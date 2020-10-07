@@ -49,7 +49,7 @@ class _ThemeSettingState extends StatefulScreenWidgetState {
         alignment: Alignment.bottomCenter,
         child: Text(
           R.string().themeStrings.welcome,
-          style: ThemeHelper.theme().titleText,
+          style: TextStyle(color: colorConstants.textColor),
         ),
       ),
     );
@@ -87,17 +87,6 @@ class _ThemeSettingState extends StatefulScreenWidgetState {
             delay: Duration(milliseconds: 3000),
           ),
           const SizedBox(height: 16),
-          const Expanded(
-            child: SlideFadeInAnimation(
-              delay: Duration(milliseconds: 3000),
-              duration: Duration(seconds: 1),
-              offset: Offset(0, 50),
-              curve: Curves.easeInOut,
-              child: ThemeSelection(
-                delay: Duration(milliseconds: 3000),
-              ),
-            ),
-          ),
           Spacer(),
           BounceInAnimation(
             delay: const Duration(milliseconds: 4000),

@@ -58,7 +58,7 @@ class CustomDialogs {
                     textAlign: TextAlign.center,
                     style: AppTheme.of(context).theme.textTheme.body1.copyWith(
                         fontWeight: FontWeight.w500,
-                        color: AppTheme.of(context).theme.accentColor),
+                        color: colorConstants.colorPrimary),
                   ),
                   SizedBox(
                     height: getSize(20),
@@ -183,7 +183,7 @@ Future OpenErrorDialog(BuildContext context, String title, String disc,
                 textAlign: TextAlign.center,
                 style: AppTheme.of(context).theme.textTheme.body1.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: AppTheme.of(context).theme.accentColor),
+                    color: colorConstants.colorPrimary),
               ),
               SizedBox(
                 height: getSize(20),
@@ -307,7 +307,7 @@ Future OpenConfirmationPopUp(BuildContext context,
                           .body1
                           .copyWith(
                               fontWeight: FontWeight.w600,
-                              color: AppTheme.of(context).theme.accentColor),
+                              color: colorConstants.colorPrimary),
                     ),
                     SizedBox(
                       height: getSize(15),

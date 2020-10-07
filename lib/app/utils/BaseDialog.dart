@@ -52,7 +52,7 @@ class _CommonAlertDialogState extends State<CommonAlertDialog>
     contents.add(
       Container(
         height: 1,
-        color: AppTheme.of(context).theme.dividerColor,
+        color: colorConstants.dividerColor,
       ),
     );
 
@@ -97,7 +97,7 @@ class _CommonAlertDialogState extends State<CommonAlertDialog>
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.title.copyWith(
                             fontSize: getFontSize(16),
-                            color: AppTheme.of(context).theme.accentColor)),
+                            color: colorConstants.colorPrimary)),
                   ),
                   onTap: () {
                     Navigator.pop(context);
@@ -126,7 +126,7 @@ class _CommonAlertDialogState extends State<CommonAlertDialog>
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.title.copyWith(
                       fontSize: getFontSize(16),
-                      color: AppTheme.of(context).theme.accentColor),
+                      color: colorConstants.colorPrimary),
                 ),
               ),
               onTap: () {
@@ -149,7 +149,7 @@ class _CommonAlertDialogState extends State<CommonAlertDialog>
               topLeft: Radius.circular(10),
               topRight: Radius.circular(10),
             ),
-            color: AppTheme.of(context).theme.primaryColor,
+            color: colorConstants.colorPrimary,
             shape: BoxShape.rectangle,
             boxShadow: getBoxShadow(context),
           ),
@@ -231,7 +231,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog>
     contents.add(
       Container(
         height: 1,
-        color: AppTheme.of(context).theme.dividerColor,
+        color: colorConstants.dividerColor,
       ),
     );
 
@@ -245,7 +245,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog>
               topLeft: Radius.circular(10),
               topRight: Radius.circular(10),
             ),
-            color: AppTheme.of(context).theme.primaryColor,
+            color: colorConstants.colorPrimary,
             shape: BoxShape.rectangle,
             boxShadow: getBoxShadow(context),
           ),

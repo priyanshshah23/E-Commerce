@@ -77,7 +77,7 @@ getBarButtonWithColor(
       height: getSize(30),
       width: getSize(30),
       decoration: BoxDecoration(
-        color: AppTheme.of(context).theme.accentColor,
+        color: colorConstants.colorPrimary,
         borderRadius: BorderRadius.all(Radius.circular(getSize(3))),
       ),
       child: InkWell(
@@ -121,7 +121,7 @@ pushToWebview(BuildContext context, String text, String url) {
 List<BoxShadow> getBoxShadow(BuildContext context) {
   return [
     BoxShadow(
-        color: AppTheme.of(context).theme.dividerColor.withAlpha(13),
+        color: colorConstants.dividerColor.withAlpha(13),
         blurRadius: getSize(13),
         spreadRadius: getSize(5))
   ];
@@ -137,8 +137,7 @@ Widget getPreferdSizeTitle(BuildContext context, String title) {
         title,
         textAlign: TextAlign.left,
         style: AppTheme.of(context).theme.textTheme.subhead.copyWith(
-            fontWeight: FontWeight.w600,
-            color: AppTheme.of(context).theme.primaryColor),
+            fontWeight: FontWeight.w600, color: colorConstants.colorPrimary),
       ),
     ),
   );
@@ -161,14 +160,14 @@ Widget getPreferdSizeTitleForPayment(
             // textAlign: TextAlign.left,
             style: AppTheme.of(context).theme.textTheme.subhead.copyWith(
                 fontWeight: FontWeight.w600,
-                color: AppTheme.of(context).theme.primaryColor),
+                color: colorConstants.colorPrimary),
           ),
           Text(
             titleAmount,
             // textAlign: TextAlign.left,
             style: AppTheme.of(context).theme.textTheme.subhead.copyWith(
                 fontWeight: FontWeight.w600,
-                color: AppTheme.of(context).theme.primaryColor),
+                color: colorConstants.colorPrimary),
           ),
         ],
       ),
@@ -198,7 +197,7 @@ Widget getAppBar(BuildContext context, String title,
     iconTheme: IconThemeData(
       color: isWhite == true
           ? AppTheme.of(context).theme.textTheme.title.color
-          : AppTheme.of(context).theme.primaryColor,
+          : colorConstants.colorPrimary,
     ),
     centerTitle: centerTitle ?? true,
     elevation: 0,
@@ -208,7 +207,7 @@ Widget getAppBar(BuildContext context, String title,
             style: AppTheme.of(context).theme.textTheme.body1.copyWith(
                   color: isWhite == true
                       ? AppTheme.of(context).theme.textTheme.title.color
-                      : AppTheme.of(context).theme.primaryColor,
+                      : colorConstants.colorPrimary,
                   fontWeight: FontWeight.w600,
                 ),
             textAlign: textalign ?? TextAlign.center,
@@ -218,8 +217,8 @@ Widget getAppBar(BuildContext context, String title,
     leading: leadingButton ??= null,
     automaticallyImplyLeading: leadingButton != null,
     backgroundColor: isWhite == true
-        ? AppTheme.of(context).theme.primaryColor
-        : AppTheme.of(context).theme.accentColor,
+        ? colorConstants.colorPrimary
+        : colorConstants.colorPrimary,
     actions: actionItems == null ? null : actionItems,
     bottom: widget,
   );

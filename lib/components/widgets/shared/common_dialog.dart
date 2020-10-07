@@ -5,10 +5,10 @@ import '../../../app/theme/app_theme.dart';
 import '../../../app/utils/math_utils.dart';
 import 'buttons.dart';
 
-Future  _showLogInDialog(BuildContext context){
+Future _showLogInDialog(BuildContext context) {
   return showDialog(
       context: context,
-      builder: (BuildContext context){
+      builder: (BuildContext context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(getSize(8)))),
@@ -17,19 +17,22 @@ Future  _showLogInDialog(BuildContext context){
             textAlign: TextAlign.center,
             style: AppTheme.of(context).theme.textTheme.body1.copyWith(
                 fontWeight: FontWeight.w500,
-                color: AppTheme.of(context).theme.accentColor
-            ),
+                color: colorConstants.colorPrimary),
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              SizedBox(height: getSize(15),),
+              SizedBox(
+                height: getSize(15),
+              ),
               Text(
                 "Email/mobile and password isn't matching.",
                 textAlign: TextAlign.center,
-                style: AppTheme.of(context).theme.textTheme.body2.copyWith(
-                    color: ColorConstants.textGray
-                ),
+                style: AppTheme.of(context)
+                    .theme
+                    .textTheme
+                    .body2
+                    .copyWith(color: ColorConstants.textGray),
               ),
               // SizedBox(height: getSize(20),),
               Container(
@@ -45,6 +48,5 @@ Future  _showLogInDialog(BuildContext context){
             ],
           ),
         );
-      }
-  );
+      });
 }
