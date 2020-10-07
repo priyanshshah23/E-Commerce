@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "936531526615",
+    "firebase_url": "https://eco-280912.firebaseio.com",
+    "project_id": "eco-280912",
+    "storage_bucket": "eco-280912.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:936531526615:android:1f081537aaf1caf7e40192",
+        "android_client_info": {
+          "package_name": "com.threeeco.driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "936531526615-1u63adtmq9gl39eb9515enooni3vhuql.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUiDZs6NdYaxqAgjUPTu2EVbRCzu-vFaM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "936531526615-1u63adtmq9gl39eb9515enooni3vhuql.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "936531526615-5i79dpt22khkttgffq73lpnpj9nt7qq4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.threeeco.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

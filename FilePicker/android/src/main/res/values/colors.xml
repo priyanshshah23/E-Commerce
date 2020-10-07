@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="filestack__primary">#FF9800</color>
+
+    <color name="colorPrimary">#000</color>
+    <color name="colorAccent">#000</color>
+    <color name="colorPrimaryDark">#000</color>
+    <color name="colorPrimaryLight">#000</color>
+    <color name="primaryText">#000</color>
+
+    <color name="overlay">#AA1C1C1C</color>
+    <color name="black">#000000</color>
+
+    <color name="vw_BgItem">#11333333</color>
+    <color name="vw_ShadowItem">#94333232</color>
+    <color name="vw_BgRvFileDivider">#EEEEEE</color>
+
+    <color name="background_video_color">#2f3031</color>
+    <color name="background_progress_color">#6C6D6D</color>
+
+    <color name="progress_color">@color/colorPrimary</color>
+    <color name="line_color">@color/colorAccent</color>
+    <color name="shadow_color">#FF000000</color>
+    <color name="line_button">#565758</color>
+    <color name="whiteBackground">#fff</color>
+
+    <color name="color_light_gray">#F2F2F2</color>
+    <color name="white">#FFFFFF</color>
+    <color name="white_tr_14">#40FFFFFF</color>
+    <color name="white_tr_56">#8FFFFFFF</color>
+</resources>

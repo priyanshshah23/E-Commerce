@@ -1,0 +1,246 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/layout_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/darker_gray">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorAccent"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        <HorizontalScrollView
+            android:id="@+id/tab_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/white"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="64dp"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/buttonRotateImage"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:padding="4dp"
+                    customForegroundColor="@{``}"
+                    android:src="@drawable/ic_rotate_left"
+                    android:textSize="16dp" />
+
+                <Button
+                    android:id="@+id/buttonDone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:text="@string/lbl_save"
+                    customForegroundColor="@{``}"
+                    android:textSize="16dp" />
+
+                <Button
+                    android:id="@+id/buttonCancel"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:padding="3dp"
+                    android:text="X"
+                    customForegroundColor="@{``}"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <Button
+                    android:id="@+id/buttonFree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="3dp"
+                    android:padding="3dp"
+                    android:text="@string/lbl_free"
+                    customForegroundColor="@{``}"
+                    android:textSize="16dp"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/buttonCircle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="3dp"
+                    android:padding="3dp"
+                    android:text="@string/lbl_circle"
+                    customForegroundColor="@{``}"
+                    android:textSize="16dp"
+                    android:visibility="gone" />
+
+
+                <Button
+                    android:id="@+id/buttonFitImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="3dp"
+                    android:gravity="center_vertical"
+                    android:padding="3dp"
+                    android:text="@string/lbl_fit_image"
+                    customForegroundColor="@{``}"
+                    android:textSize="16dp"
+                    android:visibility="gone" />
+
+
+                <Button
+                    android:id="@+id/button1_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="3dp"
+                    android:padding="3dp"
+                    android:text="1:1"
+                    customForegroundColor="@{``}"
+                    android:textSize="16dp"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/button3_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="3dp"
+                    android:padding="3dp"
+                    android:text="3:4"
+                    customForegroundColor="@{``}"
+                    android:textSize="16dp"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/button4_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_margin="3dp"
+                    android:padding="3dp"
+                    android:text="4:3"
+                    customForegroundColor="@{``}"
+                    android:textSize="16dp"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/button9_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_margin="3dp"
+                    android:padding="3dp"
+                    android:text="9:16"
+                    customForegroundColor="@{``}"
+                    android:textSize="16dp"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/button16_9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_margin="3dp"
+                    android:padding="3dp"
+                    android:text="16:9"
+                    customForegroundColor="@{``}"
+                    android:textSize="16dp"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/buttonCustom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_margin="3dp"
+                    android:padding="3dp"
+                    android:text="7:5"
+                    customForegroundColor="@{``}"
+                    android:textSize="16dp"
+                    android:visibility="gone" />
+
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <!-- <com.vincent.filepicker.activity.CropImageView1
+             android:id="@+id/cropImageView"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_above="@id/tab_bar"
+             android:layout_below="@id/toolbar"
+             android:paddingBottom="64dp"
+             android:paddingLeft="16dp"
+             android:paddingRight="16dp"
+             android:paddingTop="32dp"
+             app:backgroundColor="@color/black"
+             app:cropMode="ratio_fit_image"
+             app:frameColor="@color/frame"
+             app:frameStrokeWeight="1dp"
+             app:guideColor="@color/guide"
+             app:guideShowMode="show_on_touch"
+             app:guideStrokeWeight="1dp"
+             app:handleColor="@color/handle"
+             app:handleShowMode="show_always"
+             app:handleSize="8dp"
+             app:minFrameSize="50dp"
+             app:overlayColor="@color/overlay"
+             app:touchPadding="8dp" />-->
+
+        <com.example.flutter_files_picker.filepicker.util.CropImageView
+            android:id="@+id/cropImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/tab_bar"
+            android:layout_below="@id/toolbar"
+            android:layout_weight="1"
+            android:paddingStart="16dp"
+            android:paddingTop="32dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="64dp"
+            app:scv_background_color="@color/black"
+            app:scv_crop_mode="fit_image"
+            app:scv_frame_color="@color/color_light_gray"
+            app:scv_frame_stroke_weight="1dp"
+            app:scv_guide_color="@color/white_tr_56"
+            app:scv_guide_show_mode="show_always"
+            app:scv_guide_stroke_weight="1dp"
+            app:scv_handle_color="@color/white_tr_14"
+            app:scv_handle_show_mode="show_always"
+            app:scv_handle_size="14dp"
+            app:scv_min_frame_size="50dp"
+            app:scv_overlay_color="@color/overlay"
+            app:scv_touch_padding="8dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/cropImageView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</layout>

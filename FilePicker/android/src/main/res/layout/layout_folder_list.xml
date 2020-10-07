@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.example.flutter_files_picker.filepicker.local.MaxHeightLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/mhl_folder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10px">
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_folder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@color/whiteBackground"
+            android:scrollbarSize="3dp"
+            android:scrollbarStyle="outsideOverlay"
+            android:scrollbars="vertical"/>
+
+</com.example.flutter_files_picker.filepicker.local.MaxHeightLayout>

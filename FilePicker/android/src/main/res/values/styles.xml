@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--<style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>-->
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTheme.NavItem">
+        <item name="android:checkable">true</item>
+    </style>
+
+    <style name="BottomSheet" parent="Theme.Design.BottomSheetDialog">
+        <item name="android:backgroundDimAmount">0.5</item>
+        <item name="android:windowAnimationStyle">@style/Animation.Design.BottomSheetDialog</item>
+        <item name="android:textColorPrimary">#DDffffff</item>
+        <item name="android:textColorSecondary">#8Affffff</item>
+        <item name="android:textColorHint">#42ffffff</item>
+    </style>
+
+    <style name="AppTheme.Theme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionOverflowMenuStyle">@style/AppTheme.OverflowMenuStyle</item>
+        <item name="android:listDivider">@drawable/vw_divider_rv</item>
+    </style>
+
+    <style name="AppTheme.OverflowMenuStyle" parent="@style/Widget.AppCompat.PopupMenu.Overflow">
+        <item name="overlapAnchor">false</item>
+        <item name="android:popupBackground">#000000</item>
+        <item name="android:dropDownVerticalOffset">4dp</item>
+        <item name="android:dropDownHorizontalOffset">0dp</item>
+    </style>
+
+    <style name="AppTheme.ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="FilterFabStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:layout_margin">16dp</item>
+        <item name="backgroundTint">@color/colorAccent</item>
+    </style>
+
+    <style name="filepickerToolbarImageStyle">
+        <item name="android:layout_width">@dimen/_32px</item>
+        <item name="android:layout_height">@dimen/_32px</item>
+        <item name="android:padding">@dimen/_4px</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="FilePickerRecyclerStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:paddingBottom">@dimen/_42px</item>
+        <item name="android:clipToPadding">false</item>
+    </style>
+
+    <style name="FilePickerToolbarTextButton">
+        <item name="android:layout_width">@dimen/_48px</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">@dimen/_10px</item>
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:padding">@dimen/_2px</item>
+        <item name="android:layout_alignParentEnd">true</item>
+    </style>
+
+    <style name="CustomAlertDialog" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="buttonBarPositiveButtonStyle">@style/btnStyle</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="btnStyle" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <declare-styleable name="MaxHeightLayout">
+        <attr name="mhl_HeightRatio" format="reference|float" />
+        <attr name="mhl_HeightDimen" format="reference|dimension" />
+    </declare-styleable>
+</resources>

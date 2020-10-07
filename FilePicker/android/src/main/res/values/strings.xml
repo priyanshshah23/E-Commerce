@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name" translatable="false">File Picker</string>
+    <string name="short_seconds" translatable="false">sec</string>
+    <string name="megabyte" translatable="false">MB</string>
+    <string name="kilobyte" translatable="false">KB</string>
+    <!--<string name="vw_confirm">Done</string>-->
+    <string name="lbl_no_video_play_app">No App exists for playing video!</string>
+    <string name="lbl_rationale_storage">Need Reading Storage Permission for Picking Files</string>
+    <string name="lbl_rationale_camera">Camera permission is needed to access device camera</string>
+    <string name="lbl_up_to_max">Already up to max</string>
+    <string name="lbl_no_photo_app">No photo App in this phone!</string>
+    <string name="lbl_no_audio_play_app">No App exists for playing audio!</string>
+    <string name="lbl_no_video_app">No video App in this phone!</string>
+    <string name="lbl_no_audio_app">No audio App in this phone!</string>
+    <string name="lbl_all">All</string>
+    <string name="lbl_button_allow">Allow</string>
+    <string name="lbl_button_deny">Deny</string>
+	<string name="lbl_permission_denied">Permission was denied. Please consider granting it in order to use all features.</string>
+    <string name="lbl_permission_denied_never_ask_again">Permission was denied with never ask again.</string>
+    <string name="lbl_select_file">Select File</string>
+    <string name="lbl_file_not_selected">File not selected</string>
+    <string name="msg_finish_crop">Do you want to Finish cropping all files?</string>
+    <string name="msg_cancel_crop">Do you want to cancel cropping images?</string>
+    <string name="msg_cannot_retrieve_selected_video">Cannot Retrieve Selected Video.</string>
+    <string name="lbl_prev">PREV</string>
+    <string name="lbl_crop">CROP</string>
+    <string name="lbl_next">NEXT</string>
+    <string name="lbl_next_time">Next Time</string>
+    <string name="lbl_save">Save</string>
+    <string name="lbl_free" translatable="false">FREE</string>
+    <string name="lbl_circle" translatable="false">CIRCLE</string>
+    <string name="lbl_fit_image" translatable="false">FIT IMAGE</string>
+    <string name="lbl_choose_file_source">Choose file source</string>
+    <string name="lbl_gallery">Gallery</string>
+    <string name="lbl_audio">Audio</string>
+    <string name="lbl_video">Video</string>
+    <string name="lbl_documents">Documents</string>
+    <string name="lbl_google_drive">Google Drive</string>
+    <string name="lbl_dropbox">Dropbox</string>
+    <string name="msg_cropping_video_please_wait">Cropping Video, Please Wait...</string>
+    <string name="lbl_delete">Delete</string>
+    <string name="lbl_add_media">Add Media</string>
+    <string name="lbl_done">Done</string>
+    <string name="lbl_rotate">Rotate</string>
+    <string name="lbl_cancel">Cancel</string>
+</resources>

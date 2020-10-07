@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/fabFolder"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_42px"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical|end"
+        android:minHeight="@dimen/_36px"
+        android:paddingStart="@dimen/_16px"
+        android:paddingTop="@dimen/_4px"
+        android:paddingEnd="@dimen/_16px"
+        android:paddingBottom="@dimen/_4px"
+        tools:showIn="@layout/activity_video_pick">
+
+        <ImageView
+            android:id="@+id/filterBtn"
+            customForegroundColor="@{``}"
+            android:layout_width="@dimen/_32px"
+            android:layout_height="@dimen/_32px"
+            android:layout_marginEnd="@dimen/_2px"
+            android:layout_weight="1"
+            android:padding="@dimen/_8px"
+            android:src="@drawable/ic_funnel" />
+
+        <TextView
+            android:id="@+id/tv_count"
+            customForegroundColor="@{``}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:minWidth="@dimen/_42px"
+            android:text="0/9"
+            android:textSize="@dimen/_14px" />
+
+    </LinearLayout>
+</layout>

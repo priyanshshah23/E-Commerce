@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/tb_image_pick"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            customBackgroundColor="@{``}"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/tvCancel"
+                style="@style/filepickerToolbarImageStyle"
+                customForegroundColor="@{``}"
+                android:src="@drawable/ic_close_white_24dp" />
+
+            <TextView
+                android:id="@+id/ivLeft"
+                customForegroundColor="@{``}"
+                style="@style/FilePickerToolbarTextButton"
+                android:text="@string/lbl_prev" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/lbl_crop"
+                customForegroundColor="@{``}"
+                android:textSize="20sp" />
+
+
+            <TextView
+                android:id="@+id/ivRight"
+                customForegroundColor="@{``}"
+                style="@style/FilePickerToolbarTextButton"
+                android:text="@string/lbl_next" />
+
+            <ImageView
+                android:id="@+id/tvFinish"
+                customForegroundColor="@{``}"
+                style="@style/filepickerToolbarImageStyle"
+                android:src="@drawable/ic_check_white" />
+
+        </LinearLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_image_pick"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tb_image_pick"
+            customBackgroundColor="@{``}" />
+
+
+    </RelativeLayout>
+</layout>

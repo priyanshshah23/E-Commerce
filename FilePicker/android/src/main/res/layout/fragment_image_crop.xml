@@ -1,0 +1,114 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/layout_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.isseiaoki.simplecropview.CropImageView
+            android:id="@+id/cropImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/seperator"
+            app:scv_background_color="@color/black"
+            app:scv_crop_mode="fit_image"
+            app:scv_frame_color="@color/colorPrimary"
+            app:scv_frame_stroke_weight="1dp"
+            app:scv_guide_color="@color/colorPrimary"
+            app:scv_guide_show_mode="show_always"
+            app:scv_guide_stroke_weight="1dp"
+            app:scv_handle_color="@color/colorPrimaryDark"
+            app:scv_handle_show_mode="show_always"
+            app:scv_handle_size="14dp"
+            app:scv_min_frame_size="50dp"
+            app:scv_overlay_color="@color/overlay"
+            app:scv_touch_padding="8dp" />
+
+
+        <View
+            android:id="@+id/seperator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/tab_bar"
+            android:background="#cfcfcf"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/tab_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_2px"
+            customBackgroundColor="@{``}">
+
+            <ImageView
+                android:id="@+id/buttonRotateLeft"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:padding="18dp"
+                customForegroundColor="@{``}"
+                android:src="@drawable/ic_rotate_left" />
+
+            <ImageView
+                android:id="@+id/buttonRotateRight"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:padding="18dp"
+                customForegroundColor="@{``}"
+                android:src="@drawable/ic_rotate_right" />
+
+
+            <TextView
+                android:id="@+id/buttonSave"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/lbl_save"
+                android:textAllCaps="true"
+                customForegroundColor="@{``}"
+                android:textSize="18sp" />
+
+
+            <TextView
+                android:id="@+id/buttonFree"
+                android:layout_width="80dp"
+                android:layout_height="?attr/actionBarSize"
+                android:gravity="center"
+                android:text="@string/lbl_free"
+                customForegroundColor="@{``}"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/buttonSquare"
+                android:layout_width="60dp"
+                android:layout_height="?attr/actionBarSize"
+                android:gravity="center"
+                android:text="1:1"
+                customForegroundColor="@{``}"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+            <View
+                android:layout_width="0.3dp"
+                android:layout_height="match_parent"
+                customBackgroundColor="@{``}"
+                android:visibility="gone" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                customBackgroundColor="@{``}"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

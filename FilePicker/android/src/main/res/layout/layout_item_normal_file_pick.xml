@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground">
+
+        <ImageView
+            android:id="@+id/cbx"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:src="@drawable/vw_selector_color" />
+
+        <ImageView
+            android:id="@+id/ic_file"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            android:padding="18dp"
+            android:src="@drawable/ic_docs" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_toEndOf="@+id/ic_file"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_file_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="My Document.docx"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_file_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

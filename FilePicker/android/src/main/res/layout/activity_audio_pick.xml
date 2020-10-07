@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/tb_pick"
+            layout="@layout/layout_top_bar" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_audio_pick"
+            style="@style/FilePickerRecyclerStyle"
+            android:layout_below="@id/tb_pick" />
+
+        <include layout="@layout/layout_filter" />
+        <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabFolder"
+                android:src="@drawable/ic_funnel" style="@style/FilterFabStyle"/>-->
+
+    </RelativeLayout>
+</layout>
