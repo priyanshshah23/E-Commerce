@@ -94,7 +94,7 @@ class _ThemeSettingState extends StatefulScreenWidgetState {
               text: R.string().commonString.btnContinue,
               borderRadius: getSize(14),
               onTap: () {
-                ThemeHelper.changeTheme("orange");
+                ThemeHelper.changeTheme("light");
                 // Navigator.pop(context);
               },
             ),

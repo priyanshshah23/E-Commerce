@@ -37,3 +37,4 @@ export 'package:diamnow/components/widgets/shared/scroll_direction_listener.dart
 export 'package:diamnow/components/widgets/shared/shifted_position.dart';
 export 'package:diamnow/components/widgets/shared/texts.dart';
 export 'package:diamnow/main.dart';
+export 'package:diamnow/app/Helper/Themehelper.dart';
