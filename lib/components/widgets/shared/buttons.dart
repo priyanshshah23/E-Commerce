@@ -280,7 +280,7 @@ class AppButton extends StatelessWidget {
     final borderRadius = BorderRadius.circular(this.borderRadius);
 
     Color bgColor = isButtonEnabled
-        ? (backgroundColor ?? theme.buttonColor)
+        ? colorConstants.colorPrimary
         : theme.disabledColor;
     Color fgColor = _getForegroundColor(theme);
 

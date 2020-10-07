@@ -1,3 +1,4 @@
+import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:flutter/material.dart';
 import '../app.export.dart';
 import 'fade_route.dart';
@@ -81,7 +82,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     // case SetupScreen.route:
     //   screen = SetupScreen();
     //   break;
-
+   case LoginScreen.route:
+     screen = LoginScreen();
+     break;
   }
 
   switch (routeType) {

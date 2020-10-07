@@ -40,7 +40,7 @@ class ThemeHelper {
 
 class BaseTheme {
   Color get colorPrimary => Colors.blue;
-  Color get textColor => Colors.blue;
+  Color get textColor => Colors.black;
   Color get bgColor => Colors.blue;
   Color get dividerColor => Colors.grey[100];
   Color get textBlackColor => Colors.black;

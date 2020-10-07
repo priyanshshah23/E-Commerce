@@ -73,11 +73,10 @@ class _CommonTextfieldState extends State<CommonTextfield> {
         autofocus: widget.autoFocus ?? false,
         controller: widget.textOption.inputController ?? null,
         obscureText: this.obscureText,
-        style: AppTheme.of(context)
-            .theme
-            .textTheme
-            .display1
-            .copyWith(fontWeight: FontWeight.w400, letterSpacing: 0),
+        style: TextStyle(
+          color:  colorConstants.textBlackColor,
+          fontSize: getFontSize(16)
+        ),
         keyboardType: widget.textOption.keyboardType ?? TextInputType.text,
         textCapitalization:
             widget.textOption.textCapitalization ?? TextCapitalization.none,
@@ -94,27 +93,22 @@ class _CommonTextfieldState extends State<CommonTextfield> {
           border: widget.textOption.errorBorder ??
               OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(getSize(11))),
-                borderSide: BorderSide.none,
+                borderSide: BorderSide(color: colorConstants.textBlackColor),
               ),
 //         errorBorder: widget.textOption.errorBorder ?? OutlineInputBorder(
 //               borderRadius: BorderRadius.all(Radius.circular(11)),
 //             borderSide: BorderSide.none
 //         ),
           labelText: widget.textOption.labelText,
-          hintStyle: widget.textOption.hintStyleText ??= AppTheme.of(context)
-              .theme
-              .textTheme
-              .display1
-              .copyWith(
-                  color: colorConstants.dividerColor.withOpacity(0.4),
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0),
+          hintStyle: TextStyle(
+              color:  colorConstants.textBlackColor,
+              fontSize: getFontSize(16)
+          ),
           hintText: widget.textOption.hintText,
-          labelStyle: AppTheme.of(context)
-              .theme
-              .textTheme
-              .body2
-              .copyWith(color: colorConstants.dividerColor.withOpacity(0.4)),
+          labelStyle: TextStyle(
+              color:  colorConstants.textColor,
+              fontSize: getFontSize(16),
+          ),
           prefixIcon: widget.textOption.prefixWid,
           suffix: widget.textOption.postfixWidOnFocus,
           suffixIcon: (widget.textOption.isSecureTextField != null &&

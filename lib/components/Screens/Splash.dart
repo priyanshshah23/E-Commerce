@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'dart:io' show Platform;
 
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/components/widgets/shared/images.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,7 @@ class _SplashState extends State<Splash> {
         child: Stack(
           children: <Widget>[
             Container(
+              color: Colors.deepPurpleAccent,
               height: MathUtilities.screenHeight(context),
               width: MathUtilities.screenWidth(context),
             ),
@@ -60,6 +62,7 @@ class _SplashState extends State<Splash> {
   bool isFailed = false;
 
   Future callMasterSync() async {
+    NavigationUtilities.pushRoute(LoginScreen.route);
   /*  SyncManager.instance.callMasterSync(context, () {
       //success
       callHandler();

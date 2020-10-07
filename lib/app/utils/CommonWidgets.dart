@@ -324,3 +324,43 @@ changeNavigationColor(Color color) async {
     }
   }
 }
+
+enum IconSizeType { small, medium, large }
+
+getCommonIconWidget(
+    {String imageName,
+      IconSizeType imageType = IconSizeType.medium,
+      Color color = Colors.black,
+      VoidCallback onTap,
+      GlobalKey search_key}) {
+  return InkWell(
+    onTap: onTap,
+    child: Container(
+      width: getSize(46),
+      height: getSize(46),
+      child: Align(
+        alignment: Alignment.center,
+        child: Container(
+          padding: EdgeInsets.all(getImageSize(imageType)),
+          width: getSize(46),
+          height: getSize(46),
+          child: Image.asset(
+            imageName,
+            key: search_key,
+            color: color,
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+double getImageSize(IconSizeType imaegType) {
+  if (imaegType == IconSizeType.small) {
+    return getSize(12);
+  } else if (imaegType == IconSizeType.medium) {
+    return getSize(14);
+  } else if (imaegType == IconSizeType.large) {
+    return getSize(4);
+  }
+}
