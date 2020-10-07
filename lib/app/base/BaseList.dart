@@ -35,7 +35,7 @@ class BaseListState extends State<BaseList> {
   Widget listItems;
 
   int listCount, totalCount;
-  String noDataMsg, noDataDesc, refreshBtn, imagePath,redirectDesc;
+  String noDataMsg, noDataDesc, refreshBtn, imagePath, redirectDesc;
   bool enablePullDown;
   bool enablePullUp;
   bool isApiCalling;
@@ -72,8 +72,8 @@ class BaseListState extends State<BaseList> {
   Widget build(BuildContext context) {
     return SmartRefresher(
         header: MaterialClassicHeader(
-          backgroundColor: AppTheme.of(context).accentColor,
-          color: AppTheme.of(context).primaryColor,
+          backgroundColor: colorConstants.colorPrimary,
+          color: colorConstants.colorPrimary,
         ),
         enablePullDown: enablePullDown,
         enablePullUp: enablePullUp && listCount > 0 && listCount < totalCount,
@@ -135,10 +135,8 @@ class BaseListState extends State<BaseList> {
                 ),
               if (noDataMsg != null)
                 Text(noDataMsg,
-                    style: Theme.of(context)
-                        .textTheme
-                        .title
-                        .copyWith(fontWeight: FontWeight.bold, color: textColor),
+                    style: Theme.of(context).textTheme.title.copyWith(
+                        fontWeight: FontWeight.bold, color: textColor),
                     textAlign: TextAlign.center),
               if (noDataMsg != null)
                 SizedBox(
@@ -147,9 +145,8 @@ class BaseListState extends State<BaseList> {
               if (noDataDesc != null)
                 Text(noDataDesc,
                     style: AppTheme.of(context).theme.textTheme.body1.copyWith(
-                        color: AppTheme.of(context).theme.accentColor,
-                        fontWeight: FontWeight.bold
-                    ),
+                        color: colorConstants.colorPrimary,
+                        fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center),
               if (noDataDesc != null)
                 SizedBox(
@@ -173,15 +170,19 @@ class BaseListState extends State<BaseList> {
                 ),
               if (redirectDesc != null)
                 Padding(
-                  padding: EdgeInsets.only(top: getSize(10),bottom: getSize(40)),
+                  padding:
+                      EdgeInsets.only(top: getSize(10), bottom: getSize(40)),
                   child: InkWell(
                     onTap: onRedirect,
                     child: Text(
                       redirectDesc,
-                      style: AppTheme.of(context).theme.textTheme.body2.copyWith(
-                          color: AppTheme.of(context).theme.accentColor,
-                          decoration: TextDecoration.underline
-                      ),
+                      style: AppTheme.of(context)
+                          .theme
+                          .textTheme
+                          .body2
+                          .copyWith(
+                              color: colorConstants.colorPrimary,
+                              decoration: TextDecoration.underline),
                     ),
                   ),
                 )

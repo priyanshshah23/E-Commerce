@@ -151,7 +151,7 @@ class AppTheme {
           display2: TextStyle(
             fontSize: getFontSize(14),
             fontFamily: displayFont,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w400,
             color: bodyTextColor,
           ),
           display3: TextStyle(
@@ -164,9 +164,10 @@ class AppTheme {
           display4: TextStyle(
             fontSize: getFontSize(12),
             fontFamily: displayFont,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w400,
             color: bodyTextColor,
           ),
+
         );
   }
 
@@ -210,20 +211,13 @@ class PredefinedThemes {
 
   static final List<AppTheme> _themes = [];
 
-  static List<AppThemeData> get data => [light, dark];
+  static List<AppThemeData> get data => [light];
 
   static AppThemeData get light {
     return AppThemeData()
       ..name = "light"
       ..backgroundColors = [Colors.white.value, Colors.white.value]
       ..accentColor = 0xff2D0DB2;
-  }
-
-  static AppThemeData get dark {
-    return AppThemeData()
-      ..name = "dark"
-      ..backgroundColors = [Colors.black.value, Colors.grey[900].value]
-      ..accentColor = Colors.lightGreen.value;
   }
 }
 

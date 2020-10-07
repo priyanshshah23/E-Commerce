@@ -94,6 +94,7 @@ class BaseTheme {
   Color get colorPrimary => Colors.blue;
   Color get textColor => Colors.blue;
   Color get bgColor => Colors.blue;
+  Color get dividerColor => Colors.grey[100];
 
   TextStyle get titleText {
     return TextStyle(
@@ -109,6 +110,7 @@ class LightTheme extends BaseTheme {
   Color get textColor => Colors.white;
   @override
   Color get bgColor => Colors.black;
+
   @override
   TextStyle get titleText =>
       TextStyle(fontSize: 16, fontWeight: FontWeight.w300, color: textColor);
@@ -136,8 +138,11 @@ class OrangeTheme extends BaseTheme {
   Color get textColor => Colors.blue;
 
   @override
-  Color get bgColor => Colors.lightBlueAccent;
+  Color get bgColor => Colors.orange;
+
   @override
   TextStyle get titleText =>
       TextStyle(fontSize: 26, fontWeight: FontWeight.w600, color: textColor);
 }
+
+BaseTheme get colorConstants => ThemeHelper.theme();

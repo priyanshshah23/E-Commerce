@@ -28,10 +28,10 @@ class CommonTextfield extends StatefulWidget {
       this.inputAction,
       this.autoFocus,
       this.focusNode,
-        this.alignment,
+      this.alignment,
       this.showUnderLine = true,
       this.enable = true,
-        this.validation,
+      this.validation,
       this.autoCorrect = true,
       this.hintStyleText});
 
@@ -56,7 +56,6 @@ class _CommonTextfieldState extends State<CommonTextfield> {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
 //      padding: EdgeInsets.only(
 //          left:
@@ -80,21 +79,23 @@ class _CommonTextfieldState extends State<CommonTextfield> {
             .display1
             .copyWith(fontWeight: FontWeight.w400, letterSpacing: 0),
         keyboardType: widget.textOption.keyboardType ?? TextInputType.text,
-        textCapitalization:widget.textOption.textCapitalization?? TextCapitalization.none,
-        cursorColor: AppTheme.of(context).theme.accentColor,
+        textCapitalization:
+            widget.textOption.textCapitalization ?? TextCapitalization.none,
+        cursorColor: colorConstants.colorPrimary,
         inputFormatters: widget.textOption.formatter ?? [],
         decoration: InputDecoration(
           errorMaxLines: 2,
           fillColor: widget.textOption.fillColor ?? fromHex("#F6F6F6"),
           filled: true,
-          enabledBorder:OutlineInputBorder(
+          enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(getSize(11))),
             borderSide: BorderSide.none,
           ),
-          border: widget.textOption.errorBorder ??OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(getSize(11))),
-            borderSide: BorderSide.none,
-          ),
+          border: widget.textOption.errorBorder ??
+              OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(getSize(11))),
+                borderSide: BorderSide.none,
+              ),
 //         errorBorder: widget.textOption.errorBorder ?? OutlineInputBorder(
 //               borderRadius: BorderRadius.all(Radius.circular(11)),
 //             borderSide: BorderSide.none
@@ -105,13 +106,15 @@ class _CommonTextfieldState extends State<CommonTextfield> {
               .textTheme
               .display1
               .copyWith(
-                  color:
-                      AppTheme.of(context).theme.dividerColor.withOpacity(0.4),
+                  color: colorConstants.dividerColor.withOpacity(0.4),
                   fontWeight: FontWeight.w400,
                   letterSpacing: 0),
           hintText: widget.textOption.hintText,
-          labelStyle: AppTheme.of(context).theme.textTheme.body2.copyWith(
-              color: AppTheme.of(context).theme.dividerColor.withOpacity(0.4)),
+          labelStyle: AppTheme.of(context)
+              .theme
+              .textTheme
+              .body2
+              .copyWith(color: colorConstants.dividerColor.withOpacity(0.4)),
           prefixIcon: widget.textOption.prefixWid,
           suffix: widget.textOption.postfixWidOnFocus,
           suffixIcon: (widget.textOption.isSecureTextField != null &&
@@ -130,8 +133,8 @@ class _CommonTextfieldState extends State<CommonTextfield> {
                       } else {
                         this.obscureIcon = Icons.visibility_off;
                       }
-                      if(!widget.focusNode.hasPrimaryFocus)
-                      widget.focusNode.canRequestFocus = false;
+                      if (!widget.focusNode.hasPrimaryFocus)
+                        widget.focusNode.canRequestFocus = false;
                       widget.focusNode.unfocus();
                     });
                     //TextInputConnection;
@@ -159,8 +162,7 @@ class _CommonTextfieldState extends State<CommonTextfield> {
             widget.onNextPress();
           }
         },
-
-        validator:widget.validation,
+        validator: widget.validation,
         onChanged: (String text) {
           this.widget.textCallback(text);
         },
@@ -191,25 +193,24 @@ class TextFieldOption {
   TextEditingController inputController;
   TextCapitalization textCapitalization;
 
-  TextFieldOption({
-    this.text,
-    this.labelText,
-    this.hintText,
-    this.isSecureTextField,
-    this.keyboardType,
-    this.type,
-    this.maxLine = 1,
-    this.autoFocus,
-    this.formatter,
-    this.hintStyleText,
-    this.inputController,
-    this.prefixWid,
-    this.postfixWid,
-    this.postfixWidOnFocus,
-    this.fillColor,
-    this.errorBorder,
-    this.textCapitalization
-  });
+  TextFieldOption(
+      {this.text,
+      this.labelText,
+      this.hintText,
+      this.isSecureTextField,
+      this.keyboardType,
+      this.type,
+      this.maxLine = 1,
+      this.autoFocus,
+      this.formatter,
+      this.hintStyleText,
+      this.inputController,
+      this.prefixWid,
+      this.postfixWid,
+      this.postfixWidOnFocus,
+      this.fillColor,
+      this.errorBorder,
+      this.textCapitalization});
 }
 
 enum TextFieldType {

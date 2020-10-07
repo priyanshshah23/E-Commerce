@@ -127,25 +127,3 @@ class _DemoScreenState extends State<DemoScreen> {
     );
   }
 }
-
-class Demo2 extends StatefulWidget {
-  final Widget child;
-  Demo2(this.child);
-
-  @override
-  _Demo2State createState() => _Demo2State();
-}
-
-class _Demo2State extends State<Demo2> {
-  String theme;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(child: widget.child);
-  }
-}

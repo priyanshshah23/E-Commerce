@@ -26,7 +26,7 @@ class _FlutterTicketWidgetState extends State<FlutterTicketWidget> {
   Widget build(BuildContext context) {
     return ClipShadowPath(
       shadow: Shadow(
-        color: AppTheme.of(context).theme.dividerColor.withAlpha(13),
+        color: colorConstants.dividerColor.withAlpha(13),
         blurRadius: getSize(13),
       ),
       clipper: TicketClipper(),

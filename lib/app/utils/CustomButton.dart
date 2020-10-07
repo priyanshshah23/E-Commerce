@@ -41,7 +41,7 @@ class CustomButton extends StatelessWidget {
               borderRadius: new BorderRadius.circular(getSize(4)),
             ),
             fillColor: isButtonEnabled == true
-                ? AppTheme.of(context).theme.accentColor
+                ? colorConstants.colorPrimary
                 : AppTheme.of(context).theme.disabledColor,
             child: Padding(
               padding: EdgeInsets.all(10.0),
@@ -54,7 +54,7 @@ class CustomButton extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           fontSize: getSize(20),
                           color: isButtonEnabled
-                              ? AppTheme.of(context).theme.primaryColor
+                              ? colorConstants.colorPrimary
                               : AppTheme.of(context).theme.buttonColor)),
                 ],
               ),
