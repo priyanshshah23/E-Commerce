@@ -1,0 +1,3 @@
+[submodule "custom_localization"]
+	path = custom_localization
+	url = http://gitlab.coruscate.in/flutter/custom_localization.git
