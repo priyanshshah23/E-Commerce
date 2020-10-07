@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:diamnow/components/Screens/Splash.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +78,7 @@ class _BaseState extends State<Base> {
       navigatorKey: NavigationUtilities.key,
       onGenerateRoute: onGenerateRoute,
       navigatorObservers: [routeObserver],
-      home: DemoScreen(),
+      home: Splash(),
       routes: <String, WidgetBuilder>{
         '/ThemeSetting': (BuildContext context) => ThemeSetting(),
       },
