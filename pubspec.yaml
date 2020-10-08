@@ -81,7 +81,8 @@ flutter:
     - assets/
     - assets/diamnow/
     - assets/auth/
-    - assets/chls.pem
+    - assets/Json/
+    # - assets/chls.pem
 
 
   fonts:

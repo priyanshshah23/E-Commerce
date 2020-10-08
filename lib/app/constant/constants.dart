@@ -23,7 +23,6 @@ const CODE_TOKEN_EXPIRE = "E_TOKEN_EXPIRE";
 const CODE_ERROR = "E_ERROR";
 const CODE_DEVICE_LOGOUT = "CODE_DEVICE_LOGOUT";
 const CODE_KILL_SWITCH = "CODE_KILL_SWITCH";
-const CODE_USER_DELETED = "CODE_USER_DELETED";
 const TOKEN_EXPIRY_CODE = "TOKEN_EXPIRY_CODE";
 const INTERNET_UNAWAILABLE = "INTERNET_UNAWAILABLE";
 const NO_CONNECTION = "Internet unavailable.";
@@ -61,3 +60,32 @@ const numberRegExp = r'[a-z][A-Z]!@#$%^&*()_+{}:">?<,./;';
 const alphaNumberRegEx = r'[a-zA-Z0-9]';
 const alphaRegEx = r'[a-zA-Z]';
 const spaceRegEx = r'\s';
+
+//Master Code
+class MasterCode {
+  static const String shape = "SHAPE";
+  static const String color = "COLOR";
+  static const String fancyColor = "FANCY_COLOR";
+  static const String intensity = "INTENSITY";
+  static const String overTone = "OVERTONE";
+  static const String clarity = "CLARITY";
+  static const String fluorescence = "FLUORESCENCE";
+  static const String colorShade = "SHADE";
+  static const String lab = "LAB";
+  static const String cut = "CUT";
+  static const String polish = "POLISH";
+  static const String symmetry = "SYMMETRY";
+  static const String location = "LOCATION";
+  static const String keyToSymbol = "KEY_TO_SYMBOLS";
+  static const String blackTable = "BLACK_INCLUSION";
+  static const String blackCrown = "BLACK_INCLUSION_CROWN";
+  static const String whiteTable = "WHITE_INCLUSION_TABLE";
+  static const String whiteCrown = "WHITE_INCLUSION_CROWN";
+  static const String milky = "MILKEY";
+  static const String tableOpen = "OPEN_TABLE";
+  static const String crownOpen = "OPEN_CROWN";
+  static const String pavilionOpen = "OPEN_PAVILION";
+  static const String origin = "ORIGIN";
+  static const String eyeClean = "EYECLEAN";
+  static const String hAndA = "H_AND_A";
+}
