@@ -51,40 +51,50 @@ class _SearchComponentState extends State<SearchComponent> {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Divider(),
-        Text(title),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child:TextField(
-                focusNode: _focusMinValue,
-                controller: _minValueController,
-                keyboardType: TextInputType.number,
-                textInputAction: TextInputAction.next,
-                decoration: InputDecoration(
-                  focusedBorder: UnderlineInputBorder(),
-                    hintText: "From",
-                    hintStyle: TextStyle(fontWeight: FontWeight.w300, color: Colors.red)
-                ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: getSize(10)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(title),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child:TextField(
+                      focusNode: _focusMinValue,
+                      controller: _minValueController,
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                        focusedBorder: UnderlineInputBorder(),
+                          hintText: "From",
+                          hintStyle: TextStyle(fontWeight: FontWeight.w300, color: Colors.red)
+                      ),
 
+                    ),
+                  ),
+                  SizedBox(
+                    width: getSize(15),
+                  ),
+                  Expanded(
+                    child:TextField(
+                      focusNode: _focusMaxValue,
+                      controller: _maxValueController,
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                          focusedBorder: UnderlineInputBorder(),
+                          hintText: "To",
+                          hintStyle: TextStyle(fontWeight: FontWeight.w300, color: Colors.red)
+                      ),
+                    ),
+                  )
+                ],
               ),
-            ),
-            Expanded(
-              child:TextField(
-                focusNode: _focusMaxValue,
-                controller: _maxValueController,
-                keyboardType: TextInputType.number,
-                textInputAction: TextInputAction.next,
-                decoration: InputDecoration(
-                    focusedBorder: UnderlineInputBorder(),
-                    hintText: "To",
-                    hintStyle: TextStyle(fontWeight: FontWeight.w300, color: Colors.red)
-                ),
-              ),
-            )
-          ],
+            ],
+          ),
         ),
         Divider(),
       ],
