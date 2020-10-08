@@ -150,7 +150,7 @@ class AuthStrings {
 
     // Create Profile
     this.firstName = "First Name*",
-    this.name = "Name",
+    this.name = "Username*",
     this.lastName = "Last Name*",
     this.confirmPassword = "Confirm Password",
     this.currentPasswordErr = "Current Password Error",

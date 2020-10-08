@@ -215,23 +215,21 @@ class AppButton extends StatelessWidget {
 
   /// Returns the color for the [icon] and [text].
   Color _getForegroundColor() {
-    print("button ${backgroundColor != null}");
-    if(backgroundColor != null){
-      return backgroundColor;
-    }
-    /*if (foregroundColor != null) {
+
+    if (foregroundColor != null) {
       return foregroundColor;
     } else if (materialType == MaterialType.transparency) {
       // the text color since the button is transparent, therefore directly
       // on the background
 
-      return theme.textTheme.body1.color;
+      return appTheme.colorPrimary;
     } else if (backgroundColor == null) {
       // dont override the button color
-      return theme.textTheme.button.color;
+      return appTheme.colorPrimary;
     } else {
+      print("button");
       return backgroundColor;
-    }*/
+    }
   }
 
   /// Builds the row with the [Icon] and [Text] widget.
@@ -282,7 +280,7 @@ class AppButton extends StatelessWidget {
     final borderRadius = BorderRadius.circular(this.borderRadius);
 
     Color bgColor = isButtonEnabled
-        ? Colors.blue
+        ? (backgroundColor ?? appTheme.colorPrimary)
         : appTheme.dividerColor;
     Color fgColor = _getForegroundColor();
 

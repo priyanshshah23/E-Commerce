@@ -80,6 +80,7 @@ flutter:
   assets:
     - assets/
     - assets/diamnow/
+    - assets/auth/
 
 
   fonts:
