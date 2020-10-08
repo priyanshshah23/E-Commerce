@@ -24,7 +24,7 @@ dependencies:
   event_bus: ^1.1.0
   provider: ^3.1.0
   kiwi: 2.0.0
-  fluttertoast: 6.0.1
+  fluttertoast: ^6.0.1
   flutter_spinkit: ^4.0.0
   pull_to_refresh: ^1.5.6
   dots_indicator: ^1.0.0
@@ -57,7 +57,7 @@ dependencies:
   lottie: any
   image: any
   flutter_statusbarcolor: ^0.2.3
-  custom_localization: 
+  custom_localization:
     path: ./custom_localization
 
 dev_dependencies:
@@ -66,7 +66,7 @@ dev_dependencies:
   kiwi_generator: 2.0.0
   build_runner: any
   retrofit_generator: 1.3.4
-  custom_localization_generator: 
+  custom_localization_generator:
     path: ./custom_localization/custom_localization_generator
 
 # dependency_overrides:
@@ -86,11 +86,11 @@ flutter:
   fonts:
     - family: CerebriSans
       fonts:
-        - asset: assets/fonts/CerebriSans-Light.ttf
-          weight: 300
-        - asset: assets/fonts/CerebriSans-Medium.ttf
-          weight: 500
-        - asset: assets/fonts/CerebriSans-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/CerebriSans-SemiBold.ttf
+        - asset: assets/fonts/AvenirLTStd-Black.otf
           weight: 600
+        - asset: assets/fonts/AvenirLTStd-Book.otf
+          weight: 400
+        - asset: assets/fonts/avenirltstd-light.otf
+          weight: 300
+        - asset: assets/fonts/AvenirLTStd-Roman.otf
+          weight: 500
