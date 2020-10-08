@@ -294,23 +294,17 @@ Future OpenConfirmationPopUp(BuildContext context,
               child: Container(
                 width: MathUtilities.screenWidth(context),
                 padding: EdgeInsets.symmetric(
-                    horizontal: getSize(10), vertical: getSize(20)),
+                    horizontal: getSize(10), vertical: getSize(29)),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Text(
                       title,
                       textAlign: TextAlign.center,
-                      style: AppTheme.of(context)
-                          .theme
-                          .textTheme
-                          .body1
-                          .copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: colorConstants.colorPrimary),
+                      style: colorConstants.titleText,
                     ),
                     SizedBox(
-                      height: getSize(15),
+                      height: getSize(21),
                     ),
                     desc.isEmpty
                         ? richText
@@ -322,12 +316,11 @@ Future OpenConfirmationPopUp(BuildContext context,
                                 .textTheme
                                 .display1
                                 .copyWith(
-                                    color: ColorConstants.textGray,
-                                    fontWeight: FontWeight.normal),
+                                    color: ColorConstants.textBlackColor),
                           ),
                     // SizedBox(height: getSize(20),),
                     Container(
-                      margin: EdgeInsets.only(top: getSize(30)),
+                      margin: EdgeInsets.only(top: getSize(30),left: getSize(31),right: getSize(31)),
                       child: Row(
                         children: <Widget>[
                           negativeBtnTitle != null
@@ -374,7 +367,7 @@ Future OpenConfirmationPopUp(BuildContext context,
                                       ButtonType.PositveButtonClick);
                                 }
                               },
-                              borderRadius: 14,
+                              borderRadius: 5,
                               fitWidth: true,
                               text: positiveBtnTitle,
                               //isButtonEnabled: enableDisableSigninButton(),

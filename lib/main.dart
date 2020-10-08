@@ -59,7 +59,6 @@ class _BaseState extends State<Base> {
   @override
   void initState() {
     super.initState();
-    ThemeHelper.changeTheme("light");
 
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => setState(() {

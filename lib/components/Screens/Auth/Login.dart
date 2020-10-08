@@ -1,5 +1,8 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -102,6 +105,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                 onTap: () {
                                   if (_formKey.currentState.validate()) {
                                     _formKey.currentState.save();
+                                    app.resolve<CustomDialogs>().confirmDialog(context,
+                                      title: "Invalid Username/Password",
+                                      desc: "Please enter valid Username/Password.",
+                                      positiveBtnTitle: "Try Again",
+                                      onClickCallback: (PositveButtonClick) {
+                                     // Navigator.pop(context);
+                                      }
+                                    );
 //                                    callApiForLogin(context);
                                     //AppNavigation.shared.movetoHome(isPopAndSwitch: false);
                                   } else {

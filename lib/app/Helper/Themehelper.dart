@@ -49,6 +49,7 @@ class BaseTheme {
     return TextStyle(
         fontSize: 14, fontWeight: FontWeight.w700, color: textColor);
   }
+
 }
 
 class LightTheme extends BaseTheme {
