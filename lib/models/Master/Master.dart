@@ -1,19 +1,28 @@
-import 'dart:convert';
-
 import 'package:diamnow/app/app.export.dart';
 
 class MasterReq {
   String serverLastSync;
+  String user;
 
-  MasterReq({this.serverLastSync});
+  MasterReq({this.serverLastSync, this.user});
 
   MasterReq.fromJson(Map<String, dynamic> json) {
-    serverLastSync = json['lastSyncDate'];
+    if (json['lastSyncDate'] != null) {
+      serverLastSync = json['lastSyncDate'];
+    }
+    if (json['user'] != null) {
+      user = json['user'];
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['lastSyncDate'] = this.serverLastSync;
+    if (this.serverLastSync != null) {
+      data['lastSyncDate'] = this.serverLastSync;
+    }
+    if (this.user != null) {
+      data['user'] = this.user;
+    }
     return data;
   }
 }
@@ -118,6 +127,7 @@ class Master {
 
 class MasterRespData {
   String lastSyncDate;
+
   // User loggedInUser;
   Masters sizeMaster;
   Masters masters;

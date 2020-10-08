@@ -29,12 +29,14 @@ class SyncManager {
     Function failure, {
     bool isNetworkError = true,
     bool isProgress = true,
+        String id,
   }) async {
     MasterReq req = MasterReq();
 
-    req.serverLastSync = app.resolve<PrefUtils>().getMasterSyncDate();
+//    req.serverLastSync = app.resolve<PrefUtils>().getMasterSyncDate();
 
-    NetworkCall<MasterResp>()
+    req.user = id;
+    NetworkCall<BaseApiResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().getMaster(req),
             context,
@@ -46,20 +48,20 @@ class SyncManager {
       //   app.resolve<PrefUtils>().saveUser(masterResp.data.loggedInUser);
       // }
 
-      await AppDatabase.instance.masterDao
-          .addOrUpdate(masterResp.data.masters.list);
+      // await AppDatabase.instance.masterDao
+      //     .addOrUpdate(masterResp.data.masters.list);
 
-      await AppDatabase.instance.masterDao
-          .delete(masterResp.data.masters.deleted);
+      // await AppDatabase.instance.masterDao
+      //     .delete(masterResp.data.masters.deleted);
 
-      await AppDatabase.instance.sizeMasterDao
-          .addOrUpdate(masterResp.data.sizeMaster.list);
+      // await AppDatabase.instance.sizeMasterDao
+      //     .addOrUpdate(masterResp.data.sizeMaster.list);
 
-      await AppDatabase.instance.sizeMasterDao
-          .delete(masterResp.data.sizeMaster.deleted);
+      // await AppDatabase.instance.sizeMasterDao
+      //     .delete(masterResp.data.sizeMaster.deleted);
 
-      // save master sync date
-      app.resolve<PrefUtils>().saveMasterSyncDate(masterResp.data.lastSyncDate);
+      // // save master sync date
+      // app.resolve<PrefUtils>().saveMasterSyncDate(masterResp.data.lastSyncDate);
 
       // success block
       success();

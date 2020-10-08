@@ -1,3 +1,4 @@
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
@@ -48,9 +49,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     Container(
                       child: Padding(
                         padding: EdgeInsets.only(
-                          top: getSize(50),
+                          top: getSize(20),
                           left: getSize(20),
                           right: getSize(20),
+                          bottom: getSize(10)
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Padding(
-                                  padding: EdgeInsets.symmetric(vertical: getSize(50)),
+                                  padding: EdgeInsets.symmetric(vertical: getSize(25)),
                                   child: Stack(
                                     children: <Widget>[
                                       Container(
@@ -93,26 +95,30 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ],
                                   ),
                                 ),
+//                                Padding(
+//                                  padding: EdgeInsets.only(
+//                                      top: getSize(20), left: getSize(0)),
+//                                  child: getMobileTextField(),
+//                                ),
+                                getMobileTextField(),
                                 Padding(
                                   padding: EdgeInsets.only(
-                                      top: getSize(20), left: getSize(0)),
-                                  child: getMobileTextField(),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      top: getSize(20), left: getSize(0)),
+                                      top: getSize(15), left: getSize(0)),
                                   child: getPasswordTextField(),
                                 ),
                                 Container(
                                   alignment: Alignment.centerRight,
                                   child: Padding(
-                                    padding: EdgeInsets.only(top: getSize(30)),
+                                    padding: EdgeInsets.only(top: getSize(20)),
                                     child: getForgotPassword(),
                                   ),
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(
-                                      top: getSize(30), left: getSize(0)),
+                                      top: getSize(15), left: getSize(0)),
+                                  decoration: BoxDecoration(
+                                    boxShadow: getBoxShadow(context)
+                                  ),
                                   child: AppButton.flat(
                                     onTap: () {
                                       if (_formKey.currentState.validate()) {
@@ -125,14 +131,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                       }
                                     },
                                     //  backgroundColor: appTheme.buttonColor,
-                                    borderRadius: 14,
+                                    borderRadius: getSize(5),
                                     fitWidth: true,
                                     text: R.string().authStrings.signInCap,
                                     //isButtonEnabled: enableDisableSigninButton(),
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(top: getSize(20)),
+                                  padding: EdgeInsets.only(top: getSize(10)),
                                   child: Align(
                                     alignment: Alignment.center,
                                     child: Text(
@@ -143,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(
-                                      top: getSize(30), left: getSize(0)),
+                                      top: getSize(10), left: getSize(0)),
                                   child: AppButton.flat(
                                     onTap: () {
 
@@ -151,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     textColor: appTheme.colorPrimary,
                                     backgroundColor:
                                         appTheme.colorPrimary.withOpacity(0.1),
-                                    borderRadius: 14,
+                                    borderRadius: getSize(5),
                                     fitWidth: true,
                                     text: "Sign In as Guest",
                                     //isButtonEnabled: enableDisableSigninButton(),
@@ -177,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: <Widget>[
                   Text(R.string().authStrings.haveRegisterCode,
                       style: appTheme.grey16HintTextStyle),
-                  Text("Sign Up", style: appTheme.darkBlue16TextStyle),
+                  Text(" Sign Up", style: appTheme.darkBlue16TextStyle),
                 ],
               ),
             ),
@@ -301,21 +307,25 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future callLoginApi(BuildContext context) async {
     LoginReq req = LoginReq();
-    print("test ${_userNameController.text}");
     req.username = _userNameController.text;
     req.password = _passwordController.text;
-    print("test ${req.username}");
 
-    NetworkCall<BaseApiResp>()
+    NetworkCall<LoginResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().login(req),
         context,
         isProgress: true)
-        .then((masterResp) async {
+        .then((loginResp) async {
       // save Logged In user
-      // if (masterResp.data.loggedInUser != null) {
-      //   app.resolve<PrefUtils>().saveUser(masterResp.data.loggedInUser);
-      // }
+       if (loginResp.data != null) {
+         app.resolve<PrefUtils>().saveUser(loginResp.data.user);
+       }
+       print("Login");
+       SyncManager.instance
+           .callMasterSync(NavigationUtilities.key.currentContext, () {
+         setState(() {});
+//success
+       }, () {}, isNetworkError: false, isProgress: true,id: loginResp.data.user.id).then((value) {});
 
     }).catchError((onError) => {
       print("Error "+onError)
