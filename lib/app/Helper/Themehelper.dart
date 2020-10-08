@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:diamnow/app/app.export.dart';
 import 'package:flutter/material.dart';
 
 class ThemeHelper {
@@ -12,8 +13,7 @@ class ThemeHelper {
   static Stream<String> appthemeString = controller.stream;
 
   static Map<String, BaseTheme> _supportedThemes = {
-    "light": LightTheme(),
-    "dark": DarkTheme(),
+
   };
 
   static BaseTheme _getDefaultTheme() {
@@ -44,41 +44,13 @@ class BaseTheme {
   Color get bgColor => Colors.blue;
   Color get dividerColor => Colors.grey[100];
   Color get textBlackColor => Colors.black;
+  Color get buttonColor => fromHex("#6E8FE7");
 
   TextStyle get titleText {
     return TextStyle(
         fontSize: 14, fontWeight: FontWeight.w700, color: textColor);
   }
+
 }
 
-class LightTheme extends BaseTheme {
-  @override
-  Color get colorPrimary => Colors.black;
-
-  @override
-  Color get textColor => Colors.white;
-  @override
-  Color get bgColor => Colors.black;
-
-  @override
-  Color get textBlackColor => Colors.black;
-  @override
-  TextStyle get titleText =>
-      TextStyle(fontSize: 16, fontWeight: FontWeight.w300, color: textColor);
-}
-
-class DarkTheme extends BaseTheme {
-  @override
-  Color get colorPrimary => Colors.white;
-
-  @override
-  Color get textColor => Colors.black;
-
-  @override
-  Color get bgColor => Colors.white;
-  @override
-  TextStyle get titleText =>
-      TextStyle(fontSize: 10, fontWeight: FontWeight.w400, color: textColor);
-}
-
-BaseTheme get colorConstants => ThemeHelper.theme();
+BaseTheme get appTheme => ThemeHelper.theme();

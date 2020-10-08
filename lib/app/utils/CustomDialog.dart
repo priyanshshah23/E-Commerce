@@ -58,7 +58,7 @@ class CustomDialogs {
                     textAlign: TextAlign.center,
                     style: AppTheme.of(context).theme.textTheme.body1.copyWith(
                         fontWeight: FontWeight.w500,
-                        color: colorConstants.colorPrimary),
+                        color: appTheme.colorPrimary),
                   ),
                   SizedBox(
                     height: getSize(20),
@@ -70,7 +70,7 @@ class CustomDialogs {
                         .theme
                         .textTheme
                         .display2
-                        .copyWith(color: ColorConstants.textGray),
+                        .copyWith(color: appTheme.dividerColor),
                   ),
                   // SizedBox(height: getSize(20),),
                   Row(
@@ -86,7 +86,7 @@ class CustomDialogs {
                                 .theme
                                 .textTheme
                                 .display2
-                                .copyWith(color: ColorConstants.textGray),
+                                .copyWith(color: appTheme.dividerColor),
                           ),
                         ),
                       ),
@@ -183,7 +183,7 @@ Future OpenErrorDialog(BuildContext context, String title, String disc,
                 textAlign: TextAlign.center,
                 style: AppTheme.of(context).theme.textTheme.body1.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: colorConstants.colorPrimary),
+                    color: appTheme.colorPrimary),
               ),
               SizedBox(
                 height: getSize(20),
@@ -192,7 +192,7 @@ Future OpenErrorDialog(BuildContext context, String title, String disc,
                 disc,
                 textAlign: TextAlign.center,
                 style: AppTheme.of(context).theme.textTheme.display1.copyWith(
-                    color: ColorConstants.textGray,
+                    color: appTheme.dividerColor,
                     fontWeight: FontWeight.normal),
               ),
               // SizedBox(height: getSize(20),),
@@ -307,7 +307,7 @@ Future OpenConfirmationPopUp(BuildContext context,
                           .body1
                           .copyWith(
                               fontWeight: FontWeight.w600,
-                              color: colorConstants.colorPrimary),
+                              color: appTheme.colorPrimary),
                     ),
                     SizedBox(
                       height: getSize(15),
@@ -322,7 +322,7 @@ Future OpenConfirmationPopUp(BuildContext context,
                                 .textTheme
                                 .display1
                                 .copyWith(
-                                    color: ColorConstants.textGray,
+                                    color: appTheme.dividerColor,
                                     fontWeight: FontWeight.normal),
                           ),
                     // SizedBox(height: getSize(20),),
@@ -350,7 +350,7 @@ Future OpenConfirmationPopUp(BuildContext context,
                                             .display2
                                             .copyWith(
                                               color:
-                                                  ColorConstants.colorPrimary,
+                                                  appTheme.colorPrimary,
                                               fontWeight: FontWeight.w500,
                                             ),
                                       ),

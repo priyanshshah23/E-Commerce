@@ -14,7 +14,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
-
   final TextEditingController _mobileController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -47,37 +46,19 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Padding(
                         padding: EdgeInsets.only(
                           left: getSize(26),
-                          top: getSize(60),
                           right: getSize(26),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-//                            Container(
-//                              margin: EdgeInsets.only(
-//                                top: getSize(10),
-//                                bottom: getSize(10),
-//                              ),
-//                              child: Text(
-//                                "",
-//                                textAlign: TextAlign.center,
-//                                style: AppTheme.of(context)
-//                                    .theme
-//                                    .textTheme
-//                                    .subtitle
-//                                    .copyWith(
-//                                  fontWeight: FontWeight.bold,
-//                                ),
-//                              ),
-//                            ),
-//                            Padding(
-//                              padding: EdgeInsets.only(left: getSize(0)),
-//                              child: Image.asset(
-//                                user,
-//                                height: getSize(83),
-//                                width: getSize(80),
-//                              ),
-//                            ),
+                            Text(
+                              R.string().authStrings.welcome,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: appTheme.textBlackColor,
+                                fontSize: getFontSize(24),
+                              ),
+                            ),
                             Padding(
                               padding: EdgeInsets.only(
                                   top: getSize(60), left: getSize(0)),
@@ -110,11 +91,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                     });
                                   }
                                 },
-                                foregroundColor: colorConstants.colorPrimary,
-                                backgroundColor: colorConstants.colorPrimary,
+                                backgroundColor: appTheme.buttonColor,
                                 borderRadius: 14,
                                 fitWidth: true,
-                                isButtonEnabled: true,
                                 text: R.string().authStrings.signInCap,
                                 //isButtonEnabled: enableDisableSigninButton(),
                               ),
@@ -139,8 +118,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           .textTheme
                           .display1
                           .copyWith(
-                        fontWeight: FontWeight.w200,
-                      )),
+                            fontWeight: FontWeight.w200,
+                          )),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -160,10 +139,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   .textTheme
                                   .display1
                                   .copyWith(
-                                decoration: TextDecoration.underline,
-                                color:
-                                AppTheme.of(context).theme.accentColor,
-                              ),
+                                    decoration: TextDecoration.underline,
+                                    color:
+                                        AppTheme.of(context).theme.accentColor,
+                                  ),
                             ),
                             /*Container(
                               height: getSize(1),
@@ -179,8 +158,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               .textTheme
                               .display1
                               .copyWith(
-                            fontWeight: FontWeight.w200,
-                          )),
+                                fontWeight: FontWeight.w200,
+                              )),
                       //  for space between create account and don't have account
                     ],
                   ),
@@ -193,25 +172,24 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-
   getMobileTextField() {
     return CommonTextfield(
       focusNode: _focusMobile,
       textOption: TextFieldOption(
-        prefixWid:getCommonIconWidget(
-            imageName: user, imageType: IconSizeType.small),
+        prefixWid:
+            getCommonIconWidget(imageName: user, imageType: IconSizeType.small),
         //Image.asset(profileEmail,),
 
-        hintText:R.string().authStrings.mobileNumber,
+        hintText: R.string().authStrings.mobileNumber,
         keyboardType: TextInputType.number,
         inputController: _mobileController,
         fillColor: _isMobileValid ? null : fromHex("#FFEFEF"),
         errorBorder: _isMobileValid
             ? null
             : OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(11)),
-          borderSide: BorderSide(width: 1, color: Colors.red),
-        ),
+                borderRadius: BorderRadius.all(Radius.circular(11)),
+                borderSide: BorderSide(width: 1, color: Colors.red),
+              ),
 
         formatter: [
           ValidatorInputFormatter(
@@ -260,7 +238,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return CommonTextfield(
       focusNode: _focusPassword,
       textOption: TextFieldOption(
-          prefixWid:getCommonIconWidget(
+          prefixWid: getCommonIconWidget(
               imageName: user, imageType: IconSizeType.small),
 //          fillColor: _isPasswordValid ? null : fromHex("#FFEFEF"),
 //          errorBorder: _isPasswordValid
@@ -312,8 +290,8 @@ class _LoginScreenState extends State<LoginScreen> {
         R.string().authStrings.forgotPassword,
         textAlign: TextAlign.left,
         style: AppTheme.of(context).theme.textTheme.display1.copyWith(
-          color: colorConstants.colorPrimary,
-        ),
+              color: appTheme.colorPrimary,
+            ),
       ),
       onTap: () {
 //        NavigationUtilities.pushRoute(ForgotPassword.route,

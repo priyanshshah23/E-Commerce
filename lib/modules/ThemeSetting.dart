@@ -49,7 +49,7 @@ class _ThemeSettingState extends StatefulScreenWidgetState {
         alignment: Alignment.bottomCenter,
         child: Text(
           R.string().themeStrings.welcome,
-          style: TextStyle(color: colorConstants.textColor),
+          style: TextStyle(color: appTheme.textColor),
         ),
       ),
     );
