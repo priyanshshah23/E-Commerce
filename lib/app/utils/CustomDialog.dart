@@ -290,7 +290,7 @@ Future OpenConfirmationPopUp(BuildContext context,
 
             return Dialog(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(getSize(8)))),
+                  borderRadius: BorderRadius.all(Radius.circular(getSize(15)))),
               child: Container(
                 width: MathUtilities.screenWidth(context),
                 padding: EdgeInsets.symmetric(
@@ -301,13 +301,7 @@ Future OpenConfirmationPopUp(BuildContext context,
                     Text(
                       title,
                       textAlign: TextAlign.center,
-                      style: AppTheme.of(context)
-                          .theme
-                          .textTheme
-                          .body1
-                          .copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: appTheme.colorPrimary),
+                      style: appTheme.commonAlertDialogueTitleStyle,
                     ),
                     SizedBox(
                       height: getSize(21),
@@ -317,16 +311,11 @@ Future OpenConfirmationPopUp(BuildContext context,
                         : Text(
                             desc,
                             textAlign: TextAlign.center,
-                            style: AppTheme.of(context)
-                                .theme
-                                .textTheme
-                                .display1
-                                .copyWith(
-                                    color: ColorConstants.textBlackColor),
+                            style: appTheme.commonAlertDialogueDescStyle,
                           ),
                     // SizedBox(height: getSize(20),),
                     Container(
-                      margin: EdgeInsets.only(top: getSize(30),left: getSize(31),right: getSize(31)),
+                      margin: EdgeInsets.only(top: getSize(20),left: getSize(31),right: getSize(31),bottom: getSize(5)),
                       child: Row(
                         children: <Widget>[
                           negativeBtnTitle != null
@@ -343,15 +332,7 @@ Future OpenConfirmationPopUp(BuildContext context,
                                       padding: EdgeInsets.all(getSize(16)),
                                       child: Text(
                                         negativeBtnTitle,
-                                        style: AppTheme.of(context)
-                                            .theme
-                                            .textTheme
-                                            .display2
-                                            .copyWith(
-                                              color:
-                                                  appTheme.colorPrimary,
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                                        style: appTheme.commonAlertDialogueDescStyle.copyWith(color: appTheme.whiteColor ),
                                       ),
                                     ),
                                   ),

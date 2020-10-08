@@ -39,8 +39,9 @@ class ThemeHelper {
 }
 
 class BaseTheme {
-  Color get colorPrimary => Colors.blue;
+  Color get colorPrimary => fromHex("#6E8FE7");
   Color get textColor => Colors.black;
+  Color get whiteColor => Colors.white;
   Color get bgColor => Colors.blue;
   Color get dividerColor => fromHex("#E3E3E3");
   Color get textBlackColor => Colors.black;
@@ -66,6 +67,16 @@ class BaseTheme {
   TextStyle get darkBlue16TextStyle {
     return TextStyle(
         fontSize: getFontSize(16), color: darkBlue,fontWeight: FontWeight.w500);
+  }
+
+  TextStyle get commonAlertDialogueTitleStyle {
+    return TextStyle(
+        fontSize: getFontSize(18), color: textColor,fontWeight: FontWeight.w500);
+  }
+
+  TextStyle get commonAlertDialogueDescStyle {
+    return TextStyle(
+        fontSize: getFontSize(16), color: textColor,fontWeight: FontWeight.w400);
   }
 
 }
