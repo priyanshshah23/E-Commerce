@@ -92,5 +92,5 @@ flutter:
           weight: 400
         - asset: assets/fonts/avenirltstd-light.otf
           weight: 300
-        - asset: assets/fonts/AvenirLTStd-Roman.otf
+        - asset: assets/fonts/Avenir-Medium.otf
           weight: 500
