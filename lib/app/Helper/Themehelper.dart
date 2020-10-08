@@ -41,13 +41,13 @@ class ThemeHelper {
 class BaseTheme {
   Color get colorPrimary => fromHex("#6E8FE7");
   Color get textColor => Colors.black;
-  Color get whiteColor => Colors.white;
-  Color get bgColor => Colors.blue;
+  Color get bgColor => fromHex("#6E8FE7");
   Color get dividerColor => fromHex("#E3E3E3");
   Color get textBlackColor => Colors.black;
   Color get textGreyColor => fromHex("#C7C7C7");
   Color get buttonColor => fromHex("#6E8FE7");
   Color get darkBlue => fromHex("#003365");
+  Color get errorColor => fromHex("#FF4D4D");
 
   TextStyle get black24TitleColor {
     return TextStyle(
@@ -77,6 +77,12 @@ class BaseTheme {
   TextStyle get commonAlertDialogueDescStyle {
     return TextStyle(
         fontSize: getFontSize(16), color: textColor,fontWeight: FontWeight.w400);
+  }
+
+
+  TextStyle get error16TextStyle {
+    return TextStyle(
+        fontSize: getFontSize(14), color: errorColor,fontWeight: FontWeight.normal);
   }
 
 }
