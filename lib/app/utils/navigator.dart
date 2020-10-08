@@ -1,3 +1,4 @@
+import 'package:diamnow/components/Screens/Auth/DemoScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:flutter/material.dart';
 import '../app.export.dart';
@@ -84,6 +85,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     //   break;
    case LoginScreen.route:
      screen = LoginScreen();
+     break;
+   case DemoScreen.route:
+     screen = DemoScreen();
      break;
   }
 

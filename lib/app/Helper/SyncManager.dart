@@ -52,6 +52,12 @@ class SyncManager {
       await AppDatabase.instance.masterDao
           .delete(masterResp.data.masters.deleted);
 
+      await AppDatabase.instance.sizeMasterDao
+          .addOrUpdate(masterResp.data.sizeMaster.list);
+
+      await AppDatabase.instance.sizeMasterDao
+          .delete(masterResp.data.sizeMaster.deleted);
+
       // save master sync date
       app.resolve<PrefUtils>().saveMasterSyncDate(masterResp.data.lastSyncDate);
 

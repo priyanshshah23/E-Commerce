@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'dart:io' show Platform;
 
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/components/Screens/Auth/DemoScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/components/widgets/shared/images.dart';
 import 'package:flutter/cupertino.dart';

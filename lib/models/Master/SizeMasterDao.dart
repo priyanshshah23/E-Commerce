@@ -2,7 +2,7 @@ import 'package:sembast/sembast.dart';
 import 'package:diamnow/app/Helper/AppDatabase.dart';
 import 'package:diamnow/models/Master/Master.dart';
 
-class MasterDao {
+class SizeMasterDao {
   static const String MASTER_STORE_NAME = 'master';
 
   // A Store with int keys and Map<String, dynamic> values.
@@ -90,6 +90,12 @@ class MasterDao {
           Filter.equal('isDeleted', false),
           Filter.equal('isActive', true),
         ]),
+        // sortOrders: [
+        //   (code == MasterCodeConstant.LANGUAGE ||
+        //           code == MasterCodeConstant.CITY)
+        //       ? SortOrder('name')
+        //       : SortOrder('sortingSequence'),
+        // ],
       );
 
       final subRecordSnapshots = await _masterStore.find(

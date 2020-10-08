@@ -6,6 +6,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:rxbus/rxbus.dart';
@@ -21,6 +22,47 @@ import "package:diamnow/components/widgets/rounded_datePicker/src/material_round
 import 'package:webview_flutter/webview_flutter.dart';
 
 import 'ImageUtils.dart';
+
+showToast(
+    String msg, {
+      BuildContext context,
+      ToastGravity gravity,
+      num timer = 3000,
+    }) {
+  Widget toast = Container(
+    padding:
+    EdgeInsets.symmetric(horizontal: getSize(16), vertical: getSize(16)),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(
+        getSize(40),
+      ),
+      color: appTheme.textBlackColor.withOpacity(0.5),
+    ),
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Expanded(
+          child: getTitleText(
+              context, isStringEmpty(msg) ? SOMETHING_WENT_WRONG : msg,
+              color: ColorConstants.colorPrimary,
+              fontSize: getSize(16),
+              alignment: TextAlign.center),
+        ),
+      ],
+    ),
+  );
+
+  FlutterToast(context != null
+      ? context
+      : NavigationUtilities.key.currentState.overlay.context)
+      .showToast(
+    child: toast,
+    gravity: gravity != null ? gravity : ToastGravity.BOTTOM,
+    toastDuration: timer != null ? Duration(
+      milliseconds: timer,
+    ) : null ,
+  );
+}
 
 class CustomDialogs {
   void showToast(String msg) {
@@ -57,7 +99,7 @@ class CustomDialogs {
                     R.string().authStrings.logout,
                     textAlign: TextAlign.center,
                     style: AppTheme.of(context).theme.textTheme.body1.copyWith(
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         color: appTheme.colorPrimary),
                   ),
                   SizedBox(
@@ -290,44 +332,32 @@ Future OpenConfirmationPopUp(BuildContext context,
 
             return Dialog(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(getSize(8)))),
+                  borderRadius: BorderRadius.all(Radius.circular(getSize(15)))),
               child: Container(
                 width: MathUtilities.screenWidth(context),
                 padding: EdgeInsets.symmetric(
-                    horizontal: getSize(10), vertical: getSize(20)),
+                    horizontal: getSize(10), vertical: getSize(29)),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Text(
                       title,
                       textAlign: TextAlign.center,
-                      style: AppTheme.of(context)
-                          .theme
-                          .textTheme
-                          .body1
-                          .copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: appTheme.colorPrimary),
+                      style: appTheme.commonAlertDialogueTitleStyle,
                     ),
                     SizedBox(
-                      height: getSize(15),
+                      height: getSize(21),
                     ),
                     desc.isEmpty
                         ? richText
                         : Text(
                             desc,
                             textAlign: TextAlign.center,
-                            style: AppTheme.of(context)
-                                .theme
-                                .textTheme
-                                .display1
-                                .copyWith(
-                                    color: appTheme.dividerColor,
-                                    fontWeight: FontWeight.normal),
+                            style: appTheme.commonAlertDialogueDescStyle,
                           ),
                     // SizedBox(height: getSize(20),),
                     Container(
-                      margin: EdgeInsets.only(top: getSize(30)),
+                      margin: EdgeInsets.only(top: getSize(20),left: getSize(31),right: getSize(31),bottom: getSize(5)),
                       child: Row(
                         children: <Widget>[
                           negativeBtnTitle != null
@@ -344,15 +374,7 @@ Future OpenConfirmationPopUp(BuildContext context,
                                       padding: EdgeInsets.all(getSize(16)),
                                       child: Text(
                                         negativeBtnTitle,
-                                        style: AppTheme.of(context)
-                                            .theme
-                                            .textTheme
-                                            .display2
-                                            .copyWith(
-                                              color:
-                                                  appTheme.colorPrimary,
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                                        style: appTheme.commonAlertDialogueDescStyle.copyWith(color: appTheme.whiteColor ),
                                       ),
                                     ),
                                   ),
@@ -374,7 +396,7 @@ Future OpenConfirmationPopUp(BuildContext context,
                                       ButtonType.PositveButtonClick);
                                 }
                               },
-                              borderRadius: 14,
+                              borderRadius: 5,
                               fitWidth: true,
                               text: positiveBtnTitle,
                               //isButtonEnabled: enableDisableSigninButton(),

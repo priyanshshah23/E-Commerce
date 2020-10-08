@@ -12,9 +12,7 @@ class ThemeHelper {
 
   static Stream<String> appthemeString = controller.stream;
 
-  static Map<String, BaseTheme> _supportedThemes = {
-
-  };
+  static Map<String, BaseTheme> _supportedThemes = {};
 
   static BaseTheme _getDefaultTheme() {
     //return default strings if locale is not set
@@ -44,6 +42,7 @@ class BaseTheme {
   Color get bgColor => fromHex("#6E8FE7");
   Color get dividerColor => fromHex("#E3E3E3");
   Color get textBlackColor => Colors.black;
+  Color get whiteColor => Colors.white;
   Color get textGreyColor => fromHex("#C7C7C7");
   Color get buttonColor => fromHex("#6E8FE7");
   Color get darkBlue => fromHex("#003365");
@@ -51,7 +50,9 @@ class BaseTheme {
 
   TextStyle get black24TitleColor {
     return TextStyle(
-        fontSize: getFontSize(24), fontWeight: FontWeight.bold, color: textColor);
+        fontSize: getFontSize(24),
+        fontWeight: FontWeight.bold,
+        color: textColor);
   }
 
   TextStyle get black16TextStyle {
@@ -61,19 +62,39 @@ class BaseTheme {
 
   TextStyle get grey16HintTextStyle {
     return TextStyle(
-        fontSize: getFontSize(16), color: textGreyColor,fontWeight: FontWeight.normal);
+      fontSize: getFontSize(16),
+      color: textGreyColor,
+      fontWeight: FontWeight.w500,
+    );
   }
 
   TextStyle get darkBlue16TextStyle {
     return TextStyle(
-        fontSize: getFontSize(16), color: darkBlue,fontWeight: FontWeight.w500);
+        fontSize: getFontSize(16),
+        color: darkBlue,
+        fontWeight: FontWeight.w500);
+  }
+
+  TextStyle get commonAlertDialogueTitleStyle {
+    return TextStyle(
+        fontSize: getFontSize(18),
+        color: textColor,
+        fontWeight: FontWeight.w500);
+  }
+
+  TextStyle get commonAlertDialogueDescStyle {
+    return TextStyle(
+        fontSize: getFontSize(16),
+        color: textColor,
+        fontWeight: FontWeight.w400);
   }
 
   TextStyle get error16TextStyle {
     return TextStyle(
-        fontSize: getFontSize(14), color: errorColor,fontWeight: FontWeight.normal);
+        fontSize: getFontSize(14),
+        color: errorColor,
+        fontWeight: FontWeight.normal);
   }
-
 }
 
 BaseTheme get appTheme => ThemeHelper.theme();
