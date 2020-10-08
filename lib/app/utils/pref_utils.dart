@@ -26,6 +26,8 @@ class PrefUtils {
 
   String get FILE_DEVIDE_INFO => "deviceDetail";
 
+  String get keyMasterSyncDate => "keyMasterSyncDate";
+
   bool isHomeVisible;
 
   Future<void> init() async {
@@ -104,5 +106,17 @@ class PrefUtils {
 
   void saveShowThemeSelection(bool showThemeSelection) {
     _preferences.setBool(keyIsShowThemeSelection, showThemeSelection);
+  }
+
+  String getMasterSyncDate() {
+    if (isStringEmpty(getString(keyMasterSyncDate)) == false) {
+      return getString(keyMasterSyncDate);
+    } else {
+      return "1970-01-01T00:00:00+00:00";
+    }
+  }
+
+  void saveMasterSyncDate(String masterSyncDate) {
+    _preferences.setString(keyMasterSyncDate, masterSyncDate);
   }
 }
