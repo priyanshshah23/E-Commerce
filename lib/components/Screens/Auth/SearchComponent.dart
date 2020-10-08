@@ -83,7 +83,7 @@ class _SearchComponentState extends State<SearchComponent> {
                       focusNode: _focusMaxValue,
                       controller: _maxValueController,
                       keyboardType: TextInputType.number,
-                      textInputAction: TextInputAction.next,
+                      textInputAction: TextInputAction.done,
                       decoration: InputDecoration(
                           focusedBorder: UnderlineInputBorder(),
                           hintText: "To",
