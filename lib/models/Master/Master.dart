@@ -39,77 +39,51 @@ class MasterResp extends BaseApiResp {
 class Master {
   bool isActive;
   bool isDefault;
-
-  // List<Null> likeKeywords;
-  // List<String> subMasters;
   bool isDeleted = false;
   String sId;
   String name;
   String code;
-  // String slug;
   String normalizeName;
+  String marketingDisplay;
+  String webDisplay;
   int sortingSequence;
-  // String group;
   String description;
   String image;
-  // String icon;
   String parentId;
-  // String createdAt;
-  // String updatedAt;
-  // int iV;
   MultiLanguageData multiLanguageData;
   bool isSelected = false;
 
   Master(
       {this.isActive,
       this.isDefault,
-      // this.likeKeywords,
-      // this.subMasters,
       this.isDeleted,
+      this.marketingDisplay,
+      this.webDisplay,
       this.sId,
       this.name,
       this.code,
-      // this.slug,
       this.normalizeName,
       this.sortingSequence,
-      // this.group,
       this.description,
       this.image,
-      // this.icon,
       this.parentId,
-      // this.createdAt,
-      // this.updatedAt,
-      // this.iV,
       this.multiLanguageData,
       this.isSelected});
 
   Master.fromJson(Map<String, dynamic> json) {
     isActive = json['isActive'];
     isDefault = json['isDefault'];
-    // if (json['likeKeywords'] != null) {
-    //   likeKeywords = new List<Null>();
-    //   json['likeKeywords'].forEach((v) {
-    //     likeKeywords.add(new Null.fromJson(v));
-    //   });
-    // }
-    // if (json['subMasters'] != null) {
-    //   subMasters = json['subMasters'].cast<String>();
-    // }
+    marketingDisplay = json['marketingDisplay'];
+    webDisplay = json['webDisplay'];
     isDeleted = json['isDeleted'];
     sId = json['_id'];
     name = json['name'];
     code = json['code'];
-    // slug = json['slug'];
     normalizeName = json['normalizeName'];
     sortingSequence = json['sortingSequence'];
-    // group = json['group'];
     description = json['description'];
     image = json['image'];
-    // icon = json['icon'];
     parentId = json['parentId'];
-    // createdAt = json['createdAt'];
-    // updatedAt = json['updatedAt'];
-    // iV = json['__v'];
     multiLanguageData = json['multiLanguageData'] != null
         ? new MultiLanguageData.fromJson(json['multiLanguageData'])
         : null;
@@ -119,25 +93,18 @@ class Master {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['isActive'] = this.isActive;
     data['isDefault'] = this.isDefault;
-    // if (this.likeKeywords != null) {
-    //   data['likeKeywords'] = this.likeKeywords.map((v) => v.toJson()).toList();
-    // }
-    // data['subMasters'] = this.subMasters;
+    data['marketingDisplay'] = this.marketingDisplay;
+    data['webDisplay'] = this.webDisplay;
     data['isDeleted'] = this.isDeleted;
     data['_id'] = this.sId;
     data['name'] = this.name;
     data['code'] = this.code;
-    // data['slug'] = this.slug;
     data['normalizeName'] = this.normalizeName;
     data['sortingSequence'] = this.sortingSequence;
-    // data['group'] = this.group;
     data['description'] = this.description;
     data['image'] = this.image;
-    // data['icon'] = this.icon;
     data['parentId'] = this.parentId;
-    // data['createdAt'] = this.createdAt;
-    // data['updatedAt'] = this.updatedAt;
-    // data['__v'] = this.iV;
+
     if (this.multiLanguageData != null) {
       data['multiLanguageData'] = this.multiLanguageData.toJson();
     }
@@ -152,11 +119,13 @@ class Master {
 class MasterRespData {
   String lastSyncDate;
   // User loggedInUser;
+  Masters sizeMaster;
   Masters masters;
 
   MasterRespData({
     this.lastSyncDate,
     // this.loggedInUser,
+    this.sizeMaster,
     this.masters,
   });
 
@@ -165,6 +134,9 @@ class MasterRespData {
     // loggedInUser = json['loggedInUser'] != null
     //     ? new User.fromJson(json['loggedInUser'])
     //     : null;
+    sizeMaster = json['sizeMaster'] != null
+        ? new Masters.fromJson(json['sizeMaster'])
+        : null;
     masters =
         json['masters'] != null ? new Masters.fromJson(json['masters']) : null;
   }
@@ -175,6 +147,9 @@ class MasterRespData {
     // if (this.loggedInUser != null) {
     //   data['loggedInUser'] = this.loggedInUser.toJson();
     // }
+    if (this.sizeMaster != null) {
+      data['sizeMaster'] = this.sizeMaster.toJson();
+    }
     if (this.masters != null) {
       data['masters'] = this.masters.toJson();
     }
