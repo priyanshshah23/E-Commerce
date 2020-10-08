@@ -1,6 +1,6 @@
 import 'package:diamnow/app/utils/BottomSheet.dart';
 
-const String baseURL = "https://www.google.com";
+const String baseURL = "http://fndevelopapi.democ.in/";
 
 const DEVICE_TYPE_ANDROID = 1; //Android
 const DEVICE_TYPE_IOS = 2; //IOS

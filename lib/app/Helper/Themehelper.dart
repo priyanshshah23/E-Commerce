@@ -56,12 +56,12 @@ class BaseTheme {
 
   TextStyle get black16TextStyle {
     return TextStyle(
-        fontSize: getFontSize(16), color: textColor);
+        fontSize: getFontSize(16), color: textColor,fontWeight: FontWeight.normal);
   }
 
   TextStyle get grey16HintTextStyle {
     return TextStyle(
-        fontSize: getFontSize(16), color: textGreyColor);
+        fontSize: getFontSize(16), color: textGreyColor,fontWeight: FontWeight.normal);
   }
 
   TextStyle get darkBlue16TextStyle {
