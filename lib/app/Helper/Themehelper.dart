@@ -42,13 +42,30 @@ class BaseTheme {
   Color get colorPrimary => Colors.blue;
   Color get textColor => Colors.black;
   Color get bgColor => Colors.blue;
-  Color get dividerColor => Colors.grey[100];
+  Color get dividerColor => fromHex("#E3E3E3");
   Color get textBlackColor => Colors.black;
+  Color get textGreyColor => fromHex("#C7C7C7");
   Color get buttonColor => fromHex("#6E8FE7");
+  Color get darkBlue => fromHex("#003365");
 
-  TextStyle get titleText {
+  TextStyle get black24TitleColor {
     return TextStyle(
-        fontSize: 14, fontWeight: FontWeight.w700, color: textColor);
+        fontSize: getFontSize(24), fontWeight: FontWeight.bold, color: textColor);
+  }
+
+  TextStyle get black16TextStyle {
+    return TextStyle(
+        fontSize: getFontSize(16), color: textColor);
+  }
+
+  TextStyle get grey16HintTextStyle {
+    return TextStyle(
+        fontSize: getFontSize(16), color: textGreyColor);
+  }
+
+  TextStyle get darkBlue16TextStyle {
+    return TextStyle(
+        fontSize: getFontSize(16), color: darkBlue,fontWeight: FontWeight.w500);
   }
 
 }

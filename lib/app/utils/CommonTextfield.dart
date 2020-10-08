@@ -89,7 +89,7 @@ class _CommonTextfieldState extends State<CommonTextfield> {
             borderRadius: BorderRadius.all(Radius.circular(getSize(11))),
             borderSide: BorderSide(color: appTheme.dividerColor,width: getSize(2)),
           ),
-          border: /*widget.textOption.errorBorder ??*/
+          border:
               OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(getSize(11))),
                 borderSide: BorderSide(color: appTheme.dividerColor,width: getSize(2)),
@@ -99,10 +99,7 @@ class _CommonTextfieldState extends State<CommonTextfield> {
 //             borderSide: BorderSide.none
 //         ),
           labelText: widget.textOption.labelText,
-          hintStyle: TextStyle(
-              color:  appTheme.textBlackColor,
-              fontSize: getFontSize(16)
-          ),
+          hintStyle: appTheme.grey16HintTextStyle,
           hintText: widget.textOption.hintText,
           labelStyle: TextStyle(
               color:  appTheme.textColor,
