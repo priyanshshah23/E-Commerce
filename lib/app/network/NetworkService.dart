@@ -1,3 +1,4 @@
+import 'package:diamnow/models/LoginModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
 import 'package:retrofit/retrofit.dart';
 import '../app.export.dart';
@@ -10,4 +11,7 @@ abstract class NetworkService {
 
   @POST(ApiConstants.masterSync)
   Future<MasterResp> getMaster(@Body() MasterReq req);
+
+  @POST(ApiConstants.login)
+  Future<LoginResp> login(@Body() LoginReq req);
 }

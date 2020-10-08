@@ -1,8 +1,8 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
-import 'package:diamnow/app/utils/BaseDialog.dart';
-import 'package:diamnow/app/utils/BaseDialog.dart';
-import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -48,6 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Container(
                       child: Padding(
                         padding: EdgeInsets.only(
+                          top: getSize(50),
                           left: getSize(20),
                           right: getSize(20),
                         ),
@@ -56,92 +57,107 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: <Widget>[
                             Text(
                               R.string().authStrings.welcome,
+                              textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: appTheme.textBlackColor,
                                 fontSize: getFontSize(24),
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top: getSize(60), left: getSize(0)),
-                              child: getMobileTextField(),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top: getSize(15), left: getSize(0)),
-                              child: getPasswordTextField(),
-                            ),
-                            Container(
-                              alignment: Alignment.centerRight,
-                              child: Padding(
-                                padding: EdgeInsets.only(top: getSize(30)),
-                                child: getForgotPassword(),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                  top: getSize(30), left: getSize(0)),
-                              child: AppButton.flat(
-                                onTap: () {
-                                  if (_formKey.currentState.validate()) {
-                                    _formKey.currentState.save();
-                                    app.resolve<CustomDialogs>().confirmDialog(context,
-                                      title: "Invalid Username/Password",
-                                      desc: "Please enter valid Username/Password.",
-                                      positiveBtnTitle: "Try Again",
-                                      onClickCallback: (PositveButtonClick) {
-                                     // Navigator.pop(context);
-                                      }
-                                    );
-//                                    callApiForLogin(context);
-                                    //AppNavigation.shared.movetoHome(isPopAndSwitch: false);
-                                  } else {
-                                    setState(() {
-                                      _autoValidate = true;
-                                    });
-                                  }
-                                },
-                                //  backgroundColor: appTheme.buttonColor,
-                                borderRadius: 14,
-                                fitWidth: true,
-                                text: R.string().authStrings.signInCap,
-                                //isButtonEnabled: enableDisableSigninButton(),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(top: getSize(20)),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "Or",
-                                  style: appTheme.grey16HintTextStyle,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: getSize(50)),
+                                  child: Stack(
+                                    children: <Widget>[
+                                      Container(
+                                        height: getSize(90),
+                                        width: getSize(90),
+                                        padding: EdgeInsets.only(),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: ColorConstants.colorPrimary
+                                                  .withOpacity(0.1)),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: getSize(20)),
+                                        child: Image.asset(
+                                          diamond,
+                                          height: getSize(130),
+                                          width: getSize(140),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                  top: getSize(30), left: getSize(0)),
-                              child: AppButton.flat(
-                                onTap: () {
-                                  if (_formKey.currentState.validate()) {
-                                    _formKey.currentState.save();
-//                                    callApiForLogin(context);
-                                    //AppNavigation.shared.movetoHome(isPopAndSwitch: false);
-                                  } else {
-                                    setState(() {
-                                      _autoValidate = true;
-                                    });
-                                  }
-                                },
-                                textColor: appTheme.colorPrimary,
-                                backgroundColor:
-                                    appTheme.colorPrimary.withOpacity(0.1),
-                                borderRadius: 14,
-                                fitWidth: true,
-                                text: "Sign In as Guest",
-                                //isButtonEnabled: enableDisableSigninButton(),
-                              ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      top: getSize(20), left: getSize(0)),
+                                  child: getMobileTextField(),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      top: getSize(20), left: getSize(0)),
+                                  child: getPasswordTextField(),
+                                ),
+                                Container(
+                                  alignment: Alignment.centerRight,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: getSize(30)),
+                                    child: getForgotPassword(),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      top: getSize(30), left: getSize(0)),
+                                  child: AppButton.flat(
+                                    onTap: () {
+                                      if (_formKey.currentState.validate()) {
+                                        _formKey.currentState.save();
+                                        callLoginApi(context);
+                                      } else {
+                                        setState(() {
+                                          _autoValidate = true;
+                                        });
+                                      }
+                                    },
+                                    //  backgroundColor: appTheme.buttonColor,
+                                    borderRadius: 14,
+                                    fitWidth: true,
+                                    text: R.string().authStrings.signInCap,
+                                    //isButtonEnabled: enableDisableSigninButton(),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: getSize(20)),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      "Or",
+                                      style: appTheme.grey16HintTextStyle,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      top: getSize(30), left: getSize(0)),
+                                  child: AppButton.flat(
+                                    onTap: () {
+
+                                    },
+                                    textColor: appTheme.colorPrimary,
+                                    backgroundColor:
+                                        appTheme.colorPrimary.withOpacity(0.1),
+                                    borderRadius: 14,
+                                    fitWidth: true,
+                                    text: "Sign In as Guest",
+                                    //isButtonEnabled: enableDisableSigninButton(),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -159,14 +175,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text(
-                    R.string().authStrings.haveRegisterCode,
-                    style:appTheme.grey16HintTextStyle
-                  ),
-                  Text(
-                    "Sign Up",
-                    style:appTheme.darkBlue16TextStyle
-                  ),
+                  Text(R.string().authStrings.haveRegisterCode,
+                      style: appTheme.grey16HintTextStyle),
+                  Text("Sign Up", style: appTheme.darkBlue16TextStyle),
                 ],
               ),
             ),
@@ -185,7 +196,7 @@ class _LoginScreenState extends State<LoginScreen> {
         //Image.asset(profileEmail,),
 
         hintText: R.string().authStrings.name,
-        keyboardType: TextInputType.number,
+//        keyboardType: TextInputType.number,
         inputController: _userNameController,
 //        fillColor: _isUserNameValid ? null : fromHex("#FFEFEF"),
         errorBorder: _isUserNameValid
@@ -196,8 +207,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
         formatter: [
-          ValidatorInputFormatter(
-              editingValidator: DecimalNumberEditingRegexValidator(10)),
+//          ValidatorInputFormatter(
+//              editingValidator: DecimalNumberEditingRegexValidator(10)),
         ],
       ),
       textCallback: (text) {
@@ -221,7 +232,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (text.isEmpty) {
           _isUserNameValid = false;
 
-          return R.string().errorString.enterPhone;
+          return R.string().errorString.enterUsername;
         } else {
           return null;
         }
@@ -239,13 +250,6 @@ class _LoginScreenState extends State<LoginScreen> {
       textOption: TextFieldOption(
           prefixWid: getCommonIconWidget(
               imageName: password, imageType: IconSizeType.small),
-//          fillColor: _isPasswordValid ? null : fromHex("#FFEFEF"),
-//          errorBorder: _isPasswordValid
-//              ? null
-//              : OutlineInputBorder(
-//            borderRadius: BorderRadius.all(Radius.circular(11)),
-//            borderSide: BorderSide(width: 1, color: Colors.red),
-//          ),
           hintText: R.string().authStrings.password + "*",
           maxLine: 1,
           formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
@@ -286,12 +290,35 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Text(
         R.string().authStrings.forgotPassword,
         textAlign: TextAlign.left,
-        style:appTheme.darkBlue16TextStyle,
+        style: appTheme.darkBlue16TextStyle,
       ),
       onTap: () {
 //        NavigationUtilities.pushRoute(ForgotPassword.route,
 //            type: RouteType.fade);
       },
     );
+  }
+
+  Future callLoginApi(BuildContext context) async {
+    LoginReq req = LoginReq();
+    print("test ${_userNameController.text}");
+    req.username = _userNameController.text;
+    req.password = _passwordController.text;
+    print("test ${req.username}");
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().login(req),
+        context,
+        isProgress: true)
+        .then((masterResp) async {
+      // save Logged In user
+      // if (masterResp.data.loggedInUser != null) {
+      //   app.resolve<PrefUtils>().saveUser(masterResp.data.loggedInUser);
+      // }
+
+    }).catchError((onError) => {
+      print("Error "+onError)
+    });
   }
 }

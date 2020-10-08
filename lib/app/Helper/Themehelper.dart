@@ -56,7 +56,8 @@ class BaseTheme {
   }
 
   TextStyle get black16TextStyle {
-    return TextStyle(fontSize: getFontSize(16), color: textColor);
+    return TextStyle(
+        fontSize: getFontSize(16), color: textColor,fontWeight: FontWeight.normal);
   }
 
   TextStyle get grey16HintTextStyle {

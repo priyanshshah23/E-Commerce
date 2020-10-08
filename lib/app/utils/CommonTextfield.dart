@@ -42,6 +42,7 @@ class CommonTextfield extends StatefulWidget {
 class _CommonTextfieldState extends State<CommonTextfield> {
   bool obscureText = false;
   IconData obscureIcon = Icons.visibility;
+
   @override
   void initState() {
     super.initState();
@@ -73,10 +74,7 @@ class _CommonTextfieldState extends State<CommonTextfield> {
         autofocus: widget.autoFocus ?? false,
         controller: widget.textOption.inputController ?? null,
         obscureText: this.obscureText,
-        style: TextStyle(
-          color:  appTheme.textBlackColor,
-          fontSize: getFontSize(16)
-        ),
+        style: appTheme.black16TextStyle,
         keyboardType: widget.textOption.keyboardType ?? TextInputType.text,
         textCapitalization:
             widget.textOption.textCapitalization ?? TextCapitalization.none,
@@ -87,18 +85,20 @@ class _CommonTextfieldState extends State<CommonTextfield> {
           errorMaxLines: 2,
 //          fillColor: widget.textOption.fillColor ?? fromHex("#F6F6F6"),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(getSize(11))),
-            borderSide: BorderSide(color: appTheme.dividerColor,width: getSize(2)),
+            borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+            borderSide:
+                BorderSide(color: appTheme.dividerColor, width: getSize(1)),
           ),
-          focusedBorder:  OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(getSize(11))),
-            borderSide: BorderSide(color: appTheme.dividerColor,width: getSize(2)),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+            borderSide:
+                BorderSide(color: appTheme.dividerColor, width: getSize(1)),
           ),
-          border:
-              OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(getSize(11))),
-                borderSide: BorderSide(color: appTheme.dividerColor,width: getSize(2)),
-              ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+            borderSide:
+                BorderSide(color: appTheme.dividerColor, width: getSize(1)),
+          ),
 //         errorBorder: widget.textOption.errorBorder ?? OutlineInputBorder(
 //               borderRadius: BorderRadius.all(Radius.circular(11)),
 //             borderSide: BorderSide.none
@@ -107,8 +107,8 @@ class _CommonTextfieldState extends State<CommonTextfield> {
           hintStyle: appTheme.grey16HintTextStyle,
           hintText: widget.textOption.hintText,
           labelStyle: TextStyle(
-              color:  appTheme.textColor,
-              fontSize: getFontSize(16),
+            color: appTheme.textColor,
+            fontSize: getFontSize(16),
           ),
           prefixIcon: widget.textOption.prefixWid,
           suffix: widget.textOption.postfixWidOnFocus,
@@ -117,21 +117,23 @@ class _CommonTextfieldState extends State<CommonTextfield> {
               ? IconButton(
                   icon: Icon(
                     obscureIcon,
-                    color: appTheme.dividerColor,
+                    color: appTheme.textBlackColor,
+                    size: getSize(15),
                   ),
                   onPressed: () {
-                    setState(() {
-                      this.obscureText = !this.obscureText;
-
-                      if (this.obscureText) {
-                        this.obscureIcon = Icons.visibility;
-                      } else {
-                        this.obscureIcon = Icons.visibility_off;
-                      }
-                      if (!widget.focusNode.hasPrimaryFocus)
-                        widget.focusNode.canRequestFocus = false;
-                      widget.focusNode.unfocus();
-                    });
+                    setState(
+                      () {
+                        this.obscureText = !this.obscureText;
+                        if (this.obscureText) {
+                          this.obscureIcon = Icons.visibility;
+                        } else {
+                          this.obscureIcon = Icons.visibility_off;
+                        }
+                        if (!widget.focusNode.hasPrimaryFocus)
+                          widget.focusNode.canRequestFocus = false;
+                        widget.focusNode.unfocus();
+                      },
+                    );
                     //TextInputConnection;
                   },
                 )

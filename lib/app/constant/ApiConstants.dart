@@ -6,9 +6,11 @@ class ApiConstants {
 
   static const String imageBaseURL = baseURL;
   static const String apiUrl = baseURL;
-  static const String commonUrl = apiUrl + "common/";
+  static const String commonUrl = apiUrl + "device/v1/";
 
   static const String documentUpload = "/api/v1/upload-file";
 
   static const String masterSync = commonUrl + "user/sync";
+
+  static const String login = commonUrl + "auth/login";
 }
