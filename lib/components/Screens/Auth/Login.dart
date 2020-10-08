@@ -17,12 +17,11 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
-
-  final TextEditingController _mobileController = TextEditingController();
+  final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  var _focusMobile = FocusNode();
-  bool _isMobileValid = true;
+  var _focusUserName = FocusNode();
+  bool _isUserNameValid = true;
   var _focusPassword = FocusNode();
   bool _isPasswordValid = false;
   bool isButtonEnabled = true;
@@ -49,38 +48,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     Container(
                       child: Padding(
                         padding: EdgeInsets.only(
-                          left: getSize(26),
-                          top: getSize(60),
-                          right: getSize(26),
+                          left: getSize(20),
+                          right: getSize(20),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-//                            Container(
-//                              margin: EdgeInsets.only(
-//                                top: getSize(10),
-//                                bottom: getSize(10),
-//                              ),
-//                              child: Text(
-//                                "",
-//                                textAlign: TextAlign.center,
-//                                style: AppTheme.of(context)
-//                                    .theme
-//                                    .textTheme
-//                                    .subtitle
-//                                    .copyWith(
-//                                  fontWeight: FontWeight.bold,
-//                                ),
-//                              ),
-//                            ),
-//                            Padding(
-//                              padding: EdgeInsets.only(left: getSize(0)),
-//                              child: Image.asset(
-//                                user,
-//                                height: getSize(83),
-//                                width: getSize(80),
-//                              ),
-//                            ),
+                            Text(
+                              R.string().authStrings.welcome,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: appTheme.textBlackColor,
+                                fontSize: getFontSize(24),
+                              ),
+                            ),
                             Padding(
                               padding: EdgeInsets.only(
                                   top: getSize(60), left: getSize(0)),
@@ -121,12 +102,44 @@ class _LoginScreenState extends State<LoginScreen> {
                                     });
                                   }
                                 },
-                                foregroundColor: colorConstants.colorPrimary,
-                                backgroundColor: colorConstants.colorPrimary,
+                                //  backgroundColor: appTheme.buttonColor,
                                 borderRadius: 14,
                                 fitWidth: true,
-                                isButtonEnabled: true,
                                 text: R.string().authStrings.signInCap,
+                                //isButtonEnabled: enableDisableSigninButton(),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: getSize(20)),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "Or",
+                                  style: appTheme.grey16HintTextStyle,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(
+                                  top: getSize(30), left: getSize(0)),
+                              child: AppButton.flat(
+                                onTap: () {
+                                  if (_formKey.currentState.validate()) {
+                                    _formKey.currentState.save();
+//                                    callApiForLogin(context);
+                                    //AppNavigation.shared.movetoHome(isPopAndSwitch: false);
+                                  } else {
+                                    setState(() {
+                                      _autoValidate = true;
+                                    });
+                                  }
+                                },
+                                textColor: appTheme.colorPrimary,
+                                backgroundColor:
+                                    appTheme.colorPrimary.withOpacity(0.1),
+                                borderRadius: 14,
+                                fitWidth: true,
+                                text: "Sign In as Guest",
                                 //isButtonEnabled: enableDisableSigninButton(),
                               ),
                             ),
@@ -140,60 +153,19 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             bottomNavigationBar: Container(
+//              alignment: Alignment.bottomCenter,
               margin: EdgeInsets.all(getSize(15)),
-              child: Column(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text(R.string().authStrings.haveRegisterCode,
-                      style: AppTheme.of(context)
-                          .theme
-                          .textTheme
-                          .display1
-                          .copyWith(
-                        fontWeight: FontWeight.w200,
-                      )),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      InkWell(
-                        onTap: () {
-                          // NavigationUtilities.pushRoute(UploadDrivingLicence.route,type: RouteType.fade);
-
-//                          NavigationUtilities.pushRoute(RegisterCode.route,
-//                              type: RouteType.fade);
-                        },
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              R.string().authStrings.clickHere,
-                              style: AppTheme.of(context)
-                                  .theme
-                                  .textTheme
-                                  .display1
-                                  .copyWith(
-                                decoration: TextDecoration.underline,
-                                color:
-                                AppTheme.of(context).theme.accentColor,
-                              ),
-                            ),
-                            /*Container(
-                              height: getSize(1),
-                              width: getSize(75),
-                              color: AppTheme.of(context).theme.accentColor,
-                            )*/
-                          ],
-                        ),
-                      ),
-                      Text(R.string().authStrings.dontHaveAnAccount,
-                          style: AppTheme.of(context)
-                              .theme
-                              .textTheme
-                              .display1
-                              .copyWith(
-                            fontWeight: FontWeight.w200,
-                          )),
-                      //  for space between create account and don't have account
-                    ],
+                  Text(
+                    R.string().authStrings.haveRegisterCode,
+                    style:appTheme.grey16HintTextStyle
+                  ),
+                  Text(
+                    "Sign Up",
+                    style:appTheme.darkBlue16TextStyle
                   ),
                 ],
               ),
@@ -204,25 +176,24 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-
   getMobileTextField() {
     return CommonTextfield(
-      focusNode: _focusMobile,
+      focusNode: _focusUserName,
       textOption: TextFieldOption(
-        prefixWid:getCommonIconWidget(
-            imageName: user, imageType: IconSizeType.small),
+        prefixWid:
+            getCommonIconWidget(imageName: user, imageType: IconSizeType.small),
         //Image.asset(profileEmail,),
 
-        hintText:R.string().authStrings.mobileNumber,
+        hintText: R.string().authStrings.name,
         keyboardType: TextInputType.number,
-        inputController: _mobileController,
-        fillColor: _isMobileValid ? null : fromHex("#FFEFEF"),
-        errorBorder: _isMobileValid
+        inputController: _userNameController,
+//        fillColor: _isUserNameValid ? null : fromHex("#FFEFEF"),
+        errorBorder: _isUserNameValid
             ? null
             : OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(11)),
-          borderSide: BorderSide(width: 1, color: Colors.red),
-        ),
+                borderRadius: BorderRadius.all(Radius.circular(11)),
+                borderSide: BorderSide(width: 1, color: Colors.red),
+              ),
 
         formatter: [
           ValidatorInputFormatter(
@@ -233,29 +204,24 @@ class _LoginScreenState extends State<LoginScreen> {
         if (_autoValidate) {
           if (text.isEmpty) {
             setState(() {
-              _isMobileValid = false;
+              _isUserNameValid = false;
             });
           } else if (!validateMobile(text)) {
             setState(() {
-              _isMobileValid = false;
+              _isUserNameValid = false;
             });
           } else {
             setState(() {
-              _isMobileValid = true;
+              _isUserNameValid = true;
             });
           }
         }
       },
       validation: (text) {
-        //String validateName(String value) {
         if (text.isEmpty) {
-          _isMobileValid = false;
+          _isUserNameValid = false;
 
           return R.string().errorString.enterPhone;
-        } else if (!validateMobile(text)) {
-          _isMobileValid = false;
-
-          return R.string().errorString.enterValidPhone;
         } else {
           return null;
         }
@@ -271,8 +237,8 @@ class _LoginScreenState extends State<LoginScreen> {
     return CommonTextfield(
       focusNode: _focusPassword,
       textOption: TextFieldOption(
-          prefixWid:getCommonIconWidget(
-              imageName: user, imageType: IconSizeType.small),
+          prefixWid: getCommonIconWidget(
+              imageName: password, imageType: IconSizeType.small),
 //          fillColor: _isPasswordValid ? null : fromHex("#FFEFEF"),
 //          errorBorder: _isPasswordValid
 //              ? null
@@ -280,7 +246,7 @@ class _LoginScreenState extends State<LoginScreen> {
 //            borderRadius: BorderRadius.all(Radius.circular(11)),
 //            borderSide: BorderSide(width: 1, color: Colors.red),
 //          ),
-          hintText: R.string().authStrings.password,
+          hintText: R.string().authStrings.password + "*",
           maxLine: 1,
           formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
           keyboardType: TextInputType.text,
@@ -301,9 +267,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       },
       validation: (text) {
-        //String validateName(String value) {
         if (text.isEmpty) {
-          //
           _isPasswordValid = false;
           return R.string().errorString.enterPassword;
         } else {
@@ -312,7 +276,7 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       inputAction: TextInputAction.done,
       onNextPress: () {
-        _focusMobile.unfocus();
+        _focusUserName.unfocus();
       },
     );
   }
@@ -322,9 +286,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Text(
         R.string().authStrings.forgotPassword,
         textAlign: TextAlign.left,
-        style: AppTheme.of(context).theme.textTheme.display1.copyWith(
-          color: colorConstants.colorPrimary,
-        ),
+        style:appTheme.darkBlue16TextStyle,
       ),
       onTap: () {
 //        NavigationUtilities.pushRoute(ForgotPassword.route,

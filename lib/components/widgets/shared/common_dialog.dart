@@ -18,7 +18,7 @@ Future _showLogInDialog(BuildContext context) {
             textAlign: TextAlign.center,
             style: AppTheme.of(context).theme.textTheme.body1.copyWith(
                 fontWeight: FontWeight.w500,
-                color: colorConstants.colorPrimary),
+                color: appTheme.colorPrimary),
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -33,7 +33,7 @@ Future _showLogInDialog(BuildContext context) {
                     .theme
                     .textTheme
                     .body2
-                    .copyWith(color: ColorConstants.textGray),
+                    .copyWith(color: appTheme.dividerColor),
               ),
               // SizedBox(height: getSize(20),),
               Container(

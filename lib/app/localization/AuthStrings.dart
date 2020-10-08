@@ -7,6 +7,7 @@ class AuthStrings {
   final String haveAnAccount;
   final String haveRegisterCode;
   final String inLogin;
+  final String welcome;
 
   final String clickHere;
   final String moveToLogIn;
@@ -116,12 +117,14 @@ class AuthStrings {
     this.password = "Password",
     this.backToHome = "Go to Home",
     this.forgotPassword = "Forgot Your Password?",
-    this.signInCap = "Log In",
+    this.signInCap = "Sign In",
     this.moveToLogIn = 'Move to Log In',
     this.dontHaveAnAccount = " to set up your account.",
     this.clickHere = "Click here",
     this.reset = "Reset",
     this.haveRegisterCode = "Have a registration code?",
+    this.welcome = "Welcome Back!",
+
     // Forgot Password
     this.emaillbl = "Email",
     this.searchInventory = "Search product",
@@ -147,7 +150,7 @@ class AuthStrings {
 
     // Create Profile
     this.firstName = "First Name*",
-    this.name = "Name",
+    this.name = "Username*",
     this.lastName = "Last Name*",
     this.confirmPassword = "Confirm Password",
     this.currentPasswordErr = "Current Password Error",

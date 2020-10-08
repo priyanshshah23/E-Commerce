@@ -72,8 +72,8 @@ class BaseListState extends State<BaseList> {
   Widget build(BuildContext context) {
     return SmartRefresher(
         header: MaterialClassicHeader(
-          backgroundColor: colorConstants.colorPrimary,
-          color: colorConstants.colorPrimary,
+          backgroundColor: appTheme.colorPrimary,
+          color: appTheme.colorPrimary,
         ),
         enablePullDown: enablePullDown,
         enablePullUp: enablePullUp && listCount > 0 && listCount < totalCount,
@@ -145,7 +145,7 @@ class BaseListState extends State<BaseList> {
               if (noDataDesc != null)
                 Text(noDataDesc,
                     style: AppTheme.of(context).theme.textTheme.body1.copyWith(
-                        color: colorConstants.colorPrimary,
+                        color: appTheme.colorPrimary,
                         fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center),
               if (noDataDesc != null)
@@ -181,7 +181,7 @@ class BaseListState extends State<BaseList> {
                           .textTheme
                           .body2
                           .copyWith(
-                              color: colorConstants.colorPrimary,
+                              color: appTheme.colorPrimary,
                               decoration: TextDecoration.underline),
                     ),
                   ),

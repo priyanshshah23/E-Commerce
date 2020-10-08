@@ -74,39 +74,35 @@ class _CommonTextfieldState extends State<CommonTextfield> {
         controller: widget.textOption.inputController ?? null,
         obscureText: this.obscureText,
         style: TextStyle(
-          color:  colorConstants.textBlackColor,
+          color:  appTheme.textBlackColor,
           fontSize: getFontSize(16)
         ),
         keyboardType: widget.textOption.keyboardType ?? TextInputType.text,
         textCapitalization:
             widget.textOption.textCapitalization ?? TextCapitalization.none,
-        cursorColor: colorConstants.colorPrimary,
+        cursorColor: appTheme.colorPrimary,
         inputFormatters: widget.textOption.formatter ?? [],
         decoration: InputDecoration(
           errorMaxLines: 2,
-          fillColor: widget.textOption.fillColor ?? fromHex("#F6F6F6"),
-          filled: true,
+//          fillColor: widget.textOption.fillColor ?? fromHex("#F6F6F6"),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(getSize(11))),
-            borderSide: BorderSide.none,
+            borderSide: BorderSide(color: appTheme.dividerColor,width: getSize(2)),
           ),
-          border: widget.textOption.errorBorder ??
+          border:
               OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(getSize(11))),
-                borderSide: BorderSide(color: colorConstants.textBlackColor),
+                borderSide: BorderSide(color: appTheme.dividerColor,width: getSize(2)),
               ),
 //         errorBorder: widget.textOption.errorBorder ?? OutlineInputBorder(
 //               borderRadius: BorderRadius.all(Radius.circular(11)),
 //             borderSide: BorderSide.none
 //         ),
           labelText: widget.textOption.labelText,
-          hintStyle: TextStyle(
-              color:  colorConstants.textBlackColor,
-              fontSize: getFontSize(16)
-          ),
+          hintStyle: appTheme.grey16HintTextStyle,
           hintText: widget.textOption.hintText,
           labelStyle: TextStyle(
-              color:  colorConstants.textColor,
+              color:  appTheme.textColor,
               fontSize: getFontSize(16),
           ),
           prefixIcon: widget.textOption.prefixWid,
@@ -116,7 +112,7 @@ class _CommonTextfieldState extends State<CommonTextfield> {
               ? IconButton(
                   icon: Icon(
                     obscureIcon,
-                    color: ColorConstants.textGray.withOpacity(0.5),
+                    color: appTheme.dividerColor,
                   ),
                   onPressed: () {
                     setState(() {

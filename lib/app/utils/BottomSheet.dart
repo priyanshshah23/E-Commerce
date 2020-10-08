@@ -33,7 +33,7 @@ void modalBottomSheetMenu(
                     title,
                     style: titleStyle ??
                         AppTheme.of(context).theme.textTheme.display1.copyWith(
-                            color: colorConstants.colorPrimary,
+                            color: appTheme.colorPrimary,
                             fontWeight: FontWeight.w600),
                   )),
             Container(
@@ -94,7 +94,7 @@ void modalBottomSheetMenu(
                               )
                             : Container(
                                 height: 0.5,
-                                color: colorConstants.dividerColor,
+                                color: appTheme.dividerColor,
                               )
                       ],
                     );
@@ -102,7 +102,7 @@ void modalBottomSheetMenu(
             ),
             Container(
               height: 1,
-              color: colorConstants.dividerColor,
+              color: appTheme.dividerColor,
             ),
             SafeArea(
               child: InkWell(

@@ -93,37 +93,37 @@ class _BaseState extends State<Base> {
     );
   }
 }
-
-class DemoScreen extends StatefulWidget {
-  DemoScreen({Key key}) : super(key: key);
-
-  @override
-  _DemoScreenState createState() => _DemoScreenState();
-}
-
-class _DemoScreenState extends State<DemoScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ThemeHelper.theme().bgColor,
-      body: Center(
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Padding(
-            padding: const EdgeInsets.all(50.0),
-            child: Text(
-              "Working",
-              style: ThemeHelper.theme().titleText,
-            ),
-          ),
-          AppButton.flat(
-            text: "Continue",
-            borderRadius: getSize(14),
-            onTap: () {
-              Navigator.pushNamed(context, "/ThemeSetting");
-            },
-          ),
-        ]),
-      ),
-    );
-  }
-}
+//
+//class DemoScreen extends StatefulWidget {
+//  DemoScreen({Key key}) : super(key: key);
+//
+//  @override
+//  _DemoScreenState createState() => _DemoScreenState();
+//}
+//
+//class _DemoScreenState extends State<DemoScreen> {
+//  @override
+//  Widget build(BuildContext context) {
+//    return Scaffold(
+//      backgroundColor: ThemeHelper.theme().bgColor,
+//      body: Center(
+//        child: Column(mainAxisSize: MainAxisSize.min, children: [
+//          Padding(
+//            padding: const EdgeInsets.all(50.0),
+//            child: Text(
+//              "Working",
+//              style: ThemeHelper.theme().titleText,
+//            ),
+//          ),
+//          AppButton.flat(
+//            text: "Continue",
+//            borderRadius: getSize(14),
+//            onTap: () {
+//              Navigator.pushNamed(context, "/ThemeSetting");
+//            },
+//          ),
+//        ]),
+//      ),
+//    );
+//  }
+//}

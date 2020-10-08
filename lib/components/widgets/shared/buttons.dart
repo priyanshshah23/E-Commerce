@@ -214,28 +214,27 @@ class AppButton extends StatelessWidget {
       );
 
   /// Returns the color for the [icon] and [text].
-  Color _getForegroundColor(ThemeData theme) {
+  Color _getForegroundColor() {
+
     if (foregroundColor != null) {
       return foregroundColor;
     } else if (materialType == MaterialType.transparency) {
       // the text color since the button is transparent, therefore directly
       // on the background
 
-      return theme.textTheme.body1.color;
+      return appTheme.colorPrimary;
     } else if (backgroundColor == null) {
       // dont override the button color
-      return theme.textTheme.button.color;
+      return appTheme.colorPrimary;
     } else {
-      // black or white depending on the background color
-      final brightness = ThemeData.estimateBrightnessForColor(backgroundColor);
-
-      return brightness == Brightness.light ? Colors.black : Colors.white;
+      print("button");
+      return backgroundColor;
     }
   }
 
   /// Builds the row with the [Icon] and [Text] widget.
   Widget _buildContent(BuildContext context) {
-    final theme = AppTheme.of(context).theme;
+    // final theme = AppTheme.of(context).theme;
 
     Widget iconWidget;
     Widget textWidget;
@@ -247,8 +246,9 @@ class AppButton extends StatelessWidget {
         text,
         //textAlign: fitWidth ? TextAlign.center : TextAlign.start,
         textAlign: TextAlign.center,
-        style: theme.textTheme.button.copyWith(
+        style: TextStyle(
             fontWeight: FontWeight.normal,
+            fontSize: getFontSize(16),
             color: textColor == null ? Colors.white : textColor),
         overflow: TextOverflow.fade,
         softWrap: false,
@@ -276,13 +276,13 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = AppTheme.of(context).theme;
+    // final theme = AppTheme.of(context).theme;
     final borderRadius = BorderRadius.circular(this.borderRadius);
 
     Color bgColor = isButtonEnabled
-        ? colorConstants.colorPrimary
-        : theme.disabledColor;
-    Color fgColor = _getForegroundColor(theme);
+        ? (backgroundColor ?? appTheme.colorPrimary)
+        : appTheme.dividerColor;
+    Color fgColor = _getForegroundColor();
 
     if (onTap == null) {
       // reduce the opacity by 30% when disabled
@@ -298,7 +298,7 @@ class AppButton extends StatelessWidget {
           canvasColor: bgColor,
           // text color
           textTheme: TextTheme(
-            button: theme.textTheme.button.copyWith(color: fgColor),
+            button: TextStyle(color: appTheme.colorPrimary),
           ),
 
           // icon color
