@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:diamnow/models/Master/MasterDao.dart';
+import 'package:diamnow/models/Master/SizeMasterDao.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
@@ -11,6 +12,7 @@ class AppDatabase {
   static final AppDatabase _singleton = AppDatabase._();
 
   MasterDao masterDao = MasterDao();
+  SizeMasterDao sizeMasterDao = SizeMasterDao();
 
 //  DailyGoalDao dailyGoalDao = DailyGoalDao();
 
@@ -47,7 +49,7 @@ class AppDatabase {
     // Get a platform-specific directory where persistent app data can be stored
     final appDocumentDir = await getApplicationDocumentsDirectory();
     // Path with the form: /platform-specific-directory/demo.db
-    final dbPath = join(appDocumentDir.path, 'medonline.db');
+    final dbPath = join(appDocumentDir.path, 'diamnow.db');
 
     print(dbPath);
     final database = await databaseFactoryIo.openDatabase(dbPath);
