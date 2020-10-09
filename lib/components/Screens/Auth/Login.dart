@@ -5,6 +5,7 @@ import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/components/Screens/Auth/DemoScreen.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
+import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
@@ -156,7 +157,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       top: getSize(10), left: getSize(0)),
                                   child: AppButton.flat(
                                     onTap: () {
-                                      NavigationUtilities.pushRoute(GuestSignInScreen.route);
+                                      NavigationUtilities.pushRoute(
+                                          GuestSignInScreen.route);
                                     },
                                     textColor: appTheme.colorPrimary,
                                     backgroundColor:
@@ -328,7 +330,7 @@ class _LoginScreenState extends State<LoginScreen> {
           .callMasterSync(NavigationUtilities.key.currentContext, () async {
         //success
         await Config().getFilterJson();
-//        NavigationUtilities.pushRoute(DemoScreen.route);
+        NavigationUtilities.pushRoute(FilterScreen.route);
       }, () {},
               isNetworkError: false,
               isProgress: true,

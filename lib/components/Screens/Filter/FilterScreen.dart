@@ -1,3 +1,5 @@
+import 'package:diamnow/app/app.export.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class FilterScreen extends StatefulWidget {
@@ -11,6 +13,10 @@ class FilterScreen extends StatefulWidget {
 class _FilterScreenState extends State<FilterScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return AppBackground(
+          child: Scaffold(
+        
+      ),
+    );
   }
 }
