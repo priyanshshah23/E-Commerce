@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,6 +28,8 @@ class PrefUtils {
   String get FILE_DEVIDE_INFO => "deviceDetail";
 
   String get keyMasterSyncDate => "keyMasterSyncDate";
+
+  String get keyUser => "keyUser";
 
   bool isHomeVisible;
 
@@ -118,5 +121,16 @@ class PrefUtils {
 
   void saveMasterSyncDate(String masterSyncDate) {
     _preferences.setString(keyMasterSyncDate, masterSyncDate);
+  }
+
+
+// User Getter setter
+  void saveUser(User user) {
+    _preferences.setString(keyUser, json.encode(user));
+  }
+
+  User getUserDetails() {
+    var userJson = json.decode(_preferences.getString(keyUser));
+    return userJson != null ? new User.fromJson(userJson) : null;
   }
 }

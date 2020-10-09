@@ -13,6 +13,7 @@ import 'app/theme/app_theme.dart';
 import 'app/theme/global_models_provider.dart';
 import 'app/utils/navigator.dart';
 import 'app/utils/route_observer.dart';
+import 'models/FilterModel/FilterModel.dart';
 
 KiwiContainer app;
 
@@ -61,7 +62,7 @@ class _BaseState extends State<Base> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => setState(() {
+      (_) => setState(() async {
         themeData = AppTheme.of(context).theme;
       }),
     );
@@ -93,37 +94,3 @@ class _BaseState extends State<Base> {
     );
   }
 }
-//
-//class DemoScreen extends StatefulWidget {
-//  DemoScreen({Key key}) : super(key: key);
-//
-//  @override
-//  _DemoScreenState createState() => _DemoScreenState();
-//}
-//
-//class _DemoScreenState extends State<DemoScreen> {
-//  @override
-//  Widget build(BuildContext context) {
-//    return Scaffold(
-//      backgroundColor: ThemeHelper.theme().bgColor,
-//      body: Center(
-//        child: Column(mainAxisSize: MainAxisSize.min, children: [
-//          Padding(
-//            padding: const EdgeInsets.all(50.0),
-//            child: Text(
-//              "Working",
-//              style: ThemeHelper.theme().titleText,
-//            ),
-//          ),
-//          AppButton.flat(
-//            text: "Continue",
-//            borderRadius: getSize(14),
-//            onTap: () {
-//              Navigator.pushNamed(context, "/ThemeSetting");
-//            },
-//          ),
-//        ]),
-//      ),
-//    );
-//  }
-//}

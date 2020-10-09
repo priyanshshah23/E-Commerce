@@ -81,11 +81,13 @@ flutter:
     - assets/
     - assets/diamnow/
     - assets/auth/
-    - assets/chls.pem
+    - assets/Json/
+    - assets/fonts/
+    # - assets/chls.pem
 
 
   fonts:
-    - family: CerebriSans
+    - family: Avenir
       fonts:
         - asset: assets/fonts/AvenirLTStd-Black.otf
           weight: 600

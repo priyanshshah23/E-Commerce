@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Price/Cts $",
+    "desc": "Desc",
+    "viewType": "fromto",
+    "labelFrom": "From",
+    "labelTo": "To",
+    "minValue": -100,
+    "maxValue": 100,
+    "apiKey": "pricePerCarat"
+  },
+  {
+    "title": "Shape",
+    "desc": "Desc",
+    "viewType": "selection",
+    "apiKey": "shape",
+    "masterCode": "SHAPE",
+    "verticalScroll": false,
+    "isShowAll": true,
+    "isShowMore": false
+  }
+]

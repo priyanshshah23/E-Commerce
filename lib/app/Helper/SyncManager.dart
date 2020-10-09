@@ -29,11 +29,13 @@ class SyncManager {
     Function failure, {
     bool isNetworkError = true,
     bool isProgress = true,
+    String id,
   }) async {
     MasterReq req = MasterReq();
 
-    req.serverLastSync = app.resolve<PrefUtils>().getMasterSyncDate();
+//    req.serverLastSync = app.resolve<PrefUtils>().getMasterSyncDate();
 
+    req.user = id;
     NetworkCall<MasterResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().getMaster(req),
@@ -42,9 +44,9 @@ class SyncManager {
             isNetworkError: isNetworkError)
         .then((masterResp) async {
       // save Logged In user
-      // if (masterResp.data.loggedInUser != null) {
-      //   app.resolve<PrefUtils>().saveUser(masterResp.data.loggedInUser);
-      // }
+      if (masterResp.data.loggedInUser != null) {
+        app.resolve<PrefUtils>().saveUser(masterResp.data.loggedInUser);
+      }
 
       await AppDatabase.instance.masterDao
           .addOrUpdate(masterResp.data.masters.list);
@@ -58,8 +60,8 @@ class SyncManager {
       await AppDatabase.instance.sizeMasterDao
           .delete(masterResp.data.sizeMaster.deleted);
 
-      // save master sync date
-      app.resolve<PrefUtils>().saveMasterSyncDate(masterResp.data.lastSyncDate);
+      // // save master sync date
+      // app.resolve<PrefUtils>().saveMasterSyncDate(masterResp.data.lastSyncDate);
 
       // success block
       success();

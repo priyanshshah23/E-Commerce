@@ -1,5 +1,6 @@
 import 'package:diamnow/components/Screens/Auth/DemoScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
+import 'package:diamnow/modules/Filter/FilterScreen.dart';
 import 'package:flutter/material.dart';
 import '../app.export.dart';
 import 'fade_route.dart';
@@ -83,12 +84,12 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     // case SetupScreen.route:
     //   screen = SetupScreen();
     //   break;
-   case LoginScreen.route:
-     screen = LoginScreen();
-     break;
-   case DemoScreen.route:
-     screen = DemoScreen();
-     break;
+    case LoginScreen.route:
+      screen = LoginScreen();
+      break;
+    case FilterScreen.route:
+      screen = FilterScreen();
+      break;
   }
 
   switch (routeType) {

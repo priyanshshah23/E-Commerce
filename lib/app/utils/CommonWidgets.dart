@@ -121,9 +121,11 @@ pushToWebview(BuildContext context, String text, String url) {
 List<BoxShadow> getBoxShadow(BuildContext context) {
   return [
     BoxShadow(
-        color: appTheme.dividerColor.withAlpha(13),
-        blurRadius: getSize(13),
-        spreadRadius: getSize(5))
+        color: appTheme.colorPrimary.withOpacity(0.2),
+        blurRadius: getSize(10),
+        spreadRadius: getSize(5),
+      offset: Offset(0, 3)
+    ),
   ];
 }
 
