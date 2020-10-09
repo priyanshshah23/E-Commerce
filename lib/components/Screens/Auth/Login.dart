@@ -3,6 +3,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -49,11 +50,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     Container(
                       child: Padding(
                         padding: EdgeInsets.only(
-                          top: getSize(20),
-                          left: getSize(20),
-                          right: getSize(20),
-                          bottom: getSize(10)
-                        ),
+                            top: getSize(20),
+                            left: getSize(20),
+                            right: getSize(20),
+                            bottom: getSize(10)),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -70,7 +70,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Padding(
-                                  padding: EdgeInsets.symmetric(vertical: getSize(25)),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: getSize(25)),
                                   child: Stack(
                                     children: <Widget>[
                                       Container(
@@ -85,7 +86,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.only(left: getSize(20)),
+                                        padding:
+                                            EdgeInsets.only(left: getSize(20)),
                                         child: Image.asset(
                                           diamond,
                                           height: getSize(130),
@@ -117,10 +119,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   margin: EdgeInsets.only(
                                       top: getSize(15), left: getSize(0)),
                                   decoration: BoxDecoration(
-                                    boxShadow: getBoxShadow(context)
-                                  ),
+                                      boxShadow: getBoxShadow(context)),
                                   child: AppButton.flat(
                                     onTap: () {
+                                      FocusScope.of(context).unfocus();
                                       if (_formKey.currentState.validate()) {
                                         _formKey.currentState.save();
                                         callLoginApi(context);
@@ -151,9 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   margin: EdgeInsets.only(
                                       top: getSize(10), left: getSize(0)),
                                   child: AppButton.flat(
-                                    onTap: () {
-
-                                    },
+                                    onTap: () {},
                                     textColor: appTheme.colorPrimary,
                                     backgroundColor:
                                         appTheme.colorPrimary.withOpacity(0.1),
@@ -263,7 +263,6 @@ class _LoginScreenState extends State<LoginScreen> {
           inputController: _passwordController,
           isSecureTextField: true),
       textCallback: (text) {
-        print(text.toString());
         if (_autoValidate) {
           if (text.isEmpty) {
             setState(() {
@@ -313,22 +312,24 @@ class _LoginScreenState extends State<LoginScreen> {
     NetworkCall<LoginResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().login(req),
-        context,
-        isProgress: true)
+            context,
+            isProgress: true)
         .then((loginResp) async {
       // save Logged In user
-       if (loginResp.data != null) {
-         app.resolve<PrefUtils>().saveUser(loginResp.data.user);
-       }
-       print("Login");
-       SyncManager.instance
-           .callMasterSync(NavigationUtilities.key.currentContext, () {
-         setState(() {});
-//success
-       }, () {}, isNetworkError: false, isProgress: true,id: loginResp.data.user.id).then((value) {});
-
-    }).catchError((onError) => {
-      print("Error "+onError)
+      if (loginResp.data != null) {
+        app.resolve<PrefUtils>().saveUser(loginResp.data.user);
+      }
+      print("Login");
+      SyncManager.instance
+          .callMasterSync(NavigationUtilities.key.currentContext, () async {
+        //success
+        await Config().getFilterJson();
+      }, () {},
+              isNetworkError: false,
+              isProgress: true,
+              id: loginResp.data.user.id).then((value) {});
+    }).catchError((onError) {
+      print("Error " + onError);
     });
   }
 }

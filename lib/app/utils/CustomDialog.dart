@@ -24,14 +24,14 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'ImageUtils.dart';
 
 showToast(
-    String msg, {
-      BuildContext context,
-      ToastGravity gravity,
-      num timer = 3000,
-    }) {
+  String msg, {
+  BuildContext context,
+  ToastGravity gravity,
+  num timer = 3000,
+}) {
   Widget toast = Container(
     padding:
-    EdgeInsets.symmetric(horizontal: getSize(16), vertical: getSize(16)),
+        EdgeInsets.symmetric(horizontal: getSize(16), vertical: getSize(16)),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(
         getSize(40),
@@ -53,14 +53,16 @@ showToast(
   );
 
   FlutterToast(context != null
-      ? context
-      : NavigationUtilities.key.currentState.overlay.context)
+          ? context
+          : NavigationUtilities.key.currentState.overlay.context)
       .showToast(
     child: toast,
     gravity: gravity != null ? gravity : ToastGravity.BOTTOM,
-    toastDuration: timer != null ? Duration(
-      milliseconds: timer,
-    ) : null ,
+    toastDuration: timer != null
+        ? Duration(
+            milliseconds: timer,
+          )
+        : null,
   );
 }
 
@@ -200,7 +202,10 @@ class ProgressDialog2 {
             onWillPop: () async {
               return isCancellable;
             },
-            child: Loader(),
+            child: SpinKitFadingCircle(
+              color: Colors.white,
+              size: 50.0,
+            ),
           );
         });
   }
@@ -224,8 +229,7 @@ Future OpenErrorDialog(BuildContext context, String title, String disc,
                 title,
                 textAlign: TextAlign.center,
                 style: AppTheme.of(context).theme.textTheme.body1.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: appTheme.colorPrimary),
+                    fontWeight: FontWeight.w600, color: appTheme.colorPrimary),
               ),
               SizedBox(
                 height: getSize(20),
@@ -357,7 +361,11 @@ Future OpenConfirmationPopUp(BuildContext context,
                           ),
                     // SizedBox(height: getSize(20),),
                     Container(
-                      margin: EdgeInsets.only(top: getSize(20),left: getSize(31),right: getSize(31),bottom: getSize(5)),
+                      margin: EdgeInsets.only(
+                          top: getSize(20),
+                          left: getSize(31),
+                          right: getSize(31),
+                          bottom: getSize(5)),
                       child: Row(
                         children: <Widget>[
                           negativeBtnTitle != null
@@ -374,7 +382,10 @@ Future OpenConfirmationPopUp(BuildContext context,
                                       padding: EdgeInsets.all(getSize(16)),
                                       child: Text(
                                         negativeBtnTitle,
-                                        style: appTheme.commonAlertDialogueDescStyle.copyWith(color: appTheme.whiteColor ),
+                                        style: appTheme
+                                            .commonAlertDialogueDescStyle
+                                            .copyWith(
+                                                color: appTheme.whiteColor),
                                       ),
                                     ),
                                   ),

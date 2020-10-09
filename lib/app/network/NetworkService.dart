@@ -10,7 +10,7 @@ abstract class NetworkService {
   factory NetworkService(Dio dio) = _NetworkService;
 
   @POST(ApiConstants.masterSync)
-  Future<BaseApiResp> getMaster(@Body() MasterReq req);
+  Future<MasterResp> getMaster(@Body() MasterReq req);
 
   @POST(ApiConstants.login)
   Future<LoginResp> login(@Body() LoginReq req);

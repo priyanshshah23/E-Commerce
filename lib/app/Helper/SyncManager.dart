@@ -29,14 +29,14 @@ class SyncManager {
     Function failure, {
     bool isNetworkError = true,
     bool isProgress = true,
-        String id,
+    String id,
   }) async {
     MasterReq req = MasterReq();
 
 //    req.serverLastSync = app.resolve<PrefUtils>().getMasterSyncDate();
 
     req.user = id;
-    NetworkCall<BaseApiResp>()
+    NetworkCall<MasterResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().getMaster(req),
             context,
@@ -44,21 +44,21 @@ class SyncManager {
             isNetworkError: isNetworkError)
         .then((masterResp) async {
       // save Logged In user
-      // if (masterResp.data.loggedInUser != null) {
-      //   app.resolve<PrefUtils>().saveUser(masterResp.data.loggedInUser);
-      // }
+      if (masterResp.data.loggedInUser != null) {
+        app.resolve<PrefUtils>().saveUser(masterResp.data.loggedInUser);
+      }
 
-      // await AppDatabase.instance.masterDao
-      //     .addOrUpdate(masterResp.data.masters.list);
+      await AppDatabase.instance.masterDao
+          .addOrUpdate(masterResp.data.masters.list);
 
-      // await AppDatabase.instance.masterDao
-      //     .delete(masterResp.data.masters.deleted);
+      await AppDatabase.instance.masterDao
+          .delete(masterResp.data.masters.deleted);
 
-      // await AppDatabase.instance.sizeMasterDao
-      //     .addOrUpdate(masterResp.data.sizeMaster.list);
+      await AppDatabase.instance.sizeMasterDao
+          .addOrUpdate(masterResp.data.sizeMaster.list);
 
-      // await AppDatabase.instance.sizeMasterDao
-      //     .delete(masterResp.data.sizeMaster.deleted);
+      await AppDatabase.instance.sizeMasterDao
+          .delete(masterResp.data.sizeMaster.deleted);
 
       // // save master sync date
       // app.resolve<PrefUtils>().saveMasterSyncDate(masterResp.data.lastSyncDate);

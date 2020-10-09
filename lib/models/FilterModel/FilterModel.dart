@@ -10,20 +10,23 @@ class Config {
     String jsonForm =
         await rootBundle.loadString('assets/Json/FilterJson.json');
     ;
-    List<Map<String, dynamic>> fieldList = jsonDecode(jsonForm);
+    List<dynamic> fieldList = jsonDecode(jsonForm);
     List<FormBaseModel> formModels = [];
     fieldList.forEach((element) async {
-      String viewType = element["viewType"];
-      if (viewType == "FromTo") {
-        formModels.add(FromToModel.fromJson(element));
-      } else if (viewType == "Selection") {
-        SelectionModel selectionModel = SelectionModel.fromJson(element);
-        var arrMaster = await AppDatabase.instance.masterDao
-            .getSubMasterFromCode(selectionModel.masterCode);
-        selectionModel.masters = arrMaster;
-        formModels.add(selectionModel);
+      if (element is Map<String, dynamic>) {
+        String viewType = element["viewType"];
+        if (viewType == "FromTo") {
+          formModels.add(FromToModel.fromJson(element));
+        } else if (viewType == "Selection") {
+          SelectionModel selectionModel = SelectionModel.fromJson(element);
+          var arrMaster = await AppDatabase.instance.masterDao
+              .getSubMasterFromCode(selectionModel.masterCode);
+          selectionModel.masters = arrMaster;
+          formModels.add(selectionModel);
+        }
       }
     });
+    return formModels;
   }
 }
 
@@ -60,14 +63,13 @@ class FromToModel extends FormBaseModel {
 class SelectionModel extends FormBaseModel {
   String masterCode;
   List<Master> masters = [];
-  bool isAllowMultiSelection;
   bool verticalScroll;
   bool isShowAll;
+  bool isShowAllSelected;
   bool isShowMore;
-  bool isSelected;
+  bool isShowMoreSelected;
 
   SelectionModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
-    isAllowMultiSelection = json["isAllowMultiSelection"];
     verticalScroll = json["verticalScroll"];
     isShowAll = json['isShowAll'];
     isShowMore = json['isShowMore'];
