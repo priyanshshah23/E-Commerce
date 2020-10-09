@@ -3,6 +3,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -152,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       top: getSize(10), left: getSize(0)),
                                   child: AppButton.flat(
                                     onTap: () {
-
+                                      NavigationUtilities.pushRoute(GuestSignInScreen.route);
                                     },
                                     textColor: appTheme.colorPrimary,
                                     backgroundColor:
