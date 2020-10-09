@@ -2,6 +2,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:math' as math;
 import 'package:fluttertoast/fluttertoast.dart';
 
 class SearchComponent extends StatefulWidget {
@@ -66,9 +67,7 @@ class _SearchComponentState extends State<SearchComponent> {
                     child: TextField(
                       onChanged: (value) {
                         if (value != null || value != "") {
-                          if(validateValue(_minValueController.text.trim()) == true) {
                             if (num.parse(value) <= min || num.parse(value) >= max) {
-                              //showToast("Please Enter Valid value");
                               if (oldValueForFrom != null || oldValueForFrom != "") {
                                 _minValueController.text = oldValueForFrom;
                                 _minValueController.selection =
@@ -76,17 +75,14 @@ class _SearchComponentState extends State<SearchComponent> {
                                         offset: _minValueController.text.length));
                               }
                             }
-                          }
                         }
                         oldValueForFrom = _minValueController.text.trim();
                       },
                       focusNode: _focusMinValue,
                       controller: _minValueController,
-                      keyboardType: TextInputType.number,
+                      inputFormatters: [DecimalTextInputFormatter(decimalRange: 2)],
+                      keyboardType: TextInputType.numberWithOptions(decimal: true),
                       textInputAction: TextInputAction.next,
-//                      inputFormatters: [
-//                        BlacklistingTextInputFormatter(RegExp(r'^[0-9]*\.[0-9]{3}$')),
-//                      ],
                       decoration: InputDecoration(
                         focusedBorder: UnderlineInputBorder(),
                         hintText: "From",
@@ -118,7 +114,8 @@ class _SearchComponentState extends State<SearchComponent> {
                       },
                       focusNode: _focusMaxValue,
                       controller: _maxValueController,
-                      keyboardType: TextInputType.number,
+                      inputFormatters: [DecimalTextInputFormatter(decimalRange: 2)],
+                      keyboardType: TextInputType.numberWithOptions(decimal: true),
                       textInputAction: TextInputAction.done,
                       decoration: InputDecoration(
                         focusedBorder: UnderlineInputBorder(),
@@ -139,10 +136,44 @@ class _SearchComponentState extends State<SearchComponent> {
     );
   }
 
-  bool validateValue(String value) {
-    Pattern pattern = r'^[0-9]*\.[0-9]{2}$';
-    RegExp regex = new RegExp(pattern);
-    return (!regex.hasMatch(value)) ? false : true;
-  }
+}
 
+class DecimalTextInputFormatter extends TextInputFormatter {
+  DecimalTextInputFormatter({this.decimalRange})
+      : assert(decimalRange == null || decimalRange > 0);
+
+  final int decimalRange;
+
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, // unused.
+      TextEditingValue newValue,
+      ) {
+    TextSelection newSelection = newValue.selection;
+    String truncated = newValue.text;
+
+    if (decimalRange != null) {
+      String value = newValue.text;
+
+      if (value.contains(".") &&
+          value.substring(value.indexOf(".") + 1).length > decimalRange) {
+        truncated = oldValue.text;
+        newSelection = oldValue.selection;
+      } else if (value == ".") {
+        truncated = "0.";
+
+        newSelection = newValue.selection.copyWith(
+          baseOffset: math.min(truncated.length, truncated.length + 1),
+          extentOffset: math.min(truncated.length, truncated.length + 1),
+        );
+      }
+
+      return TextEditingValue(
+        text: truncated,
+        selection: newSelection,
+        composing: TextRange.empty,
+      );
+    }
+    return newValue;
+  }
 }
