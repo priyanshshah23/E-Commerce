@@ -386,13 +386,13 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
             }
           }
         },
-        validation: (text) {
+        validation: (text) async{
           //String validateName(String value) {
           if (text.isEmpty) {
             isMobilevalid = false;
 
             return R.string().errorString.enterPhone;
-          } else if (isValidMobile(_mobileController.text.trim(),
+          } else if (await isValidMobile(_mobileController.text.trim(),
                   selectedDialogCountry.isoCode) ==
               false) {
             isMobilevalid = false;
