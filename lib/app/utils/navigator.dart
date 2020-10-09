@@ -94,6 +94,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case GuestSignInScreen.route:
       screen = GuestSignInScreen();
       break;
+    case DemoScreen.route:
+      screen = DemoScreen();
+      break;
   }
 
   switch (routeType) {
