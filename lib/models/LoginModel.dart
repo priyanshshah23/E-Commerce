@@ -844,7 +844,7 @@ class Setting {
   bool isClickedC;
   bool isClickedR;
   String key;
-  int width;
+  // int width;
   bool isFlag;
   String sLabel;
 //  String sLabel;
@@ -860,7 +860,7 @@ class Setting {
         this.isClickedC,
         this.isClickedR,
         this.key,
-        this.width,
+        // this.width,
         this.isFlag,
         this.sLabel,
         this.nLabel});
@@ -875,7 +875,7 @@ class Setting {
     isClickedC = json['isClickedC'];
     isClickedR = json['isClickedR'];
     key = json['key'];
-    width = json['width'];
+    // width = json['width'];
     isFlag = json['isFlag'];
     sLabel = json['sLabel'];
 //    sLabel = json['sLabel '];
@@ -893,7 +893,7 @@ class Setting {
     data['isClickedC'] = this.isClickedC;
     data['isClickedR'] = this.isClickedR;
     data['key'] = this.key;
-    data['width'] = this.width;
+    // data['width'] = this.width;
     data['isFlag'] = this.isFlag;
     data['sLabel'] = this.sLabel;
 //    data['sLabel '] = this.sLabel;
