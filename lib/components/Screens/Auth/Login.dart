@@ -125,6 +125,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       boxShadow: getBoxShadow(context)),
                                   child: AppButton.flat(
                                     onTap: () {
+//                                      NavigationUtilities.pushRoute(DemoScreen.route);
+
                                       FocusScope.of(context).unfocus();
                                       if (_formKey.currentState.validate()) {
                                         _formKey.currentState.save();

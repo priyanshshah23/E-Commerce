@@ -156,6 +156,13 @@ class _SearchComponentState extends State<SearchComponent> {
       ),
     );
   }
+
+  bool validateValue(String value) {
+    Pattern pattern = r'^-?\d+(?:\.\d+)?$';
+    RegExp regex = new RegExp(pattern);
+    print(regex.hasMatch(value));
+    return (!regex.hasMatch(value)) ? false : true;
+  }
 }
 
 class DecimalTextInputFormatter extends TextInputFormatter {
