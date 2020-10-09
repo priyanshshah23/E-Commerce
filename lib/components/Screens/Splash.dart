@@ -63,7 +63,7 @@ class _SplashState extends State<Splash> {
   bool isFailed = false;
 
   Future callMasterSync() async {
-    NavigationUtilities.pushRoute(LoginScreen.route);
+    NavigationUtilities.pushRoute(DemoScreen.route);
   /*  SyncManager.instance.callMasterSync(context, () {
       //success
       callHandler();

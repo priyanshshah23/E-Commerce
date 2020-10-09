@@ -350,11 +350,14 @@ Future OpenConfirmationPopUp(BuildContext context,
                     ),
                     desc.isEmpty
                         ? richText
-                        : Text(
-                            desc,
-                            textAlign: TextAlign.center,
-                            style: appTheme.commonAlertDialogueDescStyle,
-                          ),
+                        : Padding(
+                          padding: EdgeInsets.symmetric(horizontal: getSize(30)),
+                          child: Text(
+                              desc,
+                              textAlign: TextAlign.center,
+                              style: appTheme.commonAlertDialogueDescStyle,
+                            ),
+                        ),
                     // SizedBox(height: getSize(20),),
                     Container(
                       margin: EdgeInsets.only(top: getSize(20),left: getSize(31),right: getSize(31),bottom: getSize(5)),
