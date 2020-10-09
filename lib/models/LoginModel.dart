@@ -19,7 +19,7 @@ class LoginReq {
   }
 }
 
-class LoginResp extends BaseApiResp{
+class LoginResp extends BaseApiResp {
   Data data;
 
   LoginResp({this.data});
@@ -41,30 +41,13 @@ class Data {
   Token token;
   User user;
   UserPermissions userPermissions;
-  bool isTrusted;
-  bool isAlreadyLogin;
-//  Null masters;
-  List<Setting> columns;
-  Grid grid;
-
-  Data(
-      {this.token, this.user, this.userPermissions, this.isTrusted, this.isAlreadyLogin, this.columns, this.grid});
 
   Data.fromJson(Map<String, dynamic> json) {
     token = json['token'] != null ? new Token.fromJson(json['token']) : null;
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
-    userPermissions =
-    json['userPermissions'] != null ? new UserPermissions.fromJson(
-        json['userPermissions']) : null;
-    isTrusted = json['isTrusted'];
-    isAlreadyLogin = json['isAlreadyLogin'];
-    if (json['columns'] != null) {
-      columns = new List<Setting>();
-      json['columns'].forEach((v) {
-        columns.add(new Setting.fromJson(v));
-      });
-    }
-    grid = json['grid'] != null ? new Grid.fromJson(json['grid']) : null;
+    userPermissions = json['userPermissions'] != null
+        ? new UserPermissions.fromJson(json['userPermissions'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -77,14 +60,6 @@ class Data {
     }
     if (this.userPermissions != null) {
       data['userPermissions'] = this.userPermissions.toJson();
-    }
-    data['isTrusted'] = this.isTrusted;
-    data['isAlreadyLogin'] = this.isAlreadyLogin;
-    if (this.columns != null) {
-      data['columns'] = this.columns.map((v) => v.toJson()).toList();
-    }
-    if (this.grid != null) {
-      data['grid'] = this.grid.toJson();
     }
     return data;
   }
@@ -242,9 +217,9 @@ class User {
         fingerPrints.add(new FingerPrints.fromJson(v));
       });
     }
-    loggedInSession =
-    json['loggedInSession'] != null ? new LoggedInSession.fromJson(
-        json['loggedInSession']) : null;
+    loggedInSession = json['loggedInSession'] != null
+        ? new LoggedInSession.fromJson(json['loggedInSession'])
+        : null;
     whatsapp = json['whatsapp'];
     whatsappCounCode = json['whatsappCounCode'];
     plainPassword = json['plainPassword'];
@@ -259,7 +234,7 @@ class User {
 
     group = json['group'];
     account =
-    json['account'] != null ? new Account.fromJson(json['account']) : null;
+        json['account'] != null ? new Account.fromJson(json['account']) : null;
     seller = json['seller'];
   }
 
@@ -374,9 +349,10 @@ class LoggedInSession {
 
   LoggedInSession.fromJson(Map<String, dynamic> json) {
     current =
-    json['current'] != null ? new Current.fromJson(json['current']) : null;
-    previous =
-    json['previous'] != null ? new Current.fromJson(json['previous']) : null;
+        json['current'] != null ? new Current.fromJson(json['current']) : null;
+    previous = json['previous'] != null
+        ? new Current.fromJson(json['previous'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -401,7 +377,7 @@ class Current {
   Current.fromJson(Map<String, dynamic> json) {
     ip = json['ip'];
     address =
-    json['address'] != null ? new Address.fromJson(json['address']) : null;
+        json['address'] != null ? new Address.fromJson(json['address']) : null;
     time = json['time'];
   }
 
@@ -426,7 +402,13 @@ class Address {
   String timezone;
 
   Address(
-      {this.country, this.region, this.city, this.postalCode, this.latitude, this.longitude, this.timezone});
+      {this.country,
+      this.region,
+      this.city,
+      this.postalCode,
+      this.latitude,
+      this.longitude,
+      this.timezone});
 
   Address.fromJson(Map<String, dynamic> json) {
     country = json['country'];
@@ -691,7 +673,10 @@ class BrokerInfo {
   String brokerPhoneNo;
 
   BrokerInfo(
-      {this.brokerName, this.brokerEmail, this.brokerMobile, this.brokerPhoneNo});
+      {this.brokerName,
+      this.brokerEmail,
+      this.brokerMobile,
+      this.brokerPhoneNo});
 
   BrokerInfo.fromJson(Map<String, dynamic> json) {
     brokerName = json['brokerName'];
@@ -768,7 +753,15 @@ class Permissions {
   bool all;
 
   Permissions(
-      {this.view, this.insert, this.update, this.delete, this.uploadExcel, this.downloadExcel, this.mailExcel, this.printPDF, this.all});
+      {this.view,
+      this.insert,
+      this.update,
+      this.delete,
+      this.uploadExcel,
+      this.downloadExcel,
+      this.mailExcel,
+      this.printPDF,
+      this.all});
 
   Permissions.fromJson(Map<String, dynamic> json) {
     view = json['view'];
@@ -793,111 +786,6 @@ class Permissions {
     data['mailExcel'] = this.mailExcel;
     data['printPDF'] = this.printPDF;
     data['all'] = this.all;
-    return data;
-  }
-}
-
-
-class Grid {
-  String name;
-  bool isAppendFilter;
-  bool isAppendHeader;
-  bool isAppendTitle;
-  List<Setting> setting;
-
-  Grid(
-      {this.name, this.isAppendFilter, this.isAppendHeader, this.isAppendTitle, this.setting});
-
-  Grid.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    isAppendFilter = json['isAppendFilter'];
-    isAppendHeader = json['isAppendHeader'];
-    isAppendTitle = json['isAppendTitle'];
-    if (json['setting'] != null) {
-      setting = new List<Setting>();
-      json['setting'].forEach((v) {
-        setting.add(new Setting.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['isAppendFilter'] = this.isAppendFilter;
-    data['isAppendHeader'] = this.isAppendHeader;
-    data['isAppendTitle'] = this.isAppendTitle;
-    if (this.setting != null) {
-      data['setting'] = this.setting.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class Setting {
-  String field;
-  String title;
-  String cellClass;
-  bool isActive;
-  int sequence;
-  bool isClickedL;
-  bool isClickedC;
-  bool isClickedR;
-  String key;
-  // int width;
-  bool isFlag;
-  String sLabel;
-//  String sLabel;
-  String nLabel;
-
-  Setting(
-      {this.field,
-        this.title,
-        this.cellClass,
-        this.isActive,
-        this.sequence,
-        this.isClickedL,
-        this.isClickedC,
-        this.isClickedR,
-        this.key,
-        // this.width,
-        this.isFlag,
-        this.sLabel,
-        this.nLabel});
-
-  Setting.fromJson(Map<String, dynamic> json) {
-    field = json['field'];
-    title = json['title'];
-    cellClass = json['cellClass'];
-    isActive = json['isActive'];
-    sequence = json['sequence'];
-    isClickedL = json['isClickedL'];
-    isClickedC = json['isClickedC'];
-    isClickedR = json['isClickedR'];
-    key = json['key'];
-    // width = json['width'];
-    isFlag = json['isFlag'];
-    sLabel = json['sLabel'];
-//    sLabel = json['sLabel '];
-    nLabel = json['nLabel'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['field'] = this.field;
-    data['title'] = this.title;
-    data['cellClass'] = this.cellClass;
-    data['isActive'] = this.isActive;
-    data['sequence'] = this.sequence;
-    data['isClickedL'] = this.isClickedL;
-    data['isClickedC'] = this.isClickedC;
-    data['isClickedR'] = this.isClickedR;
-    data['key'] = this.key;
-    // data['width'] = this.width;
-    data['isFlag'] = this.isFlag;
-    data['sLabel'] = this.sLabel;
-//    data['sLabel '] = this.sLabel;
-    data['nLabel'] = this.nLabel;
     return data;
   }
 }

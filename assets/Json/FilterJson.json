@@ -1,20 +1,22 @@
 [
   {
-    "title": "Shape",
+    "title": "Price/Cts $",
     "desc": "Desc",
-    "viewType": "FROMTO",
-    "isAllowMultiSelection": false,
-    "verticalScroll": false,
-    "isShowAll": true,
-    "isShowMore": false,
+    "viewType": "fromto",
     "labelFrom": "From",
     "labelTo": "To",
     "minValue": -100,
     "maxValue": 100,
-    "isSelected": false,
-    "valueFrom": 10,
-    "valueTo": 10,
-    "apiKey": "SHAPE",
-    "masterCode" : "SHAPE"
+    "apiKey": "pricePerCarat"
+  },
+  {
+    "title": "Shape",
+    "desc": "Desc",
+    "viewType": "selection",
+    "apiKey": "shape",
+    "masterCode": "SHAPE",
+    "verticalScroll": false,
+    "isShowAll": true,
+    "isShowMore": false
   }
 ]

@@ -1,4 +1,5 @@
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/models/LoginModel.dart';
 
 class MasterReq {
   String serverLastSync;
@@ -128,22 +129,22 @@ class Master {
 class MasterRespData {
   String lastSyncDate;
 
-  // User loggedInUser;
+  User loggedInUser;
   Masters sizeMaster;
   Masters masters;
 
   MasterRespData({
     this.lastSyncDate,
-    // this.loggedInUser,
+    this.loggedInUser,
     this.sizeMaster,
     this.masters,
   });
 
   MasterRespData.fromJson(Map<String, dynamic> json) {
     lastSyncDate = json['lastSyncDate'];
-    // loggedInUser = json['loggedInUser'] != null
-    //     ? new User.fromJson(json['loggedInUser'])
-    //     : null;
+    loggedInUser = json['loggedInUser'] != null
+        ? new User.fromJson(json['loggedInUser'])
+        : null;
     sizeMaster = json['sizeMaster'] != null
         ? new Masters.fromJson(json['sizeMaster'])
         : null;
@@ -154,9 +155,9 @@ class MasterRespData {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['lastSyncDate'] = this.lastSyncDate;
-    // if (this.loggedInUser != null) {
-    //   data['loggedInUser'] = this.loggedInUser.toJson();
-    // }
+    if (this.loggedInUser != null) {
+      data['loggedInUser'] = this.loggedInUser.toJson();
+    }
     if (this.sizeMaster != null) {
       data['sizeMaster'] = this.sizeMaster.toJson();
     }
