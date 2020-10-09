@@ -86,7 +86,7 @@ class Master {
     marketingDisplay = json['marketingDisplay'];
     webDisplay = json['webDisplay'];
     isDeleted = json['isDeleted'];
-    sId = json['_id'];
+    sId = json['id'];
     name = json['name'];
     code = json['code'];
     normalizeName = json['normalizeName'];
@@ -106,7 +106,7 @@ class Master {
     data['marketingDisplay'] = this.marketingDisplay;
     data['webDisplay'] = this.webDisplay;
     data['isDeleted'] = this.isDeleted;
-    data['_id'] = this.sId;
+    data['id'] = this.sId;
     data['name'] = this.name;
     data['code'] = this.code;
     data['normalizeName'] = this.normalizeName;

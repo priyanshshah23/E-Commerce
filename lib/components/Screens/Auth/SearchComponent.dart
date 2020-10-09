@@ -60,7 +60,10 @@ class _SearchComponentState extends State<SearchComponent> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(title, style: appTheme.commonAlertDialogueTitleStyle,),
+              Text(
+                title,
+                style: appTheme.commonAlertDialogueTitleStyle,
+              ),
               Row(
                 children: <Widget>[
                   Expanded(
@@ -105,7 +108,8 @@ class _SearchComponentState extends State<SearchComponent> {
                     child: TextField(
                       onChanged: (value) {
                         if (value != null || value != "") {
-                          if (num.parse(value) <= min || num.parse(value) >= max) {
+                          if (num.parse(value) <= min ||
+                              num.parse(value) >= max) {
                             //showToast("Please Enter Valid value");
                             if (oldValueForTo != null || oldValueForTo != "") {
                               _maxValueController.text = oldValueForTo;
