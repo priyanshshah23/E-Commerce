@@ -67,6 +67,7 @@ class _SearchComponentState extends State<SearchComponent> {
                     child: TextField(
                       onChanged: (value) {
                         if (value != null || value != "") {
+                          if(validateValue(value)) {
                             if (num.parse(value) <= min || num.parse(value) >= max) {
                               if (oldValueForFrom != null || oldValueForFrom != "") {
                                 _minValueController.text = oldValueForFrom;
@@ -75,8 +76,15 @@ class _SearchComponentState extends State<SearchComponent> {
                                         offset: _minValueController.text.length));
                               }
                             }
+                            oldValueForFrom = _minValueController.text.trim();
+                          } else {
+                            _minValueController.text = oldValueForFrom;
+                            _minValueController.selection =
+                                TextSelection.fromPosition(TextPosition(
+                                    offset: _minValueController.text.length));
+                          }
                         }
-                        oldValueForFrom = _minValueController.text.trim();
+
                       },
                       focusNode: _focusMinValue,
                       controller: _minValueController,
@@ -135,6 +143,15 @@ class _SearchComponentState extends State<SearchComponent> {
       ],
     );
   }
+
+
+  bool validateValue(String value) {
+    Pattern pattern = r'^-?\d+(?:\.\d+)?$';
+    RegExp regex = new RegExp(pattern);
+    print(regex.hasMatch(value));
+    return (!regex.hasMatch(value)) ? false : true;
+  }
+
 
 }
 
