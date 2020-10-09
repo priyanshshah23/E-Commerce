@@ -59,23 +59,29 @@ class _SearchComponentState extends State<SearchComponent> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(title, style: appTheme.commonAlertDialogueTitleStyle,),
+              Text(
+                title,
+                style: appTheme.commonAlertDialogueTitleStyle,
+              ),
               Row(
                 children: <Widget>[
                   Expanded(
                     child: TextField(
                       onChanged: (value) {
                         if (value != null || value != "") {
-                          if(validateValue(_minValueController.text.trim()) == true) {
-                            if (num.parse(value) <= min || num.parse(value) >= max) {
-                              //showToast("Please Enter Valid value");
-                              if (oldValueForFrom != null || oldValueForFrom != "") {
-                                _minValueController.text = oldValueForFrom;
-                                _minValueController.selection =
-                                    TextSelection.fromPosition(TextPosition(
-                                        offset: _minValueController.text.length));
-                              }
+                          // if (validateValue(_minValueController.text.trim()) ==
+                          // true) {
+                          if (num.parse(value) <= min ||
+                              num.parse(value) >= max) {
+                            //showToast("Please Enter Valid value");
+                            if (oldValueForFrom != null ||
+                                oldValueForFrom != "") {
+                              _minValueController.text = oldValueForFrom;
+                              _minValueController.selection =
+                                  TextSelection.fromPosition(TextPosition(
+                                      offset: _minValueController.text.length));
                             }
+                            // }
                           }
                         }
                         oldValueForFrom = _minValueController.text.trim();
@@ -84,9 +90,10 @@ class _SearchComponentState extends State<SearchComponent> {
                       controller: _minValueController,
                       keyboardType: TextInputType.number,
                       textInputAction: TextInputAction.next,
-//                      inputFormatters: [
-//                        BlacklistingTextInputFormatter(RegExp(r'^[0-9]*\.[0-9]{3}$')),
-//                      ],
+                      inputFormatters: [
+                        BlacklistingTextInputFormatter(
+                            RegExp(r'^[0-9]*\.[0-9]{3}$')),
+                      ],
                       decoration: InputDecoration(
                         focusedBorder: UnderlineInputBorder(),
                         hintText: "From",
@@ -101,7 +108,8 @@ class _SearchComponentState extends State<SearchComponent> {
                     child: TextField(
                       onChanged: (value) {
                         if (value != null || value != "") {
-                          if (num.parse(value) <= min || num.parse(value) >= max) {
+                          if (num.parse(value) <= min ||
+                              num.parse(value) >= max) {
                             //showToast("Please Enter Valid value");
                             if (oldValueForTo != null || oldValueForTo != "") {
                               _maxValueController.text = oldValueForTo;
@@ -142,7 +150,6 @@ class _SearchComponentState extends State<SearchComponent> {
   bool validateValue(String value) {
     Pattern pattern = r'^[0-9]*\.[0-9]{2}$';
     RegExp regex = new RegExp(pattern);
-    return (!regex.hasMatch(value)) ? false : true;
+    return (regex.hasMatch(value)) ? false : true;
   }
-
 }

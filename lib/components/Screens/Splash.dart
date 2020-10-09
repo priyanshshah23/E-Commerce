@@ -25,40 +25,36 @@ class _SplashState extends State<Splash> {
     super.initState();
     Timer(
       Duration(seconds: 1),
-          () => (callMasterSync()/*callHandler()*/),
+      () => (callMasterSync() /*callHandler()*/),
     );
   }
 
-  Future openNextScreen() async {
-  }
+  Future openNextScreen() async {}
 
   @override
   Widget build(BuildContext context) {
     //callUpdateVehicleApi(context);
-    return
-            Container(
-              color: Colors.deepPurpleAccent,
-              height: MathUtilities.screenHeight(context),
-              width: MathUtilities.screenWidth(context),
-              child: Center(
-                  child: Container(
-                    width: getSize(125),
-                    height: getSize(125),
-                    child: Image.asset(
-                      splashLogo,
-                      width: getSize(125),
-                      height: getSize(125),
-
-                    ))),
-            );
-
+    return Container(
+      color: Colors.deepPurpleAccent,
+      height: MathUtilities.screenHeight(context),
+      width: MathUtilities.screenWidth(context),
+      child: Center(
+          child: Container(
+              width: getSize(125),
+              height: getSize(125),
+              child: Image.asset(
+                splashLogo,
+                width: getSize(125),
+                height: getSize(125),
+              ))),
+    );
   }
 
   bool isFailed = false;
 
   Future callMasterSync() async {
-    NavigationUtilities.pushRoute(DemoScreen.route);
-  /*  SyncManager.instance.callMasterSync(context, () {
+    NavigationUtilities.pushRoute(LoginScreen.route);
+    /*  SyncManager.instance.callMasterSync(context, () {
       //success
       callHandler();
     }, () {
@@ -76,9 +72,9 @@ class _SplashState extends State<Splash> {
   }
 
   void callHandler() {
-     Timer(
+    Timer(
       Duration(seconds: 2),
-          () => (openNextScreen()),
+      () => (openNextScreen()),
     );
   }
 }
