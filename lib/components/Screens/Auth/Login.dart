@@ -153,7 +153,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   margin: EdgeInsets.only(
                                       top: getSize(10), left: getSize(0)),
                                   child: AppButton.flat(
-                                    onTap: () {},
+                                    onTap: () {
+                                      NavigationUtilities.pushRoute(GuestSignInScreen.route);
+                                    },
                                     textColor: appTheme.colorPrimary,
                                     backgroundColor:
                                         appTheme.colorPrimary.withOpacity(0.1),

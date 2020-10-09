@@ -35,29 +35,23 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     //callUpdateVehicleApi(context);
-    return Container(
-        child: Stack(
-          children: <Widget>[
+    return
             Container(
               color: Colors.deepPurpleAccent,
               height: MathUtilities.screenHeight(context),
               width: MathUtilities.screenWidth(context),
-            ),
-            Center(
-              child: ImageAnimation(
-                  delay: Duration(seconds: 2),
+              child: Center(
                   child: Container(
                     width: getSize(125),
                     height: getSize(125),
                     child: Image.asset(
-                      user,
+                      splashLogo,
                       width: getSize(125),
                       height: getSize(125),
-                    ),
-                  )),
-            ),
-          ],
-        ));
+
+                    ))),
+            );
+
   }
 
   bool isFailed = false;

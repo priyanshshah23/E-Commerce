@@ -1,6 +1,7 @@
 import 'package:diamnow/components/Screens/Auth/DemoScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/modules/Filter/FilterScreen.dart';
+import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
 import 'package:flutter/material.dart';
 import '../app.export.dart';
 import 'fade_route.dart';
@@ -89,6 +90,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       break;
     case FilterScreen.route:
       screen = FilterScreen();
+      break;
+    case GuestSignInScreen.route:
+      screen = GuestSignInScreen();
       break;
   }
 

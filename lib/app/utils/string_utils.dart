@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:libphonenumber/libphonenumber.dart';
 
 /// Removes the timezone to allow [DateTime] to parse the string.
 String formatAppDateString(String string) {
@@ -156,6 +157,15 @@ bool validationIFSCCode(String value) {
     return false;
   }
   return true;
+}
+
+Future<bool> isValidMobile(String value, String countryCode) async {
+  if (value.length < 3) {
+    return false;
+  }
+  bool val = await PhoneNumberUtil.isValidPhoneNumber(
+      phoneNumber: value, isoCode: countryCode);
+  return val;
 }
 
 //Validator

@@ -1,5 +1,5 @@
 //Common
-
+const String splashLogo = "assets/diamnow/splashLogo.png";
 const String placeHolder = "assets/PlaceHolder/user_placeholder.png";
 const String user = "assets/auth/user.png";
 const String password = "assets/auth/padlock.png";

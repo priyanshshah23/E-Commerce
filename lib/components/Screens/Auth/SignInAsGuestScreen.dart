@@ -1,25 +1,29 @@
+import 'package:country_pickers/country.dart';
+import 'package:country_pickers/country_pickers.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/components/widgets/shared/CountryPickerWidget.dart';
 import 'package:diamnow/components/widgets/shared/app_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class GuestSignInScreen extends StatefulWidget {
+  static const route = "Guest SignIn Screen";
+
   @override
   _GuestSignInScreenState createState() => _GuestSignInScreenState();
 }
 
 class _GuestSignInScreenState extends State<GuestSignInScreen> {
-
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
-  final TextEditingController _postalCodeController = TextEditingController();
+  final TextEditingController companyController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  Country selectedDialogCountry = CountryPickerUtils.getCountryByIsoCode("US");
 
   var _focusFirstName = FocusNode();
   var _focusLastName = FocusNode();
@@ -32,7 +36,7 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
   bool isButtonEnabled = false;
   bool isFirstnamevalid = true;
   bool isLastnamevalid = true;
-  bool isAddressvalid = true;
+  bool isCompanyValid = true;
   bool isMobilevalid = true;
   bool isEmailvalid = true;
   bool isPostalCodevalid = true;
@@ -52,12 +56,29 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
             resizeToAvoidBottomPadding: false,
             resizeToAvoidBottomInset: true,
             body: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(left: getSize(20), top: getSize(26)),
+                  child: Row(
+                    children: <Widget>[
+                      Icon(Icons.arrow_back_ios),
+                      SizedBox(
+                        width: getSize(20),
+                      ),
+                      Text(
+                        "Sign In as Guest",
+                        textAlign: TextAlign.left,
+                        style: appTheme.black24TitleColor,
+                      ),
+                    ],
+                  ),
+                ),
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.only(
-                      left: getSize(26),
-                      right: getSize(26),
+                      left: getSize(20),
+                      right: getSize(20),
                       top: getSize(10),
                     ),
                     child: SingleChildScrollView(
@@ -86,11 +107,6 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
                               padding: EdgeInsets.only(top: getSize(10)),
                               child: getCompanyTextField(),
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top: getSize(10), bottom: getSize(5)),
-                              child: getPasswordTextField(),
-                            )
                           ],
                         ),
                       ),
@@ -110,17 +126,16 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
                   FocusScope.of(context).unfocus();
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
-
                   } else {
                     setState(() {
                       _autoValidate = true;
                     });
                   }
                 },
-                backgroundColor: AppTheme.of(context).theme.accentColor,
+//                backgroundColor: AppTheme.of(context).theme.accentColor,
                 borderRadius: 14,
                 fitWidth: true,
-                text: R.string().commonString.btnNextCap,
+                text: "Sign In as Guest",
               ),
             ),
           ),
@@ -128,7 +143,6 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
       ),
     );
   }
-
 
   getFirstNameTextField() {
     return CommonTextfield(
@@ -145,9 +159,9 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
         errorBorder: isFirstnamevalid
             ? null
             : OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(11)),
-          borderSide: BorderSide(width: 1, color: Colors.red),
-        ),
+                borderRadius: BorderRadius.all(Radius.circular(11)),
+                borderSide: BorderSide(width: 1, color: Colors.red),
+              ),
         inputController: _firstNameController,
         formatter: [
           WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
@@ -199,9 +213,9 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
         errorBorder: isLastnamevalid
             ? null
             : OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(11)),
-          borderSide: BorderSide(width: 1, color: Colors.red),
-        ),
+                borderRadius: BorderRadius.all(Radius.circular(11)),
+                borderSide: BorderSide(width: 1, color: Colors.red),
+              ),
         inputController: _lastNameController,
         formatter: [
           WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
@@ -253,9 +267,9 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
         errorBorder: isEmailvalid
             ? null
             : OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(11)),
-          borderSide: BorderSide(width: 1, color: Colors.red),
-        ),
+                borderRadius: BorderRadius.all(Radius.circular(11)),
+                borderSide: BorderSide(width: 1, color: Colors.red),
+              ),
         keyboardType: TextInputType.emailAddress,
         inputController: _emailController,
         formatter: [
@@ -287,7 +301,7 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
           isEmailvalid = true;
           if (_mobileController.text.isEmpty) {
             isEmailvalid = false;
-            return R.string().errorString.enterValidEmail;
+            return R.string().errorString.enterEmail;
           }
         } else if (!validateEmail(text.trim())) {
           isEmailvalid = false;
@@ -316,22 +330,26 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
         textOption: TextFieldOption(
           hintText: R.string().authStrings.mobileNumber + "*",
           prefixWid: Padding(
-            padding: EdgeInsets.only(left: getSize(15)),
+            padding: EdgeInsets.only(left: getSize(0)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Container(
-                  height: getSize(23),
-                  child: Image.asset(
-                    india,
-                  ),
+                getCommonIconWidget(
+                    imageName: phone,
+                    imageType: IconSizeType.small,
+                    color: Colors.black),
+                CountryPickerWidget(
+                  selectedDialogCountry: selectedDialogCountry,
+                  isEnabled: true,
+                  onSelectCountry: (Country country) async {
+                    selectedDialogCountry = country;
+                    await checkValidation();
+                    setState(() {});
+                  },
                 ),
                 SizedBox(
                   width: getSize(5),
-                ),
-                SizedBox(
-                  width: getSize(15),
                 ),
               ],
             ),
@@ -341,9 +359,9 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
           errorBorder: isMobilevalid
               ? null
               : OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(11)),
-            borderSide: BorderSide(width: 1, color: Colors.red),
-          ),
+                  borderRadius: BorderRadius.all(Radius.circular(11)),
+                  borderSide: BorderSide(width: 1, color: Colors.red),
+                ),
           keyboardType: TextInputType.number,
           inputController: _mobileController,
           formatter: [
@@ -371,16 +389,12 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
         validation: (text) {
           //String validateName(String value) {
           if (text.isEmpty) {
-//            isMobilevalid = true;
-//            if(_emailController.text.isNotEmpty)
-//            {
-//              isMobilevalid = false;
-//              return R.string().errorString.enterPhone;
-//
-//            }
             isMobilevalid = false;
+
             return R.string().errorString.enterPhone;
-          } else if (!validateMobile(text)) {
+          } else if (isValidMobile(_mobileController.text.trim(),
+                  selectedDialogCountry.isoCode) ==
+              false) {
             isMobilevalid = false;
 
             return R.string().errorString.enterValidPhone;
@@ -398,24 +412,49 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
     );
   }
 
+  checkValidation() async {
+    if (isStringEmpty(_mobileController.text) ||
+        _mobileController.text == "" ||
+        _mobileController.text.length < 3) {
+      isButtonEnabled = false;
+      return false;
+    } else {
+      if (await isValidMobile(
+              _mobileController.text.trim(), selectedDialogCountry.isoCode) ==
+          false) {
+        isButtonEnabled = false;
+        return false;
+      } else {
+        if (await isValidMobile(
+                _mobileController.text.trim(), selectedDialogCountry.isoCode) ==
+            false) {
+          isButtonEnabled = false;
+          return false;
+        }
+      }
+    }
+    isButtonEnabled = true;
+    return true;
+  }
+
   getCompanyTextField() {
     return CommonTextfield(
       focusNode: _focusAddress,
       textOption: TextFieldOption(
-        hintText: R.string().authStrings.address,
+        hintText: "Company Name*",
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: company,
             imageType: IconSizeType.small,
             color: Colors.black),
-        fillColor: isAddressvalid ? null : fromHex("#FFEFEF"),
-        errorBorder: isAddressvalid
+        fillColor: isCompanyValid ? null : fromHex("#FFEFEF"),
+        errorBorder: isCompanyValid
             ? null
             : OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(11)),
-          borderSide: BorderSide(width: 1, color: Colors.red),
-        ),
-        inputController: _addressController,
+                borderRadius: BorderRadius.all(Radius.circular(11)),
+                borderSide: BorderSide(width: 1, color: Colors.red),
+              ),
+        inputController: companyController,
         formatter: [BlacklistingTextInputFormatter(new RegExp(RegexForEmoji))],
         //isSecureTextField: false
       ),
@@ -423,28 +462,20 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
         if (_autoValidate) {
           if (text.trim().isEmpty) {
             setState(() {
-              isAddressvalid = false;
-            });
-          } else if (text.trim().length < 10) {
-            setState(() {
-              isAddressvalid = false;
+              isCompanyValid = false;
             });
           } else {
             setState(() {
-              isAddressvalid = true;
+              isCompanyValid = true;
             });
           }
         }
       },
       validation: (text) {
         if (text.trim().isEmpty) {
-          isAddressvalid = false;
+          isCompanyValid = false;
 
-          return R.string().errorString.enterAddress;
-        } else if (text.trim().length < 10) {
-          isAddressvalid = false;
-
-          return R.string().errorString.enterValidAddress;
+          return "Please enter Company Name.";
         } else {
           return null;
         }
@@ -452,68 +483,6 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
       inputAction: TextInputAction.next,
       onNextPress: () {
         fieldFocusChange(context, _focusPostalCode);
-      },
-    );
-  }
-
-  getPasswordTextField() {
-    return CommonTextfield(
-      focusNode: _focusPassword,
-      textOption: TextFieldOption(
-        hintText: R.string().authStrings.password + "*",
-        maxLine: 1,
-        prefixWid: getCommonIconWidget(
-            imageName: password,
-            imageType: IconSizeType.small,
-            color: Colors.black),
-        fillColor: isPasswordvalid ? null : fromHex("#FFEFEF"),
-        errorBorder: isPasswordvalid
-            ? null
-            : OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(11)),
-          borderSide: BorderSide(width: 1, color: Colors.red),
-        ),
-        isSecureTextField: true,
-        inputController: _passwordController,
-        formatter: [
-          BlacklistingTextInputFormatter(new RegExp(spaceRegEx)),
-          BlacklistingTextInputFormatter(new RegExp(RegexForEmoji))
-        ],
-        //isSecureTextField: false
-      ),
-      textCallback: (text) {
-        if (_autoValidate) {
-          if (text.trim().isEmpty) {
-            setState(() {
-              isPasswordvalid = false;
-            });
-          } else if (text.trim().length < 6) {
-            setState(() {
-              isPasswordvalid = false;
-            });
-          } else {
-            setState(() {
-              isPasswordvalid = true;
-            });
-          }
-        }
-      },
-      validation: (text) {
-        if (text.trim().isEmpty) {
-          isPasswordvalid = false;
-
-          return R.string().errorString.enterPassword;
-        } else if (text.trim().length < 6) {
-          isPasswordvalid = false;
-
-          return R.string().errorString.enterValidPassword;
-        } else {
-          return null;
-        }
-      },
-      inputAction: TextInputAction.done,
-      onNextPress: () {
-        _focusPostalCode.unfocus();
       },
     );
   }
