@@ -20,7 +20,7 @@ getBackButton(BuildContext context, {bool isWhite = false}) {
       },
       icon: Image.asset(
         back,
-        color: appTheme.textBlackColor,
+        color: isWhite ? appTheme.whiteColor : appTheme.textBlackColor,
         width: getSize(30),
         height: getSize(22),
       ),

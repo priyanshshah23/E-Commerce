@@ -7,7 +7,8 @@
     "labelTo": "To",
     "minValue": -100,
     "maxValue": 100,
-    "apiKey": "pricePerCarat"
+    "apiKey": "pricePerCarat",
+    "tab": "basic"
   },
   {
     "title": "Shape",
@@ -17,6 +18,7 @@
     "masterCode": "SHAPE",
     "verticalScroll": false,
     "isShowAll": true,
-    "isShowMore": false
+    "isShowMore": false,
+    "tab": "basic"
   }
 ]
