@@ -3,7 +3,6 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
-import 'package:diamnow/components/Screens/Auth/DemoScreen.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
@@ -326,12 +325,15 @@ class _LoginScreenState extends State<LoginScreen> {
       // save Logged In user
       if (loginResp.data != null) {
         app.resolve<PrefUtils>().saveUser(loginResp.data.user);
+        await app.resolve<PrefUtils>().saveUserToken(
+              loginResp.data.token.jwt,
+            );
       }
-      print("Login");
+
       SyncManager.instance
           .callMasterSync(NavigationUtilities.key.currentContext, () async {
         //success
-        await Config().getFilterJson();
+        
         NavigationUtilities.pushRoute(FilterScreen.route);
       }, () {},
               isNetworkError: false,

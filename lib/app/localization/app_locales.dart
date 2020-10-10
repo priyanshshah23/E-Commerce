@@ -1,14 +1,11 @@
 import 'package:diamnow/app/localization/CommonString.dart';
 import 'package:diamnow/app/localization/ErrorString.dart';
 import 'package:diamnow/app/localization/NoDataString.dart';
-import 'package:diamnow/app/localization/SupportString.dart';
 import 'package:diamnow/app/localization/ThemeString.dart';
-import 'package:diamnow/app/localization/EarningString.dart';
 
 import 'AuthStrings.dart';
-import 'IntroStrings.dart';
+
 import 'ScreenTitle.dart';
-import 'RideStrings.dart';
 
 class R {
   static BaseLocale string() => _getDefaultLocal();
@@ -46,27 +43,19 @@ class BaseLocale {
   final StringConstant stringConstant;
   final CommonString commonString;
   final ScreenTitle screenTitle;
-  final IntroStrings introStrings;
   final AuthStrings authStrings;
   final ErrorString errorString;
   final NoDataStrings noDataStrings;
   final ThemeStrings themeStrings;
-  final SupportStrings supportStrings;
-  final EarningStrings earningStrings;
-  final RideStrings rideStrings;
 
   const BaseLocale({
     this.stringConstant = const StringConstant(),
     this.commonString = const CommonString(),
     this.screenTitle = const ScreenTitle(),
-    this.introStrings = const IntroStrings(),
     this.authStrings = const AuthStrings(),
     this.errorString = const ErrorString(),
     this.noDataStrings = const NoDataStrings(),
     this.themeStrings = const ThemeStrings(),
-    this.supportStrings = const SupportStrings(),
-    this.rideStrings = const RideStrings(),
-    this.earningStrings = const EarningStrings(),
   });
 }
 

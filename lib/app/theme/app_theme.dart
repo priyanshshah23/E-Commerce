@@ -167,7 +167,6 @@ class AppTheme {
             fontWeight: FontWeight.w400,
             color: bodyTextColor,
           ),
-
         );
   }
 
@@ -185,6 +184,7 @@ class AppTheme {
       canvasColor: primaryColor,
       toggleableActiveColor: accentColor,
       textSelectionHandleColor: accentColor,
+      splashColor: Colors.transparent,
     );
   }
 

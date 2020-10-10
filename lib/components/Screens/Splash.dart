@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:io' show Platform;
 
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/components/Screens/Auth/DemoScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
+import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/widgets/shared/images.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +31,13 @@ class _SplashState extends State<Splash> {
     );
   }
 
-  Future openNextScreen() async {}
+  Future openNextScreen() async {
+    if (app.resolve<PrefUtils>().isUserLogin()) {
+      NavigationUtilities.pushRoute(FilterScreen.route);
+    } else {
+      NavigationUtilities.pushRoute(LoginScreen.route);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +61,7 @@ class _SplashState extends State<Splash> {
   bool isFailed = false;
 
   Future callMasterSync() async {
-    NavigationUtilities.pushRoute(LoginScreen.route);
-    /*  SyncManager.instance.callMasterSync(context, () {
+    SyncManager.instance.callMasterSync(context, () {
       //success
       callHandler();
     }, () {
@@ -64,7 +71,7 @@ class _SplashState extends State<Splash> {
       //   // isFailed = true;
       //   callHandler();
       // });
-    }, isNetworkError: false, isProgress: false);*/
+    }, isNetworkError: false, isProgress: false);
     /*Timer(
       Duration(seconds: 2),
       () => (),

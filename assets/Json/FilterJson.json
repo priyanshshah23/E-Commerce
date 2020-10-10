@@ -1,24 +1,47 @@
 [
   {
-    "title": "Price/Cts $",
+    "title": "Color",
     "desc": "Desc",
-    "viewType": "fromto",
-    "labelFrom": "From",
-    "labelTo": "To",
-    "minValue": -100,
-    "maxValue": 100,
-    "apiKey": "pricePerCarat",
-    "tab": "basic"
+    "viewType": "colorWidget",
+    "apiKey": "color",
+    "masterCode": "COLOR",
+    "verticalScroll": false,
+    "orientation": "vertical",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "isWhiteColor": false,
+    "sequence": 1,
+    "intensity": {
+      "title": "Intensity",
+      "apiKey": "color",
+      "masterCode": "COLOR",
+      "verticalScroll": false,
+      "isShowAll": true,
+      "isShowMore": false,
+      "isWhiteColor": false,
+      "sequence": 1
+    },
+    "overtone": {
+      "title": "Overtone",
+      "masterCode": "COLOR",
+      "verticalScroll": false,
+      "isShowAll": true,
+      "isShowMore": false,
+      "isWhiteColor": false,
+      "sequence": 2
+    }
   },
   {
-    "title": "Shape",
-    "desc": "Desc",
-    "viewType": "selection",
-    "apiKey": "shape",
-    "masterCode": "SHAPE",
+    "title": "Clarity",
+    "viewType": "Selection",
+    "apiKey": "clarity",
+    "masterCode": "CLARITY",
     "verticalScroll": false,
+    "orientation": "horizontal",
     "isShowAll": true,
     "isShowMore": false,
-    "tab": "basic"
+    "tab": "basic",
+    "sequence": 2
   }
 ]

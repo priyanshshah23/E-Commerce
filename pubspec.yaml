@@ -60,7 +60,10 @@ dependencies:
   libphonenumber: ^1.0.1
   custom_localization:
     path: ./custom_localization
+  encrypt: ^4.0.0
+  material_segmented_control: ^2.1.0+1
 
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
