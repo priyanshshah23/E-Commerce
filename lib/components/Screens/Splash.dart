@@ -8,6 +8,7 @@ import 'package:diamnow/components/Screens/Auth/DemoScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/widgets/shared/images.dart';
+import 'package:diamnow/modules/Filter/gridviewlist/GridViewList.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,11 +33,12 @@ class _SplashState extends State<Splash> {
   }
 
   Future openNextScreen() async {
-    if (app.resolve<PrefUtils>().isUserLogin()) {
-      NavigationUtilities.pushRoute(FilterScreen.route);
-    } else {
-      NavigationUtilities.pushRoute(LoginScreen.route);
-    }
+    // if (app.resolve<PrefUtils>().isUserLogin()) {
+    //   NavigationUtilities.pushRoute(FilterScreen.route);
+    // } else {
+    //   NavigationUtilities.pushRoute(LoginScreen.route);
+    // }
+    NavigationUtilities.push(GridViewList());
   }
 
   @override

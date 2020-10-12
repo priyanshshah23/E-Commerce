@@ -79,7 +79,7 @@ class SelectionModel extends FormBaseModel {
   bool isShowMoreSelected;
 
 SelectionModel({this.isShowAll,this.isShowAllSelected,
-    this.isShowMore,this.isShowMoreSelected,this.masterCode,this.masters,this.verticalScroll});
+    this.isShowMore,this.isShowMoreSelected,this.masterCode,this.masters,this.verticalScroll,this.orientation});
   SelectionModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     verticalScroll = json["verticalScroll"];
     orientation = json["orientation"];
