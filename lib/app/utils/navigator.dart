@@ -1,5 +1,6 @@
 import 'package:diamnow/components/Screens/Auth/DemoScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Auth/PDFDemo.dart';
 import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
@@ -104,6 +105,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       break;
     case MyHomePage.route:
       screen = MyHomePage();
+      break;
+    case DiamondListScreen.route:
+      screen = DiamondListScreen();
       break;
   }
 
