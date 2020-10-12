@@ -239,7 +239,7 @@ class CardItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                obj.image != null 
+                obj.image != null && obj.sId!=R.string().commonString.all && (obj.sId!="Show More" && obj.sId=="Show Less")
                     ? Image.asset(
                         obj.image,
                         color: Colors.black,
