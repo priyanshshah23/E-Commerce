@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 class Config {
   Future<List<FormBaseModel>> getFilterJson() async {
     String jsonForm =
-        await rootBundle.loadString('assets/Json/FilterJson.json');
+        await rootBundle.loadString('assets/Json/FilterJson.jsonc');
     ;
     List<dynamic> fieldList = jsonDecode(jsonForm);
     List<FormBaseModel> formModels = [];
