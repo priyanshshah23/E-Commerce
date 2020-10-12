@@ -1,0 +1,182 @@
+[
+  {
+    "title": "Color Shade",
+    "desc": "Desc",
+    "viewType": "selection",
+    "apiKey": "colorShare",
+    "masterCode": "SHADE",
+    "verticalScroll": false,
+    "orientation": "vertical",
+    "isShowAll": true,
+    "isShowMore": false,
+    "tab": "basic",
+    "isWhiteColor": false,
+    "sequence": 1
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 2,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Clarity",
+    "viewType": "selection",
+    "apiKey": "clarity",
+    "masterCode": "CLARITY",
+    "verticalScroll": false,
+    "orientation": "horizontal",
+    "isShowAll": true,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 3
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 4,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Fluorescence",
+    "viewType": "selection",
+    "apiKey": "fluorescence",
+    "masterCode": "FLUORESCENCE",
+    "verticalScroll": false,
+    "orientation": "horizontal",
+    "isShowAll": true,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 10
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Lab",
+    "viewType": "selection",
+    "apiKey": "location",
+    "masterCode": "LAB",
+    "verticalScroll": false,
+    "orientation": "horizontal",
+    "isShowAll": true,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 10
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Location",
+    "viewType": "selection",
+    "apiKey": "location",
+    "masterCode": "LOCATION",
+    "verticalScroll": false,
+    "orientation": "horizontal",
+    "isShowAll": true,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 10
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "H & A",
+    "viewType": "selection",
+    "apiKey": "clarity",
+    "masterCode": "H_AND_A",
+    "verticalScroll": false,
+    "orientation": "horizontal",
+    "isShowAll": true,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 10
+  },
+  {
+    "title": "Brilliance",
+    "viewType": "selection",
+    "apiKey": "clarity",
+    "masterCode": "BRILLIANCY",
+    "verticalScroll": false,
+    "orientation": "horizontal",
+    "isShowAll": true,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 11
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Price / Carat",
+    "viewType": "fromto",
+    "apiKey": "pricePerCarat",
+    "sequence": 4,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "maxValue": 100,
+    "minValue": -100
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 5,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Disc %",
+    "viewType": "fromto",
+    "apiKey": "Disc %",
+    "sequence": 6,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Table%",
+    "viewType": "fromto",
+    "apiKey": "Table%",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "maxValue": 100,
+    "minValue": 0
+  }
+]

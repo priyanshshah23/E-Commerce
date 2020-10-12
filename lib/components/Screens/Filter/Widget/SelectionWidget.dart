@@ -97,7 +97,7 @@ class _TagWidgetState extends State<TagWidget> {
         isNullEmptyOrFalse(widget.model.title)
             ? SizedBox()
             : Container(
-                width: getSize(60),
+                width: getSize(80),
                 child: Text(
                   widget.model.title ?? "",
                   style: appTheme.blackNormal14TitleColorblack,
@@ -158,11 +158,13 @@ class _TagWidgetState extends State<TagWidget> {
               bottom: getSize(8.0),
               right: getSize(16.0),
               left: getSize(16.0)),
-          child: Text(
-            widget.model.masters[index].webDisplay,
-            style: widget.model.masters[index].isSelected
-                ? appTheme.primaryColor14TextStyle
-                : appTheme.blackNormal14TitleColorblack,
+          child: Center(
+            child: Text(
+              widget.model.masters[index].webDisplay,
+              style: widget.model.masters[index].isSelected
+                  ? appTheme.primaryColor14TextStyle
+                  : appTheme.blackNormal14TitleColorblack,
+            ),
           ),
         ),
       ),
