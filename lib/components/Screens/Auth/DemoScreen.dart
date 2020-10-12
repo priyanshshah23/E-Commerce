@@ -1,7 +1,6 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
-import 'package:diamnow/components/Screens/Auth/SearchComponent.dart';
 import 'package:flutter/material.dart';
 
 class DemoScreen extends StatefulWidget {
@@ -25,23 +24,24 @@ class _DemoScreenState extends State<DemoScreen> {
             SizedBox(
               height: getSize(20),
             ),
-            SearchComponent(
-              title: "amount",
-              min: 00,
-              max: 300,
-              setValue: changeValuesOfMinMax,
-            ),
-            SearchComponent(
-              title: "data",
-              min: -10,
-              max: 300.50,
-              setValue: changeValuesOfMinMax,
-            ),
+            // SearchComponent(
+            //   title: "amount",
+            //   min: 00,
+            //   max: 300,
+            //   setValue: changeValuesOfMinMax,
+            // ),
+            // SearchComponent(
+            //   title: "data",
+            //   min: -10,
+            //   max: 300.50,
+            //   setValue: changeValuesOfMinMax,
+            // ),
             SizedBox(
               height: getSize(20),
             ),
             Container(
-              margin: EdgeInsets.only(right: getSize(20), left: getSize(20),top: getSize(30)),
+              margin: EdgeInsets.only(
+                  right: getSize(20), left: getSize(20), top: getSize(30)),
               child: AppButton.flat(
                 onTap: () {
                   if (maxValue != null && minValue != null) {
@@ -51,7 +51,7 @@ class _DemoScreenState extends State<DemoScreen> {
                             title: "Value Error",
                             desc:
                                 "Max Value should be grater than or equal to min value",
-                        positiveBtnTitle: "Try Again",
+                            positiveBtnTitle: "Try Again",
                           );
                     } else {
                       NavigationUtilities.pushRoute(LoginScreen.route);

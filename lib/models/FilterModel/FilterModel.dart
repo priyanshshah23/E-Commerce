@@ -2,34 +2,53 @@ import 'dart:convert';
 
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
+import 'package:diamnow/models/FilterModel/TabModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class Config {
+  Future<List<TabModel>> getTabJson() async {
+    String jsonForm = await rootBundle.loadString('assets/Json/TabJson.json');
+
+    List<dynamic> fieldList = jsonDecode(jsonForm);
+    List<TabModel> tabModels = [];
+    for (int i = 0; i < fieldList.length; i++) {
+      dynamic element = fieldList[i];
+      if (element is Map<String, dynamic>) {
+        tabModels.add(TabModel.fromJson(element));
+      }
+    }
+    return tabModels;
+  }
+
   Future<List<FormBaseModel>> getFilterJson() async {
     String jsonForm =
-        await rootBundle.loadString('assets/Json/FilterJson.json');
-    ;
+        await rootBundle.loadString('assets/Json/FilterJson.jsonc');
+
     List<dynamic> fieldList = jsonDecode(jsonForm);
     List<FormBaseModel> formModels = [];
     for (int i = 0; i < fieldList.length; i++) {
       dynamic element = fieldList[i];
       if (element is Map<String, dynamic>) {
         String viewType = element["viewType"];
-        if (viewType == "FromTo") {
+        if (viewType == ViewTypes.fromTo) {
           formModels.add(FromToModel.fromJson(element));
-        } else if (viewType == "Selection") {
+        } else if (viewType == ViewTypes.selection) {
           SelectionModel selectionModel = SelectionModel.fromJson(element);
+          formModels.add(selectionModel);
           List<Master> arrMaster =
               await Master.getSubMaster(selectionModel.masterCode);
           selectionModel.masters = arrMaster;
-          formModels.add(selectionModel);
-        } else if (viewType == "colorWidget") {
+        } else if (viewType == ViewTypes.colorWidget) {
           ColorModel colorModel = ColorModel.fromJson(element);
           formModels.add(colorModel);
           List<Master> arrMaster =
               await Master.getSubMaster(colorModel.masterCode);
           colorModel.masters = arrMaster;
+        } else if (viewType == ViewTypes.seperator) {
+          SeperatorModel seperatorModel = SeperatorModel.fromJson(element);
+          formModels.add(seperatorModel);
         }
       }
     }
@@ -41,12 +60,16 @@ class FormBaseModel {
   String title;
   String apiKey;
   String desc;
+  String viewType;
+  String tab;
 
-FormBaseModel({this.apiKey,this.desc,this.title});
+  FormBaseModel({this.apiKey, this.desc, this.title});
   FormBaseModel.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     apiKey = json['apiKey'];
     desc = json['desc'];
+    viewType = json["viewType"];
+    tab = json["tab"];
   }
 }
 
@@ -55,14 +78,12 @@ class FromToModel extends FormBaseModel {
   String labelTo;
   String valueFrom;
   String valueTo;
-  String maxValue;
-  String minValue;
+  num maxValue;
+  num minValue;
 
   FromToModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     labelFrom = json['labelFrom'];
     labelTo = json['labelTo'];
-    valueFrom = json['valueFrom'];
-    valueTo = json['valueTo'];
     maxValue = json['maxValue'];
     minValue = json['minValue'];
   }
@@ -97,4 +118,18 @@ class ColorModel extends SelectionModel {
   SelectionModel overtone;
 
   ColorModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {}
+}
+
+class SeperatorModel extends SelectionModel {
+  num height;
+  Color color;
+  num leftPadding;
+  num rightPadding;
+
+  SeperatorModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    height = json["height"] ?? 1;
+    color = fromHex(json['color'] ?? "#E3E3E3");
+    leftPadding = json['leftPadding'] ?? 0;
+    rightPadding = json["rightPadding"] ?? 0;
+  }
 }

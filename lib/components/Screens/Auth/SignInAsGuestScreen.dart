@@ -2,19 +2,21 @@ import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_pickers.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/components/widgets/shared/CountryPickerWidget.dart';
 import 'package:diamnow/components/widgets/shared/app_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class GuestSignInScreen extends StatefulWidget {
+class GuestSignInScreen extends StatefulScreenWidget {
   static const route = "Guest SignIn Screen";
 
   @override
   _GuestSignInScreenState createState() => _GuestSignInScreenState();
 }
 
-class _GuestSignInScreenState extends State<GuestSignInScreen> {
+class _GuestSignInScreenState extends StatefulScreenWidgetState {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _firstNameController = TextEditingController();
@@ -30,18 +32,15 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
   var _focusEmail = FocusNode();
   var _focusMobile = FocusNode();
   var _focusAddress = FocusNode();
-  var _focusPostalCode = FocusNode();
-  var _focusPassword = FocusNode();
 
-  bool isButtonEnabled = false;
   bool isFirstnamevalid = true;
   bool isLastnamevalid = true;
   bool isCompanyValid = true;
   bool isMobilevalid = true;
   bool isEmailvalid = true;
-  bool isPostalCodevalid = true;
-  bool isPasswordvalid = true;
-
+  bool termCondition = false;
+  bool showTermValidation = false;
+  bool order = false;
   bool _autoValidate = false;
 
   @override
@@ -67,7 +66,7 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
                         width: getSize(20),
                       ),
                       Text(
-                        "Sign In as Guest",
+                        R.string().authStrings.signInAsGuest,
                         textAlign: TextAlign.left,
                         style: appTheme.black24TitleColor,
                       ),
@@ -88,7 +87,7 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
                         child: Column(
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.only(top: getSize(10)),
+                              padding: EdgeInsets.only(top: getSize(100)),
                               child: getFirstNameTextField(),
                             ),
                             Padding(
@@ -107,6 +106,18 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
                               padding: EdgeInsets.only(top: getSize(10)),
                               child: getCompanyTextField(),
                             ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: getSize(20),
+                              ),
+                              child: getConditionCheckBox(),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                bottom: getSize(20),
+                              ),
+                              child: getOrderCheckBox(),
+                            ),
                           ],
                         ),
                       ),
@@ -124,6 +135,9 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
               decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
               child: AppButton.flat(
                 onTap: () {
+                  if (termCondition == false) {
+                    showTermValidation = true;
+                  }
                   FocusScope.of(context).unfocus();
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
@@ -131,11 +145,14 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
                     setState(() {
                       _autoValidate = true;
                     });
+                    if(_mobileController.text.isNotEmpty){
+                      checkValidation();
+                    }
                   }
                 },
                 fitWidth: true,
                 borderRadius: getSize(5),
-                text: "Sign In as Guest",
+                text: R.string().authStrings.signInAsGuest,
               ),
             ),
           ),
@@ -298,21 +315,12 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
       validation: (text) {
         print('test ${text.isEmpty}');
         if (text.trim().isEmpty) {
-          isEmailvalid = true;
-          if (_mobileController.text.isEmpty) {
-            isEmailvalid = false;
-            return R.string().errorString.enterEmail;
-          }
+          return R.string().errorString.enterEmail;
         } else if (!validateEmail(text.trim())) {
-          isEmailvalid = false;
           return R.string().errorString.enterValidEmail;
         } else {
           return null;
         }
-
-        return null;
-
-        // }
       },
       inputAction: TextInputAction.next,
       onNextPress: () {
@@ -355,13 +363,6 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
             ),
           ),
           maxLine: 1,
-          fillColor: isMobilevalid ? null : fromHex("#FFEFEF"),
-          errorBorder: isMobilevalid
-              ? null
-              : OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(11)),
-                  borderSide: BorderSide(width: 1, color: Colors.red),
-                ),
           keyboardType: TextInputType.number,
           inputController: _mobileController,
           formatter: [
@@ -369,13 +370,9 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
                 editingValidator: DecimalNumberEditingRegexValidator(10)),
           ],
         ),
-        textCallback: (text) {
+        textCallback: (text) async {
           if (_autoValidate) {
             if (text.isEmpty) {
-              setState(() {
-                isMobilevalid = false;
-              });
-            } else if (!validateMobile(text)) {
               setState(() {
                 isMobilevalid = false;
               });
@@ -384,25 +381,25 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
                 isMobilevalid = true;
               });
             }
+          }else{
+            await checkValidation();
           }
         },
         validation: (text) {
-          //String validateName(String value) {
           if (text.isEmpty) {
             isMobilevalid = false;
-
             return R.string().errorString.enterPhone;
-          } else if (isValidMobile(_mobileController.text.trim(),
-                  selectedDialogCountry.isoCode) ==
-              false) {
-            isMobilevalid = false;
-
-            return R.string().errorString.enterValidPhone;
-          } else {
+          }
+//          else if (await isValidMobile(_mobileController.text.trim(),
+//                  selectedDialogCountry.isoCode) ==
+//              false) {
+//            isMobilevalid = false;
+//
+//            return R.string().errorString.enterValidPhone;
+//          }
+          else {
             return null;
           }
-
-          // }
         },
         inputAction: TextInputAction.next,
         onNextPress: () {
@@ -413,28 +410,13 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
   }
 
   checkValidation() async {
-    if (isStringEmpty(_mobileController.text) ||
-        _mobileController.text == "" ||
-        _mobileController.text.length < 3) {
-      isButtonEnabled = false;
-      return false;
+    if (await isValidMobile(
+            _mobileController.text.trim(), selectedDialogCountry.isoCode) ==
+        false) {
+      return showToast(R.string().errorString.enterValidPhone,context: context);
     } else {
-      if (await isValidMobile(
-              _mobileController.text.trim(), selectedDialogCountry.isoCode) ==
-          false) {
-        isButtonEnabled = false;
-        return false;
-      } else {
-        if (await isValidMobile(
-                _mobileController.text.trim(), selectedDialogCountry.isoCode) ==
-            false) {
-          isButtonEnabled = false;
-          return false;
-        }
-      }
+      return null;
     }
-    isButtonEnabled = true;
-    return true;
   }
 
   getCompanyTextField() {
@@ -480,10 +462,77 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
           return null;
         }
       },
-      inputAction: TextInputAction.next,
+      inputAction: TextInputAction.done,
       onNextPress: () {
-        fieldFocusChange(context, _focusPostalCode);
+        _focusAddress.unfocus();
       },
+    );
+  }
+
+  getConditionCheckBox() {
+    return Column(
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            InkWell(
+              onTap: () {
+                setState(() {
+                  termCondition = !termCondition;
+                  showTermValidation = false;
+                });
+              },
+              child: Image.asset(
+                termCondition ? selectedCheckbox : unSelectedCheckbox,
+                height: getSize(20),
+                width: getSize(20),
+              ),
+            ),
+            SizedBox(
+              width: getSize(10),
+            ),
+            Text(
+              "Terms and Condition*",
+              style: appTheme.black14TextStyle,
+            )
+          ],
+        ),
+        Visibility(
+          visible: showTermValidation,
+          child: Padding(
+            padding: EdgeInsets.only(top: getSize(10)),
+            child: Text(
+              "You must agree to terms and condition to Sign In as Guest User",
+              style: appTheme.error16TextStyle,
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  getOrderCheckBox() {
+    return Row(
+      children: <Widget>[
+        InkWell(
+          onTap: () {
+            setState(() {
+              order = !order;
+            });
+          },
+          child: Image.asset(
+            order ? selectedCheckbox : unSelectedCheckbox,
+            height: getSize(20),
+            width: getSize(20),
+          ),
+        ),
+        SizedBox(
+          width: getSize(10),
+        ),
+        Text(
+          "Promotional offers, newsletters and stock updates",
+          style: appTheme.black14TextStyle,
+        )
+      ],
     );
   }
 }

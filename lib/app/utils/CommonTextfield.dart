@@ -5,6 +5,8 @@ import 'package:flutter/widgets.dart';
 import '../app.export.dart';
 import 'math_utils.dart';
 
+typedef OnValidation(String text);
+
 class CommonTextfield extends StatefulWidget {
   final TextFieldOption textOption;
   final Function(String text) textCallback;
@@ -17,7 +19,7 @@ class CommonTextfield extends StatefulWidget {
   final bool autoFocus;
   final bool autoCorrect;
   final bool alignment;
-  final Function(String text) validation;
+  final OnValidation validation;
   TextStyle hintStyleText;
 
   CommonTextfield(

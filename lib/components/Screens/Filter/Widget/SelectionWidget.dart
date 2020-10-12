@@ -34,12 +34,18 @@ class _TagWidgetState extends State<TagWidget> {
     super.initState();
 
     if (widget.model.isShowAll == true) {
-      Master allMaster = Master();
-      allMaster.sId = R.string().commonString.all;
-      allMaster.webDisplay = R.string().commonString.all;
-      allMaster.isSelected = false;
+      if (widget.model.masters
+              .where((element) => element.sId == R.string().commonString.all)
+              .toList()
+              .length ==
+          0) {
+        Master allMaster = Master();
+        allMaster.sId = R.string().commonString.all;
+        allMaster.webDisplay = R.string().commonString.all;
+        allMaster.isSelected = false;
 
-      widget.model.masters.insert(0, allMaster);
+        widget.model.masters.insert(0, allMaster);
+      }
     }
   }
 
@@ -59,12 +65,12 @@ class _TagWidgetState extends State<TagWidget> {
             ? SizedBox()
             : Text(
                 widget.model.title ?? "",
-                style: appTheme.blackNormal14TitleColorblack,
+                style: appTheme.blackNormal18TitleColorblack,
                 textAlign: TextAlign.left,
               ),
         isNullEmptyOrFalse(widget.model.title)
             ? SizedBox()
-            : SizedBox(height: getSize(16)),
+            : SizedBox(height: getSize(20)),
         Container(
           height: getSize(40),
           child: ListView.builder(
@@ -97,7 +103,7 @@ class _TagWidgetState extends State<TagWidget> {
         isNullEmptyOrFalse(widget.model.title)
             ? SizedBox()
             : Container(
-                width: getSize(60),
+                width: getSize(80),
                 child: Text(
                   widget.model.title ?? "",
                   style: appTheme.blackNormal14TitleColorblack,
@@ -130,14 +136,13 @@ class _TagWidgetState extends State<TagWidget> {
             ),
           ),
         ),
-        
       ],
     );
   }
 
   getSingleTag(int index) {
     return Padding(
-      padding: EdgeInsets.only(left: getSize(8.0)),
+      padding: EdgeInsets.only(right: getSize(8.0)),
       child: Container(
         decoration: BoxDecoration(
           color: widget.model.masters[index].isSelected
@@ -159,11 +164,13 @@ class _TagWidgetState extends State<TagWidget> {
               bottom: getSize(8.0),
               right: getSize(16.0),
               left: getSize(16.0)),
-          child: Text(
-            widget.model.masters[index].webDisplay,
-            style: widget.model.masters[index].isSelected
-                ? appTheme.primaryColor14TextStyle
-                : appTheme.blackNormal14TitleColorblack,
+          child: Center(
+            child: Text(
+              widget.model.masters[index].webDisplay,
+              style: widget.model.masters[index].isSelected
+                  ? appTheme.primaryColor14TextStyle
+                  : appTheme.blackNormal14TitleColorblack,
+            ),
           ),
         ),
       ),
