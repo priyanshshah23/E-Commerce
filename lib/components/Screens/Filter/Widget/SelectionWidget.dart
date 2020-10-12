@@ -34,12 +34,18 @@ class _TagWidgetState extends State<TagWidget> {
     super.initState();
 
     if (widget.model.isShowAll == true) {
-      Master allMaster = Master();
-      allMaster.sId = R.string().commonString.all;
-      allMaster.webDisplay = R.string().commonString.all;
-      allMaster.isSelected = false;
+      if (widget.model.masters
+              .where((element) => element.sId == R.string().commonString.all)
+              .toList()
+              .length ==
+          0) {
+        Master allMaster = Master();
+        allMaster.sId = R.string().commonString.all;
+        allMaster.webDisplay = R.string().commonString.all;
+        allMaster.isSelected = false;
 
-      widget.model.masters.insert(0, allMaster);
+        widget.model.masters.insert(0, allMaster);
+      }
     }
   }
 

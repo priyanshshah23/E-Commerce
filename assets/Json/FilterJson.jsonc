@@ -102,13 +102,57 @@
     "rightPadding": 0
   },
   {
+    "title": "Cut",
+    "viewType": "selection",
+    "apiKey": "cut",
+    "masterCode": "CUT",
+    "verticalScroll": false,
+    "orientation": "horizontal",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 10
+  },
+  {
+    "title": "Polish",
+    "viewType": "selection",
+    "apiKey": "clarity",
+    "masterCode": "POLISH",
+    "verticalScroll": false,
+    "orientation": "horizontal",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 11
+  },
+  {
+    "title": "Symmetry",
+    "viewType": "selection",
+    "apiKey": "sym",
+    "masterCode": "SYMMETRY",
+    "verticalScroll": false,
+    "orientation": "horizontal",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 11
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
     "title": "H & A",
     "viewType": "selection",
     "apiKey": "clarity",
     "masterCode": "H_AND_A",
     "verticalScroll": false,
     "orientation": "horizontal",
-    "isShowAll": true,
+    "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
     "sequence": 10
@@ -120,7 +164,7 @@
     "masterCode": "BRILLIANCY",
     "verticalScroll": false,
     "orientation": "horizontal",
-    "isShowAll": true,
+    "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
     "sequence": 11
