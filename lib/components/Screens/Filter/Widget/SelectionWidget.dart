@@ -72,7 +72,7 @@ class _TagWidgetState extends State<TagWidget> {
         isNullEmptyOrFalse(widget.model.title)
             ? SizedBox()
             : SizedBox(height: getSize(20)),
-        Container(
+         Container(
           height: getSize(40),
           child: ListView.builder(
             shrinkWrap: true,

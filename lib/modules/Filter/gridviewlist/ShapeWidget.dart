@@ -18,39 +18,54 @@ class ShapeWidget extends StatefulWidget {
 }
 
 class _ShapeWidgetState extends State<ShapeWidget> {
-
   //show when isShowMoreSelected=false;
+
   int elementsToShow = 6;
   List<Master> listOfMasterView = [];
 
   @override
   void initState() {
     super.initState();
-  
-    if (widget.selectionModel.isShowAll == true) {
-      Master allMaster = Master();
-      allMaster.sId = R.string().commonString.all;
-      allMaster.webDisplay = R.string().commonString.all;
-      allMaster.isSelected = false;
 
-      widget.selectionModel.masters.insert(0, allMaster);
+    if (widget.selectionModel.isShowAll == true) {
+      if (widget.selectionModel.masters
+              .where((element) => element.sId == R.string().commonString.all)
+              .toList()
+              .length ==
+          0) {
+        Master allMaster = Master();
+        allMaster.sId = R.string().commonString.all;
+        allMaster.webDisplay = R.string().commonString.all;
+        allMaster.isSelected = false;
+
+        widget.selectionModel.masters.insert(0, allMaster);
+      }
     }
     if (widget.selectionModel.isShowMore) {
-      Master allMaster = Master();
-      allMaster.sId =
-          widget.selectionModel.isShowMoreSelected ? "Show More" : "Show Less";
-      allMaster.webDisplay =
-          widget.selectionModel.isShowMoreSelected ? "Show More" : "Show Less";
-      allMaster.isSelected = false;
+      if (widget.selectionModel.masters
+              .where((element) => element.sId == "Show More" || element.sId == "Show Less")
+              .toList()
+              .length ==
+          0) {
+        Master allMaster = Master();
+        allMaster.sId = widget.selectionModel.isShowMoreSelected
+            ? "Show More"
+            : "Show Less";
+        allMaster.webDisplay = widget.selectionModel.isShowMoreSelected
+            ? "Show More"
+            : "Show Less";
+        allMaster.isSelected = false;
 
-      widget.selectionModel.masters.insert(widget.selectionModel.masters.length, allMaster);
+        widget.selectionModel.masters
+            .insert(widget.selectionModel.masters.length, allMaster);
+      }
     }
 
     for (var masterIndex = 0; masterIndex < elementsToShow; masterIndex++) {
       listOfMasterView.add(widget.selectionModel.masters[masterIndex]);
     }
-    listOfMasterView
-        .add(widget.selectionModel.masters[widget.selectionModel.masters.length - 1]);
+    listOfMasterView.add(widget
+        .selectionModel.masters[widget.selectionModel.masters.length - 1]);
   }
 
   @override
@@ -61,20 +76,20 @@ class _ShapeWidgetState extends State<ShapeWidget> {
     final double itemHeight = (size.height - kToolbarHeight - 220) / 2;
     final double itemWidth = size.width / 2;
 
-    return  Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Text(
-            widget.selectionModel.title ?? "Shapes",
-            style: appTheme.blackNormal18TitleColorblack,
-            textAlign: TextAlign.left,
-          ),
-          SizedBox(
-            height: getSize(20),
-          ),
-          widget.selectionModel.verticalScroll
-              ? GridView.count(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Text(
+          widget.selectionModel.title ?? "Shapes",
+          style: appTheme.blackNormal18TitleColorblack,
+          textAlign: TextAlign.left,
+        ),
+        SizedBox(
+          height: getSize(20),
+        ),
+        widget.selectionModel.verticalScroll
+            ? GridView.count(
                 shrinkWrap: true,
                 primary: false,
                 childAspectRatio: (itemWidth / itemHeight),
@@ -109,7 +124,8 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                           selectionModel: widget.selectionModel,
                         ),
                       );
-                    } else if (widget.selectionModel.isShowMoreSelected == false &&
+                    } else if (widget.selectionModel.isShowMoreSelected ==
+                            false &&
                         widget.selectionModel.isShowMore &&
                         index == totalIndex - 1) {
                       obj.sId = "Show Less";
@@ -125,7 +141,8 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                           selectionModel: widget.selectionModel,
                         ),
                       );
-                    } else if (widget.selectionModel.isShowMoreSelected == true &&
+                    } else if (widget.selectionModel.isShowMoreSelected ==
+                            true &&
                         widget.selectionModel.isShowMore &&
                         index == totalIndex - 1) {
                       obj.sId = "Show More";
@@ -153,8 +170,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                             widget.selectionModel.isShowAllSelected = false;
                           }
                           widget.selectionModel.masters.forEach((element) {
-                            if (element.sId ==
-                                    R.string().commonString.all &&
+                            if (element.sId == R.string().commonString.all &&
                                 element.isSelected &&
                                 obj.isSelected) {
                               element.isSelected = false;
@@ -184,9 +200,8 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                   },
                 ),
               )
-              : SelectionWidget(widget.selectionModel),
-        ],
-      
+            : SelectionWidget(widget.selectionModel),
+      ],
     );
   }
 
@@ -239,7 +254,9 @@ class CardItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                obj.image != null && obj.sId!=R.string().commonString.all && (obj.sId!="Show More" && obj.sId=="Show Less")
+                obj.image != null &&
+                        obj.sId != R.string().commonString.all &&
+                        (obj.sId != "Show More" && obj.sId != "Show Less")
                     ? Image.asset(
                         obj.image,
                         color: Colors.black,
