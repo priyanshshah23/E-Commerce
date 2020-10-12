@@ -1,3 +1,4 @@
+import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
 import 'package:retrofit/retrofit.dart';
@@ -14,4 +15,7 @@ abstract class NetworkService {
 
   @POST(ApiConstants.login)
   Future<LoginResp> login(@Body() LoginReq req);
+
+  @POST(ApiConstants.diamondList)
+  Future<BaseApiResp> diamondList(@Body() DiamondListReq req);
 }

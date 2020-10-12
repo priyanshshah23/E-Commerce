@@ -159,6 +159,7 @@ class CommonString {
 
   //RS Symbol String
   final String rs;
+  final String doller;
 
   const CommonString({
     this.all = "All",
@@ -318,5 +319,6 @@ class CommonString {
 
     //RS Symbol String
     this.rs = "\u20B9",
+    this.doller = "\u0024",
   });
 }

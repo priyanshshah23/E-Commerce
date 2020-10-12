@@ -2,13 +2,14 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:diamnow/app/Helper/AppDatabase.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
 class SyncManager {
   static final SyncManager _instance = SyncManager._internal();
@@ -68,6 +69,36 @@ class SyncManager {
       // callHandler()
     }).catchError((onError) => {
               failure(),
+              if (isNetworkError)
+                {
+                  // showToast((onError is ErrorResp)
+                  //     ? onError.message
+                  //     : onError.toString()),
+                },
+            });
+  }
+
+  Future callApiForDiamondList(
+    BuildContext context,
+        DiamondListReq req,
+    Function(BaseApiResp) success,
+    Function failure, {
+    bool isNetworkError = true,
+    bool isProgress = true,
+  }) async {
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().diamondList(req),
+            context,
+            isProgress: isProgress,
+            isNetworkError: isNetworkError)
+        .then((diamondListResp) async {
+          success(diamondListResp);
+
+    }).catchError((onError) => {
+      print(onError),
+              //failure(),
               if (isNetworkError)
                 {
                   // showToast((onError is ErrorResp)
