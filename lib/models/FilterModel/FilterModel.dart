@@ -95,18 +95,18 @@ class SelectionModel extends FormBaseModel {
   String orientation;
   bool verticalScroll;
   bool isShowAll;
-  bool isShowAllSelected;
+  bool isShowAllSelected = false;
   bool isShowMore;
-  bool isShowMoreSelected;
+  bool isShowMoreSelected = false;
 
-SelectionModel({this.isShowAll,this.isShowAllSelected,
-    this.isShowMore,this.isShowMoreSelected,this.masterCode,this.masters,this.verticalScroll,this.orientation});
+
   SelectionModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
-    verticalScroll = json["verticalScroll"];
+    verticalScroll = json["verticalScroll"] ?? false;
     orientation = json["orientation"];
     isShowAll = json['isShowAll'] ?? false;
     isShowMore = json['isShowMore'] ?? false;
     masterCode = json["masterCode"];
+   
   }
 }
 

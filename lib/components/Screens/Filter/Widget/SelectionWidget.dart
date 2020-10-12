@@ -1,6 +1,7 @@
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
+import 'package:diamnow/modules/Filter/gridviewlist/ShapeWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:diamnow/app/app.export.dart';
@@ -16,7 +17,7 @@ class SelectionWidget extends StatefulWidget {
 class _SelectionWidgetState extends State<SelectionWidget> {
   @override
   Widget build(BuildContext context) {
-    return TagWidget(widget.selectionModel);
+    return widget.selectionModel.verticalScroll ? ShapeWidget(widget.selectionModel) : TagWidget(widget.selectionModel);
   }
 }
 

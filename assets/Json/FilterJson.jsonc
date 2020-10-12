@@ -1,5 +1,17 @@
 [
   {
+    "title": "Shape",
+    "viewType": "selection",
+    "apiKey": "shape",
+    "masterCode": "SHAPE",
+    "verticalScroll": true,
+    "orientation": "vertical",
+    "isShowAll": true,
+    "isShowMore": true,
+    "tab": "basic",
+    "sequence": 1
+  },
+  {
     "title": "Color Shade",
     "desc": "Desc",
     "viewType": "selection",
