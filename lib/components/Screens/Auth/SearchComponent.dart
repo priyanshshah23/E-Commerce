@@ -70,7 +70,7 @@ class _SearchComponentState extends State<SearchComponent> {
                     child: TextField(
                       onChanged: (value) {
                         if (value != null || value != "") {
-                          if(validateValue(value)) {
+//                          if(validateValue(value)) {
                             if (num.parse(value) <= min || num.parse(value) >= max) {
                               if (oldValueForFrom != null || oldValueForFrom != "") {
                                 _minValueController.text = oldValueForFrom;
@@ -80,12 +80,12 @@ class _SearchComponentState extends State<SearchComponent> {
                               }
                             }
                             oldValueForFrom = _minValueController.text.trim();
-                          } else {
-                            _minValueController.text = oldValueForFrom;
-                            _minValueController.selection =
-                                TextSelection.fromPosition(TextPosition(
-                                    offset: _minValueController.text.length));
-                          }
+//                          } else {
+//                            _minValueController.text = oldValueForFrom;
+//                            _minValueController.selection =
+//                                TextSelection.fromPosition(TextPosition(
+//                                    offset: _minValueController.text.length));
+//                          }
                         }
 
                       },
