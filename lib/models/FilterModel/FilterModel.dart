@@ -35,6 +35,7 @@ class FormBaseModel {
   String apiKey;
   String desc;
 
+FormBaseModel({this.apiKey,this.desc,this.title});
   FormBaseModel.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     apiKey = json['apiKey'];
@@ -69,6 +70,8 @@ class SelectionModel extends FormBaseModel {
   bool isShowMore;
   bool isShowMoreSelected;
 
+SelectionModel({this.isShowAll,this.isShowAllSelected,
+    this.isShowMore,this.isShowMoreSelected,this.masterCode,this.masters,this.verticalScroll});
   SelectionModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     verticalScroll = json["verticalScroll"];
     isShowAll = json['isShowAll'];
