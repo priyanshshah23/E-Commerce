@@ -1,0 +1,490 @@
+[
+  {
+    "title": "Shape",
+    "viewType": "selection",
+    "apiKey": "shape",
+    "masterCode": "SHAPE",
+    "verticalScroll": true,
+    "orientation": "vertical",
+    "isShowAll": true,
+    "isShowMore": true,
+    "tab": "basic",
+    "sequence": 1
+  },
+  {
+    "title": "Color Shade",
+    "desc": "Desc",
+    "viewType": "selection",
+    "apiKey": "colorShare",
+    "masterCode": "SHADE",
+    "verticalScroll": false,
+    "orientation": "vertical",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "isWhiteColor": false,
+    "sequence": 1
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 2,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "basic",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Clarity",
+    "viewType": "selection",
+    "apiKey": "clarity",
+    "masterCode": "CLARITY",
+    "verticalScroll": false,
+    "orientation": "vertical",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 3
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 4,
+    "height": 1,
+    "color": "#FFFFFF",
+    "leftPadding": 0,
+    "tab": "basic",
+    "rightPadding": 0
+  },
+  {
+    "title": "Fluorescence",
+    "viewType": "selection",
+    "apiKey": "fluorescence",
+    "masterCode": "FLUORESCENCE",
+    "verticalScroll": false,
+    "orientation": "vertical",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 10
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "basic",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Lab",
+    "viewType": "selection",
+    "apiKey": "location",
+    "masterCode": "LAB",
+    "verticalScroll": false,
+    "orientation": "vertical",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 10
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#FFFFFF",
+    "leftPadding": 0,
+    "tab": "basic",
+    "rightPadding": 0
+  },
+  {
+    "title": "Location",
+    "viewType": "selection",
+    "apiKey": "location",
+    "masterCode": "LOCATION",
+    "verticalScroll": false,
+    "orientation": "vertical",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 10
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#FFFFFF",
+    "leftPadding": 0,
+    "tab": "basic",
+    "rightPadding": 0
+  },
+  {
+    "title": "Cut",
+    "viewType": "selection",
+    "apiKey": "cut",
+    "masterCode": "CUT",
+    "verticalScroll": false,
+    "orientation": "horizontal",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 10
+  },
+  {
+    "title": "Polish",
+    "viewType": "selection",
+    "apiKey": "clarity",
+    "masterCode": "POLISH",
+    "verticalScroll": false,
+    "orientation": "horizontal",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 11
+  },
+  {
+    "title": "Symmetry",
+    "viewType": "selection",
+    "apiKey": "sym",
+    "masterCode": "SYMMETRY",
+    "verticalScroll": false,
+    "orientation": "horizontal",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 11
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#FFFFFF",
+    "leftPadding": 0,
+    "tab": "basic",
+    "rightPadding": 0
+  },
+  {
+    "title": "H & A",
+    "viewType": "selection",
+    "apiKey": "clarity",
+    "masterCode": "H_AND_A",
+    "verticalScroll": false,
+    "orientation": "horizontal",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 10
+  },
+  {
+    "title": "Brilliance",
+    "viewType": "selection",
+    "apiKey": "clarity",
+    "masterCode": "BRILLIANCY",
+    "verticalScroll": false,
+    "orientation": "horizontal",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 11
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "basic",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Price / Carat",
+    "viewType": "fromto",
+    "apiKey": "pricePerCarat",
+    "sequence": 4,
+    "labelFrom": "From",
+    "tab": "basic",
+    "labelTo": "To",
+    "maxValue": 100,
+    "minValue": -100
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 5,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "basic",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Disc %",
+    "viewType": "fromto",
+    "apiKey": "Disc %",
+    "sequence": 6,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "basic",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "basic",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Table%",
+    "viewType": "fromto",
+    "apiKey": "Table%",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Depth%",
+    "viewType": "fromto",
+    "apiKey": "Depth%",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Ratio",
+    "viewType": "fromto",
+    "apiKey": "Ratio",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Length",
+    "viewType": "fromto",
+    "apiKey": "Length",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Width",
+    "viewType": "fromto",
+    "apiKey": "Width",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Depth",
+    "viewType": "fromto",
+    "apiKey": "Depth",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Crown Angle",
+    "viewType": "fromto",
+    "apiKey": "Crown Angle",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Crown Height%",
+    "viewType": "fromto",
+    "apiKey": "Crown Height%",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Girdle%",
+    "viewType": "fromto",
+    "apiKey": "Girdle%",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Pav. Angle",
+    "viewType": "fromto",
+    "apiKey": "Pav. Angle",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Pavilion Height",
+    "viewType": "fromto",
+    "apiKey": "Pavilion Height",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Lower Half",
+    "viewType": "fromto",
+    "apiKey": "Lower Half",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Star Length",
+    "viewType": "fromto",
+    "apiKey": "Star Length",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  }
+]

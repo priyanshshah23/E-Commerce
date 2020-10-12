@@ -38,6 +38,7 @@ class _SplashState extends State<Splash> {
     } else {
       NavigationUtilities.pushRoute(MyHomePage.route);
     }
+    // NavigationUtilities.push(GridViewList());
   }
 
   @override

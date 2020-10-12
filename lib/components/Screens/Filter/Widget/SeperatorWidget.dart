@@ -17,7 +17,8 @@ class _SeperatorWidget extends State<SeperatorWidget> {
       padding: EdgeInsets.only(
           left: double.parse(widget.seperatorModel.leftPadding.toString()),
           right: double.parse(widget.seperatorModel.rightPadding.toString()),
-          top: getSize(16)),
+          top: getSize(12),
+          bottom: getSize(12)),
       child: Container(
         color: widget.seperatorModel.color,
         height: getSize(

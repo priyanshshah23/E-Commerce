@@ -9,7 +9,6 @@ import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
-import 'package:diamnow/modules/Filter/gridviewlist/GridViewList.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -143,6 +142,15 @@ class _LoginScreenState extends State<LoginScreen> {
 //                                      }
 
 //                                      NavigationUtilities.push(DemoScreen());
+                                      FocusScope.of(context).unfocus();
+                                      if (_formKey.currentState.validate()) {
+                                        _formKey.currentState.save();
+                                        callLoginApi(context);
+                                      } else {
+                                        setState(() {
+                                          _autoValidate = true;
+                                        });
+                                      }
                                       // NavigationUtilities.push(ThemeSetting());
                                     },
                                     //  backgroundColor: appTheme.buttonColor,
