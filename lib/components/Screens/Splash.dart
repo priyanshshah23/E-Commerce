@@ -36,7 +36,7 @@ class _SplashState extends State<Splash> {
 //    NavigationUtilities.pushRoute(LoginScreen.route);
 
     if (app.resolve<PrefUtils>().isUserLogin()) {
-      NavigationUtilities.pushRoute(DiamondListScreen.route);
+      NavigationUtilities.pushRoute(FilterScreen.route);
     } else {
       NavigationUtilities.pushRoute(LoginScreen.route);
     }

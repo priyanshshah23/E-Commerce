@@ -19,7 +19,6 @@ class ShapeWidget extends StatefulWidget {
 
 class _ShapeWidgetState extends State<ShapeWidget> {
   //show when isShowMoreSelected=false;
-
   int elementsToShow = 6;
   List<Master> listOfMasterView = [];
 
@@ -28,37 +27,23 @@ class _ShapeWidgetState extends State<ShapeWidget> {
     super.initState();
 
     if (widget.selectionModel.isShowAll == true) {
-      if (widget.selectionModel.masters
-              .where((element) => element.sId == R.string().commonString.all)
-              .toList()
-              .length ==
-          0) {
-        Master allMaster = Master();
-        allMaster.sId = R.string().commonString.all;
-        allMaster.webDisplay = R.string().commonString.all;
-        allMaster.isSelected = false;
+      Master allMaster = Master();
+      allMaster.sId = R.string().commonString.all;
+      allMaster.webDisplay = R.string().commonString.all;
+      allMaster.isSelected = false;
 
-        widget.selectionModel.masters.insert(0, allMaster);
-      }
+      widget.selectionModel.masters.insert(0, allMaster);
     }
     if (widget.selectionModel.isShowMore) {
-      if (widget.selectionModel.masters
-              .where((element) => element.sId == "Show More" || element.sId == "Show Less")
-              .toList()
-              .length ==
-          0) {
-        Master allMaster = Master();
-        allMaster.sId = widget.selectionModel.isShowMoreSelected
-            ? "Show More"
-            : "Show Less";
-        allMaster.webDisplay = widget.selectionModel.isShowMoreSelected
-            ? "Show More"
-            : "Show Less";
-        allMaster.isSelected = false;
+      Master allMaster = Master();
+      allMaster.sId =
+          widget.selectionModel.isShowMoreSelected ? "Show More" : "Show Less";
+      allMaster.webDisplay =
+          widget.selectionModel.isShowMoreSelected ? "Show More" : "Show Less";
+      allMaster.isSelected = false;
 
-        widget.selectionModel.masters
-            .insert(widget.selectionModel.masters.length, allMaster);
-      }
+      widget.selectionModel.masters
+          .insert(widget.selectionModel.masters.length, allMaster);
     }
 
     for (var masterIndex = 0; masterIndex < elementsToShow; masterIndex++) {
@@ -161,14 +146,9 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                     } else {
                       return InkWell(
                         onTap: () {
-                          if (widget.selectionModel.isShowAllSelected) {
-                            widget.selectionModel.isShowAllSelected = false;
-                          }
-                          widget.selectionModel.masters.forEach((element) {
-                            if (element.sId == R.string().commonString.all &&
-                                element.isSelected &&
-                                obj.isSelected) {
-                              element.isSelected = false;
+                          setState(() {
+                            if (widget.selectionModel.isShowAllSelected) {
+                              widget.selectionModel.isShowAllSelected = false;
                             }
                             widget.selectionModel.masters.forEach((element) {
                               if (element.sId == R.string().commonString.all &&
@@ -247,8 +227,8 @@ class CardItem extends StatelessWidget {
       decoration: BoxDecoration(
           color: ((obj.isSelected) || (selectionModel.isShowAllSelected)) &&
                   (obj.sId != "Show More" && obj.sId != "Show Less")
-              ? appTheme.colorPrimary
-              : appTheme.borderColor,
+              ? appTheme.selectedFilterColor
+              : appTheme.unSelectedBgColor,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color:
