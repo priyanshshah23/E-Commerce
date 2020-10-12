@@ -125,10 +125,11 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
             ),
             bottomNavigationBar: Container(
               margin: EdgeInsets.only(
-                  top: getSize(10),
-                  bottom: getSize(16),
-                  left: getSize(20),
-                  right: getSize(20)),
+                top: getSize(10),
+                bottom: getSize(16),
+                left: getSize(20),
+                right: getSize(20),
+              ),
               child: AppButton.flat(
                 onTap: () {
                   FocusScope.of(context).unfocus();
