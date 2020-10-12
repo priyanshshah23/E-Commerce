@@ -18,7 +18,6 @@ class ShapeWidget extends StatefulWidget {
 }
 
 class _ShapeWidgetState extends State<ShapeWidget> {
-
   //show when isShowMoreSelected=false;
   int elementsToShow = 6;
   List<Master> listOfMasterView = [];
@@ -26,7 +25,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
   @override
   void initState() {
     super.initState();
-  
+
     if (widget.selectionModel.isShowAll == true) {
       Master allMaster = Master();
       allMaster.sId = R.string().commonString.all;
@@ -43,14 +42,15 @@ class _ShapeWidgetState extends State<ShapeWidget> {
           widget.selectionModel.isShowMoreSelected ? "Show More" : "Show Less";
       allMaster.isSelected = false;
 
-      widget.selectionModel.masters.insert(widget.selectionModel.masters.length, allMaster);
+      widget.selectionModel.masters
+          .insert(widget.selectionModel.masters.length, allMaster);
     }
 
     for (var masterIndex = 0; masterIndex < elementsToShow; masterIndex++) {
       listOfMasterView.add(widget.selectionModel.masters[masterIndex]);
     }
-    listOfMasterView
-        .add(widget.selectionModel.masters[widget.selectionModel.masters.length - 1]);
+    listOfMasterView.add(widget
+        .selectionModel.masters[widget.selectionModel.masters.length - 1]);
   }
 
   @override
@@ -61,20 +61,20 @@ class _ShapeWidgetState extends State<ShapeWidget> {
     final double itemHeight = (size.height - kToolbarHeight - 220) / 2;
     final double itemWidth = size.width / 2;
 
-    return  Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Text(
-            widget.selectionModel.title ?? "Shapes",
-            style: appTheme.blackNormal18TitleColorblack,
-            textAlign: TextAlign.left,
-          ),
-          SizedBox(
-            height: getSize(20),
-          ),
-          widget.selectionModel.verticalScroll
-              ? GridView.count(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Text(
+          widget.selectionModel.title ?? "Shapes",
+          style: appTheme.blackNormal18TitleColorblack,
+          textAlign: TextAlign.left,
+        ),
+        SizedBox(
+          height: getSize(20),
+        ),
+        widget.selectionModel.verticalScroll
+            ? GridView.count(
                 shrinkWrap: true,
                 primary: false,
                 childAspectRatio: (itemWidth / itemHeight),
@@ -109,7 +109,8 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                           selectionModel: widget.selectionModel,
                         ),
                       );
-                    } else if (widget.selectionModel.isShowMoreSelected == false &&
+                    } else if (widget.selectionModel.isShowMoreSelected ==
+                            false &&
                         widget.selectionModel.isShowMore &&
                         index == totalIndex - 1) {
                       obj.sId = "Show Less";
@@ -125,7 +126,8 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                           selectionModel: widget.selectionModel,
                         ),
                       );
-                    } else if (widget.selectionModel.isShowMoreSelected == true &&
+                    } else if (widget.selectionModel.isShowMoreSelected ==
+                            true &&
                         widget.selectionModel.isShowMore &&
                         index == totalIndex - 1) {
                       obj.sId = "Show More";
@@ -142,38 +144,36 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                         ),
                       );
                     } else {
-                      // int tempIndex;
-                      // if (widget.selectionModel.isShowAll)
-                      //   tempIndex = index - 1;
-                      // else
-                      //   tempIndex = index;
                       return InkWell(
                         onTap: () {
-                          if (widget.selectionModel.isShowAllSelected) {
-                            widget.selectionModel.isShowAllSelected = false;
-                          }
-                          widget.selectionModel.masters.forEach((element) {
-                            if (element.sId ==
-                                    R.string().commonString.all &&
-                                element.isSelected &&
-                                obj.isSelected) {
-                              element.isSelected = false;
+                          setState(() {
+                            if (widget.selectionModel.isShowAllSelected) {
+                              widget.selectionModel.isShowAllSelected = false;
                             }
-                          });
-                          obj.isSelected ^= true;
-                          if (obj.isSelected) {
-                            for (int i = 1;
-                                i < widget.selectionModel.masters.length - 1;
-                                i++) {
-                              if (widget.selectionModel.masters[i].isSelected) {
-                                widget.selectionModel.isShowAllSelected = true;
-                              } else {
-                                widget.selectionModel.isShowAllSelected = false;
-                                break;
+                            widget.selectionModel.masters.forEach((element) {
+                              if (element.sId == R.string().commonString.all &&
+                                  element.isSelected &&
+                                  obj.isSelected) {
+                                element.isSelected = false;
+                              }
+                            });
+                            obj.isSelected ^= true;
+                            if (obj.isSelected) {
+                              for (int i = 1;
+                                  i < widget.selectionModel.masters.length - 1;
+                                  i++) {
+                                if (widget
+                                    .selectionModel.masters[i].isSelected) {
+                                  widget.selectionModel.isShowAllSelected =
+                                      true;
+                                } else {
+                                  widget.selectionModel.isShowAllSelected =
+                                      false;
+                                  break;
+                                }
                               }
                             }
-                          }
-                          setState(() {});
+                          });
                         },
                         child: CardItem(
                           obj: obj,
@@ -184,9 +184,8 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                   },
                 ),
               )
-              : SelectionWidget(widget.selectionModel),
-        ],
-      
+            : SelectionWidget(widget.selectionModel),
+      ],
     );
   }
 
@@ -228,10 +227,13 @@ class CardItem extends StatelessWidget {
       decoration: BoxDecoration(
           color: ((obj.isSelected) || (selectionModel.isShowAllSelected)) &&
                   (obj.sId != "Show More" && obj.sId != "Show Less")
-              ? Colors.blueAccent
-              : Colors.teal[50],
+              ? appTheme.colorPrimary
+              : appTheme.borderColor,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: ColorConstants.textGray)),
+          border: Border.all(
+            color:
+                obj.isSelected ? appTheme.colorPrimary : appTheme.borderColor,
+          )),
       padding: const EdgeInsets.all(8),
       child: obj != null
           ? Column(
@@ -239,19 +241,15 @@ class CardItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                obj.image != null && obj.sId!=R.string().commonString.all && (obj.sId!="Show More" && obj.sId=="Show Less")
-                    ? Image.asset(
-                        obj.image,
-                        color: Colors.black,
-                        width: getSize(28),
-                        height: getSize(28),
-                      )
+                obj.sId != R.string().commonString.all &&
+                        (obj.sId != "Show More" && obj.sId != "Show Less")
+                    ? obj.getShapeImage(obj.isSelected)
                     : SizedBox(),
                 Padding(
-                  padding: EdgeInsets.only(top: getSize(8.0)),
+                  padding: EdgeInsets.only(top: getSize(12.0)),
                   child: Text(obj.webDisplay,
                       textAlign: TextAlign.center,
-                      style: appTheme.blackNormal14TitleColorblack),
+                      style: appTheme.blackNormal12TitleColorblack),
                 ),
               ],
             )

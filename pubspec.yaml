@@ -87,6 +87,7 @@ flutter:
     - assets/auth/
     - assets/Json/
     - assets/fonts/
+    - assets/shape/
     # - assets/chls.pem
 
 
