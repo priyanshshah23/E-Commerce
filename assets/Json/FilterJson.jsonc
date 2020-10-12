@@ -7,7 +7,7 @@
     "masterCode": "SHADE",
     "verticalScroll": false,
     "orientation": "vertical",
-    "isShowAll": true,
+    "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
     "isWhiteColor": false,
@@ -17,7 +17,8 @@
     "viewType": "seperator",
     "sequence": 2,
     "height": 1,
-    "color": "#E3E3E3",
+    "color": "#FFFFFF",
+    "tab": "basic",
     "leftPadding": 0,
     "rightPadding": 0
   },
@@ -27,8 +28,8 @@
     "apiKey": "clarity",
     "masterCode": "CLARITY",
     "verticalScroll": false,
-    "orientation": "horizontal",
-    "isShowAll": true,
+    "orientation": "vertical",
+    "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
     "sequence": 3
@@ -37,8 +38,9 @@
     "viewType": "seperator",
     "sequence": 4,
     "height": 1,
-    "color": "#E3E3E3",
+    "color": "#FFFFFF",
     "leftPadding": 0,
+    "tab": "basic",
     "rightPadding": 0
   },
   {
@@ -47,8 +49,8 @@
     "apiKey": "fluorescence",
     "masterCode": "FLUORESCENCE",
     "verticalScroll": false,
-    "orientation": "horizontal",
-    "isShowAll": true,
+    "orientation": "vertical",
+    "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
     "sequence": 10
@@ -57,7 +59,8 @@
     "viewType": "seperator",
     "sequence": 9,
     "height": 1,
-    "color": "#E3E3E3",
+    "color": "#FFFFFF",
+    "tab": "basic",
     "leftPadding": 0,
     "rightPadding": 0
   },
@@ -67,8 +70,8 @@
     "apiKey": "location",
     "masterCode": "LAB",
     "verticalScroll": false,
-    "orientation": "horizontal",
-    "isShowAll": true,
+    "orientation": "vertical",
+    "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
     "sequence": 10
@@ -77,8 +80,9 @@
     "viewType": "seperator",
     "sequence": 9,
     "height": 1,
-    "color": "#E3E3E3",
+    "color": "#FFFFFF",
     "leftPadding": 0,
+    "tab": "basic",
     "rightPadding": 0
   },
   {
@@ -87,8 +91,8 @@
     "apiKey": "location",
     "masterCode": "LOCATION",
     "verticalScroll": false,
-    "orientation": "horizontal",
-    "isShowAll": true,
+    "orientation": "vertical",
+    "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
     "sequence": 10
@@ -97,8 +101,9 @@
     "viewType": "seperator",
     "sequence": 9,
     "height": 1,
-    "color": "#E3E3E3",
+    "color": "#FFFFFF",
     "leftPadding": 0,
+    "tab": "basic",
     "rightPadding": 0
   },
   {
@@ -141,8 +146,9 @@
     "viewType": "seperator",
     "sequence": 9,
     "height": 1,
-    "color": "#E3E3E3",
+    "color": "#FFFFFF",
     "leftPadding": 0,
+    "tab": "basic",
     "rightPadding": 0
   },
   {
@@ -173,7 +179,8 @@
     "viewType": "seperator",
     "sequence": 9,
     "height": 1,
-    "color": "#E3E3E3",
+    "color": "#FFFFFF",
+    "tab": "basic",
     "leftPadding": 0,
     "rightPadding": 0
   },
@@ -183,6 +190,7 @@
     "apiKey": "pricePerCarat",
     "sequence": 4,
     "labelFrom": "From",
+    "tab": "basic",
     "labelTo": "To",
     "maxValue": 100,
     "minValue": -100
@@ -191,7 +199,8 @@
     "viewType": "seperator",
     "sequence": 5,
     "height": 1,
-    "color": "#E3E3E3",
+    "color": "#FFFFFF",
+    "tab": "basic",
     "leftPadding": 0,
     "rightPadding": 0
   },
@@ -202,6 +211,7 @@
     "sequence": 6,
     "labelFrom": "From",
     "labelTo": "To",
+    "tab": "basic",
     "maxValue": 100,
     "minValue": 0
   },
@@ -209,7 +219,8 @@
     "viewType": "seperator",
     "sequence": 7,
     "height": 1,
-    "color": "#E3E3E3",
+    "color": "#FFFFFF",
+    "tab": "basic",
     "leftPadding": 0,
     "rightPadding": 0
   },
@@ -220,6 +231,247 @@
     "sequence": 8,
     "labelFrom": "From",
     "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Depth%",
+    "viewType": "fromto",
+    "apiKey": "Depth%",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Ratio",
+    "viewType": "fromto",
+    "apiKey": "Ratio",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Length",
+    "viewType": "fromto",
+    "apiKey": "Length",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Width",
+    "viewType": "fromto",
+    "apiKey": "Width",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Depth",
+    "viewType": "fromto",
+    "apiKey": "Depth",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Crown Angle",
+    "viewType": "fromto",
+    "apiKey": "Crown Angle",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Crown Height%",
+    "viewType": "fromto",
+    "apiKey": "Crown Height%",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Girdle%",
+    "viewType": "fromto",
+    "apiKey": "Girdle%",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Pav. Angle",
+    "viewType": "fromto",
+    "apiKey": "Pav. Angle",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Pavilion Height",
+    "viewType": "fromto",
+    "apiKey": "Pavilion Height",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Lower Half",
+    "viewType": "fromto",
+    "apiKey": "Lower Half",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 7,
+    "height": 1,
+    "color": "#FFFFFF",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Star Length",
+    "viewType": "fromto",
+    "apiKey": "Star Length",
+    "sequence": 8,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
     "maxValue": 100,
     "minValue": 0
   }

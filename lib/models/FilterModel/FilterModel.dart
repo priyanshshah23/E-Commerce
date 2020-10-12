@@ -61,6 +61,7 @@ class FormBaseModel {
   String apiKey;
   String desc;
   String viewType;
+  String tab;
 
   FormBaseModel({this.apiKey, this.desc, this.title});
   FormBaseModel.fromJson(Map<String, dynamic> json) {
@@ -68,6 +69,7 @@ class FormBaseModel {
     apiKey = json['apiKey'];
     desc = json['desc'];
     viewType = json["viewType"];
+    tab = json["tab"];
   }
 }
 

@@ -1,7 +1,7 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
-import 'package:diamnow/components/Screens/Auth/FromToWidget.dart';
+import 'package:diamnow/components/Screens/Filter/Widget/FromToWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SeperatorWidget.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
@@ -21,7 +21,7 @@ class FilterScreen extends StatefulScreenWidget {
 
 class _FilterScreenState extends StatefulScreenWidgetState {
   int segmentedControlValue = 0;
-
+  PageController controller = PageController();
   List<TabModel> arrTab = [];
   List<FormBaseModel> arrList = [];
 
@@ -88,37 +88,13 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                   top: isNullEmptyOrFalse(arrTab) ? getSize(80) : getSize(140),
                 ),
                 color: Colors.transparent,
-                child: isNullEmptyOrFalse(arrList)
-                    ? SizedBox()
-                    : ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: arrList.length,
-                        itemBuilder: (context, index) {
-                          return getWidgets(arrList[index]);
-                        },
-                      ),
+                child: isNullEmptyOrFalse(arrList) ? SizedBox() : getPageView(),
               ),
             ],
           ),
         ),
       ),
     );
-  }
-
-  getWidgets(FormBaseModel model) {
-    if (model.viewType == ViewTypes.seperator) {
-      return SeperatorWidget(model);
-    } else if (model.viewType == ViewTypes.selection) {
-      return Padding(
-        padding: EdgeInsets.all(getSize(8.0)),
-        child: SelectionWidget(model),
-      );
-    } else if (model.viewType == ViewTypes.fromTo) {
-      return Padding(
-        padding: EdgeInsets.all(getSize(8.0)),
-        child: FromToWidget(model),
-      );
-    }
   }
 
   Widget _segmentedControl() {
@@ -133,6 +109,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         onValueChanged: (int val) {
           setState(() {
             segmentedControlValue = val;
+            controller.animateToPage(segmentedControlValue,
+                duration: Duration(milliseconds: 500),
+                curve: Curves.bounceInOut);
           });
         },
         groupValue: segmentedControlValue,
@@ -160,5 +139,63 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             : appTheme.whiteColor,
       ),
     );
+  }
+
+  getPageView() {
+    return PageView.builder(
+      controller: controller,
+      itemCount: isNullEmptyOrFalse(arrTab) ? 1 : arrTab.length,
+      itemBuilder: (context, position) {
+        print(position);
+        return FilterItem(arrList
+            .where((element) => element.tab == arrTab[position].tab)
+            .toList());
+      },
+    );
+  }
+}
+
+class FilterItem extends StatefulWidget {
+  List<FormBaseModel> arrList = [];
+  FilterItem(this.arrList);
+
+  @override
+  _FilterItemState createState() => _FilterItemState();
+}
+
+class _FilterItemState extends State<FilterItem> {
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: widget.arrList.length,
+      itemBuilder: (context, index) {
+        return getWidgets(widget.arrList[index]);
+      },
+    );
+  }
+
+  getWidgets(FormBaseModel model) {
+    if (model.viewType == ViewTypes.seperator) {
+      return SeperatorWidget(model);
+    } else if (model.viewType == ViewTypes.selection) {
+      return Padding(
+        padding: EdgeInsets.only(
+            left: getSize(16),
+            right: getSize(16),
+            top: getSize(8.0),
+            bottom: getSize(8)),
+        child: SelectionWidget(model),
+      );
+    } else if (model.viewType == ViewTypes.fromTo) {
+      return Padding(
+        padding: EdgeInsets.only(
+            left: getSize(16),
+            right: getSize(16),
+            top: getSize(8.0),
+            bottom: getSize(8)),
+        child: FromToWidget(model),
+      );
+    }
   }
 }

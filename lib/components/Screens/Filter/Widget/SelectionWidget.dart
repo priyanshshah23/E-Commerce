@@ -65,12 +65,12 @@ class _TagWidgetState extends State<TagWidget> {
             ? SizedBox()
             : Text(
                 widget.model.title ?? "",
-                style: appTheme.blackNormal14TitleColorblack,
+                style: appTheme.blackNormal18TitleColorblack,
                 textAlign: TextAlign.left,
               ),
         isNullEmptyOrFalse(widget.model.title)
             ? SizedBox()
-            : SizedBox(height: getSize(16)),
+            : SizedBox(height: getSize(20)),
         Container(
           height: getSize(40),
           child: ListView.builder(

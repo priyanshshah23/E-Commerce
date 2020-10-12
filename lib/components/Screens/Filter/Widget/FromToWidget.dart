@@ -34,8 +34,9 @@ class _FromToWidgetState extends State<FromToWidget> {
           children: <Widget>[
             Text(
               widget.fromTomodel?.title ?? "-",
-              style: appTheme.blackNormal14TitleColorblack,
+              style: appTheme.blackNormal18TitleColorblack,
             ),
+            SizedBox(height: getSize(16)),
             Row(
               children: <Widget>[
                 Expanded(
@@ -49,8 +50,7 @@ class _FromToWidgetState extends State<FromToWidget> {
                             _minValueController.text = oldValueForFrom;
                             _minValueController.selection =
                                 TextSelection.fromPosition(TextPosition(
-                                    offset:
-                                    _minValueController.text.length));
+                                    offset: _minValueController.text.length));
                           }
                         }
                       }
@@ -59,24 +59,24 @@ class _FromToWidgetState extends State<FromToWidget> {
                     },
                     onSubmitted: (value) {
                       if (value != null) {
-                        if(_maxValueController.text != null) {
-                          if(num.parse(_maxValueController.text.trim()) < num.parse(value)) {
+                        if (_maxValueController.text != null) {
+                          if (num.parse(_maxValueController.text.trim()) <
+                              num.parse(value)) {
                             app.resolve<CustomDialogs>().confirmDialog(
-                              context,
-                              title: "Value Error",
-                              desc:
-                              "From Value should be less than or equal to To value",
-                              positiveBtnTitle: "Try Again",
-                            );
+                                  context,
+                                  title: "Value Error",
+                                  desc:
+                                      "From Value should be less than or equal to To value",
+                                  positiveBtnTitle: "Try Again",
+                                );
                           } else {
                             //todo something
                             app.resolve<CustomDialogs>().confirmDialog(
-                              context,
-                              title: "Value Error",
-                              desc:
-                              "okay",
-                              positiveBtnTitle: "Try Again",
-                            );
+                                  context,
+                                  title: "Value Error",
+                                  desc: "okay",
+                                  positiveBtnTitle: "Try Again",
+                                );
                           }
                         }
                       }
@@ -84,20 +84,19 @@ class _FromToWidgetState extends State<FromToWidget> {
                     focusNode: _focusMinValue,
                     controller: _minValueController,
                     inputFormatters: [
-                      TextInputFormatter.withFunction(
-                              (oldValue, newValue) =>
+                      TextInputFormatter.withFunction((oldValue, newValue) =>
                           RegExp(r'(^[+-]?\d*.?\d{0,2})$')
-                              .hasMatch(newValue.text)
+                                  .hasMatch(newValue.text)
                               ? newValue
                               : oldValue)
                     ],
                     keyboardType:
-                    TextInputType.numberWithOptions(decimal: true),
+                        TextInputType.numberWithOptions(decimal: true),
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
                       focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: appTheme.dividerColor,width: getSize(1))
-                      ),
+                          borderSide: BorderSide(
+                              color: appTheme.dividerColor, width: getSize(1))),
                       hintText: widget.fromTomodel?.labelFrom ?? "-",
                       hintStyle: appTheme.grey14HintTextStyle,
                     ),
@@ -112,13 +111,11 @@ class _FromToWidgetState extends State<FromToWidget> {
                       if (value != null || value != "") {
                         if (num.parse(value) < widget.fromTomodel.minValue ||
                             num.parse(value) > widget.fromTomodel.maxValue) {
-                          if (oldValueForTo != null ||
-                              oldValueForTo != "") {
+                          if (oldValueForTo != null || oldValueForTo != "") {
                             _maxValueController.text = oldValueForTo;
                             _maxValueController.selection =
                                 TextSelection.fromPosition(TextPosition(
-                                    offset:
-                                    _maxValueController.text.length));
+                                    offset: _maxValueController.text.length));
                           }
                         }
                       }
@@ -127,39 +124,38 @@ class _FromToWidgetState extends State<FromToWidget> {
                     focusNode: _focusMaxValue,
                     controller: _maxValueController,
                     inputFormatters: [
-                      TextInputFormatter.withFunction(
-                              (oldValue, newValue) =>
+                      TextInputFormatter.withFunction((oldValue, newValue) =>
                           RegExp(r'(^[+-]?\d*.?\d{0,2})$')
-                              .hasMatch(newValue.text)
+                                  .hasMatch(newValue.text)
                               ? newValue
                               : oldValue)
                     ],
                     onSubmitted: (value) {
                       if (value != null) {
-                        if(_minValueController.text != null) {
-                          if(num.parse(_minValueController.text.trim()) > num.parse(value)) {
+                        if (_minValueController.text != null) {
+                          if (num.parse(_minValueController.text.trim()) >
+                              num.parse(value)) {
                             app.resolve<CustomDialogs>().confirmDialog(
-                              context,
-                              title: "Value Error",
-                              desc:
-                              "To Value should be greater than or equal to From value",
-                              positiveBtnTitle: "Try Again",
-                            );
+                                  context,
+                                  title: "Value Error",
+                                  desc:
+                                      "To Value should be greater than or equal to From value",
+                                  positiveBtnTitle: "Try Again",
+                                );
                           } else {
                             //todo something
                             app.resolve<CustomDialogs>().confirmDialog(
-                              context,
-                              title: "Value Error",
-                              desc:
-                              "okay",
-                              positiveBtnTitle: "Try Again",
-                            );
+                                  context,
+                                  title: "Value Error",
+                                  desc: "okay",
+                                  positiveBtnTitle: "Try Again",
+                                );
                           }
                         }
                       }
                     },
                     keyboardType:
-                    TextInputType.numberWithOptions(decimal: true),
+                        TextInputType.numberWithOptions(decimal: true),
                     textInputAction: TextInputAction.done,
                     decoration: InputDecoration(
                       hintText: widget.fromTomodel?.labelTo ?? "-",
@@ -170,9 +166,6 @@ class _FromToWidgetState extends State<FromToWidget> {
               ],
             ),
           ],
-        ),
-        SizedBox(
-          height: getSize(10),
         ),
       ],
     );
