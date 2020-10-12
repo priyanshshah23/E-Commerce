@@ -38,7 +38,7 @@ class _SplashState extends State<Splash> {
     // } else {
     //   NavigationUtilities.pushRoute(LoginScreen.route);
     // }
-    NavigationUtilities.push(GridViewList());
+    // NavigationUtilities.push(ShapeWidget());
   }
 
   @override
