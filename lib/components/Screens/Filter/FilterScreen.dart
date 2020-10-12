@@ -1,6 +1,8 @@
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
+import 'package:diamnow/components/Screens/Filter/Widget/SeperatorWidget.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:flutter/cupertino.dart';
@@ -93,12 +95,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                       shrinkWrap: true,
                       itemCount: arrList.length,
                       itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SelectionWidget(
-                            arrList[index],
-                          ),
-                        );
+                        return getWidgets(arrList[index]);
                       },
                     ),
             ),
@@ -106,6 +103,17 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         ),
       ),
     );
+  }
+
+  getWidgets(FormBaseModel model) {
+    if (model.viewType == ViewTypes.seperator) {
+      return SeperatorWidget(model);
+    } else if (model.viewType == ViewTypes.selection) {
+      return Padding(
+        padding: EdgeInsets.all(getSize(8.0)),
+        child: SelectionWidget(model),
+      );
+    }
   }
 
   Widget _segmentedControl() {
