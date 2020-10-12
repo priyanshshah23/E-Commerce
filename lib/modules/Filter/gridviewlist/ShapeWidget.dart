@@ -239,7 +239,7 @@ class CardItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                obj.image != null
+                obj.image != null 
                     ? Image.asset(
                         obj.image,
                         color: Colors.black,
@@ -255,10 +255,7 @@ class CardItem extends StatelessWidget {
                 ),
               ],
             )
-          : Container(
-              alignment: Alignment.center,
-              child: getTitleText(context, obj.webDisplay),
-            ),
+          : SizedBox(),
     );
   }
 }
