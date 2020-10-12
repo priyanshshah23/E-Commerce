@@ -17,4 +17,6 @@ class ApiConstants {
   static const String masterSync = commonUrl + "masterSync";
 
   static const String login = commonUrl + "auth/login";
+
+  static const String diamondList = commonUrl + "diamond/paginate";
 }

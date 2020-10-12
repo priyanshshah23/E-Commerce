@@ -1,5 +1,6 @@
 import 'package:diamnow/components/Screens/Auth/DemoScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
 import 'package:flutter/material.dart';
@@ -96,6 +97,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       break;
     case DemoScreen.route:
       screen = DemoScreen();
+      break;
+    case DiamondListScreen.route:
+      screen = DiamondListScreen();
       break;
   }
 

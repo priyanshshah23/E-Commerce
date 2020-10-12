@@ -21,25 +21,25 @@ class ServiceModule {
     } else if (Platform.isAndroid) {
       dio.options.headers["deviceType"] = DEVICE_TYPE_ANDROID;
     }
-    // if (app.resolve<PrefUtils>().isUserLogin()) {
-    //   dio.options.headers["Authorization"] =
-    //       "JWT " + app.resolve<PrefUtils>().getUserToken();
-    // }
+     if (app.resolve<PrefUtils>().isUserLogin()) {
+       dio.options.headers["Authorization"] =
+           "JWT " + app.resolve<PrefUtils>().getUserToken();
+     }
     if (playerId != null) {
       dio.options.headers["playerId"] = playerId;
     }
 
-//         if (kDebugMode) {
-//        (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-//            (client) {
-//          // config the http client
-//          client.findProxy = (uri) {
-//            return ApiConstants.PROXY_URL;
-//          };
-//          // you can also create a new HttpClient to dio
-//          // return new HttpClient();
-//        };
-//      }
+         if (kDebugMode) {
+        (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+            (client) {
+          // config the http client
+          client.findProxy = (uri) {
+            return ApiConstants.PROXY_URL;
+          };
+          // you can also create a new HttpClient to dio
+           return new HttpClient();
+        };
+      }
     return NetworkService(dio);
   }
 }

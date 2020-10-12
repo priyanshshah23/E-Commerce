@@ -4,7 +4,10 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
+import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
+import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,14 +17,14 @@ import 'package:flutter/services.dart';
 import '../../../app/utils/navigator.dart';
 import '../../../modules/ThemeSetting.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends StatefulScreenWidget {
   static const route = "login";
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends StatefulScreenWidgetState {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _userNameController = TextEditingController();
@@ -152,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: Align(
                                     alignment: Alignment.center,
                                     child: Text(
-                                      "Or",
+                                      R.string().commonString.lblOr,
                                       style: appTheme.grey16HintTextStyle,
                                     ),
                                   ),
@@ -337,8 +340,8 @@ class _LoginScreenState extends State<LoginScreen> {
       SyncManager.instance
           .callMasterSync(NavigationUtilities.key.currentContext, () async {
         //success
-        
-        NavigationUtilities.pushRoute(FilterScreen.route);
+
+        NavigationUtilities.pushRoute(DiamondListScreen.route);
       }, () {},
               isNetworkError: false,
               isProgress: true,
