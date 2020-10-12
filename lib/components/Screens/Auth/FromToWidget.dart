@@ -70,13 +70,6 @@ class _FromToWidgetState extends State<FromToWidget> {
                             );
                           } else {
                             //todo something
-                            app.resolve<CustomDialogs>().confirmDialog(
-                              context,
-                              title: "Value Error",
-                              desc:
-                              "okay",
-                              positiveBtnTitle: "Try Again",
-                            );
                           }
                         }
                       }
@@ -150,13 +143,6 @@ class _FromToWidgetState extends State<FromToWidget> {
                             );
                           } else {
                             //todo something
-                            app.resolve<CustomDialogs>().confirmDialog(
-                              context,
-                              title: "Value Error",
-                              desc:
-                              "okay",
-                              positiveBtnTitle: "Try Again",
-                            );
                           }
                         }
                       }
