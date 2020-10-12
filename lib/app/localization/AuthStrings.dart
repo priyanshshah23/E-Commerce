@@ -13,6 +13,7 @@ class AuthStrings {
   final String moveToLogIn;
 
   final String successfullyPwdDesc;
+  final String signInAsGuest;
 
 // Forgot Password
   final String emailAddress;
@@ -124,6 +125,7 @@ class AuthStrings {
     this.reset = "Reset",
     this.haveRegisterCode = "Have a registration code?",
     this.welcome = "Welcome Back!",
+    this.signInAsGuest = "Sign In as Guest",
 
     // Forgot Password
     this.emaillbl = "Email",

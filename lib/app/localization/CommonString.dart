@@ -35,6 +35,7 @@ class CommonString {
   final String lblAppExit;
   final String lblExit;
   final String openAppSetting;
+  final String lblOr;
 
   //App Update Dialog
   final String notYetAvailable;
@@ -204,6 +205,7 @@ class CommonString {
     this.lblAppExit = "Are you sure you want to exit?",
     this.lblExit = "Exit",
     this.openAppSetting = "Open Settings",
+    this.lblOr = "Or",
 
     //App Update Dialog
     this.notYetAvailable = "Not yet available",

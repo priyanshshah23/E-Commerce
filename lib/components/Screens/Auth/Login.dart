@@ -4,6 +4,7 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
+import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
@@ -150,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: Align(
                                     alignment: Alignment.center,
                                     child: Text(
-                                      "Or",
+                                      R.string().commonString.lblOr,
                                       style: appTheme.grey16HintTextStyle,
                                     ),
                                   ),
@@ -168,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         appTheme.colorPrimary.withOpacity(0.1),
                                     borderRadius: getSize(5),
                                     fitWidth: true,
-                                    text: "Sign In as Guest",
+                                    text: R.string().authStrings.signInAsGuest,
                                     //isButtonEnabled: enableDisableSigninButton(),
                                   ),
                                 ),
