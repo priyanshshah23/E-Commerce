@@ -19,8 +19,8 @@ getBackButton(BuildContext context, {bool isWhite = false}) {
         Navigator.of(context).pop();
       },
       icon: Image.asset(
-        "back",
-        color: isWhite == true ? Colors.white : Colors.black,
+        back,
+        color: isWhite ? appTheme.whiteColor : appTheme.textBlackColor,
         width: getSize(30),
         height: getSize(22),
       ),
@@ -124,8 +124,7 @@ List<BoxShadow> getBoxShadow(BuildContext context) {
         color: appTheme.colorPrimary.withOpacity(0.2),
         blurRadius: getSize(10),
         spreadRadius: getSize(5),
-      offset: Offset(0, 3)
-    ),
+        offset: Offset(0, 3)),
   ];
 }
 
@@ -161,15 +160,13 @@ Widget getPreferdSizeTitleForPayment(
             title,
             // textAlign: TextAlign.left,
             style: AppTheme.of(context).theme.textTheme.subhead.copyWith(
-                fontWeight: FontWeight.w600,
-                color: appTheme.colorPrimary),
+                fontWeight: FontWeight.w600, color: appTheme.colorPrimary),
           ),
           Text(
             titleAmount,
             // textAlign: TextAlign.left,
             style: AppTheme.of(context).theme.textTheme.subhead.copyWith(
-                fontWeight: FontWeight.w600,
-                color: appTheme.colorPrimary),
+                fontWeight: FontWeight.w600, color: appTheme.colorPrimary),
           ),
         ],
       ),
@@ -218,9 +215,8 @@ Widget getAppBar(BuildContext context, String title,
     textTheme: getNavigationTheme(context),
     leading: leadingButton ??= null,
     automaticallyImplyLeading: leadingButton != null,
-    backgroundColor: isWhite == true
-        ? appTheme.colorPrimary
-        : appTheme.colorPrimary,
+    backgroundColor:
+        isWhite == true ? appTheme.colorPrimary : appTheme.colorPrimary,
     actions: actionItems == null ? null : actionItems,
     bottom: widget,
   );
@@ -331,10 +327,10 @@ enum IconSizeType { small, medium, large }
 
 getCommonIconWidget(
     {String imageName,
-      IconSizeType imageType = IconSizeType.medium,
-      Color color = Colors.black,
-      VoidCallback onTap,
-      GlobalKey search_key}) {
+    IconSizeType imageType = IconSizeType.medium,
+    Color color = Colors.black,
+    VoidCallback onTap,
+    GlobalKey search_key}) {
   return InkWell(
     onTap: onTap,
     child: Container(

@@ -1,4 +1,6 @@
 class CommonString {
+  final String all;
+
   // button caption
   final String btnSkip;
   final String btnContinue;
@@ -33,6 +35,7 @@ class CommonString {
   final String lblAppExit;
   final String lblExit;
   final String openAppSetting;
+  final String lblOr;
 
   //App Update Dialog
   final String notYetAvailable;
@@ -157,11 +160,12 @@ class CommonString {
   //RS Symbol String
   final String rs;
 
-
   const CommonString({
+    this.all = "All",
+
     // button caption
     this.save = 'Save',
-    this.verify ='Verify',
+    this.verify = 'Verify',
     this.readMore = 'Read More',
     this.goodMorning = 'Good Morning',
     this.goodAfternoon = 'Good Afternoon',
@@ -201,6 +205,7 @@ class CommonString {
     this.lblAppExit = "Are you sure you want to exit?",
     this.lblExit = "Exit",
     this.openAppSetting = "Open Settings",
+    this.lblOr = "Or",
 
     //App Update Dialog
     this.notYetAvailable = "Not yet available",
@@ -304,15 +309,14 @@ class CommonString {
 
 //Version Update
     this.applicationUpdate = "Application Update",
-    this.newVersionMessage = "A new version of application is available, please update the application to continue.",
+    this.newVersionMessage =
+        "A new version of application is available, please update the application to continue.",
 
     //Ride bottomsheeet
     this.paymentCollected = "Payment Collected",
-
     this.addComment = "Add a comment",
 
     //RS Symbol String
     this.rs = "\u20B9",
-
   });
 }

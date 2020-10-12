@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:diamnow/app/Helper/EncryptionHelper.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
@@ -30,6 +31,10 @@ class PrefUtils {
   String get keyMasterSyncDate => "keyMasterSyncDate";
 
   String get keyUser => "keyUser";
+
+  String get keyIsUserLogin => "keyIsUserLogin";
+
+  String get keyToken => "keyToken";
 
   bool isHomeVisible;
 
@@ -123,14 +128,30 @@ class PrefUtils {
     _preferences.setString(keyMasterSyncDate, masterSyncDate);
   }
 
-
 // User Getter setter
-  void saveUser(User user) {
+  Future<void> saveUser(User user) async {
+    await _preferences.setBool(keyIsUserLogin, true);
     _preferences.setString(keyUser, json.encode(user));
   }
 
   User getUserDetails() {
     var userJson = json.decode(_preferences.getString(keyUser));
     return userJson != null ? new User.fromJson(userJson) : null;
+  }
+
+  bool isUserLogin() {
+    return getBool(keyIsUserLogin);
+  }
+
+  String getUserToken() {
+    debugPrint("dec start ${DateTime.now()}");
+    String token = EncryptionHelper.decryptString(getString(keyToken));
+    debugPrint("dec end ${DateTime.now()}");
+    return token;
+  }
+
+  Future<void> saveUserToken(String token) async {
+    await _preferences.setString(
+        keyToken, EncryptionHelper.encryptString(token));
   }
 }

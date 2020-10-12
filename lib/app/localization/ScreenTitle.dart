@@ -1,6 +1,10 @@
 //import 'package:fluttertoast/generated/i18n.dart';
 
 class ScreenTitle {
+  final String searchDiamond;
+  final String basic;
+  final String advanced;
+  final String stoneIdCertNo;
   final String welcomeTo;
   final String welcomeDesc;
   final String forgotPassword;
@@ -164,6 +168,10 @@ class ScreenTitle {
   final String accountAndPayment;
 
   const ScreenTitle({
+    this.searchDiamond = "Search Diamond",
+    this.basic = "Basic",
+    this.advanced = "Advanced",
+    this.stoneIdCertNo = "StoneID/Cert No",
     this.changeLocationDesc =
         ' has changed the drop off location of ongoing ride.',
     this.changeLocation = 'Change Location',
@@ -253,14 +261,17 @@ class ScreenTitle {
         'Please check your timezone, set it to GMT+5:30 and time must be automatic.',
     this.enableLocationEndDesc =
         'Enable location to end shift and allow 3eco to access your location even when you are not using the app?',
-    this.rideStartLocDesc = 'Enable location to start log timer and allow 3eco to access your location even when you are not using the app?',
-    this.rideEndLocDesc = 'Enable location to end log timer and allow 3eco to access your location even when you are not using the app?',
+    this.rideStartLocDesc =
+        'Enable location to start log timer and allow 3eco to access your location even when you are not using the app?',
+    this.rideEndLocDesc =
+        'Enable location to end log timer and allow 3eco to access your location even when you are not using the app?',
     this.finishRideTitle = 'Finish Ride',
     this.finishRideDeliveryTitle = 'Finish Ride/Delivery',
     this.finishOnGoingRideDescription = 'You have a ongoing ride.'
         ' Finish ride to start a break.',
-    this.finishOnGoingRideDeliveryDescription = 'You have a ongoing ride/delivery.'
-        ' Finish ride/delivery to start a manual ride/delivery.',
+    this.finishOnGoingRideDeliveryDescription =
+        'You have a ongoing ride/delivery.'
+            ' Finish ride/delivery to start a manual ride/delivery.',
     this.finishEndLogTimeRideDescription =
         'You can not end your shift before finishing ongoing ride.',
     this.endYourRideTitle = 'End Ride',

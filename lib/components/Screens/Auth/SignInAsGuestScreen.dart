@@ -55,20 +55,15 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(left: getSize(20), top: getSize(26)),
+                  padding: EdgeInsets.only(top: getSize(26)),
                   child: Row(
                     children: <Widget>[
-                      InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Icon(Icons.arrow_back_ios),
-                      ),
+                      getBackButton(context),
                       SizedBox(
                         width: getSize(20),
                       ),
                       Text(
-                        "Sign In as Guest",
+                        R.string().authStrings.signInAsGuest,
                         textAlign: TextAlign.left,
                         style: appTheme.black24TitleColor,
                       ),
@@ -89,7 +84,7 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
                         child: Column(
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.only(top: getSize(60)),
+                              padding: EdgeInsets.only(top: getSize(100)),
                               child: getFirstNameTextField(),
                             ),
                             Padding(
@@ -114,7 +109,12 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
                               ),
                               child: getConditionCheckBox(),
                             ),
-                            getOrderCheckBox(),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                bottom: getSize(20),
+                              ),
+                              child: getOrderCheckBox(),
+                            ),
                           ],
                         ),
                       ),
@@ -125,11 +125,11 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
             ),
             bottomNavigationBar: Container(
               margin: EdgeInsets.only(
-                top: getSize(10),
-                bottom: getSize(16),
-                left: getSize(20),
-                right: getSize(20),
-              ),
+                  top: getSize(10),
+                  bottom: getSize(16),
+                  left: getSize(20),
+                  right: getSize(20)),
+              decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
               child: AppButton.flat(
                 onTap: () {
                   FocusScope.of(context).unfocus();
@@ -141,10 +141,9 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
                     });
                   }
                 },
-//                backgroundColor: AppTheme.of(context).theme.accentColor,
-                borderRadius: 14,
                 fitWidth: true,
-                text: "Sign In as Guest",
+                borderRadius: getSize(5),
+                text: R.string().authStrings.signInAsGuest,
               ),
             ),
           ),
@@ -379,21 +378,18 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
           if (text.isEmpty) {
             isMobilevalid = false;
             return R.string().errorString.enterPhone;
-          } else {
-            return null;
           }
-//          /*else if (await isValidMobile(_mobileController.text.trim(),
+//          else if (await isValidMobile(_mobileController.text.trim(),
 //                  selectedDialogCountry.isoCode) ==
 //              false) {
 //            isMobilevalid = false;
 //
 //            return R.string().errorString.enterValidPhone;
-//          } */
-//          else {
-//            return null;
 //          }
-//
-//          // }
+          else {
+            return null;
+          }
+
         },
         inputAction: TextInputAction.next,
         onNextPress: () {
@@ -472,11 +468,18 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
               termCondition = !termCondition;
             });
           },
-          child: Image.asset(
-            termCondition ? selectedCheckbox : unSelectedCheckbox,
-            height: getSize(20),
-            width: getSize(20),
-          ),
+          child: termCondition
+              ? Image.asset(
+                 selectedCheckbox,
+                  height: getSize(20),
+                  width: getSize(20),
+                )
+              : Image.asset(
+                  unSelectedCheckbox,
+                  height: getSize(20),
+                  width: getSize(20),
+            color: appTheme.dividerColor,
+                ),
         ),
         SizedBox(
           width: getSize(10),
