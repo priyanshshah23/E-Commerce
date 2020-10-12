@@ -1,4 +1,13 @@
 class ViewTypes {
-  static const String fromTo = "FromTo";
-  static const String selection = "Selection";
+  static const String fromTo = "fromto";
+  static const String selection = "selection";
+  static const String dropDown = "dropDown";
+  static const String colorWidget = "color";
+  static const String seperator = "seperator";
+}
+
+class TabTypes {
+  static const String basic = "basic";
+  static const String advanced = "advanced";
+  static const String stoneIdCertTab = "stoneIdCertTab";
 }

@@ -75,20 +75,17 @@ bool validateEmail(String value) {
 
 bool validateMobile(String value) {
   String patttern = r'^[0-9]{10}$';
-print(value);
- // String patttern = r'(^(?:[+0]9)?[0-9]{10}$)';
+  print(value);
+  // String patttern = r'(^(?:[+0]9)?[0-9]{10}$)';
   RegExp regExp = new RegExp(patttern);
   if (isStringEmpty(value)) {
     return false;
-  }
-  else if (!regExp.hasMatch(value)) {
-    if(value.length>10)
-      return true;
+  } else if (!regExp.hasMatch(value)) {
+    if (value.length > 10) return true;
     return false;
   }
   return true;
 }
-
 
 Color darken(Color color, [double amount = .1]) {
   assert(amount >= 0 && amount <= 1);
@@ -116,38 +113,36 @@ bool validatePincode(String value) {
   if (isStringEmpty(value)) {
     return false;
   } else if (!regExp.hasMatch(value)) {
-    if(value.length>6)
-      return true;
+    if (value.length > 6) return true;
     return false;
   }
   return true;
 }
-
 
 bool validationDrivingLicense(String value) {
   String patttern = r'(^[A-Z]{2}[0-9]{13}$)';
   RegExp regExp = new RegExp(patttern);
   if (isStringEmpty(value)) {
     return false;
-  } else if (!regExp.hasMatch(value)  ) {
+  } else if (!regExp.hasMatch(value)) {
     print(value);
-    if( value.length>15)
-    return true;
+    if (value.length > 15) return true;
     return false;
-
   }
   return true;
 }
+
 bool validationPANCard(String value) {
   String patttern = r'(^[A-Z]{5}[0-9]{4}[A-Z]{1}$)';
   RegExp regExp = new RegExp(patttern);
   if (isStringEmpty(value)) {
     return false;
-  } else if (!regExp.hasMatch(value) || value.length<10) {
+  } else if (!regExp.hasMatch(value) || value.length < 10) {
     return false;
   }
   return true;
 }
+
 bool validationIFSCCode(String value) {
   String patttern = r'(^[A-Z|a-z]{4}[0][\d]{6}$)';
   RegExp regExp = new RegExp(patttern);
@@ -200,11 +195,9 @@ class DecimalNumberEditingRegexValidator extends RegexValidator {
 class LicenceValidator extends RegexValidator {
   final int maxLimit;
 
-   LicenceValidator(this.maxLimit)
+  LicenceValidator(this.maxLimit)
       : super(regexSource: "^\$|^([A-Z|0-9]{0,$maxLimit})?\$");
 }
-
-
 
 class RegexValidator implements StringValidator {
   RegexValidator({this.regexSource});
@@ -229,4 +222,11 @@ class RegexValidator implements StringValidator {
       return true;
     }
   }
+}
+
+bool isNullEmptyOrFalse(dynamic o) {
+  if (o is Map<String, dynamic> || o is List<dynamic>) {
+    return o == null || o.length == 0;
+  }
+  return o == null || false == o || "" == o;
 }

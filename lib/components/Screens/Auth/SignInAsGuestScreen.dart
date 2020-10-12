@@ -59,10 +59,10 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(left: getSize(20), top: getSize(26)),
+                  padding: EdgeInsets.only(top: getSize(26)),
                   child: Row(
                     children: <Widget>[
-                      Icon(Icons.arrow_back_ios),
+                      getBackButton(context),
                       SizedBox(
                         width: getSize(20),
                       ),
@@ -121,6 +121,7 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
                   bottom: getSize(16),
                   left: getSize(20),
                   right: getSize(20)),
+              decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
               child: AppButton.flat(
                 onTap: () {
                   FocusScope.of(context).unfocus();
@@ -132,9 +133,8 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
                     });
                   }
                 },
-//                backgroundColor: AppTheme.of(context).theme.accentColor,
-                borderRadius: 14,
                 fitWidth: true,
+                borderRadius: getSize(5),
                 text: "Sign In as Guest",
               ),
             ),

@@ -3,13 +3,17 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
-import 'package:diamnow/components/Screens/Auth/DemoScreen.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
+import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
+import 'package:diamnow/modules/Filter/gridviewlist/GridViewList.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import '../../../app/utils/navigator.dart';
+import '../../../modules/ThemeSetting.dart';
 
 class LoginScreen extends StatefulWidget {
   static const route = "login";
@@ -135,6 +139,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                           _autoValidate = true;
                                         });
                                       }
+
+                                      NavigationUtilities.push(GridViewList());
+                                      // NavigationUtilities.push(ThemeSetting());
                                     },
                                     //  backgroundColor: appTheme.buttonColor,
                                     borderRadius: getSize(5),
@@ -158,7 +165,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       top: getSize(10), left: getSize(0)),
                                   child: AppButton.flat(
                                     onTap: () {
-                                      NavigationUtilities.pushRoute(GuestSignInScreen.route);
+                                      NavigationUtilities.pushRoute(
+                                          GuestSignInScreen.route);
                                     },
                                     textColor: appTheme.colorPrimary,
                                     backgroundColor:
@@ -324,13 +332,16 @@ class _LoginScreenState extends State<LoginScreen> {
       // save Logged In user
       if (loginResp.data != null) {
         app.resolve<PrefUtils>().saveUser(loginResp.data.user);
+        await app.resolve<PrefUtils>().saveUserToken(
+              loginResp.data.token.jwt,
+            );
       }
-      print("Login");
+
       SyncManager.instance
           .callMasterSync(NavigationUtilities.key.currentContext, () async {
         //success
-        await Config().getFilterJson();
-//        NavigationUtilities.pushRoute(DemoScreen.route);
+        
+        NavigationUtilities.pushRoute(FilterScreen.route);
       }, () {},
               isNetworkError: false,
               isProgress: true,

@@ -79,12 +79,15 @@ class MasterDao {
     if (arrMaster.length > 0) {
       // final finder2 = Finder(
       //   filter: Filter.equal('parentId', arrMaster.first.sId),
-      //   sortOrders: [
-      //     SortOrder('sortingSequence'),
-      //   ],
+      // sortOrders: [
+      //   SortOrder('sortingSequence'),
+      // ],
       // );
 
       final finder2 = Finder(
+        sortOrders: [
+          SortOrder('sortingSequence'),
+        ],
         filter: Filter.and([
           Filter.equal('parentId', arrMaster.first.sId),
           Filter.equal('isDeleted', false),

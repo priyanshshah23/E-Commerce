@@ -1,6 +1,6 @@
 import 'package:diamnow/components/Screens/Auth/DemoScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
-import 'package:diamnow/modules/Filter/FilterScreen.dart';
+import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
 import 'package:flutter/material.dart';
 import '../app.export.dart';

@@ -38,6 +38,7 @@ class ThemeHelper {
 
 class BaseTheme {
   Color get colorPrimary => fromHex("#6E8FE7");
+  Color get headerBgColor => fromHex("#6E8FE7");
   Color get textColor => Colors.black;
   Color get bgColor => fromHex("#6E8FE7");
   Color get dividerColor => fromHex("#E3E3E3");
@@ -47,6 +48,10 @@ class BaseTheme {
   Color get buttonColor => fromHex("#6E8FE7");
   Color get darkBlue => fromHex("#003365");
   Color get errorColor => fromHex("#FF4D4D");
+  Color get segmentSelectedColor => Colors.white;
+  Color get borderColor => fromHex("#e3e3e3");
+  Color get selectedFilterColor => fromHex("#eaeffb");
+  Color get unSelectedBgColor => fromHex("#f7f7f7");
 
   TextStyle get black24TitleColor {
     return TextStyle(
@@ -55,9 +60,25 @@ class BaseTheme {
         color: textColor);
   }
 
+  TextStyle get black24TitleColorWhite {
+    return TextStyle(
+        fontSize: getFontSize(24),
+        fontWeight: FontWeight.bold,
+        color: whiteColor);
+  }
+
+  TextStyle get blackNormal14TitleColorblack {
+    return TextStyle(
+        fontSize: getFontSize(14),
+        fontWeight: FontWeight.normal,
+        color: textColor);
+  }
+
   TextStyle get black16TextStyle {
     return TextStyle(
-        fontSize: getFontSize(16), color: textColor,fontWeight: FontWeight.normal);
+        fontSize: getFontSize(16),
+        color: textColor,
+        fontWeight: FontWeight.normal);
   }
 
   TextStyle get grey16HintTextStyle {
@@ -72,6 +93,13 @@ class BaseTheme {
     return TextStyle(
         fontSize: getFontSize(16),
         color: darkBlue,
+        fontWeight: FontWeight.w500);
+  }
+
+  TextStyle get primaryColor14TextStyle {
+    return TextStyle(
+        fontSize: getFontSize(14),
+        color: colorPrimary,
         fontWeight: FontWeight.w500);
   }
 
