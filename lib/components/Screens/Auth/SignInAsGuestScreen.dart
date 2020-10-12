@@ -2,19 +2,21 @@ import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_pickers.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/components/widgets/shared/CountryPickerWidget.dart';
 import 'package:diamnow/components/widgets/shared/app_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class GuestSignInScreen extends StatefulWidget {
+class GuestSignInScreen extends StatefulScreenWidget {
   static const route = "Guest SignIn Screen";
 
   @override
   _GuestSignInScreenState createState() => _GuestSignInScreenState();
 }
 
-class _GuestSignInScreenState extends State<GuestSignInScreen> {
+class _GuestSignInScreenState extends StatefulScreenWidgetState {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _firstNameController = TextEditingController();
@@ -37,6 +39,7 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
   bool isMobilevalid = true;
   bool isEmailvalid = true;
   bool termCondition = false;
+  bool showTermValidation = false;
   bool order = false;
   bool _autoValidate = false;
 
@@ -132,6 +135,9 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
               decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
               child: AppButton.flat(
                 onTap: () {
+                  if (termCondition == false) {
+                    showTermValidation = true;
+                  }
                   FocusScope.of(context).unfocus();
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
@@ -139,6 +145,9 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
                     setState(() {
                       _autoValidate = true;
                     });
+                    if(_mobileController.text.isNotEmpty){
+                      checkValidation();
+                    }
                   }
                 },
                 fitWidth: true,
@@ -372,6 +381,8 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
                 isMobilevalid = true;
               });
             }
+          }else{
+            await checkValidation();
           }
         },
         validation: (text) {
@@ -389,7 +400,6 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
           else {
             return null;
           }
-
         },
         inputAction: TextInputAction.next,
         onNextPress: () {
@@ -403,9 +413,9 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
     if (await isValidMobile(
             _mobileController.text.trim(), selectedDialogCountry.isoCode) ==
         false) {
-      return R.string().errorString.enterValidPhone;
+      return showToast(R.string().errorString.enterValidPhone,context: context);
     } else {
-      return true;
+      return null;
     }
   }
 
@@ -460,33 +470,41 @@ class _GuestSignInScreenState extends State<GuestSignInScreen> {
   }
 
   getConditionCheckBox() {
-    return Row(
+    return Column(
       children: <Widget>[
-        InkWell(
-          onTap: () {
-            setState(() {
-              termCondition = !termCondition;
-            });
-          },
-          child: termCondition
-              ? Image.asset(
-                 selectedCheckbox,
-                  height: getSize(20),
-                  width: getSize(20),
-                )
-              : Image.asset(
-                  unSelectedCheckbox,
-                  height: getSize(20),
-                  width: getSize(20),
-            color: appTheme.dividerColor,
-                ),
+        Row(
+          children: <Widget>[
+            InkWell(
+              onTap: () {
+                setState(() {
+                  termCondition = !termCondition;
+                  showTermValidation = false;
+                });
+              },
+              child: Image.asset(
+                termCondition ? selectedCheckbox : unSelectedCheckbox,
+                height: getSize(20),
+                width: getSize(20),
+              ),
+            ),
+            SizedBox(
+              width: getSize(10),
+            ),
+            Text(
+              "Terms and Condition*",
+              style: appTheme.black14TextStyle,
+            )
+          ],
         ),
-        SizedBox(
-          width: getSize(10),
-        ),
-        Text(
-          "Terms and Condition*",
-          style: appTheme.black14TextStyle,
+        Visibility(
+          visible: showTermValidation,
+          child: Padding(
+            padding: EdgeInsets.only(top: getSize(10)),
+            child: Text(
+              "You must agree to terms and condition to Sign In as Guest User",
+              style: appTheme.error16TextStyle,
+            ),
+          ),
         )
       ],
     );

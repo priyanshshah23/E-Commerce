@@ -1,6 +1,9 @@
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/components/Screens/Auth/FromToWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
+import 'package:diamnow/components/Screens/Filter/Widget/SeperatorWidget.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,77 +38,83 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
   @override
   Widget build(BuildContext context) {
-    return AppBackground(
-      child: Scaffold(
-        body: Stack(
-          children: [
-            Container(
-              color: appTheme.headerBgColor,
-              height: getSize(160),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: getSize(26)),
-                      child: Row(
-                        children: <Widget>[
-                          getBackButton(context, isWhite: true),
-                          SizedBox(
-                            width: getSize(20),
-                          ),
-                          Text(
-                            R.string().screenTitle.searchDiamond,
-                            textAlign: TextAlign.left,
-                            style: appTheme.black24TitleColorWhite,
-                          ),
-                        ],
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: AppBackground(
+        child: Scaffold(
+          body: Stack(
+            children: [
+              Container(
+                color: appTheme.headerBgColor,
+                height: getSize(140),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: getSize(26)),
+                        child: Row(
+                          children: <Widget>[
+                            getBackButton(context, isWhite: true),
+                            SizedBox(
+                              width: getSize(20),
+                            ),
+                            Text(
+                              R.string().screenTitle.searchDiamond,
+                              textAlign: TextAlign.left,
+                              style: appTheme.black24TitleColorWhite,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: getSize(16)),
-                    _segmentedControl(),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        // boxShadow: getContainerBoxShadow(context),
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(getSize(30)),
-                            topRight: Radius.circular(getSize(30))),
+                      SizedBox(height: getSize(16)),
+                      _segmentedControl(),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          // boxShadow: getContainerBoxShadow(context),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(getSize(30)),
+                              topRight: Radius.circular(getSize(30))),
+                        ),
                       ),
-                    ),
-                  ]),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: getSize(150)),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                // boxShadow: getContainerBoxShadow(context),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(getSize(30)),
-                    topRight: Radius.circular(getSize(30))),
+                    ]),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: getSize(160)),
-              color: Colors.transparent,
-              child: isNullEmptyOrFalse(arrList)
-                  ? SizedBox()
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: arrList.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SelectionWidget(
-                            arrList[index],
-                          ),
-                        );
-                      },
-                    ),
-            ),
-          ],
+              Container(
+                margin: EdgeInsets.only(top: getSize(140)),
+                color: Colors.transparent,
+                child: isNullEmptyOrFalse(arrList)
+                    ? SizedBox()
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: arrList.length,
+                        itemBuilder: (context, index) {
+                          return getWidgets(arrList[index]);
+                        },
+                      ),
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  getWidgets(FormBaseModel model) {
+    if (model.viewType == ViewTypes.seperator) {
+      return SeperatorWidget(model);
+    } else if (model.viewType == ViewTypes.selection) {
+      return Padding(
+        padding: EdgeInsets.all(getSize(8.0)),
+        child: SelectionWidget(model),
+      );
+    } else if (model.viewType == ViewTypes.fromTo) {
+      return Padding(
+        padding: EdgeInsets.all(getSize(8.0)),
+        child: FromToWidget(model),
+      );
+    }
   }
 
   Widget _segmentedControl() {

@@ -1,40 +1,29 @@
 [
   {
-    "title": "Color",
+    "title": "Color Shade",
     "desc": "Desc",
-    "viewType": "colorWidget",
-    "apiKey": "color",
-    "masterCode": "COLOR",
+    "viewType": "selection",
+    "apiKey": "colorShare",
+    "masterCode": "SHADE",
     "verticalScroll": false,
     "orientation": "vertical",
-    "isShowAll": false,
+    "isShowAll": true,
     "isShowMore": false,
     "tab": "basic",
     "isWhiteColor": false,
-    "sequence": 1,
-    "intensity": {
-      "title": "Intensity",
-      "apiKey": "color",
-      "masterCode": "COLOR",
-      "verticalScroll": false,
-      "isShowAll": true,
-      "isShowMore": false,
-      "isWhiteColor": false,
-      "sequence": 1
-    },
-    "overtone": {
-      "title": "Overtone",
-      "masterCode": "COLOR",
-      "verticalScroll": false,
-      "isShowAll": true,
-      "isShowMore": false,
-      "isWhiteColor": false,
-      "sequence": 2
-    }
+    "sequence": 1
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 2,
+    "height": 0.5,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "rightPadding": 0
   },
   {
     "title": "Clarity",
-    "viewType": "Selection",
+    "viewType": "selection",
     "apiKey": "clarity",
     "masterCode": "CLARITY",
     "verticalScroll": false,
@@ -42,6 +31,24 @@
     "isShowAll": true,
     "isShowMore": false,
     "tab": "basic",
-    "sequence": 2
+    "sequence": 3
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 4,
+    "height": 0.5,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Price / Carat",
+    "viewType": "fromto",
+    "apiKey": "pricePerCarat",
+    "sequence": 4,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "maxValue": 100,
+    "minValue": -100
   }
 ]

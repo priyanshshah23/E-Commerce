@@ -12,4 +12,4 @@ const String back = "assets/auth/back.png";
 
 
 const String selectedCheckbox="assets/auth/checkbox.png";
-const String unSelectedCheckbox = "assets/auth/unselectedCheckbox.png";
+const String unSelectedCheckbox = "assets/auth/unselectedcheckbox.png";

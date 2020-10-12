@@ -44,7 +44,7 @@ showToast(
         Expanded(
           child: getTitleText(
               context, isStringEmpty(msg) ? SOMETHING_WENT_WRONG : msg,
-              color: ColorConstants.colorPrimary,
+              color: appTheme.segmentSelectedColor,
               fontSize: getSize(16),
               alignment: TextAlign.center),
         ),

@@ -74,6 +74,14 @@ class BaseTheme {
         color: textColor);
   }
 
+  TextStyle get grey14HintTextStyle {
+    return TextStyle(
+      fontSize: getFontSize(14),
+      color: textGreyColor,
+      fontWeight: FontWeight.w500,
+    );
+  }
+
   TextStyle get black16TextStyle {
     return TextStyle(
         fontSize: getFontSize(16),
