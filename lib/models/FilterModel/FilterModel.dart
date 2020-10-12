@@ -2,15 +2,30 @@ import 'dart:convert';
 
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
+import 'package:diamnow/models/FilterModel/TabModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class Config {
+  Future<List<TabModel>> getTabJson() async {
+    String jsonForm = await rootBundle.loadString('assets/Json/TabJson.json');
+
+    List<dynamic> fieldList = jsonDecode(jsonForm);
+    List<TabModel> tabModels = [];
+    for (int i = 0; i < fieldList.length; i++) {
+      dynamic element = fieldList[i];
+      if (element is Map<String, dynamic>) {
+        tabModels.add(TabModel.fromJson(element));
+      }
+    }
+    return tabModels;
+  }
+
   Future<List<FormBaseModel>> getFilterJson() async {
     String jsonForm =
         await rootBundle.loadString('assets/Json/FilterJson.jsonc');
-    ;
+
     List<dynamic> fieldList = jsonDecode(jsonForm);
     List<FormBaseModel> formModels = [];
     for (int i = 0; i < fieldList.length; i++) {
@@ -46,6 +61,7 @@ class FormBaseModel {
   String apiKey;
   String desc;
   String viewType;
+  String tab;
 
   FormBaseModel({this.apiKey, this.desc, this.title});
   FormBaseModel.fromJson(Map<String, dynamic> json) {
@@ -53,6 +69,7 @@ class FormBaseModel {
     apiKey = json['apiKey'];
     desc = json['desc'];
     viewType = json["viewType"];
+    tab = json["tab"];
   }
 }
 
@@ -78,24 +95,18 @@ class SelectionModel extends FormBaseModel {
   String orientation;
   bool verticalScroll;
   bool isShowAll;
-  bool isShowAllSelected;
+  bool isShowAllSelected = false;
   bool isShowMore;
-  bool isShowMoreSelected;
+  bool isShowMoreSelected = false;
 
-  SelectionModel(
-      {this.isShowAll,
-      this.isShowAllSelected,
-      this.isShowMore,
-      this.isShowMoreSelected,
-      this.masterCode,
-      this.masters,
-      this.verticalScroll});
+
   SelectionModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
-    verticalScroll = json["verticalScroll"];
+    verticalScroll = json["verticalScroll"] ?? false;
     orientation = json["orientation"];
     isShowAll = json['isShowAll'] ?? false;
     isShowMore = json['isShowMore'] ?? false;
     masterCode = json["masterCode"];
+   
   }
 }
 

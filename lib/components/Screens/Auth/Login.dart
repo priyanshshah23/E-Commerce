@@ -10,7 +10,6 @@ import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
-import 'package:diamnow/modules/Filter/gridviewlist/GridViewList.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -131,6 +130,8 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                       boxShadow: getBoxShadow(context)),
                                   child: AppButton.flat(
                                     onTap: () {
+//                                      NavigationUtilities.pushRoute(DemoScreen.route);
+
                                       FocusScope.of(context).unfocus();
                                       if (_formKey.currentState.validate()) {
                                         _formKey.currentState.save();
@@ -140,6 +141,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                           _autoValidate = true;
                                         });
                                       }
+                                      // NavigationUtilities.push(ThemeSetting());
                                     },
                                     //  backgroundColor: appTheme.buttonColor,
                                     borderRadius: getSize(5),
@@ -171,7 +173,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                         appTheme.colorPrimary.withOpacity(0.1),
                                     borderRadius: getSize(5),
                                     fitWidth: true,
-                                    text: R.string().authStrings.signInAsGuest,
+                                    text: "Sign In as Guest",
                                     //isButtonEnabled: enableDisableSigninButton(),
                                   ),
                                 ),

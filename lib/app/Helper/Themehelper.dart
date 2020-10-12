@@ -39,7 +39,7 @@ class ThemeHelper {
 class BaseTheme {
   Color get colorPrimary => fromHex("#6E8FE7");
   Color get headerBgColor => fromHex("#6E8FE7");
-  Color get textColor => Colors.black;
+  Color get textColor => fromHex("#262626");
   Color get bgColor => fromHex("#6E8FE7");
   Color get dividerColor => fromHex("#E3E3E3");
   Color get textBlackColor => Colors.black;
@@ -74,6 +74,13 @@ class BaseTheme {
         color: textColor);
   }
 
+  TextStyle get blackNormal18TitleColorblack {
+    return TextStyle(
+        fontSize: getFontSize(18),
+        fontWeight: FontWeight.normal,
+        color: textColor);
+  }
+
   TextStyle get grey14HintTextStyle {
     return TextStyle(
       fontSize: getFontSize(14),
@@ -98,7 +105,9 @@ class BaseTheme {
 
   TextStyle get black14TextStyle {
     return TextStyle(
-        fontSize: getFontSize(14), color: textColor,fontWeight: FontWeight.normal);
+        fontSize: getFontSize(14),
+        color: textColor,
+        fontWeight: FontWeight.normal);
   }
 
   TextStyle get grey16HintTextStyle {

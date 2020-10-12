@@ -1,6 +1,7 @@
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
+import 'package:diamnow/modules/Filter/gridviewlist/ShapeWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:diamnow/app/app.export.dart';
@@ -16,7 +17,7 @@ class SelectionWidget extends StatefulWidget {
 class _SelectionWidgetState extends State<SelectionWidget> {
   @override
   Widget build(BuildContext context) {
-    return TagWidget(widget.selectionModel);
+    return widget.selectionModel.verticalScroll ? ShapeWidget(widget.selectionModel) : TagWidget(widget.selectionModel);
   }
 }
 
@@ -34,12 +35,18 @@ class _TagWidgetState extends State<TagWidget> {
     super.initState();
 
     if (widget.model.isShowAll == true) {
-      Master allMaster = Master();
-      allMaster.sId = R.string().commonString.all;
-      allMaster.webDisplay = R.string().commonString.all;
-      allMaster.isSelected = false;
+      if (widget.model.masters
+              .where((element) => element.sId == R.string().commonString.all)
+              .toList()
+              .length ==
+          0) {
+        Master allMaster = Master();
+        allMaster.sId = R.string().commonString.all;
+        allMaster.webDisplay = R.string().commonString.all;
+        allMaster.isSelected = false;
 
-      widget.model.masters.insert(0, allMaster);
+        widget.model.masters.insert(0, allMaster);
+      }
     }
   }
 
@@ -59,12 +66,12 @@ class _TagWidgetState extends State<TagWidget> {
             ? SizedBox()
             : Text(
                 widget.model.title ?? "",
-                style: appTheme.blackNormal14TitleColorblack,
+                style: appTheme.blackNormal18TitleColorblack,
                 textAlign: TextAlign.left,
               ),
         isNullEmptyOrFalse(widget.model.title)
             ? SizedBox()
-            : SizedBox(height: getSize(16)),
+            : SizedBox(height: getSize(20)),
         Container(
           height: getSize(40),
           child: ListView.builder(
