@@ -49,70 +49,73 @@ class _SearchComponentState extends State<SearchComponent> {
   @override
   Widget build(BuildContext context) {
     return AppBackground(
-      child: Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Divider(
-              color: appTheme.textBlackColor,
-            ),
-            SizedBox(
-              height: getSize(10),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: getSize(15)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    title,
-                    style: appTheme.commonAlertDialogueTitleStyle,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: TextField(
-                          onChanged: (value) {
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Divider(
+            color: appTheme.textBlackColor,
+          ),
+          SizedBox(
+            height: getSize(10),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: getSize(15)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  title,
+                  style: appTheme.commonAlertDialogueTitleStyle,
+                ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: TextField(
+                        onChanged: (value) {
                             if (value != null || value != "") {
-                              if (num.parse(value) <= min ||
-                                  num.parse(value) >= max) {
+                              if (num.parse(value) < min ||
+                                  num.parse(value) > max) {
                                 if (oldValueForFrom != null ||
                                     oldValueForFrom != "") {
                                   _minValueController.text = oldValueForFrom;
                                   _minValueController.selection =
                                       TextSelection.fromPosition(TextPosition(
                                           offset:
-                                              _minValueController.text.length));
+                                          _minValueController.text.length));
                                 }
                               }
                             }
                             oldValueForFrom = _minValueController.text.trim();
-                          ,
-                          focusNode: _focusMinValue,
-                          controller: _minValueController,
-                          inputFormatters: [
-                            DecimalTextInputFormatter(decimalRange: 2)
-                          ],
-                          keyboardType:
-                              TextInputType.numberWithOptions(decimal: true),
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            focusedBorder: UnderlineInputBorder(),
-                            hintText: "From",
-                            hintStyle: appTheme.commonAlertDialogueDescStyle,
-                          ),
+                        },
+                        focusNode: _focusMinValue,
+                        controller: _minValueController,
+                        inputFormatters: [
+                          TextInputFormatter.withFunction(
+                              (oldValue, newValue) =>
+                              RegExp(r'(^[+-]?\d*\.?\d{0,2})$')
+                                          .hasMatch(newValue.text)
+                                      ? newValue
+                                      : oldValue)
+                        ],
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        textInputAction: TextInputAction.next,
+                        decoration: InputDecoration(
+                          focusedBorder: UnderlineInputBorder(),
+                          hintText: "From",
+                          hintStyle: appTheme.commonAlertDialogueDescStyle,
                         ),
                       ),
-                      SizedBox(
-                        width: getSize(15),
-                      ),
-                      Expanded(
-                        child: TextField(
-                          onChanged: (value) {
+                    ),
+                    SizedBox(
+                      width: getSize(15),
+                    ),
+                    Expanded(
+                      child: TextField(
+                        onChanged: (value) {
                             if (value != null || value != "") {
-                              if (num.parse(value) <= min ||
-                                  num.parse(value) >= max) {
-                                //showToast("Please Enter Valid value");
+                              if (num.parse(value) < min ||
+                                  num.parse(value) > max) {
                                 if (oldValueForTo != null ||
                                     oldValueForTo != "") {
                                   _maxValueController.text = oldValueForTo;
@@ -127,32 +130,36 @@ class _SearchComponentState extends State<SearchComponent> {
                             widget.setValue(
                                 num.parse(_minValueController.text.trim()),
                                 num.parse(_maxValueController.text.trim()));
-                          },
-                          focusNode: _focusMaxValue,
-                          controller: _maxValueController,
-                          inputFormatters: [
-                            DecimalTextInputFormatter(decimalRange: 2)
-                          ],
-                          keyboardType:
-                              TextInputType.numberWithOptions(decimal: true),
-                          textInputAction: TextInputAction.done,
-                          decoration: InputDecoration(
-                            focusedBorder: UnderlineInputBorder(),
-                            hintText: "To",
-                            hintStyle: appTheme.commonAlertDialogueDescStyle,
-                          ),
+                        },
+                        focusNode: _focusMaxValue,
+                        controller: _maxValueController,
+                        inputFormatters: [
+                          TextInputFormatter.withFunction(
+                                  (oldValue, newValue) =>
+                              RegExp(r'(^[+-]?\d*\.?\d{0,2})$')
+                                  .hasMatch(newValue.text)
+                                  ? newValue
+                                  : oldValue)
+                        ],
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        textInputAction: TextInputAction.done,
+                        decoration: InputDecoration(
+                          focusedBorder: UnderlineInputBorder(),
+                          hintText: "To",
+                          hintStyle: appTheme.commonAlertDialogueDescStyle,
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-            SizedBox(
-              height: getSize(10),
-            ),
-          ],
-        ),
+          ),
+          SizedBox(
+            height: getSize(10),
+          ),
+        ],
       ),
     );
   }
@@ -187,8 +194,11 @@ class DecimalTextInputFormatter extends TextInputFormatter {
         truncated = oldValue.text;
         newSelection = oldValue.selection;
       } else if (value == ".") {
+        if (value.substring(value.indexOf(".")).contains(".")) {
+          truncated = oldValue.text;
+          newSelection = oldValue.selection;
+        }
         truncated = "0.";
-
         newSelection = newValue.selection.copyWith(
           baseOffset: math.min(truncated.length, truncated.length + 1),
           extentOffset: math.min(truncated.length, truncated.length + 1),

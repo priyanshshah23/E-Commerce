@@ -3,7 +3,9 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/components/Screens/Auth/DemoScreen.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
+import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
@@ -128,19 +130,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                       boxShadow: getBoxShadow(context)),
                                   child: AppButton.flat(
                                     onTap: () {
-//                                      NavigationUtilities.pushRoute(DemoScreen.route);
+                                      NavigationUtilities.pushRoute(TabBarDemo.route);
 
-                                      FocusScope.of(context).unfocus();
-                                      if (_formKey.currentState.validate()) {
-                                        _formKey.currentState.save();
-                                        callLoginApi(context);
-                                      } else {
-                                        setState(() {
-                                          _autoValidate = true;
-                                        });
-                                      }
+//                                      FocusScope.of(context).unfocus();
+//                                      if (_formKey.currentState.validate()) {
+//                                        _formKey.currentState.save();
+//                                        callLoginApi(context);
+//                                      } else {
+//                                        setState(() {
+//                                          _autoValidate = true;
+//                                        });
+//                                      }
 
-                                      NavigationUtilities.push(GridViewList());
+//                                      NavigationUtilities.push(DemoScreen());
                                       // NavigationUtilities.push(ThemeSetting());
                                     },
                                     //  backgroundColor: appTheme.buttonColor,

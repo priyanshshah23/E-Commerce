@@ -60,7 +60,7 @@ const numberRegExp = r'[a-z][A-Z]!@#$%^&*()_+{}:">?<,./;';
 const alphaNumberRegEx = r'[a-zA-Z0-9]';
 const alphaRegEx = r'[a-zA-Z]';
 const spaceRegEx = r'\s';
-
+const numberRegXWithDecimalAllows = r'([0-9]*[0-9]+\.)[0-9]{0,2}';
 //Master Code
 class MasterCode {
   static const String shape = "SHAPE";
