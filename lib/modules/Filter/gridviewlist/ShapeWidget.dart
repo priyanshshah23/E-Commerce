@@ -27,23 +27,35 @@ class _ShapeWidgetState extends State<ShapeWidget> {
     super.initState();
 
     if (widget.selectionModel.isShowAll == true) {
-      Master allMaster = Master();
-      allMaster.sId = R.string().commonString.all;
-      allMaster.webDisplay = R.string().commonString.all;
-      allMaster.isSelected = false;
+      if (widget.selectionModel.masters
+              .where((element) => element.sId == R.string().commonString.all)
+              .toList()
+              .length ==
+          0) {
+        Master allMaster = Master();
+        allMaster.sId = R.string().commonString.all;
+        allMaster.webDisplay = R.string().commonString.all;
+        allMaster.isSelected = false;
 
-      widget.selectionModel.masters.insert(0, allMaster);
+        widget.selectionModel.masters.insert(0, allMaster);
+      }
     }
     if (widget.selectionModel.isShowMore) {
-      Master allMaster = Master();
-      allMaster.sId =
-          widget.selectionModel.isShowMoreSelected ? "Show More" : "Show Less";
-      allMaster.webDisplay =
-          widget.selectionModel.isShowMoreSelected ? "Show More" : "Show Less";
-      allMaster.isSelected = false;
+      if (widget.selectionModel.masters
+              .where((element) => element.sId == "ShowMore")
+              .toList()
+              .length ==
+          0) {
+        Master allMaster = Master();
+        allMaster.sId = "ShowMore";
+        allMaster.webDisplay = widget.selectionModel.isShowMoreSelected
+            ? "Show More"
+            : "Show Less";
+        allMaster.isSelected = false;
 
-      widget.selectionModel.masters
-          .insert(widget.selectionModel.masters.length, allMaster);
+        widget.selectionModel.masters
+            .insert(widget.selectionModel.masters.length, allMaster);
+      }
     }
 
     for (var masterIndex = 0; masterIndex < elementsToShow; masterIndex++) {
