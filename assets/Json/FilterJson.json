@@ -16,10 +16,10 @@
   {
     "viewType": "seperator",
     "sequence": 2,
-    "height": 1,
-    "color": "#abc123",
-    "leftPadding": 12,
-    "rightPadding": 12
+    "height": 0.5,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "rightPadding": 0
   },
   {
     "title": "Clarity",
@@ -32,5 +32,23 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 3
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 4,
+    "height": 0.5,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
+    "title": "Price / Carat",
+    "viewType": "fromto",
+    "apiKey": "pricePerCarat",
+    "sequence": 4,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "maxValue": 100,
+    "minValue": -100
   }
 ]

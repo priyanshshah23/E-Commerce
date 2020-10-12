@@ -47,7 +47,7 @@ class FormBaseModel {
   String desc;
   String viewType;
 
-FormBaseModel({this.apiKey,this.desc,this.title});
+  FormBaseModel({this.apiKey, this.desc, this.title});
   FormBaseModel.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     apiKey = json['apiKey'];
@@ -61,14 +61,12 @@ class FromToModel extends FormBaseModel {
   String labelTo;
   String valueFrom;
   String valueTo;
-  String maxValue;
-  String minValue;
+  num maxValue;
+  num minValue;
 
   FromToModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     labelFrom = json['labelFrom'];
     labelTo = json['labelTo'];
-    valueFrom = json['valueFrom'];
-    valueTo = json['valueTo'];
     maxValue = json['maxValue'];
     minValue = json['minValue'];
   }
@@ -84,8 +82,14 @@ class SelectionModel extends FormBaseModel {
   bool isShowMore;
   bool isShowMoreSelected;
 
-SelectionModel({this.isShowAll,this.isShowAllSelected,
-    this.isShowMore,this.isShowMoreSelected,this.masterCode,this.masters,this.verticalScroll});
+  SelectionModel(
+      {this.isShowAll,
+      this.isShowAllSelected,
+      this.isShowMore,
+      this.isShowMoreSelected,
+      this.masterCode,
+      this.masters,
+      this.verticalScroll});
   SelectionModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     verticalScroll = json["verticalScroll"];
     orientation = json["orientation"];
