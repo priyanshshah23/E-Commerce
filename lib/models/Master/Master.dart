@@ -63,6 +63,8 @@ class Master {
   MultiLanguageData multiLanguageData;
   bool isSelected = false;
 
+  List<Master> grouped = [];
+
   Master(
       {this.isActive,
       this.isDefault,
@@ -78,7 +80,7 @@ class Master {
       this.image,
       this.parentId,
       this.multiLanguageData,
-      this.isSelected});
+      this.isSelected = false});
 
   Master.fromJson(Map<String, dynamic> json) {
     isActive = json['isActive'];
@@ -123,6 +125,34 @@ class Master {
 
   String getName() {
     return name;
+  }
+
+  static Future<List<Master>> getSubMaster(String code) async {
+    List<Master> master = [];
+    List<String> mapShape = [];
+    List<Master> allShapes =
+        await AppDatabase.instance.masterDao.getSubMasterFromCode(code);
+    allShapes.forEach((item) {
+      if (!mapShape.contains(item.webDisplay)) {
+        dynamic filter =
+            allShapes.where((element) => element.webDisplay == item.webDisplay);
+
+        item.grouped = filter.toList();
+        mapShape.add(item.webDisplay);
+        master.add(item);
+      }
+    });
+
+    if (code == MasterCode.origin) {
+      //If Master is Rough Origin Remove FM/CM Manually
+      Master filterIndex =
+          master.firstWhere((element) => element.code == "FM2/CM");
+      if (isNullEmptyOrFalse(filterIndex) == false) {
+        master.remove(filterIndex);
+      }
+    }
+
+    return master;
   }
 }
 

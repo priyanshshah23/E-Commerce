@@ -12,20 +12,27 @@ class Config {
     ;
     List<dynamic> fieldList = jsonDecode(jsonForm);
     List<FormBaseModel> formModels = [];
-    fieldList.forEach((element) async {
+    for (int i = 0; i < fieldList.length; i++) {
+      dynamic element = fieldList[i];
       if (element is Map<String, dynamic>) {
         String viewType = element["viewType"];
         if (viewType == "FromTo") {
           formModels.add(FromToModel.fromJson(element));
         } else if (viewType == "Selection") {
           SelectionModel selectionModel = SelectionModel.fromJson(element);
-          var arrMaster = await AppDatabase.instance.masterDao
-              .getSubMasterFromCode(selectionModel.masterCode);
+          List<Master> arrMaster =
+              await Master.getSubMaster(selectionModel.masterCode);
           selectionModel.masters = arrMaster;
           formModels.add(selectionModel);
+        } else if (viewType == "colorWidget") {
+          ColorModel colorModel = ColorModel.fromJson(element);
+          formModels.add(colorModel);
+          List<Master> arrMaster =
+              await Master.getSubMaster(colorModel.masterCode);
+          colorModel.masters = arrMaster;
         }
       }
-    });
+    }
     return formModels;
   }
 }
@@ -64,6 +71,7 @@ class FromToModel extends FormBaseModel {
 class SelectionModel extends FormBaseModel {
   String masterCode;
   List<Master> masters = [];
+  String orientation;
   bool verticalScroll;
   bool isShowAll;
   bool isShowAllSelected;
@@ -74,7 +82,19 @@ SelectionModel({this.isShowAll,this.isShowAllSelected,
     this.isShowMore,this.isShowMoreSelected,this.masterCode,this.masters,this.verticalScroll});
   SelectionModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     verticalScroll = json["verticalScroll"];
-    isShowAll = json['isShowAll'];
-    isShowMore = json['isShowMore'];
+    orientation = json["orientation"];
+    isShowAll = json['isShowAll'] ?? false;
+    isShowMore = json['isShowMore'] ?? false;
+    masterCode = json["masterCode"];
   }
+}
+
+class ColorModel extends SelectionModel {
+  bool isWhiteSelected = true;
+  List<Master> fancyMaster = [];
+
+  SelectionModel intensity;
+  SelectionModel overtone;
+
+  ColorModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {}
 }

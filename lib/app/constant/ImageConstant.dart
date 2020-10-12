@@ -8,3 +8,4 @@ const String phone = "assets/auth/phone.png";
 const String email = "assets/auth/envelope.png";
 const String company = "assets/auth/company.png";
 const String india = "assets/auth/india.png";
+const String back = "assets/auth/back.png";

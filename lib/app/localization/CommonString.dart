@@ -1,4 +1,6 @@
 class CommonString {
+  final String all;
+
   // button caption
   final String btnSkip;
   final String btnContinue;
@@ -157,11 +159,12 @@ class CommonString {
   //RS Symbol String
   final String rs;
 
-
   const CommonString({
+    this.all = "All",
+
     // button caption
     this.save = 'Save',
-    this.verify ='Verify',
+    this.verify = 'Verify',
     this.readMore = 'Read More',
     this.goodMorning = 'Good Morning',
     this.goodAfternoon = 'Good Afternoon',
@@ -304,15 +307,14 @@ class CommonString {
 
 //Version Update
     this.applicationUpdate = "Application Update",
-    this.newVersionMessage = "A new version of application is available, please update the application to continue.",
+    this.newVersionMessage =
+        "A new version of application is available, please update the application to continue.",
 
     //Ride bottomsheeet
     this.paymentCollected = "Payment Collected",
-
     this.addComment = "Add a comment",
 
     //RS Symbol String
     this.rs = "\u20B9",
-
   });
 }

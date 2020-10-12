@@ -6,6 +6,8 @@ import 'dart:math' as math;
 import 'package:fluttertoast/fluttertoast.dart';
 
 class SearchComponent extends StatefulWidget {
+  static const route = "SearchComponent";
+
   String title;
   num max;
   num min;
@@ -46,100 +48,121 @@ class _SearchComponentState extends State<SearchComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Divider(
-          color: appTheme.textBlackColor,
-        ),
-        SizedBox(
-          height: getSize(10),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: getSize(15)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                title,
-                style: appTheme.commonAlertDialogueTitleStyle,
-              ),
-              Row(
+    return AppBackground(
+      child: Scaffold(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Divider(
+              color: appTheme.textBlackColor,
+            ),
+            SizedBox(
+              height: getSize(10),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: getSize(15)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      onChanged: (value) {
-                        if (value != null || value != "") {
-                            if (num.parse(value) <= min || num.parse(value) >= max) {
-                              if (oldValueForFrom != null || oldValueForFrom != "") {
-                                _minValueController.text = oldValueForFrom;
-                                _minValueController.selection =
-                                    TextSelection.fromPosition(TextPosition(
-                                        offset: _minValueController.text.length));
+                  Text(
+                    title,
+                    style: appTheme.commonAlertDialogueTitleStyle,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: TextField(
+                          onChanged: (value) {
+                            if (value != null || value != "") {
+                              if (num.parse(value) <= min ||
+                                  num.parse(value) >= max) {
+                                if (oldValueForFrom != null ||
+                                    oldValueForFrom != "") {
+                                  _minValueController.text = oldValueForFrom;
+                                  _minValueController.selection =
+                                      TextSelection.fromPosition(TextPosition(
+                                          offset:
+                                              _minValueController.text.length));
+                                }
                               }
                             }
-                        }
-                        oldValueForFrom = _minValueController.text.trim();
-                      },
-                      focusNode: _focusMinValue,
-                      controller: _minValueController,
-                      inputFormatters: [DecimalTextInputFormatter(decimalRange: 2)],
-                      keyboardType: TextInputType.numberWithOptions(decimal: true),
-                      textInputAction: TextInputAction.next,
-                      decoration: InputDecoration(
-                        focusedBorder: UnderlineInputBorder(),
-                        hintText: "From",
-                        hintStyle: appTheme.commonAlertDialogueDescStyle,
+                            oldValueForFrom = _minValueController.text.trim();
+                          },
+                          focusNode: _focusMinValue,
+                          controller: _minValueController,
+                          inputFormatters: [
+                            DecimalTextInputFormatter(decimalRange: 2)
+                          ],
+                          keyboardType:
+                              TextInputType.numberWithOptions(decimal: true),
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                            focusedBorder: UnderlineInputBorder(),
+                            hintText: "From",
+                            hintStyle: appTheme.commonAlertDialogueDescStyle,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: getSize(15),
-                  ),
-                  Expanded(
-                    child: TextField(
-                      onChanged: (value) {
-                        if (value != null || value != "") {
-                          if (num.parse(value) <= min ||
-                              num.parse(value) >= max) {
-                            //showToast("Please Enter Valid value");
-                            if (oldValueForTo != null || oldValueForTo != "") {
-                              _maxValueController.text = oldValueForTo;
-                              _maxValueController.selection =
-                                  TextSelection.fromPosition(TextPosition(
-                                      offset: _maxValueController.text.length));
+                      SizedBox(
+                        width: getSize(15),
+                      ),
+                      Expanded(
+                        child: TextField(
+                          onChanged: (value) {
+                            if (value != null || value != "") {
+                              if (num.parse(value) <= min ||
+                                  num.parse(value) >= max) {
+                                //showToast("Please Enter Valid value");
+                                if (oldValueForTo != null ||
+                                    oldValueForTo != "") {
+                                  _maxValueController.text = oldValueForTo;
+                                  _maxValueController.selection =
+                                      TextSelection.fromPosition(TextPosition(
+                                          offset:
+                                              _maxValueController.text.length));
+                                }
+                              }
                             }
-                          }
-                        }
-                        oldValueForTo = _maxValueController.text.trim();
-                        widget.setValue(
-                            num.parse(_minValueController.text.trim()),
-                            num.parse(_maxValueController.text.trim()));
-                      },
-                      focusNode: _focusMaxValue,
-                      controller: _maxValueController,
-                      inputFormatters: [DecimalTextInputFormatter(decimalRange: 2)],
-                      keyboardType: TextInputType.numberWithOptions(decimal: true),
-                      textInputAction: TextInputAction.done,
-                      decoration: InputDecoration(
-                        focusedBorder: UnderlineInputBorder(),
-                        hintText: "To",
-                        hintStyle: appTheme.commonAlertDialogueDescStyle,
+                            oldValueForTo = _maxValueController.text.trim();
+                            widget.setValue(
+                                num.parse(_minValueController.text.trim()),
+                                num.parse(_maxValueController.text.trim()));
+                          },
+                          focusNode: _focusMaxValue,
+                          controller: _maxValueController,
+                          inputFormatters: [
+                            DecimalTextInputFormatter(decimalRange: 2)
+                          ],
+                          keyboardType:
+                              TextInputType.numberWithOptions(decimal: true),
+                          textInputAction: TextInputAction.done,
+                          decoration: InputDecoration(
+                            focusedBorder: UnderlineInputBorder(),
+                            hintText: "To",
+                            hintStyle: appTheme.commonAlertDialogueDescStyle,
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+            SizedBox(
+              height: getSize(10),
+            ),
+          ],
         ),
-        SizedBox(
-          height: getSize(10),
-        ),
-      ],
+      ),
     );
   }
 
+  bool validateValue(String value) {
+    Pattern pattern = r'^-?\d+(?:\.\d+)?$';
+    RegExp regex = new RegExp(pattern);
+    print(regex.hasMatch(value));
+    return (!regex.hasMatch(value)) ? false : true;
+  }
 }
 
 class DecimalTextInputFormatter extends TextInputFormatter {
@@ -150,9 +173,9 @@ class DecimalTextInputFormatter extends TextInputFormatter {
 
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, // unused.
-      TextEditingValue newValue,
-      ) {
+    TextEditingValue oldValue, // unused.
+    TextEditingValue newValue,
+  ) {
     TextSelection newSelection = newValue.selection;
     String truncated = newValue.text;
 
