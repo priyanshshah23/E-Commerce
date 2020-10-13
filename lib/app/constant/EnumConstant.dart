@@ -4,6 +4,8 @@ class ViewTypes {
   static const String dropDown = "dropDown";
   static const String colorWidget = "color";
   static const String seperator = "seperator";
+  static const String keytosymbol = "keytosymbol";
+  
 }
 
 class TabTypes {

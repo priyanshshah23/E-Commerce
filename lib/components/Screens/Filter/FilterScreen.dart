@@ -7,6 +7,7 @@ import 'package:diamnow/components/Screens/Filter/Widget/SeperatorWidget.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/FilterModel/TabModel.dart';
+import 'package:diamnow/modules/Filter/gridviewlist/KeyToSymbol.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -196,6 +197,15 @@ class _FilterItemState extends State<FilterItem> {
             bottom: getSize(8)),
         child: FromToWidget(model),
       );
-    }
+    } else if (model.viewType == ViewTypes.keytosymbol) {
+      return Padding(
+        padding: EdgeInsets.only(
+            left: getSize(16),
+            right: getSize(16),
+            top: getSize(8.0),
+            bottom: getSize(8)),
+        child: KeyToSymbolWidget(model),
+      );
+    } 
   }
 }

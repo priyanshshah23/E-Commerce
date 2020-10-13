@@ -25,6 +25,7 @@
     "isWhiteColor": false,
     "sequence": 1
   },
+  
   {
     "viewType": "seperator",
     "sequence": 2,
@@ -486,5 +487,30 @@
     "tab": "advance",
     "maxValue": 100,
     "minValue": 0
+  },
+  {
+    "title": "keyToSymbol",
+    "desc": "Desc",
+    "viewType": "keytosymbol",
+    "radiobutton": [
+      {
+        "title": "Contains",
+        "isSelected": false,
+        "apiKey":"contains"
+      },
+      {
+        "title": "Not Contains",
+        "isSelected": false,
+        "apiKey":"notcontains"
+      }
+    ],
+    "apiKey": "keytosymbol",
+    "masterCode": "KEY_TO_SYMBOLS",
+    "verticalScroll": false,
+    "orientation": "vertical",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "advance",
+    "sequence": 1
   }
 ]
