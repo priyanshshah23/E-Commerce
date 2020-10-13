@@ -43,8 +43,8 @@ dependencies:
   sembast: ^1.15.1
   rxbus: any
   percent_indicator: any
-  onesignal_flutter: 2.3.4
-  permission_handler: ^4.4.0+hotfix.2
+  # onesignal_flutter: 2.3.4
+  # permission_handler: ^4.4.0+hotfix.2
   android_intent: ^0.3.6+12
   app_settings: ^4.0.0
   package_info: ^0.4.0+16

@@ -40,7 +40,7 @@ class _SplashState extends State<Splash> {
     if (app.resolve<PrefUtils>().isUserLogin()) {
       NavigationUtilities.pushRoute(FilterScreen.route);
     } else {
-      NavigationUtilities.pushRoute(TabBarDemo.route);
+      NavigationUtilities.pushRoute(LoginScreen.route);
     }
   }
 

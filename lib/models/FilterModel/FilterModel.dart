@@ -49,6 +49,9 @@ class Config {
         } else if (viewType == ViewTypes.seperator) {
           SeperatorModel seperatorModel = SeperatorModel.fromJson(element);
           formModels.add(seperatorModel);
+        } else if (viewType == ViewTypes.text) {
+          CertNoModel seperatorModel = CertNoModel.fromJson(element);
+          formModels.add(seperatorModel);
         }
       }
     }
@@ -129,5 +132,26 @@ class SeperatorModel extends SelectionModel {
     color = fromHex(json['color'] ?? "#E3E3E3");
     leftPadding = json['leftPadding'] ?? 0;
     rightPadding = json["rightPadding"] ?? 0;
+  }
+}
+
+class CertNoModel extends FormBaseModel {
+  List<CertNoItemModel> items = [];
+
+  CertNoModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    if (json['items'] != null) {
+      items = new List<CertNoItemModel>();
+      json['list'].forEach((v) {
+        items.add(new CertNoItemModel.fromJson(v));
+      });
+    }
+  }
+}
+
+class CertNoItemModel extends FormBaseModel {
+  bool isSelected;
+
+  CertNoItemModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    isSelected = json['isSelected'];
   }
 }
