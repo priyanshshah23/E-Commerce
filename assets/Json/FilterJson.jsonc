@@ -35,7 +35,6 @@
     "isWhiteColor": false,
     "sequence": 1
   },
-  
   {
     "viewType": "seperator",
     "sequence": 2,
@@ -604,25 +603,6 @@
     }
   },
   {
-<<<<<<< HEAD
-    "title": "keyToSymbol",
-    "desc": "Desc",
-    "viewType": "keytosymbol",
-    "radiobutton": [
-      {
-        "title": "Contains",
-        "isSelected": false,
-        "apiKey":"contains"
-      },
-      {
-        "title": "Not Contains",
-        "isSelected": false,
-        "apiKey":"notcontains"
-      }
-    ],
-    "apiKey": "keytosymbol",
-    "masterCode": "KEY_TO_SYMBOLS",
-=======
     "viewType": "seperator",
     "sequence": 9,
     "height": 1,
@@ -762,16 +742,36 @@
     "viewType": "selection",
     "apiKey": "milky",
     "masterCode": "MILKEY",
->>>>>>> 7cb3010ffc8740e4946bb08bd35523f0f4eff73a
     "verticalScroll": false,
     "orientation": "vertical",
     "isShowAll": false,
     "isShowMore": false,
     "tab": "advance",
-<<<<<<< HEAD
-    "sequence": 1
-=======
     "sequence": 10
->>>>>>> 7cb3010ffc8740e4946bb08bd35523f0f4eff73a
+  },
+  {
+    "title": "keyToSymbol",
+    "desc": "Desc",
+    "viewType": "keytosymbol",
+    "radiobutton": [
+      {
+        "title": "Contains",
+        "isSelected": false,
+        "apiKey": "contains"
+      },
+      {
+        "title": "Not Contains",
+        "isSelected": false,
+        "apiKey": "notcontains"
+      }
+    ],
+    "apiKey": "keytosymbol",
+    "masterCode": "KEY_TO_SYMBOLS",
+    "verticalScroll": false,
+    "orientation": "vertical",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "advance",
+    "sequence": 10
   }
 ]
