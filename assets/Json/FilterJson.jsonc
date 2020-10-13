@@ -134,7 +134,7 @@
     "apiKey": "cut",
     "masterCode": "CUT",
     "verticalScroll": false,
-    "orientation": "vertical",
+    "orientation": "horizontal",
     "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
@@ -146,7 +146,7 @@
     "apiKey": "clarity",
     "masterCode": "POLISH",
     "verticalScroll": false,
-    "orientation": "vertical",
+    "orientation": "horizontal",
     "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
@@ -158,7 +158,7 @@
     "apiKey": "sym",
     "masterCode": "SYMMETRY",
     "verticalScroll": false,
-    "orientation": "vertical",
+    "orientation": "horizontal",
     "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
@@ -179,7 +179,7 @@
     "apiKey": "clarity",
     "masterCode": "H_AND_A",
     "verticalScroll": false,
-    "orientation": "vertical",
+    "orientation": "horizontal",
     "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
@@ -191,7 +191,7 @@
     "apiKey": "clarity",
     "masterCode": "BRILLIANCY",
     "verticalScroll": false,
-    "orientation": "vertical",
+    "orientation": "horizontal",
     "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
@@ -215,11 +215,18 @@
     "tab": "basic",
     "labelTo": "To",
     "maxValue": 100,
-    "minValue": -100
+    "minValue": -10,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
   },
   {
     "viewType": "seperator",
-    "sequence": 5,
+    "sequence": 9,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
@@ -235,7 +242,14 @@
     "labelTo": "To",
     "tab": "basic",
     "maxValue": 100,
-    "minValue": 0
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
   },
   {
     "viewType": "seperator",
@@ -255,7 +269,14 @@
     "labelTo": "To",
     "tab": "advance",
     "maxValue": 100,
-    "minValue": 0
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
   },
   {
     "viewType": "seperator",
@@ -275,7 +296,14 @@
     "labelTo": "To",
     "tab": "advance",
     "maxValue": 100,
-    "minValue": 0
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
   },
   {
     "viewType": "seperator",
@@ -295,7 +323,14 @@
     "labelTo": "To",
     "tab": "advance",
     "maxValue": 100,
-    "minValue": 0
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
   },
   {
     "viewType": "seperator",
@@ -315,7 +350,14 @@
     "labelTo": "To",
     "tab": "advance",
     "maxValue": 100,
-    "minValue": 0
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
   },
   {
     "viewType": "seperator",
@@ -335,7 +377,14 @@
     "labelTo": "To",
     "tab": "advance",
     "maxValue": 100,
-    "minValue": 0
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
   },
   {
     "viewType": "seperator",
@@ -355,7 +404,14 @@
     "labelTo": "To",
     "tab": "advance",
     "maxValue": 100,
-    "minValue": 0
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
   },
   {
     "viewType": "seperator",
@@ -375,7 +431,14 @@
     "labelTo": "To",
     "tab": "advance",
     "maxValue": 100,
-    "minValue": 0
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
   },
   {
     "viewType": "seperator",
@@ -395,7 +458,14 @@
     "labelTo": "To",
     "tab": "advance",
     "maxValue": 100,
-    "minValue": 0
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
   },
   {
     "viewType": "seperator",
@@ -415,7 +485,14 @@
     "labelTo": "To",
     "tab": "advance",
     "maxValue": 100,
-    "minValue": 0
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
   },
   {
     "viewType": "seperator",
@@ -435,7 +512,14 @@
     "labelTo": "To",
     "tab": "advance",
     "maxValue": 100,
-    "minValue": 0
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
   },
   {
     "viewType": "seperator",
@@ -455,7 +539,14 @@
     "labelTo": "To",
     "tab": "advance",
     "maxValue": 100,
-    "minValue": 0
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
   },
   {
     "viewType": "seperator",
@@ -475,7 +566,14 @@
     "labelTo": "To",
     "tab": "advance",
     "maxValue": 100,
-    "minValue": 0
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
   },
   {
     "viewType": "seperator",
@@ -495,7 +593,14 @@
     "labelTo": "To",
     "tab": "advance",
     "maxValue": 100,
-    "minValue": 0
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
   },
   {
     "viewType": "seperator",

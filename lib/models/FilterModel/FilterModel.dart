@@ -80,12 +80,16 @@ class FromToModel extends FormBaseModel {
   String valueTo;
   num maxValue;
   num minValue;
+  FromToStyle fromToStyle;
 
   FromToModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     labelFrom = json['labelFrom'];
     labelTo = json['labelTo'];
     maxValue = json['maxValue'];
     minValue = json['minValue'];
+    fromToStyle = json['fromToStyle'] != null
+        ? new FromToStyle.fromJson(json['fromToStyle'])
+        : null;
   }
 }
 
@@ -131,5 +135,21 @@ class SeperatorModel extends SelectionModel {
     color = fromHex(json['color'] ?? "#E3E3E3");
     leftPadding = json['leftPadding'] ?? 0;
     rightPadding = json["rightPadding"] ?? 0;
+  }
+}
+
+class FromToStyle {
+  bool showUnderline;
+  bool showBorder;
+  Color underlineColor;
+  Color borderColor;
+  int borderWidth;
+
+  FromToStyle.fromJson(Map<String, dynamic> json) {
+    showUnderline = json['showUnderline'] ?? true;
+    showBorder = json['showBorder'] ?? false;
+    underlineColor = fromHex(json['ounderlineColor'] ?? "#E3E3E3");
+    borderColor = fromHex(json['borderColor'] ?? "#E3E3E3");
+    borderWidth = json['borderWidth'] ?? 1;
   }
 }

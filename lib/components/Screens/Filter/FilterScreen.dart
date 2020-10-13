@@ -51,44 +51,27 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       },
       child: AppBackground(
         child: Scaffold(
-          body: Stack(
+          appBar: getAppBar(
+            context,
+            R.string().screenTitle.searchDiamond,
+            bgColor: appTheme.whiteColor,
+            leadingButton: getBackButton(context),
+            centerTitle: false,
+          ),
+          body: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                color: appTheme.headerBgColor,
-                height: isNullEmptyOrFalse(arrTab) ? getSize(80) : getSize(140),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: getSize(26)),
-                        child: Row(
-                          children: <Widget>[
-                            getBackButton(context, isWhite: true),
-                            SizedBox(
-                              width: getSize(20),
-                            ),
-                            Text(
-                              R.string().screenTitle.searchDiamond,
-                              textAlign: TextAlign.left,
-                              style: appTheme.black24TitleColorWhite,
-                            ),
-                          ],
-                        ),
-                      ),
-                      isNullEmptyOrFalse(arrTab)
-                          ? SizedBox()
-                          : SizedBox(height: getSize(16)),
-                      isNullEmptyOrFalse(arrTab)
-                          ? SizedBox()
-                          : _segmentedControl(),
-                    ]),
-              ),
-              Container(
-                margin: EdgeInsets.only(
-                  top: isNullEmptyOrFalse(arrTab) ? getSize(80) : getSize(140),
+              isNullEmptyOrFalse(arrTab)
+                  ? SizedBox()
+                  : SizedBox(height: getSize(16)),
+              isNullEmptyOrFalse(arrTab) ? SizedBox() : _segmentedControl(),
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.only(top: getSize(16)),
+                  color: Colors.transparent,
+                  child:
+                      isNullEmptyOrFalse(arrList) ? SizedBox() : getPageView(),
                 ),
-                color: Colors.transparent,
-                child: isNullEmptyOrFalse(arrList) ? SizedBox() : getPageView(),
               ),
             ],
           ),
@@ -101,10 +84,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     return Container(
       width: MathUtilities.screenWidth(context),
       child: CupertinoSegmentedControl<int>(
-        selectedColor: appTheme.segmentSelectedColor,
-        unselectedColor: Colors.transparent,
+        selectedColor: appTheme.colorPrimary,
+        unselectedColor: Colors.white,
         pressedColor: Colors.transparent,
-        borderColor: Colors.white,
+        borderColor: appTheme.colorPrimary,
         children: getSegmentChildren(),
         onValueChanged: (int val) {
           setState(() {
@@ -134,7 +117,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       style: TextStyle(
         fontSize: getFontSize(14),
         fontWeight: FontWeight.w500,
-        color: index == segmentedControlValue
+        color: index != segmentedControlValue
             ? appTheme.colorPrimary
             : appTheme.whiteColor,
       ),
@@ -147,7 +130,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       itemCount: isNullEmptyOrFalse(arrTab) ? 1 : arrTab.length,
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, position) {
-        print(position);
+        if (isNullEmptyOrFalse(arrTab)) {
+          return FilterItem(arrList);
+        }
         return FilterItem(arrList
             .where((element) => element.tab == arrTab[position].tab)
             .toList());
