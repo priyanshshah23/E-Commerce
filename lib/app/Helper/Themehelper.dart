@@ -52,6 +52,7 @@ class BaseTheme {
   Color get borderColor => fromHex("#e3e3e3");
   Color get selectedFilterColor => fromHex("#eaeffb");
   Color get unSelectedBgColor => fromHex("#f7f7f7");
+  Color get greenColor => fromHex("#0EAC33");
 
   TextStyle get black24TitleColor {
     return TextStyle(
@@ -99,6 +100,13 @@ class BaseTheme {
   TextStyle get black16TextStyle {
     return TextStyle(
         fontSize: getFontSize(16),
+        color: textColor,
+        fontWeight: FontWeight.normal);
+  }
+
+  TextStyle get black12TextStyle {
+    return TextStyle(
+        fontSize: getFontSize(12),
         color: textColor,
         fontWeight: FontWeight.normal);
   }
@@ -157,6 +165,20 @@ class BaseTheme {
     return TextStyle(
         fontSize: getFontSize(14),
         color: errorColor,
+        fontWeight: FontWeight.normal);
+  }
+
+  TextStyle get blue14TextStyle {
+    return TextStyle(
+        fontSize: getFontSize(14),
+        color: colorPrimary,
+        fontWeight: FontWeight.normal);
+  }
+
+  TextStyle get green10TextStyle {
+    return TextStyle(
+        fontSize: getFontSize(10),
+        color: greenColor,
         fontWeight: FontWeight.normal);
   }
 }

@@ -20,14 +20,16 @@ TextDirection deviceTextDirection = TextDirection.ltr;
 
 main() {
   WidgetsFlutterBinding.ensureInitialized();
+  print('debug ;; ${kDebugMode}');
   if (kDebugMode) {
     rootBundle
-        .load('assets/chls/hChls.pem')
-        .then((value) => {
+        .load('assets/chls.pem')
+        .then((value){
+          print('value :: ${value}');
               if (value != null)
                 {
                   SecurityContext.defaultContext
-                      .setTrustedCertificatesBytes(value.buffer.asUint8List())
+                      .setTrustedCertificatesBytes(value.buffer.asUint8List());
                 }
             })
         .catchError((object) => {print(object)});

@@ -17,5 +17,5 @@ abstract class NetworkService {
   Future<LoginResp> login(@Body() LoginReq req);
 
   @POST(ApiConstants.diamondList)
-  Future<BaseApiResp> diamondList(@Body() DiamondListReq req);
+  Future<DiamondListResp> diamondList(@Body() DiamondListReq req);
 }

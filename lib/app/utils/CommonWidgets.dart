@@ -12,17 +12,18 @@ import '../app.export.dart';
 import '../constant/ColorConstant.dart';
 import '../theme/app_theme.dart';
 
-getBackButton(BuildContext context, {bool isWhite = false}) {
+getBackButton(BuildContext context, {bool isWhite = false,double height,double width}) {
   return Container(
-    child: IconButton(
-      onPressed: () {
+    child: InkWell(
+//      padding: EdgeInsets.all(0),
+      onTap: () {
         Navigator.of(context).pop();
       },
-      icon: Image.asset(
+      child: Image.asset(
         back,
         color: isWhite ? appTheme.whiteColor : appTheme.textBlackColor,
-        width: getSize(30),
-        height: getSize(22),
+        width: width??getSize(30),
+        height: height??getSize(22),
       ),
     ),
   );
