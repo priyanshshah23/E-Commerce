@@ -1,6 +1,7 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/components/Screens/Filter/Widget/CertNoWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/FromToWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SeperatorWidget.dart';
@@ -183,22 +184,16 @@ class _FilterItemState extends State<FilterItem> {
             bottom: getSize(8)),
         child: FromToWidget(model),
       );
-    }
-    // else if (model.viewType == ViewTypes.text) {
-    //   return Padding(
-    //     padding: EdgeInsets.only(
-    //         left: getSize(16),
-    //         right: getSize(16),
-    //         top: getSize(8.0),
-    //         bottom: getSize(8)),
-    //     child: Column(
-    //       children: [
-    //         Text("test"),
-    //       ],
-    //     ),
-    //   );
-    // }
-    else if (model.viewType == ViewTypes.keytosymbol) {
+    } else if (model.viewType == ViewTypes.certNo) {
+      return Padding(
+        padding: EdgeInsets.only(
+            left: getSize(16),
+            right: getSize(16),
+            top: getSize(8.0),
+            bottom: getSize(8)),
+        child: CertNoWidget(model),
+      );
+    } else if (model.viewType == ViewTypes.keytosymbol) {
       return Padding(
         padding: EdgeInsets.only(
             left: getSize(16),

@@ -51,7 +51,7 @@ class Config {
         } else if (viewType == ViewTypes.seperator) {
           SeperatorModel seperatorModel = SeperatorModel.fromJson(element);
           formModels.add(seperatorModel);
-        } else if (viewType == ViewTypes.text) {
+        } else if (viewType == ViewTypes.certNo) {
           CertNoModel seperatorModel = CertNoModel.fromJson(element);
           formModels.add(seperatorModel);
         } else if (viewType == ViewTypes.keytosymbol) {
@@ -150,13 +150,13 @@ class SeperatorModel extends SelectionModel {
 }
 
 class CertNoModel extends FormBaseModel {
-  List<CertNoItemModel> items = [];
+  List<RadioButton> radiobutton = [];
 
   CertNoModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
-    if (json['items'] != null) {
-      items = new List<CertNoItemModel>();
-      json['list'].forEach((v) {
-        items.add(new CertNoItemModel.fromJson(v));
+    if (json['radiobutton'] != null) {
+      radiobutton = new List<RadioButton>();
+      json['radiobutton'].forEach((v) {
+        radiobutton.add(new RadioButton.fromJson(v));
       });
     }
   }
@@ -185,14 +185,6 @@ class KeyToSymbolModel extends SelectionModel {
     for (var i in json['radiobutton']) {
       listOfRadio.add(RadioButton.fromJson(i));
     }
-  }
-}
-
-class CertNoItemModel extends FormBaseModel {
-  bool isSelected;
-
-  CertNoItemModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
-    isSelected = json['isSelected'];
   }
 }
 
