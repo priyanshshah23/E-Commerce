@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
+import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/models/FilterModel/TabModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
+import 'package:diamnow/modules/Filter/gridviewlist/KeyToSymbol.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -49,6 +51,15 @@ class Config {
         } else if (viewType == ViewTypes.seperator) {
           SeperatorModel seperatorModel = SeperatorModel.fromJson(element);
           formModels.add(seperatorModel);
+        } else if (viewType == ViewTypes.text) {
+          CertNoModel seperatorModel = CertNoModel.fromJson(element);
+          formModels.add(seperatorModel);
+        } else if (viewType == ViewTypes.keytosymbol) {
+          KeyToSymbolModel keyToSymbol = KeyToSymbolModel.fromJson(element);
+          formModels.add(keyToSymbol);
+          List<Master> arrMaster =
+              await Master.getSubMaster(keyToSymbol.masterCode);
+          keyToSymbol.masters = arrMaster;
         }
       }
     }
@@ -80,12 +91,16 @@ class FromToModel extends FormBaseModel {
   String valueTo;
   num maxValue;
   num minValue;
+  FromToStyle fromToStyle;
 
   FromToModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     labelFrom = json['labelFrom'];
     labelTo = json['labelTo'];
     maxValue = json['maxValue'];
     minValue = json['minValue'];
+    fromToStyle = json['fromToStyle'] != null
+        ? new FromToStyle.fromJson(json['fromToStyle'])
+        : null;
   }
 }
 
@@ -97,7 +112,8 @@ class SelectionModel extends FormBaseModel {
   bool isShowAll;
   bool isShowAllSelected = false;
   bool isShowMore;
-  bool isShowMoreSelected = false;
+  bool isShowMoreSelected = true;
+  String allLableTitle;
 
   SelectionModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     verticalScroll = json["verticalScroll"] ?? false;
@@ -105,6 +121,7 @@ class SelectionModel extends FormBaseModel {
     isShowAll = json['isShowAll'] ?? false;
     isShowMore = json['isShowMore'] ?? false;
     masterCode = json["masterCode"];
+    allLableTitle = json["allLableTitle"];
   }
 }
 
@@ -129,5 +146,64 @@ class SeperatorModel extends SelectionModel {
     color = fromHex(json['color'] ?? "#E3E3E3");
     leftPadding = json['leftPadding'] ?? 0;
     rightPadding = json["rightPadding"] ?? 0;
+  }
+}
+
+class CertNoModel extends FormBaseModel {
+  List<CertNoItemModel> items = [];
+
+  CertNoModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    if (json['items'] != null) {
+      items = new List<CertNoItemModel>();
+      json['list'].forEach((v) {
+        items.add(new CertNoItemModel.fromJson(v));
+      });
+    }
+  }
+}
+
+class FromToStyle {
+  bool showUnderline;
+  bool showBorder;
+  Color underlineColor;
+  Color borderColor;
+  int borderWidth;
+
+  FromToStyle.fromJson(Map<String, dynamic> json) {
+    showUnderline = json['showUnderline'] ?? true;
+    showBorder = json['showBorder'] ?? false;
+    underlineColor = fromHex(json['ounderlineColor'] ?? "#E3E3E3");
+    borderColor = fromHex(json['borderColor'] ?? "#E3E3E3");
+    borderWidth = json['borderWidth'] ?? 1;
+  }
+}
+
+class KeyToSymbolModel extends SelectionModel {
+  List<RadioButton> listOfRadio = [];
+
+  KeyToSymbolModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    for (var i in json['radiobutton']) {
+      listOfRadio.add(RadioButton.fromJson(i));
+    }
+  }
+}
+
+class CertNoItemModel extends FormBaseModel {
+  bool isSelected;
+
+  CertNoItemModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    isSelected = json['isSelected'];
+  }
+}
+
+class RadioButton {
+  String title;
+  bool isSelected;
+  String apiKey;
+
+  RadioButton.fromJson(Map<String, dynamic> json) {
+    title = json['title'] ?? "";
+    isSelected = json['isSelected'] ?? false;
+    apiKey = json['apiKey'];
   }
 }

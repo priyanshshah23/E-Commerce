@@ -19,7 +19,7 @@ class ShapeWidget extends StatefulWidget {
 
 class _ShapeWidgetState extends State<ShapeWidget> {
   //show when isShowMoreSelected=false;
-  int elementsToShow = 6;
+  int elementsToShow = 7;
   List<Master> listOfMasterView = [];
 
   @override
@@ -28,13 +28,14 @@ class _ShapeWidgetState extends State<ShapeWidget> {
 
     if (widget.selectionModel.isShowAll == true) {
       if (widget.selectionModel.masters
-              .where((element) => element.sId == R.string().commonString.all)
+              .where((element) =>
+                  element.sId == widget.selectionModel.allLableTitle)
               .toList()
               .length ==
           0) {
         Master allMaster = Master();
-        allMaster.sId = R.string().commonString.all;
-        allMaster.webDisplay = R.string().commonString.all;
+        allMaster.sId = widget.selectionModel.allLableTitle;
+        allMaster.webDisplay = widget.selectionModel.allLableTitle;
         allMaster.isSelected = false;
 
         widget.selectionModel.masters.insert(0, allMaster);
@@ -78,7 +79,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Text(
-          widget.selectionModel.title ?? "Shapes",
+          widget.selectionModel.title ?? "-",
           style: appTheme.blackNormal18TitleColorblack,
           textAlign: TextAlign.left,
         ),
@@ -90,7 +91,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                 shrinkWrap: true,
                 primary: false,
                 childAspectRatio: (itemWidth / itemHeight),
-                padding: const EdgeInsets.all(2),
+                padding: EdgeInsets.all(getSize(2)),
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8,
                 crossAxisCount: 4,
@@ -107,12 +108,20 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                     if (index == 0 && widget.selectionModel.isShowAll == true) {
                       return InkWell(
                         onTap: () {
-                          widget.selectionModel.masters.forEach((element) {
-                            if (element.sId != "Show More" ||
-                                element.sId != "Show Less")
-                              element.isSelected = true;
-                          });
-                          widget.selectionModel.isShowAllSelected = true;
+                          widget.selectionModel.isShowAllSelected =
+                              !widget.selectionModel.isShowAllSelected;
+                          if (widget.selectionModel.isShowAllSelected == true) {
+                            widget.selectionModel.masters.forEach((element) {
+                              if (element.sId != "ShowMore")
+                                element.isSelected = true;
+                            });
+                          } else {
+                            widget.selectionModel.masters.forEach((element) {
+                              if (element.sId != "ShowMore")
+                                element.isSelected = false;
+                            });
+                          }
+
                           setState(() {});
                         },
                         child: CardItem(
@@ -125,7 +134,6 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                             false &&
                         widget.selectionModel.isShowMore &&
                         index == totalIndex - 1) {
-                      obj.sId = "Show Less";
                       obj.webDisplay = "Show Less";
                       return InkWell(
                         onTap: () {
@@ -142,7 +150,6 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                             true &&
                         widget.selectionModel.isShowMore &&
                         index == totalIndex - 1) {
-                      obj.sId = "Show More";
                       obj.webDisplay = "Show More";
                       return InkWell(
                         onTap: () {
@@ -163,7 +170,8 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                               widget.selectionModel.isShowAllSelected = false;
                             }
                             widget.selectionModel.masters.forEach((element) {
-                              if (element.sId == R.string().commonString.all &&
+                              if (element.sId ==
+                                      widget.selectionModel.allLableTitle &&
                                   element.isSelected &&
                                   obj.isSelected) {
                                 element.isSelected = false;
@@ -237,14 +245,18 @@ class CardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: ((obj.isSelected) || (selectionModel.isShowAllSelected)) &&
-                  (obj.sId != "Show More" && obj.sId != "Show Less")
-              ? appTheme.selectedFilterColor
-              : appTheme.unSelectedBgColor,
+          color: obj.sId == "ShowMore"
+              ? appTheme.unSelectedBgColor
+              : ((obj.isSelected) || (selectionModel.isShowAllSelected))
+                  ? appTheme.selectedFilterColor
+                  : appTheme.unSelectedBgColor,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color:
-                obj.isSelected ? appTheme.colorPrimary : appTheme.borderColor,
+            color: obj.sId == "ShowMore"
+                ? appTheme.borderColor
+                : (obj.isSelected || selectionModel.isShowAllSelected)
+                    ? appTheme.colorPrimary
+                    : appTheme.borderColor,
           )),
       padding: const EdgeInsets.all(8),
       child: obj != null
@@ -253,13 +265,13 @@ class CardItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                obj.sId != R.string().commonString.all &&
-                        (obj.sId != "Show More" && obj.sId != "Show Less")
+                obj.sId != selectionModel.allLableTitle &&
+                        (obj.sId != "ShowMore")
                     ? obj.getShapeImage(obj.isSelected)
                     : SizedBox(),
                 Padding(
                   padding: EdgeInsets.only(top: getSize(12.0)),
-                  child: Text(obj.webDisplay,
+                  child: Text(obj.webDisplay.toLowerCase().capitalize(),
                       textAlign: TextAlign.center,
                       style: appTheme.blackNormal12TitleColorblack),
                 ),
@@ -267,5 +279,11 @@ class CardItem extends StatelessWidget {
             )
           : SizedBox(),
     );
+  }
+}
+
+extension StringExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${this.substring(1)}";
   }
 }

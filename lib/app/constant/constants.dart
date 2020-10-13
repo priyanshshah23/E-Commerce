@@ -43,6 +43,8 @@ const eventBusSocket = "EventBusSocket";
 const eventBusLogout = "EventBusLogout";
 
 const imagePath = "assest/icon.png";
+const String googleDocViewURL = "https://docs.google.com/gview?embedded=true&url=";
+
 
 const String ONE_SIGNAL_KEY = "ceecb2ef-c463-45d3-a9d3-5ea755a48d8b";
 
@@ -60,7 +62,7 @@ const numberRegExp = r'[a-z][A-Z]!@#$%^&*()_+{}:">?<,./;';
 const alphaNumberRegEx = r'[a-zA-Z0-9]';
 const alphaRegEx = r'[a-zA-Z]';
 const spaceRegEx = r'\s';
-
+const numberRegXWithDecimalAllows = r'([0-9]*[0-9]+\.)[0-9]{0,2}';
 //Master Code
 class MasterCode {
   static const String shape = "SHAPE";
@@ -88,4 +90,8 @@ class MasterCode {
   static const String origin = "ORIGIN";
   static const String eyeClean = "EYECLEAN";
   static const String hAndA = "H_AND_A";
+  static const String girdle = "GIRDLE";
+  static const String girdleCondition = "GIRDLE_COND";
+  static const String culet = "CULET";
+  static const String culetCondition = "CULET_COND";
 }

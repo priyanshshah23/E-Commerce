@@ -17,10 +17,13 @@ class DiamondListScreen extends StatefulScreenWidget {
 
 class _DiamondListScreenState extends StatefulScreenWidgetState {
   BaseList diamondList;
- int page =  DEFAULT_PAGE;
+  String filterId;
+  List<DiamondModel> arraDiamond = List<DiamondModel>();
+  int page = DEFAULT_PAGE;
   @override
   void initState() {
     super.initState();
+   
     diamondList = BaseList(BaseListState(
 //      imagePath: noRideHistoryFound,
       noDataMsg: APPNAME,
@@ -38,22 +41,21 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         callApi(false, isLoading: true);
       },
     ));
-    WidgetsBinding.instance.addPostFrameCallback((_) => callApi(false));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+       callApiForGetFilterId();
+       callApi(false);
+    });
   }
 
-  callApi(bool isRefress, {bool isLoading = false}) {
+  callApiForGetFilterId() {
     DiamondListReq req = DiamondListReq();
-    req.page = page;
-    req.limit =DEFAULT_LIMIT ;
     req.isNotReturnTotal = true;
-    req.isNotReturnTotal = true;
-
+    req.isReturnCountOnly = true;
     SyncManager.instance.callApiForDiamondList(
       context,
       req,
       (diamondListResp) {
-        print("success" + diamondListResp.toString());
-        fillArrayList();
+        filterId = diamondListResp.data.filter.id;
         diamondList.state.setApiCalling(false);
       },
       (onError) {
@@ -62,11 +64,46 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     );
   }
 
+  callApi(bool isRefress, {bool isLoading = false}) {
+    if(isRefress){
+      arraDiamond.clear();
+      page = DEFAULT_PAGE;
+    }
+    DiamondListReq filterReq = DiamondListReq();
+    filterReq.page = page;
+    filterReq.limit = DEFAULT_LIMIT;
+    Filters filter = Filters();
+    filter.diamondSearchId = filterId;
+
+    SyncManager.instance.callApiForDiamondList(
+      context,
+      filterReq,
+      (diamondListResp) {
+        print("success" + diamondListResp.toString());
+        arraDiamond.addAll(diamondListResp.data.diamonds);
+        diamondList.state.listCount = arraDiamond.length;
+        diamondList.state.totalCount = diamondListResp.data.count;
+        fillArrayList();
+        page = page + 1;
+        diamondList.state.setApiCalling(false);
+      },
+      (onError) {
+        print("erorrr..." + onError);
+        if (isRefress) {
+          arraDiamond.clear();
+          diamondList.state.listCount = arraDiamond.length;
+          diamondList.state.totalCount = arraDiamond.length;
+        }
+        diamondList.state.setApiCalling(false);
+        //print("Error");
+      },
+    );
+  }
+
   fillArrayList() {
-    diamondList.state.listCount=5;
     diamondList.state.listItems = ListView.builder(
-      itemCount: diamondList.state.listCount,
-      itemBuilder: (context,index){
+      itemCount: arraDiamond.length,
+      itemBuilder: (context, index) {
         return DiamondItemWidget();
       },
     );
@@ -84,16 +121,16 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  getBackButton(context,height: getSize(15),width: getSize(10)),
+                  getBackButton(context,
+                      height: getSize(15), width: getSize(10)),
                   SizedBox(
                     width: getSize(20),
                   ),
                   Text(
                     "Search Result",
                     textAlign: TextAlign.left,
-                    style: appTheme.black16TextStyle.copyWith(
-                      fontSize: getFontSize(20)
-                    ),
+                    style: appTheme.black16TextStyle
+                        .copyWith(fontSize: getFontSize(20)),
                   ),
                 ],
               ),

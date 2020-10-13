@@ -5,7 +5,7 @@ class ApiConstants {
    static const String PROXY_URL = "PROXY 192.168.0.170:8888";
 //  static const String PROXY_URL = "PROXY 192.168.0.116:8888";
   // static const String PROXY_URL = "PROXY 192.168.0.114:8888";
-//  static const String PROXY_URL = "PROXY 192.168.0.114:8888";
+  // static const String PROXY_URL = "PROXY 192.168.0.114:8888";
 
   static const String imageBaseURL = baseURL;
   static const String apiUrl = baseURL;

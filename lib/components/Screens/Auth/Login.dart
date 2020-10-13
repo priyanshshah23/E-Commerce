@@ -3,7 +3,9 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/components/Screens/Auth/DemoScreen.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
+import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
@@ -130,8 +132,19 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                       boxShadow: getBoxShadow(context)),
                                   child: AppButton.flat(
                                     onTap: () {
-//                                      NavigationUtilities.pushRoute(DemoScreen.route);
+                                      NavigationUtilities.pushRoute(TabBarDemo.route);
 
+//                                      FocusScope.of(context).unfocus();
+//                                      if (_formKey.currentState.validate()) {
+//                                        _formKey.currentState.save();
+//                                        callLoginApi(context);
+//                                      } else {
+//                                        setState(() {
+//                                          _autoValidate = true;
+//                                        });
+//                                      }
+
+//                                      NavigationUtilities.push(DemoScreen());
                                       FocusScope.of(context).unfocus();
                                       if (_formKey.currentState.validate()) {
                                         _formKey.currentState.save();
@@ -336,6 +349,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
               loginResp.data.token.jwt,
             );
       }
+      print("Erroer ");
 
       SyncManager.instance
           .callMasterSync(NavigationUtilities.key.currentContext, () async {
