@@ -37,7 +37,7 @@ class ServiceModule {
             return ApiConstants.PROXY_URL;
           };
           // you can also create a new HttpClient to dio
-           return new HttpClient();
+          // return new HttpClient();
         };
       }
     return NetworkService(dio);

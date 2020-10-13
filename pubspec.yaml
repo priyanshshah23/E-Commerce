@@ -61,7 +61,9 @@ dependencies:
   custom_localization:
     path: ./custom_localization
   encrypt: ^4.0.0
+  webview_flutter: ^0.3.15+1
   material_segmented_control: ^2.1.0+1
+  url_launcher: ^5.7.2
 
   
 dev_dependencies:
@@ -88,6 +90,7 @@ flutter:
     - assets/Json/
     - assets/fonts/
     - assets/shape/
+    - assets/chls/hochls.pem
     # - assets/chls.pem
 
 
