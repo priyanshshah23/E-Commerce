@@ -1,5 +1,7 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/models/LoginModel.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class MasterReq {
   String serverLastSync;
@@ -153,6 +155,24 @@ class Master {
     }
 
     return master;
+  }
+
+  Widget getShapeImage(bool isSelected) {
+    String strCode = webDisplay.split(" ").join("");
+    // if (isSelected) {
+    //   return Image.asset(
+    //     "assets/shape/${strCode.toLowerCase()}selected.png",
+    //     color: appTheme.colorPrimary,
+    //     width: getSize(28),
+    //     height: getSize(28),
+    //   );
+    // }
+    return Image.asset(
+      "assets/shape/${strCode.toLowerCase()}.png",
+      color: Colors.black,
+      width: getSize(28),
+      height: getSize(28),
+    );
   }
 }
 
