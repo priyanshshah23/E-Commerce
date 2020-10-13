@@ -6,6 +6,7 @@ class ViewTypes {
   static const String seperator = "seperator";
   static const String text = "text";
   static const String keytosymbol = "keytosymbol";
+  static const String caratRange = "caratrange";
   
 }
 

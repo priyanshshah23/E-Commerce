@@ -62,6 +62,8 @@ class Master {
   String description;
   String image;
   String parentId;
+  String group;
+  String sizeCategory;
   MultiLanguageData multiLanguageData;
   bool isSelected = false;
 
@@ -76,6 +78,8 @@ class Master {
       this.sId,
       this.name,
       this.code,
+      this.group,
+      this.sizeCategory,
       this.normalizeName,
       this.sortingSequence,
       this.description,
@@ -90,9 +94,11 @@ class Master {
     marketingDisplay = json['marketingDisplay'];
     webDisplay = json['webDisplay'];
     isDeleted = json['isDeleted'];
+    sizeCategory = json["sizeCategory"];
     sId = json['id'];
     name = json['name'];
     code = json['code'];
+    group = json['group'];
     normalizeName = json['normalizeName'];
     sortingSequence = json['sortingSequence'];
     description = json['description'];
@@ -111,6 +117,8 @@ class Master {
     data['webDisplay'] = this.webDisplay;
     data['isDeleted'] = this.isDeleted;
     data['id'] = this.sId;
+    data['group'] = this.group;
+    data['sizeCategory'] = this.sizeCategory;
     data['name'] = this.name;
     data['code'] = this.code;
     data['normalizeName'] = this.normalizeName;
@@ -154,6 +162,25 @@ class Master {
       }
     }
 
+    return master;
+  }
+
+  static Future<List<Master>> getSizeMaster() async {
+    List<Master> master = [];
+    List<String> mapShape = [];
+    List<Master> allSizeMaster =
+        await AppDatabase.instance.sizeMasterDao.getSubMasterFromCode();
+    allSizeMaster.forEach((item) {
+      if (!mapShape.contains(item.group ?? "")) {
+        dynamic filter =
+            allSizeMaster.where((element) => element.group == item.group);
+
+        item.grouped = filter.toList();
+        mapShape.add(item.group ?? "");
+        master.add(item);
+      }
+    });
+    
     return master;
   }
 

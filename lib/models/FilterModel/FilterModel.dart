@@ -60,6 +60,12 @@ class Config {
           List<Master> arrMaster =
               await Master.getSubMaster(keyToSymbol.masterCode);
           keyToSymbol.masters = arrMaster;
+        } else if (viewType == ViewTypes.caratRange) {
+          SelectionModel selectionModel = SelectionModel.fromJson(element);
+          formModels.add(selectionModel);
+          List<Master> arrMaster = await Master.getSizeMaster();
+
+          selectionModel.masters = arrMaster;
         }
       }
     }
@@ -114,7 +120,7 @@ class SelectionModel extends FormBaseModel {
   bool isShowMore;
   bool isShowMoreSelected = true;
   String allLableTitle;
-
+  FromToStyle fromToStyle;
   SelectionModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     verticalScroll = json["verticalScroll"] ?? false;
     orientation = json["orientation"];
@@ -122,6 +128,9 @@ class SelectionModel extends FormBaseModel {
     isShowMore = json['isShowMore'] ?? false;
     masterCode = json["masterCode"];
     allLableTitle = json["allLableTitle"];
+    fromToStyle = json['fromToStyle'] != null
+        ? new FromToStyle.fromJson(json['fromToStyle'])
+        : null;
   }
 }
 
