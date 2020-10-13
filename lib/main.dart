@@ -22,7 +22,7 @@ main() {
   WidgetsFlutterBinding.ensureInitialized();
   if (kDebugMode) {
     rootBundle
-        .load('assets/chls/hChls.pem')
+        .load('assets/chls/hochls.pem')
         .then((value) => {
               if (value != null)
                 {

@@ -146,6 +146,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     return PageView.builder(
       controller: controller,
       itemCount: isNullEmptyOrFalse(arrTab) ? 1 : arrTab.length,
+      physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, position) {
         print(position);
         return FilterItem(arrList

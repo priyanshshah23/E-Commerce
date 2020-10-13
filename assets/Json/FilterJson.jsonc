@@ -2,6 +2,7 @@
   {
     "title": "Shape",
     "viewType": "selection",
+    "allLableTitle": "All Shapes",
     "apiKey": "shape",
     "masterCode": "SHAPE",
     "verticalScroll": true,
@@ -12,14 +13,23 @@
     "sequence": 1
   },
   {
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "basic",
+    "rightPadding": 0
+  },
+  {
     "title": "Color Shade",
     "desc": "Desc",
     "viewType": "selection",
-    "apiKey": "colorShare",
+    "apiKey": "colorShade",
     "masterCode": "SHADE",
     "verticalScroll": false,
     "orientation": "vertical",
-    "isShowAll": false,
+    "isShowAll": true,
     "isShowMore": false,
     "tab": "basic",
     "isWhiteColor": false,
@@ -30,7 +40,7 @@
     "viewType": "seperator",
     "sequence": 2,
     "height": 1,
-    "color": "#FFFFFF",
+    "color": "#E3E3E3",
     "tab": "basic",
     "leftPadding": 0,
     "rightPadding": 0
@@ -51,7 +61,7 @@
     "viewType": "seperator",
     "sequence": 4,
     "height": 1,
-    "color": "#FFFFFF",
+    "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
     "rightPadding": 0
@@ -72,7 +82,7 @@
     "viewType": "seperator",
     "sequence": 9,
     "height": 1,
-    "color": "#FFFFFF",
+    "color": "#E3E3E3",
     "tab": "basic",
     "leftPadding": 0,
     "rightPadding": 0
@@ -93,7 +103,7 @@
     "viewType": "seperator",
     "sequence": 9,
     "height": 1,
-    "color": "#FFFFFF",
+    "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
     "rightPadding": 0
@@ -114,7 +124,7 @@
     "viewType": "seperator",
     "sequence": 9,
     "height": 1,
-    "color": "#FFFFFF",
+    "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
     "rightPadding": 0
@@ -125,7 +135,7 @@
     "apiKey": "cut",
     "masterCode": "CUT",
     "verticalScroll": false,
-    "orientation": "horizontal",
+    "orientation": "vertical",
     "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
@@ -137,7 +147,7 @@
     "apiKey": "clarity",
     "masterCode": "POLISH",
     "verticalScroll": false,
-    "orientation": "horizontal",
+    "orientation": "vertical",
     "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
@@ -149,7 +159,7 @@
     "apiKey": "sym",
     "masterCode": "SYMMETRY",
     "verticalScroll": false,
-    "orientation": "horizontal",
+    "orientation": "vertical",
     "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
@@ -159,7 +169,7 @@
     "viewType": "seperator",
     "sequence": 9,
     "height": 1,
-    "color": "#FFFFFF",
+    "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
     "rightPadding": 0
@@ -170,7 +180,7 @@
     "apiKey": "clarity",
     "masterCode": "H_AND_A",
     "verticalScroll": false,
-    "orientation": "horizontal",
+    "orientation": "vertical",
     "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
@@ -182,7 +192,7 @@
     "apiKey": "clarity",
     "masterCode": "BRILLIANCY",
     "verticalScroll": false,
-    "orientation": "horizontal",
+    "orientation": "vertical",
     "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
@@ -192,7 +202,7 @@
     "viewType": "seperator",
     "sequence": 9,
     "height": 1,
-    "color": "#FFFFFF",
+    "color": "#E3E3E3",
     "tab": "basic",
     "leftPadding": 0,
     "rightPadding": 0
@@ -212,7 +222,7 @@
     "viewType": "seperator",
     "sequence": 5,
     "height": 1,
-    "color": "#FFFFFF",
+    "color": "#E3E3E3",
     "tab": "basic",
     "leftPadding": 0,
     "rightPadding": 0
@@ -232,7 +242,7 @@
     "viewType": "seperator",
     "sequence": 7,
     "height": 1,
-    "color": "#FFFFFF",
+    "color": "#E3E3E3",
     "tab": "basic",
     "leftPadding": 0,
     "rightPadding": 0
@@ -252,7 +262,7 @@
     "viewType": "seperator",
     "sequence": 7,
     "height": 1,
-    "color": "#FFFFFF",
+    "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
     "rightPadding": 0
@@ -272,7 +282,7 @@
     "viewType": "seperator",
     "sequence": 7,
     "height": 1,
-    "color": "#FFFFFF",
+    "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
     "rightPadding": 0
@@ -292,7 +302,7 @@
     "viewType": "seperator",
     "sequence": 7,
     "height": 1,
-    "color": "#FFFFFF",
+    "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
     "rightPadding": 0
@@ -312,7 +322,7 @@
     "viewType": "seperator",
     "sequence": 7,
     "height": 1,
-    "color": "#FFFFFF",
+    "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
     "rightPadding": 0
@@ -332,7 +342,7 @@
     "viewType": "seperator",
     "sequence": 7,
     "height": 1,
-    "color": "#FFFFFF",
+    "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
     "rightPadding": 0
@@ -352,7 +362,7 @@
     "viewType": "seperator",
     "sequence": 7,
     "height": 1,
-    "color": "#FFFFFF",
+    "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
     "rightPadding": 0
@@ -372,7 +382,7 @@
     "viewType": "seperator",
     "sequence": 7,
     "height": 1,
-    "color": "#FFFFFF",
+    "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
     "rightPadding": 0
@@ -392,7 +402,7 @@
     "viewType": "seperator",
     "sequence": 7,
     "height": 1,
-    "color": "#FFFFFF",
+    "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
     "rightPadding": 0
@@ -412,7 +422,7 @@
     "viewType": "seperator",
     "sequence": 7,
     "height": 1,
-    "color": "#FFFFFF",
+    "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
     "rightPadding": 0
@@ -432,7 +442,7 @@
     "viewType": "seperator",
     "sequence": 7,
     "height": 1,
-    "color": "#FFFFFF",
+    "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
     "rightPadding": 0
@@ -452,7 +462,7 @@
     "viewType": "seperator",
     "sequence": 7,
     "height": 1,
-    "color": "#FFFFFF",
+    "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
     "rightPadding": 0
@@ -472,7 +482,7 @@
     "viewType": "seperator",
     "sequence": 7,
     "height": 1,
-    "color": "#FFFFFF",
+    "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
     "rightPadding": 0
@@ -489,6 +499,7 @@
     "minValue": 0
   },
   {
+<<<<<<< HEAD
     "title": "keyToSymbol",
     "desc": "Desc",
     "viewType": "keytosymbol",
@@ -506,11 +517,156 @@
     ],
     "apiKey": "keytosymbol",
     "masterCode": "KEY_TO_SYMBOLS",
+=======
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "advance",
+    "rightPadding": 0
+  },
+  {
+    "title": "Culet",
+    "viewType": "selection",
+    "apiKey": "culet",
+    "masterCode": "CULET",
     "verticalScroll": false,
     "orientation": "vertical",
     "isShowAll": false,
     "isShowMore": false,
     "tab": "advance",
+    "sequence": 10
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "advance",
+    "rightPadding": 0
+  },
+  {
+    "title": "Culet Condition",
+    "viewType": "selection",
+    "apiKey": "culetCon",
+    "masterCode": "CULET_COND",
+    "verticalScroll": false,
+    "orientation": "vertical",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "advance",
+    "sequence": 10
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "advance",
+    "rightPadding": 0
+  },
+  {
+    "title": "Girdle",
+    "viewType": "selection",
+    "apiKey": "girdle",
+    "masterCode": "GIRDLE",
+    "verticalScroll": false,
+    "orientation": "vertical",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "advance",
+    "sequence": 10
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "advance",
+    "rightPadding": 0
+  },
+  {
+    "title": "Girdle Condition",
+    "viewType": "selection",
+    "apiKey": "girdle",
+    "masterCode": "GIRDLE_COND",
+    "verticalScroll": false,
+    "orientation": "vertical",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "advance",
+    "sequence": 10
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "advance",
+    "rightPadding": 0
+  },
+  {
+    "title": "Girdle",
+    "viewType": "selection",
+    "apiKey": "girdle",
+    "masterCode": "GIRDLE",
+    "verticalScroll": false,
+    "orientation": "vertical",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "advance",
+    "sequence": 10
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "advance",
+    "rightPadding": 0
+  },
+  {
+    "title": "Eye Clean",
+    "viewType": "selection",
+    "apiKey": "eyeClean",
+    "masterCode": "EYECLEAN",
+    "verticalScroll": false,
+    "orientation": "vertical",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "advance",
+    "sequence": 10
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "advance",
+    "rightPadding": 0
+  },
+  {
+    "title": "Milky",
+    "viewType": "selection",
+    "apiKey": "milky",
+    "masterCode": "MILKEY",
+>>>>>>> 7cb3010ffc8740e4946bb08bd35523f0f4eff73a
+    "verticalScroll": false,
+    "orientation": "vertical",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "advance",
+<<<<<<< HEAD
     "sequence": 1
+=======
+    "sequence": 10
+>>>>>>> 7cb3010ffc8740e4946bb08bd35523f0f4eff73a
   }
 ]
