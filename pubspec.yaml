@@ -90,6 +90,7 @@ flutter:
     - assets/Json/
     - assets/fonts/
     - assets/shape/
+    # - assets/chls/hochls.pem
     # - assets/chls.pem
 
 
@@ -97,7 +98,7 @@ flutter:
     - family: Avenir
       fonts:
         - asset: assets/fonts/AvenirLTStd-Black.otf
-          weight: 600
+          weight: 700
         - asset: assets/fonts/AvenirLTStd-Book.otf
           weight: 400
         - asset: assets/fonts/avenirltstd-light.otf

@@ -349,6 +349,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
               loginResp.data.token.jwt,
             );
       }
+      print("Erroer ");
 
       SyncManager.instance
           .callMasterSync(NavigationUtilities.key.currentContext, () async {

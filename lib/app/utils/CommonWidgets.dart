@@ -21,8 +21,8 @@ getBackButton(BuildContext context, {bool isWhite = false}) {
       icon: Image.asset(
         back,
         color: isWhite ? appTheme.whiteColor : appTheme.textBlackColor,
-        width: getSize(30),
-        height: getSize(22),
+        width: getSize(22),
+        height: getSize(16),
       ),
     ),
   );
@@ -176,7 +176,7 @@ Widget getPreferdSizeTitleForPayment(
 
 Widget getAppBar(BuildContext context, String title,
     {Widget leadingButton,
-    Brightness brightness,
+    Color bgColor,
     List<Widget> actionItems,
     bool isWhite = false,
     bool isTitleShow = true,
@@ -186,37 +186,18 @@ Widget getAppBar(BuildContext context, String title,
   //Status//(darken(AppTheme.of(context).accentColor,0.2));
 
   return AppBar(
-//    overlayStyle: SystemUiOverlayStyle(
-//      systemNavigationBarColor: appTheme.black,
-//      statusBarIconBrightness: Brightness.light,
-//      statusBarColor: darken(AppTheme.of(context).accentColor,0.2)
-//    ),
-
-    brightness: Brightness.dark,
-    iconTheme: IconThemeData(
-      color: isWhite == true
-          ? AppTheme.of(context).theme.textTheme.title.color
-          : appTheme.colorPrimary,
-    ),
     centerTitle: centerTitle ?? true,
     elevation: 0,
     title: isTitleShow
         ? Text(
             title,
-            style: AppTheme.of(context).theme.textTheme.body1.copyWith(
-                  color: isWhite == true
-                      ? AppTheme.of(context).theme.textTheme.title.color
-                      : appTheme.colorPrimary,
-                  fontWeight: FontWeight.w600,
-                ),
+            style: appTheme.blackMedium20TitleColorblack,
             textAlign: textalign ?? TextAlign.center,
           )
         : Container(),
-    textTheme: getNavigationTheme(context),
     leading: leadingButton ??= null,
     automaticallyImplyLeading: leadingButton != null,
-    backgroundColor:
-        isWhite == true ? appTheme.colorPrimary : appTheme.colorPrimary,
+    backgroundColor: bgColor,
     actions: actionItems == null ? null : actionItems,
     bottom: widget,
   );

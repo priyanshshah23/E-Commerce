@@ -7,6 +7,7 @@ import 'package:diamnow/components/Screens/Filter/Widget/SeperatorWidget.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/FilterModel/TabModel.dart';
+import 'package:diamnow/modules/Filter/gridviewlist/KeyToSymbol.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -51,44 +52,27 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       },
       child: AppBackground(
         child: Scaffold(
-          body: Stack(
+          appBar: getAppBar(
+            context,
+            R.string().screenTitle.searchDiamond,
+            bgColor: appTheme.whiteColor,
+            leadingButton: getBackButton(context),
+            centerTitle: false,
+          ),
+          body: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                color: appTheme.headerBgColor,
-                height: isNullEmptyOrFalse(arrTab) ? getSize(80) : getSize(140),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: getSize(26)),
-                        child: Row(
-                          children: <Widget>[
-                            getBackButton(context, isWhite: true),
-                            SizedBox(
-                              width: getSize(20),
-                            ),
-                            Text(
-                              R.string().screenTitle.searchDiamond,
-                              textAlign: TextAlign.left,
-                              style: appTheme.black24TitleColorWhite,
-                            ),
-                          ],
-                        ),
-                      ),
-                      isNullEmptyOrFalse(arrTab)
-                          ? SizedBox()
-                          : SizedBox(height: getSize(16)),
-                      isNullEmptyOrFalse(arrTab)
-                          ? SizedBox()
-                          : _segmentedControl(),
-                    ]),
-              ),
-              Container(
-                margin: EdgeInsets.only(
-                  top: isNullEmptyOrFalse(arrTab) ? getSize(80) : getSize(140),
+              isNullEmptyOrFalse(arrTab)
+                  ? SizedBox()
+                  : SizedBox(height: getSize(16)),
+              isNullEmptyOrFalse(arrTab) ? SizedBox() : _segmentedControl(),
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.only(top: getSize(16)),
+                  color: Colors.transparent,
+                  child:
+                      isNullEmptyOrFalse(arrList) ? SizedBox() : getPageView(),
                 ),
-                color: Colors.transparent,
-                child: isNullEmptyOrFalse(arrList) ? SizedBox() : getPageView(),
               ),
             ],
           ),
@@ -101,10 +85,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     return Container(
       width: MathUtilities.screenWidth(context),
       child: CupertinoSegmentedControl<int>(
-        selectedColor: appTheme.segmentSelectedColor,
-        unselectedColor: Colors.transparent,
+        selectedColor: appTheme.colorPrimary,
+        unselectedColor: Colors.white,
         pressedColor: Colors.transparent,
-        borderColor: Colors.white,
+        borderColor: appTheme.colorPrimary,
         children: getSegmentChildren(),
         onValueChanged: (int val) {
           setState(() {
@@ -134,7 +118,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       style: TextStyle(
         fontSize: getFontSize(14),
         fontWeight: FontWeight.w500,
-        color: index == segmentedControlValue
+        color: index != segmentedControlValue
             ? appTheme.colorPrimary
             : appTheme.whiteColor,
       ),
@@ -145,8 +129,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     return PageView.builder(
       controller: controller,
       itemCount: isNullEmptyOrFalse(arrTab) ? 1 : arrTab.length,
+      physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, position) {
-        print(position);
+        if (isNullEmptyOrFalse(arrTab)) {
+          return FilterItem(arrList);
+        }
         return FilterItem(arrList
             .where((element) => element.tab == arrTab[position].tab)
             .toList());
@@ -196,7 +183,7 @@ class _FilterItemState extends State<FilterItem> {
             bottom: getSize(8)),
         child: FromToWidget(model),
       );
-    } 
+    }
     // else if (model.viewType == ViewTypes.text) {
     //   return Padding(
     //     padding: EdgeInsets.only(
@@ -211,5 +198,15 @@ class _FilterItemState extends State<FilterItem> {
     //     ),
     //   );
     // }
+    else if (model.viewType == ViewTypes.keytosymbol) {
+      return Padding(
+        padding: EdgeInsets.only(
+            left: getSize(16),
+            right: getSize(16),
+            top: getSize(8.0),
+            bottom: getSize(8)),
+        child: KeyToSymbolWidget(model),
+      );
+    }
   }
 }
