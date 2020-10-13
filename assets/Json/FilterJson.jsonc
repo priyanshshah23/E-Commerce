@@ -773,5 +773,45 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 10
-  }
-]
+  },
+  {
+    "title": "Search, Enter Comma for Multiple Stone ID",
+    "viewType": "text",
+    "apiKey": "Star Length",
+    "sequence": 1,
+    "tab": "stoneid",
+    "items": [
+      {
+        "title": "Stone ID",
+        "viewType": "radio",
+        "apiKey": "Stone ID",
+        "sequence": 1,
+        "tab": "stoneid",
+        "isSelected": true
+      },
+      {
+        "title": "Certificate No",
+        "viewType": "radio",
+        "apiKey": "Certificate No",
+        "sequence": 2,
+        "tab": "stoneid",
+        "isSelected": false
+      },
+      {
+        "title": "Memo No",
+        "viewType": "radio",
+        "apiKey": "Memo No",
+        "sequence": 3,
+        "tab": "stoneid",
+        "isSelected": false
+      },
+      {
+        "title": "Show ID",
+        "viewType": "radio",
+        "apiKey": "Show ID",
+        "sequence": 4,
+        "tab": "stoneid",
+        "isSelected": false
+      }
+    ]
+  ]

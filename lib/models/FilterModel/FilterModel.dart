@@ -51,7 +51,10 @@ class Config {
         } else if (viewType == ViewTypes.seperator) {
           SeperatorModel seperatorModel = SeperatorModel.fromJson(element);
           formModels.add(seperatorModel);
-        }else if (viewType == ViewTypes.keytosymbol) {
+        } else if (viewType == ViewTypes.text) {
+          CertNoModel seperatorModel = CertNoModel.fromJson(element);
+          formModels.add(seperatorModel);
+        } else if (viewType == ViewTypes.keytosymbol) {
           KeyToSymbolModel keyToSymbol = KeyToSymbolModel.fromJson(element);
           formModels.add(keyToSymbol);
           List<Master> arrMaster =
@@ -146,6 +149,19 @@ class SeperatorModel extends SelectionModel {
   }
 }
 
+class CertNoModel extends FormBaseModel {
+  List<CertNoItemModel> items = [];
+
+  CertNoModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    if (json['items'] != null) {
+      items = new List<CertNoItemModel>();
+      json['list'].forEach((v) {
+        items.add(new CertNoItemModel.fromJson(v));
+      });
+    }
+  }
+}
+
 class FromToStyle {
   bool showUnderline;
   bool showBorder;
@@ -161,22 +177,31 @@ class FromToStyle {
     borderWidth = json['borderWidth'] ?? 1;
   }
 }
-class KeyToSymbolModel extends SelectionModel{
+
+class KeyToSymbolModel extends SelectionModel {
   List<RadioButton> listOfRadio = [];
 
-  KeyToSymbolModel.fromJson(Map<String, dynamic> json):super.fromJson(json){
-    for(var i in json['radiobutton']){
+  KeyToSymbolModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    for (var i in json['radiobutton']) {
       listOfRadio.add(RadioButton.fromJson(i));
     }
   }
 }
 
-class RadioButton{
+class CertNoItemModel extends FormBaseModel {
+  bool isSelected;
+
+  CertNoItemModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    isSelected = json['isSelected'];
+  }
+}
+
+class RadioButton {
   String title;
   bool isSelected;
   String apiKey;
 
-  RadioButton.fromJson(Map<String, dynamic> json){
+  RadioButton.fromJson(Map<String, dynamic> json) {
     title = json['title'] ?? "";
     isSelected = json['isSelected'] ?? false;
     apiKey = json['apiKey'];

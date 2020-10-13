@@ -20,18 +20,18 @@ TextDirection deviceTextDirection = TextDirection.ltr;
 
 main() {
   WidgetsFlutterBinding.ensureInitialized();
-  if (kDebugMode) {
-    rootBundle
-        .load('assets/chls/hochls.pem')
-        .then((value) => {
-              if (value != null)
-                {
-                  SecurityContext.defaultContext
-                      .setTrustedCertificatesBytes(value.buffer.asUint8List())
-                }
-            })
-        .catchError((object) => {print(object)});
-  }
+  // if (kDebugMode) {
+  //   rootBundle
+  //       .load('assets/chls/hChls.pem')
+  //       .then((value) => {
+  //             if (value != null)
+  //               {
+  //                 SecurityContext.defaultContext
+  //                     .setTrustedCertificatesBytes(value.buffer.asUint8List())
+  //               }
+  //           })
+  //       .catchError((object) => {print(object)});
+  // }
   app = KiwiContainer();
 
   setup();

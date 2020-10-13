@@ -183,7 +183,22 @@ class _FilterItemState extends State<FilterItem> {
             bottom: getSize(8)),
         child: FromToWidget(model),
       );
-    } else if (model.viewType == ViewTypes.keytosymbol) {
+    }
+    // else if (model.viewType == ViewTypes.text) {
+    //   return Padding(
+    //     padding: EdgeInsets.only(
+    //         left: getSize(16),
+    //         right: getSize(16),
+    //         top: getSize(8.0),
+    //         bottom: getSize(8)),
+    //     child: Column(
+    //       children: [
+    //         Text("test"),
+    //       ],
+    //     ),
+    //   );
+    // }
+    else if (model.viewType == ViewTypes.keytosymbol) {
       return Padding(
         padding: EdgeInsets.only(
             left: getSize(16),
@@ -192,6 +207,6 @@ class _FilterItemState extends State<FilterItem> {
             bottom: getSize(8)),
         child: KeyToSymbolWidget(model),
       );
-    } 
+    }
   }
 }
