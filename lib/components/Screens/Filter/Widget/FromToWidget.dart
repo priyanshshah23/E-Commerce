@@ -157,7 +157,13 @@ class _FromToWidgetState extends State<FromToWidget> {
       keyboardType: TextInputType.numberWithOptions(decimal: true),
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        border: widget.fromTomodel.fromToStyle.showUnderline
+        focusedBorder: widget.fromTomodel.fromToStyle.showUnderline
+            ? new UnderlineInputBorder(
+                borderSide: new BorderSide(
+                color: widget.fromTomodel.fromToStyle.underlineColor,
+              ))
+            : InputBorder.none,
+        enabledBorder: widget.fromTomodel.fromToStyle.showUnderline
             ? new UnderlineInputBorder(
                 borderSide: new BorderSide(
                 color: widget.fromTomodel.fromToStyle.underlineColor,
@@ -218,7 +224,13 @@ class _FromToWidgetState extends State<FromToWidget> {
       keyboardType: TextInputType.numberWithOptions(decimal: true),
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
-        border: widget.fromTomodel.fromToStyle.showUnderline
+        focusedBorder: widget.fromTomodel.fromToStyle.showUnderline
+            ? new UnderlineInputBorder(
+                borderSide: new BorderSide(
+                color: widget.fromTomodel.fromToStyle.underlineColor,
+              ))
+            : InputBorder.none,
+        enabledBorder: widget.fromTomodel.fromToStyle.showUnderline
             ? new UnderlineInputBorder(
                 borderSide: new BorderSide(
                 color: widget.fromTomodel.fromToStyle.underlineColor,
