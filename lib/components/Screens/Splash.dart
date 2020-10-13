@@ -41,13 +41,11 @@ class _SplashState extends State<Splash> {
   // KeyToSymbol keyToSymbol = KeyToSymbol.fromJson();
   // NavigationUtilities.push(KeyToSymbolWidget(keyToSymbol));
 
-
-
-    // if (app.resolve<PrefUtils>().isUserLogin()) {
-    //   NavigationUtilities.pushRoute(LoginScreen.route);
-    // } else {
-    //   NavigationUtilities.pushRoute(LoginScreen.route);
-    // }
+    if (app.resolve<PrefUtils>().isUserLogin()) {
+      NavigationUtilities.pushRoute(DiamondListScreen.route);
+    } else {
+      NavigationUtilities.pushRoute(LoginScreen.route);
+    }
   }
 
   @override

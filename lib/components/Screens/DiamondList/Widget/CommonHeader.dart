@@ -13,32 +13,40 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
     return Container(
       width: MathUtilities.screenWidth(context),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          getColumn("0","Pcs"),
-          setDivider(),
-          getColumn("0","Cts"),
-          setDivider(),
-          getColumn("0","Disc %"),
-          setDivider(),
-          getColumn("0","Price " + R.string().commonString.doller),
-          setDivider(),
-          getColumn("0","Amount " + R.string().commonString.doller),
+          getColumn("0", "Pcs"),
+          getColumn("0", "Cts"),
+          getColumn("0", "Disc %"),
+          Expanded(
+            child: getColumn(
+                "0", "Avg. Price/Ct " + R.string().commonString.doller),
+          ),
+          Expanded(
+            child: getColumn("0", "Amount " + R.string().commonString.doller),
+          )
         ],
       ),
     );
   }
 
-  getColumn(String text,String lable){
-    return Column(
-      children: <Widget>[
-        getDetailText(text),
-        getLableText(lable)
-      ],
+  getColumn(String text, String lable) {
+    return Container(
+      padding:
+          EdgeInsets.symmetric(vertical: getSize(15), horizontal: getSize(10)),
+      decoration: BoxDecoration(
+          border: Border.all(color: appTheme.dividerColor),
+          borderRadius: BorderRadius.circular(getSize(5))),
+      child: Column(
+        children: <Widget>[
+          getDetailText(text),
+          getLableText(lable),
+        ],
+      ),
     );
   }
 
-  setDivider(){
+  setDivider() {
     return Container(
       height: getSize(20),
       width: getSize(2),
@@ -49,14 +57,16 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
   getDetailText(String text) {
     return Text(
       text,
-      style: appTheme.white16TextStyle,
+      style: appTheme.black16TextStyle,
     );
   }
 
   getLableText(String text) {
     return Text(
       text,
-      style: appTheme.white16TextStyle,
+      style: appTheme.black16TextStyle.copyWith(
+        fontSize: getFontSize(11)
+      ),
     );
   }
 }
