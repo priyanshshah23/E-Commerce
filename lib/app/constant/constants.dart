@@ -88,4 +88,8 @@ class MasterCode {
   static const String origin = "ORIGIN";
   static const String eyeClean = "EYECLEAN";
   static const String hAndA = "H_AND_A";
+  static const String girdle = "GIRDLE";
+  static const String girdleCondition = "GIRDLE_COND";
+  static const String culet = "CULET";
+  static const String culetCondition = "CULET_COND";
 }
