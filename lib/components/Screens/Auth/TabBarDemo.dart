@@ -51,14 +51,20 @@
 //}
 
 
+import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/constant/ApiConstants.dart';
 import 'package:diamnow/app/constant/ColorConstant.dart';
+import 'package:diamnow/app/constant/constants.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/math_utils.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:rxbus/rxbus.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 
 class TabBarDemo extends StatefulWidget {
@@ -335,7 +341,27 @@ class _TabBarDemoState extends State<TabBarDemo> with SingleTickerProviderStateM
                       ),
                     ),
                     Container(
-                      child: LoginScreen(),
+                      child: FutureBuilder<Widget>(
+                          future: getPDFView(context,
+                          "http://www.pdf995.com/samples/pdf.pdf",
+                            height: getSize(100),
+                            width: getSize(100),
+                          ),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<Widget> snapshot) {
+                            if (snapshot.hasData)
+                              return snapshot.data;
+
+                            return Container(
+                              //decoration: decoration,
+                              height: getSize(100),
+                              width: getSize(100),
+                              child: SpinKitFadingCircle(
+                                color: ColorConstants.colorPrimary,
+                                size: getSize(50),
+                              ),
+                            );
+                          }),
                     ),
                     Container(
                       child: LoginScreen(),
@@ -356,6 +382,33 @@ class _TabBarDemoState extends State<TabBarDemo> with SingleTickerProviderStateM
       ),
     );
   }
+
+  Future<WebView> getPDFView(BuildContext context, String url,
+      {height = 100.0,
+        width = 100.0,
+        placeHolderImage,
+        fit: BoxFit.contain,
+        BoxShape shape}) async {
+    String pdfUrl = (url == null || url.length == 0)
+        ? ""
+        : ((url.startsWith("images") || url.startsWith("/"))
+        ? (ApiConstants.imageBaseURL + url)
+        : url);
+
+    return WebView(
+      initialUrl: googleDocViewURL + pdfUrl,
+      onPageStarted: (url) {
+        app.resolve<CustomDialogs>().showProgressDialog(context, "");
+      },
+
+      onPageFinished: (finish) {
+        app.resolve<CustomDialogs>().hideProgressDialog();
+
+      },
+      javascriptMode: JavascriptMode.unrestricted,
+    );
+  }
+
 }
 
 

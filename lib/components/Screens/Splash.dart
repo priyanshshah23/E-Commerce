@@ -6,6 +6,7 @@ import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/components/Screens/Auth/DemoScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
+import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Auth/PDFDemo.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
@@ -39,7 +40,7 @@ class _SplashState extends State<Splash> {
     if (app.resolve<PrefUtils>().isUserLogin()) {
       NavigationUtilities.pushRoute(DiamondListScreen.route);
     } else {
-      NavigationUtilities.pushRoute(MyHomePage.route);
+      NavigationUtilities.pushRoute(TabBarDemo.route);
     }
   }
 

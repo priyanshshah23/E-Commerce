@@ -61,8 +61,8 @@ dependencies:
   custom_localization:
     path: ./custom_localization
   encrypt: ^4.0.0
+  webview_flutter: ^0.3.15+1
   material_segmented_control: ^2.1.0+1
-  flutter_webview_plugin: ^0.3.11
   url_launcher: ^5.7.2
 
   

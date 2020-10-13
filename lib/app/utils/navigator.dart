@@ -103,9 +103,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case TabBarDemo.route:
       screen = TabBarDemo();
       break;
-    case MyHomePage.route:
-      screen = MyHomePage();
-      break;
+//    case MyHomePage.route:
+//      screen = MyHomePage();
+//      break;
     case DiamondListScreen.route:
       screen = DiamondListScreen();
       break;
