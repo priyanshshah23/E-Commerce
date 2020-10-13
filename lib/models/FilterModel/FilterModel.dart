@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
+import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/models/FilterModel/TabModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
+import 'package:diamnow/modules/Filter/gridviewlist/KeyToSymbol.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -49,6 +51,12 @@ class Config {
         } else if (viewType == ViewTypes.seperator) {
           SeperatorModel seperatorModel = SeperatorModel.fromJson(element);
           formModels.add(seperatorModel);
+        }else if (viewType == ViewTypes.keytosymbol) {
+          KeyToSymbolModel keyToSymbol = KeyToSymbolModel.fromJson(element);
+          formModels.add(keyToSymbol);
+          List<Master> arrMaster =
+              await Master.getSubMaster(keyToSymbol.masterCode);
+          keyToSymbol.masters = arrMaster;
         }
       }
     }
@@ -151,5 +159,26 @@ class FromToStyle {
     underlineColor = fromHex(json['ounderlineColor'] ?? "#E3E3E3");
     borderColor = fromHex(json['borderColor'] ?? "#E3E3E3");
     borderWidth = json['borderWidth'] ?? 1;
+  }
+}
+class KeyToSymbolModel extends SelectionModel{
+  List<RadioButton> listOfRadio = [];
+
+  KeyToSymbolModel.fromJson(Map<String, dynamic> json):super.fromJson(json){
+    for(var i in json['radiobutton']){
+      listOfRadio.add(RadioButton.fromJson(i));
+    }
+  }
+}
+
+class RadioButton{
+  String title;
+  bool isSelected;
+  String apiKey;
+
+  RadioButton.fromJson(Map<String, dynamic> json){
+    title = json['title'] ?? "";
+    isSelected = json['isSelected'] ?? false;
+    apiKey = json['apiKey'];
   }
 }
