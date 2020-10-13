@@ -22,6 +22,36 @@
     "rightPadding": 0
   },
   {
+    "title": "Carat Range",
+    "desc": "Desc",
+    "viewType": "caratrange",
+    "apiKey": "caratRange",
+    "masterCode": "Size",
+    "verticalScroll": false,
+    "orientation": "vertical",
+    "isShowAll": true,
+    "isShowMore": false,
+    "tab": "basic",
+    "isWhiteColor": false,
+    "sequence": 1,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "basic",
+    "rightPadding": 0
+  },
+  {
     "title": "Color Shade",
     "desc": "Desc",
     "viewType": "selection",
@@ -747,7 +777,7 @@
     "isShowAll": false,
     "isShowMore": false,
     "tab": "advance",
-    "sequence": 10
+    "sequence": 1
   },
   {
     "title": "keyToSymbol",

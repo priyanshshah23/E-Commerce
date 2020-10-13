@@ -81,7 +81,7 @@ class SyncManager {
   Future callApiForDiamondList(
     BuildContext context,
         DiamondListReq req,
-    Function(BaseApiResp) success,
+    Function(DiamondListResp) success,
     Function failure, {
     bool isNetworkError = true,
     bool isProgress = true,

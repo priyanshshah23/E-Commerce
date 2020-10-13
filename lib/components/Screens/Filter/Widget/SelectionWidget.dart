@@ -17,7 +17,9 @@ class SelectionWidget extends StatefulWidget {
 class _SelectionWidgetState extends State<SelectionWidget> {
   @override
   Widget build(BuildContext context) {
-    return widget.selectionModel.verticalScroll ? ShapeWidget(widget.selectionModel) : TagWidget(widget.selectionModel);
+    return widget.selectionModel.verticalScroll
+        ? ShapeWidget(widget.selectionModel)
+        : TagWidget(widget.selectionModel);
   }
 }
 
@@ -72,7 +74,7 @@ class _TagWidgetState extends State<TagWidget> {
         isNullEmptyOrFalse(widget.model.title)
             ? SizedBox()
             : SizedBox(height: getSize(20)),
-         Container(
+        Container(
           height: getSize(40),
           child: ListView.builder(
             shrinkWrap: true,
@@ -210,39 +212,5 @@ class _TagWidgetState extends State<TagWidget> {
         }
       }
     }
-  }
-}
-
-class ColorWidget extends StatefulWidget {
-  ColorModel colorModel;
-  ColorWidget({Key key}) : super(key: key);
-
-  @override
-  _ColorWidgetState createState() => _ColorWidgetState();
-}
-
-class _ColorWidgetState extends State<ColorWidget> {
-  @override
-  void initState() {
-    super.initState();
-    widget.colorModel.title = "";
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Column(
-        children: [
-          Text(
-            "Color",
-            style: appTheme.blackNormal14TitleColorblack,
-            textAlign: TextAlign.left,
-          ),
-          SizedBox(height: getSize(16)),
-          SelectionWidget(widget.colorModel)
-        ],
-      ),
-    );
   }
 }
