@@ -37,15 +37,17 @@ class _SplashState extends State<Splash> {
   }
 
   Future openNextScreen() async {
-  //  NavigationUtilities.pushRoute(LoginScreen.route);
+   NavigationUtilities.pushRoute(FilterScreen.route);
   // KeyToSymbol keyToSymbol = KeyToSymbol.fromJson();
   // NavigationUtilities.push(KeyToSymbolWidget(keyToSymbol));
 
-    if (app.resolve<PrefUtils>().isUserLogin()) {
-      NavigationUtilities.pushRoute(LoginScreen.route);
-    } else {
-      NavigationUtilities.pushRoute(LoginScreen.route);
-    }
+
+
+    // if (app.resolve<PrefUtils>().isUserLogin()) {
+    //   NavigationUtilities.pushRoute(LoginScreen.route);
+    // } else {
+    //   NavigationUtilities.pushRoute(LoginScreen.route);
+    // }
   }
 
   @override
