@@ -1,5 +1,6 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +24,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       width: MathUtilities.screenWidth(context),
       decoration: BoxDecoration(
           color: appTheme.whiteColor,
+          boxShadow: widget.item.isSelected ?getBoxShadow(context):[BoxShadow(color: Colors.transparent)],
           borderRadius: BorderRadius.circular(getSize(6)),
           border: Border.all(color: widget.item.isSelected ?appTheme.colorPrimary:appTheme.dividerColor)
           //boxShadow: getBoxShadow(context),
@@ -91,7 +93,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 color: appTheme.whiteColor,
                 borderRadius: BorderRadius.circular(getSize(5))),
             child: Text(
-              widget.item?.back.toString() + " %" ?? "",
+              PriceUtilities.getPrice(widget.item?.back) + " %" ?? "",
               style: appTheme.green10TextStyle,
             ),
           )

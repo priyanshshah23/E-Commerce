@@ -33,6 +33,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   List<DiamondModel> arraDiamond = List<DiamondModel>();
   int page = DEFAULT_PAGE;
   num avgCarat = 0;
+  num pcs = 0;
+
 
   @override
   void initState() {
@@ -77,6 +79,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         (diamondListResp) {
       arraDiamond.addAll(diamondListResp.data.diamonds);
       avgCarat = arraDiamond.map((m) => m.crt).reduce((a, b) => a + b) / arraDiamond.length;
+      pcs = arraDiamond.length;
       print("average ${avgCarat}");
       diamondList.state.listCount = arraDiamond.length;
       diamondList.state.totalCount = diamondListResp.data.count;
@@ -117,7 +120,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   @override
   Widget build(BuildContext context) {
-    print("carat..... ${avgCarat}");
     return SafeArea(
       child: Scaffold(
         backgroundColor: appTheme.whiteColor,
@@ -133,7 +135,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               left: getSize(20), right: getSize(20), top: getSize(20)),
           child: Column(
             children: <Widget>[
-              DiamondListHeader(carat: avgCarat,),
+              DiamondListHeader(carat: avgCarat,pcs: pcs,),
               SizedBox(
                 height: getSize(20),
               ),
