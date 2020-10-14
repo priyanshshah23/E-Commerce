@@ -42,7 +42,9 @@ class _SplashState extends State<Splash> {
   // NavigationUtilities.push(KeyToSymbolWidget(keyToSymbol));
 
     if (app.resolve<PrefUtils>().isUserLogin()) {
-      NavigationUtilities.pushRoute(DiamondListScreen.route);
+      // NavigationUtilities.pushRoute(DiamondListScreen.route);
+      NavigationUtilities.pushRoute(FilterScreen.route);
+
     } else {
       NavigationUtilities.pushRoute(LoginScreen.route);
     }
