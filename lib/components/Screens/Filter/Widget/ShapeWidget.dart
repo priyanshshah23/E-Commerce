@@ -1,7 +1,5 @@
 import 'package:diamnow/app/app.export.dart';
-import 'package:diamnow/app/constant/ColorConstant.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
-import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
@@ -24,7 +22,8 @@ class _ShapeWidgetState extends State<ShapeWidget> {
   void initState() {
     super.initState();
 
-    if (widget.selectionModel.isShowAll == true) {
+    if (widget.selectionModel.isShowAll == true &&
+        widget.selectionModel.orientation == DisplayTypes.vertical) {
       if (widget.selectionModel.masters
               .where((element) =>
                   element.sId == widget.selectionModel.allLableTitle)

@@ -25,6 +25,7 @@
     "title": "Carat Range",
     "desc": "Desc",
     "viewType": "caratrange",
+    "allLableTitle": "All",
     "apiKey": "caratRange",
     "masterCode": "Size",
     "verticalScroll": false,

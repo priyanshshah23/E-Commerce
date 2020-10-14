@@ -1,8 +1,8 @@
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
-import 'package:diamnow/modules/Filter/gridviewlist/ShapeWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:diamnow/app/app.export.dart';
@@ -36,20 +36,18 @@ class _TagWidgetState extends State<TagWidget> {
   @override
   void initState() {
     super.initState();
-    if (widget.model.viewType != ViewTypes.shapeWidget) {
-      if (widget.model.isShowAll == true) {
-        if (widget.model.masters
-                .where((element) => element.sId == R.string().commonString.all)
-                .toList()
-                .length ==
-            0) {
-          Master allMaster = Master();
-          allMaster.sId = R.string().commonString.all;
-          allMaster.webDisplay = R.string().commonString.all;
-          allMaster.isSelected = false;
+    if (widget.model.isShowAll == true) {
+      if (widget.model.masters
+              .where((element) => element.sId == widget.model.allLableTitle)
+              .toList()
+              .length ==
+          0) {
+        Master allMaster = Master();
+        allMaster.sId = widget.model.allLableTitle;
+        allMaster.webDisplay = widget.model.allLableTitle;
+        allMaster.isSelected = false;
 
-          widget.model.masters.insert(0, allMaster);
-        }
+        widget.model.masters.insert(0, allMaster);
       }
     }
   }
@@ -226,7 +224,7 @@ class _TagWidgetState extends State<TagWidget> {
 
   void onSelectionClick(int index) {
     if (widget.model.isShowAll == true) {
-      if (widget.model.masters[index].sId == R.string().commonString.all) {
+      if (widget.model.masters[index].sId == widget.model.allLableTitle) {
         if (widget.model.masters[0].isSelected == true) {
           widget.model.masters.forEach((element) {
             element.isSelected = true;
@@ -237,7 +235,7 @@ class _TagWidgetState extends State<TagWidget> {
           });
         }
       } else {
-        if (widget.model.masters[index].sId == R.string().commonString.all) {
+        if (widget.model.masters[index].sId == widget.model.allLableTitle) {
           widget.model.masters.forEach((element) {
             element.isSelected = false;
           });
@@ -245,7 +243,7 @@ class _TagWidgetState extends State<TagWidget> {
           if (widget.model.masters
                   .where((element) =>
                       element.isSelected == true &&
-                      element.sId != R.string().commonString.all)
+                      element.sId != widget.model.allLableTitle)
                   .toList()
                   .length ==
               widget.model.masters.length - 1) {
