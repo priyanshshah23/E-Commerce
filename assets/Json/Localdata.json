@@ -1,0 +1,124 @@
+[
+    {
+        "id": "123123123",
+        "code": "MAKE",
+        "webDisplay": "MAKE",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentCode": "MAKE1",
+        "parentId": null
+    },
+    {
+        "id": "3EX",
+        "code": "3EX",
+        "webDisplay": "3EX",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentCode": "MAKE",
+        "parentId": "123123123"
+    },
+    {
+        "id": "3EX-NON",
+        "code": "3EX-NON",
+        "webDisplay": "3EX-NON",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 2,
+        "parentCode": "MAKE",
+        "parentId": "123123123"
+    },
+    {
+        "id": "456456456",
+        "code": "ARRIVALS",
+        "webDisplay": "Arrivals",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentCode": "ARRIVALS",
+        "parentId": null
+    },
+    {
+        "id": "1day",
+        "code": "1day",
+        "webDisplay": "1 day",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentId": "456456456"
+    },
+    {
+        "id": "7day",
+        "code": "7day",
+        "webDisplay": "7 day",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 2,
+        "parentId": "456456456"
+    },
+    {
+        "id": "15day",
+        "code": "15day",
+        "webDisplay": "15 day",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentId": "456456456"
+    },
+    {
+        "id": "30day",
+        "code": "30day",
+        "webDisplay": "30 day",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 2,
+        "parentId": "456456456"
+    },
+    {
+        "id": "789789789",
+        "code": "STAGE",
+        "webDisplay": "stage",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentCode": "STAGE",
+        "parentId": null
+    },
+    {
+        "id": "Memo",
+        "code": "Memo",
+        "webDisplay": "Memo",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentId": "789789789"
+    },
+    {
+        "id": "Availble",
+        "code": "Availble",
+        "webDisplay": "Availble",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 2,
+        "parentId": "789789789"
+    },
+    {
+        "id": "Office",
+        "code": "Office",
+        "webDisplay": "Office",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentId": "789789789"
+    },
+    {
+        "id": "Show",
+        "code": "Show",
+        "webDisplay": "Show",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 2,
+        "parentId": "789789789"
+    }
+]

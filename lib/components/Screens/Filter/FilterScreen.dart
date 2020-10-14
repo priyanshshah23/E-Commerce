@@ -1,6 +1,11 @@
+import 'dart:collection';
+
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
+import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 
 import 'package:diamnow/components/Screens/Filter/Widget/CertNoWidget.dart';
 
@@ -9,13 +14,18 @@ import 'package:diamnow/components/Screens/Filter/Widget/CaratRangeWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/FromToWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SeperatorWidget.dart';
+import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
+import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
+import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/FilterModel/TabModel.dart';
+import 'package:diamnow/models/Master/Master.dart';
 import 'package:diamnow/modules/Filter/gridviewlist/KeyToSymbol.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:rxbus/rxbus.dart';
 
 class FilterScreen extends StatefulScreenWidget {
   static const route = "FilterScreen";
@@ -30,10 +40,13 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   PageController controller = PageController();
   List<TabModel> arrTab = [];
   List<FormBaseModel> arrList = [];
+  List<BottomTabModel> arrBottomTab;
+  String filterId;
 
   @override
   void initState() {
     super.initState();
+    registerRsBus();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Config().getFilterJson().then((result) {
         setState(() {
@@ -47,42 +60,205 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         });
       });
     });
+    arrBottomTab = BottomTabModel().getFilterScreenBottomTabs();
+    setState(() {
+      //
+    });
+  }
+
+  registerRsBus() {
+    RxBus.register<Map<MasterSelection, bool>>(tag: eventMasterSelection)
+        .listen(
+      (event) => setState(
+        () {
+          List<SelectionModel> list = arrList
+              .where((element) => element.viewType == ViewTypes.selection)
+              .toList()
+              .cast<SelectionModel>();
+
+          event.keys.first.masterToSelect.forEach((element) {
+            SelectionModel temp = list.firstWhere((mainElement) {
+              print(mainElement.masterCode);
+              print(element.code);
+              return mainElement.masterCode == element.code;
+            });
+            if (!isNullEmptyOrFalse(temp)) {
+              temp.masters.forEach((elementSubMaster) {
+                elementSubMaster.isSelected = false;
+                print(elementSubMaster.code);
+                print(element.subMasters);
+                if (element.subMasters.contains(elementSubMaster.code)) {
+                  elementSubMaster.isSelected = event.values.first;
+                }
+              });
+            }
+          });
+        },
+      ),
+    );
+
+    RxBus.register<bool>(tag: eventMasterForDeSelectMake).listen(
+      (event) => setState(
+        () {
+          List<SelectionModel> list = arrList
+              .where((element) => element.viewType == ViewTypes.selection)
+              .toList()
+              .cast<SelectionModel>();
+
+          list.forEach((element) {
+            if (element.masterCode == MasterCode.make) {
+              element.masters.forEach((element) {
+                element.isSelected = false;
+              });
+            }
+          });
+        },
+      ),
+    );
   }
 
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: AppBackground(
         child: Scaffold(
-          appBar: getAppBar(
-            context,
-            R.string().screenTitle.searchDiamond,
-            bgColor: appTheme.whiteColor,
-            leadingButton: getBackButton(context),
-            centerTitle: false,
-          ),
-          body: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              isNullEmptyOrFalse(arrTab)
-                  ? SizedBox()
-                  : SizedBox(height: getSize(16)),
-              isNullEmptyOrFalse(arrTab) ? SizedBox() : _segmentedControl(),
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(top: getSize(16)),
-                  color: Colors.transparent,
-                  child:
-                      isNullEmptyOrFalse(arrList) ? SizedBox() : getPageView(),
+            appBar: getAppBar(
+              context,
+              R.string().screenTitle.searchDiamond,
+              bgColor: appTheme.whiteColor,
+              leadingButton: getBackButton(context),
+              centerTitle: false,
+            ),
+            body: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                isNullEmptyOrFalse(arrTab)
+                    ? SizedBox()
+                    : SizedBox(height: getSize(16)),
+                isNullEmptyOrFalse(arrTab) ? SizedBox() : _segmentedControl(),
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.only(top: getSize(16)),
+                    color: Colors.transparent,
+                    child: isNullEmptyOrFalse(arrList)
+                        ? SizedBox()
+                        : getPageView(),
+                  ),
                 ),
-              ),
+              ],
+            ),
+            bottomNavigationBar: getBottomTab()),
+      ),
+    );
+  }
+
+  Widget getBottomTab() {
+    if (arrBottomTab.length > 0) {
+      return SafeArea(
+        child: Container(
+          height: getSize(56),
+          color: appTheme.colorPrimary,
+          child: Row(
+            children: [
+              for (var i = 0; i < arrBottomTab.length; i++)
+                InkWell(
+                  onTap: () {
+                    //
+                    if (arrBottomTab[i].code ==
+                        BottomCodeConstant.savedSearch) {
+                      //
+                      print(arrBottomTab[i].code);
+                    } else if (arrBottomTab[i].code ==
+                        BottomCodeConstant.addDemamd) {
+                      //
+                      print(arrBottomTab[i].code);
+                    } else if (arrBottomTab[i].code ==
+                        BottomCodeConstant.search) {
+                      //
+                      print(arrBottomTab[i].code);
+                      callApiForGetFilterId();
+                    } else if (arrBottomTab[i].code ==
+                        BottomCodeConstant.saveAndSearch) {
+                      //
+                      print(arrBottomTab[i].code);
+                    } else if (arrBottomTab[i].code ==
+                        BottomCodeConstant.matchPair) {
+                      //
+                      print(arrBottomTab[i].code);
+                    }
+                  },
+                  child: Container(
+                    width: MathUtilities.screenWidth(context) /
+                        arrBottomTab.length,
+                    color: arrBottomTab[i].getBackgroundColor(),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          arrBottomTab[i].isCenter
+                              ? Container(
+                                  // color:
+                                  //     arrBottomTab[i].centerImageBackgroundColor,
+                                  // color: Colors.white,
+                                  decoration: new BoxDecoration(
+                                    color: arrBottomTab[i]
+                                        .getCenterImageBackgroundColor(),
+                                    borderRadius: new BorderRadius.all(
+                                        Radius.circular(5.0)),
+                                  ),
+                                  width: getSize(40),
+                                  height: getSize(40),
+                                  child: Center(
+                                    child: Image.asset(arrBottomTab[i].image,
+                                        width: getSize(20),
+                                        height: getSize(20)),
+                                  ))
+                              : Image.asset(arrBottomTab[i].image,
+                                  width: getSize(20), height: getSize(20)),
+                          if (arrBottomTab[i].isCenter == false)
+                            SizedBox(
+                              height: getSize(5),
+                            ),
+                          if (arrBottomTab[i].isCenter == false)
+                            Text(
+                              arrBottomTab[i].title,
+                              style: appTheme.getTabbarTextStyle(
+                                  textColor: arrBottomTab[i].getTextColor()),
+                              textAlign: TextAlign.center,
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
             ],
           ),
         ),
-      ),
+      );
+    } else {
+      return null;
+    }
+  }
+
+  callApiForGetFilterId() {
+    DiamondListReq req = DiamondListReq();
+    req.isNotReturnTotal = true;
+    req.isReturnCountOnly = true;
+    SyncManager.instance.callApiForDiamondList(
+      context,
+      req,
+      (diamondListResp) {
+        Map<String, dynamic> dict = new HashMap();
+        dict["filterId"] = diamondListResp.data.filter.id;
+        NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+      },
+      (onError) {
+        //print("Error");
+      },
     );
   }
 
@@ -223,6 +399,15 @@ class _FilterItemState extends State<FilterItem> {
             top: getSize(8.0),
             bottom: getSize(8)),
         child: CaratRangeWidget(model),
+      );
+    } else if (model.viewType == ViewTypes.shapeWidget) {
+      return Padding(
+        padding: EdgeInsets.only(
+            left: getSize(16),
+            right: getSize(16),
+            top: getSize(8.0),
+            bottom: getSize(8)),
+        child: ShapeWidget(model),
       );
     }
   }

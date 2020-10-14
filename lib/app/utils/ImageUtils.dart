@@ -8,7 +8,7 @@ import 'package:diamnow/app/constant/ApiConstants.dart';
 CachedNetworkImage getImageView(String url,
     {height = 100.0,
     width = 100.0,
-    placeHolderImage,
+    placeHolderImage = india,
     fit: BoxFit.contain,
     BoxShape shape}) {
   String imageUrl = (url == null || url.length == 0)
@@ -20,24 +20,21 @@ CachedNetworkImage getImageView(String url,
     height: height,
     width: width,
     imageUrl: imageUrl,
-//    imageBuilder: (context, imageProvider) => Container(
-//      width: width,
-//      height: height,
-//      decoration: BoxDecoration(
-//        shape: shape,
-//        image: DecorationImage(
-//            image: imageProvider, fit: BoxFit.cover),
-//      ),
-//    ),
     fit: fit,
     placeholder: (context, url) => Container(
-      //decoration: decoration,
       height: height,
       width: width,
-      child: SpinKitFadingCircle(
-        color: ColorConstants.colorPrimary,
-        size: getSize(20),
-      ),
+      child: isStringEmpty(imageUrl)
+          ? Image.asset(
+              placeHolderImage,
+              width: width,
+              height: height,
+              fit: fit,
+            )
+          : SpinKitFadingCircle(
+              color: appTheme.colorPrimary,
+              size: getSize(20),
+            ),
     ),
     errorWidget: (context, url, error) => Image.asset(
       placeHolderImage == null || placeHolderImage.length == 0

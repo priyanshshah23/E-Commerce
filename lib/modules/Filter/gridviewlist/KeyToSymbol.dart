@@ -141,16 +141,14 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
           // symmetry: true,
           // borderSide: BorderSide(color: appTheme.),
           textActiveColor: appTheme.colorPrimary,
-          // borderSide: _tags.map((element) { 
+          // borderSide: _tags.map((element) {
           //   if(element.active){
           //     return BorderSide(color: appTheme.colorPrimary);
-              
+
           //   }
           // }),
-          
-          
-                   
-                  // : appTheme.blackNormal14TitleColorblack,
+
+          // : appTheme.blackNormal14TitleColorblack,
           color: appTheme.unSelectedBgColor,
           activeColor: appTheme.selectedFilterColor, // default false
           onPressed: (tag) {

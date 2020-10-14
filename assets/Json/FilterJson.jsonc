@@ -1,12 +1,12 @@
 [
   {
     "title": "Shape",
-    "viewType": "selection",
+    "viewType": "shape",
     "allLableTitle": "All Shapes",
     "apiKey": "shape",
     "masterCode": "SHAPE",
-    "verticalScroll": true,
-    "orientation": "vertical",
+    "verticalScroll": false,
+    "orientation": "horizontal",
     "isShowAll": true,
     "isShowMore": true,
     "tab": "basic",
@@ -25,6 +25,7 @@
     "title": "Carat Range",
     "desc": "Desc",
     "viewType": "caratrange",
+    "allLableTitle": "All",
     "apiKey": "caratRange",
     "masterCode": "Size",
     "verticalScroll": false,
@@ -55,6 +56,7 @@
     "title": "Color Shade",
     "desc": "Desc",
     "viewType": "selection",
+    "allLableTitle": "All Shapes",
     "apiKey": "colorShade",
     "masterCode": "SHADE",
     "verticalScroll": false,
@@ -77,6 +79,7 @@
   {
     "title": "Clarity",
     "viewType": "selection",
+    "allLableTitle": "All",
     "apiKey": "clarity",
     "masterCode": "CLARITY",
     "verticalScroll": false,
@@ -98,6 +101,7 @@
   {
     "title": "Fluorescence",
     "viewType": "selection",
+    "allLableTitle": "All",
     "apiKey": "fluorescence",
     "masterCode": "FLUORESCENCE",
     "verticalScroll": false,
@@ -119,6 +123,7 @@
   {
     "title": "Lab",
     "viewType": "selection",
+    "allLableTitle": "All",
     "apiKey": "location",
     "masterCode": "LAB",
     "verticalScroll": false,
@@ -138,8 +143,31 @@
     "rightPadding": 0
   },
   {
+    "title": "Arrivals",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "arrivals",
+    "masterCode": "ARRIVALS",
+    "verticalScroll": false,
+    "orientation": "vertical",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 10
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "basic",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
     "title": "Location",
     "viewType": "selection",
+    "allLableTitle": "All",
     "apiKey": "location",
     "masterCode": "LOCATION",
     "verticalScroll": false,
@@ -159,8 +187,74 @@
     "rightPadding": 0
   },
   {
+    "title": "Make",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "isSingleSelection": true,
+    "apiKey": "",
+    "masterCode": "MAKE",
+    "verticalScroll": false,
+    "orientation": "horizontal",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 10,
+    "masterSelection": [
+      {
+        "code": "3EX",
+        "masterToSelect": [
+          {
+            "code": "CUT",
+            "subMasters": [
+              "EX"
+            ]
+          },
+          {
+            "code": "POLISH",
+            "subMasters": [
+              "EX"
+            ]
+          },
+          {
+            "code": "SYMMETRY",
+            "subMasters": [
+              "EX"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "3EX-NON",
+        "masterToSelect": [
+          {
+            "code": "CUT",
+            "subMasters": [
+              "EX",
+              "VG"
+            ]
+          },
+          {
+            "code": "POLISH",
+            "subMasters": [
+              "EX",
+              "VG"
+            ]
+          },
+          {
+            "code": "SYMMETRY",
+            "subMasters": [
+              "EX",
+              "VG"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "title": "Cut",
     "viewType": "selection",
+    "allLableTitle": "All",
     "apiKey": "cut",
     "masterCode": "CUT",
     "verticalScroll": false,
@@ -173,6 +267,7 @@
   {
     "title": "Polish",
     "viewType": "selection",
+    "allLableTitle": "All",
     "apiKey": "clarity",
     "masterCode": "POLISH",
     "verticalScroll": false,
@@ -185,6 +280,7 @@
   {
     "title": "Symmetry",
     "viewType": "selection",
+    "allLableTitle": "All",
     "apiKey": "sym",
     "masterCode": "SYMMETRY",
     "verticalScroll": false,
@@ -206,6 +302,7 @@
   {
     "title": "H & A",
     "viewType": "selection",
+    "allLableTitle": "All",
     "apiKey": "clarity",
     "masterCode": "H_AND_A",
     "verticalScroll": false,
@@ -218,6 +315,7 @@
   {
     "title": "Brilliance",
     "viewType": "selection",
+    "allLableTitle": "All",
     "apiKey": "clarity",
     "masterCode": "BRILLIANCY",
     "verticalScroll": false,
@@ -226,6 +324,19 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 11
+  },
+  {
+    "title": "Stage",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "STAGE",
+    "masterCode": "STAGE",
+    "verticalScroll": false,
+    "orientation": "horizontal",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 10
   },
   {
     "viewType": "seperator",
@@ -644,6 +755,7 @@
   {
     "title": "Culet",
     "viewType": "selection",
+    "allLableTitle": "All",
     "apiKey": "culet",
     "masterCode": "CULET",
     "verticalScroll": false,
@@ -665,6 +777,7 @@
   {
     "title": "Culet Condition",
     "viewType": "selection",
+    "allLableTitle": "All",
     "apiKey": "culetCon",
     "masterCode": "CULET_COND",
     "verticalScroll": false,
@@ -686,6 +799,7 @@
   {
     "title": "Girdle",
     "viewType": "selection",
+    "allLableTitle": "All",
     "apiKey": "girdle",
     "masterCode": "GIRDLE",
     "verticalScroll": false,
@@ -707,6 +821,7 @@
   {
     "title": "Girdle Condition",
     "viewType": "selection",
+    "allLableTitle": "All",
     "apiKey": "girdle",
     "masterCode": "GIRDLE_COND",
     "verticalScroll": false,
@@ -728,6 +843,7 @@
   {
     "title": "Girdle",
     "viewType": "selection",
+    "allLableTitle": "All",
     "apiKey": "girdle",
     "masterCode": "GIRDLE",
     "verticalScroll": false,
@@ -749,6 +865,7 @@
   {
     "title": "Eye Clean",
     "viewType": "selection",
+    "allLableTitle": "All",
     "apiKey": "eyeClean",
     "masterCode": "EYECLEAN",
     "verticalScroll": false,
@@ -770,6 +887,7 @@
   {
     "title": "Milky",
     "viewType": "selection",
+    "allLableTitle": "All",
     "apiKey": "milky",
     "masterCode": "MILKEY",
     "verticalScroll": false,
@@ -778,6 +896,15 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 1
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "advance",
+    "rightPadding": 0
   },
   {
     "title": "keyToSymbol",

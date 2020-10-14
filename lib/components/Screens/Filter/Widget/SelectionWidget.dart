@@ -1,10 +1,13 @@
+import 'package:diamnow/app/constant/EnumConstant.dart';
+import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
-import 'package:diamnow/modules/Filter/gridviewlist/ShapeWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:diamnow/app/app.export.dart';
+import 'package:rxbus/rxbus.dart';
 
 class SelectionWidget extends StatefulWidget {
   SelectionModel selectionModel;
@@ -35,16 +38,15 @@ class _TagWidgetState extends State<TagWidget> {
   @override
   void initState() {
     super.initState();
-
     if (widget.model.isShowAll == true) {
       if (widget.model.masters
-              .where((element) => element.sId == R.string().commonString.all)
+              .where((element) => element.sId == widget.model.allLableTitle)
               .toList()
               .length ==
           0) {
         Master allMaster = Master();
-        allMaster.sId = R.string().commonString.all;
-        allMaster.webDisplay = R.string().commonString.all;
+        allMaster.sId = widget.model.allLableTitle;
+        allMaster.webDisplay = widget.model.allLableTitle;
         allMaster.isSelected = false;
 
         widget.model.masters.insert(0, allMaster);
@@ -54,7 +56,12 @@ class _TagWidgetState extends State<TagWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.model.orientation == "vertical"
+    if (widget.model.verticalScroll == false &&
+        widget.model.viewType == ViewTypes.shapeWidget) {
+      return getShapeWidgetHorizontal();
+    }
+
+    return widget.model.orientation == DisplayTypes.vertical
         ? getVerticalOrientation()
         : getHorizontalOrientation();
   }
@@ -131,7 +138,7 @@ class _TagWidgetState extends State<TagWidget> {
                       widget.model.masters[index].isSelected =
                           !widget.model.masters[index].isSelected;
 
-                      onSelectionClick(index);
+                      getMultipleMasterSelections(index);
                     });
                   },
                 );
@@ -180,9 +187,46 @@ class _TagWidgetState extends State<TagWidget> {
     );
   }
 
+  getShapeWidgetHorizontal() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Container(
+            height: getSize(100),
+            child: ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: widget.model.masters.length,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  child: Padding(
+                    padding: EdgeInsets.only(right: getSize(8)),
+                    child: ShapeItemWidget(
+                      obj: widget.model.masters[index],
+                      selectionModel: widget.model,
+                    ),
+                  ),
+                  onTap: () {
+                    setState(() {
+                      widget.model.masters[index].isSelected =
+                          !widget.model.masters[index].isSelected;
+
+                      onSelectionClick(index);
+                    });
+                  },
+                );
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   void onSelectionClick(int index) {
     if (widget.model.isShowAll == true) {
-      if (widget.model.masters[index].sId == R.string().commonString.all) {
+      if (widget.model.masters[index].sId == widget.model.allLableTitle) {
         if (widget.model.masters[0].isSelected == true) {
           widget.model.masters.forEach((element) {
             element.isSelected = true;
@@ -193,7 +237,7 @@ class _TagWidgetState extends State<TagWidget> {
           });
         }
       } else {
-        if (widget.model.masters[index].sId == R.string().commonString.all) {
+        if (widget.model.masters[index].sId == widget.model.allLableTitle) {
           widget.model.masters.forEach((element) {
             element.isSelected = false;
           });
@@ -201,7 +245,7 @@ class _TagWidgetState extends State<TagWidget> {
           if (widget.model.masters
                   .where((element) =>
                       element.isSelected == true &&
-                      element.sId != R.string().commonString.all)
+                      element.sId != widget.model.allLableTitle)
                   .toList()
                   .length ==
               widget.model.masters.length - 1) {
@@ -211,6 +255,32 @@ class _TagWidgetState extends State<TagWidget> {
           }
         }
       }
+    }
+  }
+
+  getMultipleMasterSelections(int index) {
+    //When Local data has added and multilple master has to select
+    if (widget.model.isSingleSelection) {
+      for (var item in widget.model.masters) {
+        if (item != widget.model.masters[index]) {
+          item.isSelected = false;
+        }
+      }
+
+      if (!isNullEmptyOrFalse(widget.model.masterSelection)) {
+        Map<MasterSelection, bool> m = Map<MasterSelection, bool>();
+        m[widget.model.masterSelection[index]] =
+            widget.model.masters[index].isSelected;
+
+        RxBus.post(m, tag: eventMasterSelection);
+      }
+    } else {
+      if (widget.model.masterCode == MasterCode.cut ||
+          widget.model.masterCode == MasterCode.polish ||
+          widget.model.masterCode == MasterCode.symmetry) {
+        RxBus.post(false, tag: eventMasterForDeSelectMake);
+      }
+      onSelectionClick(index);
     }
   }
 }

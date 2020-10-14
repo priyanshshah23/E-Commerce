@@ -7,6 +7,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
+import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -49,6 +50,10 @@ class SyncManager {
         app.resolve<PrefUtils>().saveUser(masterResp.data.loggedInUser);
       }
 
+      //Append static data masters
+      List<Master> arrLocalData = await Config().getLocalDataJson();
+      masterResp.data.masters.list.addAll(arrLocalData);
+
       await AppDatabase.instance.masterDao
           .addOrUpdate(masterResp.data.masters.list);
 
@@ -80,31 +85,22 @@ class SyncManager {
 
   Future callApiForDiamondList(
     BuildContext context,
-        DiamondListReq req,
+    DiamondListReq req,
     Function(DiamondListResp) success,
     Function failure, {
-    bool isNetworkError = true,
     bool isProgress = true,
   }) async {
-
-    NetworkCall<BaseApiResp>()
+    NetworkCall<DiamondListResp>()
         .makeCall(
-            () => app.resolve<ServiceModule>().networkService().diamondList(req),
+            () =>
+                app.resolve<ServiceModule>().networkService().diamondList(req),
             context,
-            isProgress: isProgress,
-            isNetworkError: isNetworkError)
+            isProgress: isProgress,)
         .then((diamondListResp) async {
-          success(diamondListResp);
-
+      success(diamondListResp);
     }).catchError((onError) => {
-      print(onError),
-              //failure(),
-              if (isNetworkError)
-                {
-                  // showToast((onError is ErrorResp)
-                  //     ? onError.message
-                  //     : onError.toString()),
-                },
+              print(onError),
+              //failure()
             });
   }
 }

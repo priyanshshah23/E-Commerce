@@ -3,6 +3,9 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:flutter/material.dart';
 
 class DiamondListHeader extends StatefulWidget {
+  num carat = 0;
+  DiamondListHeader({this.carat});
+
   @override
   _DiamondListHeaderState createState() => _DiamondListHeaderState();
 }
@@ -16,7 +19,7 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           getColumn("0", "Pcs"),
-          getColumn("0", "Cts"),
+          getColumn(widget.carat.toStringAsFixed(2), "Cts"),
           getColumn("0", "Disc %"),
           Expanded(
             child: getColumn(

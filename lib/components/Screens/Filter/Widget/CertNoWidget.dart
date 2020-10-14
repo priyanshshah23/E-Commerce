@@ -77,23 +77,26 @@ class _CertNoWidgetState extends State<CertNoWidget> {
         filled: true,
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(getSize(6))),
-          borderSide: BorderSide(color: ColorConstants.borderColor, width: 1),
+          borderSide: BorderSide(color: appTheme.borderColor, width: 1),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(getSize(6))),
-          borderSide: BorderSide(color: ColorConstants.borderColor, width: 1),
+          borderSide: BorderSide(color: appTheme.borderColor, width: 1),
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(getSize(6))),
-          borderSide: BorderSide(color: ColorConstants.borderColor, width: 1),
+          borderSide: BorderSide(color: appTheme.borderColor, width: 1),
         ),
         hintStyle: appTheme.grey14HintTextStyle,
-        hintText: "Search, Enter Comma for Multiple Stone ID",
+        hintText: widget.certNoModel.title,
       ),
       onFieldSubmitted: (String text) {
+        widget.certNoModel.text = _stoneIdController.text.trim();
         FocusScope.of(context).unfocus();
       },
-      onChanged: (String text) {},
+      onChanged: (String text) {
+        widget.certNoModel.text = _stoneIdController.text.trim();
+      },
     );
   }
 
@@ -104,7 +107,7 @@ class _CertNoWidgetState extends State<CertNoWidget> {
           value: index,
           groupValue: _radioValue,
           onChanged: onClick,
-          activeColor: ColorConstants.colorPrimary,
+          activeColor: appTheme.colorPrimary,
         ),
         Text(
           model.title,

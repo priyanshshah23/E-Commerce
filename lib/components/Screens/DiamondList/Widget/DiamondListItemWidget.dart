@@ -4,9 +4,10 @@ import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:flutter/material.dart';
 
 class DiamondItemWidget extends StatefulWidget {
-
   DiamondModel item;
+
   DiamondItemWidget({this.item});
+
   @override
   _DiamondItemWidgetState createState() => _DiamondItemWidgetState();
 }
@@ -22,8 +23,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       width: MathUtilities.screenWidth(context),
       decoration: BoxDecoration(
           color: appTheme.whiteColor,
-          borderRadius: BorderRadius.circular(getSize(5)),
-          border: Border.all(color: appTheme.dividerColor)
+          borderRadius: BorderRadius.circular(getSize(6)),
+          border: Border.all(color: widget.item.isSelected ?appTheme.colorPrimary:appTheme.dividerColor)
           //boxShadow: getBoxShadow(context),
           ),
       child: Row(
@@ -59,22 +60,27 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         bottom: getSize(5),
       ),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(getSize(5)),
-            bottomLeft: Radius.circular(getSize(5)),
-          ),
-          color: appTheme.colorPrimary),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(getSize(5)),
+          bottomLeft: Radius.circular(getSize(5)),
+        ),
+        color: widget.item.isSelected
+            ? appTheme.colorPrimary
+            : appTheme.dividerColor,
+      ),
       child: Column(
         children: <Widget>[
           Text(
-            "12.50",
-            style:
-                appTheme.white16TextStyle.copyWith(fontSize: getFontSize(14)),
+            widget.item?.crt.toString() ?? "",
+            style:appTheme.blue14TextStyle.copyWith(
+              color: widget.item.isSelected ? appTheme.whiteColor : appTheme.colorPrimary
+            ),
           ),
           Text(
             "Carat",
-            style:
-                appTheme.white16TextStyle.copyWith(fontSize: getFontSize(14)),
+            style: appTheme.blue14TextStyle.copyWith(
+                color: widget.item.isSelected ? appTheme.whiteColor : appTheme.colorPrimary
+            ),
           ),
           Container(
             alignment: Alignment.center,
@@ -85,7 +91,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 color: appTheme.whiteColor,
                 borderRadius: BorderRadius.circular(getSize(5))),
             child: Text(
-              "3.05%",
+              widget.item?.back.toString() + " %" ?? "",
               style: appTheme.green10TextStyle,
             ),
           )
@@ -100,39 +106,39 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       child: Row(
 //        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          getText("6878989"),
+          getText(widget.item?.vStnId ?? ""),
           Expanded(child: Container()),
-          getText("Round"),
+          getText(widget.item?.shpNm ?? ""),
           Expanded(child: Container()),
           Padding(
             padding: EdgeInsets.only(
               right: getSize(10),
             ),
-            child: getText("D"),
+            child: getText(widget.item?.colNm ?? ""),
           ),
           Padding(
             padding: EdgeInsets.only(
               right: getSize(10),
             ),
-            child: getText("IF"),
+            child: getText(widget.item?.clrNm ?? ""),
           ),
           Row(
             children: <Widget>[
-              getText("EX"),
+              getText(widget.item?.cutNm ?? ""),
               Container(
                 height: getSize(4),
                 width: getSize(4),
                 decoration: BoxDecoration(
                     color: appTheme.dividerColor, shape: BoxShape.circle),
               ),
-              getText("EX"),
+              getText(widget.item?.polNm ?? ""),
               Container(
                 height: getSize(4),
                 width: getSize(4),
                 decoration: BoxDecoration(
                     color: appTheme.dividerColor, shape: BoxShape.circle),
               ),
-              getText("EX"),
+              getText(widget.item?.symNm ?? ""),
             ],
           )
         ],
@@ -146,25 +152,31 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          getText("MAD"),
-          getText("7.27 X 7.3 - 14.57"),
-          getText("GIA"),
-          getAmountText(R.string().commonString.doller+"13,992.50/Cts"),
+          getText(widget.item?.fluNm ?? ""),
+          getText(widget.item?.msrmnt ?? ""),
+          getText(widget.item?.lbNm ?? ""),
+          getAmountText(R.string().commonString.doller +
+                  widget.item?.ctPr.toStringAsFixed(2) +
+                  "/Cts" ??
+              ""),
         ],
       ),
     );
   }
 
-  getTableDepthAndAmountDetail(){
+  getTableDepthAndAmountDetail() {
     return Padding(
       padding: EdgeInsets.only(top: getSize(5)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          getText("Yellow"),
-          getText("59.00%T"),
-          getText("59.00%D"),
-          getAmountText(R.string().commonString.doller+"20,988.75/Amt"),
+          getText(widget.item?.shpNm ?? ""),
+          getText(widget.item?.tblPer.toString() + "%T" ?? ""),
+          getText(widget.item?.depPer.toString() + "%D" ?? ""),
+          getAmountText(R.string().commonString.doller +
+                  widget.item?.amt.toStringAsFixed(2) +
+                  "/Amt" ??
+              ""),
         ],
       ),
     );
@@ -177,13 +189,10 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
     );
   }
 
-
   getAmountText(String text) {
     return Text(
       text,
-      style: appTheme.black12TextStyle.copyWith(
-        color: ColorConstants.colorPrimary
-      ),
+      style: appTheme.blue14TextStyle.copyWith(fontSize: getFontSize(12)),
     );
   }
 }
