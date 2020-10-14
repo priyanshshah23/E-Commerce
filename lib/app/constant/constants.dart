@@ -94,4 +94,5 @@ class MasterCode {
   static const String girdleCondition = "GIRDLE_COND";
   static const String culet = "CULET";
   static const String culetCondition = "CULET_COND";
+  static const String make = "MAKE";
 }

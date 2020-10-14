@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
+import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 
@@ -19,10 +20,12 @@ import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/FilterModel/TabModel.dart';
+import 'package:diamnow/models/Master/Master.dart';
 import 'package:diamnow/modules/Filter/gridviewlist/KeyToSymbol.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:rxbus/rxbus.dart';
 
 class FilterScreen extends StatefulScreenWidget {
   static const route = "FilterScreen";
@@ -43,6 +46,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   @override
   void initState() {
     super.initState();
+    registerRsBus();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Config().getFilterJson().then((result) {
         setState(() {
@@ -60,6 +64,57 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     setState(() {
       //
     });
+  }
+
+  registerRsBus() {
+    RxBus.register<Map<MasterSelection, bool>>(tag: eventMasterSelection)
+        .listen(
+      (event) => setState(
+        () {
+          List<SelectionModel> list = arrList
+              .where((element) => element.viewType == ViewTypes.selection)
+              .toList()
+              .cast<SelectionModel>();
+
+          event.keys.first.masterToSelect.forEach((element) {
+            SelectionModel temp = list.firstWhere((mainElement) {
+              print(mainElement.masterCode);
+              print(element.code);
+              return mainElement.masterCode == element.code;
+            });
+            if (!isNullEmptyOrFalse(temp)) {
+              temp.masters.forEach((elementSubMaster) {
+                elementSubMaster.isSelected = false;
+                print(elementSubMaster.code);
+                print(element.subMasters);
+                if (element.subMasters.contains(elementSubMaster.code)) {
+                  elementSubMaster.isSelected = event.values.first;
+                }
+              });
+            }
+          });
+        },
+      ),
+    );
+
+    RxBus.register<bool>(tag: eventMasterForDeSelectMake).listen(
+      (event) => setState(
+        () {
+          List<SelectionModel> list = arrList
+              .where((element) => element.viewType == ViewTypes.selection)
+              .toList()
+              .cast<SelectionModel>();
+
+          list.forEach((element) {
+            if (element.masterCode == MasterCode.make) {
+              element.masters.forEach((element) {
+                element.isSelected = false;
+              });
+            }
+          });
+        },
+      ),
+    );
   }
 
   @override
@@ -188,7 +243,6 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     }
   }
 
-
   callApiForGetFilterId() {
     DiamondListReq req = DiamondListReq();
     req.isNotReturnTotal = true;
@@ -196,10 +250,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     SyncManager.instance.callApiForDiamondList(
       context,
       req,
-          (diamondListResp) {
+      (diamondListResp) {
         filterId = diamondListResp.data.filter.id;
       },
-          (onError) {
+      (onError) {
         //print("Error");
       },
     );
