@@ -228,7 +228,7 @@ class _TagWidgetState extends State<TagWidget> {
     //When Local data has added and multilple master has to select
     if (widget.model.isSingleSelection) {
       for (var item in widget.model.masters) {
-        if (widget.model.masters[index].code != "NoBGM") {
+        if (widget.model.masters[index].code != MasterCode.noBgm) {
           if (item != widget.model.masters[index]) {
             item.isSelected = false;
           }
