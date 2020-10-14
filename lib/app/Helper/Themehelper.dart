@@ -188,6 +188,13 @@ class BaseTheme {
         color: greenColor,
         fontWeight: FontWeight.normal);
   }
+
+  TextStyle getTabbarTextStyle({Color textColor}) {
+    return TextStyle(
+        fontSize: getFontSize(10),
+        color: textColor ?? whiteColor,
+        fontWeight: FontWeight.normal);
+  }
 }
 
 BaseTheme get appTheme => ThemeHelper.theme();

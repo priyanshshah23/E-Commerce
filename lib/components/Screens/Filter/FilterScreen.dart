@@ -15,6 +15,7 @@ import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SeperatorWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
+import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/FilterModel/TabModel.dart';
@@ -36,6 +37,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   PageController controller = PageController();
   List<TabModel> arrTab = [];
   List<FormBaseModel> arrList = [];
+  List<BottomTabModel> arrBottomTab;
   String filterId;
 
   @override
@@ -54,6 +56,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         });
       });
     });
+    arrBottomTab = BottomTabModel().getFilterScreenBottomTabs();
+    setState(() {
+      //
+    });
   }
 
   @override
@@ -64,28 +70,115 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       },
       child: AppBackground(
         child: Scaffold(
-          appBar: getAppBar(
-            context,
-            R.string().screenTitle.searchDiamond,
-            bgColor: appTheme.whiteColor,
-            leadingButton: getBackButton(context),
-            centerTitle: false,
-          ),
-          body: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              isNullEmptyOrFalse(arrTab)
-                  ? SizedBox()
-                  : SizedBox(height: getSize(16)),
-              isNullEmptyOrFalse(arrTab) ? SizedBox() : _segmentedControl(),
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(top: getSize(16)),
-                  color: Colors.transparent,
-                  child:
-                      isNullEmptyOrFalse(arrList) ? SizedBox() : getPageView(),
+            appBar: getAppBar(
+              context,
+              R.string().screenTitle.searchDiamond,
+              bgColor: appTheme.whiteColor,
+              leadingButton: getBackButton(context),
+              centerTitle: false,
+            ),
+            body: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                isNullEmptyOrFalse(arrTab)
+                    ? SizedBox()
+                    : SizedBox(height: getSize(16)),
+                isNullEmptyOrFalse(arrTab) ? SizedBox() : _segmentedControl(),
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.only(top: getSize(16)),
+                    color: Colors.transparent,
+                    child: isNullEmptyOrFalse(arrList)
+                        ? SizedBox()
+                        : getPageView(),
+                  ),
                 ),
-              ),
+              ],
+            ),
+            bottomNavigationBar: getBottomTab()),
+      ),
+    );
+  }
+
+  Widget getBottomTab() {
+    if (arrBottomTab.length > 0) {
+      return SafeArea(
+        child: Container(
+          height: getSize(56),
+          color: appTheme.colorPrimary,
+          child: Row(
+            children: [
+              for (var i = 0; i < arrBottomTab.length; i++)
+                InkWell(
+                  onTap: () {
+                    //
+                    if (arrBottomTab[i].code ==
+                        BottomCodeConstant.savedSearch) {
+                      //
+                      print(arrBottomTab[i].code);
+                    } else if (arrBottomTab[i].code ==
+                        BottomCodeConstant.addDemamd) {
+                      //
+                      print(arrBottomTab[i].code);
+                    } else if (arrBottomTab[i].code ==
+                        BottomCodeConstant.search) {
+                      //
+                      print(arrBottomTab[i].code);
+                    } else if (arrBottomTab[i].code ==
+                        BottomCodeConstant.saveAndSearch) {
+                      //
+                      print(arrBottomTab[i].code);
+                    } else if (arrBottomTab[i].code ==
+                        BottomCodeConstant.matchPair) {
+                      //
+                      print(arrBottomTab[i].code);
+                    }
+                  },
+                  child: Container(
+                    width: MathUtilities.screenWidth(context) /
+                        arrBottomTab.length,
+                    color: arrBottomTab[i].getBackgroundColor(),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          arrBottomTab[i].isCenter
+                              ? Container(
+                                  // color:
+                                  //     arrBottomTab[i].centerImageBackgroundColor,
+                                  // color: Colors.white,
+                                  decoration: new BoxDecoration(
+                                    color: arrBottomTab[i]
+                                        .getCenterImageBackgroundColor(),
+                                    borderRadius: new BorderRadius.all(
+                                        Radius.circular(5.0)),
+                                  ),
+                                  width: getSize(40),
+                                  height: getSize(40),
+                                  child: Center(
+                                    child: Image.asset(arrBottomTab[i].image,
+                                        width: getSize(20),
+                                        height: getSize(20)),
+                                  ))
+                              : Image.asset(arrBottomTab[i].image,
+                                  width: getSize(20), height: getSize(20)),
+                          if (arrBottomTab[i].isCenter == false)
+                            SizedBox(
+                              height: getSize(5),
+                            ),
+                          if (arrBottomTab[i].isCenter == false)
+                            Text(
+                              arrBottomTab[i].title,
+                              style: appTheme.getTabbarTextStyle(
+                                  textColor: arrBottomTab[i].getTextColor()),
+                              textAlign: TextAlign.center,
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
             ],
           ),
           floatingActionButton: InkWell(
@@ -99,8 +192,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             ),
           ),
         ),
-      ),
-    );
+      );
+    } else {
+      return null;
+    }
   }
 
   callApiForGetFilterId() {

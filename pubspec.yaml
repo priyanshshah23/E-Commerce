@@ -91,6 +91,7 @@ flutter:
     - assets/Json/
     - assets/fonts/
     - assets/shape/
+    - assets/filter/
     # - assets/chls/hochls.pem
     - assets/chls.pem
 

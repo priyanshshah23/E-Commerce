@@ -10,6 +10,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class Config {
+  Future<List<Master>> getLocalDataJson() async {
+    String jsonForm = await rootBundle.loadString('assets/Json/Localdata.json');
+
+    List<dynamic> fieldList = jsonDecode(jsonForm);
+    List<Master> masters = [];
+    for (int i = 0; i < fieldList.length; i++) {
+      dynamic element = fieldList[i];
+      if (element is Map<String, dynamic>) {
+        masters.add(Master.fromJson(element));
+      }
+    }
+    return masters;
+  }
+
   Future<List<TabModel>> getTabJson() async {
     String jsonForm = await rootBundle.loadString('assets/Json/TabJson.json');
 
