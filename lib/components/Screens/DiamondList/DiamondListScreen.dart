@@ -1,7 +1,8 @@
-import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
@@ -24,10 +25,13 @@ class DiamondListScreen extends StatefulScreenWidget {
 
 class _DiamondListScreenState extends StatefulScreenWidgetState {
   String filterId;
+
   _DiamondListScreenState({this.filterId});
+
   BaseList diamondList;
   List<DiamondModel> arraDiamond = List<DiamondModel>();
   int page = DEFAULT_PAGE;
+
   @override
   void initState() {
     super.initState();
@@ -65,31 +69,61 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     filterReq.limit = DEFAULT_LIMIT;
     Filters filter = Filters();
     filter.diamondSearchId = filterId;
-
-    SyncManager.instance.callApiForDiamondList(context, filterReq,
-        (diamondListResp) {
+    NetworkCall<DiamondListResp>()
+        .makeCall(
+      () =>
+          app.resolve<ServiceModule>().networkService().diamondList(filterReq),
+      context,
+      isProgress: !isRefress && !isLoading,
+    )
+        .then((diamondListResp) async {
       arraDiamond.addAll(diamondListResp.data.diamonds);
       diamondList.state.listCount = arraDiamond.length;
       diamondList.state.totalCount = diamondListResp.data.count;
-      fillArrayList();
       page = page + 1;
+      fillArrayList();
+
       diamondList.state.setApiCalling(false);
-    }, (onError) {
-      print("erorrr..." + onError);
+    }).catchError((onError) {
       if (isRefress) {
         arraDiamond.clear();
         diamondList.state.listCount = arraDiamond.length;
         diamondList.state.totalCount = arraDiamond.length;
       }
       diamondList.state.setApiCalling(false);
-    }, isProgress: !isRefress && !isLoading);
+      print("error ${onError.toString()}");
+    });
+//    SyncManager.instance.callApiForDiamondList(context, filterReq,
+//        (diamondListResp) {
+//      arraDiamond.addAll(diamondListResp.data.diamonds);
+//      diamondList.state.listCount = arraDiamond.length;
+//      diamondList.state.totalCount = diamondListResp.data.count;
+//      fillArrayList();
+//      page = page + 1;
+//      diamondList.state.setApiCalling(false);
+//    }, (onError) {
+//      print("erorrr..." + onError);
+//      if (isRefress) {
+//        arraDiamond.clear();
+//        diamondList.state.listCount = arraDiamond.length;
+//        diamondList.state.totalCount = arraDiamond.length;
+//      }
+//      diamondList.state.setApiCalling(false);
+//    }, isProgress: !isRefress && !isLoading);
   }
 
   fillArrayList() {
     diamondList.state.listItems = ListView.builder(
       itemCount: arraDiamond.length,
       itemBuilder: (context, index) {
-        return DiamondItemWidget();
+        return InkWell(
+          onTap: (){
+            setState(() {
+            });
+          },
+            child: DiamondItemWidget(
+          item: arraDiamond[index],
+        ));
       },
     );
   }

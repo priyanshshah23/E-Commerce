@@ -318,87 +318,7 @@ class DiamondModel {
   String isCm;
   String fcColDesc;
   num ratio;
-
-  DiamondModel(
-      {this.id,
-      this.stoneId,
-      this.wSts,
-      this.sSts,
-      this.rptNo,
-      this.certFile,
-      this.videoFile,
-      this.hAFile,
-      this.clrNm,
-      this.colNm,
-      this.lbCmt,
-      this.cAng,
-      this.cHgt,
-      this.cultNm,
-      this.cutNm,
-      this.depPer,
-      this.img,
-      this.eClnNm,
-      this.isFcCol,
-      this.fluNm,
-      this.grdlPer,
-      this.grdlThnNm,
-      this.grdlThkNm,
-      this.grdlCondNm,
-      this.kToSArr,
-      this.kToSStr,
-      this.lbNm,
-      this.msrmnt,
-      this.length,
-      this.width,
-      this.height,
-      this.pAng,
-      this.pHgt,
-      this.polNm,
-      this.rap,
-      this.crt,
-      this.back,
-      this.ctPr,
-      this.amt,
-      this.shpNm,
-      this.shdNm,
-      this.strLn,
-      this.symNm,
-      this.tblPer,
-      this.pktType,
-      this.hANm,
-      this.vStnId,
-      this.locNm,
-      this.lwrHal,
-      this.org,
-      this.blkTblNm,
-      this.blkSdNm,
-      this.wTblNm,
-      this.wSdNm,
-      this.opCrwnNm,
-      this.opPavNm,
-      this.opTblNm,
-      this.isDor,
-      this.type2,
-      this.mines,
-      this.isSeal,
-      this.inDt,
-      this.brlncyNm,
-      this.isXray,
-      this.arrowFile,
-      this.assetFile,
-      this.hA,
-      this.loc,
-      this.girdleStr,
-      this.legendStatus,
-      this.countryCode,
-      this.lsrInc,
-      this.city,
-      this.country,
-      this.state,
-      this.fluColNm,
-      this.isCm,
-      this.fcColDesc,
-      this.ratio});
+  bool isSelected;
 
   DiamondModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -480,6 +400,11 @@ class DiamondModel {
     isCm = json['isCm'];
     fcColDesc = json['fcColDesc'];
     ratio = json['ratio'];
+//    isSelected = json['isSelected'];
+  }
+
+  DiamondModel({bool isSelected = false}){
+    this.isSelected = isSelected;
   }
 
   Map<String, dynamic> toJson() {
@@ -563,6 +488,7 @@ class DiamondModel {
     data['isCm'] = this.isCm;
     data['fcColDesc'] = this.fcColDesc;
     data['ratio'] = this.ratio;
+//    data['isSelected'] = this.isSelected;
     return data;
   }
 }

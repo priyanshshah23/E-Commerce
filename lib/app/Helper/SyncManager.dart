@@ -90,7 +90,7 @@ class SyncManager {
     Function failure, {
     bool isProgress = true,
   }) async {
-    NetworkCall<BaseApiResp>()
+    NetworkCall<DiamondListResp>()
         .makeCall(
             () =>
                 app.resolve<ServiceModule>().networkService().diamondList(req),
