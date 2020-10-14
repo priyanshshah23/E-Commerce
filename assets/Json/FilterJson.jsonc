@@ -5,8 +5,8 @@
     "allLableTitle": "All Shapes",
     "apiKey": "shape",
     "masterCode": "SHAPE",
-    "verticalScroll": false,
-    "orientation": "horizontal",
+    "verticalScroll": true,
+    "orientation": "vertical",
     "isShowAll": true,
     "isShowMore": true,
     "tab": "basic",
@@ -56,7 +56,7 @@
     "title": "Color Shade",
     "desc": "Desc",
     "viewType": "selection",
-    "allLableTitle": "All Shapes",
+    "allLableTitle": "All",
     "apiKey": "colorShade",
     "masterCode": "SHADE",
     "verticalScroll": false,
@@ -201,6 +201,23 @@
     "sequence": 10,
     "masterSelection": [
       {
+        "code": "2EX",
+        "masterToSelect": [
+          {
+            "code": "CUT",
+            "subMasters": [
+              "EX"
+            ]
+          },
+          {
+            "code": "POLISH",
+            "subMasters": [
+              "EX"
+            ]
+          }
+        ]
+      },
+      {
         "code": "3EX",
         "masterToSelect": [
           {
@@ -224,7 +241,7 @@
         ]
       },
       {
-        "code": "3EX-NON",
+        "code": "3VG+",
         "masterToSelect": [
           {
             "code": "CUT",
@@ -245,6 +262,24 @@
             "subMasters": [
               "EX",
               "VG"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "NoBGM",
+        "masterToSelect": [
+          {
+            "code": "SHADE",
+            "subMasters": [
+              "YEL",
+              "WHT"
+            ]
+          },
+          {
+            "code": "MILKEY",
+            "subMasters": [
+              "NONE"
             ]
           }
         ]
@@ -926,8 +961,8 @@
     "masterCode": "KEY_TO_SYMBOLS",
     "verticalScroll": false,
     "orientation": "vertical",
-    "isShowAll": false,
-    "isShowMore": false,
+    "isShowAll": true,
+    "isShowMore": true,
     "tab": "advance",
     "sequence": 10
   },

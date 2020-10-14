@@ -15,7 +15,7 @@ class ShapeWidget extends StatefulWidget {
 
 class _ShapeWidgetState extends State<ShapeWidget> {
   //show when isShowMoreSelected=false;
-  int elementsToShow = 7;
+  int elementsToShow = 11;
   List<Master> listOfMasterView = [];
 
   @override
