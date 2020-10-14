@@ -107,7 +107,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
 //      screen = MyHomePage();
 //      break;
     case DiamondListScreen.route:
-      screen = DiamondListScreen();
+      screen = DiamondListScreen(arguments);
       break;
   }
 

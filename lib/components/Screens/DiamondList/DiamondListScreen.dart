@@ -11,13 +11,20 @@ import 'package:flutter/material.dart';
 class DiamondListScreen extends StatefulScreenWidget {
   static const route = "Diamond List Screen";
 
+  String filterId;
+
+  DiamondListScreen(Map<String, dynamic> arguments) {
+    this.filterId = arguments["filterId"];
+  }
+
   @override
-  _DiamondListScreenState createState() => _DiamondListScreenState();
+  _DiamondListScreenState createState() => _DiamondListScreenState(filterId: filterId);
 }
 
 class _DiamondListScreenState extends StatefulScreenWidgetState {
-  BaseList diamondList;
   String filterId;
+_DiamondListScreenState({this.filterId});
+  BaseList diamondList;
   List<DiamondModel> arraDiamond = List<DiamondModel>();
   int page = DEFAULT_PAGE;
   @override
@@ -42,27 +49,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       },
     ));
     WidgetsBinding.instance.addPostFrameCallback((_) {
-       callApiForGetFilterId();
        callApi(false);
     });
   }
 
-  callApiForGetFilterId() {
-    DiamondListReq req = DiamondListReq();
-    req.isNotReturnTotal = true;
-    req.isReturnCountOnly = true;
-    SyncManager.instance.callApiForDiamondList(
-      context,
-      req,
-      (diamondListResp) {
-        filterId = diamondListResp.data.filter.id;
-        diamondList.state.setApiCalling(false);
-      },
-      (onError) {
-        //print("Error");
-      },
-    );
-  }
 
   callApi(bool isRefress, {bool isLoading = false}) {
     if(isRefress){

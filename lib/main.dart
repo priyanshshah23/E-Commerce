@@ -20,12 +20,10 @@ TextDirection deviceTextDirection = TextDirection.ltr;
 
 main() {
   WidgetsFlutterBinding.ensureInitialized();
-  print('debug ;; ${kDebugMode}');
   if (kDebugMode) {
     rootBundle
         .load('assets/chls.pem')
         .then((value){
-          print('value :: ${value}');
               if (value != null)
                 {
                   SecurityContext.defaultContext

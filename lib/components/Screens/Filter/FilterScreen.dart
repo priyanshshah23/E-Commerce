@@ -1,6 +1,10 @@
+import 'dart:collection';
+
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 
 import 'package:diamnow/components/Screens/Filter/Widget/CertNoWidget.dart';
 
@@ -9,8 +13,10 @@ import 'package:diamnow/components/Screens/Filter/Widget/CaratRangeWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/FromToWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SeperatorWidget.dart';
+import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
+import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/FilterModel/TabModel.dart';
 import 'package:diamnow/modules/Filter/gridviewlist/KeyToSymbol.dart';
@@ -32,6 +38,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   List<TabModel> arrTab = [];
   List<FormBaseModel> arrList = [];
   List<BottomTabModel> arrBottomTab;
+  String filterId;
 
   @override
   void initState() {
@@ -181,6 +188,23 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     }
   }
 
+
+  callApiForGetFilterId() {
+    DiamondListReq req = DiamondListReq();
+    req.isNotReturnTotal = true;
+    req.isReturnCountOnly = true;
+    SyncManager.instance.callApiForDiamondList(
+      context,
+      req,
+          (diamondListResp) {
+        filterId = diamondListResp.data.filter.id;
+      },
+          (onError) {
+        //print("Error");
+      },
+    );
+  }
+
   Widget _segmentedControl() {
     return Container(
       width: MathUtilities.screenWidth(context),
@@ -318,6 +342,15 @@ class _FilterItemState extends State<FilterItem> {
             top: getSize(8.0),
             bottom: getSize(8)),
         child: CaratRangeWidget(model),
+      );
+    } else if (model.viewType == ViewTypes.shapeWidget) {
+      return Padding(
+        padding: EdgeInsets.only(
+            left: getSize(16),
+            right: getSize(16),
+            top: getSize(8.0),
+            bottom: getSize(8)),
+        child: ShapeWidget(model),
       );
     }
   }

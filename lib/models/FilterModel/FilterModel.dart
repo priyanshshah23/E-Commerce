@@ -36,6 +36,12 @@ class Config {
         String viewType = element["viewType"];
         if (viewType == ViewTypes.fromTo) {
           formModels.add(FromToModel.fromJson(element));
+        } else if (viewType == ViewTypes.shapeWidget) {
+          SelectionModel selectionModel = SelectionModel.fromJson(element);
+          formModels.add(selectionModel);
+          List<Master> arrMaster =
+              await Master.getSubMaster(selectionModel.masterCode);
+          selectionModel.masters = arrMaster;
         } else if (viewType == ViewTypes.selection) {
           SelectionModel selectionModel = SelectionModel.fromJson(element);
           formModels.add(selectionModel);
