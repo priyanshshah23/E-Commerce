@@ -36,6 +36,12 @@ class Config {
         String viewType = element["viewType"];
         if (viewType == ViewTypes.fromTo) {
           formModels.add(FromToModel.fromJson(element));
+        } else if (viewType == ViewTypes.shapeWidget) {
+          SelectionModel selectionModel = SelectionModel.fromJson(element);
+          formModels.add(selectionModel);
+          List<Master> arrMaster =
+              await Master.getSubMaster(selectionModel.masterCode);
+          selectionModel.masters = arrMaster;
         } else if (viewType == ViewTypes.selection) {
           SelectionModel selectionModel = SelectionModel.fromJson(element);
           formModels.add(selectionModel);
@@ -71,6 +77,13 @@ class Config {
     }
     return formModels;
   }
+
+  // getFilterReq(List<FormBaseModel> formModels) {
+  //   if (formModels[0].viewType == ViewTypes.certNo) {
+  //     //
+  //     (List<FormBaseModel> formModels[0] is CertNoModel).
+  //   }
+  // }
 }
 
 class FormBaseModel {
@@ -160,6 +173,7 @@ class SeperatorModel extends SelectionModel {
 
 class CertNoModel extends FormBaseModel {
   List<RadioButton> radiobutton = [];
+  String text;
 
   CertNoModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     if (json['radiobutton'] != null) {

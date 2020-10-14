@@ -58,6 +58,7 @@ class SizeMasterDao {
   Future<List<Master>> getSubMasterFromCode() async {
     // Finder object can also sort data.
     final finder = Finder(
+      filter: Filter.equal('sizeCategory', '0'),
       sortOrders: [
         SortOrder('sortingSequence'),
       ],
@@ -78,9 +79,13 @@ class SizeMasterDao {
     if (arrMaster.length > 0) {
       final finder2 = Finder(
         filter: Filter.and([
+          Filter.equal('sizeCategory', '0'),
           Filter.equal('isDeleted', false),
           Filter.equal('isActive', true),
         ]),
+        sortOrders: [
+          SortOrder('sortingSequence'),
+        ],
       );
 
       final subRecordSnapshots = await _masterStore.find(
