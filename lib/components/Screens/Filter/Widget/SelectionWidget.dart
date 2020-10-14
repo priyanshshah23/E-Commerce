@@ -224,6 +224,34 @@ class _TagWidgetState extends State<TagWidget> {
     );
   }
 
+  getMultipleMasterSelections(int index) {
+    //When Local data has added and multilple master has to select
+    if (widget.model.isSingleSelection) {
+      for (var item in widget.model.masters) {
+        if (widget.model.masters[index].code != "NoBGM") {
+          if (item != widget.model.masters[index]) {
+            item.isSelected = false;
+          }
+        }
+      }
+
+      if (!isNullEmptyOrFalse(widget.model.masterSelection)) {
+        Map<MasterSelection, bool> m = Map<MasterSelection, bool>();
+        m[widget.model.masterSelection[index]] =
+            widget.model.masters[index].isSelected;
+
+        RxBus.post(m, tag: eventMasterSelection);
+      }
+    } else {
+      if (widget.model.masterCode == MasterCode.cut ||
+          widget.model.masterCode == MasterCode.polish ||
+          widget.model.masterCode == MasterCode.symmetry) {
+        RxBus.post(false, tag: eventMasterForDeSelectMake);
+      }
+      onSelectionClick(index);
+    }
+  }
+
   void onSelectionClick(int index) {
     if (widget.model.isShowAll == true) {
       if (widget.model.masters[index].sId == widget.model.allLableTitle) {
@@ -255,32 +283,6 @@ class _TagWidgetState extends State<TagWidget> {
           }
         }
       }
-    }
-  }
-
-  getMultipleMasterSelections(int index) {
-    //When Local data has added and multilple master has to select
-    if (widget.model.isSingleSelection) {
-      for (var item in widget.model.masters) {
-        if (item != widget.model.masters[index]) {
-          item.isSelected = false;
-        }
-      }
-
-      if (!isNullEmptyOrFalse(widget.model.masterSelection)) {
-        Map<MasterSelection, bool> m = Map<MasterSelection, bool>();
-        m[widget.model.masterSelection[index]] =
-            widget.model.masters[index].isSelected;
-
-        RxBus.post(m, tag: eventMasterSelection);
-      }
-    } else {
-      if (widget.model.masterCode == MasterCode.cut ||
-          widget.model.masterCode == MasterCode.polish ||
-          widget.model.masterCode == MasterCode.symmetry) {
-        RxBus.post(false, tag: eventMasterForDeSelectMake);
-      }
-      onSelectionClick(index);
     }
   }
 }

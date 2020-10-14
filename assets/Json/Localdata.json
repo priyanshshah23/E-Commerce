@@ -10,6 +10,16 @@
         "parentId": null
     },
     {
+        "id": "2EX",
+        "code": "2EX",
+        "webDisplay": "2EX",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentCode": "MAKE",
+        "parentId": "123123123"
+    },
+    {
         "id": "3EX",
         "code": "3EX",
         "webDisplay": "3EX",
@@ -20,9 +30,19 @@
         "parentId": "123123123"
     },
     {
-        "id": "3EX-NON",
-        "code": "3EX-NON",
-        "webDisplay": "3EX-NON",
+        "id": "3VG+",
+        "code": "3VG+",
+        "webDisplay": "3VG+",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 2,
+        "parentCode": "MAKE",
+        "parentId": "123123123"
+    },
+    {
+        "id": "NoBGM",
+        "code": "NoBGM",
+        "webDisplay": "No BGM",
         "isActive": true,
         "isDeleted": false,
         "sortingSequence": 2,
@@ -63,7 +83,7 @@
         "webDisplay": "15 day",
         "isActive": true,
         "isDeleted": false,
-        "sortingSequence": 1,
+        "sortingSequence": 3,
         "parentId": "456456456"
     },
     {
@@ -72,7 +92,7 @@
         "webDisplay": "30 day",
         "isActive": true,
         "isDeleted": false,
-        "sortingSequence": 2,
+        "sortingSequence": 4,
         "parentId": "456456456"
     },
     {
