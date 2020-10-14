@@ -45,7 +45,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {  
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
