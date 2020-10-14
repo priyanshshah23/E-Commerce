@@ -71,6 +71,13 @@ class Config {
     }
     return formModels;
   }
+
+  // getFilterReq(List<FormBaseModel> formModels) {
+  //   if (formModels[0].viewType == ViewTypes.certNo) {
+  //     //
+  //     (List<FormBaseModel> formModels[0] is CertNoModel).
+  //   }
+  // }
 }
 
 class FormBaseModel {
@@ -160,6 +167,7 @@ class SeperatorModel extends SelectionModel {
 
 class CertNoModel extends FormBaseModel {
   List<RadioButton> radiobutton = [];
+  String text;
 
   CertNoModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     if (json['radiobutton'] != null) {
