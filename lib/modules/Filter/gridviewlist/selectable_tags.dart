@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:diamnow/app/Helper/Themehelper.dart';
 import 'package:flutter/material.dart';
 
-
 //Used in keyToSymbol widget.
 // ---------------------------
 
@@ -237,14 +236,7 @@ class _SelectableTagsState extends State<SelectableTags> {
               height: widget.height ?? 31 * (widget.fontSize / 14),
               padding: EdgeInsets.all(0.0),
               decoration: BoxDecoration(
-                boxShadow: widget.boxShadow ??
-                    [
-                      BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          spreadRadius: 0.5,
-                          blurRadius: 4,
-                          offset: Offset(0, 1))
-                    ],
+                boxShadow: widget.boxShadow ?? null,
                 borderRadius: BorderRadius.circular(
                     widget.borderRadius ?? _initBorderRadius),
                 color: tag.active
@@ -258,7 +250,9 @@ class _SelectableTagsState extends State<SelectableTags> {
                   highlightColor: Colors.transparent,
                   highlightedBorderColor: widget.activeColor ?? Colors.blueGrey,
                   //disabledTextColor: Colors.red,
-                  borderSide: tag.active?BorderSide(color: appTheme.colorPrimary):null,
+                  borderSide: tag.active
+                      ? BorderSide(color: appTheme.colorPrimary)
+                      : null,
                   // borderSide: widget.borderSide ??
                   //     BorderSide(
                   //         color: (widget.activeColor ?? Colors.blueGrey)),

@@ -165,6 +165,71 @@
     "rightPadding": 0
   },
   {
+    "title": "Make",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "isSingleSelection": true,
+    "apiKey": "",
+    "masterCode": "MAKE",
+    "verticalScroll": false,
+    "orientation": "horizontal",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 10,
+    "masterSelection": [
+      {
+        "code": "3EX",
+        "masterToSelect": [
+          {
+            "code": "CUT",
+            "subMasters": [
+              "EX"
+            ]
+          },
+          {
+            "code": "POLISH",
+            "subMasters": [
+              "EX"
+            ]
+          },
+          {
+            "code": "SYMMETRY",
+            "subMasters": [
+              "EX"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "3EX-NON",
+        "masterToSelect": [
+          {
+            "code": "CUT",
+            "subMasters": [
+              "EX",
+              "VG"
+            ]
+          },
+          {
+            "code": "POLISH",
+            "subMasters": [
+              "EX",
+              "VG"
+            ]
+          },
+          {
+            "code": "SYMMETRY",
+            "subMasters": [
+              "EX",
+              "VG"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "title": "Cut",
     "viewType": "selection",
     "allLableTitle": "All",

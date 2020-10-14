@@ -1,0 +1,32 @@
+[
+    {
+        "id": "123123123",
+        "code": "MAKE",
+        "webDisplay": "MAKE",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentCode": "MAKE1",
+        "parentId": null
+    },
+    {
+        "id": "3EX",
+        "code": "3EX",
+        "webDisplay": "3EX",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentCode": "MAKE",
+        "parentId": "123123123"
+    },
+    {
+        "id": "3EX-NON",
+        "code": "3EX-NON",
+        "webDisplay": "3EX-NON",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 2,
+        "parentCode": "MAKE",
+        "parentId": "123123123"
+    }
+]

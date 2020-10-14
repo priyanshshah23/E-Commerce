@@ -10,6 +10,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class Config {
+  Future<List<Master>> getLocalDataJson() async {
+    String jsonForm = await rootBundle.loadString('assets/Json/Localdata.json');
+
+    List<dynamic> fieldList = jsonDecode(jsonForm);
+    List<Master> masters = [];
+    for (int i = 0; i < fieldList.length; i++) {
+      dynamic element = fieldList[i];
+      if (element is Map<String, dynamic>) {
+        masters.add(Master.fromJson(element));
+      }
+    }
+    return masters;
+  }
+
   Future<List<TabModel>> getTabJson() async {
     String jsonForm = await rootBundle.loadString('assets/Json/TabJson.json');
 
@@ -134,6 +148,9 @@ class SelectionModel extends FormBaseModel {
   bool isShowMoreSelected = true;
   String allLableTitle;
   FromToStyle fromToStyle;
+  bool isSingleSelection;
+  List<MasterSelection> masterSelection;
+
   SelectionModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     verticalScroll = json["verticalScroll"] ?? false;
     orientation = json["orientation"];
@@ -144,6 +161,13 @@ class SelectionModel extends FormBaseModel {
     fromToStyle = json['fromToStyle'] != null
         ? new FromToStyle.fromJson(json['fromToStyle'])
         : null;
+    isSingleSelection = json["isSingleSelection"] ?? false;
+    if (json['masterSelection'] != null) {
+      masterSelection = new List<MasterSelection>();
+      json['masterSelection'].forEach((v) {
+        masterSelection.add(new MasterSelection.fromJson(v));
+      });
+    }
   }
 }
 
@@ -220,5 +244,51 @@ class RadioButton {
     title = json['title'] ?? "";
     isSelected = json['isSelected'] ?? false;
     apiKey = json['apiKey'];
+  }
+}
+
+class MasterSelection {
+  String code;
+  List<MasterToSelect> masterToSelect;
+
+  MasterSelection({this.code, this.masterToSelect});
+
+  MasterSelection.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+    if (json['masterToSelect'] != null) {
+      masterToSelect = new List<MasterToSelect>();
+      json['masterToSelect'].forEach((v) {
+        masterToSelect.add(new MasterToSelect.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['code'] = this.code;
+    if (this.masterToSelect != null) {
+      data['masterToSelect'] =
+          this.masterToSelect.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class MasterToSelect {
+  String code;
+  List<String> subMasters;
+
+  MasterToSelect({this.code, this.subMasters});
+
+  MasterToSelect.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+    subMasters = json['subMasters'].cast<String>();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['code'] = this.code;
+    data['subMasters'] = this.subMasters;
+    return data;
   }
 }
