@@ -1,4 +1,5 @@
 import 'package:diamnow/app/constant/EnumConstant.dart';
+import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
@@ -6,6 +7,7 @@ import 'package:diamnow/models/Master/Master.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:diamnow/app/app.export.dart';
+import 'package:rxbus/rxbus.dart';
 
 class SelectionWidget extends StatefulWidget {
   SelectionModel selectionModel;
@@ -136,7 +138,7 @@ class _TagWidgetState extends State<TagWidget> {
                       widget.model.masters[index].isSelected =
                           !widget.model.masters[index].isSelected;
 
-                      onSelectionClick(index);
+                      getMultipleMasterSelections(index);
                     });
                   },
                 );
@@ -253,6 +255,32 @@ class _TagWidgetState extends State<TagWidget> {
           }
         }
       }
+    }
+  }
+
+  getMultipleMasterSelections(int index) {
+    //When Local data has added and multilple master has to select
+    if (widget.model.isSingleSelection) {
+      for (var item in widget.model.masters) {
+        if (item != widget.model.masters[index]) {
+          item.isSelected = false;
+        }
+      }
+
+      if (!isNullEmptyOrFalse(widget.model.masterSelection)) {
+        Map<MasterSelection, bool> m = Map<MasterSelection, bool>();
+        m[widget.model.masterSelection[index]] =
+            widget.model.masters[index].isSelected;
+
+        RxBus.post(m, tag: eventMasterSelection);
+      }
+    } else {
+      if (widget.model.masterCode == MasterCode.cut ||
+          widget.model.masterCode == MasterCode.polish ||
+          widget.model.masterCode == MasterCode.symmetry) {
+        RxBus.post(false, tag: eventMasterForDeSelectMake);
+      }
+      onSelectionClick(index);
     }
   }
 }
