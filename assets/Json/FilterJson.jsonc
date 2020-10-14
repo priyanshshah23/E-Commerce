@@ -961,8 +961,8 @@
     "masterCode": "KEY_TO_SYMBOLS",
     "verticalScroll": false,
     "orientation": "vertical",
-    "isShowAll": false,
-    "isShowMore": false,
+    "isShowAll": true,
+    "isShowMore": true,
     "tab": "advance",
     "sequence": 10
   },
