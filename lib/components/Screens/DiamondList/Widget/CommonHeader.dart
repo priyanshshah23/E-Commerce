@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 class DiamondListHeader extends StatefulWidget {
   num carat = 0;
-  DiamondListHeader({this.carat});
+  num pcs = 0;
+  DiamondListHeader({this.pcs,this.carat});
 
   @override
   _DiamondListHeaderState createState() => _DiamondListHeaderState();
@@ -18,7 +19,7 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
       child: Row(
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          getColumn("0", "Pcs"),
+          getColumn(widget.pcs.toString(), "Pcs"),
           getColumn(widget.carat.toStringAsFixed(2), "Cts"),
           getColumn("0", "Disc %"),
           Expanded(
@@ -43,6 +44,7 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
       child: Column(
         children: <Widget>[
           getDetailText(text),
+          SizedBox(height: getSize(5),),
           getLableText(lable),
         ],
       ),
@@ -60,7 +62,7 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
   getDetailText(String text) {
     return Text(
       text,
-      style: appTheme.black16TextStyle,
+      style: appTheme.blue14TextStyle,
     );
   }
 
@@ -68,7 +70,7 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
     return Text(
       text,
       style: appTheme.black16TextStyle.copyWith(
-        fontSize: getFontSize(11)
+        fontSize: getFontSize(12)
       ),
     );
   }
