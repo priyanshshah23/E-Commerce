@@ -77,15 +77,15 @@ class _CertNoWidgetState extends State<CertNoWidget> {
         filled: true,
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(getSize(6))),
-          borderSide: BorderSide(color: ColorConstants.borderColor, width: 1),
+          borderSide: BorderSide(color: appTheme.borderColor, width: 1),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(getSize(6))),
-          borderSide: BorderSide(color: ColorConstants.borderColor, width: 1),
+          borderSide: BorderSide(color: appTheme.borderColor, width: 1),
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(getSize(6))),
-          borderSide: BorderSide(color: ColorConstants.borderColor, width: 1),
+          borderSide: BorderSide(color: appTheme.borderColor, width: 1),
         ),
         hintStyle: appTheme.grey14HintTextStyle,
         hintText: widget.certNoModel.title,
@@ -107,7 +107,7 @@ class _CertNoWidgetState extends State<CertNoWidget> {
           value: index,
           groupValue: _radioValue,
           onChanged: onClick,
-          activeColor: ColorConstants.colorPrimary,
+          activeColor: appTheme.colorPrimary,
         ),
         Text(
           model.title,
