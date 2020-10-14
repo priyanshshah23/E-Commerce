@@ -1,3 +1,4 @@
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
@@ -31,6 +32,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   BaseList diamondList;
   List<DiamondModel> arraDiamond = List<DiamondModel>();
   int page = DEFAULT_PAGE;
+  num avgCarat;
 
   @override
   void initState() {
@@ -69,47 +71,26 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     filterReq.limit = DEFAULT_LIMIT;
     Filters filter = Filters();
     filter.diamondSearchId = filterId;
-    NetworkCall<DiamondListResp>()
-        .makeCall(
-      () =>
-          app.resolve<ServiceModule>().networkService().diamondList(filterReq),
-      context,
-      isProgress: !isRefress && !isLoading,
-    )
-        .then((diamondListResp) async {
+    filterReq.filters = filter;
+    SyncManager.instance.callApiForDiamondList(context, filterReq,
+        (diamondListResp) {
       arraDiamond.addAll(diamondListResp.data.diamonds);
+      avgCarat = arraDiamond.map((m) => m.crt).reduce((a, b) => a + b) / arraDiamond.length;
+      print("average ${avgCarat}");
       diamondList.state.listCount = arraDiamond.length;
       diamondList.state.totalCount = diamondListResp.data.count;
-      page = page + 1;
       fillArrayList();
-
+      page = page + 1;
       diamondList.state.setApiCalling(false);
-    }).catchError((onError) {
+    }, (onError) {
+      print("erorrr..." + onError);
       if (isRefress) {
         arraDiamond.clear();
         diamondList.state.listCount = arraDiamond.length;
         diamondList.state.totalCount = arraDiamond.length;
       }
       diamondList.state.setApiCalling(false);
-      print("error ${onError.toString()}");
-    });
-//    SyncManager.instance.callApiForDiamondList(context, filterReq,
-//        (diamondListResp) {
-//      arraDiamond.addAll(diamondListResp.data.diamonds);
-//      diamondList.state.listCount = arraDiamond.length;
-//      diamondList.state.totalCount = diamondListResp.data.count;
-//      fillArrayList();
-//      page = page + 1;
-//      diamondList.state.setApiCalling(false);
-//    }, (onError) {
-//      print("erorrr..." + onError);
-//      if (isRefress) {
-//        arraDiamond.clear();
-//        diamondList.state.listCount = arraDiamond.length;
-//        diamondList.state.totalCount = arraDiamond.length;
-//      }
-//      diamondList.state.setApiCalling(false);
-//    }, isProgress: !isRefress && !isLoading);
+    }, isProgress: !isRefress && !isLoading);
   }
 
   fillArrayList() {
@@ -130,6 +111,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   @override
   Widget build(BuildContext context) {
+    print("carat..... ${avgCarat}");
     return SafeArea(
       child: Scaffold(
         backgroundColor: appTheme.whiteColor,
@@ -145,7 +127,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               left: getSize(20), right: getSize(20), top: getSize(20)),
           child: Column(
             children: <Widget>[
-              DiamondListHeader(),
+              DiamondListHeader(carat: avgCarat,),
               SizedBox(
                 height: getSize(20),
               ),
