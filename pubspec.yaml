@@ -93,7 +93,7 @@ flutter:
     - assets/shape/
     - assets/filter/
     # - assets/chls/hochls.pem
-    # - assets/chls.pem
+    - assets/chls.pem
 
 
   fonts:

@@ -250,16 +250,16 @@ class DiamondModel {
   String clrNm;
   String colNm;
   String lbCmt;
-  double cAng;
-  double cHgt;
+  num cAng;
+  num cHgt;
   String cultNm;
   String cutNm;
-  double depPer;
+  num depPer;
   bool img;
   String eClnNm;
   bool isFcCol;
   String fluNm;
-  double grdlPer;
+  num grdlPer;
   String grdlThnNm;
   String grdlThkNm;
   String grdlCondNm;
@@ -267,22 +267,22 @@ class DiamondModel {
   String kToSStr;
   String lbNm;
   String msrmnt;
-  double length;
-  double width;
-  double height;
-  double pAng;
-  double pHgt;
+  num length;
+  num width;
+  num height;
+  num pAng;
+  num pHgt;
   String polNm;
   int rap;
-  double crt;
-  double back;
-  double ctPr;
-  double amt;
+  num crt;
+  num back;
+  num ctPr;
+  num amt;
   String shpNm;
   String shdNm;
-  double strLn;
+  num strLn;
   String symNm;
-  double tblPer;
+  num tblPer;
   String pktType;
   String hANm;
   String vStnId;
@@ -317,88 +317,8 @@ class DiamondModel {
   String fluColNm;
   String isCm;
   String fcColDesc;
-  double ratio;
-
-  DiamondModel(
-      {this.id,
-      this.stoneId,
-      this.wSts,
-      this.sSts,
-      this.rptNo,
-      this.certFile,
-      this.videoFile,
-      this.hAFile,
-      this.clrNm,
-      this.colNm,
-      this.lbCmt,
-      this.cAng,
-      this.cHgt,
-      this.cultNm,
-      this.cutNm,
-      this.depPer,
-      this.img,
-      this.eClnNm,
-      this.isFcCol,
-      this.fluNm,
-      this.grdlPer,
-      this.grdlThnNm,
-      this.grdlThkNm,
-      this.grdlCondNm,
-      this.kToSArr,
-      this.kToSStr,
-      this.lbNm,
-      this.msrmnt,
-      this.length,
-      this.width,
-      this.height,
-      this.pAng,
-      this.pHgt,
-      this.polNm,
-      this.rap,
-      this.crt,
-      this.back,
-      this.ctPr,
-      this.amt,
-      this.shpNm,
-      this.shdNm,
-      this.strLn,
-      this.symNm,
-      this.tblPer,
-      this.pktType,
-      this.hANm,
-      this.vStnId,
-      this.locNm,
-      this.lwrHal,
-      this.org,
-      this.blkTblNm,
-      this.blkSdNm,
-      this.wTblNm,
-      this.wSdNm,
-      this.opCrwnNm,
-      this.opPavNm,
-      this.opTblNm,
-      this.isDor,
-      this.type2,
-      this.mines,
-      this.isSeal,
-      this.inDt,
-      this.brlncyNm,
-      this.isXray,
-      this.arrowFile,
-      this.assetFile,
-      this.hA,
-      this.loc,
-      this.girdleStr,
-      this.legendStatus,
-      this.countryCode,
-      this.lsrInc,
-      this.city,
-      this.country,
-      this.state,
-      this.fluColNm,
-      this.isCm,
-      this.fcColDesc,
-      this.ratio});
+  num ratio;
+  bool isSelected;
 
   DiamondModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -480,6 +400,11 @@ class DiamondModel {
     isCm = json['isCm'];
     fcColDesc = json['fcColDesc'];
     ratio = json['ratio'];
+//    isSelected = json['isSelected'];
+  }
+
+  DiamondModel({bool isSelected = false}){
+    this.isSelected = isSelected;
   }
 
   Map<String, dynamic> toJson() {
@@ -563,6 +488,7 @@ class DiamondModel {
     data['isCm'] = this.isCm;
     data['fcColDesc'] = this.fcColDesc;
     data['ratio'] = this.ratio;
+//    data['isSelected'] = this.isSelected;
     return data;
   }
 }

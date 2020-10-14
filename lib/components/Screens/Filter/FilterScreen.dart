@@ -179,6 +179,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                         BottomCodeConstant.search) {
                       //
                       print(arrBottomTab[i].code);
+                      callApiForGetFilterId();
                     } else if (arrBottomTab[i].code ==
                         BottomCodeConstant.saveAndSearch) {
                       //
@@ -251,7 +252,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       context,
       req,
       (diamondListResp) {
-        filterId = diamondListResp.data.filter.id;
+        Map<String, dynamic> dict = new HashMap();
+        dict["filterId"] = diamondListResp.data.filter.id;
+        NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
       },
       (onError) {
         //print("Error");
