@@ -13,3 +13,10 @@ const String plusIcon = "assets/diamnow/plusIcon.png";
 
 const String selectedCheckbox = "assets/auth/checkbox.png";
 const String unSelectedCheckbox = "assets/auth/unselectedcheckbox.png";
+
+//filter
+const String addDemand = "assets/filter/addDemand.png";
+const String matchPair = "assets/filter/matchPair.png";
+const String saveAndSearch = "assets/filter/saveAndSearch.png";
+const String savedSearch = "assets/filter/savedSearch.png";
+const String search = "assets/filter/search.png";
