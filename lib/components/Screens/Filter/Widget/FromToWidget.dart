@@ -177,6 +177,9 @@ class _FromToWidgetState extends State<FromToWidget> {
 
   getToTextField() {
     return TextField(
+      textAlign: widget.fromTomodel.fromToStyle.showUnderline
+          ? TextAlign.left
+          : TextAlign.center,
       onChanged: (value) {
         if (value != null || value != "") {
           if (num.parse(value) < widget.fromTomodel.minValue ||

@@ -37,7 +37,7 @@ class _SplashState extends State<Splash> {
   }
 
   Future openNextScreen() async {
-   NavigationUtilities.pushRoute(FilterScreen.route);
+  //  NavigationUtilities.pushRoute(FilterScreen.route);
   // KeyToSymbol keyToSymbol = KeyToSymbol.fromJson();
   // NavigationUtilities.push(KeyToSymbolWidget(keyToSymbol));
 
