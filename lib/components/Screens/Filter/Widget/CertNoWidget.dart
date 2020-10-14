@@ -88,12 +88,15 @@ class _CertNoWidgetState extends State<CertNoWidget> {
           borderSide: BorderSide(color: ColorConstants.borderColor, width: 1),
         ),
         hintStyle: appTheme.grey14HintTextStyle,
-        hintText: "Search, Enter Comma for Multiple Stone ID",
+        hintText: widget.certNoModel.title,
       ),
       onFieldSubmitted: (String text) {
+        widget.certNoModel.text = _stoneIdController.text.trim();
         FocusScope.of(context).unfocus();
       },
-      onChanged: (String text) {},
+      onChanged: (String text) {
+        widget.certNoModel.text = _stoneIdController.text.trim();
+      },
     );
   }
 
