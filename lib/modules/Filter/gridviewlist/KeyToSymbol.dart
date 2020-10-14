@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 
 class KeyToSymbolWidget extends StatefulWidget {
   final KeyToSymbolModel keyToSymbol;
-
   KeyToSymbolWidget(this.keyToSymbol);
 
   @override

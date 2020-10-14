@@ -3,6 +3,10 @@ import 'dart:convert';
 import 'package:diamnow/app/Helper/Themehelper.dart';
 import 'package:flutter/material.dart';
 
+
+//Used in keyToSymbol widget.
+// ---------------------------
+
 /// Callback
 typedef void OnPressed(Tag tags);
 
