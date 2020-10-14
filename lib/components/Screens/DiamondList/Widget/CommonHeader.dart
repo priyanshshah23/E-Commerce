@@ -18,8 +18,8 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
       child: Row(
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          getColumn(widget.carat.toString(), "Pcs"),
-          getColumn("0", "Cts"),
+          getColumn("0", "Pcs"),
+          getColumn(widget.carat.toStringAsFixed(2), "Cts"),
           getColumn("0", "Disc %"),
           Expanded(
             child: getColumn(

@@ -32,7 +32,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   BaseList diamondList;
   List<DiamondModel> arraDiamond = List<DiamondModel>();
   int page = DEFAULT_PAGE;
-  num avgCarat;
+  num avgCarat = 0;
 
   @override
   void initState() {
@@ -55,6 +55,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         callApi(false, isLoading: true);
       },
     ));
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       callApi(false);
     });
@@ -82,6 +83,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       fillArrayList();
       page = page + 1;
       diamondList.state.setApiCalling(false);
+      setState(() {
+      });
     }, (onError) {
       print("erorrr..." + onError);
       if (isRefress) {
@@ -100,6 +103,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         return InkWell(
           onTap: (){
             setState(() {
+              arraDiamond[index].isSelected = !arraDiamond[index].isSelected;
+              fillArrayList();
+              diamondList.state.setApiCalling(false);
             });
           },
             child: DiamondItemWidget(
