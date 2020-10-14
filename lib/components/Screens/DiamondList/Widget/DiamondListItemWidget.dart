@@ -4,9 +4,10 @@ import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:flutter/material.dart';
 
 class DiamondItemWidget extends StatefulWidget {
-
   DiamondModel item;
+
   DiamondItemWidget({this.item});
+
   @override
   _DiamondItemWidgetState createState() => _DiamondItemWidgetState();
 }
@@ -22,8 +23,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       width: MathUtilities.screenWidth(context),
       decoration: BoxDecoration(
           color: appTheme.whiteColor,
-          borderRadius: BorderRadius.circular(getSize(5)),
-          border: Border.all(color: appTheme.dividerColor)
+          borderRadius: BorderRadius.circular(getSize(6)),
+          border: Border.all(color: widget.item.isSelected ?appTheme.colorPrimary:appTheme.dividerColor)
           //boxShadow: getBoxShadow(context),
           ),
       child: Row(
@@ -59,22 +60,27 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         bottom: getSize(5),
       ),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(getSize(5)),
-            bottomLeft: Radius.circular(getSize(5)),
-          ),
-          color: appTheme.dividerColor),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(getSize(5)),
+          bottomLeft: Radius.circular(getSize(5)),
+        ),
+        color: widget.item.isSelected
+            ? appTheme.colorPrimary
+            : appTheme.dividerColor,
+      ),
       child: Column(
         children: <Widget>[
           Text(
             widget.item?.crt.toString() ?? "",
-            style:
-                appTheme.blue14TextStyle,
+            style:appTheme.blue14TextStyle.copyWith(
+              color: widget.item.isSelected ? appTheme.whiteColor : appTheme.colorPrimary
+            ),
           ),
           Text(
             "Carat",
-            style:
-                appTheme.blue14TextStyle,
+            style: appTheme.blue14TextStyle.copyWith(
+                color: widget.item.isSelected ? appTheme.whiteColor : appTheme.colorPrimary
+            ),
           ),
           Container(
             alignment: Alignment.center,
@@ -85,7 +91,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 color: appTheme.whiteColor,
                 borderRadius: BorderRadius.circular(getSize(5))),
             child: Text(
-              widget.item?.back.toString()+" %" ?? "",
+              widget.item?.back.toString() + " %" ?? "",
               style: appTheme.green10TextStyle,
             ),
           )
@@ -149,22 +155,28 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           getText(widget.item?.fluNm ?? ""),
           getText(widget.item?.msrmnt ?? ""),
           getText(widget.item?.lbNm ?? ""),
-          getAmountText(R.string().commonString.doller+widget.item?.ctPr.toString()+"/Cts" ?? ""),
+          getAmountText(R.string().commonString.doller +
+                  widget.item?.ctPr.toStringAsFixed(2) +
+                  "/Cts" ??
+              ""),
         ],
       ),
     );
   }
 
-  getTableDepthAndAmountDetail(){
+  getTableDepthAndAmountDetail() {
     return Padding(
       padding: EdgeInsets.only(top: getSize(5)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           getText(widget.item?.shpNm ?? ""),
-          getText(widget.item?.tblPer.toString()+"%T" ?? ""),
-          getText(widget.item?.depPer.toString()+"%D" ?? ""),
-          getAmountText(R.string().commonString.doller+widget.item?.amt.toString()+"/Amt" ?? ""),
+          getText(widget.item?.tblPer.toString() + "%T" ?? ""),
+          getText(widget.item?.depPer.toString() + "%D" ?? ""),
+          getAmountText(R.string().commonString.doller +
+                  widget.item?.amt.toStringAsFixed(2) +
+                  "/Amt" ??
+              ""),
         ],
       ),
     );
@@ -177,13 +189,10 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
     );
   }
 
-
   getAmountText(String text) {
     return Text(
       text,
-      style: appTheme.blue14TextStyle.copyWith(
-        fontSize: getFontSize(12)
-      ),
+      style: appTheme.blue14TextStyle.copyWith(fontSize: getFontSize(12)),
     );
   }
 }

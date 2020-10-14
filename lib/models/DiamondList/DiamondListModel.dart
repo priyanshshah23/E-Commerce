@@ -318,7 +318,7 @@ class DiamondModel {
   String isCm;
   String fcColDesc;
   num ratio;
-  bool isSelected;
+  bool isSelected = false;
 
   DiamondModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
