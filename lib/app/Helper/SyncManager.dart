@@ -83,7 +83,6 @@ class SyncManager {
         DiamondListReq req,
     Function(DiamondListResp) success,
     Function failure, {
-    bool isNetworkError = true,
     bool isProgress = true,
   }) async {
 
@@ -91,20 +90,13 @@ class SyncManager {
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().diamondList(req),
             context,
-            isProgress: isProgress,
-            isNetworkError: isNetworkError)
+            isProgress: isProgress,)
         .then((diamondListResp) async {
           success(diamondListResp);
 
     }).catchError((onError) => {
       print(onError),
-              //failure(),
-              if (isNetworkError)
-                {
-                  // showToast((onError is ErrorResp)
-                  //     ? onError.message
-                  //     : onError.toString()),
-                },
+              //failure()
             });
   }
 }

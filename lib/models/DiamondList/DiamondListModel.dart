@@ -250,16 +250,16 @@ class DiamondModel {
   String clrNm;
   String colNm;
   String lbCmt;
-  double cAng;
-  double cHgt;
+  num cAng;
+  num cHgt;
   String cultNm;
   String cutNm;
-  double depPer;
+  num depPer;
   bool img;
   String eClnNm;
   bool isFcCol;
   String fluNm;
-  double grdlPer;
+  num grdlPer;
   String grdlThnNm;
   String grdlThkNm;
   String grdlCondNm;
@@ -267,22 +267,22 @@ class DiamondModel {
   String kToSStr;
   String lbNm;
   String msrmnt;
-  double length;
-  double width;
-  double height;
-  double pAng;
-  double pHgt;
+  num length;
+  num width;
+  num height;
+  num pAng;
+  num pHgt;
   String polNm;
   int rap;
-  double crt;
-  double back;
-  double ctPr;
-  double amt;
+  num crt;
+  num back;
+  num ctPr;
+  num amt;
   String shpNm;
   String shdNm;
-  double strLn;
+  num strLn;
   String symNm;
-  double tblPer;
+  num tblPer;
   String pktType;
   String hANm;
   String vStnId;
@@ -317,7 +317,7 @@ class DiamondModel {
   String fluColNm;
   String isCm;
   String fcColDesc;
-  double ratio;
+  num ratio;
 
   DiamondModel(
       {this.id,

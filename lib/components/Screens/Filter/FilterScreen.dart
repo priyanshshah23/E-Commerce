@@ -88,11 +88,20 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               ),
             ],
           ),
+          floatingActionButton: InkWell(
+            onTap: () {
+              callApiForGetFilterId();
+            },
+            child: Container(
+              height: getSize(40),
+              width: getSize(40),
+              child: Text("data"),
+            ),
+          ),
         ),
       ),
     );
   }
-
 
   callApiForGetFilterId() {
     DiamondListReq req = DiamondListReq();
@@ -101,10 +110,12 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     SyncManager.instance.callApiForDiamondList(
       context,
       req,
-          (diamondListResp) {
-        filterId = diamondListResp.data.filter.id;
+      (diamondListResp) {
+        Map<String, dynamic> dict = new HashMap();
+        dict["filterId"] = diamondListResp.data.filter.id;
+        NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
       },
-          (onError) {
+      (onError) {
         //print("Error");
       },
     );
