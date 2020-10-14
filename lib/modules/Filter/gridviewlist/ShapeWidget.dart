@@ -1,5 +1,6 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/ColorConstant.dart';
+import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +42,8 @@ class _ShapeWidgetState extends State<ShapeWidget> {
         widget.selectionModel.masters.insert(0, allMaster);
       }
     }
-    if (widget.selectionModel.isShowMore) {
+    if (widget.selectionModel.isShowMore &&
+        widget.selectionModel.orientation == DisplayTypes.vertical) {
       if (widget.selectionModel.masters
               .where((element) => element.sId == "ShowMore")
               .toList()
@@ -124,7 +126,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
 
                           setState(() {});
                         },
-                        child: CardItem(
+                        child: ShapeItemWidget(
                           txt: "All",
                           obj: obj,
                           selectionModel: widget.selectionModel,
@@ -140,7 +142,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                           widget.selectionModel.isShowMoreSelected = true;
                           setState(() {});
                         },
-                        child: CardItem(
+                        child: ShapeItemWidget(
                           txt: "Show Less",
                           obj: obj,
                           selectionModel: widget.selectionModel,
@@ -156,7 +158,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                           widget.selectionModel.isShowMoreSelected = false;
                           setState(() {});
                         },
-                        child: CardItem(
+                        child: ShapeItemWidget(
                           txt: "Show More",
                           obj: obj,
                           selectionModel: widget.selectionModel,
@@ -195,7 +197,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                             }
                           });
                         },
-                        child: CardItem(
+                        child: ShapeItemWidget(
                           obj: obj,
                           selectionModel: widget.selectionModel,
                         ),
@@ -233,17 +235,20 @@ class _ShapeWidgetState extends State<ShapeWidget> {
 }
 
 // card item for each type.
-class CardItem extends StatelessWidget {
+class ShapeItemWidget extends StatelessWidget {
   Master obj;
   String txt;
   SelectionModel selectionModel;
 
-  CardItem({Key key, this.obj, this.txt, this.selectionModel})
+  ShapeItemWidget({Key key, this.obj, this.txt, this.selectionModel})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: selectionModel.orientation == DisplayTypes.horizontal
+          ? getSize(90)
+          : 0,
       decoration: BoxDecoration(
           color: obj.sId == "ShowMore"
               ? appTheme.unSelectedBgColor

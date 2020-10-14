@@ -180,7 +180,7 @@ class Master {
         master.add(item);
       }
     });
-    
+
     return master;
   }
 

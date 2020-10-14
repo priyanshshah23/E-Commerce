@@ -132,19 +132,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                       boxShadow: getBoxShadow(context)),
                                   child: AppButton.flat(
                                     onTap: () {
-                                      NavigationUtilities.pushRoute(TabBarDemo.route);
-
-//                                      FocusScope.of(context).unfocus();
-//                                      if (_formKey.currentState.validate()) {
-//                                        _formKey.currentState.save();
-//                                        callLoginApi(context);
-//                                      } else {
-//                                        setState(() {
-//                                          _autoValidate = true;
-//                                        });
-//                                      }
-
-//                                      NavigationUtilities.push(DemoScreen());
+                                      // NavigationUtilities.pushRoute(TabBarDemo.route);
                                       FocusScope.of(context).unfocus();
                                       if (_formKey.currentState.validate()) {
                                         _formKey.currentState.save();
