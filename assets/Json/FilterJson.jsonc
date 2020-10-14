@@ -143,6 +143,28 @@
     "rightPadding": 0
   },
   {
+    "title": "Arrivals",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "arrivals",
+    "masterCode": "ARRIVALS",
+    "verticalScroll": false,
+    "orientation": "vertical",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 10
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "basic",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
     "title": "Location",
     "viewType": "selection",
     "allLableTitle": "All",
@@ -302,6 +324,19 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 11
+  },
+  {
+    "title": "Stage",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "STAGE",
+    "masterCode": "STAGE",
+    "verticalScroll": false,
+    "orientation": "horizontal",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 10
   },
   {
     "viewType": "seperator",
