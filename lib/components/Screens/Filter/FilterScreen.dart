@@ -1,6 +1,10 @@
+import 'dart:collection';
+
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 
 import 'package:diamnow/components/Screens/Filter/Widget/CertNoWidget.dart';
 
@@ -10,6 +14,7 @@ import 'package:diamnow/components/Screens/Filter/Widget/FromToWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SeperatorWidget.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
+import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/FilterModel/TabModel.dart';
 import 'package:diamnow/modules/Filter/gridviewlist/KeyToSymbol.dart';
@@ -30,6 +35,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   PageController controller = PageController();
   List<TabModel> arrTab = [];
   List<FormBaseModel> arrList = [];
+  String filterId;
 
   @override
   void initState() {
@@ -50,7 +56,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   }
 
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -83,6 +89,23 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           ),
         ),
       ),
+    );
+  }
+
+
+  callApiForGetFilterId() {
+    DiamondListReq req = DiamondListReq();
+    req.isNotReturnTotal = true;
+    req.isReturnCountOnly = true;
+    SyncManager.instance.callApiForDiamondList(
+      context,
+      req,
+          (diamondListResp) {
+        filterId = diamondListResp.data.filter.id;
+      },
+          (onError) {
+        //print("Error");
+      },
     );
   }
 
