@@ -3,12 +3,9 @@ import 'package:diamnow/app/constant/ColorConstant.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
+import 'package:diamnow/models/FilterModel/FilterModel.dart';
+import 'package:diamnow/models/Master/Master.dart';
 import 'package:flutter/material.dart';
-
-import '../../../app/constant/ImageConstant.dart';
-import '../../../app/utils/CommonWidgets.dart';
-import '../../../models/FilterModel/FilterModel.dart';
-import '../../../models/Master/Master.dart';
 
 class ShapeWidget extends StatefulWidget {
   SelectionModel selectionModel;
