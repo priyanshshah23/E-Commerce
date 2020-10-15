@@ -41,7 +41,7 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     //callUpdateVehicleApi(context);
     return Container(
-      color: Colors.deepPurpleAccent,
+      color: appTheme.colorPrimary,
       height: MathUtilities.screenHeight(context),
       width: MathUtilities.screenWidth(context),
       child: Center(
