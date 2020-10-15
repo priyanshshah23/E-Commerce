@@ -4,6 +4,7 @@ import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
@@ -36,6 +37,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   String totalPriceCrt = "0";
   String totalAmount = "0";
   String pcs = "0";
+
+  bool isGrid = false;
 
   @override
   void initState() {
@@ -101,7 +104,34 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   }
 
   fillArrayList() {
-    diamondList.state.listItems = ListView.builder(
+    diamondList.state.listItems = isGrid
+        ? GridView.count(
+            shrinkWrap: true,
+            crossAxisCount: 2,
+            childAspectRatio: 1.0,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 8,
+            children: List.generate(arraDiamond.length, (index) {
+              var item = arraDiamond[index];
+              return InkWell(
+                onTap: () {
+                  setState(() {
+                    arraDiamond[index].isSelected =
+                        !arraDiamond[index].isSelected;
+                    fillArrayList();
+                    diamondList.state.setApiCalling(false);
+                  });
+                },
+                child: DiamondGridItemWidget(
+                  item: item,
+                ),
+              );
+              // return Container(
+              //   color: Colors.green,
+              // );
+            }),
+          )
+        : ListView.builder(
       itemCount: arraDiamond.length,
       itemBuilder: (context, index) {
         return InkWell(
@@ -121,8 +151,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   }
 
   calulate(List<DiamondModel> diamondList){
-    print("List....${diamondList.length}");
-
     double carat = 0.0;
     double calcAmount = 0.0;
     double rapAvg = 0.0;
@@ -136,18 +164,21 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     filterList = list.toList();
 
     if(filterList != null && filterList.length >0){
-      carat = SyncManager.instance.getTotalCaratRapAmount(filterList)[0];
-      calcAmount = SyncManager.instance.getTotalCaratRapAmount(filterList)[1];
-      rapAvg = SyncManager.instance.getTotalCaratRapAmount(filterList)[2];
-      fancyCarat = SyncManager.instance.getTotalCaratRapAmount(filterList)[3];
-      fancyAmt = SyncManager.instance.getTotalCaratRapAmount(filterList)[4];
+
+      List<num> arrValues = SyncManager.instance.getTotalCaratRapAmount(filterList);
+      carat = arrValues[0];
+      calcAmount = arrValues[1];
+      rapAvg = arrValues[2];
+      fancyCarat = arrValues[3];
+      fancyAmt = arrValues[4];
       pcs = filterList.length.toString();
     }else{
-      carat = SyncManager.instance.getTotalCaratRapAmount(diamondList)[0];
-      calcAmount = SyncManager.instance.getTotalCaratRapAmount(diamondList)[1];
-      rapAvg = SyncManager.instance.getTotalCaratRapAmount(diamondList)[2];
-      fancyCarat = SyncManager.instance.getTotalCaratRapAmount(diamondList)[3];
-      fancyAmt = SyncManager.instance.getTotalCaratRapAmount(diamondList)[4];
+      List<num> arrValues = SyncManager.instance.getTotalCaratRapAmount(diamondList);
+      carat = arrValues[0];
+      calcAmount = arrValues[1];
+      rapAvg = arrValues[2];
+      fancyCarat = arrValues[3];
+      fancyAmt = arrValues[4];
       pcs = diamondList.length.toString();
     }
 
@@ -168,12 +199,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     }
     if (calcDiscount > 0 || calcDiscount < 0){
     totalDisc = PriceUtilities.getPercent(calcDiscount);
-    print("Discount...${totalDisc}");
     }else{
       totalDisc = PriceUtilities.getPercent(0);
     }
     totalAmount = PriceUtilities.getPrice(calcAmount);
-    totalCarat = PriceUtilities.getPrice(carat);
+    totalCarat = PriceUtilities.getDoubleValue(carat);
   }
 
   @override

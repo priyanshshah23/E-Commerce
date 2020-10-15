@@ -32,6 +32,6 @@ class PriceUtilities {
   }
 
   static String getDoubleValue(num price) {
-    return int_oCcy.format((price ?? 0).toInt());
+    return initialZeroFormat.format((price ?? 0).toDouble());
   }
 }
