@@ -54,6 +54,37 @@ class _ColorWidgetState extends State<ColorWidget> {
             InkWell(
               onTap: () {
                 setState(() {
+                  Master master =
+                      widget.colorModel.masters.singleWhere((element) {
+                    return element.sId == widget.colorModel.allLableTitle;
+                  });
+                  if (!isNullEmptyOrFalse(master)) {
+                    if (master.isSelected) {
+                      widget.colorModel.groupMaster.forEach((element) {
+                        element.isSelected = true;
+                      });
+                    } else {
+                      widget.colorModel.masterSelection.forEach((main) {
+                        main.masterToSelect.forEach((element) {
+                          List<Master> selectedSubMasters = widget
+                              .colorModel.mainMasters
+                              .where((element) => element.isSelected == true)
+                              .toList()
+                              .where((e) => element.subMasters.contains(e.code))
+                              .toList();
+
+                          if (!isNullEmptyOrFalse(selectedSubMasters)) {
+                            widget.colorModel.groupMaster
+                                    .singleWhere((groupMaster) =>
+                                        groupMaster.code == main.code)
+                                    .isSelected =
+                                selectedSubMasters.length ==
+                                    element.subMasters.length;
+                          }
+                        });
+                      });
+                    }
+                  }
                   widget.colorModel.isGroupSelected = true;
                   widget.colorModel.masters = widget.colorModel.groupMaster;
                 });
@@ -82,6 +113,51 @@ class _ColorWidgetState extends State<ColorWidget> {
             InkWell(
               onTap: () {
                 setState(() {
+                  Master master =
+                      widget.colorModel.masters.singleWhere((element) {
+                    return element.sId == widget.colorModel.allLableTitle;
+                  });
+                  if (!isNullEmptyOrFalse(master)) {
+                    if (master.isSelected) {
+                      widget.colorModel.mainMasters.forEach((element) {
+                        element.isSelected = true;
+                      });
+                    } else {
+                      // widget.colorModel.mainMasters.forEach((e) {
+                      //   e.isSelected = false;
+                      // });
+
+                      widget.colorModel.masterSelection.forEach((main) {
+                        main.masterToSelect.forEach((element) {
+                          widget.colorModel.groupMaster
+                              .where((element) => element.code == main.code)
+                              .forEach((master) {
+                            if (master.isSelected) {
+                              widget.colorModel.mainMasters
+                                  .where((r) =>
+                                      element.subMasters.contains(r.code))
+                                  .forEach((e) {
+                                e.isSelected =
+                                    element.subMasters.contains(e.code);
+                              });
+                            } else {
+                              for (var item in element.subMasters) {
+                                print(item);
+                                print(master.code);
+                                widget.colorModel.mainMasters
+                                    .where((element) => element.code == item)
+                                    .toList()
+                                    .forEach((element) {
+                                  element.isSelected = false;
+                                });
+                              }
+                            }
+                          });
+                        });
+                      });
+                    }
+                  }
+
                   widget.colorModel.isGroupSelected = false;
                   widget.colorModel.masters = widget.colorModel.mainMasters;
                 });
