@@ -30,14 +30,9 @@ class _SplashState extends State<Splash> {
 
   Future openNextScreen() async {
     if (app.resolve<PrefUtils>().isUserLogin()) {
-<<<<<<< HEAD
       // NavigationUtilities.pushRoute(DiamondListScreen.route);
       NavigationUtilities.pushRoute(FilterScreen.route);
 
-=======
-      // NavigationUtilities.pushRoute(FilterScreen.route);
-      NavigationUtilities.pushRoute(FilterScreen.route);
->>>>>>> d5b8fe788b884d6a0b77f256c5e7d18bb46710a0
     } else {
       NavigationUtilities.pushRoute(LoginScreen.route);
     }
