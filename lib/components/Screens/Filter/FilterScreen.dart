@@ -212,7 +212,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         } else if (obj.code == BottomCodeConstant.filterSearch) {
           //
           print(obj.code);
-          // callApiForGetFilterId();
+           callApiForGetFilterId();
         } else if (obj.code == BottomCodeConstant.filterSaveAndSearch) {
           //
           print(obj.code);
