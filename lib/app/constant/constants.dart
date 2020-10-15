@@ -99,4 +99,13 @@ class MasterCode {
   static const String arrivals = "ARRIVALS";
   static const String stage = "STAGE";
   static const String noBgm = "NoBGM";
+  static const String colorGroup = "COLORGROUP";
+  static const String clarityGroup = "CLARITYGROUP";
+}
+
+class DiamondStatus{
+  static const String available = "A";
+  static const String onMine = "M";
+  static const String office = "O";
+  static const String show = "S";
 }

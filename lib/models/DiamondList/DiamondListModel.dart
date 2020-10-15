@@ -1,4 +1,5 @@
 import 'package:diamnow/app/app.export.dart';
+import 'package:flutter/cupertino.dart';
 
 class DiamondListReq {
   int page;
@@ -490,5 +491,25 @@ class DiamondModel {
     data['ratio'] = this.ratio;
 //    data['isSelected'] = this.isSelected;
     return data;
+  }
+
+
+  Color getStatusColor() {
+    Color color ;
+    switch (wSts) {
+      case DiamondStatus.available:
+        color = appTheme.darkBlue;
+        break;
+      case DiamondStatus.onMine:
+        color = appTheme.errorColor;
+        break;
+      case DiamondStatus.office:
+        color = appTheme.errorColor;
+        break;
+      case DiamondStatus.show:
+        color = appTheme.darkBlue;
+        break;
+    }
+    return color;
   }
 }

@@ -14,6 +14,10 @@ const String plusIcon = "assets/diamnow/plusIcon.png";
 const String selectedCheckbox = "assets/auth/checkbox.png";
 const String unSelectedCheckbox = "assets/auth/unselectedcheckbox.png";
 
+// DiamNow
+const String notification = "assets/diamnow/notification.png";
+const String share = "assets/diamnow/share.png";
+
 //filter
 const String addDemand = "assets/filter/addDemand.png";
 const String matchPair = "assets/filter/matchPair.png";
@@ -26,4 +30,13 @@ const String selectAll = "assets/diamnow/select_all.png";
 const String gridView = "assets/diamnow/GridView.png";
 const String filter = "assets/diamnow/filter.png";
 const String download = "assets/diamnow/download.png";
+const String showSelected = "assets/diamnow/showSelected.png";
+const String compare = "assets/diamnow/compare.png";
+const String status = "assets/diamnow/status.png";
 
+//Diamond Detail
+const String enquiry = "assets/DiamondDetail/enquiry.png";
+const String addToCart = "assets/DiamondDetail/addToCart.png";
+const String addToWatchlist = "assets/DiamondDetail/addToWatchlist.png";
+const String placeOrder = "assets/DiamondDetail/placeOrder.png";
+const String comment = "assets/DiamondDetail/comment.png";

@@ -63,7 +63,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             child: Center(
                 child: Container(
               decoration: BoxDecoration(
-                  color: Colors.red,
+                  color: widget.item.getStatusColor(),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(5),
                       bottomLeft: Radius.circular(5))),
@@ -199,8 +199,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           getText(widget.item?.shpNm ?? ""),
-          getText(PriceUtilities.getPercent(widget.item?.tblPer ?? 0) + "%T"),
-          getText(PriceUtilities.getPercent(widget.item?.depPer ?? 0) + "%D"),
+          getText(PriceUtilities.getPercent(widget.item?.tblPer ?? 0) + "T"),
+          getText(PriceUtilities.getPercent(widget.item?.depPer ?? 0) + "D"),
           getAmountText(R.string().commonString.doller +
                   widget.item?.amt.toStringAsFixed(2) +
                   "/Amt" ??

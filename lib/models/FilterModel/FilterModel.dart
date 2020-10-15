@@ -62,11 +62,15 @@ class Config {
           List<Master> arrMaster =
               await Master.getSubMaster(selectionModel.masterCode);
           selectionModel.masters = arrMaster;
-        } else if (viewType == ViewTypes.colorWidget) {
+        } else if (viewType == ViewTypes.groupWidget) {
           ColorModel colorModel = ColorModel.fromJson(element);
           formModels.add(colorModel);
           List<Master> arrMaster =
               await Master.getSubMaster(colorModel.masterCode);
+          List<Master> arrGroupMaster =
+              await Master.getSubMaster(colorModel.groupMasterCode);
+          colorModel.mainMasters = arrMaster;
+          colorModel.groupMaster = arrGroupMaster;
           colorModel.masters = arrMaster;
         } else if (viewType == ViewTypes.seperator) {
           SeperatorModel seperatorModel = SeperatorModel.fromJson(element);
@@ -87,6 +91,8 @@ class Config {
 
           selectionModel.masters = arrMaster;
         }
+
+        print(element["masterCode"]);
       }
     }
     return formModels;
@@ -141,6 +147,7 @@ class SelectionModel extends FormBaseModel {
   String masterCode;
   List<Master> masters = [];
   String orientation;
+  String groupMasterCode;
   bool verticalScroll;
   bool isShowAll;
   bool isShowAllSelected = false;
@@ -150,8 +157,10 @@ class SelectionModel extends FormBaseModel {
   FromToStyle fromToStyle;
   bool isSingleSelection;
   List<MasterSelection> masterSelection;
+  List<String> caratRangeChipsToShow = [];
 
   SelectionModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    groupMasterCode = json["groupMasterCode"];
     verticalScroll = json["verticalScroll"] ?? false;
     orientation = json["orientation"];
     isShowAll = json['isShowAll'] ?? false;
@@ -172,8 +181,9 @@ class SelectionModel extends FormBaseModel {
 }
 
 class ColorModel extends SelectionModel {
-  bool isWhiteSelected = true;
-  List<Master> fancyMaster = [];
+  bool isGroupSelected = false;
+  List<Master> mainMasters = [];
+  List<Master> groupMaster = [];
 
   SelectionModel intensity;
   SelectionModel overtone;
