@@ -45,6 +45,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   List<FormBaseModel> arrList = [];
   List<BottomTabModel> arrBottomTab;
   String filterId;
+  List<FilterOptions> optionList = List<FilterOptions>();
 
   @override
   void initState() {
@@ -56,14 +57,22 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           arrList = result;
         });
       });
-      showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        shape: RoundedRectangleBorder(
-            borderRadius:
-            BorderRadius.vertical(top: Radius.circular(25.0))),
-        builder: (_) => FilterBy(),
-      );
+      Config().getOptionsJson().then((result) {
+        result.forEach((element) {
+          if(element.isActive) {
+            optionList.add(element);
+          }
+        });
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          shape: RoundedRectangleBorder(
+              borderRadius:
+              BorderRadius.vertical(top: Radius.circular(25.0))),
+          builder: (_) => FilterBy(optionList: optionList,),
+        );
+        setState(() {});
+      });
 
       Config().getTabJson().then((result) {
         setState(() {

@@ -6,50 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class FilterBy extends StatefulWidget {
+  List<FilterOptions> optionList;
+
+  FilterBy({this.optionList});
+
   @override
-  _FilterByState createState() => _FilterByState();
+  _FilterByState createState() => _FilterByState(optionList: optionList);
 }
 
 class _FilterByState extends State<FilterBy> {
-  List<FilterOptions> optionList = List<FilterOptions>();
+  List<FilterOptions> optionList;
 
-  @override
-  void initState() {
-    super.initState();
-    Config().getOptionsJson().then((result) {
-        result.forEach((element) {
-          if(element.isSelected) {
-            optionList.add(element);
-          }
-        });
-        setState(() {});
-    });
-//    optionList.add(FilterOptions(title: "Default", icon: filterUnionArrow));
-//    optionList
-//        .add(FilterOptions(title: "New Diamonds", icon: filterRightArrow));
-//    optionList
-//        .add(FilterOptions(title: "Price Low to High", icon: filterUpArrow));
-//    optionList
-//        .add(FilterOptions(title: "Price High to Low", icon: filterDownArrow));
-//    optionList
-//        .add(FilterOptions(title: "Discount Low to High", icon: filterUpArrow));
-//    optionList.add(
-//        FilterOptions(title: "Discount High to Low", icon: filterDownArrow));
-//    optionList
-//        .add(FilterOptions(title: "Color Low to High", icon: filterUpArrow));
-//    optionList
-//        .add(FilterOptions(title: "Color High to Low", icon: filterDownArrow));
-//    optionList
-//        .add(FilterOptions(title: "Carat Low to High", icon: filterUpArrow));
-//    optionList
-//        .add(FilterOptions(title: "Carat High to Low", icon: filterDownArrow));
-//    optionList
-//        .add(FilterOptions(title: "Clarity Low to High", icon: filterUpArrow));
-//    optionList.add(
-//        FilterOptions(title: "Clarity High to Low", icon: filterDownArrow));
-  }
-
-
+  _FilterByState({this.optionList});
 
 
   @override
@@ -91,7 +59,7 @@ class _FilterByState extends State<FilterBy> {
                         height: getSize(12),
                         width: getSize(12),
                         child: Image.asset(
-                          optionList[index].icon,
+                          filterPopUpPath + optionList[index].icon,
                         ),
                       ),
                       SizedBox(

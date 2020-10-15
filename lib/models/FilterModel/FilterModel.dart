@@ -41,7 +41,7 @@ class Config {
   }
 
   Future<List<FilterOptions>> getOptionsJson() async {
-    String jsonForm = await rootBundle.loadString('assets/Json/TabJson.json');
+    String jsonForm = await rootBundle.loadString('assets/Json/FilterPopUp.json');
 
     List<dynamic> fieldList = jsonDecode(jsonForm);
     List<FilterOptions> optionsModels = [];
