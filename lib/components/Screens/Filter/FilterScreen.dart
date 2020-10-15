@@ -78,15 +78,12 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
           event.keys.first.masterToSelect.forEach((element) {
             SelectionModel temp = list.firstWhere((mainElement) {
-              print(mainElement.masterCode);
-              print(element.code);
               return mainElement.masterCode == element.code;
             });
             if (!isNullEmptyOrFalse(temp)) {
               temp.masters.forEach((elementSubMaster) {
                 elementSubMaster.isSelected = false;
-                print(elementSubMaster.code);
-                print(element.subMasters);
+
                 if (element.subMasters.contains(elementSubMaster.code)) {
                   elementSubMaster.isSelected = event.values.first;
                 }
