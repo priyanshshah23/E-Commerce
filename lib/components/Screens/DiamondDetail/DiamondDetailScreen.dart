@@ -1,8 +1,10 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
+import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
+import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -37,6 +39,7 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
   TabController _controller;
   int _currentIndex = 0;
   bool isLoading = true;
+  List<BottomTabModel> arrBottomTab;
 
   List<DiamondDetailImagePagerModel> arrImages =
       List<DiamondDetailImagePagerModel>();
@@ -78,6 +81,11 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
       initialIndex: 0,
     );
     _controller.addListener(_handleTabSelection);
+
+    arrBottomTab = BottomTabModel().getDiamondDetailScreenBottomTabs();
+    setState(() {
+      //
+    });
   }
 
   _handleTabSelection() {
@@ -89,10 +97,44 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: appTheme.whiteColor,
-        body: Padding(
+    return Scaffold(
+      backgroundColor: appTheme.whiteColor,
+      appBar: getAppBar(
+        context,
+        "Diamond Detail",
+        bgColor: appTheme.whiteColor,
+        leadingButton: getBackButton(context),
+        centerTitle: false,
+        actionItems: [
+          Padding(
+            padding: EdgeInsets.only(right: getSize(20)),
+            child: Image.asset(
+              share,
+              height: getSize(20),
+              width: getSize(20),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: getSize(20)),
+            child: Image.asset(
+              notification,
+              height: getSize(20),
+              width: getSize(20),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: getSize(20)),
+            child: Image.asset(
+              download,
+              height: getSize(20),
+              width: getSize(20),
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: getBottomTab(),
+      body: SafeArea(
+        child: Padding(
             padding: EdgeInsets.only(top: getSize(20)),
             child: Container(
               child: Column(
@@ -214,6 +256,32 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
         });
       },
       javascriptMode: JavascriptMode.unrestricted,
+    );
+  }
+
+  Widget getBottomTab() {
+    return BottomTabbarWidget(
+      arrBottomTab: arrBottomTab,
+      onClickCallback: (obj) {
+        //
+        if (obj.code == BottomCodeConstant.dDEnquiry) {
+          //
+          print(obj.code);
+        } else if (obj.code == BottomCodeConstant.dDAddToCart) {
+          //
+          print(obj.code);
+        } else if (obj.code == BottomCodeConstant.dDAddToWatchlist) {
+          //
+          print(obj.code);
+          // callApiForGetFilterId();
+        } else if (obj.code == BottomCodeConstant.dDPlaceOrder) {
+          //
+          print(obj.code);
+        } else if (obj.code == BottomCodeConstant.dDComment) {
+          //
+          print(obj.code);
+        }
+      },
     );
   }
 }
