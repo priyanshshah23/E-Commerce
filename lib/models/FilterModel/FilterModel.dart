@@ -87,6 +87,8 @@ class Config {
 
           selectionModel.masters = arrMaster;
         }
+
+        print(element["masterCode"]);
       }
     }
     return formModels;
@@ -150,6 +152,7 @@ class SelectionModel extends FormBaseModel {
   FromToStyle fromToStyle;
   bool isSingleSelection;
   List<MasterSelection> masterSelection;
+  List<String> caratRangeChipsToShow = [];
 
   SelectionModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     verticalScroll = json["verticalScroll"] ?? false;
