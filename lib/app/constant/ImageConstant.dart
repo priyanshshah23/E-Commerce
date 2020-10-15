@@ -34,6 +34,13 @@ const String showSelected = "assets/diamnow/showSelected.png";
 const String compare = "assets/diamnow/compare.png";
 const String status = "assets/diamnow/status.png";
 
+const String filterDownArrow = "assets/filter/filterDownArrow.png";
+const String filterRightArrow = "assets/filter/filterRightArrow.png";
+const String filterUnionArrow = "assets/filter/filterUnionArrow.png";
+const String filterUpArrow = "assets/filter/filterUpArrow.png";
+const String selectedFilter = "assets/filter/selectedFilter.png";
+const String unselectedFilter = "assets/filter/unselectedFilter.png";
+
 //Diamond Detail
 const String enquiry = "assets/DiamondDetail/enquiry.png";
 const String addToCart = "assets/DiamondDetail/addToCart.png";

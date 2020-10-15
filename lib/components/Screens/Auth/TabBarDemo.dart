@@ -349,22 +349,44 @@ class _TabBarDemoState extends State<TabBarDemo> with SingleTickerProviderStateM
                           ),
                           builder: (BuildContext context,
                               AsyncSnapshot<Widget> snapshot) {
-                            if (snapshot.hasData)
+                            if (snapshot.hasData) {
                               return snapshot.data;
-
-                            return Container(
-                              //decoration: decoration,
-                              height: getSize(100),
-                              width: getSize(100),
-                              child: SpinKitFadingCircle(
-                                color: ColorConstants.colorPrimary,
-                                size: getSize(50),
-                              ),
-                            );
+                            } else {
+                              return Container(
+                                //decoration: decoration,
+                                height: getSize(100),
+                                width: getSize(100),
+                                child: SpinKitFadingCircle(
+                                  color: ColorConstants.colorPrimary,
+                                  size: getSize(50),
+                                ),
+                              );
+                            }
                           }),
                     ),
                     Container(
-                      child: LoginScreen(),
+                      child: FutureBuilder<Widget>(
+                          future: getPDFView(context,
+                            "http://www.pdf995.com/samples/pdf.pdf",
+                            height: getSize(100),
+                            width: getSize(100),
+                          ),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<Widget> snapshot) {
+                            if (snapshot.hasData) {
+                              return snapshot.data;
+                            } else {
+                              return Container(
+                                //decoration: decoration,
+                                height: getSize(100),
+                                width: getSize(100),
+                                child: SpinKitFadingCircle(
+                                  color: ColorConstants.colorPrimary,
+                                  size: getSize(50),
+                                ),
+                              );
+                            }
+                          }),
                     ),
                     Container(
                       child: Image.network(
