@@ -1097,7 +1097,7 @@
     "verticalScroll": false,
     "orientation": "vertical",
     "isShowAll": true,
-    "isShowMore": true,
+    "isShowMore": false,
     "tab": "advance",
     "sequence": 10
   },

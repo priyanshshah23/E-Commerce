@@ -3,6 +3,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
@@ -32,6 +33,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   int page = DEFAULT_PAGE;
   num avgCarat = 0;
   num pcs = 0;
+
+  bool isGrid = false;
 
   @override
   void initState() {
@@ -96,22 +99,51 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   }
 
   fillArrayList() {
-    diamondList.state.listItems = ListView.builder(
-      itemCount: arraDiamond.length,
-      itemBuilder: (context, index) {
-        return InkWell(
-            onTap: () {
-              setState(() {
-                arraDiamond[index].isSelected = !arraDiamond[index].isSelected;
-                fillArrayList();
-                diamondList.state.setApiCalling(false);
-              });
+    diamondList.state.listItems = isGrid
+        ? GridView.count(
+            shrinkWrap: true,
+            crossAxisCount: 2,
+            childAspectRatio: 1.009,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 8,
+            children: List.generate(arraDiamond.length, (index) {
+              var item = arraDiamond[index];
+              return InkWell(
+                onTap: () {
+                  setState(() {
+                    arraDiamond[index].isSelected =
+                        !arraDiamond[index].isSelected;
+                    fillArrayList();
+                    diamondList.state.setApiCalling(false);
+                  });
+                },
+                child: DiamondGridItemWidget(
+                  item: item,
+                ),
+              );
+              // return Container(
+              //   color: Colors.green,
+              // );
+            }),
+          )
+        : ListView.builder(
+            itemCount: arraDiamond.length,
+            itemBuilder: (context, index) {
+              return InkWell(
+                onTap: () {
+                  setState(() {
+                    arraDiamond[index].isSelected =
+                        !arraDiamond[index].isSelected;
+                    fillArrayList();
+                    diamondList.state.setApiCalling(false);
+                  });
+                },
+                child: DiamondItemWidget(
+                  item: arraDiamond[index],
+                ),
+              );
             },
-            child: DiamondItemWidget(
-              item: arraDiamond[index],
-            ));
-      },
-    );
+          );
   }
 
   @override
