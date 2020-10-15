@@ -182,30 +182,7 @@ class _FromToWidgetState extends State<FromToWidget> {
 
           oldValueForFrom = _minValueController.text.trim();
         },
-        onSubmitted: (value) {
-          // if (value != null) {
-          //   if (_maxValueController.text != null) {
-          //     if (num.parse(_maxValueController.text.trim()) <
-          //         num.parse(value)) {
-          //       app.resolve<CustomDialogs>().confirmDialog(
-          //             context,
-          //             title: "Value Error",
-          //             desc:
-          //                 "From Value should be less than or equal to To value",
-          //             positiveBtnTitle: "Try Again",
-          //           );
-          //     } else {
-          //       //todo something
-          //       app.resolve<CustomDialogs>().confirmDialog(
-          //             context,
-          //             title: "Value Error",
-          //             desc: "okay",
-          //             positiveBtnTitle: "Try Again",
-          //           );
-          //     }
-          //   }
-          // }
-        },
+        onSubmitted: (value) {},
         focusNode: _focusMinValue,
         controller: _minValueController,
         inputFormatters: [
@@ -291,30 +268,7 @@ class _FromToWidgetState extends State<FromToWidget> {
                   ? newValue
                   : oldValue)
         ],
-        onSubmitted: (value) {
-          // if (value != null) {
-          //   if (_minValueController.text != null) {
-          //     if (num.parse(_minValueController.text.trim()) >
-          //         num.parse(value)) {
-          //       app.resolve<CustomDialogs>().confirmDialog(
-          //             context,
-          //             title: "Value Error",
-          //             desc:
-          //                 "To Value should be greater than or equal to From value",
-          //             positiveBtnTitle: "Try Again",
-          //           );
-          //     } else {
-          //       //todo something
-          //       app.resolve<CustomDialogs>().confirmDialog(
-          //             context,
-          //             title: "Value Error",
-          //             desc: "okay",
-          //             positiveBtnTitle: "Try Again",
-          //           );
-          //     }
-          //   }
-          // }
-        },
+        onSubmitted: (value) {},
         style: appTheme.blackNormal14TitleColorblack,
         keyboardType: TextInputType.numberWithOptions(decimal: true),
         textInputAction: TextInputAction.done,

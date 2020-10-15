@@ -103,4 +103,27 @@ class SyncManager {
               //failure()
             });
   }
+
+  List<num> getTotalCaratRapAmount(List<DiamondModel> diamondList){
+
+    double carat = 0.0;
+    double calcAmount = 0.0;
+    double rapAvg = 0.0;
+    double fancyCarat = 0.0;
+    double fancyAmt = 0.0;
+
+    for(var item in diamondList){
+      if (item.rap > 0){
+        carat += item.crt;
+        calcAmount += item.ctPr;
+        rapAvg += item.rap * item.crt;
+      }else{
+        fancyCarat += item.crt;
+        fancyAmt += item.amt;
+      }
+    }
+    return [carat,calcAmount,rapAvg,fancyCarat,fancyAmt];
+  }
 }
+
+

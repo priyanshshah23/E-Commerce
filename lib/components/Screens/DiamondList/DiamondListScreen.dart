@@ -3,6 +3,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
+import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
@@ -33,8 +34,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   BaseList diamondList;
   List<DiamondModel> arraDiamond = List<DiamondModel>();
   int page = DEFAULT_PAGE;
-  num avgCarat = 0;
-  num pcs = 0;
+  String totalCarat = "0";
+  String totalDisc = "0";
+  String totalPriceCrt = "0";
+  String totalAmount = "0";
+  String pcs = "0";
 
   List<BottomTabModel> arrBottomTab;
   bool isGrid = false;
@@ -86,9 +90,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     SyncManager.instance.callApiForDiamondList(context, filterReq,
         (diamondListResp) {
       arraDiamond.addAll(diamondListResp.data.diamonds);
-      avgCarat = arraDiamond.map((m) => m.crt).reduce((a, b) => a + b) /
-          arraDiamond.length;
-      pcs = arraDiamond.length;
+//      avgCarat = arraDiamond.map((m) => m.crt).reduce((a, b) => a + b) /
+//          arraDiamond.length;
+//      pcs = arraDiamond.length;
       diamondList.state.listCount = arraDiamond.length;
       diamondList.state.totalCount = diamondListResp.data.count;
       fillArrayList();
@@ -135,23 +139,78 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             }),
           )
         : ListView.builder(
-            itemCount: arraDiamond.length,
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  setState(() {
-                    arraDiamond[index].isSelected =
-                        !arraDiamond[index].isSelected;
-                    fillArrayList();
-                    diamondList.state.setApiCalling(false);
-                  });
-                },
-                child: DiamondItemWidget(
-                  item: arraDiamond[index],
-                ),
-              );
+      itemCount: arraDiamond.length,
+      itemBuilder: (context, index) {
+        return InkWell(
+            onTap: () {
+              setState(() {
+                arraDiamond[index].isSelected = !arraDiamond[index].isSelected;
+                fillArrayList();
+                calulate(arraDiamond);
+                diamondList.state.setApiCalling(false);
+              });
             },
-          );
+            child: DiamondItemWidget(
+              item: arraDiamond[index],
+            ));
+      },
+    );
+  }
+
+  calulate(List<DiamondModel> diamondList){
+    double carat = 0.0;
+    double calcAmount = 0.0;
+    double rapAvg = 0.0;
+    double fancyCarat = 0.0;
+    double fancyAmt = 0.0;
+    List<DiamondModel> filterList;
+
+    Iterable<DiamondModel> list = diamondList.where((item) {
+      return item.isSelected == true;
+    });
+    filterList = list.toList();
+
+    if(filterList != null && filterList.length >0){
+
+      List<num> arrValues = SyncManager.instance.getTotalCaratRapAmount(filterList);
+      carat = arrValues[0];
+      calcAmount = arrValues[1];
+      rapAvg = arrValues[2];
+      fancyCarat = arrValues[3];
+      fancyAmt = arrValues[4];
+      pcs = filterList.length.toString();
+    }else{
+      List<num> arrValues = SyncManager.instance.getTotalCaratRapAmount(diamondList);
+      carat = arrValues[0];
+      calcAmount = arrValues[1];
+      rapAvg = arrValues[2];
+      fancyCarat = arrValues[3];
+      fancyAmt = arrValues[4];
+      pcs = diamondList.length.toString();
+    }
+
+    num calcDiscount = (calcAmount / rapAvg * 100) - 100;
+    if (fancyCarat > 0) {
+    carat += fancyCarat;
+    }
+
+    if (fancyAmt > 0) {
+    calcAmount += fancyAmt;
+    }
+
+    num calcPricePerCarat = calcAmount / carat;
+    if (calcPricePerCarat > 0 || calcDiscount < 0){
+    totalPriceCrt = PriceUtilities.getPrice(calcPricePerCarat);
+    }else{
+      totalPriceCrt = PriceUtilities.getPrice(0);
+    }
+    if (calcDiscount > 0 || calcDiscount < 0){
+    totalDisc = PriceUtilities.getPercent(calcDiscount);
+    }else{
+      totalDisc = PriceUtilities.getPercent(0);
+    }
+    totalAmount = PriceUtilities.getPrice(calcAmount);
+    totalCarat = PriceUtilities.getDoubleValue(carat);
   }
 
   @override
@@ -214,8 +273,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           child: Column(
             children: <Widget>[
               DiamondListHeader(
-                carat: avgCarat,
                 pcs: pcs,
+                totalDisc: totalDisc,
+                totalCarat: totalCarat,
+                totalPriceCrt: totalPriceCrt,
+                totalAmount: totalAmount,
               ),
               SizedBox(
                 height: getSize(20),
