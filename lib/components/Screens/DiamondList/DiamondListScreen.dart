@@ -2,11 +2,13 @@ import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
+import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:flutter/material.dart';
 
 class DiamondListScreen extends StatefulScreenWidget {
@@ -34,6 +36,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   num avgCarat = 0;
   num pcs = 0;
 
+  List<BottomTabModel> arrBottomTab;
   bool isGrid = false;
 
   @override
@@ -60,6 +63,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       callApi(false);
+    });
+
+    arrBottomTab = BottomTabBar.getDiamondListScreenBottomTabs();
+    setState(() {
+      //
     });
   }
 
@@ -168,10 +176,17 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             ),
             Padding(
               padding: EdgeInsets.only(right: getSize(20)),
-              child: Image.asset(
-                gridView,
-                height: getSize(20),
-                width: getSize(20),
+              child: InkWell(
+                onTap: () {
+                  setState(() {
+                    isGrid = !isGrid;
+                  });
+                },
+                child: Image.asset(
+                  gridView,
+                  height: getSize(20),
+                  width: getSize(20),
+                ),
               ),
             ),
             Padding(
@@ -192,6 +207,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             ),
           ],
         ),
+        bottomNavigationBar: getBottomTab(),
         body: Padding(
           padding: EdgeInsets.only(
               left: getSize(20), right: getSize(20), top: getSize(20)),
@@ -211,6 +227,29 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           ),
         ),
       ),
+    );
+  }
+
+  Widget getBottomTab() {
+    return BottomTabbarWidget(
+      arrBottomTab: arrBottomTab,
+      onClickCallback: (obj) {
+        //
+        if (obj.code == BottomCodeConstant.dLShowSelected) {
+          //
+          print(obj.code);
+        } else if (obj.code == BottomCodeConstant.dLCompare) {
+          //
+          print(obj.code);
+        } else if (obj.code == BottomCodeConstant.dLMore) {
+          //
+          print(obj.code);
+          // callApiForGetFilterId();
+        } else if (obj.code == BottomCodeConstant.dLStatus) {
+          //
+          print(obj.code);
+        }
+      },
     );
   }
 }

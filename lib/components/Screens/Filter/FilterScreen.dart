@@ -7,6 +7,7 @@ import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 
 import 'package:diamnow/components/Screens/Filter/Widget/CertNoWidget.dart';
 
@@ -62,7 +63,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         });
       });
     });
-    arrBottomTab = BottomTabModel().getFilterScreenBottomTabs();
+    arrBottomTab = BottomTabBar.getFilterScreenBottomTabs();
     setState(() {
       //
     });

@@ -82,7 +82,7 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
     );
     _controller.addListener(_handleTabSelection);
 
-    arrBottomTab = BottomTabModel().getDiamondDetailScreenBottomTabs();
+    arrBottomTab = BottomTabBar.getDiamondDetailScreenBottomTabs();
     setState(() {
       //
     });
@@ -135,10 +135,11 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
       bottomNavigationBar: getBottomTab(),
       body: SafeArea(
         child: Padding(
-            padding: EdgeInsets.only(top: getSize(20)),
+            padding: EdgeInsets.only(
+                top: getSize(20), left: getSize(20), right: getSize(20)),
             child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+              child: ListView(
+                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
                     child: Center(
@@ -222,9 +223,103 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
                       ],
                     ),
                   ),
+                  //
+                  getSection("Basic Details"),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  getGridView(18),
+                  SizedBox(
+                    height: getSize(38),
+                  ),
+                  getSection("Measurements"),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  getGridView(15),
+                  SizedBox(
+                    height: getSize(38),
+                  ),
+                  getSection("Inclusion Details"),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  getGridView(6),
+                  SizedBox(
+                    height: getSize(38),
+                  ),
+                  getSection("Other"),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  getGridView(3),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
                 ],
               ),
             )),
+      ),
+    );
+  }
+
+  Widget getSection(String title) {
+    return Text(
+      title,
+      style: appTheme.blackNormal18TitleColorblack
+          .copyWith(fontWeight: FontWeight.w500),
+    );
+  }
+
+  Widget getGridView(int count) {
+    return Container(
+      child: GridView.count(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        crossAxisCount: 3,
+        childAspectRatio: 1.8,
+        mainAxisSpacing: 0,
+        crossAxisSpacing: 0,
+        children: List.generate(count, (index) {
+          // var item = arraDiamond[index];
+          return getGridItem();
+        }),
+      ),
+    );
+  }
+
+  Widget getGridItem() {
+    return Container(
+      decoration: BoxDecoration(
+          color: appTheme.whiteColor,
+          // borderRadius: BorderRadius.circular(getSize(5)),
+          border: Border.all(color: appTheme.lightBGColor)),
+      child: Padding(
+        padding: EdgeInsets.all(getSize(2)),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "191071",
+                style: appTheme.black14TextStyle.copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              SizedBox(
+                height: getSize(2),
+              ),
+              Text(
+                "Stone ID",
+                style: appTheme.grey14HintTextStyle.copyWith(
+                  fontSize: getFontSize(12),
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

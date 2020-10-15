@@ -16,7 +16,7 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:icon="@mipmap/ic_launcher"
-        android:label="3eco SPro"
+        android:label="Diamnow"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:usesCleartextTraffic="true">
         <!--
