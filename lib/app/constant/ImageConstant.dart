@@ -30,6 +30,16 @@ const String selectAll = "assets/diamnow/select_all.png";
 const String gridView = "assets/diamnow/GridView.png";
 const String filter = "assets/diamnow/filter.png";
 const String download = "assets/diamnow/download.png";
+const String showSelected = "assets/diamnow/showSelected.png";
+const String compare = "assets/diamnow/compare.png";
+const String status = "assets/diamnow/status.png";
+
+const String filterDownArrow = "assets/filter/filterDownArrow.png";
+const String filterRightArrow = "assets/filter/filterRightArrow.png";
+const String filterUnionArrow = "assets/filter/filterUnionArrow.png";
+const String filterUpArrow = "assets/filter/filterUpArrow.png";
+const String selectedFilter = "assets/filter/selectedFilter.png";
+const String unselectedFilter = "assets/filter/unselectedFilter.png";
 
 //Diamond Detail
 const String enquiry = "assets/DiamondDetail/enquiry.png";

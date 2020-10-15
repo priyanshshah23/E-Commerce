@@ -140,5 +140,97 @@
         "isDeleted": false,
         "sortingSequence": 2,
         "parentId": "789789789"
+    },
+    {
+        "id": "147147147",
+        "code": "COLORGROUP",
+        "webDisplay": "Color Group",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentCode": "COLORGROUP",
+        "parentId": null
+    },
+    {
+        "id": "DEF",
+        "code": "DEF",
+        "webDisplay": "DEF",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentId": "147147147"
+    },
+    {
+        "id": "GH",
+        "code": "GH",
+        "webDisplay": "GH",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 2,
+        "parentId": "147147147"
+    },
+    {
+        "id": "IJK",
+        "code": "IJK",
+        "webDisplay": "IJK",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 3,
+        "parentId": "147147147"
+    },
+    {
+        "id": "LMN",
+        "code": "LMN",
+        "webDisplay": "LMN",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 4,
+        "parentId": "147147147"
+    },
+    {
+        "id": "258258258",
+        "code": "CLARITYGROUP",
+        "webDisplay": "Clarity Group",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentCode": "CLATIRYGROUP",
+        "parentId": null
+    },
+    {
+        "id": "FL-IF",
+        "code": "FL-IF",
+        "webDisplay": "FL-IF",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentId": "258258258"
+    },
+    {
+        "id": "VVS",
+        "code": "VVS",
+        "webDisplay": "VVS",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 2,
+        "parentId": "258258258"
+    },
+    {
+        "id": "VS",
+        "code": "VS",
+        "webDisplay": "VS",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 3,
+        "parentId": "258258258"
+    },
+    {
+        "id": "I",
+        "code": "I",
+        "webDisplay": "I",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 4,
+        "parentId": "258258258"
     }
 ]

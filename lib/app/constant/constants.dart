@@ -99,4 +99,6 @@ class MasterCode {
   static const String arrivals = "ARRIVALS";
   static const String stage = "STAGE";
   static const String noBgm = "NoBGM";
+  static const String colorGroup = "COLORGROUP";
+  static const String clarityGroup = "CLARITYGROUP";
 }
