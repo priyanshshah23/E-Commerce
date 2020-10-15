@@ -17,8 +17,8 @@ class KeyToSymbolWidget extends StatefulWidget {
 }
 
 class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
-  int elementsToShow = 6;
-  List<Master> listOfMasterView = [];
+  // int elementsToShow = 6;
+  // List<Master> listOfMasterView = [];
   List<Tag> _tags = [];
 
   @override
@@ -41,22 +41,24 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
         widget.keyToSymbol.masters.insert(0, allMaster);
       }
     }
-    if (widget.keyToSymbol.isShowMore) {
-      if (widget.keyToSymbol.masters
-              .where((element) => element.sId == "ShowMore")
-              .toList()
-              .length ==
-          0) {
-        Master allMaster = Master();
-        allMaster.sId = "ShowMore";
-        allMaster.webDisplay =
-            widget.keyToSymbol.isShowMoreSelected ? "Show More" : "Show Less";
-        allMaster.isSelected = false;
 
-        widget.keyToSymbol.masters
-            .insert(widget.keyToSymbol.masters.length, allMaster);
-      }
-    }
+    //code for showMore & showLess functionality.
+    // if (widget.keyToSymbol.isShowMore) {
+    //   if (widget.keyToSymbol.masters
+    //           .where((element) => element.sId == "ShowMore")
+    //           .toList()
+    //           .length ==
+    //       0) {
+    //     Master allMaster = Master();
+    //     allMaster.sId = "ShowMore";
+    //     allMaster.webDisplay =
+    //         widget.keyToSymbol.isShowMoreSelected ? "Show More" : "Show Less";
+    //     allMaster.isSelected = false;
+
+    //     widget.keyToSymbol.masters
+    //         .insert(widget.keyToSymbol.masters.length, allMaster);
+    //   }
+    // }
 
     if (_tags.isEmpty) {
       widget.keyToSymbol.masters.forEach((element) {
@@ -68,11 +70,12 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
       });
     }
 
-    for (var masterIndex = 0; masterIndex < elementsToShow; masterIndex++) {
-      listOfMasterView.add(widget.keyToSymbol.masters[masterIndex]);
-    }
-    listOfMasterView
-        .add(widget.keyToSymbol.masters[widget.keyToSymbol.masters.length - 1]);
+    //code for showMore & showLess functionality.
+    // for (var masterIndex = 0; masterIndex < elementsToShow; masterIndex++) {
+    //   listOfMasterView.add(widget.keyToSymbol.masters[masterIndex]);
+    // }
+    // listOfMasterView
+    //     .add(widget.keyToSymbol.masters[widget.keyToSymbol.masters.length - 1]);
   }
 
   int _radioValue = 0;
@@ -93,10 +96,6 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    final double itemHeight = (size.height - kToolbarHeight - 400) / 2;
-    final double itemWidth = size.width / 2;
-
     return Column(
       children: <Widget>[
         Row(
@@ -152,11 +151,64 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
           color: appTheme.unSelectedBgColor,
           activeColor: appTheme.selectedFilterColor, // default false
           onPressed: (tag) {
-            widget.keyToSymbol.masters.forEach((element) {
-              if (element.webDisplay == tag.title) {
-                element.isSelected ^= true;
+            if (tag.title != R.string().commonString.all) {
+              widget.keyToSymbol.masters.forEach((element) {
+                if (element.webDisplay == tag.title) {
+                  element.isSelected ^= true;
+                  if (!element.isSelected) {
+                    widget.keyToSymbol.isShowAllSelected = false;
+                  } else {
+                    for (var element in widget.keyToSymbol.masters) {
+                      if (element.sId != R.string().commonString.all) {
+                        if (element.isSelected) {
+                          widget.keyToSymbol.isShowAllSelected = true;
+                        } else {
+                          widget.keyToSymbol.isShowAllSelected = false;
+                          break;
+                        }
+                      }
+                    }
+                  }
+                }
+              });
+              if (widget.keyToSymbol.isShowAllSelected) {
+                _tags.forEach((element) {
+                  element.active = true;
+                });
+                widget.keyToSymbol.masters.forEach((element) {
+                  element.isSelected = true;
+                });
+              } else {
+                _tags.forEach((element) {
+                  if (element.title == R.string().commonString.all)
+                    element.active = false;
+                });
+                widget.keyToSymbol.masters.forEach((element) {
+                  if (element.sId == R.string().commonString.all)
+                    element.isSelected = false;
+                });
               }
-            });
+            }
+            if (tag.title == R.string().commonString.all) {
+              widget.keyToSymbol.isShowAllSelected ^= true;
+
+              if (widget.keyToSymbol.isShowAllSelected) {
+                _tags.forEach((element) {
+                  element.active = true;
+                });
+                widget.keyToSymbol.masters.forEach((element) {
+                  element.isSelected = true;
+                });
+              } else {
+                _tags.forEach((element) {
+                  element.active = false;
+                });
+                widget.keyToSymbol.masters.forEach((element) {
+                  element.isSelected = false;
+                });
+              }
+            }
+            setState(() {});
           },
         )
 
@@ -291,64 +343,64 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
     );
   }
 
-  int getGridViewLength(KeyToSymbolModel keyToSymbol) {
-    int length = 0;
-    if (keyToSymbol.isShowAll && keyToSymbol.isShowMore) {
-      if (keyToSymbol.isShowMoreSelected)
-        length = listOfMasterView.length;
-      else
-        length = keyToSymbol.masters.length;
-    } else if ((!keyToSymbol.isShowAll && keyToSymbol.isShowMore)) {
-      if (keyToSymbol.isShowMoreSelected)
-        length = listOfMasterView.length;
-      else
-        length = keyToSymbol.masters.length;
-    } else if ((keyToSymbol.isShowAll && !keyToSymbol.isShowMore)) {
-      length = keyToSymbol.masters.length;
-    } else if (!keyToSymbol.isShowAll && !keyToSymbol.isShowMore) {
-      length = keyToSymbol.masters.length;
-    }
+  // int getGridViewLength(KeyToSymbolModel keyToSymbol) {
+  //   int length = 0;
+  //   if (keyToSymbol.isShowAll && keyToSymbol.isShowMore) {
+  //     if (keyToSymbol.isShowMoreSelected)
+  //       length = listOfMasterView.length;
+  //     else
+  //       length = keyToSymbol.masters.length;
+  //   } else if ((!keyToSymbol.isShowAll && keyToSymbol.isShowMore)) {
+  //     if (keyToSymbol.isShowMoreSelected)
+  //       length = listOfMasterView.length;
+  //     else
+  //       length = keyToSymbol.masters.length;
+  //   } else if ((keyToSymbol.isShowAll && !keyToSymbol.isShowMore)) {
+  //     length = keyToSymbol.masters.length;
+  //   } else if (!keyToSymbol.isShowAll && !keyToSymbol.isShowMore) {
+  //     length = keyToSymbol.masters.length;
+  //   }
 
-    return length;
-  }
+  //   return length;
+  // }
 }
 
-class CardItem extends StatelessWidget {
-  Master obj;
-  String txt;
-  KeyToSymbolModel keyToSymbol;
+// class CardItem extends StatelessWidget {
+//   Master obj;
+//   String txt;
+//   KeyToSymbolModel keyToSymbol;
 
-  CardItem({Key key, this.obj, this.txt, this.keyToSymbol}) : super(key: key);
+//   CardItem({Key key, this.obj, this.txt, this.keyToSymbol}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: obj.sId == "ShowMore"
-            ? appTheme.unSelectedBgColor
-            : ((obj.isSelected) || (keyToSymbol.isShowAllSelected))
-                ? appTheme.selectedFilterColor
-                : appTheme.unSelectedBgColor,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: obj.sId == "ShowMore"
-              ? appTheme.borderColor
-              : (obj.isSelected || keyToSymbol.isShowAllSelected)
-                  ? appTheme.colorPrimary
-                  : appTheme.borderColor,
-        ),
-      ),
-      // padding: const EdgeInsets.all(8),
-      child: Center(
-        child: Text(
-          obj.webDisplay.toLowerCase().capitalize(),
-          textAlign: TextAlign.center,
-          style: appTheme.blackNormal12TitleColorblack,
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       decoration: BoxDecoration(
+//         color: obj.sId == "ShowMore"
+//             ? appTheme.unSelectedBgColor
+//             : ((obj.isSelected) || (keyToSymbol.isShowAllSelected))
+//                 ? appTheme.selectedFilterColor
+//                 : appTheme.unSelectedBgColor,
+//         borderRadius: BorderRadius.circular(12),
+//         border: Border.all(
+//           color: obj.sId == "ShowMore"
+//               ? appTheme.borderColor
+//               : (obj.isSelected || keyToSymbol.isShowAllSelected)
+//                   ? appTheme.colorPrimary
+//                   : appTheme.borderColor,
+//         ),
+//       ),
+//       // padding: const EdgeInsets.all(8),
+//       child: Center(
+//         child: Text(
+//           obj.webDisplay.toLowerCase().capitalize(),
+//           textAlign: TextAlign.center,
+//           style: appTheme.blackNormal12TitleColorblack,
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 extension StringExtension on String {
   String capitalize() {

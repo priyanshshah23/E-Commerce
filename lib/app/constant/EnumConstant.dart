@@ -2,7 +2,7 @@ class ViewTypes {
   static const String fromTo = "fromto";
   static const String selection = "selection";
   static const String dropDown = "dropDown";
-  static const String colorWidget = "color";
+  static const String groupWidget = "groupwidget";
   static const String seperator = "seperator";
   static const String certNo = "certNo";
   static const String keytosymbol = "keytosymbol";

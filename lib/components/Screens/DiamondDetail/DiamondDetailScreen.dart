@@ -1,8 +1,10 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
+import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
+import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -37,6 +39,7 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
   TabController _controller;
   int _currentIndex = 0;
   bool isLoading = true;
+  List<BottomTabModel> arrBottomTab;
 
   List<DiamondDetailImagePagerModel> arrImages =
       List<DiamondDetailImagePagerModel>();
@@ -78,6 +81,11 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
       initialIndex: 0,
     );
     _controller.addListener(_handleTabSelection);
+
+    arrBottomTab = BottomTabBar.getDiamondDetailScreenBottomTabs();
+    setState(() {
+      //
+    });
   }
 
   _handleTabSelection() {
@@ -89,14 +97,49 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: appTheme.whiteColor,
-        body: Padding(
-            padding: EdgeInsets.only(top: getSize(20)),
+    return Scaffold(
+      backgroundColor: appTheme.whiteColor,
+      appBar: getAppBar(
+        context,
+        "Diamond Detail",
+        bgColor: appTheme.whiteColor,
+        leadingButton: getBackButton(context),
+        centerTitle: false,
+        actionItems: [
+          Padding(
+            padding: EdgeInsets.only(right: getSize(20)),
+            child: Image.asset(
+              share,
+              height: getSize(20),
+              width: getSize(20),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: getSize(20)),
+            child: Image.asset(
+              notification,
+              height: getSize(20),
+              width: getSize(20),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: getSize(20)),
+            child: Image.asset(
+              download,
+              height: getSize(20),
+              width: getSize(20),
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: getBottomTab(),
+      body: SafeArea(
+        child: Padding(
+            padding: EdgeInsets.only(
+                top: getSize(20), left: getSize(20), right: getSize(20)),
             child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+              child: ListView(
+                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
                     child: Center(
@@ -180,9 +223,103 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
                       ],
                     ),
                   ),
+                  //
+                  getSection("Basic Details"),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  getGridView(18),
+                  SizedBox(
+                    height: getSize(38),
+                  ),
+                  getSection("Measurements"),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  getGridView(15),
+                  SizedBox(
+                    height: getSize(38),
+                  ),
+                  getSection("Inclusion Details"),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  getGridView(6),
+                  SizedBox(
+                    height: getSize(38),
+                  ),
+                  getSection("Other"),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  getGridView(3),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
                 ],
               ),
             )),
+      ),
+    );
+  }
+
+  Widget getSection(String title) {
+    return Text(
+      title,
+      style: appTheme.blackNormal18TitleColorblack
+          .copyWith(fontWeight: FontWeight.w500),
+    );
+  }
+
+  Widget getGridView(int count) {
+    return Container(
+      child: GridView.count(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        crossAxisCount: 3,
+        childAspectRatio: 1.8,
+        mainAxisSpacing: 0,
+        crossAxisSpacing: 0,
+        children: List.generate(count, (index) {
+          // var item = arraDiamond[index];
+          return getGridItem();
+        }),
+      ),
+    );
+  }
+
+  Widget getGridItem() {
+    return Container(
+      decoration: BoxDecoration(
+          color: appTheme.whiteColor,
+          // borderRadius: BorderRadius.circular(getSize(5)),
+          border: Border.all(color: appTheme.lightBGColor)),
+      child: Padding(
+        padding: EdgeInsets.all(getSize(2)),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "191071",
+                style: appTheme.black14TextStyle.copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              SizedBox(
+                height: getSize(2),
+              ),
+              Text(
+                "Stone ID",
+                style: appTheme.grey14HintTextStyle.copyWith(
+                  fontSize: getFontSize(12),
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -214,6 +351,32 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
         });
       },
       javascriptMode: JavascriptMode.unrestricted,
+    );
+  }
+
+  Widget getBottomTab() {
+    return BottomTabbarWidget(
+      arrBottomTab: arrBottomTab,
+      onClickCallback: (obj) {
+        //
+        if (obj.code == BottomCodeConstant.dDEnquiry) {
+          //
+          print(obj.code);
+        } else if (obj.code == BottomCodeConstant.dDAddToCart) {
+          //
+          print(obj.code);
+        } else if (obj.code == BottomCodeConstant.dDAddToWatchlist) {
+          //
+          print(obj.code);
+          // callApiForGetFilterId();
+        } else if (obj.code == BottomCodeConstant.dDPlaceOrder) {
+          //
+          print(obj.code);
+        } else if (obj.code == BottomCodeConstant.dDComment) {
+          //
+          print(obj.code);
+        }
+      },
     );
   }
 }
