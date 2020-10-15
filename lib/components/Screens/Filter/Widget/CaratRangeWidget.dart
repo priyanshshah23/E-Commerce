@@ -187,7 +187,8 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
             TextInputFormatter.withFunction((oldValue, newValue) =>
                 RegExp(r'(^[+-]?\d*.?\d{0,2})$').hasMatch(newValue.text)
                     ? newValue
-                    : oldValue)
+                    : oldValue),
+            LengthLimitingTextInputFormatter(3),
           ],
           keyboardType: TextInputType.numberWithOptions(decimal: true),
           textInputAction: TextInputAction.next,
@@ -257,7 +258,8 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
             TextInputFormatter.withFunction((oldValue, newValue) =>
                 RegExp(r'(^[+-]?\d*.?\d{0,2})$').hasMatch(newValue.text)
                     ? newValue
-                    : oldValue)
+                    : oldValue),
+            LengthLimitingTextInputFormatter(3),
           ],
           onSubmitted: (value) {},
           style: appTheme.blackNormal14TitleColorblack,

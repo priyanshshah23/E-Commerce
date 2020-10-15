@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:diamnow/app/app.export.dart';
@@ -43,7 +44,11 @@ class Config {
         await rootBundle.loadString('assets/Json/FilterJson.jsonc');
 
     List<dynamic> fieldList = jsonDecode(jsonForm);
-    List<FormBaseModel> formModels = [];
+
+    List<FormBaseModel> formModels = []; //list of onlymodels.
+    final SplayTreeMap<int, FormBaseModel> formModelsWithSeq =
+        SplayTreeMap<int, FormBaseModel>(); //store formbasemodels with sequence...
+
     for (int i = 0; i < fieldList.length; i++) {
       dynamic element = fieldList[i];
       if (element is Map<String, dynamic>) {
@@ -89,9 +94,21 @@ class Config {
         }
 
         print(element["masterCode"]);
+
+        //code to arrange all filterModel into ascending order if its isActive value is true.
+        if (element["isActive"]) {
+          int seq = element["sequence"];
+          formModelsWithSeq[seq] = formModels[i];
+        }
       }
     }
-    return formModels;
+
+    formModels.clear(); //bcz we have to overwrite our new list of models into it.
+    formModelsWithSeq.values.forEach((element) { 
+      formModels.add(element);
+    });
+
+    return formModels; //updated list of all models, isActive and sequence property wise.
   }
 
   // getFilterReq(List<FormBaseModel> formModels) {
