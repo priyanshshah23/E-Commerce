@@ -5,6 +5,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 
 import 'package:diamnow/components/Screens/Filter/Widget/CertNoWidget.dart';
@@ -154,92 +155,29 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   }
 
   Widget getBottomTab() {
-    if (arrBottomTab.length > 0) {
-      return SafeArea(
-        child: Container(
-          height: getSize(56),
-          color: appTheme.colorPrimary,
-          child: Row(
-            children: [
-              for (var i = 0; i < arrBottomTab.length; i++)
-                InkWell(
-                  onTap: () {
-                    //
-                    if (arrBottomTab[i].code ==
-                        BottomCodeConstant.savedSearch) {
-                      //
-                      print(arrBottomTab[i].code);
-                    } else if (arrBottomTab[i].code ==
-                        BottomCodeConstant.addDemamd) {
-                      //
-                      print(arrBottomTab[i].code);
-                    } else if (arrBottomTab[i].code ==
-                        BottomCodeConstant.search) {
-                      //
-                      print(arrBottomTab[i].code);
-                      callApiForGetFilterId();
-                    } else if (arrBottomTab[i].code ==
-                        BottomCodeConstant.saveAndSearch) {
-                      //
-                      print(arrBottomTab[i].code);
-                    } else if (arrBottomTab[i].code ==
-                        BottomCodeConstant.matchPair) {
-                      //
-                      print(arrBottomTab[i].code);
-                    }
-                  },
-                  child: Container(
-                    width: MathUtilities.screenWidth(context) /
-                        arrBottomTab.length,
-                    color: arrBottomTab[i].getBackgroundColor(),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          arrBottomTab[i].isCenter
-                              ? Container(
-                                  // color:
-                                  //     arrBottomTab[i].centerImageBackgroundColor,
-                                  // color: Colors.white,
-                                  decoration: new BoxDecoration(
-                                    color: arrBottomTab[i]
-                                        .getCenterImageBackgroundColor(),
-                                    borderRadius: new BorderRadius.all(
-                                        Radius.circular(5.0)),
-                                  ),
-                                  width: getSize(40),
-                                  height: getSize(40),
-                                  child: Center(
-                                    child: Image.asset(arrBottomTab[i].image,
-                                        width: getSize(20),
-                                        height: getSize(20)),
-                                  ))
-                              : Image.asset(arrBottomTab[i].image,
-                                  width: getSize(20), height: getSize(20)),
-                          if (arrBottomTab[i].isCenter == false)
-                            SizedBox(
-                              height: getSize(5),
-                            ),
-                          if (arrBottomTab[i].isCenter == false)
-                            Text(
-                              arrBottomTab[i].title,
-                              style: appTheme.getTabbarTextStyle(
-                                  textColor: arrBottomTab[i].getTextColor()),
-                              textAlign: TextAlign.center,
-                            ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-            ],
-          ),
-        ),
-      );
-    } else {
-      return null;
-    }
+    return BottomTabbarWidget(
+      arrBottomTab: arrBottomTab,
+      onClickCallback: (obj) {
+        //
+        if (obj.code == BottomCodeConstant.filterSavedSearch) {
+          //
+          print(obj.code);
+        } else if (obj.code == BottomCodeConstant.filterAddDemamd) {
+          //
+          print(obj.code);
+        } else if (obj.code == BottomCodeConstant.filterSearch) {
+          //
+          print(obj.code);
+          // callApiForGetFilterId();
+        } else if (obj.code == BottomCodeConstant.filterSaveAndSearch) {
+          //
+          print(obj.code);
+        } else if (obj.code == BottomCodeConstant.filteMatchPair) {
+          //
+          print(obj.code);
+        }
+      },
+    );
   }
 
   callApiForGetFilterId() {

@@ -36,7 +36,7 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
             ),
           ),
           SizedBox(
-            height: getSize(2),
+            height: getSize(4),
           ),
           Container(
             decoration: BoxDecoration(
@@ -60,8 +60,8 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
                   child: Padding(
                     padding: EdgeInsets.only(
                       top: getSize(8),
-                      left: getSize(8),
-                      right: getSize(8),
+                      left: getSize(5),
+                      right: getSize(5),
                       bottom: getSize(5),
                     ),
                     child: Center(
@@ -88,16 +88,19 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
                           Container(
                             alignment: Alignment.center,
                             margin: EdgeInsets.only(top: getSize(5)),
-                            width: getSize(55),
-                            height: getSize(20),
+                            // width: getSize(55),
+                            // height: getSize(19),
                             decoration: BoxDecoration(
                                 color: appTheme.whiteColor,
                                 borderRadius:
                                     BorderRadius.circular(getSize(5))),
-                            child: Text(
-                              widget.item?.back.toString() + " %" ?? "",
-                              style: appTheme.green10TextStyle
-                                  .copyWith(fontSize: getFontSize(8)),
+                            child: Padding(
+                              padding: EdgeInsets.all(getSize(2)),
+                              child: Text(
+                                widget.item?.back.toString() + " %" ?? "",
+                                style: appTheme.green10TextStyle
+                                    .copyWith(fontSize: getFontSize(8)),
+                              ),
                             ),
                           )
                         ],
@@ -106,11 +109,13 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
                   ),
                 ),
                 SizedBox(
-                  width: getSize(4),
+                  width: getSize(2),
                 ),
                 Expanded(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    // mainAxisSize: MainAxisSize.max,
                     children: [
                       Row(
                         children: [
@@ -172,25 +177,37 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
                           Spacer(),
                           getText(widget.item?.lbNm ?? "")
                         ],
-                      )
+                      ),
+                      SizedBox(
+                        height: getSize(4),
+                      ),
+                      Row(
+                        children: [
+                          Spacer(),
+                          Container(
+                            child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(5),
+                                        topRight: Radius.circular(5))),
+                                width: getSize(26),
+                                height: getSize(4),
+                                // color: Colors.red,
+                              ),
+                            ),
+                          ),
+                          Spacer(),
+                          Spacer(),
+                        ],
+                      ),
                     ],
                   ),
                 ),
                 SizedBox(
-                  width: getSize(4),
-                ),
-                Container(
-                  child: Center(
-                      child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(5),
-                            bottomLeft: Radius.circular(5))),
-                    height: getSize(26),
-                    width: getSize(4),
-                    // color: Colors.red,
-                  )),
+                  width: getSize(2),
                 ),
               ],
             ),

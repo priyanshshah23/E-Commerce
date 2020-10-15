@@ -34,7 +34,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   num avgCarat = 0;
   num pcs = 0;
 
-  bool isGrid = true;
+  bool isGrid = false;
 
   @override
   void initState() {
@@ -103,7 +103,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         ? GridView.count(
             shrinkWrap: true,
             crossAxisCount: 2,
-            childAspectRatio: 1.0,
+            childAspectRatio: 1.009,
             mainAxisSpacing: 10,
             crossAxisSpacing: 8,
             children: List.generate(arraDiamond.length, (index) {
