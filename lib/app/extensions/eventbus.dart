@@ -5,3 +5,6 @@ final EventBus eventForBank = EventBus();
 
 final String eventMasterSelection = "eventMasterSelection";
 final String eventMasterForDeSelectMake = "eventMasterForDeSelectMake";
+final String eventMasterForGroupWidget = "eventMasterForGroupWidget";
+final String eventMasterForGroupWidgetSelectAll =
+    "eventMasterForGroupWidgetSelectAll";

@@ -253,34 +253,56 @@ class _TagWidgetState extends State<TagWidget> {
   }
 
   void onSelectionClick(int index) {
+    if (widget.model.viewType == ViewTypes.groupWidget) {
+      onSelectionClickForGroupWidget(index);
+    } else {
+      if (widget.model.isShowAll == true) {
+        if (widget.model.masters[index].sId == widget.model.allLableTitle) {
+          if (widget.model.masters[0].isSelected == true) {
+            widget.model.masters.forEach((element) {
+              element.isSelected = true;
+            });
+          } else {
+            widget.model.masters.forEach((element) {
+              element.isSelected = false;
+            });
+          }
+        } else {
+          if (widget.model.masters[index].sId == widget.model.allLableTitle) {
+            widget.model.masters.forEach((element) {
+              element.isSelected = false;
+            });
+          } else {
+            if (widget.model.masters
+                    .where((element) =>
+                        element.isSelected == true &&
+                        element.sId != widget.model.allLableTitle)
+                    .toList()
+                    .length ==
+                widget.model.masters.length - 1) {
+              widget.model.masters[0].isSelected = true;
+            } else {
+              widget.model.masters[0].isSelected = false;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  onSelectionClickForGroupWidget(int index) {
     if (widget.model.isShowAll == true) {
       if (widget.model.masters[index].sId == widget.model.allLableTitle) {
         if (widget.model.masters[0].isSelected == true) {
           widget.model.masters.forEach((element) {
             element.isSelected = true;
           });
-        } else {
-          widget.model.masters.forEach((element) {
-            element.isSelected = false;
-          });
-        }
-      } else {
-        if (widget.model.masters[index].sId == widget.model.allLableTitle) {
-          widget.model.masters.forEach((element) {
-            element.isSelected = false;
-          });
-        } else {
-          if (widget.model.masters
-                  .where((element) =>
-                      element.isSelected == true &&
-                      element.sId != widget.model.allLableTitle)
-                  .toList()
-                  .length ==
-              widget.model.masters.length - 1) {
-            widget.model.masters[0].isSelected = true;
-          } else {
-            widget.model.masters[0].isSelected = false;
-          }
+
+          Map<String, bool> m = Map<String, bool>();
+          m[widget.model.masterSelection[index].masterToSelect[0].code] =
+              widget.model.masters[index].isSelected;
+
+          RxBus.post(m, tag: eventMasterForGroupWidgetSelectAll);
         }
       }
     }

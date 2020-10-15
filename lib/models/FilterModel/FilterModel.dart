@@ -100,7 +100,7 @@ class Config {
         print(element["masterCode"]);
 
         //code to arrange all filterModel into ascending order if its isActive value is true.
-        if (element["isActive"]) {
+        if (element["isActive"] ?? true) {
           int seq = element["sequence"];
           formModelsWithSeq[seq] = formModels[i];
         }

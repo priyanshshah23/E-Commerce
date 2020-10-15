@@ -116,6 +116,31 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         },
       ),
     );
+    RxBus.register<Map<String, bool>>(tag: eventMasterForGroupWidgetSelectAll)
+        .listen(
+      (event) => setState(
+        () {
+          List<ColorModel> list = arrList
+              .where((element) => element.viewType == ViewTypes.groupWidget)
+              .toList()
+              .cast<ColorModel>();
+
+          List<ColorModel> list2 = list
+              .where((element) => element.masterCode == event.keys.first)
+              .toList()
+              .cast<ColorModel>();
+
+          print(list2);
+          list2.forEach((element) {
+            if (element.masterCode == event.keys.first) {
+              element.mainMasters.forEach((element) {
+                element.isSelected == event.values.first;
+              });
+            }
+          });
+        },
+      ),
+    );
   }
 
   @override
