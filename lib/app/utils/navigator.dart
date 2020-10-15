@@ -1,5 +1,7 @@
+import 'package:diamnow/components/Screens/Auth/ChangePassword.dart';
 import 'package:diamnow/components/Screens/Auth/DemoScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
+import 'package:diamnow/components/Screens/Auth/Profile.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Auth/PDFDemo.dart';
@@ -104,11 +106,14 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case TabBarDemo.route:
       screen = TabBarDemo();
       break;
-//    case MyHomePage.route:
-//      screen = MyHomePage();
-//      break;
+    case Profile.route:
+      screen = Profile();
+      break;
     case DiamondListScreen.route:
       screen = DiamondListScreen(arguments);
+      break;
+    case ChangePassword.route:
+      screen = ChangePassword();
       break;
     case DiamondDetailScreen.route:
       screen = DiamondDetailScreen(
