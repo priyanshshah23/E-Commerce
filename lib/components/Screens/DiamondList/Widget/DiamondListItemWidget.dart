@@ -15,7 +15,7 @@ class DiamondItemWidget extends StatefulWidget {
 }
 
 class _DiamondItemWidgetState extends State<DiamondItemWidget> {
-  final formater = NumberFormat("#,##0.000");
+  final formater = NumberFormat("00.00", "en_US");
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +76,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       child: Column(
         children: <Widget>[
           Text(
-            formater.format(widget.item?.crt.toString() ?? 0),
+            formater.format(widget.item?.crt ?? 0),
             style:appTheme.blue14TextStyle.copyWith(
               color: widget.item.isSelected ? appTheme.whiteColor : appTheme.colorPrimary
             ),
@@ -176,8 +176,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           getText(widget.item?.shpNm ?? ""),
-          getText(widget.item?.tblPer.toString() + "%T" ?? ""),
-          getText(widget.item?.depPer.toString() + "%D" ?? ""),
+          getText( formater.format(widget.item?.tblPer ?? 0) + "%T"),
+          getText(formater.format(widget.item?.depPer ?? 0)  + "%D" ?? ""),
           getAmountText(R.string().commonString.doller +
                   widget.item?.amt.toStringAsFixed(2) +
                   "/Amt" ??
