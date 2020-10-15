@@ -10,6 +10,7 @@ import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/CertNoWidget.dart';
 
 import 'package:diamnow/components/Screens/Filter/Widget/CaratRangeWidget.dart';
+import 'package:diamnow/components/Screens/Filter/Widget/ColorWidget.dart';
 
 import 'package:diamnow/components/Screens/Filter/Widget/FromToWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
@@ -380,14 +381,14 @@ class _FilterItemState extends State<FilterItem> {
             bottom: getSize(8)),
         child: KeyToSymbolWidget(model),
       );
-    } else if (model.viewType == ViewTypes.colorWidget) {
+    } else if (model.viewType == ViewTypes.groupWidget) {
       return Padding(
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
             top: getSize(8.0),
             bottom: getSize(8)),
-        child: CaratRangeWidget(model),
+        child: ColorWidget(model),
       );
     } else if (model.viewType == ViewTypes.caratRange) {
       return Padding(

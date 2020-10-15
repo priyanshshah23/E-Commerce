@@ -13,6 +13,7 @@ import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -39,6 +40,15 @@ class _LoginScreenState extends StatefulScreenWidgetState {
   bool isButtonEnabled = true;
   bool _autoValidate = false;
 
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (kDebugMode) {
+      _userNameController.text = "testuser";
+      _passwordController.text = "1234";
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

@@ -53,6 +53,83 @@
     "rightPadding": 0
   },
   {
+    "title": "Color",
+    "viewType": "groupwidget",
+    "groupMasterCode": "COLORGROUP",
+    "allLableTitle": "All",
+    "apiKey": "color",
+    "masterCode": "COLOR",
+    "verticalScroll": false,
+    "orientation": "vertical",
+    "isShowAll": true,
+    "isShowMore": false,
+    "tab": "basic",
+    "isWhiteColor": false,
+    "sequence": 1,
+    "masterSelection": [
+      {
+        "code": "DEF",
+        "masterToSelect": [
+          {
+            "code": "COLOR",
+            "subMasters": [
+              "D",
+              "E",
+              "F"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "GH",
+        "masterToSelect": [
+          {
+            "code": "COLOR",
+            "subMasters": [
+              "G",
+              "H"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "IJK",
+        "masterToSelect": [
+          {
+            "code": "COLOR",
+            "subMasters": [
+              "I",
+              "J",
+              "K"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "LMN",
+        "masterToSelect": [
+          {
+            "code": "COLOR",
+            "subMasters": [
+              "L",
+              "M",
+              "-N"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "basic",
+    "rightPadding": 0
+  },
+  {
     "title": "Color Shade",
     "desc": "Desc",
     "viewType": "selection",
@@ -78,16 +155,68 @@
   },
   {
     "title": "Clarity",
-    "viewType": "selection",
+    "viewType": "groupwidget",
+    "groupMasterCode": "CLARITYGROUP",
     "allLableTitle": "All",
     "apiKey": "clarity",
     "masterCode": "CLARITY",
     "verticalScroll": false,
     "orientation": "vertical",
-    "isShowAll": false,
+    "isShowAll": true,
     "isShowMore": false,
     "tab": "basic",
-    "sequence": 3
+    "isWhiteColor": false,
+    "sequence": 1,
+    "masterSelection": [
+      {
+        "code": "FL-IF",
+        "masterToSelect": [
+          {
+            "code": "COLOR",
+            "subMasters": [
+              "FL",
+              "IF"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "VVS",
+        "masterToSelect": [
+          {
+            "code": "COLOR",
+            "subMasters": [
+              "VVS1",
+              "VVS2"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "VS",
+        "masterToSelect": [
+          {
+            "code": "COLOR",
+            "subMasters": [
+              "SI1",
+              "SI2"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "I",
+        "masterToSelect": [
+          {
+            "code": "COLOR",
+            "subMasters": [
+              "I1",
+              "I2"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "viewType": "seperator",
