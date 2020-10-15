@@ -56,6 +56,14 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           arrList = result;
         });
       });
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        shape: RoundedRectangleBorder(
+            borderRadius:
+            BorderRadius.vertical(top: Radius.circular(25.0))),
+        builder: (_) => FilterBy(),
+      );
 
       Config().getTabJson().then((result) {
         setState(() {

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/models/FilterModel/TabModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
@@ -36,6 +37,20 @@ class Config {
       }
     }
     return tabModels;
+  }
+
+  Future<List<FilterOptions>> getOptionsJson() async {
+    String jsonForm = await rootBundle.loadString('assets/Json/TabJson.json');
+
+    List<dynamic> fieldList = jsonDecode(jsonForm);
+    List<FilterOptions> optionsModels = [];
+    for (int i = 0; i < fieldList.length; i++) {
+      dynamic element = fieldList[i];
+      if (element is Map<String, dynamic>) {
+        optionsModels.add(FilterOptions.fromJson(element));
+      }
+    }
+    return optionsModels;
   }
 
   Future<List<FormBaseModel>> getFilterJson() async {

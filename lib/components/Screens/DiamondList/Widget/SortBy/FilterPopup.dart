@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class FilterBy extends StatefulWidget {
   @override
@@ -12,30 +16,41 @@ class _FilterByState extends State<FilterBy> {
   @override
   void initState() {
     super.initState();
-    optionList.add(FilterOptions(title: "Default", icon: filterUnionArrow));
-    optionList
-        .add(FilterOptions(title: "New Diamonds", icon: filterRightArrow));
-    optionList
-        .add(FilterOptions(title: "Price Low to High", icon: filterUpArrow));
-    optionList
-        .add(FilterOptions(title: "Price High to Low", icon: filterDownArrow));
-    optionList
-        .add(FilterOptions(title: "Discount Low to High", icon: filterUpArrow));
-    optionList.add(
-        FilterOptions(title: "Discount High to Low", icon: filterDownArrow));
-    optionList
-        .add(FilterOptions(title: "Color Low to High", icon: filterUpArrow));
-    optionList
-        .add(FilterOptions(title: "Color High to Low", icon: filterDownArrow));
-    optionList
-        .add(FilterOptions(title: "Carat Low to High", icon: filterUpArrow));
-    optionList
-        .add(FilterOptions(title: "Carat High to Low", icon: filterDownArrow));
-    optionList
-        .add(FilterOptions(title: "Clarity Low to High", icon: filterUpArrow));
-    optionList.add(
-        FilterOptions(title: "Clarity High to Low", icon: filterDownArrow));
+    Config().getOptionsJson().then((result) {
+        result.forEach((element) {
+          if(element.isSelected) {
+            optionList.add(element);
+          }
+        });
+        setState(() {});
+    });
+//    optionList.add(FilterOptions(title: "Default", icon: filterUnionArrow));
+//    optionList
+//        .add(FilterOptions(title: "New Diamonds", icon: filterRightArrow));
+//    optionList
+//        .add(FilterOptions(title: "Price Low to High", icon: filterUpArrow));
+//    optionList
+//        .add(FilterOptions(title: "Price High to Low", icon: filterDownArrow));
+//    optionList
+//        .add(FilterOptions(title: "Discount Low to High", icon: filterUpArrow));
+//    optionList.add(
+//        FilterOptions(title: "Discount High to Low", icon: filterDownArrow));
+//    optionList
+//        .add(FilterOptions(title: "Color Low to High", icon: filterUpArrow));
+//    optionList
+//        .add(FilterOptions(title: "Color High to Low", icon: filterDownArrow));
+//    optionList
+//        .add(FilterOptions(title: "Carat Low to High", icon: filterUpArrow));
+//    optionList
+//        .add(FilterOptions(title: "Carat High to Low", icon: filterDownArrow));
+//    optionList
+//        .add(FilterOptions(title: "Clarity Low to High", icon: filterUpArrow));
+//    optionList.add(
+//        FilterOptions(title: "Clarity High to Low", icon: filterDownArrow));
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
