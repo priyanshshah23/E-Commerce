@@ -5,7 +5,7 @@ const String baseURL = "http://fndevelopapi.democ.in/";
 const DEVICE_TYPE_ANDROID = 1; //Android
 const DEVICE_TYPE_IOS = 2; //IOS
 const DEFAULT_PAGE = 1;
-const DEFAULT_LIMIT = 8;
+const DEFAULT_LIMIT = 100;
 const SUCCESS = 1;
 const FAIL = 2;
 
@@ -43,8 +43,8 @@ const eventBusSocket = "EventBusSocket";
 const eventBusLogout = "EventBusLogout";
 
 const imagePath = "assest/icon.png";
-const String googleDocViewURL = "https://docs.google.com/gview?embedded=true&url=";
-
+const String googleDocViewURL =
+    "https://docs.google.com/gview?embedded=true&url=";
 
 const String ONE_SIGNAL_KEY = "ceecb2ef-c463-45d3-a9d3-5ea755a48d8b";
 
@@ -63,6 +63,7 @@ const alphaNumberRegEx = r'[a-zA-Z0-9]';
 const alphaRegEx = r'[a-zA-Z]';
 const spaceRegEx = r'\s';
 const numberRegXWithDecimalAllows = r'([0-9]*[0-9]+\.)[0-9]{0,2}';
+
 //Master Code
 class MasterCode {
   static const String shape = "SHAPE";
@@ -95,4 +96,7 @@ class MasterCode {
   static const String culet = "CULET";
   static const String culetCondition = "CULET_COND";
   static const String make = "MAKE";
+  static const String arrivals = "ARRIVALS";
+  static const String stage = "STAGE";
+  static const String noBgm = "NoBGM";
 }

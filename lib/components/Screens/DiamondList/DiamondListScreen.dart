@@ -2,8 +2,6 @@ import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
-import 'package:diamnow/app/network/NetworkCall.dart';
-import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
@@ -34,6 +32,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   List<DiamondModel> arraDiamond = List<DiamondModel>();
   int page = DEFAULT_PAGE;
   num avgCarat = 0;
+  num pcs = 0;
 
   bool isGrid = true;
 
@@ -81,7 +80,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       arraDiamond.addAll(diamondListResp.data.diamonds);
       avgCarat = arraDiamond.map((m) => m.crt).reduce((a, b) => a + b) /
           arraDiamond.length;
-      print("average ${avgCarat}");
+      pcs = arraDiamond.length;
       diamondList.state.listCount = arraDiamond.length;
       diamondList.state.totalCount = diamondListResp.data.count;
       fillArrayList();
@@ -149,7 +148,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   @override
   Widget build(BuildContext context) {
-    print("carat..... ${avgCarat}");
     return SafeArea(
       child: Scaffold(
         backgroundColor: appTheme.whiteColor,
@@ -159,6 +157,40 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           bgColor: appTheme.whiteColor,
           leadingButton: getBackButton(context),
           centerTitle: false,
+          actionItems: [
+            Padding(
+              padding: EdgeInsets.only(right: getSize(20)),
+              child: Image.asset(
+                selectAll,
+                height: getSize(20),
+                width: getSize(20),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(right: getSize(20)),
+              child: Image.asset(
+                gridView,
+                height: getSize(20),
+                width: getSize(20),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(right: getSize(20)),
+              child: Image.asset(
+                filter,
+                height: getSize(20),
+                width: getSize(20),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(right: getSize(20)),
+              child: Image.asset(
+                download,
+                height: getSize(20),
+                width: getSize(20),
+              ),
+            ),
+          ],
         ),
         body: Padding(
           padding: EdgeInsets.only(
@@ -167,6 +199,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             children: <Widget>[
               DiamondListHeader(
                 carat: avgCarat,
+                pcs: pcs,
               ),
               SizedBox(
                 height: getSize(20),

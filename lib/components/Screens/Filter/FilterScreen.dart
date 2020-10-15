@@ -78,15 +78,12 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
           event.keys.first.masterToSelect.forEach((element) {
             SelectionModel temp = list.firstWhere((mainElement) {
-              print(mainElement.masterCode);
-              print(element.code);
               return mainElement.masterCode == element.code;
             });
             if (!isNullEmptyOrFalse(temp)) {
               temp.masters.forEach((elementSubMaster) {
                 elementSubMaster.isSelected = false;
-                print(elementSubMaster.code);
-                print(element.subMasters);
+
                 if (element.subMasters.contains(elementSubMaster.code)) {
                   elementSubMaster.isSelected = event.values.first;
                 }
@@ -108,7 +105,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           list.forEach((element) {
             if (element.masterCode == MasterCode.make) {
               element.masters.forEach((element) {
-                element.isSelected = false;
+                if (element.code != MasterCode.noBgm)
+                  element.isSelected = false;
               });
             }
           });

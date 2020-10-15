@@ -20,3 +20,10 @@ const String matchPair = "assets/filter/matchPair.png";
 const String saveAndSearch = "assets/filter/saveAndSearch.png";
 const String savedSearch = "assets/filter/savedSearch.png";
 const String search = "assets/filter/search.png";
+
+//DiamodList
+const String selectAll = "assets/diamnow/select_all.png";
+const String gridView = "assets/diamnow/GridView.png";
+const String filter = "assets/diamnow/filter.png";
+const String download = "assets/diamnow/download.png";
+

@@ -25,60 +25,91 @@ class _FromToWidgetState extends State<FromToWidget> {
   String oldValueForTo;
 
   @override
+  void initState() {
+    super.initState();
+    // _focusMaxValue.addListener(() {
+    //   print("Has focus: ${_focusMaxValue.hasFocus}");
+    // });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              widget.fromTomodel?.title ?? "-",
-              style: appTheme.blackNormal18TitleColorblack,
-            ),
-            !widget.fromTomodel.fromToStyle.showUnderline
-                ? SizedBox(height: getSize(16))
-                : SizedBox(),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                    height: getSize(50),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(getSize(10)),
-                      border: Border.all(
-                        width: getSize(1.0),
-                        color: widget.fromTomodel.fromToStyle.showUnderline
-                            ? Colors.transparent
-                            : appTheme.borderColor,
+    return GestureDetector(
+      onTap: () {
+        if (_minValueController != null && _maxValueController != null) {
+          if (num.parse(_minValueController.text.trim()) <=
+              num.parse(_maxValueController.text.trim())) {
+            app.resolve<CustomDialogs>().confirmDialog(
+                  context,
+                  title: "Value Error",
+                  desc: "okay",
+                  positiveBtnTitle: "Try Again",
+                );
+          } else {
+            app.resolve<CustomDialogs>().confirmDialog(
+                  context,
+                  title: "Value Error",
+                  desc: "From Value should be less than or equal to To value",
+                  positiveBtnTitle: "Try Again",
+                );
+          }
+        }
+        // Focus.of(context).unfocus();
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                widget.fromTomodel?.title ?? "-",
+                style: appTheme.blackNormal18TitleColorblack,
+              ),
+              !widget.fromTomodel.fromToStyle.showUnderline
+                  ? SizedBox(height: getSize(16))
+                  : SizedBox(),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      height: getSize(50),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(getSize(10)),
+                        border: Border.all(
+                          width: getSize(1.0),
+                          color: widget.fromTomodel.fromToStyle.showUnderline
+                              ? Colors.transparent
+                              : appTheme.borderColor,
+                        ),
                       ),
+                      child: Center(child: getFromTextFieldWithPadding()),
                     ),
-                    child: Center(child: getFromTextFieldWithPadding()),
                   ),
-                ),
-                SizedBox(
-                  width: getSize(15),
-                ),
-                Expanded(
-                  child: Container(
-                    height: getSize(50),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(getSize(10)),
-                      border: Border.all(
-                        width: getSize(1.0),
-                        color: widget.fromTomodel.fromToStyle.showUnderline
-                            ? Colors.transparent
-                            : appTheme.borderColor,
+                  SizedBox(
+                    width: getSize(15),
+                  ),
+                  Expanded(
+                    child: Container(
+                      height: getSize(50),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(getSize(10)),
+                        border: Border.all(
+                          width: getSize(1.0),
+                          color: widget.fromTomodel.fromToStyle.showUnderline
+                              ? Colors.transparent
+                              : appTheme.borderColor,
+                        ),
                       ),
+                      child: Center(child: getToTextFieldWithPadding()),
                     ),
-                    child: Center(child: getToTextFieldWithPadding()),
                   ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ],
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -109,102 +140,118 @@ class _FromToWidgetState extends State<FromToWidget> {
   }
 
   getFromTexteField() {
-    return TextField(
-      onChanged: (value) {
-        if (value != null || value != "") {
-          if (num.parse(value) < widget.fromTomodel.minValue ||
-              num.parse(value) > widget.fromTomodel.maxValue) {
-            if (oldValueForFrom != null || oldValueForFrom != "") {
-              _minValueController.text = oldValueForFrom;
-              _minValueController.selection = TextSelection.fromPosition(
-                  TextPosition(offset: _minValueController.text.length));
-            }
-          }
-        }
-
-        oldValueForFrom = _minValueController.text.trim();
-      },
-      onSubmitted: (value) {
-        if (value != null) {
-          if (_maxValueController.text != null) {
-            if (num.parse(_maxValueController.text.trim()) < num.parse(value)) {
+    return Focus(
+      onFocusChange: (hasfocus) {
+        if (hasfocus == false) {
+          if (_minValueController.text.isNotEmpty &&
+              _maxValueController.text.isNotEmpty) {
+            if (num.parse(_minValueController.text.trim()) <=
+                num.parse(_maxValueController.text.trim())) {
+              // app.resolve<CustomDialogs>().confirmDialog(
+              //       context,
+              //       title: "Value Error",
+              //       desc: "okay",
+              //       positiveBtnTitle: "Try Again",
+              //     );
+            } else {
               app.resolve<CustomDialogs>().confirmDialog(
                     context,
                     title: "Value Error",
                     desc: "From Value should be less than or equal to To value",
                     positiveBtnTitle: "Try Again",
                   );
-            } else {
-              //todo something
-              app.resolve<CustomDialogs>().confirmDialog(
-                    context,
-                    title: "Value Error",
-                    desc: "okay",
-                    positiveBtnTitle: "Try Again",
-                  );
+              _minValueController.text = "";
+              setState(() {});
             }
           }
         }
+        // Focus.of(context).unfocus();
       },
-      focusNode: _focusMinValue,
-      controller: _minValueController,
-      inputFormatters: [
-        TextInputFormatter.withFunction((oldValue, newValue) =>
-            RegExp(r'(^[+-]?\d*.?\d{0,2})$').hasMatch(newValue.text)
-                ? newValue
-                : oldValue)
-      ],
-      keyboardType: TextInputType.numberWithOptions(decimal: true),
-      textInputAction: TextInputAction.next,
-      decoration: InputDecoration(
-        focusedBorder: widget.fromTomodel.fromToStyle.showUnderline
-            ? new UnderlineInputBorder(
-                borderSide: new BorderSide(
-                color: widget.fromTomodel.fromToStyle.underlineColor,
-              ))
-            : InputBorder.none,
-        enabledBorder: widget.fromTomodel.fromToStyle.showUnderline
-            ? new UnderlineInputBorder(
-                borderSide: new BorderSide(
-                color: widget.fromTomodel.fromToStyle.underlineColor,
-              ))
-            : InputBorder.none,
-        hintText: widget.fromTomodel?.labelFrom ?? "-",
-        hintStyle: appTheme.grey14HintTextStyle,
+      child: TextField(
+        onChanged: (value) {
+          if (value != null || value != "") {
+            if (num.parse(value) < widget.fromTomodel.minValue ||
+                num.parse(value) > widget.fromTomodel.maxValue) {
+              if (oldValueForFrom != null || oldValueForFrom != "") {
+                _minValueController.text = oldValueForFrom;
+                _minValueController.selection = TextSelection.fromPosition(
+                    TextPosition(offset: _minValueController.text.length));
+              }
+            }
+          }
+
+          oldValueForFrom = _minValueController.text.trim();
+        },
+        onSubmitted: (value) {
+          // if (value != null) {
+          //   if (_maxValueController.text != null) {
+          //     if (num.parse(_maxValueController.text.trim()) <
+          //         num.parse(value)) {
+          //       app.resolve<CustomDialogs>().confirmDialog(
+          //             context,
+          //             title: "Value Error",
+          //             desc:
+          //                 "From Value should be less than or equal to To value",
+          //             positiveBtnTitle: "Try Again",
+          //           );
+          //     } else {
+          //       //todo something
+          //       app.resolve<CustomDialogs>().confirmDialog(
+          //             context,
+          //             title: "Value Error",
+          //             desc: "okay",
+          //             positiveBtnTitle: "Try Again",
+          //           );
+          //     }
+          //   }
+          // }
+        },
+        focusNode: _focusMinValue,
+        controller: _minValueController,
+        inputFormatters: [
+          TextInputFormatter.withFunction((oldValue, newValue) =>
+              RegExp(r'(^[+-]?\d*.?\d{0,2})$').hasMatch(newValue.text)
+                  ? newValue
+                  : oldValue)
+        ],
+        style: appTheme.blackNormal14TitleColorblack,
+        keyboardType: TextInputType.numberWithOptions(decimal: true),
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          focusedBorder: widget.fromTomodel.fromToStyle.showUnderline
+              ? new UnderlineInputBorder(
+                  borderSide: new BorderSide(
+                  color: widget.fromTomodel.fromToStyle.underlineColor,
+                ))
+              : InputBorder.none,
+          enabledBorder: widget.fromTomodel.fromToStyle.showUnderline
+              ? new UnderlineInputBorder(
+                  borderSide: new BorderSide(
+                  color: widget.fromTomodel.fromToStyle.underlineColor,
+                ))
+              : InputBorder.none,
+          hintText: widget.fromTomodel?.labelFrom ?? "-",
+          hintStyle: appTheme.grey14HintTextStyle,
+        ),
       ),
     );
   }
 
   getToTextField() {
-    return TextField(
-      textAlign: widget.fromTomodel.fromToStyle.showUnderline
-          ? TextAlign.left
-          : TextAlign.center,
-      onChanged: (value) {
-        if (value != null || value != "") {
-          if (num.parse(value) < widget.fromTomodel.minValue ||
-              num.parse(value) > widget.fromTomodel.maxValue) {
-            if (oldValueForTo != null || oldValueForTo != "") {
-              _maxValueController.text = oldValueForTo;
-              _maxValueController.selection = TextSelection.fromPosition(
-                  TextPosition(offset: _maxValueController.text.length));
-            }
-          }
-        }
-        oldValueForTo = _maxValueController.text.trim();
-      },
-      focusNode: _focusMaxValue,
-      controller: _maxValueController,
-      inputFormatters: [
-        TextInputFormatter.withFunction((oldValue, newValue) =>
-            RegExp(r'(^[+-]?\d*.?\d{0,2})$').hasMatch(newValue.text)
-                ? newValue
-                : oldValue)
-      ],
-      onSubmitted: (value) {
-        if (value != null) {
-          if (_minValueController.text != null) {
-            if (num.parse(_minValueController.text.trim()) > num.parse(value)) {
+    return Focus(
+      onFocusChange: (hasfocus) {
+        if (hasfocus == false) {
+          if (_minValueController.text.isNotEmpty &&
+              _maxValueController.text.isNotEmpty) {
+            if (num.parse(_minValueController.text.trim()) <=
+                num.parse(_maxValueController.text.trim())) {
+              // app.resolve<CustomDialogs>().confirmDialog(
+              //       context,
+              //       title: "Value Error",
+              //       desc: "okay",
+              //       positiveBtnTitle: "Try Again",
+              //     );
+            } else {
               app.resolve<CustomDialogs>().confirmDialog(
                     context,
                     title: "Value Error",
@@ -212,35 +259,81 @@ class _FromToWidgetState extends State<FromToWidget> {
                         "To Value should be greater than or equal to From value",
                     positiveBtnTitle: "Try Again",
                   );
-            } else {
-              //todo something
-              app.resolve<CustomDialogs>().confirmDialog(
-                    context,
-                    title: "Value Error",
-                    desc: "okay",
-                    positiveBtnTitle: "Try Again",
-                  );
+              _maxValueController.text = "";
+              setState(() {});
             }
           }
         }
+        // Focus.of(context).unfocus();
       },
-      keyboardType: TextInputType.numberWithOptions(decimal: true),
-      textInputAction: TextInputAction.done,
-      decoration: InputDecoration(
-        focusedBorder: widget.fromTomodel.fromToStyle.showUnderline
-            ? new UnderlineInputBorder(
-                borderSide: new BorderSide(
-                color: widget.fromTomodel.fromToStyle.underlineColor,
-              ))
-            : InputBorder.none,
-        enabledBorder: widget.fromTomodel.fromToStyle.showUnderline
-            ? new UnderlineInputBorder(
-                borderSide: new BorderSide(
-                color: widget.fromTomodel.fromToStyle.underlineColor,
-              ))
-            : InputBorder.none,
-        hintText: widget.fromTomodel?.labelTo ?? "-",
-        hintStyle: appTheme.grey14HintTextStyle,
+      child: TextField(
+        textAlign: widget.fromTomodel.fromToStyle.showUnderline
+            ? TextAlign.left
+            : TextAlign.center,
+        onChanged: (value) {
+          if (value != null || value != "") {
+            if (num.parse(value) < widget.fromTomodel.minValue ||
+                num.parse(value) > widget.fromTomodel.maxValue) {
+              if (oldValueForTo != null || oldValueForTo != "") {
+                _maxValueController.text = oldValueForTo;
+                _maxValueController.selection = TextSelection.fromPosition(
+                    TextPosition(offset: _maxValueController.text.length));
+              }
+            }
+          }
+          oldValueForTo = _maxValueController.text.trim();
+        },
+        focusNode: _focusMaxValue,
+        controller: _maxValueController,
+        inputFormatters: [
+          TextInputFormatter.withFunction((oldValue, newValue) =>
+              RegExp(r'(^[+-]?\d*.?\d{0,2})$').hasMatch(newValue.text)
+                  ? newValue
+                  : oldValue)
+        ],
+        onSubmitted: (value) {
+          // if (value != null) {
+          //   if (_minValueController.text != null) {
+          //     if (num.parse(_minValueController.text.trim()) >
+          //         num.parse(value)) {
+          //       app.resolve<CustomDialogs>().confirmDialog(
+          //             context,
+          //             title: "Value Error",
+          //             desc:
+          //                 "To Value should be greater than or equal to From value",
+          //             positiveBtnTitle: "Try Again",
+          //           );
+          //     } else {
+          //       //todo something
+          //       app.resolve<CustomDialogs>().confirmDialog(
+          //             context,
+          //             title: "Value Error",
+          //             desc: "okay",
+          //             positiveBtnTitle: "Try Again",
+          //           );
+          //     }
+          //   }
+          // }
+        },
+        style: appTheme.blackNormal14TitleColorblack,
+        keyboardType: TextInputType.numberWithOptions(decimal: true),
+        textInputAction: TextInputAction.done,
+        decoration: InputDecoration(
+          focusedBorder: widget.fromTomodel.fromToStyle.showUnderline
+              ? new UnderlineInputBorder(
+                  borderSide: new BorderSide(
+                  color: widget.fromTomodel.fromToStyle.underlineColor,
+                ))
+              : InputBorder.none,
+          enabledBorder: widget.fromTomodel.fromToStyle.showUnderline
+              ? new UnderlineInputBorder(
+                  borderSide: new BorderSide(
+                  color: widget.fromTomodel.fromToStyle.underlineColor,
+                ))
+              : InputBorder.none,
+          hintText: widget.fromTomodel?.labelTo ?? "-",
+          hintStyle: appTheme.grey14HintTextStyle,
+        ),
       ),
     );
   }

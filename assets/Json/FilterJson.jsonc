@@ -5,8 +5,8 @@
     "allLableTitle": "All Shapes",
     "apiKey": "shape",
     "masterCode": "SHAPE",
-    "verticalScroll": false,
-    "orientation": "horizontal",
+    "verticalScroll": true,
+    "orientation": "vertical",
     "isShowAll": true,
     "isShowMore": true,
     "tab": "basic",
@@ -56,7 +56,7 @@
     "title": "Color Shade",
     "desc": "Desc",
     "viewType": "selection",
-    "allLableTitle": "All Shapes",
+    "allLableTitle": "All",
     "apiKey": "colorShade",
     "masterCode": "SHADE",
     "verticalScroll": false,
@@ -143,6 +143,28 @@
     "rightPadding": 0
   },
   {
+    "title": "Arrivals",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "arrivals",
+    "masterCode": "ARRIVALS",
+    "verticalScroll": false,
+    "orientation": "vertical",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 10
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 9,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "basic",
+    "leftPadding": 0,
+    "rightPadding": 0
+  },
+  {
     "title": "Location",
     "viewType": "selection",
     "allLableTitle": "All",
@@ -179,6 +201,29 @@
     "sequence": 10,
     "masterSelection": [
       {
+        "code": "2EX",
+        "masterToSelect": [
+          {
+            "code": "CUT",
+            "subMasters": [
+              "EX"
+            ]
+          },
+          {
+            "code": "POLISH",
+            "subMasters": [
+              "EX"
+            ]
+          },
+          {
+            "code": "SYMMETRY",
+            "subMasters": [
+              "XE"
+            ]
+          }
+        ]
+      },
+      {
         "code": "3EX",
         "masterToSelect": [
           {
@@ -202,7 +247,7 @@
         ]
       },
       {
-        "code": "3EX-NON",
+        "code": "3VG+",
         "masterToSelect": [
           {
             "code": "CUT",
@@ -223,6 +268,24 @@
             "subMasters": [
               "EX",
               "VG"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "NoBGM",
+        "masterToSelect": [
+          {
+            "code": "SHADE",
+            "subMasters": [
+              "YEL",
+              "WHT"
+            ]
+          },
+          {
+            "code": "MILKEY",
+            "subMasters": [
+              "NONE"
             ]
           }
         ]
@@ -302,6 +365,19 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 11
+  },
+  {
+    "title": "Stage",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "STAGE",
+    "masterCode": "STAGE",
+    "verticalScroll": false,
+    "orientation": "horizontal",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 10
   },
   {
     "viewType": "seperator",
@@ -891,8 +967,8 @@
     "masterCode": "KEY_TO_SYMBOLS",
     "verticalScroll": false,
     "orientation": "vertical",
-    "isShowAll": false,
-    "isShowMore": false,
+    "isShowAll": true,
+    "isShowMore": true,
     "tab": "advance",
     "sequence": 10
   },
