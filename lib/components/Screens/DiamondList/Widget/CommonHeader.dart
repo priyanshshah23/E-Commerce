@@ -3,9 +3,18 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:flutter/material.dart';
 
 class DiamondListHeader extends StatefulWidget {
-  num carat = 0;
-  num pcs = 0;
-  DiamondListHeader({this.pcs,this.carat});
+  String totalCarat = "0";
+  String totalDisc = "0";
+  String totalPriceCrt = "0";
+  String totalAmount = "0";
+  String pcs = "0";
+
+  DiamondListHeader(
+      {this.pcs,
+      this.totalCarat,
+      this.totalDisc,
+      this.totalPriceCrt,
+      this.totalAmount});
 
   @override
   _DiamondListHeaderState createState() => _DiamondListHeaderState();
@@ -19,15 +28,15 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
       child: Row(
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          getColumn(widget.pcs.toString(), "Pcs"),
-          getColumn(widget.carat.toStringAsFixed(2), "Cts"),
-          getColumn("0", "Disc %"),
+          getColumn(widget.pcs, "Pcs"),
+          getColumn(widget.totalCarat, "Cts"),
+          getColumn(widget.totalDisc, "Disc %"),
           Expanded(
             child: getColumn(
-                "0", "Avg. Price/Ct " + R.string().commonString.doller),
+                widget.totalPriceCrt, "Avg. Price/Ct " + R.string().commonString.doller),
           ),
           Expanded(
-            child: getColumn("0", "Amount " + R.string().commonString.doller),
+            child: getColumn(widget.totalAmount, "Amount " + R.string().commonString.doller),
           )
         ],
       ),
@@ -44,7 +53,9 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
       child: Column(
         children: <Widget>[
           getDetailText(text),
-          SizedBox(height: getSize(5),),
+          SizedBox(
+            height: getSize(5),
+          ),
           getLableText(lable),
         ],
       ),
@@ -63,15 +74,14 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
     return Text(
       text,
       style: appTheme.blue14TextStyle,
+      overflow: TextOverflow.ellipsis,
     );
   }
 
   getLableText(String text) {
     return Text(
       text,
-      style: appTheme.black16TextStyle.copyWith(
-        fontSize: getFontSize(12)
-      ),
+      style: appTheme.black16TextStyle.copyWith(fontSize: getFontSize(10)),
     );
   }
 }
