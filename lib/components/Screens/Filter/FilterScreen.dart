@@ -45,6 +45,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   List<FormBaseModel> arrList = [];
   List<BottomTabModel> arrBottomTab;
   String filterId;
+  List<FilterOptions> optionList = List<FilterOptions>();
 
   @override
   void initState() {
@@ -55,6 +56,22 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         setState(() {
           arrList = result;
         });
+      });
+      Config().getOptionsJson().then((result) {
+        result.forEach((element) {
+          if(element.isActive) {
+            optionList.add(element);
+          }
+        });
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          shape: RoundedRectangleBorder(
+              borderRadius:
+              BorderRadius.vertical(top: Radius.circular(25.0))),
+          builder: (_) => FilterBy(optionList: optionList,),
+        );
+        setState(() {});
       });
 
       Config().getTabJson().then((result) {
@@ -110,6 +127,31 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               element.masters.forEach((element) {
                 if (element.code != MasterCode.noBgm)
                   element.isSelected = false;
+              });
+            }
+          });
+        },
+      ),
+    );
+    RxBus.register<Map<String, bool>>(tag: eventMasterForGroupWidgetSelectAll)
+        .listen(
+      (event) => setState(
+        () {
+          List<ColorModel> list = arrList
+              .where((element) => element.viewType == ViewTypes.groupWidget)
+              .toList()
+              .cast<ColorModel>();
+
+          List<ColorModel> list2 = list
+              .where((element) => element.masterCode == event.keys.first)
+              .toList()
+              .cast<ColorModel>();
+
+          print(list2);
+          list2.forEach((element) {
+            if (element.masterCode == event.keys.first) {
+              element.mainMasters.forEach((element) {
+                element.isSelected == event.values.first;
               });
             }
           });

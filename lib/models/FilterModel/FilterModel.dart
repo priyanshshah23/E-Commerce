@@ -1,7 +1,9 @@
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/models/FilterModel/TabModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
@@ -38,12 +40,30 @@ class Config {
     return tabModels;
   }
 
+  Future<List<FilterOptions>> getOptionsJson() async {
+    String jsonForm = await rootBundle.loadString('assets/Json/FilterPopUp.json');
+
+    List<dynamic> fieldList = jsonDecode(jsonForm);
+    List<FilterOptions> optionsModels = [];
+    for (int i = 0; i < fieldList.length; i++) {
+      dynamic element = fieldList[i];
+      if (element is Map<String, dynamic>) {
+        optionsModels.add(FilterOptions.fromJson(element));
+      }
+    }
+    return optionsModels;
+  }
+
   Future<List<FormBaseModel>> getFilterJson() async {
     String jsonForm =
         await rootBundle.loadString('assets/Json/FilterJson.jsonc');
 
     List<dynamic> fieldList = jsonDecode(jsonForm);
-    List<FormBaseModel> formModels = [];
+
+    List<FormBaseModel> formModels = []; //list of onlymodels.
+    final SplayTreeMap<int, FormBaseModel> formModelsWithSeq =
+        SplayTreeMap<int, FormBaseModel>(); //store formbasemodels with sequence...
+
     for (int i = 0; i < fieldList.length; i++) {
       dynamic element = fieldList[i];
       if (element is Map<String, dynamic>) {
@@ -93,9 +113,21 @@ class Config {
         }
 
         print(element["masterCode"]);
+
+        //code to arrange all filterModel into ascending order if its isActive value is true.
+        if (element["isActive"] ?? true) {
+          int seq = element["sequence"];
+          formModelsWithSeq[seq] = formModels[i];
+        }
       }
     }
-    return formModels;
+
+    formModels.clear(); //bcz we have to overwrite our new list of models into it.
+    formModelsWithSeq.values.forEach((element) { 
+      formModels.add(element);
+    });
+
+    return formModels; //updated list of all models, isActive and sequence property wise.
   }
 
   // getFilterReq(List<FormBaseModel> formModels) {

@@ -10,11 +10,13 @@
     "isShowAll": true,
     "isShowMore": true,
     "tab": "basic",
-    "sequence": 1
+    "sequence": 1,
+    "isActive": true
   },
   {
     "viewType": "seperator",
-    "sequence": 9,
+    "sequence": 2,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -34,7 +36,8 @@
     "isShowMore": false,
     "tab": "basic",
     "isWhiteColor": false,
-    "sequence": 1,
+    "sequence": 3,
+    "isActive": true,
     "fromToStyle": {
       "showUnderline": true,
       "showBorder": false,
@@ -45,7 +48,8 @@
   },
   {
     "viewType": "seperator",
-    "sequence": 9,
+    "sequence": 4,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -65,7 +69,7 @@
     "isShowMore": false,
     "tab": "basic",
     "isWhiteColor": false,
-    "sequence": 1,
+    "sequence": 5,
     "masterSelection": [
       {
         "code": "DEF",
@@ -122,7 +126,7 @@
   },
   {
     "viewType": "seperator",
-    "sequence": 9,
+    "sequence": 6,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -142,11 +146,13 @@
     "isShowMore": false,
     "tab": "basic",
     "isWhiteColor": false,
-    "sequence": 1
+    "sequence": 7,
+    "isActive": true
   },
   {
     "viewType": "seperator",
-    "sequence": 2,
+    "sequence": 8,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
@@ -166,13 +172,14 @@
     "isShowMore": false,
     "tab": "basic",
     "isWhiteColor": false,
-    "sequence": 1,
+    "sequence": 9,
+    "isActive": true,
     "masterSelection": [
       {
         "code": "FL-IF",
         "masterToSelect": [
           {
-            "code": "COLOR",
+            "code": "CLARITY",
             "subMasters": [
               "FL",
               "IF"
@@ -184,7 +191,7 @@
         "code": "VVS",
         "masterToSelect": [
           {
-            "code": "COLOR",
+            "code": "CLARITY",
             "subMasters": [
               "VVS1",
               "VVS2"
@@ -196,7 +203,7 @@
         "code": "VS",
         "masterToSelect": [
           {
-            "code": "COLOR",
+            "code": "CLARITY",
             "subMasters": [
               "SI1",
               "SI2"
@@ -208,7 +215,7 @@
         "code": "I",
         "masterToSelect": [
           {
-            "code": "COLOR",
+            "code": "CLARITY",
             "subMasters": [
               "I1",
               "I2"
@@ -220,7 +227,8 @@
   },
   {
     "viewType": "seperator",
-    "sequence": 4,
+    "sequence": 10,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -238,11 +246,13 @@
     "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
-    "sequence": 10
+    "sequence": 11,
+    "isActive": true
   },
   {
     "viewType": "seperator",
-    "sequence": 9,
+    "sequence": 12,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
@@ -260,11 +270,13 @@
     "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
-    "sequence": 10
+    "sequence": 13,
+    "isActive": true
   },
   {
     "viewType": "seperator",
-    "sequence": 9,
+    "sequence": 14,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -282,11 +294,13 @@
     "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
-    "sequence": 10
+    "sequence": 15,
+    "isActive": true
   },
   {
     "viewType": "seperator",
-    "sequence": 9,
+    "sequence": 16,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
@@ -304,11 +318,13 @@
     "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
-    "sequence": 10
+    "sequence": 17,
+    "isActive": true
   },
   {
     "viewType": "seperator",
-    "sequence": 9,
+    "sequence": 18,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -327,7 +343,8 @@
     "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
-    "sequence": 10,
+    "sequence": 19,
+    "isActive": true,
     "masterSelection": [
       {
         "code": "2EX",
@@ -432,7 +449,8 @@
     "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
-    "sequence": 10
+    "sequence": 20,
+    "isActive": true
   },
   {
     "title": "Polish",
@@ -445,7 +463,8 @@
     "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
-    "sequence": 11
+    "sequence": 21,
+    "isActive": true
   },
   {
     "title": "Symmetry",
@@ -458,11 +477,13 @@
     "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
-    "sequence": 11
+    "sequence": 22,
+    "isActive": true
   },
   {
     "viewType": "seperator",
-    "sequence": 9,
+    "sequence": 23,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -480,7 +501,8 @@
     "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
-    "sequence": 10
+    "sequence": 24,
+    "isActive": true
   },
   {
     "title": "Brilliance",
@@ -493,7 +515,8 @@
     "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
-    "sequence": 11
+    "sequence": 25,
+    "isActive": true
   },
   {
     "title": "Stage",
@@ -506,11 +529,13 @@
     "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
-    "sequence": 10
+    "sequence": 26,
+    "isActive": true
   },
   {
     "viewType": "seperator",
-    "sequence": 9,
+    "sequence": 27,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
@@ -521,7 +546,8 @@
     "title": "Price / Carat",
     "viewType": "fromto",
     "apiKey": "pricePerCarat",
-    "sequence": 4,
+    "sequence": 28,
+    "isActive": true,
     "labelFrom": "From",
     "tab": "basic",
     "labelTo": "To",
@@ -537,7 +563,8 @@
   },
   {
     "viewType": "seperator",
-    "sequence": 9,
+    "sequence": 29,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
@@ -548,7 +575,8 @@
     "title": "Disc %",
     "viewType": "fromto",
     "apiKey": "Disc %",
-    "sequence": 6,
+    "sequence": 30,
+    "isActive": true,
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "basic",
@@ -564,7 +592,8 @@
   },
   {
     "viewType": "seperator",
-    "sequence": 7,
+    "sequence": 31,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
@@ -575,7 +604,8 @@
     "title": "Table%",
     "viewType": "fromto",
     "apiKey": "Table%",
-    "sequence": 8,
+    "sequence": 32,
+    "isActive": true,
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "advance",
@@ -591,7 +621,8 @@
   },
   {
     "viewType": "seperator",
-    "sequence": 7,
+    "sequence": 33,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -602,7 +633,8 @@
     "title": "Depth%",
     "viewType": "fromto",
     "apiKey": "Depth%",
-    "sequence": 8,
+    "sequence": 34,
+    "isActive": true,
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "advance",
@@ -618,7 +650,8 @@
   },
   {
     "viewType": "seperator",
-    "sequence": 7,
+    "sequence": 35,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -629,7 +662,8 @@
     "title": "Ratio",
     "viewType": "fromto",
     "apiKey": "Ratio",
-    "sequence": 8,
+    "sequence": 36,
+    "isActive": true,
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "advance",
@@ -645,7 +679,8 @@
   },
   {
     "viewType": "seperator",
-    "sequence": 7,
+    "sequence": 37,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -656,7 +691,8 @@
     "title": "Length",
     "viewType": "fromto",
     "apiKey": "Length",
-    "sequence": 8,
+    "sequence": 38,
+    "isActive": true,
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "advance",
@@ -672,7 +708,8 @@
   },
   {
     "viewType": "seperator",
-    "sequence": 7,
+    "sequence": 39,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -683,7 +720,8 @@
     "title": "Width",
     "viewType": "fromto",
     "apiKey": "Width",
-    "sequence": 8,
+    "sequence": 40,
+    "isActive": true,
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "advance",
@@ -699,7 +737,8 @@
   },
   {
     "viewType": "seperator",
-    "sequence": 7,
+    "sequence": 41,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -710,7 +749,8 @@
     "title": "Depth",
     "viewType": "fromto",
     "apiKey": "Depth",
-    "sequence": 8,
+    "sequence": 42,
+    "isActive": true,
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "advance",
@@ -726,7 +766,8 @@
   },
   {
     "viewType": "seperator",
-    "sequence": 7,
+    "sequence": 43,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -737,7 +778,8 @@
     "title": "Crown Angle",
     "viewType": "fromto",
     "apiKey": "Crown Angle",
-    "sequence": 8,
+    "sequence": 44,
+    "isActive": true,
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "advance",
@@ -753,7 +795,8 @@
   },
   {
     "viewType": "seperator",
-    "sequence": 7,
+    "sequence": 45,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -764,7 +807,8 @@
     "title": "Crown Height%",
     "viewType": "fromto",
     "apiKey": "Crown Height%",
-    "sequence": 8,
+    "sequence": 46,
+    "isActive": true,
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "advance",
@@ -780,7 +824,8 @@
   },
   {
     "viewType": "seperator",
-    "sequence": 7,
+    "sequence": 47,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -791,7 +836,8 @@
     "title": "Girdle%",
     "viewType": "fromto",
     "apiKey": "Girdle%",
-    "sequence": 8,
+    "sequence": 48,
+    "isActive": true,
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "advance",
@@ -807,7 +853,8 @@
   },
   {
     "viewType": "seperator",
-    "sequence": 7,
+    "sequence": 49,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -818,7 +865,8 @@
     "title": "Pav. Angle",
     "viewType": "fromto",
     "apiKey": "Pav. Angle",
-    "sequence": 8,
+    "sequence": 50,
+    "isActive": true,
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "advance",
@@ -834,7 +882,8 @@
   },
   {
     "viewType": "seperator",
-    "sequence": 7,
+    "sequence": 51,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -845,7 +894,8 @@
     "title": "Pavilion Height",
     "viewType": "fromto",
     "apiKey": "Pavilion Height",
-    "sequence": 8,
+    "sequence": 52,
+    "isActive": true,
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "advance",
@@ -861,7 +911,8 @@
   },
   {
     "viewType": "seperator",
-    "sequence": 7,
+    "sequence": 53,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -872,7 +923,8 @@
     "title": "Lower Half",
     "viewType": "fromto",
     "apiKey": "Lower Half",
-    "sequence": 8,
+    "sequence": 54,
+    "isActive": true,
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "advance",
@@ -888,7 +940,8 @@
   },
   {
     "viewType": "seperator",
-    "sequence": 7,
+    "sequence": 55,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -899,7 +952,8 @@
     "title": "Star Length",
     "viewType": "fromto",
     "apiKey": "Star Length",
-    "sequence": 8,
+    "sequence": 56,
+    "isActive": true,
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "advance",
@@ -915,7 +969,8 @@
   },
   {
     "viewType": "seperator",
-    "sequence": 9,
+    "sequence": 57,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -933,11 +988,13 @@
     "isShowAll": false,
     "isShowMore": false,
     "tab": "advance",
-    "sequence": 10
+    "sequence": 58,
+    "isActive": true
   },
   {
     "viewType": "seperator",
-    "sequence": 9,
+    "sequence": 59,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -955,11 +1012,13 @@
     "isShowAll": false,
     "isShowMore": false,
     "tab": "advance",
-    "sequence": 10
+    "sequence": 60,
+    "isActive": true
   },
   {
     "viewType": "seperator",
-    "sequence": 9,
+    "sequence": 61,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -977,11 +1036,13 @@
     "isShowAll": false,
     "isShowMore": false,
     "tab": "advance",
-    "sequence": 10
+    "sequence": 62,
+    "isActive": true
   },
   {
     "viewType": "seperator",
-    "sequence": 9,
+    "sequence": 63,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -999,11 +1060,13 @@
     "isShowAll": false,
     "isShowMore": false,
     "tab": "advance",
-    "sequence": 10
+    "sequence": 64,
+    "isActive": true
   },
   {
     "viewType": "seperator",
-    "sequence": 9,
+    "sequence": 65,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1021,11 +1084,13 @@
     "isShowAll": false,
     "isShowMore": false,
     "tab": "advance",
-    "sequence": 10
+    "sequence": 66,
+    "isActive": true
   },
   {
     "viewType": "seperator",
-    "sequence": 9,
+    "sequence": 67,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1043,11 +1108,13 @@
     "isShowAll": false,
     "isShowMore": false,
     "tab": "advance",
-    "sequence": 10
+    "sequence": 68,
+    "isActive": true
   },
   {
     "viewType": "seperator",
-    "sequence": 9,
+    "sequence": 69,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1065,11 +1132,13 @@
     "isShowAll": false,
     "isShowMore": false,
     "tab": "advance",
-    "sequence": 1
+    "sequence": 70,
+    "isActive": true
   },
   {
     "viewType": "seperator",
-    "sequence": 9,
+    "sequence": 71,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1099,14 +1168,16 @@
     "isShowAll": true,
     "isShowMore": false,
     "tab": "advance",
-    "sequence": 10
+    "sequence": 72,
+    "isActive": true
   },
   {
     "title": "Search, Enter Comma for Multiple Stone ID",
     "desc": "Desc",
     "viewType": "certNo",
     "apiKey": "certNo",
-    "sequence": 1,
+    "sequence": 73,
+    "isActive": true,
     "tab": "stoneid",
     "radiobutton": [
       {
