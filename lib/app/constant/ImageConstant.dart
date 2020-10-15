@@ -27,3 +27,10 @@ const String gridView = "assets/diamnow/GridView.png";
 const String filter = "assets/diamnow/filter.png";
 const String download = "assets/diamnow/download.png";
 
+const String filterDownArrow = "assets/filter/filterDownArrow.png";
+const String filterRightArrow = "assets/filter/filterRightArrow.png";
+const String filterUnionArrow = "assets/filter/filterUnionArrow.png";
+const String filterUpArrow = "assets/filter/filterUpArrow.png";
+const String selectedFilter = "assets/filter/selectedFilter.png";
+const String unselectedFilter = "assets/filter/unselectedFilter.png";
+

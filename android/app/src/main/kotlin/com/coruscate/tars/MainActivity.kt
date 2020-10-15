@@ -16,10 +16,10 @@ import com.example.flutter_files_picker.FlutterFilePickerPlugin
 import com.example.flutter_files_picker.FlutterFilePickerPlugin.Companion.activityContext
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.LocationSettingsRequest
-import com.google.android.gms.location.LocationSettingsStatusCodes
+//import com.google.android.gms.location.LocationRequest
+//import com.google.android.gms.location.LocationServices
+//import com.google.android.gms.location.LocationSettingsRequest
+//import com.google.android.gms.location.LocationSettingsStatusCodes
 import io.flutter.app.FlutterActivity
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugins.GeneratedPluginRegistrant
@@ -38,12 +38,12 @@ class MainActivity : FlutterActivity(), GoogleApiClient.ConnectionCallbacks, Goo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        googleApiClient = GoogleApiClient.Builder(this)
-                .addApi(LocationServices.API)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build()
-        googleApiClient?.connect()
+//        googleApiClient = GoogleApiClient.Builder(this)
+//                .addApi(LocationServices.API)
+//                .addConnectionCallbacks(this)
+//                .addOnConnectionFailedListener(this)
+//                .build()
+//        googleApiClient?.connect()
 
         Log.e("Register", "in main")
         GeneratedPluginRegistrant.registerWith(this)
@@ -83,35 +83,35 @@ class MainActivity : FlutterActivity(), GoogleApiClient.ConnectionCallbacks, Goo
     }
 
     private fun showStartGpsDialog() {
-        if (!isGpsEnabled()) {
-            val locationRequest: LocationRequest = LocationRequest.create()
-                    .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                    .setInterval(1000)
-                    .setSmallestDisplacement(100f)
-                    .setFastestInterval(1000)
-            val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
-            builder.setAlwaysShow(true)
-
-            val result = LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build())
-            result.setResultCallback { result ->
-                val status = result.status
-                Log.e("status", "${result.status}");
-                Log.e("status", "$result");
-                when (status.statusCode) {
-                    LocationSettingsStatusCodes.SUCCESS -> {
-                        this.result?.success(true)
-                    }
-                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
-                        status.startResolutionForResult(activityContext, REQUEST_CHECK_SETTINGS_GPS)
-                    } catch (e: IntentSender.SendIntentException) {
-                        e.printStackTrace()
-                    }
-                    LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
-                        this.result?.error("NOT_AVAILBLE", "GPS Service Not available", null)
-                    }
-                }
-            }
-        }
+//        if (!isGpsEnabled()) {
+//            val locationRequest: LocationRequest = LocationRequest.create()
+//                    .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+//                    .setInterval(1000)
+//                    .setSmallestDisplacement(100f)
+//                    .setFastestInterval(1000)
+//            val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
+//            builder.setAlwaysShow(true)
+//
+//            val result = LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build())
+//            result.setResultCallback { result ->
+//                val status = result.status
+//                Log.e("status", "${result.status}");
+//                Log.e("status", "$result");
+//                when (status.statusCode) {
+//                    LocationSettingsStatusCodes.SUCCESS -> {
+//                        this.result?.success(true)
+//                    }
+//                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
+//                        status.startResolutionForResult(activityContext, REQUEST_CHECK_SETTINGS_GPS)
+//                    } catch (e: IntentSender.SendIntentException) {
+//                        e.printStackTrace()
+//                    }
+//                    LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
+//                        this.result?.error("NOT_AVAILBLE", "GPS Service Not available", null)
+//                    }
+//                }
+//            }
+//        }x
     }
 
     fun checkPermissionStatus(context: Context?): Int {
