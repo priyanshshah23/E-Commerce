@@ -10,6 +10,12 @@ class BottomCodeConstant {
   static const String filterSaveAndSearch = "FILTER_SAVE_SEARCH";
   static const String filteMatchPair = "FILTER_MATCH_PAIR";
 
+  //DIAMOND LIST
+  static const String dLShowSelected = "DL_SHOWSELECTED";
+  static const String dLCompare = "DL_COMPARE";
+  static const String dLMore = "DL_MORE";
+  static const String dLStatus = "DL_STATUS";
+
 //DIAMOND DETAIL
   static const String dDEnquiry = "DD_ENQUIRY";
   static const String dDAddToCart = "DD_ADD_TO_CART";
@@ -86,8 +92,12 @@ class BottomTabModel extends TabConfiguration {
     data['isCenter'] = this.isCenter;
     return data;
   }
+}
 
-  List<BottomTabModel> getFilterScreenBottomTabs() {
+class BottomTabBar {
+  //
+
+  static List<BottomTabModel> getFilterScreenBottomTabs() {
     List<BottomTabModel> arrBootomTab = List<BottomTabModel>();
     arrBootomTab.add(BottomTabModel(
         title: "Saved Search",
@@ -123,7 +133,37 @@ class BottomTabModel extends TabConfiguration {
     return arrBootomTab;
   }
 
-  List<BottomTabModel> getDiamondDetailScreenBottomTabs() {
+  static List<BottomTabModel> getDiamondListScreenBottomTabs() {
+    List<BottomTabModel> arrBootomTab = List<BottomTabModel>();
+    arrBootomTab.add(BottomTabModel(
+        title: "Show Selected",
+        image: showSelected,
+        code: BottomCodeConstant.dLShowSelected,
+        sequence: 0,
+        isCenter: false));
+    arrBootomTab.add(BottomTabModel(
+        title: "Compare",
+        image: compare,
+        code: BottomCodeConstant.dLCompare,
+        sequence: 1,
+        isCenter: false));
+    arrBootomTab.add(BottomTabModel(
+        title: "More",
+        image: plusIcon,
+        code: BottomCodeConstant.dLMore,
+        sequence: 2,
+        isCenter: false));
+    arrBootomTab.add(BottomTabModel(
+        title: "Status",
+        image: status,
+        code: BottomCodeConstant.dLStatus,
+        sequence: 3,
+        isCenter: false));
+
+    return arrBootomTab;
+  }
+
+  static List<BottomTabModel> getDiamondDetailScreenBottomTabs() {
     List<BottomTabModel> arrBootomTab = List<BottomTabModel>();
     arrBootomTab.add(BottomTabModel(
         title: "Enquiry",

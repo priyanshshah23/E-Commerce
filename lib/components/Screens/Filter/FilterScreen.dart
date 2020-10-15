@@ -62,7 +62,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         });
       });
     });
-    arrBottomTab = BottomTabModel().getFilterScreenBottomTabs();
+    arrBottomTab = BottomTabBar.getFilterScreenBottomTabs();
     setState(() {
       //
     });
