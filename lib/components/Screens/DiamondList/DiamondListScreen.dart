@@ -88,56 +88,57 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     filter.diamondSearchId = filterId;
     filterReq.filters = filter;
     SyncManager.instance.callApiForDiamondList(context, filterReq,
-        (diamondListResp) {
-      arraDiamond.addAll(diamondListResp.data.diamonds);
+            (diamondListResp) {
+          arraDiamond.addAll(diamondListResp.data.diamonds);
 //      avgCarat = arraDiamond.map((m) => m.crt).reduce((a, b) => a + b) /
 //          arraDiamond.length;
 //      pcs = arraDiamond.length;
-      diamondList.state.listCount = arraDiamond.length;
-      diamondList.state.totalCount = diamondListResp.data.count;
-      fillArrayList();
-      page = page + 1;
-      diamondList.state.setApiCalling(false);
-      setState(() {});
-    }, (onError) {
-      print("erorrr..." + onError);
-      if (isRefress) {
-        arraDiamond.clear();
-        diamondList.state.listCount = arraDiamond.length;
-        diamondList.state.totalCount = arraDiamond.length;
-      }
-      diamondList.state.setApiCalling(false);
-    }, isProgress: !isRefress && !isLoading);
+          diamondList.state.listCount = arraDiamond.length;
+          diamondList.state.totalCount = diamondListResp.data.count;
+              getAverageCalculation(diamondListResp.data.diamonds);
+          fillArrayList();
+          page = page + 1;
+          diamondList.state.setApiCalling(false);
+          setState(() {});
+        }, (onError) {
+          print("erorrr..." + onError);
+          if (isRefress) {
+            arraDiamond.clear();
+            diamondList.state.listCount = arraDiamond.length;
+            diamondList.state.totalCount = arraDiamond.length;
+          }
+          diamondList.state.setApiCalling(false);
+        }, isProgress: !isRefress && !isLoading);
   }
 
   fillArrayList() {
     diamondList.state.listItems = isGrid
         ? GridView.count(
-            shrinkWrap: true,
-            crossAxisCount: 2,
-            childAspectRatio: 1.009,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 8,
-            children: List.generate(arraDiamond.length, (index) {
-              var item = arraDiamond[index];
-              return InkWell(
-                onTap: () {
-                  setState(() {
-                    arraDiamond[index].isSelected =
-                        !arraDiamond[index].isSelected;
-                    fillArrayList();
-                    diamondList.state.setApiCalling(false);
-                  });
-                },
-                child: DiamondGridItemWidget(
-                  item: item,
-                ),
-              );
-              // return Container(
-              //   color: Colors.green,
-              // );
-            }),
-          )
+      shrinkWrap: true,
+      crossAxisCount: 2,
+      childAspectRatio: 1.009,
+      mainAxisSpacing: 10,
+      crossAxisSpacing: 8,
+      children: List.generate(arraDiamond.length, (index) {
+        var item = arraDiamond[index];
+        return InkWell(
+          onTap: () {
+            setState(() {
+              arraDiamond[index].isSelected =
+              !arraDiamond[index].isSelected;
+              fillArrayList();
+              diamondList.state.setApiCalling(false);
+            });
+          },
+          child: DiamondGridItemWidget(
+            item: item,
+          ),
+        );
+        // return Container(
+        //   color: Colors.green,
+        // );
+      }),
+    )
         : ListView.builder(
       itemCount: arraDiamond.length,
       itemBuilder: (context, index) {
@@ -146,7 +147,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               setState(() {
                 arraDiamond[index].isSelected = !arraDiamond[index].isSelected;
                 fillArrayList();
-                calulate(arraDiamond);
+                getAverageCalculation(arraDiamond);
                 diamondList.state.setApiCalling(false);
               });
             },
@@ -155,6 +156,64 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             ));
       },
     );
+  }
+
+  getAverageCalculation(List<DiamondModel> diamondList){
+    double carat = 0.0;
+    double avgDisc = 0.0;
+    double avgRapCrt = 0.0;
+    double avgAmount = 0.0;
+    double totalRap = 0.0;
+    double priceCrt = 0.0;
+    List<DiamondModel> filterList;
+    Iterable<DiamondModel> list = diamondList.where((item) {
+      return item.isSelected == true;
+    });
+    filterList = list.toList();
+    if(filterList != null && filterList.length >0){
+      for(var i in filterList){
+        carat+=i.crt;
+        totalRap += i.crt*i.rap;
+        priceCrt += i.crt*i.ctPr;
+        avgDisc += getAvgDiscount(getFinalRate(i.ctPr),i.rap);
+      }
+      avgRapCrt= totalRap/carat;
+      totalCarat = PriceUtilities.getPrice(carat);
+      totalPriceCrt = PriceUtilities.getPrice(getAveragePriceCrt(priceCrt, carat));
+      totalDisc = PriceUtilities.getPercent(avgDisc);
+      pcs = filterList.length.toString();
+    }else{
+      for(var i in diamondList){
+        carat+=i.crt;
+        totalRap += i.crt*i.rap;
+        priceCrt += i.crt*i.ctPr;
+        avgDisc += getAvgDiscount(getFinalRate(i.ctPr),i.rap);
+      }
+      avgRapCrt= totalRap/carat;
+      totalCarat = PriceUtilities.getPrice(carat);
+      totalPriceCrt = PriceUtilities.getPrice(getAveragePriceCrt(priceCrt, carat));
+      totalDisc = PriceUtilities.getPercent(avgDisc);
+      pcs = diamondList.length.toString();
+    }
+
+
+  }
+
+  getAveragePriceCrt(num totalPrice,num totalcarat){
+    return totalPrice/totalcarat;
+  }
+
+  getAvgDiscount(num priceCrt,num rapPrice){
+    num avgDiscount = priceCrt / rapPrice;
+    return avgDiscount;
+  }
+
+  getFinalRate (num priceCrt){
+    return (priceCrt*0.98).toDouble();
+  }
+
+  getFinalDiscount (num finalRate,num rapPrice){
+    return ((1-(finalRate/rapPrice))*100).toDouble();
   }
 
   calulate(List<DiamondModel> diamondList){
@@ -191,21 +250,21 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
     num calcDiscount = (calcAmount / rapAvg * 100) - 100;
     if (fancyCarat > 0) {
-    carat += fancyCarat;
+      carat += fancyCarat;
     }
 
     if (fancyAmt > 0) {
-    calcAmount += fancyAmt;
+      calcAmount += fancyAmt;
     }
 
     num calcPricePerCarat = calcAmount / carat;
     if (calcPricePerCarat > 0 || calcDiscount < 0){
-    totalPriceCrt = PriceUtilities.getPrice(calcPricePerCarat);
+      totalPriceCrt = PriceUtilities.getPrice(calcPricePerCarat);
     }else{
       totalPriceCrt = PriceUtilities.getPrice(0);
     }
     if (calcDiscount > 0 || calcDiscount < 0){
-    totalDisc = PriceUtilities.getPercent(calcDiscount);
+      totalDisc = PriceUtilities.getPercent(calcDiscount);
     }else{
       totalDisc = PriceUtilities.getPercent(0);
     }

@@ -1,0 +1,88 @@
+[
+  {
+    "title": "Default",
+    "isSelected": false,
+    "icon": "filterUnionArrow.png",
+    "isActive": true,
+    "apiKey": "default"
+
+  },
+  {
+    "title": "New Diamonds",
+    "isSelected": false,
+    "icon": "filterRightArrow.png",
+    "isActive": true,
+    "apiKey": "newDiamonds"
+
+  },
+  {
+    "title": "Price Low to High",
+    "isSelected": false,
+    "icon": "filterUpArrow.png",
+    "isActive": true,
+    "apiKey": "priceLowToHigh"
+  },
+  {
+    "title": "Price High to Low",
+    "isSelected": false,
+    "icon": "filterDownArrow.png",
+    "isActive": true,
+    "apiKey": "priceHighToLow"
+  },
+  {
+    "title": "Discount Low to High",
+    "isSelected": false,
+    "icon": "filterUpArrow.png",
+    "isActive": true,
+    "apiKey": "discountLowToHigh"
+  },
+  {
+    "title": "Discount High to Low",
+    "isSelected": false,
+    "icon": "filterDownArrow.png",
+    "isActive": true,
+    "apiKey": "discountHighToLow"
+  },
+  {
+    "title": "Color Low to High",
+    "isSelected": false,
+    "icon": "filterUpArrow.png",
+    "isActive": true,
+    "apiKey": "colorLowToHigh"
+  },
+  {
+    "title": "Color High to Low",
+    "isSelected": false,
+    "icon": "filterDownArrow.png",
+    "isActive": true,
+    "apiKey": "colorHighToLow"
+  },
+  {
+    "title": "Carat Low to High",
+    "isSelected": false,
+    "icon": "filterUpArrow.png",
+    "isActive": true,
+    "apiKey": "caratLowToHigh"
+  },
+  {
+    "title": "Carat High to Low",
+    "isSelected": false,
+    "icon": "filterDownArrow.png",
+    "isActive": true,
+    "apiKey": "caratHighToLow"
+  },
+  {
+    "title": "Clarity Low to High",
+    "isSelected": false,
+    "icon": "filterUpArrow.png",
+    "isActive": true,
+    "apiKey": "clarityLowToHigh"
+  },
+  {
+    "title": "Clarity High to Low",
+    "isSelected": false,
+    "icon": "filterDownArrow.png",
+    "isActive": true,
+    "apiKey": "clarityHighToLow"
+  }
+]
