@@ -171,12 +171,8 @@
     "isShowAll": true,
     "isShowMore": false,
     "tab": "basic",
-<<<<<<< HEAD
-    "sequence": 7,
-    "isActive":true
-=======
     "isWhiteColor": false,
-    "sequence": 1,
+    "sequence": 7,
     "masterSelection": [
       {
         "code": "FL-IF",
@@ -227,7 +223,6 @@
         ]
       }
     ]
->>>>>>> 3fb69c5c18609ad04d55366269cae619ffeb66ed
   },
   {
     "viewType": "seperator",
