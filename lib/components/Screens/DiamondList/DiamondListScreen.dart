@@ -5,6 +5,7 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
@@ -33,6 +34,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   List<DiamondModel> arraDiamond = List<DiamondModel>();
   int page = DEFAULT_PAGE;
   num avgCarat = 0;
+
+  bool isGrid = true;
 
   @override
   void initState() {
@@ -76,15 +79,15 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     SyncManager.instance.callApiForDiamondList(context, filterReq,
         (diamondListResp) {
       arraDiamond.addAll(diamondListResp.data.diamonds);
-      avgCarat = arraDiamond.map((m) => m.crt).reduce((a, b) => a + b) / arraDiamond.length;
+      avgCarat = arraDiamond.map((m) => m.crt).reduce((a, b) => a + b) /
+          arraDiamond.length;
       print("average ${avgCarat}");
       diamondList.state.listCount = arraDiamond.length;
       diamondList.state.totalCount = diamondListResp.data.count;
       fillArrayList();
       page = page + 1;
       diamondList.state.setApiCalling(false);
-      setState(() {
-      });
+      setState(() {});
     }, (onError) {
       print("erorrr..." + onError);
       if (isRefress) {
@@ -97,22 +100,51 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   }
 
   fillArrayList() {
-    diamondList.state.listItems = ListView.builder(
-      itemCount: arraDiamond.length,
-      itemBuilder: (context, index) {
-        return InkWell(
-          onTap: (){
-            setState(() {
-              arraDiamond[index].isSelected = !arraDiamond[index].isSelected;
-              fillArrayList();
-              diamondList.state.setApiCalling(false);
-            });
-          },
-            child: DiamondItemWidget(
-          item: arraDiamond[index],
-        ));
-      },
-    );
+    diamondList.state.listItems = isGrid
+        ? GridView.count(
+            shrinkWrap: true,
+            crossAxisCount: 2,
+            childAspectRatio: 1.0,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 8,
+            children: List.generate(arraDiamond.length, (index) {
+              var item = arraDiamond[index];
+              return InkWell(
+                onTap: () {
+                  setState(() {
+                    arraDiamond[index].isSelected =
+                        !arraDiamond[index].isSelected;
+                    fillArrayList();
+                    diamondList.state.setApiCalling(false);
+                  });
+                },
+                child: DiamondGridItemWidget(
+                  item: item,
+                ),
+              );
+              // return Container(
+              //   color: Colors.green,
+              // );
+            }),
+          )
+        : ListView.builder(
+            itemCount: arraDiamond.length,
+            itemBuilder: (context, index) {
+              return InkWell(
+                onTap: () {
+                  setState(() {
+                    arraDiamond[index].isSelected =
+                        !arraDiamond[index].isSelected;
+                    fillArrayList();
+                    diamondList.state.setApiCalling(false);
+                  });
+                },
+                child: DiamondItemWidget(
+                  item: arraDiamond[index],
+                ),
+              );
+            },
+          );
   }
 
   @override
@@ -133,7 +165,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               left: getSize(20), right: getSize(20), top: getSize(20)),
           child: Column(
             children: <Widget>[
-              DiamondListHeader(carat: avgCarat,),
+              DiamondListHeader(
+                carat: avgCarat,
+              ),
               SizedBox(
                 height: getSize(20),
               ),
