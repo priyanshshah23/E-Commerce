@@ -108,7 +108,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           list.forEach((element) {
             if (element.masterCode == MasterCode.make) {
               element.masters.forEach((element) {
-                element.isSelected = false;
+                if (element.code != MasterCode.noBgm)
+                  element.isSelected = false;
               });
             }
           });

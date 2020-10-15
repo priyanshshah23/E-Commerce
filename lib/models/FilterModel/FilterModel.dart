@@ -88,8 +88,6 @@ class Config {
           selectionModel.masters = arrMaster;
         }
       }
-
-      print(element["masterCode"]);
     }
     return formModels;
   }

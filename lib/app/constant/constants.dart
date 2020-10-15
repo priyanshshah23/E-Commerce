@@ -98,4 +98,5 @@ class MasterCode {
   static const String make = "MAKE";
   static const String arrivals = "ARRIVALS";
   static const String stage = "STAGE";
+  static const String noBgm = "NoBGM";
 }

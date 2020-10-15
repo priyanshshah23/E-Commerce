@@ -3,6 +3,7 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class DiamondItemWidget extends StatefulWidget {
   DiamondModel item;
@@ -14,6 +15,8 @@ class DiamondItemWidget extends StatefulWidget {
 }
 
 class _DiamondItemWidgetState extends State<DiamondItemWidget> {
+  final formater = NumberFormat("#,##0.000");
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -73,7 +76,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       child: Column(
         children: <Widget>[
           Text(
-            widget.item?.crt.toString() ?? "",
+            formater.format(widget.item?.crt.toString() ?? 0),
             style:appTheme.blue14TextStyle.copyWith(
               color: widget.item.isSelected ? appTheme.whiteColor : appTheme.colorPrimary
             ),
