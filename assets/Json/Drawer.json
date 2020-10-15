@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Basic",
+    "tab": "basic",
+    "sequence": 1
+  },
+  {
+    "title": "Advanced",
+    "tab": "advance",
+    "sequence": 2
+  },
+  {
+    "title": "Stone ID/Cert No",
+    "tab": "stoneid",
+    "sequence": 3
+  }
+]

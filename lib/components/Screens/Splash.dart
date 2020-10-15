@@ -31,7 +31,7 @@ class _SplashState extends State<Splash> {
   Future openNextScreen() async {
     if (app.resolve<PrefUtils>().isUserLogin()) {
       // NavigationUtilities.pushRoute(FilterScreen.route);
-      NavigationUtilities.pushRoute(DiamondListScreen.route);
+      NavigationUtilities.pushRoute(FilterScreen.route);
     } else {
       NavigationUtilities.pushRoute(LoginScreen.route);
     }
@@ -41,7 +41,7 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     //callUpdateVehicleApi(context);
     return Container(
-      color: Colors.deepPurpleAccent,
+      color: appTheme.colorPrimary,
       height: MathUtilities.screenHeight(context),
       width: MathUtilities.screenWidth(context),
       child: Center(
