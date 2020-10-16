@@ -17,7 +17,6 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
 
   @override
   void initState() {
-    print(widget.item.sSts);
     super.initState();
   }
   @override

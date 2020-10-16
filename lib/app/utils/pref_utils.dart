@@ -140,14 +140,17 @@ class PrefUtils {
   }
 
   bool isUserLogin() {
-    return getBool(keyIsUserLogin);
+    return !isStringEmpty(getUserToken());
   }
 
   String getUserToken() {
-    debugPrint("dec start ${DateTime.now()}");
-    String token = EncryptionHelper.decryptString(getString(keyToken));
-    debugPrint("dec end ${DateTime.now()}");
-    return token;
+    String str = getString(keyToken);
+    if (!isStringEmpty(str)) {
+      String token = EncryptionHelper.decryptString(getString(keyToken));
+      return token;
+    } else {
+      return null;
+    }
   }
 
   Future<void> saveUserToken(String token) async {

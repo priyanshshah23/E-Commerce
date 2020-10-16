@@ -147,6 +147,7 @@ class SyncManager {
         priceCrt += item.crt * item.ctPr;
       }
     }
+
     avgRapAmt = rapAvg / carat;
     avgPriceCrt = priceCrt / carat;
     return [carat, calcAmount, rapAvg, avgRapAmt, avgPriceCrt];

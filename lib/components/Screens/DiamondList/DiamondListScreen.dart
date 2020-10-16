@@ -99,7 +99,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 //      pcs = arraDiamond.length;
           diamondList.state.listCount = arraDiamond.length;
           diamondList.state.totalCount = diamondListResp.data.count;
-              calulate(diamondListResp.data.diamonds);
+              getAverageCalculation(diamondListResp.data.diamonds);
           fillArrayList();
           page = page + 1;
           diamondList.state.setApiCalling(false);
@@ -151,7 +151,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               setState(() {
                 arraDiamond[index].isSelected = !arraDiamond[index].isSelected;
                 fillArrayList();
-                calulate(arraDiamond);
+                getAverageCalculation(arraDiamond);
                 diamondList.state.setApiCalling(false);
               });
             },
@@ -181,6 +181,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       avgRapCrt = arrValues[3];
       avgPriceCrt = arrValues[4];
       avgDisc = avgPriceCrt/avgRapCrt;
+//      print("average"+avgRapCrt.toString());
+//      print("Price.."+avgPriceCrt.toString());
+//      print("Disc..."+avgDisc.toString());
       totalDisc = PriceUtilities.getPercent(avgDisc);
       totalCarat = PriceUtilities.getPrice(carat);
       pcs = filterList.length.toString();
