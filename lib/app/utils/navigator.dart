@@ -1,6 +1,9 @@
 import 'package:diamnow/components/Screens/Auth/ChangePassword.dart';
+import 'package:diamnow/components/Screens/Auth/CompanyInformation.dart';
 import 'package:diamnow/components/Screens/Auth/DemoScreen.dart';
+import 'package:diamnow/components/Screens/Auth/ForgetPassword.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
+import 'package:diamnow/components/Screens/Auth/PersonalInformation.dart';
 import 'package:diamnow/components/Screens/Auth/Profile.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
@@ -8,6 +11,7 @@ import 'package:diamnow/components/Screens/Auth/PDFDemo.dart';
 import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
+import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
 import 'package:flutter/material.dart';
 import '../app.export.dart';
 import 'fade_route.dart';
@@ -114,6 +118,18 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       break;
     case ChangePassword.route:
       screen = ChangePassword();
+      break;
+    case PersonalInformation.route:
+      screen = PersonalInformation();
+      break;
+    case CompanyInformation.route:
+      screen = CompanyInformation();
+      break;
+    case StaticPageScreen.route:
+      screen = StaticPageScreen(arguments);
+      break;
+    case ForgetPasswordScreen.route:
+      screen = ForgetPasswordScreen();
       break;
     case DiamondDetailScreen.route:
       screen = DiamondDetailScreen(

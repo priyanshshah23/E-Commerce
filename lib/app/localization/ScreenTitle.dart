@@ -11,6 +11,7 @@ class ScreenTitle {
   final String forgotPasswordDesc;
   final String termsAndCondition;
   final String privacyPolicy;
+  final String aboutUS;
   final String otpVerification;
   final String otpVerificationDelivery;
   final String otpVerificationDeliveryDone;
@@ -231,7 +232,8 @@ class ScreenTitle {
         "Enter your registered mobile number to recover your password.",
     this.termsAndCondition = "Terms & Conditions",
     this.privacyPolicy = "Privacy Policy",
-    this.otpVerification = "Verify Ride Code",
+    this.aboutUS = "About Us",
+     this.otpVerification = "Verify Ride Code",
     this.otpVerificationDelivery = "Verify Pickup Code",
     this.otpVerificationDeliveryDone = "Verify Delivery Code",
     this.enterOtp = "Enter 4-digit",

@@ -26,41 +26,52 @@ class _ChangePasswordState extends State<ChangePassword> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: getSize(20), vertical: getSize(30)),
-          child: Form(
-            key: _formKey,
-            autovalidate: _autoValidate,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(
-                  height: getSize(40),
-                ),
-                getOldPasswordTextField(),
-                SizedBox(
-                  height: getSize(20),
-                ),
-                getNewPasswordTextField(),
-                SizedBox(
-                  height: getSize(20),
-                ),
-                getConfirmPasswordTextField(),
-                SizedBox(
-                  height: getSize(30),
-                ),
-                Container(
-                  margin: EdgeInsets.only(
-                      top: getSize(15), left: getSize(0)),
-                  decoration: BoxDecoration(
-                      boxShadow: getBoxShadow(context)),
-                  child: AppButton.flat(
-                    onTap: () {
-                      // NavigationUtilities.pushRoute(TabBarDemo.route);
-                      FocusScope.of(context).unfocus();
-                      if (_formKey.currentState.validate()) {
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        appBar: getAppBar(
+          context,
+          "Change Password",
+          bgColor: appTheme.whiteColor,
+          leadingButton: getBackButton(context),
+          centerTitle: false,
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: getSize(20), vertical: getSize(30)),
+            child: Form(
+              key: _formKey,
+              autovalidate: _autoValidate,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(
+                    height: getSize(40),
+                  ),
+                  getOldPasswordTextField(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  getNewPasswordTextField(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  getConfirmPasswordTextField(),
+                  SizedBox(
+                    height: getSize(30),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                        top: getSize(15), left: getSize(0)),
+                    decoration: BoxDecoration(
+                        boxShadow: getBoxShadow(context)),
+                    child: AppButton.flat(
+                      onTap: () {
+                        // NavigationUtilities.pushRoute(TabBarDemo.route);
+                        FocusScope.of(context).unfocus();
+                        if (_formKey.currentState.validate()) {
 //                      if(  _confirmPasswordController.text.trim() != _newPasswordController.text.trim()) {
 //                        _autoValidate = true;
 //                        isPasswordSame = false;
@@ -68,23 +79,24 @@ class _ChangePasswordState extends State<ChangePassword> {
 //                        isPasswordSame = true;
 //                      }
 //                      setState(() {});
-                        _formKey.currentState.save();
+                          _formKey.currentState.save();
 //                      callLoginApi(context);
-                      } else {
-                        setState(() {
-                          _autoValidate = true;
-                        });
-                      }
-                      // NavigationUtilities.push(ThemeSetting());
-                    },
-                    //  backgroundColor: appTheme.buttonColor,
-                    borderRadius: getSize(5),
-                    fitWidth: true,
-                    text: "Change Password",
-                    //isButtonEnabled: enableDisableSigninButton(),
+                        } else {
+                          setState(() {
+                            _autoValidate = true;
+                          });
+                        }
+                        // NavigationUtilities.push(ThemeSetting());
+                      },
+                      //  backgroundColor: appTheme.buttonColor,
+                      borderRadius: getSize(5),
+                      fitWidth: true,
+                      text: "Change Password",
+                      //isButtonEnabled: enableDisableSigninButton(),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

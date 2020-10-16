@@ -17,4 +17,7 @@ class ApiConstants {
   static const String login = commonUrl + "auth/login";
 
   static const String diamondList = commonUrl + "diamond/paginate";
+
+  static const String staticPage = apiV1 + "static-page/{id}";
+
 }
