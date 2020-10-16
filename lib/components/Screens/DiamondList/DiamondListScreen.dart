@@ -7,9 +7,11 @@ import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
+import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:flutter/material.dart';
 
 class DiamondListScreen extends StatefulScreenWidget {
@@ -41,13 +43,22 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   String totalPriceCrt = "0";
   String totalAmount = "0";
   String pcs = "0";
-
+  List<FilterOptions> optionList = List<FilterOptions>();
   List<BottomTabModel> arrBottomTab;
   bool isGrid = false;
 
   @override
   void initState() {
     super.initState();
+    Config().getOptionsJson().then((result) {
+      result.forEach((element) {
+        if (element.isActive) {
+          optionList.add(element);
+        }
+      });
+
+      setState(() {});
+    });
 
     diamondList = BaseList(BaseListState(
 //      imagePath: noRideHistoryFound,
@@ -299,6 +310,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 onTap: () {
                   setState(() {
                     isGrid = !isGrid;
+                    fillArrayList();
+                    diamondList.state.setApiCalling(false);
+                    print(isGrid);
                   });
                 },
                 child: Image.asset(
@@ -308,12 +322,25 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(right: getSize(20)),
-              child: Image.asset(
-                filter,
-                height: getSize(20),
-                width: getSize(20),
+            InkWell(
+              onTap: (){
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
+                  builder: (_) => FilterBy(
+                    optionList: optionList,
+                  ),
+                );
+              },
+              child: Padding(
+                padding: EdgeInsets.only(right: getSize(20)),
+                child: Image.asset(
+                  filter,
+                  height: getSize(20),
+                  width: getSize(20),
+                ),
               ),
             ),
             Padding(

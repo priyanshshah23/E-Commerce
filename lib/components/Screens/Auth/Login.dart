@@ -353,7 +353,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
           .callMasterSync(NavigationUtilities.key.currentContext, () async {
         //success
 
-        NavigationUtilities.pushRoute(DiamondListScreen.route);
+        NavigationUtilities.pushRoute(FilterScreen.route);
       }, () {},
               isNetworkError: false,
               isProgress: true,
