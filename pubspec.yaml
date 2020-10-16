@@ -96,7 +96,7 @@ flutter:
     - assets/DiamondDetail/
     - assets/Common/
     # - assets/chls/hochls.pem
-    - assets/chls.pem
+    # - assets/chls.pem
 
 
   fonts:
