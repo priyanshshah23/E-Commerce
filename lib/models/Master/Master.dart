@@ -1,4 +1,7 @@
+import 'dart:core';
+
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -182,6 +185,53 @@ class Master {
     });
 
     return master;
+  }
+
+  static List<String> getSelectedId(List<Master> masters) {
+    List<String> ids = [];
+
+    for (Master item in masters) {
+      if (item.isSelected) {
+        if (item.sId != R.string().commonString.all && item.sId != "ShowMore") {
+          ids.add(item.sId);
+        }
+
+        // if isWebDisplay == true{
+        //     ids.append(item.webDisplay!)
+        // }
+        // else{
+        //     ids.append(item.id!)
+        // }
+
+        for (Master groped in item.grouped) {
+          if (groped.sId != R.string().commonString.all &&
+              groped.sId != "ShowMore") {
+            if (!ids.contains(groped.sId)) {
+              ids.add(groped.sId);
+            }
+          }
+
+          // if isWebDisplay == true{
+
+          //     if !ids.contains(groped.webDisplay!){
+          //         ids.append(groped.webDisplay!)
+          //     }
+          // }
+          // else{
+
+          //     if !ids.contains(groped.id!){
+          //         ids.append(groped.id!)
+          //     }
+          // }
+        }
+      }
+    }
+
+    if (ids.length > 0) {
+      return ids;
+    }
+
+    return null;
   }
 
   Widget getShapeImage(bool isSelected) {

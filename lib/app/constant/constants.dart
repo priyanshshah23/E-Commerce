@@ -1,6 +1,7 @@
 import 'package:diamnow/app/utils/BottomSheet.dart';
 
 const String baseURL = "http://fndevelopapi.democ.in/";
+const apiV1 = "api/v1/";
 
 const DEVICE_TYPE_ANDROID = 1; //Android
 const DEVICE_TYPE_IOS = 2; //IOS
@@ -108,4 +109,10 @@ class DiamondStatus{
   static const String onMine = "M";
   static const String office = "O";
   static const String show = "S";
+}
+
+class StaticPageConstant {
+  static const String ABOUT_US = "ABOUT_US";
+  static const String PRIVACY_POLICY = "PRIVACY_POLICY";
+  static const String TERMS_CONDITION = "TERMS_CONDITION";
 }

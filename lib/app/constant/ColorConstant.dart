@@ -14,6 +14,8 @@ class ColorConstants {
   static Color introgrey = fromHex("#999999");
   static Color black = fromHex("#000000");
   static Color white = fromHex("#FFFFFF");
+  static Color countryBgShadow = fromHex("#00000029");
+
 
   static MaterialColor accentCustomColor =
       MaterialColor(0xFF2B0DB2, accentColor);

@@ -106,16 +106,20 @@ class User {
   String dateOfJoin;
   bool isActive;
   int isVerified;
+
 //  Null androidPlayerId;
 //  Null iosPlayerId;
   int status;
+
 //  Null connectedSockets;
   int termsDiscount;
+
 //  Null resetPasswordLink;
 //  Null apiTokens;
 //  Null defaultFilter;
   String clientSecret;
   String profileImage;
+
 //  Null syncExtra;
   String anniversary;
   String businessId;
@@ -147,13 +151,16 @@ class User {
   int version;
   bool isTermsCondAgree;
   String termsCondAgreeAt;
+
 //  Null loginOtp;
   String group;
+
 //  Null addedBy;
 //  Null updatedBy;
   Account account;
-//  Null accountTerm;
+  AccountTerm accountTerm;
   String seller;
+
 //  Null createdBy;
 
   User.fromJson(Map<String, dynamic> json) {
@@ -235,6 +242,9 @@ class User {
     group = json['group'];
     account =
         json['account'] != null ? new Account.fromJson(json['account']) : null;
+    accountTerm = json['accountTerm'] != null
+        ? new AccountTerm.fromJson(json['accountTerm'])
+        : null;
     seller = json['seller'];
   }
 
@@ -316,7 +326,9 @@ class User {
     if (this.account != null) {
       data['account'] = this.account.toJson();
     }
-//    data['accountTerm'] = this.accountTerm;
+    if (this.accountTerm != null) {
+      data['accountTerm'] = this.accountTerm.toJson();
+    }
     data['seller'] = this.seller;
     return data;
   }
@@ -786,6 +798,124 @@ class Permissions {
     data['mailExcel'] = this.mailExcel;
     data['printPDF'] = this.printPDF;
     data['all'] = this.all;
+    return data;
+  }
+}
+
+class AccountTerm {
+  String createdAt;
+  String updatedAt;
+  String id;
+  String deliveryType;
+  String deliveryDays;
+  int extraAmt;
+  int extraPer;
+  int rapPer;
+  int creditLimit;
+  int memoLimit;
+  int adatCommission;
+  int brokerCommission;
+  int type;
+  String dFTermId;
+  bool isApproved;
+  bool isActive;
+  bool isDeleted;
+  bool isDefault;
+  String syncId;
+  String parentId;
+  String approvedOn;
+  String stockCategory;
+  String addedBy;
+  String currencyId;
+  String dayTermsId;
+  String createdBy;
+
+  AccountTerm({
+    this.createdAt,
+    this.updatedAt,
+    this.id,
+    this.deliveryType,
+    this.deliveryDays,
+    this.extraAmt,
+    this.extraPer,
+    this.rapPer,
+    this.creditLimit,
+    this.memoLimit,
+    this.adatCommission,
+    this.brokerCommission,
+    this.type,
+    this.dFTermId,
+    this.isApproved,
+    this.isActive,
+    this.isDeleted,
+    this.isDefault,
+    this.syncId,
+    this.parentId,
+    this.approvedOn,
+    this.stockCategory,
+    this.addedBy,
+    this.currencyId,
+    this.dayTermsId,
+    this.createdBy,
+  });
+
+  AccountTerm.fromJson(Map<String, dynamic> json) {
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    id = json['id'];
+    deliveryType = json['deliveryType'];
+    deliveryDays = json['deliveryDays'];
+    extraAmt = json['extraAmt'];
+    extraPer = json['extraPer'];
+    rapPer = json['rapPer'];
+    creditLimit = json['creditLimit'];
+    memoLimit = json['memoLimit'];
+    adatCommission = json['adatCommission'];
+    brokerCommission = json['brokerCommission'];
+    type = json['type'];
+    dFTermId = json['DFTermId'];
+    isApproved = json['isApproved'];
+    isActive = json['isActive'];
+    isDeleted = json['isDeleted'];
+    isDefault = json['isDefault'];
+    syncId = json['syncId'];
+    parentId = json['parentId'];
+    approvedOn = json['approvedOn'];
+    stockCategory = json['stockCategory'];
+    addedBy = json['addedBy'];
+    currencyId = json['currencyId'];
+    dayTermsId = json['dayTermsId'];
+    createdBy = json['createdBy'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    data['id'] = this.id;
+    data['deliveryType'] = this.deliveryType;
+    data['deliveryDays'] = this.deliveryDays;
+    data['extraAmt'] = this.extraAmt;
+    data['extraPer'] = this.extraPer;
+    data['rapPer'] = this.rapPer;
+    data['creditLimit'] = this.creditLimit;
+    data['memoLimit'] = this.memoLimit;
+    data['adatCommission'] = this.adatCommission;
+    data['brokerCommission'] = this.brokerCommission;
+    data['type'] = this.type;
+    data['DFTermId'] = this.dFTermId;
+    data['isApproved'] = this.isApproved;
+    data['isActive'] = this.isActive;
+    data['isDeleted'] = this.isDeleted;
+    data['isDefault'] = this.isDefault;
+    data['syncId'] = this.syncId;
+    data['parentId'] = this.parentId;
+    data['approvedOn'] = this.approvedOn;
+    data['stockCategory'] = this.stockCategory;
+    data['addedBy'] = this.addedBy;
+    data['currencyId'] = this.currencyId;
+    data['dayTermsId'] = this.dayTermsId;
+    data['createdBy'] = this.createdBy;
     return data;
   }
 }
