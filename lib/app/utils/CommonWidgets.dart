@@ -8,7 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:rxbus/rxbus.dart';
-import 'package:diamnow/app/localization/app_locales.dart';
+
 
 import '../app.export.dart';
 import '../constant/ColorConstant.dart';
