@@ -61,7 +61,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   List<FilterOptions> optionList = List<FilterOptions>();
   List<BottomTabModel> arrMoreMenu;
   List<BottomTabModel> arrBottomTab;
-  bool isGrid = true;
+  bool isGrid = false;
   bool isAccountTerm = false;
 
   @override
