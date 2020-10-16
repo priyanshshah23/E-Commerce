@@ -92,10 +92,10 @@ class SyncManager {
   }) async {
     NetworkCall<DiamondListResp>()
         .makeCall(
-            () =>
-                app.resolve<ServiceModule>().networkService().diamondList(req),
-            context,
-            isProgress: isProgress,)
+      () => app.resolve<ServiceModule>().networkService().diamondList(req),
+      context,
+      isProgress: isProgress,
+    )
         .then((diamondListResp) async {
       success(diamondListResp);
     }).catchError((onError) => {
@@ -104,29 +104,27 @@ class SyncManager {
             });
   }
 
-  List<num> getTotalCaratRapAmount(List<DiamondModel> diamondList){
-
+  List<num> getTotalCaratRapAmount(List<DiamondModel> diamondList) {
     double carat = 0.0;
     double calcAmount = 0.0;
     double rapAvg = 0.0;
     double fancyCarat = 0.0;
     double fancyAmt = 0.0;
 
-    for(var item in diamondList){
-      if (item.rap > 0){
+    for (var item in diamondList) {
+      if (item.rap > 0) {
         carat += item.crt;
         calcAmount += item.ctPr;
         rapAvg += item.rap * item.crt;
-      }else{
+      } else {
         fancyCarat += item.crt;
         fancyAmt += item.amt;
       }
     }
-    return [carat,calcAmount,rapAvg,fancyCarat,fancyAmt];
+    return [carat, calcAmount, rapAvg, fancyCarat, fancyAmt];
   }
 
-  List<num> getTotalCaratAvgRapAmount(List<DiamondModel> diamondList){
-
+  List<num> getTotalCaratAvgRapAmount(List<DiamondModel> diamondList) {
     double carat = 0.0;
     double calcAmount = 0.0;
     double rapAvg = 0.0;
@@ -136,23 +134,21 @@ class SyncManager {
 //    double fancyCarat = 0.0;
 //    double fancyAmt = 0.0;
 
-    for(var item in diamondList){
-      if (item.rap > 0){
+    for (var item in diamondList) {
+      if (item.rap > 0) {
         carat += item.crt;
         calcAmount += item.ctPr;
         rapAvg += item.rap * item.crt;
         priceCrt += item.crt * item.ctPr;
-      }else{
+      } else {
         carat += item.crt;
         calcAmount += item.ctPr;
         rapAvg += item.rap * item.crt;
         priceCrt += item.crt * item.ctPr;
       }
     }
-    avgRapAmt = rapAvg/carat;
-    avgPriceCrt= priceCrt/carat;
-    return [carat,calcAmount,rapAvg,avgRapAmt,avgPriceCrt];
+    avgRapAmt = rapAvg / carat;
+    avgPriceCrt = priceCrt / carat;
+    return [carat, calcAmount, rapAvg, avgRapAmt, avgPriceCrt];
   }
 }
-
-

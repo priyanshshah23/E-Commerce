@@ -18,7 +18,9 @@ class DiamondListScreen extends StatefulScreenWidget {
   String filterId = "";
 
   DiamondListScreen(Map<String, dynamic> arguments) {
-    this.filterId = arguments["filterId"];
+    if(arguments.containsKey("filterId")){
+      this.filterId = arguments["filterId"];
+    }
   }
 
   @override
@@ -84,9 +86,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     DiamondListReq filterReq = DiamondListReq();
     filterReq.page = page;
     filterReq.limit = DEFAULT_LIMIT;
-    Filters filter = Filters();
-    filter.diamondSearchId = filterId;
-    filterReq.filters = filter;
+    if(filter!=null || filterId.isNotEmpty){
+      Filters filter = Filters();
+      filter.diamondSearchId = filterId;
+      filterReq.filters = filter;
+    }
     SyncManager.instance.callApiForDiamondList(context, filterReq,
             (diamondListResp) {
           arraDiamond.addAll(diamondListResp.data.diamonds);

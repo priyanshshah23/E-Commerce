@@ -216,7 +216,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         } else if (obj.code == BottomCodeConstant.filterSearch) {
           //
           print(obj.code);
-           callApiForGetFilterId();
+//          NavigationUtilities.pushRoute(DiamondListScreen.route,);
+          callApiForGetFilterId();
         } else if (obj.code == BottomCodeConstant.filterSaveAndSearch) {
           //
           print(obj.code);
@@ -231,17 +232,17 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   callApiForGetFilterId() {
     DiamondListReq req = DiamondListReq();
     req.isNotReturnTotal = true;
-    req.isReturnCountOnly = true;
     SyncManager.instance.callApiForDiamondList(
       context,
       req,
       (diamondListResp) {
+        print("Filter...${diamondListResp}");
         Map<String, dynamic> dict = new HashMap();
         dict["filterId"] = diamondListResp.data.filter.id;
         NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
       },
       (onError) {
-        print("Error");
+        print("Error......");
       },
     );
   }
