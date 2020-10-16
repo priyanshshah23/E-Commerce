@@ -1,4 +1,5 @@
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:flutter/cupertino.dart';
 
 class DiamondListReq {
@@ -8,7 +9,12 @@ class DiamondListReq {
   bool isNotReturnTotal;
   bool isReturnCountOnly;
 
-  DiamondListReq({this.page,this.limit,this.filters, this.isNotReturnTotal, this.isReturnCountOnly});
+  DiamondListReq(
+      {this.page,
+      this.limit,
+      this.filters,
+      this.isNotReturnTotal,
+      this.isReturnCountOnly});
 
   DiamondListReq.fromJson(Map<String, dynamic> json) {
     page = json['page'];
@@ -139,27 +145,28 @@ class Filter {
   String user;
   String account;
 
-  Filter(
-      {this.createdAt,
-      this.updatedAt,
-      this.id,
-      this.name,
-      this.isSentReminder,
-      this.normalizeName,
-      this.searchData,
-      this.type,
-      this.expiryDate,
-      this.remark,
-      this.isActive,
-      this.isDeleted,
-      this.isSendNotification,
-      this.isReturnSimilar,
-      this.searchCount,
-      this.articleSeq,
-      this.updateIp,
-      this.createIp,
-      this.user,
-      this.account,});
+  Filter({
+    this.createdAt,
+    this.updatedAt,
+    this.id,
+    this.name,
+    this.isSentReminder,
+    this.normalizeName,
+    this.searchData,
+    this.type,
+    this.expiryDate,
+    this.remark,
+    this.isActive,
+    this.isDeleted,
+    this.isSendNotification,
+    this.isReturnSimilar,
+    this.searchCount,
+    this.articleSeq,
+    this.updateIp,
+    this.createIp,
+    this.user,
+    this.account,
+  });
 
   Filter.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
@@ -404,7 +411,7 @@ class DiamondModel {
 //    isSelected = json['isSelected'];
   }
 
-  DiamondModel({bool isSelected = false}){
+  DiamondModel({bool isSelected = false}) {
     this.isSelected = isSelected;
   }
 
@@ -493,9 +500,8 @@ class DiamondModel {
     return data;
   }
 
-
   Color getStatusColor() {
-    Color color ;
+    Color color;
     switch (wSts) {
       case DiamondStatus.available:
         color = appTheme.darkBlue;
@@ -511,5 +517,19 @@ class DiamondModel {
         break;
     }
     return color;
+  }
+
+  String getAmount() {
+    var amount =
+        (amt.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
+
+    return R.string().commonString.doller + amount + "/Amt" ?? "";
+  }
+
+  String getPricePerCarat() {
+    var caratPerPrice =
+        (ctPr.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
+
+    return R.string().commonString.doller + caratPerPrice + "/Cts" ?? "";
   }
 }

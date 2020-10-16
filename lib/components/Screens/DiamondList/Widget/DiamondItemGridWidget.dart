@@ -122,10 +122,7 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
                           getText(widget.item?.vStnId ?? ""),
                           // Expanded(child: Container()),
                           Spacer(),
-                          getAmountText(R.string().commonString.doller +
-                                  widget.item?.ctPr.toStringAsFixed(2) +
-                                  "/Cts" ??
-                              ""),
+                          getAmountText(widget.item?.getPricePerCarat() ?? "-"),
                         ],
                       ),
                       SizedBox(
@@ -135,10 +132,7 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
                         children: [
                           getText(widget.item?.shpNm ?? ""),
                           Spacer(),
-                          getAmountText(R.string().commonString.doller +
-                                  widget.item?.amt.toStringAsFixed(2) +
-                                  "/Amt" ??
-                              ""),
+                          getAmountText(widget.item?.getAmount() ?? "-"),
                         ],
                       ),
                       SizedBox(

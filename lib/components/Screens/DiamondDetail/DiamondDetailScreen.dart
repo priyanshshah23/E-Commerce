@@ -138,7 +138,13 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
         if (isStringEmpty(element.apiKey) == false) {
           dynamic valueElement = diamondModel.toJson()[element.apiKey];
           if (valueElement != null) {
-            if (valueElement is String) {
+            if (element.apiKey == DiamondDetailUIAPIKeys.pricePerCarat) {
+              //
+              diamonDetailComponent.value = diamondModel.getPricePerCarat();
+            } else if (element.apiKey == DiamondDetailUIAPIKeys.amount) {
+              //
+              diamonDetailComponent.value = diamondModel.getAmount();
+            } else if (valueElement is String) {
               diamonDetailComponent.value = valueElement;
             } else if (valueElement is num) {
               diamonDetailComponent.value = valueElement.toString();
@@ -369,13 +375,11 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
                           children: [
                             getSection(arrDiamondDetailUIModel[i].title),
                             Spacer(),
-                            Image.asset(
-                              arrDiamondDetailUIModel[i].isExpand == true
-                                  ? filterUpArrow
-                                  : filterDownArrow,
-                              height: getSize(14),
-                              width: getSize(14),
-                            ),
+                            Icon(
+                                arrDiamondDetailUIModel[i].isExpand == true
+                                    ? Icons.expand_less
+                                    : Icons.expand_more,
+                                color: appTheme.textColor),
                           ],
                         ),
                       ),
@@ -438,59 +442,6 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
       title,
       style: appTheme.blackNormal18TitleColorblack
           .copyWith(fontWeight: FontWeight.w500),
-    );
-  }
-
-  Widget getGridView(int count) {
-    return Container(
-      child: GridView.count(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        crossAxisCount: 3,
-        childAspectRatio: 1.8,
-        mainAxisSpacing: 0,
-        crossAxisSpacing: 0,
-        children: List.generate(count, (index) {
-          // var item = arraDiamond[index];
-          return getGridItem();
-        }),
-      ),
-    );
-  }
-
-  Widget getGridItem() {
-    return Container(
-      decoration: BoxDecoration(
-          color: appTheme.whiteColor,
-          // borderRadius: BorderRadius.circular(getSize(5)),
-          border: Border.all(color: appTheme.lightBGColor)),
-      child: Padding(
-        padding: EdgeInsets.all(getSize(2)),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "191071",
-                style: appTheme.black14TextStyle.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              SizedBox(
-                height: getSize(2),
-              ),
-              Text(
-                "Stone ID",
-                style: appTheme.grey14HintTextStyle.copyWith(
-                  fontSize: getFontSize(12),
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 

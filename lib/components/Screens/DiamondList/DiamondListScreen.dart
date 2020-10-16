@@ -37,8 +37,8 @@ class DiamondListScreen extends StatefulScreenWidget {
   }
 
   @override
-  _DiamondListScreenState createState() =>
-       _DiamondListScreenState(filterId: filterId, moduleType: moduleType,isFromDrawer: isFromDrawer);
+  _DiamondListScreenState createState() => _DiamondListScreenState(
+      filterId: filterId, moduleType: moduleType, isFromDrawer: isFromDrawer);
 }
 
 class _DiamondListScreenState extends StatefulScreenWidgetState {
@@ -153,7 +153,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               var item = arraDiamond[index];
               return InkWell(
                 onTap: () {
-                /*  setState(() {
+                  /*  setState(() {
                     arraDiamond[index].isSelected =
                         !arraDiamond[index].isSelected;
                     manageDiamondSelection();
@@ -375,21 +375,21 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: appTheme.whiteColor,
-        appBar: getAppBar(
-          context,
-          diamondConfig.getScreenTitle(),
-          bgColor: appTheme.whiteColor,
-          leadingButton: isFromDrawer
-              ? getDrawerButton(context, true)
-              : getBackButton(context),
-          centerTitle: false,
-          actionItems: getToolbarItem(),
-        ),
-        bottomNavigationBar: getBottomTab(),
-        body: Padding(
+    return Scaffold(
+      backgroundColor: appTheme.whiteColor,
+      appBar: getAppBar(
+        context,
+        diamondConfig.getScreenTitle(),
+        bgColor: appTheme.whiteColor,
+        leadingButton: isFromDrawer
+            ? getDrawerButton(context, true)
+            : getBackButton(context),
+        centerTitle: false,
+        actionItems: getToolbarItem(),
+      ),
+      bottomNavigationBar: getBottomTab(),
+      body: SafeArea(
+        child: Padding(
           padding: EdgeInsets.only(
               left: getSize(20), right: getSize(20), top: getSize(20)),
           child: Column(
