@@ -168,6 +168,9 @@ class _FromToWidgetState extends State<FromToWidget> {
         // Focus.of(context).unfocus();
       },
       child: TextField(
+        textAlign: widget.fromTomodel.fromToStyle.showUnderline
+            ? TextAlign.left
+            : TextAlign.center,
         onChanged: (value) {
           if (value != null || value != "") {
             if (num.parse(value) < widget.fromTomodel.minValue ||
@@ -182,7 +185,7 @@ class _FromToWidgetState extends State<FromToWidget> {
 
           oldValueForFrom = _minValueController.text.trim();
           widget.fromTomodel.valueFrom = oldValueForFrom;
-          print("=======>>"+oldValueForFrom);
+          print("=======>>" + oldValueForFrom);
         },
         onSubmitted: (value) {},
         focusNode: _focusMinValue,
@@ -262,7 +265,7 @@ class _FromToWidgetState extends State<FromToWidget> {
           }
           oldValueForTo = _maxValueController.text.trim();
           widget.fromTomodel.valueTo = oldValueForTo;
-          print("=======>"+oldValueForTo);
+          print("=======>" + oldValueForTo);
         },
         focusNode: _focusMaxValue,
         controller: _maxValueController,

@@ -299,8 +299,8 @@
     "sequence": 15,
     "isActive": true,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -563,8 +563,8 @@
     "maxValue": 100,
     "minValue": -10,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1

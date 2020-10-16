@@ -44,7 +44,6 @@ class _TagWidgetState extends State<TagWidget> {
   String oldValueForFrom;
   String oldValueForTo;
 
-
   @override
   void initState() {
     super.initState();
@@ -95,27 +94,7 @@ class _TagWidgetState extends State<TagWidget> {
         isNullEmptyOrFalse(widget.model.title)
             ? SizedBox()
             : SizedBox(height: getSize(20)),
-        Container(
-          height: getSize(40),
-          child: ListView.builder(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemCount: widget.model.masters.length,
-            itemBuilder: (context, index) {
-              return InkWell(
-                child: getSingleTag(index),
-                onTap: () {
-                  setState(() {
-                    widget.model.masters[index].isSelected =
-                        !widget.model.masters[index].isSelected;
-
-                    onSelectionClick(index);
-                  });
-                },
-              );
-            },
-          ),
-        ),
+        getListViewofTags(),
       ],
     );
   }
@@ -138,29 +117,33 @@ class _TagWidgetState extends State<TagWidget> {
             ? SizedBox()
             : SizedBox(width: getSize(30)),
         Expanded(
-          child: Container(
-            height: getSize(40),
-            child: ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: widget.model.masters.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  child: getSingleTag(index),
-                  onTap: () {
-                    setState(() {
-                      widget.model.masters[index].isSelected =
-                          !widget.model.masters[index].isSelected;
-
-                      getMultipleMasterSelections(index);
-                    });
-                  },
-                );
-              },
-            ),
-          ),
+          child: getListViewofTags(),
         ),
       ],
+    );
+  }
+
+  getListViewofTags() {
+    return Container(
+      height: getSize(40),
+      child: ListView.builder(
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        itemCount: widget.model.masters.length,
+        itemBuilder: (context, index) {
+          return InkWell(
+            child: getSingleTag(index),
+            onTap: () {
+              setState(() {
+                widget.model.masters[index].isSelected =
+                    !widget.model.masters[index].isSelected;
+
+                getMultipleMasterSelections(index);
+              });
+            },
+          );
+        },
+      ),
     );
   }
 
@@ -206,33 +189,7 @@ class _TagWidgetState extends State<TagWidget> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Expanded(
-          child: Container(
-            height: getSize(100),
-            child: ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: widget.model.masters.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  child: Padding(
-                    padding: EdgeInsets.only(right: getSize(8)),
-                    child: ShapeItemWidget(
-                      obj: widget.model.masters[index],
-                      selectionModel: widget.model,
-                    ),
-                  ),
-                  onTap: () {
-                    setState(() {
-                      widget.model.masters[index].isSelected =
-                          !widget.model.masters[index].isSelected;
-
-                      onSelectionClick(index);
-                    });
-                  },
-                );
-              },
-            ),
-          ),
+          child: getListViewofTags(),
         ),
       ],
     );
@@ -254,106 +211,52 @@ class _TagWidgetState extends State<TagWidget> {
                   ),
                   Spacer(),
                   getFromTextField(),
-                  SizedBox(width:  getSize(8),),
+                  SizedBox(
+                    width: getSize(8),
+                  ),
                   getToTextField(),
                 ],
               ),
         isNullEmptyOrFalse(widget.model.title)
             ? SizedBox()
             : SizedBox(height: getSize(20)),
-        Container(
-          height: getSize(40),
-          child: ListView.builder(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemCount: widget.model.masters.length,
-            itemBuilder: (context, index) {
-              return InkWell(
-                child: getSingleTag(index),
-                onTap: () {
-                  setState(() {
-                    widget.model.masters[index].isSelected =
-                        !widget.model.masters[index].isSelected;
-
-                    onSelectionClick(index);
-                  });
-                },
-              );
-            },
-          ),
-        ),
+        getListViewofTags(),
       ],
     );
   }
 
-getFromTextField() {
+  getFromTextField() {
     return Container(
       width: getSize(70),
       height: getSize(30),
-      child: Focus(
-        onFocusChange: (hasfocus) {
-          if (hasfocus == false) {
-            if (_minValueController.text.isNotEmpty &&
-                _maxValueController.text.isNotEmpty) {
-              if (num.parse(_minValueController.text.trim()) <=
-                  num.parse(_maxValueController.text.trim())) {
-                // app.resolve<CustomDialogs>().confirmDialog(
-                //       context,
-                //       title: "Value Error",
-                //       desc: "okay",
-                //       positiveBtnTitle: "Try Again",
-                //     );
-              } else {
-                app.resolve<CustomDialogs>().confirmDialog(
-                      context,
-                      title: "Value Error",
-                      desc:
-                          "From Value should be less than or equal to To value",
-                      positiveBtnTitle: "Try Again",
-                    );
-                _minValueController.text = "";
-                setState(() {});
-              }
-            }
-          }
-          // Focus.of(context).unfocus();
+      child: TextField(
+        readOnly: true,
+        textAlign: widget.model.fromToStyle.showUnderline
+            ? TextAlign.left
+            : TextAlign.center,
+        onTap: () {
+          print("Tapped");
         },
-        child: TextField(
-          textAlign: widget.model.fromToStyle.showUnderline
-              ? TextAlign.left
-              : TextAlign.center,
-          onChanged: (value) {
-            oldValueForFrom = _minValueController.text.trim();
-          },
-          onSubmitted: (value) {},
-          style: appTheme.blackNormal14TitleColorblack,
-          focusNode: _focusMinValue,
-          controller: _minValueController,
-          inputFormatters: [
-            TextInputFormatter.withFunction((oldValue, newValue) =>
-                RegExp(r'(^[+-]?\d*.?\d{0,2})$').hasMatch(newValue.text)
-                    ? newValue
-                    : oldValue),
-            LengthLimitingTextInputFormatter(3),
-          ],
-          keyboardType: TextInputType.numberWithOptions(decimal: true),
-          textInputAction: TextInputAction.next,
-          decoration: InputDecoration(
-            focusedBorder: widget.model.fromToStyle.showUnderline
-                ? new UnderlineInputBorder(
-                    borderSide: new BorderSide(
-                    color: widget.model.fromToStyle.underlineColor,
-                  ))
-                : InputBorder.none,
-            enabledBorder: widget.model.fromToStyle.showUnderline
-                ? new UnderlineInputBorder(
-                    borderSide: new BorderSide(
-                    color: widget.model.fromToStyle.underlineColor,
-                  ))
-                : InputBorder.none,
-            hintText: "From",
-            hintStyle: appTheme.grey14HintTextStyle,
-          ),
+        style: appTheme.blackNormal14TitleColorblack,
+        focusNode: _focusMinValue,
+        controller: _minValueController,
+        keyboardType: TextInputType.numberWithOptions(decimal: true),
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          focusedBorder: widget.model.fromToStyle.showUnderline
+              ? new UnderlineInputBorder(
+                  borderSide: new BorderSide(
+                  color: widget.model.fromToStyle.underlineColor,
+                ))
+              : InputBorder.none,
+          enabledBorder: widget.model.fromToStyle.showUnderline
+              ? new UnderlineInputBorder(
+                  borderSide: new BorderSide(
+                  color: widget.model.fromToStyle.underlineColor,
+                ))
+              : InputBorder.none,
+          hintText: "From",
+          hintStyle: appTheme.grey14HintTextStyle,
         ),
       ),
     );
@@ -363,74 +266,38 @@ getFromTextField() {
     return Container(
       width: getSize(70),
       height: getSize(30),
-      child: Focus(
-        onFocusChange: (hasfocus) {
-          if (hasfocus == false) {
-            if (_minValueController.text.isNotEmpty &&
-                _maxValueController.text.isNotEmpty) {
-              if (num.parse(_minValueController.text.trim()) <=
-                  num.parse(_maxValueController.text.trim())) {
-                // app.resolve<CustomDialogs>().confirmDialog(
-                //       context,
-                //       title: "Value Error",
-                //       desc: "okay",
-                //       positiveBtnTitle: "Try Again",
-                //     );
-              } else {
-                app.resolve<CustomDialogs>().confirmDialog(
-                      context,
-                      title: "Value Error",
-                      desc:
-                          "To Value should be greater than or equal to From value",
-                      positiveBtnTitle: "Try Again",
-                    );
-                _maxValueController.text = "";
-                setState(() {});
-              }
-            }
-          }
-          // Focus.of(context).unfocus();
+      child: TextField(
+        readOnly: true,
+        textAlign: widget.model.fromToStyle.showUnderline
+            ? TextAlign.left
+            : TextAlign.center,
+        onTap: () {
+          print("Tapped");
         },
-        child: TextField(
-          textAlign: widget.model.fromToStyle.showUnderline
-              ? TextAlign.left
-              : TextAlign.center,
-          onChanged: (value) {
-            oldValueForTo = _maxValueController.text.trim();
-          },
-          focusNode: _focusMaxValue,
-          controller: _maxValueController,
-          inputFormatters: [
-            TextInputFormatter.withFunction((oldValue, newValue) =>
-                RegExp(r'(^[+-]?\d*.?\d{0,2})$').hasMatch(newValue.text)
-                    ? newValue
-                    : oldValue),
-            LengthLimitingTextInputFormatter(3),
-          ],
-          onSubmitted: (value) {},
-          style: appTheme.blackNormal14TitleColorblack,
-          keyboardType: TextInputType.numberWithOptions(decimal: true),
-          textInputAction: TextInputAction.done,
-          decoration: InputDecoration(
-            focusedBorder: widget.model.fromToStyle.showUnderline
-                ? new UnderlineInputBorder(
-                    borderSide: new BorderSide(
-                    color: widget.model.fromToStyle.underlineColor,
-                  ))
-                : InputBorder.none,
-            enabledBorder: widget.model.fromToStyle.showUnderline
-                ? new UnderlineInputBorder(
-                    borderSide: new BorderSide(
-                    color: widget.model.fromToStyle.underlineColor,
-                  ))
-                : InputBorder.none,
-            hintText: "To",
-            hintStyle: appTheme.grey14HintTextStyle,
-          ),
+        focusNode: _focusMaxValue,
+        controller: _maxValueController,
+        style: appTheme.blackNormal14TitleColorblack,
+        textInputAction: TextInputAction.done,
+        decoration: InputDecoration(
+          focusedBorder: widget.model.fromToStyle.showUnderline
+              ? new UnderlineInputBorder(
+                  borderSide: new BorderSide(
+                  color: widget.model.fromToStyle.underlineColor,
+                ))
+              : InputBorder.none,
+          enabledBorder: widget.model.fromToStyle.showUnderline
+              ? new UnderlineInputBorder(
+                  borderSide: new BorderSide(
+                  color: widget.model.fromToStyle.underlineColor,
+                ))
+              : InputBorder.none,
+          hintText: "To",
+          hintStyle: appTheme.grey14HintTextStyle,
         ),
       ),
     );
   }
+
   getMultipleMasterSelections(int index) {
     //When Local data has added and multilple master has to select
     if (widget.model.isSingleSelection) {
