@@ -12,6 +12,7 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup
 import 'package:diamnow/components/Screens/Filter/Widget/CertNoWidget.dart';
 
 import 'package:diamnow/components/Screens/Filter/Widget/CaratRangeWidget.dart';
+import 'package:diamnow/components/Screens/Filter/Widget/ColorWhiteFancyWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/ColorWidget.dart';
 
 import 'package:diamnow/components/Screens/Filter/Widget/FromToWidget.dart';
@@ -436,7 +437,9 @@ class _FilterItemState extends State<FilterItem> {
             right: getSize(16),
             top: getSize(8.0),
             bottom: getSize(8)),
-        child: ColorWidget(model),
+        child: (model as ColorModel).showGroup
+            ? ColorWidget(model)
+            : ColorWhiteFancyWidget(model),
       );
     } else if (model.viewType == ViewTypes.caratRange) {
       return Padding(
