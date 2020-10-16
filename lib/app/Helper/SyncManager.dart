@@ -124,6 +124,35 @@ class SyncManager {
     }
     return [carat,calcAmount,rapAvg,fancyCarat,fancyAmt];
   }
+
+  List<num> getTotalCaratAvgRapAmount(List<DiamondModel> diamondList){
+
+    double carat = 0.0;
+    double calcAmount = 0.0;
+    double rapAvg = 0.0;
+    double priceCrt = 0.0;
+    double avgRapAmt = 0.0;
+    double avgPriceCrt = 0.0;
+//    double fancyCarat = 0.0;
+//    double fancyAmt = 0.0;
+
+    for(var item in diamondList){
+      if (item.rap > 0){
+        carat += item.crt;
+        calcAmount += item.ctPr;
+        rapAvg += item.rap * item.crt;
+        priceCrt += item.crt * item.ctPr;
+      }else{
+        carat += item.crt;
+        calcAmount += item.ctPr;
+        rapAvg += item.rap * item.crt;
+        priceCrt += item.crt * item.ctPr;
+      }
+    }
+    avgRapAmt = rapAvg/carat;
+    avgPriceCrt= priceCrt/carat;
+    return [carat,calcAmount,rapAvg,avgRapAmt,avgPriceCrt];
+  }
 }
 
 

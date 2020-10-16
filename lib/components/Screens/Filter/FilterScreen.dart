@@ -241,7 +241,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
       },
       (onError) {
-        //print("Error");
+        print("Error");
       },
     );
   }

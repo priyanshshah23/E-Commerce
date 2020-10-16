@@ -95,7 +95,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 //      pcs = arraDiamond.length;
           diamondList.state.listCount = arraDiamond.length;
           diamondList.state.totalCount = diamondListResp.data.count;
-              getAverageCalculation(diamondListResp.data.diamonds);
+              calulate(diamondListResp.data.diamonds);
           fillArrayList();
           page = page + 1;
           diamondList.state.setApiCalling(false);
@@ -147,7 +147,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               setState(() {
                 arraDiamond[index].isSelected = !arraDiamond[index].isSelected;
                 fillArrayList();
-                getAverageCalculation(arraDiamond);
+                calulate(arraDiamond);
                 diamondList.state.setApiCalling(false);
               });
             },
@@ -162,40 +162,34 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     double carat = 0.0;
     double avgDisc = 0.0;
     double avgRapCrt = 0.0;
-    double avgAmount = 0.0;
-    double totalRap = 0.0;
-    double priceCrt = 0.0;
+    double avgPriceCrt = 0.0;
+//    double avgAmount = 0.0;
+//    double totalRap = 0.0;
+//    double priceCrt = 0.0;
     List<DiamondModel> filterList;
     Iterable<DiamondModel> list = diamondList.where((item) {
       return item.isSelected == true;
     });
     filterList = list.toList();
     if(filterList != null && filterList.length >0){
-      for(var i in filterList){
-        carat+=i.crt;
-        totalRap += i.crt*i.rap;
-        priceCrt += i.crt*i.ctPr;
-        avgDisc += getAvgDiscount(getFinalRate(i.ctPr),i.rap);
-      }
-      avgRapCrt= totalRap/carat;
-      totalCarat = PriceUtilities.getPrice(carat);
-      totalPriceCrt = PriceUtilities.getPrice(getAveragePriceCrt(priceCrt, carat));
+      List<num> arrValues = SyncManager.instance.getTotalCaratAvgRapAmount(filterList);
+      carat = arrValues[0];
+      avgRapCrt = arrValues[3];
+      avgPriceCrt = arrValues[4];
+      avgDisc = avgPriceCrt/avgRapCrt;
       totalDisc = PriceUtilities.getPercent(avgDisc);
+      totalCarat = PriceUtilities.getPrice(carat);
       pcs = filterList.length.toString();
     }else{
-      for(var i in diamondList){
-        carat+=i.crt;
-        totalRap += i.crt*i.rap;
-        priceCrt += i.crt*i.ctPr;
-        avgDisc += getAvgDiscount(getFinalRate(i.ctPr),i.rap);
-      }
-      avgRapCrt= totalRap/carat;
-      totalCarat = PriceUtilities.getPrice(carat);
-      totalPriceCrt = PriceUtilities.getPrice(getAveragePriceCrt(priceCrt, carat));
+      List<num> arrValues = SyncManager.instance.getTotalCaratAvgRapAmount(diamondList);
+      carat = arrValues[0];
+      avgRapCrt = arrValues[3];
+      avgPriceCrt = arrValues[4];
+      avgDisc = avgPriceCrt/avgRapCrt;
       totalDisc = PriceUtilities.getPercent(avgDisc);
+      totalCarat = PriceUtilities.getPrice(carat);
       pcs = diamondList.length.toString();
     }
-
 
   }
 
