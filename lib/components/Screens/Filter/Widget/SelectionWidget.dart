@@ -97,7 +97,27 @@ class _TagWidgetState extends State<TagWidget> {
         isNullEmptyOrFalse(widget.model.title)
             ? SizedBox()
             : SizedBox(height: getSize(20)),
-        getListViewofTags(),
+        Container(
+          height: getSize(40),
+          child: ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemCount: widget.model.masters.length,
+            itemBuilder: (context, index) {
+              return InkWell(
+                child: getSingleTag(index),
+                onTap: () {
+                  setState(() {
+                    widget.model.masters[index].isSelected =
+                        !widget.model.masters[index].isSelected;
+
+                    onSelectionClick(index);
+                  });
+                },
+              );
+            },
+          ),
+        ),
       ],
     );
   }
@@ -120,33 +140,29 @@ class _TagWidgetState extends State<TagWidget> {
             ? SizedBox()
             : SizedBox(width: getSize(30)),
         Expanded(
-          child: getListViewofTags(),
+          child: Container(
+            height: getSize(40),
+            child: ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: widget.model.masters.length,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  child: getSingleTag(index),
+                  onTap: () {
+                    setState(() {
+                      widget.model.masters[index].isSelected =
+                          !widget.model.masters[index].isSelected;
+
+                      getMultipleMasterSelections(index);
+                    });
+                  },
+                );
+              },
+            ),
+          ),
         ),
       ],
-    );
-  }
-
-  getListViewofTags() {
-    return Container(
-      height: getSize(40),
-      child: ListView.builder(
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        itemCount: widget.model.masters.length,
-        itemBuilder: (context, index) {
-          return InkWell(
-            child: getSingleTag(index),
-            onTap: () {
-              setState(() {
-                widget.model.masters[index].isSelected =
-                    !widget.model.masters[index].isSelected;
-
-                getMultipleMasterSelections(index);
-              });
-            },
-          );
-        },
-      ),
     );
   }
 
@@ -192,7 +208,33 @@ class _TagWidgetState extends State<TagWidget> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Expanded(
-          child: getListViewofTags(),
+          child: Container(
+            height: getSize(100),
+            child: ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: widget.model.masters.length,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  child: Padding(
+                    padding: EdgeInsets.only(right: getSize(8)),
+                    child: ShapeItemWidget(
+                      obj: widget.model.masters[index],
+                      selectionModel: widget.model,
+                    ),
+                  ),
+                  onTap: () {
+                    setState(() {
+                      widget.model.masters[index].isSelected =
+                          !widget.model.masters[index].isSelected;
+
+                      onSelectionClick(index);
+                    });
+                  },
+                );
+              },
+            ),
+          ),
         ),
       ],
     );
@@ -223,7 +265,27 @@ class _TagWidgetState extends State<TagWidget> {
         isNullEmptyOrFalse(widget.model.title)
             ? SizedBox()
             : SizedBox(height: getSize(20)),
-        getListViewofTags(),
+        Container(
+          height: getSize(40),
+          child: ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemCount: widget.model.masters.length,
+            itemBuilder: (context, index) {
+              return InkWell(
+                child: getSingleTag(index),
+                onTap: () {
+                  setState(() {
+                    widget.model.masters[index].isSelected =
+                        !widget.model.masters[index].isSelected;
+
+                    getMultipleMasterSelections(index);
+                  });
+                },
+              );
+            },
+          ),
+        ),
       ],
     );
   }
@@ -418,8 +480,11 @@ class _TagWidgetState extends State<TagWidget> {
             m["isSelected"] = widget.model.masters[index].isSelected;
             m["selectedMasterCode"] = widget.model.masters[index].code;
             m["masterSelection"] = widget.model.masterSelection;
-            m["isGroupSelected"] = (widget.model as ColorModel).isGroupSelected;
-            RxBus.post(m, tag: eventMasterForSingleItemOfGroupSelection);
+            if (widget.model.viewType == ViewTypes.groupWidget) {
+              m["isGroupSelected"] =
+                  (widget.model as ColorModel).isGroupSelected;
+              RxBus.post(m, tag: eventMasterForSingleItemOfGroupSelection);
+            }
           }
         }
       }

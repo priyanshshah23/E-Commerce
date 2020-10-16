@@ -11,12 +11,11 @@ class FilterRequest {
 
     list.forEach((element) {
       if (element.viewType == ViewTypes.selection) {
-        map[element.apiKey] =
+        List<String> arrStr =
             Master.getSelectedId((element as SelectionModel).masters);
+        if (!isNullEmptyOrFalse(arrStr)) map[element.apiKey] = arrStr;
       }
-    });
 
-    list.forEach((element) {
       if (element.viewType == ViewTypes.fromTo) {
         if (!isNullEmptyOrFalse((element as FromToModel).valueFrom) &&
             !isNullEmptyOrFalse((element as FromToModel).valueTo)) {
@@ -28,9 +27,7 @@ class FilterRequest {
           map[element.apiKey] = fromToValue;
         }
       }
-    });
 
-    list.forEach((element) {
       if (element.viewType == ViewTypes.keytosymbol) {
         Map<String, dynamic> mapOfSelectedRadioButton = {};
         List<RadioButton> listOfSelectedRadioButton =
@@ -48,9 +45,7 @@ class FilterRequest {
           map[element.apiKey] = mapOfSelectedRadioButton;
         }
       }
-    });
 
-    list.forEach((element) {
       if (element.viewType == ViewTypes.certNo) {
         Map<String, dynamic> mapOfSelectedRadioButton = {};
         List<RadioButton> listOfSelectedRadioButton = (element as CertNoModel)
@@ -61,29 +56,29 @@ class FilterRequest {
             .toList();
 
         if (!isNullEmptyOrFalse(listOfSelectedRadioButton)) {
-          if (!isNullEmptyOrFalse((element as SelectionModel))) {
-            List<String> listOfIds = (element as CertNoModel).text.split(",");
-            mapOfSelectedRadioButton[listOfSelectedRadioButton.first.apiKey] =
-                listOfIds;
+          if (!isNullEmptyOrFalse(element)) {
+            if (!isNullEmptyOrFalse((element as CertNoModel).text)) {
+              List<String> listOfIds = (element as CertNoModel).text.split(",");
+              mapOfSelectedRadioButton[listOfSelectedRadioButton.first.apiKey] =
+                  listOfIds;
 
-            map[element.apiKey] = mapOfSelectedRadioButton;
+              map[element.apiKey] = mapOfSelectedRadioButton;
+            }
           }
         }
       }
-    });
 
-    list.forEach((element) {
       if (element.viewType == ViewTypes.caratRange) {
         map[(element as SelectionModel).apiKey] =
             Master.getSelectedId((element as SelectionModel).masters);
       }
-    });
 
-    list.forEach((element) {
       if (element.viewType == ViewTypes.shapeWidget) {
         map[element.apiKey] =
             Master.getSelectedId((element as SelectionModel).masters);
       }
     });
+
+    return map;
   }
 }

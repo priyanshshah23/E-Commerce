@@ -62,6 +62,7 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
       List<DiamondDetailUIModel>();
 
   _DiamondDetailScreenState(this.diamondModel);
+
   //DiamondDetailUIModel
 
   @override

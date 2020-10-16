@@ -29,37 +29,8 @@ class ScreenTitle {
   final String otpVerifyDesc;
   final String diamondDetail;
 
-//popUp
-  final String enableLocationTitle;
-  final String enableLocationDesc;
-  final String enableLocationDescIOS;
-  final String manualTime;
-  final String changeVehicle;
-
-  final String manualTimeDesc;
-  final String enableLocationEndDesc;
-  final String rideStartLocDesc;
-  final String rideEndLocDesc;
-  final String finishRideTitle;
-  final String finishRideDeliveryTitle;
-  final String endYourRideTitle;
-  final String endYourShiftTitle;
-  final String endYourAttendanceDescription;
-  final String filterByDate;
-  final String startResumeTitle;
-  final String startResumeDescription;
-  final String goToAttendance;
-  final String endYourRideDescription;
-  final String finishOnGoingRideDescription;
-  final String finishOnGoingRideDeliveryDescription;
-  final String finishEndLogTimeRideDescription;
-
 // drawer
-  final String logTimer;
-  final String breakTimer;
-  final String rideHistory;
   final String settings;
-  final String rideSummary;
   final String notifications;
   final String myEarning;
   final String support;
@@ -67,11 +38,6 @@ class ScreenTitle {
   final String skip;
   final String usingApp;
   final String changePassword;
-  final String manualRide;
-  final String about3eco;
-  final String legal;
-  final String dispute;
-  final String myDispute;
 
   //fareDetails
   final String fareDetailsTitle;
@@ -142,6 +108,8 @@ class ScreenTitle {
 //  Support
   final String accountAndPayment;
 
+  final String searchResult;
+
   const ScreenTitle({
     this.searchDiamond = "Search Diamond",
     this.basic = "Basic",
@@ -198,59 +166,14 @@ class ScreenTitle {
         "The verification code was sent to your mobile number. Please enter the code.",
     this.diamondDetail = "Diamond Detail",
 
-    //popup
-    this.enableLocationTitle = 'Enable Location Access',
-    this.enableLocationDesc = 'Enable location to start shift'
-        ' and allow 3eco to access your '
-        'location even when you are'
-        ' not using the app.',
-    this.enableLocationDescIOS =
-        'Enable location to start shift and allow 3eco to access your location.',
-    this.manualTime = 'Update Setting',
-    this.changeVehicle = "Change Vehicle",
-    this.manualTimeDesc =
-        'Please check your timezone, set it to GMT+5:30 and time must be automatic.',
-    this.enableLocationEndDesc =
-        'Enable location to end shift and allow 3eco to access your location even when you are not using the app?',
-    this.rideStartLocDesc =
-        'Enable location to start log timer and allow 3eco to access your location even when you are not using the app?',
-    this.rideEndLocDesc =
-        'Enable location to end log timer and allow 3eco to access your location even when you are not using the app?',
-    this.finishRideTitle = 'Finish Ride',
-    this.finishRideDeliveryTitle = 'Finish Ride/Delivery',
-    this.finishOnGoingRideDescription = 'You have a ongoing ride.'
-        ' Finish ride to start a break.',
-    this.finishOnGoingRideDeliveryDescription =
-        'You have a ongoing ride/delivery.'
-            ' Finish ride/delivery to start a manual ride/delivery.',
-    this.finishEndLogTimeRideDescription =
-        'You can not end your shift before finishing ongoing ride.',
-    this.endYourRideTitle = 'End Ride',
-    this.endYourShiftTitle = 'End Shift',
-    this.filterByDate = 'Select Filter',
-    this.startResumeTitle = 'Start/Resume Shift',
-    this.startResumeDescription =
-        'Start shift or resume shift to start a ride.',
-    this.goToAttendance = 'Go to Timesheet',
-    this.endYourAttendanceDescription = 'Are you sure want to end shift?',
-    this.endYourRideDescription = 'Are you sure want to end ride?',
     // drawer
-    this.logTimer = 'Shift Time',
-    this.breakTimer = 'Break Time',
-    this.rideHistory = "Ride/Delivery History",
     this.settings = "Settings",
-    this.rideSummary = "Ride/Delivery Summary",
     this.notifications = "Notifications",
     this.logout = "Logout",
     this.usingApp = "Using the app",
     this.myEarning = "My Earnings",
     this.support = "Support",
     this.changePassword = "Change Password",
-    this.manualRide = "Manual Ride/Delivery",
-    this.about3eco = "About 3eco",
-    this.legal = "Legal",
-    this.dispute = "Dispute",
-    this.myDispute = "My Disputes",
 
     //fairDetails
     this.fareDetailsTitle = 'Enter Sales Details',
@@ -294,5 +217,6 @@ class ScreenTitle {
     this.officeView = "Office View",
     this.placeOrder = "Place Order",
     this.share = "Share",
+    this.searchResult = "Search Result",
   });
 }

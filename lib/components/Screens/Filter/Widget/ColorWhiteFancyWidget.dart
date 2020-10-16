@@ -5,15 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:flutter/material.dart';
 
-class ColorWidget extends StatefulWidget {
+class ColorWhiteFancyWidget extends StatefulWidget {
   ColorModel colorModel;
-  ColorWidget(this.colorModel);
+  ColorWhiteFancyWidget(this.colorModel);
 
   @override
-  _ColorWidgetState createState() => _ColorWidgetState();
+  _ColorWhiteFancyWidgetState createState() => _ColorWhiteFancyWidgetState();
 }
 
-class _ColorWidgetState extends State<ColorWidget> {
+class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
   @override
   void initState() {
     super.initState();
@@ -44,9 +44,7 @@ class _ColorWidgetState extends State<ColorWidget> {
         Row(
           children: [
             Text(
-              widget.colorModel.masterCode == MasterCode.color
-                  ? "Color"
-                  : "Clarity",
+              "Color",
               style: appTheme.blackNormal18TitleColorblack,
               textAlign: TextAlign.left,
             ),
@@ -61,21 +59,17 @@ class _ColorWidgetState extends State<ColorWidget> {
               child: Column(
                 children: [
                   Text(
-                    widget.colorModel.masterCode == MasterCode.color
-                        ? "Color"
-                        : "Clarity",
+                    "White",
                     style: appTheme.blackNormal14TitleColorblack,
                     textAlign: TextAlign.left,
                   ),
                   SizedBox(height: getSize(4)),
-                  Center(
-                    child: Container(
-                      width: getSize(40),
-                      height: getSize(1),
-                      color: !widget.colorModel.isGroupSelected
-                          ? appTheme.colorPrimary
-                          : Colors.transparent,
-                    ),
+                  Container(
+                    width: getSize(40),
+                    height: getSize(1),
+                    color: !widget.colorModel.isGroupSelected
+                        ? appTheme.colorPrimary
+                        : Colors.transparent,
                   )
                 ],
               ),
@@ -86,24 +80,42 @@ class _ColorWidgetState extends State<ColorWidget> {
                 setState(() {
                   widget.colorModel.isGroupSelected = true;
                   widget.colorModel.masters = widget.colorModel.groupMaster;
+
+                  widget.colorModel.intensitySelection = SelectionModel(
+                      title: "Intensity",
+                      masters: widget.colorModel.intensity,
+                      isShowAll: widget.colorModel.isShowAll,
+                      orientation: widget.colorModel.orientation,
+                      allLableTitle: widget.colorModel.allLableTitle,
+                      verticalScroll: widget.colorModel.verticalScroll,
+                      apiKey: "inten");
+
+                  widget.colorModel.overtoneSelection = SelectionModel(
+                      title: "Overtone",
+                      masters: widget.colorModel.overtone,
+                      isShowAll: widget.colorModel.isShowAll,
+                      orientation: widget.colorModel.orientation,
+                      allLableTitle: widget.colorModel.allLableTitle,
+                      verticalScroll: widget.colorModel.verticalScroll,
+                      apiKey: "ovrtn");
                 });
               },
               child: Column(
                 children: [
                   Text(
-                    widget.colorModel.masterCode == MasterCode.color
-                        ? "Color Group"
-                        : "Clarity Group",
+                    "Fancy",
                     style: appTheme.blackNormal14TitleColorblack,
                     textAlign: TextAlign.left,
                   ),
                   SizedBox(height: getSize(4)),
-                  Container(
-                    width: getSize(90),
-                    height: getSize(1),
-                    color: widget.colorModel.isGroupSelected
-                        ? appTheme.colorPrimary
-                        : Colors.transparent,
+                  Center(
+                    child: Container(
+                      width: getSize(40),
+                      height: getSize(1),
+                      color: widget.colorModel.isGroupSelected
+                          ? appTheme.colorPrimary
+                          : Colors.transparent,
+                    ),
                   )
                 ],
               ),
@@ -111,8 +123,20 @@ class _ColorWidgetState extends State<ColorWidget> {
           ],
         ),
         SizedBox(height: getSize(16)),
-        SelectionWidget(widget.colorModel)
+        SelectionWidget(widget.colorModel),
+        widget.colorModel.isGroupSelected
+            ? getOverToneIntensityViews()
+            : SizedBox(),
       ],
     );
+  }
+
+  getOverToneIntensityViews() {
+    return Column(children: [
+      SizedBox(height: getSize(16)),
+      SelectionWidget(widget.colorModel.intensitySelection),
+      SizedBox(height: getSize(16)),
+      SelectionWidget(widget.colorModel.overtoneSelection),
+    ]);
   }
 }

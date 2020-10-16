@@ -26,7 +26,6 @@ class AppNavigation {
 
 // Move To Home Scree
   void movetoHome({bool isPopAndSwitch = false}) {
-    // move to Homprint('home');
     if (isPopAndSwitch) {
       NavigationUtilities.pushReplacementNamed(HomeScreen.route,
           type: RouteType.fade);
