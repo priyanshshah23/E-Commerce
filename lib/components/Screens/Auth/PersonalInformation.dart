@@ -50,8 +50,6 @@ class _PersonalInformationState extends State<PersonalInformation> {
   var _focusSkype = FocusNode();
   var _focusWhatsAppMobile = FocusNode();
 
-  bool isPasswordSame = true;
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

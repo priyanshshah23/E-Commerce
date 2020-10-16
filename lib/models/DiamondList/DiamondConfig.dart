@@ -1,10 +1,14 @@
+import 'package:diamnow/Setting/SettingModel.dart';
 import 'package:diamnow/app/constant/ImageConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
+import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 
 class DiamondConfig {
   int moduleType;
+  List<BottomTabModel> arrMoreMenu;
+  List<BottomTabModel> arrBottomTab;
 
   List<BottomTabModel> toolbarList = [];
 
@@ -12,6 +16,8 @@ class DiamondConfig {
 
   initItems() {
     toolbarList = getToolbarItem();
+    arrMoreMenu = BottomMenuSetting().getMoreMenuItems();
+    arrBottomTab = BottomTabBar.getDiamondListScreenBottomTabs();
   }
 
   String getScreenTitle() {
@@ -51,4 +57,10 @@ class DiamondConfig {
         isCenter: true));
     return list;
   }
+
+  manageDiamondAction(List<DiamondModel>list,BottomTabModel bottomTabModel){
+
+  }
+
+
 }

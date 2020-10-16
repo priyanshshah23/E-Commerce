@@ -23,7 +23,7 @@ class DiamondDetailScreen extends StatefulScreenWidget {
 
   DiamondDetailScreen({Map<String, dynamic> arguments}) {
     this.filterId = arguments["filterId"];
-    this.diamondModel = arguments["diamondModel"];
+    this.diamondModel = arguments[ArgumentConstant.DiamondDetail];
     if (arguments[ArgumentConstant.ModuleType] != null) {
       moduleType = arguments[ArgumentConstant.ModuleType];
     }
