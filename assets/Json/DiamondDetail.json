@@ -1,0 +1,205 @@
+[
+    {
+        "title": "Basic Details",
+        "sequence": 1,
+        "isExpand": true,
+        "parameters": [
+            {
+                "title": "Stone ID",
+                "apiKey": "stoneId",
+                "sequence": 1
+            },
+            {
+                "title": "Shape",
+                "apiKey": "shpNm",
+                "sequence": 2
+            },
+            {
+                "title": "Carat Range",
+                "apiKey": "",
+                "sequence": 3
+            },
+            {
+                "title": "Color Shade",
+                "apiKey": "shdNm",
+                "sequence": 4
+            },
+            {
+                "title": "Cut",
+                "apiKey": "cutNm",
+                "sequence": 5
+            },
+            {
+                "title": "Polish",
+                "apiKey": "polNm",
+                "sequence": 6
+            },
+            {
+                "title": "Symmentry",
+                "apiKey": "symNm",
+                "sequence": 7
+            },
+            {
+                "title": "Fluorescence",
+                "apiKey": "fluNm",
+                "sequence": 8
+            },
+            {
+                "title": "Lab",
+                "apiKey": "lbNm",
+                "sequence": 9
+            },
+            {
+                "title": "Certificate Number",
+                "apiKey": "",
+                "sequence": 10
+            },
+            {
+                "title": "Dis%",
+                "apiKey": "",
+                "sequence": 11
+            },
+            {
+                "title": "Price/Ct",
+                "apiKey": "ctPr",
+                "sequence": 12
+            },
+            {
+                "title": "Amount",
+                "apiKey": "amt",
+                "sequence": 13
+            },
+            {
+                "title": "Milky",
+                "apiKey": "",
+                "sequence": 14
+            },
+            {
+                "title": "Eye Clean",
+                "apiKey": "eClnNm",
+                "sequence": 15
+            },
+            {
+                "title": "Arrivals",
+                "apiKey": "",
+                "sequence": 16
+            }
+        ]
+    },
+    {
+        "title": "Measurements",
+        "sequence": 2,
+        "isExpand": false,
+        "parameters": [
+            {
+                "title": "Length",
+                "apiKey": "length",
+                "sequence": 1
+            },
+            {
+                "title": "Width",
+                "apiKey": "width",
+                "sequence": 2
+            },
+            {
+                "title": "Depth",
+                "apiKey": "height",
+                "sequence": 3
+            },
+            {
+                "title": "Ratio",
+                "apiKey": "ratio",
+                "sequence": 4
+            },
+            {
+                "title": "Depth%",
+                "apiKey": "depPer",
+                "sequence": 5
+            },
+            {
+                "title": "Table%",
+                "apiKey": "tblPer",
+                "sequence": 6
+            },
+            {
+                "title": "Crown Height%",
+                "apiKey": "cHgt",
+                "sequence": 7
+            },
+            {
+                "title": "Crown Angle",
+                "apiKey": "cAng",
+                "sequence": 8
+            },
+            {
+                "title": "Pavilion Angle",
+                "apiKey": "pAng",
+                "sequence": 9
+            },
+            {
+                "title": "Girdle",
+                "apiKey": "",
+                "sequence": 10
+            },
+            {
+                "title": "Girdle Condition",
+                "apiKey": "grdlCondNm",
+                "sequence": 11
+            },
+            {
+                "title": "Culet",
+                "apiKey": "cultNm",
+                "sequence": 12
+            },
+            {
+                "title": "Culet Condition",
+                "apiKey": "",
+                "sequence": 13
+            }
+        ]
+    },
+    {
+        "title": "Inclusion Details",
+        "sequence": 3,
+        "isExpand": false,
+        "parameters": [
+            {
+                "title": "Heart & Arrow",
+                "apiKey": "hANm",
+                "sequence": 1
+            },
+            {
+                "title": "Other Inclusion",
+                "apiKey": "",
+                "sequence": 2
+            },
+            {
+                "title": "Natural",
+                "apiKey": "",
+                "sequence": 3
+            },
+            {
+                "title": "Extra Facet",
+                "apiKey": "",
+                "sequence": 4
+            }
+        ]
+    },
+    {
+        "title": "Other",
+        "sequence": 3,
+        "isExpand": false,
+        "parameters": [
+            {
+                "title": "Comment",
+                "apiKey": "",
+                "sequence": 1
+            },
+            {
+                "title": "Keywords",
+                "apiKey": "",
+                "sequence": 2
+            }
+        ]
+    }
+]

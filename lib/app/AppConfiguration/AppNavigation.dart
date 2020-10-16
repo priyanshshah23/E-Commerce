@@ -1,5 +1,7 @@
 import 'dart:collection';
 
+import 'package:diamnow/components/Screens/Auth/Login.dart';
+import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
 import 'package:flutter/services.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 
@@ -19,5 +21,24 @@ class AppNavigation {
   Future<void> init() async {
     // code
     // _configuration = AppConfiguration.shared.configuration;
+  }
+
+// Move To Home Scree
+  void movetoHome({bool isPopAndSwitch = false}) {
+    // move to Homprint('home');
+    if (isPopAndSwitch) {
+      NavigationUtilities.pushReplacementNamed(HomeScreen.route,
+          type: RouteType.fade);
+    } else {
+      NavigationUtilities.pushRoute(HomeScreen.route, type: RouteType.fade);
+    }
+  }
+
+  void movetoLogin({bool isPopAndSwitch = false}) {
+    if (isPopAndSwitch) {
+      NavigationUtilities.pushReplacementNamed(LoginScreen.route);
+    } else {
+      NavigationUtilities.pushRoute(LoginScreen.route);
+    }
   }
 }

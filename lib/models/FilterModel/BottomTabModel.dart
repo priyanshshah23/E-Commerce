@@ -22,6 +22,7 @@ class BottomCodeConstant {
   static const String dDAddToWatchlist = "DD_ADD_TO_WATCHLIST";
   static const String dDPlaceOrder = "DD_PLACEORDER";
   static const String dDComment = "DD_COMMENT";
+  static const String dDMore = "DD_MORE";
 }
 
 class TabConfiguration {
@@ -178,9 +179,9 @@ class BottomTabBar {
         sequence: 1,
         isCenter: false));
     arrBootomTab.add(BottomTabModel(
-        title: "Add to Watchlist",
-        image: addToWatchlist,
-        code: BottomCodeConstant.dDAddToWatchlist,
+        title: "More",
+        image: plusIcon,
+        code: BottomCodeConstant.dDMore,
         sequence: 2,
         isCenter: false));
     arrBootomTab.add(BottomTabModel(
@@ -189,12 +190,12 @@ class BottomTabBar {
         code: BottomCodeConstant.dDPlaceOrder,
         sequence: 3,
         isCenter: false));
-    arrBootomTab.add(BottomTabModel(
-        title: "Comment",
-        image: comment,
-        code: BottomCodeConstant.dDComment,
-        sequence: 4,
-        isCenter: false));
+    // arrBootomTab.add(BottomTabModel(
+    //     title: "Comment",
+    //     image: comment,
+    //     code: BottomCodeConstant.dDComment,
+    //     sequence: 4,
+    //     isCenter: false));
 
     return arrBootomTab;
   }

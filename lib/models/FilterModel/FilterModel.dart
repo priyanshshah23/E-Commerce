@@ -5,6 +5,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
+import 'package:diamnow/models/DiamondDetail/DiamondDetailUIModel.dart';
 import 'package:diamnow/models/FilterModel/TabModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
 import 'package:diamnow/modules/Filter/gridviewlist/KeyToSymbol.dart';
@@ -41,7 +42,8 @@ class Config {
   }
 
   Future<List<FilterOptions>> getOptionsJson() async {
-    String jsonForm = await rootBundle.loadString('assets/Json/FilterPopUp.json');
+    String jsonForm =
+        await rootBundle.loadString('assets/Json/SortingPopup.json');
 
     List<dynamic> fieldList = jsonDecode(jsonForm);
     List<FilterOptions> optionsModels = [];
@@ -60,74 +62,64 @@ class Config {
 
     List<dynamic> fieldList = jsonDecode(jsonForm);
 
-    List<FormBaseModel> formModels = []; //list of onlymodels.
-    final SplayTreeMap<int, FormBaseModel> formModelsWithSeq =
-        SplayTreeMap<int, FormBaseModel>(); //store formbasemodels with sequence...
+    List<FormBaseModel> formModels =
+        []; //list of onlymodels. //store formbasemodels with sequence...
 
     for (int i = 0; i < fieldList.length; i++) {
       dynamic element = fieldList[i];
       if (element is Map<String, dynamic>) {
         String viewType = element["viewType"];
-        if (viewType == ViewTypes.fromTo) {
-          formModels.add(FromToModel.fromJson(element));
-        } else if (viewType == ViewTypes.shapeWidget) {
-          SelectionModel selectionModel = SelectionModel.fromJson(element);
-          formModels.add(selectionModel);
-          List<Master> arrMaster =
-              await Master.getSubMaster(selectionModel.masterCode);
-          selectionModel.masters = arrMaster;
-        } else if (viewType == ViewTypes.selection) {
-          SelectionModel selectionModel = SelectionModel.fromJson(element);
-          formModels.add(selectionModel);
-          List<Master> arrMaster =
-              await Master.getSubMaster(selectionModel.masterCode);
-          selectionModel.masters = arrMaster;
-        } else if (viewType == ViewTypes.groupWidget) {
-          ColorModel colorModel = ColorModel.fromJson(element);
-          formModels.add(colorModel);
-          List<Master> arrMaster =
-              await Master.getSubMaster(colorModel.masterCode);
-          List<Master> arrGroupMaster =
-              await Master.getSubMaster(colorModel.groupMasterCode);
-          colorModel.mainMasters = arrMaster;
-          colorModel.groupMaster = arrGroupMaster;
-          colorModel.masters = arrMaster;
-        } else if (viewType == ViewTypes.seperator) {
-          SeperatorModel seperatorModel = SeperatorModel.fromJson(element);
-          formModels.add(seperatorModel);
-        } else if (viewType == ViewTypes.certNo) {
-          CertNoModel seperatorModel = CertNoModel.fromJson(element);
-          formModels.add(seperatorModel);
-        } else if (viewType == ViewTypes.keytosymbol) {
-          KeyToSymbolModel keyToSymbol = KeyToSymbolModel.fromJson(element);
-          formModels.add(keyToSymbol);
-          List<Master> arrMaster =
-              await Master.getSubMaster(keyToSymbol.masterCode);
-          keyToSymbol.masters = arrMaster;
-        } else if (viewType == ViewTypes.caratRange) {
-          SelectionModel selectionModel = SelectionModel.fromJson(element);
-          formModels.add(selectionModel);
-          List<Master> arrMaster = await Master.getSizeMaster();
-
-          selectionModel.masters = arrMaster;
-        }
-
-        print(element["masterCode"]);
-
-        //code to arrange all filterModel into ascending order if its isActive value is true.
         if (element["isActive"] ?? true) {
-          int seq = element["sequence"];
-          formModelsWithSeq[seq] = formModels[i];
+          if (viewType == ViewTypes.fromTo) {
+            formModels.add(FromToModel.fromJson(element));
+          } else if (viewType == ViewTypes.shapeWidget) {
+            SelectionModel selectionModel = SelectionModel.fromJson(element);
+            formModels.add(selectionModel);
+            List<Master> arrMaster =
+                await Master.getSubMaster(selectionModel.masterCode);
+            selectionModel.masters = arrMaster;
+          } else if (viewType == ViewTypes.selection) {
+            SelectionModel selectionModel = SelectionModel.fromJson(element);
+            formModels.add(selectionModel);
+            List<Master> arrMaster =
+                await Master.getSubMaster(selectionModel.masterCode);
+            selectionModel.masters = arrMaster;
+          } else if (viewType == ViewTypes.groupWidget) {
+            ColorModel colorModel = ColorModel.fromJson(element);
+            formModels.add(colorModel);
+            List<Master> arrMaster =
+                await Master.getSubMaster(colorModel.masterCode);
+            List<Master> arrGroupMaster =
+                await Master.getSubMaster(colorModel.groupMasterCode);
+            colorModel.mainMasters = arrMaster;
+            colorModel.groupMaster = arrGroupMaster;
+            colorModel.masters = arrMaster;
+          } else if (viewType == ViewTypes.seperator) {
+            SeperatorModel seperatorModel = SeperatorModel.fromJson(element);
+            formModels.add(seperatorModel);
+          } else if (viewType == ViewTypes.certNo) {
+            CertNoModel seperatorModel = CertNoModel.fromJson(element);
+            formModels.add(seperatorModel);
+          } else if (viewType == ViewTypes.keytosymbol) {
+            KeyToSymbolModel keyToSymbol = KeyToSymbolModel.fromJson(element);
+            formModels.add(keyToSymbol);
+            List<Master> arrMaster =
+                await Master.getSubMaster(keyToSymbol.masterCode);
+            keyToSymbol.masters = arrMaster;
+          } else if (viewType == ViewTypes.caratRange) {
+            SelectionModel selectionModel = SelectionModel.fromJson(element);
+            formModels.add(selectionModel);
+            List<Master> arrMaster = await Master.getSizeMaster();
+
+            selectionModel.masters = arrMaster;
+          }
         }
       }
     }
-
-    formModels.clear(); //bcz we have to overwrite our new list of models into it.
-    formModelsWithSeq.values.forEach((element) { 
-      formModels.add(element);
+    formModels.sort((model1, model2) {
+      return model1.sequence.compareTo(model2.sequence);
     });
-
-    return formModels; //updated list of all models, isActive and sequence property wise.
+    return formModels;
   }
 
   // getFilterReq(List<FormBaseModel> formModels) {
@@ -136,6 +128,21 @@ class Config {
   //     (List<FormBaseModel> formModels[0] is CertNoModel).
   //   }
   // }
+
+  Future<List<DiamondDetailUIModel>> getDiamonDetailUIJson() async {
+    String jsonForm =
+        await rootBundle.loadString('assets/Json/DiamondDetail.json');
+
+    List<dynamic> fieldList = jsonDecode(jsonForm);
+    List<DiamondDetailUIModel> tabModels = [];
+    for (int i = 0; i < fieldList.length; i++) {
+      dynamic element = fieldList[i];
+      if (element is Map<String, dynamic>) {
+        tabModels.add(DiamondDetailUIModel.fromJson(element));
+      }
+    }
+    return tabModels;
+  }
 }
 
 class FormBaseModel {
@@ -144,6 +151,7 @@ class FormBaseModel {
   String desc;
   String viewType;
   String tab;
+  int sequence;
 
   FormBaseModel({this.apiKey, this.desc, this.title});
   FormBaseModel.fromJson(Map<String, dynamic> json) {
@@ -152,6 +160,7 @@ class FormBaseModel {
     desc = json['desc'];
     viewType = json["viewType"];
     tab = json["tab"];
+    sequence = json["sequence"];
   }
 }
 

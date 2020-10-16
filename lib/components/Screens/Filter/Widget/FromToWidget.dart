@@ -194,7 +194,7 @@ class _FromToWidgetState extends State<FromToWidget> {
                   : oldValue)
         ],
         style: appTheme.blackNormal14TitleColorblack,
-        keyboardType: TextInputType.numberWithOptions(decimal: true),
+        keyboardType: TextInputType.text,
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
           focusedBorder: widget.fromTomodel.fromToStyle.showUnderline
@@ -276,7 +276,7 @@ class _FromToWidgetState extends State<FromToWidget> {
           print(oldValueForTo);
         },
         style: appTheme.blackNormal14TitleColorblack,
-        keyboardType: TextInputType.numberWithOptions(decimal: true),
+        keyboardType: TextInputType.text,
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(
           focusedBorder: widget.fromTomodel.fromToStyle.showUnderline

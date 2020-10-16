@@ -59,7 +59,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       });
       Config().getOptionsJson().then((result) {
         result.forEach((element) {
-          if(element.isActive) {
+          if (element.isActive) {
             optionList.add(element);
           }
         });
@@ -67,9 +67,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           context: context,
           isScrollControlled: true,
           shape: RoundedRectangleBorder(
-              borderRadius:
-              BorderRadius.vertical(top: Radius.circular(25.0))),
-          builder: (_) => FilterBy(optionList: optionList,),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
+          builder: (_) => FilterBy(
+            optionList: optionList,
+          ),
         );
         setState(() {});
       });
@@ -133,31 +134,32 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         },
       ),
     );
+
     RxBus.register<Map<String, bool>>(tag: eventMasterForGroupWidgetSelectAll)
-        .listen(
-      (event) => setState(
-        () {
-          List<ColorModel> list = arrList
-              .where((element) => element.viewType == ViewTypes.groupWidget)
-              .toList()
-              .cast<ColorModel>();
-
-          List<ColorModel> list2 = list
-              .where((element) => element.masterCode == event.keys.first)
-              .toList()
-              .cast<ColorModel>();
-
-          print(list2);
-          list2.forEach((element) {
-            if (element.masterCode == event.keys.first) {
-              element.mainMasters.forEach((element) {
-                element.isSelected == event.values.first;
+        .listen((event) {
+      if (event is Map<String, bool>) {
+        List<ColorModel> list = arrList
+            .where((element) => element.viewType == ViewTypes.groupWidget)
+            .toList()
+            .cast<ColorModel>();
+        if (event.keys.first == MasterCode.color) {
+          for (var item in list) {
+            if (item.masterCode == MasterCode.color) {
+              list.forEach((element) {
+                element.mainMasters.forEach((element) {
+                  element.isSelected = event.values.first;
+                });
+              });
+              list.forEach((element) {
+                element.groupMaster.forEach((element) {
+                  element.isSelected = event.values.first;
+                });
               });
             }
-          });
-        },
-      ),
-    );
+          }
+        }
+      }
+    });
   }
 
   @override
@@ -212,7 +214,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         } else if (obj.code == BottomCodeConstant.filterSearch) {
           //
           print(obj.code);
-           callApiForGetFilterId();
+          callApiForGetFilterId();
         } else if (obj.code == BottomCodeConstant.filterSaveAndSearch) {
           //
           print(obj.code);
