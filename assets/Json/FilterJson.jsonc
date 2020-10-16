@@ -5,8 +5,8 @@
     "allLableTitle": "All Shapes",
     "apiKey": "shp",
     "masterCode": "SHAPE",
-    "verticalScroll": false,
-    "orientation": "horizontal",
+    "verticalScroll": true,
+    "orientation": "vertical",
     "isShowAll": true,
     "isShowMore": true,
     "tab": "basic",
@@ -562,8 +562,8 @@
     "maxValue": 100,
     "minValue": -10,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1

@@ -133,7 +133,6 @@ class Config {
           }
         }
       }
-      print(element["masterCode"]);
     }
     formModels.sort((model1, model2) {
       return model1.sequence.compareTo(model2.sequence);

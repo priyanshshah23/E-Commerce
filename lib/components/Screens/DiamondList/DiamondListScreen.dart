@@ -3,6 +3,8 @@ import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
@@ -21,6 +23,7 @@ import 'package:flutter/material.dart';
 class DiamondListScreen extends StatefulScreenWidget {
   static const route = "Diamond List Screen";
 
+  Map<String, dynamic> dictFilters;
   String filterId = "";
   int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
   bool isFromDrawer = false;
@@ -28,6 +31,7 @@ class DiamondListScreen extends StatefulScreenWidget {
   DiamondListScreen(Map<String, dynamic> arguments) {
     if (arguments != null) {
       this.filterId = arguments["filterId"];
+      this.dictFilters = arguments["filters"];
       if (arguments[ArgumentConstant.ModuleType] != null) {
         moduleType = arguments[ArgumentConstant.ModuleType];
       }
@@ -39,15 +43,20 @@ class DiamondListScreen extends StatefulScreenWidget {
 
   @override
   _DiamondListScreenState createState() => _DiamondListScreenState(
-      filterId: filterId, moduleType: moduleType, isFromDrawer: isFromDrawer);
+      filterId: filterId,
+      moduleType: moduleType,
+      isFromDrawer: isFromDrawer,
+      dictFilters: dictFilters);
 }
 
 class _DiamondListScreenState extends StatefulScreenWidgetState {
   String filterId;
   int moduleType;
   bool isFromDrawer;
+  Map<String, dynamic> dictFilters;
 
-  _DiamondListScreenState({this.filterId, this.moduleType, this.isFromDrawer});
+  _DiamondListScreenState(
+      {this.filterId, this.moduleType, this.isFromDrawer, this.dictFilters});
 
   DiamondConfig diamondConfig;
   BaseList diamondList;
@@ -112,20 +121,25 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       arraDiamond.clear();
       page = DEFAULT_PAGE;
     }
-    DiamondListReq filterReq = DiamondListReq();
-    filterReq.page = page;
-    filterReq.limit = DEFAULT_LIMIT;
-    if (filter != null || filterId.isNotEmpty) {
-      Filters filter = Filters();
-      filter.diamondSearchId = filterId;
-      filterReq.filters = filter;
-    }
-    SyncManager.instance.callApiForDiamondList(context, filterReq,
-        (diamondListResp) {
+
+    Map<String, dynamic> dict = {};
+    dict["page"] = page;
+    dict["limit"] = DEFAULT_LIMIT;
+    dict["filters"] = this.dictFilters;
+    dict["filters"]["diamondSearchId"] = this.filterId;
+
+    NetworkCall<DiamondListResp>()
+        .makeCall(
+      () => app
+          .resolve<ServiceModule>()
+          .networkService()
+          .diamondListPaginate(dict),
+      context,
+      isProgress: !isRefress && !isLoading,
+    )
+        .then((diamondListResp) async {
       arraDiamond.addAll(diamondListResp.data.diamonds);
-//      avgCarat = arraDiamond.map((m) => m.crt).reduce((a, b) => a + b) /
-//          arraDiamond.length;
-//      pcs = arraDiamond.length;
+
       diamondList.state.listCount = arraDiamond.length;
       diamondList.state.totalCount = diamondListResp.data.count;
       getAverageCalculation(diamondListResp.data.diamonds);
@@ -133,14 +147,14 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       page = page + 1;
       diamondList.state.setApiCalling(false);
       setState(() {});
-    }, (onError) {
+    }).catchError((onError) {
       if (isRefress) {
         arraDiamond.clear();
         diamondList.state.listCount = arraDiamond.length;
         diamondList.state.totalCount = arraDiamond.length;
       }
       diamondList.state.setApiCalling(false);
-    }, isProgress: !isRefress && !isLoading);
+    });
   }
 
   fillArrayList() {
@@ -256,6 +270,25 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         pcs = diamondList.length.toString();
       }
     }
+    // List<num> arrValues =
+    //     SyncManager.instance.getTotalCaratAvgRapAmount(filterList);
+    // carat = arrValues[0];
+    // totalamt = arrValues[2];
+    // avgRapCrt = arrValues[3];
+    // avgPriceCrt = arrValues[4];
+    // termDiscAmount = arrValues[5];
+    // avgAmount = totalamt / carat;
+    // totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt);
+    // totalAmount = PriceUtilities.getPrice(avgAmount);
+    // if (isAccountTerm) {
+    //   avgDisc = (1 - (termDiscAmount / avgRapCrt)) * (-100);
+    //   totalDisc = PriceUtilities.getPercent(avgDisc);
+    // } else {
+    //   avgDisc = (1 - (avgPriceCrt / avgRapCrt)) * (-100);
+    //   totalDisc = PriceUtilities.getPercent(avgDisc);
+    // }
+    // totalCarat = PriceUtilities.getDoubleValue(carat);
+    // pcs = filterList.length.toString();
   }
 
   getAveragePriceCrt(num totalPrice, num totalcarat) {

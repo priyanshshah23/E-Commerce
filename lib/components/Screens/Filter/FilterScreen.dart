@@ -27,6 +27,7 @@ import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/FilterModel/TabModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
+import 'package:diamnow/modules/Filter/gridviewlist/FilterRequest.dart';
 import 'package:diamnow/modules/Filter/gridviewlist/KeyToSymbol.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -89,6 +90,15 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     setState(() {
       //
     });
+  }
+
+  @override
+  void dispose() {
+    RxBus.destroy(tag: eventMasterSelection);
+    RxBus.destroy(tag: eventMasterForDeSelectMake);
+    RxBus.destroy(tag: eventMasterForDeSelectMake);
+    RxBus.destroy(tag: eventMasterForGroupWidgetSelectAll);
+    super.dispose();
   }
 
   registerRsBus() {
@@ -306,7 +316,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       req,
       (diamondListResp) {
         Map<String, dynamic> dict = new HashMap();
+
         dict["filterId"] = diamondListResp.data.filter.id;
+        dict["filters"] = FilterRequest().createRequest(arrList);
         NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
       },
       (onError) {
