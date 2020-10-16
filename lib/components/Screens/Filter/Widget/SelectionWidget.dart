@@ -1,12 +1,14 @@
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:diamnow/app/app.export.dart';
+import 'package:flutter/services.dart';
 import 'package:rxbus/rxbus.dart';
 
 class SelectionWidget extends StatefulWidget {
@@ -35,6 +37,14 @@ class TagWidget extends StatefulWidget {
 }
 
 class _TagWidgetState extends State<TagWidget> {
+  final TextEditingController _minValueController = TextEditingController();
+  final TextEditingController _maxValueController = TextEditingController();
+  var _focusMinValue = FocusNode();
+  var _focusMaxValue = FocusNode();
+  String oldValueForFrom;
+  String oldValueForTo;
+
+
   @override
   void initState() {
     super.initState();
@@ -59,6 +69,10 @@ class _TagWidgetState extends State<TagWidget> {
     if (widget.model.verticalScroll == false &&
         widget.model.viewType == ViewTypes.shapeWidget) {
       return getShapeWidgetHorizontal();
+    }
+
+    if (widget.model.masterCode == MasterCode.arrivals) {
+      return getArrivalsWidget();
     }
 
     return widget.model.orientation == DisplayTypes.vertical
@@ -224,6 +238,199 @@ class _TagWidgetState extends State<TagWidget> {
     );
   }
 
+  getArrivalsWidget() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        isNullEmptyOrFalse(widget.model.title)
+            ? SizedBox()
+            : Row(
+                children: [
+                  Text(
+                    widget.model.title ?? "",
+                    style: appTheme.blackNormal18TitleColorblack,
+                    textAlign: TextAlign.left,
+                  ),
+                  Spacer(),
+                  getFromTextField(),
+                  SizedBox(width:  getSize(8),),
+                  getToTextField(),
+                ],
+              ),
+        isNullEmptyOrFalse(widget.model.title)
+            ? SizedBox()
+            : SizedBox(height: getSize(20)),
+        Container(
+          height: getSize(40),
+          child: ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemCount: widget.model.masters.length,
+            itemBuilder: (context, index) {
+              return InkWell(
+                child: getSingleTag(index),
+                onTap: () {
+                  setState(() {
+                    widget.model.masters[index].isSelected =
+                        !widget.model.masters[index].isSelected;
+
+                    onSelectionClick(index);
+                  });
+                },
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+getFromTextField() {
+    return Container(
+      width: getSize(70),
+      height: getSize(30),
+      child: Focus(
+        onFocusChange: (hasfocus) {
+          if (hasfocus == false) {
+            if (_minValueController.text.isNotEmpty &&
+                _maxValueController.text.isNotEmpty) {
+              if (num.parse(_minValueController.text.trim()) <=
+                  num.parse(_maxValueController.text.trim())) {
+                // app.resolve<CustomDialogs>().confirmDialog(
+                //       context,
+                //       title: "Value Error",
+                //       desc: "okay",
+                //       positiveBtnTitle: "Try Again",
+                //     );
+              } else {
+                app.resolve<CustomDialogs>().confirmDialog(
+                      context,
+                      title: "Value Error",
+                      desc:
+                          "From Value should be less than or equal to To value",
+                      positiveBtnTitle: "Try Again",
+                    );
+                _minValueController.text = "";
+                setState(() {});
+              }
+            }
+          }
+          // Focus.of(context).unfocus();
+        },
+        child: TextField(
+          textAlign: widget.model.fromToStyle.showUnderline
+              ? TextAlign.left
+              : TextAlign.center,
+          onChanged: (value) {
+            oldValueForFrom = _minValueController.text.trim();
+          },
+          onSubmitted: (value) {},
+          style: appTheme.blackNormal14TitleColorblack,
+          focusNode: _focusMinValue,
+          controller: _minValueController,
+          inputFormatters: [
+            TextInputFormatter.withFunction((oldValue, newValue) =>
+                RegExp(r'(^[+-]?\d*.?\d{0,2})$').hasMatch(newValue.text)
+                    ? newValue
+                    : oldValue),
+            LengthLimitingTextInputFormatter(3),
+          ],
+          keyboardType: TextInputType.numberWithOptions(decimal: true),
+          textInputAction: TextInputAction.next,
+          decoration: InputDecoration(
+            focusedBorder: widget.model.fromToStyle.showUnderline
+                ? new UnderlineInputBorder(
+                    borderSide: new BorderSide(
+                    color: widget.model.fromToStyle.underlineColor,
+                  ))
+                : InputBorder.none,
+            enabledBorder: widget.model.fromToStyle.showUnderline
+                ? new UnderlineInputBorder(
+                    borderSide: new BorderSide(
+                    color: widget.model.fromToStyle.underlineColor,
+                  ))
+                : InputBorder.none,
+            hintText: "From",
+            hintStyle: appTheme.grey14HintTextStyle,
+          ),
+        ),
+      ),
+    );
+  }
+
+  getToTextField() {
+    return Container(
+      width: getSize(70),
+      height: getSize(30),
+      child: Focus(
+        onFocusChange: (hasfocus) {
+          if (hasfocus == false) {
+            if (_minValueController.text.isNotEmpty &&
+                _maxValueController.text.isNotEmpty) {
+              if (num.parse(_minValueController.text.trim()) <=
+                  num.parse(_maxValueController.text.trim())) {
+                // app.resolve<CustomDialogs>().confirmDialog(
+                //       context,
+                //       title: "Value Error",
+                //       desc: "okay",
+                //       positiveBtnTitle: "Try Again",
+                //     );
+              } else {
+                app.resolve<CustomDialogs>().confirmDialog(
+                      context,
+                      title: "Value Error",
+                      desc:
+                          "To Value should be greater than or equal to From value",
+                      positiveBtnTitle: "Try Again",
+                    );
+                _maxValueController.text = "";
+                setState(() {});
+              }
+            }
+          }
+          // Focus.of(context).unfocus();
+        },
+        child: TextField(
+          textAlign: widget.model.fromToStyle.showUnderline
+              ? TextAlign.left
+              : TextAlign.center,
+          onChanged: (value) {
+            oldValueForTo = _maxValueController.text.trim();
+          },
+          focusNode: _focusMaxValue,
+          controller: _maxValueController,
+          inputFormatters: [
+            TextInputFormatter.withFunction((oldValue, newValue) =>
+                RegExp(r'(^[+-]?\d*.?\d{0,2})$').hasMatch(newValue.text)
+                    ? newValue
+                    : oldValue),
+            LengthLimitingTextInputFormatter(3),
+          ],
+          onSubmitted: (value) {},
+          style: appTheme.blackNormal14TitleColorblack,
+          keyboardType: TextInputType.numberWithOptions(decimal: true),
+          textInputAction: TextInputAction.done,
+          decoration: InputDecoration(
+            focusedBorder: widget.model.fromToStyle.showUnderline
+                ? new UnderlineInputBorder(
+                    borderSide: new BorderSide(
+                    color: widget.model.fromToStyle.underlineColor,
+                  ))
+                : InputBorder.none,
+            enabledBorder: widget.model.fromToStyle.showUnderline
+                ? new UnderlineInputBorder(
+                    borderSide: new BorderSide(
+                    color: widget.model.fromToStyle.underlineColor,
+                  ))
+                : InputBorder.none,
+            hintText: "To",
+            hintStyle: appTheme.grey14HintTextStyle,
+          ),
+        ),
+      ),
+    );
+  }
   getMultipleMasterSelections(int index) {
     //When Local data has added and multilple master has to select
     if (widget.model.isSingleSelection) {
