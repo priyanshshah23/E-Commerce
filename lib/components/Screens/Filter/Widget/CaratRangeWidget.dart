@@ -56,9 +56,6 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
                   _maxValueController.text.isNotEmpty) {
                 if (num.parse(_minValueController.text.trim()) <=
                     num.parse(_maxValueController.text.trim())) {
-                  _minValueController.text = "";
-                  _maxValueController.text = "";
-
                   String text =
                       "${_minValueController.text}-${_maxValueController.text}";
                   if (!widget.selectionModel.caratRangeChipsToShow
@@ -66,6 +63,8 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
                     widget.selectionModel.caratRangeChipsToShow.add(text);
                     setState(() {});
                   }
+                  _minValueController.text = "";
+                  _maxValueController.text = "";
                 } else {
                   app.resolve<CustomDialogs>().confirmDialog(
                         context,
