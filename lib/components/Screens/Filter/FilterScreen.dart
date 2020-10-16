@@ -19,6 +19,7 @@ import 'package:diamnow/components/Screens/Filter/Widget/FromToWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SeperatorWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
+import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
@@ -242,7 +243,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               context,
               R.string().screenTitle.searchDiamond,
               bgColor: appTheme.whiteColor,
-              leadingButton: getBackButton(context),
+              leadingButton: getBackButton(context,ontap: (){
+                RxBus.post(DrawerEvent(DrawerConstant.OPEN_DRAWER, false),
+                    tag: eventBusTag);
+              }),
               centerTitle: false,
             ),
             body: Column(

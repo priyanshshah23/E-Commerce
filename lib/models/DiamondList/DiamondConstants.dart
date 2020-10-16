@@ -1,5 +1,6 @@
 class DiamondModuleConstant {
   static const MODULE_TYPE_SEARCH = 1;
+  static const MODULE_TYPE_UPCOMING = 2;
 }
 
 class ArgumentConstant{
@@ -9,6 +10,7 @@ class ArgumentConstant{
 
 class DrawerConstant {
   static const int MODULE_SEARCH = DiamondModuleConstant.MODULE_TYPE_SEARCH;
+  static const int MODULE_UPCOMING = DiamondModuleConstant.MODULE_TYPE_UPCOMING;
 
   static const int LOGOUT = 111;
   static const int OPEN_DRAWER = 1001;
