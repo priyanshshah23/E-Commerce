@@ -31,13 +31,13 @@ class DiamondListScreen extends StatefulScreenWidget {
 
   @override
   _DiamondListScreenState createState() =>
-      _DiamondListScreenState(filterId: filterId,moduleType: moduleType);
+      _DiamondListScreenState(filterId: filterId, moduleType: moduleType);
 }
 
 class _DiamondListScreenState extends StatefulScreenWidgetState {
   String filterId;
   int moduleType;
-  _DiamondListScreenState({this.filterId,this.moduleType});
+  _DiamondListScreenState({this.filterId, this.moduleType});
 
   BaseList diamondList;
   List<DiamondModel> arraDiamond = List<DiamondModel>();
@@ -101,7 +101,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     DiamondListReq filterReq = DiamondListReq();
     filterReq.page = page;
     filterReq.limit = DEFAULT_LIMIT;
-    if(filter!=null || filterId.isNotEmpty){
+    if (filter != null || filterId.isNotEmpty) {
       Filters filter = Filters();
       filter.diamondSearchId = filterId;
       filterReq.filters = filter;
@@ -142,21 +142,22 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               var item = arraDiamond[index];
               return InkWell(
                 onTap: () {
-                  setState(() {
-                    arraDiamond[index].isSelected =
-                        !arraDiamond[index].isSelected;
-                    fillArrayList();
-                    getAverageCalculation(arraDiamond);
-                    diamondList.state.setApiCalling(false);
-                  });
+                  // setState(() {
+                  //   arraDiamond[index].isSelected =
+                  //       !arraDiamond[index].isSelected;
+                  //   fillArrayList();
+                  //   diamondList.state.setApiCalling(false);
+                  // });
+                  var dict = Map<String, dynamic>();
+                  dict["diamondModel"] = arraDiamond[index];
+
+                  NavigationUtilities.pushRoute(DiamondDetailScreen.route,
+                      args: dict);
                 },
                 child: DiamondGridItemWidget(
                   item: item,
                 ),
               );
-              // return Container(
-              //   color: Colors.green,
-              // );
             }),
           )
         : ListView.builder(
@@ -193,11 +194,12 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     });
     filterList = list.toList();
     if (filterList != null && filterList.length > 0) {
-      List<num> arrValues = SyncManager.instance.getTotalCaratAvgRapAmount(filterList);
+      List<num> arrValues =
+          SyncManager.instance.getTotalCaratAvgRapAmount(filterList);
       carat = arrValues[0];
       avgRapCrt = arrValues[3];
       avgPriceCrt = arrValues[4];
-      avgDisc = avgPriceCrt/avgRapCrt;
+      avgDisc = avgPriceCrt / avgRapCrt;
 //      print("average"+avgRapCrt.toString());
 //      print("Price.."+avgPriceCrt.toString());
 //      print("Disc..."+avgDisc.toString());
@@ -205,16 +207,16 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       totalCarat = PriceUtilities.getDoubleValue(carat);
       pcs = filterList.length.toString();
     } else {
-      List<num> arrValues = SyncManager.instance.getTotalCaratAvgRapAmount(diamondList);
+      List<num> arrValues =
+          SyncManager.instance.getTotalCaratAvgRapAmount(diamondList);
       carat = arrValues[0];
       avgRapCrt = arrValues[3];
       avgPriceCrt = arrValues[4];
-      avgDisc = avgPriceCrt/avgRapCrt;
+      avgDisc = avgPriceCrt / avgRapCrt;
       totalDisc = PriceUtilities.getPercent(avgDisc);
       totalCarat = PriceUtilities.getDoubleValue(carat);
       pcs = diamondList.length.toString();
     }
-
   }
 
   getAveragePriceCrt(num totalPrice, num totalcarat) {
@@ -330,12 +332,13 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               ),
             ),
             InkWell(
-              onTap: (){
+              onTap: () {
                 showModalBottomSheet(
                   context: context,
                   isScrollControlled: true,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(25.0))),
                   builder: (_) => FilterBy(
                     optionList: optionList,
                   ),

@@ -204,9 +204,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           List<Master> masters = list2.first.mainMasters
               .where((element) => element.isSelected == true)
               .toList();
-          print(masters);
+
           List<String> masterCodes = masters.map((e) => e.code).toList();
-          print(masterCodes);
+
           for (var item in masterSelection) {
             item.masterToSelect.forEach((element) {
               if (element.subMasters
