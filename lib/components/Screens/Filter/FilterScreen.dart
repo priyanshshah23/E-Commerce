@@ -12,6 +12,7 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup
 import 'package:diamnow/components/Screens/Filter/Widget/CertNoWidget.dart';
 
 import 'package:diamnow/components/Screens/Filter/Widget/CaratRangeWidget.dart';
+import 'package:diamnow/components/Screens/Filter/Widget/ColorWhiteFancyWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/ColorWidget.dart';
 
 import 'package:diamnow/components/Screens/Filter/Widget/FromToWidget.dart';
@@ -77,24 +78,6 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           arrList = result;
         });
       });
-      Config().getOptionsJson().then((result) {
-        result.forEach((element) {
-          if (element.isActive) {
-            optionList.add(element);
-          }
-        });
-        showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
-          builder: (_) => FilterBy(
-            optionList: optionList,
-          ),
-        );
-        setState(() {});
-      });
-
       Config().getTabJson().then((result) {
         setState(() {
           arrTab = result;
@@ -459,7 +442,9 @@ class _FilterItemState extends State<FilterItem> {
             right: getSize(16),
             top: getSize(8.0),
             bottom: getSize(8)),
-        child: ColorWidget(model),
+        child: (model as ColorModel).showGroup
+            ? ColorWidget(model)
+            : ColorWhiteFancyWidget(model),
       );
     } else if (model.viewType == ViewTypes.caratRange) {
       return Padding(

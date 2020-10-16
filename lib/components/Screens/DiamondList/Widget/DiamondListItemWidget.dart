@@ -103,7 +103,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                     : appTheme.colorPrimary),
           ),
           Text(
-            "Carat",
+            R.string().commonString.carat,
             style: appTheme.blue14TextStyle.copyWith(
                 color: widget.item.isSelected
                     ? appTheme.whiteColor

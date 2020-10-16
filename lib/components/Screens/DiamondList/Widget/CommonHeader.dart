@@ -28,15 +28,15 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
       child: Row(
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          getColumn(widget.pcs, "Pcs"),
-          getColumn(widget.totalCarat, "Cts"),
-          getColumn(widget.totalDisc, "Disc %"),
+          getColumn(widget.pcs, R.string().commonString.pcs),
+          getColumn(widget.totalCarat, R.string().commonString.cts),
+          getColumn(widget.totalDisc, R.string().commonString.disc),
           Expanded(
             child: getColumn(
-                widget.totalPriceCrt, "Avg. Price/Ct " + R.string().commonString.doller),
+                widget.totalPriceCrt, R.string().commonString.avgPriceCrt + R.string().commonString.doller),
           ),
           Expanded(
-            child: getColumn(widget.totalAmount, "Amount " + R.string().commonString.doller),
+            child: getColumn(widget.totalAmount, R.string().commonString.amount + R.string().commonString.doller),
           )
         ],
       ),
