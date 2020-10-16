@@ -26,6 +26,8 @@ class ScreenTitle {
   final String newRideSharingRequest;
   final String newRequest;
   final String otpVerifyDesc;
+  final String diamondDetail;
+  
 
 //popUp
   final String enableLocationTitle;
@@ -246,6 +248,7 @@ class ScreenTitle {
         "The recovery code was sent to your mobile number. Please enter the code.",
     this.otpVerifyDesc =
         "The verification code was sent to your mobile number. Please enter the code.",
+        this.diamondDetail = "Diamond Detail",
 
     //popup
     this.enableLocationTitle = 'Enable Location Access',
