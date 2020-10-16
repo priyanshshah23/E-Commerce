@@ -114,17 +114,20 @@
             {
                 "title": "Depth%",
                 "apiKey": "depPer",
-                "sequence": 5
+                "sequence": 5,
+                "isPercentage": true
             },
             {
                 "title": "Table%",
                 "apiKey": "tblPer",
-                "sequence": 6
+                "sequence": 6,
+                "isPercentage": true
             },
             {
                 "title": "Crown Height%",
                 "apiKey": "cHgt",
-                "sequence": 7
+                "sequence": 7,
+                "isPercentage": true
             },
             {
                 "title": "Crown Angle",

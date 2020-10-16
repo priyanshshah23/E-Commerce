@@ -31,13 +31,13 @@ class DiamondListScreen extends StatefulScreenWidget {
 
   @override
   _DiamondListScreenState createState() =>
-      _DiamondListScreenState(filterId: filterId,moduleType: moduleType);
+      _DiamondListScreenState(filterId: filterId, moduleType: moduleType);
 }
 
 class _DiamondListScreenState extends StatefulScreenWidgetState {
   String filterId;
   int moduleType;
-  _DiamondListScreenState({this.filterId,this.moduleType});
+  _DiamondListScreenState({this.filterId, this.moduleType});
 
   BaseList diamondList;
   List<DiamondModel> arraDiamond = List<DiamondModel>();
@@ -142,21 +142,22 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               var item = arraDiamond[index];
               return InkWell(
                 onTap: () {
-                  setState(() {
-                    arraDiamond[index].isSelected =
-                        !arraDiamond[index].isSelected;
-                    fillArrayList();
-                    getAverageCalculation(arraDiamond);
-                    diamondList.state.setApiCalling(false);
-                  });
+                  // setState(() {
+                  //   arraDiamond[index].isSelected =
+                  //       !arraDiamond[index].isSelected;
+                  //   fillArrayList();
+                  //   diamondList.state.setApiCalling(false);
+                  // });
+                  var dict = Map<String, dynamic>();
+                  dict["diamondModel"] = arraDiamond[index];
+
+                  NavigationUtilities.pushRoute(DiamondDetailScreen.route,
+                      args: dict);
                 },
                 child: DiamondGridItemWidget(
                   item: item,
                 ),
               );
-              // return Container(
-              //   color: Colors.green,
-              // );
             }),
           )
         : ListView.builder(
