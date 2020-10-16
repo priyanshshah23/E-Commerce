@@ -1,3 +1,4 @@
+import 'package:diamnow/Setting/SettingModel.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/base/BaseList.dart';
@@ -9,6 +10,7 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart'
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
+import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
@@ -48,8 +50,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   String totalAmount = "0";
   String pcs = "0";
   List<FilterOptions> optionList = List<FilterOptions>();
+  List<BottomTabModel> arrMoreMenu;
   List<BottomTabModel> arrBottomTab;
   bool isGrid = true;
+  bool isAccountTerm = false;
 
   @override
   void initState() {
@@ -67,7 +71,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     diamondList = BaseList(BaseListState(
 //      imagePath: noRideHistoryFound,
       noDataMsg: APPNAME,
-      noDataDesc: "No record found",
+      noDataDesc: R.string().noDataStrings.noDataFound,
       refreshBtn: R.string().commonString.refresh,
       enablePullDown: true,
       enablePullUp: true,
@@ -85,7 +89,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       callApi(false);
     });
-
+    arrMoreMenu = DrawerSetting.getMoreMenuItems();
     arrBottomTab = BottomTabBar.getDiamondListScreenBottomTabs();
     setState(() {
       //
@@ -93,7 +97,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   }
 
   callApi(bool isRefress, {bool isLoading = false}) {
-    print("filter Id : ${filterId}");
     if (isRefress) {
       arraDiamond.clear();
       page = DEFAULT_PAGE;
@@ -120,7 +123,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       diamondList.state.setApiCalling(false);
       setState(() {});
     }, (onError) {
-      print("erorrr..." + onError);
       if (isRefress) {
         arraDiamond.clear();
         diamondList.state.listCount = arraDiamond.length;
@@ -184,9 +186,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     double avgDisc = 0.0;
     double avgRapCrt = 0.0;
     double avgPriceCrt = 0.0;
-//    double avgAmount = 0.0;
-//    double totalRap = 0.0;
-//    double priceCrt = 0.0;
+    double avgAmount = 0.0;
+    double totalamt = 0.0;
+    double termDiscAmount = 0.0;
+
     List<DiamondModel> filterList;
     Iterable<DiamondModel> list = diamondList.where((item) {
       return item.isSelected == true;
@@ -195,21 +198,39 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     if (filterList != null && filterList.length > 0) {
       List<num> arrValues = SyncManager.instance.getTotalCaratAvgRapAmount(filterList);
       carat = arrValues[0];
+      totalamt = arrValues[2];
       avgRapCrt = arrValues[3];
       avgPriceCrt = arrValues[4];
-      avgDisc = avgPriceCrt/avgRapCrt;
-//      print("average"+avgRapCrt.toString());
-//      print("Price.."+avgPriceCrt.toString());
-//      print("Disc..."+avgDisc.toString());
-      totalDisc = PriceUtilities.getPercent(avgDisc);
+      termDiscAmount = arrValues[5];
+      avgAmount = totalamt/carat;
+      totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt);
+      totalAmount = PriceUtilities.getPrice(avgAmount);
+      if(isAccountTerm){
+        avgDisc = (1-(termDiscAmount/avgRapCrt))*(-100);
+        totalDisc = PriceUtilities.getPercent(avgDisc);
+      }else{
+        avgDisc = (1-(avgPriceCrt/avgRapCrt))*(-100);
+        totalDisc = PriceUtilities.getPercent(avgDisc);
+      }
       totalCarat = PriceUtilities.getDoubleValue(carat);
       pcs = filterList.length.toString();
     } else {
       List<num> arrValues = SyncManager.instance.getTotalCaratAvgRapAmount(diamondList);
       carat = arrValues[0];
+      totalamt = arrValues[2];
       avgRapCrt = arrValues[3];
       avgPriceCrt = arrValues[4];
-      avgDisc = avgPriceCrt/avgRapCrt;
+      termDiscAmount = arrValues[5];
+      avgAmount = totalamt/carat;
+      if(isAccountTerm){
+        avgDisc = (1-(termDiscAmount/avgRapCrt))*(-100);
+        totalDisc = PriceUtilities.getPercent(avgDisc);
+      }else{
+        avgDisc = (1-(avgPriceCrt/avgRapCrt))*(-100);
+        totalDisc = PriceUtilities.getPercent(avgDisc);
+      }
+      totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt);
+      totalAmount = PriceUtilities.getPrice(avgAmount);
       totalDisc = PriceUtilities.getPercent(avgDisc);
       totalCarat = PriceUtilities.getDoubleValue(carat);
       pcs = diamondList.length.toString();
@@ -298,7 +319,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         backgroundColor: appTheme.whiteColor,
         appBar: getAppBar(
           context,
-          "Search Result",
+          R.string().screenTitle.searchResult,
           bgColor: appTheme.whiteColor,
           leadingButton: getBackButton(context),
           centerTitle: false,
@@ -341,12 +362,17 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   ),
                 );
               },
-              child: Padding(
-                padding: EdgeInsets.only(right: getSize(20)),
-                child: Image.asset(
-                  filter,
-                  height: getSize(20),
-                  width: getSize(20),
+              child: InkWell(
+                onTap: (){
+                  showBottomSheetForMenu(context,arrMoreMenu);
+                },
+                child: Padding(
+                  padding: EdgeInsets.only(right: getSize(20)),
+                  child: Image.asset(
+                    filter,
+                    height: getSize(20),
+                    width: getSize(20),
+                  ),
                 ),
               ),
             ),

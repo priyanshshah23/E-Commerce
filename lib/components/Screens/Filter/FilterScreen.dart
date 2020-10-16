@@ -57,24 +57,6 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           arrList = result;
         });
       });
-      Config().getOptionsJson().then((result) {
-        result.forEach((element) {
-          if (element.isActive) {
-            optionList.add(element);
-          }
-        });
-        showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
-          builder: (_) => FilterBy(
-            optionList: optionList,
-          ),
-        );
-        setState(() {});
-      });
-
       Config().getTabJson().then((result) {
         setState(() {
           arrTab = result;
