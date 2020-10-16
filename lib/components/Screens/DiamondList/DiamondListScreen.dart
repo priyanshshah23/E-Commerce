@@ -9,6 +9,7 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart'
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:flutter/material.dart';
@@ -17,20 +18,24 @@ class DiamondListScreen extends StatefulScreenWidget {
   static const route = "Diamond List Screen";
 
   String filterId = "";
+  int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
 
   DiamondListScreen(Map<String, dynamic> arguments) {
     this.filterId = arguments["filterId"];
+    if (arguments[ArgumentConstant.ModuleType] != null) {
+      moduleType = arguments[ArgumentConstant.ModuleType];
+    }
   }
 
   @override
   _DiamondListScreenState createState() =>
-      _DiamondListScreenState(filterId: filterId);
+      _DiamondListScreenState(filterId: filterId,moduleType: moduleType);
 }
 
 class _DiamondListScreenState extends StatefulScreenWidgetState {
   String filterId;
-
-  _DiamondListScreenState({this.filterId});
+  int moduleType;
+  _DiamondListScreenState({this.filterId,this.moduleType});
 
   BaseList diamondList;
   List<DiamondModel> arraDiamond = List<DiamondModel>();

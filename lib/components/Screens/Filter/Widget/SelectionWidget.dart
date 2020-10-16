@@ -254,16 +254,29 @@ class _TagWidgetState extends State<TagWidget> {
 
   void onSelectionClick(int index) {
     if (widget.model.isShowAll == true) {
-      print(widget.model.groupMasterCode);
       if (widget.model.masters[index].sId == widget.model.allLableTitle) {
         if (widget.model.masters[0].isSelected == true) {
           widget.model.masters.forEach((element) {
             element.isSelected = true;
           });
+
+          //Group Logic is Selected
+          if (widget.model.viewType == ViewTypes.groupWidget) {
+            Map<String, bool> m = Map<String, bool>();
+            m[widget.model.masterCode] = widget.model.masters[index].isSelected;
+            RxBus.post(m, tag: eventMasterForGroupWidgetSelectAll);
+          }
         } else {
           widget.model.masters.forEach((element) {
             element.isSelected = false;
           });
+
+          //Group Logic is Selected
+          if (widget.model.viewType == ViewTypes.groupWidget) {
+            Map<String, bool> m = Map<String, bool>();
+            m[widget.model.masterCode] = widget.model.masters[index].isSelected;
+            RxBus.post(m, tag: eventMasterForGroupWidgetSelectAll);
+          }
         }
       } else {
         if (widget.model.masters[index].sId == widget.model.allLableTitle) {
