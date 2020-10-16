@@ -27,6 +27,7 @@ class ScreenTitle {
   final String newRideSharingRequest;
   final String newRequest;
   final String otpVerifyDesc;
+  final String diamondDetail;
 
 //popUp
   final String enableLocationTitle;
@@ -82,20 +83,6 @@ class ScreenTitle {
   final String typeOfService;
   final String paymentType;
 
-  //Manage Attendence
-  final String manageAttendance;
-  final String manageRide;
-  final String startRide;
-  final String endRide;
-  final String startLogTime;
-  final String takeBreak;
-  final String resumeDuty;
-  final String endLogTimer;
-  final String goToRide;
-  final String goToRideBtn;
-
-  final String timerSheet;
-
   // recently view
   final String recentlyView;
   final String uploadImgValidationText;
@@ -140,30 +127,17 @@ class ScreenTitle {
   final String title;
   final String description;
 
-  //assigned Auto
-  final String autoType;
-  final String modelNo;
-  final String vehicleRegNo;
-  final String color;
-  final String passCapacity;
-  final String pickUpLoc;
-  final String parcelSize;
-  final String parcelDesc;
-  final String contactPerson;
-  final String dropOffLocation;
-  final String deliverToLocation;
-  final String distance;
-  final String eta;
-  final String acceptTime;
-  final String reject;
-  final String accept;
-  final String acceptIn;
-  final String veficationCOde;
-  final String verifyMobileDesc;
-  final String cancelRide;
-  final String cancelRideMsg;
-  final String changeLocation;
-  final String changeLocationDesc;
+  //Menu Items
+  final String enquiry;
+  final String placeOrder;
+  final String addToCart;
+  final String comment;
+  final String offer;
+  final String officeView;
+  final String hold;
+  final String download;
+  final String clearSelection;
+  final String share;
 
 //  Support
   final String accountAndPayment;
@@ -173,35 +147,9 @@ class ScreenTitle {
     this.basic = "Basic",
     this.advanced = "Advanced",
     this.stoneIdCertNo = "StoneID/Cert No",
-    this.changeLocationDesc =
-        ' has changed the drop off location of ongoing ride.',
-    this.changeLocation = 'Change Location',
-    this.parcelSize = 'Parcel Size',
     this.takeSignature = 'Take Signature',
-    this.parcelDesc = 'Parcel Description',
-    this.contactPerson = 'Contact person',
-    this.cancelRideMsg =
-        ' has cancelled the ongoing ride. Accept the new rides and keep riding..',
-    this.cancelRide = 'Ride Cancelled',
     this.optional = 'Optional',
-    this.verifyMobileDesc = 'There is a change in your mobile number. ' +
-        'You can\'t update your profile without verify it.',
     this.MyAddress = "My Address",
-    this.veficationCOde = 'verification code',
-    this.acceptIn = 'Accept in',
-    this.accept = 'Accept',
-    this.distance = 'Distance',
-    this.eta = 'ETA',
-    this.acceptTime = 'Accept Time',
-    this.reject = 'Reject',
-    this.pickUpLoc = 'Pickup location',
-    this.dropOffLocation = 'Drop off location',
-    this.deliverToLocation = 'Deliver to location',
-    this.passCapacity = 'Passenger Capacity',
-    this.color = 'Color',
-    this.vehicleRegNo = 'Vehicle Registration No.',
-    this.modelNo = 'Model No.',
-    this.autoType = 'Auto Type',
     this.expiryDate = 'Expiry Date',
     this.drivingLicenceDesc = 'Your driving licence picture',
     this.PanDesc = 'Your PAN card picture',
@@ -248,6 +196,7 @@ class ScreenTitle {
         "The recovery code was sent to your mobile number. Please enter the code.",
     this.otpVerifyDesc =
         "The verification code was sent to your mobile number. Please enter the code.",
+    this.diamondDetail = "Diamond Detail",
 
     //popup
     this.enableLocationTitle = 'Enable Location Access',
@@ -312,18 +261,6 @@ class ScreenTitle {
     this.typeOfService = 'Type of Service',
     this.paymentType = 'Payment Type*',
 
-    //manage Attendance
-    this.manageAttendance = 'Manage Timesheet',
-    this.manageRide = 'Manage Ride/Delivery',
-    this.startLogTime = 'Start Shift',
-    this.startRide = 'Start Ride',
-    this.takeBreak = 'Start Break',
-    this.resumeDuty = 'End Break',
-    this.endLogTimer = 'End Shift',
-    this.endRide = 'End Ride',
-    this.goToRide = 'GO TO RIDE',
-    this.goToRideBtn = 'Go to Ride',
-    this.timerSheet = 'Summary Timesheet',
     // recently View
     this.recentlyView = "Recently View",
     this.uploadImgValidationText =
@@ -345,5 +282,17 @@ class ScreenTitle {
 
 //    Support
     this.accountAndPayment = "Account and Payment",
+
+    //More Menu
+    this.enquiry = "Enquiry",
+    this.download = "Download",
+    this.addToCart = "Add to Cart",
+    this.clearSelection = "Clear Selection",
+    this.comment = "Comment",
+    this.hold = "Hold",
+    this.offer = "Offer",
+    this.officeView = "Office View",
+    this.placeOrder = "Place Order",
+    this.share = "Share",
   });
 }

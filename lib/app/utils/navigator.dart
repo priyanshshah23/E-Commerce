@@ -12,6 +12,7 @@ import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
+import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import '../app.export.dart';
 import 'fade_route.dart';
@@ -97,6 +98,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     //   break;
     case LoginScreen.route:
       screen = LoginScreen();
+      break;
+    case HomeScreen.route:
+      screen = HomeScreen();
       break;
     case FilterScreen.route:
       screen = FilterScreen();

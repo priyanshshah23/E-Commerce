@@ -59,7 +59,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       });
       Config().getOptionsJson().then((result) {
         result.forEach((element) {
-          if(element.isActive) {
+          if (element.isActive) {
             optionList.add(element);
           }
         });
@@ -67,9 +67,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           context: context,
           isScrollControlled: true,
           shape: RoundedRectangleBorder(
-              borderRadius:
-              BorderRadius.vertical(top: Radius.circular(25.0))),
-          builder: (_) => FilterBy(optionList: optionList,),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
+          builder: (_) => FilterBy(
+            optionList: optionList,
+          ),
         );
         setState(() {});
       });
@@ -133,31 +134,97 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         },
       ),
     );
+
+    //Group selection for All
     RxBus.register<Map<String, bool>>(tag: eventMasterForGroupWidgetSelectAll)
-        .listen(
-      (event) => setState(
-        () {
-          List<ColorModel> list = arrList
-              .where((element) => element.viewType == ViewTypes.groupWidget)
-              .toList()
-              .cast<ColorModel>();
+        .listen((event) {
+      List<ColorModel> list = arrList
+          .where((element) => element.viewType == ViewTypes.groupWidget)
+          .toList()
+          .cast<ColorModel>();
 
-          List<ColorModel> list2 = list
-              .where((element) => element.masterCode == event.keys.first)
-              .toList()
-              .cast<ColorModel>();
+      List<ColorModel> list2 = list
+          .where((element) => element.masterCode == event.keys.first)
+          .toList()
+          .cast<ColorModel>();
 
-          print(list2);
-          list2.forEach((element) {
-            if (element.masterCode == event.keys.first) {
-              element.mainMasters.forEach((element) {
-                element.isSelected == event.values.first;
-              });
+      list2.forEach((element) {
+        element.mainMasters.forEach((element) {
+          element.isSelected = event.values.first;
+        });
+      });
+      list2.forEach((element) {
+        element.groupMaster.forEach((element) {
+          element.isSelected = event.values.first;
+        });
+      });
+    });
+
+    RxBus.register<Map<String, dynamic>>(
+            tag: eventMasterForSingleItemOfGroupSelection)
+        .listen((event) {
+      String masterCode = event["masterCode"];
+      String selectedMasterCode = event["selectedMasterCode"];
+      bool isSelected = event["isSelected"];
+      List<MasterSelection> masterSelection = event["masterSelection"];
+      bool isGroupSelected = event["isGroupSelected"];
+
+      List<ColorModel> list = arrList
+          .where((element) => element.viewType == ViewTypes.groupWidget)
+          .toList()
+          .cast<ColorModel>();
+
+      List<ColorModel> list2 = list
+          .where((element) => element.masterCode == masterCode)
+          .toList()
+          .cast<ColorModel>();
+
+      if (!isNullEmptyOrFalse(list2)) {
+        if (isGroupSelected) {
+          for (var item in masterSelection) {
+            if (item.code == selectedMasterCode) {
+              if (isGroupSelected) {
+                for (var subMaster in item.masterToSelect) {
+                  subMaster.subMasters.forEach((strCode) {
+                    list2.first.mainMasters.forEach((element) {
+                      if (element.code == strCode) {
+                        element.isSelected = isSelected;
+                      }
+                    });
+                  });
+                }
+              }
             }
+          }
+        } else {
+          list2.first.groupMaster.forEach((element) {
+            element.isSelected = false;
           });
-        },
-      ),
-    );
+
+          List<Master> masters = list2.first.mainMasters
+              .where((element) => element.isSelected == true)
+              .toList();
+          print(masters);
+          List<String> masterCodes = masters.map((e) => e.code).toList();
+          print(masterCodes);
+          for (var item in masterSelection) {
+            item.masterToSelect.forEach((element) {
+              if (element.subMasters
+                      .where((f) => masterCodes.contains(f))
+                      .toList()
+                      .length ==
+                  element.subMasters.length) {
+                list2.first.groupMaster.forEach((element) {
+                  if (element.code == item.code) {
+                    element.isSelected = true;
+                  }
+                });
+              }
+            });
+          }
+        }
+      }
+    });
   }
 
   @override
@@ -212,7 +279,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         } else if (obj.code == BottomCodeConstant.filterSearch) {
           //
           print(obj.code);
-           callApiForGetFilterId();
+          callApiForGetFilterId();
         } else if (obj.code == BottomCodeConstant.filterSaveAndSearch) {
           //
           print(obj.code);

@@ -228,7 +228,7 @@ class _TagWidgetState extends State<TagWidget> {
     //When Local data has added and multilple master has to select
     if (widget.model.isSingleSelection) {
       for (var item in widget.model.masters) {
-        if (widget.model.masters[index].code != MasterCode.noBgm) {
+        if (item.code != MasterCode.noBgm) {
           if (item != widget.model.masters[index]) {
             item.isSelected = false;
           }
@@ -253,44 +253,6 @@ class _TagWidgetState extends State<TagWidget> {
   }
 
   void onSelectionClick(int index) {
-    if (widget.model.viewType == ViewTypes.groupWidget) {
-      onSelectionClickForGroupWidget(index);
-    } else {
-      if (widget.model.isShowAll == true) {
-        if (widget.model.masters[index].sId == widget.model.allLableTitle) {
-          if (widget.model.masters[0].isSelected == true) {
-            widget.model.masters.forEach((element) {
-              element.isSelected = true;
-            });
-          } else {
-            widget.model.masters.forEach((element) {
-              element.isSelected = false;
-            });
-          }
-        } else {
-          if (widget.model.masters[index].sId == widget.model.allLableTitle) {
-            widget.model.masters.forEach((element) {
-              element.isSelected = false;
-            });
-          } else {
-            if (widget.model.masters
-                    .where((element) =>
-                        element.isSelected == true &&
-                        element.sId != widget.model.allLableTitle)
-                    .toList()
-                    .length ==
-                widget.model.masters.length - 1) {
-              widget.model.masters[0].isSelected = true;
-            } else {
-              widget.model.masters[0].isSelected = false;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  onSelectionClickForGroupWidget(int index) {
     if (widget.model.isShowAll == true) {
       if (widget.model.masters[index].sId == widget.model.allLableTitle) {
         if (widget.model.masters[0].isSelected == true) {
@@ -298,11 +260,48 @@ class _TagWidgetState extends State<TagWidget> {
             element.isSelected = true;
           });
 
-          Map<String, bool> m = Map<String, bool>();
-          m[widget.model.masterSelection[index].masterToSelect[0].code] =
-              widget.model.masters[index].isSelected;
+          //Group Logic is Selected
+          if (widget.model.viewType == ViewTypes.groupWidget) {
+            Map<String, bool> m = Map<String, bool>();
+            m[widget.model.masterCode] = widget.model.masters[index].isSelected;
+            RxBus.post(m, tag: eventMasterForGroupWidgetSelectAll);
+          }
+        } else {
+          widget.model.masters.forEach((element) {
+            element.isSelected = false;
+          });
 
-          RxBus.post(m, tag: eventMasterForGroupWidgetSelectAll);
+          //Group Logic is Selected
+          if (widget.model.viewType == ViewTypes.groupWidget) {
+            Map<String, bool> m = Map<String, bool>();
+            m[widget.model.masterCode] = widget.model.masters[index].isSelected;
+            RxBus.post(m, tag: eventMasterForGroupWidgetSelectAll);
+          }
+        }
+      } else {
+        if (widget.model.masters[index].sId == widget.model.allLableTitle) {
+          widget.model.masters.forEach((element) {
+            element.isSelected = false;
+          });
+        } else {
+          if (widget.model.masters
+                  .where((element) =>
+                      element.isSelected == true &&
+                      element.sId != widget.model.allLableTitle)
+                  .toList()
+                  .length ==
+              widget.model.masters.length - 1) {
+            widget.model.masters[0].isSelected = true;
+          } else {
+            widget.model.masters[0].isSelected = false;
+            Map<String, dynamic> m = Map<String, dynamic>();
+            m["masterCode"] = widget.model.masterCode;
+            m["isSelected"] = widget.model.masters[index].isSelected;
+            m["selectedMasterCode"] = widget.model.masters[index].code;
+            m["masterSelection"] = widget.model.masterSelection;
+            m["isGroupSelected"] = (widget.model as ColorModel).isGroupSelected;
+            RxBus.post(m, tag: eventMasterForSingleItemOfGroupSelection);
+          }
         }
       }
     }

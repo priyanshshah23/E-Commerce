@@ -58,3 +58,10 @@ const String city = "assets/Common/city.png";
 const String country = "assets/Common/country.png";
 const String state = "assets/Common/state.png";
 const String pincode = "assets/Common/pincode.png";
+
+//More Menu
+const String offer = "assets/more/offer.png";
+const String hold = "assets/more/hold.png";
+const String clearSelection = "assets/more/clear.png";
+
+
