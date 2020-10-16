@@ -28,10 +28,10 @@ class DrawerSetting{
     ];*/
   }
 
-  List<DrawerModel> getMoreMenuItems(){
-     List<DrawerModel> moreMenuList = [];
-      moreMenuList.add(DrawerModel(
-        image:
-      ));
-  }
+  // List<DrawerModel> getMoreMenuItems(){
+  //    List<DrawerModel> moreMenuList = [];
+  //     moreMenuList.add(DrawerModel(
+  //       image:
+  //     ));
+  // }
 }

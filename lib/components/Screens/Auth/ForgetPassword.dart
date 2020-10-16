@@ -1,24 +1,9 @@
-import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
-import 'package:diamnow/app/network/NetworkCall.dart';
-import 'package:diamnow/app/network/ServiceModule.dart';
-import 'package:diamnow/components/Screens/Auth/DemoScreen.dart';
-import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
-import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
-import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
-import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
-import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
+
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
-import 'package:diamnow/models/FilterModel/FilterModel.dart';
-import 'package:diamnow/models/LoginModel.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import '../../../app/utils/navigator.dart';
-import '../../../modules/ThemeSetting.dart';
 
 class ForgetPasswordScreen extends StatefulScreenWidget {
   static const route = "ForgetPasswordScreen";
@@ -39,6 +24,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -72,22 +58,28 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Padding(
-                          padding:
-                          EdgeInsets.only(right: getSize(47), left: getSize(82),bottom: getSize(52),top: getSize(12)),
+                          padding: EdgeInsets.only(
+                              right: getSize(50),
+                              left: getSize(82),
+                              bottom: getSize(52),
+                              top: getSize(12)),
                           child: Image.asset(
                             forgetPassword,
-                            height: getSize(211),
-                            width: getSize(245),
+                            height: getSize(200),
+                            width: getSize(200),
                           ),
                         ),
-                        Text("The OTP has been sent to your registered Email address.", style: appTheme.blue14TextStyle.copyWith(color: appTheme.textBlackColor),),
-                        Text(" Please enter the OTP.",style: appTheme.blue14TextStyle.copyWith(color: appTheme.textBlackColor),),
+                        Text(
+                          "The OTP has been sent to your registered Email address. Please enter the OTP.",
+                          style: appTheme.black14TextStyle,
+                          textAlign: TextAlign.center,
+                        ),
                         getEmailTextField(),
                         Container(
                           margin: EdgeInsets.only(
                               top: getSize(15), left: getSize(0)),
-                          decoration: BoxDecoration(
-                              boxShadow: getBoxShadow(context)),
+                          decoration:
+                              BoxDecoration(boxShadow: getBoxShadow(context)),
                           child: AppButton.flat(
                             onTap: () {
                               // NavigationUtilities.pushRoute(TabBarDemo.route);
@@ -121,7 +113,8 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text("Remember Password?", style: appTheme.grey16HintTextStyle),
+                  Text("Remember Password?",
+                      style: appTheme.grey16HintTextStyle),
                   Text(" Sign In", style: appTheme.darkBlue16TextStyle),
                 ],
               ),
@@ -157,7 +150,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
           ],
           //isSecureTextField: false
         ),
-        textCallback: (text) { },
+        textCallback: (text) {},
         validation: (text) {
           if (text.trim().isEmpty) {
             return R.string().errorString.enterEmail;
