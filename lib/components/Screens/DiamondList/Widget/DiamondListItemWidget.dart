@@ -17,7 +17,6 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
 
   @override
   void initState() {
-    print(widget.item.sSts);
     super.initState();
   }
   @override
@@ -119,7 +118,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 color: appTheme.whiteColor,
                 borderRadius: BorderRadius.circular(getSize(5))),
             child: Text(
-              PriceUtilities.getPrice(widget.item?.back) + " %" ?? "",
+              PriceUtilities.getPercent(widget.item?.back) ?? "",
               style: appTheme.green10TextStyle,
             ),
           )

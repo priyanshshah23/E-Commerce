@@ -37,6 +37,7 @@ class AuthStrings {
   // Create Profile
   final String firstName;
   final String lastName;
+  final String middleName;
   final String name;
   final String confirmPassword;
   final String enterYour;
@@ -46,6 +47,9 @@ class AuthStrings {
   final String uploadPhotoDesc;
   final String updateProfile;
   final String postalCode;
+  final String addressLineOne;
+  final String addressLineTwo;
+  final String addressLineThree;
 
 // Profile
   final String currentPasswordErr;
@@ -112,6 +116,9 @@ class AuthStrings {
     this.pleaseEnterDeliveryOTP = "Please enter customer delivery code.",
     this.verified = "Verified",
     this.verify = "Verify",
+    this.addressLineOne = "Address 1",
+    this.addressLineTwo = "Address 2",
+    this.addressLineThree = "Address 3",
     this.verifyMobileDesc =
         "Please verify mobile number to update the profile.",
     this.verifyNow = 'Verify Now',
@@ -154,6 +161,7 @@ class AuthStrings {
     this.firstName = "First Name*",
     this.name = "Username*",
     this.lastName = "Last Name*",
+    this.middleName = "Middle Name*",
     this.confirmPassword = "Confirm Password",
     this.currentPasswordErr = "Current Password Error",
     this.passwordChanged = "Password Changed",

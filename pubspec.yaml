@@ -92,7 +92,9 @@ flutter:
     - assets/fonts/
     - assets/shape/
     - assets/filter/
+    - assets/more/
     - assets/DiamondDetail/
+    - assets/Common/
     # - assets/chls/hochls.pem
     # - assets/chls.pem
 

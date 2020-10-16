@@ -135,27 +135,92 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       ),
     );
 
+    //Group selection for All
     RxBus.register<Map<String, bool>>(tag: eventMasterForGroupWidgetSelectAll)
         .listen((event) {
-      if (event is Map<String, bool>) {
-        List<ColorModel> list = arrList
-            .where((element) => element.viewType == ViewTypes.groupWidget)
-            .toList()
-            .cast<ColorModel>();
-        if (event.keys.first == MasterCode.color) {
-          for (var item in list) {
-            if (item.masterCode == MasterCode.color) {
-              list.forEach((element) {
-                element.mainMasters.forEach((element) {
-                  element.isSelected = event.values.first;
-                });
-              });
-              list.forEach((element) {
-                element.groupMaster.forEach((element) {
-                  element.isSelected = event.values.first;
-                });
-              });
+      List<ColorModel> list = arrList
+          .where((element) => element.viewType == ViewTypes.groupWidget)
+          .toList()
+          .cast<ColorModel>();
+
+      List<ColorModel> list2 = list
+          .where((element) => element.masterCode == event.keys.first)
+          .toList()
+          .cast<ColorModel>();
+
+      list2.forEach((element) {
+        element.mainMasters.forEach((element) {
+          element.isSelected = event.values.first;
+        });
+      });
+      list2.forEach((element) {
+        element.groupMaster.forEach((element) {
+          element.isSelected = event.values.first;
+        });
+      });
+    });
+
+    RxBus.register<Map<String, dynamic>>(
+            tag: eventMasterForSingleItemOfGroupSelection)
+        .listen((event) {
+      String masterCode = event["masterCode"];
+      String selectedMasterCode = event["selectedMasterCode"];
+      bool isSelected = event["isSelected"];
+      List<MasterSelection> masterSelection = event["masterSelection"];
+      bool isGroupSelected = event["isGroupSelected"];
+
+      List<ColorModel> list = arrList
+          .where((element) => element.viewType == ViewTypes.groupWidget)
+          .toList()
+          .cast<ColorModel>();
+
+      List<ColorModel> list2 = list
+          .where((element) => element.masterCode == masterCode)
+          .toList()
+          .cast<ColorModel>();
+
+      if (!isNullEmptyOrFalse(list2)) {
+        if (isGroupSelected) {
+          for (var item in masterSelection) {
+            if (item.code == selectedMasterCode) {
+              if (isGroupSelected) {
+                for (var subMaster in item.masterToSelect) {
+                  subMaster.subMasters.forEach((strCode) {
+                    list2.first.mainMasters.forEach((element) {
+                      if (element.code == strCode) {
+                        element.isSelected = isSelected;
+                      }
+                    });
+                  });
+                }
+              }
             }
+          }
+        } else {
+          list2.first.groupMaster.forEach((element) {
+            element.isSelected = false;
+          });
+
+          List<Master> masters = list2.first.mainMasters
+              .where((element) => element.isSelected == true)
+              .toList();
+
+          List<String> masterCodes = masters.map((e) => e.code).toList();
+
+          for (var item in masterSelection) {
+            item.masterToSelect.forEach((element) {
+              if (element.subMasters
+                      .where((f) => masterCodes.contains(f))
+                      .toList()
+                      .length ==
+                  element.subMasters.length) {
+                list2.first.groupMaster.forEach((element) {
+                  if (element.code == item.code) {
+                    element.isSelected = true;
+                  }
+                });
+              }
+            });
           }
         }
       }

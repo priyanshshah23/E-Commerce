@@ -1,3 +1,9 @@
+class DiamondDetailUIAPIKeys {
+  // static const String shape = "SHAPE";
+  //ctPr
+  //amt
+}
+
 class DiamondDetailUIModel {
   String title;
   int sequence;
@@ -38,17 +44,23 @@ class DiamondDetailUIModel {
 class DiamondDetailUIComponentModel {
   String title;
   String apiKey;
-
   int sequence;
+  bool isPercentage;
 
   String value;
 
-  DiamondDetailUIComponentModel({this.title, this.apiKey, this.sequence});
+  DiamondDetailUIComponentModel({
+    this.title,
+    this.apiKey,
+    this.sequence,
+    this.isPercentage,
+  });
 
   DiamondDetailUIComponentModel.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     apiKey = json['apiKey'];
     sequence = json['sequence'];
+    isPercentage = json['isPercentage'] ?? false;
   }
 
   Map<String, dynamic> toJson() {
@@ -56,6 +68,7 @@ class DiamondDetailUIComponentModel {
     data['title'] = this.title;
     data['apiKey'] = this.apiKey;
     data['sequence'] = this.sequence;
+    data['isPercentage'] = this.isPercentage;
 
     return data;
   }
