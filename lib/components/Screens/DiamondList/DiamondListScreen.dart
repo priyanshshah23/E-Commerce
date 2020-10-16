@@ -60,8 +60,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   String totalAmount = "0";
   String pcs = "0";
   List<FilterOptions> optionList = List<FilterOptions>();
-  List<BottomTabModel> arrMoreMenu;
-  List<BottomTabModel> arrBottomTab;
   bool isGrid = false;
   bool isAccountTerm = false;
 
@@ -101,8 +99,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       callApi(false);
     });
-    arrMoreMenu = DrawerSetting.getMoreMenuItems();
-    arrBottomTab = BottomTabBar.getDiamondListScreenBottomTabs();
     setState(() {
       //
     });
@@ -153,45 +149,21 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             crossAxisSpacing: 8,
             children: List.generate(arraDiamond.length, (index) {
               var item = arraDiamond[index];
-              return InkWell(
-                onTap: () {
-                  /*  setState(() {
-                    arraDiamond[index].isSelected =
-                        !arraDiamond[index].isSelected;
-                    manageDiamondSelection();
-                  });*/
-                  // setState(() {
-                  //   arraDiamond[index].isSelected =
-                  //       !arraDiamond[index].isSelected;
-                  //   fillArrayList();
-                  //   diamondList.state.setApiCalling(false);
-                  // });
-                  var dict = Map<String, dynamic>();
-                  dict["diamondModel"] = arraDiamond[index];
-
-                  NavigationUtilities.pushRoute(DiamondDetailScreen.route,
-                      args: dict);
-                },
-                child: DiamondGridItemWidget(
+              return DiamondGridItemWidget(
                   item: item,
-                ),
-              );
+                  actionClick: (manageClick) {
+                    manageRowClick(index, manageClick.type);
+                  });
             }),
           )
         : ListView.builder(
             itemCount: arraDiamond.length,
             itemBuilder: (context, index) {
-              return InkWell(
-                  onTap: () {
-                    setState(() {
-                      arraDiamond[index].isSelected =
-                          !arraDiamond[index].isSelected;
-                      manageDiamondSelection();
-                    });
-                  },
-                  child: DiamondItemWidget(
-                    item: arraDiamond[index],
-                  ));
+              return DiamondItemWidget(
+                  item: arraDiamond[index],
+                  actionClick: (manageClick) {
+                    manageRowClick(index, manageClick.type);
+                  });
             },
           );
   }
@@ -214,25 +186,25 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     } else {
       filterList = list.toList();
     }
-    List<num> arrValues = SyncManager.instance.getTotalCaratAvgRapAmount(filterList);
+    List<num> arrValues =
+        SyncManager.instance.getTotalCaratAvgRapAmount(filterList);
     carat = arrValues[0];
     totalamt = arrValues[2];
     avgRapCrt = arrValues[3];
     avgPriceCrt = arrValues[4];
     termDiscAmount = arrValues[5];
-    avgAmount = totalamt/carat;
+    avgAmount = totalamt / carat;
     totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt);
     totalAmount = PriceUtilities.getPrice(avgAmount);
-    if(isAccountTerm){
-      avgDisc = (1-(termDiscAmount/avgRapCrt))*(-100);
+    if (isAccountTerm) {
+      avgDisc = (1 - (termDiscAmount / avgRapCrt)) * (-100);
       totalDisc = PriceUtilities.getPercent(avgDisc);
-    }else{
-      avgDisc = (1-(avgPriceCrt/avgRapCrt))*(-100);
+    } else {
+      avgDisc = (1 - (avgPriceCrt / avgRapCrt)) * (-100);
       totalDisc = PriceUtilities.getPercent(avgDisc);
     }
     totalCarat = PriceUtilities.getDoubleValue(carat);
     pcs = filterList.length.toString();
-
   }
 
   getAveragePriceCrt(num totalPrice, num totalcarat) {
@@ -329,6 +301,22 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     return list;
   }
 
+  manageRowClick(int index, int type) {
+    switch (type) {
+      case clickConstant.CLICK_TYPE_SELECTION:
+        setState(() {
+          arraDiamond[index].isSelected = !arraDiamond[index].isSelected;
+          manageDiamondSelection();
+        });
+        break;
+      case clickConstant.CLICK_TYPE_ROW:
+        var dict = Map<String, dynamic>();
+        dict[ArgumentConstant.DiamondDetail] = arraDiamond[index];
+        NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
+        break;
+    }
+  }
+
   manageToolbarClick(BottomTabModel model) {
     switch (model.code) {
       case BottomCodeConstant.TBSelectAll:
@@ -417,7 +405,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   Widget getBottomTab() {
     return BottomTabbarWidget(
-      arrBottomTab: arrBottomTab,
+      arrBottomTab: diamondConfig.arrBottomTab,
       onClickCallback: (obj) {
         //
         if (obj.code == BottomCodeConstant.dLShowSelected) {
@@ -427,9 +415,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           //
           print(obj.code);
         } else if (obj.code == BottomCodeConstant.dLMore) {
-          //
-          print(obj.code);
-          // callApiForGetFilterId();
+          showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
+              (manageClick) {
+            diamondConfig.manageDiamondAction(
+                arraDiamond, manageClick.bottomTabModel);
+          });
         } else if (obj.code == BottomCodeConstant.dLStatus) {
           //
           print(obj.code);

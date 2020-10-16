@@ -1,128 +1,140 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:flutter/material.dart';
 
 class DiamondItemWidget extends StatefulWidget {
   DiamondModel item;
+  ActionClick actionClick;
 
-  DiamondItemWidget({this.item});
+  DiamondItemWidget({this.item, this.actionClick});
 
   @override
   _DiamondItemWidgetState createState() => _DiamondItemWidgetState();
 }
 
 class _DiamondItemWidgetState extends State<DiamondItemWidget> {
-
   @override
   void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(
-        bottom: getSize(10),
-        top: getSize(5),
-      ),
-      width: MathUtilities.screenWidth(context),
-      decoration: BoxDecoration(
-          color: appTheme.whiteColor,
-          boxShadow: widget.item.isSelected
-              ? getBoxShadow(context)
-              : [BoxShadow(color: Colors.transparent)],
-          borderRadius: BorderRadius.circular(getSize(6)),
-          border: Border.all(
-              color: widget.item.isSelected
-                  ? appTheme.colorPrimary
-                  : appTheme.dividerColor)
-          //boxShadow: getBoxShadow(context),
-          ),
-      child: Row(
-        children: <Widget>[
-          getCaratAndDiscountDetail(),
-          //   getIdColorDetail(),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(
-                left: getSize(10),
-                right: getSize(10),
-              ),
-              child: Column(
-                children: <Widget>[
-                  getIdShapeDetail(),
-                  getDymentionAndCaratDetail(),
-                  getTableDepthAndAmountDetail()
-                ],
+    return GestureDetector(
+      onTap: () {
+        widget.actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_ROW));
+      },
+      child: Container(
+        margin: EdgeInsets.only(
+          bottom: getSize(10),
+          top: getSize(5),
+        ),
+        width: MathUtilities.screenWidth(context),
+        decoration: BoxDecoration(
+            color: appTheme.whiteColor,
+            boxShadow: widget.item.isSelected
+                ? getBoxShadow(context)
+                : [BoxShadow(color: Colors.transparent)],
+            borderRadius: BorderRadius.circular(getSize(6)),
+            border: Border.all(
+                color: widget.item.isSelected
+                    ? appTheme.colorPrimary
+                    : appTheme.dividerColor)
+            //boxShadow: getBoxShadow(context),
+            ),
+        child: Row(
+          children: <Widget>[
+            getCaratAndDiscountDetail(widget.actionClick),
+            //   getIdColorDetail(),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: getSize(10),
+                  right: getSize(10),
+                ),
+                child: Column(
+                  children: <Widget>[
+                    getIdShapeDetail(),
+                    getDymentionAndCaratDetail(),
+                    getTableDepthAndAmountDetail()
+                  ],
+                ),
               ),
             ),
-          ),
-          Container(
-            child: Center(
-                child: Container(
-              decoration: BoxDecoration(
-                  color: widget.item.getStatusColor(),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(5),
-                      bottomLeft: Radius.circular(5))),
-              height: getSize(26),
-              width: getSize(4),
-              // color: Colors.red,
-            )),
-          ),
-        ],
+            Container(
+              child: Center(
+                  child: Container(
+                decoration: BoxDecoration(
+                    color: widget.item.getStatusColor(),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(5),
+                        bottomLeft: Radius.circular(5))),
+                height: getSize(26),
+                width: getSize(4),
+                // color: Colors.red,
+              )),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  getCaratAndDiscountDetail() {
-    return Container(
-      padding: EdgeInsets.only(
-        top: getSize(8),
-        left: getSize(10),
-        right: getSize(10),
-        bottom: getSize(5),
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(getSize(5)),
-          bottomLeft: Radius.circular(getSize(5)),
+  getCaratAndDiscountDetail(ActionClick actionClick) {
+    return GestureDetector(
+      onTap: () {
+        actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_SELECTION));
+      },
+      child: Container(
+        padding: EdgeInsets.only(
+          top: getSize(8),
+          left: getSize(10),
+          right: getSize(10),
+          bottom: getSize(5),
         ),
-        color: widget.item.isSelected
-            ? appTheme.colorPrimary
-            : appTheme.dividerColor,
-      ),
-      child: Column(
-        children: <Widget>[
-          Text(
-            PriceUtilities.getPercent(widget.item?.crt ?? 0),
-            style: appTheme.blue14TextStyle.copyWith(
-                color: widget.item.isSelected
-                    ? appTheme.whiteColor
-                    : appTheme.colorPrimary),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(getSize(5)),
+            bottomLeft: Radius.circular(getSize(5)),
           ),
-          Text(
-            R.string().commonString.carat,
-            style: appTheme.blue14TextStyle.copyWith(
-                color: widget.item.isSelected
-                    ? appTheme.whiteColor
-                    : appTheme.colorPrimary),
-          ),
-          Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(top: getSize(5)),
-            width: getSize(55),
-            height: getSize(20),
-            decoration: BoxDecoration(
-                color: appTheme.whiteColor,
-                borderRadius: BorderRadius.circular(getSize(5))),
-            child: Text(
-              PriceUtilities.getPercent(widget.item?.back) ?? "",
-              style: appTheme.green10TextStyle,
+          color: widget.item.isSelected
+              ? appTheme.colorPrimary
+              : appTheme.dividerColor,
+        ),
+        child: Column(
+          children: <Widget>[
+            Text(
+              PriceUtilities.getPercent(widget.item?.crt ?? 0),
+              style: appTheme.blue14TextStyle.copyWith(
+                  color: widget.item.isSelected
+                      ? appTheme.whiteColor
+                      : appTheme.colorPrimary),
             ),
-          )
-        ],
+            Text(
+              R.string().commonString.carat,
+              style: appTheme.blue14TextStyle.copyWith(
+                  color: widget.item.isSelected
+                      ? appTheme.whiteColor
+                      : appTheme.colorPrimary),
+            ),
+            Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(top: getSize(5)),
+              width: getSize(55),
+              height: getSize(20),
+              decoration: BoxDecoration(
+                  color: appTheme.whiteColor,
+                  borderRadius: BorderRadius.circular(getSize(5))),
+              child: Text(
+                PriceUtilities.getPercent(widget.item?.back) ?? "",
+                style: appTheme.green10TextStyle,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -1,10 +1,11 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:flutter/material.dart';
 
-Future showBottomSheetForMenu(
-    BuildContext context, List<BottomTabModel> moreList) {
+Future showBottomSheetForMenu(BuildContext context,
+    List<BottomTabModel> moreList, ActionClick actionClick) {
   return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -37,11 +38,13 @@ Future showBottomSheetForMenu(
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
-                      moreList.forEach((element) {
+                      /*moreList.forEach((element) {
                         element.isSelected = false;
                       });
-                      moreList[index].isSelected = !moreList[index].isSelected;
-                      setSetter(() {});
+                      moreList[index].isSelected = true;
+                      setSetter(() {});*/
+                      Navigator.pop(context);
+                      actionClick(ManageCLick(bottomTabModel: moreList[index]));
                     },
                     child: Padding(
                       padding: EdgeInsets.symmetric(
