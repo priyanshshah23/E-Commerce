@@ -8,6 +8,7 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart'
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
+import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
@@ -18,24 +19,31 @@ class DiamondListScreen extends StatefulScreenWidget {
 
   String filterId = "";
   int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
+  bool isFromDrawer = false;
 
   DiamondListScreen(Map<String, dynamic> arguments) {
     this.filterId = arguments["filterId"];
     if (arguments[ArgumentConstant.ModuleType] != null) {
       moduleType = arguments[ArgumentConstant.ModuleType];
     }
+    if (arguments[ArgumentConstant.IsFromDrawer] != null) {
+      isFromDrawer = arguments[ArgumentConstant.IsFromDrawer];
+    }
   }
 
   @override
   _DiamondListScreenState createState() =>
-      _DiamondListScreenState(filterId: filterId,moduleType: moduleType);
+      _DiamondListScreenState(filterId: filterId, moduleType: moduleType);
 }
 
 class _DiamondListScreenState extends StatefulScreenWidgetState {
   String filterId;
   int moduleType;
-  _DiamondListScreenState({this.filterId,this.moduleType});
+  bool isFromDrawer;
 
+  _DiamondListScreenState({this.filterId, this.moduleType, this.isFromDrawer});
+
+  DiamondConfig diamondConfig;
   BaseList diamondList;
   List<DiamondModel> arraDiamond = List<DiamondModel>();
   int page = DEFAULT_PAGE;
@@ -51,7 +59,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   @override
   void initState() {
     super.initState();
-
+    diamondConfig = DiamondConfig(moduleType);
     diamondList = BaseList(BaseListState(
 //      imagePath: noRideHistoryFound,
       noDataMsg: APPNAME,
@@ -286,9 +294,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         backgroundColor: appTheme.whiteColor,
         appBar: getAppBar(
           context,
-          "Search Result",
+          diamondConfig.getScreenTitle(),
           bgColor: appTheme.whiteColor,
-          leadingButton: getBackButton(context),
+          leadingButton: isFromDrawer
+              ? getDrawerButton(context, true)
+              : getBackButton(context),
           centerTitle: false,
           actionItems: [
             Padding(
