@@ -228,7 +228,7 @@ class _TagWidgetState extends State<TagWidget> {
     //When Local data has added and multilple master has to select
     if (widget.model.isSingleSelection) {
       for (var item in widget.model.masters) {
-        if (widget.model.masters[index].code != MasterCode.noBgm) {
+        if (item.code != MasterCode.noBgm) {
           if (item != widget.model.masters[index]) {
             item.isSelected = false;
           }
@@ -294,6 +294,13 @@ class _TagWidgetState extends State<TagWidget> {
             widget.model.masters[0].isSelected = true;
           } else {
             widget.model.masters[0].isSelected = false;
+            Map<String, dynamic> m = Map<String, dynamic>();
+            m["masterCode"] = widget.model.masterCode;
+            m["isSelected"] = widget.model.masters[index].isSelected;
+            m["selectedMasterCode"] = widget.model.masters[index].code;
+            m["masterSelection"] = widget.model.masterSelection;
+            m["isGroupSelected"] = (widget.model as ColorModel).isGroupSelected;
+            RxBus.post(m, tag: eventMasterForSingleItemOfGroupSelection);
           }
         }
       }
