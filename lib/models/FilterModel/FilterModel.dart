@@ -5,6 +5,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
+import 'package:diamnow/models/DiamondDetail/DiamondDetailUIModel.dart';
 import 'package:diamnow/models/FilterModel/TabModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
 import 'package:diamnow/modules/Filter/gridviewlist/KeyToSymbol.dart';
@@ -127,6 +128,21 @@ class Config {
   //     (List<FormBaseModel> formModels[0] is CertNoModel).
   //   }
   // }
+
+  Future<List<DiamondDetailUIModel>> getDiamonDetailUIJson() async {
+    String jsonForm =
+        await rootBundle.loadString('assets/Json/DiamondDetail.json');
+
+    List<dynamic> fieldList = jsonDecode(jsonForm);
+    List<DiamondDetailUIModel> tabModels = [];
+    for (int i = 0; i < fieldList.length; i++) {
+      dynamic element = fieldList[i];
+      if (element is Map<String, dynamic>) {
+        tabModels.add(DiamondDetailUIModel.fromJson(element));
+      }
+    }
+    return tabModels;
+  }
 }
 
 class FormBaseModel {

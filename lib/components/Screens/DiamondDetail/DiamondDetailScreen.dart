@@ -5,7 +5,10 @@ import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
+import 'package:diamnow/models/DiamondDetail/DiamondDetailUIModel.dart';
+import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
+import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -14,13 +17,16 @@ class DiamondDetailScreen extends StatefulScreenWidget {
   static const route = "Diamond Detail Screen";
 
   String filterId;
+  DiamondModel diamondModel;
 
   DiamondDetailScreen({Map<String, dynamic> arguments}) {
     this.filterId = arguments["filterId"];
+    this.diamondModel = arguments["diamondModel"];
   }
 
   @override
-  _DiamondDetailScreenState createState() => _DiamondDetailScreenState();
+  _DiamondDetailScreenState createState() =>
+      _DiamondDetailScreenState(this.diamondModel);
 }
 
 class DiamondDetailImagePagerModel {
@@ -37,6 +43,8 @@ class DiamondDetailImagePagerModel {
 
 class _DiamondDetailScreenState extends StatefulScreenWidgetState
     with SingleTickerProviderStateMixin {
+  final DiamondModel diamondModel;
+
   TabController _controller;
   int _currentIndex = 0;
   bool isLoading = true;
@@ -44,6 +52,12 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
 
   List<DiamondDetailImagePagerModel> arrImages =
       List<DiamondDetailImagePagerModel>();
+
+  List<DiamondDetailUIModel> arrDiamondDetailUIModel =
+      List<DiamondDetailUIModel>();
+
+  _DiamondDetailScreenState(this.diamondModel);
+  //DiamondDetailUIModel
 
   @override
   bool get wantKeepAlive => true;
@@ -84,6 +98,50 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
     _controller.addListener(_handleTabSelection);
 
     arrBottomTab = BottomTabBar.getDiamondDetailScreenBottomTabs();
+    setState(() {
+      //
+    });
+
+    Config().getDiamonDetailUIJson().then((result) {
+      // arrDiamondDetailUIModel = result;
+      setupDiamonDetail(result);
+    });
+  }
+
+  setupDiamonDetail(List<DiamondDetailUIModel> arrModel) {
+    // var diamondModel = DiamondModel();
+    for (int i = 0; i < arrModel.length; i++) {
+      var diamondDetailItem = arrModel[i];
+      var diamondDetailUIModel = DiamondDetailUIModel(
+          title: diamondDetailItem.title,
+          sequence: diamondDetailItem.sequence,
+          isExpand: diamondDetailItem.isExpand);
+
+      diamondDetailUIModel.parameters = List<DiamondDetailUIComponentModel>();
+
+      for (DiamondDetailUIComponentModel element
+          in diamondDetailItem.parameters) {
+        //
+        var diamonDetailComponent = DiamondDetailUIComponentModel(
+            title: element.title,
+            apiKey: element.apiKey,
+            sequence: element.sequence);
+
+        if (isStringEmpty(element.apiKey) == false) {
+          dynamic valueElement = diamondModel.toJson()[element.apiKey];
+          if (valueElement != null) {
+            if (valueElement is String) {
+              diamonDetailComponent.value = valueElement;
+            } else if (valueElement is num) {
+              diamonDetailComponent.value = valueElement.toString();
+            }
+            diamondDetailUIModel.parameters.add(diamonDetailComponent);
+          }
+        }
+      }
+      arrDiamondDetailUIModel.add(diamondDetailUIModel);
+    }
+
     setState(() {
       //
     });
@@ -225,41 +283,141 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
                     ),
                   ),
                   //
-                  getSection("Basic Details"),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  getGridView(18),
-                  SizedBox(
-                    height: getSize(38),
-                  ),
-                  getSection("Measurements"),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  getGridView(15),
-                  SizedBox(
-                    height: getSize(38),
-                  ),
-                  getSection("Inclusion Details"),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  getGridView(6),
-                  SizedBox(
-                    height: getSize(38),
-                  ),
-                  getSection("Other"),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  getGridView(3),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
+                  getDiamondDetailComponents(),
+                  // getSection("Basic Details"),
+                  // SizedBox(
+                  //   height: getSize(20),
+                  // ),
+                  // getGridView(18),
+                  // SizedBox(
+                  //   height: getSize(38),
+                  // ),
+                  // getSection("Measurements"),
+                  // SizedBox(
+                  //   height: getSize(20),
+                  // ),
+                  // getGridView(15),
+                  // SizedBox(
+                  //   height: getSize(38),
+                  // ),
+                  // getSection("Inclusion Details"),
+                  // SizedBox(
+                  //   height: getSize(20),
+                  // ),
+                  // getGridView(6),
+                  // SizedBox(
+                  //   height: getSize(38),
+                  // ),
+                  // getSection("Other"),
+                  // SizedBox(
+                  //   height: getSize(20),
+                  // ),
+                  // getGridView(3),
+                  // SizedBox(
+                  //   height: getSize(20),
+                  // ),
                 ],
               ),
             )),
+      ),
+    );
+  }
+
+  Widget getDiamondDetailComponents() {
+    //
+    return Container(
+      child: Column(
+        children: [
+          for (int i = 0; i < arrDiamondDetailUIModel.length; i++)
+            InkWell(
+              onTap: () {
+                //
+                setState(() {
+                  arrDiamondDetailUIModel[i].isExpand =
+                      !arrDiamondDetailUIModel[i].isExpand;
+                });
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    color: appTheme.whiteColor,
+                    // borderRadius: BorderRadius.circular(getSize(5)),
+                    border: Border.all(color: appTheme.lightBGColor)),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: getSize(20),
+                    right: getSize(20),
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: getSize(20),
+                          bottom: getSize(20),
+                        ),
+                        child: Row(
+                          children: [
+                            getSection(arrDiamondDetailUIModel[i].title),
+                            Spacer(),
+                            Image.asset(
+                              arrDiamondDetailUIModel[i].isExpand == true
+                                  ? filterUpArrow
+                                  : filterDownArrow,
+                              height: getSize(14),
+                              width: getSize(14),
+                            ),
+                          ],
+                        ),
+                      ),
+                      arrDiamondDetailUIModel[i].isExpand
+                          ? Column(
+                              children: [
+                                for (int j = 0;
+                                    j <
+                                        arrDiamondDetailUIModel[i]
+                                            .parameters
+                                            .length;
+                                    j++)
+                                  Container(
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                        top: getSize(12),
+                                        bottom: getSize(12),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            arrDiamondDetailUIModel[i]
+                                                .parameters[j]
+                                                .apiKey,
+                                            style: appTheme.grey14HintTextStyle
+                                                .copyWith(
+                                              fontSize: getFontSize(12),
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                          Spacer(),
+                                          Text(
+                                            arrDiamondDetailUIModel[i]
+                                                .parameters[j]
+                                                .value,
+                                            style: appTheme.black14TextStyle
+                                                .copyWith(
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            )
+                          : SizedBox(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }

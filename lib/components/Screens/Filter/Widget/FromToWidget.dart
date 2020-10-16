@@ -181,6 +181,8 @@ class _FromToWidgetState extends State<FromToWidget> {
           }
 
           oldValueForFrom = _minValueController.text.trim();
+          widget.fromTomodel.valueFrom = oldValueForFrom;
+          print("=======>>"+oldValueForFrom);
         },
         onSubmitted: (value) {},
         focusNode: _focusMinValue,
@@ -259,6 +261,8 @@ class _FromToWidgetState extends State<FromToWidget> {
             }
           }
           oldValueForTo = _maxValueController.text.trim();
+          widget.fromTomodel.valueTo = oldValueForTo;
+          print("=======>"+oldValueForTo);
         },
         focusNode: _focusMaxValue,
         controller: _maxValueController,
@@ -268,7 +272,9 @@ class _FromToWidgetState extends State<FromToWidget> {
                   ? newValue
                   : oldValue)
         ],
-        onSubmitted: (value) {},
+        onSubmitted: (value) {
+          print(oldValueForTo);
+        },
         style: appTheme.blackNormal14TitleColorblack,
         keyboardType: TextInputType.text,
         textInputAction: TextInputAction.done,
