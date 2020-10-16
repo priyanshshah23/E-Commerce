@@ -14,11 +14,11 @@ class DiamondItemWidget extends StatefulWidget {
 }
 
 class _DiamondItemWidgetState extends State<DiamondItemWidget> {
-
   @override
   void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
