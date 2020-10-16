@@ -1,4 +1,5 @@
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
@@ -101,7 +102,7 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
       backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(
         context,
-        "Diamond Detail",
+        R.string().screenTitle.diamondDetail,
         bgColor: appTheme.whiteColor,
         leadingButton: getBackButton(context),
         centerTitle: false,
