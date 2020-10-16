@@ -2,8 +2,8 @@ import '../app.export.dart';
 
 class ApiConstants {
  //  static const String PROXY_URL = "PROXY 192.168.2.124:8888";
-   static const String PROXY_URL = "PROXY 192.168.0.117:8888";
-//   static const String PROXY_URL = "PROXY 192.168.225.188:8888";
+//   static const String PROXY_URL = "PROXY 192.168.0.117:8888";
+  static const String PROXY_URL = "PROXY 192.168.225.188:8888";
 // static const String PROXY_URL = "PROXY 192.168.0.116:8888";
   // static const String PROXY_URL = "PROXY 192.168.225.121:8888"; // Brijesh
 
@@ -18,4 +18,7 @@ class ApiConstants {
   static const String login = commonUrl + "auth/login";
 
   static const String diamondList = commonUrl + "diamond/paginate";
+
+  static const String staticPage = apiV1 + "static-page/{id}";
+
 }

@@ -12,6 +12,7 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWid
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
+import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
@@ -23,24 +24,33 @@ class DiamondListScreen extends StatefulScreenWidget {
 
   String filterId = "";
   int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
+  bool isFromDrawer = false;
 
   DiamondListScreen(Map<String, dynamic> arguments) {
-    this.filterId = arguments["filterId"];
-    if (arguments[ArgumentConstant.ModuleType] != null) {
-      moduleType = arguments[ArgumentConstant.ModuleType];
+    if (arguments != null) {
+      this.filterId = arguments["filterId"];
+      if (arguments[ArgumentConstant.ModuleType] != null) {
+        moduleType = arguments[ArgumentConstant.ModuleType];
+      }
+      if (arguments[ArgumentConstant.IsFromDrawer] != null) {
+        isFromDrawer = arguments[ArgumentConstant.IsFromDrawer];
+      }
     }
   }
 
   @override
-  _DiamondListScreenState createState() =>
-      _DiamondListScreenState(filterId: filterId,moduleType: moduleType);
+  _DiamondListScreenState createState() => _DiamondListScreenState(
+      filterId: filterId, moduleType: moduleType, isFromDrawer: isFromDrawer);
 }
 
 class _DiamondListScreenState extends StatefulScreenWidgetState {
   String filterId;
   int moduleType;
-  _DiamondListScreenState({this.filterId,this.moduleType});
+  bool isFromDrawer;
 
+  _DiamondListScreenState({this.filterId, this.moduleType, this.isFromDrawer});
+
+  DiamondConfig diamondConfig;
   BaseList diamondList;
   List<DiamondModel> arraDiamond = List<DiamondModel>();
   int page = DEFAULT_PAGE;
@@ -68,6 +78,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       setState(() {});
     });
 
+    diamondConfig = DiamondConfig(moduleType);
+    diamondConfig.initItems();
     diamondList = BaseList(BaseListState(
 //      imagePath: noRideHistoryFound,
       noDataMsg: APPNAME,
@@ -104,7 +116,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     DiamondListReq filterReq = DiamondListReq();
     filterReq.page = page;
     filterReq.limit = DEFAULT_LIMIT;
-    if(filter!=null || filterId.isNotEmpty){
+    if (filter != null || filterId.isNotEmpty) {
       Filters filter = Filters();
       filter.diamondSearchId = filterId;
       filterReq.filters = filter;
@@ -117,8 +129,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 //      pcs = arraDiamond.length;
       diamondList.state.listCount = arraDiamond.length;
       diamondList.state.totalCount = diamondListResp.data.count;
-      getAverageCalculation(diamondListResp.data.diamonds);
-      fillArrayList();
+      manageDiamondSelection();
       page = page + 1;
       diamondList.state.setApiCalling(false);
       setState(() {});
@@ -144,21 +155,27 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               var item = arraDiamond[index];
               return InkWell(
                 onTap: () {
-                  setState(() {
+                  /*  setState(() {
                     arraDiamond[index].isSelected =
                         !arraDiamond[index].isSelected;
-                    fillArrayList();
-                    getAverageCalculation(arraDiamond);
-                    diamondList.state.setApiCalling(false);
-                  });
+                    manageDiamondSelection();
+                  });*/
+                  // setState(() {
+                  //   arraDiamond[index].isSelected =
+                  //       !arraDiamond[index].isSelected;
+                  //   fillArrayList();
+                  //   diamondList.state.setApiCalling(false);
+                  // });
+                  var dict = Map<String, dynamic>();
+                  dict["diamondModel"] = arraDiamond[index];
+
+                  NavigationUtilities.pushRoute(DiamondDetailScreen.route,
+                      args: dict);
                 },
                 child: DiamondGridItemWidget(
                   item: item,
                 ),
               );
-              // return Container(
-              //   color: Colors.green,
-              // );
             }),
           )
         : ListView.builder(
@@ -169,9 +186,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                     setState(() {
                       arraDiamond[index].isSelected =
                           !arraDiamond[index].isSelected;
-                      fillArrayList();
-                      getAverageCalculation(arraDiamond);
-                      diamondList.state.setApiCalling(false);
+                      manageDiamondSelection();
                     });
                   },
                   child: DiamondItemWidget(
@@ -181,7 +196,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           );
   }
 
-  getAverageCalculation(List<DiamondModel> diamondList) {
+  getAverageCalculation() {
     double carat = 0.0;
     double avgDisc = 0.0;
     double avgRapCrt = 0.0;
@@ -191,9 +206,12 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     double termDiscAmount = 0.0;
 
     List<DiamondModel> filterList;
-    Iterable<DiamondModel> list = diamondList.where((item) {
+    Iterable<DiamondModel> list = arraDiamond.where((item) {
       return item.isSelected == true;
     });
+    if (list == null || list.length == 0) {
+      filterList = arraDiamond;
+    } else {
     filterList = list.toList();
     if (filterList != null && filterList.length > 0) {
       List<num> arrValues = SyncManager.instance.getTotalCaratAvgRapAmount(filterList);
@@ -312,6 +330,71 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     totalCarat = PriceUtilities.getDoubleValue(carat);
   }
 
+  List<Widget> getToolbarItem() {
+    List<Widget> list = [];
+    diamondConfig.toolbarList.forEach((element) {
+      list.add(GestureDetector(
+        onTap: () {
+          manageToolbarClick(element);
+        },
+        child: Padding(
+          padding: EdgeInsets.all(getSize(8.0)),
+          child: Image.asset(
+            element.image,
+            height: getSize(20),
+            width: getSize(20),
+          ),
+        ),
+      ));
+    });
+    return list;
+  }
+
+  manageToolbarClick(BottomTabModel model) {
+    switch (model.code) {
+      case BottomCodeConstant.TBSelectAll:
+        setSelectAllDiamond(model);
+        break;
+      case BottomCodeConstant.TBGrideView:
+        isGrid = !isGrid;
+        fillArrayList();
+        diamondList.state.setApiCalling(false);
+        break;
+      case BottomCodeConstant.TBSortView:
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
+          builder: (_) => FilterBy(
+            optionList: optionList,
+          ),
+        );
+        break;
+    }
+  }
+
+  setSelectAllDiamond(BottomTabModel model) {
+    List<DiamondModel> list =
+        arraDiamond.where((element) => element.isSelected).toList();
+    if (list != null && list.length == arraDiamond.length) {
+      model.isSelected = false;
+    } else {
+      model.isSelected = true;
+    }
+    arraDiamond.forEach((element) {
+      element.isSelected = model.isSelected;
+    });
+    setState(() {});
+    manageDiamondSelection();
+  }
+
+  manageDiamondSelection() {
+    fillArrayList();
+    getAverageCalculation();
+    diamondList.state.setApiCalling(false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -319,72 +402,13 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         backgroundColor: appTheme.whiteColor,
         appBar: getAppBar(
           context,
-          R.string().screenTitle.searchResult,
+          diamondConfig.getScreenTitle(),
           bgColor: appTheme.whiteColor,
-          leadingButton: getBackButton(context),
+          leadingButton: isFromDrawer
+              ? getDrawerButton(context, true)
+              : getBackButton(context),
           centerTitle: false,
-          actionItems: [
-            Padding(
-              padding: EdgeInsets.only(right: getSize(20)),
-              child: Image.asset(
-                selectAll,
-                height: getSize(20),
-                width: getSize(20),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(right: getSize(20)),
-              child: InkWell(
-                onTap: () {
-                  setState(() {
-                    isGrid = !isGrid;
-                    fillArrayList();
-                    diamondList.state.setApiCalling(false);
-                    print(isGrid);
-                  });
-                },
-                child: Image.asset(
-                  gridView,
-                  height: getSize(20),
-                  width: getSize(20),
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: (){
-                showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
-                  builder: (_) => FilterBy(
-                    optionList: optionList,
-                  ),
-                );
-              },
-              child: InkWell(
-                onTap: (){
-                  showBottomSheetForMenu(context,arrMoreMenu);
-                },
-                child: Padding(
-                  padding: EdgeInsets.only(right: getSize(20)),
-                  child: Image.asset(
-                    filter,
-                    height: getSize(20),
-                    width: getSize(20),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(right: getSize(20)),
-              child: Image.asset(
-                download,
-                height: getSize(20),
-                width: getSize(20),
-              ),
-            ),
-          ],
+          actionItems: getToolbarItem(),
         ),
         bottomNavigationBar: getBottomTab(),
         body: Padding(

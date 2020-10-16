@@ -6,6 +6,7 @@ import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/DiamondDetail/DiamondDetailUIModel.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
@@ -18,10 +19,14 @@ class DiamondDetailScreen extends StatefulScreenWidget {
 
   String filterId;
   DiamondModel diamondModel;
+  int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
 
   DiamondDetailScreen({Map<String, dynamic> arguments}) {
     this.filterId = arguments["filterId"];
     this.diamondModel = arguments["diamondModel"];
+    if (arguments[ArgumentConstant.ModuleType] != null) {
+      moduleType = arguments[ArgumentConstant.ModuleType];
+    }
   }
 
   @override
@@ -57,6 +62,7 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
       List<DiamondDetailUIModel>();
 
   _DiamondDetailScreenState(this.diamondModel);
+
   //DiamondDetailUIModel
 
   @override
@@ -123,9 +129,11 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
           in diamondDetailItem.parameters) {
         //
         var diamonDetailComponent = DiamondDetailUIComponentModel(
-            title: element.title,
-            apiKey: element.apiKey,
-            sequence: element.sequence);
+          title: element.title,
+          apiKey: element.apiKey,
+          sequence: element.sequence,
+          isPercentage: element.isPercentage,
+        );
 
         if (isStringEmpty(element.apiKey) == false) {
           dynamic valueElement = diamondModel.toJson()[element.apiKey];
@@ -134,6 +142,9 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
               diamonDetailComponent.value = valueElement;
             } else if (valueElement is num) {
               diamonDetailComponent.value = valueElement.toString();
+            }
+            if (element.isPercentage) {
+              diamonDetailComponent.value = "${diamonDetailComponent.value}%";
             }
             diamondDetailUIModel.parameters.add(diamonDetailComponent);
           }
@@ -388,7 +399,7 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
                                           Text(
                                             arrDiamondDetailUIModel[i]
                                                 .parameters[j]
-                                                .apiKey,
+                                                .title,
                                             style: appTheme.grey14HintTextStyle
                                                 .copyWith(
                                               fontSize: getFontSize(12),

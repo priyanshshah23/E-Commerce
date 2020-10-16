@@ -4,16 +4,16 @@ import 'package:diamnow/components/Screens/Home/DrawerModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 
-class DrawerSetting{
-   List<DrawerModel> getDrawerItems() {
-     List<DrawerModel>drawerList=[];
-     drawerList.add( DrawerModel(
-       image: search,
-       title: "Search",
-       isSelected: true,
-       type: DrawerConstant.MODULE_SEARCH,
-     ));
-     return drawerList;
+class DrawerSetting {
+  List<DrawerModel> getDrawerItems() {
+    List<DrawerModel> drawerList = [];
+    drawerList.add(DrawerModel(
+      image: search,
+      title: "Search",
+      isSelected: true,
+      type: DrawerConstant.MODULE_SEARCH,
+    ));
+    return drawerList;
     /*return <DrawerModel>[
       DrawerModel(
         image: search,
