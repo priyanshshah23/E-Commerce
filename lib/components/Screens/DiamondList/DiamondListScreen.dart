@@ -4,6 +4,7 @@ import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
+import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
@@ -48,7 +49,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   String pcs = "0";
   List<FilterOptions> optionList = List<FilterOptions>();
   List<BottomTabModel> arrBottomTab;
-  bool isGrid = false;
+  bool isGrid = true;
 
   @override
   void initState() {
