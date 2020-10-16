@@ -69,13 +69,27 @@ class FilterRequest {
       }
 
       if (element.viewType == ViewTypes.caratRange) {
-        map[(element as SelectionModel).apiKey] =
-            Master.getSelectedId((element as SelectionModel).masters);
+        List<Map<String, dynamic>> caratRequest =
+            Master.getSelectedCarat((element as SelectionModel).masters);
+
+        Map<String, dynamic> caratDic = Map<String, dynamic>();
+
+        for (var item in (element as SelectionModel).caratRangeChipsToShow) {
+          Map<String, dynamic> mainDic = Map<String, dynamic>();
+          Map<String, dynamic> dict = Map<String, dynamic>();
+          dict[">="] = item.split("-")[0];
+          dict["<="] = item.split("-")[1];
+
+          mainDic["crt"] = dict;
+          caratRequest.add(mainDic);
+        }
+        map["or"] = caratRequest;
       }
 
       if (element.viewType == ViewTypes.shapeWidget) {
-        map[element.apiKey] =
+        List<String> arrStr =
             Master.getSelectedId((element as SelectionModel).masters);
+        if (!isNullEmptyOrFalse(arrStr)) map[element.apiKey] = arrStr;
       }
     });
 
