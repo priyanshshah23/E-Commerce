@@ -59,7 +59,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   String pcs = "0";
   List<FilterOptions> optionList = List<FilterOptions>();
   List<BottomTabModel> arrBottomTab;
-  bool isGrid = true;
+  bool isGrid = false;
 
   @override
   void initState() {

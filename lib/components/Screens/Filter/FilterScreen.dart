@@ -259,7 +259,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               context,
               R.string().screenTitle.searchDiamond,
               bgColor: appTheme.whiteColor,
-              leadingButton: getBackButton(context),
+              leadingButton: isFromDrawer
+                  ? getDrawerButton(context, true)
+                  : getBackButton(context),
               centerTitle: false,
             ),
             body: Column(
