@@ -49,3 +49,10 @@ const String addToCart = "assets/DiamondDetail/addToCart.png";
 const String addToWatchlist = "assets/DiamondDetail/addToWatchlist.png";
 const String placeOrder = "assets/DiamondDetail/placeOrder.png";
 const String comment = "assets/DiamondDetail/comment.png";
+
+//More Menu
+const String offer = "assets/more/offer.png";
+const String hold = "assets/more/hold.png";
+const String clearSelection = "assets/more/clear.png";
+
+

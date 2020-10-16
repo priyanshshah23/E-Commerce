@@ -1,3 +1,4 @@
+import 'package:diamnow/app/AppConfiguration/AppNavigation.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
@@ -9,6 +10,7 @@ import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
+import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
@@ -352,8 +354,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
       SyncManager.instance
           .callMasterSync(NavigationUtilities.key.currentContext, () async {
         //success
-
-        NavigationUtilities.pushRoute(FilterScreen.route);
+        AppNavigation().movetoHome(isPopAndSwitch: true);
       }, () {},
               isNetworkError: false,
               isProgress: true,
