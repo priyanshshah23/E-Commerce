@@ -63,6 +63,7 @@
     "allLableTitle": "All",
     "apiKey": "color",
     "masterCode": "COLOR",
+    "showGroup": true,
     "verticalScroll": false,
     "orientation": "vertical",
     "isShowAll": true,
@@ -163,6 +164,7 @@
     "title": "Clarity",
     "viewType": "groupwidget",
     "groupMasterCode": "CLARITYGROUP",
+    "showGroup": true,
     "allLableTitle": "All",
     "apiKey": "clarity",
     "masterCode": "CLARITY",
@@ -295,7 +297,14 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 15,
-    "isActive": true
+    "isActive": true,
+    "fromToStyle": {
+      "showUnderline": false,
+      "showBorder": true,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
   },
   {
     "viewType": "seperator",
@@ -554,8 +563,8 @@
     "maxValue": 100,
     "minValue": -10,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1

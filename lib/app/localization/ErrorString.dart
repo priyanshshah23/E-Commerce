@@ -5,6 +5,7 @@ class ErrorString {
   final String enterRegisterCode;
   final String enterEmail;
   final String enterPhone;
+  final String enterSkype;
   final String enterUsername;
   final String enterValidEmail;
   final String enterValidPhone;
@@ -17,6 +18,7 @@ class ErrorString {
   final String enterFirstName;
   final String enterName;
   final String enterLastName;
+  final String enterMiddleName;
   final String enterCurrentPassword;
   final String enterNewPassword;
   final String enterFareAmount;
@@ -51,6 +53,7 @@ class ErrorString {
     this.enterEmailOrPhone = 'Please enter email/mobile.',
     this.enterPassword = "Password can't be empty. Please enter Password.",
     this.enterConfirmPassword = 'Please enter confirm password.',
+    this.enterSkype = "Please Enter Skype.",
     this.enterRegisterCode = 'Please enter registration code',
     this.enterEmail = 'Please enter the Email address.',
     this.enterPhone = 'Please enter Mobile Number.',
@@ -60,6 +63,7 @@ class ErrorString {
     this.enterValidPassword = 'Please enter 6 characters or long password.',
     this.mismatchPassword = 'Password and confirm password is not matching.',
     this.enterFirstName = 'Please enter the First Name.',
+    this.enterMiddleName = 'Please enter the Middle Name.',
     this.enterName = 'Please enter name.',
     this.enterLastName = 'Please enter Last Name.',
     this.enterAddress = 'Please enter address.',

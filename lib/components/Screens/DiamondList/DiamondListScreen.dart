@@ -38,7 +38,7 @@ class DiamondListScreen extends StatefulScreenWidget {
 
   @override
   _DiamondListScreenState createState() =>
-      _DiamondListScreenState(filterId: filterId, moduleType: moduleType,isFromDrawer: isFromDrawer);
+       _DiamondListScreenState(filterId: filterId, moduleType: moduleType,isFromDrawer: isFromDrawer);
 }
 
 class _DiamondListScreenState extends StatefulScreenWidgetState {
@@ -153,19 +153,27 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               var item = arraDiamond[index];
               return InkWell(
                 onTap: () {
-                  setState(() {
+                /*  setState(() {
                     arraDiamond[index].isSelected =
                         !arraDiamond[index].isSelected;
                     manageDiamondSelection();
-                  });
+                  });*/
+                  // setState(() {
+                  //   arraDiamond[index].isSelected =
+                  //       !arraDiamond[index].isSelected;
+                  //   fillArrayList();
+                  //   diamondList.state.setApiCalling(false);
+                  // });
+                  var dict = Map<String, dynamic>();
+                  dict["diamondModel"] = arraDiamond[index];
+
+                  NavigationUtilities.pushRoute(DiamondDetailScreen.route,
+                      args: dict);
                 },
                 child: DiamondGridItemWidget(
                   item: item,
                 ),
               );
-              // return Container(
-              //   color: Colors.green,
-              // );
             }),
           )
         : ListView.builder(
