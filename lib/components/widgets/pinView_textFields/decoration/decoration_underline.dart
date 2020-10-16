@@ -27,7 +27,7 @@ class UnderlineDecoration extends PinDecoration implements SupportGap {
     this.enteredColor,
     this.gapSpace: 16.0,
     this.gapSpaces,
-    this.color: Colors.cyan,
+    this.color: Colors.grey,
     this.lineHeight: 2.0,
   }) : super(
           textStyle: textStyle,

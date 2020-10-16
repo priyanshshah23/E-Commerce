@@ -148,6 +148,8 @@ class _ChangePasswordState extends State<ChangePassword> {
       validation: (text) {
         if (text.isEmpty) {
           return R.string().errorString.enterPassword;
+        } else if(!validateStructure(text)) {
+          return R.string().errorString.wrongPassword;
         } else {
           return null;
         }

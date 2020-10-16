@@ -73,6 +73,18 @@ bool validateEmail(String value) {
   return (!regex.hasMatch(value)) ? false : true;
 }
 
+bool validateStructure(String value) {
+  String pattern = r'^(?=.?[a-z])(?=.?[0-9])(?=.?[!@#$&~]).{8,}$';
+  RegExp regExp = new RegExp(pattern);
+  if (isStringEmpty(value)) {
+    return false;
+  } else if (!regExp.hasMatch(value)) {
+    return false;
+  }
+  return true;
+
+}
+
 bool validateMobile(String value) {
   String patttern = r'^[0-9]{10}$';
   print(value);
