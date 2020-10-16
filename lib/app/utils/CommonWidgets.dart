@@ -15,11 +15,11 @@ import '../constant/ColorConstant.dart';
 import '../theme/app_theme.dart';
 
 getBackButton(BuildContext context,
-    {bool isWhite = false, double height, double width}) {
+    {bool isWhite = false, double height, double width,VoidCallback ontap}) {
   return Container(
     margin: EdgeInsets.all(getSize(20)),
     child: InkWell(
-      onTap: () {
+      onTap: ontap??() {
         Navigator.of(context).pop();
       },
       child: Image.asset(
