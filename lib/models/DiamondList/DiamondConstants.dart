@@ -6,6 +6,7 @@ class ArgumentConstant{
 
 
   static const ModuleType = "moduleType";
+  static const IsFromDrawer = "isFromDrawer";
 }
 
 class DrawerConstant {

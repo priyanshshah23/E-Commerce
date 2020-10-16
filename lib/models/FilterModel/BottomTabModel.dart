@@ -23,6 +23,13 @@ class BottomCodeConstant {
   static const String dDPlaceOrder = "DD_PLACEORDER";
   static const String dDComment = "DD_COMMENT";
   static const String dDMore = "DD_MORE";
+
+  //Toolbar Constant
+
+  static const String TBSelectAll = "TB_SELECT_ALL";
+  static const String TBGrideView = "TB_GRIDE_VIEW";
+  static const String TBSortView = "TB_SORT_VIEW";
+  static const String TBDownloadView = "TB_DOWNLOAD_VIEW";
 }
 
 class TabConfiguration {
@@ -69,6 +76,7 @@ class BottomTabModel extends TabConfiguration {
   String code;
   int sequence;
   bool isCenter;
+  bool isSelected;
 
   BottomTabModel({
     this.title,

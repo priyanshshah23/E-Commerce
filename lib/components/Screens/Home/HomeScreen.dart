@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
@@ -42,7 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     //SocketManager.instance.connect();
-    currentWidget = FilterScreen();
+
+    openSearch();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       RxBus.register<DrawerEvent>(tag: eventBusTag).listen((event) {
         if (event.index == DrawerConstant.OPEN_DRAWER) {
@@ -91,7 +93,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   openSearch() {
     selectedType = DrawerConstant.MODULE_SEARCH;
-    currentWidget = FilterScreen();
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.ModuleType] =
+        DiamondModuleConstant.MODULE_TYPE_SEARCH;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = FilterScreen(dict);
   }
 
   manageDrawerClick(BuildContext context, int type, bool isPop) {

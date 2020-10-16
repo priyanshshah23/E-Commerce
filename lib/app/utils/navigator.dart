@@ -103,7 +103,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       screen = HomeScreen();
       break;
     case FilterScreen.route:
-      screen = FilterScreen();
+      screen = FilterScreen(arguments);
       break;
     case GuestSignInScreen.route:
       screen = GuestSignInScreen();
