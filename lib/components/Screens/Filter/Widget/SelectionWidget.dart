@@ -435,8 +435,11 @@ class _TagWidgetState extends State<TagWidget> {
             m["isSelected"] = widget.model.masters[index].isSelected;
             m["selectedMasterCode"] = widget.model.masters[index].code;
             m["masterSelection"] = widget.model.masterSelection;
-            m["isGroupSelected"] = (widget.model as ColorModel).isGroupSelected;
-            RxBus.post(m, tag: eventMasterForSingleItemOfGroupSelection);
+            if (widget.model.viewType == ViewTypes.groupWidget) {
+              m["isGroupSelected"] =
+                  (widget.model as ColorModel).isGroupSelected;
+              RxBus.post(m, tag: eventMasterForSingleItemOfGroupSelection);
+            }
           }
         }
       }
