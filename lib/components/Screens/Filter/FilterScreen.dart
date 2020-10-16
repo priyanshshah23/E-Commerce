@@ -19,6 +19,7 @@ import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SeperatorWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
@@ -32,13 +33,32 @@ import 'package:rxbus/rxbus.dart';
 
 class FilterScreen extends StatefulScreenWidget {
   static const route = "FilterScreen";
-  FilterScreen({Key key}) : super(key: key);
+
+  int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
+  bool isFromDrawer = false;
+
+  FilterScreen(Map<String, dynamic> arguments) {
+    if (arguments != null) {
+      if (arguments[ArgumentConstant.ModuleType] != null) {
+        moduleType = arguments[ArgumentConstant.ModuleType];
+      }
+      if (arguments[ArgumentConstant.IsFromDrawer] != null) {
+        isFromDrawer = arguments[ArgumentConstant.IsFromDrawer];
+      }
+    }
+  }
 
   @override
-  _FilterScreenState createState() => _FilterScreenState();
+  _FilterScreenState createState() =>
+      _FilterScreenState(moduleType, isFromDrawer);
 }
 
 class _FilterScreenState extends StatefulScreenWidgetState {
+  int moduleType;
+  bool isFromDrawer;
+
+  _FilterScreenState(this.moduleType, this.isFromDrawer);
+
   int segmentedControlValue = 0;
   PageController controller = PageController();
   List<TabModel> arrTab = [];
@@ -372,6 +392,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
 class FilterItem extends StatefulWidget {
   List<FormBaseModel> arrList = [];
+
   FilterItem(this.arrList);
 
   @override

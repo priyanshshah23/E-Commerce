@@ -37,8 +37,8 @@ class DiamondListScreen extends StatefulScreenWidget {
   }
 
   @override
-  _DiamondListScreenState createState() =>
-       _DiamondListScreenState(filterId: filterId, moduleType: moduleType,isFromDrawer: isFromDrawer);
+  _DiamondListScreenState createState() => _DiamondListScreenState(
+      filterId: filterId, moduleType: moduleType, isFromDrawer: isFromDrawer);
 }
 
 class _DiamondListScreenState extends StatefulScreenWidgetState {
@@ -153,7 +153,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               var item = arraDiamond[index];
               return InkWell(
                 onTap: () {
-                /*  setState(() {
+                  /*  setState(() {
                     arraDiamond[index].isSelected =
                         !arraDiamond[index].isSelected;
                     manageDiamondSelection();
@@ -207,34 +207,20 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       return item.isSelected == true;
     });
     if (list == null || list.length == 0) {
-      list = arraDiamond;
+      filterList = arraDiamond;
+    } else {
+      filterList = list.toList();
     }
-    filterList = list.toList();
-
-    //if (filterList != null && filterList.length > 0) {
     List<num> arrValues =
         SyncManager.instance.getTotalCaratAvgRapAmount(filterList);
     carat = arrValues[0];
     avgRapCrt = arrValues[3];
     avgPriceCrt = arrValues[4];
     avgDisc = avgPriceCrt / avgRapCrt;
-//      print("average"+avgRapCrt.toString());
-//      print("Price.."+avgPriceCrt.toString());
-//      print("Disc..."+avgDisc.toString());
     totalDisc = PriceUtilities.getPercent(avgDisc);
     totalCarat = PriceUtilities.getDoubleValue(carat);
     pcs = filterList.length.toString();
-    /* } else {
-      List<num> arrValues =
-          SyncManager.instance.getTotalCaratAvgRapAmount(arraDiamond);
-      carat = arrValues[0];
-      avgRapCrt = arrValues[3];
-      avgPriceCrt = arrValues[4];
-      avgDisc = avgPriceCrt / avgRapCrt;
-      totalDisc = PriceUtilities.getPercent(avgDisc);
-      totalCarat = PriceUtilities.getDoubleValue(carat);
-      pcs = arraDiamond.length.toString();
-    }*/
+
   }
 
   getAveragePriceCrt(num totalPrice, num totalcarat) {
@@ -318,10 +304,13 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         onTap: () {
           manageToolbarClick(element);
         },
-        child: Image.asset(
-          element.image,
-          height: getSize(20),
-          width: getSize(20),
+        child: Padding(
+          padding: EdgeInsets.all(getSize(8.0)),
+          child: Image.asset(
+            element.image,
+            height: getSize(20),
+            width: getSize(20),
+          ),
         ),
       ));
     });
@@ -354,7 +343,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   setSelectAllDiamond(BottomTabModel model) {
     List<DiamondModel> list =
-        arraDiamond.where((element) => element.isSelected);
+        arraDiamond.where((element) => element.isSelected).toList();
     if (list != null && list.length == arraDiamond.length) {
       model.isSelected = false;
     } else {
