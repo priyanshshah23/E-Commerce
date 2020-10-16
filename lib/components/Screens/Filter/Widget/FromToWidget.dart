@@ -34,82 +34,59 @@ class _FromToWidgetState extends State<FromToWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        if (_minValueController != null && _maxValueController != null) {
-          if (num.parse(_minValueController.text.trim()) <=
-              num.parse(_maxValueController.text.trim())) {
-            app.resolve<CustomDialogs>().confirmDialog(
-                  context,
-                  title: "Value Error",
-                  desc: "okay",
-                  positiveBtnTitle: "Try Again",
-                );
-          } else {
-            app.resolve<CustomDialogs>().confirmDialog(
-                  context,
-                  title: "Value Error",
-                  desc: "From Value should be less than or equal to To value",
-                  positiveBtnTitle: "Try Again",
-                );
-          }
-        }
-        // Focus.of(context).unfocus();
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                widget.fromTomodel?.title ?? "-",
-                style: appTheme.blackNormal18TitleColorblack,
-              ),
-              !widget.fromTomodel.fromToStyle.showUnderline
-                  ? SizedBox(height: getSize(16))
-                  : SizedBox(),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      height: getSize(50),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(getSize(10)),
-                        border: Border.all(
-                          width: getSize(1.0),
-                          color: widget.fromTomodel.fromToStyle.showUnderline
-                              ? Colors.transparent
-                              : appTheme.borderColor,
-                        ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              widget.fromTomodel?.title ?? "-",
+              style: appTheme.blackNormal18TitleColorblack,
+            ),
+            !widget.fromTomodel.fromToStyle.showUnderline
+                ? SizedBox(height: getSize(16))
+                : SizedBox(),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    height: getSize(50),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(getSize(10)),
+                      border: Border.all(
+                        width: getSize(1.0),
+                        color: widget.fromTomodel.fromToStyle.showUnderline
+                            ? Colors.transparent
+                            : appTheme.borderColor,
                       ),
-                      child: Center(child: getFromTextFieldWithPadding()),
                     ),
+                    child: Center(child: getFromTextFieldWithPadding()),
                   ),
-                  SizedBox(
-                    width: getSize(15),
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: getSize(50),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(getSize(10)),
-                        border: Border.all(
-                          width: getSize(1.0),
-                          color: widget.fromTomodel.fromToStyle.showUnderline
-                              ? Colors.transparent
-                              : appTheme.borderColor,
-                        ),
+                ),
+                SizedBox(
+                  width: getSize(15),
+                ),
+                Expanded(
+                  child: Container(
+                    height: getSize(50),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(getSize(10)),
+                      border: Border.all(
+                        width: getSize(1.0),
+                        color: widget.fromTomodel.fromToStyle.showUnderline
+                            ? Colors.transparent
+                            : appTheme.borderColor,
                       ),
-                      child: Center(child: getToTextFieldWithPadding()),
                     ),
+                    child: Center(child: getToTextFieldWithPadding()),
                   ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
     );
   }
 
@@ -168,6 +145,9 @@ class _FromToWidgetState extends State<FromToWidget> {
         // Focus.of(context).unfocus();
       },
       child: TextField(
+        textAlign: widget.fromTomodel.fromToStyle.showUnderline
+            ? TextAlign.left
+            : TextAlign.center,
         onChanged: (value) {
           if (value != null || value != "") {
             if (num.parse(value) < widget.fromTomodel.minValue ||
@@ -182,14 +162,20 @@ class _FromToWidgetState extends State<FromToWidget> {
 
           oldValueForFrom = _minValueController.text.trim();
           widget.fromTomodel.valueFrom = oldValueForFrom;
-          print("=======>>"+oldValueForFrom);
+          print("=======>>" + oldValueForFrom);
         },
         onSubmitted: (value) {},
         focusNode: _focusMinValue,
         controller: _minValueController,
         inputFormatters: [
+          
+          // old regx = r'(^[+-]?\d*.?\d{0,2})$'
           TextInputFormatter.withFunction((oldValue, newValue) =>
-              RegExp(r'(^[+-]?\d*.?\d{0,2})$').hasMatch(newValue.text)
+              // RegExp(r'(^[+-]?[0-9]+\d*.?\d{0,2})$').hasMatch(newValue.text)
+              //     ? newValue
+              //     : oldValue)
+              
+              RegExp(r'(^[+-]?[0-9]+\d*.?\d{0,2})?$').hasMatch(newValue.text)
                   ? newValue
                   : oldValue)
         ],
@@ -262,7 +248,7 @@ class _FromToWidgetState extends State<FromToWidget> {
           }
           oldValueForTo = _maxValueController.text.trim();
           widget.fromTomodel.valueTo = oldValueForTo;
-          print("=======>"+oldValueForTo);
+          print("=======>" + oldValueForTo);
         },
         focusNode: _focusMaxValue,
         controller: _maxValueController,

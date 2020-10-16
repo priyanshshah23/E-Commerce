@@ -87,13 +87,31 @@ class Config {
           } else if (viewType == ViewTypes.groupWidget) {
             ColorModel colorModel = ColorModel.fromJson(element);
             formModels.add(colorModel);
-            List<Master> arrMaster =
-                await Master.getSubMaster(colorModel.masterCode);
-            List<Master> arrGroupMaster =
-                await Master.getSubMaster(colorModel.groupMasterCode);
-            colorModel.mainMasters = arrMaster;
-            colorModel.groupMaster = arrGroupMaster;
-            colorModel.masters = arrMaster;
+
+            if (colorModel.showGroup) {
+              List<Master> arrMaster =
+                  await Master.getSubMaster(colorModel.masterCode);
+              List<Master> arrGroupMaster =
+                  await Master.getSubMaster(colorModel.groupMasterCode);
+              colorModel.mainMasters = arrMaster;
+              colorModel.groupMaster = arrGroupMaster;
+              colorModel.masters = arrMaster;
+            } else if (colorModel.showWhiteFancy) {
+              List<Master> arrMaster =
+                  await Master.getSubMaster(colorModel.masterCode);
+              List<Master> arrGroupMaster =
+                  await Master.getSubMaster(MasterCode.fancyColor);
+
+              List<Master> intensity =
+                  await Master.getSubMaster(MasterCode.intensity);
+              List<Master> overtone =
+                  await Master.getSubMaster(MasterCode.overTone);
+              colorModel.mainMasters = arrMaster;
+              colorModel.groupMaster = arrGroupMaster;
+              colorModel.intensity = intensity;
+              colorModel.overtone = overtone;
+              colorModel.masters = arrMaster;
+            }
           } else if (viewType == ViewTypes.seperator) {
             SeperatorModel seperatorModel = SeperatorModel.fromJson(element);
             formModels.add(seperatorModel);
@@ -121,13 +139,6 @@ class Config {
     });
     return formModels;
   }
-
-  // getFilterReq(List<FormBaseModel> formModels) {
-  //   if (formModels[0].viewType == ViewTypes.certNo) {
-  //     //
-  //     (List<FormBaseModel> formModels[0] is CertNoModel).
-  //   }
-  // }
 
   Future<List<DiamondDetailUIModel>> getDiamonDetailUIJson() async {
     String jsonForm =
@@ -200,6 +211,18 @@ class SelectionModel extends FormBaseModel {
   List<MasterSelection> masterSelection;
   List<String> caratRangeChipsToShow = [];
 
+  SelectionModel(
+      {title,
+      this.masters,
+      this.orientation,
+      this.allLableTitle,
+      this.isShowAll,
+      this.verticalScroll,
+      apiKey}) {
+    super.title = title;
+    super.apiKey = apiKey;
+  }
+
   SelectionModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     groupMasterCode = json["groupMasterCode"];
     verticalScroll = json["verticalScroll"] ?? false;
@@ -223,13 +246,21 @@ class SelectionModel extends FormBaseModel {
 
 class ColorModel extends SelectionModel {
   bool isGroupSelected = false;
+  bool showGroup;
+  bool showWhiteFancy;
   List<Master> mainMasters = [];
   List<Master> groupMaster = [];
 
-  SelectionModel intensity;
-  SelectionModel overtone;
+  SelectionModel intensitySelection;
+  SelectionModel overtoneSelection;
 
-  ColorModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {}
+  List<Master> intensity = [];
+  List<Master> overtone = [];
+
+  ColorModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    showGroup = json["showGroup"] ?? false;
+    showWhiteFancy = json["showWhiteFancy"] ?? true;
+  }
 }
 
 class SeperatorModel extends SelectionModel {

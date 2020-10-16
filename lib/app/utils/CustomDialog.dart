@@ -388,7 +388,7 @@ Future OpenConfirmationPopUp(BuildContext context,
                                         style: appTheme
                                             .commonAlertDialogueDescStyle
                                             .copyWith(
-                                                color: appTheme.whiteColor),
+                                                color: appTheme.textColor),
                                       ),
                                     ),
                                   ),

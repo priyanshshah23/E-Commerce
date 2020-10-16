@@ -1,15 +1,20 @@
+import 'package:diamnow/Setting/SettingModel.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
-import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
+import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
+import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
+import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
@@ -19,26 +24,42 @@ import 'package:flutter/material.dart';
 class DiamondListScreen extends StatefulScreenWidget {
   static const route = "Diamond List Screen";
 
+  Map<String, dynamic> dictFilters;
   String filterId = "";
   int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
+  bool isFromDrawer = false;
 
   DiamondListScreen(Map<String, dynamic> arguments) {
-    this.filterId = arguments["filterId"];
-    if (arguments[ArgumentConstant.ModuleType] != null) {
-      moduleType = arguments[ArgumentConstant.ModuleType];
+    if (arguments != null) {
+      this.filterId = arguments["filterId"];
+      this.dictFilters = arguments["filters"];
+      if (arguments[ArgumentConstant.ModuleType] != null) {
+        moduleType = arguments[ArgumentConstant.ModuleType];
+      }
+      if (arguments[ArgumentConstant.IsFromDrawer] != null) {
+        isFromDrawer = arguments[ArgumentConstant.IsFromDrawer];
+      }
     }
   }
 
   @override
-  _DiamondListScreenState createState() =>
-      _DiamondListScreenState(filterId: filterId, moduleType: moduleType);
+  _DiamondListScreenState createState() => _DiamondListScreenState(
+      filterId: filterId,
+      moduleType: moduleType,
+      isFromDrawer: isFromDrawer,
+      dictFilters: dictFilters);
 }
 
 class _DiamondListScreenState extends StatefulScreenWidgetState {
   String filterId;
   int moduleType;
-  _DiamondListScreenState({this.filterId, this.moduleType});
+  bool isFromDrawer;
+  Map<String, dynamic> dictFilters;
 
+  _DiamondListScreenState(
+      {this.filterId, this.moduleType, this.isFromDrawer, this.dictFilters});
+
+  DiamondConfig diamondConfig;
   BaseList diamondList;
   List<DiamondModel> arraDiamond = List<DiamondModel>();
   int page = DEFAULT_PAGE;
@@ -48,8 +69,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   String totalAmount = "0";
   String pcs = "0";
   List<FilterOptions> optionList = List<FilterOptions>();
-  List<BottomTabModel> arrBottomTab;
-  bool isGrid = true;
+  bool isGrid = false;
+  bool isAccountTerm = false;
 
   @override
   void initState() {
@@ -64,10 +85,12 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       setState(() {});
     });
 
+    diamondConfig = DiamondConfig(moduleType);
+    diamondConfig.initItems();
     diamondList = BaseList(BaseListState(
 //      imagePath: noRideHistoryFound,
       noDataMsg: APPNAME,
-      noDataDesc: "No record found",
+      noDataDesc: R.string().noDataStrings.noDataFound,
       refreshBtn: R.string().commonString.refresh,
       enablePullDown: true,
       enablePullUp: true,
@@ -85,49 +108,49 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       callApi(false);
     });
-
-    arrBottomTab = BottomTabBar.getDiamondListScreenBottomTabs();
     setState(() {
       //
     });
   }
 
   callApi(bool isRefress, {bool isLoading = false}) {
-    print("filter Id : ${filterId}");
     if (isRefress) {
       arraDiamond.clear();
       page = DEFAULT_PAGE;
     }
-    DiamondListReq filterReq = DiamondListReq();
-    filterReq.page = page;
-    filterReq.limit = DEFAULT_LIMIT;
-    if (filter != null || filterId.isNotEmpty) {
-      Filters filter = Filters();
-      filter.diamondSearchId = filterId;
-      filterReq.filters = filter;
-    }
-    SyncManager.instance.callApiForDiamondList(context, filterReq,
-        (diamondListResp) {
+
+    Map<String, dynamic> dict = {};
+    dict["page"] = page;
+    dict["limit"] = DEFAULT_LIMIT;
+    dict["filters"] = this.dictFilters;
+    dict["filters"]["diamondSearchId"] = this.filterId;
+
+    NetworkCall<DiamondListResp>()
+        .makeCall(
+      () => app
+          .resolve<ServiceModule>()
+          .networkService()
+          .diamondListPaginate(dict),
+      context,
+      isProgress: !isRefress && !isLoading,
+    )
+        .then((diamondListResp) async {
       arraDiamond.addAll(diamondListResp.data.diamonds);
-//      avgCarat = arraDiamond.map((m) => m.crt).reduce((a, b) => a + b) /
-//          arraDiamond.length;
-//      pcs = arraDiamond.length;
+
       diamondList.state.listCount = arraDiamond.length;
       diamondList.state.totalCount = diamondListResp.data.count;
-      getAverageCalculation(diamondListResp.data.diamonds);
-      fillArrayList();
+       manageDiamondSelection();
       page = page + 1;
       diamondList.state.setApiCalling(false);
       setState(() {});
-    }, (onError) {
-      print("erorrr..." + onError);
+    }).catchError((onError) {
       if (isRefress) {
         arraDiamond.clear();
         diamondList.state.listCount = arraDiamond.length;
         diamondList.state.totalCount = arraDiamond.length;
       }
       diamondList.state.setApiCalling(false);
-    }, isProgress: !isRefress && !isLoading);
+    });
   }
 
   fillArrayList() {
@@ -140,83 +163,62 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             crossAxisSpacing: 8,
             children: List.generate(arraDiamond.length, (index) {
               var item = arraDiamond[index];
-              return InkWell(
-                onTap: () {
-                  // setState(() {
-                  //   arraDiamond[index].isSelected =
-                  //       !arraDiamond[index].isSelected;
-                  //   fillArrayList();
-                  //   diamondList.state.setApiCalling(false);
-                  // });
-                  var dict = Map<String, dynamic>();
-                  dict["diamondModel"] = arraDiamond[index];
-
-                  NavigationUtilities.pushRoute(DiamondDetailScreen.route,
-                      args: dict);
-                },
-                child: DiamondGridItemWidget(
+              return DiamondGridItemWidget(
                   item: item,
-                ),
-              );
+                  actionClick: (manageClick) {
+                    manageRowClick(index, manageClick.type);
+                  });
             }),
           )
         : ListView.builder(
             itemCount: arraDiamond.length,
             itemBuilder: (context, index) {
-              return InkWell(
-                  onTap: () {
-                    setState(() {
-                      arraDiamond[index].isSelected =
-                          !arraDiamond[index].isSelected;
-                      fillArrayList();
-                      getAverageCalculation(arraDiamond);
-                      diamondList.state.setApiCalling(false);
-                    });
-                  },
-                  child: DiamondItemWidget(
-                    item: arraDiamond[index],
-                  ));
+              return DiamondItemWidget(
+                  item: arraDiamond[index],
+                  actionClick: (manageClick) {
+                    manageRowClick(index, manageClick.type);
+                  });
             },
           );
   }
 
-  getAverageCalculation(List<DiamondModel> diamondList) {
+  getAverageCalculation() {
     double carat = 0.0;
     double avgDisc = 0.0;
     double avgRapCrt = 0.0;
     double avgPriceCrt = 0.0;
-//    double avgAmount = 0.0;
-//    double totalRap = 0.0;
-//    double priceCrt = 0.0;
+    double avgAmount = 0.0;
+    double totalamt = 0.0;
+    double termDiscAmount = 0.0;
+
     List<DiamondModel> filterList;
-    Iterable<DiamondModel> list = diamondList.where((item) {
+    Iterable<DiamondModel> list = arraDiamond.where((item) {
       return item.isSelected == true;
     });
-    filterList = list.toList();
-    if (filterList != null && filterList.length > 0) {
-      List<num> arrValues =
-          SyncManager.instance.getTotalCaratAvgRapAmount(filterList);
-      carat = arrValues[0];
-      avgRapCrt = arrValues[3];
-      avgPriceCrt = arrValues[4];
-      avgDisc = avgPriceCrt / avgRapCrt;
-//      print("average"+avgRapCrt.toString());
-//      print("Price.."+avgPriceCrt.toString());
-//      print("Disc..."+avgDisc.toString());
-      totalDisc = PriceUtilities.getPercent(avgDisc);
-      totalCarat = PriceUtilities.getDoubleValue(carat);
-      pcs = filterList.length.toString();
+    if (list == null || list.length == 0) {
+      filterList = arraDiamond;
     } else {
-      List<num> arrValues =
-          SyncManager.instance.getTotalCaratAvgRapAmount(diamondList);
-      carat = arrValues[0];
-      avgRapCrt = arrValues[3];
-      avgPriceCrt = arrValues[4];
-      avgDisc = avgPriceCrt / avgRapCrt;
-      totalDisc = PriceUtilities.getPercent(avgDisc);
-      totalCarat = PriceUtilities.getDoubleValue(carat);
-      pcs = diamondList.length.toString();
+      filterList = list.toList();
     }
+    List<num> arrValues =
+        SyncManager.instance.getTotalCaratAvgRapAmount(filterList);
+    carat = arrValues[0];
+    totalamt = arrValues[2];
+    avgRapCrt = arrValues[3];
+    avgPriceCrt = arrValues[4];
+    termDiscAmount = arrValues[5];
+    avgAmount = totalamt / carat;
+    totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt);
+    totalAmount = PriceUtilities.getPrice(avgAmount);
+    if (isAccountTerm) {
+      avgDisc = (1 - (termDiscAmount / avgRapCrt)) * (-100);
+      totalDisc = PriceUtilities.getPercent(avgDisc);
+    } else {
+      avgDisc = (1 - (avgPriceCrt / avgRapCrt)) * (-100);
+      totalDisc = PriceUtilities.getPercent(avgDisc);
+    }
+    totalCarat = PriceUtilities.getDoubleValue(carat);
+    pcs = filterList.length.toString();
   }
 
   getAveragePriceCrt(num totalPrice, num totalcarat) {
@@ -293,6 +295,87 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     totalCarat = PriceUtilities.getDoubleValue(carat);
   }
 
+  List<Widget> getToolbarItem() {
+    List<Widget> list = [];
+    diamondConfig.toolbarList.forEach((element) {
+      list.add(GestureDetector(
+        onTap: () {
+          manageToolbarClick(element);
+        },
+        child: Padding(
+          padding: EdgeInsets.all(getSize(8.0)),
+          child: Image.asset(
+            element.image,
+            height: getSize(20),
+            width: getSize(20),
+          ),
+        ),
+      ));
+    });
+    return list;
+  }
+
+  manageRowClick(int index, int type) {
+    switch (type) {
+      case clickConstant.CLICK_TYPE_SELECTION:
+        setState(() {
+          arraDiamond[index].isSelected = !arraDiamond[index].isSelected;
+          manageDiamondSelection();
+        });
+        break;
+      case clickConstant.CLICK_TYPE_ROW:
+        var dict = Map<String, dynamic>();
+        dict[ArgumentConstant.DiamondDetail] = arraDiamond[index];
+        NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
+        break;
+    }
+  }
+
+  manageToolbarClick(BottomTabModel model) {
+    switch (model.code) {
+      case BottomCodeConstant.TBSelectAll:
+        setSelectAllDiamond(model);
+        break;
+      case BottomCodeConstant.TBGrideView:
+        isGrid = !isGrid;
+        fillArrayList();
+        diamondList.state.setApiCalling(false);
+        break;
+      case BottomCodeConstant.TBSortView:
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
+          builder: (_) => FilterBy(
+            optionList: optionList,
+          ),
+        );
+        break;
+    }
+  }
+
+  setSelectAllDiamond(BottomTabModel model) {
+    List<DiamondModel> list =
+        arraDiamond.where((element) => element.isSelected).toList();
+    if (list != null && list.length == arraDiamond.length) {
+      model.isSelected = false;
+    } else {
+      model.isSelected = true;
+    }
+    arraDiamond.forEach((element) {
+      element.isSelected = model.isSelected;
+    });
+    setState(() {});
+    manageDiamondSelection();
+  }
+
+  manageDiamondSelection() {
+    fillArrayList();
+    getAverageCalculation();
+    diamondList.state.setApiCalling(false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -300,68 +383,13 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         backgroundColor: appTheme.whiteColor,
         appBar: getAppBar(
           context,
-          "Search Result",
+          diamondConfig.getScreenTitle(),
           bgColor: appTheme.whiteColor,
-          leadingButton: getBackButton(context),
+          leadingButton: isFromDrawer
+              ? getDrawerButton(context, true)
+              : getBackButton(context),
           centerTitle: false,
-          actionItems: [
-            Padding(
-              padding: EdgeInsets.only(right: getSize(20)),
-              child: Image.asset(
-                selectAll,
-                height: getSize(20),
-                width: getSize(20),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(right: getSize(20)),
-              child: InkWell(
-                onTap: () {
-                  setState(() {
-                    isGrid = !isGrid;
-                    fillArrayList();
-                    diamondList.state.setApiCalling(false);
-                    print(isGrid);
-                  });
-                },
-                child: Image.asset(
-                  gridView,
-                  height: getSize(20),
-                  width: getSize(20),
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(25.0))),
-                  builder: (_) => FilterBy(
-                    optionList: optionList,
-                  ),
-                );
-              },
-              child: Padding(
-                padding: EdgeInsets.only(right: getSize(20)),
-                child: Image.asset(
-                  filter,
-                  height: getSize(20),
-                  width: getSize(20),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(right: getSize(20)),
-              child: Image.asset(
-                download,
-                height: getSize(20),
-                width: getSize(20),
-              ),
-            ),
-          ],
+          actionItems: getToolbarItem(),
         ),
         bottomNavigationBar: getBottomTab(),
         body: Padding(
@@ -391,7 +419,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   Widget getBottomTab() {
     return BottomTabbarWidget(
-      arrBottomTab: arrBottomTab,
+      arrBottomTab: diamondConfig.arrBottomTab,
       onClickCallback: (obj) {
         //
         if (obj.code == BottomCodeConstant.dLShowSelected) {
@@ -401,9 +429,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           //
           print(obj.code);
         } else if (obj.code == BottomCodeConstant.dLMore) {
-          //
-          print(obj.code);
-          // callApiForGetFilterId();
+          showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
+              (manageClick) {
+            diamondConfig.manageDiamondAction(
+                arraDiamond, manageClick.bottomTabModel);
+          });
         } else if (obj.code == BottomCodeConstant.dLStatus) {
           //
           print(obj.code);

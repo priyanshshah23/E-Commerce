@@ -1,12 +1,15 @@
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:diamnow/app/app.export.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:rxbus/rxbus.dart';
 
 class SelectionWidget extends StatefulWidget {
@@ -35,6 +38,15 @@ class TagWidget extends StatefulWidget {
 }
 
 class _TagWidgetState extends State<TagWidget> {
+  final TextEditingController _fromDateController = TextEditingController();
+  final TextEditingController _toDateController = TextEditingController();
+  var _focusMinValue = FocusNode();
+  var _focusMaxValue = FocusNode();
+  String oldValueForFrom;
+  String oldValueForTo;
+  var myFormat = DateFormat('d-MM-yyyy');
+  DateTime fromDate, toDate;
+
   @override
   void initState() {
     super.initState();
@@ -59,6 +71,10 @@ class _TagWidgetState extends State<TagWidget> {
     if (widget.model.verticalScroll == false &&
         widget.model.viewType == ViewTypes.shapeWidget) {
       return getShapeWidgetHorizontal();
+    }
+
+    if (widget.model.masterCode == MasterCode.arrivals) {
+      return getArrivalsWidget();
     }
 
     return widget.model.orientation == DisplayTypes.vertical
@@ -224,6 +240,190 @@ class _TagWidgetState extends State<TagWidget> {
     );
   }
 
+  getArrivalsWidget() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        isNullEmptyOrFalse(widget.model.title)
+            ? SizedBox()
+            : Row(
+                children: [
+                  Text(
+                    widget.model.title ?? "",
+                    style: appTheme.blackNormal18TitleColorblack,
+                    textAlign: TextAlign.left,
+                  ),
+                  Spacer(),
+                  getFromTextField(),
+                  SizedBox(
+                    width: getSize(8),
+                  ),
+                  getToTextField(),
+                ],
+              ),
+        isNullEmptyOrFalse(widget.model.title)
+            ? SizedBox()
+            : SizedBox(height: getSize(20)),
+        Container(
+          height: getSize(40),
+          child: ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemCount: widget.model.masters.length,
+            itemBuilder: (context, index) {
+              return InkWell(
+                child: getSingleTag(index),
+                onTap: () {
+                  setState(() {
+                    widget.model.masters[index].isSelected =
+                        !widget.model.masters[index].isSelected;
+
+                    getMultipleMasterSelections(index);
+                  });
+                },
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  getFromTextField() {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(getSize(10)),
+        border: Border.all(
+          width: getSize(1.0),
+          color: widget.model.fromToStyle.showUnderline
+              ? Colors.transparent
+              : appTheme.borderColor,
+        ),
+      ),
+      width: getSize(100),
+      height: getSize(40),
+      child: TextField(
+        readOnly: true,
+        textAlign: widget.model.fromToStyle.showUnderline
+            ? TextAlign.left
+            : TextAlign.center,
+        onTap: () {
+          _selectFromDate(context);
+        },
+        style: appTheme.blackNormal14TitleColorblack,
+        focusNode: _focusMinValue,
+        controller: _fromDateController,
+        keyboardType: TextInputType.numberWithOptions(decimal: true),
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          focusedBorder: widget.model.fromToStyle.showUnderline
+              ? new UnderlineInputBorder(
+                  borderSide: new BorderSide(
+                  color: widget.model.fromToStyle.underlineColor,
+                ))
+              : InputBorder.none,
+          enabledBorder: widget.model.fromToStyle.showUnderline
+              ? new UnderlineInputBorder(
+                  borderSide: new BorderSide(
+                  color: widget.model.fromToStyle.underlineColor,
+                ))
+              : InputBorder.none,
+          hintText: "From",
+          hintStyle: appTheme.grey14HintTextStyle,
+        ),
+      ),
+    );
+  }
+
+  getToTextField() {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(getSize(10)),
+        border: Border.all(
+          width: getSize(1.0),
+          color: widget.model.fromToStyle.showUnderline
+              ? Colors.transparent
+              : appTheme.borderColor,
+        ),
+      ),
+      width: getSize(100),
+      height: getSize(40),
+      child: TextField(
+        readOnly: true,
+        textAlign: widget.model.fromToStyle.showUnderline
+            ? TextAlign.left
+            : TextAlign.center,
+        onTap: () {
+          if (!isNullEmptyOrFalse(_fromDateController.text)) {
+            _selectToDate(context);
+          } else {
+            app.resolve<CustomDialogs>().confirmDialog(
+                  context,
+                  title: "Warning",
+                  desc: "select fromdate first",
+                  positiveBtnTitle: "Try Again",
+                );
+          }
+        },
+        focusNode: _focusMaxValue,
+        controller: _toDateController,
+        style: appTheme.blackNormal14TitleColorblack,
+        textInputAction: TextInputAction.done,
+        decoration: InputDecoration(
+          focusedBorder: widget.model.fromToStyle.showUnderline
+              ? new UnderlineInputBorder(
+                  borderSide: new BorderSide(
+                  color: widget.model.fromToStyle.underlineColor,
+                ))
+              : InputBorder.none,
+          enabledBorder: widget.model.fromToStyle.showUnderline
+              ? new UnderlineInputBorder(
+                  borderSide: new BorderSide(
+                  color: widget.model.fromToStyle.underlineColor,
+                ))
+              : InputBorder.none,
+          hintText: "To",
+          hintStyle: appTheme.grey14HintTextStyle,
+        ),
+      ),
+    );
+  }
+
+  Future<void> _selectFromDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2101),
+    );
+    setState(() {
+      if (!isNullEmptyOrFalse(picked)) {
+        fromDate = picked;
+        _fromDateController.text = myFormat.format(picked);
+      }
+      ;
+      print("From Date====>" + fromDate.toString());
+    });
+  }
+
+  Future<void> _selectToDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: fromDate,
+      firstDate: fromDate,
+      lastDate: DateTime(2101),
+    );
+    setState(() {
+      if (!isNullEmptyOrFalse(picked)) {
+        toDate = picked;
+        _toDateController.text = myFormat.format(picked);
+      }
+      ;
+      print("To Date====>" + toDate.toString());
+    });
+  }
+
   getMultipleMasterSelections(int index) {
     //When Local data has added and multilple master has to select
     if (widget.model.isSingleSelection) {
@@ -299,8 +499,11 @@ class _TagWidgetState extends State<TagWidget> {
             m["isSelected"] = widget.model.masters[index].isSelected;
             m["selectedMasterCode"] = widget.model.masters[index].code;
             m["masterSelection"] = widget.model.masterSelection;
-            m["isGroupSelected"] = (widget.model as ColorModel).isGroupSelected;
-            RxBus.post(m, tag: eventMasterForSingleItemOfGroupSelection);
+            if (widget.model.viewType == ViewTypes.groupWidget) {
+              m["isGroupSelected"] =
+                  (widget.model as ColorModel).isGroupSelected;
+              RxBus.post(m, tag: eventMasterForSingleItemOfGroupSelection);
+            }
           }
         }
       }

@@ -12,18 +12,22 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup
 import 'package:diamnow/components/Screens/Filter/Widget/CertNoWidget.dart';
 
 import 'package:diamnow/components/Screens/Filter/Widget/CaratRangeWidget.dart';
+import 'package:diamnow/components/Screens/Filter/Widget/ColorWhiteFancyWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/ColorWidget.dart';
 
 import 'package:diamnow/components/Screens/Filter/Widget/FromToWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SeperatorWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
+import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/FilterModel/TabModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
+import 'package:diamnow/modules/Filter/gridviewlist/FilterRequest.dart';
 import 'package:diamnow/modules/Filter/gridviewlist/KeyToSymbol.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,13 +36,32 @@ import 'package:rxbus/rxbus.dart';
 
 class FilterScreen extends StatefulScreenWidget {
   static const route = "FilterScreen";
-  FilterScreen({Key key}) : super(key: key);
+
+  int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
+  bool isFromDrawer = false;
+
+  FilterScreen(Map<String, dynamic> arguments) {
+    if (arguments != null) {
+      if (arguments[ArgumentConstant.ModuleType] != null) {
+        moduleType = arguments[ArgumentConstant.ModuleType];
+      }
+      if (arguments[ArgumentConstant.IsFromDrawer] != null) {
+        isFromDrawer = arguments[ArgumentConstant.IsFromDrawer];
+      }
+    }
+  }
 
   @override
-  _FilterScreenState createState() => _FilterScreenState();
+  _FilterScreenState createState() =>
+      _FilterScreenState(moduleType, isFromDrawer);
 }
 
 class _FilterScreenState extends StatefulScreenWidgetState {
+  int moduleType;
+  bool isFromDrawer;
+
+  _FilterScreenState(this.moduleType, this.isFromDrawer);
+
   int segmentedControlValue = 0;
   PageController controller = PageController();
   List<TabModel> arrTab = [];
@@ -57,24 +80,6 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           arrList = result;
         });
       });
-      Config().getOptionsJson().then((result) {
-        result.forEach((element) {
-          if (element.isActive) {
-            optionList.add(element);
-          }
-        });
-        showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
-          builder: (_) => FilterBy(
-            optionList: optionList,
-          ),
-        );
-        setState(() {});
-      });
-
       Config().getTabJson().then((result) {
         setState(() {
           arrTab = result;
@@ -85,6 +90,15 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     setState(() {
       //
     });
+  }
+
+  @override
+  void dispose() {
+    RxBus.destroy(tag: eventMasterSelection);
+    RxBus.destroy(tag: eventMasterForDeSelectMake);
+    RxBus.destroy(tag: eventMasterForDeSelectMake);
+    RxBus.destroy(tag: eventMasterForGroupWidgetSelectAll);
+    super.dispose();
   }
 
   registerRsBus() {
@@ -239,7 +253,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               context,
               R.string().screenTitle.searchDiamond,
               bgColor: appTheme.whiteColor,
-              leadingButton: getBackButton(context),
+              leadingButton: isFromDrawer
+                  ? getDrawerButton(context, true)
+                  : getBackButton(context),
               centerTitle: false,
             ),
             body: Column(
@@ -300,7 +316,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       req,
       (diamondListResp) {
         Map<String, dynamic> dict = new HashMap();
+
         dict["filterId"] = diamondListResp.data.filter.id;
+        dict["filters"] = FilterRequest().createRequest(arrList);
         NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
       },
       (onError) {
@@ -372,6 +390,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
 class FilterItem extends StatefulWidget {
   List<FormBaseModel> arrList = [];
+
   FilterItem(this.arrList);
 
   @override
@@ -436,7 +455,9 @@ class _FilterItemState extends State<FilterItem> {
             right: getSize(16),
             top: getSize(8.0),
             bottom: getSize(8)),
-        child: ColorWidget(model),
+        child: (model as ColorModel).showGroup
+            ? ColorWidget(model)
+            : ColorWhiteFancyWidget(model),
       );
     } else if (model.viewType == ViewTypes.caratRange) {
       return Padding(

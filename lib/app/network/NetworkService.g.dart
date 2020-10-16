@@ -77,6 +77,26 @@ class _NetworkService implements NetworkService {
   }
 
   @override
+  diamondListPaginate(req) async {
+    ArgumentError.checkNotNull(req, 'req');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(req ?? <String, dynamic>{});
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'http://fndevelopapi.democ.in/device/v1/diamond/paginate',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = DiamondListResp.fromJson(_result.data);
+    return Future.value(value);
+  }
+
+  @override
   staticPage(id) async {
     ArgumentError.checkNotNull(id, 'id');
     const _extra = <String, dynamic>{};

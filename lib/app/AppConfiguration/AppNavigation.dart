@@ -26,12 +26,11 @@ class AppNavigation {
 
 // Move To Home Scree
   void movetoHome({bool isPopAndSwitch = false}) {
-    // move to Homprint('home');
     if (isPopAndSwitch) {
-      // NavigationUtilities.pushReplacementNamed(HomeScreen.route,
-      //     type: RouteType.fade);
-          NavigationUtilities.pushReplacementNamed(DiamondListScreen.route,
+      NavigationUtilities.pushReplacementNamed(HomeScreen.route,
           type: RouteType.fade);
+      // NavigationUtilities.pushReplacementNamed(DiamondListScreen.route,
+      // type: RouteType.fade);
     } else {
       NavigationUtilities.pushRoute(HomeScreen.route, type: RouteType.fade);
     }
