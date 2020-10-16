@@ -297,7 +297,14 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 15,
-    "isActive": true
+    "isActive": true,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
   },
   {
     "viewType": "seperator",
