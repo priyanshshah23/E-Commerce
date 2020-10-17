@@ -84,7 +84,7 @@ class _CommonTextfieldState extends State<CommonTextfield> {
         inputFormatters: widget.textOption.formatter ?? [],
         decoration: InputDecoration(
           errorStyle: appTheme.error16TextStyle,
-          errorMaxLines: 2,
+          errorMaxLines: 3,
 //          fillColor: widget.textOption.fillColor ?? fromHex("#F6F6F6"),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(getSize(5))),

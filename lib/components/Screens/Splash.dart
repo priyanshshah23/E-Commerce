@@ -39,6 +39,8 @@ class _SplashState extends State<Splash> {
       // NavigationUtilities.pushRoute(FilterScreen.route);
       //  NavigationUtilities.pushRoute(ResetPassword.route);
       AppNavigation().movetoHome(isPopAndSwitch: true);
+     //  NavigationUtilities.pushRoute(ForgetPasswordScreen.route);
+//      AppNavigation().movetoHome(isPopAndSwitch: true);
     } else {
       AppNavigation().movetoLogin(isPopAndSwitch: true);
     }

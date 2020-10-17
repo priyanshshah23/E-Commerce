@@ -1,6 +1,7 @@
 
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -72,14 +73,16 @@ class _ChangePasswordState extends State<ChangePassword> {
                         // NavigationUtilities.pushRoute(TabBarDemo.route);
                         FocusScope.of(context).unfocus();
                         if (_formKey.currentState.validate()) {
-//                      if(  _confirmPasswordController.text.trim() != _newPasswordController.text.trim()) {
-//                        _autoValidate = true;
-//                        isPasswordSame = false;
-//                      } else {
-//                        isPasswordSame = true;
-//                      }
-//                      setState(() {});
-                          _formKey.currentState.save();
+                          if(_confirmPasswordController.text.trim() != _newPasswordController.text.trim()) {
+                            app.resolve<CustomDialogs>().confirmDialog(
+                              context,
+                              title: "Password does not match",
+                              desc: "Confirm Password does not match with Password. Please enter confirm password same as Password.",
+                              positiveBtnTitle: "Try Again",
+                            );
+                          } else {
+                            _formKey.currentState.save();
+                          }
 //                      callLoginApi(context);
                         } else {
                           setState(() {
@@ -148,8 +151,6 @@ class _ChangePasswordState extends State<ChangePassword> {
       validation: (text) {
         if (text.isEmpty) {
           return R.string().errorString.enterPassword;
-        } else if(!validateStructure(text)) {
-          return R.string().errorString.wrongPassword;
         } else {
           return null;
         }
@@ -178,8 +179,8 @@ class _ChangePasswordState extends State<ChangePassword> {
       validation: (text) {
         if (text.isEmpty) {
           return R.string().errorString.enterPassword;
-        } else  if(text != _newPasswordController.text.trim())  {
-          return "New Password And Confirm Password Should be same";
+        } else if(!validateStructure(text)) {
+          return R.string().errorString.wrongPassword;
         } else {
           return null;
         }
