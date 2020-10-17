@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/components/Screens/Auth/ResetPassword.dart';
 
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
@@ -190,7 +191,15 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                 children: <Widget>[
                   Text("Remember Password?",
                       style: appTheme.grey16HintTextStyle),
-                  Text(" Sign In", style: appTheme.darkBlue16TextStyle),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushNamedAndRemoveUntil(
+                          LoginScreen.route,
+                              (Route<dynamic> route) => false,
+                        );
+                      },
+                      child: Text(" Sign In", style: appTheme.darkBlue16TextStyle)),
                 ],
               ),
             ),

@@ -54,7 +54,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   Padding(
                     padding: EdgeInsets.only(
                         right: getSize(30),
-                        left: getSize(62),
+                        left: getSize(82),
                         bottom: getSize(52),
                         top: getSize(12)),
                     child: Image.asset(
