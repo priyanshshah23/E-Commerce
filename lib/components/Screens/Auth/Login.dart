@@ -4,6 +4,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/components/Screens/Auth/ForgetPassword.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Signup.dart';
 import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
@@ -337,8 +338,8 @@ class _LoginScreenState extends StatefulScreenWidgetState {
         style: appTheme.darkBlue16TextStyle,
       ),
       onTap: () {
-//        NavigationUtilities.pushRoute(ForgotPassword.route,
-//            type: RouteType.fade);
+        NavigationUtilities.pushRoute(ForgetPasswordScreen.route,
+            type: RouteType.fade);
       },
     );
   }

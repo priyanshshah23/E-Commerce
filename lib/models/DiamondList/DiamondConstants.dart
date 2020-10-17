@@ -29,6 +29,7 @@ class DrawerConstant {
 
   static const int LOGOUT = 111;
   static const int OPEN_DRAWER = 1001;
+  static const int PROFILE = 1002;
 }
 
 class clickConstant {

@@ -98,7 +98,7 @@ flutter:
     - assets/Common/
     - assets/drawer/
     # - assets/chls/hochls.pem
-    - assets/chls.pem
+    # - assets/chls.pem
 
 
   fonts:
