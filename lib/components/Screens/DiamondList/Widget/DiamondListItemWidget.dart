@@ -25,7 +25,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        widget.actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_ROW));
+        widget
+            .actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_SELECTION));
       },
       child: Container(
         margin: EdgeInsets.only(
@@ -65,19 +66,20 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 ),
               ),
             ),
-            Container(
-              child: Center(
-                  child: Container(
-                decoration: BoxDecoration(
-                    color: widget.item.getStatusColor(),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(5),
-                        bottomLeft: Radius.circular(5))),
-                height: getSize(26),
-                width: getSize(4),
-                // color: Colors.red,
-              )),
-            ),
+
+//            Container(
+//              child: Center(
+//                  child: Container(
+//                decoration: BoxDecoration(
+//                    color: widget.item.getStatusColor(),
+//                    borderRadius: BorderRadius.only(
+//                        topLeft: Radius.circular(5),
+//                        bottomLeft: Radius.circular(5))),
+//                height: getSize(26),
+//                width: getSize(4),
+//                // color: Colors.red,
+//              )),
+//            ),
           ],
         ),
       ),

@@ -87,7 +87,7 @@ class ErrorString {
     'Please enter 10 digit alphanumeric PAN card number.',
     this.selectFromDate = 'Please select from date',
     this.selectToDate = 'Please select to date',
-    this.fromGreaterTo = 'To date must be greater than from date',
+    this.fromGreaterTo = 'Selected date must be greater than current date',
     this.wrongPassword = "Password must contains, Minimum 8 characters, 1 uppercase alphabet, 1 lower case alphabet, 1 digit, 1 special charater",
   });
 }

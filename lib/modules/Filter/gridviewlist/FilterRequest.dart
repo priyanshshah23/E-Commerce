@@ -7,7 +7,7 @@ import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
 
 class FilterRequest {
-  Future<Map<String, dynamic>> createRequest(List<FormBaseModel> list) async {
+  Map<String, dynamic> createRequest(List<FormBaseModel> list)  {
     Map<String, dynamic> map = {};
 
     for (var element in list) {

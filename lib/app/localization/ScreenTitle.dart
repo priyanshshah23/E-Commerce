@@ -220,7 +220,7 @@ class ScreenTitle {
     this.addToCart = "Add to Cart",
     this.addToWatchList = "Add to Watchlist",
     this.clearSelection = "Clear Selection",
-    this.comment = "Comment",
+    this.comment = "Comments",
     this.hold = "Hold",
     this.offer = "Offer",
     this.officeView = "Office View",

@@ -241,9 +241,7 @@ Future OpenErrorDialog(BuildContext context, String title, String disc,
               Text(
                 disc,
                 textAlign: TextAlign.center,
-                style: AppTheme.of(context).theme.textTheme.display1.copyWith(
-                    color: appTheme.dividerColor,
-                    fontWeight: FontWeight.normal),
+                style: appTheme.black16TextStyle,
               ),
               // SizedBox(height: getSize(20),),
               btntitle != null
