@@ -10,6 +10,7 @@ import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -37,11 +38,13 @@ class DiamondDetailScreen extends StatefulScreenWidget {
 class DiamondDetailImagePagerModel {
   String title;
   String url;
+  bool isSelected;
   bool isImage;
 
   DiamondDetailImagePagerModel({
     this.title,
     this.url,
+    this.isSelected = false,
     this.isImage,
   });
 }
@@ -76,25 +79,26 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
         title: "Image",
         url:
             "https://cdn.pixabay.com/photo/2015/02/24/15/41/dog-647528_960_720.jpg",
+        isSelected: true,
         isImage: true));
     arrImages.add(DiamondDetailImagePagerModel(
-        title: "Questions",
+        title: "Video",
         url: "http://www.pdf995.com/samples/pdf.pdf",
         isImage: false));
     arrImages.add(DiamondDetailImagePagerModel(
-        title: "Certificate",
+        title: "H&A",
         url:
             "https://i.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U",
         isImage: true));
-    arrImages.add(DiamondDetailImagePagerModel(
-        title: "Image",
-        url:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnltfxyRHuEEUE4gIZp9fr77Q8goigP7mQ6Q&usqp=CAU",
-        isImage: true));
-    arrImages.add(DiamondDetailImagePagerModel(
-        title: "Certificate",
-        url: "http://www.africau.edu/images/default/sample.pdf",
-        isImage: false));
+    // arrImages.add(DiamondDetailImagePagerModel(
+    //     title: "Certificate",
+    //     url:
+    //         "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnltfxyRHuEEUE4gIZp9fr77Q8goigP7mQ6Q&usqp=CAU",
+    //     isImage: true));
+    // arrImages.add(DiamondDetailImagePagerModel(
+    //     title: "Certificate",
+    //     url: "http://www.africau.edu/images/default/sample.pdf",
+    //     isImage: false));
 
     _controller = TabController(
       vsync: this,
@@ -219,31 +223,71 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
                 children: <Widget>[
                   Container(
                     child: Center(
-                      child: DefaultTabController(
-                        length: 0,
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.only(
-                                left: getSize(14),
-                              ),
-                              child: TabBar(
-                                isScrollable: true,
-                                controller: _controller,
-                                tabs: <Widget>[
-                                  for (var i = 0; i < arrImages.length; i++)
-                                    Tab(
-                                      text: arrImages[i].title,
+                      child: Container(
+                        height: getSize(36),
+                        decoration: BoxDecoration(
+                            color: appTheme.whiteColor,
+                            borderRadius: BorderRadius.circular(getSize(5)),
+                            border: Border.all(color: appTheme.colorPrimary)),
+                        child: SingleChildScrollView(
+                          physics: ClampingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            // scrollDirection: Axis.horizontal,
+                            children: [
+                              for (var i = 0; i < arrImages.length; i++)
+                                InkWell(
+                                  onTap: () {
+                                    arrImages = arrImages.map((e) {
+                                      e.isSelected = false;
+                                      return e;
+                                    }).toList();
+                                    arrImages[i].isSelected = true;
+                                    setState(() {
+                                      //
+                                    });
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: arrImages[i].isSelected
+                                          ? appTheme.colorPrimary
+                                          : Colors.transparent,
+                                      border: Border(
+                                        left: BorderSide(
+                                          color: appTheme.colorPrimary,
+                                          width: (i == 0)
+                                              ? getSize(0)
+                                              : getSize(0.5),
+                                        ),
+                                        right: BorderSide(
+                                          color: appTheme.colorPrimary,
+                                          width: (i == arrImages.length - 1)
+                                              ? getSize(0)
+                                              : getSize(0.5),
+                                        ),
+                                      ),
                                     ),
-                                ],
-                                indicatorColor: appTheme.colorPrimary,
-                                indicatorSize: TabBarIndicatorSize.tab,
-                                unselectedLabelColor: appTheme.textColor,
-                                labelColor: appTheme.colorPrimary,
-                                labelStyle: appTheme.black14TextStyle,
-                              ),
-                            ),
-                          ],
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          top: getSize(8),
+                                          bottom: getSize(8),
+                                          left: getSize(20),
+                                          right: getSize(20)),
+                                      child: Center(
+                                        child: Text(
+                                          arrImages[i].title,
+                                          style: appTheme.black14TextStyle
+                                              .copyWith(
+                                                  color: arrImages[i].isSelected
+                                                      ? appTheme.whiteColor
+                                                      : appTheme.colorPrimary),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

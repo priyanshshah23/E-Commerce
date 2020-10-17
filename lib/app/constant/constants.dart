@@ -48,6 +48,9 @@ const imagePath = "assest/icon.png";
 const String googleDocViewURL =
     "https://docs.google.com/gview?embedded=true&url=";
 
+const String diamondImageURL =
+    "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/";
+
 const String ONE_SIGNAL_KEY = "ceecb2ef-c463-45d3-a9d3-5ea755a48d8b";
 
 const RegexForEmoji =

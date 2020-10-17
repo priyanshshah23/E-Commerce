@@ -54,155 +54,157 @@ class _LoginScreenState extends StatefulScreenWidgetState {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
-      child: AppBackground(
-        child: SafeArea(
-          child: Scaffold(
-            resizeToAvoidBottomPadding: false,
-            resizeToAvoidBottomInset: true,
-            body: SingleChildScrollView(
-              child: Form(
-                key: _formKey,
-                autovalidate: _autoValidate,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Container(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            top: getSize(20),
-                            left: getSize(20),
-                            right: getSize(20),
-                            bottom: getSize(10)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              R.string().authStrings.welcome,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: appTheme.textBlackColor,
-                                fontSize: getFontSize(24),
-                              ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: getSize(25)),
-                                  child: Stack(
-                                    children: <Widget>[
-                                      Container(
-                                        height: getSize(90),
-                                        width: getSize(90),
-                                        padding: EdgeInsets.only(),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: ColorConstants.colorPrimary
-                                                  .withOpacity(0.1)),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            EdgeInsets.only(left: getSize(20)),
-                                        child: Image.asset(
-                                          diamond,
-                                          height: getSize(130),
-                                          width: getSize(140),
-                                        ),
-                                      )
-                                    ],
-                                  ),
+    return WillPopScope(
+      onWillPop: onWillPop,
+      child: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: AppBackground(
+          child: SafeArea(
+            child: Scaffold(
+              resizeToAvoidBottomPadding: false,
+              resizeToAvoidBottomInset: true,
+              body: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  autovalidate: _autoValidate,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Container(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              top: getSize(20),
+                              left: getSize(20),
+                              right: getSize(20),
+                              bottom: getSize(10)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                R.string().authStrings.welcome,
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: appTheme.textBlackColor,
+                                  fontSize: getFontSize(24),
                                 ),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: getSize(25)),
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Container(
+                                          height: getSize(90),
+                                          width: getSize(90),
+                                          padding: EdgeInsets.only(),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: ColorConstants.colorPrimary
+                                                    .withOpacity(0.1)),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsets.only(left: getSize(20)),
+                                          child: Image.asset(
+                                            diamond,
+                                            height: getSize(130),
+                                            width: getSize(140),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
 //                                Padding(
 //                                  padding: EdgeInsets.only(
 //                                      top: getSize(20), left: getSize(0)),
 //                                  child: getMobileTextField(),
 //                                ),
-                                getMobileTextField(),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      top: getSize(15), left: getSize(0)),
-                                  child: getPasswordTextField(),
-                                ),
-                                Container(
-                                  alignment: Alignment.centerRight,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(top: getSize(20)),
-                                    child: getForgotPassword(),
+                                  getMobileTextField(),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        top: getSize(15), left: getSize(0)),
+                                    child: getPasswordTextField(),
                                   ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(
-                                      top: getSize(15), left: getSize(0)),
-                                  decoration: BoxDecoration(
-                                      boxShadow: getBoxShadow(context)),
-                                  child: AppButton.flat(
-                                    onTap: () {
-                                      // NavigationUtilities.pushRoute(TabBarDemo.route);
-                                      FocusScope.of(context).unfocus();
-                                      if (_formKey.currentState.validate()) {
-                                        _formKey.currentState.save();
-                                        callLoginApi(context);
-                                      } else {
-                                        setState(() {
-                                          _autoValidate = true;
-                                        });
-                                      }
-                                      // NavigationUtilities.push(ThemeSetting());
-                                    },
-                                    //  backgroundColor: appTheme.buttonColor,
-                                    borderRadius: getSize(5),
-                                    fitWidth: true,
-                                    text: R.string().authStrings.signInCap,
-                                    //isButtonEnabled: enableDisableSigninButton(),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(top: getSize(10)),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      R.string().commonString.lblOr,
-                                      style: appTheme.grey16HintTextStyle,
+                                  Container(
+                                    alignment: Alignment.centerRight,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(top: getSize(20)),
+                                      child: getForgotPassword(),
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(
-                                      top: getSize(10), left: getSize(0)),
-                                  child: AppButton.flat(
-                                    onTap: () {
-                                      NavigationUtilities.pushRoute(
-                                          GuestSignInScreen.route);
-                                    },
-                                    textColor: appTheme.colorPrimary,
-                                    backgroundColor:
-                                        appTheme.colorPrimary.withOpacity(0.1),
-                                    borderRadius: getSize(5),
-                                    fitWidth: true,
-                                    text: "Sign In as Guest",
-                                    //isButtonEnabled: enableDisableSigninButton(),
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                        top: getSize(15), left: getSize(0)),
+                                    decoration: BoxDecoration(
+                                        boxShadow: getBoxShadow(context)),
+                                    child: AppButton.flat(
+                                      onTap: () {
+                                        // NavigationUtilities.pushRoute(TabBarDemo.route);
+                                        FocusScope.of(context).unfocus();
+                                        if (_formKey.currentState.validate()) {
+                                          _formKey.currentState.save();
+                                          callLoginApi(context);
+                                        } else {
+                                          setState(() {
+                                            _autoValidate = true;
+                                          });
+                                        }
+                                        // NavigationUtilities.push(ThemeSetting());
+                                      },
+                                      //  backgroundColor: appTheme.buttonColor,
+                                      borderRadius: getSize(5),
+                                      fitWidth: true,
+                                      text: R.string().authStrings.signInCap,
+                                      //isButtonEnabled: enableDisableSigninButton(),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                  Padding(
+                                    padding: EdgeInsets.only(top: getSize(10)),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        R.string().commonString.lblOr,
+                                        style: appTheme.grey16HintTextStyle,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                        top: getSize(10), left: getSize(0)),
+                                    child: AppButton.flat(
+                                      onTap: () {
+                                        NavigationUtilities.pushRoute(
+                                            GuestSignInScreen.route);
+                                      },
+                                      textColor: appTheme.colorPrimary,
+                                      backgroundColor:
+                                          appTheme.colorPrimary.withOpacity(0.1),
+                                      borderRadius: getSize(5),
+                                      fitWidth: true,
+                                      text: "Sign In as Guest",
+                                      //isButtonEnabled: enableDisableSigninButton(),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Flexible(child: Container()),
-                  ],
+                      Flexible(child: Container()),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            bottomNavigationBar: Container(
+              bottomNavigationBar: Container(
 //              alignment: Alignment.bottomCenter,
               margin: EdgeInsets.all(getSize(15)),
               child: InkWell(
@@ -223,6 +225,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
           ),
         ),
       ),
+    )
     );
   }
 
@@ -372,4 +375,9 @@ class _LoginScreenState extends StatefulScreenWidgetState {
       print("Error " + onError);
     });
   }
+
+  Future<bool> onWillPop() {
+    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+  }
+
 }
