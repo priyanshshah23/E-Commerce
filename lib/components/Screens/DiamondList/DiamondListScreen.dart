@@ -13,6 +13,7 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWid
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
+import 'package:diamnow/components/Screens/More/DiamondBottomSheets.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
@@ -26,7 +27,7 @@ class DiamondListScreen extends StatefulScreenWidget {
 
   Map<String, dynamic> dictFilters;
   String filterId = "";
-  int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
+  int moduleType = DiamondModuleConstant.MODULE_TYPE_UPCOMING;
   bool isFromDrawer = false;
 
   DiamondListScreen(Map<String, dynamic> arguments) {
@@ -95,21 +96,64 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       enablePullDown: true,
       enablePullUp: true,
       onPullToRefress: () {
-        callApi(true);
+        callApiforUpcoming(true);
       },
       onRefress: () {
-        callApi(true);
+        callApiforUpcoming(true);
       },
       onLoadMore: () {
-        callApi(false, isLoading: true);
+        callApiforUpcoming(false, isLoading: true);
       },
     ));
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      callApi(false);
+      callApiforUpcoming(false);
     });
     setState(() {
       //
+    });
+  }
+
+  callApiforUpcoming(bool isRefress, {bool isLoading = false}) {
+    if (isRefress) {
+      arraDiamond.clear();
+      page = DEFAULT_PAGE;
+    }
+
+    DiamondListReq req = DiamondListReq();
+    req.page = page;
+    req.limit = DEFAULT_LIMIT;
+    ReqFilters filter = ReqFilters();
+    filter.wSts = "U";
+    InDt inDt =InDt();
+    inDt.lessThan=DateTime.now().toIso8601String();
+    filter.inDt=inDt;
+    req.filters=filter;
+    req.sort = "inDt ASC";
+
+    NetworkCall<DiamondListResp>()
+        .makeCall(
+      () => app.resolve<ServiceModule>().networkService().diamondList(req),
+      context,
+      isProgress: !isRefress && !isLoading,
+    )
+        .then((UpcomingListResp) async {
+          print("Count ${UpcomingListResp.data.count}");
+      arraDiamond.addAll(UpcomingListResp.data.diamonds);
+
+      diamondList.state.listCount = arraDiamond.length;
+      diamondList.state.totalCount = UpcomingListResp.data.count;
+      manageDiamondSelection();
+      page = page + 1;
+      diamondList.state.setApiCalling(false);
+      setState(() {});
+    }).catchError((onError) {
+      if (isRefress) {
+        arraDiamond.clear();
+        diamondList.state.listCount = arraDiamond.length;
+        diamondList.state.totalCount = arraDiamond.length;
+      }
+      diamondList.state.setApiCalling(false);
     });
   }
 
@@ -139,7 +183,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
       diamondList.state.listCount = arraDiamond.length;
       diamondList.state.totalCount = diamondListResp.data.count;
-       manageDiamondSelection();
+      manageDiamondSelection();
       page = page + 1;
       diamondList.state.setApiCalling(false);
       setState(() {});
@@ -219,23 +263,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     }
     totalCarat = PriceUtilities.getDoubleValue(carat);
     pcs = filterList.length.toString();
-  }
-
-  getAveragePriceCrt(num totalPrice, num totalcarat) {
-    return totalPrice / totalcarat;
-  }
-
-  getAvgDiscount(num priceCrt, num rapPrice) {
-    num avgDiscount = priceCrt / rapPrice;
-    return avgDiscount;
-  }
-
-  getFinalRate(num priceCrt) {
-    return (priceCrt * 0.98).toDouble();
-  }
-
-  getFinalDiscount(num finalRate, num rapPrice) {
-    return ((1 - (finalRate / rapPrice)) * 100).toDouble();
   }
 
   calulate(List<DiamondModel> diamondList) {
@@ -435,7 +462,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 arraDiamond, manageClick.bottomTabModel);
           });
         } else if (obj.code == BottomCodeConstant.dLStatus) {
-          //
+          showBottomSheetforAddToOffice(context);
           print(obj.code);
         }
       },

@@ -211,7 +211,7 @@ class ScreenTitle {
     this.download = "Download",
     this.addToCart = "Add to Cart",
     this.clearSelection = "Clear Selection",
-    this.comment = "Comment",
+    this.comment = "Comments",
     this.hold = "Hold",
     this.offer = "Offer",
     this.officeView = "Office View",

@@ -1,3 +1,9 @@
+import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/components/widgets/rounded_datePicker/src/flutter_rounded_date_picker_widget.dart';
+import 'package:diamnow/components/widgets/rounded_datePicker/src/flutter_rounded_time_picker_widget.dart';
+import 'package:diamnow/components/widgets/rounded_datePicker/src/material_rounded_date_picker_style.dart';
+import 'package:diamnow/components/widgets/rounded_datePicker/src/material_rounded_year_picker_style.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DateUtilities {
@@ -91,4 +97,93 @@ class DateUtilities {
   static const String eee_dd_mmm_yyyy = "EEEE, dd MMM yyyy";
 
   static const String dd_mmm_yy_h_mm_a = "dd MMM''yy 'at' h:mma";
+
+
+
+
+  Future<DateTime> pickDateDialog(
+      BuildContext context,
+      ) async {
+    return await showRoundedDatePicker(
+      initialDate: DateTime.now(),
+//      firstDate: DateTime.now().subtract(Duration(days: 1)),
+      horizontalPadding: getSize(10),
+      verticalPadding: MathUtilities.screenHeight(context) / 10,
+      context: context,
+      //   theme: ThemeData(primarySwatch: appTheme.whiteColor),
+      styleDatePicker: MaterialRoundedDatePickerStyle(
+        textStyleDayButton:
+        TextStyle(fontSize: getFontSize(25), color: appTheme.colorPrimary),
+        textStyleYearButton: TextStyle(
+          fontSize: getFontSize(30),
+          color: appTheme.whiteColor,
+        ),
+        textStyleDayHeader: TextStyle(
+          fontSize: getFontSize(20),
+          color: appTheme.textBlackColor,
+        ),
+        textStyleCurrentDayOnCalendar: TextStyle(
+            fontSize: getFontSize(30),
+            color: appTheme.darkBlue,
+            fontWeight: FontWeight.w600),
+        textStyleDayOnCalendar:
+        TextStyle(fontSize: getFontSize(20), color: appTheme.darkBlue),
+        textStyleDayOnCalendarSelected: TextStyle(
+            fontSize: getFontSize(20),
+            color: Colors.white,
+            fontWeight: FontWeight.bold),
+        textStyleDayOnCalendarDisabled: TextStyle(
+            fontSize: getFontSize(20), color: Colors.white.withOpacity(0.1)),
+        textStyleMonthYearHeader: TextStyle(
+            fontSize: getFontSize(24),
+            color: Colors.white,
+            fontWeight: FontWeight.w500),
+        paddingDatePicker: EdgeInsets.all(0),
+        paddingMonthHeader: EdgeInsets.all(getSize(12)),
+        // paddingActionBar: EdgeInsets.all(getSize(8)),
+        paddingDateYearHeader: EdgeInsets.all(getSize(10)),
+        sizeArrow: getSize(40),
+        colorArrowNext: Colors.white,
+        colorArrowPrevious: Colors.white,
+        marginLeftArrowPrevious: getSize(10),
+        marginTopArrowPrevious: getSize(0),
+        marginTopArrowNext: getSize(0),
+        marginRightArrowNext: getSize(10),
+        textStyleButtonAction:
+        TextStyle(fontSize: getFontSize(18), color: Colors.white),
+        textStyleButtonPositive: TextStyle(
+            fontSize: getFontSize(18),
+            color: appTheme.darkBlue,
+            fontWeight: FontWeight.bold),
+        textStyleButtonNegative: TextStyle(
+            fontSize: getFontSize(18), color: appTheme.darkBlue.withOpacity(0.5)),
+        decorationDateSelected:
+        BoxDecoration(color: appTheme.colorPrimary, shape: BoxShape.circle),
+        backgroundPicker: appTheme.whiteColor,
+        backgroundActionBar: appTheme.whiteColor,
+        backgroundHeaderMonth: appTheme.colorPrimary.withOpacity(0.5),
+      ),
+      styleYearPicker: MaterialRoundedYearPickerStyle(
+        textStyleYear:
+        TextStyle(fontSize: getFontSize(40), color: appTheme.darkBlue),
+        textStyleYearSelected: TextStyle(
+            fontSize: getFontSize(34),
+            color: appTheme.darkBlue,
+            fontWeight: FontWeight.bold),
+        heightYearRow: getSize(100),
+        backgroundPicker: appTheme.whiteColor,
+      ),
+    );
+  }
+
+
+  Future<TimeOfDay> pickTimeDialog(BuildContext context) async {
+    return await showRoundedTimePicker(
+//      theme: ThemeData(
+//          accentColor: appTheme.colorPrimary,
+//          primarySwatch: ColorConstants.accentCustomColor),
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+  }
 }
