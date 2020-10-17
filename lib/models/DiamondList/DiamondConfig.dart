@@ -26,9 +26,9 @@ class DiamondCalculation {
     double totalamt = 0.0;
     double termDiscAmount = 0.0;
 
-    List<DiamondModel> filterList;
+    List<DiamondModel> filterList=[];
     Iterable<DiamondModel> list = arraDiamond.where((item) {
-      return item.isSelected == true;
+      return item.isSelected == false;
     });
     if (list == null || list.length == 0) {
       filterList = arraDiamond;
@@ -46,10 +46,12 @@ class DiamondCalculation {
     totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt);
     totalAmount = PriceUtilities.getPrice(avgAmount);
     if (isAccountTerm) {
-      avgDisc = (1 - (termDiscAmount / avgRapCrt)) * (-100);
+      avgDisc =arrValues[6];
+      print("Discount....$avgDisc");
       totalDisc = PriceUtilities.getPercent(avgDisc);
     } else {
       avgDisc = (1 - (avgPriceCrt / avgRapCrt)) * (-100);
+      print("finalDiscount....$avgDisc");
       totalDisc = PriceUtilities.getPercent(avgDisc);
     }
     totalCarat = PriceUtilities.getDoubleValue(carat);

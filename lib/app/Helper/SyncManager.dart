@@ -132,24 +132,26 @@ class SyncManager {
     double avgRapAmt = 0.0;
     double avgPriceCrt = 0.0;
     double termDiscAmount = 0.0;
+    double discount = 0.0;
 
     for (var item in diamondList) {
       if (item.rap > 0) {
         carat += item.crt;
         calcAmount += item.amt;
         rapAvg += item.rap * item.crt;
-        priceCrt += item.crt * item.ctPr;
-        termDiscAmount += (item.ctPr * 0.98);
+        priceCrt += item.ctPr * item.crt;
+        termDiscAmount += (item.ctPr-((item.ctPr*2)/100));
       } else {
         carat += item.crt;
         calcAmount += item.amt;
         rapAvg += item.rap * item.crt;
-        priceCrt += item.crt * item.ctPr;
-        termDiscAmount += (item.ctPr * 0.98);
+        priceCrt += item.ctPr * item.crt;
+        termDiscAmount += (item.ctPr-((item.ctPr*2)/100));
       }
     }
     avgRapAmt = rapAvg / carat;
-    avgPriceCrt = priceCrt / carat;
-    return [carat, calcAmount, rapAvg, avgRapAmt, avgPriceCrt,termDiscAmount];
+    avgPriceCrt = priceCrt/carat;
+    discount = (1-(termDiscAmount/avgPriceCrt))*(-100);
+    return [carat, calcAmount, rapAvg, avgRapAmt, avgPriceCrt,termDiscAmount,discount];
   }
 }
