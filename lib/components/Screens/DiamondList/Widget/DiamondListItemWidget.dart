@@ -194,10 +194,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           getText(widget.item?.fluNm ?? ""),
           getText(widget.item?.msrmnt ?? ""),
           getText(widget.item?.lbNm ?? ""),
-          getAmountText(R.string().commonString.doller +
-                  widget.item?.ctPr.toStringAsFixed(2) +
-                  "/Cts" ??
-              ""),
+          getAmountText(widget.item?.getPricePerCarat() ?? ""),
         ],
       ),
     );
@@ -212,10 +209,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           getText(widget.item?.shpNm ?? ""),
           getText(PriceUtilities.getPercent(widget.item?.tblPer ?? 0) + "T"),
           getText(PriceUtilities.getPercent(widget.item?.depPer ?? 0) + "D"),
-          getAmountText(R.string().commonString.doller +
-                  widget.item?.amt.toStringAsFixed(2) +
-                  "/Amt" ??
-              ""),
+          getAmountText(widget.item?.getAmount() ?? ""),
         ],
       ),
     );

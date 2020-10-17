@@ -519,6 +519,14 @@ class DiamondModel {
     return color;
   }
 
+  String getDiamondImage() {
+    if (isStringEmpty(vStnId) == false) {
+      return diamondImageURL + vStnId + ".jpg";
+    }
+    //img
+    return "";
+  }
+
   String getAmount() {
     var amount =
         (amt.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");

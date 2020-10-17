@@ -139,7 +139,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
       diamondList.state.listCount = arraDiamond.length;
       diamondList.state.totalCount = diamondListResp.data.count;
-       manageDiamondSelection();
+      manageDiamondSelection();
       page = page + 1;
       diamondList.state.setApiCalling(false);
       setState(() {});
