@@ -51,6 +51,18 @@ class _ChangePasswordState extends State<ChangePassword> {
                   SizedBox(
                     height: getSize(40),
                   ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        right: getSize(30),
+                        left: getSize(62),
+                        bottom: getSize(52),
+                        top: getSize(12)),
+                    child: Image.asset(
+                      resetPassword,
+                      height: getSize(150),
+                      width: getSize(200),
+                    ),
+                  ),
                   getOldPasswordTextField(),
                   SizedBox(
                     height: getSize(20),

@@ -74,7 +74,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
                               top: getSize(12)),
                           child: Image.asset(
                             resetPassword,
-                            height: getSize(200),
+                            height: getSize(150),
                             width: getSize(200),
                           ),
                         ),
