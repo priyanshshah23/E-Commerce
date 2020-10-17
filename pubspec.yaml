@@ -67,7 +67,7 @@ dependencies:
   flutter_tags: ^0.4.9
   # flutter_tags: ^0.1.9
 
-  
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -98,7 +98,7 @@ flutter:
     - assets/Common/
     - assets/drawer/
     # - assets/chls/hochls.pem
-    # - assets/chls.pem
+    - assets/chls.pem
 
 
   fonts:

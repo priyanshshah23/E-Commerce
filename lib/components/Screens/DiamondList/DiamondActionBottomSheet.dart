@@ -47,7 +47,7 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
               ),
               Padding(
                 padding: EdgeInsets.only(left: getSize(8), right: getSize(8)),
-                child: diamondList.length < 3
+                child: diamondList.length < 4
                     ? ListView.builder(
                         padding: EdgeInsets.only(
                           bottom: getSize(15),
@@ -62,7 +62,7 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
                         },
                       )
                     : Container(
-                        height: getSize(100) * 3,
+                        height: getSize(100) * 4,
                         child: ListView.builder(
                           padding: EdgeInsets.only(
                             bottom: getSize(15),
@@ -97,7 +97,9 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
                     ),
                     FlatButton(
                       padding: EdgeInsets.all(getSize(0)),
-                      onPressed: () {},
+                      onPressed: () {
+                        actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_CONFIRM));
+                      },
                       child: Text(
                         R.string().screenTitle.addToWatchList,
                         style: appTheme.black16TextStyle,

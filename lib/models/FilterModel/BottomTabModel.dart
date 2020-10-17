@@ -76,7 +76,7 @@ class BottomTabModel extends TabConfiguration {
   String code;
   int type;
   int sequence;
-  bool isCenter;
+  bool isCenter=true;
   bool isSelected;
 
   BottomTabModel({
