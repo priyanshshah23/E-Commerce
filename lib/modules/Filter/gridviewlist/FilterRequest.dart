@@ -1,4 +1,5 @@
 import 'package:diamnow/app/constant/EnumConstant.dart';
+import 'package:diamnow/app/constant/constants.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/string_utils.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/CaratRangeWidget.dart';
@@ -6,14 +7,52 @@ import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
 
 class FilterRequest {
-  Map<String, dynamic> createRequest(List<FormBaseModel> list) {
+  Future<Map<String, dynamic>> createRequest(List<FormBaseModel> list) async {
     Map<String, dynamic> map = {};
 
-    list.forEach((element) {
+    for (var element in list) {
       if (element.viewType == ViewTypes.selection) {
-        List<String> arrStr =
-            Master.getSelectedId((element as SelectionModel).masters);
-        if (!isNullEmptyOrFalse(arrStr)) map[element.apiKey] = arrStr;
+        SelectionModel selectionModel = element as SelectionModel;
+        if (selectionModel.masterCode == MasterCode.canadamarkparent ||
+            selectionModel.masterCode == MasterCode.newarrivalsgroup) {
+          List<Master> arrMaster = selectionModel.masters
+              .where((element) => element.isSelected == true)
+              .toList();
+
+          if (!isNullEmptyOrFalse(arrMaster)) {
+            for (var item in arrMaster) {
+              if (item.code == MasterCode.canadamark) {
+                map["isCm"] = ["CERT", "ELIG"];
+              } else if (item.code == MasterCode.typeiia) {
+                map["type2"] = {"!=": null};
+              } else if (item.code == MasterCode.xray) {
+                map["isXray"] = true;
+              } else if (item.code == MasterCode.newarrivals) {
+                map["wSts"] = "B";
+              } else if (item.code == MasterCode.upcoming) {
+                map["wSts"] = "U";
+              } else if (item.code == MasterCode.eyecleanStatic) {}
+            }
+          }
+        } else if (selectionModel.masterCode == MasterCode.dor ||
+            selectionModel.masterCode == MasterCode.fm) {
+          List<Master> arrMaster = selectionModel.masters
+              .where((element) => element.isSelected == true)
+              .toList();
+
+          List<String> arr = [];
+
+          if (!isNullEmptyOrFalse(arrMaster)) {
+            for (var item in arrMaster) {
+              arr.add(item.code);
+            }
+
+            map[selectionModel.apiKey] = arr;
+          }
+        } else {
+          List<String> arrStr = Master.getSelectedId(selectionModel.masters);
+          if (!isNullEmptyOrFalse(arrStr)) map[element.apiKey] = arrStr;
+        }
       }
 
       if (element.viewType == ViewTypes.fromTo) {
@@ -69,15 +108,27 @@ class FilterRequest {
       }
 
       if (element.viewType == ViewTypes.caratRange) {
-        map[(element as SelectionModel).apiKey] =
-            Master.getSelectedId((element as SelectionModel).masters);
+        List<Map<String, dynamic>> caratRequest =
+            Master.getSelectedCarat((element as SelectionModel).masters);
+
+        for (var item in (element as SelectionModel).caratRangeChipsToShow) {
+          Map<String, dynamic> mainDic = Map<String, dynamic>();
+          Map<String, dynamic> dict = Map<String, dynamic>();
+          dict[">="] = item.split("-")[0];
+          dict["<="] = item.split("-")[1];
+
+          mainDic["crt"] = dict;
+          caratRequest.add(mainDic);
+        }
+        if (!isNullEmptyOrFalse(caratRequest)) map["or"] = caratRequest;
       }
 
       if (element.viewType == ViewTypes.shapeWidget) {
-        map[element.apiKey] =
+        List<String> arrStr =
             Master.getSelectedId((element as SelectionModel).masters);
+        if (!isNullEmptyOrFalse(arrStr)) map[element.apiKey] = arrStr;
       }
-    });
+    }
 
     return map;
   }

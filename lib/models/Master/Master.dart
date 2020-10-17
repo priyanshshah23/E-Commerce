@@ -69,7 +69,8 @@ class Master {
   String sizeCategory;
   MultiLanguageData multiLanguageData;
   bool isSelected = false;
-
+  num fromCarat;
+  num toCarat;
   List<Master> grouped = [];
 
   Master(
@@ -89,6 +90,8 @@ class Master {
       this.image,
       this.parentId,
       this.multiLanguageData,
+      this.fromCarat,
+      this.toCarat,
       this.isSelected = false});
 
   Master.fromJson(Map<String, dynamic> json) {
@@ -101,6 +104,8 @@ class Master {
     sId = json['id'];
     name = json['name'];
     code = json['code'];
+    fromCarat = json['fromCarat'];
+    toCarat = json['toCarat'];
     group = json['group'];
     normalizeName = json['normalizeName'];
     sortingSequence = json['sortingSequence'];
@@ -195,14 +200,6 @@ class Master {
         if (item.sId != R.string().commonString.all && item.sId != "ShowMore") {
           ids.add(item.sId);
         }
-
-        // if isWebDisplay == true{
-        //     ids.append(item.webDisplay!)
-        // }
-        // else{
-        //     ids.append(item.id!)
-        // }
-
         for (Master groped in item.grouped) {
           if (groped.sId != R.string().commonString.all &&
               groped.sId != "ShowMore") {
@@ -210,19 +207,6 @@ class Master {
               ids.add(groped.sId);
             }
           }
-
-          // if isWebDisplay == true{
-
-          //     if !ids.contains(groped.webDisplay!){
-          //         ids.append(groped.webDisplay!)
-          //     }
-          // }
-          // else{
-
-          //     if !ids.contains(groped.id!){
-          //         ids.append(groped.id!)
-          //     }
-          // }
         }
       }
     }
@@ -232,6 +216,25 @@ class Master {
     }
 
     return null;
+  }
+
+  static List<Map<String, dynamic>> getSelectedCarat(List<Master> masters) {
+    List<Map<String, dynamic>> requestCarats = List<Map<String, dynamic>>();
+
+    for (var item in masters) {
+      for (var carat in item.grouped) {
+        if (carat.isSelected == true) {
+          Map<String, dynamic> mainDic = Map<String, dynamic>();
+          Map<String, dynamic> caratDic = Map<String, dynamic>();
+          caratDic[">="] = "${carat.fromCarat}";
+          caratDic["<="] = "${carat.toCarat}";
+          mainDic["crt"] = caratDic;
+          requestCarats.add(mainDic);
+        }
+      }
+    }
+
+    return requestCarats.length > 0 ? requestCarats : null;
   }
 
   Widget getShapeImage(bool isSelected) {

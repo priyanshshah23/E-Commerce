@@ -232,5 +232,163 @@
         "isDeleted": false,
         "sortingSequence": 4,
         "parentId": "258258258"
+    },
+    {
+        "id": "369369369",
+        "code": "NEWARRIVALSGROUP",
+        "webDisplay": "",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentCode": "NEWARRIVALSGROUP",
+        "parentId": null
+    },
+    {
+        "id": "NEWARRIVAL",
+        "code": "NEWARRIVAL",
+        "webDisplay": "New Arrivals",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentId": "369369369"
+    },
+    {
+        "id": "UPCOMING",
+        "code": "UPCOMING",
+        "webDisplay": "Upcoming",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 2,
+        "parentId": "369369369"
+    },
+    {
+        "id": "EYECLEAN",
+        "code": "EYECLEANSTATIC",
+        "webDisplay": "Eye Clean",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 3,
+        "parentId": "369369369"
+    },
+    {
+        "id": "159159159",
+        "code": "CANADAMARKPARENT",
+        "webDisplay": "",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentCode": "CANADAMARKPARENT",
+        "parentId": null
+    },
+    {
+        "id": "CANADAMARK",
+        "code": "CANADAMARK",
+        "webDisplay": "Canadamark",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentId": "159159159"
+    },
+    {
+        "id": "TYPEIIA",
+        "code": "TYPEIIA",
+        "webDisplay": "Type IIA",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 2,
+        "parentId": "159159159"
+    },
+    {
+        "id": "XRAY",
+        "code": "XRAY",
+        "webDisplay": "XRay",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 3,
+        "parentId": "159159159"
+    },
+    {
+        "id": "357357357",
+        "code": "DOR",
+        "webDisplay": "",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentCode": "DOR",
+        "parentId": null
+    },
+    {
+        "id": "INVENTORY",
+        "code": "CERT",
+        "webDisplay": "Inventory",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentId": "357357357"
+    },
+    {
+        "id": "ELIGIBLE",
+        "code": "ELIG",
+        "webDisplay": "Eligible",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 2,
+        "parentId": "357357357"
+    },
+    {
+        "id": "7878787878",
+        "code": "FM",
+        "webDisplay": "",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentCode": "DOR",
+        "parentId": null
+    },
+    {
+        "id": "INVENTORY1",
+        "code": "CERT",
+        "webDisplay": "Inventory",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentId": "7878787878"
+    },
+    {
+        "id": "ELIGIBLE1",
+        "code": "ELIG",
+        "webDisplay": "Eligible",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 2,
+        "parentId": "7878787878"
+    },
+    {
+        "id": "969696969",
+        "code": "SEAL",
+        "webDisplay": "",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentCode": "SEAL",
+        "parentId": null
+    },
+    {
+        "id": "YES",
+        "code": "YES",
+        "webDisplay": "Yes",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 1,
+        "parentId": "969696969"
+    },
+    {
+        "id": "NO",
+        "code": "NO",
+        "webDisplay": "No",
+        "isActive": true,
+        "isDeleted": false,
+        "sortingSequence": 2,
+        "parentId": "969696969"
     }
 ]

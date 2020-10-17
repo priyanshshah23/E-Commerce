@@ -37,7 +37,9 @@ class _SplashState extends State<Splash> {
   Future openNextScreen() async {
     if (app.resolve<PrefUtils>().isUserLogin()) {
       // NavigationUtilities.pushRoute(FilterScreen.route);
-       NavigationUtilities.pushRoute(ForgetPasswordScreen.route);
+      //  NavigationUtilities.pushRoute(ResetPassword.route);
+      AppNavigation().movetoHome(isPopAndSwitch: true);
+     //  NavigationUtilities.pushRoute(ForgetPasswordScreen.route);
 //      AppNavigation().movetoHome(isPopAndSwitch: true);
     } else {
       AppNavigation().movetoLogin(isPopAndSwitch: true);
