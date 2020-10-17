@@ -1,4 +1,5 @@
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
+import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
 import 'package:diamnow/models/StaticPage/StaticPageModel.dart';
@@ -19,6 +20,9 @@ abstract class NetworkService {
 
   @POST(ApiConstants.diamondList)
   Future<DiamondListResp> diamondList(@Body() DiamondListReq req);
+
+  @POST(ApiConstants.createDiamondTrack)
+  Future<BaseApiResp> createDiamondTrack(@Body() CreateDiamondTrackReq req);
 
   @POST(ApiConstants.diamondList)
   Future<DiamondListResp> diamondListPaginate(@Body() Map<String, dynamic> req);

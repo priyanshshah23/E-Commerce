@@ -223,71 +223,106 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
                 children: <Widget>[
                   Container(
                     child: Center(
-                      child: Container(
-                        height: getSize(36),
-                        decoration: BoxDecoration(
-                            color: appTheme.whiteColor,
-                            borderRadius: BorderRadius.circular(getSize(5)),
-                            border: Border.all(color: appTheme.colorPrimary)),
-                        child: SingleChildScrollView(
-                          physics: ClampingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            // scrollDirection: Axis.horizontal,
-                            children: [
-                              for (var i = 0; i < arrImages.length; i++)
-                                InkWell(
-                                  onTap: () {
-                                    arrImages = arrImages.map((e) {
-                                      e.isSelected = false;
-                                      return e;
-                                    }).toList();
-                                    arrImages[i].isSelected = true;
-                                    setState(() {
-                                      //
-                                    });
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: arrImages[i].isSelected
-                                          ? appTheme.colorPrimary
-                                          : Colors.transparent,
-                                      border: Border(
-                                        left: BorderSide(
-                                          color: appTheme.colorPrimary,
-                                          width: (i == 0)
-                                              ? getSize(0)
-                                              : getSize(0.5),
-                                        ),
-                                        right: BorderSide(
-                                          color: appTheme.colorPrimary,
-                                          width: (i == arrImages.length - 1)
-                                              ? getSize(0)
-                                              : getSize(0.5),
-                                        ),
-                                      ),
+                      // child: Container(
+                      //   height: getSize(36),
+                      //   decoration: BoxDecoration(
+                      //       color: appTheme.whiteColor,
+                      //       borderRadius: BorderRadius.circular(getSize(5)),
+                      //       border: Border.all(color: appTheme.colorPrimary)),
+                      //   child: SingleChildScrollView(
+                      //     physics: ClampingScrollPhysics(),
+                      //     scrollDirection: Axis.horizontal,
+                      //     child: Row(
+                      //       // scrollDirection: Axis.horizontal,
+                      //       children: [
+                      //         for (var i = 0; i < arrImages.length; i++)
+                      //           InkWell(
+                      //             onTap: () {
+                      //               arrImages = arrImages.map((e) {
+                      //                 e.isSelected = false;
+                      //                 return e;
+                      //               }).toList();
+                      //               arrImages[i].isSelected = true;
+                      //               setState(() {
+                      //                 _currentIndex = i;
+                      //                 _controller.index = i;
+                      //               });
+                      //             },
+                      //             child: Container(
+                      //               decoration: BoxDecoration(
+                      //                 color: arrImages[i].isSelected
+                      //                     ? appTheme.colorPrimary
+                      //                     : Colors.transparent,
+                      //                 border: Border(
+                      //                   left: BorderSide(
+                      //                     color: appTheme.colorPrimary,
+                      //                     width: (i == 0)
+                      //                         ? getSize(0)
+                      //                         : getSize(0.5),
+                      //                   ),
+                      //                   right: BorderSide(
+                      //                     color: appTheme.colorPrimary,
+                      //                     width: (i == arrImages.length - 1)
+                      //                         ? getSize(0)
+                      //                         : getSize(0.5),
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //               child: Padding(
+                      //                 padding: EdgeInsets.only(
+                      //                     top: getSize(8),
+                      //                     bottom: getSize(8),
+                      //                     left: getSize(20),
+                      //                     right: getSize(20)),
+                      //                 child: Center(
+                      //                   child: Text(
+                      //                     arrImages[i].title,
+                      //                     style: appTheme.black14TextStyle
+                      //                         .copyWith(
+                      //                             color: arrImages[i].isSelected
+                      //                                 ? appTheme.whiteColor
+                      //                                 : appTheme.colorPrimary),
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //           ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
+                      child: DefaultTabController(
+                        length: 0,
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              // height: getSize(36),
+                              // decoration: BoxDecoration(
+                              //   color: appTheme.whiteColor,
+                              //   borderRadius: BorderRadius.circular(getSize(5)),
+                              //   border:
+                              //       Border.all(color: appTheme.colorPrimary),
+                              // ),
+                              padding: EdgeInsets.only(
+                                left: getSize(14),
+                              ),
+                              child: TabBar(
+                                isScrollable: true,
+                                controller: _controller,
+                                tabs: <Widget>[
+                                  for (var i = 0; i < arrImages.length; i++)
+                                    Tab(
+                                      text: arrImages[i].title,
                                     ),
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                          top: getSize(8),
-                                          bottom: getSize(8),
-                                          left: getSize(20),
-                                          right: getSize(20)),
-                                      child: Center(
-                                        child: Text(
-                                          arrImages[i].title,
-                                          style: appTheme.black14TextStyle
-                                              .copyWith(
-                                                  color: arrImages[i].isSelected
-                                                      ? appTheme.whiteColor
-                                                      : appTheme.colorPrimary),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                            ],
-                          ),
+                                ],
+                                indicatorColor: appTheme.colorPrimary,
+                                indicatorSize: TabBarIndicatorSize.tab,
+                                unselectedLabelColor: appTheme.textColor,
+                                labelColor: appTheme.colorPrimary,
+                                labelStyle: appTheme.black14TextStyle,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
