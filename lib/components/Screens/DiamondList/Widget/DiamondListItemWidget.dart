@@ -59,7 +59,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   children: <Widget>[
                     getIdShapeDetail(),
                     getDymentionAndCaratDetail(),
-                    getTableDepthAndAmountDetail()
+                    getTableDepthAndAmountDetail(),
+                    getWatchListDetail(),
                   ],
                 ),
               ),
@@ -221,12 +222,56 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
     );
   }
 
-  getText(String text) {
-    return Text(
-      text,
-      style: appTheme.black12TextStyle,
-    );
+  getWatchListDetail() {
+    List<String> backPerList = widget.item.getWatchlistPer();
+    return widget.item.isAddToWatchList
+        ? Padding(
+            padding: EdgeInsets.only(top: getSize(5)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                getText(R.string().screenTitle.todayDiscPer),
+                getText((widget.item.back ?? "").toString() + "%"),
+                getText(R.string().screenTitle.expDiscPer),
+                _offsetPopup(widget.item, backPerList),
+              ],
+            ),
+          )
+        : Container();
   }
+
+  Widget _offsetPopup(DiamondModel model, List<String> backPerList) =>
+      PopupMenuButton<String>(
+        shape: TooltipShapeBorder(arrowArc: 0.5),
+        itemBuilder: (context) => [
+          for (var item in backPerList) getPopupItems(item, model),
+          PopupMenuItem(
+            height: getSize(30),
+            value: "Start",
+            child: SizedBox(),
+          ),
+        ],
+        child: Container(
+          padding: EdgeInsets.symmetric(
+              vertical: getSize(1), horizontal: getSize(10)),
+          decoration: BoxDecoration(
+              border: Border.all(color: appTheme.dividerColor),
+              borderRadius: BorderRadius.circular(getSize(5))),
+          child: Row(
+            children: <Widget>[
+              getText(model.getSelectedBackPer()),
+              SizedBox(
+                height: getSize(5),
+              ),
+              Icon(
+                Icons.arrow_drop_down,
+                size: getSize(20),
+              ),
+            ],
+          ),
+        ),
+        offset: Offset(25, 110),
+      );
 
   getAmountText(String text) {
     return Text(
@@ -234,4 +279,66 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       style: appTheme.blue14TextStyle.copyWith(fontSize: getFontSize(12)),
     );
   }
+}
+
+getText(String text) {
+  return Text(
+    text,
+    style: appTheme.black12TextStyle,
+  );
+}
+
+getPopupItems(String per, DiamondModel model) {
+  return PopupMenuItem(
+    value: per,
+    height: getSize(20),
+    child: GestureDetector(
+      onTap: () {
+        model.selectedBackPer = per;
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[getText(per + "%")],
+      ),
+    ),
+  );
+}
+
+class TooltipShapeBorder extends ShapeBorder {
+  final double arrowWidth;
+  final double arrowHeight;
+  final double arrowArc;
+  final double radius;
+
+  TooltipShapeBorder({
+    this.radius = 5.0,
+    this.arrowWidth = 15.0,
+    this.arrowHeight = 30.0,
+    this.arrowArc = 0.0,
+  }) : assert(arrowArc <= 1.0 && arrowArc >= 0.0);
+
+  @override
+  EdgeInsetsGeometry get dimensions => EdgeInsets.only(bottom: arrowHeight);
+
+  @override
+  Path getInnerPath(Rect rect, {TextDirection textDirection}) => null;
+
+  @override
+  Path getOuterPath(Rect rect, {TextDirection textDirection}) {
+    rect = Rect.fromPoints(
+        rect.topLeft, rect.bottomRight - Offset(0, arrowHeight));
+    double x = arrowWidth, y = arrowHeight, r = 1 - arrowArc;
+    return Path()
+      ..addRRect(RRect.fromRectAndRadius(rect, Radius.circular(radius)))
+      ..moveTo(rect.topRight.dx - (x + 2), rect.topRight.dy - (y - 15))
+      ..relativeLineTo(-x * r, y * r)
+      ..relativeQuadraticBezierTo(x, 0, x, 0)
+      ..relativeLineTo(-x * r, -y * r);
+  }
+
+  @override
+  void paint(Canvas canvas, Rect rect, {TextDirection textDirection}) {}
+
+  @override
+  ShapeBorder scale(double t) => this;
 }

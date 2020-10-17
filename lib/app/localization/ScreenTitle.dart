@@ -97,6 +97,7 @@ class ScreenTitle {
   final String enquiry;
   final String placeOrder;
   final String addToCart;
+  final String addToWatchList;
   final String comment;
   final String offer;
   final String officeView;
@@ -104,6 +105,9 @@ class ScreenTitle {
   final String download;
   final String clearSelection;
   final String share;
+  final String expDiscPer;
+  final String todayDiscPer;
+
 
 //  Support
   final String accountAndPayment;
@@ -111,6 +115,8 @@ class ScreenTitle {
   final String searchResult;
 
   const ScreenTitle({
+    this.expDiscPer = "Exp Disc%",
+    this.todayDiscPer = "Today's Disc%",
     this.searchDiamond = "Search Diamond",
     this.basic = "Basic",
     this.advanced = "Advanced",
@@ -210,6 +216,7 @@ class ScreenTitle {
     this.enquiry = "Enquiry",
     this.download = "Download",
     this.addToCart = "Add to Cart",
+    this.addToWatchList = "Add to Watchlist",
     this.clearSelection = "Clear Selection",
     this.comment = "Comment",
     this.hold = "Hold",
