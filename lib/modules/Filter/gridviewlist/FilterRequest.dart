@@ -7,7 +7,7 @@ import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
 
 class FilterRequest {
-  Map<String, dynamic> createRequest(List<FormBaseModel> list)  {
+  Map<String, dynamic> createRequest(List<FormBaseModel> list) {
     Map<String, dynamic> map = {};
 
     for (var element in list) {
@@ -126,6 +126,28 @@ class FilterRequest {
       if (element.viewType == ViewTypes.shapeWidget) {
         List<String> arrStr =
             Master.getSelectedId((element as SelectionModel).masters);
+        if (!isNullEmptyOrFalse(arrStr)) map[element.apiKey] = arrStr;
+      }
+
+      if (element.viewType == ViewTypes.groupWidget) {
+        ColorModel colorModel = (element as ColorModel);
+
+        if (colorModel.masterCode == MasterCode.color) {
+          if (colorModel.showWhiteFancy) {
+            List<String> arrFancy =
+                Master.getSelectedId(colorModel.groupMaster);
+            if (!isNullEmptyOrFalse(arrFancy)) map[element.apiKey] = arrFancy;
+            List<String> arrInclusion =
+                Master.getSelectedId(colorModel.masters);
+            if (!isNullEmptyOrFalse(arrInclusion))
+              map[element.apiKey] = arrInclusion;
+            List<String> arrOvertone = Master.getSelectedId(colorModel.masters);
+            if (!isNullEmptyOrFalse(arrOvertone))
+              map[element.apiKey] = arrOvertone;
+          }
+        }
+
+        List<String> arrStr = Master.getSelectedId(colorModel.masters);
         if (!isNullEmptyOrFalse(arrStr)) map[element.apiKey] = arrStr;
       }
     }
