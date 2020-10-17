@@ -43,6 +43,7 @@ const aboutUsUrl = "https://loremipsum.io/";
 const eventBusTag = "EventBus";
 const eventBusSocket = "EventBusSocket";
 const eventBusLogout = "EventBusLogout";
+const eventBusDropDown = "EventBusDropDown";
 
 const imagePath = "assest/icon.png";
 const String googleDocViewURL =

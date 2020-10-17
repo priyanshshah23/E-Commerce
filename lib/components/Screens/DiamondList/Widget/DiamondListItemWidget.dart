@@ -4,6 +4,7 @@ import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:flutter/material.dart';
+import 'package:rxbus/rxbus.dart';
 
 class DiamondItemWidget extends StatefulWidget {
   DiamondModel item;
@@ -223,6 +224,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
 
   getWatchListDetail() {
     List<String> backPerList = widget.item.getWatchlistPer();
+    DropDownItem item = DropDownItem(widget.item);
     return widget.item.isAddToWatchList
         ? Padding(
             padding: EdgeInsets.only(top: getSize(5)),
@@ -232,16 +234,23 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 getText(R.string().screenTitle.todayDiscPer),
                 getText((widget.item.back ?? "").toString() + "%"),
                 getText(R.string().screenTitle.expDiscPer),
-                _offsetPopup(widget.item, backPerList),
+                offsetPopup(widget.item, backPerList, item),
               ],
             ),
           )
         : Container();
   }
 
-  Widget _offsetPopup(DiamondModel model, List<String> backPerList) =>
+  Widget offsetPopup(DiamondModel model, List<String> backPerList,
+          DropDownItem dropDownItem) =>
       PopupMenuButton<String>(
         shape: TooltipShapeBorder(arrowArc: 0.5),
+        onSelected: (newValue) {
+          // add this property
+
+          model.selectedBackPer = newValue;
+          RxBus.post(true, tag: eventBusDropDown);
+        },
         itemBuilder: (context) => [
           for (var item in backPerList) getPopupItems(item, model),
           PopupMenuItem(
@@ -250,25 +259,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             child: SizedBox(),
           ),
         ],
-        child: Container(
-          padding: EdgeInsets.symmetric(
-              vertical: getSize(1), horizontal: getSize(10)),
-          decoration: BoxDecoration(
-              border: Border.all(color: appTheme.dividerColor),
-              borderRadius: BorderRadius.circular(getSize(5))),
-          child: Row(
-            children: <Widget>[
-              getText(model.getSelectedBackPer()),
-              SizedBox(
-                height: getSize(5),
-              ),
-              Icon(
-                Icons.arrow_drop_down,
-                size: getSize(20),
-              ),
-            ],
-          ),
-        ),
+        child: dropDownItem,
         offset: Offset(25, 110),
       );
 
@@ -277,6 +268,51 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       text,
       style: appTheme.blue14TextStyle.copyWith(fontSize: getFontSize(12)),
     );
+  }
+}
+
+class DropDownItem extends StatefulWidget {
+  DiamondModel model;
+
+  DropDownItem(this.model);
+
+  @override
+  _DropDownItemState createState() => _DropDownItemState();
+}
+
+class _DropDownItemState extends State<DropDownItem> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding:
+          EdgeInsets.symmetric(vertical: getSize(1), horizontal: getSize(10)),
+      decoration: BoxDecoration(
+          border: Border.all(color: appTheme.dividerColor),
+          borderRadius: BorderRadius.circular(getSize(5))),
+      child: Row(
+        children: <Widget>[
+          getText(widget.model.getSelectedBackPer()),
+          SizedBox(
+            height: getSize(5),
+          ),
+          Icon(
+            Icons.arrow_drop_down,
+            size: getSize(20),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    /*onclick = () {
+      setState(() {});
+    };*/
+    RxBus.register<bool>(tag: eventBusDropDown).listen((event) {
+      setState(() {});
+    });
   }
 }
 
@@ -291,14 +327,9 @@ getPopupItems(String per, DiamondModel model) {
   return PopupMenuItem(
     value: per,
     height: getSize(20),
-    child: GestureDetector(
-      onTap: () {
-        model.selectedBackPer = per;
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[getText(per + "%")],
-      ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[getText(per + "%")],
     ),
   );
 }

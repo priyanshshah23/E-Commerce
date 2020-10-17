@@ -26,6 +26,9 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
       ),
       builder: (context) {
         return StatefulBuilder(builder: (context, StateSetter setSetter) {
+          ActionClick actionClick = (manageClick) {
+            setSetter(() {});
+          };
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -58,7 +61,7 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
                         itemBuilder: (BuildContext context, int index) {
                           return DiamondItemWidget(
                               item: diamondList[index],
-                              actionClick: (manageClick) {});
+                              actionClick: actionClick);
                         },
                       )
                     : Container(
@@ -71,7 +74,7 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
                           itemBuilder: (BuildContext context, int index) {
                             return DiamondItemWidget(
                                 item: diamondList[index],
-                                actionClick: (manageClick) {});
+                                actionClick: actionClick);
                           },
                         ),
                       ),
@@ -98,7 +101,8 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
                     FlatButton(
                       padding: EdgeInsets.all(getSize(0)),
                       onPressed: () {
-                        actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_CONFIRM));
+                        actionClick(ManageCLick(
+                            type: clickConstant.CLICK_TYPE_CONFIRM));
                       },
                       child: Text(
                         R.string().screenTitle.addToWatchList,
