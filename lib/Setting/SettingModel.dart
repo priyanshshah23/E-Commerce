@@ -27,70 +27,63 @@ class DrawerSetting {
         isSelected: true,
         type: DrawerConstant.MODULE_SEARCH,
       ),
-      *//*DrawerModel(
+      */ /*DrawerModel(
         image: drawer_logout,
         title: R.string().screenTitle.logout,
         isSelected: false,
         type: DrawerConstant.LOGOUT,
-      ),*//*
+      ),*/ /*
     ];*/
   }
-
-
 }
-class BottomMenuSetting{
-  List<BottomTabModel> getMoreMenuItems(){
+
+class BottomMenuSetting {
+  List<BottomTabModel> getMoreMenuItems() {
     List<BottomTabModel> moreMenuList = [];
     moreMenuList.add(BottomTabModel(
-        image:enquiry,
+        image: enquiry,
         title: R.string().screenTitle.enquiry,
-        type: ActionMenuConstant.ACTION_TYPE_ENQUIRY
-    ));
+        type: ActionMenuConstant.ACTION_TYPE_ENQUIRY));
     moreMenuList.add(BottomTabModel(
-        image:placeOrder,
+        image: placeOrder,
         title: R.string().screenTitle.placeOrder,
-        type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER
-    ));
+        type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER));
     moreMenuList.add(BottomTabModel(
-        image:addToCart,
+        image: addToCart,
         title: R.string().screenTitle.addToCart,
-        type: ActionMenuConstant.ACTION_TYPE_ADD_TO_CART
-    ));
+        type: ActionMenuConstant.ACTION_TYPE_ADD_TO_CART));
     moreMenuList.add(BottomTabModel(
-        image:comment,
+        image: addToCart,
+        title: R.string().screenTitle.addToWatchList,
+        type: ActionMenuConstant.ACTION_TYPE_WISHLIST));
+    moreMenuList.add(BottomTabModel(
+        image: comment,
         title: R.string().screenTitle.comment,
-        type: ActionMenuConstant.ACTION_TYPE_COMMENT
-    ));
+        type: ActionMenuConstant.ACTION_TYPE_COMMENT));
     moreMenuList.add(BottomTabModel(
-        image:offer,
+        image: offer,
         title: R.string().screenTitle.offer,
-        type: ActionMenuConstant.ACTION_TYPE_OFFER
-    ));
+        type: ActionMenuConstant.ACTION_TYPE_OFFER));
     moreMenuList.add(BottomTabModel(
-        image:company,
+        image: company,
         title: R.string().screenTitle.officeView,
-        type: ActionMenuConstant.ACTION_TYPE_OFFER_VIEW
-    ));
+        type: ActionMenuConstant.ACTION_TYPE_OFFER_VIEW));
     moreMenuList.add(BottomTabModel(
-        image:hold,
+        image: hold,
         title: R.string().screenTitle.hold,
-        type: ActionMenuConstant.ACTION_TYPE_HOLD
-    ));
+        type: ActionMenuConstant.ACTION_TYPE_HOLD));
     moreMenuList.add(BottomTabModel(
-        image:download,
+        image: download,
         title: R.string().screenTitle.download,
-        type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD
-    ));
+        type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
     moreMenuList.add(BottomTabModel(
-        image:clearSelection,
+        image: clearSelection,
         title: R.string().screenTitle.clearSelection,
-        type: ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION
-    ));
+        type: ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION));
     moreMenuList.add(BottomTabModel(
-        image:share,
+        image: share,
         title: R.string().screenTitle.share,
-        type: ActionMenuConstant.ACTION_TYPE_SHARE
-    ));
+        type: ActionMenuConstant.ACTION_TYPE_SHARE));
     return moreMenuList;
   }
 }

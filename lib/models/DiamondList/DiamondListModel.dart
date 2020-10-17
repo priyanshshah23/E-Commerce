@@ -1,4 +1,5 @@
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:flutter/cupertino.dart';
 
 class DiamondListReq {
@@ -368,6 +369,32 @@ class DiamondModel {
   String fcColDesc;
   num ratio;
   bool isSelected = false;
+  bool isAddToWatchList = false;
+  String selectedBackPer;
+
+  getSelectedBackPer() {
+    return (selectedBackPer ?? "0") + "%";
+  }
+
+  getWatchlistPer() {
+    List<String> list = [];
+    if (back >= 0) {
+      if (selectedBackPer == null) {
+        selectedBackPer=(back + 1).toString();
+      }
+      list.add((back + 1).toString());
+      list.add((back + 2).toString());
+      list.add((back + 3).toString());
+    } else {
+      if (selectedBackPer == null) {
+        selectedBackPer=(back - 1).toString();
+      }
+      list.add((back - 1).toString());
+      list.add((back - 2).toString());
+      list.add((back - 3).toString());
+    }
+    return list;
+  }
 
   DiamondModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -558,5 +585,19 @@ class DiamondModel {
         break;
     }
     return color;
+  }
+
+  String getAmount() {
+    var amount =
+        (amt.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
+
+    return R.string().commonString.doller + amount + "/Amt" ?? "";
+  }
+
+  String getPricePerCarat() {
+    var caratPerPrice =
+        (ctPr.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
+
+    return R.string().commonString.doller + caratPerPrice + "/Cts" ?? "";
   }
 }

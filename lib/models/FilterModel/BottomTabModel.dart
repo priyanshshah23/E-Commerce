@@ -216,5 +216,54 @@ class BottomTabBar {
     arrTimeList.add(BottomTabModel(
       title: "9:00AM - 9:30AM",
     ));
+    arrTimeList.add(BottomTabModel(
+      title: "9:30AM - 10:00AM",
+    ));
+    arrTimeList.add(BottomTabModel(
+      title: "10:00AM - 10:30AM",
+    ));
+    arrTimeList.add(BottomTabModel(
+      title: "10:30AM - 11:00AM",
+    ));
+    arrTimeList.add(BottomTabModel(
+      title: "11:00AM - 11:30AM",
+    ));
+    arrTimeList.add(BottomTabModel(
+      title: "11:30M - 12:00PM",
+    ));
+    arrTimeList.add(BottomTabModel(
+      title: "12:00PM - 12:30PM",
+    ));
+    arrTimeList.add(BottomTabModel(
+      title: "12:00PM - 12:30PM",
+    ));
+    arrTimeList.add(BottomTabModel(
+      title: "12:30PM - 1:00PM",
+    ));
+    arrTimeList.add(BottomTabModel(
+      title: "1:00PM - 1:30PM",
+    ));
+    arrTimeList.add(BottomTabModel(
+      title: "1:30PM - 2:00PM",
+    ));
+    arrTimeList.add(BottomTabModel(
+      title: "2:00PM - 2:30PM",
+    ));
+    arrTimeList.add(BottomTabModel(
+      title: "2:30PM - 3:00PM",
+    ));
+    arrTimeList.add(BottomTabModel(
+      title: "3:30PM - 4:00PM",
+    ));
+    arrTimeList.add(BottomTabModel(
+      title: "3:00PM - 3:30PM",
+    ));
+    arrTimeList.add(BottomTabModel(
+      title: "3:00PM - 3:30PM",
+    ));
+    arrTimeList.add(BottomTabModel(
+      title: "3:00PM - 3:30PM",
+    ));
+
   }
 }
