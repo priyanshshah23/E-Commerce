@@ -211,7 +211,7 @@ class BottomTabBar {
     return arrBootomTab;
   }
 
-  List<BottomTabModel> getTimeSlotList(){
+  static List<BottomTabModel> getTimeSlotList(){
     List<BottomTabModel> arrTimeList=[];
     arrTimeList.add(BottomTabModel(
       title: "9:00AM - 9:30AM",
@@ -261,5 +261,6 @@ class BottomTabBar {
     arrTimeList.add(BottomTabModel(
       title: "4:30PM - 5:00PM",
     ));
+    return arrTimeList;
   }
 }

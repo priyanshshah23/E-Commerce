@@ -134,21 +134,27 @@ class FilterRequest {
 
         if (colorModel.masterCode == MasterCode.color) {
           if (colorModel.showWhiteFancy) {
-            List<String> arrFancy =
-                Master.getSelectedId(colorModel.groupMaster);
-            if (!isNullEmptyOrFalse(arrFancy)) map[element.apiKey] = arrFancy;
-            List<String> arrInclusion =
-                Master.getSelectedId(colorModel.masters);
-            if (!isNullEmptyOrFalse(arrInclusion))
-              map[element.apiKey] = arrInclusion;
-            List<String> arrOvertone = Master.getSelectedId(colorModel.masters);
-            if (!isNullEmptyOrFalse(arrOvertone))
-              map[element.apiKey] = arrOvertone;
+            if (colorModel.isGroupSelected) {
+              List<String> arrFancy =
+                  Master.getSelectedId(colorModel.groupMaster);
+              if (!isNullEmptyOrFalse(arrFancy)) map["fcCol"] = arrFancy;
+              List<String> arrInclusion =
+                  Master.getSelectedId(colorModel.intensitySelection.masters);
+              if (!isNullEmptyOrFalse(arrInclusion))
+                map[colorModel.intensitySelection.apiKey] = arrInclusion;
+              List<String> arrOvertone =
+                  Master.getSelectedId(colorModel.overtoneSelection.masters);
+              if (!isNullEmptyOrFalse(arrOvertone))
+                map[colorModel.overtoneSelection.apiKey] = arrOvertone;
+            } else {
+              List<String> arrStr = Master.getSelectedId(colorModel.masters);
+              if (!isNullEmptyOrFalse(arrStr)) map[element.apiKey] = arrStr;
+            }
+          } else {
+            List<String> arrStr = Master.getSelectedId(colorModel.masters);
+            if (!isNullEmptyOrFalse(arrStr)) map[element.apiKey] = arrStr;
           }
         }
-
-        List<String> arrStr = Master.getSelectedId(colorModel.masters);
-        if (!isNullEmptyOrFalse(arrStr)) map[element.apiKey] = arrStr;
       }
     }
 
