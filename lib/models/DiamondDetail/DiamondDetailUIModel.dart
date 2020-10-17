@@ -1,7 +1,6 @@
 class DiamondDetailUIAPIKeys {
-  // static const String shape = "SHAPE";
-  //ctPr
-  //amt
+  static const String pricePerCarat = "ctPr";
+  static const String amount = "amt";
 }
 
 class DiamondDetailUIModel {

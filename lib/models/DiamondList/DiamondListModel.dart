@@ -1,4 +1,5 @@
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:flutter/cupertino.dart';
 
 class DiamondListReq {
@@ -543,5 +544,19 @@ class DiamondModel {
         break;
     }
     return color;
+  }
+
+  String getAmount() {
+    var amount =
+        (amt.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
+
+    return R.string().commonString.doller + amount + "/Amt" ?? "";
+  }
+
+  String getPricePerCarat() {
+    var caratPerPrice =
+        (ctPr.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
+
+    return R.string().commonString.doller + caratPerPrice + "/Cts" ?? "";
   }
 }

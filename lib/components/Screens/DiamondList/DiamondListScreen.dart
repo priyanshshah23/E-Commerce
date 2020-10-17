@@ -260,21 +260,21 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: appTheme.whiteColor,
-        appBar: getAppBar(
-          context,
-          diamondConfig.getScreenTitle(),
-          bgColor: appTheme.whiteColor,
-          leadingButton: isFromDrawer
-              ? getDrawerButton(context, true)
-              : getBackButton(context),
-          centerTitle: false,
-          actionItems: getToolbarItem(),
-        ),
-        bottomNavigationBar: getBottomTab(),
-        body: Padding(
+    return Scaffold(
+      backgroundColor: appTheme.whiteColor,
+      appBar: getAppBar(
+        context,
+        diamondConfig.getScreenTitle(),
+        bgColor: appTheme.whiteColor,
+        leadingButton: isFromDrawer
+            ? getDrawerButton(context, true)
+            : getBackButton(context),
+        centerTitle: false,
+        actionItems: getToolbarItem(),
+      ),
+      bottomNavigationBar: getBottomTab(),
+      body: SafeArea(
+        child: Padding(
           padding: EdgeInsets.only(
               left: getSize(20), right: getSize(20), top: getSize(20)),
           child: Column(
