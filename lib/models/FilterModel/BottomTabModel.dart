@@ -256,14 +256,10 @@ class BottomTabBar {
       title: "3:30PM - 4:00PM",
     ));
     arrTimeList.add(BottomTabModel(
-      title: "3:00PM - 3:30PM",
+      title: "4:00PM - 4:30PM",
     ));
     arrTimeList.add(BottomTabModel(
-      title: "3:00PM - 3:30PM",
+      title: "4:30PM - 5:00PM",
     ));
-    arrTimeList.add(BottomTabModel(
-      title: "3:00PM - 3:30PM",
-    ));
-
   }
 }

@@ -35,7 +35,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         ),
         width: MathUtilities.screenWidth(context),
         decoration: BoxDecoration(
-            color: appTheme.darkBlue,
+            color: appTheme.whiteColor,
             boxShadow: widget.item.isSelected
                 ? getBoxShadow(context)
                 : [BoxShadow(color: Colors.transparent)],
@@ -48,6 +48,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             ),
         child: Row(
           children: <Widget>[
+            getCaratAndDiscountDetail(widget.actionClick),
             //   getIdColorDetail(),
             Expanded(
               child: Padding(
@@ -65,7 +66,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 ),
               ),
             ),
-            getCaratAndDiscountDetail(widget.actionClick),
+
 //            Container(
 //              child: Center(
 //                  child: Container(
