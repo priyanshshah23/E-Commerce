@@ -225,6 +225,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
           ),
         ),
       ),
+    )
     );
   }
 
