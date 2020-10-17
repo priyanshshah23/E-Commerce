@@ -21,8 +21,6 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: HomeDrawer(),
-      key: _scaffoldKey,
       appBar: getAppBar(
         context,
         "",

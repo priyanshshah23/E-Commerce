@@ -49,31 +49,29 @@ class _PasswordResetSuccessfullyState extends State<PasswordResetSuccessfully> {
             ),
           ),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: getSize(20)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(
-                      right: getSize(132),
-                      left: getSize(132),
-                      bottom: getSize(19),),
-                  child: Image.asset(
-                    passwordResetSuccessfully,
-                    height: getSize(150),
-                    width: getSize(150),
-                  ),
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: getSize(20)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(
+                    right: getSize(132),
+                    left: getSize(132),
+                    bottom: getSize(19),),
+                child: Image.asset(
+                  passwordResetSuccessfully,
+                  height: getSize(150),
+                  width: getSize(150),
                 ),
-                Text(
-                  "Password reset successfully.",
-                  style: appTheme.blackMedium20TitleColorblack,
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            )
-          ),
+              ),
+              Text(
+                "Password reset successfully.",
+                style: appTheme.blackMedium20TitleColorblack,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          )
         ),
       ),
     );
