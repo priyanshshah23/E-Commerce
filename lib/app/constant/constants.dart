@@ -89,7 +89,6 @@ class MasterCode {
   static const String blackside = "BLACK_INCLUSION_SIDE";
   static const String blackCrown = "BLACK_INCLUSION_CROWN";
   static const String whiteside = "WHITE_INCLUSION_SIDE";
-
   static const String whiteTable = "WHITE_INCLUSION_TABLE";
   static const String whiteCrown = "WHITE_INCLUSION_CROWN";
   static const String milky = "MILKEY";

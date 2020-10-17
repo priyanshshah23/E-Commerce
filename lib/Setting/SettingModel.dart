@@ -20,6 +20,12 @@ class DrawerSetting {
       type: DrawerConstant.MODULE_UPCOMING,
     ));
     drawerList.add(DrawerModel(
+      image: search,
+      title: "Profile",
+      isSelected: true,
+      type: DrawerConstant.MODULE_PROFILE,
+    ));
+    drawerList.add(DrawerModel(
       image: user,
       title: R.string().screenTitle.myProfile,
       isSelected: false,
