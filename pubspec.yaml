@@ -95,6 +95,7 @@ flutter:
     - assets/more/
     - assets/DiamondDetail/
     - assets/Common/
+    - assets/drawer/
     # - assets/chls/hochls.pem
     # - assets/chls.pem
 

@@ -1,23 +1,25 @@
 import 'dart:io';
 
+import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:rxbus/rxbus.dart';
-import 'package:diamnow/app/localization/app_locales.dart';
+
 
 import '../app.export.dart';
 import '../constant/ColorConstant.dart';
 import '../theme/app_theme.dart';
 
 getBackButton(BuildContext context,
-    {bool isWhite = false, double height, double width}) {
+    {bool isWhite = false, double height, double width,VoidCallback ontap}) {
   return Container(
     margin: EdgeInsets.all(getSize(20)),
     child: InkWell(
-      onTap: () {
+      onTap: ontap??() {
         Navigator.of(context).pop();
       },
       child: Image.asset(
@@ -50,6 +52,7 @@ getBarButton(
   );
 }
 
+/*
 getDrawerButton(BuildContext context, bool isBlack) {
   return IconButton(
     padding: EdgeInsets.all(3),
@@ -60,6 +63,23 @@ getDrawerButton(BuildContext context, bool isBlack) {
     icon: Image.asset(
       "menu",
       color: isBlack == true ? Colors.black : Colors.white,
+      width: getSize(26),
+      height: getSize(26),
+    ),
+  );
+}
+*/
+
+getDrawerButton(BuildContext context, bool isBlack) {
+  return IconButton(
+    padding: EdgeInsets.all(3),
+    onPressed: () {
+      RxBus.post(DrawerEvent(DrawerConstant.OPEN_DRAWER, false),
+          tag: eventBusTag);
+    },
+    icon: Image.asset(
+      menu,
+      color: isBlack == true ? ColorConstants.colorPrimary: Colors.white,
       width: getSize(26),
       height: getSize(26),
     ),

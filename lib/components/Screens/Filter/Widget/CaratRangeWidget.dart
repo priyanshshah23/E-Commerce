@@ -51,22 +51,20 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
           SizedBox(width: getSize(16)),
           InkWell(
             onTap: () {
+              FocusScope.of(context).unfocus();
               if (_minValueController.text.isNotEmpty &&
                   _maxValueController.text.isNotEmpty) {
                 if (num.parse(_minValueController.text.trim()) <=
                     num.parse(_maxValueController.text.trim())) {
-                  // app.resolve<CustomDialogs>().confirmDialog(
-                  //       context,
-                  //       title: "Value Error",
-                  //       desc: "okay",
-                  //       positiveBtnTitle: "Try Again",
-                  //     );
                   String text =
                       "${_minValueController.text}-${_maxValueController.text}";
-                  if (!widget.selectionModel.caratRangeChipsToShow.contains(text)) {
+                  if (!widget.selectionModel.caratRangeChipsToShow
+                      .contains(text)) {
                     widget.selectionModel.caratRangeChipsToShow.add(text);
                     setState(() {});
                   }
+                  _minValueController.text = "";
+                  _maxValueController.text = "";
                 } else {
                   app.resolve<CustomDialogs>().confirmDialog(
                         context,
@@ -79,7 +77,6 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
                   setState(() {});
                 }
               }
-              
             },
             child: Container(
               decoration: BoxDecoration(
@@ -113,14 +110,16 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
     return Wrap(
       spacing: getSize(6),
       runSpacing: getSize(6),
-      children:
-          List<Widget>.generate(widget.selectionModel.caratRangeChipsToShow.length, (int index) {
+      children: List<Widget>.generate(
+          widget.selectionModel.caratRangeChipsToShow.length, (int index) {
         return Chip(
-          label: Text(widget.selectionModel.caratRangeChipsToShow[index].toString()),
+          label: Text(
+              widget.selectionModel.caratRangeChipsToShow[index].toString()),
           backgroundColor: appTheme.unSelectedBgColor,
           deleteIcon: Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(getSize(20)), color: appTheme.buttonColor),
+                borderRadius: BorderRadius.circular(getSize(20)),
+                color: appTheme.buttonColor),
             child: Icon(
               Icons.clear,
               color: appTheme.unSelectedBgColor,
@@ -131,7 +130,9 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
           onDeleted: () {
             setState(() {
               widget.selectionModel.caratRangeChipsToShow.removeWhere((entry) {
-                return entry == widget.selectionModel.caratRangeChipsToShow[index].toString();
+                return entry ==
+                    widget.selectionModel.caratRangeChipsToShow[index]
+                        .toString();
               });
             });
           },

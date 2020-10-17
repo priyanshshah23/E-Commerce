@@ -306,7 +306,9 @@ class _LoginScreenState extends StatefulScreenWidgetState {
         if (text.isEmpty) {
           _isPasswordValid = false;
           return R.string().errorString.enterPassword;
-        } else {
+        } /* else if(!validateStructure(text)) {
+          return R.string().errorString.wrongPassword;
+        } */else {
           return null;
         }
       },

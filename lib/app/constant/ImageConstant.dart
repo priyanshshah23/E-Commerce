@@ -9,11 +9,13 @@ const String email = "assets/auth/envelope.png";
 const String company = "assets/auth/company.png";
 const String india = "assets/auth/india.png";
 const String back = "assets/auth/back.png";
+const String menu = "assets/drawer/menu.png";
 const String plusIcon = "assets/diamnow/plusIcon.png";
 
 const String selectedCheckbox = "assets/auth/checkbox.png";
 const String unSelectedCheckbox = "assets/auth/unselectedcheckbox.png";
 const String forgetPassword = "assets/auth/forgetPassword.png";
+const String resetPassword = "assets/auth/resetPassword.png";
 
 
 

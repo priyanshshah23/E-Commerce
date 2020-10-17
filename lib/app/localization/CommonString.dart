@@ -161,6 +161,14 @@ class CommonString {
   final String rs;
   final String doller;
 
+  final String more;
+  final String carat;
+  final String pcs;
+  final String cts;
+  final String disc;
+  final String avgPriceCrt;
+  final String amount;
+
   const CommonString({
     this.all = "All",
 
@@ -320,5 +328,12 @@ class CommonString {
     //RS Symbol String
     this.rs = "\u20B9",
     this.doller = "\u0024",
+    this.more = "More",
+    this.carat = "Carat",
+    this.pcs = "Pcs",
+    this.cts = "Cts",
+    this.disc = "Disc %",
+    this.avgPriceCrt = "Avg. Price/Ct ",
+    this.amount = "Amount ",
   });
 }

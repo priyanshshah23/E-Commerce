@@ -15,6 +15,11 @@ class ColorConstants {
   static Color black = fromHex("#000000");
   static Color white = fromHex("#FFFFFF");
   static Color countryBgShadow = fromHex("#00000029");
+  static Color otpSuccessFillColor = fromHex("#FCFFFD");
+  static Color otpSuccessBorderColor = fromHex("#019B15");
+  static Color lightgrey = fromHex("#F6F6F6");
+  static Color errorText = fromHex('#D60505');
+
 
 
   static MaterialColor accentCustomColor =

@@ -5,6 +5,7 @@ import 'package:diamnow/components/Screens/Auth/ForgetPassword.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/components/Screens/Auth/PersonalInformation.dart';
 import 'package:diamnow/components/Screens/Auth/Profile.dart';
+import 'package:diamnow/components/Screens/Auth/ResetPassword.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Auth/PDFDemo.dart';
@@ -103,7 +104,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       screen = HomeScreen();
       break;
     case FilterScreen.route:
-      screen = FilterScreen();
+      screen = FilterScreen(arguments);
       break;
     case GuestSignInScreen.route:
       screen = GuestSignInScreen();
@@ -134,6 +135,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       break;
     case ForgetPasswordScreen.route:
       screen = ForgetPasswordScreen();
+      break;
+    case ResetPassword.route:
+      screen = ResetPassword();
       break;
     case DiamondDetailScreen.route:
       screen = DiamondDetailScreen(

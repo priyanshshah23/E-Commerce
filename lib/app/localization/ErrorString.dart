@@ -1,6 +1,7 @@
 class ErrorString {
   final String enterEmailOrPhone;
   final String enterPassword;
+  final String wrongPassword;
   final String enterConfirmPassword;
   final String enterRegisterCode;
   final String enterEmail;
@@ -87,5 +88,6 @@ class ErrorString {
     this.selectFromDate = 'Please select from date',
     this.selectToDate = 'Please select to date',
     this.fromGreaterTo = 'To date must be greater than from date',
+    this.wrongPassword = "Password must contains, Minimum 8 characters, 1 uppercase alphabet, 1 lower case alphabet, 1 digit, 1 special charater",
   });
 }

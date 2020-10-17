@@ -74,6 +74,7 @@ class BottomTabModel extends TabConfiguration {
   String title;
   String image;
   String code;
+  int type;
   int sequence;
   bool isCenter;
   bool isSelected;
@@ -84,6 +85,8 @@ class BottomTabModel extends TabConfiguration {
     this.code,
     this.sequence,
     this.isCenter,
+    this.type,
+    this.isSelected = false,
   });
 
   BottomTabModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {

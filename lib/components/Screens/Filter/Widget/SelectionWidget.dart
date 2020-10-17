@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:rxbus/rxbus.dart';
 
 class SelectionWidget extends StatefulWidget {
@@ -37,12 +38,14 @@ class TagWidget extends StatefulWidget {
 }
 
 class _TagWidgetState extends State<TagWidget> {
-  final TextEditingController _minValueController = TextEditingController();
-  final TextEditingController _maxValueController = TextEditingController();
+  final TextEditingController _fromDateController = TextEditingController();
+  final TextEditingController _toDateController = TextEditingController();
   var _focusMinValue = FocusNode();
   var _focusMaxValue = FocusNode();
   String oldValueForFrom;
   String oldValueForTo;
+  var myFormat = DateFormat('d-MM-yyyy');
+  DateTime fromDate, toDate;
 
   @override
   void initState() {
@@ -94,7 +97,27 @@ class _TagWidgetState extends State<TagWidget> {
         isNullEmptyOrFalse(widget.model.title)
             ? SizedBox()
             : SizedBox(height: getSize(20)),
-        getListViewofTags(),
+        Container(
+          height: getSize(40),
+          child: ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemCount: widget.model.masters.length,
+            itemBuilder: (context, index) {
+              return InkWell(
+                child: getSingleTag(index),
+                onTap: () {
+                  setState(() {
+                    widget.model.masters[index].isSelected =
+                        !widget.model.masters[index].isSelected;
+
+                    onSelectionClick(index);
+                  });
+                },
+              );
+            },
+          ),
+        ),
       ],
     );
   }
@@ -117,33 +140,29 @@ class _TagWidgetState extends State<TagWidget> {
             ? SizedBox()
             : SizedBox(width: getSize(30)),
         Expanded(
-          child: getListViewofTags(),
+          child: Container(
+            height: getSize(40),
+            child: ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: widget.model.masters.length,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  child: getSingleTag(index),
+                  onTap: () {
+                    setState(() {
+                      widget.model.masters[index].isSelected =
+                          !widget.model.masters[index].isSelected;
+
+                      getMultipleMasterSelections(index);
+                    });
+                  },
+                );
+              },
+            ),
+          ),
         ),
       ],
-    );
-  }
-
-  getListViewofTags() {
-    return Container(
-      height: getSize(40),
-      child: ListView.builder(
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        itemCount: widget.model.masters.length,
-        itemBuilder: (context, index) {
-          return InkWell(
-            child: getSingleTag(index),
-            onTap: () {
-              setState(() {
-                widget.model.masters[index].isSelected =
-                    !widget.model.masters[index].isSelected;
-
-                getMultipleMasterSelections(index);
-              });
-            },
-          );
-        },
-      ),
     );
   }
 
@@ -189,7 +208,33 @@ class _TagWidgetState extends State<TagWidget> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Expanded(
-          child: getListViewofTags(),
+          child: Container(
+            height: getSize(100),
+            child: ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: widget.model.masters.length,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  child: Padding(
+                    padding: EdgeInsets.only(right: getSize(8)),
+                    child: ShapeItemWidget(
+                      obj: widget.model.masters[index],
+                      selectionModel: widget.model,
+                    ),
+                  ),
+                  onTap: () {
+                    setState(() {
+                      widget.model.masters[index].isSelected =
+                          !widget.model.masters[index].isSelected;
+
+                      onSelectionClick(index);
+                    });
+                  },
+                );
+              },
+            ),
+          ),
         ),
       ],
     );
@@ -220,26 +265,55 @@ class _TagWidgetState extends State<TagWidget> {
         isNullEmptyOrFalse(widget.model.title)
             ? SizedBox()
             : SizedBox(height: getSize(20)),
-        getListViewofTags(),
+        Container(
+          height: getSize(40),
+          child: ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemCount: widget.model.masters.length,
+            itemBuilder: (context, index) {
+              return InkWell(
+                child: getSingleTag(index),
+                onTap: () {
+                  setState(() {
+                    widget.model.masters[index].isSelected =
+                        !widget.model.masters[index].isSelected;
+
+                    getMultipleMasterSelections(index);
+                  });
+                },
+              );
+            },
+          ),
+        ),
       ],
     );
   }
 
   getFromTextField() {
     return Container(
-      width: getSize(70),
-      height: getSize(30),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(getSize(10)),
+        border: Border.all(
+          width: getSize(1.0),
+          color: widget.model.fromToStyle.showUnderline
+              ? Colors.transparent
+              : appTheme.borderColor,
+        ),
+      ),
+      width: getSize(100),
+      height: getSize(40),
       child: TextField(
         readOnly: true,
         textAlign: widget.model.fromToStyle.showUnderline
             ? TextAlign.left
             : TextAlign.center,
         onTap: () {
-          print("Tapped");
+          _selectFromDate(context);
         },
         style: appTheme.blackNormal14TitleColorblack,
         focusNode: _focusMinValue,
-        controller: _minValueController,
+        controller: _fromDateController,
         keyboardType: TextInputType.numberWithOptions(decimal: true),
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
@@ -264,18 +338,36 @@ class _TagWidgetState extends State<TagWidget> {
 
   getToTextField() {
     return Container(
-      width: getSize(70),
-      height: getSize(30),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(getSize(10)),
+        border: Border.all(
+          width: getSize(1.0),
+          color: widget.model.fromToStyle.showUnderline
+              ? Colors.transparent
+              : appTheme.borderColor,
+        ),
+      ),
+      width: getSize(100),
+      height: getSize(40),
       child: TextField(
         readOnly: true,
         textAlign: widget.model.fromToStyle.showUnderline
             ? TextAlign.left
             : TextAlign.center,
         onTap: () {
-          print("Tapped");
+          if (!isNullEmptyOrFalse(_fromDateController.text)) {
+            _selectToDate(context);
+          } else {
+            app.resolve<CustomDialogs>().confirmDialog(
+                  context,
+                  title: "Warning",
+                  desc: "select fromdate first",
+                  positiveBtnTitle: "Try Again",
+                );
+          }
         },
         focusNode: _focusMaxValue,
-        controller: _maxValueController,
+        controller: _toDateController,
         style: appTheme.blackNormal14TitleColorblack,
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(
@@ -296,6 +388,40 @@ class _TagWidgetState extends State<TagWidget> {
         ),
       ),
     );
+  }
+
+  Future<void> _selectFromDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2101),
+    );
+    setState(() {
+      if (!isNullEmptyOrFalse(picked)) {
+        fromDate = picked;
+        _fromDateController.text = myFormat.format(picked);
+      }
+      ;
+      print("From Date====>" + fromDate.toString());
+    });
+  }
+
+  Future<void> _selectToDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: fromDate,
+      firstDate: fromDate,
+      lastDate: DateTime(2101),
+    );
+    setState(() {
+      if (!isNullEmptyOrFalse(picked)) {
+        toDate = picked;
+        _toDateController.text = myFormat.format(picked);
+      }
+      ;
+      print("To Date====>" + toDate.toString());
+    });
   }
 
   getMultipleMasterSelections(int index) {
@@ -373,8 +499,11 @@ class _TagWidgetState extends State<TagWidget> {
             m["isSelected"] = widget.model.masters[index].isSelected;
             m["selectedMasterCode"] = widget.model.masters[index].code;
             m["masterSelection"] = widget.model.masterSelection;
-            m["isGroupSelected"] = (widget.model as ColorModel).isGroupSelected;
-            RxBus.post(m, tag: eventMasterForSingleItemOfGroupSelection);
+            if (widget.model.viewType == ViewTypes.groupWidget) {
+              m["isGroupSelected"] =
+                  (widget.model as ColorModel).isGroupSelected;
+              RxBus.post(m, tag: eventMasterForSingleItemOfGroupSelection);
+            }
           }
         }
       }
