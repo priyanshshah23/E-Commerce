@@ -1,4 +1,5 @@
 import 'package:diamnow/app/Helper/Themehelper.dart';
+import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/math_utils.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
@@ -26,6 +27,9 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
       ),
       builder: (context) {
         return StatefulBuilder(builder: (context, StateSetter setSetter) {
+          ActionClick actionClick = (manageClick) {
+            setSetter(() {});
+          };
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -47,7 +51,7 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
               ),
               Padding(
                 padding: EdgeInsets.only(left: getSize(8), right: getSize(8)),
-                child: diamondList.length < 3
+                child: diamondList.length < 4
                     ? ListView.builder(
                         padding: EdgeInsets.only(
                           bottom: getSize(15),
@@ -58,11 +62,11 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
                         itemBuilder: (BuildContext context, int index) {
                           return DiamondItemWidget(
                               item: diamondList[index],
-                              actionClick: (manageClick) {});
+                              actionClick: actionClick);
                         },
                       )
                     : Container(
-                        height: getSize(100) * 3,
+                        height: getSize(100) * 4,
                         child: ListView.builder(
                           padding: EdgeInsets.only(
                             bottom: getSize(15),
@@ -71,7 +75,7 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
                           itemBuilder: (BuildContext context, int index) {
                             return DiamondItemWidget(
                                 item: diamondList[index],
-                                actionClick: (manageClick) {});
+                                actionClick: actionClick);
                           },
                         ),
                       ),
@@ -95,12 +99,18 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
                     SizedBox(
                       width: getSize(38),
                     ),
-                    FlatButton(
-                      padding: EdgeInsets.all(getSize(0)),
-                      onPressed: () {},
-                      child: Text(
-                        R.string().screenTitle.addToWatchList,
-                        style: appTheme.black16TextStyle,
+                    Expanded(
+                      child: FlatButton(
+                        textColor: ColorConstants.colorPrimary,
+                        padding: EdgeInsets.all(getSize(0)),
+                        onPressed: () {
+                          actionClick(ManageCLick(
+                              type: clickConstant.CLICK_TYPE_CONFIRM));
+                        },
+                        child: Text(
+                          R.string().screenTitle.addToWatchList,
+                          style: appTheme.black16TextStyle,
+                        ),
                       ),
                     ),
                   ],

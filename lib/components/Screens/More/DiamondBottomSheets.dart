@@ -3,6 +3,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
+import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/modules/Filter/gridviewlist/selectable_tags.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -420,7 +421,8 @@ Future showBottomSheetforAddToOffice(BuildContext context) {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: getSize(20),vertical: getSize(16)),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: getSize(20), vertical: getSize(16)),
                     child: AppButton.flat(
                       onTap: () {
                         // NavigationUtilities.pushRoute(TabBarDemo.route);
@@ -451,7 +453,7 @@ Future showBottomSheetforAddToOffice(BuildContext context) {
 }
 
 openTimeSlotDialog(){
-//  LIst
+  List<BottomTabModel> arrTimeSlot = BottomTabBar.getTimeSlotList();
   return Tags(
 //    key: _tagStateKey,
   );

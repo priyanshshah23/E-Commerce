@@ -1,13 +1,18 @@
 import 'package:diamnow/Setting/SettingModel.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
+import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/ImageConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
+import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:flutter/cupertino.dart';
+
+import '../../main.dart';
 
 class DiamondCalculation {
   String totalCarat = "0";
@@ -26,9 +31,9 @@ class DiamondCalculation {
     double totalamt = 0.0;
     double termDiscAmount = 0.0;
 
-    List<DiamondModel> filterList;
+    List<DiamondModel> filterList=[];
     Iterable<DiamondModel> list = arraDiamond.where((item) {
-      return item.isSelected == true;
+      return item.isSelected == false;
     });
     if (list == null || list.length == 0) {
       filterList = arraDiamond;
@@ -46,10 +51,12 @@ class DiamondCalculation {
     totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt);
     totalAmount = PriceUtilities.getPrice(avgAmount);
     if (isAccountTerm) {
-      avgDisc = (1 - (termDiscAmount / avgRapCrt)) * (-100);
+      avgDisc =arrValues[6];
+      print("Discount....$avgDisc");
       totalDisc = PriceUtilities.getPercent(avgDisc);
     } else {
       avgDisc = (1 - (avgPriceCrt / avgRapCrt)) * (-100);
+      print("finalDiscount....$avgDisc");
       totalDisc = PriceUtilities.getPercent(avgDisc);
     }
     totalCarat = PriceUtilities.getDoubleValue(carat);
@@ -69,7 +76,7 @@ class DiamondConfig {
   initItems() {
     toolbarList = getToolbarItem();
     arrMoreMenu = BottomMenuSetting().getMoreMenuItems();
-    arrBottomTab = BottomTabBar.getDiamondListScreenBottomTabs();
+    arrBottomTab = BottomMenuSetting().getBottomMenuItems();
   }
 
   String getScreenTitle() {
@@ -114,10 +121,10 @@ class DiamondConfig {
       BottomTabModel bottomTabModel) {
     switch (bottomTabModel.type) {
       case ActionMenuConstant.ACTION_TYPE_ADD_TO_CART:
-        actionAddToCart(list);
+        actionAddToCart(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_ENQUIRY:
-        actionAddToEnquiry(list);
+        actionAddToEnquiry(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_WISHLIST:
         actionAddToWishList(context, list);
@@ -146,9 +153,14 @@ class DiamondConfig {
     }
   }
 
-  actionAddToCart(List<DiamondModel> list) {}
+  actionAddToCart(BuildContext context, List<DiamondModel> list) {
+    callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART);
+  }
 
-  actionAddToEnquiry(List<DiamondModel> list) {}
+  actionAddToEnquiry(BuildContext context, List<DiamondModel> list) {
+    callApiFoCreateTrack(
+        context, list, DiamondTrackConstant.TRACK_TYPE_ENQUIRY);
+  }
 
   actionAddToWishList(BuildContext context, List<DiamondModel> list) {
     List<DiamondModel> selectedList = [];
@@ -158,7 +170,13 @@ class DiamondConfig {
       model.isAddToWatchList = true;
       selectedList.add(model);
     });
-    showWatchListDialog(context, selectedList, (manageClick) {});
+    showWatchListDialog(context, selectedList, (manageClick) {
+      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
+        callApiFoCreateTrack(
+            context, list, DiamondTrackConstant.TRACK_TYPE_WATCH_LIST,
+            isPop: true);
+      }
+    });
   }
 
   actionPlaceOrder(List<DiamondModel> list) {}
@@ -174,4 +192,45 @@ class DiamondConfig {
   actionDownload(List<DiamondModel> list) {}
 
   actionShare(List<DiamondModel> list) {}
+
+  callApiFoCreateTrack(
+      BuildContext context, List<DiamondModel> list, int trackType,
+      {bool isPop = false}) {
+    CreateDiamondTrackReq req = CreateDiamondTrackReq();
+    req.trackType = trackType;
+    req.diamonds = [];
+    list.forEach((element) {
+      req.diamonds.add(Diamonds(
+          diamond: element.id,
+          trackDiscount: element.back,
+          newDiscount: element.selectedBackPer,
+          trackAmount: element.amt,
+          trackPricePerCarat: element.ctPr));
+    });
+    SyncManager.instance.callApiForCreateDiamondTrack(
+      context,
+      req,
+      (resp) {
+        if (isPop) {
+          Navigator.pop(context);
+        }
+        app.resolve<CustomDialogs>().errorDialog(
+              context,
+              "",
+              resp.message,
+              btntitle: R.string().commonString.ok,
+            );
+      },
+      (onError) {
+        if (onError.message != null) {
+          app.resolve<CustomDialogs>().errorDialog(
+                context,
+                "",
+                onError.message,
+                btntitle: R.string().commonString.ok,
+              );
+        }
+      },
+    );
+  }
 }

@@ -67,7 +67,7 @@ dependencies:
   flutter_tags: ^0.4.9
   # flutter_tags: ^0.1.9
 
-  
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

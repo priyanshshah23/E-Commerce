@@ -4,6 +4,7 @@ import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:flutter/material.dart';
+import 'package:rxbus/rxbus.dart';
 
 class DiamondItemWidget extends StatefulWidget {
   DiamondModel item;
@@ -46,40 +47,46 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                     : appTheme.dividerColor)
             //boxShadow: getBoxShadow(context),
             ),
-        child: Row(
-          children: <Widget>[
-            getCaratAndDiscountDetail(widget.actionClick),
-            //   getIdColorDetail(),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: getSize(10),
-                  right: getSize(10),
-                ),
-                child: Column(
-                  children: <Widget>[
-                    getIdShapeDetail(),
-                    getDymentionAndCaratDetail(),
-                    getTableDepthAndAmountDetail(),
-                    getWatchListDetail(),
-                  ],
-                ),
+        child: Wrap(
+          children: [
+            IntrinsicHeight(
+              child: Row(
+                children: <Widget>[
+                  getCaratAndDiscountDetail(widget.actionClick),
+                  //   getIdColorDetail(),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: getSize(10),
+                        right: getSize(10),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          getIdShapeDetail(),
+                          getDymentionAndCaratDetail(),
+                          getTableDepthAndAmountDetail(),
+                          getWatchListDetail(),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: Center(
+                        child: Container(
+                      decoration: BoxDecoration(
+                          color: widget.item.getStatusColor(),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(5),
+                              bottomLeft: Radius.circular(5))),
+                      height: getSize(26),
+                      width: getSize(4),
+                      // color: Colors.red,
+                    )),
+                  ),
+                ],
               ),
             ),
-
-//            Container(
-//              child: Center(
-//                  child: Container(
-//                decoration: BoxDecoration(
-//                    color: widget.item.getStatusColor(),
-//                    borderRadius: BorderRadius.only(
-//                        topLeft: Radius.circular(5),
-//                        bottomLeft: Radius.circular(5))),
-//                height: getSize(26),
-//                width: getSize(4),
-//                // color: Colors.red,
-//              )),
-//            ),
           ],
         ),
       ),
@@ -96,7 +103,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           top: getSize(8),
           left: getSize(10),
           right: getSize(10),
-          bottom: getSize(5),
+          bottom: getSize(8),
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -108,9 +115,10 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               : appTheme.dividerColor,
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              PriceUtilities.getPercent(widget.item?.crt ?? 0),
+              PriceUtilities.getDoubleValue(widget.item?.crt ?? 0),
               style: appTheme.blue14TextStyle.copyWith(
                   color: widget.item.isSelected
                       ? appTheme.whiteColor
@@ -135,7 +143,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 PriceUtilities.getPercent(widget.item?.back) ?? "",
                 style: appTheme.green10TextStyle,
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -220,6 +228,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
 
   getWatchListDetail() {
     List<String> backPerList = widget.item.getWatchlistPer();
+    DropDownItem item = DropDownItem(widget.item);
     return widget.item.isAddToWatchList
         ? Padding(
             padding: EdgeInsets.only(top: getSize(5)),
@@ -227,18 +236,25 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 getText(R.string().screenTitle.todayDiscPer),
-                getText((widget.item.back ?? "").toString() + "%"),
+                getText(PriceUtilities.getPercent(widget.item?.back) ?? ""),
                 getText(R.string().screenTitle.expDiscPer),
-                _offsetPopup(widget.item, backPerList),
+                offsetPopup(widget.item, backPerList, item),
               ],
             ),
           )
         : Container();
   }
 
-  Widget _offsetPopup(DiamondModel model, List<String> backPerList) =>
+  Widget offsetPopup(DiamondModel model, List<String> backPerList,
+          DropDownItem dropDownItem) =>
       PopupMenuButton<String>(
         shape: TooltipShapeBorder(arrowArc: 0.5),
+        onSelected: (newValue) {
+          // add this property
+
+          model.selectedBackPer = newValue;
+          RxBus.post(true, tag: eventBusDropDown);
+        },
         itemBuilder: (context) => [
           for (var item in backPerList) getPopupItems(item, model),
           PopupMenuItem(
@@ -247,25 +263,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             child: SizedBox(),
           ),
         ],
-        child: Container(
-          padding: EdgeInsets.symmetric(
-              vertical: getSize(1), horizontal: getSize(10)),
-          decoration: BoxDecoration(
-              border: Border.all(color: appTheme.dividerColor),
-              borderRadius: BorderRadius.circular(getSize(5))),
-          child: Row(
-            children: <Widget>[
-              getText(model.getSelectedBackPer()),
-              SizedBox(
-                height: getSize(5),
-              ),
-              Icon(
-                Icons.arrow_drop_down,
-                size: getSize(20),
-              ),
-            ],
-          ),
-        ),
+        child: dropDownItem,
         offset: Offset(25, 110),
       );
 
@@ -274,6 +272,51 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       text,
       style: appTheme.blue14TextStyle.copyWith(fontSize: getFontSize(12)),
     );
+  }
+}
+
+class DropDownItem extends StatefulWidget {
+  DiamondModel model;
+
+  DropDownItem(this.model);
+
+  @override
+  _DropDownItemState createState() => _DropDownItemState();
+}
+
+class _DropDownItemState extends State<DropDownItem> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding:
+          EdgeInsets.symmetric(vertical: getSize(1), horizontal: getSize(10)),
+      decoration: BoxDecoration(
+          border: Border.all(color: appTheme.dividerColor),
+          borderRadius: BorderRadius.circular(getSize(5))),
+      child: Row(
+        children: <Widget>[
+          getText(widget.model.getSelectedBackPer()),
+          SizedBox(
+            height: getSize(5),
+          ),
+          Icon(
+            Icons.arrow_drop_down,
+            size: getSize(20),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    /*onclick = () {
+      setState(() {});
+    };*/
+    RxBus.register<bool>(tag: eventBusDropDown).listen((event) {
+      setState(() {});
+    });
   }
 }
 
@@ -288,14 +331,9 @@ getPopupItems(String per, DiamondModel model) {
   return PopupMenuItem(
     value: per,
     height: getSize(20),
-    child: GestureDetector(
-      onTap: () {
-        model.selectedBackPer = per;
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[getText(per + "%")],
-      ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[getText(per + "%")],
     ),
   );
 }

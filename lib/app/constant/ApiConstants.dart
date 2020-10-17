@@ -20,4 +20,5 @@ class ApiConstants {
   static const String diamondList = commonUrl + "diamond/paginate";
 
   static const String staticPage = apiV1 + "static-page/{id}";
+  static const String createDiamondTrack = commonUrl + "diamond-track/create";
 }
