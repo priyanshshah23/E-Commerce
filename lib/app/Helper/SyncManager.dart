@@ -7,6 +7,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
+import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
 import 'package:flutter/services.dart';
@@ -104,6 +105,25 @@ class SyncManager {
             });
   }
 
+  Future callApiForCreateDiamondTrack(
+    BuildContext context,
+    CreateDiamondTrackReq req,
+    Function(BaseApiResp) success,
+    Function(ErrorResp) failure, {
+    bool isProgress = true,
+  }) async {
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+      () =>
+          app.resolve<ServiceModule>().networkService().createDiamondTrack(req),
+      context,
+      isProgress: isProgress,
+    )
+        .then((resp) async {
+      success(resp);
+    }).catchError((onError) => {if (onError is ErrorResp) failure(onError)});
+  }
+
   List<num> getTotalCaratRapAmount(List<DiamondModel> diamondList) {
     double carat = 0.0;
     double calcAmount = 0.0;
@@ -152,6 +172,6 @@ class SyncManager {
     }
     avgRapAmt = rapAvg / carat;
     avgPriceCrt = priceCrt / carat;
-    return [carat, calcAmount, rapAvg, avgRapAmt, avgPriceCrt,termDiscAmount];
+    return [carat, calcAmount, rapAvg, avgRapAmt, avgPriceCrt, termDiscAmount];
   }
 }

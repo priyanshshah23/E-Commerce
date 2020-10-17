@@ -300,13 +300,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       arrBottomTab: diamondConfig.arrBottomTab,
       onClickCallback: (obj) {
         //
-        if (obj.code == BottomCodeConstant.dLShowSelected) {
-          //
-          print(obj.code);
-        } else if (obj.code == BottomCodeConstant.dLCompare) {
-          //
-          print(obj.code);
-        } else if (obj.code == BottomCodeConstant.dLMore) {
+        if (obj.type == ActionMenuConstant.ACTION_TYPE_MORE) {
           showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
               (manageClick) {
             if (manageClick.bottomTabModel.type ==
@@ -316,19 +310,21 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               });
               manageDiamondSelection();
             } else {
-              List<DiamondModel> selectedList =
-                  arraDiamond.where((element) => element.isSelected).toList();
-              if (selectedList != null && selectedList.length > 0) {
-                diamondConfig.manageDiamondAction(
-                    context, selectedList, manageClick.bottomTabModel);
-              } else {}
+              manageBottomMenuClick(manageClick.bottomTabModel);
             }
           });
-        } else if (obj.code == BottomCodeConstant.dLStatus) {
-          //
-          print(obj.code);
+        } else {
+          manageBottomMenuClick(obj);
         }
       },
     );
+  }
+
+  manageBottomMenuClick(BottomTabModel bottomTabModel) {
+    List<DiamondModel> selectedList =
+        arraDiamond.where((element) => element.isSelected).toList();
+    if (selectedList != null && selectedList.length > 0) {
+      diamondConfig.manageDiamondAction(context, selectedList, bottomTabModel);
+    } else {}
   }
 }

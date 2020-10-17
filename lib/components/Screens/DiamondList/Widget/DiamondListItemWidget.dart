@@ -45,38 +45,42 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                     : appTheme.dividerColor)
             //boxShadow: getBoxShadow(context),
             ),
-        child: Row(
-          children: <Widget>[
-            getCaratAndDiscountDetail(widget.actionClick),
-            //   getIdColorDetail(),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: getSize(10),
-                  right: getSize(10),
+        child: Wrap(
+          children: [
+            Row(
+              children: <Widget>[
+                getCaratAndDiscountDetail(widget.actionClick),
+                //   getIdColorDetail(),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: getSize(10),
+                      right: getSize(10),
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        getIdShapeDetail(),
+                        getDymentionAndCaratDetail(),
+                        getTableDepthAndAmountDetail(),
+                        getWatchListDetail(),
+                      ],
+                    ),
+                  ),
                 ),
-                child: Column(
-                  children: <Widget>[
-                    getIdShapeDetail(),
-                    getDymentionAndCaratDetail(),
-                    getTableDepthAndAmountDetail(),
-                    getWatchListDetail(),
-                  ],
+                Container(
+                  child: Center(
+                      child: Container(
+                    decoration: BoxDecoration(
+                        color: widget.item.getStatusColor(),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(5),
+                            bottomLeft: Radius.circular(5))),
+                    height: getSize(26),
+                    width: getSize(4),
+                    // color: Colors.red,
+                  )),
                 ),
-              ),
-            ),
-            Container(
-              child: Center(
-                  child: Container(
-                decoration: BoxDecoration(
-                    color: widget.item.getStatusColor(),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(5),
-                        bottomLeft: Radius.circular(5))),
-                height: getSize(26),
-                width: getSize(4),
-                // color: Colors.red,
-              )),
+              ],
             ),
           ],
         ),
@@ -133,7 +137,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 PriceUtilities.getPercent(widget.item?.back) ?? "",
                 style: appTheme.green10TextStyle,
               ),
-            )
+            ),
           ],
         ),
       ),

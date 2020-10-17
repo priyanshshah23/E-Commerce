@@ -17,6 +17,7 @@ typedef ActionClick(ManageCLick manageCLick);
 class ManageCLick {
   int type;
   BottomTabModel bottomTabModel;
+
   ManageCLick({this.bottomTabModel, this.type});
 }
 
@@ -31,6 +32,13 @@ class DrawerConstant {
 class clickConstant {
   static const CLICK_TYPE_ROW = 1;
   static const CLICK_TYPE_SELECTION = 2;
+  static const CLICK_TYPE_CONFIRM = 3;
+}
+
+class DiamondTrackConstant {
+  static const TRACK_TYPE_CART = 1;
+  static const TRACK_TYPE_WATCH_LIST = 2;
+  static const TRACK_TYPE_ENQUIRY = 6;
 }
 
 class ActionMenuConstant {
@@ -45,6 +53,8 @@ class ActionMenuConstant {
   static const ACTION_TYPE_DOWNLOAD = 9;
   static const ACTION_TYPE_CLEAR_SELECTION = 10;
   static const ACTION_TYPE_SHARE = 11;
+  static const ACTION_TYPE_STATUS = 12;
+  static const ACTION_TYPE_MORE = 13;
 }
 
 class MoreMenuConstant {

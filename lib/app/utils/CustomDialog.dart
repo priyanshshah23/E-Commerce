@@ -213,7 +213,57 @@ class ProgressDialog2 {
 
 Future OpenErrorDialog(BuildContext context, String title, String disc,
     {String btntitle, VoidCallback voidCallback}) {
-  return showDialog(
+  return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: appTheme.whiteColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(15),
+          topRight: Radius.circular(15),
+        ),
+      ),
+      builder: (context) {
+        return StatefulBuilder(builder: (context, StateSetter setSetter) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              title != null && title.length > 0
+                  ? Text(
+                      title,
+                      style: appTheme.commonAlertDialogueTitleStyle,
+                    )
+                  : Container(),
+              SizedBox(
+                height: getSize(30),
+              ),
+              Text(
+                disc,
+                textAlign: TextAlign.center,
+                style: appTheme.commonAlertDialogueTitleStyle,
+              ),
+              // SizedBox(height: getSize(20),),
+              btntitle != null
+                  ? Container(
+                      margin: EdgeInsets.only(top: getSize(30)),
+                      child: AppButton.flat(
+                        onTap: voidCallback ??
+                            () {
+                              Navigator.pop(context);
+                            },
+                        borderRadius: 14,
+                        fitWidth: true,
+                        text: btntitle,
+                        //isButtonEnabled: enableDisableSigninButton(),
+                      ),
+                    )
+                  : SizedBox(),
+            ],
+          );
+        });
+      });
+
+  /* return showDialog(
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
@@ -225,15 +275,24 @@ Future OpenErrorDialog(BuildContext context, String title, String disc,
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text(
-                title,
-                textAlign: TextAlign.center,
-                style: AppTheme.of(context).theme.textTheme.body1.copyWith(
-                    fontWeight: FontWeight.w600, color: appTheme.colorPrimary),
-              ),
-              SizedBox(
-                height: getSize(20),
-              ),
+              title != null && title.length > 0
+                  ? Text(
+                      title,
+                      textAlign: TextAlign.center,
+                      style: AppTheme.of(context)
+                          .theme
+                          .textTheme
+                          .body1
+                          .copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: appTheme.colorPrimary),
+                    )
+                  : Container(),
+              title != null && title.length > 0
+                  ? SizedBox(
+                      height: getSize(20),
+                    )
+                  : Container(),
               Text(
                 disc,
                 textAlign: TextAlign.center,
@@ -260,7 +319,7 @@ Future OpenErrorDialog(BuildContext context, String title, String disc,
             ],
           ),
         );
-      });
+      });*/
 }
 
 Future<String> get _localPath async {
@@ -355,13 +414,14 @@ Future OpenConfirmationPopUp(BuildContext context,
                     desc.isEmpty
                         ? richText
                         : Padding(
-                          padding: EdgeInsets.symmetric(horizontal: getSize(30)),
-                          child: Text(
+                            padding:
+                                EdgeInsets.symmetric(horizontal: getSize(30)),
+                            child: Text(
                               desc,
                               textAlign: TextAlign.center,
                               style: appTheme.commonAlertDialogueDescStyle,
                             ),
-                        ),
+                          ),
                     // SizedBox(height: getSize(20),),
                     Container(
                       margin: EdgeInsets.only(
