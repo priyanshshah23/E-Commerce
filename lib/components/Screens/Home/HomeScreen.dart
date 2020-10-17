@@ -5,6 +5,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/components/Screens/Auth/Signup.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
@@ -110,6 +111,15 @@ class _HomeScreenState extends State<HomeScreen> {
     currentWidget = DiamondListScreen(dict);
   }
 
+  openProfilw() {
+    selectedType = DrawerConstant.MODULE_PROFILE;
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.ModuleType] =
+        DiamondModuleConstant.MODULE_TYPE_PROFILE;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = SignupScreen();
+  }
+
   manageDrawerClick(BuildContext context, int type, bool isPop) {
     if (context != null) {
       if (isPop) Navigator.pop(context);
@@ -122,6 +132,9 @@ class _HomeScreenState extends State<HomeScreen> {
           break;
         case DrawerConstant.MODULE_UPCOMING:
           openDiamondList();
+          break;
+        case DrawerConstant.MODULE_PROFILE:
+          openProfilw();
           break;
         case DrawerConstant.LOGOUT:
           logout(context);
