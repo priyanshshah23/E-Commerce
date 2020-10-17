@@ -27,23 +27,22 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
   bool _autoValidate = false;
   bool isApiCall = false;
   // bool isButtonEnabled = false;
-  String mobiles;
   bool isOtpCheck = true; // true when screen load first time for grey color
   bool isOtpTrue = false; // to manage error color and success color
-  final GlobalKey<FormFieldState<String>> _formKeyPin = GlobalKey<FormFieldState<String>>(debugLabel: '_formkey');
+  final GlobalKey<FormFieldState<String>> _formKeyPin =
+      GlobalKey<FormFieldState<String>>(debugLabel: '_formkey');
   TextEditingController _pinEditingController = TextEditingController(text: '');
 
-  String showOTPMsg = null;
+  String showOTPMsg = "";
   Timer _timer;
   int _start = 30;
   bool isTimerCompleted = false;
-
 
   @override
   void initState() {
     super.initState();
     _pinEditingController.clear();
-    if(kDebugMode) {
+    if (kDebugMode) {
       _emailController.text = "honeyspatel98@gmail.com";
     }
   }
@@ -58,8 +57,8 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
     const oneSec = const Duration(seconds: 1);
     _timer = new Timer.periodic(
       oneSec,
-          (Timer timer) => setState(
-            () {
+      (Timer timer) => setState(
+        () {
           if (_start < 1) {
             timer.cancel();
             isTimerCompleted = true;
@@ -84,10 +83,12 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
               context,
               "Forgot Password",
               bgColor: appTheme.whiteColor,
-              leadingButton: isApiCall ?  getBackButton(context, ontap: () {
-                isApiCall = false;
-                setState(() {});
-              }) : getBackButton(context),
+              leadingButton: isApiCall
+                  ? getBackButton(context, ontap: () {
+                      isApiCall = false;
+                      setState(() {});
+                    })
+                  : getBackButton(context),
               centerTitle: false,
             ),
             resizeToAvoidBottomPadding: false,
@@ -119,81 +120,92 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                           ),
                         ),
                         Text(
-                         isApiCall ? "The OTP has been sent to your registered Email address. Please enter the OTP." : "We will send an OTP to your entered email address. Please enter the email address.",
+                          isApiCall
+                              ? "The OTP has been sent to your registered Email address. Please enter the OTP."
+                              : "We will send an OTP to your entered email address. Please enter the email address.",
                           style: appTheme.black14TextStyle,
                           textAlign: TextAlign.center,
                         ),
                         isApiCall ? getPinViewOTP() : getEmailTextField(),
-                        isApiCall ? Container(
-                          margin: EdgeInsets.all(getSize(15)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Text("If you didn't receive an OTP!",
-                                  style: appTheme.grey16HintTextStyle),
-                              GestureDetector(
+                        isApiCall
+                            ? Container(
+                                margin: EdgeInsets.all(getSize(15)),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Text("If you didn't receive an OTP!",
+                                        style: appTheme.grey16HintTextStyle),
+                                    GestureDetector(
+                                        onTap: () {
+                                          if (isTimerCompleted) {
+                                            _start = 30;
+                                            startTimer();
+                                            isTimerCompleted = false;
+                                          }
+                                        },
+                                        child: Text(
+                                            isTimerCompleted
+                                                ? " Resend Now"
+                                                : " ${_printDuration(Duration(seconds: _start))}",
+                                            style:
+                                                appTheme.darkBlue16TextStyle)),
+                                  ],
+                                ),
+                              )
+                            : Container(
+                                margin: EdgeInsets.only(
+                                    top: getSize(15), left: getSize(0)),
+                                decoration: BoxDecoration(
+                                    boxShadow: getBoxShadow(context)),
+                                child: AppButton.flat(
                                   onTap: () {
-                                    if(isTimerCompleted) {
-                                      _start = 30;
+                                    // NavigationUtilities.pushRoute(TabBarDemo.route);
+                                    FocusScope.of(context).unfocus();
+                                    if (_formKey.currentState.validate()) {
+                                      _formKey.currentState.save();
                                       startTimer();
-                                      isTimerCompleted = false;
-                                    }
-                                  },
-                                  child: Text(isTimerCompleted ? " Resend Now" : " ${_printDuration(Duration(seconds: _start))}", style: appTheme.darkBlue16TextStyle)),
-                            ],
-                          ),
-                        ) : Container(
-                          margin: EdgeInsets.only(
-                              top: getSize(15), left: getSize(0)),
-                          decoration:
-                              BoxDecoration(boxShadow: getBoxShadow(context)),
-                          child: AppButton.flat(
-                            onTap: () {
-                              // NavigationUtilities.pushRoute(TabBarDemo.route);
-                              FocusScope.of(context).unfocus();
-                              if (_formKey.currentState.validate()) {
-                                _formKey.currentState.save();
-                                startTimer();
-                                isApiCall = true;
-                                setState(() {});
+                                      isApiCall = true;
+                                      setState(() {});
 //                                callLoginApi(context);
-                              } else {
-                                setState(() {
-                                  _autoValidate = true;
+                                    } else {
+                                      setState(() {
+                                        _autoValidate = true;
 //                                  showOTPMsg = R
 //                                      .string()
 //                                      .errorString
 //                                      .enteredCodeNotMatching;
-                                });
-                              }
-                              // NavigationUtilities.push(ThemeSetting());
-                            },
-                            //  backgroundColor: appTheme.buttonColor,
-                            borderRadius: getSize(5),
-                            fitWidth: true,
-                            text: "Send OTP",
-                            //isButtonEnabled: enableDisableSigninButton(),
-                          ),
-                        ),
+                                      });
+                                    }
+                                    // NavigationUtilities.push(ThemeSetting());
+                                  },
+                                  //  backgroundColor: appTheme.buttonColor,
+                                  borderRadius: getSize(5),
+                                  fitWidth: true,
+                                  text: "Send OTP",
+                                  //isButtonEnabled: enableDisableSigninButton(),
+                                ),
+                              ),
                       ],
                     ),
                   ),
                 ),
               ),
             ),
-            bottomNavigationBar: isApiCall ? SizedBox() : Container(
-              margin: EdgeInsets.all(getSize(15)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text("Remember Password?",
-                      style: appTheme.grey16HintTextStyle),
-                  Text(" Sign In", style: appTheme.darkBlue16TextStyle),
-                ],
-              ),
-            ),
+            bottomNavigationBar: isApiCall
+                ? SizedBox()
+                : Container(
+                    margin: EdgeInsets.all(getSize(15)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Text("Remember Password?",
+                            style: appTheme.grey16HintTextStyle),
+                        Text(" Sign In", style: appTheme.darkBlue16TextStyle),
+                      ],
+                    ),
+                  ),
           ),
         ),
       ),
@@ -292,30 +304,28 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
     return Padding(
         padding: EdgeInsets.only(
           top: getSize(50),
-          bottom: getSize(16),
-          left: getSize(20),
-          right: getSize(20)
+          bottom: getSize(50),
         ),
         child: PinInputTextFormField(
           key: _formKeyPin,
           autoFocus: true,
           pinLength: 4,
           decoration: UnderlineDecoration(
-            color: isOtpCheck ? ColorConstants.lightgrey :
-            isOtpTrue ? ColorConstants.otpSuccessBorderColor:ColorConstants.errorText,
-            gapSpace: getSize(45),
-            textStyle: AppTheme.of(context)
-                .theme
-                .textTheme
-                .subtitle,
-            errorTextStyle: AppTheme.of(context)
-                .theme
-                .textTheme
-                .display1
-                .copyWith(
-              color: isOtpCheck ? ColorConstants.lightgrey :
-              isOtpTrue ? ColorConstants.otpSuccessBorderColor:ColorConstants.errorText,
-            ),
+            color: isOtpCheck
+                ? ColorConstants.lightgrey
+                : isOtpTrue
+                    ? ColorConstants.otpSuccessBorderColor
+                    : ColorConstants.errorText,
+            gapSpace: getSize(40),
+            textStyle: AppTheme.of(context).theme.textTheme.subtitle,
+            errorTextStyle:
+                AppTheme.of(context).theme.textTheme.display1.copyWith(
+                      color: isOtpCheck
+                          ? ColorConstants.lightgrey
+                          : isOtpTrue
+                              ? ColorConstants.otpSuccessBorderColor
+                              : ColorConstants.errorText,
+                    ),
             obscureStyle: ObscureStyle(
               isTextObscure: false,
             ),
@@ -325,12 +335,9 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
           textInputAction: TextInputAction.done,
           enabled: true,
           inputFormatter: [
-            BlacklistingTextInputFormatter(
-                RegExp(RegexForEmoji)),
+            BlacklistingTextInputFormatter(RegExp(RegexForEmoji)),
             ValidatorInputFormatter(
-                editingValidator:
-                DecimalNumberEditingRegexValidator(
-                    4)),
+                editingValidator: DecimalNumberEditingRegexValidator(4)),
           ],
           keyboardType: TextInputType.number,
           autovalidate: true,
@@ -338,31 +345,30 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
             setState(() {});
             if (_formKey.currentState.validate()) {
               _formKey.currentState.save();
-              if(pin.trim().length != 4) {
+              if (pin.trim().length != 4) {
                 isOtpTrue = false;
                 isOtpCheck = false;
                 showOTPMsg = R.string().errorString.pleaseEnterOTP;
-              } else if(pin.trim().length == 4) {
+              } else if (pin.trim().length == 4) {
                 showOTPMsg = null;
                 isOtpTrue = true;
 //                isOtpCheck = true;
                 FocusScope.of(context).unfocus();
-              NavigationUtilities.pushRoute(ResetPassword.route);
+                NavigationUtilities.pushRoute(ResetPassword.route);
               }
-           //   callApiForEditVerifyMobile(context, pin);
-            }
-            else{
+              //   callApiForEditVerifyMobile(context, pin);
+            } else {
               setState(() {
                 isOtpCheck = false;
-                isOtpTrue=false;
+                isOtpTrue = false;
               });
             }
           },
           onChanged: (pin) {
-            if(pin.trim().length < 4) {
-                showOTPMsg = null;
-                isOtpTrue = false;
-            } else if(pin.trim().length == 4) {
+            if (pin.trim().length < 4) {
+              showOTPMsg = null;
+              isOtpTrue = false;
+            } else if (pin.trim().length == 4) {
               isOtpTrue = true;
               isOtpCheck = false;
               NavigationUtilities.pushRoute(ResetPassword.route);
@@ -371,20 +377,10 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
             setState(() {});
           },
           validator: (text) {
-            if (text.trim().isEmpty) {
-              //setState(() {});
-              //return '';
-              return R.string().errorString.pleaseEnterOTP;
-              //return R.string().errorString.enteredCodeNotMatching;
-            } else {
-              if(text.isNotEmpty){
-                return showOTPMsg;
-              }
-            }
-            return null;
+            return showOTPMsg ?? "";
           },
         )
-      /*
+        /*
       child: PinEntryTextField(
         enable: true,
         errorBorder: isOtpCheck
@@ -408,16 +404,15 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
             });
             callApiForVerifyMobile(context);
 
-            *//*Map<String, dynamic> dict = new HashMap();
+            */ /*Map<String, dynamic> dict = new HashMap();
             dict["otp"] = strOtp;
             NavigationUtilities.pushRoute(PasswordScreen.route,
-                type: RouteType.fade, args: dict);*//*
+                type: RouteType.fade, args: dict);*/ /*
           } else {
             setState(() {});
           }
         }, // end onSubmit
       ),*/
-    );
+        );
   }
-
 }

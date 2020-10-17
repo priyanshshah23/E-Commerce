@@ -308,8 +308,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   }
 
   callApiForGetFilterId() {
-    FilterRequest().createRequest(arrList);
-    /*DiamondListReq req = DiamondListReq();
+    DiamondListReq req = DiamondListReq();
     req.isNotReturnTotal = true;
     req.isReturnCountOnly = true;
     SyncManager.instance.callApiForDiamondList(
@@ -325,7 +324,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       (onError) {
         //print("Error");
       },
-    );*/
+    );
   }
 
   Widget _segmentedControl() {

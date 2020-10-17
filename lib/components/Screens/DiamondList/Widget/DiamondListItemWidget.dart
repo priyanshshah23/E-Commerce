@@ -48,40 +48,43 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             ),
         child: Wrap(
           children: [
-            Row(
-              children: <Widget>[
-                getCaratAndDiscountDetail(widget.actionClick),
-                //   getIdColorDetail(),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: getSize(10),
-                      right: getSize(10),
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        getIdShapeDetail(),
-                        getDymentionAndCaratDetail(),
-                        getTableDepthAndAmountDetail(),
-                        getWatchListDetail(),
-                      ],
+            IntrinsicHeight(
+              child: Row(
+                children: <Widget>[
+                  getCaratAndDiscountDetail(widget.actionClick),
+                  //   getIdColorDetail(),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: getSize(10),
+                        right: getSize(10),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          getIdShapeDetail(),
+                          getDymentionAndCaratDetail(),
+                          getTableDepthAndAmountDetail(),
+                          getWatchListDetail(),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  child: Center(
-                      child: Container(
-                    decoration: BoxDecoration(
-                        color: widget.item.getStatusColor(),
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(5),
-                            bottomLeft: Radius.circular(5))),
-                    height: getSize(26),
-                    width: getSize(4),
-                    // color: Colors.red,
-                  )),
-                ),
-              ],
+                  Container(
+                    child: Center(
+                        child: Container(
+                      decoration: BoxDecoration(
+                          color: widget.item.getStatusColor(),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(5),
+                              bottomLeft: Radius.circular(5))),
+                      height: getSize(26),
+                      width: getSize(4),
+                      // color: Colors.red,
+                    )),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -99,7 +102,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           top: getSize(8),
           left: getSize(10),
           right: getSize(10),
-          bottom: getSize(5),
+          bottom: getSize(8),
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -111,9 +114,10 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               : appTheme.dividerColor,
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              PriceUtilities.getPercent(widget.item?.crt ?? 0),
+              PriceUtilities.getDoubleValue(widget.item?.crt ?? 0),
               style: appTheme.blue14TextStyle.copyWith(
                   color: widget.item.isSelected
                       ? appTheme.whiteColor

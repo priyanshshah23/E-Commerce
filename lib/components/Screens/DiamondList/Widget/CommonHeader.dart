@@ -22,7 +22,25 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
       child: Row(
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          getColumn(widget.diamondCalculation.pcs, R.string().commonString.pcs),
+          Container(
+            width: widget.diamondCalculation.pcs.length > 4
+                ? getSize(60)
+                : getSize(45),
+            padding: EdgeInsets.symmetric(
+                vertical: getSize(15), horizontal: getSize(4)),
+            decoration: BoxDecoration(
+                border: Border.all(color: appTheme.dividerColor),
+                borderRadius: BorderRadius.circular(getSize(5))),
+            child: Column(
+              children: <Widget>[
+                getDetailText(widget.diamondCalculation.pcs),
+                SizedBox(
+                  height: getSize(5),
+                ),
+                getLableText(R.string().commonString.pcs),
+              ],
+            ),
+          ),
           getColumn(widget.diamondCalculation.totalCarat,
               R.string().commonString.cts),
           getColumn(widget.diamondCalculation.totalDisc,
@@ -47,7 +65,7 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
   getColumn(String text, String lable) {
     return Container(
       padding:
-          EdgeInsets.symmetric(vertical: getSize(15), horizontal: getSize(10)),
+          EdgeInsets.symmetric(vertical: getSize(15), horizontal: getSize(4)),
       decoration: BoxDecoration(
           border: Border.all(color: appTheme.dividerColor),
           borderRadius: BorderRadius.circular(getSize(5))),
