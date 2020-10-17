@@ -1,4 +1,5 @@
 import 'package:diamnow/app/Helper/Themehelper.dart';
+import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/math_utils.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
@@ -98,15 +99,18 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
                     SizedBox(
                       width: getSize(38),
                     ),
-                    FlatButton(
-                      padding: EdgeInsets.all(getSize(0)),
-                      onPressed: () {
-                        actionClick(ManageCLick(
-                            type: clickConstant.CLICK_TYPE_CONFIRM));
-                      },
-                      child: Text(
-                        R.string().screenTitle.addToWatchList,
-                        style: appTheme.black16TextStyle,
+                    Expanded(
+                      child: FlatButton(
+                        textColor: ColorConstants.colorPrimary,
+                        padding: EdgeInsets.all(getSize(0)),
+                        onPressed: () {
+                          actionClick(ManageCLick(
+                              type: clickConstant.CLICK_TYPE_CONFIRM));
+                        },
+                        child: Text(
+                          R.string().screenTitle.addToWatchList,
+                          style: appTheme.black16TextStyle,
+                        ),
                       ),
                     ),
                   ],

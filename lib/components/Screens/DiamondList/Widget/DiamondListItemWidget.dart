@@ -236,7 +236,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 getText(R.string().screenTitle.todayDiscPer),
-                getText((widget.item.back ?? "").toString() + "%"),
+                getText(PriceUtilities.getPercent(widget.item?.back) ?? ""),
                 getText(R.string().screenTitle.expDiscPer),
                 offsetPopup(widget.item, backPerList, item),
               ],
