@@ -421,7 +421,8 @@ Future showBottomSheetforAddToOffice(BuildContext context) {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: getSize(20),vertical: getSize(16)),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: getSize(20), vertical: getSize(16)),
                     child: AppButton.flat(
                       onTap: () {
                         // NavigationUtilities.pushRoute(TabBarDemo.route);

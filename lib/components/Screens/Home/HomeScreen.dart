@@ -5,6 +5,8 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/components/Screens/Auth/Login.dart';
+import 'package:diamnow/components/Screens/Auth/Profile.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
@@ -110,6 +112,15 @@ class _HomeScreenState extends State<HomeScreen> {
     currentWidget = DiamondListScreen(dict);
   }
 
+  openProfile() {
+    selectedType = DrawerConstant.MODULE_PROFILE;
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.ModuleType] =
+        DiamondModuleConstant.MODULE_TYPE_PROFILE;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = Profile();
+  }
+
   manageDrawerClick(BuildContext context, int type, bool isPop) {
     if (context != null) {
       if (isPop) Navigator.pop(context);
@@ -122,6 +133,9 @@ class _HomeScreenState extends State<HomeScreen> {
           break;
         case DrawerConstant.MODULE_UPCOMING:
           openDiamondList();
+          break;
+        case DrawerConstant.MODULE_PROFILE:
+          openProfile();
           break;
         case DrawerConstant.LOGOUT:
           logout(context);
@@ -144,6 +158,11 @@ class _HomeScreenState extends State<HomeScreen> {
         calllogout(context);
         SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
         ThemeSettingsModel.of(context).updateSystemUi(isLogin: true);
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil(
+          LoginScreen.route,
+              (Route<dynamic> route) => false,
+        );
       }
     });
   }

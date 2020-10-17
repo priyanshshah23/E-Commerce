@@ -54,72 +54,77 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
           child: Scaffold(
             resizeToAvoidBottomPadding: false,
             resizeToAvoidBottomInset: true,
+            appBar: getAppBar(
+              context,
+              R.string().authStrings.signInAsGuest,
+              bgColor: appTheme.whiteColor,
+              leadingButton: getBackButton(context),
+              centerTitle: false,
+            ),
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: getSize(26)),
-                  child: Row(
-                    children: <Widget>[
-                      getBackButton(context),
-                      SizedBox(
-                        width: getSize(20),
-                      ),
-                      Text(
-                        R.string().authStrings.signInAsGuest,
-                        textAlign: TextAlign.left,
-                        style: appTheme.black24TitleColor,
-                      ),
-                    ],
+//                Padding(
+//                  padding: EdgeInsets.only(top: getSize(26)),
+//                  child: Row(
+//                    children: <Widget>[
+//                      getBackButton(context),
+//                      SizedBox(
+//                        width: getSize(20),
+//                      ),
+//                      Text(
+//                        R.string().authStrings.signInAsGuest,
+//                        textAlign: TextAlign.left,
+//                        style: appTheme.black24TitleColor,
+//                      ),
+//                    ],
+//                  ),
+//                ),
+                Container(
+                  padding: EdgeInsets.only(
+                    left: getSize(20),
+                    right: getSize(20),
+                    top: getSize(10),
                   ),
-                ),
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.only(
-                      left: getSize(20),
-                      right: getSize(20),
-                      top: getSize(10),
-                    ),
-                    child: SingleChildScrollView(
-                      child: Form(
-                        key: _formKey,
-                        autovalidate: _autoValidate,
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(top: getSize(100)),
-                              child: getFirstNameTextField(),
+                  child: SingleChildScrollView(
+                    child: Form(
+                      key: _formKey,
+                      autovalidate: _autoValidate,
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(top: getSize(100)),
+                            child: getFirstNameTextField(),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: getSize(10)),
+                            child: getLastNameTextField(),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: getSize(10)),
+                            child: getEmailTextField(),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: getSize(10)),
+                            child: getMobileTextField(),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: getSize(10)),
+                            child: getCompanyTextField(),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: getSize(20),
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(top: getSize(10)),
-                              child: getLastNameTextField(),
+                            child: getConditionCheckBox(),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              bottom: getSize(20),
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(top: getSize(10)),
-                              child: getEmailTextField(),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(top: getSize(10)),
-                              child: getMobileTextField(),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(top: getSize(10)),
-                              child: getCompanyTextField(),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                vertical: getSize(20),
-                              ),
-                              child: getConditionCheckBox(),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                bottom: getSize(20),
-                              ),
-                              child: getOrderCheckBox(),
-                            ),
-                          ],
-                        ),
+                            child: getOrderCheckBox(),
+                          ),
+                        ],
                       ),
                     ),
                   ),
