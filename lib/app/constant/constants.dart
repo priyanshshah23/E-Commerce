@@ -35,6 +35,7 @@ const successStatusCode = 200;
 const addedSuccesStatusCode = 201;
 const notFoundStatusCode = 404;
 
+const signupURl = "http://fndevelop.democ.in/signup";
 const termConditionUrl = "https://loremipsum.io/";
 const privacyPolicyUrl = "https://loremipsum.io/";
 const aboutUsUrl = "https://loremipsum.io/";
@@ -81,8 +82,11 @@ class MasterCode {
   static const String symmetry = "SYMMETRY";
   static const String location = "LOCATION";
   static const String keyToSymbol = "KEY_TO_SYMBOLS";
-  static const String blackTable = "BLACK_INCLUSION";
+  static const String blackTable = "BLACK_INCLUSION_TABLE";
+  static const String blackside = "BLACK_INCLUSION_SIDE";
   static const String blackCrown = "BLACK_INCLUSION_CROWN";
+  static const String whiteside = "WHITE_INCLUSION_SIDE";
+
   static const String whiteTable = "WHITE_INCLUSION_TABLE";
   static const String whiteCrown = "WHITE_INCLUSION_CROWN";
   static const String milky = "MILKEY";
@@ -102,9 +106,19 @@ class MasterCode {
   static const String noBgm = "NoBGM";
   static const String colorGroup = "COLORGROUP";
   static const String clarityGroup = "CLARITYGROUP";
+  static const String canadamarkparent = "CANADAMARKPARENT";
+  static const String typeiia = "TYPEIIA";
+  static const String canadamark = "CANADAMARK";
+  static const String xray = "XRAY";
+  static const String upcoming = "UPCOMING";
+  static const String eyecleanStatic = "EYECLEANSTATIC";
+  static const String newarrivalsgroup = "NEWARRIVALSGROUP";
+  static const String newarrivals = "NEWARRIVAL";
+  static const String dor = "DOR";
+  static const String fm = "FM";
 }
 
-class DiamondStatus{
+class DiamondStatus {
   static const String available = "A";
   static const String onMine = "M";
   static const String office = "O";

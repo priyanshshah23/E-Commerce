@@ -4,8 +4,8 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
-import 'package:diamnow/components/Screens/Auth/DemoScreen.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
+import 'package:diamnow/components/Screens/Auth/Signup.dart';
 import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
@@ -42,7 +42,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
   bool isButtonEnabled = true;
   bool _autoValidate = false;
 
-@override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -51,6 +51,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
       _passwordController.text = "1234";
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -204,14 +205,19 @@ class _LoginScreenState extends StatefulScreenWidgetState {
             bottomNavigationBar: Container(
 //              alignment: Alignment.bottomCenter,
               margin: EdgeInsets.all(getSize(15)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(R.string().authStrings.haveRegisterCode,
-                      style: appTheme.grey16HintTextStyle),
-                  Text(" Sign Up", style: appTheme.darkBlue16TextStyle),
-                ],
+              child: InkWell(
+                onTap: () {
+                  NavigationUtilities.pushRoute(SignupScreen.route);
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(R.string().authStrings.haveRegisterCode,
+                        style: appTheme.grey16HintTextStyle),
+                    Text(" Sign Up", style: appTheme.darkBlue16TextStyle),
+                  ],
+                ),
               ),
             ),
           ),
@@ -308,7 +314,8 @@ class _LoginScreenState extends StatefulScreenWidgetState {
           return R.string().errorString.enterPassword;
         } /* else if(!validateStructure(text)) {
           return R.string().errorString.wrongPassword;
-        } */else {
+        } */
+        else {
           return null;
         }
       },

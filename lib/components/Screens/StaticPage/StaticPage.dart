@@ -9,7 +9,6 @@ import 'package:diamnow/models/StaticPage/StaticPageModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -54,11 +53,11 @@ class _StaticPageScreenState extends StatefulScreenWidgetState {
       });
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
-        context,
-        title: "$screenType Error",
-        desc: onError.message,
-        positiveBtnTitle: "Try Again",
-      );
+            context,
+            title: "$screenType Error",
+            desc: onError.message,
+            positiveBtnTitle: "Try Again",
+          );
     });
   }
 
@@ -79,8 +78,8 @@ class _StaticPageScreenState extends StatefulScreenWidgetState {
               ),
               child: SafeArea(
                 child: Padding(
-                  padding: EdgeInsets.only(
-                      left: getSize(20), right: getSize(20)),
+                  padding:
+                      EdgeInsets.only(left: getSize(20), right: getSize(20)),
                   child: !isNullEmptyOrFalse(data)
                       ? WebView(
                           initialUrl: 'about:blank',
@@ -118,7 +117,8 @@ class _StaticPageScreenState extends StatefulScreenWidgetState {
       return R.string().screenTitle.privacyPolicy;
     } else if (screenType == StaticPageConstant.ABOUT_US) {
       return R.string().screenTitle.aboutUS;
-    } /*else if (screenType == StaticPageConstant.CANCELLAION_POLICY) {
+    }
+    /*else if (screenType == StaticPageConstant.CANCELLAION_POLICY) {
       return "Order Cancel Policy";
     } else if (screenType == StaticPageConstant.SHIPPING_POLICY) {
       return "Order Shipping Policy";

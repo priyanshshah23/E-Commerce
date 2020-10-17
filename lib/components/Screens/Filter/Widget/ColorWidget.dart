@@ -60,23 +60,43 @@ class _ColorWidgetState extends State<ColorWidget> {
               },
               child: Column(
                 children: [
-                  Text(
-                    widget.colorModel.masterCode == MasterCode.color
-                        ? "Color"
-                        : "Clarity",
-                    style: appTheme.blackNormal14TitleColorblack,
-                    textAlign: TextAlign.left,
+                  Row(
+                    children: [
+                      widget.colorModel.showRadio
+                          ? Image.asset(
+                              widget.colorModel.isGroupSelected == false
+                                  ? selectedFilter
+                                  : unselectedFilter,
+                              width: getSize(24),
+                              height: getSize(24),
+                            )
+                          : SizedBox(),
+                      widget.colorModel.showRadio
+                          ? SizedBox(width: getSize(8))
+                          : SizedBox(),
+                      Text(
+                        widget.colorModel.masterCode == MasterCode.color
+                            ? "Color"
+                            : "Clarity",
+                        style: appTheme.blackNormal14TitleColorblack,
+                        textAlign: TextAlign.left,
+                      ),
+                    ],
                   ),
-                  SizedBox(height: getSize(4)),
-                  Center(
-                    child: Container(
-                      width: getSize(40),
-                      height: getSize(1),
-                      color: !widget.colorModel.isGroupSelected
-                          ? appTheme.colorPrimary
-                          : Colors.transparent,
-                    ),
-                  )
+                  widget.colorModel.showRadio
+                      ? SizedBox()
+                      : SizedBox(height: getSize(4)),
+                  widget.colorModel.showRadio
+                      ? SizedBox()
+                      : Center(
+                          child: Container(
+                            width: getSize(40),
+                            height: getSize(1),
+                            color: !widget.colorModel.isGroupSelected
+                                ? appTheme.colorPrimary
+                                : Colors.transparent,
+                          ),
+                        )
                 ],
               ),
             ),
@@ -90,21 +110,43 @@ class _ColorWidgetState extends State<ColorWidget> {
               },
               child: Column(
                 children: [
-                  Text(
-                    widget.colorModel.masterCode == MasterCode.color
-                        ? "Color Group"
-                        : "Clarity Group",
-                    style: appTheme.blackNormal14TitleColorblack,
-                    textAlign: TextAlign.left,
+                  Row(
+                    children: [
+                      widget.colorModel.showRadio
+                          ? Image.asset(
+                              widget.colorModel.isGroupSelected == true
+                                  ? selectedFilter
+                                  : unselectedFilter,
+                              width: getSize(24),
+                              height: getSize(24),
+                            )
+                          : SizedBox(),
+                      widget.colorModel.showRadio
+                          ? SizedBox(width: getSize(8))
+                          : SizedBox(),
+                      Text(
+                        widget.colorModel.masterCode == MasterCode.color
+                            ? "Color Group"
+                            : "Clarity Group",
+                        style: appTheme.blackNormal14TitleColorblack,
+                        textAlign: TextAlign.left,
+                      ),
+                    ],
                   ),
-                  SizedBox(height: getSize(4)),
-                  Container(
-                    width: getSize(90),
-                    height: getSize(1),
-                    color: widget.colorModel.isGroupSelected
-                        ? appTheme.colorPrimary
-                        : Colors.transparent,
-                  )
+                  widget.colorModel.showRadio
+                      ? SizedBox()
+                      : SizedBox(height: getSize(4)),
+                  widget.colorModel.showRadio
+                      ? SizedBox()
+                      : Center(
+                          child: Container(
+                            width: getSize(90),
+                            height: getSize(1),
+                            color: widget.colorModel.isGroupSelected
+                                ? appTheme.colorPrimary
+                                : Colors.transparent,
+                          ),
+                        )
                 ],
               ),
             ),

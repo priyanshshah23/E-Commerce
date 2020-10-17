@@ -87,6 +87,18 @@ class _TagWidgetState extends State<TagWidget> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        isNullEmptyOrFalse(widget.model.megaTitle)
+            ? SizedBox()
+            : Text(
+                widget.model.megaTitle ?? "",
+                style: appTheme.blackNormal18TitleColorblack.copyWith(
+                  decoration: TextDecoration.underline,
+                ),
+                textAlign: TextAlign.left,
+              ),
+        !isNullEmptyOrFalse(widget.model.megaTitle)
+            ? SizedBox(height: getSize(16))
+            : SizedBox(),
         isNullEmptyOrFalse(widget.model.title)
             ? SizedBox()
             : Text(

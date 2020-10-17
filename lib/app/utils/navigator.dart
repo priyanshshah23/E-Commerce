@@ -1,14 +1,13 @@
 import 'package:diamnow/components/Screens/Auth/ChangePassword.dart';
 import 'package:diamnow/components/Screens/Auth/CompanyInformation.dart';
-import 'package:diamnow/components/Screens/Auth/DemoScreen.dart';
 import 'package:diamnow/components/Screens/Auth/ForgetPassword.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/components/Screens/Auth/PersonalInformation.dart';
 import 'package:diamnow/components/Screens/Auth/Profile.dart';
 import 'package:diamnow/components/Screens/Auth/ResetPassword.dart';
+import 'package:diamnow/components/Screens/Auth/Signup.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
-import 'package:diamnow/components/Screens/Auth/PDFDemo.dart';
 import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
@@ -109,8 +108,8 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case GuestSignInScreen.route:
       screen = GuestSignInScreen();
       break;
-    case DemoScreen.route:
-      screen = DemoScreen();
+    case SignupScreen.route:
+      screen = SignupScreen();
       break;
     case TabBarDemo.route:
       screen = TabBarDemo();
