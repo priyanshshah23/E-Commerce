@@ -1,5 +1,7 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/components/Screens/Auth/PasswordResetSuccessfully.dart';
 
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/components/widgets/pinView_textFields/decoration/pin_decoration.dart';
@@ -20,7 +22,8 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
   bool _autoValidate = false;
 
   final TextEditingController _newPasswordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   var _focusNewPassword = FocusNode();
   var _focusConfirmPassword = FocusNode();
@@ -76,7 +79,8 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: getSize(30), bottom: getSize(40)),
+                          padding: EdgeInsets.only(
+                              top: getSize(30), bottom: getSize(40)),
                           child: Text(
                             "Set your new password and sign in again.",
                             style: appTheme.black14TextStyle,
@@ -101,7 +105,20 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
                               // NavigationUtilities.pushRoute(TabBarDemo.route);
                               FocusScope.of(context).unfocus();
                               if (_formKey.currentState.validate()) {
-                                _formKey.currentState.save();
+
+                                if (_confirmPasswordController.text.trim() !=
+                                    _newPasswordController.text.trim()) {
+                                  app.resolve<CustomDialogs>().confirmDialog(
+                                        context,
+                                        title: "Password does not match",
+                                        desc:
+                                            "Confirm Password does not match with Password. Please enter confirm password same as Password.",
+                                        positiveBtnTitle: "Try Again",
+                                      );
+                                } else {
+                                  _formKey.currentState.save();
+                                  NavigationUtilities.pushRoute(PasswordResetSuccessfully.route);
+                                }
 //                                callLoginApi(context);
                               } else {
                                 setState(() {
@@ -145,8 +162,6 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
       validation: (text) {
         if (text.isEmpty) {
           return R.string().errorString.enterPassword;
-        } else if(!validateStructure(text)) {
-          return R.string().errorString.wrongPassword;
         } else {
           return null;
         }
@@ -175,8 +190,8 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
       validation: (text) {
         if (text.isEmpty) {
           return R.string().errorString.enterPassword;
-        } else  if(text != _newPasswordController.text.trim())  {
-          return "New Password And Confirm Password Should be same";
+        } else if(!validateStructure(text)) {
+          return R.string().errorString.wrongPassword;
         } else {
           return null;
         }

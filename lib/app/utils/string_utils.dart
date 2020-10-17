@@ -74,7 +74,9 @@ bool validateEmail(String value) {
 }
 
 bool validateStructure(String value) {
-  String pattern = r'^(?=.?[a-z])(?=.?[0-9])(?=.?[!@#$&~]).{8,}$';
+  String pattern =
+      r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+
   RegExp regExp = new RegExp(pattern);
   if (isStringEmpty(value)) {
     return false;
@@ -82,7 +84,6 @@ bool validateStructure(String value) {
     return false;
   }
   return true;
-
 }
 
 bool validateMobile(String value) {
