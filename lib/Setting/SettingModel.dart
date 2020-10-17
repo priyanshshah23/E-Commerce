@@ -19,6 +19,18 @@ class DrawerSetting {
       isSelected: true,
       type: DrawerConstant.MODULE_UPCOMING,
     ));
+    drawerList.add(DrawerModel(
+      image: user,
+      title: R.string().screenTitle.myProfile,
+      isSelected: false,
+      type: DrawerConstant.PROFILE,
+    ));
+    drawerList.add(DrawerModel(
+      image: password,
+      title: R.string().screenTitle.logout,
+      isSelected: false,
+      type: DrawerConstant.LOGOUT,
+    ));
     return drawerList;
     /*return <DrawerModel>[
       DrawerModel(

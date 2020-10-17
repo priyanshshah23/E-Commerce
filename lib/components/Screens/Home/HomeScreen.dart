@@ -5,6 +5,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/components/Screens/Auth/Profile.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
@@ -125,6 +126,9 @@ class _HomeScreenState extends State<HomeScreen> {
           break;
         case DrawerConstant.LOGOUT:
           logout(context);
+          break;
+        case DrawerConstant.PROFILE:
+          NavigationUtilities.pushRoute(Profile.route);
           break;
       }
       if (type != DrawerConstant.LOGOUT) {
