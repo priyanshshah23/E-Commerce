@@ -3,11 +3,12 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
+import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/modules/Filter/gridviewlist/selectable_tags.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-//import 'package:flutter_tags/flutter_tags.dart';
+import 'package:flutter_tags/flutter_tags.dart';
 
 Future showBottomSheetForConfirmStoneDetail(BuildContext context) {
   final _formKey = GlobalKey<FormState>();
@@ -451,10 +452,9 @@ Future showBottomSheetforAddToOffice(BuildContext context) {
   );
 }
 
-openTimeSlotDialog() {
-//  LIst
-  return Container();
-  /*Tags(
+openTimeSlotDialog(){
+  List<BottomTabModel> arrTimeSlot = BottomTabBar.getTimeSlotList();
+  return Tags(
 //    key: _tagStateKey,
-  );*/
+  );
 }
