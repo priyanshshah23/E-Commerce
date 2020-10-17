@@ -5,23 +5,26 @@ import 'package:flutter/cupertino.dart';
 class DiamondListReq {
   int page;
   int limit;
-  Filters filters;
+  ReqFilters filters;
   bool isNotReturnTotal;
   bool isReturnCountOnly;
+  String sort;
 
   DiamondListReq(
       {this.page,
       this.limit,
       this.filters,
       this.isNotReturnTotal,
-      this.isReturnCountOnly});
+      this.isReturnCountOnly,
+        this.sort,
+      });
 
   DiamondListReq.fromJson(Map<String, dynamic> json) {
     page = json['page'];
     limit = json['limit'];
     if (json['filters'] != null) {
       filters = json['filters'] != null
-          ? new Filters.fromJson(json['filters'])
+          ? new ReqFilters.fromJson(json['filters'])
           : null;
     }
     if (json['isNotReturnTotal'] != null) {
@@ -29,6 +32,9 @@ class DiamondListReq {
     }
     if (json['isReturnCountOnly'] != null) {
       isReturnCountOnly = json['isReturnCountOnly'];
+    }
+    if( json['sort']!=null){
+      sort = json['sort'];
     }
   }
 
@@ -45,22 +51,57 @@ class DiamondListReq {
     if (this.isReturnCountOnly != null) {
       data['isReturnCountOnly'] = this.isReturnCountOnly;
     }
+    if (this.sort != null) {
+      data['sort'] = this.sort;
+    }
     return data;
   }
 }
 
-class Filters {
+class ReqFilters {
   String diamondSearchId;
+  String wSts;
+  InDt inDt;
 
-  Filters({this.diamondSearchId});
+  ReqFilters({this.diamondSearchId});
 
-  Filters.fromJson(Map<String, dynamic> json) {
-    diamondSearchId = json['diamondSearchId'];
+  ReqFilters.fromJson(Map<String, dynamic> json) {
+    if(json['diamondSearchId']!=null){
+      diamondSearchId = json['diamondSearchId'];
+    }
+    if(json['wSts']!=null){
+      wSts = json['wSts'];
+    }
+    inDt = json['inDt'] != null ? new InDt.fromJson(json['inDt']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['diamondSearchId'] = this.diamondSearchId;
+    if (this.diamondSearchId != null) {
+      data['diamondSearchId'] = this.diamondSearchId;
+    }
+    if (this.wSts != null) {
+      data['wSts'] = this.wSts;
+    }
+    if (this.inDt != null) {
+      data['inDt'] = this.inDt.toJson();
+    }
+    return data;
+  }
+}
+
+class InDt {
+  String lessThan;
+
+  InDt({this.lessThan});
+
+  InDt.fromJson(Map<String, dynamic> json) {
+    lessThan = json['lessThan'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['lessThan'] = this.lessThan;
     return data;
   }
 }
@@ -544,6 +585,14 @@ class DiamondModel {
         break;
     }
     return color;
+  }
+
+  String getDiamondImage() {
+    if (isStringEmpty(vStnId) == false) {
+      return diamondImageURL + vStnId + ".jpg";
+    }
+    //img
+    return "";
   }
 
   String getAmount() {

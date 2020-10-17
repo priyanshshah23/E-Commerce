@@ -169,6 +169,8 @@ class CommonString {
   final String avgPriceCrt;
   final String amount;
 
+  final String confirmStone;
+
   const CommonString({
     this.all = "All",
 
@@ -231,7 +233,7 @@ class CommonString {
     this.jumpToTop = "Jump to top",
 
     // My Vehicle List
-    this.selected = "Selected",
+    this.selected = "Select",
     this.lbllogout = "Log Out",
     this.lblThanx = "Thank you",
 
@@ -313,7 +315,7 @@ class CommonString {
     this.enterFareDetailDesc =
         'You can not move back or change screen without adding sales details.',
     this.fromDate = "From Date",
-    this.toDate = "To Date",
+    this.toDate = "Selected Date",
     this.btnUnderstand = "I Understand",
 
 //Version Update
@@ -335,5 +337,7 @@ class CommonString {
     this.disc = "Disc %",
     this.avgPriceCrt = "Avg. Price/Ct ",
     this.amount = "Amount ",
+
+    this.confirmStone = "CONFIRM STONE",
   });
 }

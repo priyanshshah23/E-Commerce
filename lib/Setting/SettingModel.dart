@@ -13,6 +13,18 @@ class DrawerSetting {
       isSelected: true,
       type: DrawerConstant.MODULE_SEARCH,
     ));
+    drawerList.add(DrawerModel(
+      image: search,
+      title: "Upcoming",
+      isSelected: true,
+      type: DrawerConstant.MODULE_UPCOMING,
+    ));
+    drawerList.add(DrawerModel(
+      image: search,
+      title: "Profile",
+      isSelected: true,
+      type: DrawerConstant.MODULE_PROFILE,
+    ));
     return drawerList;
     /*return <DrawerModel>[
       DrawerModel(

@@ -152,8 +152,6 @@ class SyncManager {
     double avgRapAmt = 0.0;
     double avgPriceCrt = 0.0;
     double termDiscAmount = 0.0;
-//    double fancyCarat = 0.0;
-//    double fancyAmt = 0.0;
 
     for (var item in diamondList) {
       if (item.rap > 0) {

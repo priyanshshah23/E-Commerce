@@ -1,10 +1,14 @@
+import 'dart:async';
+
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/components/Screens/Auth/ResetPassword.dart';
 
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/components/widgets/pinView_textFields/decoration/pin_decoration.dart';
 import 'package:diamnow/components/widgets/pinView_textFields/pin_widget.dart';
 import 'package:diamnow/components/widgets/pinView_textFields/style/obscure.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -23,23 +27,48 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
   bool _autoValidate = false;
   bool isApiCall = false;
   // bool isButtonEnabled = false;
-  int _start = 30;
-  String strOtp;
-  bool isTimerCompleted = false;
   String mobiles;
   bool isOtpCheck = true; // true when screen load first time for grey color
   bool isOtpTrue = false; // to manage error color and success color
   final GlobalKey<FormFieldState<String>> _formKeyPin = GlobalKey<FormFieldState<String>>(debugLabel: '_formkey');
   TextEditingController _pinEditingController = TextEditingController(text: '');
-  bool autovalidate = false;
 
   String showOTPMsg = null;
+  Timer _timer;
+  int _start = 30;
+  bool isTimerCompleted = false;
 
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    _pinEditingController.clear();
+    if(kDebugMode) {
+      _emailController.text = "honeyspatel98@gmail.com";
+    }
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  void startTimer() {
+    const oneSec = const Duration(seconds: 1);
+    _timer = new Timer.periodic(
+      oneSec,
+          (Timer timer) => setState(
+            () {
+          if (_start < 1) {
+            timer.cancel();
+            isTimerCompleted = true;
+          } else {
+            _start = _start - 1;
+          }
+        },
+      ),
+    );
   }
 
   @override
@@ -55,7 +84,10 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
               context,
               "Forgot Password",
               bgColor: appTheme.whiteColor,
-              leadingButton: getBackButton(context),
+              leadingButton: isApiCall ?  getBackButton(context, ontap: () {
+                isApiCall = false;
+                setState(() {});
+              }) : getBackButton(context),
               centerTitle: false,
             ),
             resizeToAvoidBottomPadding: false,
@@ -87,12 +119,31 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                           ),
                         ),
                         Text(
-                          "The OTP has been sent to your registered Email address. Please enter the OTP.",
+                         isApiCall ? "The OTP has been sent to your registered Email address. Please enter the OTP." : "We will send an OTP to your entered email address. Please enter the email address.",
                           style: appTheme.black14TextStyle,
                           textAlign: TextAlign.center,
                         ),
-                        isOtpCheck ? getEmailTextField() : getPinViewOTP(),
-                        Container(
+                        isApiCall ? getPinViewOTP() : getEmailTextField(),
+                        isApiCall ? Container(
+                          margin: EdgeInsets.all(getSize(15)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Text("If you didn't receive an OTP!",
+                                  style: appTheme.grey16HintTextStyle),
+                              GestureDetector(
+                                  onTap: () {
+                                    if(isTimerCompleted) {
+                                      _start = 30;
+                                      startTimer();
+                                      isTimerCompleted = false;
+                                    }
+                                  },
+                                  child: Text(isTimerCompleted ? " Resend Now" : " ${_printDuration(Duration(seconds: _start))}", style: appTheme.darkBlue16TextStyle)),
+                            ],
+                          ),
+                        ) : Container(
                           margin: EdgeInsets.only(
                               top: getSize(15), left: getSize(0)),
                           decoration:
@@ -103,20 +154,17 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                               FocusScope.of(context).unfocus();
                               if (_formKey.currentState.validate()) {
                                 _formKey.currentState.save();
-                                isOtpCheck = !isOtpCheck;
-                                isOtpTrue = !isOtpTrue;
+                                startTimer();
+                                isApiCall = true;
                                 setState(() {});
 //                                callLoginApi(context);
                               } else {
                                 setState(() {
                                   _autoValidate = true;
-                                  autovalidate = true;
-                                  isOtpCheck = false;
-                                  isOtpTrue=false;
-                                  showOTPMsg = R
-                                      .string()
-                                      .errorString
-                                      .enteredCodeNotMatching;
+//                                  showOTPMsg = R
+//                                      .string()
+//                                      .errorString
+//                                      .enteredCodeNotMatching;
                                 });
                               }
                               // NavigationUtilities.push(ThemeSetting());
@@ -134,7 +182,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                 ),
               ),
             ),
-            bottomNavigationBar: Container(
+            bottomNavigationBar: isApiCall ? SizedBox() : Container(
               margin: EdgeInsets.all(getSize(15)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -150,6 +198,17 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
         ),
       ),
     );
+  }
+
+  String _printDuration(Duration duration) {
+    String twoDigits(int n) {
+      if (n >= 10) return "$n";
+      return "0$n";
+    }
+
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(30));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(30));
+    return "$twoDigitMinutes:$twoDigitSeconds";
   }
 
   getEmailTextField() {
@@ -242,6 +301,8 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
           autoFocus: true,
           pinLength: 4,
           decoration: UnderlineDecoration(
+            color: isOtpCheck ? ColorConstants.lightgrey :
+            isOtpTrue ? ColorConstants.otpSuccessBorderColor:ColorConstants.errorText,
             gapSpace: getSize(45),
             textStyle: AppTheme.of(context)
                 .theme
@@ -252,7 +313,8 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                 .textTheme
                 .display1
                 .copyWith(
-              color: ColorConstants.errorText,
+              color: isOtpCheck ? ColorConstants.lightgrey :
+              isOtpTrue ? ColorConstants.otpSuccessBorderColor:ColorConstants.errorText,
             ),
             obscureStyle: ObscureStyle(
               isTextObscure: false,
@@ -271,42 +333,53 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                     4)),
           ],
           keyboardType: TextInputType.number,
-          autovalidate: autovalidate,
+          autovalidate: true,
           onSubmit: (pin) {
+            setState(() {});
             if (_formKey.currentState.validate()) {
               _formKey.currentState.save();
+              if(pin.trim().length != 4) {
+                isOtpTrue = false;
+                isOtpCheck = false;
+                showOTPMsg = R.string().errorString.pleaseEnterOTP;
+              } else if(pin.trim().length == 4) {
+                showOTPMsg = null;
+                isOtpTrue = true;
+//                isOtpCheck = true;
+                FocusScope.of(context).unfocus();
+              NavigationUtilities.pushRoute(ResetPassword.route);
+              }
            //   callApiForEditVerifyMobile(context, pin);
             }
             else{
               setState(() {
                 isOtpCheck = false;
-                autovalidate = true;
                 isOtpTrue=false;
               });
             }
           },
           onChanged: (pin) {
-            setState(() {
+            if(pin.trim().length < 4) {
+                showOTPMsg = null;
+                isOtpTrue = false;
+            } else if(pin.trim().length == 4) {
+              isOtpTrue = true;
+              isOtpCheck = false;
+              NavigationUtilities.pushRoute(ResetPassword.route);
               showOTPMsg = null;
-            });
-          },
-          onSaved: (pin) {
-            print('onSaved pin:$pin');
-            FocusScope.of(context).unfocus();
+            }
+            setState(() {});
           },
           validator: (text) {
-            if (text.trim().isEmpty ||
-                text.trim().length != 4) {
+            if (text.trim().isEmpty) {
               //setState(() {});
               //return '';
-              return R
-                  .string()
-                  .errorString
-                  .pleaseEnterOTP;
+              return R.string().errorString.pleaseEnterOTP;
               //return R.string().errorString.enteredCodeNotMatching;
-            } else
-            if(text.isNotEmpty){
-              return showOTPMsg;
+            } else {
+              if(text.isNotEmpty){
+                return showOTPMsg;
+              }
             }
             return null;
           },

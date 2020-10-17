@@ -109,6 +109,11 @@ class AuthStrings {
   final String verify;
   final String verifyMobileDesc;
 
+  //stoneDetail
+  final String companyName;
+  final String invoiceDate;
+  final String confirmStoneDetail;
+
   const AuthStrings({
     // Login
     this.pleaseEnterCustomerOTP = "Please enter customer ride code.",
@@ -220,5 +225,10 @@ class AuthStrings {
     this.hoursAvailable = "Total Shifttime",
     this.totalTrips = "Total\n Rides/Deliveries",
     this.totalKMs = "Total Incentive",
+
+    //Stone detail
+    this.confirmStoneDetail = "CONFIRM STONE DETAIL",
+    this.companyName = "Company Name",
+    this.invoiceDate = "Invoice Date",
   });
 }

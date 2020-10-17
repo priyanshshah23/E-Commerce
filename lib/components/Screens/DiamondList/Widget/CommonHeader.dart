@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 class DiamondListHeader extends StatefulWidget {
   DiamondCalculation diamondCalculation;
 
-  DiamondListHeader(
-      {this.diamondCalculation,});
+  DiamondListHeader({
+    this.diamondCalculation,
+  });
 
   @override
   _DiamondListHeaderState createState() => _DiamondListHeaderState();
@@ -22,14 +23,21 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           getColumn(widget.diamondCalculation.pcs, R.string().commonString.pcs),
-          getColumn(widget.diamondCalculation.totalCarat, R.string().commonString.cts),
-          getColumn(widget.diamondCalculation.totalDisc, R.string().commonString.disc),
+          getColumn(widget.diamondCalculation.totalCarat,
+              R.string().commonString.cts),
+          getColumn(widget.diamondCalculation.totalDisc,
+              R.string().commonString.disc),
           Expanded(
             child: getColumn(
-                widget.diamondCalculation.totalPriceCrt, R.string().commonString.avgPriceCrt + R.string().commonString.doller),
+                widget.diamondCalculation.totalPriceCrt,
+                R.string().commonString.avgPriceCrt +
+                    R.string().commonString.doller),
           ),
           Expanded(
-            child: getColumn(widget.diamondCalculation.totalAmount, R.string().commonString.amount + R.string().commonString.doller),
+            child: getColumn(
+                widget.diamondCalculation.totalAmount,
+                R.string().commonString.amount +
+                    R.string().commonString.doller),
           )
         ],
       ),

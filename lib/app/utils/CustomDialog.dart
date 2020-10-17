@@ -5,6 +5,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
@@ -170,6 +171,9 @@ class CustomDialogs {
         btntitle: btntitle, voidCallback: voidCallBack ?? null);
   }
 
+
+
+
   void confirmDialog(BuildContext context,
       {String title,
       String desc,
@@ -296,9 +300,7 @@ Future OpenErrorDialog(BuildContext context, String title, String disc,
               Text(
                 disc,
                 textAlign: TextAlign.center,
-                style: AppTheme.of(context).theme.textTheme.display1.copyWith(
-                    color: appTheme.dividerColor,
-                    fontWeight: FontWeight.normal),
+                style: appTheme.black16TextStyle,
               ),
               // SizedBox(height: getSize(20),),
               btntitle != null
