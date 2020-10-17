@@ -2,6 +2,7 @@
 
 class ScreenTitle {
   final String searchDiamond;
+  final String signup;
   final String basic;
   final String advanced;
   final String stoneIdCertNo;
@@ -115,6 +116,7 @@ class ScreenTitle {
   final String searchResult;
 
   const ScreenTitle({
+    this.signup = "Sign up",
     this.expDiscPer = "Exp Disc%",
     this.todayDiscPer = "Today's Disc%",
     this.searchDiamond = "Search Diamond",
