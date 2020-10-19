@@ -59,6 +59,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                       padding: EdgeInsets.only(
                         left: getSize(10),
                         right: getSize(10),
+                        top: getSize(5),
+                        bottom: getSize(5)
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
