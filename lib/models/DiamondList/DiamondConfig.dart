@@ -31,7 +31,7 @@ class DiamondCalculation {
     double totalamt = 0.0;
     double termDiscAmount = 0.0;
 
-    List<DiamondModel> filterList=[];
+    List<DiamondModel> filterList = [];
     Iterable<DiamondModel> list = arraDiamond.where((item) {
       return item.isSelected == false;
     });
@@ -51,7 +51,7 @@ class DiamondCalculation {
     totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt);
     totalAmount = PriceUtilities.getPrice(avgAmount);
     if (isAccountTerm) {
-      avgDisc =arrValues[6];
+      avgDisc = arrValues[6];
       print("Discount....$avgDisc");
       totalDisc = PriceUtilities.getPercent(avgDisc);
     } else {
@@ -136,7 +136,7 @@ class DiamondConfig {
         actionComment(list);
         break;
       case ActionMenuConstant.ACTION_TYPE_OFFER:
-        actionOffer(list);
+        actionOffer(context,list);
         break;
       case ActionMenuConstant.ACTION_TYPE_OFFER_VIEW:
         actionOfferView(list);
@@ -183,7 +183,22 @@ class DiamondConfig {
 
   actionComment(List<DiamondModel> list) {}
 
-  actionOffer(List<DiamondModel> list) {}
+  actionOffer(BuildContext context, List<DiamondModel> list) {
+    List<DiamondModel> selectedList = [];
+    DiamondModel model;
+    list.forEach((element) {
+      model = DiamondModel.fromJson(element.toJson());
+      model.isAddToOffer = true;
+      selectedList.add(model);
+    });
+    showOfferListDialog(context, selectedList, (manageClick) {
+      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
+        callApiFoCreateTrack(
+            context, list, DiamondTrackConstant.TRACK_TYPE_OFFER,
+            isPop: true);
+      }
+    });
+  }
 
   actionOfferView(List<DiamondModel> list) {}
 
