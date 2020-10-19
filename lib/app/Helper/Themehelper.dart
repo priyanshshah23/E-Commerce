@@ -112,6 +112,12 @@ class BaseTheme {
         color: textColor,
         fontWeight: FontWeight.normal);
   }
+  TextStyle get primary16TextStyle {
+    return TextStyle(
+        fontSize: getFontSize(16),
+        color: colorPrimary,
+        fontWeight: FontWeight.normal);
+  }
 
   TextStyle get black12TextStyle {
     return TextStyle(

@@ -40,12 +40,18 @@ class DiamondDetailImagePagerModel {
   String url;
   bool isSelected;
   bool isImage;
+  bool isVideo;
+  int subIndex = 0;
+  List<DiamondDetailImagePagerModel> arr = List<DiamondDetailImagePagerModel>();
 
   DiamondDetailImagePagerModel({
     this.title,
     this.url,
     this.isSelected = false,
-    this.isImage,
+    this.isImage = false,
+    this.isVideo = false,
+    this.subIndex = 0,
+    this.arr,
   });
 }
 
@@ -74,31 +80,92 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
   @override
   void initState() {
     super.initState();
+    setupData();
+  }
+
+  setupData() {
+    arrImages.add(DiamondDetailImagePagerModel(
+        title: "Video",
+        url:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        isSelected: true,
+        isVideo: true));
+
+    List<DiamondDetailImagePagerModel> arr =
+        List<DiamondDetailImagePagerModel>();
+    arr.add(DiamondDetailImagePagerModel(
+        title: "",
+        url:
+            "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/859019531.jpg",
+        isSelected: true,
+        isImage: true));
+
+    arr.add(DiamondDetailImagePagerModel(
+        title: "",
+        url:
+            "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/732147891.jpg",
+        isSelected: false,
+        isImage: true));
+    arr.add(DiamondDetailImagePagerModel(
+        title: "",
+        url:
+            "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/551134751.jpg",
+        isSelected: false,
+        isImage: true));
+    arr.add(DiamondDetailImagePagerModel(
+        title: "",
+        url:
+            "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/930064101.jpg",
+        isSelected: false,
+        isImage: true));
+    arr.add(DiamondDetailImagePagerModel(
+        title: "",
+        url:
+            "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/859019531.jpg",
+        isSelected: false,
+        isImage: true));
+    arr.add(DiamondDetailImagePagerModel(
+        title: "",
+        url:
+            "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/732147891.jpg",
+        isSelected: false,
+        isImage: true));
+    arr.add(DiamondDetailImagePagerModel(
+        title: "",
+        url:
+            "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/551134751.jpg",
+        isSelected: false,
+        isImage: true));
+    arr.add(DiamondDetailImagePagerModel(
+        title: "",
+        url:
+            "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/930064101.jpg",
+        isSelected: false,
+        isImage: true));
+    arr.add(DiamondDetailImagePagerModel(
+        title: "",
+        url:
+            "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/859019531.jpg",
+        isSelected: false,
+        isImage: true));
 
     arrImages.add(DiamondDetailImagePagerModel(
         title: "Image",
         url:
             "https://cdn.pixabay.com/photo/2015/02/24/15/41/dog-647528_960_720.jpg",
-        isSelected: true,
-        isImage: true));
-    arrImages.add(DiamondDetailImagePagerModel(
-        title: "Video",
-        url: "http://www.pdf995.com/samples/pdf.pdf",
-        isImage: false));
+        isSelected: false,
+        isImage: true,
+        arr: arr));
+
     arrImages.add(DiamondDetailImagePagerModel(
         title: "H&A",
         url:
             "https://i.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U",
         isImage: true));
-    // arrImages.add(DiamondDetailImagePagerModel(
-    //     title: "Certificate",
-    //     url:
-    //         "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnltfxyRHuEEUE4gIZp9fr77Q8goigP7mQ6Q&usqp=CAU",
-    //     isImage: true));
-    // arrImages.add(DiamondDetailImagePagerModel(
-    //     title: "Certificate",
-    //     url: "http://www.africau.edu/images/default/sample.pdf",
-    //     isImage: false));
+    arrImages.add(DiamondDetailImagePagerModel(
+        title: "Certificate",
+        url: "http://www.pdf995.com/samples/pdf.pdf",
+        isImage: false));
 
     _controller = TabController(
       vsync: this,
@@ -172,6 +239,11 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
     setState(() {
       isLoading = true;
       _currentIndex = _controller.index;
+      arrImages = arrImages.map((e) {
+        e.isSelected = false;
+        return e;
+      }).toList();
+      arrImages[_currentIndex].isSelected = true;
     });
   }
 
@@ -219,204 +291,225 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
                 top: getSize(20), left: getSize(20), right: getSize(20)),
             child: Container(
               child: ListView(
-                // crossAxisAlignment: CrossAxisAlignment.start,
+                shrinkWrap: true,
+                physics: ClampingScrollPhysics(),
                 children: <Widget>[
                   Container(
                     child: Center(
-                      // child: Container(
-                      //   height: getSize(36),
-                      //   decoration: BoxDecoration(
-                      //       color: appTheme.whiteColor,
-                      //       borderRadius: BorderRadius.circular(getSize(5)),
-                      //       border: Border.all(color: appTheme.colorPrimary)),
-                      //   child: SingleChildScrollView(
-                      //     physics: ClampingScrollPhysics(),
-                      //     scrollDirection: Axis.horizontal,
-                      //     child: Row(
-                      //       // scrollDirection: Axis.horizontal,
-                      //       children: [
-                      //         for (var i = 0; i < arrImages.length; i++)
-                      //           InkWell(
-                      //             onTap: () {
-                      //               arrImages = arrImages.map((e) {
-                      //                 e.isSelected = false;
-                      //                 return e;
-                      //               }).toList();
-                      //               arrImages[i].isSelected = true;
-                      //               setState(() {
-                      //                 _currentIndex = i;
-                      //                 _controller.index = i;
-                      //               });
-                      //             },
-                      //             child: Container(
-                      //               decoration: BoxDecoration(
-                      //                 color: arrImages[i].isSelected
-                      //                     ? appTheme.colorPrimary
-                      //                     : Colors.transparent,
-                      //                 border: Border(
-                      //                   left: BorderSide(
-                      //                     color: appTheme.colorPrimary,
-                      //                     width: (i == 0)
-                      //                         ? getSize(0)
-                      //                         : getSize(0.5),
-                      //                   ),
-                      //                   right: BorderSide(
-                      //                     color: appTheme.colorPrimary,
-                      //                     width: (i == arrImages.length - 1)
-                      //                         ? getSize(0)
-                      //                         : getSize(0.5),
-                      //                   ),
-                      //                 ),
-                      //               ),
-                      //               child: Padding(
-                      //                 padding: EdgeInsets.only(
-                      //                     top: getSize(8),
-                      //                     bottom: getSize(8),
-                      //                     left: getSize(20),
-                      //                     right: getSize(20)),
-                      //                 child: Center(
-                      //                   child: Text(
-                      //                     arrImages[i].title,
-                      //                     style: appTheme.black14TextStyle
-                      //                         .copyWith(
-                      //                             color: arrImages[i].isSelected
-                      //                                 ? appTheme.whiteColor
-                      //                                 : appTheme.colorPrimary),
-                      //                   ),
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //           ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ),
-                      child: DefaultTabController(
-                        length: 0,
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                              // height: getSize(36),
-                              // decoration: BoxDecoration(
-                              //   color: appTheme.whiteColor,
-                              //   borderRadius: BorderRadius.circular(getSize(5)),
-                              //   border:
-                              //       Border.all(color: appTheme.colorPrimary),
-                              // ),
-                              padding: EdgeInsets.only(
-                                left: getSize(14),
-                              ),
-                              child: TabBar(
-                                isScrollable: true,
-                                controller: _controller,
-                                tabs: <Widget>[
-                                  for (var i = 0; i < arrImages.length; i++)
-                                    Tab(
-                                      text: arrImages[i].title,
+                      child: Container(
+                        height: getSize(36),
+                        decoration: BoxDecoration(
+                            color: appTheme.whiteColor,
+                            borderRadius: BorderRadius.circular(getSize(5)),
+                            border: Border.all(color: appTheme.colorPrimary)),
+                        child: SingleChildScrollView(
+                          physics: ClampingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            // scrollDirection: Axis.horizontal,
+                            children: [
+                              for (var i = 0; i < arrImages.length; i++)
+                                InkWell(
+                                  onTap: () {
+                                    _controller.index = i;
+                                    _handleTabSelection();
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: arrImages[i].isSelected
+                                          ? appTheme.colorPrimary
+                                          : Colors.transparent,
+                                      border: Border(
+                                        left: BorderSide(
+                                          color: appTheme.colorPrimary,
+                                          width: (i == 0)
+                                              ? getSize(0)
+                                              : getSize(0.5),
+                                        ),
+                                        right: BorderSide(
+                                          color: appTheme.colorPrimary,
+                                          width: (i == arrImages.length - 1)
+                                              ? getSize(0)
+                                              : getSize(0.5),
+                                        ),
+                                      ),
                                     ),
-                                ],
-                                indicatorColor: appTheme.colorPrimary,
-                                indicatorSize: TabBarIndicatorSize.tab,
-                                unselectedLabelColor: appTheme.textColor,
-                                labelColor: appTheme.colorPrimary,
-                                labelStyle: appTheme.black14TextStyle,
-                              ),
-                            ),
-                          ],
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          top: getSize(8),
+                                          bottom: getSize(8),
+                                          left: getSize(20),
+                                          right: getSize(20)),
+                                      child: Center(
+                                        child: Text(
+                                          arrImages[i].title,
+                                          style: appTheme.black14TextStyle
+                                              .copyWith(
+                                                  color: arrImages[i].isSelected
+                                                      ? appTheme.whiteColor
+                                                      : appTheme.colorPrimary),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: getSize(10),
+                    height: getSize(20),
                   ),
                   Container(
                     width: double.infinity,
-                    height: getSize(300),
+                    height: getSize(366),
                     child: TabBarView(
                       controller: _controller,
                       children: <Widget>[
                         for (var i = 0; i < arrImages.length; i++)
-                          arrImages[i].isImage
-                              ? Container(
-                                  child: getImageView(
-                                    arrImages[i].url,
-                                    height: getSize(130),
-                                    width: getSize(140),
-                                  ),
-                                )
-                              : Container(
-                                  child: Stack(
-                                    children: [
-                                      FutureBuilder<Widget>(
-                                          future: getPDFView(
-                                            context,
-                                            arrImages[i].url,
-                                            height: getSize(100),
-                                            width: getSize(100),
-                                          ),
-                                          builder: (BuildContext context,
-                                              AsyncSnapshot<Widget> snapshot) {
-                                            if (snapshot.hasData)
-                                              return snapshot.data;
-
-                                            return Container(
-                                              color: appTheme.whiteColor,
-                                            );
-                                          }),
-                                      isLoading
-                                          ? Center(
-                                              child: SpinKitFadingCircle(
-                                                color: appTheme.colorPrimary,
-                                                size: getSize(30),
-                                              ),
-                                            )
-                                          : Stack(),
-                                    ],
-                                  ),
-                                ),
+                          getTabBlock(arrImages[i]),
                       ],
                     ),
                   ),
                   //
+                  SizedBox(
+                    height: getSize(40),
+                  ),
                   getDiamondDetailComponents(),
-                  // getSection("Basic Details"),
-                  // SizedBox(
-                  //   height: getSize(20),
-                  // ),
-                  // getGridView(18),
-                  // SizedBox(
-                  //   height: getSize(38),
-                  // ),
-                  // getSection("Measurements"),
-                  // SizedBox(
-                  //   height: getSize(20),
-                  // ),
-                  // getGridView(15),
-                  // SizedBox(
-                  //   height: getSize(38),
-                  // ),
-                  // getSection("Inclusion Details"),
-                  // SizedBox(
-                  //   height: getSize(20),
-                  // ),
-                  // getGridView(6),
-                  // SizedBox(
-                  //   height: getSize(38),
-                  // ),
-                  // getSection("Other"),
-                  // SizedBox(
-                  //   height: getSize(20),
-                  // ),
-                  // getGridView(3),
-                  // SizedBox(
-                  //   height: getSize(20),
-                  // ),
                 ],
               ),
             )),
       ),
     );
+  }
+
+  Widget getTabBlock(DiamondDetailImagePagerModel model) {
+    return (model.isImage == false)
+        ? Container(
+            child: Stack(
+              children: [
+                FutureBuilder<Widget>(
+                    future: getPDFView(context, model),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+                      if (snapshot.hasData) return snapshot.data;
+
+                      return Container(
+                        color: appTheme.whiteColor,
+                      );
+                    }),
+                if (isLoading)
+                  Center(
+                    child: SpinKitFadingCircle(
+                      color: appTheme.colorPrimary,
+                      size: getSize(30),
+                    ),
+                  ),
+              ],
+            ),
+          )
+        : Column(
+            children: [
+              Container(
+                height: getSize(300),
+                decoration: BoxDecoration(
+                    color: appTheme.whiteColor,
+                    borderRadius: BorderRadius.circular(getSize(5)),
+                    border: Border.all(color: appTheme.lightBGColor)),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      top: getSize(20),
+                      bottom: getSize(20),
+                      left: getSize(16),
+                      right: getSize(16)),
+                  child: getImageView(
+                    (model.arr != null &&
+                            model.arr.length > 0 &&
+                            isStringEmpty(model.url) == false)
+                        ? model.arr[model.subIndex].url
+                        : model.url,
+                    height: getSize(260),
+                    width: MathUtilities.screenWidth(context),
+                    fit: BoxFit.scaleDown,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: getSize(30),
+              ),
+              if (model.arr != null && model.arr.length > 0)
+                Container(
+                  height: getSize(36),
+                  child: Row(
+                    children: [
+                      // Image.asset(
+                      //   filterUnionArrow,
+                      //   width: getSize(14),
+                      //   height: getSize(14),
+                      // ),
+                      Icon(Icons.chevron_left),
+                      SizedBox(
+                        width: getSize(8),
+                      ),
+                      Expanded(
+                          child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          for (var i = 0; i < model.arr.length; i++)
+                            Padding(
+                              padding: EdgeInsets.only(right: getSize(8)),
+                              child: InkWell(
+                                onTap: () {
+                                  //
+                                  model.arr = model.arr.map((e) {
+                                    e.isSelected = false;
+                                    return e;
+                                  }).toList();
+                                  model.arr[i].isSelected = true;
+                                  model.subIndex = i;
+                                  setState(() {
+                                    //
+                                  });
+                                },
+                                child: Container(
+                                  width: getSize(50),
+                                  decoration: BoxDecoration(
+                                      color: appTheme.whiteColor,
+                                      borderRadius:
+                                          BorderRadius.circular(getSize(5)),
+                                      border: Border.all(
+                                          color: model.arr[i].isSelected
+                                              ? appTheme.colorPrimary
+                                              : appTheme.lightBGColor)),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(getSize(4)),
+                                    child: getImageView(
+                                      model.arr[i].url,
+                                      height: getSize(50),
+                                      width: getSize(36),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                        ],
+                      )),
+                      SizedBox(
+                        width: getSize(8),
+                      ),
+                      // Image.asset(
+                      //   filterRightArrow,
+                      //   width: getSize(14),
+                      //   height: getSize(14),
+                      // ),
+                      Icon(Icons.chevron_right),
+                    ],
+                  ),
+                ),
+            ],
+          );
   }
 
   Widget getDiamondDetailComponents() {
@@ -524,20 +617,18 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
     );
   }
 
-  Future<WebView> getPDFView(BuildContext context, String url,
-      {height = 100.0,
-      width = 100.0,
-      placeHolderImage,
-      fit: BoxFit.contain,
-      BoxShape shape}) async {
-    String pdfUrl = (url == null || url.length == 0)
+  Future<WebView> getPDFView(
+    BuildContext context,
+    DiamondDetailImagePagerModel model,
+  ) async {
+    String pdfUrl = (model.url == null || model.url.length == 0)
         ? ""
-        : ((url.startsWith("images") || url.startsWith("/"))
-            ? (ApiConstants.imageBaseURL + url)
-            : url);
+        : ((model.url.startsWith("images") || model.url.startsWith("/"))
+            ? (ApiConstants.imageBaseURL + model.url)
+            : model.url);
 
     return WebView(
-      initialUrl: googleDocViewURL + pdfUrl,
+      initialUrl: (model.isVideo) ? pdfUrl : googleDocViewURL + pdfUrl,
       onPageStarted: (url) {
         // app.resolve<CustomDialogs>().showProgressDialog(context, "");
         setState(() {

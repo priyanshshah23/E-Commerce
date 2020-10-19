@@ -72,6 +72,7 @@ class Master {
   num fromCarat;
   num toCarat;
   List<Master> grouped = [];
+  dynamic map;
 
   Master(
       {this.isActive,

@@ -20,7 +20,7 @@ class DiamondCalculation {
   String totalPriceCrt = "0";
   String totalAmount = "0";
   String pcs = "0";
-  bool isAccountTerm = false;
+  bool isAccountTerm = true;
 
   setAverageCalculation(List<DiamondModel> arraDiamond) {
     double carat = 0.0;
@@ -31,9 +31,9 @@ class DiamondCalculation {
     double totalamt = 0.0;
     double termDiscAmount = 0.0;
 
-    List<DiamondModel> filterList=[];
+    List<DiamondModel> filterList = [];
     Iterable<DiamondModel> list = arraDiamond.where((item) {
-      return item.isSelected == false;
+      return item.isSelected == true;
     });
     if (list == null || list.length == 0) {
       filterList = arraDiamond;
@@ -42,22 +42,26 @@ class DiamondCalculation {
     }
     List<num> arrValues =
         SyncManager.instance.getTotalCaratAvgRapAmount(filterList);
+    List<num> arrFinalValues =
+        SyncManager.instance.getFinalCalculations(filterList);
     carat = arrValues[0];
     totalamt = arrValues[2];
     avgRapCrt = arrValues[3];
     avgPriceCrt = arrValues[4];
     termDiscAmount = arrValues[5];
-    avgAmount = totalamt / carat;
+
     totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt);
     totalAmount = PriceUtilities.getPrice(avgAmount);
     if (isAccountTerm) {
-      avgDisc =arrValues[6];
       print("Discount....$avgDisc");
-      totalDisc = PriceUtilities.getPercent(avgDisc);
+      totalDisc = PriceUtilities.getPercent(arrFinalValues[2]);
+      totalAmount = PriceUtilities.getPrice(arrFinalValues[1]);
+      totalPriceCrt = PriceUtilities.getPrice(arrFinalValues[0]);
     } else {
       avgDisc = (1 - (avgPriceCrt / avgRapCrt)) * (-100);
       print("finalDiscount....$avgDisc");
       totalDisc = PriceUtilities.getPercent(avgDisc);
+      avgAmount = arrValues[1];
     }
     totalCarat = PriceUtilities.getDoubleValue(carat);
     pcs = filterList.length.toString();
@@ -133,10 +137,10 @@ class DiamondConfig {
         actionPlaceOrder(list);
         break;
       case ActionMenuConstant.ACTION_TYPE_COMMENT:
-        actionComment(list);
+        actionComment(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_OFFER:
-        actionOffer(list);
+        actionOffer(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_OFFER_VIEW:
         actionOfferView(list);
@@ -154,12 +158,13 @@ class DiamondConfig {
   }
 
   actionAddToCart(BuildContext context, List<DiamondModel> list) {
-    callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART);
+    callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,
+        title: "Added in Cart");
   }
 
   actionAddToEnquiry(BuildContext context, List<DiamondModel> list) {
-    callApiFoCreateTrack(
-        context, list, DiamondTrackConstant.TRACK_TYPE_ENQUIRY);
+    callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_ENQUIRY,
+        title: "Added in Enquiry");
   }
 
   actionAddToWishList(BuildContext context, List<DiamondModel> list) {
@@ -174,16 +179,39 @@ class DiamondConfig {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
         callApiFoCreateTrack(
             context, list, DiamondTrackConstant.TRACK_TYPE_WATCH_LIST,
-            isPop: true);
+            isPop: true, title: "Added in Watchlist");
       }
     });
   }
 
   actionPlaceOrder(List<DiamondModel> list) {}
 
-  actionComment(List<DiamondModel> list) {}
+  actionComment(BuildContext context, List<DiamondModel> list) {
+    showNotesDialog(context, (manageClick) {
+      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
+        callApiFoCreateTrack(
+            context, list, DiamondTrackConstant.TRACK_TYPE_COMMENT,
+            isPop: true, remark: manageClick.remark);
+      }
+    });
+  }
 
-  actionOffer(List<DiamondModel> list) {}
+  actionOffer(BuildContext context, List<DiamondModel> list) {
+    List<DiamondModel> selectedList = [];
+    DiamondModel model;
+    list.forEach((element) {
+      model = DiamondModel.fromJson(element.toJson());
+      model.isAddToOffer = true;
+      selectedList.add(model);
+    });
+    showOfferListDialog(context, selectedList, (manageClick) {
+      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
+        callApiFoCreateTrack(
+            context, list, DiamondTrackConstant.TRACK_TYPE_OFFER,
+            isPop: true);
+      }
+    });
+  }
 
   actionOfferView(List<DiamondModel> list) {}
 
@@ -195,17 +223,24 @@ class DiamondConfig {
 
   callApiFoCreateTrack(
       BuildContext context, List<DiamondModel> list, int trackType,
-      {bool isPop = false}) {
+      {bool isPop = false, String remark,String title}) {
     CreateDiamondTrackReq req = CreateDiamondTrackReq();
     req.trackType = trackType;
     req.diamonds = [];
+    Diamonds diamonds;
     list.forEach((element) {
-      req.diamonds.add(Diamonds(
+      diamonds = Diamonds(
           diamond: element.id,
           trackDiscount: element.back,
           newDiscount: element.selectedBackPer,
           trackAmount: element.amt,
-          trackPricePerCarat: element.ctPr));
+          trackPricePerCarat: element.ctPr);
+      switch (trackType) {
+        case DiamondTrackConstant.TRACK_TYPE_COMMENT:
+          diamonds.remarks = remark;
+          break;
+      }
+      req.diamonds.add(diamonds);
     });
     SyncManager.instance.callApiForCreateDiamondTrack(
       context,
@@ -216,7 +251,7 @@ class DiamondConfig {
         }
         app.resolve<CustomDialogs>().errorDialog(
               context,
-              "",
+              title,
               resp.message,
               btntitle: R.string().commonString.ok,
             );

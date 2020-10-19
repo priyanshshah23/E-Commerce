@@ -108,6 +108,15 @@ class ScreenTitle {
   final String share;
   final String expDiscPer;
   final String todayDiscPer;
+  final String addOffer;
+  final String addComment;
+  final String hours;
+  final String note;
+  final String offerMsg;
+  final String finalOffer;
+  final String finalDisc;
+  final String finalRate;
+  final String finalValue;
 
 
 //  Support
@@ -117,6 +126,15 @@ class ScreenTitle {
 
   const ScreenTitle({
     this.signup = "Sign up",
+    this.addComment = "Add Comment",
+    this.finalOffer = "Final Offer",
+    this.finalDisc = "Final Disc",
+    this.finalRate = "Final Rate",
+    this.finalValue = "Final Value",
+    this.offerMsg = "Offered stone will directly be confirmed if the price gets approved so we request you to be sure before offering. Any stone(s) put in Offer list is not kept on hold for you as it is available for other customer's as well.",
+    this.note = "Note",
+    this.hours = "Hours",
+    this.addOffer = "Add Offer",
     this.expDiscPer = "Exp Disc%",
     this.todayDiscPer = "Today's Disc%",
     this.searchDiamond = "Search Diamond",

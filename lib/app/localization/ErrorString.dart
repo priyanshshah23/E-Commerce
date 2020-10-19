@@ -42,8 +42,12 @@ class ErrorString {
   final String enterOTP;
   final String selectExpiryDate;
   final String pleaseEnterOTP;
+  final String pleaseEnterCompanyName;
+  final String pleaseEnterComment;
 
   const ErrorString({
+    this.pleaseEnterCompanyName = 'Please enter company name.',
+    this.pleaseEnterComment = 'Please enter comment.',
     this.selectExpiryDate = 'Please select expiry date.',
     this.enterOTP = 'Please enter code',
     this.pleaseEnterOTP = 'Please enter verification code.',

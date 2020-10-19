@@ -4,7 +4,6 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
-import 'package:diamnow/modules/Filter/gridviewlist/selectable_tags.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -210,6 +209,7 @@ Future showBottomSheetforAddToOffice(BuildContext context) {
   final TextEditingController _roomNoController = TextEditingController();
   final TextEditingController _salesmanController = TextEditingController();
   final TextEditingController _commentController = TextEditingController();
+  final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>();
   String selectedDate;
   bool autovalid = false;
 
@@ -244,6 +244,27 @@ Future showBottomSheetforAddToOffice(BuildContext context) {
                         "ADD TO OFFICE",
                         style: appTheme.commonAlertDialogueTitleStyle,
                       ),
+                    ),
+                  ),
+                  getFieldTitleText(R.string().authStrings.companyName + "*"),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: getSize(20)),
+                    child: CommonTextfield(
+                      autoFocus: false,
+                      textOption: TextFieldOption(
+                        hintText: R.string().commonString.selected,
+                        maxLine: 1,
+                        inputController: _timeController,
+                        //isSecureTextField: false
+                      ),
+                      textCallback: (text) {},
+                      validation: (text) {
+                        if (text.isEmpty) {
+                          return "Please select time.";
+                        }
+                      },
+                      inputAction: TextInputAction.next,
+                      onNextPress: () {},
                     ),
                   ),
                   getFieldTitleText("Appointment Date*"),
@@ -289,7 +310,7 @@ Future showBottomSheetforAddToOffice(BuildContext context) {
                     padding: EdgeInsets.symmetric(horizontal: getSize(20)),
                     child: InkWell(
                       onTap: () {
-                        FocusScope.of(context).unfocus();
+//                        FocusScope.of(context).unfocus();
 //                        DateUtilities()
 //                            .pickTimeDialog(context)
 //                            .then((pickTime) {
@@ -297,41 +318,7 @@ Future showBottomSheetforAddToOffice(BuildContext context) {
 //                          _timeController.text = pickTime.toString();
 ////                      _dateController.text = selectedDate.toIso8601String();
 //                        });
-                      },
-                      child: AbsorbPointer(
-                        child: CommonTextfield(
-                          autoFocus: false,
-                          textOption: TextFieldOption(
-                            hintText: R.string().commonString.selected,
-                            maxLine: 1,
-                            inputController: _timeController,
-                            //isSecureTextField: false
-                          ),
-                          textCallback: (text) {},
-                          validation: (text) {
-                            if (text.isEmpty) {
-                              return "Please select time.";
-                            }
-                          },
-                          inputAction: TextInputAction.next,
-                          onNextPress: () {},
-                        ),
-                      ),
-                    ),
-                  ),
-                  getFieldTitleText(R.string().authStrings.companyName + "*"),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: getSize(20)),
-                    child: InkWell(
-                      onTap: () {
-                        FocusScope.of(context).unfocus();
-                        DateUtilities()
-                            .pickTimeDialog(context)
-                            .then((pickTime) {
-                          selectedDate = pickTime.toString();
-                          _timeController.text = pickTime.toString();
-//                      _dateController.text = selectedDate.toIso8601String();
-                        });
+                        openTimeSlotDialog(context, _tagStateKey);
                       },
                       child: AbsorbPointer(
                         child: CommonTextfield(
@@ -452,9 +439,34 @@ Future showBottomSheetforAddToOffice(BuildContext context) {
   );
 }
 
-openTimeSlotDialog(){
+openTimeSlotDialog(BuildContext context, Key key) {
   List<BottomTabModel> arrTimeSlot = BottomTabBar.getTimeSlotList();
-  return Tags(
-//    key: _tagStateKey,
+  return showDialog(
+    context: context,
+    child: Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(getSize(5)),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(getSize(15)),
+        child: Tags(
+          key: key,
+          itemCount: arrTimeSlot.length,
+          itemBuilder: (int index) {
+            final item = arrTimeSlot[index];
+            return ItemTags(
+              index: index,
+              title: item.title,
+              borderRadius: BorderRadius.circular(getSize(10)),
+              color: appTheme.colorPrimary.withOpacity(0.5),
+              activeColor:  appTheme.colorPrimary.withOpacity(0.5),
+              singleItem: true,
+              onPressed: (item){
+              },
+            );
+          },
+        ),
+      ),
+    ),
   );
 }

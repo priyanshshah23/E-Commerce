@@ -1,5 +1,6 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:flutter/cupertino.dart';
 
 class DiamondListReq {
@@ -10,14 +11,14 @@ class DiamondListReq {
   bool isReturnCountOnly;
   String sort;
 
-  DiamondListReq(
-      {this.page,
-      this.limit,
-      this.filters,
-      this.isNotReturnTotal,
-      this.isReturnCountOnly,
-        this.sort,
-      });
+  DiamondListReq({
+    this.page,
+    this.limit,
+    this.filters,
+    this.isNotReturnTotal,
+    this.isReturnCountOnly,
+    this.sort,
+  });
 
   DiamondListReq.fromJson(Map<String, dynamic> json) {
     page = json['page'];
@@ -33,7 +34,7 @@ class DiamondListReq {
     if (json['isReturnCountOnly'] != null) {
       isReturnCountOnly = json['isReturnCountOnly'];
     }
-    if( json['sort']!=null){
+    if (json['sort'] != null) {
       sort = json['sort'];
     }
   }
@@ -66,10 +67,10 @@ class ReqFilters {
   ReqFilters({this.diamondSearchId});
 
   ReqFilters.fromJson(Map<String, dynamic> json) {
-    if(json['diamondSearchId']!=null){
+    if (json['diamondSearchId'] != null) {
       diamondSearchId = json['diamondSearchId'];
     }
-    if(json['wSts']!=null){
+    if (json['wSts'] != null) {
       wSts = json['wSts'];
     }
     inDt = json['inDt'] != null ? new InDt.fromJson(json['inDt']) : null;
@@ -323,7 +324,7 @@ class DiamondModel {
   num pAng;
   num pHgt;
   String polNm;
-  int rap;
+  num rap;
   num crt;
   num back;
   num ctPr;
@@ -337,7 +338,7 @@ class DiamondModel {
   String hANm;
   String vStnId;
   String locNm;
-  int lwrHal;
+  num lwrHal;
   String org;
   String blkTblNm;
   String blkSdNm;
@@ -370,29 +371,82 @@ class DiamondModel {
   num ratio;
   bool isSelected = false;
   bool isAddToWatchList = false;
+  bool isAddToOffer = false;
   String selectedBackPer;
+  String selectedOfferPer;
+  String selectedOfferHour;
 
-  getSelectedBackPer() {
-    return (selectedBackPer ?? "0") + "%";
+  getSelectedDetail(int type) {
+    switch (type) {
+      case DropDownItem.BACK_PER:
+        return (selectedBackPer ?? "0") + "%";
+      case DropDownItem.QUOTE:
+        return (selectedOfferPer ?? "0");
+      case DropDownItem.HOURS:
+        return (selectedOfferHour ?? "0");
+    }
+  }
+
+  getFinalOffer() {
+    if (selectedOfferPer == null) {
+      getOfferPer();
+    }
+    if (back >= 0) {
+      return (back + num.parse(selectedOfferPer)).toString();
+    } else {
+      return (back - num.parse(selectedOfferPer)).toString();
+    }
+  }
+
+  getFinalDisc() {
+    return "";
+  }
+
+  getFinalValue() {
+    return "";
   }
 
   getWatchlistPer() {
     List<String> list = [];
     if (back >= 0) {
       if (selectedBackPer == null) {
-        selectedBackPer=(back + 1).toString();
+        selectedBackPer = (back + 1).toString();
       }
       list.add((back + 1).toString());
       list.add((back + 2).toString());
       list.add((back + 3).toString());
     } else {
       if (selectedBackPer == null) {
-        selectedBackPer=(back - 1).toString();
+        selectedBackPer = (back - 1).toString();
       }
       list.add((back - 1).toString());
       list.add((back - 2).toString());
       list.add((back - 3).toString());
     }
+    return list;
+  }
+
+  getOfferPer() {
+    List<String> list = [];
+    if (selectedOfferPer == null) {
+      selectedOfferPer = (1).toString();
+    }
+    list.add((0.5).toString());
+    list.add((1).toString());
+    return list;
+  }
+
+  getOfferHour() {
+    List<String> list = [];
+    if (selectedOfferHour == null) {
+      selectedOfferHour = (2).toString();
+    }
+    list.add((2).toString());
+    list.add((4).toString());
+    list.add((8).toString());
+    list.add((10).toString());
+    list.add((24).toString());
+    list.add((48).toString());
     return list;
   }
 
@@ -607,5 +661,17 @@ class DiamondModel {
         (ctPr.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
 
     return R.string().commonString.doller + caratPerPrice + "/Cts" ?? "";
+  }
+
+  num getFinalRate() {
+    return this.ctPr - ((this.ctPr * 2) / 100);
+  }
+
+  num getFinalDiscount() {
+    return (1 - (getFinalRate() / rap)) * (-100);
+  }
+
+  num getFinalAmount() {
+    return crt * getFinalRate();
   }
 }
