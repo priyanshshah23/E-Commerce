@@ -160,18 +160,47 @@ class SyncManager {
         calcAmount += item.amt;
         rapAvg += item.rap * item.crt;
         priceCrt += item.ctPr * item.crt;
-        termDiscAmount += (item.ctPr-((item.ctPr*2)/100));
+        termDiscAmount += item.getFinalRate();
       } else {
         carat += item.crt;
         calcAmount += item.amt;
         rapAvg += item.rap * item.crt;
         priceCrt += item.ctPr * item.crt;
-        termDiscAmount += (item.ctPr-((item.ctPr*2)/100));
+        termDiscAmount += item.getFinalRate();
       }
     }
     avgRapAmt = rapAvg / carat;
-    avgPriceCrt = priceCrt/carat;
-    discount = (1-(termDiscAmount/avgPriceCrt))*(-100);
-    return [carat, calcAmount, rapAvg, avgRapAmt, avgPriceCrt,termDiscAmount,discount];
+    avgPriceCrt = priceCrt / carat;
+
+    return [
+      carat,
+      calcAmount,
+      rapAvg,
+      avgRapAmt,
+      avgPriceCrt,
+      termDiscAmount,
+      discount
+    ];
+  }
+
+  List<num> getFinalCalculations(List<DiamondModel> diamondList) {
+    num totalFinalValue = 0;
+    num totalCarat = 0;
+    num totalRapPrice = 0;
+
+    for (var item in diamondList) {
+      totalFinalValue += item.getFinalAmount();
+      totalCarat += item.crt;
+      totalRapPrice += (item.rap * item.crt);
+    }
+
+    num avgFinalValue = totalFinalValue / totalCarat;
+    num avgRap = totalRapPrice / totalCarat;
+
+    return [
+      avgFinalValue,
+      totalFinalValue,
+      (1 - (avgFinalValue / avgRap)) * -100
+    ];
   }
 }

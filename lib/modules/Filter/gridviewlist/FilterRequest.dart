@@ -31,7 +31,9 @@ class FilterRequest {
                 map["wSts"] = "B";
               } else if (item.code == MasterCode.upcoming) {
                 map["wSts"] = "U";
-              } else if (item.code == MasterCode.eyecleanStatic) {}
+              } else if (item.code == MasterCode.eyecleanStatic) {
+                map.addAll(item.map as Map<String, dynamic>);
+              }
             }
           }
         } else if (selectionModel.masterCode == MasterCode.dor ||

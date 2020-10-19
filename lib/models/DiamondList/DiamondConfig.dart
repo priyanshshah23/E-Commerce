@@ -20,7 +20,7 @@ class DiamondCalculation {
   String totalPriceCrt = "0";
   String totalAmount = "0";
   String pcs = "0";
-  bool isAccountTerm = false;
+  bool isAccountTerm = true;
 
   setAverageCalculation(List<DiamondModel> arraDiamond) {
     double carat = 0.0;
@@ -42,22 +42,26 @@ class DiamondCalculation {
     }
     List<num> arrValues =
         SyncManager.instance.getTotalCaratAvgRapAmount(filterList);
+    List<num> arrFinalValues =
+        SyncManager.instance.getFinalCalculations(filterList);
     carat = arrValues[0];
     totalamt = arrValues[2];
     avgRapCrt = arrValues[3];
     avgPriceCrt = arrValues[4];
     termDiscAmount = arrValues[5];
-    avgAmount = arrValues[2];
+
     totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt);
     totalAmount = PriceUtilities.getPrice(avgAmount);
     if (isAccountTerm) {
-      avgDisc = arrValues[6];
       print("Discount....$avgDisc");
-      totalDisc = PriceUtilities.getPercent(avgDisc);
+      totalDisc = PriceUtilities.getPercent(arrFinalValues[2]);
+      totalAmount = PriceUtilities.getPrice(arrFinalValues[1]);
+      totalPriceCrt = PriceUtilities.getPrice(arrFinalValues[0]);
     } else {
       avgDisc = (1 - (avgPriceCrt / avgRapCrt)) * (-100);
       print("finalDiscount....$avgDisc");
       totalDisc = PriceUtilities.getPercent(avgDisc);
+      avgAmount = arrValues[1];
     }
     totalCarat = PriceUtilities.getDoubleValue(carat);
     pcs = filterList.length.toString();
@@ -136,7 +140,7 @@ class DiamondConfig {
         actionComment(list);
         break;
       case ActionMenuConstant.ACTION_TYPE_OFFER:
-        actionOffer(context,list);
+        actionOffer(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_OFFER_VIEW:
         actionOfferView(list);
@@ -154,12 +158,13 @@ class DiamondConfig {
   }
 
   actionAddToCart(BuildContext context, List<DiamondModel> list) {
-    callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,title: "Added in Cart");
+    callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,
+        title: "Added in Cart");
   }
 
   actionAddToEnquiry(BuildContext context, List<DiamondModel> list) {
-    callApiFoCreateTrack(
-        context, list, DiamondTrackConstant.TRACK_TYPE_ENQUIRY,title:"Added in Enquiry");
+    callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_ENQUIRY,
+        title: "Added in Enquiry");
   }
 
   actionAddToWishList(BuildContext context, List<DiamondModel> list) {
@@ -174,7 +179,7 @@ class DiamondConfig {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
         callApiFoCreateTrack(
             context, list, DiamondTrackConstant.TRACK_TYPE_WATCH_LIST,
-            isPop: true,title: "Added in Watchlist");
+            isPop: true, title: "Added in Watchlist");
       }
     });
   }

@@ -643,4 +643,16 @@ class DiamondModel {
 
     return R.string().commonString.doller + caratPerPrice + "/Cts" ?? "";
   }
+
+  num getFinalRate() {
+    return this.ctPr - ((this.ctPr * 2) / 100);
+  }
+
+  num getFinalDiscount() {
+    return (1 - (getFinalRate() / rap)) * (-100);
+  }
+
+  num getFinalAmount() {
+    return crt * getFinalRate();
+  }
 }
