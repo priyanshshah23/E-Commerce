@@ -134,83 +134,85 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
           ],
         ),
 
+        widget.keyToSymbol.verticalScroll?
         SelectableTags(
-          tags: _tags,
-          columns: 3, // default 4
-          // symmetry: true,
-          // borderSide: BorderSide(color: appTheme.),
-          textActiveColor: appTheme.colorPrimary,
-          // borderSide: _tags.map((element) {
-          //   if(element.active){
-          //     return BorderSide(color: appTheme.colorPrimary);
+                tags: _tags,
+                columns: 3, // default 4
+                // symmetry: true,
+                // borderSide: BorderSide(color: appTheme.),
+                textActiveColor: appTheme.colorPrimary,
+                // borderSide: _tags.map((element) {
+                //   if(element.active){
+                //     return BorderSide(color: appTheme.colorPrimary);
 
-          //   }
-          // }),
+                //   }
+                // }),
 
-          // : appTheme.blackNormal14TitleColorblack,
-          color: appTheme.unSelectedBgColor,
-          activeColor: appTheme.selectedFilterColor, // default false
-          onPressed: (tag) {
-            if (tag.title != R.string().commonString.all) {
-              widget.keyToSymbol.masters.forEach((element) {
-                if (element.webDisplay == tag.title) {
-                  element.isSelected ^= true;
-                  if (!element.isSelected) {
-                    widget.keyToSymbol.isShowAllSelected = false;
-                  } else {
-                    for (var element in widget.keyToSymbol.masters) {
-                      if (element.sId != R.string().commonString.all) {
-                        if (element.isSelected) {
-                          widget.keyToSymbol.isShowAllSelected = true;
-                        } else {
+                // : appTheme.blackNormal14TitleColorblack,
+                color: appTheme.unSelectedBgColor,
+                activeColor: appTheme.selectedFilterColor, // default false
+                onPressed: (tag) {
+                  if (tag.title != R.string().commonString.all) {
+                    widget.keyToSymbol.masters.forEach((element) {
+                      if (element.webDisplay == tag.title) {
+                        element.isSelected ^= true;
+                        if (!element.isSelected) {
                           widget.keyToSymbol.isShowAllSelected = false;
-                          break;
+                        } else {
+                          for (var element in widget.keyToSymbol.masters) {
+                            if (element.sId != R.string().commonString.all) {
+                              if (element.isSelected) {
+                                widget.keyToSymbol.isShowAllSelected = true;
+                              } else {
+                                widget.keyToSymbol.isShowAllSelected = false;
+                                break;
+                              }
+                            }
+                          }
                         }
                       }
+                    });
+                    if (widget.keyToSymbol.isShowAllSelected) {
+                      _tags.forEach((element) {
+                        element.active = true;
+                      });
+                      widget.keyToSymbol.masters.forEach((element) {
+                        element.isSelected = true;
+                      });
+                    } else {
+                      _tags.forEach((element) {
+                        if (element.title == R.string().commonString.all)
+                          element.active = false;
+                      });
+                      widget.keyToSymbol.masters.forEach((element) {
+                        if (element.sId == R.string().commonString.all)
+                          element.isSelected = false;
+                      });
                     }
                   }
-                }
-              });
-              if (widget.keyToSymbol.isShowAllSelected) {
-                _tags.forEach((element) {
-                  element.active = true;
-                });
-                widget.keyToSymbol.masters.forEach((element) {
-                  element.isSelected = true;
-                });
-              } else {
-                _tags.forEach((element) {
-                  if (element.title == R.string().commonString.all)
-                    element.active = false;
-                });
-                widget.keyToSymbol.masters.forEach((element) {
-                  if (element.sId == R.string().commonString.all)
-                    element.isSelected = false;
-                });
-              }
-            }
-            if (tag.title == R.string().commonString.all) {
-              widget.keyToSymbol.isShowAllSelected ^= true;
+                  if (tag.title == R.string().commonString.all) {
+                    widget.keyToSymbol.isShowAllSelected ^= true;
 
-              if (widget.keyToSymbol.isShowAllSelected) {
-                _tags.forEach((element) {
-                  element.active = true;
-                });
-                widget.keyToSymbol.masters.forEach((element) {
-                  element.isSelected = true;
-                });
-              } else {
-                _tags.forEach((element) {
-                  element.active = false;
-                });
-                widget.keyToSymbol.masters.forEach((element) {
-                  element.isSelected = false;
-                });
-              }
-            }
-            setState(() {});
-          },
-        )
+                    if (widget.keyToSymbol.isShowAllSelected) {
+                      _tags.forEach((element) {
+                        element.active = true;
+                      });
+                      widget.keyToSymbol.masters.forEach((element) {
+                        element.isSelected = true;
+                      });
+                    } else {
+                      _tags.forEach((element) {
+                        element.active = false;
+                      });
+                      widget.keyToSymbol.masters.forEach((element) {
+                        element.isSelected = false;
+                      });
+                    }
+                  }
+                  setState(() {});
+                },
+              ):SelectionWidget(widget.keyToSymbol),
+            
 
         // Column(
         //   crossAxisAlignment: CrossAxisAlignment.start,
@@ -343,6 +345,143 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
     );
   }
 
+  getHorizontalView() {
+    List<Tag> _list1 = [];
+    List<Tag> _list2 = [];
+
+    for (int i = 0; i < _tags.length / 2; i++) {
+      _list1.add(_tags[i]);
+    }
+    // for (int i = _tags.length ~/ 2; i < _tags.length; i++) {
+    //   _list2.add(_tags[i]);
+    // }
+    for (int i = 0; i < _tags.length; i++) {
+      _list2.add(_tags[i]);
+    }
+
+    return ListView(
+      scrollDirection: Axis.horizontal,
+      shrinkWrap: true,
+      children: <Widget>[
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Row(
+            // crossAxisAlignment:CrossAxisAlignment.start,
+              children: List.generate(_list1.length, (index) {
+            return Padding(
+              padding: const EdgeInsets.all(3.0),
+              child: Container(
+                
+                width: 50.0,
+                height: 50.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: Colors.red,
+                ),
+                child: Text(_list1[index].title),
+              ),
+            );
+          })),
+        ),
+        Padding(
+          padding: EdgeInsets.all(8),
+          child: Row(
+            // crossAxisAlignment:CrossAxisAlignment.start,
+              children: List.generate(_list2.length, (index) {
+            return Padding(
+              padding: const EdgeInsets.all(3.0),
+              child: 
+              Container(
+                
+                width: 50.0,
+                height: 50.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: Colors.green,
+                ),
+                child: Text(_list2[index].title),
+              ),
+            );
+          })),
+        ),
+          ],
+        )
+      ],
+    );
+  }
+
+  // getSelectableTag(Tag tag){
+  //   return Tooltip(
+  //     message: tag.title.toString(),
+  //     child: Container(
+  //         margin: widget.margin ??
+  //             EdgeInsets.symmetric(horizontal: _initMargin, vertical: 6),
+  //         width: (widget.symmetry) ? _widthCalc(row: row) : null,
+  //         height: widget.height ?? 31 * (widget.fontSize / 14),
+  //         padding: EdgeInsets.all(0.0),
+  //         decoration: BoxDecoration(
+  //           boxShadow: widget.boxShadow ?? null,
+  //           borderRadius: BorderRadius.circular(
+  //               widget.borderRadius ?? _initBorderRadius),
+  //           color: tag.active
+  //               ? (widget.activeColor ?? Colors.blueGrey)
+  //               : (widget.color ?? Colors.white),
+  //         ),
+  //         child: OutlineButton(
+  //             color: tag.active
+  //                 ? (widget.activeColor ?? Colors.blueGrey)
+  //                 : (widget.color ?? Colors.white),
+  //             highlightColor: Colors.transparent,
+  //             highlightedBorderColor: widget.activeColor ?? Colors.blueGrey,
+  //             //disabledTextColor: Colors.red,
+  //             borderSide: tag.active
+  //                 ? BorderSide(color: appTheme.colorPrimary)
+  //                 : null,
+  //             // borderSide: widget.borderSide ??
+  //             //     BorderSide(
+  //             //         color: (widget.activeColor ?? Colors.blueGrey)),
+  //             child: (tag.icon != null)
+  //                 ? FittedBox(
+  //                     child: Icon(
+  //                       tag.icon,
+  //                       size: widget.fontSize,
+  //                       color: tag.active
+  //                           ? (widget.textActiveColor ?? Colors.white)
+  //                           : (widget.textColor ?? Colors.black),
+  //                     ),
+  //                   )
+  //                 : FittedBox(
+  //                     child: Text(
+  //                       tag.title,
+  //                       // overflow: widget.textOverflow ?? TextOverflow.fade,
+  //                       softWrap: false,
+  //                       style: TextStyle(
+  //                           fontSize: widget.fontSize ?? null,
+  //                           color: tag.active
+  //                               ? (widget.textActiveColor ?? Colors.white)
+  //                               : (widget.textColor ?? Colors.black),
+  //                           fontWeight: FontWeight.normal),
+  //                     ),
+  //                   ),
+  //             onPressed: () {
+  //               if (widget.singleItem) _singleItem();
+
+  //               setState(() {
+  //                 (widget.singleItem)
+  //                     ? tag.active = true
+  //                     : tag.active = !tag.active;
+  //                 widget.onPressed(tag);
+  //               });
+  //             },
+  //             shape: RoundedRectangleBorder(
+  //                 borderRadius: BorderRadius.circular(
+  //                     widget.borderRadius ?? _initBorderRadius)))),
+  //   );
+
+  // }
   // int getGridViewLength(KeyToSymbolModel keyToSymbol) {
   //   int length = 0;
   //   if (keyToSymbol.isShowAll && keyToSymbol.isShowMore) {

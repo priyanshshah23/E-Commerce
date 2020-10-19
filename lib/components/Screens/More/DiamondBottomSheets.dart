@@ -8,7 +8,7 @@ import 'package:diamnow/modules/Filter/gridviewlist/selectable_tags.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_tags/flutter_tags.dart';
+// import 'package:flutter_tags/flutter_tags.dart';
 
 Future showBottomSheetForConfirmStoneDetail(BuildContext context) {
   final _formKey = GlobalKey<FormState>();
@@ -454,7 +454,7 @@ Future showBottomSheetforAddToOffice(BuildContext context) {
 
 openTimeSlotDialog(){
   List<BottomTabModel> arrTimeSlot = BottomTabBar.getTimeSlotList();
-  return Tags(
-//    key: _tagStateKey,
-  );
+//   return Tags(
+// //    key: _tagStateKey,
+//   );
 }
