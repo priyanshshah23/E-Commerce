@@ -48,15 +48,11 @@ class _ChangePasswordState extends State<ChangePassword> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(
-                    height: getSize(40),
-                  ),
                   Padding(
                     padding: EdgeInsets.only(
                         right: getSize(30),
                         left: getSize(82),
-                        bottom: getSize(52),
-                        top: getSize(12)),
+                        bottom: getSize(52),),
                     child: Image.asset(
                       resetPassword,
                       height: getSize(150),

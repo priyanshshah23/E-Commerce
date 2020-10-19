@@ -69,6 +69,7 @@ const alphaNumberRegEx = r'[a-zA-Z0-9]';
 const alphaRegEx = r'[a-zA-Z]';
 const spaceRegEx = r'\s';
 const numberRegXWithDecimalAllows = r'([0-9]*[0-9]+\.)[0-9]{0,2}';
+const IMAGE_FILE_SIZE = 10.0;
 
 //Master Code
 class MasterCode {

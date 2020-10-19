@@ -11,6 +11,10 @@ class ApiConstants {
   static const String apiUrl = baseURL;
   static const String commonUrl = apiUrl + "device/v1/";
 
+ static const String countryList = commonUrl + "country/paginate";
+ static const String stateList = commonUrl + "state/paginate";
+ static const String cityList = commonUrl + "city/paginate";
+
   static const String documentUpload = "/api/v1/upload-file";
 
   static const String masterSync = commonUrl + "masterSync";

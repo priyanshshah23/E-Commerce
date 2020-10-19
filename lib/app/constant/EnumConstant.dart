@@ -20,3 +20,5 @@ class DisplayTypes {
   static const String vertical = "vertical";
   static const String horizontal = "horizontal";
 }
+
+enum DialogueListType { Country , State, City }
