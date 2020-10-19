@@ -57,9 +57,10 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(
-                        left: getSize(10),
-                        right: getSize(10),
-                      ),
+                          left: getSize(10),
+                          right: getSize(10),
+                          top: getSize(8),
+                          bottom: getSize(8)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -67,6 +68,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                           getDymentionAndCaratDetail(),
                           getTableDepthAndAmountDetail(),
                           getWatchListDetail(),
+                          getOfferDetail(),
                         ],
                       ),
                     ),
@@ -228,7 +230,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
 
   getWatchListDetail() {
     List<String> backPerList = widget.item.getWatchlistPer();
-    DropDownItem item = DropDownItem(widget.item);
+    DropDownItem item = DropDownItem(widget.item, DropDownItem.BACK_PER);
     return widget.item.isAddToWatchList
         ? Padding(
             padding: EdgeInsets.only(top: getSize(5)),
@@ -238,25 +240,55 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 getText(R.string().screenTitle.todayDiscPer),
                 getText(PriceUtilities.getPercent(widget.item?.back) ?? ""),
                 getText(R.string().screenTitle.expDiscPer),
-                offsetPopup(widget.item, backPerList, item),
+                popupList(widget.item, backPerList, item, (selectedValue) {
+                  widget.item.selectedBackPer = selectedValue;
+                  RxBus.post(true, tag: eventBusDropDown);
+                }, isPer: true),
               ],
             ),
           )
         : Container();
   }
 
-  Widget offsetPopup(DiamondModel model, List<String> backPerList,
-          DropDownItem dropDownItem) =>
+  getOfferDetail() {
+    List<String> offerPer = widget.item.getOfferPer();
+    List<String> offerHour = widget.item.getOfferHour();
+    DropDownItem itemOffer = DropDownItem(widget.item, DropDownItem.QUOTE);
+    DropDownItem itemHour = DropDownItem(widget.item, DropDownItem.HOURS);
+    return widget.item.isAddToOffer
+        ? Padding(
+            padding: EdgeInsets.only(top: getSize(5)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                getText(R.string().screenTitle.offer),
+                popupList(widget.item, offerPer, itemOffer, (selectedValue) {
+                  widget.item.selectedOfferPer = selectedValue;
+                  RxBus.post(true, tag: eventBusDropDown);
+                }),
+                getText(R.string().screenTitle.hours),
+                popupList(widget.item, offerHour, itemHour, (selectedValue) {
+                  widget.item.selectedOfferHour = selectedValue;
+                  RxBus.post(true, tag: eventBusDropDown);
+                }),
+              ],
+            ),
+          )
+        : Container();
+  }
+
+  Widget popupList(DiamondModel model, List<String> backPerList,
+          DropDownItem dropDownItem, Function(String) selectedValue,
+          {bool isPer = false}) =>
       PopupMenuButton<String>(
         shape: TooltipShapeBorder(arrowArc: 0.5),
         onSelected: (newValue) {
           // add this property
-
-          model.selectedBackPer = newValue;
-          RxBus.post(true, tag: eventBusDropDown);
+          selectedValue(newValue);
         },
         itemBuilder: (context) => [
-          for (var item in backPerList) getPopupItems(item, model),
+          for (var item in backPerList)
+            getPopupItems(item, model, isPer: isPer),
           PopupMenuItem(
             height: getSize(30),
             value: "Start",
@@ -277,8 +309,13 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
 
 class DropDownItem extends StatefulWidget {
   DiamondModel model;
+  static const BACK_PER = 1;
+  static const QUOTE = 2;
+  static const HOURS = 3;
 
-  DropDownItem(this.model);
+  int type = BACK_PER;
+
+  DropDownItem(this.model, this.type);
 
   @override
   _DropDownItemState createState() => _DropDownItemState();
@@ -295,7 +332,7 @@ class _DropDownItemState extends State<DropDownItem> {
           borderRadius: BorderRadius.circular(getSize(5))),
       child: Row(
         children: <Widget>[
-          getText(widget.model.getSelectedBackPer()),
+          getText(widget.model.getSelectedDetail(widget.type)),
           SizedBox(
             height: getSize(5),
           ),
@@ -327,13 +364,13 @@ getText(String text) {
   );
 }
 
-getPopupItems(String per, DiamondModel model) {
+getPopupItems(String per, DiamondModel model, {bool isPer = false}) {
   return PopupMenuItem(
     value: per,
     height: getSize(20),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[getText(per + "%")],
+      children: <Widget>[getText(per + (isPer ? "%" : ""))],
     ),
   );
 }
