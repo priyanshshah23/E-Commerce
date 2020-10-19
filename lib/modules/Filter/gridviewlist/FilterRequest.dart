@@ -29,8 +29,8 @@ class FilterRequest {
                 map["isXray"] = true;
               } else if (item.code == MasterCode.newarrivals) {
                 map["wSts"] = "B";
-              } else if (item.code == MasterCode.upcoming) {
-                map["wSts"] = "U";
+              } else if (item.code == MasterCode.stage) {
+                map["wSts"] = "B";
               } else if (item.code == MasterCode.eyecleanStatic) {
                 if (!isNullEmptyOrFalse(item.map))
                   map.addAll(item.map as Map<String, dynamic>);
