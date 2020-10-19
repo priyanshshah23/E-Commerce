@@ -223,21 +223,36 @@ class DiamondConfig {
 
   callApiFoCreateTrack(
       BuildContext context, List<DiamondModel> list, int trackType,
-      {bool isPop = false, String remark,String title}) {
+      {bool isPop = false, String remark, String companyName, String title}) {
     CreateDiamondTrackReq req = CreateDiamondTrackReq();
     req.trackType = trackType;
+    switch (trackType) {
+      case DiamondTrackConstant.TRACK_TYPE_OFFER:
+        req.remarks = remark;
+        req.company = companyName;
+        break;
+    }
+    DateTime dateTimeNow = DateTime.now();
     req.diamonds = [];
     Diamonds diamonds;
     list.forEach((element) {
       diamonds = Diamonds(
           diamond: element.id,
           trackDiscount: element.back,
-          newDiscount: element.selectedBackPer,
+          newDiscount: num.parse(element.selectedBackPer),
           trackAmount: element.amt,
           trackPricePerCarat: element.ctPr);
       switch (trackType) {
         case DiamondTrackConstant.TRACK_TYPE_COMMENT:
           diamonds.remarks = remark;
+          break;
+        case DiamondTrackConstant.TRACK_TYPE_OFFER:
+          diamonds.vStnId = element.vStnId;
+          diamonds.newAmount = element.getFinalValue();
+          diamonds.newPricePerCarat = element.getFinalRate();
+          dateTimeNow
+              .add(Duration(hours: int.parse(element.selectedOfferHour)));
+          diamonds.offerValidDate = dateTimeNow.toUtc().toIso8601String();
           break;
       }
       req.diamonds.add(diamonds);
@@ -248,6 +263,9 @@ class DiamondConfig {
       (resp) {
         if (isPop) {
           Navigator.pop(context);
+          if (trackType == DiamondTrackConstant.TRACK_TYPE_OFFER) {
+            Navigator.pop(context);
+          }
         }
         app.resolve<CustomDialogs>().errorDialog(
               context,

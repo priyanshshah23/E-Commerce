@@ -392,18 +392,22 @@ class DiamondModel {
       getOfferPer();
     }
     if (back >= 0) {
-      return (back + num.parse(selectedOfferPer)).toString();
+      return (back + num.parse(selectedOfferPer));
     } else {
-      return (back - num.parse(selectedOfferPer)).toString();
+      return (back - num.parse(selectedOfferPer));
     }
   }
 
   getFinalDisc() {
-    return "";
+    return 0;
+  }
+
+  getFinalRate() {
+    return 0;
   }
 
   getFinalValue() {
-    return "";
+    return 0;
   }
 
   getWatchlistPer() {
