@@ -269,9 +269,9 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     getText(R.string().screenTitle.finalOffer + " :"),
-                    getText(widget.item.getFinalOffer()),
+                    getText(widget.item.getFinalOffer().toString()),
                     getText(R.string().screenTitle.finalDisc + " :"),
-                    getText(widget.item.getFinalDisc()),
+                    getText(widget.item.getFinalDisc().toString()),
                   ],
                 ),
               ),
@@ -281,9 +281,9 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     getText(R.string().screenTitle.finalRate + " :"),
-                    getText(widget.item.getFinalRate()),
+                    getText(widget.item.getFinalRate().toString()),
                     getText(R.string().screenTitle.finalValue + " :"),
-                    getText(widget.item.getFinalValue()),
+                    getText(widget.item.getFinalValue().toString()),
                   ],
                 ),
               ),

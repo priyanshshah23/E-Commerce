@@ -356,7 +356,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             }
           });
         } else if (obj.type == ActionMenuConstant.ACTION_TYPE_STATUS) {
-          showBottomSheetforAddToOffice(context);
         } else {
           manageBottomMenuClick(obj);
         }
