@@ -25,51 +25,52 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
   void initState() {
     super.initState();
 
-    widget.keyToSymbol.title = "";
+    if (widget.keyToSymbol.verticalScroll) {
+      widget.keyToSymbol.title = "";
 
-    if (widget.keyToSymbol.isShowAll == true) {
-      if (widget.keyToSymbol.masters
-              .where((element) => element.sId == R.string().commonString.all)
-              .toList()
-              .length ==
-          0) {
-        Master allMaster = Master();
-        allMaster.sId = R.string().commonString.all;
-        allMaster.webDisplay = R.string().commonString.all;
-        allMaster.isSelected = false;
+      if (widget.keyToSymbol.isShowAll == true) {
+        if (widget.keyToSymbol.masters
+                .where((element) => element.sId == R.string().commonString.all)
+                .toList()
+                .length ==
+            0) {
+          Master allMaster = Master();
+          allMaster.sId = R.string().commonString.all;
+          allMaster.webDisplay = R.string().commonString.all;
+          allMaster.isSelected = false;
 
-        widget.keyToSymbol.masters.insert(0, allMaster);
+          widget.keyToSymbol.masters.insert(0, allMaster);
+        }
+      }
+
+      //code for showMore & showLess functionality.
+      // if (widget.keyToSymbol.isShowMore) {
+      //   if (widget.keyToSymbol.masters
+      //           .where((element) => element.sId == "ShowMore")
+      //           .toList()
+      //           .length ==
+      //       0) {
+      //     Master allMaster = Master();
+      //     allMaster.sId = "ShowMore";
+      //     allMaster.webDisplay =
+      //         widget.keyToSymbol.isShowMoreSelected ? "Show More" : "Show Less";
+      //     allMaster.isSelected = false;
+
+      //     widget.keyToSymbol.masters
+      //         .insert(widget.keyToSymbol.masters.length, allMaster);
+      //   }
+      // }
+
+      if (_tags.isEmpty) {
+        widget.keyToSymbol.masters.forEach((element) {
+          _tags.add(Tag(
+            // id: item.id,
+            title: element.webDisplay,
+            active: false,
+          ));
+        });
       }
     }
-
-    //code for showMore & showLess functionality.
-    // if (widget.keyToSymbol.isShowMore) {
-    //   if (widget.keyToSymbol.masters
-    //           .where((element) => element.sId == "ShowMore")
-    //           .toList()
-    //           .length ==
-    //       0) {
-    //     Master allMaster = Master();
-    //     allMaster.sId = "ShowMore";
-    //     allMaster.webDisplay =
-    //         widget.keyToSymbol.isShowMoreSelected ? "Show More" : "Show Less";
-    //     allMaster.isSelected = false;
-
-    //     widget.keyToSymbol.masters
-    //         .insert(widget.keyToSymbol.masters.length, allMaster);
-    //   }
-    // }
-
-    if (_tags.isEmpty) {
-      widget.keyToSymbol.masters.forEach((element) {
-        _tags.add(Tag(
-          // id: item.id,
-          title: element.webDisplay,
-          active: false,
-        ));
-      });
-    }
-
     //code for showMore & showLess functionality.
     // for (var masterIndex = 0; masterIndex < elementsToShow; masterIndex++) {
     //   listOfMasterView.add(widget.keyToSymbol.masters[masterIndex]);
@@ -134,8 +135,8 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
           ],
         ),
 
-        widget.keyToSymbol.verticalScroll?
-        SelectableTags(
+        widget.keyToSymbol.verticalScroll
+            ? SelectableTags(
                 tags: _tags,
                 columns: 3, // default 4
                 // symmetry: true,
@@ -211,8 +212,8 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
                   }
                   setState(() {});
                 },
-              ):SelectionWidget(widget.keyToSymbol),
-            
+              )
+            : SelectionWidget(widget.keyToSymbol),
 
         // Column(
         //   crossAxisAlignment: CrossAxisAlignment.start,
@@ -355,7 +356,7 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
     // for (int i = _tags.length ~/ 2; i < _tags.length; i++) {
     //   _list2.add(_tags[i]);
     // }
-    for (int i = 0; i < _tags.length; i++) {
+    for (int i = _tags.length ~/ 2; i < _tags.length; i++) {
       _list2.add(_tags[i]);
     }
 
@@ -367,46 +368,43 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Row(
-            // crossAxisAlignment:CrossAxisAlignment.start,
-              children: List.generate(_list1.length, (index) {
-            return Padding(
-              padding: const EdgeInsets.all(3.0),
-              child: Container(
-                
-                width: 50.0,
-                height: 50.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  color: Colors.red,
-                ),
-                child: Text(_list1[index].title),
-              ),
-            );
-          })),
-        ),
-        Padding(
-          padding: EdgeInsets.all(8),
-          child: Row(
-            // crossAxisAlignment:CrossAxisAlignment.start,
-              children: List.generate(_list2.length, (index) {
-            return Padding(
-              padding: const EdgeInsets.all(3.0),
-              child: 
-              Container(
-                
-                width: 50.0,
-                height: 50.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  color: Colors.green,
-                ),
-                child: Text(_list2[index].title),
-              ),
-            );
-          })),
-        ),
+              padding: EdgeInsets.all(8.0),
+              child: Row(
+                  // crossAxisAlignment:CrossAxisAlignment.start,
+                  children: List.generate(_list1.length, (index) {
+                return Padding(
+                  padding: const EdgeInsets.all(3.0),
+                  child: Container(
+                    width: 50.0,
+                    height: 50.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: Colors.red,
+                    ),
+                    child: Text(_list1[index].title),
+                  ),
+                );
+              })),
+            ),
+            Padding(
+              padding: EdgeInsets.all(8),
+              child: Row(
+                  // crossAxisAlignment:CrossAxisAlignment.start,
+                  children: List.generate(_list2.length, (index) {
+                return Padding(
+                  padding: const EdgeInsets.all(3.0),
+                  child: Container(
+                    width: 50.0,
+                    height: 50.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: Colors.green,
+                    ),
+                    child: Text(_list2[index].title),
+                  ),
+                );
+              })),
+            ),
           ],
         )
       ],

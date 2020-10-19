@@ -47,6 +47,7 @@ class _TagWidgetState extends State<TagWidget> {
   String oldValueForTo;
   var myFormat = DateFormat('d-MM-yyyy');
   DateTime fromDate, toDate;
+  List<Tag> _tags = []; //for keytosymbol
 
   @override
   void initState() {
@@ -63,6 +64,19 @@ class _TagWidgetState extends State<TagWidget> {
         allMaster.isSelected = false;
 
         widget.model.masters.insert(0, allMaster);
+      }
+    }
+    if (widget.model.masterCode == "KEY_TO_SYMBOLS") {
+      widget.model.title = "";
+
+      if (isNullEmptyOrFalse(_tags)) {
+        widget.model.masters.forEach((element) {
+          _tags.add(Tag(
+            // id: item.id,
+            title: element.webDisplay ?? "-",
+            active: false,
+          ));
+        });
       }
     }
   }
@@ -532,10 +546,9 @@ class _TagWidgetState extends State<TagWidget> {
             for (var master in result) {
               if (master.code.toLowerCase() == "y") {
                 Map<String, dynamic> map = {};
-                Master.getSubMaster(master.code).then((value) {
-                  map["eCln"] = value;
-                  widget.model.masters[index].map = map;
-                });
+
+                map["eCln"] = [master.sId];
+                if (master.isSelected) widget.model.masters[index].map = map;
 
                 break;
               }
@@ -548,104 +561,112 @@ class _TagWidgetState extends State<TagWidget> {
 
   //code of keytosymbol
   getKeytoSymbolWidgetHorizontal() {
-    List<Tag> _tags = [];
-    widget.model.title = "";
-
-    // if (widget.model.isShowAll == true) {
-    //   if (widget.model.masters
-    //           .where((element) => element.sId == R.string().commonString.all)
-    //           .toList()
-    //           .length ==
-    //       0) {
-    //     Master allMaster = Master();
-    //     allMaster.sId = R.string().commonString.all;
-    //     allMaster.webDisplay = R.string().commonString.all;
-    //     allMaster.isSelected = false;
-
-    //     widget.model.masters.insert(0, allMaster);
-    //   }
-    // }
-
-    if (_tags.isEmpty) {
-      widget.model.masters.forEach((element) {
-        _tags.add(Tag(
-          // id: item.id,
-          title: element.webDisplay,
-          active: false,
-        ));
-      });
-    }
-
     List<Tag> _list1 = [];
     List<Tag> _list2 = [];
 
-    for (int i = 0; i < _tags.length / 2; i++) {
-      _list1.add(_tags[i]);
-    }
-    // for (int i = _tags.length ~/ 2; i < _tags.length; i++) {
-    //   _list2.add(_tags[i]);
-    // }
     for (int i = 0; i < _tags.length; i++) {
-      _list2.add(_tags[i]);
+      if (i % 2 == 0)
+        _list1.add(_tags[i]);
+      else
+        _list2.add(_tags[i]);
     }
 
     return Row(
       children: <Widget>[
         Expanded(
           child: Container(
-            height: getSize(150),
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Row(
-                          // crossAxisAlignment:CrossAxisAlignment.start,
-                          children: List.generate(_list1.length, (index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Container(
-                            width: 50.0,
-                            height: 50.0,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.red,
-                            ),
-                            child: Text(_list1[index].title),
-                          ),
-                        );
-                      })),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8),
-                      child: Row(
-                          // crossAxisAlignment:CrossAxisAlignment.start,
-                          children: List.generate(_list2.length, (index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Container(
-                            width: 50.0,
-                            height: 50.0,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.green,
-                            ),
-                            child: Text(_list2[index].title),
-                          ),
-                        );
-                      })),
-                    ),
-                  ],
-                )
-              ],
-            ),
+            height: getSize(105),
+            child: getKeytoSymbolHorizontalView(_list1, _list2),
           ),
         ),
       ],
+    );
+  }
+
+  getKeytoSymbolHorizontalView(List<Tag> _list1, List<Tag> _list2) {
+    return ListView(
+      scrollDirection: Axis.horizontal,
+      shrinkWrap: true,
+      children: <Widget>[
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Row(
+                  // crossAxisAlignment:CrossAxisAlignment.start,
+                  children: List.generate(_list1.length, (index) {
+                return InkWell(
+                  child: getSingleTagForKeytoSymbol(_list1, index),
+                  onTap: () {
+                    setState(() {
+                      widget.model.masters[index].isSelected =
+                          !widget.model.masters[index].isSelected;
+
+                      getMultipleMasterSelections(index);
+                    });
+                  },
+                );
+              })),
+            ),
+            Padding(
+              padding: EdgeInsets.all(8),
+              child: Row(
+                  // crossAxisAlignment:CrossAxisAlignment.start,
+                  children: List.generate(_list2.length, (index) {
+                return InkWell(
+                  child: getSingleTagForKeytoSymbol(_list2, index),
+                  onTap: () {
+                    setState(() {
+                      widget.model.masters[index].isSelected =
+                          !widget.model.masters[index].isSelected;
+
+                      getMultipleMasterSelections(index);
+                    });
+                  },
+                );
+              })),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
+  getSingleTagForKeytoSymbol(List<Tag> list, int index) {
+    return Padding(
+      padding: EdgeInsets.only(right: getSize(8.0)),
+      child: Container(
+        decoration: BoxDecoration(
+          color: widget.model.masters[index].isSelected
+              ? appTheme.selectedFilterColor
+              : appTheme.unSelectedBgColor,
+          border: Border.all(
+            width: getSize(1.0),
+            color: widget.model.masters[index].isSelected
+                ? appTheme.colorPrimary
+                : appTheme.borderColor,
+          ),
+          borderRadius: BorderRadius.circular(
+            getSize(5),
+          ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.only(
+              top: getSize(8.0),
+              bottom: getSize(8.0),
+              right: getSize(16.0),
+              left: getSize(16.0)),
+          child: Center(
+            child: Text(
+              list[index].title,
+              style: widget.model.masters[index].isSelected
+                  ? appTheme.primaryColor14TextStyle
+                  : appTheme.blackNormal14TitleColorblack,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -1384,6 +1384,7 @@
   {
     "title": "keyToSymbol",
     "desc": "Desc",
+    "allLableTitle": "All",
     "viewType": "keytosymbol",
     "radiobutton": [
       {
