@@ -462,7 +462,6 @@ openTimeSlotDialog(BuildContext context, Key key) {
               activeColor:  appTheme.colorPrimary.withOpacity(0.5),
               singleItem: true,
               onPressed: (item){
-
               },
             );
           },
