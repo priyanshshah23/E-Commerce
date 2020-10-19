@@ -84,7 +84,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
   @override
   void initState() {
     super.initState();
-    _callApiForCountryList();
+//    _callApiForCountryList();
   }
 
   @override
