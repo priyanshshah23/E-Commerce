@@ -816,31 +816,35 @@ class _PersonalInformationState extends State<PersonalInformation> {
   getCountryDropDown() {
     return InkWell(
       onTap: () {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return Dialog(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(getSize(25)),
-                  ),
-                  child: DialogueList(
-                    type: DialogueListType.Country,
-                    selectedItem: selectedCountryItem,
-                    duplicateItems: countryList,
-                    applyFilterCallBack: (
-                        {CityList cityList,
-                        CountryList countryList,
-                        StateList stateList}) {
-                      if (_countryController.text != countryList.name) {
-                        _stateController.text = "";
-                        _cityController.text = "";
-                      }
-                      selectedCountryItem = countryList;
-                      _countryController.text = countryList.name;
-                      _callApiForStateList(countryId: countryList.id);
-                    },
-                  ));
-            });
+        if(countryList == null || countryList.length == 0) {
+          _callApiForCountryList(isShowDialogue: true);
+        } else {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Dialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(getSize(25)),
+                    ),
+                    child: DialogueList(
+                      type: DialogueListType.Country,
+                      selectedItem: selectedCountryItem,
+                      duplicateItems: countryList,
+                      applyFilterCallBack: (
+                          {CityList cityList,
+                            CountryList countryList,
+                            StateList stateList}) {
+                        if (_countryController.text != countryList.name) {
+                          _stateController.text = "";
+                          _cityController.text = "";
+                        }
+                        selectedCountryItem = countryList;
+                        _countryController.text = countryList.name;
+                        _callApiForStateList(countryId: countryList.id);
+                      },
+                    ));
+              });
+        }
       },
       child: CommonTextfield(
           focusNode: _focusCountry,
@@ -870,30 +874,34 @@ class _PersonalInformationState extends State<PersonalInformation> {
     return InkWell(
       onTap: () {
         if (countrySelect()) {
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return Dialog(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(getSize(25)),
-                    ),
-                    child: DialogueList(
-                      type: DialogueListType.State,
-                      selectedItem: selectedStateItem,
-                      duplicateItems: stateList,
-                      applyFilterCallBack: (
-                          {CityList cityList,
-                          CountryList countryList,
-                          StateList stateList}) {
-                        if (_stateController.text != stateList.name) {
-                          _cityController.text = "";
-                        }
-                        selectedStateItem = stateList;
-                        _stateController.text = stateList.name;
-                        _callApiForCityList(countryId: selectedCountryItem.id, stateId: stateList.id);
-                      },
-                    ));
-              });
+          if(stateList == null || stateList.length == 0) {
+            _callApiForStateList(countryId: selectedCountryItem.id,isShowDialogue: true);
+          } else {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return Dialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(getSize(25)),
+                      ),
+                      child: DialogueList(
+                        type: DialogueListType.State,
+                        selectedItem: selectedStateItem,
+                        duplicateItems: stateList,
+                        applyFilterCallBack: (
+                            {CityList cityList,
+                              CountryList countryList,
+                              StateList stateList}) {
+                          if (_stateController.text != stateList.name) {
+                            _cityController.text = "";
+                          }
+                          selectedStateItem = stateList;
+                          _stateController.text = stateList.name;
+                          _callApiForCityList(countryId: selectedCountryItem.id, stateId: stateList.id);
+                        },
+                      ));
+                });
+          }
         } else {
           showToast("Please Select Country First", context: context);
         }
@@ -928,26 +936,30 @@ class _PersonalInformationState extends State<PersonalInformation> {
         FocusScope.of(context).unfocus();
         if (countrySelect()) {
           if (stateSelect()) {
-            showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return Dialog(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(getSize(25)),
-                      ),
-                      child: DialogueList(
-                        type: DialogueListType.City,
-                        selectedItem: selectedCityItem,
-                        duplicateItems: cityList,
-                        applyFilterCallBack: (
-                            {CityList cityList,
-                            CountryList countryList,
-                            StateList stateList}) {
-                          selectedCityItem = cityList;
-                          _cityController.text = cityList.name;
-                        },
-                      ));
-                });
+            if(cityList == null || cityList.length == 0) {
+              _callApiForCityList(countryId: selectedCountryItem.id,stateId: selectedStateItem.id,isShowDialogue: true);
+            } else {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Dialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(getSize(25)),
+                        ),
+                        child: DialogueList(
+                          type: DialogueListType.City,
+                          selectedItem: selectedCityItem,
+                          duplicateItems: cityList,
+                          applyFilterCallBack: (
+                              {CityList cityList,
+                                CountryList countryList,
+                                StateList stateList}) {
+                            selectedCityItem = cityList;
+                            _cityController.text = cityList.name;
+                          },
+                        ));
+                  });
+            }
           } else {
             showToast("Please Select State First");
           }
@@ -1005,7 +1017,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
     return true;
   }
 
-  void _callApiForCityList({String stateId, String countryId}) {
+  void _callApiForCityList({String stateId, String countryId, bool isShowDialogue = false}) {
     CityListReq req = CityListReq();
     req.state = stateId;
     req.country = countryId;
@@ -1017,6 +1029,28 @@ class _PersonalInformationState extends State<PersonalInformation> {
             isProgress: true)
         .then((resp) {
       cityList.addAll(resp.data);
+      if(isShowDialogue) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Dialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(getSize(25)),
+                  ),
+                  child: DialogueList(
+                    type: DialogueListType.City,
+                    selectedItem: selectedCityItem,
+                    duplicateItems: cityList,
+                    applyFilterCallBack: (
+                        {CityList cityList,
+                          CountryList countryList,
+                          StateList stateList}) {
+                      selectedCityItem = cityList;
+                      _cityController.text = cityList.name;
+                    },
+                  ));
+            });
+      }
     }).catchError(
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(
@@ -1032,7 +1066,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
     );
   }
 
-  void _callApiForCountryList() {
+  void _callApiForCountryList({bool isShowDialogue = false}) {
     NetworkCall<CountryListResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().countryList(),
@@ -1040,6 +1074,34 @@ class _PersonalInformationState extends State<PersonalInformation> {
         isProgress: true)
         .then((resp) {
       countryList.addAll(resp.data);
+      if(isShowDialogue) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Dialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(getSize(25)),
+                  ),
+                  child: DialogueList(
+                    type: DialogueListType.Country,
+                    selectedItem: selectedCountryItem,
+                    duplicateItems: countryList,
+                    applyFilterCallBack: (
+                        {CityList cityList,
+                          CountryList countryList,
+                          StateList stateList}) {
+                      if (_countryController.text != countryList.name) {
+                        _stateController.text = "";
+                        _cityController.text = "";
+                      }
+                      selectedCountryItem = countryList;
+                      _countryController.text = countryList.name;
+                      _callApiForStateList(countryId: countryList.id);
+                    },
+                  ));
+            });
+      }
+
     }).catchError(
           (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(
@@ -1058,7 +1120,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
     );
   }
 
-  void _callApiForStateList({String countryId}) {
+  void _callApiForStateList({String countryId,bool isShowDialogue = false}) {
     StateListReq req = StateListReq();
     req.country = countryId;
 
@@ -1069,6 +1131,32 @@ class _PersonalInformationState extends State<PersonalInformation> {
         isProgress: true)
         .then((resp) {
       stateList.addAll(resp.data);
+      if(isShowDialogue) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Dialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(getSize(25)),
+                  ),
+                  child: DialogueList(
+                    type: DialogueListType.State,
+                    selectedItem: selectedStateItem,
+                    duplicateItems: stateList,
+                    applyFilterCallBack: (
+                        {CityList cityList,
+                          CountryList countryList,
+                          StateList stateList}) {
+                      if (_stateController.text != stateList.name) {
+                        _cityController.text = "";
+                      }
+                      selectedStateItem = stateList;
+                      _stateController.text = stateList.name;
+                      _callApiForCityList(countryId: selectedCountryItem.id, stateId: stateList.id);
+                    },
+                  ));
+            });
+      }
     }).catchError(
           (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(
