@@ -217,54 +217,57 @@ class ProgressDialog2 {
 
 Future OpenErrorDialog(BuildContext context, String title, String disc,
     {String btntitle, VoidCallback voidCallback}) {
-  return showModalBottomSheet(
+  return showDialog(
       context: context,
-      isScrollControlled: true,
-      backgroundColor: appTheme.whiteColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(15),
-          topRight: Radius.circular(15),
-        ),
-      ),
+//      isScrollControlled: true,
+//      backgroundColor: appTheme.whiteColor,
       builder: (context) {
-        return StatefulBuilder(builder: (context, StateSetter setSetter) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              title != null && title.length > 0
-                  ? Text(
-                      title,
-                      style: appTheme.commonAlertDialogueTitleStyle,
-                    )
-                  : Container(),
-              SizedBox(
-                height: getSize(30),
-              ),
-              Text(
-                disc,
-                textAlign: TextAlign.center,
-                style: appTheme.commonAlertDialogueTitleStyle,
-              ),
-              // SizedBox(height: getSize(20),),
-              btntitle != null
-                  ? Container(
-                      margin: EdgeInsets.only(top: getSize(30)),
-                      child: AppButton.flat(
-                        onTap: voidCallback ??
-                            () {
-                              Navigator.pop(context);
-                            },
-                        borderRadius: 14,
-                        fitWidth: true,
-                        text: btntitle,
-                        //isButtonEnabled: enableDisableSigninButton(),
-                      ),
-                    )
-                  : SizedBox(),
-            ],
-          );
-        });
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(getSize(15),
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(getSize(15)),
+            child: StatefulBuilder(builder: (context, StateSetter setSetter) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  title != null && title.length > 0
+                      ? Text(
+                          title,
+                          style: appTheme.commonAlertDialogueTitleStyle,
+                        )
+                      : Container(),
+                  SizedBox(
+                    height: getSize(30),
+                  ),
+                  Text(
+                    disc,
+                    textAlign: TextAlign.center,
+                    style: appTheme.commonAlertDialogueTitleStyle,
+                  ),
+                  // SizedBox(height: getSize(20),),
+                  btntitle != null
+                      ? Container(
+                          margin: EdgeInsets.only(top: getSize(30)),
+                          child: AppButton.flat(
+                            onTap: voidCallback ??
+                                () {
+                                  Navigator.pop(context);
+                                },
+                            borderRadius: 14,
+                            fitWidth: true,
+                            text: btntitle,
+                            //isButtonEnabled: enableDisableSigninButton(),
+                          ),
+                        )
+                      : SizedBox(),
+                ],
+              );
+            }),
+          ),
+        );
       });
 
   /* return showDialog(

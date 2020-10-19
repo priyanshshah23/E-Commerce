@@ -47,7 +47,7 @@ class DiamondCalculation {
     avgRapCrt = arrValues[3];
     avgPriceCrt = arrValues[4];
     termDiscAmount = arrValues[5];
-    avgAmount = totalamt / carat;
+    avgAmount = arrValues[2];
     totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt);
     totalAmount = PriceUtilities.getPrice(avgAmount);
     if (isAccountTerm) {
@@ -154,12 +154,12 @@ class DiamondConfig {
   }
 
   actionAddToCart(BuildContext context, List<DiamondModel> list) {
-    callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART);
+    callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,title: "Added in Cart");
   }
 
   actionAddToEnquiry(BuildContext context, List<DiamondModel> list) {
     callApiFoCreateTrack(
-        context, list, DiamondTrackConstant.TRACK_TYPE_ENQUIRY);
+        context, list, DiamondTrackConstant.TRACK_TYPE_ENQUIRY,title:"Added in Enquiry");
   }
 
   actionAddToWishList(BuildContext context, List<DiamondModel> list) {
@@ -174,7 +174,7 @@ class DiamondConfig {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
         callApiFoCreateTrack(
             context, list, DiamondTrackConstant.TRACK_TYPE_WATCH_LIST,
-            isPop: true);
+            isPop: true,title: "Added in Watchlist");
       }
     });
   }
@@ -218,7 +218,7 @@ class DiamondConfig {
 
   callApiFoCreateTrack(
       BuildContext context, List<DiamondModel> list, int trackType,
-      {bool isPop = false, String remark}) {
+      {bool isPop = false, String remark,String title}) {
     CreateDiamondTrackReq req = CreateDiamondTrackReq();
     req.trackType = trackType;
     req.diamonds = [];
@@ -246,7 +246,7 @@ class DiamondConfig {
         }
         app.resolve<CustomDialogs>().errorDialog(
               context,
-              "",
+              title,
               resp.message,
               btntitle: R.string().commonString.ok,
             );
