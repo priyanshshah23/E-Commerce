@@ -301,7 +301,7 @@ Future showOfferCommentDialog(BuildContext context, ActionClick actionClick) {
                       ),
                       validation: (text) {
                         if (text.isEmpty) {
-                          return "Please enter company name.";
+                          return R.string().errorString.pleaseEnterCompanyName;
                         }
                       },
                       textCallback: (text) {},
@@ -350,7 +350,7 @@ Future showOfferCommentDialog(BuildContext context, ActionClick actionClick) {
                         bottom: getSize(5),
                         top: getSize(10)),
                     child: Text(
-                      R.string().screenTitle.note,
+                      R.string().screenTitle.comment,
                       style: appTheme.black16TextStyle,
                     ),
                   ),
@@ -401,6 +401,130 @@ Future showOfferCommentDialog(BuildContext context, ActionClick actionClick) {
                             },
                             child: Text(
                               R.string().screenTitle.addOffer,
+                              style: appTheme.primary16TextStyle,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      });
+    },
+  );
+}
+
+Future showNotesDialog(BuildContext context, ActionClick actionClick) {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _commentController = TextEditingController();
+  bool autovalid = false;
+
+  return showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: appTheme.whiteColor,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(15),
+        topRight: Radius.circular(15),
+      ),
+    ),
+    builder: (context) {
+      return StatefulBuilder(builder: (context, StateSetter setsetter) {
+        return Padding(
+          padding: MediaQuery.of(context).viewInsets,
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              autovalidate: autovalid,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding:
+                        EdgeInsets.only(top: getSize(28), bottom: getSize(21)),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        R.string().screenTitle.comment,
+                        style: appTheme.commonAlertDialogueTitleStyle,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: getSize(20),
+                        right: getSize(20),
+                        bottom: getSize(20),
+                        top: getSize(10)),
+                    child: CommonTextfield(
+                      autoFocus: false,
+                      textOption: TextFieldOption(
+                        maxLine: 3,
+                        hintText: R.string().screenTitle.comment,
+                        inputController: _commentController,
+                        formatter: [
+                          WhitelistingTextInputFormatter(
+                              new RegExp(alphaRegEx)),
+                          BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+                        ],
+                        //isSecureTextField: false
+                      ),
+                      validation: (text) {
+                        if (text.isEmpty) {
+                          return R.string().errorString.pleaseEnterComment;
+                        }
+                      },
+                      textCallback: (text) {},
+                      inputAction: TextInputAction.done,
+                      onNextPress: () {
+                        FocusScope.of(context).unfocus();
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        right: getSize(10),
+                        left: getSize(26),
+                        bottom: getSize(20)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Expanded(
+                          child: FlatButton(
+                            textColor: ColorConstants.colorPrimary,
+                            padding: EdgeInsets.all(getSize(0)),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              R.string().commonString.cancel,
+                              style: appTheme.black16TextStyle,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: FlatButton(
+                            textColor: ColorConstants.colorPrimary,
+                            padding: EdgeInsets.all(getSize(0)),
+                            onPressed: () {
+                              if (_formKey.currentState.validate()) {
+                                actionClick(ManageCLick(
+                                    type: clickConstant.CLICK_TYPE_CONFIRM,
+                                    remark: _commentController.text));
+                              } else {
+                                setsetter(() {
+                                  autovalid = true;
+                                });
+                              }
+                            },
+                            child: Text(
+                              R.string().screenTitle.addComment,
                               style: appTheme.primary16TextStyle,
                             ),
                           ),

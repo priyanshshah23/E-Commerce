@@ -324,7 +324,7 @@ class DiamondModel {
   num pAng;
   num pHgt;
   String polNm;
-  int rap;
+  num rap;
   num crt;
   num back;
   num ctPr;
@@ -338,7 +338,7 @@ class DiamondModel {
   String hANm;
   String vStnId;
   String locNm;
-  int lwrHal;
+  num lwrHal;
   String org;
   String blkTblNm;
   String blkSdNm;
@@ -385,6 +385,29 @@ class DiamondModel {
       case DropDownItem.HOURS:
         return (selectedOfferHour ?? "0");
     }
+  }
+
+  getFinalOffer() {
+    if (selectedOfferPer == null) {
+      getOfferPer();
+    }
+    if (back >= 0) {
+      return (back + num.parse(selectedOfferPer)).toString();
+    } else {
+      return (back - num.parse(selectedOfferPer)).toString();
+    }
+  }
+
+  getFinalDisc() {
+    return "";
+  }
+
+  getFinalRate() {
+    return "";
+  }
+
+  getFinalValue() {
+    return "";
   }
 
   getWatchlistPer() {

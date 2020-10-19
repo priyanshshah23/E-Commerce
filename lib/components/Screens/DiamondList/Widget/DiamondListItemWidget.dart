@@ -20,6 +20,11 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   @override
   void initState() {
     super.initState();
+    if (widget.item.isAddToOffer ?? false) {
+      RxBus.register<bool>(tag: eventBusDropDown).listen((event) {
+        setState(() {});
+      });
+    }
   }
 
   @override
@@ -237,9 +242,9 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                getText(R.string().screenTitle.todayDiscPer),
+                getText(R.string().screenTitle.todayDiscPer + " :"),
                 getText(PriceUtilities.getPercent(widget.item?.back) ?? ""),
-                getText(R.string().screenTitle.expDiscPer),
+                getText(R.string().screenTitle.expDiscPer + " :"),
                 popupList(widget.item, backPerList, item, (selectedValue) {
                   widget.item.selectedBackPer = selectedValue;
                   RxBus.post(true, tag: eventBusDropDown);
@@ -256,23 +261,53 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
     DropDownItem itemOffer = DropDownItem(widget.item, DropDownItem.QUOTE);
     DropDownItem itemHour = DropDownItem(widget.item, DropDownItem.HOURS);
     return widget.item.isAddToOffer
-        ? Padding(
-            padding: EdgeInsets.only(top: getSize(5)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                getText(R.string().screenTitle.offer),
-                popupList(widget.item, offerPer, itemOffer, (selectedValue) {
-                  widget.item.selectedOfferPer = selectedValue;
-                  RxBus.post(true, tag: eventBusDropDown);
-                }),
-                getText(R.string().screenTitle.hours),
-                popupList(widget.item, offerHour, itemHour, (selectedValue) {
-                  widget.item.selectedOfferHour = selectedValue;
-                  RxBus.post(true, tag: eventBusDropDown);
-                }),
-              ],
-            ),
+        ? Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: getSize(5)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    getText(R.string().screenTitle.finalOffer + " :"),
+                    getText(widget.item.getFinalOffer()),
+                    getText(R.string().screenTitle.finalDisc + " :"),
+                    getText(widget.item.getFinalDisc()),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: getSize(5)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    getText(R.string().screenTitle.finalRate + " :"),
+                    getText(widget.item.getFinalRate()),
+                    getText(R.string().screenTitle.finalValue + " :"),
+                    getText(widget.item.getFinalValue()),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: getSize(5)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    getText(R.string().screenTitle.offer + " :"),
+                    popupList(widget.item, offerPer, itemOffer,
+                        (selectedValue) {
+                      widget.item.selectedOfferPer = selectedValue;
+                      RxBus.post(true, tag: eventBusDropDown);
+                    }),
+                    getText(R.string().screenTitle.hours + " :"),
+                    popupList(widget.item, offerHour, itemHour,
+                        (selectedValue) {
+                      widget.item.selectedOfferHour = selectedValue;
+                      RxBus.post(true, tag: eventBusDropDown);
+                    }),
+                  ],
+                ),
+              ),
+            ],
           )
         : Container();
   }

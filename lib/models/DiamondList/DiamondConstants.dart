@@ -18,8 +18,16 @@ typedef ActionClick(ManageCLick manageCLick);
 class ManageCLick {
   int type;
   BottomTabModel bottomTabModel;
+  String remark;
+  String companyName;
+  String date;
 
-  ManageCLick({this.bottomTabModel, this.type});
+  ManageCLick(
+      {this.bottomTabModel,
+      this.type,
+      this.companyName,
+      this.remark,
+      this.date});
 }
 
 class DrawerConstant {
@@ -43,6 +51,7 @@ class DiamondTrackConstant {
   static const TRACK_TYPE_WATCH_LIST = 2;
   static const TRACK_TYPE_OFFER = 3;
   static const TRACK_TYPE_ENQUIRY = 6;
+  static const TRACK_TYPE_COMMENT = 99;
 }
 
 class ActionMenuConstant {

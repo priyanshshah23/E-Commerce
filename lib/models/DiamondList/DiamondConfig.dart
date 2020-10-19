@@ -33,7 +33,7 @@ class DiamondCalculation {
 
     List<DiamondModel> filterList = [];
     Iterable<DiamondModel> list = arraDiamond.where((item) {
-      return item.isSelected == false;
+      return item.isSelected == true;
     });
     if (list == null || list.length == 0) {
       filterList = arraDiamond;
@@ -133,10 +133,10 @@ class DiamondConfig {
         actionPlaceOrder(list);
         break;
       case ActionMenuConstant.ACTION_TYPE_COMMENT:
-        actionComment(list);
+        actionComment(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_OFFER:
-        actionOffer(context,list);
+        actionOffer(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_OFFER_VIEW:
         actionOfferView(list);
@@ -181,7 +181,15 @@ class DiamondConfig {
 
   actionPlaceOrder(List<DiamondModel> list) {}
 
-  actionComment(List<DiamondModel> list) {}
+  actionComment(BuildContext context, List<DiamondModel> list) {
+    showNotesDialog(context, (manageClick) {
+      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
+        callApiFoCreateTrack(
+            context, list, DiamondTrackConstant.TRACK_TYPE_COMMENT,
+            isPop: true, remark: manageClick.remark);
+      }
+    });
+  }
 
   actionOffer(BuildContext context, List<DiamondModel> list) {
     List<DiamondModel> selectedList = [];
@@ -210,17 +218,24 @@ class DiamondConfig {
 
   callApiFoCreateTrack(
       BuildContext context, List<DiamondModel> list, int trackType,
-      {bool isPop = false}) {
+      {bool isPop = false, String remark}) {
     CreateDiamondTrackReq req = CreateDiamondTrackReq();
     req.trackType = trackType;
     req.diamonds = [];
+    Diamonds diamonds;
     list.forEach((element) {
-      req.diamonds.add(Diamonds(
+      diamonds = Diamonds(
           diamond: element.id,
           trackDiscount: element.back,
           newDiscount: element.selectedBackPer,
           trackAmount: element.amt,
-          trackPricePerCarat: element.ctPr));
+          trackPricePerCarat: element.ctPr);
+      switch (trackType) {
+        case DiamondTrackConstant.TRACK_TYPE_COMMENT:
+          diamonds.remarks = remark;
+          break;
+      }
+      req.diamonds.add(diamonds);
     });
     SyncManager.instance.callApiForCreateDiamondTrack(
       context,

@@ -26,6 +26,7 @@ class CreateDiamondTrackReq {
 
 class Diamonds {
   String diamond;
+  String remarks;
   num trackPricePerCarat;
   num trackAmount;
   String newDiscount;
@@ -36,7 +37,8 @@ class Diamonds {
       this.trackPricePerCarat,
       this.trackAmount,
       this.newDiscount,
-      this.trackDiscount});
+      this.trackDiscount,
+      this.remarks});
 
   Diamonds.fromJson(Map<String, dynamic> json) {
     diamond = json['diamond'];
@@ -44,15 +46,18 @@ class Diamonds {
     trackAmount = json['trackAmount'];
     newDiscount = json['newDiscount'];
     trackDiscount = json['trackDiscount'];
+    remarks = json['remarks'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['diamond'] = this.diamond;
-    data['trackPricePerCarat'] = this.trackPricePerCarat;
-    data['trackAmount'] = this.trackAmount;
-    data['newDiscount'] = this.newDiscount;
-    data['trackDiscount'] = this.trackDiscount;
+    if (this.trackPricePerCarat != null)
+      data['trackPricePerCarat'] = this.trackPricePerCarat;
+    if (this.trackAmount != null) data['trackAmount'] = this.trackAmount;
+    if (this.newDiscount != null) data['newDiscount'] = this.newDiscount;
+    if (this.trackDiscount != null) data['trackDiscount'] = this.trackDiscount;
+    if (this.remarks != null) data['remarks'] = this.remarks;
     return data;
   }
 }
