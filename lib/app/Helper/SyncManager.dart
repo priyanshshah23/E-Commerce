@@ -139,6 +139,24 @@ class SyncManager {
     }
   }
 
+  Future callApiForPlaceOrder(
+    BuildContext context,
+    PlaceOrderReq req,
+    Function(BaseApiResp) success,
+    Function(ErrorResp) failure, {
+    bool isProgress = true,
+  }) async {
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+      () => app.resolve<ServiceModule>().networkService().placeOrder(req),
+      context,
+      isProgress: isProgress,
+    )
+        .then((resp) async {
+      success(resp);
+    }).catchError((onError) => {if (onError is ErrorResp) failure(onError)});
+  }
+
   List<num> getTotalCaratRapAmount(List<DiamondModel> diamondList) {
     double carat = 0.0;
     double calcAmount = 0.0;

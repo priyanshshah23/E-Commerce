@@ -1,3 +1,4 @@
+import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/ImageConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/Home/DrawerModel.dart';
@@ -79,7 +80,7 @@ class BottomMenuSetting {
     moreMenuList.add(BottomTabModel(
         image: company,
         title: R.string().screenTitle.officeView,
-        type: ActionMenuConstant.ACTION_TYPE_OFFER_VIEW));
+        type: ActionMenuConstant.ACTION_TYPE_APPOINTMENT));
     moreMenuList.add(BottomTabModel(
         image: hold,
         title: R.string().screenTitle.hold,
@@ -127,6 +128,48 @@ class BottomMenuSetting {
       image: plusIcon,
       type: ActionMenuConstant.ACTION_TYPE_MORE,
     ));
+
+    return moreMenuList;
+  }
+
+  List<BottomTabModel> getStatusMenuItems() {
+    List<BottomTabModel> moreMenuList = [];
+    BottomTabModel model = BottomTabModel(
+        image: diamond,
+        isCenter: false,
+        title: R.string().screenTitle.statusHold);
+    model.imageColor = appTheme.statusHold;
+    moreMenuList.add(model);
+    model = BottomTabModel(
+        image: diamond,
+        isCenter: false,
+        title: R.string().screenTitle.statusOnMemo);
+    model.imageColor = appTheme.statusOnMemo;
+    moreMenuList.add(model);
+    model = BottomTabModel(
+        image: diamond,
+        isCenter: false,
+        title: R.string().screenTitle.statusAvailable);
+    model.imageColor = appTheme.statusAvailable;
+    moreMenuList.add(model);
+    model = BottomTabModel(
+        image: diamond,
+        isCenter: false,
+        title: R.string().screenTitle.statusNew);
+    model.imageColor = appTheme.statusNew;
+    moreMenuList.add(model);
+    model = BottomTabModel(
+        image: diamond,
+        isCenter: false,
+        title: R.string().screenTitle.statusOffer);
+    model.imageColor = appTheme.statusOffer;
+    moreMenuList.add(model);
+    model = BottomTabModel(
+        image: diamond,
+        isCenter: false,
+        title: R.string().screenTitle.statusMyHold);
+    model.imageColor = appTheme.statusMyHold;
+    moreMenuList.add(model);
 
     return moreMenuList;
   }

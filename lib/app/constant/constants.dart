@@ -12,7 +12,7 @@ const FAIL = 2;
 
 var IMAGEFILESIZE = 10.0;
 
-const APPNAME = "3eco SPro";
+const APPNAME = "Diamnow";
 const STRIPE_KEY = "pk_test_ZCG3mwYMaOFEFAdpcQtkNIZ300fxNZXXOj";
 
 const CODE_OK = "OK";

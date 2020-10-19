@@ -398,18 +398,6 @@ class DiamondModel {
     }
   }
 
-  getFinalDisc() {
-    return 0;
-  }
-
-  getFinalRate() {
-    return 0;
-  }
-
-  getFinalValue() {
-    return 0;
-  }
-
   getWatchlistPer() {
     List<String> list = [];
     if (back >= 0) {

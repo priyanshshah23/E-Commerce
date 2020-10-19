@@ -82,3 +82,27 @@ class Diamonds {
     return data;
   }
 }
+class PlaceOrderReq {
+  List<String> diamonds;
+  String comment;
+  String company;
+  String date;
+
+  PlaceOrderReq({this.diamonds, this.comment, this.company, this.date});
+
+  PlaceOrderReq.fromJson(Map<String, dynamic> json) {
+    diamonds = json['diamonds'].cast<String>();
+    comment = json['comment'];
+    company = json['company'];
+    date = json['date'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['diamonds'] = this.diamonds;
+    data['comment'] = this.comment;
+    data['company'] = this.company;
+    data['date'] = this.date;
+    return data;
+  }
+}
