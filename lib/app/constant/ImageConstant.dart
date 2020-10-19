@@ -15,7 +15,8 @@ const String plusIcon = "assets/diamnow/plusIcon.png";
 const String selectedCheckbox = "assets/auth/checkbox.png";
 const String unSelectedCheckbox = "assets/auth/unselectedcheckbox.png";
 const String forgetPassword = "assets/auth/forgetPassword.png";
-
+const String resetPassword = "assets/auth/resetPassword.png";
+const String passwordResetSuccessfully = "assets/auth/passwordResetSuccessfully.png";
 
 
 // DiamNow

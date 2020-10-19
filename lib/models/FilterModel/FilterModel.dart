@@ -134,9 +134,9 @@ class Config {
         }
       }
     }
-    formModels.sort((model1, model2) {
-      return model1.sequence.compareTo(model2.sequence);
-    });
+    // formModels.sort((model1, model2) {
+    //   return model1.sequence.compareTo(model2.sequence);
+    // });
     return formModels;
   }
 
@@ -157,6 +157,7 @@ class Config {
 }
 
 class FormBaseModel {
+  String megaTitle;
   String title;
   String apiKey;
   String desc;
@@ -164,9 +165,15 @@ class FormBaseModel {
   String tab;
   int sequence;
 
-  FormBaseModel({this.apiKey, this.desc, this.title});
+  FormBaseModel({
+    this.apiKey,
+    this.desc,
+    this.title,
+    this.megaTitle,
+  });
   FormBaseModel.fromJson(Map<String, dynamic> json) {
-    title = json['title'];
+    title = json['title'] ?? "";
+    megaTitle = json["megaTitle"] ?? "";
     apiKey = json['apiKey'];
     desc = json['desc'];
     viewType = json["viewType"];
@@ -247,6 +254,7 @@ class SelectionModel extends FormBaseModel {
 class ColorModel extends SelectionModel {
   bool isGroupSelected = false;
   bool showGroup;
+  bool showRadio;
   bool showWhiteFancy;
   List<Master> mainMasters = [];
   List<Master> groupMaster = [];
@@ -258,6 +266,7 @@ class ColorModel extends SelectionModel {
   List<Master> overtone = [];
 
   ColorModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    showRadio = json["showRadio"] ?? false;
     showGroup = json["showGroup"] ?? false;
     showWhiteFancy = json["showWhiteFancy"] ?? true;
   }

@@ -1,27 +1,27 @@
 import 'dart:io';
 
+import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
-import 'package:intl/intl.dart' as intl;
 import 'package:rxbus/rxbus.dart';
-import 'package:diamnow/app/localization/app_locales.dart';
 
 import '../app.export.dart';
 import '../constant/ColorConstant.dart';
 import '../theme/app_theme.dart';
 
 getBackButton(BuildContext context,
-    {bool isWhite = false, double height, double width,VoidCallback ontap}) {
+    {bool isWhite = false, double height, double width, VoidCallback ontap}) {
   return Container(
     margin: EdgeInsets.all(getSize(20)),
     child: InkWell(
-      onTap: ontap??() {
-        Navigator.of(context).pop();
-      },
+      onTap: ontap ??
+          () {
+            Navigator.of(context).pop();
+          },
       child: Image.asset(
         back,
         color: isWhite ? appTheme.whiteColor : appTheme.textBlackColor,
@@ -79,7 +79,7 @@ getDrawerButton(BuildContext context, bool isBlack) {
     },
     icon: Image.asset(
       menu,
-      color: isBlack == true ? ColorConstants.colorPrimary: Colors.white,
+      color: isBlack == true ? ColorConstants.colorPrimary : Colors.white,
       width: getSize(26),
       height: getSize(26),
     ),
@@ -364,4 +364,62 @@ double getImageSize(IconSizeType imaegType) {
   } else if (imaegType == IconSizeType.large) {
     return getSize(4);
   }
+}
+
+getBottomButton(BuildContext context, VoidCallback onTap, String title,
+    {String firstButtonTitle, VoidCallback onCancel}) {
+  return Padding(
+    padding: EdgeInsets.only(
+      top: getSize(24),
+      left: getSize(16),
+      right: getSize(16),
+      bottom: getSize(24),
+    ),
+    child: Row(
+      children: [
+        GestureDetector(
+          onTap: () {
+            if (onCancel != null) {
+              onCancel();
+            } else {
+              Navigator.pop(context);
+            }
+          },
+          child: Container(
+            width: MathUtilities.screenWidth(context) / 2 - 50,
+            child: getBodyText(
+                context, firstButtonTitle ?? R.string().commonString.cancel),
+          ),
+        ),
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(14),
+              color: appTheme.colorPrimary,
+            ),
+            height: getSize(54),
+            child: FlatButton(
+              padding: EdgeInsets.all(getSize(0)),
+              onPressed: onTap,
+              child: Text(title, style: appTheme.black16TextStyle),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+getFieldTitleText(String text){
+  return Padding(
+    padding: EdgeInsets.only(
+        left: getSize(20),
+        right: getSize(20),
+        bottom: getSize(5),
+        top: getSize(10)),
+    child: Text(
+      text,
+      style: appTheme.black16TextStyle,
+    ),
+  );
 }

@@ -12,6 +12,8 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart'
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
+import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
+import 'package:diamnow/components/Screens/More/DiamondBottomSheets.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
@@ -25,7 +27,7 @@ class DiamondListScreen extends StatefulScreenWidget {
 
   Map<String, dynamic> dictFilters;
   String filterId = "";
-  int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
+  int moduleType = DiamondModuleConstant.MODULE_TYPE_UPCOMING;
   bool isFromDrawer = false;
 
   DiamondListScreen(Map<String, dynamic> arguments) {
@@ -62,16 +64,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   BaseList diamondList;
   List<DiamondModel> arraDiamond = List<DiamondModel>();
   int page = DEFAULT_PAGE;
-  String totalCarat = "0";
-  String totalDisc = "0";
-  String totalPriceCrt = "0";
-  String totalAmount = "0";
-  String pcs = "0";
+  DiamondCalculation diamondCalculation = DiamondCalculation();
   List<FilterOptions> optionList = List<FilterOptions>();
-  List<BottomTabModel> arrMoreMenu;
-  List<BottomTabModel> arrBottomTab;
   bool isGrid = false;
-  bool isAccountTerm = false;
 
   @override
   void initState() {
@@ -109,10 +104,51 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       callApi(false);
     });
-    arrMoreMenu = DrawerSetting.getMoreMenuItems();
-    arrBottomTab = BottomTabBar.getDiamondListScreenBottomTabs();
     setState(() {
       //
+    });
+  }
+
+  callApiforUpcoming(bool isRefress, {bool isLoading = false}) {
+    if (isRefress) {
+      arraDiamond.clear();
+      page = DEFAULT_PAGE;
+    }
+
+    DiamondListReq req = DiamondListReq();
+    req.page = page;
+    req.limit = DEFAULT_LIMIT;
+    ReqFilters filter = ReqFilters();
+    filter.wSts = "U";
+    InDt inDt =InDt();
+    inDt.lessThan=DateTime.now().toIso8601String();
+    filter.inDt=inDt;
+    req.filters=filter;
+    req.sort = "inDt ASC";
+
+    NetworkCall<DiamondListResp>()
+        .makeCall(
+      () => app.resolve<ServiceModule>().networkService().diamondList(req),
+      context,
+      isProgress: !isRefress && !isLoading,
+    )
+        .then((UpcomingListResp) async {
+          print("Count ${UpcomingListResp.data.count}");
+      arraDiamond.addAll(UpcomingListResp.data.diamonds);
+
+      diamondList.state.listCount = arraDiamond.length;
+      diamondList.state.totalCount = UpcomingListResp.data.count;
+      manageDiamondSelection();
+      page = page + 1;
+      diamondList.state.setApiCalling(false);
+      setState(() {});
+    }).catchError((onError) {
+      if (isRefress) {
+        arraDiamond.clear();
+        diamondList.state.listCount = arraDiamond.length;
+        diamondList.state.totalCount = arraDiamond.length;
+      }
+      diamondList.state.setApiCalling(false);
     });
   }
 
@@ -142,7 +178,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
       diamondList.state.listCount = arraDiamond.length;
       diamondList.state.totalCount = diamondListResp.data.count;
-      getAverageCalculation(diamondListResp.data.diamonds);
       manageDiamondSelection();
       page = page + 1;
       diamondList.state.setApiCalling(false);
@@ -167,202 +202,23 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             crossAxisSpacing: 8,
             children: List.generate(arraDiamond.length, (index) {
               var item = arraDiamond[index];
-              return InkWell(
-                onTap: () {
-                  /*  setState(() {
-                    arraDiamond[index].isSelected =
-                        !arraDiamond[index].isSelected;
-                    manageDiamondSelection();
-                  });*/
-                  // setState(() {
-                  //   arraDiamond[index].isSelected =
-                  //       !arraDiamond[index].isSelected;
-                  //   fillArrayList();
-                  //   diamondList.state.setApiCalling(false);
-                  // });
-                  var dict = Map<String, dynamic>();
-                  dict["diamondModel"] = arraDiamond[index];
-
-                  NavigationUtilities.pushRoute(DiamondDetailScreen.route,
-                      args: dict);
-                },
-                child: DiamondGridItemWidget(
+              return DiamondGridItemWidget(
                   item: item,
-                ),
-              );
+                  actionClick: (manageClick) {
+                    manageRowClick(index, manageClick.type);
+                  });
             }),
           )
         : ListView.builder(
             itemCount: arraDiamond.length,
             itemBuilder: (context, index) {
-              return InkWell(
-                  onTap: () {
-                    setState(() {
-                      arraDiamond[index].isSelected =
-                          !arraDiamond[index].isSelected;
-                      manageDiamondSelection();
-                    });
-                  },
-                  child: DiamondItemWidget(
-                    item: arraDiamond[index],
-                  ));
+              return DiamondItemWidget(
+                  item: arraDiamond[index],
+                  actionClick: (manageClick) {
+                    manageRowClick(index, manageClick.type);
+                  });
             },
           );
-  }
-
-  getAverageCalculation(List<DiamondModel> diamondList) {
-    double carat = 0.0;
-    double avgDisc = 0.0;
-    double avgRapCrt = 0.0;
-    double avgPriceCrt = 0.0;
-    double avgAmount = 0.0;
-    double totalamt = 0.0;
-    double termDiscAmount = 0.0;
-
-    List<DiamondModel> filterList;
-    Iterable<DiamondModel> list = arraDiamond.where((item) {
-      return item.isSelected == true;
-    });
-    if (list == null || list.length == 0) {
-      filterList = arraDiamond;
-    } else {
-      filterList = list.toList();
-      if (filterList != null && filterList.length > 0) {
-        List<num> arrValues =
-            SyncManager.instance.getTotalCaratAvgRapAmount(filterList);
-        carat = arrValues[0];
-        totalamt = arrValues[2];
-        avgRapCrt = arrValues[3];
-        avgPriceCrt = arrValues[4];
-        termDiscAmount = arrValues[5];
-        avgAmount = totalamt / carat;
-        totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt);
-        totalAmount = PriceUtilities.getPrice(avgAmount);
-        if (isAccountTerm) {
-          avgDisc = (1 - (termDiscAmount / avgRapCrt)) * (-100);
-          totalDisc = PriceUtilities.getPercent(avgDisc);
-        } else {
-          avgDisc = (1 - (avgPriceCrt / avgRapCrt)) * (-100);
-          totalDisc = PriceUtilities.getPercent(avgDisc);
-        }
-        totalCarat = PriceUtilities.getDoubleValue(carat);
-        pcs = filterList.length.toString();
-      } else {
-        List<num> arrValues =
-            SyncManager.instance.getTotalCaratAvgRapAmount(diamondList);
-        carat = arrValues[0];
-        totalamt = arrValues[2];
-        avgRapCrt = arrValues[3];
-        avgPriceCrt = arrValues[4];
-        termDiscAmount = arrValues[5];
-        avgAmount = totalamt / carat;
-        if (isAccountTerm) {
-          avgDisc = (1 - (termDiscAmount / avgRapCrt)) * (-100);
-          totalDisc = PriceUtilities.getPercent(avgDisc);
-        } else {
-          avgDisc = (1 - (avgPriceCrt / avgRapCrt)) * (-100);
-          totalDisc = PriceUtilities.getPercent(avgDisc);
-        }
-        totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt);
-        totalAmount = PriceUtilities.getPrice(avgAmount);
-        totalDisc = PriceUtilities.getPercent(avgDisc);
-        totalCarat = PriceUtilities.getDoubleValue(carat);
-        pcs = diamondList.length.toString();
-      }
-    }
-    // List<num> arrValues =
-    //     SyncManager.instance.getTotalCaratAvgRapAmount(filterList);
-    // carat = arrValues[0];
-    // totalamt = arrValues[2];
-    // avgRapCrt = arrValues[3];
-    // avgPriceCrt = arrValues[4];
-    // termDiscAmount = arrValues[5];
-    // avgAmount = totalamt / carat;
-    // totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt);
-    // totalAmount = PriceUtilities.getPrice(avgAmount);
-    // if (isAccountTerm) {
-    //   avgDisc = (1 - (termDiscAmount / avgRapCrt)) * (-100);
-    //   totalDisc = PriceUtilities.getPercent(avgDisc);
-    // } else {
-    //   avgDisc = (1 - (avgPriceCrt / avgRapCrt)) * (-100);
-    //   totalDisc = PriceUtilities.getPercent(avgDisc);
-    // }
-    // totalCarat = PriceUtilities.getDoubleValue(carat);
-    // pcs = filterList.length.toString();
-  }
-
-  getAveragePriceCrt(num totalPrice, num totalcarat) {
-    return totalPrice / totalcarat;
-  }
-
-  getAvgDiscount(num priceCrt, num rapPrice) {
-    num avgDiscount = priceCrt / rapPrice;
-    return avgDiscount;
-  }
-
-  getFinalRate(num priceCrt) {
-    return (priceCrt * 0.98).toDouble();
-  }
-
-  getFinalDiscount(num finalRate, num rapPrice) {
-    return ((1 - (finalRate / rapPrice)) * 100).toDouble();
-  }
-
-  calulate(List<DiamondModel> diamondList) {
-    double carat = 0.0;
-    double calcAmount = 0.0;
-    double rapAvg = 0.0;
-    double fancyCarat = 0.0;
-    double fancyAmt = 0.0;
-    List<DiamondModel> filterList;
-
-    Iterable<DiamondModel> list = diamondList.where((item) {
-      return item.isSelected == true;
-    });
-    filterList = list.toList();
-
-    if (filterList != null && filterList.length > 0) {
-      List<num> arrValues =
-          SyncManager.instance.getTotalCaratRapAmount(filterList);
-      carat = arrValues[0];
-      calcAmount = arrValues[1];
-      rapAvg = arrValues[2];
-      fancyCarat = arrValues[3];
-      fancyAmt = arrValues[4];
-      pcs = filterList.length.toString();
-    } else {
-      List<num> arrValues =
-          SyncManager.instance.getTotalCaratRapAmount(diamondList);
-      carat = arrValues[0];
-      calcAmount = arrValues[1];
-      rapAvg = arrValues[2];
-      fancyCarat = arrValues[3];
-      fancyAmt = arrValues[4];
-      pcs = diamondList.length.toString();
-    }
-
-    num calcDiscount = (calcAmount / rapAvg * 100) - 100;
-    if (fancyCarat > 0) {
-      carat += fancyCarat;
-    }
-
-    if (fancyAmt > 0) {
-      calcAmount += fancyAmt;
-    }
-
-    num calcPricePerCarat = calcAmount / carat;
-    if (calcPricePerCarat > 0 || calcDiscount < 0) {
-      totalPriceCrt = PriceUtilities.getPrice(calcPricePerCarat);
-    } else {
-      totalPriceCrt = PriceUtilities.getPrice(0);
-    }
-    if (calcDiscount > 0 || calcDiscount < 0) {
-      totalDisc = PriceUtilities.getPercent(calcDiscount);
-    } else {
-      totalDisc = PriceUtilities.getPercent(0);
-    }
-    totalAmount = PriceUtilities.getPrice(calcAmount);
-    totalCarat = PriceUtilities.getDoubleValue(carat);
   }
 
   List<Widget> getToolbarItem() {
@@ -383,6 +239,22 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       ));
     });
     return list;
+  }
+
+  manageRowClick(int index, int type) {
+    switch (type) {
+      case clickConstant.CLICK_TYPE_SELECTION:
+        setState(() {
+          arraDiamond[index].isSelected = !arraDiamond[index].isSelected;
+          manageDiamondSelection();
+        });
+        break;
+      case clickConstant.CLICK_TYPE_ROW:
+        var dict = Map<String, dynamic>();
+        dict[ArgumentConstant.DiamondDetail] = arraDiamond[index];
+        NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
+        break;
+    }
   }
 
   manageToolbarClick(BottomTabModel model) {
@@ -426,37 +298,33 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   manageDiamondSelection() {
     fillArrayList();
-    getAverageCalculation(arraDiamond);
+    diamondCalculation.setAverageCalculation(arraDiamond);
     diamondList.state.setApiCalling(false);
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: appTheme.whiteColor,
-        appBar: getAppBar(
-          context,
-          diamondConfig.getScreenTitle(),
-          bgColor: appTheme.whiteColor,
-          leadingButton: isFromDrawer
-              ? getDrawerButton(context, true)
-              : getBackButton(context),
-          centerTitle: false,
-          actionItems: getToolbarItem(),
-        ),
-        bottomNavigationBar: getBottomTab(),
-        body: Padding(
+    return Scaffold(
+      backgroundColor: appTheme.whiteColor,
+      appBar: getAppBar(
+        context,
+        diamondConfig.getScreenTitle(),
+        bgColor: appTheme.whiteColor,
+        leadingButton: isFromDrawer
+            ? getDrawerButton(context, true)
+            : getBackButton(context),
+        centerTitle: false,
+        actionItems: getToolbarItem(),
+      ),
+      bottomNavigationBar: getBottomTab(),
+      body: SafeArea(
+        child: Padding(
           padding: EdgeInsets.only(
               left: getSize(20), right: getSize(20), top: getSize(20)),
           child: Column(
             children: <Widget>[
               DiamondListHeader(
-                pcs: pcs,
-                totalDisc: totalDisc,
-                totalCarat: totalCarat,
-                totalPriceCrt: totalPriceCrt,
-                totalAmount: totalAmount,
+                diamondCalculation: diamondCalculation,
               ),
               SizedBox(
                 height: getSize(20),
@@ -473,24 +341,34 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   Widget getBottomTab() {
     return BottomTabbarWidget(
-      arrBottomTab: arrBottomTab,
+      arrBottomTab: diamondConfig.arrBottomTab,
       onClickCallback: (obj) {
         //
-        if (obj.code == BottomCodeConstant.dLShowSelected) {
-          //
-          print(obj.code);
-        } else if (obj.code == BottomCodeConstant.dLCompare) {
-          //
-          print(obj.code);
-        } else if (obj.code == BottomCodeConstant.dLMore) {
-          //
-          print(obj.code);
-          // callApiForGetFilterId();
-        } else if (obj.code == BottomCodeConstant.dLStatus) {
-          //
-          print(obj.code);
+        if (obj.type == ActionMenuConstant.ACTION_TYPE_MORE) {
+          showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
+              (manageClick) {
+            if (manageClick.bottomTabModel.type ==
+                ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
+              arraDiamond.forEach((element) {
+                element.isSelected = false;
+              });
+              manageDiamondSelection();
+            } else {
+              manageBottomMenuClick(manageClick.bottomTabModel);
+            }
+          });
+        } else {
+          manageBottomMenuClick(obj);
         }
       },
     );
+  }
+
+  manageBottomMenuClick(BottomTabModel bottomTabModel) {
+    List<DiamondModel> selectedList =
+        arraDiamond.where((element) => element.isSelected).toList();
+    if (selectedList != null && selectedList.length > 0) {
+      diamondConfig.manageDiamondAction(context, selectedList, bottomTabModel);
+    } else {}
   }
 }

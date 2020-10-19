@@ -1,3 +1,4 @@
+import 'package:diamnow/app/app.export.dart';
 import 'package:flutter/material.dart';
 
 import '../style/obscure.dart';

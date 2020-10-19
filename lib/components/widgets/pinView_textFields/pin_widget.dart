@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:diamnow/app/app.export.dart';
-
 import 'decoration/pin_decoration.dart';
 
 const _kDefaultPinLength = 6;
@@ -179,6 +177,7 @@ class _PinInputTextFieldState extends State<PinInputTextField> {
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
+
       /// The foreground paint to display pin.
       foregroundPainter: _PinPaint(
         text: _text,

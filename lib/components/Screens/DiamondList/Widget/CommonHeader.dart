@@ -1,20 +1,14 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:flutter/material.dart';
 
 class DiamondListHeader extends StatefulWidget {
-  String totalCarat = "0";
-  String totalDisc = "0";
-  String totalPriceCrt = "0";
-  String totalAmount = "0";
-  String pcs = "0";
+  DiamondCalculation diamondCalculation;
 
-  DiamondListHeader(
-      {this.pcs,
-      this.totalCarat,
-      this.totalDisc,
-      this.totalPriceCrt,
-      this.totalAmount});
+  DiamondListHeader({
+    this.diamondCalculation,
+  });
 
   @override
   _DiamondListHeaderState createState() => _DiamondListHeaderState();
@@ -28,15 +22,40 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
       child: Row(
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          getColumn(widget.pcs, R.string().commonString.pcs),
-          getColumn(widget.totalCarat, R.string().commonString.cts),
-          getColumn(widget.totalDisc, R.string().commonString.disc),
+          Container(
+            width: widget.diamondCalculation.pcs.length > 4
+                ? getSize(60)
+                : getSize(45),
+            padding: EdgeInsets.symmetric(
+                vertical: getSize(15), horizontal: getSize(4)),
+            decoration: BoxDecoration(
+                border: Border.all(color: appTheme.dividerColor),
+                borderRadius: BorderRadius.circular(getSize(5))),
+            child: Column(
+              children: <Widget>[
+                getDetailText(widget.diamondCalculation.pcs),
+                SizedBox(
+                  height: getSize(5),
+                ),
+                getLableText(R.string().commonString.pcs),
+              ],
+            ),
+          ),
+          getColumn(widget.diamondCalculation.totalCarat,
+              R.string().commonString.cts),
+          getColumn(widget.diamondCalculation.totalDisc,
+              R.string().commonString.disc),
           Expanded(
             child: getColumn(
-                widget.totalPriceCrt, R.string().commonString.avgPriceCrt + R.string().commonString.doller),
+                widget.diamondCalculation.totalPriceCrt,
+                R.string().commonString.avgPriceCrt +
+                    R.string().commonString.doller),
           ),
           Expanded(
-            child: getColumn(widget.totalAmount, R.string().commonString.amount + R.string().commonString.doller),
+            child: getColumn(
+                widget.diamondCalculation.totalAmount,
+                R.string().commonString.amount +
+                    R.string().commonString.doller),
           )
         ],
       ),
@@ -46,7 +65,7 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
   getColumn(String text, String lable) {
     return Container(
       padding:
-          EdgeInsets.symmetric(vertical: getSize(15), horizontal: getSize(10)),
+          EdgeInsets.symmetric(vertical: getSize(15), horizontal: getSize(4)),
       decoration: BoxDecoration(
           border: Border.all(color: appTheme.dividerColor),
           borderRadius: BorderRadius.circular(getSize(5))),

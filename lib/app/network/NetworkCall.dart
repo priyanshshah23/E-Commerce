@@ -30,26 +30,12 @@ class NetworkCall<T extends BaseApiResp> {
           if (resp.code == CODE_OK)
             return resp;
           else if (resp.code == CODE_UNAUTHORIZED) {
-            // if (app.resolve<PrefUtils>().isUserLogin()) {
-            //   showToast(resp.message);
-            //   RxBus.post(true, tag: eventBusLogout);
-            // } else {
-            //   return Future.error(ErrorResp(resp.message, resp.code, false));
-            // }
-          } else if (resp.code == MISMATCHED_TIME_ZONE) {
-//            if (context != null) {
-//              app.resolve<CustomDialogs>().confirmDialog(context,
-//                  title: R.string().screenTitle.manualTime,
-//                  desc: R.string().screenTitle.manualTimeDesc,
-//                  positiveBtnTitle: R.string().commonString.openAppSetting,
-//                  dismissPopup: false, onClickCallback: (BtnType) async {
-//                if (BtnType == ButtonType.PositveButtonClick) {
-//                  Navigator.pop(context);
-//                  await AppSettings.openDateSettings();
-//                }
-//              });
-//            }
-            return Future.error("");
+            if (app.resolve<PrefUtils>().isUserLogin()) {
+              showToast(resp.message);
+              RxBus.post(true, tag: eventBusLogout);
+            } else {
+              return Future.error(ErrorResp(resp.message, resp.code, false));
+            }
           } else {
             return Future.error(ErrorResp(resp.message, resp.code, false));
           }

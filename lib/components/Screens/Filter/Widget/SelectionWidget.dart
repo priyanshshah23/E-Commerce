@@ -87,6 +87,18 @@ class _TagWidgetState extends State<TagWidget> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        isNullEmptyOrFalse(widget.model.megaTitle)
+            ? SizedBox()
+            : Text(
+                widget.model.megaTitle ?? "",
+                style: appTheme.blackNormal18TitleColorblack.copyWith(
+                  decoration: TextDecoration.underline,
+                ),
+                textAlign: TextAlign.left,
+              ),
+        !isNullEmptyOrFalse(widget.model.megaTitle)
+            ? SizedBox(height: getSize(16))
+            : SizedBox(),
         isNullEmptyOrFalse(widget.model.title)
             ? SizedBox()
             : Text(
@@ -292,8 +304,17 @@ class _TagWidgetState extends State<TagWidget> {
 
   getFromTextField() {
     return Container(
-      width: getSize(70),
-      height: getSize(50),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(getSize(10)),
+        border: Border.all(
+          width: getSize(1.0),
+          color: widget.model.fromToStyle.showUnderline
+              ? Colors.transparent
+              : appTheme.borderColor,
+        ),
+      ),
+      width: getSize(100),
+      height: getSize(40),
       child: TextField(
         readOnly: true,
         textAlign: widget.model.fromToStyle.showUnderline
@@ -329,18 +350,27 @@ class _TagWidgetState extends State<TagWidget> {
 
   getToTextField() {
     return Container(
-      width: getSize(70),
-      height: getSize(50),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(getSize(10)),
+        border: Border.all(
+          width: getSize(1.0),
+          color: widget.model.fromToStyle.showUnderline
+              ? Colors.transparent
+              : appTheme.borderColor,
+        ),
+      ),
+      width: getSize(100),
+      height: getSize(40),
       child: TextField(
         readOnly: true,
         textAlign: widget.model.fromToStyle.showUnderline
             ? TextAlign.left
             : TextAlign.center,
         onTap: () {
-          if(!isNullEmptyOrFalse(_fromDateController.text)){
+          if (!isNullEmptyOrFalse(_fromDateController.text)) {
             _selectToDate(context);
-          } else{
-            app.resolve<CustomDialogs>().confirmDialog(  
+          } else {
+            app.resolve<CustomDialogs>().confirmDialog(
                   context,
                   title: "Warning",
                   desc: "select fromdate first",
@@ -380,11 +410,12 @@ class _TagWidgetState extends State<TagWidget> {
       lastDate: DateTime(2101),
     );
     setState(() {
-      if (!isNullEmptyOrFalse(picked)){
+      if (!isNullEmptyOrFalse(picked)) {
         fromDate = picked;
         _fromDateController.text = myFormat.format(picked);
-      };
-      print("From Date====>"+fromDate.toString());
+      }
+      ;
+      print("From Date====>" + fromDate.toString());
     });
   }
 
@@ -394,14 +425,14 @@ class _TagWidgetState extends State<TagWidget> {
       initialDate: fromDate,
       firstDate: fromDate,
       lastDate: DateTime(2101),
-      
     );
     setState(() {
-      if (!isNullEmptyOrFalse(picked)){
+      if (!isNullEmptyOrFalse(picked)) {
         toDate = picked;
         _toDateController.text = myFormat.format(picked);
-      };
-      print("To Date====>"+toDate.toString());
+      }
+      ;
+      print("To Date====>" + toDate.toString());
     });
   }
 

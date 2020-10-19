@@ -1,128 +1,151 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:flutter/material.dart';
+import 'package:rxbus/rxbus.dart';
 
 class DiamondItemWidget extends StatefulWidget {
   DiamondModel item;
+  ActionClick actionClick;
 
-  DiamondItemWidget({this.item});
+  DiamondItemWidget({this.item, this.actionClick});
 
   @override
   _DiamondItemWidgetState createState() => _DiamondItemWidgetState();
 }
 
 class _DiamondItemWidgetState extends State<DiamondItemWidget> {
-
   @override
   void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(
-        bottom: getSize(10),
-        top: getSize(5),
-      ),
-      width: MathUtilities.screenWidth(context),
-      decoration: BoxDecoration(
-          color: appTheme.whiteColor,
-          boxShadow: widget.item.isSelected
-              ? getBoxShadow(context)
-              : [BoxShadow(color: Colors.transparent)],
-          borderRadius: BorderRadius.circular(getSize(6)),
-          border: Border.all(
-              color: widget.item.isSelected
-                  ? appTheme.colorPrimary
-                  : appTheme.dividerColor)
-          //boxShadow: getBoxShadow(context),
-          ),
-      child: Row(
-        children: <Widget>[
-          getCaratAndDiscountDetail(),
-          //   getIdColorDetail(),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(
-                left: getSize(10),
-                right: getSize(10),
-              ),
-              child: Column(
+    return GestureDetector(
+      onTap: () {
+        widget
+            .actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_SELECTION));
+      },
+      child: Container(
+        margin: EdgeInsets.only(
+          bottom: getSize(10),
+          top: getSize(5),
+        ),
+        width: MathUtilities.screenWidth(context),
+        decoration: BoxDecoration(
+            color: appTheme.whiteColor,
+            boxShadow: widget.item.isSelected
+                ? getBoxShadow(context)
+                : [BoxShadow(color: Colors.transparent)],
+            borderRadius: BorderRadius.circular(getSize(6)),
+            border: Border.all(
+                color: widget.item.isSelected
+                    ? appTheme.colorPrimary
+                    : appTheme.dividerColor)
+            //boxShadow: getBoxShadow(context),
+            ),
+        child: Wrap(
+          children: [
+            IntrinsicHeight(
+              child: Row(
                 children: <Widget>[
-                  getIdShapeDetail(),
-                  getDymentionAndCaratDetail(),
-                  getTableDepthAndAmountDetail()
+                  getCaratAndDiscountDetail(widget.actionClick),
+                  //   getIdColorDetail(),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: getSize(10),
+                        right: getSize(10),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          getIdShapeDetail(),
+                          getDymentionAndCaratDetail(),
+                          getTableDepthAndAmountDetail(),
+                          getWatchListDetail(),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: Center(
+                        child: Container(
+                      decoration: BoxDecoration(
+                          color: widget.item.getStatusColor(),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(5),
+                              bottomLeft: Radius.circular(5))),
+                      height: getSize(26),
+                      width: getSize(4),
+                      // color: Colors.red,
+                    )),
+                  ),
                 ],
               ),
             ),
-          ),
-          Container(
-            child: Center(
-                child: Container(
-              decoration: BoxDecoration(
-                  color: widget.item.getStatusColor(),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(5),
-                      bottomLeft: Radius.circular(5))),
-              height: getSize(26),
-              width: getSize(4),
-              // color: Colors.red,
-            )),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  getCaratAndDiscountDetail() {
-    return Container(
-      padding: EdgeInsets.only(
-        top: getSize(8),
-        left: getSize(10),
-        right: getSize(10),
-        bottom: getSize(5),
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(getSize(5)),
-          bottomLeft: Radius.circular(getSize(5)),
+  getCaratAndDiscountDetail(ActionClick actionClick) {
+    return GestureDetector(
+      onTap: () {
+        actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_SELECTION));
+      },
+      child: Container(
+        padding: EdgeInsets.only(
+          top: getSize(8),
+          left: getSize(10),
+          right: getSize(10),
+          bottom: getSize(8),
         ),
-        color: widget.item.isSelected
-            ? appTheme.colorPrimary
-            : appTheme.dividerColor,
-      ),
-      child: Column(
-        children: <Widget>[
-          Text(
-            PriceUtilities.getPercent(widget.item?.crt ?? 0),
-            style: appTheme.blue14TextStyle.copyWith(
-                color: widget.item.isSelected
-                    ? appTheme.whiteColor
-                    : appTheme.colorPrimary),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(getSize(5)),
+            bottomLeft: Radius.circular(getSize(5)),
           ),
-          Text(
-            R.string().commonString.carat,
-            style: appTheme.blue14TextStyle.copyWith(
-                color: widget.item.isSelected
-                    ? appTheme.whiteColor
-                    : appTheme.colorPrimary),
-          ),
-          Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(top: getSize(5)),
-            width: getSize(55),
-            height: getSize(20),
-            decoration: BoxDecoration(
-                color: appTheme.whiteColor,
-                borderRadius: BorderRadius.circular(getSize(5))),
-            child: Text(
-              PriceUtilities.getPercent(widget.item?.back) ?? "",
-              style: appTheme.green10TextStyle,
+          color: widget.item.isSelected
+              ? appTheme.colorPrimary
+              : appTheme.dividerColor,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              PriceUtilities.getDoubleValue(widget.item?.crt ?? 0),
+              style: appTheme.blue14TextStyle.copyWith(
+                  color: widget.item.isSelected
+                      ? appTheme.whiteColor
+                      : appTheme.colorPrimary),
             ),
-          )
-        ],
+            Text(
+              R.string().commonString.carat,
+              style: appTheme.blue14TextStyle.copyWith(
+                  color: widget.item.isSelected
+                      ? appTheme.whiteColor
+                      : appTheme.colorPrimary),
+            ),
+            Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(top: getSize(5)),
+              width: getSize(55),
+              height: getSize(20),
+              decoration: BoxDecoration(
+                  color: appTheme.whiteColor,
+                  borderRadius: BorderRadius.circular(getSize(5))),
+              child: Text(
+                PriceUtilities.getPercent(widget.item?.back) ?? "",
+                style: appTheme.green10TextStyle,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -182,10 +205,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           getText(widget.item?.fluNm ?? ""),
           getText(widget.item?.msrmnt ?? ""),
           getText(widget.item?.lbNm ?? ""),
-          getAmountText(R.string().commonString.doller +
-                  widget.item?.ctPr.toStringAsFixed(2) +
-                  "/Cts" ??
-              ""),
+          getAmountText(widget.item?.getPricePerCarat() ?? ""),
         ],
       ),
     );
@@ -200,21 +220,52 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           getText(widget.item?.shpNm ?? ""),
           getText(PriceUtilities.getPercent(widget.item?.tblPer ?? 0) + "T"),
           getText(PriceUtilities.getPercent(widget.item?.depPer ?? 0) + "D"),
-          getAmountText(R.string().commonString.doller +
-                  widget.item?.amt.toStringAsFixed(2) +
-                  "/Amt" ??
-              ""),
+          getAmountText(widget.item?.getAmount() ?? ""),
         ],
       ),
     );
   }
 
-  getText(String text) {
-    return Text(
-      text,
-      style: appTheme.black12TextStyle,
-    );
+  getWatchListDetail() {
+    List<String> backPerList = widget.item.getWatchlistPer();
+    DropDownItem item = DropDownItem(widget.item);
+    return widget.item.isAddToWatchList
+        ? Padding(
+            padding: EdgeInsets.only(top: getSize(5)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                getText(R.string().screenTitle.todayDiscPer),
+                getText(PriceUtilities.getPercent(widget.item?.back) ?? ""),
+                getText(R.string().screenTitle.expDiscPer),
+                offsetPopup(widget.item, backPerList, item),
+              ],
+            ),
+          )
+        : Container();
   }
+
+  Widget offsetPopup(DiamondModel model, List<String> backPerList,
+          DropDownItem dropDownItem) =>
+      PopupMenuButton<String>(
+        shape: TooltipShapeBorder(arrowArc: 0.5),
+        onSelected: (newValue) {
+          // add this property
+
+          model.selectedBackPer = newValue;
+          RxBus.post(true, tag: eventBusDropDown);
+        },
+        itemBuilder: (context) => [
+          for (var item in backPerList) getPopupItems(item, model),
+          PopupMenuItem(
+            height: getSize(30),
+            value: "Start",
+            child: SizedBox(),
+          ),
+        ],
+        child: dropDownItem,
+        offset: Offset(25, 110),
+      );
 
   getAmountText(String text) {
     return Text(
@@ -222,4 +273,106 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       style: appTheme.blue14TextStyle.copyWith(fontSize: getFontSize(12)),
     );
   }
+}
+
+class DropDownItem extends StatefulWidget {
+  DiamondModel model;
+
+  DropDownItem(this.model);
+
+  @override
+  _DropDownItemState createState() => _DropDownItemState();
+}
+
+class _DropDownItemState extends State<DropDownItem> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding:
+          EdgeInsets.symmetric(vertical: getSize(1), horizontal: getSize(10)),
+      decoration: BoxDecoration(
+          border: Border.all(color: appTheme.dividerColor),
+          borderRadius: BorderRadius.circular(getSize(5))),
+      child: Row(
+        children: <Widget>[
+          getText(widget.model.getSelectedBackPer()),
+          SizedBox(
+            height: getSize(5),
+          ),
+          Icon(
+            Icons.arrow_drop_down,
+            size: getSize(20),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    /*onclick = () {
+      setState(() {});
+    };*/
+    RxBus.register<bool>(tag: eventBusDropDown).listen((event) {
+      setState(() {});
+    });
+  }
+}
+
+getText(String text) {
+  return Text(
+    text,
+    style: appTheme.black12TextStyle,
+  );
+}
+
+getPopupItems(String per, DiamondModel model) {
+  return PopupMenuItem(
+    value: per,
+    height: getSize(20),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[getText(per + "%")],
+    ),
+  );
+}
+
+class TooltipShapeBorder extends ShapeBorder {
+  final double arrowWidth;
+  final double arrowHeight;
+  final double arrowArc;
+  final double radius;
+
+  TooltipShapeBorder({
+    this.radius = 5.0,
+    this.arrowWidth = 15.0,
+    this.arrowHeight = 30.0,
+    this.arrowArc = 0.0,
+  }) : assert(arrowArc <= 1.0 && arrowArc >= 0.0);
+
+  @override
+  EdgeInsetsGeometry get dimensions => EdgeInsets.only(bottom: arrowHeight);
+
+  @override
+  Path getInnerPath(Rect rect, {TextDirection textDirection}) => null;
+
+  @override
+  Path getOuterPath(Rect rect, {TextDirection textDirection}) {
+    rect = Rect.fromPoints(
+        rect.topLeft, rect.bottomRight - Offset(0, arrowHeight));
+    double x = arrowWidth, y = arrowHeight, r = 1 - arrowArc;
+    return Path()
+      ..addRRect(RRect.fromRectAndRadius(rect, Radius.circular(radius)))
+      ..moveTo(rect.topRight.dx - (x + 2), rect.topRight.dy - (y - 15))
+      ..relativeLineTo(-x * r, y * r)
+      ..relativeQuadraticBezierTo(x, 0, x, 0)
+      ..relativeLineTo(-x * r, -y * r);
+  }
+
+  @override
+  void paint(Canvas canvas, Rect rect, {TextDirection textDirection}) {}
+
+  @override
+  ShapeBorder scale(double t) => this;
 }

@@ -5,6 +5,7 @@ import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/components/Screens/Auth/Profile.dart';
+import 'package:diamnow/components/Screens/Auth/ResetPassword.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
@@ -36,8 +37,10 @@ class _SplashState extends State<Splash> {
   Future openNextScreen() async {
     if (app.resolve<PrefUtils>().isUserLogin()) {
       // NavigationUtilities.pushRoute(FilterScreen.route);
-      // NavigationUtilities.pushRoute(ForgetPasswordScreen.route);
+      //  NavigationUtilities.pushRoute(ResetPassword.route);
       AppNavigation().movetoHome(isPopAndSwitch: true);
+     //  NavigationUtilities.pushRoute(ForgetPasswordScreen.route);
+//      AppNavigation().movetoHome(isPopAndSwitch: true);
     } else {
       AppNavigation().movetoLogin(isPopAndSwitch: true);
     }
