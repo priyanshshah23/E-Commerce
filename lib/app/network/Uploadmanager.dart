@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
-import 'package:percent_indicator/linear_percent_indicator.dart';
+//import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:diamnow/app/constant/ApiConstants.dart';
 import 'package:diamnow/app/constant/ColorConstant.dart';
 import 'package:diamnow/app/constant/constants.dart';
@@ -218,20 +218,21 @@ class _UploadProgressState extends State<UploadProgress> {
                         bottom: getSize(16),
                         right: getSize(8),
                         left: getSize(8)),
-                    child: new LinearPercentIndicator(
-                      width: MathUtilities.screenWidth(context) - getSize(150),
-                      lineHeight: 14.0,
-                      percent: this.percentge ?? 0,
-                      center: getBodyText(
-                          context,
-                          this.percentge != null
-                              ? (this.percentge * 100).toStringAsFixed(2) + "%"
-                              : "0.0 %",
-                          Colors.white),
-                      linearStrokeCap: LinearStrokeCap.roundAll,
-                      backgroundColor: ColorConstants.introgrey,
-                      progressColor: ColorConstants.colorPrimary,
-                    ),
+                    child: SizedBox(),
+//                    child: new LinearPercentIndicator(
+//                      width: MathUtilities.screenWidth(context) - getSize(150),
+//                      lineHeight: 14.0,
+//                      percent: this.percentge ?? 0,
+//                      center: getBodyText(
+//                          context,
+//                          this.percentge != null
+//                              ? (this.percentge * 100).toStringAsFixed(2) + "%"
+//                              : "0.0 %",
+//                          Colors.white),
+//                      linearStrokeCap: LinearStrokeCap.roundAll,
+//                      backgroundColor: ColorConstants.introgrey,
+//                      progressColor: ColorConstants.colorPrimary,
+//                    ),
                   )
                 ],
               ),

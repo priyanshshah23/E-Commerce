@@ -54,6 +54,7 @@ class BaseTheme {
   Color get unSelectedBgColor => fromHex("#f7f7f7");
   Color get greenColor => fromHex("#0EAC33");
   Color get lightBGColor => fromHex("#F8F8F8");
+  Color get textFieldBorderColor => fromHex("#F5F5F5");
 
   TextStyle get black24TitleColor {
     return TextStyle(

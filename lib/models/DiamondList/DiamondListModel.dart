@@ -324,7 +324,7 @@ class DiamondModel {
   num pAng;
   num pHgt;
   String polNm;
-  int rap;
+  num rap;
   num crt;
   num back;
   num ctPr;
@@ -338,7 +338,7 @@ class DiamondModel {
   String hANm;
   String vStnId;
   String locNm;
-  int lwrHal;
+  num lwrHal;
   String org;
   String blkTblNm;
   String blkSdNm;
@@ -385,6 +385,29 @@ class DiamondModel {
       case DropDownItem.HOURS:
         return (selectedOfferHour ?? "0");
     }
+  }
+
+  getFinalOffer() {
+    if (selectedOfferPer == null) {
+      getOfferPer();
+    }
+    if (back >= 0) {
+      return (back + num.parse(selectedOfferPer));
+    } else {
+      return (back - num.parse(selectedOfferPer));
+    }
+  }
+
+  getFinalDisc() {
+    return 0;
+  }
+
+  getFinalRate() {
+    return 0;
+  }
+
+  getFinalValue() {
+    return 0;
   }
 
   getWatchlistPer() {
@@ -642,5 +665,17 @@ class DiamondModel {
         (ctPr.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
 
     return R.string().commonString.doller + caratPerPrice + "/Cts" ?? "";
+  }
+
+  num getFinalRate() {
+    return this.ctPr - ((this.ctPr * 2) / 100);
+  }
+
+  num getFinalDiscount() {
+    return (1 - (getFinalRate() / rap)) * (-100);
+  }
+
+  num getFinalAmount() {
+    return crt * getFinalRate();
   }
 }

@@ -1,11 +1,9 @@
-import 'package:diamnow/Setting/SettingModel.dart';
-import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
-import 'package:diamnow/app/utils/price_utility.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
@@ -120,10 +118,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     req.limit = DEFAULT_LIMIT;
     ReqFilters filter = ReqFilters();
     filter.wSts = "U";
-    InDt inDt =InDt();
-    inDt.lessThan=DateTime.now().toIso8601String();
-    filter.inDt=inDt;
-    req.filters=filter;
+    InDt inDt = InDt();
+    inDt.lessThan = DateTime.now().toIso8601String();
+    filter.inDt = inDt;
+    req.filters = filter;
     req.sort = "inDt ASC";
 
     NetworkCall<DiamondListResp>()
@@ -133,7 +131,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       isProgress: !isRefress && !isLoading,
     )
         .then((UpcomingListResp) async {
-          print("Count ${UpcomingListResp.data.count}");
+      print("Count ${UpcomingListResp.data.count}");
       arraDiamond.addAll(UpcomingListResp.data.diamonds);
 
       diamondList.state.listCount = arraDiamond.length;
@@ -357,6 +355,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               manageBottomMenuClick(manageClick.bottomTabModel);
             }
           });
+        } else if (obj.type == ActionMenuConstant.ACTION_TYPE_STATUS) {
         } else {
           manageBottomMenuClick(obj);
         }
@@ -369,6 +368,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         arraDiamond.where((element) => element.isSelected).toList();
     if (selectedList != null && selectedList.length > 0) {
       diamondConfig.manageDiamondAction(context, selectedList, bottomTabModel);
-    } else {}
+    } else {
+      app.resolve<CustomDialogs>().errorDialog(
+          context, "Selection Error", "Please select at least one item.",
+          btntitle: R.string().commonString.btnTryAgain);
+    }
   }
 }

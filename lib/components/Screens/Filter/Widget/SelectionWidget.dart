@@ -539,6 +539,24 @@ class _TagWidgetState extends State<TagWidget> {
           }
         }
       }
+    } else {
+      if (widget.model.masters[index].code == MasterCode.eyecleanStatic) {
+        Master.getSubMaster(MasterCode.eyeClean).then((result) {
+          if (!isNullEmptyOrFalse(result)) {
+            for (var master in result) {
+              if (master.code.toLowerCase() == "y") {
+                Map<String, dynamic> map = {};
+                Master.getSubMaster(master.code).then((value) {
+                  map["eCln"] = value;
+                  widget.model.masters[index].map = map;
+                });
+
+                break;
+              }
+            }
+          }
+        });
+      }
     }
   }
 

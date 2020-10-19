@@ -70,8 +70,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
                           padding: EdgeInsets.only(
                               right: getSize(50),
                               left: getSize(82),
-                              bottom: getSize(52),
-                              top: getSize(12)),
+                              bottom: getSize(52),),
                           child: Image.asset(
                             resetPassword,
                             height: getSize(150),

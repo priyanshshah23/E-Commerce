@@ -77,9 +77,6 @@ class _CompanyInformationState extends State<CompanyInformation> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(
-                    height: getSize(40),
-                  ),
                   getCompanyNameTextField(),
                   SizedBox(
                     height: getSize(20),
