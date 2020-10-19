@@ -6,6 +6,7 @@ import 'package:diamnow/app/Helper/AppDatabase.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
@@ -112,16 +113,30 @@ class SyncManager {
     Function(ErrorResp) failure, {
     bool isProgress = true,
   }) async {
-    NetworkCall<BaseApiResp>()
-        .makeCall(
-      () =>
-          app.resolve<ServiceModule>().networkService().createDiamondTrack(req),
-      context,
-      isProgress: isProgress,
-    )
-        .then((resp) async {
-      success(resp);
-    }).catchError((onError) => {if (onError is ErrorResp) failure(onError)});
+    if (req.trackType == DiamondTrackConstant.TRACK_TYPE_COMMENT) {
+      NetworkCall<BaseApiResp>()
+          .makeCall(
+        () => app.resolve<ServiceModule>().networkService().upsetComment(req),
+        context,
+        isProgress: isProgress,
+      )
+          .then((resp) async {
+        success(resp);
+      }).catchError((onError) => {if (onError is ErrorResp) failure(onError)});
+    } else {
+      NetworkCall<BaseApiResp>()
+          .makeCall(
+        () => app
+            .resolve<ServiceModule>()
+            .networkService()
+            .createDiamondTrack(req),
+        context,
+        isProgress: isProgress,
+      )
+          .then((resp) async {
+        success(resp);
+      }).catchError((onError) => {if (onError is ErrorResp) failure(onError)});
+    }
   }
 
   List<num> getTotalCaratRapAmount(List<DiamondModel> diamondList) {
@@ -171,7 +186,6 @@ class SyncManager {
     }
     avgRapAmt = rapAvg / carat;
     avgPriceCrt = priceCrt / carat;
-
     return [
       carat,
       calcAmount,

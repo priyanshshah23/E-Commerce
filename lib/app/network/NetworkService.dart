@@ -23,6 +23,8 @@ abstract class NetworkService {
 
   @POST(ApiConstants.createDiamondTrack)
   Future<BaseApiResp> createDiamondTrack(@Body() CreateDiamondTrackReq req);
+  @POST(ApiConstants.upsetComment)
+  Future<BaseApiResp> upsetComment(@Body() CreateDiamondTrackReq req);
 
   @POST(ApiConstants.diamondList)
   Future<DiamondListResp> diamondListPaginate(@Body() Map<String, dynamic> req);
