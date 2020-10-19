@@ -1,3 +1,6 @@
+import 'package:diamnow/models/Address/CityListModel.dart';
+import 'package:diamnow/models/Address/CountryListModel.dart';
+import 'package:diamnow/models/Address/StateListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/LoginModel.dart';
@@ -17,6 +20,15 @@ abstract class NetworkService {
 
   @POST(ApiConstants.login)
   Future<LoginResp> login(@Body() LoginReq req);
+
+  @POST(ApiConstants.cityList)
+  Future<CityListResp> cityList(@Body() CityListReq req);
+
+  @POST(ApiConstants.countryList)
+  Future<CountryListResp> countryList();
+
+  @POST(ApiConstants.stateList)
+  Future<StateListResp> stateList(@Body() StateListReq req);
 
   @POST(ApiConstants.diamondList)
   Future<DiamondListResp> diamondList(@Body() DiamondListReq req);
