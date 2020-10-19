@@ -5,6 +5,7 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
+import 'package:diamnow/modules/Filter/gridviewlist/selectable_tags.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:diamnow/app/app.export.dart';
@@ -71,6 +72,11 @@ class _TagWidgetState extends State<TagWidget> {
     if (widget.model.verticalScroll == false &&
         widget.model.viewType == ViewTypes.shapeWidget) {
       return getShapeWidgetHorizontal();
+    }
+
+    if (widget.model.verticalScroll == false &&
+        widget.model.viewType == ViewTypes.keytosymbol) {
+      return getKeytoSymbolWidgetHorizontal();
     }
 
     if (widget.model.masterCode == MasterCode.arrivals) {
@@ -520,5 +526,108 @@ class _TagWidgetState extends State<TagWidget> {
         }
       }
     }
+  }
+
+  //code of keytosymbol
+  getKeytoSymbolWidgetHorizontal() {
+    List<Tag> _tags = [];
+    widget.model.title = "";
+
+    // if (widget.model.isShowAll == true) {
+    //   if (widget.model.masters
+    //           .where((element) => element.sId == R.string().commonString.all)
+    //           .toList()
+    //           .length ==
+    //       0) {
+    //     Master allMaster = Master();
+    //     allMaster.sId = R.string().commonString.all;
+    //     allMaster.webDisplay = R.string().commonString.all;
+    //     allMaster.isSelected = false;
+
+    //     widget.model.masters.insert(0, allMaster);
+    //   }
+    // }
+
+    if (_tags.isEmpty) {
+      widget.model.masters.forEach((element) {
+        _tags.add(Tag(
+          // id: item.id,
+          title: element.webDisplay,
+          active: false,
+        ));
+      });
+    }
+
+    List<Tag> _list1 = [];
+    List<Tag> _list2 = [];
+
+    for (int i = 0; i < _tags.length / 2; i++) {
+      _list1.add(_tags[i]);
+    }
+    // for (int i = _tags.length ~/ 2; i < _tags.length; i++) {
+    //   _list2.add(_tags[i]);
+    // }
+    for (int i = 0; i < _tags.length; i++) {
+      _list2.add(_tags[i]);
+    }
+
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Container(
+            height: getSize(150),
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              shrinkWrap: true,
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Row(
+                          // crossAxisAlignment:CrossAxisAlignment.start,
+                          children: List.generate(_list1.length, (index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: Container(
+                            width: 50.0,
+                            height: 50.0,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Colors.red,
+                            ),
+                            child: Text(_list1[index].title),
+                          ),
+                        );
+                      })),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Row(
+                          // crossAxisAlignment:CrossAxisAlignment.start,
+                          children: List.generate(_list2.length, (index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: Container(
+                            width: 50.0,
+                            height: 50.0,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Colors.green,
+                            ),
+                            child: Text(_list2[index].title),
+                          ),
+                        );
+                      })),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

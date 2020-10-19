@@ -108,6 +108,10 @@ class ScreenTitle {
   final String share;
   final String expDiscPer;
   final String todayDiscPer;
+  final String addOffer;
+  final String hours;
+  final String note;
+  final String offerMsg;
 
 
 //  Support
@@ -117,6 +121,10 @@ class ScreenTitle {
 
   const ScreenTitle({
     this.signup = "Sign up",
+    this.offerMsg = "Quoted stone will directly be confirmed if the price gets approved so we request you to be sure before quoting. Any stone(s) put in Quote list is not kept on hold for you as it is available for other customer's as well.",
+    this.note = "Note",
+    this.hours = "Hours",
+    this.addOffer = "Add Offer",
     this.expDiscPer = "Exp Disc%",
     this.todayDiscPer = "Today's Disc%",
     this.searchDiamond = "Search Diamond",

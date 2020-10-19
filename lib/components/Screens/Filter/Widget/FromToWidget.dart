@@ -175,7 +175,8 @@ class _FromToWidgetState extends State<FromToWidget> {
               //     ? newValue
               //     : oldValue)
               
-              RegExp(r'(^[+-]?[0-9]+\d*.?\d{0,2})?$').hasMatch(newValue.text)
+              // new regx = ^([+-]?[0-9]+[0-9]*.?[0-9]{0,2})?$
+              RegExp(r'^([+-]?[0-9]+[0-9]*.?[0-9]{0,2})?$').hasMatch(newValue.text)
                   ? newValue
                   : oldValue)
         ],
