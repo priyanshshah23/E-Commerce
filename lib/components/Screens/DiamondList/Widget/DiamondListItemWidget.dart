@@ -281,7 +281,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     getText(R.string().screenTitle.finalRate + " :"),
-                    getText(widget.item.getFinalRate()),
+                    getText(widget.item.getFinalRate().toString()),
                     getText(R.string().screenTitle.finalValue + " :"),
                     getText(widget.item.getFinalValue()),
                   ],
