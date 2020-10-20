@@ -31,10 +31,12 @@ class ApiConstants {
   static const String upsetComment = commonUrl + "diamond-comment/upsert";
 
   static const String placeOrder = commonUrl + "diamond-confirm/request";
-
-  static const String forgetPassword = commonUrl + "forgot-password";
-  static const String resetPassword = commonUrl + "reset-password-by-user";
   static const String staticPage = apiV1 + "static-page/{id}";
+  static const String forgetPassword = apiUrl + "web/v1/auth/forgot-password";//done
+  static const String resetPassword = apiUrl + "admin/v1/reset-password";
+  static const String changePassword = apiUrl + "web/v1/auth/reset-password-by-user";//done
+  static const String personalInformation = commonUrl + "user/update";//done
+  static const String companyInformation = commonUrl + "user/profile/update";//done
 }
 
 class DiamondUrls {
@@ -47,9 +49,4 @@ class DiamondUrls {
   static const String plotting = commonUrl + "PlottingImages/";
   static const String certificate = commonUrl + "PlottingImages/";
   static const String arroImage = commonUrl + "ArrowImages/";
-  static const String forgetPassword = apiUrl + "web/v1/auth/forgot-password";//done
-  static const String resetPassword = apiUrl + "admin/v1/reset-password";
-  static const String changePassword = apiUrl + "web/v1/auth/reset-password-by-user";//done
-  static const String personalInformation = commonUrl + "user/update";//done
-  static const String companyInformation = commonUrl + "user/profile/update";//done
 }
