@@ -406,13 +406,10 @@ class DiamondModel {
     return 0;
   }
 
-<<<<<<< HEAD
   // getFinalRate() {
   //   return 0;
   // }
 
-=======
->>>>>>> 047b40e09e6f7f410a02daa7487d25900fcb2b0b
   getFinalValue() {
     return 0;
   }
