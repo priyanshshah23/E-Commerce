@@ -402,10 +402,6 @@ class DiamondModel {
     return 0;
   }
 
-  getFinalRate() {
-    return 0;
-  }
-
   getFinalValue() {
     return 0;
   }

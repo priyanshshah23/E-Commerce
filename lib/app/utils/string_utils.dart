@@ -100,6 +100,13 @@ bool validateMobile(String value) {
   return true;
 }
 
+bool validateZipCode(String value) {
+  if (value.length < 4 || value.length > 6) {
+    return false;
+  }
+  return true;
+}
+
 Color darken(Color color, [double amount = .1]) {
   assert(amount >= 0 && amount <= 1);
 

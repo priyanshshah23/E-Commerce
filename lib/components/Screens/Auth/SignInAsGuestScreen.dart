@@ -145,14 +145,14 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
                   }
                   FocusScope.of(context).unfocus();
                   if (_formKey.currentState.validate()) {
-                    _formKey.currentState.save();
+                    if(_mobileController.text.isNotEmpty){
+                      checkValidation();
+                    }
                   } else {
                     setState(() {
                       _autoValidate = true;
                     });
-                    if(_mobileController.text.isNotEmpty){
-                      checkValidation();
-                    }
+
                   }
                 },
                 fitWidth: true,
