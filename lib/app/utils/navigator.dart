@@ -5,6 +5,7 @@ import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/components/Screens/Auth/PasswordResetSuccessfully.dart';
 import 'package:diamnow/components/Screens/Auth/PersonalInformation.dart';
 import 'package:diamnow/components/Screens/Auth/Profile.dart';
+import 'package:diamnow/components/Screens/Auth/ProfileList.dart';
 import 'package:diamnow/components/Screens/Auth/ResetPassword.dart';
 import 'package:diamnow/components/Screens/Auth/Signup.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
@@ -141,6 +142,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       break;
     case PasswordResetSuccessfully.route:
       screen = PasswordResetSuccessfully();
+      break;
+    case ProfileList.route:
+      screen = ProfileList();
       break;
     case DiamondDetailScreen.route:
       screen = DiamondDetailScreen(
