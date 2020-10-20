@@ -30,6 +30,8 @@ class BottomCodeConstant {
   static const String TBGrideView = "TB_GRIDE_VIEW";
   static const String TBSortView = "TB_SORT_VIEW";
   static const String TBDownloadView = "TB_DOWNLOAD_VIEW";
+  static const String TBShare= "TB_SHARE";
+  static const String TBClock= "TB_CLOCK";
 }
 
 class TabConfiguration {

@@ -11,9 +11,9 @@ class ApiConstants {
   static const String apiUrl = baseURL;
   static const String commonUrl = apiUrl + "device/v1/";
 
- static const String countryList = commonUrl + "country/paginate";
- static const String stateList = commonUrl + "state/paginate";
- static const String cityList = commonUrl + "city/paginate";
+  static const String countryList = commonUrl + "country/paginate";
+  static const String stateList = commonUrl + "state/paginate";
+  static const String cityList = commonUrl + "city/paginate";
 
   static const String documentUpload = "/api/v1/upload-file";
 
@@ -27,4 +27,6 @@ class ApiConstants {
   static const String createDiamondTrack = commonUrl + "diamond-track/create";
   static const String upsetComment = commonUrl + "diamond-comment/upsert";
   static const String placeOrder = commonUrl + "diamond-confirm/request";
+  static const String forgetPassword = commonUrl + "forgot-password";
+  static const String resetPassword = commonUrl + "reset-password-by-user";
 }

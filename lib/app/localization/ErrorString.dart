@@ -44,6 +44,8 @@ class ErrorString {
   final String pleaseEnterOTP;
   final String pleaseEnterCompanyName;
   final String pleaseEnterComment;
+  final String enterPinCode;
+
 
   const ErrorString({
     this.pleaseEnterCompanyName = 'Please enter company name.',
@@ -69,6 +71,7 @@ class ErrorString {
     this.mismatchPassword = 'Password and confirm password is not matching.',
     this.enterFirstName = 'Please enter the First Name.',
     this.enterMiddleName = 'Please enter the Middle Name.',
+    this.enterPinCode = 'Please enter the Pin Code.',
     this.enterName = 'Please enter name.',
     this.enterLastName = 'Please enter Last Name.',
     this.enterAddress = 'Please enter address.',

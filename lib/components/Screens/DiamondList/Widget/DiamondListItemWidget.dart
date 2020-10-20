@@ -32,7 +32,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
     return GestureDetector(
       onTap: () {
         widget
-            .actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_SELECTION));
+            .actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_ROW));
       },
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: getSize(20)),
