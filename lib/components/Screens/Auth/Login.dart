@@ -107,7 +107,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                           child: Container(
                                             decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
-                                                color: ColorConstants.colorPrimary
+                                                color: appTheme.colorPrimary
                                                     .withOpacity(0.1)),
                                           ),
                                         ),

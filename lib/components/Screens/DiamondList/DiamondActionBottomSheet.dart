@@ -93,7 +93,7 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
                   children: <Widget>[
                     Expanded(
                       child: FlatButton(
-                        textColor: ColorConstants.colorPrimary,
+                        textColor: appTheme.colorPrimary,
                         padding: EdgeInsets.all(getSize(0)),
                         onPressed: () {
                           Navigator.pop(context);
@@ -106,7 +106,7 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
                     ),
                     Expanded(
                       child: FlatButton(
-                        textColor: ColorConstants.colorPrimary,
+                        textColor: appTheme.colorPrimary,
                         padding: EdgeInsets.all(getSize(0)),
                         onPressed: () {
                           actionClick(ManageCLick(
@@ -204,7 +204,7 @@ Future showOfferListDialog(BuildContext context, List<DiamondModel> diamondList,
                   children: <Widget>[
                     Expanded(
                       child: FlatButton(
-                        textColor: ColorConstants.colorPrimary,
+                        textColor: appTheme.colorPrimary,
                         padding: EdgeInsets.all(getSize(0)),
                         onPressed: () {
                           Navigator.pop(context);
@@ -217,7 +217,7 @@ Future showOfferListDialog(BuildContext context, List<DiamondModel> diamondList,
                     ),
                     Expanded(
                       child: FlatButton(
-                        textColor: ColorConstants.colorPrimary,
+                        textColor: appTheme.colorPrimary,
                         padding: EdgeInsets.all(getSize(0)),
                         onPressed: () {
                           showOfferCommentDialog(context, actionClick);
@@ -377,7 +377,7 @@ Future showOfferCommentDialog(BuildContext context, ActionClick actionClick) {
                       children: <Widget>[
                         Expanded(
                           child: FlatButton(
-                            textColor: ColorConstants.colorPrimary,
+                            textColor: appTheme.colorPrimary,
                             padding: EdgeInsets.all(getSize(0)),
                             onPressed: () {
                               Navigator.pop(context);
@@ -390,7 +390,7 @@ Future showOfferCommentDialog(BuildContext context, ActionClick actionClick) {
                         ),
                         Expanded(
                           child: FlatButton(
-                            textColor: ColorConstants.colorPrimary,
+                            textColor: appTheme.colorPrimary,
                             padding: EdgeInsets.all(getSize(0)),
                             onPressed: () {
                               if (_formKey.currentState.validate()) {
@@ -502,7 +502,7 @@ Future showNotesDialog(BuildContext context, ActionClick actionClick) {
                       children: <Widget>[
                         Expanded(
                           child: FlatButton(
-                            textColor: ColorConstants.colorPrimary,
+                            textColor: appTheme.colorPrimary,
                             padding: EdgeInsets.all(getSize(0)),
                             onPressed: () {
                               Navigator.pop(context);
@@ -515,7 +515,7 @@ Future showNotesDialog(BuildContext context, ActionClick actionClick) {
                         ),
                         Expanded(
                           child: FlatButton(
-                            textColor: ColorConstants.colorPrimary,
+                            textColor: appTheme.colorPrimary,
                             padding: EdgeInsets.all(getSize(0)),
                             onPressed: () {
                               if (_formKey.currentState.validate()) {
@@ -744,7 +744,7 @@ Future showPlaceOrderDialog(BuildContext context, ActionClick actionClick) {
                       children: <Widget>[
                         Expanded(
                           child: FlatButton(
-                            textColor: ColorConstants.colorPrimary,
+                            textColor: appTheme.colorPrimary,
                             padding: EdgeInsets.all(getSize(0)),
                             onPressed: () {
                               Navigator.pop(context);
@@ -757,7 +757,7 @@ Future showPlaceOrderDialog(BuildContext context, ActionClick actionClick) {
                         ),
                         Expanded(
                           child: FlatButton(
-                            textColor: ColorConstants.colorPrimary,
+                            textColor: appTheme.colorPrimary,
                             padding: EdgeInsets.all(getSize(0)),
                             onPressed: () {
                               if (_formKey.currentState.validate()) {
@@ -1017,7 +1017,7 @@ Future showAppointmentDialog(BuildContext context, ActionClick actionClick) {
                       children: <Widget>[
                         Expanded(
                           child: FlatButton(
-                            textColor: ColorConstants.colorPrimary,
+                            textColor: appTheme.colorPrimary,
                             padding: EdgeInsets.all(getSize(0)),
                             onPressed: () {
                               Navigator.pop(context);
@@ -1030,7 +1030,7 @@ Future showAppointmentDialog(BuildContext context, ActionClick actionClick) {
                         ),
                         Expanded(
                           child: FlatButton(
-                            textColor: ColorConstants.colorPrimary,
+                            textColor: appTheme.colorPrimary,
                             padding: EdgeInsets.all(getSize(0)),
                             onPressed: () {
                               if (_formKey.currentState.validate()) {

@@ -61,7 +61,7 @@ class BaseTheme {
   Color get statusNew => fromHex("#B256E6");
   Color get statusOffer => fromHex("#FF4DB8");
   Color get statusMyHold => fromHex("#F1951E");
-
+  Color get textGray => fromHex("#7B7E84");
   TextStyle get black24TitleColor {
     return TextStyle(
         fontSize: getFontSize(24),

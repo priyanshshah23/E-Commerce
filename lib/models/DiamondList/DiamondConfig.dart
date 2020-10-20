@@ -73,17 +73,19 @@ class DiamondConfig {
   List<BottomTabModel> arrMoreMenu;
   List<BottomTabModel> arrBottomTab;
   List<BottomTabModel> arrStatusMenu;
-
+  BottomMenuSetting bottomMenuSetting;
   List<BottomTabModel> toolbarList = [];
 
   DiamondConfig(this.moduleType);
 
   initItems({bool isDetail = false}) {
+    bottomMenuSetting = BottomMenuSetting(moduleType);
     toolbarList = getToolbarItem(isDetail: isDetail);
-    arrBottomTab = BottomMenuSetting().getBottomMenuItems(moduleType,isDetail: isDetail);
-    arrMoreMenu = BottomMenuSetting().getMoreMenuItems(isDetail: isDetail);
+    arrBottomTab =
+        bottomMenuSetting.getBottomMenuItems(moduleType, isDetail: isDetail);
+    arrMoreMenu = bottomMenuSetting.getMoreMenuItems(isDetail: isDetail);
     if (!isDetail) {
-      arrStatusMenu = BottomMenuSetting().getStatusMenuItems();
+      arrStatusMenu = bottomMenuSetting.getStatusMenuItems();
     }
   }
 
@@ -99,10 +101,9 @@ class DiamondConfig {
   List<BottomTabModel> getToolbarItem({bool isDetail = false}) {
     List<BottomTabModel> list = [];
     if (isDetail) {
-
       list.add(BottomTabModel(
           title: "",
-          image: selectAll,
+          image: share,
           code: BottomCodeConstant.TBShare,
           sequence: 0,
           isCenter: true));
@@ -118,7 +119,6 @@ class DiamondConfig {
           code: BottomCodeConstant.TBDownloadView,
           sequence: 3,
           isCenter: true));
-
     } else {
       list.add(BottomTabModel(
           title: "",

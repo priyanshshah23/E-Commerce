@@ -97,6 +97,7 @@ class ScreenTitle {
   //Menu Items
   final String enquiry;
   final String placeOrder;
+  final String compare;
   final String addToCart;
   final String addToWatchList;
   final String comment;
@@ -133,6 +134,7 @@ class ScreenTitle {
   final String searchResult;
 
   const ScreenTitle({
+    this.compare = "Compare",
     this.statusHold = "Hold",
     this.statusOnMemo = "On Memo",
     this.statusAvailable = "Available",
