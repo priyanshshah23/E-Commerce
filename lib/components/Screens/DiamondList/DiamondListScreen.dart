@@ -25,7 +25,7 @@ class DiamondListScreen extends StatefulScreenWidget {
 
   Map<String, dynamic> dictFilters;
   String filterId = "";
-  int moduleType = DiamondModuleConstant.MODULE_TYPE_UPCOMING;
+  int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
   bool isFromDrawer = false;
 
   DiamondListScreen(Map<String, dynamic> arguments) {

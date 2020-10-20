@@ -57,7 +57,7 @@ class DrawerSetting {
 }
 
 class BottomMenuSetting {
-  List<BottomTabModel> getMoreMenuItems() {
+  List<BottomTabModel> getMoreMenuItems({bool isDetail = false}) {
     List<BottomTabModel> moreMenuList = [];
     moreMenuList.add(BottomTabModel(
         image: enquiry,
@@ -106,8 +106,9 @@ class BottomMenuSetting {
     return moreMenuList;
   }
 
-  List<BottomTabModel> getBottomMenuItems() {
+  List<BottomTabModel> getBottomMenuItems(int moduleType,{bool isDetail = false}) {
     List<BottomTabModel> moreMenuList = [];
+    if(moduleType!=DiamondModuleConstant.MODULE_TYPE_SEARCH)
     moreMenuList.add(BottomTabModel(
         image: enquiry,
         isCenter: false,
@@ -123,13 +124,22 @@ class BottomMenuSetting {
         title: R.string().screenTitle.addToCart,
         isCenter: false,
         type: ActionMenuConstant.ACTION_TYPE_ADD_TO_CART));
+    if (isDetail) {
+      moreMenuList.add(BottomTabModel(
+          image: offer,
+          title: R.string().screenTitle.offer,
+          isCenter: false,
+          type: ActionMenuConstant.ACTION_TYPE_OFFER));
+    }
+    if (!isDetail) {
+      moreMenuList.add(BottomTabModel(
+          title: R.string().commonString.status,
+          isCenter: false,
+          image: status,
+          type: ActionMenuConstant.ACTION_TYPE_STATUS));
+    }
     moreMenuList.add(BottomTabModel(
-        title: "Status",
-        isCenter: false,
-        image: status,
-        type: ActionMenuConstant.ACTION_TYPE_STATUS));
-    moreMenuList.add(BottomTabModel(
-      title: "More",
+      title: R.string().commonString.more,
       isCenter: false,
       image: plusIcon,
       type: ActionMenuConstant.ACTION_TYPE_MORE,
