@@ -7,6 +7,7 @@ import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
@@ -71,20 +72,21 @@ class DiamondCalculation {
 
 class DiamondConfig {
   int moduleType;
+  bool isCompare;
   List<BottomTabModel> arrMoreMenu;
   List<BottomTabModel> arrBottomTab;
   List<BottomTabModel> arrStatusMenu;
   BottomMenuSetting bottomMenuSetting;
   List<BottomTabModel> toolbarList = [];
 
-  DiamondConfig(this.moduleType);
+  DiamondConfig(this.moduleType, {bool isCompare = false});
 
   initItems({bool isDetail = false}) {
     bottomMenuSetting = BottomMenuSetting(moduleType);
     toolbarList = getToolbarItem(isDetail: isDetail);
     arrBottomTab =
-        bottomMenuSetting.getBottomMenuItems(moduleType, isDetail: isDetail);
-    arrMoreMenu = bottomMenuSetting.getMoreMenuItems(isDetail: isDetail);
+        bottomMenuSetting.getBottomMenuItems(moduleType, isDetail: isDetail,isCompare: isCompare);
+    arrMoreMenu = bottomMenuSetting.getMoreMenuItems(isDetail: isDetail,isCompare: isCompare);
     if (!isDetail) {
       arrStatusMenu = bottomMenuSetting.getStatusMenuItems();
     }
@@ -144,7 +146,14 @@ class DiamondConfig {
 
   List<BottomTabModel> getToolbarItem({bool isDetail = false}) {
     List<BottomTabModel> list = [];
-    if (isDetail) {
+    if (isCompare) {
+      list.add(BottomTabModel(
+          title: "",
+          image: download,
+          code: BottomCodeConstant.TBDownloadView,
+          sequence: 3,
+          isCenter: true));
+    } else if (isDetail) {
       list.add(BottomTabModel(
           title: "",
           image: share,
@@ -224,6 +233,12 @@ class DiamondConfig {
         break;
       case ActionMenuConstant.ACTION_TYPE_SHARE:
         actionShare(list);
+        break;
+      case ActionMenuConstant.ACTION_TYPE_COMPARE:
+        var dict = Map<String, dynamic>();
+        dict[ArgumentConstant.DiamondList] = list;
+        dict[ArgumentConstant.ModuleType] = moduleType;
+        NavigationUtilities.pushRoute(DiamondCompareScreen.route, args: dict);
         break;
     }
   }

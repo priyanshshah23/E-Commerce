@@ -365,7 +365,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       diamondConfig.manageDiamondAction(context, selectedList, bottomTabModel);
     } else {
       app.resolve<CustomDialogs>().errorDialog(
-          context, "Selection Error", "Please select at least one stone.",
+          context, "Selection", "Please select at least one stone.",
           btntitle: R.string().commonString.ok);
     }
   }

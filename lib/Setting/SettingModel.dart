@@ -97,7 +97,6 @@ class DrawerSetting {
 
     drawerList.add(DrawerModel(
       image: myBid,
-
       title: R.string().screenTitle.myBid,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_MY_BID,
@@ -211,17 +210,19 @@ class BottomMenuSetting {
 
   BottomMenuSetting(this.moduleType);
 
-  List<BottomTabModel> getMoreMenuItems({bool isDetail = false}) {
+  List<BottomTabModel> getMoreMenuItems(
+      {bool isDetail = false, bool isCompare = false}) {
     List<BottomTabModel> moreMenuList = [];
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ORDER)
       moreMenuList.add(BottomTabModel(
           image: placeOrder,
           title: R.string().screenTitle.placeOrder,
           type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER));
-    moreMenuList.add(BottomTabModel(
-        image: compare,
-        title: R.string().screenTitle.compare,
-        type: ActionMenuConstant.ACTION_TYPE_COMPARE));
+    if (!isDetail && !isCompare)
+      moreMenuList.add(BottomTabModel(
+          image: compare,
+          title: R.string().screenTitle.compare,
+          type: ActionMenuConstant.ACTION_TYPE_COMPARE));
     moreMenuList.add(BottomTabModel(
         image: comment,
         title: R.string().screenTitle.comment,
@@ -256,7 +257,7 @@ class BottomMenuSetting {
   }
 
   List<BottomTabModel> getBottomMenuItems(int moduleType,
-      {bool isDetail = false}) {
+      {bool isDetail = false, bool isCompare = false}) {
     List<BottomTabModel> moreMenuList = [];
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY)
       moreMenuList.add(BottomTabModel(
@@ -303,7 +304,7 @@ class BottomMenuSetting {
           isCenter: false,
           type: ActionMenuConstant.ACTION_TYPE_OFFER));
     }
-    if (!isDetail && isDiamondSearchModule(moduleType)) {
+    if (!isCompare && !isDetail && isDiamondSearchModule(moduleType)) {
       moreMenuList.add(BottomTabModel(
           title: R.string().commonString.status,
           isCenter: false,
