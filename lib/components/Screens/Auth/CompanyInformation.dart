@@ -9,10 +9,12 @@ import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/DialogueList.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/components/widgets/shared/CountryPickerWidget.dart';
 import 'package:diamnow/models/Address/CityListModel.dart';
 import 'package:diamnow/models/Address/CountryListModel.dart';
 import 'package:diamnow/models/Address/StateListModel.dart';
+import 'package:diamnow/models/Auth/CompanyInformationModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -101,6 +103,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                 FocusScope.of(context).unfocus();
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
+                  callCompanyInformationApi();
                   //isProfileImageUpload ? uploadDocument() : callApi();
                 } else {
                   setState(() {
@@ -131,7 +134,10 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                   SizedBox(
                     height: getSize(20),
                   ),
-                  getBusinessTypeDropDown(),
+                  popupList(businessItem,  (value) {
+                    _businessTypeController.text = value;
+                  }),
+                  //getBusinessTypeDropDown(),
                   SizedBox(
                     height: getSize(20),
                   ),
@@ -542,51 +548,11 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
           }),
     );
   }
+List<String> businessItem = ["Independent Jeweler","Online Jewelery Store","Diamond Dealer/Broker","Diamond Manufacture/ Cutter", "Jewelry Manufacturer", "Jewelry Retain Chain", "Pawn Shop"];
+//  DropDownItem item = DropDownItem(widget.item, DropDownItem.BACK_PER);
 
   getBusinessTypeDropDown() {
-    return InkWell(
-      onTap: () {
-//              FocusScope.of(context).unfocus();
-//              showDialog(
-//                  context: context,
-//                  builder: (BuildContext context) {
-//                    return Dialog(
-//                        shape: RoundedRectangleBorder(
-//                          borderRadius: BorderRadius.circular(getSize(25)),
-//                        ),
-//                        child: DialogueList(
-//                          selectedItem: selectedItem,
-//                          duplicateItems: cityList,
-//                          applyFilterCallBack: (result) {
-//                            selectedItem = result;
-//                            _cityController.text = result.name;
-//                          },
-//                        ));
-//                  });
-        /*    if (countrySelect()) {
-          if (stateSelect()) {
-            showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return Dialog(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(getSize(25)),
-                      ),
-                      child: DialogueList(
-                        selectedItem: _cityController.text.trim(),
-                        duplicateItems: countryList,
-                        applyFilterCallBack: (result) {
-                          _cityController.text = result;
-                        },
-                      ));
-                });
-          } else {
-            showToast("Please Select State First");
-          }
-        } else {
-          showToast("Please Select Country First");
-        }*/
-      },
+    return AbsorbPointer(
       child: CommonTextfield(
           focusNode: _focusBusinessType,
           enable: false,
@@ -611,6 +577,45 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
     );
   }
 
+  Widget popupList(List<String> backPerList,
+      Function(String) selectedValue,
+      {bool isPer = false}) =>
+      PopupMenuButton<String>(
+        shape: TooltipShapeBorder(arrowArc: 0.5),
+        onSelected: (newValue) {
+          // add this property
+          selectedValue(newValue);
+        },
+        itemBuilder: (context) => [
+          for (var item in backPerList)
+            getPopupItems(item),
+          PopupMenuItem(
+            height: getSize(30),
+            value: "Start",
+            child: SizedBox(),
+          ),
+        ],
+        child: getBusinessTypeDropDown(),
+        offset: Offset(25, 110),
+      );
+
+
+  getPopupItems(String per, ) {
+    return PopupMenuItem(
+      value: per,
+      height: getSize(20),
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: getSize(10)),
+        width: MathUtilities.screenWidth(context),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(per, style: appTheme.black16TextStyle,)
+          ],
+        ),
+      ),
+    );
+  }
 
   bool countrySelect() {
     if (isStringEmpty(_countryController.text.trim())) {
@@ -777,6 +782,26 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
             })
       },
     );
+  }
+
+  callCompanyInformationApi() async {
+    CompanyInformationReq req = CompanyInformationReq();
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().companyInformation(req),
+        context,
+        isProgress: true)
+        .then((resp) async {
+
+    }).catchError((onError) {
+      app.resolve<CustomDialogs>().confirmDialog(
+        context,
+        title: "Update Company Information Error",
+        desc: onError.message,
+        positiveBtnTitle: "Try Again",
+      );
+    });
   }
 
   @override

@@ -2,6 +2,7 @@ import 'package:diamnow/models/Address/CityListModel.dart';
 import 'package:diamnow/models/Address/CountryListModel.dart';
 import 'package:diamnow/models/Address/StateListModel.dart';
 import 'package:diamnow/models/Auth/ChangePasswordModel.dart';
+import 'package:diamnow/models/Auth/CompanyInformationModel.dart';
 import 'package:diamnow/models/Auth/ForgetPassword.dart';
 import 'package:diamnow/models/Auth/PersonalInformationModel.dart';
 import 'package:diamnow/models/Auth/ResetPasswordModel.dart';
@@ -54,6 +55,9 @@ abstract class NetworkService {
 
   @POST(ApiConstants.personalInformation)
   Future<BaseApiResp> personalInformation(@Body() PersonalInformationReq req);
+
+  @POST(ApiConstants.companyInformation)
+  Future<CompanyInformationResp> companyInformation(@Body() CompanyInformationReq req);
 
   @POST(ApiConstants.placeOrder)
   Future<BaseApiResp> placeOrder(@Body() PlaceOrderReq req);

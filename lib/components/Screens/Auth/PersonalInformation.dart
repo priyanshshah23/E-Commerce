@@ -19,6 +19,7 @@ import 'package:diamnow/components/widgets/shared/CountryPickerWidget.dart';
 import 'package:diamnow/models/Address/CityListModel.dart';
 import 'package:diamnow/models/Address/CountryListModel.dart';
 import 'package:diamnow/models/Address/StateListModel.dart';
+import 'package:diamnow/models/Auth/PersonalInformationModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -108,12 +109,14 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
 //          margin: EdgeInsets.only(top: getSize(15), left: getSize(0)),
 //          decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
           child: AppButton.flat(
-            onTap: () {
+            onTap: () async {
               FocusScope.of(context).unfocus();
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
                 if(_mobileController.text.isNotEmpty || _whatsAppMobileController.text.isNotEmpty){
-                  checkValidation();
+                  if(await checkValidation()) {
+                 //   callPersonalInformationApi();
+                  }
                 }
                 //isProfileImageUpload ? uploadDocument() : callApi();
               } else {
@@ -1226,8 +1229,28 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
         false) {
        showToast("Enter Valid Whatsapp Mobile Number",context: context);
     } else {
-      //todo
+
     }
+  }
+
+  callPersonalInformationApi() async {
+    PersonalInformationReq req = PersonalInformationReq();
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().personalInformation(req),
+        context,
+        isProgress: true)
+        .then((resp) async {
+
+    }).catchError((onError) {
+      app.resolve<CustomDialogs>().confirmDialog(
+        context,
+        title: "Update Personal Information Error",
+        desc: onError.message,
+        positiveBtnTitle: "Try Again",
+      );
+    });
   }
 
   @override
