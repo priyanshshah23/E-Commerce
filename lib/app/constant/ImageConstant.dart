@@ -9,15 +9,14 @@ const String email = "assets/auth/envelope.png";
 const String company = "assets/auth/company.png";
 const String india = "assets/auth/india.png";
 const String back = "assets/auth/back.png";
-const String menu = "assets/drawer/menu.png";
 const String plusIcon = "assets/diamnow/plusIcon.png";
 
 const String selectedCheckbox = "assets/auth/checkbox.png";
 const String unSelectedCheckbox = "assets/auth/unselectedcheckbox.png";
 const String forgetPassword = "assets/auth/forgetPassword.png";
 const String resetPassword = "assets/auth/resetPassword.png";
-const String passwordResetSuccessfully = "assets/auth/passwordResetSuccessfully.png";
-
+const String passwordResetSuccessfully =
+    "assets/auth/passwordResetSuccessfully.png";
 
 // DiamNow
 const String notification = "assets/diamnow/notification.png";
@@ -38,7 +37,6 @@ const String download = "assets/diamnow/download.png";
 const String showSelected = "assets/diamnow/showSelected.png";
 const String compare = "assets/diamnow/compare.png";
 const String status = "assets/diamnow/status.png";
-
 
 const String filterDownArrow = "assets/filter/filterDownArrow.png";
 const String filterRightArrow = "assets/filter/filterRightArrow.png";
@@ -66,4 +64,30 @@ const String offer = "assets/more/offer.png";
 const String hold = "assets/more/hold.png";
 const String clearSelection = "assets/more/clear.png";
 
+//Drawer
+const String menu = "assets/drawer/menu.png";
 
+const String aboutUs = "assets/drawer/aboutUs.png";
+const String changePassword = "assets/drawer/changePassword.png";
+const String contactUs = "assets/drawer/contactUs.png";
+const String diamondOnAuction = "assets/drawer/diamondOnAuction.png";
+const String exclusiveDiamonds = "assets/drawer/exclusiveDiamonds.png";
+const String home = "assets/drawer/home.png";
+const String logout = "assets/drawer/logout.png";
+const String myBid = "assets/drawer/myBid.png";
+const String myDemand = "assets/drawer/myDemand.png";
+const String myHold = "assets/drawer/myHold.png";
+const String myOffer = "assets/drawer/myOffer.png";
+const String myOffice = "assets/drawer/myOffice.png";
+const String myOrder = "assets/drawer/myOrder.png";
+const String myPurchased = "assets/drawer/myPurchased.png";
+const String mySavedSearch = "assets/drawer/mySavedSearch.png";
+const String myWatchlist = "assets/drawer/myWatchlist.png";
+const String newArrival = "assets/drawer/newArrival.png";
+const String privacyPolicy = "assets/drawer/privacyPolicy.png";
+const String quickSearch = "assets/drawer/quickSearch.png";
+const String stoneOfTheDay = "assets/drawer/stoneOfTheDay.png";
+const String termsAndCondition = "assets/drawer/termsAndCondition.png";
+const String userTemp = "assets/drawer/user.png";
+const String bottomGradient = "assets/drawer/bottomGradient.png";
+const String edit = "assets/drawer/edit.png";

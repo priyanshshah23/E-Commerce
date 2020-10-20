@@ -9,6 +9,12 @@ class DrawerSetting {
   List<DrawerModel> getDrawerItems() {
     List<DrawerModel> drawerList = [];
     drawerList.add(DrawerModel(
+      image: home,
+      title: "Home",
+      isSelected: true,
+      type: DrawerConstant.HOME,
+    ));
+    drawerList.add(DrawerModel(
       image: search,
       title: "Search",
       isSelected: true,
@@ -17,13 +23,13 @@ class DrawerSetting {
     drawerList.add(DrawerModel(
       image: search,
       title: "Upcoming",
-      isSelected: true,
+      isSelected: false,
       type: DrawerConstant.MODULE_UPCOMING,
     ));
     drawerList.add(DrawerModel(
       image: search,
       title: R.string().screenTitle.myProfile,
-      isSelected: true,
+      isSelected: false,
       type: DrawerConstant.MODULE_PROFILE,
     ));
     drawerList.add(DrawerModel(

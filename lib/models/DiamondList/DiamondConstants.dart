@@ -35,6 +35,10 @@ class DrawerConstant {
   static const int MODULE_UPCOMING = DiamondModuleConstant.MODULE_TYPE_UPCOMING;
   static const int MODULE_PROFILE = DiamondModuleConstant.MODULE_TYPE_PROFILE;
 
+  static const int MODULE_QUICK_SEARCH = 100;
+
+  static const int HOME = 100;
+
   static const int LOGOUT = 111;
   static const int OPEN_DRAWER = 1001;
   static const int PROFILE = 1002;
