@@ -332,6 +332,18 @@ class User {
     data['seller'] = this.seller;
     return data;
   }
+
+  String getFullName() {
+    var fn = firstName
+        .split(' ')
+        .map((word) => word[0].toUpperCase() + word.substring(1))
+        .join(' ');
+    var ln = lastName
+        .split(' ')
+        .map((word) => word[0].toUpperCase() + word.substring(1))
+        .join(' ');
+    return fn + " " + ln;
+  }
 }
 
 class FingerPrints {
