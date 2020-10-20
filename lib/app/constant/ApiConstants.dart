@@ -23,11 +23,13 @@ class ApiConstants {
   static const String login = commonUrl + "auth/login";
 
   static const String diamondList = commonUrl + "diamond/paginate";
+  static const String diamondTrackList = commonUrl + "diamond-track/paginate";
 
-  static const String staticPage = apiV1 + "static-page/{id}";
   static const String createDiamondTrack = commonUrl + "diamond-track/create";
   static const String upsetComment = commonUrl + "diamond-comment/upsert";
   static const String placeOrder = commonUrl + "diamond-confirm/request";
+
   static const String forgetPassword = commonUrl + "forgot-password";
   static const String resetPassword = commonUrl + "reset-password-by-user";
+  static const String staticPage = apiV1 + "static-page/{id}";
 }

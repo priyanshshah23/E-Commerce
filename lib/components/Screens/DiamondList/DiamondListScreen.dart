@@ -159,21 +159,34 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     Map<String, dynamic> dict = {};
     dict["page"] = page;
     dict["limit"] = DEFAULT_LIMIT;
-    dict["filters"] = this.dictFilters;
-    dict["filters"]["diamondSearchId"] = this.filterId;
+    switch (moduleType) {
+      case DiamondModuleConstant.MODULE_TYPE_SEARCH:
+        dict["filters"] = this.dictFilters;
+        dict["filters"]["diamondSearchId"] = this.filterId;
+        break;
+
+      case DiamondModuleConstant.MODULE_TYPE_MY_CART:
+        dict["trackType"] = DiamondTrackConstant.TRACK_TYPE_CART;
+        break;
+      case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
+        dict["trackType"] = DiamondTrackConstant.TRACK_TYPE_WATCH_LIST;
+        break;
+      case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
+        dict["trackType"] = DiamondTrackConstant.TRACK_TYPE_ENQUIRY;
+        break;
+      case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+        dict["trackType"] = DiamondTrackConstant.TRACK_TYPE_OFFER;
+        break;
+    }
 
     NetworkCall<DiamondListResp>()
         .makeCall(
-      () => app
-          .resolve<ServiceModule>()
-          .networkService()
-          .diamondListPaginate(dict),
+      () => diamondConfig.getApiCall(moduleType, dict),
       context,
       isProgress: !isRefress && !isLoading,
     )
         .then((diamondListResp) async {
       arraDiamond.addAll(diamondListResp.data.diamonds);
-
       diamondList.state.listCount = arraDiamond.length;
       diamondList.state.totalCount = diamondListResp.data.count;
       manageDiamondSelection();

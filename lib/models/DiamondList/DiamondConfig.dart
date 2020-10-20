@@ -3,6 +3,7 @@ import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/ImageConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
@@ -95,6 +96,26 @@ class DiamondConfig {
         return R.string().screenTitle.searchDiamond;
       default:
         return R.string().screenTitle.searchDiamond;
+    }
+  }
+
+  Future<DiamondListResp> getApiCall(
+      int moduleType, Map<String, dynamic> dict) {
+    switch (moduleType) {
+      case DiamondModuleConstant.MODULE_TYPE_SEARCH:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .diamondListPaginate(dict);
+
+      case DiamondModuleConstant.MODULE_TYPE_MY_CART:
+      case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
+      case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
+      case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .diamondTrackList(dict);
     }
   }
 

@@ -107,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
     selectedType = DrawerConstant.MODULE_UPCOMING;
     Map<String, dynamic> dict = new HashMap();
     dict[ArgumentConstant.ModuleType] =
-        DiamondModuleConstant.MODULE_TYPE_UPCOMING;
+        DiamondModuleConstant.MODULE_TYPE_MY_CART;
     dict[ArgumentConstant.IsFromDrawer] = true;
     currentWidget = DiamondListScreen(dict);
   }
@@ -158,10 +158,9 @@ class _HomeScreenState extends State<HomeScreen> {
         calllogout(context);
         SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
         ThemeSettingsModel.of(context).updateSystemUi(isLogin: true);
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil(
+        Navigator.of(context).pushNamedAndRemoveUntil(
           LoginScreen.route,
-              (Route<dynamic> route) => false,
+          (Route<dynamic> route) => false,
         );
       }
     });

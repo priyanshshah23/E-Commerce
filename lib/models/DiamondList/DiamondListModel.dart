@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 class DiamondListReq {
   int page;
   int limit;
+  int trackType;
   ReqFilters filters;
   bool isNotReturnTotal;
   bool isReturnCountOnly;
@@ -14,6 +15,7 @@ class DiamondListReq {
   DiamondListReq({
     this.page,
     this.limit,
+    this.trackType,
     this.filters,
     this.isNotReturnTotal,
     this.isReturnCountOnly,
@@ -37,6 +39,9 @@ class DiamondListReq {
     if (json['sort'] != null) {
       sort = json['sort'];
     }
+    if (json['trackType'] != null) {
+      trackType = json['trackType'];
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -54,6 +59,9 @@ class DiamondListReq {
     }
     if (this.sort != null) {
       data['sort'] = this.sort;
+    }
+    if (this.trackType != null) {
+      data['trackType'] = this.trackType;
     }
     return data;
   }
