@@ -1,7 +1,10 @@
 
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/models/Auth/ChangePasswordModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -90,6 +93,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                             );
                           } else {
                             _formKey.currentState.save();
+                            callChangePasswordApi();
                           }
 //                      callLoginApi(context);
                         } else {
@@ -199,4 +203,33 @@ class _ChangePasswordState extends State<ChangePassword> {
       },
     );
   }
+
+  callChangePasswordApi({bool isResend = false}) async {
+    ChangePasswordReq req = ChangePasswordReq();
+    req.currentPassword = _oldPasswordController.text.trim();
+    req.newPassword = _newPasswordController.text.trim();
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().changePassword(req),
+        context,
+        isProgress: true)
+        .then((resp) async {
+      FocusScope.of(context).unfocus();
+      _oldPasswordController.clear();
+      _newPasswordController.clear();
+      _confirmPasswordController.clear();
+      _autoValidate = false;
+      showToast(resp.message,context: context);
+      setState(() {});
+    }).catchError((onError) {
+      app.resolve<CustomDialogs>().confirmDialog(
+        context,
+        title: "Change Password Error",
+        desc: onError.message,
+        positiveBtnTitle: "Try Again",
+      );
+    });
+  }
+
 }

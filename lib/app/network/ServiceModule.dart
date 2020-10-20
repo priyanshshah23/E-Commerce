@@ -28,7 +28,7 @@ class ServiceModule {
     if (playerId != null) {
       dio.options.headers["playerId"] = playerId;
     }
-
+//
     if (kDebugMode) {
       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (client) {

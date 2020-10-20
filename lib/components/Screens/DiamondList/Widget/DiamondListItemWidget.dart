@@ -33,67 +33,70 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       onTap: () {
         widget.actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_ROW));
       },
-      child: Container(
-        margin: EdgeInsets.only(
-          bottom: getSize(10),
-          top: getSize(5),
-        ),
-        width: MathUtilities.screenWidth(context),
-        decoration: BoxDecoration(
-            color: appTheme.whiteColor,
-            boxShadow: widget.item.isSelected
-                ? getBoxShadow(context)
-                : [BoxShadow(color: Colors.transparent)],
-            borderRadius: BorderRadius.circular(getSize(6)),
-            border: Border.all(
-                color: widget.item.isSelected
-                    ? appTheme.colorPrimary
-                    : appTheme.dividerColor)
-            //boxShadow: getBoxShadow(context),
-            ),
-        child: Wrap(
-          children: [
-            IntrinsicHeight(
-              child: Row(
-                children: <Widget>[
-                  getCaratAndDiscountDetail(widget.actionClick),
-                  //   getIdColorDetail(),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: getSize(10),
-                          right: getSize(10),
-                          top: getSize(8),
-                          bottom: getSize(8)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          getIdShapeDetail(),
-                          getDymentionAndCaratDetail(),
-                          getTableDepthAndAmountDetail(),
-                          getWatchListDetail(),
-                          getOfferDetail(),
-                        ],
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: getSize(20)),
+        child: Container(
+          margin: EdgeInsets.only(
+            bottom: getSize(10),
+            top: getSize(5),
+          ),
+          width: MathUtilities.screenWidth(context),
+          decoration: BoxDecoration(
+              color: appTheme.whiteColor,
+              boxShadow: widget.item.isSelected
+                  ? getBoxShadow(context)
+                  : [BoxShadow(color: Colors.transparent)],
+              borderRadius: BorderRadius.circular(getSize(6)),
+              border: Border.all(
+                  color: widget.item.isSelected
+                      ? appTheme.colorPrimary
+                      : appTheme.dividerColor)
+              //boxShadow: getBoxShadow(context),
+              ),
+          child: Wrap(
+            children: [
+              IntrinsicHeight(
+                child: Row(
+                  children: <Widget>[
+                    getCaratAndDiscountDetail(widget.actionClick),
+                    //   getIdColorDetail(),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            left: getSize(10),
+                            right: getSize(10),
+                            top: getSize(8),
+                            bottom: getSize(8)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            getIdShapeDetail(),
+                            getDymentionAndCaratDetail(),
+                            getTableDepthAndAmountDetail(),
+                            getWatchListDetail(),
+                            getOfferDetail(),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    child: Center(
-                        child: Container(
-                      decoration: BoxDecoration(
-                          color: widget.item.getStatusColor(),
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(5),
-                              bottomLeft: Radius.circular(5))),
-                      height: getSize(26),
-                      width: getSize(4),
-                      // color: Colors.red,
-                    )),
-                  ),
-                ],
+                    Container(
+                      child: Center(
+                          child: Container(
+                        decoration: BoxDecoration(
+                            color: widget.item.getStatusColor(),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(5),
+                                bottomLeft: Radius.circular(5))),
+                        height: getSize(26),
+                        width: getSize(4),
+                        // color: Colors.red,
+                      )),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -270,7 +273,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                     getText(R.string().screenTitle.finalOffer + " :"),
                     getText(widget.item.getFinalOffer().toString()),
                     getText(R.string().screenTitle.finalDisc + " :"),
-                    getText(widget.item.getFinalDiscount().toString()),
+                    getText(PriceUtilities.getPercent(widget.item.getFinalDiscount())),
                   ],
                 ),
               ),
@@ -280,9 +283,9 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     getText(R.string().screenTitle.finalRate + " :"),
-                    getText(widget.item.getFinalRate().toString()),
+                    getText(PriceUtilities.getPercent(widget.item.getFinalRate())),
                     getText(R.string().screenTitle.finalValue + " :"),
-                    getText(widget.item.getFinalAmount().toString()),
+                    getText(PriceUtilities.getPercent(widget.item.getFinalAmount())),
                   ],
                 ),
               ),
