@@ -93,25 +93,25 @@ class DiamondConfig {
   String getScreenTitle() {
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_MY_CART:
-        return R.string().screenTitle.searchDiamond;
+        return R.string().screenTitle.myCart;
       case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
-        return R.string().screenTitle.searchDiamond;
+        return R.string().screenTitle.myWatchlist;
       case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
-        return R.string().screenTitle.searchDiamond;
+        return R.string().screenTitle.myOffer;
       case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
-        return R.string().screenTitle.searchDiamond;
+        return R.string().screenTitle.myEnquiry;
       case DiamondModuleConstant.MODULE_TYPE_MY_BID:
-        return R.string().screenTitle.searchDiamond;
+        return R.string().screenTitle.myBid;
       case DiamondModuleConstant.MODULE_TYPE_MY_HOLD:
-        return R.string().screenTitle.searchDiamond;
+        return R.string().screenTitle.myHold;
       case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
-        return R.string().screenTitle.searchDiamond;
+        return R.string().screenTitle.myOrder;
       case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
-        return R.string().screenTitle.searchDiamond;
+        return R.string().screenTitle.myOffice;
       case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
-        return R.string().screenTitle.searchDiamond;
+        return R.string().screenTitle.myOffer;
       case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
-        return R.string().screenTitle.searchDiamond;
+        return R.string().screenTitle.myPurchased;
       default:
         return R.string().screenTitle.searchDiamond;
     }

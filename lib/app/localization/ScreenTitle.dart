@@ -38,6 +38,11 @@ class ScreenTitle {
   final String exclusiveDiamonds;
   final String diamondOnAuction;
   final String stoneOfTheDays;
+
+  final String myEnquiry;
+  final String myCart;
+  final String myComment;
+
   final String myWatchlist;
   final String myBid;
   final String myHold;
@@ -144,6 +149,9 @@ class ScreenTitle {
   final String searchResult;
 
   const ScreenTitle({
+    this.myEnquiry = "My Enquiry",
+    this.myCart = "My Cart",
+    this.myComment = "My Notes",
     this.compare = "Compare",
     this.statusHold = "Hold",
     this.statusOnMemo = "On Memo",

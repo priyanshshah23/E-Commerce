@@ -106,48 +106,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     });
   }
 
-  callApiforUpcoming(bool isRefress, {bool isLoading = false}) {
-    if (isRefress) {
-      arraDiamond.clear();
-      page = DEFAULT_PAGE;
-    }
-
-    DiamondListReq req = DiamondListReq();
-    req.page = page;
-    req.limit = DEFAULT_LIMIT;
-    ReqFilters filter = ReqFilters();
-    filter.wSts = "U";
-    InDt inDt = InDt();
-    inDt.lessThan = DateTime.now().toIso8601String();
-    filter.inDt = inDt;
-    req.filters = filter;
-    req.sort = "inDt ASC";
-
-    NetworkCall<DiamondListResp>()
-        .makeCall(
-      () => app.resolve<ServiceModule>().networkService().diamondList(req),
-      context,
-      isProgress: !isRefress && !isLoading,
-    )
-        .then((UpcomingListResp) async {
-      print("Count ${UpcomingListResp.data.count}");
-      arraDiamond.addAll(UpcomingListResp.data.diamonds);
-
-      diamondList.state.listCount = arraDiamond.length;
-      diamondList.state.totalCount = UpcomingListResp.data.count;
-      manageDiamondSelection();
-      page = page + 1;
-      diamondList.state.setApiCalling(false);
-      setState(() {});
-    }).catchError((onError) {
-      if (isRefress) {
-        arraDiamond.clear();
-        diamondList.state.listCount = arraDiamond.length;
-        diamondList.state.totalCount = arraDiamond.length;
-      }
-      diamondList.state.setApiCalling(false);
-    });
-  }
 
   callApi(bool isRefress, {bool isLoading = false}) {
     if (isRefress) {

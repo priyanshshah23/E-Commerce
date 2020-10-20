@@ -68,31 +68,36 @@ class DrawerSetting {
     ));
 
     drawerList.add(DrawerModel(
-      image: myWatchlist,
-      title: "My Enquiry",
+      image: enquiry,
+      title: R.string().screenTitle.myEnquiry,
+      imageColor: appTheme.colorPrimary,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY,
     ));
     drawerList.add(DrawerModel(
       image: myWatchlist,
       title: R.string().screenTitle.myWatchlist,
+      imageColor: appTheme.colorPrimary,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST,
     ));
 
     drawerList.add(DrawerModel(
-        image: myWatchlist,
-        title: "My Cart",
+        image: addToCart,
+        title: R.string().screenTitle.myCart,
+        imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_CART));
     drawerList.add(DrawerModel(
-        image: myWatchlist,
-        title: "My Notes",
+        image: comment,
+        title: R.string().screenTitle.myComment,
+        imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_COMMENT));
 
     drawerList.add(DrawerModel(
       image: myBid,
+
       title: R.string().screenTitle.myBid,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_MY_BID,
