@@ -73,16 +73,20 @@ class DiamondConfig {
   List<BottomTabModel> arrMoreMenu;
   List<BottomTabModel> arrBottomTab;
   List<BottomTabModel> arrStatusMenu;
-
+  BottomMenuSetting bottomMenuSetting;
   List<BottomTabModel> toolbarList = [];
 
   DiamondConfig(this.moduleType);
 
-  initItems() {
-    toolbarList = getToolbarItem();
-    arrMoreMenu = BottomMenuSetting().getMoreMenuItems();
-    arrBottomTab = BottomMenuSetting().getBottomMenuItems();
-    arrStatusMenu = BottomMenuSetting().getStatusMenuItems();
+  initItems({bool isDetail = false}) {
+    bottomMenuSetting = BottomMenuSetting(moduleType);
+    toolbarList = getToolbarItem(isDetail: isDetail);
+    arrBottomTab =
+        bottomMenuSetting.getBottomMenuItems(moduleType, isDetail: isDetail);
+    arrMoreMenu = bottomMenuSetting.getMoreMenuItems(isDetail: isDetail);
+    if (!isDetail) {
+      arrStatusMenu = bottomMenuSetting.getStatusMenuItems();
+    }
   }
 
   String getScreenTitle() {
@@ -94,32 +98,53 @@ class DiamondConfig {
     }
   }
 
-  List<BottomTabModel> getToolbarItem() {
+  List<BottomTabModel> getToolbarItem({bool isDetail = false}) {
     List<BottomTabModel> list = [];
-    list.add(BottomTabModel(
-        title: "",
-        image: selectAll,
-        code: BottomCodeConstant.TBSelectAll,
-        sequence: 0,
-        isCenter: true));
-    list.add(BottomTabModel(
-        title: "",
-        image: gridView,
-        code: BottomCodeConstant.TBGrideView,
-        sequence: 1,
-        isCenter: true));
-    list.add(BottomTabModel(
-        title: "",
-        image: filter,
-        code: BottomCodeConstant.TBSortView,
-        sequence: 2,
-        isCenter: true));
-    list.add(BottomTabModel(
-        title: "",
-        image: download,
-        code: BottomCodeConstant.TBDownloadView,
-        sequence: 3,
-        isCenter: true));
+    if (isDetail) {
+      list.add(BottomTabModel(
+          title: "",
+          image: share,
+          code: BottomCodeConstant.TBShare,
+          sequence: 0,
+          isCenter: true));
+      list.add(BottomTabModel(
+          title: "",
+          image: clock,
+          code: BottomCodeConstant.TBClock,
+          sequence: 0,
+          isCenter: true));
+      list.add(BottomTabModel(
+          title: "",
+          image: download,
+          code: BottomCodeConstant.TBDownloadView,
+          sequence: 3,
+          isCenter: true));
+    } else {
+      list.add(BottomTabModel(
+          title: "",
+          image: selectAll,
+          code: BottomCodeConstant.TBSelectAll,
+          sequence: 0,
+          isCenter: true));
+      list.add(BottomTabModel(
+          title: "",
+          image: gridView,
+          code: BottomCodeConstant.TBGrideView,
+          sequence: 1,
+          isCenter: true));
+      list.add(BottomTabModel(
+          title: "",
+          image: filter,
+          code: BottomCodeConstant.TBSortView,
+          sequence: 2,
+          isCenter: true));
+      list.add(BottomTabModel(
+          title: "",
+          image: download,
+          code: BottomCodeConstant.TBDownloadView,
+          sequence: 3,
+          isCenter: true));
+    }
     return list;
   }
 

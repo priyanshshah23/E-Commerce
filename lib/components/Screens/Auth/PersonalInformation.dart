@@ -146,7 +146,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                             Container(
                               color: isProfileImageUpload || image != ""
                                   ? Colors.transparent
-                                  : ColorConstants.colorPrimary
+                                  : appTheme.colorPrimary
                                       .withOpacity(0.5),
                             ),
                           ],

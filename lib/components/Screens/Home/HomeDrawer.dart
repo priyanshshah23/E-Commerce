@@ -31,7 +31,7 @@ class HomeDrawer extends StatelessWidget {
                 top: getSize(18),
                 bottom: getSize(18)),
             child: Image.asset(icon,
-                color: ColorConstants.colorPrimary,
+                color: appTheme.colorPrimary,
                 width: getSize(22),
                 height: getSize(22)),
           ),
@@ -40,7 +40,7 @@ class HomeDrawer extends StatelessWidget {
             style: AppTheme.of(context).theme.textTheme.body1.copyWith(
                 fontSize: getFontSize(16),
                 fontWeight: FontWeight.bold,
-                color: ColorConstants.textGray),
+                color: appTheme.textGray),
           )
         ],
       ),
