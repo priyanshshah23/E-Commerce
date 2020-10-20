@@ -89,7 +89,7 @@ getDrawerButton(BuildContext context, bool isBlack) {
   return IconButton(
     padding: EdgeInsets.all(3),
     onPressed: () {
-      RxBus.post(DrawerEvent(DrawerConstant.OPEN_DRAWER, false),
+      RxBus.post(DrawerEvent(DiamondModuleConstant.MODULE_TYPE_OPEN_DRAWER, false),
           tag: eventBusTag);
     },
     icon: Image.asset(

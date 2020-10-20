@@ -92,7 +92,25 @@ class DiamondConfig {
 
   String getScreenTitle() {
     switch (moduleType) {
-      case DiamondModuleConstant.MODULE_TYPE_SEARCH:
+      case DiamondModuleConstant.MODULE_TYPE_MY_CART:
+        return R.string().screenTitle.searchDiamond;
+      case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
+        return R.string().screenTitle.searchDiamond;
+      case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+        return R.string().screenTitle.searchDiamond;
+      case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
+        return R.string().screenTitle.searchDiamond;
+      case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+        return R.string().screenTitle.searchDiamond;
+      case DiamondModuleConstant.MODULE_TYPE_MY_HOLD:
+        return R.string().screenTitle.searchDiamond;
+      case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
+        return R.string().screenTitle.searchDiamond;
+      case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
+        return R.string().screenTitle.searchDiamond;
+      case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+        return R.string().screenTitle.searchDiamond;
+      case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
         return R.string().screenTitle.searchDiamond;
       default:
         return R.string().screenTitle.searchDiamond;
@@ -116,6 +134,11 @@ class DiamondConfig {
             .resolve<ServiceModule>()
             .networkService()
             .diamondTrackList(dict);
+      case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .diamondCommentList(dict);
     }
   }
 

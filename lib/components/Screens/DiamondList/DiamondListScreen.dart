@@ -28,7 +28,10 @@ class DiamondListScreen extends StatefulScreenWidget {
   int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
   bool isFromDrawer = false;
 
-  DiamondListScreen(Map<String, dynamic> arguments) {
+  DiamondListScreen(
+    Map<String, dynamic> arguments, {
+    Key key,
+  }) : super(key: key) {
     if (arguments != null) {
       this.filterId = arguments["filterId"];
       this.dictFilters = arguments["filters"];
@@ -177,6 +180,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
         dict["trackType"] = DiamondTrackConstant.TRACK_TYPE_OFFER;
         break;
+      case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
+        dict["isAppendDiamond"] = 1;
+        break;
     }
 
     NetworkCall<DiamondListResp>()
@@ -186,7 +192,22 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       isProgress: !isRefress && !isLoading,
     )
         .then((diamondListResp) async {
-      arraDiamond.addAll(diamondListResp.data.diamonds);
+      switch (moduleType) {
+        case DiamondModuleConstant.MODULE_TYPE_MY_CART:
+        case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
+        case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
+        case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+        case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
+          List<DiamondModel> list = [];
+          diamondListResp.data.list.forEach((element) {
+            list.add(element.diamond);
+          });
+          arraDiamond.addAll(list);
+          break;
+        default:
+          arraDiamond.addAll(diamondListResp.data.diamonds);
+          break;
+      }
       diamondList.state.listCount = arraDiamond.length;
       diamondList.state.totalCount = diamondListResp.data.count;
       manageDiamondSelection();
@@ -263,6 +284,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       case clickConstant.CLICK_TYPE_ROW:
         var dict = Map<String, dynamic>();
         dict[ArgumentConstant.DiamondDetail] = arraDiamond[index];
+        dict[ArgumentConstant.ModuleType] = moduleType;
         NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
         break;
     }

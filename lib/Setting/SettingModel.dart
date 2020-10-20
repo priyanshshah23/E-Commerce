@@ -69,10 +69,27 @@ class DrawerSetting {
 
     drawerList.add(DrawerModel(
       image: myWatchlist,
+      title: "My Enquiry",
+      isSelected: false,
+      type: DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY,
+    ));
+    drawerList.add(DrawerModel(
+      image: myWatchlist,
       title: "My Watchlist",
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST,
     ));
+
+    drawerList.add(DrawerModel(
+        image: myWatchlist,
+        title: "My Cart",
+        isSelected: false,
+        type: DiamondModuleConstant.MODULE_TYPE_MY_CART));
+    drawerList.add(DrawerModel(
+        image: myWatchlist,
+        title: "My Notes",
+        isSelected: false,
+        type: DiamondModuleConstant.MODULE_TYPE_MY_COMMENT));
 
     drawerList.add(DrawerModel(
       image: myBid,
@@ -254,18 +271,11 @@ class BottomMenuSetting {
           title: R.string().screenTitle.addToCart,
           isCenter: false,
           type: ActionMenuConstant.ACTION_TYPE_ADD_TO_CART));
-    if (isDetail) {
-      if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
-        moreMenuList.add(BottomTabModel(
-            image: offer,
-            title: R.string().screenTitle.offer,
-            isCenter: false,
-            type: ActionMenuConstant.ACTION_TYPE_OFFER));
-      }
-    }
+
     if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY ||
         moduleType == DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST ||
-        moduleType == DiamondModuleConstant.MODULE_TYPE_MY_CART) {
+        moduleType == DiamondModuleConstant.MODULE_TYPE_MY_CART ||
+        moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
       moreMenuList.add(BottomTabModel(
           image: placeOrder,
           title: R.string().screenTitle.placeOrder,
@@ -281,7 +291,14 @@ class BottomMenuSetting {
             type: ActionMenuConstant.ACTION_TYPE_OFFER));
       }
     }
-    if (!isDetail) {
+    if (isDiamondSearchModule(moduleType) && isDetail) {
+      moreMenuList.add(BottomTabModel(
+          image: offer,
+          title: R.string().screenTitle.offer,
+          isCenter: false,
+          type: ActionMenuConstant.ACTION_TYPE_OFFER));
+    }
+    if (!isDetail && isDiamondSearchModule(moduleType)) {
       moreMenuList.add(BottomTabModel(
           title: R.string().commonString.status,
           isCenter: false,
