@@ -3,8 +3,30 @@ import 'package:flutter/cupertino.dart';
 
 class DiamondModuleConstant {
   static const MODULE_TYPE_SEARCH = 1;
-  static const MODULE_TYPE_UPCOMING = 2;
-  static const MODULE_TYPE_PROFILE = 3;
+  static const MODULE_TYPE_QUICK_SEARCH = 2;
+  static const MODULE_TYPE_NEW_ARRIVAL = 3;
+  static const MODULE_TYPE_EXCLUSIVE_DIAMOND = 4;
+  static const MODULE_TYPE_DIAMOND_AUCTION = 5;
+  static const MODULE_TYPE_STONE_OF_THE_DAY = 6;
+  static const MODULE_TYPE_MY_WATCH_LIST = 7;
+  static const MODULE_TYPE_MY_CART = 8;
+  static const MODULE_TYPE_MY_ENQUIRY = 9;
+  static const MODULE_TYPE_MY_BID = 10;
+  static const MODULE_TYPE_MY_HOLD = 11;
+  static const MODULE_TYPE_MY_ORDER = 12;
+  static const MODULE_TYPE_MY_OFFICE = 13;
+  static const MODULE_TYPE_MY_OFFER = 14;
+  static const MODULE_TYPE_MY_PURCHASE =15;
+  static const MODULE_TYPE_MY_SAVED_SEARCH = 16;
+  static const MODULE_TYPE_MY_DEMAND = 17;
+  static const MODULE_TYPE_TERM_CONDITION = 18;
+  static const MODULE_TYPE_PRIVACY_POLICY = 19;
+  static const MODULE_TYPE_ABOUT_US = 20;
+  static const MODULE_TYPE_CONTACT_US = 21;
+  static const MODULE_TYPE_CHANGE_PASSWORD = 22;
+  static const MODULE_TYPE_LOGOUT = 23;
+  static const MODULE_TYPE_UPCOMING = 24;
+  static const MODULE_TYPE_PROFILE = 25;
 }
 
 class ArgumentConstant {
