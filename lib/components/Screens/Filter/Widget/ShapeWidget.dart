@@ -1,5 +1,6 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
@@ -17,6 +18,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
   //show when isShowMoreSelected=false;
   int elementsToShow = 11;
   List<Master> listOfMasterView = [];
+  String showMoreId = "ShowMore";
 
   @override
   void initState() {
@@ -41,15 +43,15 @@ class _ShapeWidgetState extends State<ShapeWidget> {
     if (widget.selectionModel.isShowMore &&
         widget.selectionModel.orientation == DisplayTypes.vertical) {
       if (widget.selectionModel.masters
-              .where((element) => element.sId == "ShowMore")
+              .where((element) => element.sId == showMoreId)
               .toList()
               .length ==
           0) {
         Master allMaster = Master();
-        allMaster.sId = "ShowMore";
+        allMaster.sId = showMoreId;
         allMaster.webDisplay = widget.selectionModel.isShowMoreSelected
-            ? "Show More"
-            : "Show Less";
+            ? R.string().commonString.showMore
+            : R.string().commonString.showLess;
         allMaster.isSelected = false;
 
         widget.selectionModel.masters
@@ -110,12 +112,12 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                               !widget.selectionModel.isShowAllSelected;
                           if (widget.selectionModel.isShowAllSelected == true) {
                             widget.selectionModel.masters.forEach((element) {
-                              if (element.sId != "ShowMore")
+                              if (element.sId != showMoreId)
                                 element.isSelected = true;
                             });
                           } else {
                             widget.selectionModel.masters.forEach((element) {
-                              if (element.sId != "ShowMore")
+                              if (element.sId != showMoreId)
                                 element.isSelected = false;
                             });
                           }
@@ -123,41 +125,44 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                           setState(() {});
                         },
                         child: ShapeItemWidget(
-                          txt: "All",
+                          txt: R.string().commonString.all,
                           obj: obj,
                           selectionModel: widget.selectionModel,
+                          showMoreId: this.showMoreId,
                         ),
                       );
                     } else if (widget.selectionModel.isShowMoreSelected ==
                             false &&
                         widget.selectionModel.isShowMore &&
                         index == totalIndex - 1) {
-                      obj.webDisplay = "Show Less";
+                      obj.webDisplay = R.string().commonString.showLess;
                       return InkWell(
                         onTap: () {
                           widget.selectionModel.isShowMoreSelected = true;
                           setState(() {});
                         },
                         child: ShapeItemWidget(
-                          txt: "Show Less",
+                          txt: R.string().commonString.showLess,
                           obj: obj,
                           selectionModel: widget.selectionModel,
+                          showMoreId: this.showMoreId,
                         ),
                       );
                     } else if (widget.selectionModel.isShowMoreSelected ==
                             true &&
                         widget.selectionModel.isShowMore &&
                         index == totalIndex - 1) {
-                      obj.webDisplay = "Show More";
+                      obj.webDisplay = R.string().commonString.showMore;
                       return InkWell(
                         onTap: () {
                           widget.selectionModel.isShowMoreSelected = false;
                           setState(() {});
                         },
                         child: ShapeItemWidget(
-                          txt: "Show More",
+                          txt: R.string().commonString.showMore,
                           obj: obj,
                           selectionModel: widget.selectionModel,
+                          showMoreId: this.showMoreId,
                         ),
                       );
                     } else {
@@ -196,6 +201,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                         child: ShapeItemWidget(
                           obj: obj,
                           selectionModel: widget.selectionModel,
+                          showMoreId: this.showMoreId,
                         ),
                       );
                     }
@@ -235,8 +241,10 @@ class ShapeItemWidget extends StatelessWidget {
   Master obj;
   String txt;
   SelectionModel selectionModel;
+  String showMoreId;
 
-  ShapeItemWidget({Key key, this.obj, this.txt, this.selectionModel})
+  ShapeItemWidget(
+      {Key key, this.obj, this.txt, this.selectionModel, this.showMoreId})
       : super(key: key);
 
   @override
@@ -246,14 +254,14 @@ class ShapeItemWidget extends StatelessWidget {
           ? getSize(90)
           : 0,
       decoration: BoxDecoration(
-          color: obj.sId == "ShowMore"
+          color: obj.sId == showMoreId
               ? appTheme.unSelectedBgColor
               : ((obj.isSelected) || (selectionModel.isShowAllSelected))
                   ? appTheme.selectedFilterColor
                   : appTheme.unSelectedBgColor,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: obj.sId == "ShowMore"
+            color: obj.sId == showMoreId
                 ? appTheme.borderColor
                 : (obj.isSelected || selectionModel.isShowAllSelected)
                     ? appTheme.colorPrimary
@@ -267,7 +275,7 @@ class ShapeItemWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 obj.sId != selectionModel.allLableTitle &&
-                        (obj.sId != "ShowMore")
+                        (obj.sId != showMoreId)
                     ? obj.getShapeImage(obj.isSelected)
                     : SizedBox(),
                 Padding(

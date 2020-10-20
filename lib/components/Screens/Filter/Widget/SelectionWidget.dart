@@ -66,7 +66,8 @@ class _TagWidgetState extends State<TagWidget> {
         widget.model.masters.insert(0, allMaster);
       }
     }
-    if (widget.model.masterCode == "KEY_TO_SYMBOLS") {
+    if (widget.model.masterCode.toLowerCase() ==
+        MasterCode.keyToSymbol.toLowerCase()) {
       widget.model.title = "";
 
       if (isNullEmptyOrFalse(_tags)) {
@@ -93,7 +94,8 @@ class _TagWidgetState extends State<TagWidget> {
       return getKeytoSymbolWidgetHorizontal();
     }
 
-    if (widget.model.masterCode == MasterCode.arrivals) {
+    if (widget.model.masterCode.toLowerCase() ==
+        MasterCode.arrivals.toLowerCase()) {
       return getArrivalsWidget();
     }
 
@@ -361,7 +363,7 @@ class _TagWidgetState extends State<TagWidget> {
                   color: widget.model.fromToStyle.underlineColor,
                 ))
               : InputBorder.none,
-          hintText: "From",
+          hintText: R.string().commonString.fromLbl,
           hintStyle: appTheme.grey14HintTextStyle,
         ),
       ),
@@ -393,8 +395,8 @@ class _TagWidgetState extends State<TagWidget> {
             app.resolve<CustomDialogs>().confirmDialog(
                   context,
                   title: "Warning",
-                  desc: "select fromdate first",
-                  positiveBtnTitle: "Try Again",
+                  desc: R.string().errorString.selectFromDate,
+                  positiveBtnTitle: R.string().commonString.ok,
                 );
           }
         },
@@ -475,9 +477,12 @@ class _TagWidgetState extends State<TagWidget> {
         RxBus.post(m, tag: eventMasterSelection);
       }
     } else {
-      if (widget.model.masterCode == MasterCode.cut ||
-          widget.model.masterCode == MasterCode.polish ||
-          widget.model.masterCode == MasterCode.symmetry) {
+      if (widget.model.masterCode.toLowerCase() ==
+              MasterCode.cut.toLowerCase() ||
+          widget.model.masterCode.toLowerCase() ==
+              MasterCode.polish.toLowerCase() ||
+          widget.model.masterCode.toLowerCase() ==
+              MasterCode.symmetry.toLowerCase()) {
         RxBus.post(false, tag: eventMasterForDeSelectMake);
       }
       onSelectionClick(index);
