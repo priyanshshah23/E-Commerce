@@ -8,13 +8,16 @@ class DiamondDetailUIModel {
   int sequence;
   List<DiamondDetailUIComponentModel> parameters;
   bool isExpand = false;
+  int columns;
+  String orientation;
 
-  DiamondDetailUIModel({
-    this.title,
-    this.parameters,
-    this.sequence,
-    this.isExpand,
-  });
+  DiamondDetailUIModel(
+      {this.title,
+      this.parameters,
+      this.sequence,
+      this.isExpand,
+      this.columns,
+      this.orientation});
 
   DiamondDetailUIModel.fromJson(Map<String, dynamic> json) {
     title = json['title'];
@@ -26,6 +29,8 @@ class DiamondDetailUIModel {
       });
     }
     isExpand = json['isExpand'] ?? false;
+    columns = json['columns'];
+    orientation = json['orientation'];
   }
 
   Map<String, dynamic> toJson() {
@@ -36,6 +41,8 @@ class DiamondDetailUIModel {
       data['parameters'] = this.parameters.map((v) => v.toJson()).toList();
     }
     data['isExpand'] = this.isExpand;
+    data['columns'] = this.columns;
+    data['orientation'] = this.orientation;
     return data;
   }
 }
@@ -44,6 +51,7 @@ class DiamondDetailUIComponentModel {
   String title;
   String apiKey;
   int sequence;
+  bool isActive;
   bool isPercentage;
 
   String value;
@@ -52,6 +60,7 @@ class DiamondDetailUIComponentModel {
     this.title,
     this.apiKey,
     this.sequence,
+    this.isActive,
     this.isPercentage,
   });
 
@@ -59,6 +68,7 @@ class DiamondDetailUIComponentModel {
     title = json['title'];
     apiKey = json['apiKey'];
     sequence = json['sequence'];
+    isActive = json["isActive"];
     isPercentage = json['isPercentage'] ?? false;
   }
 
@@ -67,6 +77,7 @@ class DiamondDetailUIComponentModel {
     data['title'] = this.title;
     data['apiKey'] = this.apiKey;
     data['sequence'] = this.sequence;
+    data['isActive'] = this.isActive;
     data['isPercentage'] = this.isPercentage;
 
     return data;

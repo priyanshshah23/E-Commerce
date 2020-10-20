@@ -45,7 +45,8 @@ class ErrorString {
   final String pleaseEnterCompanyName;
   final String pleaseEnterComment;
   final String enterPinCode;
-
+  final String fromValueGreateThanTo;
+  final String toValueGreaterThanFrom;
 
   const ErrorString({
     this.pleaseEnterCompanyName = 'Please enter company name.',
@@ -87,14 +88,20 @@ class ErrorString {
     this.enterValidFareAmount = 'Sales amount can not be zero.',
     this.enterPassangerNo = 'Please enter no. of passengers.',
     this.enterValidPassangerNo = 'No. of passengers can not be zero.',
-    this.notEnterMorePassangerNo = 'No. of passengers can not be more than seven.',
+    this.notEnterMorePassangerNo =
+        'No. of passengers can not be more than seven.',
     this.drivingLicenseValidationText =
         'Please enter 15 digit alphanumeric driving licence number.',
     this.PANCardValidationText =
-    'Please enter 10 digit alphanumeric PAN card number.',
+        'Please enter 10 digit alphanumeric PAN card number.',
     this.selectFromDate = 'Please select from date',
     this.selectToDate = 'Please select to date',
     this.fromGreaterTo = 'Selected date must be greater than current date',
-    this.wrongPassword = "Password must contains, Minimum 8 characters, 1 uppercase alphabet, 1 lower case alphabet, 1 digit, 1 special charater",
+    this.wrongPassword =
+        "Password must contains, Minimum 8 characters, 1 uppercase alphabet, 1 lower case alphabet, 1 digit, 1 special charater",
+    this.fromValueGreateThanTo =
+        "From Value should be less than or equal to To value",
+    this.toValueGreaterThanFrom =
+        "To Value should be greater than or equal to From value",
   });
 }

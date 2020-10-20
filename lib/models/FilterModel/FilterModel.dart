@@ -152,6 +152,11 @@ class Config {
         tabModels.add(DiamondDetailUIModel.fromJson(element));
       }
     }
+
+    //sort list according to sequence.
+    // tabModels.sort((model1, model2) {
+    //   return model1.sequence.compareTo(model2.sequence);
+    // });
     return tabModels;
   }
 }

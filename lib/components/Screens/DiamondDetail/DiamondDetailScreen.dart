@@ -4,6 +4,7 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
+import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/DiamondDetail/DiamondDetailUIModel.dart';
@@ -58,9 +59,11 @@ class DiamondDetailImagePagerModel {
   });
 }
 
-class _DiamondDetailScreenState extends StatefulScreenWidgetState
-    with SingleTickerProviderStateMixin {
-  DiamondModel diamondModel;
+class _DiamondDetailScreenState extends State<DiamondDetailScreen>
+    with
+        SingleTickerProviderStateMixin,
+        AutomaticKeepAliveClientMixin<DiamondDetailScreen> {
+  final DiamondModel diamondModel;
 
   TabController _controller;
   int _currentIndex = 0;
@@ -92,89 +95,73 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
   }
 
   setupData() {
-    arrImages.add(DiamondDetailImagePagerModel(
-        title: "Video",
-        url:
-            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        isSelected: true,
-        isVideo: true));
-
-    List<DiamondDetailImagePagerModel> arr =
+    List<DiamondDetailImagePagerModel> arrOfImages =
         List<DiamondDetailImagePagerModel>();
-    arr.add(DiamondDetailImagePagerModel(
-        title: "",
-        url:
-            "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/859019531.jpg",
-        isSelected: true,
-        isImage: true));
 
-    arr.add(DiamondDetailImagePagerModel(
-        title: "",
-        url:
-            "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/732147891.jpg",
-        isSelected: false,
-        isImage: true));
-    arr.add(DiamondDetailImagePagerModel(
-        title: "",
-        url:
-            "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/551134751.jpg",
-        isSelected: false,
-        isImage: true));
-    arr.add(DiamondDetailImagePagerModel(
-        title: "",
-        url:
-            "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/930064101.jpg",
-        isSelected: false,
-        isImage: true));
-    arr.add(DiamondDetailImagePagerModel(
-        title: "",
-        url:
-            "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/859019531.jpg",
-        isSelected: false,
-        isImage: true));
-    arr.add(DiamondDetailImagePagerModel(
-        title: "",
-        url:
-            "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/732147891.jpg",
-        isSelected: false,
-        isImage: true));
-    arr.add(DiamondDetailImagePagerModel(
-        title: "",
-        url:
-            "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/551134751.jpg",
-        isSelected: false,
-        isImage: true));
-    arr.add(DiamondDetailImagePagerModel(
-        title: "",
-        url:
-            "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/930064101.jpg",
-        isSelected: false,
-        isImage: true));
-    arr.add(DiamondDetailImagePagerModel(
-        title: "",
-        url:
-            "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/859019531.jpg",
-        isSelected: false,
-        isImage: true));
+    if (diamondModel.pltFile) {
+      arrOfImages.add(
+        DiamondDetailImagePagerModel(
+          title: "Plotting",
+          url: DiamondUrls.plotting + diamondModel.vStnId + ".jpg",
+          isSelected: false,
+          isImage: true,
+        ),
+      );
+    }
 
-    arrImages.add(DiamondDetailImagePagerModel(
-        title: "Image",
-        url:
-            "https://cdn.pixabay.com/photo/2015/02/24/15/41/dog-647528_960_720.jpg",
-        isSelected: false,
-        isImage: true,
-        arr: arr));
+    if (diamondModel.arrowFile) {
+      arrOfImages.add(
+        DiamondDetailImagePagerModel(
+          title: "ArrowImage",
+          url: DiamondUrls.arroImage + diamondModel.vStnId + ".jpg",
+          isSelected: false,
+          isImage: true,
+        ),
+      );
+    }
 
-    arrImages.add(DiamondDetailImagePagerModel(
-        title: "H&A",
-        url:
-            "https://i.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U",
-        isImage: true));
-    arrImages.add(DiamondDetailImagePagerModel(
-        title: "Certificate",
-        url: "http://www.pdf995.com/samples/pdf.pdf",
-        isImage: false));
+    if (diamondModel.img) {
+      arrImages.add(
+        DiamondDetailImagePagerModel(
+            title: "Image",
+            url: DiamondUrls.image + diamondModel.vStnId + ".jpg",
+            isSelected: true,
+            isImage: true,
+            arr: arrOfImages),
+      );
+    }
+    if (diamondModel.videoFile) {
+      arrImages.add(
+        DiamondDetailImagePagerModel(
+          title: "Video",
+          url: DiamondUrls.video + diamondModel.vStnId + ".html",
+          isSelected: false,
+          isVideo: true,
+        ),
+      );
+    }
+    print(DiamondUrls.video + diamondModel.vStnId + ".html");
+    if (diamondModel.hAFile) {
+      arrImages.add(
+        DiamondDetailImagePagerModel(
+          title: "H&A",
+          url: DiamondUrls.heartImage + diamondModel.vStnId + ".jpg",
+          isSelected: false,
+          isImage: true,
+        ),
+      );
+    }
 
+    if (diamondModel.certFile) {
+      arrImages.add(
+        DiamondDetailImagePagerModel(
+          title: "Certificate",
+          url: DiamondUrls.certificate + diamondModel.vStnId + ".jpg",
+          isSelected: false,
+          isImage: true,
+        ),
+      );
+    }
     _controller = TabController(
       vsync: this,
       length: arrImages.length,
@@ -189,58 +176,67 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
 
     Config().getDiamonDetailUIJson().then((result) {
       // arrDiamondDetailUIModel = result;
-      setupDiamonDetail(result);
+
+      setState(() {
+        setupDiamonDetail(result);
+      });
     });
   }
 
   setupDiamonDetail(List<DiamondDetailUIModel> arrModel) {
-    // var diamondModel = DiamondModel();
     for (int i = 0; i < arrModel.length; i++) {
       var diamondDetailItem = arrModel[i];
       var diamondDetailUIModel = DiamondDetailUIModel(
           title: diamondDetailItem.title,
           sequence: diamondDetailItem.sequence,
-          isExpand: diamondDetailItem.isExpand);
+          isExpand: diamondDetailItem.isExpand,
+          columns: diamondDetailItem.columns,
+          orientation: diamondDetailItem.orientation);
 
       diamondDetailUIModel.parameters = List<DiamondDetailUIComponentModel>();
 
       for (DiamondDetailUIComponentModel element
           in diamondDetailItem.parameters) {
         //
-        var diamonDetailComponent = DiamondDetailUIComponentModel(
-          title: element.title,
-          apiKey: element.apiKey,
-          sequence: element.sequence,
-          isPercentage: element.isPercentage,
-        );
+        if (element.isActive) {
+          var diamonDetailComponent = DiamondDetailUIComponentModel(
+            title: element.title,
+            apiKey: element.apiKey,
+            sequence: element.sequence,
+            isPercentage: element.isPercentage,
+            isActive: element.isActive,
+          );
 
-        if (isStringEmpty(element.apiKey) == false) {
-          dynamic valueElement = diamondModel.toJson()[element.apiKey];
-          if (valueElement != null) {
-            if (element.apiKey == DiamondDetailUIAPIKeys.pricePerCarat) {
-              //
-              diamonDetailComponent.value = diamondModel.getPricePerCarat();
-            } else if (element.apiKey == DiamondDetailUIAPIKeys.amount) {
-              //
-              diamonDetailComponent.value = diamondModel.getAmount();
-            } else if (valueElement is String) {
-              diamonDetailComponent.value = valueElement;
-            } else if (valueElement is num) {
-              diamonDetailComponent.value = valueElement.toString();
+          if (isStringEmpty(element.apiKey) == false) {
+            dynamic valueElement = diamondModel.toJson()[element.apiKey];
+            if (valueElement != null) {
+              if (element.apiKey == DiamondDetailUIAPIKeys.pricePerCarat) {
+                //
+                diamonDetailComponent.value = diamondModel.getPricePerCarat();
+              } else if (element.apiKey == DiamondDetailUIAPIKeys.amount) {
+                //
+                diamonDetailComponent.value = diamondModel.getAmount();
+              } else if (valueElement is String) {
+                diamonDetailComponent.value = valueElement;
+              } else if (valueElement is num) {
+                diamonDetailComponent.value = valueElement.toString();
+              }
+              if (element.isPercentage) {
+                diamonDetailComponent.value = "${diamonDetailComponent.value}%";
+              }
+              diamondDetailUIModel.parameters.add(diamonDetailComponent);
             }
-            if (element.isPercentage) {
-              diamonDetailComponent.value = "${diamonDetailComponent.value}%";
-            }
-            diamondDetailUIModel.parameters.add(diamonDetailComponent);
           }
         }
       }
+
+      //sort list according to sequence.
+      // diamondDetailUIModel.parameters.sort((model1, model2) {
+      //   return model1.sequence.compareTo(model2.sequence);
+      // });
+
       arrDiamondDetailUIModel.add(diamondDetailUIModel);
     }
-
-    setState(() {
-      //
-    });
   }
 
   _handleTabSelection() {
@@ -257,6 +253,7 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(
@@ -361,6 +358,9 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
                     height: getSize(40),
                   ),
                   getDiamondDetailComponents(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
                 ],
               ),
             )),
@@ -468,48 +468,49 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
                         width: getSize(8),
                       ),
                       Expanded(
-                          child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          for (var i = 0; i < model.arr.length; i++)
-                            Padding(
-                              padding: EdgeInsets.only(right: getSize(8)),
-                              child: InkWell(
-                                onTap: () {
-                                  //
-                                  model.arr = model.arr.map((e) {
-                                    e.isSelected = false;
-                                    return e;
-                                  }).toList();
-                                  model.arr[i].isSelected = true;
-                                  model.subIndex = i;
-                                  setState(() {
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            for (var i = 0; i < model.arr.length; i++)
+                              Padding(
+                                padding: EdgeInsets.only(right: getSize(8)),
+                                child: InkWell(
+                                  onTap: () {
                                     //
-                                  });
-                                },
-                                child: Container(
-                                  width: getSize(50),
-                                  decoration: BoxDecoration(
-                                      color: appTheme.whiteColor,
-                                      borderRadius:
-                                          BorderRadius.circular(getSize(5)),
-                                      border: Border.all(
-                                          color: model.arr[i].isSelected
-                                              ? appTheme.colorPrimary
-                                              : appTheme.lightBGColor)),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(getSize(4)),
-                                    child: getImageView(
-                                      model.arr[i].url,
-                                      height: getSize(50),
-                                      width: getSize(36),
+                                    model.arr = model.arr.map((e) {
+                                      e.isSelected = false;
+                                      return e;
+                                    }).toList();
+                                    model.arr[i].isSelected = true;
+                                    model.subIndex = i;
+                                    setState(() {
+                                      //
+                                    });
+                                  },
+                                  child: Container(
+                                    width: getSize(50),
+                                    decoration: BoxDecoration(
+                                        color: appTheme.whiteColor,
+                                        borderRadius:
+                                            BorderRadius.circular(getSize(5)),
+                                        border: Border.all(
+                                            color: model.arr[i].isSelected
+                                                ? appTheme.colorPrimary
+                                                : appTheme.lightBGColor)),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(getSize(4)),
+                                      child: getImageView(
+                                        model.arr[i].url,
+                                        height: getSize(50),
+                                        width: getSize(36),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            )
-                        ],
-                      )),
+                              )
+                          ],
+                        ),
+                      ),
                       SizedBox(
                         width: getSize(8),
                       ),
@@ -526,6 +527,7 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
           );
   }
 
+  //will show all tabs.
   Widget getDiamondDetailComponents() {
     //
     return Container(
@@ -545,82 +547,197 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
                     color: appTheme.whiteColor,
                     // borderRadius: BorderRadius.circular(getSize(5)),
                     border: Border.all(color: appTheme.lightBGColor)),
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: getSize(20),
-                    right: getSize(20),
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: getSize(20),
-                          bottom: getSize(20),
-                        ),
-                        child: Row(
-                          children: [
-                            getSection(arrDiamondDetailUIModel[i].title),
-                            Spacer(),
-                            Icon(
-                                arrDiamondDetailUIModel[i].isExpand == true
-                                    ? Icons.expand_less
-                                    : Icons.expand_more,
-                                color: appTheme.textColor),
-                          ],
-                        ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: getSize(20),
+                        bottom: getSize(20),
+                        left: getSize(8),
+                        right: getSize(8),
                       ),
-                      arrDiamondDetailUIModel[i].isExpand
-                          ? Column(
-                              children: [
-                                for (int j = 0;
-                                    j <
-                                        arrDiamondDetailUIModel[i]
-                                            .parameters
-                                            .length;
-                                    j++)
-                                  Container(
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                        top: getSize(12),
-                                        bottom: getSize(12),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            arrDiamondDetailUIModel[i]
-                                                .parameters[j]
-                                                .title,
-                                            style: appTheme.grey14HintTextStyle
-                                                .copyWith(
-                                              fontSize: getFontSize(12),
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          ),
-                                          Spacer(),
-                                          Text(
-                                            arrDiamondDetailUIModel[i]
-                                                .parameters[j]
-                                                .value,
-                                            style: appTheme.black14TextStyle
-                                                .copyWith(
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                              ],
-                            )
-                          : SizedBox(),
-                    ],
-                  ),
+                      child: Row(
+                        children: [
+                          getSection(arrDiamondDetailUIModel[i].title),
+                          Spacer(),
+                          Icon(
+                              arrDiamondDetailUIModel[i].isExpand == true
+                                  ? Icons.expand_less
+                                  : Icons.expand_more,
+                              color: appTheme.textColor),
+                        ],
+                      ),
+                    ),
+                    arrDiamondDetailUIModel[i].isExpand
+                        ? getDiamondDetailUIComponent(
+                            arrDiamondDetailUIModel[i])
+                        : SizedBox(),
+                  ],
                 ),
               ),
             ),
         ],
       ),
     );
+  }
+
+  Widget getDiamondDetailUIComponent(
+      DiamondDetailUIModel diamondDetailUIModel) {
+    if (diamondDetailUIModel.columns == 1) {
+      return Column(
+        children: [
+          for (int j = 0; j < diamondDetailUIModel.parameters.length; j++)
+            Container(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: getSize(12),
+                  bottom: getSize(12),
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      diamondDetailUIModel.parameters[j].title,
+                      style: appTheme.grey14HintTextStyle.copyWith(
+                        fontSize: getFontSize(12),
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    Spacer(),
+                    Text(
+                      diamondDetailUIModel.parameters[j].value,
+                      style: appTheme.black14TextStyle.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+        ],
+      );
+    } else {
+      num spacing = 0;
+      if (diamondDetailUIModel.orientation == "horizontal" &&
+          diamondDetailUIModel.columns == 2) {
+        spacing = 500;
+      } else if (diamondDetailUIModel.orientation == "vertical" &&
+          diamondDetailUIModel.columns == 2) {
+        spacing = 470;
+      } else {
+        spacing = 400;
+      }
+
+      var size = MediaQuery.of(context).size;
+      final double itemHeight = (size.height - kToolbarHeight - spacing) / 2;
+      final double itemWidth = size.width / 2;
+
+      return GridView.count(
+        shrinkWrap: true,
+        primary: false,
+        childAspectRatio: (itemWidth / itemHeight),
+        // padding: EdgeInsets.all(getSize(2)),
+        crossAxisSpacing: 0,
+        mainAxisSpacing: 0,
+        crossAxisCount: diamondDetailUIModel.columns,
+        children: List.generate(
+          diamondDetailUIModel.parameters.length,
+          (index) {
+            return Container(
+                decoration: BoxDecoration(
+                  // borderRadius: BorderRadius.circular(3.0),
+                  border: Border.all(color: appTheme.borderColor),
+                  color: appTheme.unSelectedBgColor,
+                ),
+                child: diamondDetailUIModel.orientation == "horizontal" &&
+                        diamondDetailUIModel.columns == 2
+                    ? Padding(
+                        padding: EdgeInsets.all(getSize(8)),
+                        child: Row(
+                          // mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Expanded(
+                              child: Text(
+                                diamondDetailUIModel.parameters[index].title,
+                                textAlign: TextAlign.left,
+                                style: appTheme.grey14HintTextStyle,
+                              ),
+                            ),
+                            SizedBox(width: getSize(8)),
+                            Text(
+                              diamondDetailUIModel.parameters[index].value,
+                              textAlign: TextAlign.right,
+                              style: appTheme.blackNormal12TitleColorblack,
+                            )
+                          ],
+                        ),
+                      )
+                    : Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            diamondDetailUIModel.parameters[index].title,
+                            textAlign: TextAlign.center,
+                            style: appTheme.grey12TextStyle,
+                          ),
+                          SizedBox(
+                            height: getSize(8),
+                          ),
+                          Text(
+                            diamondDetailUIModel.parameters[index].value,
+                            textAlign: TextAlign.center,
+                            style: appTheme.blackNormal14TitleColorblack,
+                          )
+                        ],
+                      ));
+          },
+        ),
+      );
+    }
+    // else if (diamondDetailUIModel.columns == 3) {
+    //   return Wrap(
+    //     spacing: 8,
+    //     runSpacing: 8,
+    //     children: List.generate(
+    //       diamondDetailUIModel.parameters.length,
+    //       (index) {
+    //         return Container(
+    //           decoration: BoxDecoration(
+    //             borderRadius: BorderRadius.circular(3.0),
+    //             border: Border.all(color: appTheme.borderColor),
+    //             color: appTheme.unSelectedBgColor,
+    //           ),
+    //           child: Padding(
+    //             padding: const EdgeInsets.all(12.0),
+    //             child: Column(
+    //               mainAxisSize: MainAxisSize.min,
+    //               crossAxisAlignment: CrossAxisAlignment.center,
+    //               mainAxisAlignment: MainAxisAlignment.center,
+    //               children: <Widget>[
+    //                 Text(
+    //                   diamondDetailUIModel.parameters[index].title,
+    //                   textAlign: TextAlign.center,
+    //                   style: appTheme.grey14HintTextStyle,
+    //                 ),
+    //                 SizedBox(
+    //                   height: getSize(2),
+    //                 ),
+    //                 Text(
+    //                   diamondDetailUIModel.parameters[index].value,
+    //                   textAlign: TextAlign.center,
+    //                   style: appTheme.blackNormal12TitleColorblack,
+    //                 )
+    //               ],
+    //             ),
+    //           ),
+    //         );
+    //       },
+    //     ),
+    //   );
+    // }
   }
 
   Widget getSection(String title) {
@@ -662,7 +779,8 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
   Widget getBottomTab() {
     return BottomTabbarWidget(
       arrBottomTab: diamondConfig.arrBottomTab,
-      onClickCallback: (obj) {        //
+      onClickCallback: (obj) {
+        //
         if (obj.type == ActionMenuConstant.ACTION_TYPE_MORE) {
           showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
               (manageClick) {

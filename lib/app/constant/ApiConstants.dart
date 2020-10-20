@@ -6,7 +6,7 @@ class ApiConstants {
 // static const String PROXY_URL = "PROXY 192.168.0.116:8888";
 //  static const String PROXY_URL = "PROXY 192.168.225.188:8888";
 
-//  static const String PROXY_URL = "PROXY 192.168.225.121:8888"; // Brijesh
+ // static const String PROXY_URL = "PROXY 192.168.225.121:8888"; // Brijesh
 
   static const String imageBaseURL = baseURL;
   static const String apiUrl = baseURL;
@@ -24,11 +24,29 @@ class ApiConstants {
   static const String login = commonUrl + "auth/login";
 
   static const String diamondList = commonUrl + "diamond/paginate";
+  static const String diamondTrackList = commonUrl + "diamond-track/paginate";
+  static const String diamondCommentList = commonUrl + "diamond-comment/by-user";
 
-  static const String staticPage = apiV1 + "static-page/{id}";
   static const String createDiamondTrack = commonUrl + "diamond-track/create";
   static const String upsetComment = commonUrl + "diamond-comment/upsert";
+
   static const String placeOrder = commonUrl + "diamond-confirm/request";
+
+  static const String forgetPassword = commonUrl + "forgot-password";
+  static const String resetPassword = commonUrl + "reset-password-by-user";
+  static const String staticPage = apiV1 + "static-page/{id}";
+}
+
+class DiamondUrls {
+  static const String commonUrl =
+      "https://s3.ap-south-1.amazonaws.com/finestargroup/";
+
+  static const String image = commonUrl + "RealImages/";
+  static const String video = commonUrl + "viewer3/html/";
+  static const String heartImage = commonUrl + "HeartImages/";
+  static const String plotting = commonUrl + "PlottingImages/";
+  static const String certificate = commonUrl + "PlottingImages/";
+  static const String arroImage = commonUrl + "ArrowImages/";
   static const String forgetPassword = apiUrl + "web/v1/auth/forgot-password";//done
   static const String resetPassword = apiUrl + "admin/v1/reset-password";
   static const String changePassword = apiUrl + "web/v1/auth/reset-password-by-user";//done

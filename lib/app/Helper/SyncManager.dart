@@ -87,23 +87,25 @@ class SyncManager {
 
   Future callApiForDiamondList(
     BuildContext context,
-    DiamondListReq req,
+    Map<String, dynamic> req,
     Function(DiamondListResp) success,
     Function failure, {
     bool isProgress = true,
   }) async {
     NetworkCall<DiamondListResp>()
         .makeCall(
-      () => app.resolve<ServiceModule>().networkService().diamondList(req),
+      () => app
+          .resolve<ServiceModule>()
+          .networkService()
+          .diamondListPaginate(req),
       context,
       isProgress: isProgress,
     )
         .then((diamondListResp) async {
       success(diamondListResp);
-    }).catchError((onError) => {
-              print(onError),
-              //failure()
-            });
+    }).catchError((onError) {
+      print(onError);
+    });
   }
 
   Future callApiForCreateDiamondTrack(

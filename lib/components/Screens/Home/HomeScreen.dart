@@ -41,17 +41,17 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isSwitched = false;
   double bottomPadding = 0;
   Widget currentWidget;
-  int selectedType = DrawerConstant.MODULE_SEARCH;
+  int selectedType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
 
   @override
   void initState() {
     super.initState();
     //SocketManager.instance.connect();
 
-    openSearch();
+    openSearch(DiamondModuleConstant.MODULE_TYPE_SEARCH);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       RxBus.register<DrawerEvent>(tag: eventBusTag).listen((event) {
-        if (event.index == DrawerConstant.OPEN_DRAWER) {
+        if (event.index == DiamondModuleConstant.MODULE_TYPE_OPEN_DRAWER) {
           _scaffoldKey?.currentState?.openDrawer();
         } else {
           manageDrawerClick(context, event.index, event.isPop);
@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<bool> _onWillPop(BuildContext context) {
     if (!Navigator.of(context).canPop()) {
-      if (true) {
+      if (selectedType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
         app.resolve<CustomDialogs>().confirmDialog(context,
             title: APPNAME,
             desc: R.string().commonString.lblAppExit,
@@ -88,33 +88,35 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         });
       } else {
-        manageDrawerClick(context, DrawerConstant.MODULE_SEARCH, false);
+        manageDrawerClick(
+            context, DiamondModuleConstant.MODULE_TYPE_SEARCH, false);
       }
     } else {
       return Future.value(true);
     }
   }
 
-  openSearch() {
-    selectedType = DrawerConstant.MODULE_SEARCH;
+  openSearch(int moduleType) {
+    selectedType = moduleType;
     Map<String, dynamic> dict = new HashMap();
-    dict[ArgumentConstant.ModuleType] =
-        DiamondModuleConstant.MODULE_TYPE_SEARCH;
+    dict[ArgumentConstant.ModuleType] = moduleType;
     dict[ArgumentConstant.IsFromDrawer] = true;
     currentWidget = FilterScreen(dict);
   }
 
-  openDiamondList() {
-    selectedType = DrawerConstant.MODULE_UPCOMING;
+  openDiamondList(int moduleType) {
+    selectedType = moduleType;
     Map<String, dynamic> dict = new HashMap();
-    dict[ArgumentConstant.ModuleType] =
-        DiamondModuleConstant.MODULE_TYPE_UPCOMING;
+    dict[ArgumentConstant.ModuleType] = moduleType;
     dict[ArgumentConstant.IsFromDrawer] = true;
-    currentWidget = DiamondListScreen(dict);
+    currentWidget = DiamondListScreen(
+      dict,
+      key: Key(moduleType.toString()),
+    );
   }
 
   openProfile() {
-    selectedType = DrawerConstant.MODULE_PROFILE;
+    selectedType = DiamondModuleConstant.MODULE_TYPE_PROFILE;
     Map<String, dynamic> dict = new HashMap();
     dict[ArgumentConstant.ModuleType] =
         DiamondModuleConstant.MODULE_TYPE_PROFILE;
@@ -129,21 +131,26 @@ class _HomeScreenState extends State<HomeScreen> {
       if (selectedType == type) {
         return;
       }
+
       switch (type) {
-        case DrawerConstant.MODULE_SEARCH:
-          openSearch();
+        case DiamondModuleConstant.MODULE_TYPE_SEARCH:
+          openSearch(type);
           break;
-        case DrawerConstant.MODULE_UPCOMING:
-          openDiamondList();
+        case DiamondModuleConstant.MODULE_TYPE_MY_CART:
+        case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
+        case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+        case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
+        case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
+          openDiamondList(type);
           break;
-        case DrawerConstant.MODULE_PROFILE:
+        case DiamondModuleConstant.MODULE_TYPE_PROFILE:
           openProfile();
           break;
-        case DrawerConstant.LOGOUT:
+        case DiamondModuleConstant.MODULE_TYPE_LOGOUT:
           logout(context);
           break;
       }
-      if (type != DrawerConstant.LOGOUT) {
+      if (type != DiamondModuleConstant.MODULE_TYPE_LOGOUT) {
         setState(() {});
       }
     }
@@ -160,10 +167,9 @@ class _HomeScreenState extends State<HomeScreen> {
         calllogout(context);
         SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
         ThemeSettingsModel.of(context).updateSystemUi(isLogin: true);
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil(
+        Navigator.of(context).pushNamedAndRemoveUntil(
           LoginScreen.route,
-              (Route<dynamic> route) => false,
+          (Route<dynamic> route) => false,
         );
       }
     });

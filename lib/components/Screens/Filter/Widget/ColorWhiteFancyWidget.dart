@@ -1,4 +1,5 @@
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/models/Master/Master.dart';
 import 'package:flutter/cupertino.dart';
@@ -44,7 +45,7 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
         Row(
           children: [
             Text(
-              "Color",
+              R.string().commonString.color,
               style: appTheme.blackNormal18TitleColorblack,
               textAlign: TextAlign.left,
             ),
@@ -73,7 +74,7 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
                           ? SizedBox(width: getSize(8))
                           : SizedBox(),
                       Text(
-                        "White",
+                        R.string().commonString.colorWhite,
                         style: appTheme.blackNormal14TitleColorblack,
                         textAlign: TextAlign.left,
                       ),
@@ -104,7 +105,7 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
                   widget.colorModel.masters = widget.colorModel.groupMaster;
 
                   widget.colorModel.intensitySelection = SelectionModel(
-                      title: "Intensity",
+                      title: R.string().commonString.intensity,
                       masters: widget.colorModel.intensity,
                       isShowAll: widget.colorModel.isShowAll,
                       orientation: widget.colorModel.orientation,
@@ -113,7 +114,7 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
                       apiKey: "inten");
 
                   widget.colorModel.overtoneSelection = SelectionModel(
-                      title: "Overtone",
+                      title: R.string().commonString.overtone,
                       masters: widget.colorModel.overtone,
                       isShowAll: widget.colorModel.isShowAll,
                       orientation: widget.colorModel.orientation,
@@ -139,7 +140,7 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
                           ? SizedBox(width: getSize(8))
                           : SizedBox(),
                       Text(
-                        "Fancy",
+                        R.string().commonString.colorFancy,
                         style: appTheme.blackNormal14TitleColorblack,
                         textAlign: TextAlign.left,
                       ),

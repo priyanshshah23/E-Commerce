@@ -123,6 +123,10 @@ class CommonString {
   final String tripPricelbl;
   final String taxeslbl;
   final String totallbl;
+  final String fromLbl;
+  final String toLbl;
+  final String showMore;
+  final String showLess;
 
   // Text filed hint Text
   final String passengerName;
@@ -172,6 +176,16 @@ class CommonString {
 
   final String confirmStone;
 
+  //Colo range
+  final String color;
+  final String colorGroup;
+  final String clarity;
+  final String clarityGroup;
+  final String colorWhite;
+  final String colorFancy;
+  final String overtone;
+  final String intensity;
+
   const CommonString({
     this.all = "All",
     this.status = "Status",
@@ -219,6 +233,10 @@ class CommonString {
     this.lblExit = "Exit",
     this.openAppSetting = "Open Settings",
     this.lblOr = "Or",
+    this.fromLbl = "From",
+    this.toLbl = "To",
+    this.showMore = "Show More",
+    this.showLess = "Show Less",
 
     //App Update Dialog
     this.notYetAvailable = "Not yet available",
@@ -339,7 +357,16 @@ class CommonString {
     this.disc = "Disc %",
     this.avgPriceCrt = "Avg. Price/Ct ",
     this.amount = "Amount ",
-
     this.confirmStone = "Confirm Stone",
+
+    //Color range
+    this.color = "Color",
+    this.colorGroup = "Color Group",
+    this.colorFancy = "Fancy",
+    this.colorWhite = "White",
+    this.clarity = "Clarity",
+    this.clarityGroup = "Clarity Group",
+    this.intensity = "Intensity",
+    this.overtone = "Overtone",
   });
 }
