@@ -23,15 +23,13 @@ import 'package:flutter/material.dart';
 class DiamondListScreen extends StatefulScreenWidget {
   static const route = "Diamond List Screen";
 
-  Map<String, dynamic> dictFilters;
   String filterId = "";
-  int moduleType = DiamondModuleConstant.MODULE_TYPE_UPCOMING;
+  int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
   bool isFromDrawer = false;
 
   DiamondListScreen(Map<String, dynamic> arguments) {
     if (arguments != null) {
       this.filterId = arguments["filterId"];
-      this.dictFilters = arguments["filters"];
       if (arguments[ArgumentConstant.ModuleType] != null) {
         moduleType = arguments[ArgumentConstant.ModuleType];
       }
@@ -43,20 +41,18 @@ class DiamondListScreen extends StatefulScreenWidget {
 
   @override
   _DiamondListScreenState createState() => _DiamondListScreenState(
-      filterId: filterId,
-      moduleType: moduleType,
-      isFromDrawer: isFromDrawer,
-      dictFilters: dictFilters);
+        filterId: filterId,
+        moduleType: moduleType,
+        isFromDrawer: isFromDrawer,
+      );
 }
 
 class _DiamondListScreenState extends StatefulScreenWidgetState {
   String filterId;
   int moduleType;
   bool isFromDrawer;
-  Map<String, dynamic> dictFilters;
 
-  _DiamondListScreenState(
-      {this.filterId, this.moduleType, this.isFromDrawer, this.dictFilters});
+  _DiamondListScreenState({this.filterId, this.moduleType, this.isFromDrawer});
 
   DiamondConfig diamondConfig;
   BaseList diamondList;
@@ -159,7 +155,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     Map<String, dynamic> dict = {};
     dict["page"] = page;
     dict["limit"] = DEFAULT_LIMIT;
-    dict["filters"] = this.dictFilters;
+    dict["filters"] = {};
     dict["filters"]["diamondSearchId"] = this.filterId;
 
     NetworkCall<DiamondListResp>()
@@ -318,7 +314,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.only(
-              left: getSize(20), right: getSize(20), top: getSize(20)),
+            left: getSize(20),
+            right: getSize(20),
+            top: getSize(8),
+          ),
           child: Column(
             children: <Widget>[
               DiamondListHeader(
@@ -354,8 +353,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             } else {
               manageBottomMenuClick(manageClick.bottomTabModel);
             }
-          });
+          }, R.string().commonString.more, isDisplaySelection: false);
         } else if (obj.type == ActionMenuConstant.ACTION_TYPE_STATUS) {
+          showBottomSheetForMenu(context, diamondConfig.arrStatusMenu,
+              (manageClick) {}, R.string().commonString.status,
+              isDisplaySelection: false);
         } else {
           manageBottomMenuClick(obj);
         }
@@ -370,8 +372,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       diamondConfig.manageDiamondAction(context, selectedList, bottomTabModel);
     } else {
       app.resolve<CustomDialogs>().errorDialog(
-          context, "Selection Error", "Please select at least one item.",
-          btntitle: R.string().commonString.btnTryAgain);
+          context, "Selection Error", "Please select at least one stone.",
+          btntitle: R.string().commonString.ok);
     }
   }
 }

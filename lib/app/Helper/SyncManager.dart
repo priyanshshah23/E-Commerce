@@ -87,23 +87,25 @@ class SyncManager {
 
   Future callApiForDiamondList(
     BuildContext context,
-    DiamondListReq req,
+    Map<String, dynamic> req,
     Function(DiamondListResp) success,
     Function failure, {
     bool isProgress = true,
   }) async {
     NetworkCall<DiamondListResp>()
         .makeCall(
-      () => app.resolve<ServiceModule>().networkService().diamondList(req),
+      () => app
+          .resolve<ServiceModule>()
+          .networkService()
+          .diamondListPaginate(req),
       context,
       isProgress: isProgress,
     )
         .then((diamondListResp) async {
       success(diamondListResp);
-    }).catchError((onError) => {
-              print(onError),
-              //failure()
-            });
+    }).catchError((onError) {
+      print(onError);
+    });
   }
 
   Future callApiForCreateDiamondTrack(
@@ -137,6 +139,24 @@ class SyncManager {
         success(resp);
       }).catchError((onError) => {if (onError is ErrorResp) failure(onError)});
     }
+  }
+
+  Future callApiForPlaceOrder(
+    BuildContext context,
+    PlaceOrderReq req,
+    Function(BaseApiResp) success,
+    Function(ErrorResp) failure, {
+    bool isProgress = true,
+  }) async {
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+      () => app.resolve<ServiceModule>().networkService().placeOrder(req),
+      context,
+      isProgress: isProgress,
+    )
+        .then((resp) async {
+      success(resp);
+    }).catchError((onError) => {if (onError is ErrorResp) failure(onError)});
   }
 
   List<num> getTotalCaratRapAmount(List<DiamondModel> diamondList) {

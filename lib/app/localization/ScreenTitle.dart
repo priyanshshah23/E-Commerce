@@ -97,6 +97,7 @@ class ScreenTitle {
   //Menu Items
   final String enquiry;
   final String placeOrder;
+  final String compare;
   final String addToCart;
   final String addToWatchList;
   final String comment;
@@ -110,14 +111,22 @@ class ScreenTitle {
   final String todayDiscPer;
   final String addOffer;
   final String addComment;
+  final String addToOffice;
   final String hours;
   final String note;
   final String offerMsg;
+  final String orderMsg;
   final String finalOffer;
   final String finalDisc;
   final String finalRate;
   final String finalValue;
 
+  final String statusHold;
+  final String statusOnMemo;
+  final String statusAvailable;
+  final String statusNew;
+  final String statusOffer;
+  final String statusMyHold;
 
 //  Support
   final String accountAndPayment;
@@ -125,13 +134,24 @@ class ScreenTitle {
   final String searchResult;
 
   const ScreenTitle({
+    this.compare = "Compare",
+    this.statusHold = "Hold",
+    this.statusOnMemo = "On Memo",
+    this.statusAvailable = "Available",
+    this.statusNew = "New",
+    this.statusOffer = "Offer",
+    this.statusMyHold = "My Hold",
     this.signup = "Sign up",
+    this.addToOffice = "Add To Office",
     this.addComment = "Add Comment",
     this.finalOffer = "Final Offer",
     this.finalDisc = "Final Disc",
     this.finalRate = "Final Rate",
     this.finalValue = "Final Value",
-    this.offerMsg = "Offered stone will directly be confirmed if the price gets approved so we request you to be sure before offering. Any stone(s) put in Offer list is not kept on hold for you as it is available for other customer's as well.",
+    this.orderMsg =
+        "1) The prices mentioned over here are fixed and hence not negotiable. 2) The Grading, patterns & parameters mentioned on our website beyond GIA's grading is solely our perspective based on examinations conducted by our grading department and we do not hold ourself responsible for any conflicts in this regard.",
+    this.offerMsg =
+        "Offered stone will directly be confirmed if the price gets approved so we request you to be sure before offering. Any stone(s) put in Offer list is not kept on hold for you as it is available for other customer's as well.",
     this.note = "Note",
     this.hours = "Hours",
     this.addOffer = "Add Offer",
@@ -175,7 +195,7 @@ class ScreenTitle {
     this.termsAndCondition = "Terms & Conditions",
     this.privacyPolicy = "Privacy Policy",
     this.aboutUS = "About Us",
-     this.otpVerification = "Verify Ride Code",
+    this.otpVerification = "Verify Ride Code",
     this.otpVerificationDelivery = "Verify Pickup Code",
     this.otpVerificationDeliveryDone = "Verify Delivery Code",
     this.enterOtp = "Enter 4-digit",

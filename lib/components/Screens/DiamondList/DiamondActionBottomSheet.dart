@@ -93,7 +93,7 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
                   children: <Widget>[
                     Expanded(
                       child: FlatButton(
-                        textColor: ColorConstants.colorPrimary,
+                        textColor: appTheme.colorPrimary,
                         padding: EdgeInsets.all(getSize(0)),
                         onPressed: () {
                           Navigator.pop(context);
@@ -106,7 +106,7 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
                     ),
                     Expanded(
                       child: FlatButton(
-                        textColor: ColorConstants.colorPrimary,
+                        textColor: appTheme.colorPrimary,
                         padding: EdgeInsets.all(getSize(0)),
                         onPressed: () {
                           actionClick(ManageCLick(
@@ -143,7 +143,6 @@ Future showOfferListDialog(BuildContext context, List<DiamondModel> diamondList,
       ),
       builder: (context) {
         return StatefulBuilder(builder: (context, StateSetter setSetter) {
-
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -196,13 +195,16 @@ Future showOfferListDialog(BuildContext context, List<DiamondModel> diamondList,
               ),
               Padding(
                 padding: EdgeInsets.only(
-                    right: getSize(10), left: getSize(26), bottom: getSize(20)),
+                    right: getSize(10),
+                    left: getSize(26),
+                    bottom: getSize(20),
+                    top: getSize(20)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     Expanded(
                       child: FlatButton(
-                        textColor: ColorConstants.colorPrimary,
+                        textColor: appTheme.colorPrimary,
                         padding: EdgeInsets.all(getSize(0)),
                         onPressed: () {
                           Navigator.pop(context);
@@ -215,7 +217,7 @@ Future showOfferListDialog(BuildContext context, List<DiamondModel> diamondList,
                     ),
                     Expanded(
                       child: FlatButton(
-                        textColor: ColorConstants.colorPrimary,
+                        textColor: appTheme.colorPrimary,
                         padding: EdgeInsets.all(getSize(0)),
                         onPressed: () {
                           showOfferCommentDialog(context, actionClick);
@@ -351,7 +353,7 @@ Future showOfferCommentDialog(BuildContext context, ActionClick actionClick) {
                         bottom: getSize(5),
                         top: getSize(10)),
                     child: Text(
-                      R.string().screenTitle.comment,
+                      R.string().screenTitle.note,
                       style: appTheme.black16TextStyle,
                     ),
                   ),
@@ -375,7 +377,7 @@ Future showOfferCommentDialog(BuildContext context, ActionClick actionClick) {
                       children: <Widget>[
                         Expanded(
                           child: FlatButton(
-                            textColor: ColorConstants.colorPrimary,
+                            textColor: appTheme.colorPrimary,
                             padding: EdgeInsets.all(getSize(0)),
                             onPressed: () {
                               Navigator.pop(context);
@@ -388,12 +390,14 @@ Future showOfferCommentDialog(BuildContext context, ActionClick actionClick) {
                         ),
                         Expanded(
                           child: FlatButton(
-                            textColor: ColorConstants.colorPrimary,
+                            textColor: appTheme.colorPrimary,
                             padding: EdgeInsets.all(getSize(0)),
                             onPressed: () {
                               if (_formKey.currentState.validate()) {
                                 actionClick(ManageCLick(
-                                    type: clickConstant.CLICK_TYPE_CONFIRM,remark: _commentController.text,companyName: _nameController.text));
+                                    type: clickConstant.CLICK_TYPE_CONFIRM,
+                                    remark: _commentController.text,
+                                    companyName: _nameController.text));
                               } else {
                                 setsetter(() {
                                   autovalid = true;
@@ -498,7 +502,7 @@ Future showNotesDialog(BuildContext context, ActionClick actionClick) {
                       children: <Widget>[
                         Expanded(
                           child: FlatButton(
-                            textColor: ColorConstants.colorPrimary,
+                            textColor: appTheme.colorPrimary,
                             padding: EdgeInsets.all(getSize(0)),
                             onPressed: () {
                               Navigator.pop(context);
@@ -511,7 +515,7 @@ Future showNotesDialog(BuildContext context, ActionClick actionClick) {
                         ),
                         Expanded(
                           child: FlatButton(
-                            textColor: ColorConstants.colorPrimary,
+                            textColor: appTheme.colorPrimary,
                             padding: EdgeInsets.all(getSize(0)),
                             onPressed: () {
                               if (_formKey.currentState.validate()) {
@@ -543,7 +547,7 @@ Future showNotesDialog(BuildContext context, ActionClick actionClick) {
   );
 }
 
-Future showBottomSheetForConfirmStoneDetail(BuildContext context) {
+Future showPlaceOrderDialog(BuildContext context, ActionClick actionClick) {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
@@ -575,7 +579,7 @@ Future showBottomSheetForConfirmStoneDetail(BuildContext context) {
                 children: <Widget>[
                   Padding(
                     padding:
-                    EdgeInsets.only(top: getSize(28), bottom: getSize(21)),
+                        EdgeInsets.only(top: getSize(28), bottom: getSize(21)),
                     child: Align(
                       alignment: Alignment.center,
                       child: Text(
@@ -709,22 +713,84 @@ Future showBottomSheetForConfirmStoneDetail(BuildContext context) {
                       },
                     ),
                   ),
-                  getBottomButton(context, () {
-                    if (_formKey.currentState.validate()) {
-                      if (DateTime.parse(selectedDate).millisecondsSinceEpoch <
-                          DateTime.now().millisecondsSinceEpoch) {
-                        app.resolve<CustomDialogs>().errorDialog(
-                            context,
-                            R.string().commonString.toDate,
-                            R.string().errorString.fromGreaterTo,
-                            btntitle: R.string().commonString.ok);
-                      }
-                    } else {
-                      setsetter(() {
-                        autovalid = true;
-                      });
-                    }
-                  }, R.string().commonString.confirmStone)
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: getSize(20),
+                        right: getSize(20),
+                        bottom: getSize(5),
+                        top: getSize(10)),
+                    child: Text(
+                      R.string().screenTitle.note,
+                      style: appTheme.black16TextStyle,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: getSize(20),
+                        right: getSize(20),
+                        bottom: getSize(5)),
+                    child: Text(
+                      R.string().screenTitle.orderMsg,
+                      style: appTheme.black12TextStyle,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        right: getSize(10),
+                        left: getSize(26),
+                        bottom: getSize(20)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Expanded(
+                          child: FlatButton(
+                            textColor: appTheme.colorPrimary,
+                            padding: EdgeInsets.all(getSize(0)),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              R.string().commonString.cancel,
+                              style: appTheme.black16TextStyle,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: FlatButton(
+                            textColor: appTheme.colorPrimary,
+                            padding: EdgeInsets.all(getSize(0)),
+                            onPressed: () {
+                              if (_formKey.currentState.validate()) {
+                                if (DateTime.parse(selectedDate)
+                                        .millisecondsSinceEpoch <
+                                    DateTime.now().millisecondsSinceEpoch) {
+                                  app.resolve<CustomDialogs>().errorDialog(
+                                      context,
+                                      R.string().commonString.toDate,
+                                      R.string().errorString.fromGreaterTo,
+                                      btntitle: R.string().commonString.ok);
+                                } else {
+                                  actionClick(ManageCLick(
+                                      type: clickConstant.CLICK_TYPE_CONFIRM,
+                                      remark: _commentController.text,
+                                      companyName: _nameController.text,
+                                      date: _dateController.text));
+                                }
+                              } else {
+                                setsetter(() {
+                                  autovalid = true;
+                                });
+                              }
+                            },
+                            child: Text(
+                              R.string().commonString.confirmStone,
+                              style: appTheme.primary16TextStyle,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -735,7 +801,7 @@ Future showBottomSheetForConfirmStoneDetail(BuildContext context) {
   );
 }
 
-Future showBottomSheetforAddToOffice(BuildContext context) {
+Future showAppointmentDialog(BuildContext context, ActionClick actionClick) {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _timeController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
@@ -771,11 +837,11 @@ Future showBottomSheetforAddToOffice(BuildContext context) {
                 children: <Widget>[
                   Padding(
                     padding:
-                    EdgeInsets.only(top: getSize(28), bottom: getSize(21)),
+                        EdgeInsets.only(top: getSize(28), bottom: getSize(21)),
                     child: Align(
                       alignment: Alignment.center,
                       child: Text(
-                        "ADD TO OFFICE",
+                        R.string().screenTitle.addToOffice,
                         style: appTheme.commonAlertDialogueTitleStyle,
                       ),
                     ),
@@ -942,27 +1008,50 @@ Future showBottomSheetforAddToOffice(BuildContext context) {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: getSize(20), vertical: getSize(16)),
-                    child: AppButton.flat(
-                      onTap: () {
-                        // NavigationUtilities.pushRoute(TabBarDemo.route);
-                        FocusScope.of(context).unfocus();
-                        if (_formKey.currentState.validate()) {
-                          _formKey.currentState.save();
-                        } else {
-                          setsetter(() {
-                            autovalid = true;
-                          });
-                        }
-                        // NavigationUtilities.push(ThemeSetting());
-                      },
-                      borderRadius: getSize(5),
-                      fitWidth: true,
-                      text: R.string().commonString.btnSubmit.toUpperCase(),
-                      //isButtonEnabled: enableDisableSigninButton(),
+                    padding: EdgeInsets.only(
+                        right: getSize(10),
+                        left: getSize(26),
+                        bottom: getSize(20)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Expanded(
+                          child: FlatButton(
+                            textColor: appTheme.colorPrimary,
+                            padding: EdgeInsets.all(getSize(0)),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              R.string().commonString.cancel,
+                              style: appTheme.black16TextStyle,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: FlatButton(
+                            textColor: appTheme.colorPrimary,
+                            padding: EdgeInsets.all(getSize(0)),
+                            onPressed: () {
+                              if (_formKey.currentState.validate()) {
+                                actionClick(ManageCLick(
+                                    type: clickConstant.CLICK_TYPE_CONFIRM,
+                                    remark: _commentController.text));
+                              } else {
+                                setsetter(() {
+                                  autovalid = true;
+                                });
+                              }
+                            },
+                            child: Text(
+                              R.string().screenTitle.addToOffice,
+                              style: appTheme.primary16TextStyle,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
@@ -991,12 +1080,12 @@ openTimeSlotDialog(BuildContext context, Key key) {
             return ItemTags(
               index: index,
               title: item.title,
+              textStyle: appTheme.black12TextStyle,
               borderRadius: BorderRadius.circular(getSize(10)),
               color: appTheme.colorPrimary.withOpacity(0.5),
-              activeColor:  appTheme.colorPrimary.withOpacity(0.5),
+              activeColor: appTheme.colorPrimary.withOpacity(0.5),
               singleItem: true,
-              onPressed: (item){
-              },
+              onPressed: (item) {},
             );
           },
         ),

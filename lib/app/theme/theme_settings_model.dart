@@ -43,7 +43,7 @@ class ThemeSettingsModel extends ChangeNotifier {
 
   /// Updates the color of the navigation bar.
   void updateSystemUi({bool isLogin = true}) {
-    //(ColorConstants.textGray);
+    //(ColorConstants.appTheme.textGray);
     if (isLogin) {
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
           systemNavigationBarColor: ColorConstants.black,

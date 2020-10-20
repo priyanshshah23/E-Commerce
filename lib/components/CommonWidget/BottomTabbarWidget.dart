@@ -62,6 +62,10 @@ class _BottomTabbarWidgetState extends State<BottomTabbarWidget> {
                                         height: getSize(20)),
                                   ))
                               : Image.asset(widget.arrBottomTab[i].image,
+                                  color:
+                                      widget.arrBottomTab[i].imageColor != null
+                                          ? widget.arrBottomTab[i].imageColor
+                                          : null,
                                   width: getSize(20),
                                   height: getSize(20)),
                           if (widget.arrBottomTab[i].isCenter == false)

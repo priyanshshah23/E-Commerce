@@ -106,7 +106,7 @@
         "parentId": null
     },
     {
-        "id": "Memo",
+        "id": "M",
         "code": "Memo",
         "webDisplay": "Memo",
         "isActive": true,
@@ -115,7 +115,7 @@
         "parentId": "789789789"
     },
     {
-        "id": "Availble",
+        "id": "A",
         "code": "Availble",
         "webDisplay": "Availble",
         "isActive": true,
@@ -124,7 +124,7 @@
         "parentId": "789789789"
     },
     {
-        "id": "Office",
+        "id": "O",
         "code": "Office",
         "webDisplay": "Office",
         "isActive": true,
@@ -133,7 +133,7 @@
         "parentId": "789789789"
     },
     {
-        "id": "Show",
+        "id": "S",
         "code": "Show",
         "webDisplay": "Show",
         "isActive": true,

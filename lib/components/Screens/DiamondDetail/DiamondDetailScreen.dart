@@ -5,8 +5,10 @@ import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
+import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/DiamondDetail/DiamondDetailUIModel.dart';
+import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
@@ -33,7 +35,7 @@ class DiamondDetailScreen extends StatefulScreenWidget {
 
   @override
   _DiamondDetailScreenState createState() =>
-      _DiamondDetailScreenState(this.diamondModel);
+      _DiamondDetailScreenState(this.diamondModel, this.moduleType);
 }
 
 class DiamondDetailImagePagerModel {
@@ -43,6 +45,7 @@ class DiamondDetailImagePagerModel {
   bool isImage;
   bool isVideo;
   int subIndex = 0;
+
   List<DiamondDetailImagePagerModel> arr = List<DiamondDetailImagePagerModel>();
 
   DiamondDetailImagePagerModel({
@@ -66,6 +69,8 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   int _currentIndex = 0;
   bool isLoading = true;
   List<BottomTabModel> arrBottomTab;
+  DiamondConfig diamondConfig;
+  int moduleType;
 
   List<DiamondDetailImagePagerModel> arrImages =
       List<DiamondDetailImagePagerModel>();
@@ -73,7 +78,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   List<DiamondDetailUIModel> arrDiamondDetailUIModel =
       List<DiamondDetailUIModel>();
 
-  _DiamondDetailScreenState(this.diamondModel);
+  _DiamondDetailScreenState(this.diamondModel, this.moduleType);
 
   //DiamondDetailUIModel
 
@@ -84,6 +89,9 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   void initState() {
     super.initState();
     setupData();
+
+    diamondConfig = DiamondConfig(moduleType);
+    diamondConfig.initItems(isDetail: true);
   }
 
   setupData() {
@@ -344,32 +352,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         bgColor: appTheme.whiteColor,
         leadingButton: getBackButton(context),
         centerTitle: false,
-        actionItems: [
-          Padding(
-            padding: EdgeInsets.only(right: getSize(20)),
-            child: Image.asset(
-              share,
-              height: getSize(20),
-              width: getSize(20),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(right: getSize(20)),
-            child: Image.asset(
-              notification,
-              height: getSize(20),
-              width: getSize(20),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(right: getSize(20)),
-            child: Image.asset(
-              download,
-              height: getSize(20),
-              width: getSize(20),
-            ),
-          ),
-        ],
+        actionItems: getToolbarItem(),
       ),
       bottomNavigationBar: getBottomTab(),
       body: SafeArea(
@@ -470,6 +453,37 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
             )),
       ),
     );
+  }
+
+  List<Widget> getToolbarItem() {
+    List<Widget> list = [];
+    diamondConfig.toolbarList.forEach((element) {
+      list.add(GestureDetector(
+        onTap: () {
+          manageToolbarClick(element);
+        },
+        child: Padding(
+          padding: EdgeInsets.all(getSize(8.0)),
+          child: Image.asset(
+            element.image,
+            height: getSize(20),
+            width: getSize(20),
+          ),
+        ),
+      ));
+    });
+    return list;
+  }
+
+  manageToolbarClick(BottomTabModel model) {
+    switch (model.code) {
+      case BottomCodeConstant.TBShare:
+        break;
+      case BottomCodeConstant.TBClock:
+        break;
+      case BottomCodeConstant.TBDownloadView:
+        break;
+    }
   }
 
   Widget getTabBlock(DiamondDetailImagePagerModel model) {
@@ -843,27 +857,23 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
 
   Widget getBottomTab() {
     return BottomTabbarWidget(
-      arrBottomTab: arrBottomTab,
-      onClickCallback: (obj) {
-        //
-        if (obj.code == BottomCodeConstant.dDEnquiry) {
-          //
-          print(obj.code);
-        } else if (obj.code == BottomCodeConstant.dDAddToCart) {
-          //
-          print(obj.code);
-        } else if (obj.code == BottomCodeConstant.dDAddToWatchlist) {
-          //
-          print(obj.code);
-          // callApiForGetFilterId();
-        } else if (obj.code == BottomCodeConstant.dDPlaceOrder) {
-          //
-          print(obj.code);
-        } else if (obj.code == BottomCodeConstant.dDComment) {
-          //
-          print(obj.code);
+      arrBottomTab: diamondConfig.arrBottomTab,
+      onClickCallback: (obj) {        //
+        if (obj.type == ActionMenuConstant.ACTION_TYPE_MORE) {
+          showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
+              (manageClick) {
+            manageBottomMenuClick(manageClick.bottomTabModel);
+          }, R.string().commonString.more, isDisplaySelection: false);
+        } else {
+          manageBottomMenuClick(obj);
         }
       },
     );
+  }
+
+  manageBottomMenuClick(BottomTabModel bottomTabModel) {
+    List<DiamondModel> selectedList = [];
+    selectedList.add(diamondModel);
+    diamondConfig.manageDiamondAction(context, selectedList, bottomTabModel);
   }
 }

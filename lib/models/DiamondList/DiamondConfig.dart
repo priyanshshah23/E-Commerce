@@ -72,15 +72,21 @@ class DiamondConfig {
   int moduleType;
   List<BottomTabModel> arrMoreMenu;
   List<BottomTabModel> arrBottomTab;
-
+  List<BottomTabModel> arrStatusMenu;
+  BottomMenuSetting bottomMenuSetting;
   List<BottomTabModel> toolbarList = [];
 
   DiamondConfig(this.moduleType);
 
-  initItems() {
-    toolbarList = getToolbarItem();
-    arrMoreMenu = BottomMenuSetting().getMoreMenuItems();
-    arrBottomTab = BottomMenuSetting().getBottomMenuItems();
+  initItems({bool isDetail = false}) {
+    bottomMenuSetting = BottomMenuSetting(moduleType);
+    toolbarList = getToolbarItem(isDetail: isDetail);
+    arrBottomTab =
+        bottomMenuSetting.getBottomMenuItems(moduleType, isDetail: isDetail);
+    arrMoreMenu = bottomMenuSetting.getMoreMenuItems(isDetail: isDetail);
+    if (!isDetail) {
+      arrStatusMenu = bottomMenuSetting.getStatusMenuItems();
+    }
   }
 
   String getScreenTitle() {
@@ -92,32 +98,53 @@ class DiamondConfig {
     }
   }
 
-  List<BottomTabModel> getToolbarItem() {
+  List<BottomTabModel> getToolbarItem({bool isDetail = false}) {
     List<BottomTabModel> list = [];
-    list.add(BottomTabModel(
-        title: "",
-        image: selectAll,
-        code: BottomCodeConstant.TBSelectAll,
-        sequence: 0,
-        isCenter: true));
-    list.add(BottomTabModel(
-        title: "",
-        image: gridView,
-        code: BottomCodeConstant.TBGrideView,
-        sequence: 1,
-        isCenter: true));
-    list.add(BottomTabModel(
-        title: "",
-        image: filter,
-        code: BottomCodeConstant.TBSortView,
-        sequence: 2,
-        isCenter: true));
-    list.add(BottomTabModel(
-        title: "",
-        image: download,
-        code: BottomCodeConstant.TBDownloadView,
-        sequence: 3,
-        isCenter: true));
+    if (isDetail) {
+      list.add(BottomTabModel(
+          title: "",
+          image: share,
+          code: BottomCodeConstant.TBShare,
+          sequence: 0,
+          isCenter: true));
+      list.add(BottomTabModel(
+          title: "",
+          image: clock,
+          code: BottomCodeConstant.TBClock,
+          sequence: 0,
+          isCenter: true));
+      list.add(BottomTabModel(
+          title: "",
+          image: download,
+          code: BottomCodeConstant.TBDownloadView,
+          sequence: 3,
+          isCenter: true));
+    } else {
+      list.add(BottomTabModel(
+          title: "",
+          image: selectAll,
+          code: BottomCodeConstant.TBSelectAll,
+          sequence: 0,
+          isCenter: true));
+      list.add(BottomTabModel(
+          title: "",
+          image: gridView,
+          code: BottomCodeConstant.TBGrideView,
+          sequence: 1,
+          isCenter: true));
+      list.add(BottomTabModel(
+          title: "",
+          image: filter,
+          code: BottomCodeConstant.TBSortView,
+          sequence: 2,
+          isCenter: true));
+      list.add(BottomTabModel(
+          title: "",
+          image: download,
+          code: BottomCodeConstant.TBDownloadView,
+          sequence: 3,
+          isCenter: true));
+    }
     return list;
   }
 
@@ -134,7 +161,7 @@ class DiamondConfig {
         actionAddToWishList(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_PLACE_ORDER:
-        actionPlaceOrder(list);
+        actionPlaceOrder(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_COMMENT:
         actionComment(context, list);
@@ -142,8 +169,8 @@ class DiamondConfig {
       case ActionMenuConstant.ACTION_TYPE_OFFER:
         actionOffer(context, list);
         break;
-      case ActionMenuConstant.ACTION_TYPE_OFFER_VIEW:
-        actionOfferView(list);
+      case ActionMenuConstant.ACTION_TYPE_APPOINTMENT:
+        actionAppointment(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_HOLD:
         actionHold(list);
@@ -184,7 +211,17 @@ class DiamondConfig {
     });
   }
 
-  actionPlaceOrder(List<DiamondModel> list) {}
+  actionPlaceOrder(BuildContext context, List<DiamondModel> list) {
+    showPlaceOrderDialog(context, (manageClick) {
+      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
+        callApiFoPlaceOrder(context, list,
+            isPop: true,
+            remark: manageClick.remark,
+            companyName: manageClick.companyName,
+            date: manageClick.date);
+      }
+    });
+  }
 
   actionComment(BuildContext context, List<DiamondModel> list) {
     showNotesDialog(context, (manageClick) {
@@ -213,7 +250,15 @@ class DiamondConfig {
     });
   }
 
-  actionOfferView(List<DiamondModel> list) {}
+  actionAppointment(BuildContext context, List<DiamondModel> list) {
+    showAppointmentDialog(context, (manageClick) {
+      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
+        /*callApiFoCreateTrack(
+            context, list, DiamondTrackConstant.TRACK_TYPE_APPOINTMENT,
+            isPop: true);*/
+      }
+    });
+  }
 
   actionHold(List<DiamondModel> list) {}
 
@@ -248,7 +293,7 @@ class DiamondConfig {
           break;
         case DiamondTrackConstant.TRACK_TYPE_OFFER:
           diamonds.vStnId = element.vStnId;
-          diamonds.newAmount = element.getFinalValue();
+          diamonds.newAmount = element.getFinalAmount();
           diamonds.newPricePerCarat = element.getFinalRate();
           dateTimeNow
               .add(Duration(hours: int.parse(element.selectedOfferHour)));
@@ -266,6 +311,47 @@ class DiamondConfig {
           if (trackType == DiamondTrackConstant.TRACK_TYPE_OFFER) {
             Navigator.pop(context);
           }
+        }
+        app.resolve<CustomDialogs>().errorDialog(
+              context,
+              title,
+              resp.message,
+              btntitle: R.string().commonString.ok,
+            );
+      },
+      (onError) {
+        if (onError.message != null) {
+          app.resolve<CustomDialogs>().errorDialog(
+                context,
+                "",
+                onError.message,
+                btntitle: R.string().commonString.ok,
+              );
+        }
+      },
+    );
+  }
+
+  callApiFoPlaceOrder(BuildContext context, List<DiamondModel> list,
+      {bool isPop = false,
+      String remark,
+      String companyName,
+      String title,
+      String date}) {
+    PlaceOrderReq req = PlaceOrderReq();
+    req.company = companyName;
+    req.comment = remark;
+    req.date = date;
+    req.diamonds = [];
+    list.forEach((element) {
+      req.diamonds.add(element.id);
+    });
+    SyncManager.instance.callApiForPlaceOrder(
+      context,
+      req,
+      (resp) {
+        if (isPop) {
+          Navigator.pop(context);
         }
         app.resolve<CustomDialogs>().errorDialog(
               context,

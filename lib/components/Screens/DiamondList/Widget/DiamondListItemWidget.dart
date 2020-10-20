@@ -31,8 +31,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        widget
-            .actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_SELECTION));
+        widget.actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_ROW));
       },
       child: Container(
         margin: EdgeInsets.only(
@@ -271,7 +270,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                     getText(R.string().screenTitle.finalOffer + " :"),
                     getText(widget.item.getFinalOffer().toString()),
                     getText(R.string().screenTitle.finalDisc + " :"),
-                    getText(widget.item.getFinalDisc().toString()),
+                    getText(widget.item.getFinalDiscount().toString()),
                   ],
                 ),
               ),
@@ -283,7 +282,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                     getText(R.string().screenTitle.finalRate + " :"),
                     getText(widget.item.getFinalRate().toString()),
                     getText(R.string().screenTitle.finalValue + " :"),
-                    getText(widget.item.getFinalValue().toString()),
+                    getText(widget.item.getFinalAmount().toString()),
                   ],
                 ),
               ),

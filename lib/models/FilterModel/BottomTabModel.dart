@@ -30,15 +30,18 @@ class BottomCodeConstant {
   static const String TBGrideView = "TB_GRIDE_VIEW";
   static const String TBSortView = "TB_SORT_VIEW";
   static const String TBDownloadView = "TB_DOWNLOAD_VIEW";
+  static const String TBShare= "TB_SHARE";
+  static const String TBClock= "TB_CLOCK";
 }
 
 class TabConfiguration {
+  Color imageColor;
   Color textColor;
   Color backgroundColor;
   Color centerImageBackgroundColor;
 
   TabConfiguration(
-      {this.textColor, this.backgroundColor, this.centerImageBackgroundColor});
+      {this.textColor, this.backgroundColor, this.centerImageBackgroundColor,this.imageColor});
 
   TabConfiguration.fromJson(Map<String, dynamic> json) {
     textColor = fromHex(
@@ -78,6 +81,7 @@ class BottomTabModel extends TabConfiguration {
   int sequence;
   bool isCenter=true;
   bool isSelected;
+
 
   BottomTabModel({
     this.title,

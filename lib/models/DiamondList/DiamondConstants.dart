@@ -3,8 +3,31 @@ import 'package:flutter/cupertino.dart';
 
 class DiamondModuleConstant {
   static const MODULE_TYPE_SEARCH = 1;
-  static const MODULE_TYPE_UPCOMING = 2;
-  static const MODULE_TYPE_PROFILE = 3;
+  static const MODULE_TYPE_QUICK_SEARCH = 2;
+  static const MODULE_TYPE_NEW_ARRIVAL = 3;
+  static const MODULE_TYPE_EXCLUSIVE_DIAMOND = 4;
+  static const MODULE_TYPE_DIAMOND_AUCTION = 5;
+  static const MODULE_TYPE_STONE_OF_THE_DAY = 6;
+  static const MODULE_TYPE_MY_WATCH_LIST = 7;
+  static const MODULE_TYPE_MY_CART = 8;
+  static const MODULE_TYPE_MY_ENQUIRY = 9;
+  static const MODULE_TYPE_MY_BID = 10;
+  static const MODULE_TYPE_MY_HOLD = 11;
+  static const MODULE_TYPE_MY_ORDER = 12;
+  static const MODULE_TYPE_MY_OFFICE = 13;
+  static const MODULE_TYPE_MY_OFFER = 14;
+  static const MODULE_TYPE_MY_PURCHASE = 15;
+  static const MODULE_TYPE_MY_SAVED_SEARCH = 16;
+  static const MODULE_TYPE_MY_DEMAND = 17;
+  static const MODULE_TYPE_TERM_CONDITION = 18;
+  static const MODULE_TYPE_PRIVACY_POLICY = 19;
+  static const MODULE_TYPE_ABOUT_US = 20;
+  static const MODULE_TYPE_CONTACT_US = 21;
+  static const MODULE_TYPE_CHANGE_PASSWORD = 22;
+  static const MODULE_TYPE_LOGOUT = 23;
+  static const MODULE_TYPE_UPCOMING = 24;
+  static const MODULE_TYPE_PROFILE = 25;
+  static const MODULE_TYPE_Home = 100;
 }
 
 class ArgumentConstant {
@@ -31,9 +54,14 @@ class ManageCLick {
 }
 
 class DrawerConstant {
+  static const int HOME = 100;
+
   static const int MODULE_SEARCH = DiamondModuleConstant.MODULE_TYPE_SEARCH;
+
   static const int MODULE_UPCOMING = DiamondModuleConstant.MODULE_TYPE_UPCOMING;
   static const int MODULE_PROFILE = DiamondModuleConstant.MODULE_TYPE_PROFILE;
+
+  static const int MODULE_QUICK_SEARCH = 100;
 
   static const int LOGOUT = 111;
   static const int OPEN_DRAWER = 1001;
@@ -52,6 +80,7 @@ class DiamondTrackConstant {
   static const TRACK_TYPE_OFFER = 3;
   static const TRACK_TYPE_ENQUIRY = 6;
   static const TRACK_TYPE_COMMENT = 99;
+  static const TRACK_TYPE_APPOINTMENT = 100;
 }
 
 class ActionMenuConstant {
@@ -61,13 +90,14 @@ class ActionMenuConstant {
   static const ACTION_TYPE_ADD_TO_CART = 4;
   static const ACTION_TYPE_COMMENT = 5;
   static const ACTION_TYPE_OFFER = 6;
-  static const ACTION_TYPE_OFFER_VIEW = 7;
+  static const ACTION_TYPE_APPOINTMENT = 7;
   static const ACTION_TYPE_HOLD = 8;
   static const ACTION_TYPE_DOWNLOAD = 9;
   static const ACTION_TYPE_CLEAR_SELECTION = 10;
   static const ACTION_TYPE_SHARE = 11;
   static const ACTION_TYPE_STATUS = 12;
   static const ACTION_TYPE_MORE = 13;
+  static const ACTION_TYPE_COMPARE = 14;
 }
 
 class MoreMenuConstant {
@@ -76,7 +106,7 @@ class MoreMenuConstant {
   static const int ADD_TO_CART = ActionMenuConstant.ACTION_TYPE_ADD_TO_CART;
   static const int COMMENT = ActionMenuConstant.ACTION_TYPE_COMMENT;
   static const int OFFER = ActionMenuConstant.ACTION_TYPE_OFFER;
-  static const int OFFER_VIEW = ActionMenuConstant.ACTION_TYPE_OFFER_VIEW;
+  static const int OFFER_VIEW = ActionMenuConstant.ACTION_TYPE_APPOINTMENT;
   static const int HOLD = ActionMenuConstant.ACTION_TYPE_HOLD;
   static const int DOWNLOAD = ActionMenuConstant.ACTION_TYPE_DOWNLOAD;
   static const int CLEAR_SELECTION =

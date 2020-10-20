@@ -33,13 +33,13 @@ abstract class StatefulScreenWidgetState extends State<StatefulScreenWidget> {
       changeStatusColor(statusBarColor);
       changeNavigationColor(bottomBarColor);
     } else {
-      changeStatusColor(ColorConstants.textGray.withOpacity(0.1));
+      changeStatusColor(appTheme.textGray.withOpacity(0.1));
       changeNavigationColor(Colors.black);
       // if (app.resolve<PrefUtils>().isUserLogin() == true) {
-      //   changeStatusColor(ColorConstants.colorPrimary);
+      //   changeStatusColor(appTheme.colorPrimary);
       //   changeNavigationColor(Colors.black);
       // } else {
-      //   changeStatusColor(ColorConstants.textGray.withOpacity(0.1));
+      //   changeStatusColor(ColorConstants.appTheme.textGray.withOpacity(0.1));
       //   changeNavigationColor(Colors.black);
       // }
     }

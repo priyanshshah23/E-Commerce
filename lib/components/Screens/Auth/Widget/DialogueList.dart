@@ -57,7 +57,7 @@ class _DialogueListState extends State<DialogueList> {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                          "Select City",
+                          getTitle(),
                           style: AppTheme.of(context)
                               .theme
                               .textTheme
@@ -180,6 +180,16 @@ class _DialogueListState extends State<DialogueList> {
         items.clear();
         items.addAll(duplicateItems);
       });
+    }
+  }
+
+  String getTitle() {
+    if(widget.type == DialogueListType.City) {
+      return "Select City";
+    } else if(widget.type == DialogueListType.State) {
+      return "Select State";
+    } else if(widget.type == DialogueListType.Country) {
+      return "Select Country";
     }
   }
 }

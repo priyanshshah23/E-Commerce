@@ -146,7 +146,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                             Container(
                               color: isProfileImageUpload || image != ""
                                   ? Colors.transparent
-                                  : ColorConstants.colorPrimary
+                                  : appTheme.colorPrimary
                                       .withOpacity(0.5),
                             ),
                           ],
@@ -284,6 +284,9 @@ class _PersonalInformationState extends State<PersonalInformation> {
                         FocusScope.of(context).unfocus();
                         if (_formKey.currentState.validate()) {
                           _formKey.currentState.save();
+                          if(_mobileController.text.isNotEmpty || _whatsAppMobileController.text.isNotEmpty){
+                           checkValidation();
+                          }
                           //isProfileImageUpload ? uploadDocument() : callApi();
                         } else {
                           setState(() {
@@ -353,15 +356,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
       validation: (text) {
         if (text.isEmpty) {
           return R.string().errorString.enterPhone;
-        }
-//          else if (await isValidMobile(_mobileController.text.trim(),
-//                  selectedDialogCountry.isoCode) ==
-//              false) {
-//            isMobilevalid = false;
-//
-//            return R.string().errorString.enterValidPhone;
-//          }
-        else {
+        } else {
           return null;
         }
       },
@@ -413,7 +408,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
             imageName: phone,
             imageType: IconSizeType.small,
             color: Colors.black),
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.text,
         inputController: _skypeController,
         formatter: [
           ValidatorInputFormatter(
@@ -466,7 +461,6 @@ class _PersonalInformationState extends State<PersonalInformation> {
                 isEnabled: true,
                 onSelectCountry: (Country country) async {
                   selectedDialogCountryForWhatsapp = country;
-                  //await checkValidation();
                   setState(() {});
                 },
               ),
@@ -490,15 +484,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
       validation: (text) {
         if (text.isEmpty) {
           return R.string().errorString.enterPhone;
-        }
-//          else if (await isValidMobile(_mobileController.text.trim(),
-//                  selectedDialogCountry.isoCode) ==
-//              false) {
-//            isMobilevalid = false;
-//
-//            return R.string().errorString.enterValidPhone;
-//          }
-        else {
+        } else {
           return null;
         }
       },
@@ -530,6 +516,15 @@ class _PersonalInformationState extends State<PersonalInformation> {
 //          setState(() {
 //            checkValidation();
 //          });
+        },
+        validation: (text) {
+          if (text.isEmpty) {
+            return R.string().errorString.enterPinCode;
+          } else if (!validatePincode(text)) {
+            return "Enter Valid PinCode.";
+          } else {
+            return null;
+          }
         },
         inputAction: TextInputAction.next,
         onNextPress: () {
@@ -816,7 +811,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
   getCountryDropDown() {
     return InkWell(
       onTap: () {
-        if(countryList == null || countryList.length == 0) {
+        if (countryList == null || countryList.length == 0) {
           _callApiForCountryList(isShowDialogue: true);
         } else {
           showDialog(
@@ -832,8 +827,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                       duplicateItems: countryList,
                       applyFilterCallBack: (
                           {CityList cityList,
-                            CountryList countryList,
-                            StateList stateList}) {
+                          CountryList countryList,
+                          StateList stateList}) {
                         if (_countryController.text != countryList.name) {
                           _stateController.text = "";
                           _cityController.text = "";
@@ -874,8 +869,9 @@ class _PersonalInformationState extends State<PersonalInformation> {
     return InkWell(
       onTap: () {
         if (countrySelect()) {
-          if(stateList == null || stateList.length == 0) {
-            _callApiForStateList(countryId: selectedCountryItem.id,isShowDialogue: true);
+          if (stateList == null || stateList.length == 0) {
+            _callApiForStateList(
+                countryId: selectedCountryItem.id, isShowDialogue: true);
           } else {
             showDialog(
                 context: context,
@@ -890,14 +886,16 @@ class _PersonalInformationState extends State<PersonalInformation> {
                         duplicateItems: stateList,
                         applyFilterCallBack: (
                             {CityList cityList,
-                              CountryList countryList,
-                              StateList stateList}) {
+                            CountryList countryList,
+                            StateList stateList}) {
                           if (_stateController.text != stateList.name) {
                             _cityController.text = "";
                           }
                           selectedStateItem = stateList;
                           _stateController.text = stateList.name;
-                          _callApiForCityList(countryId: selectedCountryItem.id, stateId: stateList.id);
+                          _callApiForCityList(
+                              countryId: selectedCountryItem.id,
+                              stateId: stateList.id);
                         },
                       ));
                 });
@@ -936,8 +934,11 @@ class _PersonalInformationState extends State<PersonalInformation> {
         FocusScope.of(context).unfocus();
         if (countrySelect()) {
           if (stateSelect()) {
-            if(cityList == null || cityList.length == 0) {
-              _callApiForCityList(countryId: selectedCountryItem.id,stateId: selectedStateItem.id,isShowDialogue: true);
+            if (cityList == null || cityList.length == 0) {
+              _callApiForCityList(
+                  countryId: selectedCountryItem.id,
+                  stateId: selectedStateItem.id,
+                  isShowDialogue: true);
             } else {
               showDialog(
                   context: context,
@@ -952,8 +953,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                           duplicateItems: cityList,
                           applyFilterCallBack: (
                               {CityList cityList,
-                                CountryList countryList,
-                                StateList stateList}) {
+                              CountryList countryList,
+                              StateList stateList}) {
                             selectedCityItem = cityList;
                             _cityController.text = cityList.name;
                           },
@@ -1017,7 +1018,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
     return true;
   }
 
-  void _callApiForCityList({String stateId, String countryId, bool isShowDialogue = false}) {
+  void _callApiForCityList(
+      {String stateId, String countryId, bool isShowDialogue = false}) {
     CityListReq req = CityListReq();
     req.state = stateId;
     req.country = countryId;
@@ -1029,7 +1031,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
             isProgress: true)
         .then((resp) {
       cityList.addAll(resp.data);
-      if(isShowDialogue) {
+      if (isShowDialogue) {
         showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -1043,8 +1045,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     duplicateItems: cityList,
                     applyFilterCallBack: (
                         {CityList cityList,
-                          CountryList countryList,
-                          StateList stateList}) {
+                        CountryList countryList,
+                        StateList stateList}) {
                       selectedCityItem = cityList;
                       _cityController.text = cityList.name;
                     },
@@ -1053,15 +1055,13 @@ class _PersonalInformationState extends State<PersonalInformation> {
       }
     }).catchError(
       (onError) => {
-        app.resolve<CustomDialogs>().confirmDialog(
-              context,
-              title: "Error in Fetching City List",
-              desc: onError.message,
-              positiveBtnTitle: "Try again",
-              onClickCallback: (PositveButtonClick) {
-                _callApiForCityList(stateId: stateId, countryId: countryId);
-              }
-            )
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            title: "Error in Fetching City List",
+            desc: onError.message,
+            positiveBtnTitle: "Try again",
+            onClickCallback: (PositveButtonClick) {
+          _callApiForCityList(stateId: stateId, countryId: countryId);
+        })
       },
     );
   }
@@ -1070,11 +1070,11 @@ class _PersonalInformationState extends State<PersonalInformation> {
     NetworkCall<CountryListResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().countryList(),
-        context,
-        isProgress: true)
+            context,
+            isProgress: true)
         .then((resp) {
       countryList.addAll(resp.data);
-      if(isShowDialogue) {
+      if (isShowDialogue) {
         showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -1088,8 +1088,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     duplicateItems: countryList,
                     applyFilterCallBack: (
                         {CityList cityList,
-                          CountryList countryList,
-                          StateList stateList}) {
+                        CountryList countryList,
+                        StateList stateList}) {
                       if (_countryController.text != countryList.name) {
                         _stateController.text = "";
                         _cityController.text = "";
@@ -1101,16 +1101,15 @@ class _PersonalInformationState extends State<PersonalInformation> {
                   ));
             });
       }
-
     }).catchError(
-          (onError) => {
+      (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(
           context,
           title: "Error in Fetching Country List",
           desc: onError.message,
           positiveBtnTitle: "Try again",
           onClickCallback: (buttonType) {
-            if(buttonType == ButtonType.PositveButtonClick){
+            if (buttonType == ButtonType.PositveButtonClick) {
               _callApiForCountryList();
             }
           },
@@ -1120,18 +1119,18 @@ class _PersonalInformationState extends State<PersonalInformation> {
     );
   }
 
-  void _callApiForStateList({String countryId,bool isShowDialogue = false}) {
+  void _callApiForStateList({String countryId, bool isShowDialogue = false}) {
     StateListReq req = StateListReq();
     req.country = countryId;
 
     NetworkCall<StateListResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().stateList(req),
-        context,
-        isProgress: true)
+            context,
+            isProgress: true)
         .then((resp) {
       stateList.addAll(resp.data);
-      if(isShowDialogue) {
+      if (isShowDialogue) {
         showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -1145,31 +1144,45 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     duplicateItems: stateList,
                     applyFilterCallBack: (
                         {CityList cityList,
-                          CountryList countryList,
-                          StateList stateList}) {
+                        CountryList countryList,
+                        StateList stateList}) {
                       if (_stateController.text != stateList.name) {
                         _cityController.text = "";
                       }
                       selectedStateItem = stateList;
                       _stateController.text = stateList.name;
-                      _callApiForCityList(countryId: selectedCountryItem.id, stateId: stateList.id);
+                      _callApiForCityList(
+                          countryId: selectedCountryItem.id,
+                          stateId: stateList.id);
                     },
                   ));
             });
       }
     }).catchError(
-          (onError) => {
-        app.resolve<CustomDialogs>().confirmDialog(
-            context,
+      (onError) => {
+        app.resolve<CustomDialogs>().confirmDialog(context,
             title: "Error in Fetching State List",
             desc: onError.message,
             positiveBtnTitle: "Try again",
             onClickCallback: (PositveButtonClick) {
-              _callApiForStateList(countryId: countryId);
-            }
-        )
+          _callApiForStateList(countryId: countryId);
+        })
       },
     );
+  }
+
+  checkValidation() async {
+    if (await isValidMobile(
+        _mobileController.text.trim(), selectedDialogCountryForMobile.isoCode) ==
+        false) {
+       showToast("Enter Valid Phone Number",context: context);
+    } else if (await isValidMobile(
+        _whatsAppMobileController.text.trim(), selectedDialogCountryForWhatsapp.isoCode) ==
+        false) {
+       showToast("Enter Valid Whatsapp Mobile Number",context: context);
+    } else {
+      //todo
+    }
   }
 
 }
