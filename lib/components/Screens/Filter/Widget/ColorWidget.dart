@@ -1,4 +1,5 @@
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/models/Master/Master.dart';
 import 'package:flutter/cupertino.dart';
@@ -45,8 +46,8 @@ class _ColorWidgetState extends State<ColorWidget> {
           children: [
             Text(
               widget.colorModel.masterCode == MasterCode.color
-                  ? "Color"
-                  : "Clarity",
+                  ? R.string().commonString.color
+                  : R.string().commonString.clarity,
               style: appTheme.blackNormal18TitleColorblack,
               textAlign: TextAlign.left,
             ),
@@ -76,8 +77,8 @@ class _ColorWidgetState extends State<ColorWidget> {
                           : SizedBox(),
                       Text(
                         widget.colorModel.masterCode == MasterCode.color
-                            ? "Color"
-                            : "Clarity",
+                            ? R.string().commonString.color
+                            : R.string().commonString.clarity,
                         style: appTheme.blackNormal14TitleColorblack,
                         textAlign: TextAlign.left,
                       ),
@@ -126,8 +127,8 @@ class _ColorWidgetState extends State<ColorWidget> {
                           : SizedBox(),
                       Text(
                         widget.colorModel.masterCode == MasterCode.color
-                            ? "Color Group"
-                            : "Clarity Group",
+                            ? R.string().commonString.colorGroup
+                            : R.string().commonString.clarityGroup,
                         style: appTheme.blackNormal14TitleColorblack,
                         textAlign: TextAlign.left,
                       ),
