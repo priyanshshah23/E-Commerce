@@ -28,9 +28,22 @@ class ApiConstants {
 
   static const String createDiamondTrack = commonUrl + "diamond-track/create";
   static const String upsetComment = commonUrl + "diamond-comment/upsert";
+
   static const String placeOrder = commonUrl + "diamond-confirm/request";
 
   static const String forgetPassword = commonUrl + "forgot-password";
   static const String resetPassword = commonUrl + "reset-password-by-user";
   static const String staticPage = apiV1 + "static-page/{id}";
+}
+
+class DiamondUrls {
+  static const String commonUrl =
+      "https://s3.ap-south-1.amazonaws.com/finestargroup/";
+
+  static const String image = commonUrl + "RealImages/";
+  static const String video = commonUrl + "viewer3/html/";
+  static const String heartImage = commonUrl + "HeartImages/";
+  static const String plotting = commonUrl + "PlottingImages/";
+  static const String certificate = commonUrl + "PlottingImages/";
+  static const String arroImage = commonUrl + "ArrowImages/";
 }

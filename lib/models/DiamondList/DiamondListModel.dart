@@ -313,6 +313,9 @@ class SearchData {
 class DiamondModel {
   String id;
   String stoneId;
+  String pltId;
+  String certId;
+  String arrowImgId;
   String wSts;
   String sSts;
   String rptNo;
@@ -396,6 +399,7 @@ class DiamondModel {
   String selectedBackPer;
   String selectedOfferPer;
   String selectedOfferHour;
+  bool pltFile;
 
   getSelectedDetail(int type) {
     switch (type) {
@@ -422,6 +426,10 @@ class DiamondModel {
   getFinalDisc() {
     return 0;
   }
+
+  // getFinalRate() {
+  //   return 0;
+  // }
 
   getFinalValue() {
     return 0;
@@ -474,12 +482,14 @@ class DiamondModel {
   DiamondModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     stoneId = json['stoneId'];
+    pltId = json['pltId'] ?? "";
+    arrowImgId = json['packet_no'] ?? "";
     wSts = json['wSts'];
     sSts = json['sSts'];
     rptNo = json['rptNo'];
-    certFile = json['certFile'];
-    videoFile = json['videoFile'];
-    hAFile = json['hAFile'];
+    certFile = json['certFile'] ?? false;
+    videoFile = json['videoFile'] ?? false;
+    hAFile = json['hAFile'] ?? false;
     clrNm = json['clrNm'];
     colNm = json['colNm'];
     lbCmt = json['lbCmt'];
@@ -488,7 +498,7 @@ class DiamondModel {
     cultNm = json['cultNm'];
     cutNm = json['cutNm'];
     depPer = json['depPer'];
-    img = json['img'];
+    img = json['img'] ?? false;
     eClnNm = json['eClnNm'];
     isFcCol = json['isFcCol'];
     fluNm = json['fluNm'];
@@ -536,7 +546,7 @@ class DiamondModel {
     inDt = json['inDt'];
     brlncyNm = json['brlncyNm'];
     isXray = json['isXray'];
-    arrowFile = json['arrowFile'];
+    arrowFile = json['arrowFile'] ?? false;
     assetFile = json['assetFile'];
     hA = json['hA'];
     loc = json['loc'];
@@ -551,6 +561,7 @@ class DiamondModel {
     isCm = json['isCm'];
     fcColDesc = json['fcColDesc'];
     ratio = json['ratio'];
+    pltFile = json['pltFile'] ?? false;
 //    isSelected = json['isSelected'];
   }
 
@@ -562,6 +573,9 @@ class DiamondModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['stoneId'] = this.stoneId;
+    data['pltId'] = this.pltId;
+    data['report_no'] = this.certId;
+    data['packet_no'] = this.arrowImgId;
     data['wSts'] = this.wSts;
     data['sSts'] = this.sSts;
     data['rptNo'] = this.rptNo;
@@ -639,6 +653,7 @@ class DiamondModel {
     data['isCm'] = this.isCm;
     data['fcColDesc'] = this.fcColDesc;
     data['ratio'] = this.ratio;
+    data['pltFile'] = this.pltFile;
 //    data['isSelected'] = this.isSelected;
     return data;
   }
