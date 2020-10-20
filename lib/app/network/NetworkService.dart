@@ -1,6 +1,8 @@
 import 'package:diamnow/models/Address/CityListModel.dart';
 import 'package:diamnow/models/Address/CountryListModel.dart';
 import 'package:diamnow/models/Address/StateListModel.dart';
+import 'package:diamnow/models/Auth/ForgetPassword.dart';
+import 'package:diamnow/models/Auth/ResetPasswordModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/LoginModel.dart';
@@ -38,6 +40,12 @@ abstract class NetworkService {
 
   @POST(ApiConstants.upsetComment)
   Future<BaseApiResp> upsetComment(@Body() CreateDiamondTrackReq req);
+
+  @POST(ApiConstants.forgetPassword)
+  Future<BaseApiResp> forgetPassword(@Body() ForgotPasswordReq req);
+
+  @POST(ApiConstants.resetPassword)
+  Future<BaseApiResp> resetPassword(@Body() ResetPasswordReq req);
 
   @POST(ApiConstants.placeOrder)
   Future<BaseApiResp> placeOrder(@Body() PlaceOrderReq req);
