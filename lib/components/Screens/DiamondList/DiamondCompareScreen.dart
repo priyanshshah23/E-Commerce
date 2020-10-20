@@ -115,7 +115,7 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
         backgroundColor: appTheme.whiteColor,
         appBar: getAppBar(
           context,
-          diamondConfig.getScreenTitle(),
+          R.string().screenTitle.compare,
           bgColor: appTheme.whiteColor,
           leadingButton: getBackButton(context),
           centerTitle: false,
