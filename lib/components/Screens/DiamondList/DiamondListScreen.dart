@@ -23,7 +23,6 @@ import 'package:flutter/material.dart';
 class DiamondListScreen extends StatefulScreenWidget {
   static const route = "Diamond List Screen";
 
-  Map<String, dynamic> dictFilters;
   String filterId = "";
   int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
   bool isFromDrawer = false;
@@ -31,7 +30,6 @@ class DiamondListScreen extends StatefulScreenWidget {
   DiamondListScreen(Map<String, dynamic> arguments) {
     if (arguments != null) {
       this.filterId = arguments["filterId"];
-      this.dictFilters = arguments["filters"];
       if (arguments[ArgumentConstant.ModuleType] != null) {
         moduleType = arguments[ArgumentConstant.ModuleType];
       }
@@ -43,20 +41,18 @@ class DiamondListScreen extends StatefulScreenWidget {
 
   @override
   _DiamondListScreenState createState() => _DiamondListScreenState(
-      filterId: filterId,
-      moduleType: moduleType,
-      isFromDrawer: isFromDrawer,
-      dictFilters: dictFilters);
+        filterId: filterId,
+        moduleType: moduleType,
+        isFromDrawer: isFromDrawer,
+      );
 }
 
 class _DiamondListScreenState extends StatefulScreenWidgetState {
   String filterId;
   int moduleType;
   bool isFromDrawer;
-  Map<String, dynamic> dictFilters;
 
-  _DiamondListScreenState(
-      {this.filterId, this.moduleType, this.isFromDrawer, this.dictFilters});
+  _DiamondListScreenState({this.filterId, this.moduleType, this.isFromDrawer});
 
   DiamondConfig diamondConfig;
   BaseList diamondList;
@@ -159,7 +155,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     Map<String, dynamic> dict = {};
     dict["page"] = page;
     dict["limit"] = DEFAULT_LIMIT;
-    dict["filters"] = this.dictFilters;
+    dict["filters"] = {};
     dict["filters"]["diamondSearchId"] = this.filterId;
 
     NetworkCall<DiamondListResp>()
@@ -318,7 +314,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.only(
-              left: getSize(20), right: getSize(20), top: getSize(20)),
+            left: getSize(20),
+            right: getSize(20),
+            top: getSize(8),
+          ),
           child: Column(
             children: <Widget>[
               DiamondListHeader(
