@@ -10,26 +10,26 @@ class DrawerSetting {
     List<DrawerModel> drawerList = [];
     drawerList.add(DrawerModel(
       image: home,
-      title: "Home",
+      title: R.string().screenTitle.home,
       isSelected: true,
-      type: DiamondModuleConstant.MODULE_TYPE_Home,
+      type: DiamondModuleConstant.MODULE_TYPE_HOME,
     ));
     drawerList.add(DrawerModel(
       image: drawerSearch,
-      title: "Search",
+      title: R.string().screenTitle.search,
       isSelected: true,
       type: DiamondModuleConstant.MODULE_TYPE_SEARCH,
     ));
     drawerList.add(DrawerModel(
       image: quickSearch,
-      title: "Quick Search",
+      title: R.string().screenTitle.quickSearch,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH,
     ));
 
     drawerList.add(DrawerModel(
       image: newArrival,
-      title: "New Arrival",
+      title: R.string().screenTitle.newArrival,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL,
       isShowCount: true,
@@ -39,7 +39,7 @@ class DrawerSetting {
 
     drawerList.add(DrawerModel(
       image: exclusiveDiamonds,
-      title: "Exclusive Diamonds",
+      title: R.string().screenTitle.exclusiveDiamonds,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND,
       isShowCount: true,
@@ -49,7 +49,7 @@ class DrawerSetting {
 
     drawerList.add(DrawerModel(
       image: diamondOnAuction,
-      title: "Diamond On Auction",
+      title: R.string().screenTitle.diamondOnAuction,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION,
       isShowCount: true,
@@ -59,7 +59,7 @@ class DrawerSetting {
 
     drawerList.add(DrawerModel(
       image: stoneOfTheDay,
-      title: "Stones of the Day",
+      title: R.string().screenTitle.stoneOfTheDays,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY,
       isShowCount: true,
@@ -75,7 +75,7 @@ class DrawerSetting {
     ));
     drawerList.add(DrawerModel(
       image: myWatchlist,
-      title: "My Watchlist",
+      title: R.string().screenTitle.myWatchlist,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST,
     ));
@@ -93,86 +93,86 @@ class DrawerSetting {
 
     drawerList.add(DrawerModel(
       image: myBid,
-      title: "My Bid",
+      title: R.string().screenTitle.myBid,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_MY_BID,
     ));
 
     drawerList.add(DrawerModel(
       image: myHold,
-      title: "My Hold",
+      title: R.string().screenTitle.myHold,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_MY_HOLD,
     ));
 
     drawerList.add(DrawerModel(
       image: myOrder,
-      title: "My Order",
+      title: R.string().screenTitle.myOrder,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_MY_ORDER,
     ));
 
     drawerList.add(DrawerModel(
       image: myOffice,
-      title: "My Office",
+      title: R.string().screenTitle.myOffice,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_MY_OFFICE,
     ));
 
     drawerList.add(DrawerModel(
       image: myOffer,
-      title: "My Offer",
+      title: R.string().screenTitle.myOffer,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_MY_OFFER,
     ));
 
     drawerList.add(DrawerModel(
       image: myPurchased,
-      title: "My Purchased",
+      title: R.string().screenTitle.myPurchased,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE,
     ));
 
     drawerList.add(DrawerModel(
       image: mySavedSearch,
-      title: "My Saved Search",
+      title: R.string().screenTitle.mySavedSearch,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH,
     ));
 
     drawerList.add(DrawerModel(
       image: myDemand,
-      title: "My Demand",
+      title: R.string().screenTitle.myDemand,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_MY_DEMAND,
     ));
     drawerList.add(DrawerModel(
       image: termsAndCondition,
-      title: "Terms & Condition",
+      title: R.string().screenTitle.termsAndCondition,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION,
     ));
     drawerList.add(DrawerModel(
       image: privacyPolicy,
-      title: "Privacy Policy",
+      title: R.string().screenTitle.privacyPolicy,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY,
     ));
     drawerList.add(DrawerModel(
       image: aboutUs,
-      title: "About Us",
+      title: R.string().screenTitle.aboutUs,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_ABOUT_US,
     ));
     drawerList.add(DrawerModel(
       image: contactUs,
-      title: "Contact Us",
+      title: R.string().screenTitle.contactUs,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_CONTACT_US,
     ));
     drawerList.add(DrawerModel(
       image: changePassword,
-      title: "Change Password",
+      title: R.string().screenTitle.changePassword,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_CHANGE_PASSWORD,
     ));

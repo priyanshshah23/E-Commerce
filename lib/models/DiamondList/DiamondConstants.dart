@@ -30,6 +30,7 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_MY_COMMENT = 25;
   static const MODULE_TYPE_Home = 100;
   static const MODULE_TYPE_OPEN_DRAWER= 1000;
+  static const MODULE_TYPE_HOME = 100;
 }
 
 class ArgumentConstant {

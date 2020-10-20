@@ -31,14 +31,26 @@ class ScreenTitle {
   final String diamondDetail;
 
 // drawer
-  final String settings;
-  final String notifications;
-  final String myEarning;
-  final String support;
-  final String logout;
-  final String skip;
-  final String usingApp;
+  final String home;
+  final String search;
+  final String quickSearch;
+  final String newArrival;
+  final String exclusiveDiamonds;
+  final String diamondOnAuction;
+  final String stoneOfTheDays;
+  final String myWatchlist;
+  final String myBid;
+  final String myHold;
+  final String myOrder;
+  final String myOffice;
+  final String myOffer;
+  final String myPurchased;
+  final String mySavedSearch;
+  final String myDemand;
+  final String aboutUs;
+  final String contactUs;
   final String changePassword;
+  final String logout;
 
   //fareDetails
   final String fareDetailsTitle;
@@ -78,8 +90,6 @@ class ScreenTitle {
   final String help;
   final String about;
   final String bankDetails;
-  final String contactUs;
-  final String home;
   final String pending;
   final String rejected;
   final String uploadAgain;
@@ -202,7 +212,6 @@ class ScreenTitle {
     this.recoveryCode = "Recovery code",
     this.editProfile = "Edit Profile",
     this.myProfile = "My Profile",
-    this.skip = "Skip",
     this.reset = "Reset",
     this.yourPassword = "Your Password",
     this.photo = "Photo",
@@ -213,13 +222,26 @@ class ScreenTitle {
     this.diamondDetail = "Diamond Detail",
 
     // drawer
-    this.settings = "Settings",
-    this.notifications = "Notifications",
-    this.logout = "Logout",
-    this.usingApp = "Using the app",
-    this.myEarning = "My Earnings",
-    this.support = "Support",
+    this.home = "Home",
+    this.search = "Search",
+    this.quickSearch = "Quick Search",
+    this.newArrival = "New Arrival",
+    this.exclusiveDiamonds = "Exclusive Diamonds",
+    this.diamondOnAuction = "Diamond On Auction",
+    this.stoneOfTheDays = "Stones of the Day",
+    this.myWatchlist = "My Watchlist",
+    this.myBid = "My Bid",
+    this.myHold = "My Hold",
+    this.myOrder = "My Order",
+    this.myOffice = "My Office",
+    this.myOffer = "My Offer",
+    this.myPurchased = "My Purchased",
+    this.mySavedSearch = "My Saved Search",
+    this.myDemand = "My Demand",
+    this.aboutUs = "About Us",
+    this.contactUs = "Contact Us",
     this.changePassword = "Change Password",
+    this.logout = "Logout",
 
     //fairDetails
     this.fareDetailsTitle = 'Enter Sales Details',
@@ -246,8 +268,6 @@ class ScreenTitle {
     this.help = "HELP",
     this.about = "About",
     this.bankDetails = "Bank Details",
-    this.contactUs = "Contact Us",
-    this.home = "Home",
 
 //    Support
     this.accountAndPayment = "Account and Payment",

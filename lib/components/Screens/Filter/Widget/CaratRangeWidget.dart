@@ -1,5 +1,6 @@
 import 'package:diamnow/app/Helper/Themehelper.dart';
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/math_utils.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
@@ -68,10 +69,9 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
                 } else {
                   app.resolve<CustomDialogs>().confirmDialog(
                         context,
-                        title: "Value Error",
-                        desc:
-                            "From Value should be less than or equal to To value",
-                        positiveBtnTitle: "Try Again",
+                        title: "",
+                        desc: R.string().errorString.fromValueGreateThanTo,
+                        positiveBtnTitle: R.string().commonString.ok,
                       );
                   _minValueController.text = "";
                   setState(() {});
@@ -161,10 +161,9 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
               } else {
                 app.resolve<CustomDialogs>().confirmDialog(
                       context,
-                      title: "Value Error",
-                      desc:
-                          "From Value should be less than or equal to To value",
-                      positiveBtnTitle: "Try Again",
+                      title: "",
+                      desc: R.string().errorString.fromValueGreateThanTo,
+                      positiveBtnTitle: R.string().commonString.ok,
                     );
                 _minValueController.text = "";
                 setState(() {});
@@ -206,7 +205,7 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
                     color: widget.selectionModel.fromToStyle.underlineColor,
                   ))
                 : InputBorder.none,
-            hintText: "From",
+            hintText: R.string().commonString.fromLbl,
             hintStyle: appTheme.grey14HintTextStyle,
           ),
         ),
@@ -234,10 +233,9 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
               } else {
                 app.resolve<CustomDialogs>().confirmDialog(
                       context,
-                      title: "Value Error",
-                      desc:
-                          "To Value should be greater than or equal to From value",
-                      positiveBtnTitle: "Try Again",
+                      title: "",
+                      desc: R.string().errorString.toValueGreaterThanFrom,
+                      positiveBtnTitle: R.string().commonString.ok,
                     );
                 _maxValueController.text = "";
                 setState(() {});
@@ -279,7 +277,7 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
                     color: widget.selectionModel.fromToStyle.underlineColor,
                   ))
                 : InputBorder.none,
-            hintText: "To",
+            hintText: R.string().commonString.toLbl,
             hintStyle: appTheme.grey14HintTextStyle,
           ),
         ),
