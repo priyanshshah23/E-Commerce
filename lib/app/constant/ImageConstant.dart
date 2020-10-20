@@ -69,6 +69,7 @@ const String clearSelection = "assets/more/clear.png";
 const String menu = "assets/drawer/menu.png";
 
 const String aboutUs = "assets/drawer/aboutUs.png";
+const String drawerSearch = "assets/drawer/search.png";
 const String changePassword = "assets/drawer/changePassword.png";
 const String contactUs = "assets/drawer/contactUs.png";
 const String diamondOnAuction = "assets/drawer/diamondOnAuction.png";

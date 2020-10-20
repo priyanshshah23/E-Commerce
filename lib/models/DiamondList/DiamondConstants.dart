@@ -16,7 +16,7 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_MY_ORDER = 12;
   static const MODULE_TYPE_MY_OFFICE = 13;
   static const MODULE_TYPE_MY_OFFER = 14;
-  static const MODULE_TYPE_MY_PURCHASE =15;
+  static const MODULE_TYPE_MY_PURCHASE = 15;
   static const MODULE_TYPE_MY_SAVED_SEARCH = 16;
   static const MODULE_TYPE_MY_DEMAND = 17;
   static const MODULE_TYPE_TERM_CONDITION = 18;
@@ -27,6 +27,7 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_LOGOUT = 23;
   static const MODULE_TYPE_UPCOMING = 24;
   static const MODULE_TYPE_PROFILE = 25;
+  static const MODULE_TYPE_Home = 100;
 }
 
 class ArgumentConstant {
@@ -53,13 +54,14 @@ class ManageCLick {
 }
 
 class DrawerConstant {
+  static const int HOME = 100;
+
   static const int MODULE_SEARCH = DiamondModuleConstant.MODULE_TYPE_SEARCH;
+
   static const int MODULE_UPCOMING = DiamondModuleConstant.MODULE_TYPE_UPCOMING;
   static const int MODULE_PROFILE = DiamondModuleConstant.MODULE_TYPE_PROFILE;
 
   static const int MODULE_QUICK_SEARCH = 100;
-
-  static const int HOME = 100;
 
   static const int LOGOUT = 111;
   static const int OPEN_DRAWER = 1001;

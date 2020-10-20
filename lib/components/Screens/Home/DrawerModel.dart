@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:diamnow/app/app.export.dart';
+import 'package:flutter/material.dart';
 
 class DrawerModel {
   String title;
@@ -10,14 +11,16 @@ class DrawerModel {
   bool isShowCount = false;
   Color countBackgroundColor = appTheme.colorPrimary;
   int type;
+  int count;
 
   DrawerModel({
     this.image,
     this.title,
     this.isSelected,
     this.type,
-    this.isExpand,
-    this.isShowCount,
-    this.countBackgroundColor,
+    this.isExpand = false,
+    this.isShowCount = false,
+    this.countBackgroundColor = Colors.red,
+    this.count = 0,
   });
 }

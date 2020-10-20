@@ -15,33 +15,55 @@ import 'HomeScreen.dart';
 class HomeDrawer extends StatelessWidget {
   List<DrawerModel> drawerItems = DrawerSetting().getDrawerItems();
 
-  Widget getDrawerItem(BuildContext context, String icon, String title,
-      int type, VoidCallback callback) {
+  Widget getDrawerItem(
+      BuildContext context, DrawerModel model, VoidCallback callback) {
     return InkWell(
       onTap: callback,
       child: Row(
-        mainAxisSize: MainAxisSize.max,
+        // mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(
-                left: getSize(20),
-                right: getSize(16),
-                top: getSize(18),
-                bottom: getSize(18)),
-            child: Image.asset(icon,
-                color: ColorConstants.colorPrimary,
+                left: getSize(20), top: getSize(10), bottom: getSize(10)),
+            child: Image.asset(model.image,
+                // color: appTheme.colorPrimary,
                 width: getSize(22),
                 height: getSize(22)),
           ),
+          SizedBox(
+            width: getSize(12),
+          ),
           Text(
-            title,
-            style: AppTheme.of(context).theme.textTheme.body1.copyWith(
-                fontSize: getFontSize(16),
-                fontWeight: FontWeight.bold,
-                color: ColorConstants.textGray),
-          )
+            model.title,
+            style: appTheme.blackNormal12TitleColorblack.copyWith(
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          Spacer(),
+          if (model.isShowCount && model.count > 0)
+            Container(
+              decoration: BoxDecoration(
+                  color: model.countBackgroundColor,
+                  borderRadius: BorderRadius.circular(
+                    getSize(5),
+                  )),
+              child: Padding(
+                padding: EdgeInsets.only(
+                    left: getSize(6),
+                    right: getSize(6),
+                    top: getSize(4),
+                    bottom: getSize(4)),
+                child: Text(
+                  model.count.toString(),
+                  style: appTheme.blackNormal12TitleColorblack.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: appTheme.whiteColor,
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );
@@ -50,11 +72,25 @@ class HomeDrawer extends StatelessWidget {
   List<Widget> getDrawerList(BuildContext context) {
     List<Widget> list = List<Widget>();
     for (int i = 0; i < drawerItems.length; i++) {
-      list.add(getDrawerItem(context, drawerItems[i].image,
-          drawerItems[i].title, drawerItems[i].type, () {
+      list.add(getDrawerItem(context, drawerItems[i], () {
         RxBus.post(DrawerEvent(drawerItems[i].type, true), tag: eventBusTag);
       }));
     }
+
+    list.add(
+      Container(
+        child: Padding(
+          padding: EdgeInsets.only(
+              left: getSize(20), top: getSize(16), bottom: getSize(10)),
+          child: Text(
+            "App Version 1.0.0",
+            style: appTheme.blackNormal12TitleColorblack.copyWith(
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ),
+    );
     return list;
   }
 
@@ -73,22 +109,33 @@ class HomeDrawer extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius:
                       BorderRadius.only(topRight: Radius.circular(26)),
-                  color: AppTheme.of(context).theme.accentColor,
+                  color: AppTheme.of(context).theme.primaryColor,
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    // UserDrawerHeader(),
-                    Expanded(
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.bottomCenter,
                       child: Container(
-                          padding: EdgeInsets.fromLTRB(
-                              getSize(0), getSize(12), getSize(16), getSize(0)),
-                          color: AppTheme.of(context).theme.primaryColor,
-                          child: ListView(
-                              padding: EdgeInsets.all(getSize(0)),
-                              //shrinkWrap: true,
-                              children: getDrawerList(context))),
-                    )
+                        child: Image.asset(bottomGradient),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        // UserDrawerHeader(),
+                        Expanded(
+                          child: Container(
+                              padding: EdgeInsets.fromLTRB(getSize(0),
+                                  getSize(12), getSize(16), getSize(0)),
+                              // color: AppTheme.of(context).theme.primaryColor,
+                              child: ListView(
+                                  padding: EdgeInsets.all(getSize(0)),
+                                  //shrinkWrap: true,
+                                  children: getDrawerList(context))),
+                        )
+                      ],
+                    ),
+                    //
                   ],
                 ),
               ),
