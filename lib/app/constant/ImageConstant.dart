@@ -66,5 +66,6 @@ const String pincode = "assets/Common/pincode.png";
 const String offer = "assets/more/offer.png";
 const String hold = "assets/more/hold.png";
 const String clearSelection = "assets/more/clear.png";
+const String editProfile = "assets/Common/editProfile.png";
 
 

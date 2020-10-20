@@ -343,18 +343,27 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       onClickCallback: (obj) {
         //
         if (obj.type == ActionMenuConstant.ACTION_TYPE_MORE) {
-          showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
-              (manageClick) {
-            if (manageClick.bottomTabModel.type ==
-                ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
-              arraDiamond.forEach((element) {
-                element.isSelected = false;
-              });
-              manageDiamondSelection();
-            } else {
-              manageBottomMenuClick(manageClick.bottomTabModel);
-            }
-          }, R.string().commonString.more, isDisplaySelection: false);
+
+          List<DiamondModel> selectedList =
+          arraDiamond.where((element) => element.isSelected).toList();
+          if (selectedList != null && selectedList.length > 0) {
+            showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
+                    (manageClick) {
+                  if (manageClick.bottomTabModel.type ==
+                      ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
+                    arraDiamond.forEach((element) {
+                      element.isSelected = false;
+                    });
+                    manageDiamondSelection();
+                  } else {
+                    manageBottomMenuClick(manageClick.bottomTabModel);
+                  }
+                }, R.string().commonString.more, isDisplaySelection: false);
+          }else{
+            app.resolve<CustomDialogs>().errorDialog(
+                context, "Selection Error", "Please select at least one stone.",
+                btntitle: R.string().commonString.ok);
+          }
         } else if (obj.type == ActionMenuConstant.ACTION_TYPE_STATUS) {
           showBottomSheetForMenu(context, diamondConfig.arrStatusMenu,
               (manageClick) {}, R.string().commonString.status,
