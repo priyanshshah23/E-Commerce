@@ -213,9 +213,14 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     diamondConfig.toolbarList.forEach((element) {
       list.add(GestureDetector(
         onTap: () {
-          if (allSelected) {
-            diamondConfig.toolbarList[0].image = search;
-          }
+          setState(() {
+            if (!allSelected) {
+              diamondConfig.toolbarList[0].image = selectList;
+            }else{
+              diamondConfig.toolbarList[0].image = selectAll;
+            }
+          });
+
           manageToolbarClick(element);
         },
         child: Padding(
