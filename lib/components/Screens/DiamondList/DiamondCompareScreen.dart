@@ -131,8 +131,8 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
             (index) {
               return Image.asset(
                 placeHolder,
-                width: getSize(70),
-                height: getSize(500),
+                width: getSize(200),
+                height: getSize(2000),
                 key: Key(index.toString()),
               );
             },
