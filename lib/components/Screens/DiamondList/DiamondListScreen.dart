@@ -362,8 +362,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             } else {
               manageBottomMenuClick(manageClick.bottomTabModel);
             }
-          });
+          }, R.string().commonString.more);
         } else if (obj.type == ActionMenuConstant.ACTION_TYPE_STATUS) {
+          showBottomSheetForMenu(context, diamondConfig.arrStatusMenu,
+              (manageClick) {}, R.string().commonString.status,
+              isDisplaySelection: false);
         } else {
           manageBottomMenuClick(obj);
         }

@@ -546,10 +546,9 @@ class _TagWidgetState extends State<TagWidget> {
             for (var master in result) {
               if (master.code.toLowerCase() == "y") {
                 Map<String, dynamic> map = {};
-                Master.getSubMaster(master.code).then((value) {
-                  map["eCln"] = value;
-                  widget.model.masters[index].map = map;
-                });
+
+                map["eCln"] = [master.sId];
+                if (master.isSelected) widget.model.masters[index].map = map;
 
                 break;
               }

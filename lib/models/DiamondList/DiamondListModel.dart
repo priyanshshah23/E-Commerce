@@ -656,11 +656,22 @@ class DiamondModel {
   }
 
   num getFinalRate() {
+
     return this.ctPr - ((this.ctPr * 2) / 100);
   }
 
   num getFinalDiscount() {
-    return (1 - (getFinalRate() / rap)) * (-100);
+    if (selectedOfferPer == null) {
+      getOfferPer();
+    }
+    if (back >= 0) {
+      return (1 - (getFinalRate() / rap)) * (-100)+ num.parse(selectedOfferPer);
+      return (back + num.parse(selectedOfferPer));
+    } else {
+      return (1 - (getFinalRate() / rap)) * (-100)- num.parse(selectedOfferPer);
+      return (back - num.parse(selectedOfferPer));
+    }
+
   }
 
   num getFinalAmount() {

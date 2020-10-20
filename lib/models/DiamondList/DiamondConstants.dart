@@ -52,6 +52,7 @@ class DiamondTrackConstant {
   static const TRACK_TYPE_OFFER = 3;
   static const TRACK_TYPE_ENQUIRY = 6;
   static const TRACK_TYPE_COMMENT = 99;
+  static const TRACK_TYPE_APPOINTMENT = 100;
 }
 
 class ActionMenuConstant {
@@ -61,7 +62,7 @@ class ActionMenuConstant {
   static const ACTION_TYPE_ADD_TO_CART = 4;
   static const ACTION_TYPE_COMMENT = 5;
   static const ACTION_TYPE_OFFER = 6;
-  static const ACTION_TYPE_OFFER_VIEW = 7;
+  static const ACTION_TYPE_APPOINTMENT = 7;
   static const ACTION_TYPE_HOLD = 8;
   static const ACTION_TYPE_DOWNLOAD = 9;
   static const ACTION_TYPE_CLEAR_SELECTION = 10;
@@ -76,7 +77,7 @@ class MoreMenuConstant {
   static const int ADD_TO_CART = ActionMenuConstant.ACTION_TYPE_ADD_TO_CART;
   static const int COMMENT = ActionMenuConstant.ACTION_TYPE_COMMENT;
   static const int OFFER = ActionMenuConstant.ACTION_TYPE_OFFER;
-  static const int OFFER_VIEW = ActionMenuConstant.ACTION_TYPE_OFFER_VIEW;
+  static const int OFFER_VIEW = ActionMenuConstant.ACTION_TYPE_APPOINTMENT;
   static const int HOLD = ActionMenuConstant.ACTION_TYPE_HOLD;
   static const int DOWNLOAD = ActionMenuConstant.ACTION_TYPE_DOWNLOAD;
   static const int CLEAR_SELECTION =

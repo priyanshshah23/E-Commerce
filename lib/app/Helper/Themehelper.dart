@@ -55,6 +55,12 @@ class BaseTheme {
   Color get greenColor => fromHex("#0EAC33");
   Color get lightBGColor => fromHex("#F8F8F8");
   Color get textFieldBorderColor => fromHex("#F5F5F5");
+  Color get statusHold => fromHex("#DB1C1C");
+  Color get statusOnMemo => fromHex("#307BEA");
+  Color get statusAvailable => fromHex("#6BC950");
+  Color get statusNew => fromHex("#B256E6");
+  Color get statusOffer => fromHex("#FF4DB8");
+  Color get statusMyHold => fromHex("#F1951E");
 
   TextStyle get black24TitleColor {
     return TextStyle(

@@ -33,12 +33,13 @@ class BottomCodeConstant {
 }
 
 class TabConfiguration {
+  Color imageColor;
   Color textColor;
   Color backgroundColor;
   Color centerImageBackgroundColor;
 
   TabConfiguration(
-      {this.textColor, this.backgroundColor, this.centerImageBackgroundColor});
+      {this.textColor, this.backgroundColor, this.centerImageBackgroundColor,this.imageColor});
 
   TabConfiguration.fromJson(Map<String, dynamic> json) {
     textColor = fromHex(
@@ -78,6 +79,7 @@ class BottomTabModel extends TabConfiguration {
   int sequence;
   bool isCenter=true;
   bool isSelected;
+
 
   BottomTabModel({
     this.title,

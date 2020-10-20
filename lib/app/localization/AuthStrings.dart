@@ -220,14 +220,12 @@ class AuthStrings {
     this.lblProfileSetup = "Your profile is set up",
     this.lblProfileSetupDesc =
         "We have received your profile details, our support team will activate your account soon. You will receive a notification for the same.",
-
     // Drawer
     this.hoursAvailable = "Total Shifttime",
     this.totalTrips = "Total\n Rides/Deliveries",
     this.totalKMs = "Total Incentive",
-
     //Stone detail
-    this.confirmStoneDetail = "CONFIRM STONE DETAIL",
+    this.confirmStoneDetail = "Confirm Stone Detail",
     this.companyName = "Company Name",
     this.invoiceDate = "Invoice Date",
   });

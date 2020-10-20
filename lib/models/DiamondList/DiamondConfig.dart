@@ -72,6 +72,7 @@ class DiamondConfig {
   int moduleType;
   List<BottomTabModel> arrMoreMenu;
   List<BottomTabModel> arrBottomTab;
+  List<BottomTabModel> arrStatusMenu;
 
   List<BottomTabModel> toolbarList = [];
 
@@ -81,6 +82,7 @@ class DiamondConfig {
     toolbarList = getToolbarItem();
     arrMoreMenu = BottomMenuSetting().getMoreMenuItems();
     arrBottomTab = BottomMenuSetting().getBottomMenuItems();
+    arrStatusMenu = BottomMenuSetting().getStatusMenuItems();
   }
 
   String getScreenTitle() {
@@ -134,7 +136,7 @@ class DiamondConfig {
         actionAddToWishList(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_PLACE_ORDER:
-        actionPlaceOrder(list);
+        actionPlaceOrder(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_COMMENT:
         actionComment(context, list);
@@ -142,8 +144,8 @@ class DiamondConfig {
       case ActionMenuConstant.ACTION_TYPE_OFFER:
         actionOffer(context, list);
         break;
-      case ActionMenuConstant.ACTION_TYPE_OFFER_VIEW:
-        actionOfferView(list);
+      case ActionMenuConstant.ACTION_TYPE_APPOINTMENT:
+        actionAppointment(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_HOLD:
         actionHold(list);
@@ -184,7 +186,17 @@ class DiamondConfig {
     });
   }
 
-  actionPlaceOrder(List<DiamondModel> list) {}
+  actionPlaceOrder(BuildContext context, List<DiamondModel> list) {
+    showPlaceOrderDialog(context, (manageClick) {
+      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
+        callApiFoPlaceOrder(context, list,
+            isPop: true,
+            remark: manageClick.remark,
+            companyName: manageClick.companyName,
+            date: manageClick.date);
+      }
+    });
+  }
 
   actionComment(BuildContext context, List<DiamondModel> list) {
     showNotesDialog(context, (manageClick) {
@@ -213,7 +225,15 @@ class DiamondConfig {
     });
   }
 
-  actionOfferView(List<DiamondModel> list) {}
+  actionAppointment(BuildContext context, List<DiamondModel> list) {
+    showAppointmentDialog(context, (manageClick) {
+      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
+        /*callApiFoCreateTrack(
+            context, list, DiamondTrackConstant.TRACK_TYPE_APPOINTMENT,
+            isPop: true);*/
+      }
+    });
+  }
 
   actionHold(List<DiamondModel> list) {}
 
@@ -266,6 +286,47 @@ class DiamondConfig {
           if (trackType == DiamondTrackConstant.TRACK_TYPE_OFFER) {
             Navigator.pop(context);
           }
+        }
+        app.resolve<CustomDialogs>().errorDialog(
+              context,
+              title,
+              resp.message,
+              btntitle: R.string().commonString.ok,
+            );
+      },
+      (onError) {
+        if (onError.message != null) {
+          app.resolve<CustomDialogs>().errorDialog(
+                context,
+                "",
+                onError.message,
+                btntitle: R.string().commonString.ok,
+              );
+        }
+      },
+    );
+  }
+
+  callApiFoPlaceOrder(BuildContext context, List<DiamondModel> list,
+      {bool isPop = false,
+      String remark,
+      String companyName,
+      String title,
+      String date}) {
+    PlaceOrderReq req = PlaceOrderReq();
+    req.company = companyName;
+    req.comment = remark;
+    req.date = date;
+    req.diamonds = [];
+    list.forEach((element) {
+      req.diamonds.add(element.id);
+    });
+    SyncManager.instance.callApiForPlaceOrder(
+      context,
+      req,
+      (resp) {
+        if (isPop) {
+          Navigator.pop(context);
         }
         app.resolve<CustomDialogs>().errorDialog(
               context,
