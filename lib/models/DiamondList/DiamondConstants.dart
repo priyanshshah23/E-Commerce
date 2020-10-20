@@ -27,7 +27,7 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_LOGOUT = 23;
   static const MODULE_TYPE_UPCOMING = 24;
   static const MODULE_TYPE_PROFILE = 25;
-  static const MODULE_TYPE_Home = 100;
+  static const MODULE_TYPE_HOME = 100;
 }
 
 class ArgumentConstant {

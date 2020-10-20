@@ -130,16 +130,19 @@ class _HomeScreenState extends State<HomeScreen> {
         return;
       }
       switch (type) {
-        case DrawerConstant.MODULE_SEARCH:
+        case DiamondModuleConstant.MODULE_TYPE_HOME:
+          // openSearch();
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_SEARCH:
           openSearch();
           break;
-        case DrawerConstant.MODULE_UPCOMING:
+        case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
           openDiamondList();
           break;
-        case DrawerConstant.MODULE_PROFILE:
+        case DiamondModuleConstant.MODULE_TYPE_PROFILE:
           openProfile();
           break;
-        case DrawerConstant.LOGOUT:
+        case DiamondModuleConstant.MODULE_TYPE_LOGOUT:
           logout(context);
           break;
       }
@@ -160,10 +163,9 @@ class _HomeScreenState extends State<HomeScreen> {
         calllogout(context);
         SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
         ThemeSettingsModel.of(context).updateSystemUi(isLogin: true);
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil(
+        Navigator.of(context).pushNamedAndRemoveUntil(
           LoginScreen.route,
-              (Route<dynamic> route) => false,
+          (Route<dynamic> route) => false,
         );
       }
     });
