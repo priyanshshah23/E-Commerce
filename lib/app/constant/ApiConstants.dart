@@ -2,11 +2,11 @@ import '../app.export.dart';
 
 class ApiConstants {
   //  static const String PROXY_URL = "PROXY 192.168.2.124:8888";
-//   static const String PROXY_URL = "PROXY 192.168.0.117:8888";
+  static const String PROXY_URL = "PROXY 192.168.0.114:8888";
 // static const String PROXY_URL = "PROXY 192.168.0.116:8888";
   // static const String PROXY_URL = "PROXY 192.168.225.188:8888";
 
-  static const String PROXY_URL = "PROXY 192.168.225.121:8888"; // Brijesh
+  // static const String PROXY_URL = "PROXY 192.168.225.121:8888"; // Brijesh
 
   static const String imageBaseURL = baseURL;
   static const String apiUrl = baseURL;
@@ -33,13 +33,14 @@ class ApiConstants {
   static const String resetPassword = commonUrl + "reset-password-by-user";
 }
 
-class DiamondUrls{
-  static const String commonUrl = "https://s3.ap-south-1.amazonaws.com/finestargroup/";
+class DiamondUrls {
+  static const String commonUrl =
+      "https://s3.ap-south-1.amazonaws.com/finestargroup/";
 
   static const String image = commonUrl + "RealImages/";
   static const String video = commonUrl + "viewer3/html/";
   static const String heartImage = commonUrl + "HeartImages/";
-  static const String plotting  = commonUrl + "PlottingImages/";
+  static const String plotting = commonUrl + "PlottingImages/";
   static const String certificate = commonUrl + "PlottingImages/";
   static const String arroImage = commonUrl + "ArrowImages/";
 }

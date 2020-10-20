@@ -162,93 +162,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         ),
       );
     }
-
-    // List<DiamondDetailImagePagerModel> arr =
-    //     List<DiamondDetailImagePagerModel>();
-    // arr.add(DiamondDetailImagePagerModel(
-    //     title: "",
-    //     url:
-    //         "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/859019531.jpg",
-    //     isSelected: true,
-    //     isImage: true));
-
-    // arr.add(DiamondDetailImagePagerModel(
-    //     title: "",
-    //     url:
-    //         "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/732147891.jpg",
-    //     isSelected: false,
-    //     isImage: true));
-    // arr.add(DiamondDetailImagePagerModel(
-    //     title: "",
-    //     url:
-    //         "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/551134751.jpg",
-    //     isSelected: false,
-    //     isImage: true));
-    // arr.add(DiamondDetailImagePagerModel(
-    //     title: "",
-    //     url:
-    //         "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/930064101.jpg",
-    //     isSelected: false,
-    //     isImage: true));
-    // arr.add(DiamondDetailImagePagerModel(
-    //     title: "",
-    //     url:
-    //         "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/859019531.jpg",
-    //     isSelected: false,
-    //     isImage: true));
-    // arr.add(DiamondDetailImagePagerModel(
-    //     title: "",
-    //     url:
-    //         "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/732147891.jpg",
-    //     isSelected: false,
-    //     isImage: true));
-    // arr.add(DiamondDetailImagePagerModel(
-    //     title: "",
-    //     url:
-    //         "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/551134751.jpg",
-    //     isSelected: false,
-    //     isImage: true));
-    // arr.add(DiamondDetailImagePagerModel(
-    //     title: "",
-    //     url:
-    //         "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/930064101.jpg",
-    //     isSelected: false,
-    //     isImage: true));
-    // arr.add(DiamondDetailImagePagerModel(
-    //     title: "",
-    //     url:
-    //         "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/859019531.jpg",
-    //     isSelected: false,
-    //     isImage: true));
-
-    // arrImages.add(DiamondDetailImagePagerModel(
-    //     title: "Image",
-    //     url:
-    //         "https://cdn.pixabay.com/photo/2015/02/24/15/41/dog-647528_960_720.jpg",
-    //     isSelected: false,
-    //     isImage: true,
-    //     arr: arr));
-
-    // arrImages.add(
-    //   DiamondDetailImagePagerModel(
-    //       title: "Video",
-    //       url:
-    //           "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-    //       isSelected: true,
-    //       isVideo: true),
-    // );
-
-    // arrImages.add(DiamondDetailImagePagerModel(
-    //     title: "H&A",
-    //     url:
-    //         "https://i.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U",
-    //     isImage: true));
-
-    // arrImages.add(DiamondDetailImagePagerModel(
-    //     title: "Certificate",
-    //     url: "http://www.pdf995.com/samples/pdf.pdf",
-    //     isImage: false));
-
     _controller = TabController(
       vsync: this,
       length: arrImages.length,
@@ -263,12 +176,14 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
 
     Config().getDiamonDetailUIJson().then((result) {
       // arrDiamondDetailUIModel = result;
-      setupDiamonDetail(result);
+
+      setState(() {
+        setupDiamonDetail(result);
+      });
     });
   }
 
   setupDiamonDetail(List<DiamondDetailUIModel> arrModel) {
-    // var diamondModel = DiamondModel();
     for (int i = 0; i < arrModel.length; i++) {
       var diamondDetailItem = arrModel[i];
       var diamondDetailUIModel = DiamondDetailUIModel(
@@ -320,13 +235,8 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       //   return model1.sequence.compareTo(model2.sequence);
       // });
 
-      print(diamondDetailUIModel.parameters);
       arrDiamondDetailUIModel.add(diamondDetailUIModel);
     }
-
-    setState(() {
-      //
-    });
   }
 
   _handleTabSelection() {
@@ -448,6 +358,9 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                     height: getSize(40),
                   ),
                   getDiamondDetailComponents(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
                 ],
               ),
             )),
@@ -640,6 +553,8 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                       padding: EdgeInsets.only(
                         top: getSize(20),
                         bottom: getSize(20),
+                        left: getSize(8),
+                        right: getSize(8),
                       ),
                       child: Row(
                         children: [
@@ -701,9 +616,17 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         ],
       );
     } else {
-      num spacing =  diamondDetailUIModel.orientation == "horizontal" &&
-                        diamondDetailUIModel.columns == 2
-                    ? 550 : 500;
+      num spacing = 0;
+      if (diamondDetailUIModel.orientation == "horizontal" &&
+          diamondDetailUIModel.columns == 2) {
+        spacing = 500;
+      } else if (diamondDetailUIModel.orientation == "vertical" &&
+          diamondDetailUIModel.columns == 2) {
+        spacing = 470;
+      } else {
+        spacing = 400;
+      }
+
       var size = MediaQuery.of(context).size;
       final double itemHeight = (size.height - kToolbarHeight - spacing) / 2;
       final double itemWidth = size.width / 2;
@@ -720,7 +643,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           diamondDetailUIModel.parameters.length,
           (index) {
             return Container(
-                height: 40,
                 decoration: BoxDecoration(
                   // borderRadius: BorderRadius.circular(3.0),
                   border: Border.all(color: appTheme.borderColor),
@@ -742,8 +664,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                                 style: appTheme.grey14HintTextStyle,
                               ),
                             ),
-                            SizedBox(width : getSize(8)),
-
+                            SizedBox(width: getSize(8)),
                             Text(
                               diamondDetailUIModel.parameters[index].value,
                               textAlign: TextAlign.right,
@@ -760,15 +681,15 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                           Text(
                             diamondDetailUIModel.parameters[index].title,
                             textAlign: TextAlign.center,
-                            style: appTheme.grey14HintTextStyle,
+                            style: appTheme.grey12TextStyle,
                           ),
                           SizedBox(
-                            height: getSize(2),
+                            height: getSize(8),
                           ),
                           Text(
                             diamondDetailUIModel.parameters[index].value,
                             textAlign: TextAlign.center,
-                            style: appTheme.blackNormal12TitleColorblack,
+                            style: appTheme.blackNormal14TitleColorblack,
                           )
                         ],
                       ));
@@ -858,7 +779,8 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   Widget getBottomTab() {
     return BottomTabbarWidget(
       arrBottomTab: diamondConfig.arrBottomTab,
-      onClickCallback: (obj) {        //
+      onClickCallback: (obj) {
+        //
         if (obj.type == ActionMenuConstant.ACTION_TYPE_MORE) {
           showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
               (manageClick) {

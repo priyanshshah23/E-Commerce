@@ -3,105 +3,105 @@
         "title": "Basic Details",
         "sequence": 1,
         "isExpand": false,
-        "columns":3,
-        "orientation":"horizontal",
+        "columns": 3,
+        "orientation": "horizontal",
         "parameters": [
             {
                 "title": "Stone ID",
                 "apiKey": "stoneId",
                 "sequence": 1,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Shape",
                 "apiKey": "shpNm",
                 "sequence": 2,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Carat Range",
                 "apiKey": "crt",
                 "sequence": 3,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Color Shade",
                 "apiKey": "shdNm",
                 "sequence": 4,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Cut",
                 "apiKey": "cutNm",
                 "sequence": 5,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Polish",
                 "apiKey": "polNm",
                 "sequence": 6,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Symmentry",
                 "apiKey": "symNm",
                 "sequence": 7,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Fluorescence",
                 "apiKey": "fluNm",
                 "sequence": 8,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Lab",
                 "apiKey": "lbNm",
                 "sequence": 9,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Certificate Number",
                 "apiKey": "rptNo",
                 "sequence": 10,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Dis%",
                 "apiKey": "back",
                 "sequence": 11,
-                "isActive":true,
+                "isActive": true,
                 "isPercentage": true
             },
             {
                 "title": "Price/Ct",
                 "apiKey": "ctPr",
                 "sequence": 12,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Amount",
                 "apiKey": "amt",
                 "sequence": 13,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Milky",
                 "apiKey": "mlkNm",
                 "sequence": 14,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Eye Clean",
                 "apiKey": "eClnNm",
                 "sequence": 15,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Arrivals",
                 "apiKey": "",
                 "sequence": 16,
-                "isActive":true
+                "isActive": true
             }
         ]
     },
@@ -109,89 +109,89 @@
         "title": "Measurements",
         "sequence": 2,
         "isExpand": false,
-        "columns":2,
-        "orientation":"vertical",
+        "columns": 2,
+        "orientation": "horizontal",
         "parameters": [
             {
                 "title": "Length",
                 "apiKey": "length",
                 "sequence": 1,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Width",
                 "apiKey": "width",
                 "sequence": 2,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Depth",
                 "apiKey": "height",
                 "sequence": 3,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Ratio",
                 "apiKey": "ratio",
                 "sequence": 4,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Depth%",
                 "apiKey": "depPer",
                 "sequence": 5,
-                "isActive":true,
+                "isActive": true,
                 "isPercentage": true
             },
             {
                 "title": "Table%",
                 "apiKey": "tblPer",
                 "sequence": 6,
-                "isActive":true,
+                "isActive": true,
                 "isPercentage": true
             },
             {
                 "title": "Crown Height%",
                 "apiKey": "cHgt",
                 "sequence": 7,
-                "isActive":true,
+                "isActive": true,
                 "isPercentage": true
             },
             {
                 "title": "Crown Angle",
                 "apiKey": "cAng",
                 "sequence": 8,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Pavilion Angle",
                 "apiKey": "pAng",
                 "sequence": 9,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Girdle",
                 "apiKey": "girdleStr",
                 "sequence": 10,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Girdle Condition",
                 "apiKey": "grdlCondNm",
                 "sequence": 11,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Culet",
                 "apiKey": "cultNm",
                 "sequence": 12,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Culet Condition",
                 "apiKey": "cultCondNm",
                 "sequence": 13,
-                "isActive":true
+                "isActive": true
             }
         ]
     },
@@ -199,32 +199,32 @@
         "title": "Inclusion Details",
         "sequence": 3,
         "isExpand": false,
-        "columns":1,
-        "orientation":"vertical",
+        "columns": 1,
+        "orientation": "vertical",
         "parameters": [
             {
                 "title": "Heart & Arrow",
                 "apiKey": "hANm",
                 "sequence": 1,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Other Inclusion",
                 "apiKey": "",
                 "sequence": 2,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Natural",
                 "apiKey": "",
                 "sequence": 3,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Extra Facet",
                 "apiKey": "",
                 "sequence": 4,
-                "isActive":true
+                "isActive": true
             }
         ]
     },
@@ -232,20 +232,20 @@
         "title": "Other",
         "sequence": 4,
         "isExpand": false,
-        "columns":1,
-        "orientation":"vertical",
+        "columns": 1,
+        "orientation": "vertical",
         "parameters": [
             {
                 "title": "Comment",
                 "apiKey": "comments",
                 "sequence": 1,
-                "isActive":true
+                "isActive": true
             },
             {
                 "title": "Keywords",
                 "apiKey": "",
                 "sequence": 2,
-                "isActive":true
+                "isActive": true
             }
         ]
     }
