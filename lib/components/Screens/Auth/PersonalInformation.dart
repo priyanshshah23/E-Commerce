@@ -1028,6 +1028,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
             context,
             isProgress: true)
         .then((resp) {
+          cityList.clear();
       cityList.addAll(resp.data);
       if(isShowDialogue) {
         showDialog(
@@ -1073,6 +1074,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
         context,
         isProgress: true)
         .then((resp) {
+          countryList.clear();
       countryList.addAll(resp.data);
       if(isShowDialogue) {
         showDialog(
@@ -1130,6 +1132,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
         context,
         isProgress: true)
         .then((resp) {
+          stateList.clear();
       stateList.addAll(resp.data);
       if(isShowDialogue) {
         showDialog(

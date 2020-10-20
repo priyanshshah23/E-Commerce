@@ -248,7 +248,7 @@ class DiamondConfig {
           break;
         case DiamondTrackConstant.TRACK_TYPE_OFFER:
           diamonds.vStnId = element.vStnId;
-          diamonds.newAmount = element.getFinalValue();
+          diamonds.newAmount = element.getFinalAmount();
           diamonds.newPricePerCarat = element.getFinalRate();
           dateTimeNow
               .add(Duration(hours: int.parse(element.selectedOfferHour)));

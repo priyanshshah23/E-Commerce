@@ -11,7 +11,6 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWid
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
-import 'package:diamnow/components/Screens/More/DiamondBottomSheets.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
@@ -54,6 +53,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   int moduleType;
   bool isFromDrawer;
   Map<String, dynamic> dictFilters;
+  bool allSelected = false;
 
   _DiamondListScreenState(
       {this.filterId, this.moduleType, this.isFromDrawer, this.dictFilters});
@@ -224,6 +224,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     diamondConfig.toolbarList.forEach((element) {
       list.add(GestureDetector(
         onTap: () {
+          if (allSelected) {
+            diamondConfig.toolbarList[0].image = search;
+          }
           manageToolbarClick(element);
         },
         child: Padding(
@@ -284,8 +287,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         arraDiamond.where((element) => element.isSelected).toList();
     if (list != null && list.length == arraDiamond.length) {
       model.isSelected = false;
+      allSelected = false;
     } else {
       model.isSelected = true;
+      allSelected = true;
     }
     arraDiamond.forEach((element) {
       element.isSelected = model.isSelected;
@@ -316,22 +321,25 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       ),
       bottomNavigationBar: getBottomTab(),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.only(
-              left: getSize(20), right: getSize(20), top: getSize(20)),
-          child: Column(
-            children: <Widget>[
-              DiamondListHeader(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(
+                left: getSize(20),
+                right: getSize(20),
+                top: getSize(20),
+              ),
+              child: DiamondListHeader(
                 diamondCalculation: diamondCalculation,
               ),
-              SizedBox(
-                height: getSize(20),
-              ),
-              Expanded(
-                child: diamondList,
-              )
-            ],
-          ),
+            ),
+            SizedBox(
+              height: getSize(20),
+            ),
+            Expanded(
+              child: diamondList,
+            )
+          ],
         ),
       ),
     );
@@ -369,9 +377,12 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     if (selectedList != null && selectedList.length > 0) {
       diamondConfig.manageDiamondAction(context, selectedList, bottomTabModel);
     } else {
-      app.resolve<CustomDialogs>().errorDialog(
-          context, "Selection Error", "Please select at least one item.",
-          btntitle: R.string().commonString.btnTryAgain);
+      app.resolve<CustomDialogs>().confirmDialog(
+            context,
+            title: "Selection Error",
+            desc: "Please select at least one item.",
+            positiveBtnTitle: R.string().commonString.btnTryAgain,
+          );
     }
   }
 }
