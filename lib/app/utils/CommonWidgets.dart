@@ -79,7 +79,7 @@ getDrawerButton(BuildContext context, bool isBlack) {
     },
     icon: Image.asset(
       menu,
-      color: isBlack == true ? ColorConstants.colorPrimary : Colors.white,
+      color: isBlack == true ? appTheme.colorPrimary : Colors.white,
       width: getSize(26),
       height: getSize(26),
     ),

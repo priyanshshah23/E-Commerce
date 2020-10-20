@@ -132,7 +132,7 @@ class _TabBarDemoState extends State<TabBarDemo> with SingleTickerProviderStateM
 ////              begin: Alignment.topCenter,
 ////              end: Alignment.bottomCenter,
 ////              colors: [
-////                ColorConstants.colorPrimary,
+////                appTheme.colorPrimary,
 ////                ColorConstants.black
 ////              ],
 ////            ),
@@ -213,13 +213,13 @@ class _TabBarDemoState extends State<TabBarDemo> with SingleTickerProviderStateM
 ////                  placeholder: searchLabel,
 ////                  placeholderStyle: Theme.of(context).textTheme.title.copyWith(
 ////                        fontSize: getFontSize(16),
-////                        color: ColorConstants.colorPrimary,
+////                        color: appTheme.colorPrimary,
 ////                      ),
 ////                  prefix: Padding(
 ////                      padding: EdgeInsets.only(left: getSize(16)),
 ////                      child: Image.asset(
 ////                        ImageConstant.searchIcon,
-////                        color: ColorConstants.colorPrimary,
+////                        color: appTheme.colorPrimary,
 ////                        width: getSize(20),
 ////                        height: getSize(20),
 ////                      )),
@@ -261,7 +261,7 @@ class _TabBarDemoState extends State<TabBarDemo> with SingleTickerProviderStateM
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      ColorConstants.colorPrimary,
+                      appTheme.colorPrimary,
                       ColorConstants.black
                     ],
                   ),
@@ -357,7 +357,7 @@ class _TabBarDemoState extends State<TabBarDemo> with SingleTickerProviderStateM
                                 height: getSize(100),
                                 width: getSize(100),
                                 child: SpinKitFadingCircle(
-                                  color: ColorConstants.colorPrimary,
+                                  color: appTheme.colorPrimary,
                                   size: getSize(50),
                                 ),
                               );
@@ -381,7 +381,7 @@ class _TabBarDemoState extends State<TabBarDemo> with SingleTickerProviderStateM
                                 height: getSize(100),
                                 width: getSize(100),
                                 child: SpinKitFadingCircle(
-                                  color: ColorConstants.colorPrimary,
+                                  color: appTheme.colorPrimary,
                                   size: getSize(50),
                                 ),
                               );

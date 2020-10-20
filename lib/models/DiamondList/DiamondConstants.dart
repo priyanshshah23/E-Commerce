@@ -97,6 +97,7 @@ class ActionMenuConstant {
   static const ACTION_TYPE_SHARE = 11;
   static const ACTION_TYPE_STATUS = 12;
   static const ACTION_TYPE_MORE = 13;
+  static const ACTION_TYPE_COMPARE = 14;
 }
 
 class MoreMenuConstant {

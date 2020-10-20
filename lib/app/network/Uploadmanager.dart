@@ -231,7 +231,7 @@ class _UploadProgressState extends State<UploadProgress> {
 //                          Colors.white),
 //                      linearStrokeCap: LinearStrokeCap.roundAll,
 //                      backgroundColor: ColorConstants.introgrey,
-//                      progressColor: ColorConstants.colorPrimary,
+//                      progressColor: appTheme.colorPrimary,
 //                    ),
                   )
                 ],

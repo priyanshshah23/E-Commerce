@@ -662,13 +662,12 @@ class _DiamondDetailScreenState extends StatefulScreenWidgetState
   Widget getBottomTab() {
     return BottomTabbarWidget(
       arrBottomTab: diamondConfig.arrBottomTab,
-      onClickCallback: (obj) {
-        //
+      onClickCallback: (obj) {        //
         if (obj.type == ActionMenuConstant.ACTION_TYPE_MORE) {
           showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
               (manageClick) {
             manageBottomMenuClick(manageClick.bottomTabModel);
-          }, R.string().commonString.more);
+          }, R.string().commonString.more, isDisplaySelection: false);
         } else {
           manageBottomMenuClick(obj);
         }
