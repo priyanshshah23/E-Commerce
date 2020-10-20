@@ -15,21 +15,36 @@ import '../theme/app_theme.dart';
 
 getBackButton(BuildContext context,
     {bool isWhite = false, double height, double width, VoidCallback ontap}) {
-  return Container(
-    margin: EdgeInsets.all(getSize(20)),
+  return IconButton(
+    padding: EdgeInsets.all(3),
+    onPressed: ontap ??
+        () {
+          Navigator.of(context).pop();
+        },
+    icon: Image.asset(
+      back,
+      color: isWhite ? appTheme.whiteColor : appTheme.textBlackColor,
+      width: width ?? getSize(22),
+      height: height ?? getSize(22),
+    ),
+  );
+  /* return Container(
     child: InkWell(
       onTap: ontap ??
           () {
             Navigator.of(context).pop();
           },
-      child: Image.asset(
-        back,
-        color: isWhite ? appTheme.whiteColor : appTheme.textBlackColor,
-        width: width ?? getSize(22),
-        height: height ?? getSize(16),
+      child: Padding(
+        padding: EdgeInsets.all(getSize(8.0)),
+        child: Image.asset(
+          back,
+          color: isWhite ? appTheme.whiteColor : appTheme.textBlackColor,
+          width: width ?? getSize(16),
+          height: height ?? getSize(16),
+        ),
       ),
     ),
-  );
+  );*/
 }
 
 getBarButton(
@@ -74,12 +89,12 @@ getDrawerButton(BuildContext context, bool isBlack) {
   return IconButton(
     padding: EdgeInsets.all(3),
     onPressed: () {
-      RxBus.post(DrawerEvent(DrawerConstant.OPEN_DRAWER, false),
+      RxBus.post(DrawerEvent(DiamondModuleConstant.MODULE_TYPE_OPEN_DRAWER, false),
           tag: eventBusTag);
     },
     icon: Image.asset(
       menu,
-      color: isBlack == true ? appTheme.colorPrimary : Colors.white,
+      color: isBlack == true ? Colors.black : Colors.white,
       width: getSize(26),
       height: getSize(26),
     ),
@@ -410,7 +425,7 @@ getBottomButton(BuildContext context, VoidCallback onTap, String title,
   );
 }
 
-getFieldTitleText(String text){
+getFieldTitleText(String text) {
   return Padding(
     padding: EdgeInsets.only(
         left: getSize(20),

@@ -22,15 +22,16 @@ import 'package:flutter/material.dart';
 class DiamondListScreen extends StatefulScreenWidget {
   static const route = "Diamond List Screen";
 
-  Map<String, dynamic> dictFilters;
   String filterId = "";
   int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
   bool isFromDrawer = false;
 
-  DiamondListScreen(Map<String, dynamic> arguments) {
+  DiamondListScreen(
+    Map<String, dynamic> arguments, {
+    Key key,
+  }) : super(key: key) {
     if (arguments != null) {
       this.filterId = arguments["filterId"];
-      this.dictFilters = arguments["filters"];
       if (arguments[ArgumentConstant.ModuleType] != null) {
         moduleType = arguments[ArgumentConstant.ModuleType];
       }
@@ -42,10 +43,10 @@ class DiamondListScreen extends StatefulScreenWidget {
 
   @override
   _DiamondListScreenState createState() => _DiamondListScreenState(
-      filterId: filterId,
-      moduleType: moduleType,
-      isFromDrawer: isFromDrawer,
-      dictFilters: dictFilters);
+        filterId: filterId,
+        moduleType: moduleType,
+        isFromDrawer: isFromDrawer,
+      );
 }
 
 class _DiamondListScreenState extends StatefulScreenWidgetState {
@@ -55,8 +56,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   Map<String, dynamic> dictFilters;
   bool allSelected = false;
 
-  _DiamondListScreenState(
-      {this.filterId, this.moduleType, this.isFromDrawer, this.dictFilters});
+  _DiamondListScreenState({this.filterId, this.moduleType, this.isFromDrawer});
 
   DiamondConfig diamondConfig;
   BaseList diamondList;
@@ -107,48 +107,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     });
   }
 
-  callApiforUpcoming(bool isRefress, {bool isLoading = false}) {
-    if (isRefress) {
-      arraDiamond.clear();
-      page = DEFAULT_PAGE;
-    }
-
-    DiamondListReq req = DiamondListReq();
-    req.page = page;
-    req.limit = DEFAULT_LIMIT;
-    ReqFilters filter = ReqFilters();
-    filter.wSts = "U";
-    InDt inDt = InDt();
-    inDt.lessThan = DateTime.now().toIso8601String();
-    filter.inDt = inDt;
-    req.filters = filter;
-    req.sort = "inDt ASC";
-
-    NetworkCall<DiamondListResp>()
-        .makeCall(
-      () => app.resolve<ServiceModule>().networkService().diamondList(req),
-      context,
-      isProgress: !isRefress && !isLoading,
-    )
-        .then((UpcomingListResp) async {
-      print("Count ${UpcomingListResp.data.count}");
-      arraDiamond.addAll(UpcomingListResp.data.diamonds);
-
-      diamondList.state.listCount = arraDiamond.length;
-      diamondList.state.totalCount = UpcomingListResp.data.count;
-      manageDiamondSelection();
-      page = page + 1;
-      diamondList.state.setApiCalling(false);
-      setState(() {});
-    }).catchError((onError) {
-      if (isRefress) {
-        arraDiamond.clear();
-        diamondList.state.listCount = arraDiamond.length;
-        diamondList.state.totalCount = arraDiamond.length;
-      }
-      diamondList.state.setApiCalling(false);
-    });
-  }
 
   callApi(bool isRefress, {bool isLoading = false}) {
     if (isRefress) {
@@ -159,21 +117,52 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     Map<String, dynamic> dict = {};
     dict["page"] = page;
     dict["limit"] = DEFAULT_LIMIT;
-    dict["filters"] = this.dictFilters;
-    dict["filters"]["diamondSearchId"] = this.filterId;
+    switch (moduleType) {
+      case DiamondModuleConstant.MODULE_TYPE_SEARCH:
+        dict["filters"] = {};
+        dict["filters"]["diamondSearchId"] = this.filterId;
+        break;
+
+      case DiamondModuleConstant.MODULE_TYPE_MY_CART:
+        dict["trackType"] = DiamondTrackConstant.TRACK_TYPE_CART;
+        break;
+      case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
+        dict["trackType"] = DiamondTrackConstant.TRACK_TYPE_WATCH_LIST;
+        break;
+      case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
+        dict["trackType"] = DiamondTrackConstant.TRACK_TYPE_ENQUIRY;
+        break;
+      case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+        dict["trackType"] = DiamondTrackConstant.TRACK_TYPE_OFFER;
+        break;
+      case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
+        dict["isAppendDiamond"] = 1;
+        break;
+    }
 
     NetworkCall<DiamondListResp>()
         .makeCall(
-      () => app
-          .resolve<ServiceModule>()
-          .networkService()
-          .diamondListPaginate(dict),
+      () => diamondConfig.getApiCall(moduleType, dict),
       context,
       isProgress: !isRefress && !isLoading,
     )
         .then((diamondListResp) async {
-      arraDiamond.addAll(diamondListResp.data.diamonds);
-
+      switch (moduleType) {
+        case DiamondModuleConstant.MODULE_TYPE_MY_CART:
+        case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
+        case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
+        case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+        case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
+          List<DiamondModel> list = [];
+          diamondListResp.data.list.forEach((element) {
+            list.add(element.diamond);
+          });
+          arraDiamond.addAll(list);
+          break;
+        default:
+          arraDiamond.addAll(diamondListResp.data.diamonds);
+          break;
+      }
       diamondList.state.listCount = arraDiamond.length;
       diamondList.state.totalCount = diamondListResp.data.count;
       manageDiamondSelection();
@@ -253,6 +242,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       case clickConstant.CLICK_TYPE_ROW:
         var dict = Map<String, dynamic>();
         dict[ArgumentConstant.DiamondDetail] = arraDiamond[index];
+        dict[ArgumentConstant.ModuleType] = moduleType;
         NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
         break;
     }
@@ -321,6 +311,12 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       ),
       bottomNavigationBar: getBottomTab(),
       body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: getSize(20),
+            right: getSize(20),
+            top: getSize(8),
+          ),
         child: Column(
           children: <Widget>[
             Padding(
@@ -342,7 +338,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           ],
         ),
       ),
-    );
+    ));
   }
 
   Widget getBottomTab() {
@@ -351,18 +347,27 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       onClickCallback: (obj) {
         //
         if (obj.type == ActionMenuConstant.ACTION_TYPE_MORE) {
-          showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
-              (manageClick) {
-            if (manageClick.bottomTabModel.type ==
-                ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
-              arraDiamond.forEach((element) {
-                element.isSelected = false;
-              });
-              manageDiamondSelection();
-            } else {
-              manageBottomMenuClick(manageClick.bottomTabModel);
-            }
-          }, R.string().commonString.more, isDisplaySelection: false);
+
+          List<DiamondModel> selectedList =
+          arraDiamond.where((element) => element.isSelected).toList();
+          if (selectedList != null && selectedList.length > 0) {
+            showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
+                    (manageClick) {
+                  if (manageClick.bottomTabModel.type ==
+                      ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
+                    arraDiamond.forEach((element) {
+                      element.isSelected = false;
+                    });
+                    manageDiamondSelection();
+                  } else {
+                    manageBottomMenuClick(manageClick.bottomTabModel);
+                  }
+                }, R.string().commonString.more, isDisplaySelection: false);
+          }else{
+            app.resolve<CustomDialogs>().errorDialog(
+                context, "Selection Error", "Please select at least one stone.",
+                btntitle: R.string().commonString.ok);
+          }
         } else if (obj.type == ActionMenuConstant.ACTION_TYPE_STATUS) {
           showBottomSheetForMenu(context, diamondConfig.arrStatusMenu,
               (manageClick) {}, R.string().commonString.status,

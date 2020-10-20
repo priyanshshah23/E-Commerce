@@ -2,8 +2,17 @@
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_pickers.dart';
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/components/Screens/Auth/Widget/DialogueList.dart';
 import 'package:diamnow/components/widgets/shared/CountryPickerWidget.dart';
+import 'package:diamnow/models/Address/CityListModel.dart';
+import 'package:diamnow/models/Address/CountryListModel.dart';
+import 'package:diamnow/models/Address/StateListModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,7 +23,7 @@ class CompanyInformation extends StatefulWidget {
   _CompanyInformationState createState() => _CompanyInformationState();
 }
 
-class _CompanyInformationState extends State<CompanyInformation> {
+class _CompanyInformationState extends State<CompanyInformation> with AutomaticKeepAliveClientMixin<CompanyInformation>{
   final _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
   final TextEditingController _CompanyNameController = TextEditingController();
@@ -54,6 +63,19 @@ class _CompanyInformationState extends State<CompanyInformation> {
 
   bool isPasswordSame = true;
 
+  List<CityList> cityList = List<CityList>();
+  CityList selectedCityItem = CityList();
+  List<CountryList> countryList = List<CountryList>();
+  CountryList selectedCountryItem = CountryList();
+  List<StateList> stateList = List<StateList>();
+  StateList selectedStateItem = StateList();
+
+  @override
+  void initState() {
+    super.initState();
+    _callApiForCountryList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -61,12 +83,40 @@ class _CompanyInformationState extends State<CompanyInformation> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        appBar: getAppBar(
-          context,
-          "Company Information",
-          bgColor: appTheme.whiteColor,
-          leadingButton: getBackButton(context),
-          centerTitle: false,
+//        appBar: getAppBar(
+//          context,
+//          "Company Information",
+//          bgColor: appTheme.whiteColor,
+//          leadingButton: getBackButton(context),
+//          centerTitle: false,
+//        ),
+        bottomNavigationBar:  Padding(
+          padding: EdgeInsets.only(top: getSize(10), bottom: getSize(16), right: getSize(20), left: getSize(20),),
+          child: Container(
+            // padding: EdgeInsets.symmetric(vertical: getSize(30)),
+//          margin: EdgeInsets.only(top: getSize(15), left: getSize(0)),
+//          decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
+            child: AppButton.flat(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+                if (_formKey.currentState.validate()) {
+                  _formKey.currentState.save();
+                  //isProfileImageUpload ? uploadDocument() : callApi();
+                } else {
+                  setState(() {
+                    _autoValidate = true;
+                  });
+                }
+                // NavigationUtilities.push(ThemeSetting());
+              },
+              backgroundColor: appTheme.colorPrimary.withOpacity(0.1),
+              textColor: appTheme.colorPrimary,
+              borderRadius: getSize(5),
+              fitWidth: true,
+              text: "Save Company Details",
+              //isButtonEnabled: enableDisableSigninButton(),
+            ),
+          ),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -110,42 +160,6 @@ class _CompanyInformationState extends State<CompanyInformation> {
                     height: getSize(20),
                   ),
                   getCompanyCodeTextField(),
-                  SizedBox(
-                    height: getSize(30),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                        top: getSize(15), left: getSize(0)),
-                    decoration: BoxDecoration(
-                        boxShadow: getBoxShadow(context)),
-                    child: AppButton.flat(
-                      onTap: () {
-                        // NavigationUtilities.pushRoute(TabBarDemo.route);
-                        FocusScope.of(context).unfocus();
-                        if (_formKey.currentState.validate()) {
-//                      if(  _confirmPasswordController.text.trim() != _newPasswordController.text.trim()) {
-//                        _autoValidate = true;
-//                        isPasswordSame = false;
-//                      } else {
-//                        isPasswordSame = true;
-//                      }
-//                      setState(() {});
-                          _formKey.currentState.save();
-//                      callLoginApi(context);
-                        } else {
-                          setState(() {
-                            _autoValidate = true;
-                          });
-                        }
-                        // NavigationUtilities.push(ThemeSetting());
-                      },
-                      //  backgroundColor: appTheme.buttonColor,
-                      borderRadius: getSize(5),
-                      fitWidth: true,
-                      text: "Save Company Details",
-                      //isButtonEnabled: enableDisableSigninButton(),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -348,25 +362,35 @@ class _CompanyInformationState extends State<CompanyInformation> {
   getCountryDropDown() {
     return InkWell(
       onTap: () {
-        /*   showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return Dialog(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(getSize(25)),
-                  ),
-                  child: DialogueList(
-                    duplicateItems: countryList,
-                    selectedItem: _countryController.text.trim(),
-                    applyFilterCallBack: (result) {
-                      if(_countryController.text != result) {
-                       _stateController.text = "";
-                       _cityController.text = "";
-                      }
-                      _countryController.text = result;
-                    },
-                  ));
-            });*/
+        if (countryList == null || countryList.length == 0) {
+          _callApiForCountryList(isShowDialogue: true);
+        } else {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Dialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(getSize(25)),
+                    ),
+                    child: DialogueList(
+                      type: DialogueListType.Country,
+                      selectedItem: selectedCountryItem,
+                      duplicateItems: countryList,
+                      applyFilterCallBack: (
+                          {CityList cityList,
+                            CountryList countryList,
+                            StateList stateList}) {
+                        if (_countryController.text != countryList.name) {
+                          _stateController.text = "";
+                          _cityController.text = "";
+                        }
+                        selectedCountryItem = countryList;
+                        _countryController.text = countryList.name;
+                        _callApiForStateList(countryId: countryList.id);
+                      },
+                    ));
+              });
+        }
       },
       child: CommonTextfield(
           focusNode: _focusCountry,
@@ -395,28 +419,41 @@ class _CompanyInformationState extends State<CompanyInformation> {
   getStateDropDown() {
     return InkWell(
       onTap: () {
-        /*   if (countrySelect()) {
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return Dialog(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(getSize(25)),
-                    ),
-                    child: DialogueList(
-                      duplicateItems: countryList,
-                      selectedItem: _stateController.text.trim(),
-                      applyFilterCallBack: (result) {
-                        if(_stateController.text != result) {
-                          _cityController.text = "";
-                        }
-                        _stateController.text = result;
-                      },
-                    ));
-              });
+        if (countrySelect()) {
+          if (stateList == null || stateList.length == 0) {
+            _callApiForStateList(
+                countryId: selectedCountryItem.id, isShowDialogue: true);
+          } else {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return Dialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(getSize(25)),
+                      ),
+                      child: DialogueList(
+                        type: DialogueListType.State,
+                        selectedItem: selectedStateItem,
+                        duplicateItems: stateList,
+                        applyFilterCallBack: (
+                            {CityList cityList,
+                              CountryList countryList,
+                              StateList stateList}) {
+                          if (_stateController.text != stateList.name) {
+                            _cityController.text = "";
+                          }
+                          selectedStateItem = stateList;
+                          _stateController.text = stateList.name;
+                          _callApiForCityList(
+                              countryId: selectedCountryItem.id,
+                              stateId: stateList.id);
+                        },
+                      ));
+                });
+          }
         } else {
-          showToast("Please Select Country First");
-        }*/
+          showToast("Please Select Country First", context: context);
+        }
       },
       child: CommonTextfield(
           focusNode: _focusState,
@@ -445,46 +482,42 @@ class _CompanyInformationState extends State<CompanyInformation> {
   getCityDropDown() {
     return InkWell(
       onTap: () {
-//              FocusScope.of(context).unfocus();
-//              showDialog(
-//                  context: context,
-//                  builder: (BuildContext context) {
-//                    return Dialog(
-//                        shape: RoundedRectangleBorder(
-//                          borderRadius: BorderRadius.circular(getSize(25)),
-//                        ),
-//                        child: DialogueList(
-//                          selectedItem: selectedItem,
-//                          duplicateItems: cityList,
-//                          applyFilterCallBack: (result) {
-//                            selectedItem = result;
-//                            _cityController.text = result.name;
-//                          },
-//                        ));
-//                  });
-        /*    if (countrySelect()) {
+        FocusScope.of(context).unfocus();
+        if (countrySelect()) {
           if (stateSelect()) {
-            showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return Dialog(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(getSize(25)),
-                      ),
-                      child: DialogueList(
-                        selectedItem: _cityController.text.trim(),
-                        duplicateItems: countryList,
-                        applyFilterCallBack: (result) {
-                          _cityController.text = result;
-                        },
-                      ));
-                });
+            if (cityList == null || cityList.length == 0) {
+              _callApiForCityList(
+                  countryId: selectedCountryItem.id,
+                  stateId: selectedStateItem.id,
+                  isShowDialogue: true);
+            } else {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Dialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(getSize(25)),
+                        ),
+                        child: DialogueList(
+                          type: DialogueListType.City,
+                          selectedItem: selectedCityItem,
+                          duplicateItems: cityList,
+                          applyFilterCallBack: (
+                              {CityList cityList,
+                                CountryList countryList,
+                                StateList stateList}) {
+                            selectedCityItem = cityList;
+                            _cityController.text = cityList.name;
+                          },
+                        ));
+                  });
+            }
           } else {
             showToast("Please Select State First");
           }
         } else {
           showToast("Please Select Country First");
-        }*/
+        }
       },
       child: CommonTextfield(
           focusNode: _focusCity,
@@ -578,5 +611,175 @@ class _CompanyInformationState extends State<CompanyInformation> {
     );
   }
 
+
+  bool countrySelect() {
+    if (isStringEmpty(_countryController.text.trim())) {
+      return false;
+    }
+    return true;
+  }
+
+  bool stateSelect() {
+    if (isStringEmpty(_stateController.text.trim())) {
+      return false;
+    }
+    return true;
+  }
+
+  void _callApiForCityList(
+      {String stateId, String countryId, bool isShowDialogue = false}) {
+    CityListReq req = CityListReq();
+    req.state = stateId;
+    req.country = countryId;
+
+    NetworkCall<CityListResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().cityList(req),
+        context,
+        isProgress: true)
+        .then((resp) {
+      cityList.addAll(resp.data);
+      if (isShowDialogue) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Dialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(getSize(25)),
+                  ),
+                  child: DialogueList(
+                    type: DialogueListType.City,
+                    selectedItem: selectedCityItem,
+                    duplicateItems: cityList,
+                    applyFilterCallBack: (
+                        {CityList cityList,
+                          CountryList countryList,
+                          StateList stateList}) {
+                      selectedCityItem = cityList;
+                      _cityController.text = cityList.name;
+                    },
+                  ));
+            });
+      }
+    }).catchError(
+          (onError) => {
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            title: "Error in Fetching City List",
+            desc: onError.message,
+            positiveBtnTitle: "Try again",
+            onClickCallback: (PositveButtonClick) {
+              _callApiForCityList(stateId: stateId, countryId: countryId);
+            })
+      },
+    );
+  }
+
+  void _callApiForCountryList({bool isShowDialogue = false}) {
+    NetworkCall<CountryListResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().countryList(),
+        context,
+        isProgress: true)
+        .then((resp) {
+      countryList.addAll(resp.data);
+      if (isShowDialogue) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Dialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(getSize(25)),
+                  ),
+                  child: DialogueList(
+                    type: DialogueListType.Country,
+                    selectedItem: selectedCountryItem,
+                    duplicateItems: countryList,
+                    applyFilterCallBack: (
+                        {CityList cityList,
+                          CountryList countryList,
+                          StateList stateList}) {
+                      if (_countryController.text != countryList.name) {
+                        _stateController.text = "";
+                        _cityController.text = "";
+                      }
+                      selectedCountryItem = countryList;
+                      _countryController.text = countryList.name;
+                      _callApiForStateList(countryId: countryList.id);
+                    },
+                  ));
+            });
+      }
+    }).catchError(
+          (onError) => {
+        app.resolve<CustomDialogs>().confirmDialog(
+          context,
+          title: "Error in Fetching Country List",
+          desc: onError.message,
+          positiveBtnTitle: "Try again",
+          onClickCallback: (buttonType) {
+            if (buttonType == ButtonType.PositveButtonClick) {
+              _callApiForCountryList();
+            }
+          },
+          negativeBtnTitle: "Cancel",
+        )
+      },
+    );
+  }
+
+  void _callApiForStateList({String countryId, bool isShowDialogue = false}) {
+    StateListReq req = StateListReq();
+    req.country = countryId;
+
+    NetworkCall<StateListResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().stateList(req),
+        context,
+        isProgress: true)
+        .then((resp) {
+      stateList.addAll(resp.data);
+      if (isShowDialogue) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Dialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(getSize(25)),
+                  ),
+                  child: DialogueList(
+                    type: DialogueListType.State,
+                    selectedItem: selectedStateItem,
+                    duplicateItems: stateList,
+                    applyFilterCallBack: (
+                        {CityList cityList,
+                          CountryList countryList,
+                          StateList stateList}) {
+                      if (_stateController.text != stateList.name) {
+                        _cityController.text = "";
+                      }
+                      selectedStateItem = stateList;
+                      _stateController.text = stateList.name;
+                      _callApiForCityList(
+                          countryId: selectedCountryItem.id,
+                          stateId: stateList.id);
+                    },
+                  ));
+            });
+      }
+    }).catchError(
+          (onError) => {
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            title: "Error in Fetching State List",
+            desc: onError.message,
+            positiveBtnTitle: "Try again",
+            onClickCallback: (PositveButtonClick) {
+              _callApiForStateList(countryId: countryId);
+            })
+      },
+    );
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 
 }

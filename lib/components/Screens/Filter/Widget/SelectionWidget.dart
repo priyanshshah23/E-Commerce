@@ -66,7 +66,8 @@ class _TagWidgetState extends State<TagWidget> {
         widget.model.masters.insert(0, allMaster);
       }
     }
-    if (widget.model.masterCode == "KEY_TO_SYMBOLS") {
+    if (widget.model.masterCode.toLowerCase() ==
+        MasterCode.keyToSymbol.toLowerCase()) {
       widget.model.title = "";
 
       if (isNullEmptyOrFalse(_tags)) {
@@ -93,7 +94,8 @@ class _TagWidgetState extends State<TagWidget> {
       return getKeytoSymbolWidgetHorizontal();
     }
 
-    if (widget.model.masterCode == MasterCode.arrivals) {
+    if (widget.model.masterCode.toLowerCase() ==
+        MasterCode.arrivals.toLowerCase()) {
       return getArrivalsWidget();
     }
 
@@ -361,7 +363,7 @@ class _TagWidgetState extends State<TagWidget> {
                   color: widget.model.fromToStyle.underlineColor,
                 ))
               : InputBorder.none,
-          hintText: "From",
+          hintText: R.string().commonString.fromLbl,
           hintStyle: appTheme.grey14HintTextStyle,
         ),
       ),
@@ -393,8 +395,8 @@ class _TagWidgetState extends State<TagWidget> {
             app.resolve<CustomDialogs>().confirmDialog(
                   context,
                   title: "Warning",
-                  desc: "select fromdate first",
-                  positiveBtnTitle: "Try Again",
+                  desc: R.string().errorString.selectFromDate,
+                  positiveBtnTitle: R.string().commonString.ok,
                 );
           }
         },
@@ -475,9 +477,12 @@ class _TagWidgetState extends State<TagWidget> {
         RxBus.post(m, tag: eventMasterSelection);
       }
     } else {
-      if (widget.model.masterCode == MasterCode.cut ||
-          widget.model.masterCode == MasterCode.polish ||
-          widget.model.masterCode == MasterCode.symmetry) {
+      if (widget.model.masterCode.toLowerCase() ==
+              MasterCode.cut.toLowerCase() ||
+          widget.model.masterCode.toLowerCase() ==
+              MasterCode.polish.toLowerCase() ||
+          widget.model.masterCode.toLowerCase() ==
+              MasterCode.symmetry.toLowerCase()) {
         RxBus.post(false, tag: eventMasterForDeSelectMake);
       }
       onSelectionClick(index);
@@ -564,7 +569,7 @@ class _TagWidgetState extends State<TagWidget> {
     List<Tag> _list1 = [];
     List<Tag> _list2 = [];
 
-    for (int i = 0; i < _tags.length; i++) {
+    for (int i = 1; i < _tags.length; i++) {
       if (i % 2 == 0)
         _list1.add(_tags[i]);
       else
@@ -583,6 +588,7 @@ class _TagWidgetState extends State<TagWidget> {
     );
   }
 
+  //code of keytosymbol
   getKeytoSymbolHorizontalView(List<Tag> _list1, List<Tag> _list2) {
     return ListView(
       scrollDirection: Axis.horizontal,
@@ -597,13 +603,13 @@ class _TagWidgetState extends State<TagWidget> {
                   // crossAxisAlignment:CrossAxisAlignment.start,
                   children: List.generate(_list1.length, (index) {
                 return InkWell(
-                  child: getSingleTagForKeytoSymbol(_list1, index),
+                  child: getSingleTagForKeytoSymbol(_list1, index,index*2),
                   onTap: () {
                     setState(() {
-                      widget.model.masters[index].isSelected =
-                          !widget.model.masters[index].isSelected;
+                      widget.model.masters[index*2].isSelected =
+                          !widget.model.masters[index*2].isSelected;
 
-                      getMultipleMasterSelections(index);
+                      // getMultipleMasterSelections(index);
                     });
                   },
                 );
@@ -615,13 +621,13 @@ class _TagWidgetState extends State<TagWidget> {
                   // crossAxisAlignment:CrossAxisAlignment.start,
                   children: List.generate(_list2.length, (index) {
                 return InkWell(
-                  child: getSingleTagForKeytoSymbol(_list2, index),
+                  child: getSingleTagForKeytoSymbol(_list2, index,index*2+1),
                   onTap: () {
                     setState(() {
-                      widget.model.masters[index].isSelected =
-                          !widget.model.masters[index].isSelected;
+                      widget.model.masters[index*2+1].isSelected =
+                          !widget.model.masters[index*2+1].isSelected;
 
-                      getMultipleMasterSelections(index);
+                      // getMultipleMasterSelections(index);
                     });
                   },
                 );
@@ -633,7 +639,8 @@ class _TagWidgetState extends State<TagWidget> {
     );
   }
 
-  getSingleTagForKeytoSymbol(List<Tag> list, int index) {
+  //code of keytosymbol
+  getSingleTagForKeytoSymbol(List<Tag> list, int indexForTagList,int index) {
     return Padding(
       padding: EdgeInsets.only(right: getSize(8.0)),
       child: Container(
@@ -659,7 +666,7 @@ class _TagWidgetState extends State<TagWidget> {
               left: getSize(16.0)),
           child: Center(
             child: Text(
-              list[index].title,
+              list[indexForTagList].title,
               style: widget.model.masters[index].isSelected
                   ? appTheme.primaryColor14TextStyle
                   : appTheme.blackNormal14TitleColorblack,

@@ -1,4 +1,5 @@
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:flutter/material.dart';
@@ -133,9 +134,9 @@ class _FromToWidgetState extends State<FromToWidget> {
             } else {
               app.resolve<CustomDialogs>().confirmDialog(
                     context,
-                    title: "Value Error",
-                    desc: "From Value should be less than or equal to To value",
-                    positiveBtnTitle: "Try Again",
+                    title: "",
+                    desc: R.string().errorString.fromValueGreateThanTo,
+                    positiveBtnTitle: R.string().commonString.ok,
                   );
               _minValueController.text = "";
               setState(() {});
@@ -168,15 +169,15 @@ class _FromToWidgetState extends State<FromToWidget> {
         focusNode: _focusMinValue,
         controller: _minValueController,
         inputFormatters: [
-          
           // old regx = r'(^[+-]?\d*.?\d{0,2})$'
           TextInputFormatter.withFunction((oldValue, newValue) =>
               // RegExp(r'(^[+-]?[0-9]+\d*.?\d{0,2})$').hasMatch(newValue.text)
               //     ? newValue
               //     : oldValue)
-              
+
               // new regx = ^([+-]?[0-9]+[0-9]*.?[0-9]{0,2})?$
-              RegExp(r'^([+-]?[0-9]+[0-9]*.?[0-9]{0,2})?$').hasMatch(newValue.text)
+              RegExp(r'^([+-]?[0-9]+[0-9]*.?[0-9]{0,2})?$')
+                      .hasMatch(newValue.text)
                   ? newValue
                   : oldValue)
         ],
@@ -220,10 +221,9 @@ class _FromToWidgetState extends State<FromToWidget> {
             } else {
               app.resolve<CustomDialogs>().confirmDialog(
                     context,
-                    title: "Value Error",
-                    desc:
-                        "To Value should be greater than or equal to From value",
-                    positiveBtnTitle: "Try Again",
+                    title: "",
+                    desc: R.string().errorString.toValueGreaterThanFrom,
+                    positiveBtnTitle: R.string().commonString.ok,
                   );
               _maxValueController.text = "";
               setState(() {});

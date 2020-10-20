@@ -1,5 +1,9 @@
+import 'package:country_pickers/country_pickers.dart';
 import 'package:diamnow/Setting/SettingModel.dart';
+import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/Screens/Home/DrawerModel.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
+import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -15,46 +19,89 @@ import 'HomeScreen.dart';
 class HomeDrawer extends StatelessWidget {
   List<DrawerModel> drawerItems = DrawerSetting().getDrawerItems();
 
-  Widget getDrawerItem(BuildContext context, String icon, String title,
-      int type, VoidCallback callback) {
+  Widget getDrawerItem(
+      BuildContext context, DrawerModel model, VoidCallback callback) {
     return InkWell(
       onTap: callback,
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(
-                left: getSize(20),
-                right: getSize(16),
-                top: getSize(18),
-                bottom: getSize(18)),
-            child: Image.asset(icon,
-                color: appTheme.colorPrimary,
-                width: getSize(22),
-                height: getSize(22)),
-          ),
-          Text(
-            title,
-            style: AppTheme.of(context).theme.textTheme.body1.copyWith(
-                fontSize: getFontSize(16),
-                fontWeight: FontWeight.bold,
-                color: appTheme.textGray),
-          )
-        ],
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: getSize(20),
+          right: getSize(20),
+        ),
+        child: Row(
+          // mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: getSize(10), bottom: getSize(10)),
+              child: Image.asset(model.image,
+                  color: model.imageColor != null ? model.imageColor : null,
+                  width: getSize(22),
+                  height: getSize(22)),
+            ),
+            SizedBox(
+              width: getSize(12),
+            ),
+            Text(
+              model.title,
+              style: appTheme.blackNormal12TitleColorblack.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Spacer(),
+            if (model.isShowCount && model.count > 0)
+              Container(
+                decoration: BoxDecoration(
+                    color: model.countBackgroundColor,
+                    borderRadius: BorderRadius.circular(
+                      getSize(5),
+                    )),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      left: getSize(6),
+                      right: getSize(6),
+                      top: getSize(4),
+                      bottom: getSize(4)),
+                  child: Text(
+                    model.count.toString(),
+                    style: appTheme.blackNormal12TitleColorblack.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: appTheme.whiteColor,
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
 
   List<Widget> getDrawerList(BuildContext context) {
     List<Widget> list = List<Widget>();
+
+    list.add(UserDrawerHeader());
     for (int i = 0; i < drawerItems.length; i++) {
-      list.add(getDrawerItem(context, drawerItems[i].image,
-          drawerItems[i].title, drawerItems[i].type, () {
+      list.add(getDrawerItem(context, drawerItems[i], () {
         RxBus.post(DrawerEvent(drawerItems[i].type, true), tag: eventBusTag);
       }));
     }
+
+    list.add(
+      Container(
+        child: Padding(
+          padding: EdgeInsets.only(
+              left: getSize(20), top: getSize(16), bottom: getSize(10)),
+          child: Text(
+            "App Version 1.0.0",
+            style: appTheme.blackNormal12TitleColorblack.copyWith(
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ),
+    );
     return list;
   }
 
@@ -73,22 +120,33 @@ class HomeDrawer extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius:
                       BorderRadius.only(topRight: Radius.circular(26)),
-                  color: AppTheme.of(context).theme.accentColor,
+                  color: AppTheme.of(context).theme.primaryColor,
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    // UserDrawerHeader(),
-                    Expanded(
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.bottomCenter,
                       child: Container(
-                          padding: EdgeInsets.fromLTRB(
-                              getSize(0), getSize(12), getSize(16), getSize(0)),
-                          color: AppTheme.of(context).theme.primaryColor,
-                          child: ListView(
-                              padding: EdgeInsets.all(getSize(0)),
-                              //shrinkWrap: true,
-                              children: getDrawerList(context))),
-                    )
+                        child: Image.asset(bottomGradient),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        // UserDrawerHeader(), // if you want to set static
+                        Expanded(
+                          child: Container(
+                              padding: EdgeInsets.fromLTRB(getSize(0),
+                                  getSize(12), getSize(0), getSize(0)),
+                              // color: AppTheme.of(context).theme.primaryColor,
+                              child: ListView(
+                                  padding: EdgeInsets.all(getSize(0)),
+                                  //shrinkWrap: true,
+                                  children: getDrawerList(context))),
+                        )
+                      ],
+                    ),
+                    //
                   ],
                 ),
               ),
@@ -99,180 +157,23 @@ class HomeDrawer extends StatelessWidget {
     );
   }
 }
-/*
+
 /// The [UserDrawerHeader] that contains information about the logged in [User].
 class UserDrawerHeader extends StatelessWidget {
-  const UserDrawerHeader();
+  // const UserDrawerHeader();
 
 //this.user
-//  final User user;
+  // User user;
 
-  Future<void> _navigateToUserScreen(BuildContext context,int index) async {
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
+
+  Future<void> _navigateToUserScreen() async {
     //await Navigator.of(context).maybePop();
-    RxBus.post(DrawerEvent(index, true),
+    RxBus.post(DrawerEvent(DiamondModuleConstant.MODULE_TYPE_PROFILE, true),
         tag: eventBusTag);
-  }
-
-  Widget _buildAvatarRow(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Container(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              // circle avatar
-              GestureDetector(
-                onTap: () => _navigateToUserScreen(context,DrawerConstant.MY_PROFILE),
-                child: Container(
-                  height: getSize(48),
-                  width: getSize(48),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      width: getSize(1),
-                      color: AppTheme.of(context).primaryColor,
-                    ),
-                  ),
-                  child: ClipRRect(
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(getSize(24))),
-                    child: isStringEmpty(app
-                                .resolve<PrefUtils>()
-                                .getUserDetails()
-                                .image) ==
-                            false
-                        ? CachedNetworkImage(
-                            imageUrl: ApiConstants.imageBaseURL +
-                                app.resolve<PrefUtils>().getUserDetails().image,
-                            fit: BoxFit.cover,
-                            placeholder: (BuildContext context, String url) {
-                              return getUserPlaceHolderImage();
-                            },
-                          )
-                        : getUserPlaceHolderImage(),
-                  ),
-                ),
-              ),
-              SizedBox(width: getSize(10)),
-              //username
-              Expanded(
-                child: GestureDetector(
-                  onTap: () => _navigateToUserScreen(context,DrawerConstant.MY_PROFILE),
-                  child: Text(
-                    app.resolve<PrefUtils>().getUserDetails().getFullName(),
-                    maxLines: 2,
-                    style: AppTheme.of(context).theme.textTheme.title.copyWith(
-                        fontSize: getFontSize(18),
-                        color: AppTheme.of(context).theme.primaryColor,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 0.0),
-                  ),
-                ),
-              ),
-              //bell icon
-              InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                  NavigationUtilities.pushRoute(NotificationList.route,
-                      type: RouteType.fade);
-                },
-                child: Padding(
-                  padding: EdgeInsets.all(getSize(10)),
-                  child: Stack(
-                    alignment: Alignment.topRight,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(right: getSize(6)),
-                        child: Image.asset(notifications,
-                            width: getSize(28), height: getSize(28)),
-                      ),
-                      Container(
-                        height: getSize(20),
-                        width: getSize(20),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppTheme.of(context).theme.primaryColor),
-                        child: Center(
-                          child: Text(
-                            getNotifications(),
-                            style: AppTheme.of(context)
-                                .theme
-                                .textTheme
-                                .display3
-                                .copyWith(
-                                    fontSize: getSize(10),
-                                    color:
-                                        AppTheme.of(context).theme.accentColor),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(
-              left: getSize(0), right: getSize(10), top: getSize(25)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              InkWell(
-                onTap: () => _navigateToUserScreen(context,DrawerConstant.SUMMARY_TIMESHEET),
-                child: getHeaderItem(context, clock, getOnlineHours(),
-                    R.string().authStrings.hoursAvailable),
-              ),
-              Spacer(),
-              InkWell(
-                onTap: () => _navigateToUserScreen(context,DrawerConstant.RIDE_HISTORY),
-                child: getHeaderItem(context, trips, getTotalTrips(),
-                    R.string().authStrings.totalTrips),
-              ),
-              Spacer(),
-              InkWell(
-                onTap: () => _navigateToUserScreen(context,DrawerConstant.RIDE_SUMMARY),
-                child: getHeaderItem(context, incentive, getTotalKm(),
-                    R.string().authStrings.totalKMs),
-              ),
-            ],
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget getHeaderItem(
-      BuildContext context, String icon, String title, String description) {
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.all(getSize(8)),
-          child: Image.asset(icon,
-              color: AppTheme.of(context).theme.primaryColor,
-              width: getSize(20),
-              height: getSize(20)),
-        ),
-        Text(
-          title,
-          textAlign: TextAlign.center,
-          style: AppTheme.of(context).theme.textTheme.title.copyWith(
-              color: ColorConstants.white,
-              fontSize: getFontSize(18),
-              fontWeight: FontWeight.bold),
-        ),
-        Text(
-          description,
-          textAlign: TextAlign.center,
-          style: AppTheme.of(context).theme.textTheme.body1.copyWith(
-              color: ColorConstants.drawer_bottom_text,
-              fontSize: getFontSize(12),
-              fontWeight: FontWeight.normal),
-        ),
-      ],
-    );
   }
 
   @override
@@ -282,57 +183,158 @@ class UserDrawerHeader extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 8),
         padding: EdgeInsets.fromLTRB(
           getSize(20),
-          getSize(35), // + statusbar height
+          getSize(26), // + statusbar height
           getSize(20),
-          getSize(12),
+          getSize(0),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             _buildAvatarRow(context),
-//           SizedBox(
-//             width: double.infinity,
-//             child: Container(),
-// //              FollowersCount(user)
-//           ),
           ],
         ),
       ),
     );
   }
 
-  String getOnlineHours() {
-    int totalSec =
-        app.resolve<PrefUtils>()?.getRideSummary()?.totalTime?.toInt() ?? 0;
-    print('time - 0');
-    Duration duration = Duration(seconds: totalSec);
-    int hour = duration.inHours;
-    int min = duration.inMinutes.remainder(60);
-    String hourMinStr = addPrefixZero(hour) + 'h:' + addPrefixZero(min) + 'm';
-    return hourMinStr;
+  Widget _buildAvatarRow(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: appTheme.whiteColor,
+        borderRadius: BorderRadius.circular(getSize(5)),
+        border: Border.all(color: appTheme.dividerColor),
+        boxShadow: [
+          BoxShadow(
+            color: fromHex("#7D9EF6").withOpacity(0.26),
+            spreadRadius: 1,
+            blurRadius: 20,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
+      padding: EdgeInsets.only(
+        top: getSize(20),
+        bottom: getSize(20),
+        left: getSize(16),
+        right: getSize(16),
+      ),
+      child: Column(
+        children: <Widget>[
+          Container(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                // circle avatar
+                Container(
+                  height: getSize(50),
+                  width: getSize(50),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                  ),
+                  child: ClipRRect(
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(getSize(25))),
+                    child: getImageView(
+                      app.resolve<PrefUtils>().getUserDetails().photoId,
+                      placeHolderImage: userTemp,
+                      height: getSize(50),
+                      width: getSize(50),
+                    ),
+                  ),
+                ),
+                SizedBox(width: getSize(10)),
+                //username
+                Expanded(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            app
+                                    .resolve<PrefUtils>()
+                                    .getUserDetails()
+                                    .getFullName() ??
+                                "-",
+                            style: appTheme.black16TextStyle.copyWith(
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Spacer(),
+                          InkWell(
+                            onTap: () {
+                              _navigateToUserScreen();
+                            },
+                            child: Image.asset(
+                              edit,
+                              height: getSize(18),
+                              width: getSize(18),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: getSize(6)),
+                      if (isStringEmpty(app
+                              .resolve<PrefUtils>()
+                              .getUserDetails()
+                              .email) ==
+                          false)
+                        Row(
+                          children: [
+                            Image.asset(
+                              email,
+                              height: getSize(12),
+                              width: getSize(12),
+                            ),
+                            SizedBox(width: getSize(8)),
+                            Text(
+                              app.resolve<PrefUtils>().getUserDetails().email ??
+                                  "-",
+                              style: appTheme.black12TextStyle,
+                            ),
+                          ],
+                        ),
+                      SizedBox(height: getSize(6)),
+                      Row(
+                        children: [
+                          Image.asset(
+                            phone,
+                            height: getSize(14),
+                            width: getSize(12),
+                          ),
+                          SizedBox(width: getSize(8)),
+                          if (isStringEmpty(app
+                                  .resolve<PrefUtils>()
+                                  .getUserDetails()
+                                  .countryCode) ==
+                              false)
+                            Image.asset(
+                              CountryPickerUtils.getFlagImageAssetPath(
+                                  CountryPickerUtils.getCountryByPhoneCode(app
+                                          .resolve<PrefUtils>()
+                                          .getUserDetails()
+                                          .countryCode)
+                                      .isoCode),
+                              height: getSize(12),
+                              width: getSize(16),
+                              fit: BoxFit.fill,
+                              package: "country_pickers",
+                            ),
+                          SizedBox(width: getSize(8)),
+                          Text(
+                            app.resolve<PrefUtils>().getUserDetails().phone ??
+                                "-",
+                            style: appTheme.black12TextStyle,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
-
-  String getTotalKm() {
-    return app
-            .resolve<PrefUtils>()
-            ?.getRideSummary()
-            ?.totalDistance
-            ?.toStringAsFixed(2)
-            ?.toString() ??
-        '0';
-  }
-
-  String getTotalTrips() {
-    return app.resolve<PrefUtils>()?.getRideSummary()?.totalRide?.toString() ??
-        '0';
-  }
-
-  String getNotifications() {
-    return app
-            .resolve<PrefUtils>()
-            ?.getRideSummary()
-            ?.totalUnreadNotifications
-            ?.toString() ??
-        '0';
-  }
-}*/
+}

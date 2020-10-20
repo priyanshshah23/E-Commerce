@@ -308,12 +308,14 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   }
 
   callApiForGetFilterId() {
-    DiamondListReq req = DiamondListReq();
-    req.isNotReturnTotal = true;
-    req.isReturnCountOnly = true;
+    Map<String, dynamic> dict = {};
+    dict["isNotReturnTotal"] = true;
+    dict["isReturnCountOnly"] = true;
+    dict["filters"] = FilterRequest().createRequest(arrList);
+
     SyncManager.instance.callApiForDiamondList(
       context,
-      req,
+      dict,
       (diamondListResp) {
         Map<String, dynamic> dict = new HashMap();
 

@@ -3,9 +3,12 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../LoginModel.dart';
+
 class DiamondListReq {
   int page;
   int limit;
+  int trackType;
   ReqFilters filters;
   bool isNotReturnTotal;
   bool isReturnCountOnly;
@@ -14,6 +17,7 @@ class DiamondListReq {
   DiamondListReq({
     this.page,
     this.limit,
+    this.trackType,
     this.filters,
     this.isNotReturnTotal,
     this.isReturnCountOnly,
@@ -37,6 +41,9 @@ class DiamondListReq {
     if (json['sort'] != null) {
       sort = json['sort'];
     }
+    if (json['trackType'] != null) {
+      trackType = json['trackType'];
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -54,6 +61,9 @@ class DiamondListReq {
     }
     if (this.sort != null) {
       data['sort'] = this.sort;
+    }
+    if (this.trackType != null) {
+      data['trackType'] = this.trackType;
     }
     return data;
   }
@@ -129,6 +139,8 @@ class Data {
   Filter filter;
   int count;
   bool maxLimit;
+
+  List<TrackItem> list;
   List<DiamondModel> diamonds;
 
   Data({
@@ -149,6 +161,12 @@ class Data {
         diamonds.add(new DiamondModel.fromJson(v));
       });
     }
+    if (json['list'] != null) {
+      list = new List<TrackItem>();
+      json['list'].forEach((v) {
+        list.add(new TrackItem.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -160,6 +178,9 @@ class Data {
     data['maxLimit'] = this.maxLimit;
     if (this.diamonds != null) {
       data['diamonds'] = this.diamonds.map((v) => v.toJson()).toList();
+    }
+    if (this.list != null) {
+      data['list'] = this.list.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -292,6 +313,9 @@ class SearchData {
 class DiamondModel {
   String id;
   String stoneId;
+  String pltId;
+  String certId;
+  String arrowImgId;
   String wSts;
   String sSts;
   String rptNo;
@@ -375,6 +399,7 @@ class DiamondModel {
   String selectedBackPer;
   String selectedOfferPer;
   String selectedOfferHour;
+  bool pltFile;
 
   getSelectedDetail(int type) {
     switch (type) {
@@ -445,12 +470,14 @@ class DiamondModel {
   DiamondModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     stoneId = json['stoneId'];
+    pltId = json['pltId'] ?? "";
+    arrowImgId = json['packet_no'] ?? "";
     wSts = json['wSts'];
     sSts = json['sSts'];
     rptNo = json['rptNo'];
-    certFile = json['certFile'];
-    videoFile = json['videoFile'];
-    hAFile = json['hAFile'];
+    certFile = json['certFile'] ?? false;
+    videoFile = json['videoFile'] ?? false;
+    hAFile = json['hAFile'] ?? false;
     clrNm = json['clrNm'];
     colNm = json['colNm'];
     lbCmt = json['lbCmt'];
@@ -459,7 +486,7 @@ class DiamondModel {
     cultNm = json['cultNm'];
     cutNm = json['cutNm'];
     depPer = json['depPer'];
-    img = json['img'];
+    img = json['img'] ?? false;
     eClnNm = json['eClnNm'];
     isFcCol = json['isFcCol'];
     fluNm = json['fluNm'];
@@ -507,7 +534,7 @@ class DiamondModel {
     inDt = json['inDt'];
     brlncyNm = json['brlncyNm'];
     isXray = json['isXray'];
-    arrowFile = json['arrowFile'];
+    arrowFile = json['arrowFile'] ?? false;
     assetFile = json['assetFile'];
     hA = json['hA'];
     loc = json['loc'];
@@ -522,6 +549,7 @@ class DiamondModel {
     isCm = json['isCm'];
     fcColDesc = json['fcColDesc'];
     ratio = json['ratio'];
+    pltFile = json['pltFile'] ?? false;
 //    isSelected = json['isSelected'];
   }
 
@@ -533,6 +561,9 @@ class DiamondModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['stoneId'] = this.stoneId;
+    data['pltId'] = this.pltId;
+    data['report_no'] = this.certId;
+    data['packet_no'] = this.arrowImgId;
     data['wSts'] = this.wSts;
     data['sSts'] = this.sSts;
     data['rptNo'] = this.rptNo;
@@ -610,6 +641,7 @@ class DiamondModel {
     data['isCm'] = this.isCm;
     data['fcColDesc'] = this.fcColDesc;
     data['ratio'] = this.ratio;
+    data['pltFile'] = this.pltFile;
 //    data['isSelected'] = this.isSelected;
     return data;
   }
@@ -672,5 +704,159 @@ class DiamondModel {
 
   num getFinalAmount() {
     return crt * getFinalRate();
+  }
+}
+
+
+class TrackItem {
+  String createdAt;
+  String updatedAt;
+  String id;
+  String enquiryNo;
+  int trackType;
+  String name;
+  String trackTxnId;
+  String memoNo;
+  String reminderDate;
+  num trackPricePerCarat;
+  num trackDiscount;
+  num trackAmount;
+  num newPricePerCarat;
+  num newDiscount;
+  num newAmount;
+  int offerStatus;
+  String offerValidDate;
+  bool isCounterOffer;
+  String remarks;
+  bool isActive;
+  bool isDeleted;
+  bool isSystemDeleted;
+  bool isNameDeleted;
+  int deviceType;
+  int status;
+  String updateIp;
+  String createIp;
+  bool isSentReminder;
+  String addedBy;
+  //User user;
+  DiamondModel diamond;
+
+  String userAccount;
+  String createdBy;
+
+  TrackItem({
+    this.createdAt,
+    this.updatedAt,
+    this.id,
+    this.enquiryNo,
+    this.trackType,
+    this.name,
+    this.trackTxnId,
+    this.memoNo,
+    this.reminderDate,
+    this.trackPricePerCarat,
+    this.trackDiscount,
+    this.trackAmount,
+    this.newPricePerCarat,
+    this.newDiscount,
+    this.newAmount,
+    this.offerStatus,
+    this.offerValidDate,
+    this.isCounterOffer,
+    this.remarks,
+    this.isActive,
+    this.isDeleted,
+    this.isSystemDeleted,
+    this.isNameDeleted,
+    this.deviceType,
+    this.status,
+    this.updateIp,
+    this.createIp,
+    this.isSentReminder,
+    this.addedBy,
+  //  this.user,
+    this.diamond,
+    this.userAccount,
+    this.createdBy,
+  });
+
+  TrackItem.fromJson(Map<String, dynamic> json) {
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    id = json['id'];
+    enquiryNo = json['enquiryNo'];
+    trackType = json['trackType'];
+    name = json['name'];
+    trackTxnId = json['trackTxnId'];
+    memoNo = json['memoNo'];
+    reminderDate = json['reminderDate'];
+    trackPricePerCarat = json['trackPricePerCarat'];
+    trackDiscount = json['trackDiscount'];
+    trackAmount = json['trackAmount'];
+    newPricePerCarat = json['newPricePerCarat'];
+    newDiscount = json['newDiscount'];
+    newAmount = json['newAmount'];
+    offerStatus = json['offerStatus'];
+    offerValidDate = json['offerValidDate'];
+    isCounterOffer = json['isCounterOffer'];
+    remarks = json['remarks'];
+    isActive = json['isActive'];
+    isDeleted = json['isDeleted'];
+    isSystemDeleted = json['isSystemDeleted'];
+    isNameDeleted = json['isNameDeleted'];
+    deviceType = json['deviceType'];
+    status = json['status'];
+    updateIp = json['updateIp'];
+    createIp = json['createIp'];
+    isSentReminder = json['isSentReminder'];
+    addedBy = json['addedBy'];
+   // user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    diamond = json['diamond'] != null
+        ? new DiamondModel.fromJson(json['diamond'])
+        : null;
+    userAccount = json['userAccount'];
+    createdBy = json['createdBy'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    data['id'] = this.id;
+    data['enquiryNo'] = this.enquiryNo;
+    data['trackType'] = this.trackType;
+    data['name'] = this.name;
+    data['trackTxnId'] = this.trackTxnId;
+    data['memoNo'] = this.memoNo;
+    data['reminderDate'] = this.reminderDate;
+    data['trackPricePerCarat'] = this.trackPricePerCarat;
+    data['trackDiscount'] = this.trackDiscount;
+    data['trackAmount'] = this.trackAmount;
+    data['newPricePerCarat'] = this.newPricePerCarat;
+    data['newDiscount'] = this.newDiscount;
+    data['newAmount'] = this.newAmount;
+    data['offerStatus'] = this.offerStatus;
+    data['offerValidDate'] = this.offerValidDate;
+    data['isCounterOffer'] = this.isCounterOffer;
+    data['remarks'] = this.remarks;
+    data['isActive'] = this.isActive;
+    data['isDeleted'] = this.isDeleted;
+    data['isSystemDeleted'] = this.isSystemDeleted;
+    data['isNameDeleted'] = this.isNameDeleted;
+    data['deviceType'] = this.deviceType;
+    data['status'] = this.status;
+    data['updateIp'] = this.updateIp;
+    data['createIp'] = this.createIp;
+    data['isSentReminder'] = this.isSentReminder;
+    data['addedBy'] = this.addedBy;
+    /*if (this.user != null) {
+      data['user'] = this.user.toJson();
+    }*/
+    if (this.diamond != null) {
+      data['diamond'] = this.diamond.toJson();
+    }
+    data['userAccount'] = this.userAccount;
+    data['createdBy'] = this.createdBy;
+    return data;
   }
 }

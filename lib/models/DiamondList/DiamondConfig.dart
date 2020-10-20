@@ -3,6 +3,7 @@ import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/ImageConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
@@ -91,10 +92,53 @@ class DiamondConfig {
 
   String getScreenTitle() {
     switch (moduleType) {
-      case DiamondModuleConstant.MODULE_TYPE_SEARCH:
-        return R.string().screenTitle.searchDiamond;
+      case DiamondModuleConstant.MODULE_TYPE_MY_CART:
+        return R.string().screenTitle.myCart;
+      case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
+        return R.string().screenTitle.myWatchlist;
+      case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+        return R.string().screenTitle.myOffer;
+      case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
+        return R.string().screenTitle.myEnquiry;
+      case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+        return R.string().screenTitle.myBid;
+      case DiamondModuleConstant.MODULE_TYPE_MY_HOLD:
+        return R.string().screenTitle.myHold;
+      case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
+        return R.string().screenTitle.myOrder;
+      case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
+        return R.string().screenTitle.myOffice;
+      case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+        return R.string().screenTitle.myOffer;
+      case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
+        return R.string().screenTitle.myPurchased;
       default:
         return R.string().screenTitle.searchDiamond;
+    }
+  }
+
+  Future<DiamondListResp> getApiCall(
+      int moduleType, Map<String, dynamic> dict) {
+    switch (moduleType) {
+      case DiamondModuleConstant.MODULE_TYPE_SEARCH:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .diamondListPaginate(dict);
+
+      case DiamondModuleConstant.MODULE_TYPE_MY_CART:
+      case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
+      case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
+      case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .diamondTrackList(dict);
+      case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .diamondCommentList(dict);
     }
   }
 
