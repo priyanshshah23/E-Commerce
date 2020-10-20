@@ -162,6 +162,7 @@ class CommonString {
   final String doller;
 
   final String more;
+  final String status;
   final String carat;
   final String pcs;
   final String cts;
@@ -173,6 +174,7 @@ class CommonString {
 
   const CommonString({
     this.all = "All",
+    this.status = "Status",
 
     // button caption
     this.save = 'Save',
@@ -338,6 +340,6 @@ class CommonString {
     this.avgPriceCrt = "Avg. Price/Ct ",
     this.amount = "Amount ",
 
-    this.confirmStone = "CONFIRM STONE",
+    this.confirmStone = "Confirm Stone",
   });
 }

@@ -5,7 +5,8 @@ import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:flutter/material.dart';
 
 Future showBottomSheetForMenu(BuildContext context,
-    List<BottomTabModel> moreList, ActionClick actionClick) {
+    List<BottomTabModel> moreList, ActionClick actionClick, String title,
+    {bool isDisplaySelection = true}) {
   return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -24,7 +25,7 @@ Future showBottomSheetForMenu(BuildContext context,
               Padding(
                 padding: EdgeInsets.only(top: getSize(28), bottom: getSize(21)),
                 child: Text(
-                  R.string().commonString.more,
+                  title,
                   style: appTheme.commonAlertDialogueTitleStyle,
                 ),
               ),
@@ -52,11 +53,13 @@ Future showBottomSheetForMenu(BuildContext context,
                       child: Row(
                         children: <Widget>[
                           Container(
-                            height: getSize(12),
-                            width: getSize(12),
+                            height: getSize(14),
+                            width: getSize(14),
                             child: Image.asset(
                               moreList[index].image,
-                              color: appTheme.textColor,
+                              color: moreList[index].imageColor != null
+                                  ? moreList[index].imageColor
+                                  : appTheme.textColor,
                             ),
                           ),
                           SizedBox(
@@ -64,17 +67,19 @@ Future showBottomSheetForMenu(BuildContext context,
                           ),
                           Expanded(
                             child: Text(moreList[index].title,
-                                style: appTheme.black12TextStyle),
+                                style: appTheme.black14TextStyle),
                           ),
-                          Container(
-                            height: getSize(16),
-                            width: getSize(16),
-                            child: Image.asset(
-                              moreList[index].isSelected
-                                  ? selectedFilter
-                                  : unselectedFilter,
-                            ),
-                          ),
+                          isDisplaySelection
+                              ? Container(
+                                  height: getSize(16),
+                                  width: getSize(16),
+                                  child: Image.asset(
+                                    moreList[index].isSelected
+                                        ? selectedFilter
+                                        : unselectedFilter,
+                                  ),
+                                )
+                              : Container(),
                         ],
                       ),
                     ),

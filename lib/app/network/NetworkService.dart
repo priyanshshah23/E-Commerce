@@ -47,6 +47,9 @@ abstract class NetworkService {
   @POST(ApiConstants.resetPassword)
   Future<BaseApiResp> resetPassword(@Body() ResetPasswordReq req);
 
+  @POST(ApiConstants.placeOrder)
+  Future<BaseApiResp> placeOrder(@Body() PlaceOrderReq req);
+
   @POST(ApiConstants.diamondList)
   Future<DiamondListResp> diamondListPaginate(@Body() Map<String, dynamic> req);
 
