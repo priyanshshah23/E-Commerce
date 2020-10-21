@@ -150,7 +150,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   color: appTheme.whiteColor,
                   borderRadius: BorderRadius.circular(getSize(5))),
               child: Text(
-                PriceUtilities.getPercent(widget.item?.back) ?? "",
+                PriceUtilities.getPercent(widget.item?.getFinalDiscount()) ?? "",
                 style: appTheme.green10TextStyle,
               ),
             ),

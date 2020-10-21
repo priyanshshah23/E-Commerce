@@ -80,7 +80,7 @@ class DateUtilities {
   static const String dd_mm_yyyy_hh_mm_ss_a = "dd/MM/yyyy',' hh:mm a";
   static const String dd_mm_yyyy_n_mm_ss_a = "dd/MM/yyyy'\n' hh:mm a";
   static const String dd_mm_yyyy = "dd MMM yyyy";
-  static const String dd_mmm = "dd MMM";
+  static const String dd_eee = "dd\nEE";
   static const String mm_yyyy = "MM/yyyy";
   static const String dd = "d";
   static const String mmm = "MMM";
@@ -94,9 +94,13 @@ class DateUtilities {
   static const String hh_mm_a = "hh:mm a";
   static const String h_mm_a = "h:mm a";
   static const String eeee = "EEEE";
+  static const String ee = "EE";
   static const String eee_dd_mmm_yyyy = "EEEE, dd MMM yyyy";
 
   static const String dd_mmm_yy_h_mm_a = "dd MMM''yy 'at' h:mma";
+
+  static const String mmm_yyyy = "MMMM yyyy";
+
 
 
 

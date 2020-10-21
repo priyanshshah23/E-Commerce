@@ -2,6 +2,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:flutter/material.dart';
+import 'package:rxbus/rxbus.dart';
 
 class DiamondListHeader extends StatefulWidget {
   DiamondCalculation diamondCalculation;
@@ -15,6 +16,7 @@ class DiamondListHeader extends StatefulWidget {
 }
 
 class _DiamondListHeaderState extends State<DiamondListHeader> {
+
   @override
   Widget build(BuildContext context) {
     return Container(

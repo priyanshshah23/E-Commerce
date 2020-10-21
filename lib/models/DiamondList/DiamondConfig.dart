@@ -8,11 +8,13 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
+import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../../main.dart';
 
@@ -31,7 +33,6 @@ class DiamondCalculation {
     double avgPriceCrt = 0.0;
     double avgAmount = 0.0;
     double totalamt = 0.0;
-    double termDiscAmount = 0.0;
 
     List<DiamondModel> filterList = [];
     Iterable<DiamondModel> list = arraDiamond.where((item) {
@@ -50,7 +51,6 @@ class DiamondCalculation {
     totalamt = arrValues[2];
     avgRapCrt = arrValues[3];
     avgPriceCrt = arrValues[4];
-    termDiscAmount = arrValues[5];
 
     totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt);
     totalAmount = PriceUtilities.getPrice(avgAmount);
@@ -311,13 +311,14 @@ class DiamondConfig {
   }
 
   actionAppointment(BuildContext context, List<DiamondModel> list) {
-    showAppointmentDialog(context, (manageClick) {
-      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
-        /*callApiFoCreateTrack(
-            context, list, DiamondTrackConstant.TRACK_TYPE_APPOINTMENT,
-            isPop: true);*/
-      }
-    });
+    NavigationUtilities.pushRoute(OfferViewScreen.route);
+//    showAppointmentDialog(context, (manageClick) {
+//      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
+//        /*callApiFoCreateTrack(
+//            context, list, DiamondTrackConstant.TRACK_TYPE_APPOINTMENT,
+//            isPop: true);*/
+//      }
+//    });
   }
 
   actionHold(List<DiamondModel> list) {}
