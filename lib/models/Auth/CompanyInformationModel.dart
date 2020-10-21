@@ -1,41 +1,470 @@
 import 'package:diamnow/app/app.export.dart';
 
 class CompanyInformationReq {
-  String id;
+  String sId;
   String companyName;
-  String dateOfJoin;
-  String companyType;
+//  String dateOfJoin;
+//  String companyType;
   String businessType;
-  bool isActive;
+  String country;
+  String state;
+  String city;
+  String address;
+  String zipCode;
+  String vendorCode;
 
   CompanyInformationReq(
-      {this.id,
-      this.companyName,
-      this.dateOfJoin,
-      this.companyType,
-      this.businessType,
-      this.isActive});
+      {this.sId,
+        this.companyName,
+//        this.dateOfJoin,
+//        this.companyType,
+        this.businessType,
+        this.country,
+        this.state,
+        this.city,
+        this.address,
+        this.zipCode,
+        this.vendorCode});
 
   CompanyInformationReq.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    sId = json['_id'];
     companyName = json['companyName'];
-    dateOfJoin = json['dateOfJoin'];
-    companyType = json['companyType'];
+//    dateOfJoin = json["dateOfJoin"];
+//    companyType = json['companyType'];
     businessType = json['businessType'];
-    isActive = json['isActive'];
+    country = json['country'];
+    state = json['state'];
+    city = json['city'];
+    address = json['address'];
+    zipCode = json['zipCode'];
+    vendorCode = json['vendorCode'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    data['_id'] = this.sId;
     data['companyName'] = this.companyName;
-    data['dateOfJoin'] = this.dateOfJoin;
-    data['companyType'] = this.companyType;
+//    data['dateOfJoin'] = this.dateOfJoin;
+//    data['companyType'] = this.companyType;
     data['businessType'] = this.businessType;
+    data['country'] = this.country;
+    data['state'] = this.state;
+    data['city'] = this.city;
+    data['address'] = this.address;
+    data['zipCode'] = this.zipCode;
+    data['vendorCode'] = this.vendorCode;
+    return data;
+  }
+
+}
+
+class CompanyInformation {
+  String createdAt;
+  String updatedAt;
+  String id;
+  String stockCategory;
+  String vendorLogo;
+  String vendorCode;
+  String vendorNormalizeCode;
+  String vendorNo;
+  String prefix;
+  String gender;
+  String name;
+  String profileImage;
+  String code;
+  String displayName;
+  String companyName;
+  String companyNormalizeName;
+  String companyType;
+  String ledgerType;
+  String normalizeName;
+  String accountType;
+  bool hasBroker;
+  BrokerInfo brokerInfo;
+  int registrationType;
+  String dateOfJoin;
+  String dateOfAnniversary;
+  String addressType;
+  String address;
+  String landMark;
+  String street;
+  String area;
+  String zipCode;
+  List<String> emails;
+  String website;
+  List<String> faxes;
+//  Null phones;
+  List<String> mobiles;
+//  Null bank;
+//  Null social;
+  String defaultNarration;
+  String orderEmail;
+  String newStoneEmail;
+  String newsEventEmail;
+  String noOfEmployee;
+  String contactSource;
+  String dateOfBirth;
+  String accountName;
+  String isSubscribeForNewGoodFavourite;
+  String isSubscribeForNewGoodPurchase;
+  String isSubscribeForNotification;
+  String gstNo;
+  String panNo;
+  String verifyBy;
+  String verifyDate;
+  String designation;
+  String howKnow;
+  String referenceFrom;
+  bool isDeleted;
+  bool isActive;
+//  Null androidPlayerId;
+//  Null iosPlayerId;
+  int status;
+//  Null connectedSockets;
+  String updateIp;
+  String createIp;
+  bool isApproved;
+  String founded;
+  String specialties;
+  String companySize;
+  String videoUrl;
+  String about;
+  bool showPublicly;
+  String coverImage;
+  int isVerified;
+//  List<Null> group;
+  String contactEmail;
+  String contactMobile;
+  bool isFm;
+  String addedBy;
+  String updatedBy;
+//  Null grpCompany;
+//  Null departmentHead;
+//  Null department;
+  String country;
+  String state;
+  String city;
+  String businessType;
+//  Null createdBy;
+//  Null accountTerm;
+
+  CompanyInformation(
+      {this.createdAt,
+        this.updatedAt,
+        this.id,
+        this.stockCategory,
+        this.vendorLogo,
+        this.vendorCode,
+        this.vendorNormalizeCode,
+        this.vendorNo,
+        this.prefix,
+        this.gender,
+        this.name,
+        this.profileImage,
+        this.code,
+        this.displayName,
+        this.companyName,
+        this.companyNormalizeName,
+        this.companyType,
+        this.ledgerType,
+        this.normalizeName,
+        this.accountType,
+        this.hasBroker,
+        this.brokerInfo,
+        this.registrationType,
+        this.dateOfJoin,
+        this.dateOfAnniversary,
+        this.addressType,
+        this.address,
+        this.landMark,
+        this.street,
+        this.area,
+        this.zipCode,
+        this.emails,
+        this.website,
+        this.faxes,
+//        this.phones,
+        this.mobiles,
+//        this.bank,
+//        this.social,
+        this.defaultNarration,
+        this.orderEmail,
+        this.newStoneEmail,
+        this.newsEventEmail,
+        this.noOfEmployee,
+        this.contactSource,
+        this.dateOfBirth,
+        this.accountName,
+        this.isSubscribeForNewGoodFavourite,
+        this.isSubscribeForNewGoodPurchase,
+        this.isSubscribeForNotification,
+        this.gstNo,
+        this.panNo,
+        this.verifyBy,
+        this.verifyDate,
+        this.designation,
+        this.howKnow,
+        this.referenceFrom,
+        this.isDeleted,
+        this.isActive,
+//        this.androidPlayerId,
+//        this.iosPlayerId,
+        this.status,
+//        this.connectedSockets,
+        this.updateIp,
+        this.createIp,
+        this.isApproved,
+        this.founded,
+        this.specialties,
+        this.companySize,
+        this.videoUrl,
+        this.about,
+        this.showPublicly,
+        this.coverImage,
+        this.isVerified,
+//        this.group,
+        this.contactEmail,
+        this.contactMobile,
+        this.isFm,
+        this.addedBy,
+        this.updatedBy,
+//        this.grpCompany,
+//        this.departmentHead,
+//        this.department,
+        this.country,
+        this.state,
+        this.city,
+        this.businessType,
+//        this.createdBy,
+//        this.accountTerm,
+      });
+
+  CompanyInformation.fromJson(Map<String, dynamic> json) {
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    id = json['id'];
+    stockCategory = json['stockCategory'];
+    vendorLogo = json['vendorLogo'];
+    vendorCode = json['vendorCode'];
+    vendorNormalizeCode = json['vendorNormalizeCode'];
+    vendorNo = json['vendorNo'];
+    prefix = json['prefix'];
+    gender = json['gender'];
+    name = json['name'];
+    profileImage = json['profileImage'];
+    code = json['code'];
+    displayName = json['displayName'];
+    companyName = json['companyName'];
+    companyNormalizeName = json['companyNormalizeName'];
+    companyType = json['companyType'];
+    ledgerType = json['ledgerType'];
+    normalizeName = json['normalizeName'];
+    accountType = json['accountType'];
+    hasBroker = json['hasBroker'];
+    brokerInfo = json['brokerInfo'] != null
+        ? new BrokerInfo.fromJson(json['brokerInfo'])
+        : null;
+    registrationType = json['registrationType'];
+    dateOfJoin = json['dateOfJoin'];
+    dateOfAnniversary = json['dateOfAnniversary'];
+    addressType = json['addressType'];
+    address = json['address'];
+    landMark = json['landMark'];
+    street = json['street'];
+    area = json['area'];
+    zipCode = json['zipCode'];
+    emails = json['emails'].cast<String>();
+    website = json['Website'];
+    faxes = json['faxes'].cast<String>();
+//    phones = json['phones'];
+    mobiles = json['mobiles'].cast<String>();
+//    bank = json['bank'];
+//    social = json['social'];
+    defaultNarration = json['defaultNarration'];
+    orderEmail = json['orderEmail'];
+    newStoneEmail = json['newStoneEmail'];
+    newsEventEmail = json['newsEventEmail'];
+    noOfEmployee = json['noOfEmployee'];
+    contactSource = json['contactSource'];
+    dateOfBirth = json['dateOfBirth'];
+    accountName = json['accountName'];
+    isSubscribeForNewGoodFavourite = json['isSubscribeForNewGoodFavourite'];
+    isSubscribeForNewGoodPurchase = json['isSubscribeForNewGoodPurchase'];
+    isSubscribeForNotification = json['isSubscribeForNotification'];
+    gstNo = json['gstNo'];
+    panNo = json['panNo'];
+    verifyBy = json['verifyBy'];
+    verifyDate = json['verifyDate'];
+    designation = json['designation'];
+    howKnow = json['howKnow'];
+    referenceFrom = json['referenceFrom'];
+    isDeleted = json['isDeleted'];
+    isActive = json['isActive'];
+//    androidPlayerId = json['androidPlayerId'];
+//    iosPlayerId = json['iosPlayerId'];
+    status = json['status'];
+//    connectedSockets = json['connectedSockets'];
+    updateIp = json['updateIp'];
+    createIp = json['createIp'];
+    isApproved = json['isApproved'];
+    founded = json['founded'];
+    specialties = json['specialties'];
+    companySize = json['companySize'];
+    videoUrl = json['videoUrl'];
+    about = json['about'];
+    showPublicly = json['showPublicly'];
+    coverImage = json['coverImage'];
+    isVerified = json['isVerified'];
+//    if (json['group'] != null) {
+//      group = new List<Null>();
+//      json['group'].forEach((v) {
+//        group.add(new Null.fromJson(v));
+//      });
+//    }
+    contactEmail = json['contactEmail'];
+    contactMobile = json['contactMobile'];
+    isFm = json['isFm'];
+    addedBy = json['addedBy'];
+    updatedBy = json['updatedBy'];
+//    grpCompany = json['grpCompany'];
+//    departmentHead = json['departmentHead'];
+//    department = json['department'];
+    country = json['country'];
+    state = json['state'];
+    city = json['city'];
+    businessType = json['businessType'];
+//    createdBy = json['createdBy'];
+//    accountTerm = json['accountTerm'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    data['id'] = this.id;
+    data['stockCategory'] = this.stockCategory;
+    data['vendorLogo'] = this.vendorLogo;
+    data['vendorCode'] = this.vendorCode;
+    data['vendorNormalizeCode'] = this.vendorNormalizeCode;
+    data['vendorNo'] = this.vendorNo;
+    data['prefix'] = this.prefix;
+    data['gender'] = this.gender;
+    data['name'] = this.name;
+    data['profileImage'] = this.profileImage;
+    data['code'] = this.code;
+    data['displayName'] = this.displayName;
+    data['companyName'] = this.companyName;
+    data['companyNormalizeName'] = this.companyNormalizeName;
+    data['companyType'] = this.companyType;
+    data['ledgerType'] = this.ledgerType;
+    data['normalizeName'] = this.normalizeName;
+    data['accountType'] = this.accountType;
+    data['hasBroker'] = this.hasBroker;
+    if (this.brokerInfo != null) {
+      data['brokerInfo'] = this.brokerInfo.toJson();
+    }
+    data['registrationType'] = this.registrationType;
+    data['dateOfJoin'] = this.dateOfJoin;
+    data['dateOfAnniversary'] = this.dateOfAnniversary;
+    data['addressType'] = this.addressType;
+    data['address'] = this.address;
+    data['landMark'] = this.landMark;
+    data['street'] = this.street;
+    data['area'] = this.area;
+    data['zipCode'] = this.zipCode;
+    data['emails'] = this.emails;
+    data['Website'] = this.website;
+    data['faxes'] = this.faxes;
+//    data['phones'] = this.phones;
+    data['mobiles'] = this.mobiles;
+//    data['bank'] = this.bank;
+//    data['social'] = this.social;
+    data['defaultNarration'] = this.defaultNarration;
+    data['orderEmail'] = this.orderEmail;
+    data['newStoneEmail'] = this.newStoneEmail;
+    data['newsEventEmail'] = this.newsEventEmail;
+    data['noOfEmployee'] = this.noOfEmployee;
+    data['contactSource'] = this.contactSource;
+    data['dateOfBirth'] = this.dateOfBirth;
+    data['accountName'] = this.accountName;
+    data['isSubscribeForNewGoodFavourite'] =
+        this.isSubscribeForNewGoodFavourite;
+    data['isSubscribeForNewGoodPurchase'] = this.isSubscribeForNewGoodPurchase;
+    data['isSubscribeForNotification'] = this.isSubscribeForNotification;
+    data['gstNo'] = this.gstNo;
+    data['panNo'] = this.panNo;
+    data['verifyBy'] = this.verifyBy;
+    data['verifyDate'] = this.verifyDate;
+    data['designation'] = this.designation;
+    data['howKnow'] = this.howKnow;
+    data['referenceFrom'] = this.referenceFrom;
+    data['isDeleted'] = this.isDeleted;
     data['isActive'] = this.isActive;
+//    data['androidPlayerId'] = this.androidPlayerId;
+//    data['iosPlayerId'] = this.iosPlayerId;
+    data['status'] = this.status;
+//    data['connectedSockets'] = this.connectedSockets;
+    data['updateIp'] = this.updateIp;
+    data['createIp'] = this.createIp;
+    data['isApproved'] = this.isApproved;
+    data['founded'] = this.founded;
+    data['specialties'] = this.specialties;
+    data['companySize'] = this.companySize;
+    data['videoUrl'] = this.videoUrl;
+    data['about'] = this.about;
+    data['showPublicly'] = this.showPublicly;
+    data['coverImage'] = this.coverImage;
+    data['isVerified'] = this.isVerified;
+//    if (this.group != null) {
+//      data['group'] = this.group.map((v) => v.toJson()).toList();
+//    }
+    data['contactEmail'] = this.contactEmail;
+    data['contactMobile'] = this.contactMobile;
+    data['isFm'] = this.isFm;
+    data['addedBy'] = this.addedBy;
+    data['updatedBy'] = this.updatedBy;
+//    data['grpCompany'] = this.grpCompany;
+//    data['departmentHead'] = this.departmentHead;
+//    data['department'] = this.department;
+    data['country'] = this.country;
+    data['state'] = this.state;
+    data['city'] = this.city;
+    data['businessType'] = this.businessType;
+//    data['createdBy'] = this.createdBy;
+//    data['accountTerm'] = this.accountTerm;
     return data;
   }
 }
+
+class BrokerInfo {
+  String brokerName;
+  String brokerEmail;
+  String brokerMobile;
+  String brokerPhoneNo;
+
+  BrokerInfo(
+      {this.brokerName,
+        this.brokerEmail,
+        this.brokerMobile,
+        this.brokerPhoneNo});
+
+  BrokerInfo.fromJson(Map<String, dynamic> json) {
+    brokerName = json['brokerName'];
+    brokerEmail = json['brokerEmail'];
+    brokerMobile = json['brokerMobile'];
+    brokerPhoneNo = json['brokerPhoneNo'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['brokerName'] = this.brokerName;
+    data['brokerEmail'] = this.brokerEmail;
+    data['brokerMobile'] = this.brokerMobile;
+    data['brokerPhoneNo'] = this.brokerPhoneNo;
+    return data;
+  }
+}
+
 
 class CompanyInformationResp extends BaseApiResp{
   CompanyInformation data;
@@ -51,549 +480,6 @@ class CompanyInformationResp extends BaseApiResp{
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
-    return data;
-  }
-}
-
-class CompanyInformation {
-  String createdAt;
-  String updatedAt;
-  String id;
-  String vendorNo;
-  String firstName;
-  String lastName;
-  String name;
-  String companyName;
-//  Null address;
-  String companyAddress;
-  String username;
-  String email;
-  String mobile;
-  int type;
-  int roleType;
-  String spaceCodeIp;
-  String hostName;
-  String macAddress;
-  String toAuthenticate;
-  bool isEmailVerified;
-  String emailHash;
-  bool isDeleted;
-  String dateOfJoin;
-  bool isActive;
-  int isVerified;
-  Setting setting;
-//  Null androidPlayerId;
-//  Null iosPlayerId;
-  int status;
-//  Null connectedSockets;
-  int termsDiscount;
-//  Null resetPasswordLink;
-//  Null apiTokens;
-  String clientSecret;
-  String profileImage;
-//  Null syncExtra;
-  String anniversary;
-  String businessId;
-  String businessType;
-  String countryCode;
-  String designation;
-  String device;
-  String dob;
-  String fax;
-  String gender;
-  String howKnow;
-  String phone;
-  String photoId;
-  String pinCode;
-  String reference;
-  List<String> roles;
-//  List<Null> adminRoles;
-  bool updateRequired;
-  bool isIntoHide;
-  String updateIp;
-  String createIp;
-  List<FingerPrints> fingerPrints;
-  LoggedInSession loggedInSession;
-  String whatsapp;
-  String whatsappCounCode;
-  String skype;
-  String wechat;
-  Token token;
-  int version;
-  bool isTermsCondAgree;
-  String termsCondAgreeAt;
-//  List<Null> termsCondHistory;
-//  Null loginOtp;
-
-//  FailedAttempts failedAttempts;
-  String group;
-//  Null addedBy;
-  String updatedBy;
-  String account;
-//  Null accountTerm;
-//  Null defaultFilter;
-  String city;
-  String state;
-  String country;
-  String seller;
-//  Null createdBy;
-
-  CompanyInformation(
-      {this.createdAt,
-      this.updatedAt,
-      this.id,
-      this.vendorNo,
-      this.firstName,
-      this.lastName,
-      this.name,
-      this.companyName,
-//      this.address,
-      this.companyAddress,
-      this.username,
-      this.email,
-      this.mobile,
-      this.type,
-      this.roleType,
-      this.spaceCodeIp,
-      this.hostName,
-      this.macAddress,
-      this.toAuthenticate,
-      this.isEmailVerified,
-      this.emailHash,
-      this.isDeleted,
-      this.dateOfJoin,
-      this.isActive,
-      this.isVerified,
-      this.setting,
-//      this.androidPlayerId,
-//      this.iosPlayerId,
-      this.status,
-//      this.connectedSockets,
-      this.termsDiscount,
-//      this.resetPasswordLink,
-//      this.apiTokens,
-      this.clientSecret,
-      this.profileImage,
-//      this.syncExtra,
-      this.anniversary,
-      this.businessId,
-      this.businessType,
-      this.countryCode,
-      this.designation,
-      this.device,
-      this.dob,
-      this.fax,
-      this.gender,
-      this.howKnow,
-      this.phone,
-      this.photoId,
-      this.pinCode,
-      this.reference,
-      this.roles,
-//      this.adminRoles,
-      this.updateRequired,
-      this.isIntoHide,
-      this.updateIp,
-      this.createIp,
-      this.fingerPrints,
-      this.loggedInSession,
-      this.whatsapp,
-      this.whatsappCounCode,
-      this.skype,
-      this.wechat,
-      this.token,
-      this.version,
-      this.isTermsCondAgree,
-      this.termsCondAgreeAt,
-//      this.termsCondHistory,
-//      this.loginOtp,
-//      this.failedAttempts,
-      this.group,
-//      this.addedBy,
-      this.updatedBy,
-      this.account,
-//      this.accountTerm,
-//      this.defaultFilter,
-      this.city,
-      this.state,
-      this.country,
-      this.seller,
-//      this.createdBy,
-      });
-
-  CompanyInformation.fromJson(Map<String, dynamic> json) {
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
-    id = json['id'];
-    vendorNo = json['vendorNo'];
-    firstName = json['firstName'];
-    lastName = json['lastName'];
-    name = json['name'];
-    companyName = json['companyName'];
-//    address = json['address'];
-    companyAddress = json['companyAddress'];
-    username = json['username'];
-    email = json['email'];
-    mobile = json['mobile'];
-    type = json['type'];
-    roleType = json['roleType'];
-    spaceCodeIp = json['SpaceCodeIp'];
-    hostName = json['hostName'];
-    macAddress = json['macAddress'];
-    toAuthenticate = json['toAuthenticate'];
-    isEmailVerified = json['isEmailVerified'];
-    emailHash = json['emailHash'];
-    isDeleted = json['isDeleted'];
-    dateOfJoin = json['dateOfJoin'];
-    isActive = json['isActive'];
-    isVerified = json['isVerified'];
-    setting =
-        json['setting'] != null ? new Setting.fromJson(json['setting']) : null;
-//    androidPlayerId = json['androidPlayerId'];
-//    iosPlayerId = json['iosPlayerId'];
-    status = json['status'];
-//    connectedSockets = json['connectedSockets'];
-    termsDiscount = json['termsDiscount'];
-//    resetPasswordLink = json['resetPasswordLink'];
-//    apiTokens = json['apiTokens'];
-    clientSecret = json['clientSecret'];
-    profileImage = json['profileImage'];
-//    syncExtra = json['syncExtra'];
-    anniversary = json['anniversary'];
-    businessId = json['businessId'];
-    businessType = json['BusinessType'];
-    countryCode = json['countryCode'];
-    designation = json['designation'];
-    device = json['device'];
-    dob = json['dob'];
-    fax = json['fax'];
-    gender = json['gender'];
-    howKnow = json['howKnow'];
-    phone = json['phone'];
-    photoId = json['photoId'];
-    pinCode = json['pinCode'];
-    reference = json['reference'];
-    roles = json['roles'].cast<String>();
-//    if (json['adminRoles'] != null) {
-//      adminRoles = new List<Null>();
-//      json['adminRoles'].forEach((v) {
-//        adminRoles.add(new Null.fromJson(v));
-//      });
-//    }
-    updateRequired = json['updateRequired'];
-    isIntoHide = json['isIntoHide'];
-    updateIp = json['updateIp'];
-    createIp = json['createIp'];
-    if (json['fingerPrints'] != null) {
-      fingerPrints = new List<FingerPrints>();
-      json['fingerPrints'].forEach((v) {
-        fingerPrints.add(new FingerPrints.fromJson(v));
-      });
-    }
-    loggedInSession = json['loggedInSession'] != null
-        ? new LoggedInSession.fromJson(json['loggedInSession'])
-        : null;
-    whatsapp = json['whatsapp'];
-    whatsappCounCode = json['whatsappCounCode'];
-    skype = json['skype'];
-    wechat = json['wechat'];
-    token = json['token'] != null ? new Token.fromJson(json['token']) : null;
-    version = json['version'];
-    isTermsCondAgree = json['isTermsCondAgree'];
-    termsCondAgreeAt = json['termsCondAgreeAt'];
-//    if (json['termsCondHistory'] != null) {
-//      termsCondHistory = new List<Null>();
-//      json['termsCondHistory'].forEach((v) {
-//        termsCondHistory.add(new Null.fromJson(v));
-//      });
-//    }
-//    loginOtp = json['loginOtp'];
-//    failedAttempts = json['failedAttempts'] != null
-//        ? new FailedAttempts.fromJson(json['failedAttempts'])
-//        : null;
-    group = json['group'];
-//    addedBy = json['addedBy'];
-    updatedBy = json['updatedBy'];
-    account = json['account'];
-//    accountTerm = json['accountTerm'];
-//    defaultFilter = json['defaultFilter'];
-    city = json['city'];
-    state = json['state'];
-    country = json['country'];
-    seller = json['seller'];
-//    createdBy = json['createdBy'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['id'] = this.id;
-    data['vendorNo'] = this.vendorNo;
-    data['firstName'] = this.firstName;
-    data['lastName'] = this.lastName;
-    data['name'] = this.name;
-    data['companyName'] = this.companyName;
-//    data['address'] = this.address;
-    data['companyAddress'] = this.companyAddress;
-    data['username'] = this.username;
-    data['email'] = this.email;
-    data['mobile'] = this.mobile;
-    data['type'] = this.type;
-    data['roleType'] = this.roleType;
-    data['SpaceCodeIp'] = this.spaceCodeIp;
-    data['hostName'] = this.hostName;
-    data['macAddress'] = this.macAddress;
-    data['toAuthenticate'] = this.toAuthenticate;
-    data['isEmailVerified'] = this.isEmailVerified;
-    data['emailHash'] = this.emailHash;
-    data['isDeleted'] = this.isDeleted;
-    data['dateOfJoin'] = this.dateOfJoin;
-    data['isActive'] = this.isActive;
-    data['isVerified'] = this.isVerified;
-    if (this.setting != null) {
-      data['setting'] = this.setting.toJson();
-    }
-//    data['androidPlayerId'] = this.androidPlayerId;
-//    data['iosPlayerId'] = this.iosPlayerId;
-    data['status'] = this.status;
-//    data['connectedSockets'] = this.connectedSockets;
-    data['termsDiscount'] = this.termsDiscount;
-//    data['resetPasswordLink'] = this.resetPasswordLink;
-//    data['apiTokens'] = this.apiTokens;
-    data['clientSecret'] = this.clientSecret;
-    data['profileImage'] = this.profileImage;
-//    data['syncExtra'] = this.syncExtra;
-    data['anniversary'] = this.anniversary;
-    data['businessId'] = this.businessId;
-    data['BusinessType'] = this.businessType;
-    data['countryCode'] = this.countryCode;
-    data['designation'] = this.designation;
-    data['device'] = this.device;
-    data['dob'] = this.dob;
-    data['fax'] = this.fax;
-    data['gender'] = this.gender;
-    data['howKnow'] = this.howKnow;
-    data['phone'] = this.phone;
-    data['photoId'] = this.photoId;
-    data['pinCode'] = this.pinCode;
-    data['reference'] = this.reference;
-    data['roles'] = this.roles;
-//    if (this.adminRoles != null) {
-//      data['adminRoles'] = this.adminRoles.map((v) => v.toJson()).toList();
-//    }
-    data['updateRequired'] = this.updateRequired;
-    data['isIntoHide'] = this.isIntoHide;
-    data['updateIp'] = this.updateIp;
-    data['createIp'] = this.createIp;
-    if (this.fingerPrints != null) {
-      data['fingerPrints'] = this.fingerPrints.map((v) => v.toJson()).toList();
-    }
-    if (this.loggedInSession != null) {
-      data['loggedInSession'] = this.loggedInSession.toJson();
-    }
-    data['whatsapp'] = this.whatsapp;
-    data['whatsappCounCode'] = this.whatsappCounCode;
-    data['skype'] = this.skype;
-    data['wechat'] = this.wechat;
-    if (this.token != null) {
-      data['token'] = this.token.toJson();
-    }
-    data['version'] = this.version;
-    data['isTermsCondAgree'] = this.isTermsCondAgree;
-    data['termsCondAgreeAt'] = this.termsCondAgreeAt;
-//    if (this.termsCondHistory != null) {
-//      data['termsCondHistory'] =
-//          this.termsCondHistory.map((v) => v.toJson()).toList();
-//    }
-//    data['loginOtp'] = this.loginOtp;
-//    if (this.failedAttempts != null) {
-//      data['failedAttempts'] = this.failedAttempts.toJson();
-//    }
-    data['group'] = this.group;
-//    data['addedBy'] = this.addedBy;
-    data['updatedBy'] = this.updatedBy;
-    data['account'] = this.account;
-//    data['accountTerm'] = this.accountTerm;
-//    data['defaultFilter'] = this.defaultFilter;
-    data['city'] = this.city;
-    data['state'] = this.state;
-    data['country'] = this.country;
-    data['seller'] = this.seller;
-//    data['createdBy'] = this.createdBy;
-    return data;
-  }
-}
-
-class Setting {
-  int diamondListLimit;
-  int offlineStockLimit;
-  AllowedOperations allowedOperations;
-
-  Setting(
-      {this.diamondListLimit, this.offlineStockLimit, this.allowedOperations});
-
-  Setting.fromJson(Map<String, dynamic> json) {
-    diamondListLimit = json['diamondListLimit'];
-    offlineStockLimit = json['offlineStockLimit'];
-    allowedOperations = json['allowedOperations'] != null
-        ? new AllowedOperations.fromJson(json['allowedOperations'])
-        : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['diamondListLimit'] = this.diamondListLimit;
-    data['offlineStockLimit'] = this.offlineStockLimit;
-    if (this.allowedOperations != null) {
-      data['allowedOperations'] = this.allowedOperations.toJson();
-    }
-    return data;
-  }
-}
-
-class AllowedOperations {
-  bool placeOrder;
-
-  AllowedOperations({this.placeOrder});
-
-  AllowedOperations.fromJson(Map<String, dynamic> json) {
-    placeOrder = json['placeOrder'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['placeOrder'] = this.placeOrder;
-    return data;
-  }
-}
-
-class FingerPrints {
-  String fingerPrint;
-  bool isVerified;
-
-  FingerPrints({this.fingerPrint, this.isVerified});
-
-  FingerPrints.fromJson(Map<String, dynamic> json) {
-    fingerPrint = json['fingerPrint'];
-    isVerified = json['isVerified'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['fingerPrint'] = this.fingerPrint;
-    data['isVerified'] = this.isVerified;
-    return data;
-  }
-}
-
-class LoggedInSession {
-  Current current;
-  Current previous;
-
-  LoggedInSession({this.current, this.previous});
-
-  LoggedInSession.fromJson(Map<String, dynamic> json) {
-    current =
-        json['current'] != null ? new Current.fromJson(json['current']) : null;
-    previous = json['previous'] != null
-        ? new Current.fromJson(json['previous'])
-        : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.current != null) {
-      data['current'] = this.current.toJson();
-    }
-    if (this.previous != null) {
-      data['previous'] = this.previous.toJson();
-    }
-    return data;
-  }
-}
-
-class Current {
-  String ip;
-  Address address;
-  String time;
-
-  Current({this.ip, this.address, this.time});
-
-  Current.fromJson(Map<String, dynamic> json) {
-    ip = json['ip'];
-    address =
-        json['address'] != null ? new Address.fromJson(json['address']) : null;
-    time = json['time'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ip'] = this.ip;
-    if (this.address != null) {
-      data['address'] = this.address.toJson();
-    }
-    data['time'] = this.time;
-    return data;
-  }
-}
-
-class Address {
-  String country;
-  String region;
-  String city;
-  String postalCode;
-  double latitude;
-  double longitude;
-  String timezone;
-
-  Address(
-      {this.country,
-      this.region,
-      this.city,
-      this.postalCode,
-      this.latitude,
-      this.longitude,
-      this.timezone});
-
-  Address.fromJson(Map<String, dynamic> json) {
-    country = json['country'];
-    region = json['region'];
-    city = json['city'];
-    postalCode = json['postalCode'];
-    latitude = json['latitude'];
-    longitude = json['longitude'];
-    timezone = json['timezone'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['country'] = this.country;
-    data['region'] = this.region;
-    data['city'] = this.city;
-    data['postalCode'] = this.postalCode;
-    data['latitude'] = this.latitude;
-    data['longitude'] = this.longitude;
-    data['timezone'] = this.timezone;
-    return data;
-  }
-}
-
-class Token {
-  String web;
-  String device;
-
-  Token({this.web, this.device});
-
-  Token.fromJson(Map<String, dynamic> json) {
-    web = json['web'];
-    device = json['device'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['web'] = this.web;
-    data['device'] = this.device;
     return data;
   }
 }

@@ -48,9 +48,6 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
   void initState() {
     super.initState();
     _pinEditingController.clear();
-    if (kDebugMode) {
-      _emailController.text = "honeyspatel98@gmail.com";
-    }
   }
 
   @override
@@ -87,7 +84,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
           child: Scaffold(
             appBar: getAppBar(
               context,
-              "Forgot Password",
+              R.string().authStrings.forgotPassword,
               bgColor: appTheme.whiteColor,
               leadingButton: isApiCall
                   ? getBackButton(context, ontap: () {
@@ -127,8 +124,8 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                         ),
                         Text(
                           isApiCall
-                              ? "The OTP has been sent to your registered Email address. Please enter the OTP."
-                              : "We will send an OTP to your entered email address. Please enter the email address.",
+                              ? R.string().authStrings.enterOTP
+                              : R.string().authStrings.sendOTPToEmail,
                           style: appTheme.black14TextStyle,
                           textAlign: TextAlign.center,
                         ),
@@ -140,7 +137,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
-                                    Text("If you didn't receive an OTP!",
+                                    Text(R.string().authStrings.didNotReceiveOTP,
                                         style: appTheme.grey16HintTextStyle),
                                     GestureDetector(
                                         onTap: () {
@@ -150,7 +147,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                                         },
                                         child: Text(
                                             isTimerCompleted
-                                                ? " Resend Now"
+                                                ? " " + R.string().authStrings.resendNow
                                                 : " ${_printDuration(Duration(seconds: _start))}",
                                             style:
                                                 appTheme.darkBlue16TextStyle)),
@@ -184,7 +181,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                                   //  backgroundColor: appTheme.buttonColor,
                                   borderRadius: getSize(5),
                                   fitWidth: true,
-                                  text: "Send OTP",
+                                  text: R.string().authStrings.sendOTP,
                                   //isButtonEnabled: enableDisableSigninButton(),
                                 ),
                               ),
@@ -202,7 +199,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        Text("Remember Password?",
+                        Text(R.string().authStrings.rememberPassword,
                             style: appTheme.grey16HintTextStyle),
                         GestureDetector(
                             onTap: () {
@@ -211,7 +208,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                                 (Route<dynamic> route) => false,
                               );
                             },
-                            child: Text(" Sign In",
+                            child: Text(" " + R.string().authStrings.signInCap,
                                 style: appTheme.darkBlue16TextStyle)),
                       ],
                     ),
@@ -449,9 +446,9 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
         context,
-        title: "Forget Password Error",
+        title: R.string().commonString.error,
         desc: onError.message,
-        positiveBtnTitle: "Try Again",
+        positiveBtnTitle: R.string().commonString.btnTryAgain,
       );
     });
   }

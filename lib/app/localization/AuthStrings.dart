@@ -8,6 +8,9 @@ class AuthStrings {
   final String haveRegisterCode;
   final String inLogin;
   final String welcome;
+  final String enterCompanyName;
+  final String saveCompanyDetails;
+  final String setNewPassword;
 
   final String clickHere;
   final String moveToLogIn;
@@ -23,6 +26,8 @@ class AuthStrings {
   final String resetPwdDesc;
   final String backToLogin;
   final String backToHome;
+  final String companyCode;
+  final String oldPassword;
 
 //Enter Mobile Number
   final String mobileNumber;
@@ -33,6 +38,8 @@ class AuthStrings {
   final String resendCodeIn;
   final String resendCode;
   final String dontReceiveCode;
+  final String skype;
+  final String whatsApp;
 
   // Create Profile
   final String firstName;
@@ -108,14 +115,38 @@ class AuthStrings {
   final String verified;
   final String verify;
   final String verifyMobileDesc;
+  final String pinCode;
+
 
   //stoneDetail
   final String companyName;
   final String invoiceDate;
   final String confirmStoneDetail;
 
+  final String editProfileTitle;
+
+  final String passwordNotChange;
+
+  final String rememberPassword;
+
+  final String sendOTP;
+
+  final String resendNow;
+
+  final String didNotReceiveOTP;
+
+  final String sendOTPToEmail;
+
+  final String enterOTP;
+
+  final String backToSignIn;
+
+  final String passwordResetSuccessfully;
+
   const AuthStrings({
     // Login
+    this.setNewPassword = "Set your new password and sign in again.",
+    this.enterCompanyName = "Please enter Company Name.",
     this.pleaseEnterCustomerOTP = "Please enter customer ride code.",
     this.pleaseEnterPickupOTP = "Please enter customer pickup code.",
     this.pleaseEnterDeliveryOTP = "Please enter customer delivery code.",
@@ -124,6 +155,10 @@ class AuthStrings {
     this.addressLineOne = "Address 1",
     this.addressLineTwo = "Address 2",
     this.addressLineThree = "Address 3",
+    this.oldPassword = "Old Password",
+    this.skype = "Skype",
+    this.whatsApp = "Whatsapp*",
+    this.pinCode = "PinCode*",
     this.verifyMobileDesc =
         "Please verify mobile number to update the profile.",
     this.verifyNow = 'Verify Now',
@@ -138,7 +173,7 @@ class AuthStrings {
     this.haveRegisterCode = "Have a registration code?",
     this.welcome = "Welcome Back!",
     this.signInAsGuest = "Sign In as Guest",
-
+    this.editProfileTitle = "Edit Profile",
     // Forgot Password
     this.emaillbl = "Email",
     this.searchInventory = "Search product",
@@ -228,5 +263,16 @@ class AuthStrings {
     this.confirmStoneDetail = "Confirm Stone Detail",
     this.companyName = "Company Name",
     this.invoiceDate = "Invoice Date",
+    this.companyCode = "Company Code",
+    this.saveCompanyDetails = "Save Company Details",
+    this.passwordNotChange = "Password does not match",
+    this.rememberPassword = "Remember Password?",
+    this.sendOTP = "Send OTP",
+    this.resendNow = "Resend Now",
+    this.didNotReceiveOTP = "If you didn't receive an OTP!",
+    this.sendOTPToEmail = "We will send an OTP to your entered email address. Please enter the email address.",
+    this.enterOTP = "The OTP has been sent to your registered Email address. Please enter the OTP.",
+    this.backToSignIn = "Back to Sign In",
+    this.passwordResetSuccessfully = "Password reset successfully.",
   });
 }

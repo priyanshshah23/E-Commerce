@@ -181,7 +181,12 @@ class DrawerSetting {
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_CHANGE_PASSWORD,
     ));
-
+    drawerList.add(DrawerModel(
+      image: user,
+      title: R.string().screenTitle.myProfile,
+      isSelected: false,
+      type: DiamondModuleConstant.MODULE_TYPE_PROFILE,
+    ));
     drawerList.add(DrawerModel(
       image: logout,
       title: R.string().screenTitle.logout,

@@ -8,6 +8,9 @@ class CommonString {
   final String btnEdit;
   final String btnSubmit;
   final String btnNextCap;
+  final String selectCity;
+  final String selectState;
+  final String selectCountry;
   final String btnSaveCap;
   final String btnWithdrawCap;
   final String btnSaveAndContinueCap;
@@ -36,6 +39,8 @@ class CommonString {
   final String lblExit;
   final String openAppSetting;
   final String lblOr;
+  final String countryFirst;
+  final String stateFirst;
 
   //App Update Dialog
   final String notYetAvailable;
@@ -58,8 +63,6 @@ class CommonString {
 
   // My Vehicle List
   final String selected;
-
-  final String selectCountry;
   final String clickHere;
 
   final String lblThanx;
@@ -185,6 +188,17 @@ class CommonString {
   final String colorFancy;
   final String overtone;
   final String intensity;
+  final String selectBusinessType;
+
+  final String search;
+
+  final String profile;
+
+  final String personal;
+
+  final String business;
+
+  final String documents;
 
   const CommonString({
     this.all = "All",
@@ -216,6 +230,7 @@ class CommonString {
     this.doneCap = "DONE",
     this.cancel = "Cancel",
     this.allow = 'Allow',
+    this.countryFirst = "Please Select Country First",
     this.apply = 'Apply',
     this.cancelCap = "CANCEL",
     this.uploadCap = "UPLOAD",
@@ -237,13 +252,14 @@ class CommonString {
     this.toLbl = "To",
     this.showMore = "Show More",
     this.showLess = "Show Less",
-
+    this.selectCity = "Select City",
     //App Update Dialog
     this.notYetAvailable = "Not yet available",
     this.updateAvailable = "Update Available!",
     this.downloadAppFrom = "Download application update from",
     this.playStore = "Play Store",
     this.skipUpdate = "Skip Update",
+    this.stateFirst = "Please Select State First",
 
     // Other
     this.reallyExit = "Really exit?",
@@ -368,5 +384,12 @@ class CommonString {
     this.clarityGroup = "Clarity Group",
     this.intensity = "Intensity",
     this.overtone = "Overtone",
+    this.selectBusinessType = "Select Business Type",
+    this.selectState = "Select State",
+    this.search = "Search",
+    this.profile = "My Profile",
+    this.personal = "Personal",
+    this.business = "Business",
+    this.documents = "Documents",
   });
 }

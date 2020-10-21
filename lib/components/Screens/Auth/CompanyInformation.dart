@@ -7,6 +7,7 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
+import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/DialogueList.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
@@ -71,13 +72,26 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
   CountryList selectedCountryItem = CountryList();
   List<StateList> stateList = List<StateList>();
   StateList selectedStateItem = StateList();
+  List<SelectionPopupModel> businessTypeList = List<SelectionPopupModel>();
+
 
   @override
   void initState() {
     super.initState();
     _callApiForCountryList();
+    getBusinessType();
+
   }
 
+  getBusinessType() async {
+    var arrMaster = await AppDatabase.instance.masterDao
+        .getSubMasterFromCode(BUSINESS_TYPE);
+    for (var master in arrMaster) {
+      businessTypeList.add(SelectionPopupModel(master.sId, master.getName(),
+          isSelected: master.isDefault));
+    }
+    setState(() {});
+  }
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -116,7 +130,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
               textColor: appTheme.colorPrimary,
               borderRadius: getSize(5),
               fitWidth: true,
-              text: "Save Company Details",
+              text: R.string().authStrings.saveCompanyDetails,
               //isButtonEnabled: enableDisableSigninButton(),
             ),
           ),
@@ -134,7 +148,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                   SizedBox(
                     height: getSize(20),
                   ),
-                  popupList(businessItem,  (value) {
+                  popupList(businessTypeList,  (value) {
                     _businessTypeController.text = value;
                   }),
                   //getBusinessTypeDropDown(),
@@ -180,25 +194,21 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
       //enable: enable,
       focusNode: _focuscompanyCode,
       textOption: TextFieldOption(
-        hintText: "Company Code",
+        hintText: R.string().authStrings.companyCode,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: pincode,
             imageType: IconSizeType.small,
             color: Colors.black),
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.text,
         inputController: _companyCodeController,
-        formatter: [
-          ValidatorInputFormatter(
-              editingValidator: DecimalNumberEditingRegexValidator(10)),
-        ],
       ),
       textCallback: (text) async {
 //          await checkValidation();
       },
       validation: (text) {
         if (text.isEmpty) {
-          return "Please Enter Company Code.";
+          return R.string().errorString.pleaseEnterCompanyCode;
         }
 //          else if (await isValidMobile(_mobileController.text.trim(),
 //                  selectedDialogCountry.isoCode) ==
@@ -222,7 +232,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
     return CommonTextfield(
         focusNode: _focusPinCode,
         textOption: TextFieldOption(
-            hintText: "ZipCode*",
+            hintText: R.string().commonString.lblPinCode + "*",
             maxLine: 1,
             prefixWid: getCommonIconWidget(
                 imageName: pincode,
@@ -240,6 +250,15 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
 //            checkValidation();
 //          });
         },
+        validation: (text) {
+          if (text.isEmpty) {
+            return R.string().errorString.enterPinCode;
+          } else if (!validatePincode(text)) {
+            return R.string().errorString.enterValidPinCode;
+          } else {
+            return null;
+          }
+        },
         inputAction: TextInputAction.next,
         onNextPress: () {
           _focusPinCode.unfocus();
@@ -252,7 +271,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
       autoFocus: false,
       focusNode: _focusCompanyName,
       textOption: TextFieldOption(
-        hintText: "Company Name*",
+        hintText: R.string().authStrings.companyName + "*",
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: user,
@@ -265,7 +284,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
         ),
         inputController: _CompanyNameController,
         formatter: [
-          WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+         // WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
           BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
         ],
         //isSecureTextField: false
@@ -273,7 +292,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
       textCallback: (text) { },
       validation: (text) {
         if (text.trim().isEmpty) {
-          return "Please enter Company Name.";
+          return R.string().authStrings.enterCompanyName;
         } else {
           return null;
         }
@@ -282,7 +301,6 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
       inputAction: TextInputAction.next,
       onNextPress: () {
         _focusCompanyName.unfocus();
-        fieldFocusChange(context, _focusMiddleName);
       },
     );
   }
@@ -304,7 +322,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
         ),
         inputController: _addressLineOneController,
         formatter: [
-          WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+        //  WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
           BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
         ],
         //isSecureTextField: false
@@ -343,7 +361,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
         ),
         inputController: _addressLineTwoController,
         formatter: [
-          WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+         // WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
           BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
         ],
         //isSecureTextField: false
@@ -360,7 +378,6 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
       inputAction: TextInputAction.next,
       onNextPress: () {
         _focusAddressLineTwo.unfocus();
-        fieldFocusChange(context, _focusAddressLineThree);
       },
     );
   }
@@ -402,7 +419,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
           focusNode: _focusCountry,
           enable: false,
           textOption: TextFieldOption(
-              hintText: "Select Country",
+              hintText: R.string().commonString.lblCountry,
               maxLine: 1,
               prefixWid: getCommonIconWidget(
                   imageName: country, imageType: IconSizeType.small),
@@ -458,14 +475,14 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                 });
           }
         } else {
-          showToast("Please Select Country First", context: context);
+          showToast(R.string().commonString.countryFirst, context: context);
         }
       },
       child: CommonTextfield(
           focusNode: _focusState,
           enable: false,
           textOption: TextFieldOption(
-              hintText: "Select State",
+              hintText: R.string().commonString.lblState,
               maxLine: 1,
               prefixWid: getCommonIconWidget(
                   imageName: state, imageType: IconSizeType.small),
@@ -519,10 +536,10 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                   });
             }
           } else {
-            showToast("Please Select State First");
+            showToast(R.string().commonString.stateFirst);
           }
         } else {
-          showToast("Please Select Country First");
+          showToast(R.string().commonString.countryFirst);
         }
       },
       child: CommonTextfield(
@@ -531,7 +548,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
           textOption: TextFieldOption(
               prefixWid: getCommonIconWidget(
                   imageName: city, imageType: IconSizeType.small),
-              hintText: "Select City",
+              hintText: R.string().commonString.lblCity,
               maxLine: 1,
               keyboardType: TextInputType.text,
               type: TextFieldType.DropDown,
@@ -548,8 +565,6 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
           }),
     );
   }
-List<String> businessItem = ["Independent Jeweler","Online Jewelery Store","Diamond Dealer/Broker","Diamond Manufacture/ Cutter", "Jewelry Manufacturer", "Jewelry Retain Chain", "Pawn Shop"];
-//  DropDownItem item = DropDownItem(widget.item, DropDownItem.BACK_PER);
 
   getBusinessTypeDropDown() {
     return AbsorbPointer(
@@ -559,7 +574,7 @@ List<String> businessItem = ["Independent Jeweler","Online Jewelery Store","Diam
           textOption: TextFieldOption(
               prefixWid: getCommonIconWidget(
                   imageName: city, imageType: IconSizeType.small),
-              hintText: "Select Business Type",
+              hintText: R.string().commonString.selectBusinessType,
               maxLine: 1,
               keyboardType: TextInputType.text,
               type: TextFieldType.DropDown,
@@ -577,7 +592,7 @@ List<String> businessItem = ["Independent Jeweler","Online Jewelery Store","Diam
     );
   }
 
-  Widget popupList(List<String> backPerList,
+  Widget popupList(List<SelectionPopupModel> backPerList,
       Function(String) selectedValue,
       {bool isPer = false}) =>
       PopupMenuButton<String>(
@@ -588,7 +603,7 @@ List<String> businessItem = ["Independent Jeweler","Online Jewelery Store","Diam
         },
         itemBuilder: (context) => [
           for (var item in backPerList)
-            getPopupItems(item),
+            getPopupItems(item.title),
           PopupMenuItem(
             height: getSize(30),
             value: "Start",
@@ -669,9 +684,9 @@ List<String> businessItem = ["Independent Jeweler","Online Jewelery Store","Diam
     }).catchError(
           (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            title: "Error in Fetching City List",
+            title: R.string().commonString.error,
             desc: onError.message,
-            positiveBtnTitle: "Try again",
+            positiveBtnTitle: R.string().commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
               _callApiForCityList(stateId: stateId, countryId: countryId);
             })
@@ -718,15 +733,15 @@ List<String> businessItem = ["Independent Jeweler","Online Jewelery Store","Diam
           (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(
           context,
-          title: "Error in Fetching Country List",
+          title: R.string().commonString.error,
           desc: onError.message,
-          positiveBtnTitle: "Try again",
+          positiveBtnTitle: R.string().commonString.btnTryAgain,
           onClickCallback: (buttonType) {
             if (buttonType == ButtonType.PositveButtonClick) {
               _callApiForCountryList();
             }
           },
-          negativeBtnTitle: "Cancel",
+          negativeBtnTitle: R.string().commonString.cancel,
         )
       },
     );
@@ -774,9 +789,9 @@ List<String> businessItem = ["Independent Jeweler","Online Jewelery Store","Diam
     }).catchError(
           (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            title: "Error in Fetching State List",
+            title: R.string().commonString.error,
             desc: onError.message,
-            positiveBtnTitle: "Try again",
+            positiveBtnTitle: R.string().commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
               _callApiForStateList(countryId: countryId);
             })
@@ -786,6 +801,19 @@ List<String> businessItem = ["Independent Jeweler","Online Jewelery Store","Diam
 
   callCompanyInformationApi() async {
     CompanyInformationReq req = CompanyInformationReq();
+    req.companyName = _CompanyNameController.text;
+    req.country = selectedCountryItem.id;
+    req.state = selectedStateItem.id;
+    req.city = selectedCityItem.id;
+    req.address = _addressLineOneController.text + " " + _addressLineTwoController.text;
+    req.vendorCode = _companyCodeController.text;
+    businessTypeList.forEach((element) {
+      if(element.title == _businessTypeController.text.trim()) {
+        req.businessType = element.id;
+      }
+    });
+    req.zipCode = _pinCodeController.text;
+    req.sId = app.resolve<PrefUtils>().getUserDetails().id;
 
     NetworkCall<BaseApiResp>()
         .makeCall(
@@ -797,9 +825,9 @@ List<String> businessItem = ["Independent Jeweler","Online Jewelery Store","Diam
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
         context,
-        title: "Update Company Information Error",
+        title: R.string().commonString.error,
         desc: onError.message,
-        positiveBtnTitle: "Try Again",
+        positiveBtnTitle: R.string().commonString.btnTryAgain,
       );
     });
   }

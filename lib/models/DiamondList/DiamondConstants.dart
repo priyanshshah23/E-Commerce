@@ -26,7 +26,7 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_CHANGE_PASSWORD = 22;
   static const MODULE_TYPE_LOGOUT = 23;
   static const MODULE_TYPE_UPCOMING = 24;
-  static const MODULE_TYPE_PROFILE = 25;
+  static const MODULE_TYPE_PROFILE = 26;
   static const MODULE_TYPE_MY_COMMENT = 25;
   static const MODULE_TYPE_Home = 100;
   static const MODULE_TYPE_OPEN_DRAWER= 1000;
