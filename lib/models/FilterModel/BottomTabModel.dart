@@ -1,4 +1,5 @@
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -30,8 +31,11 @@ class BottomCodeConstant {
   static const String TBGrideView = "TB_GRIDE_VIEW";
   static const String TBSortView = "TB_SORT_VIEW";
   static const String TBDownloadView = "TB_DOWNLOAD_VIEW";
-  static const String TBShare= "TB_SHARE";
-  static const String TBClock= "TB_CLOCK";
+  static const String TBShare = "TB_SHARE";
+  static const String TBClock = "TB_CLOCK";
+
+  static const String TBProfile = "TB_PROFILE";
+  static const String TBNotification = "TB_NOTIFICATION";
 }
 
 class TabConfiguration {
@@ -41,7 +45,10 @@ class TabConfiguration {
   Color centerImageBackgroundColor;
 
   TabConfiguration(
-      {this.textColor, this.backgroundColor, this.centerImageBackgroundColor,this.imageColor});
+      {this.textColor,
+      this.backgroundColor,
+      this.centerImageBackgroundColor,
+      this.imageColor});
 
   TabConfiguration.fromJson(Map<String, dynamic> json) {
     textColor = fromHex(
@@ -79,9 +86,8 @@ class BottomTabModel extends TabConfiguration {
   String code;
   int type;
   int sequence;
-  bool isCenter=true;
+  bool isCenter = true;
   bool isSelected;
-
 
   BottomTabModel({
     this.title,
@@ -215,55 +221,55 @@ class BottomTabBar {
     return arrBootomTab;
   }
 
-  static List<BottomTabModel> getTimeSlotList(){
-    List<BottomTabModel> arrTimeList=[];
+  static List<BottomTabModel> getTimeSlotList() {
+    List<BottomTabModel> arrTimeList = [];
     arrTimeList.add(BottomTabModel(
-      title: "9:00AM - 9:30AM",
+      title: R.string().commonString.lblTimeSlot1,
     ));
     arrTimeList.add(BottomTabModel(
-      title: "9:30AM - 10:00AM",
+      title: R.string().commonString.lblTimeSlot2,
     ));
     arrTimeList.add(BottomTabModel(
-      title: "10:00AM - 10:30AM",
+      title: R.string().commonString.lblTimeSlot3,
     ));
     arrTimeList.add(BottomTabModel(
-      title: "10:30AM - 11:00AM",
+      title: R.string().commonString.lblTimeSlot4,
     ));
     arrTimeList.add(BottomTabModel(
-      title: "11:00AM - 11:30AM",
+      title: R.string().commonString.lblTimeSlot5,
     ));
     arrTimeList.add(BottomTabModel(
-      title: "11:30M - 12:00PM",
+      title:R.string().commonString.lblTimeSlot6,
     ));
     arrTimeList.add(BottomTabModel(
-      title: "12:00PM - 12:30PM",
+      title: R.string().commonString.lblTimeSlot7,
     ));
     arrTimeList.add(BottomTabModel(
-      title: "12:00PM - 12:30PM",
+      title: R.string().commonString.lblTimeSlot8,
     ));
     arrTimeList.add(BottomTabModel(
-      title: "12:30PM - 1:00PM",
+      title: R.string().commonString.lblTimeSlot9,
     ));
     arrTimeList.add(BottomTabModel(
-      title: "1:00PM - 1:30PM",
+      title:R.string().commonString.lblTimeSlot10,
     ));
     arrTimeList.add(BottomTabModel(
-      title: "1:30PM - 2:00PM",
+      title: R.string().commonString.lblTimeSlot11,
     ));
     arrTimeList.add(BottomTabModel(
-      title: "2:00PM - 2:30PM",
+      title: R.string().commonString.lblTimeSlot12,
     ));
     arrTimeList.add(BottomTabModel(
-      title: "2:30PM - 3:00PM",
+      title: R.string().commonString.lblTimeSlot13,
     ));
     arrTimeList.add(BottomTabModel(
-      title: "3:30PM - 4:00PM",
+      title: R.string().commonString.lblTimeSlot14,
     ));
     arrTimeList.add(BottomTabModel(
-      title: "4:00PM - 4:30PM",
+      title: R.string().commonString.lblTimeSlot15,
     ));
     arrTimeList.add(BottomTabModel(
-      title: "4:30PM - 5:00PM",
+      title: R.string().commonString.lblTimeSlot16,
     ));
     return arrTimeList;
   }

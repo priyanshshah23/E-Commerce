@@ -150,6 +150,26 @@ class Config {
     return arrFilter;
   }
 
+  Future<List<DiamondDetailUIModel>> getDiamonCompareUIJson() async {
+    String jsonForm =
+        await rootBundle.loadString('assets/Json/DiamondCompare.json');
+
+    List<dynamic> fieldList = jsonDecode(jsonForm);
+    List<DiamondDetailUIModel> tabModels = [];
+    for (int i = 0; i < fieldList.length; i++) {
+      dynamic element = fieldList[i];
+      if (element is Map<String, dynamic>) {
+        tabModels.add(DiamondDetailUIModel.fromJson(element));
+      }
+    }
+
+    //sort list according to sequence.
+    // tabModels.sort((model1, model2) {
+    //   return model1.sequence.compareTo(model2.sequence);
+    // });
+    return tabModels;
+  }
+
   Future<List<DiamondDetailUIModel>> getDiamonDetailUIJson() async {
     String jsonForm =
         await rootBundle.loadString('assets/Json/DiamondDetail.json');

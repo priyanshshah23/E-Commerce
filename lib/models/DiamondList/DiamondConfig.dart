@@ -8,11 +8,13 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
+import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../../main.dart';
 
@@ -31,7 +33,6 @@ class DiamondCalculation {
     double avgPriceCrt = 0.0;
     double avgAmount = 0.0;
     double totalamt = 0.0;
-    double termDiscAmount = 0.0;
 
     List<DiamondModel> filterList = [];
     Iterable<DiamondModel> list = arraDiamond.where((item) {
@@ -50,7 +51,6 @@ class DiamondCalculation {
     totalamt = arrValues[2];
     avgRapCrt = arrValues[3];
     avgPriceCrt = arrValues[4];
-    termDiscAmount = arrValues[5];
 
     totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt);
     totalAmount = PriceUtilities.getPrice(avgAmount);
@@ -113,6 +113,8 @@ class DiamondConfig {
         return R.string().screenTitle.myOffer;
       case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
         return R.string().screenTitle.myPurchased;
+      case DiamondModuleConstant.MODULE_TYPE_HOME:
+        return R.string().screenTitle.home;
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
         return R.string().screenTitle.newArrival;
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
@@ -161,58 +163,80 @@ class DiamondConfig {
 
   List<BottomTabModel> getToolbarItem({bool isDetail = false}) {
     List<BottomTabModel> list = [];
-    if (isCompare) {
-      list.add(BottomTabModel(
-          title: "",
-          image: download,
-          code: BottomCodeConstant.TBDownloadView,
-          sequence: 3,
-          isCenter: true));
-    } else if (isDetail) {
-      list.add(BottomTabModel(
-          title: "",
-          image: share,
-          code: BottomCodeConstant.TBShare,
-          sequence: 0,
-          isCenter: true));
-      list.add(BottomTabModel(
-          title: "",
-          image: clock,
-          code: BottomCodeConstant.TBClock,
-          sequence: 0,
-          isCenter: true));
-      list.add(BottomTabModel(
-          title: "",
-          image: download,
-          code: BottomCodeConstant.TBDownloadView,
-          sequence: 3,
-          isCenter: true));
-    } else {
-      list.add(BottomTabModel(
-          title: "",
-          image: selectAll,
-          code: BottomCodeConstant.TBSelectAll,
-          sequence: 0,
-          isCenter: true));
-      list.add(BottomTabModel(
-          title: "",
-          image: gridView,
-          code: BottomCodeConstant.TBGrideView,
-          sequence: 1,
-          isCenter: true));
-      list.add(BottomTabModel(
-          title: "",
-          image: filter,
-          code: BottomCodeConstant.TBSortView,
-          sequence: 2,
-          isCenter: true));
-      list.add(BottomTabModel(
-          title: "",
-          image: download,
-          code: BottomCodeConstant.TBDownloadView,
-          sequence: 3,
-          isCenter: true));
+
+    switch (moduleType) {
+      case DiamondModuleConstant.MODULE_TYPE_HOME:
+        list.add(BottomTabModel(
+            title: "",
+            image: notification,
+            code: BottomCodeConstant.TBNotification,
+            sequence: 1,
+            isCenter: true));
+        list.add(BottomTabModel(
+            title: "",
+            image: userTemp,
+            code: BottomCodeConstant.TBProfile,
+            sequence: 2,
+            isCenter: true));
+
+        break;
+
+      default:
+        if (isCompare) {
+          list.add(BottomTabModel(
+              title: "",
+              image: download,
+              code: BottomCodeConstant.TBDownloadView,
+              sequence: 3,
+              isCenter: true));
+        } else if (isDetail) {
+          list.add(BottomTabModel(
+              title: "",
+              image: share,
+              code: BottomCodeConstant.TBShare,
+              sequence: 0,
+              isCenter: true));
+          list.add(BottomTabModel(
+              title: "",
+              image: clock,
+              code: BottomCodeConstant.TBClock,
+              sequence: 0,
+              isCenter: true));
+          list.add(BottomTabModel(
+              title: "",
+              image: download,
+              code: BottomCodeConstant.TBDownloadView,
+              sequence: 3,
+              isCenter: true));
+        } else {
+          list.add(BottomTabModel(
+              title: "",
+              image: selectAll,
+              code: BottomCodeConstant.TBSelectAll,
+              sequence: 0,
+              isCenter: true));
+          list.add(BottomTabModel(
+              title: "",
+              image: gridView,
+              code: BottomCodeConstant.TBGrideView,
+              sequence: 1,
+              isCenter: true));
+          list.add(BottomTabModel(
+              title: "",
+              image: filter,
+              code: BottomCodeConstant.TBSortView,
+              sequence: 2,
+              isCenter: true));
+          list.add(BottomTabModel(
+              title: "",
+              image: download,
+              code: BottomCodeConstant.TBDownloadView,
+              sequence: 3,
+              isCenter: true));
+        }
+        break;
     }
+
     return list;
   }
 
@@ -344,13 +368,14 @@ class DiamondConfig {
   }
 
   actionAppointment(BuildContext context, List<DiamondModel> list) {
-    showAppointmentDialog(context, (manageClick) {
-      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
-        /*callApiFoCreateTrack(
-            context, list, DiamondTrackConstant.TRACK_TYPE_APPOINTMENT,
-            isPop: true);*/
-      }
-    });
+    NavigationUtilities.pushRoute(OfferViewScreen.route);
+//    showAppointmentDialog(context, (manageClick) {
+//      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
+//        /*callApiFoCreateTrack(
+//            context, list, DiamondTrackConstant.TRACK_TYPE_APPOINTMENT,
+//            isPop: true);*/
+//      }
+//    });
   }
 
   actionHold(List<DiamondModel> list) {}

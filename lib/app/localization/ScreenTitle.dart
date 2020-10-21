@@ -152,6 +152,16 @@ class ScreenTitle {
 
   final String searchResult;
 
+  // HOme
+  final String watchlist;
+  final String exclusive;
+  final String featuredStones;
+  final String stoneOfDay;
+  final String savedSearch;
+  final String recentSearch;
+  final String viewAll;
+  final String salesPersonDetail;
+
   const ScreenTitle({
     this.myEnquiry = "My Enquiry",
     this.bidPricePerCt = "Bid Price / Ct",
@@ -301,5 +311,16 @@ class ScreenTitle {
     this.placeOrder = "Place Order",
     this.share = "Share",
     this.searchResult = "Search Result",
+
+    //home
+    this.watchlist = "Watchlist",
+    this.exclusive = "Exclusive",
+    this.featuredStones = "Featured Stones",
+    this.stoneOfDay = "Stones of Day",
+    this.savedSearch = "Saved Search",
+    this.recentSearch = "Recent Search",
+    this.viewAll = "View All",
+    this.salesPersonDetail = "Sales Person Detail",
+    //
   });
 }

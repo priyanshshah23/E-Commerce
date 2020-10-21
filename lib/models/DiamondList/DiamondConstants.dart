@@ -31,7 +31,6 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_COMPARE = 27;
   static const MODULE_TYPE_MATCH_PAIR= 28;
 
-  static const MODULE_TYPE_Home = 100;
   static const MODULE_TYPE_OPEN_DRAWER = 1000;
   static const MODULE_TYPE_HOME = 100;
 }

@@ -1,10 +1,9 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
-
-import '../LoginModel.dart';
 
 class DiamondListReq {
   int page;
@@ -406,7 +405,7 @@ class DiamondModel {
   bool isAddToOffer = false;
   bool isAddToBid = false;
   String selectedBackPer;
-  String selectedOfferPer;
+  String selectedOfferPer = "0.5";
   String selectedOfferHour;
   bool pltFile;
   int groupNo;
@@ -687,29 +686,32 @@ class DiamondModel {
     return "";
   }
 
-  String getAmount() {
-    var amount =
-        (amt.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
-
-    return R.string().commonString.doller + amount + "/Amt" ?? "";
-  }
-
-  String getPricePerCarat() {
-    var caratPerPrice =
-        (ctPr.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
-
-    return R.string().commonString.doller + caratPerPrice + "/Cts" ?? "";
-  }
-
   num getFinalRate() {
-    if (selectedOfferPer != null) {
+    if (isAddToOffer) {
+      if (selectedOfferPer != null) {
+        num quote = (-back + num.parse(selectedOfferPer));
+        num pricePerCarat = rap - ((quote * rap) / 100);
+        num lessAmt = ((pricePerCarat * 2) / 100);
+        num finalrate = pricePerCarat - lessAmt;
+        return finalrate;
+      }else{
+        num quote = (-back + num.parse(selectedOfferPer));
+        num pricePerCarat = rap - ((quote * rap) / 100);
+        num lessAmt = ((pricePerCarat * 2) / 100);
+        num finalrate = pricePerCarat - lessAmt;
+        return finalrate;
+      }
+    }else{
+      return this.ctPr - ((this.ctPr * 2) / 100);
+    }
+    /*if (selectedOfferPer != null) {
       num quote = (-back + num.parse(selectedOfferPer));
       num pricePerCarat = rap - ((quote * rap) / 100);
       num lessAmt = ((pricePerCarat * 2) / 100);
       num finalrate = pricePerCarat - lessAmt;
       return finalrate;
-    } else
-      return this.ctPr - ((this.ctPr * 2) / 100);
+    } else*/
+    return this.ctPr - ((this.ctPr * 2) / 100);
   }
 
   num getFinalDiscount() {
@@ -719,6 +721,21 @@ class DiamondModel {
   num getFinalAmount() {
     return crt * getFinalRate();
   }
+
+  String getAmount() {
+    var amount =
+    (amt.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
+
+    return R.string().commonString.doller + getFinalAmount().toStringAsFixed(2) + "/Amt" ?? "";
+  }
+
+  String getPricePerCarat() {
+    var caratPerPrice =
+    (ctPr.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
+   // return PriceUtilities.getPrice(getFinalRate()) + "Cts";
+    return R.string().commonString.doller + getFinalRate().toStringAsFixed(2) + "/Cts" ?? "";
+  }
+
 }
 
 class TrackItem {
