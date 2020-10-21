@@ -109,6 +109,17 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       );
     }
 
+    if (diamondModel.img) {
+      arrOfImages.add(
+        DiamondDetailImagePagerModel(
+          title: "Image",
+          url: DiamondUrls.image + diamondModel.vStnId + ".jpg",
+          isSelected: true,
+          isImage: true,
+        ),
+      );
+    }
+
     if (diamondModel.arrowFile) {
       arrOfImages.add(
         DiamondDetailImagePagerModel(
@@ -120,6 +131,11 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       );
     }
 
+    print("ArrowImage     " +
+        DiamondUrls.arroImage +
+        diamondModel.vStnId +
+        ".jpg");
+
     if (diamondModel.img) {
       arrImages.add(
         DiamondDetailImagePagerModel(
@@ -130,6 +146,8 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
             arr: arrOfImages),
       );
     }
+    print("Image    " + DiamondUrls.image + diamondModel.vStnId + ".jpg");
+
     if (diamondModel.videoFile) {
       arrImages.add(
         DiamondDetailImagePagerModel(
@@ -140,7 +158,9 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         ),
       );
     }
-    print(DiamondUrls.video + diamondModel.vStnId + ".html");
+
+    print("Video    " + DiamondUrls.video + diamondModel.vStnId + ".html");
+
     if (diamondModel.hAFile) {
       arrImages.add(
         DiamondDetailImagePagerModel(
@@ -151,6 +171,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         ),
       );
     }
+    print("H&A    " + DiamondUrls.heartImage + diamondModel.vStnId + ".jpg");
 
     if (diamondModel.certFile) {
       arrImages.add(
@@ -162,6 +183,12 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         ),
       );
     }
+
+    print("Certificate    " +
+        DiamondUrls.certificate +
+        diamondModel.vStnId +
+        ".jpg");
+
     _controller = TabController(
       vsync: this,
       length: arrImages.length,
@@ -343,6 +370,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                     height: getSize(20),
                   ),
                   Container(
+                    // color: Colors.yellow,
                     width: double.infinity,
                     height: getSize(366),
                     child: TabBarView(
@@ -451,78 +479,77 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                 ),
               ),
               SizedBox(
-                height: getSize(30),
+                height: getSize(16),
               ),
               if (model.arr != null && model.arr.length > 0)
                 Container(
-                  height: getSize(36),
-                  child: Row(
-                    children: [
-                      // Image.asset(
-                      //   filterUnionArrow,
-                      //   width: getSize(14),
-                      //   height: getSize(14),
-                      // ),
-                      Icon(Icons.chevron_left),
-                      SizedBox(
-                        width: getSize(8),
-                      ),
-                      Expanded(
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: [
-                            for (var i = 0; i < model.arr.length; i++)
-                              Padding(
-                                padding: EdgeInsets.only(right: getSize(8)),
-                                child: InkWell(
-                                  onTap: () {
-                                    //
-                                    model.arr = model.arr.map((e) {
-                                      e.isSelected = false;
-                                      return e;
-                                    }).toList();
-                                    model.arr[i].isSelected = true;
-                                    model.subIndex = i;
-                                    setState(() {
+                    height: getSize(36),
+                    child: Row(
+                      children: [
+                        // Image.asset(
+                        //   filterUnionArrow,
+                        //   width: getSize(14),
+                        //   height: getSize(14),
+                        // ),
+                        Icon(Icons.chevron_left),
+                        SizedBox(
+                          width: getSize(8),
+                        ),
+                        Expanded(
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              for (var i = 0; i < model.arr.length; i++)
+                                Padding(
+                                  padding: EdgeInsets.only(right: getSize(8)),
+                                  child: InkWell(
+                                    onTap: () {
                                       //
-                                    });
-                                  },
-                                  child: Container(
-                                    width: getSize(50),
-                                    decoration: BoxDecoration(
-                                        color: appTheme.whiteColor,
-                                        borderRadius:
-                                            BorderRadius.circular(getSize(5)),
-                                        border: Border.all(
-                                            color: model.arr[i].isSelected
-                                                ? appTheme.colorPrimary
-                                                : appTheme.lightBGColor)),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(getSize(4)),
-                                      child: getImageView(
-                                        model.arr[i].url,
-                                        height: getSize(50),
-                                        width: getSize(36),
+                                      model.arr = model.arr.map((e) {
+                                        e.isSelected = false;
+                                        return e;
+                                      }).toList();
+                                      model.arr[i].isSelected = true;
+                                      model.subIndex = i;
+                                      setState(() {
+                                        //
+                                      });
+                                    },
+                                    child: Container(
+                                      width: getSize(50),
+                                      decoration: BoxDecoration(
+                                          color: appTheme.whiteColor,
+                                          borderRadius:
+                                              BorderRadius.circular(getSize(5)),
+                                          border: Border.all(
+                                              color: model.arr[i].isSelected
+                                                  ? appTheme.colorPrimary
+                                                  : appTheme.lightBGColor)),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(getSize(4)),
+                                        child: getImageView(
+                                          model.arr[i].url,
+                                          height: getSize(50),
+                                          width: getSize(36),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              )
-                          ],
+                                )
+                            ],
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: getSize(8),
-                      ),
-                      // Image.asset(
-                      //   filterRightArrow,
-                      //   width: getSize(14),
-                      //   height: getSize(14),
-                      // ),
-                      Icon(Icons.chevron_right),
-                    ],
-                  ),
-                ),
+                        SizedBox(
+                          width: getSize(8),
+                        ),
+                        // Image.asset(
+                        //   filterRightArrow,
+                        //   width: getSize(14),
+                        //   height: getSize(14),
+                        // ),
+                        Icon(Icons.chevron_right),
+                      ],
+                    )),
             ],
           );
   }

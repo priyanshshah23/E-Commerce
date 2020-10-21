@@ -230,6 +230,7 @@ class SelectionModel extends FormBaseModel {
       this.allLableTitle,
       this.isShowAll,
       this.verticalScroll,
+      this.masterCode,
       apiKey}) {
     super.title = title;
     super.apiKey = apiKey;
