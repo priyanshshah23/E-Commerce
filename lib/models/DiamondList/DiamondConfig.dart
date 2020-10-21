@@ -115,6 +115,8 @@ class DiamondConfig {
         return R.string().screenTitle.myPurchased;
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
         return R.string().screenTitle.newArrival;
+      case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
+        return R.string().screenTitle.exclusiveDiamonds;
       default:
         return R.string().screenTitle.searchDiamond;
     }
@@ -125,6 +127,7 @@ class DiamondConfig {
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
+      case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
         return app
             .resolve<ServiceModule>()
             .networkService()
@@ -471,5 +474,34 @@ class DiamondConfig {
         }
       },
     );
+  }
+
+  List<Map<String, dynamic>> getExclusiveDiamondReq() {
+    List<Map<String, dynamic>> caratRequest = [];
+    Map<String, dynamic> mainDic = Map<String, dynamic>();
+    Map<String, dynamic> dict = Map<String, dynamic>();
+    dict[">="] = "5.0";
+    dict["<="] = "5.99";
+    mainDic["crt"] = dict;
+    caratRequest.add(mainDic);
+    Map<String, dynamic> mainDic1 = Map<String, dynamic>();
+    Map<String, dynamic> dict1 = Map<String, dynamic>();
+    dict1[">="] = "6.0";
+    dict1["<="] = "9.99";
+    mainDic1["crt"] = dict1;
+    caratRequest.add(mainDic1);
+    Map<String, dynamic> mainDic2 = Map<String, dynamic>();
+    Map<String, dynamic> dict2 = Map<String, dynamic>();
+    dict2[">="] = "10.0";
+    dict2["<="] = "19.99";
+    mainDic2["crt"] = dict2;
+    caratRequest.add(mainDic2);
+    Map<String, dynamic> mainDic3 = Map<String, dynamic>();
+    Map<String, dynamic> dict3 = Map<String, dynamic>();
+    dict3[">="] = "20.0";
+    dict3["<="] = "100";
+    mainDic3["crt"] = dict3;
+    caratRequest.add(mainDic3);
+    return caratRequest;
   }
 }

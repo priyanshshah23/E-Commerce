@@ -155,6 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
         case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
         case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
         case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+        case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
           openDiamondList(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_PROFILE:
