@@ -68,6 +68,8 @@ abstract class NetworkService {
 
   @POST(ApiConstants.diamondList)
   Future<DiamondListResp> diamondListPaginate(@Body() Map<String, dynamic> req);
+  @POST(ApiConstants.diamondMatchPair)
+  Future<DiamondListResp> diamondMatchPairList(@Body() Map<String, dynamic> req);
 
   @POST(ApiConstants.diamondBidList)
   Future<DiamondListResp> diamondBidList(@Body() Map<String, dynamic> req);

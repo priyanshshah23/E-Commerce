@@ -29,11 +29,10 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_PROFILE = 25;
   static const MODULE_TYPE_MY_COMMENT = 26;
   static const MODULE_TYPE_COMPARE = 27;
-
-
+  static const MODULE_TYPE_MATCH_PAIR= 28;
 
   static const MODULE_TYPE_Home = 100;
-  static const MODULE_TYPE_OPEN_DRAWER= 1000;
+  static const MODULE_TYPE_OPEN_DRAWER = 1000;
   static const MODULE_TYPE_HOME = 100;
 }
 
@@ -61,9 +60,6 @@ class ManageCLick {
       this.date});
 }
 
-
-
-
 class clickConstant {
   static const CLICK_TYPE_ROW = 1;
   static const CLICK_TYPE_SELECTION = 2;
@@ -79,11 +75,21 @@ class DiamondTrackConstant {
   static const TRACK_TYPE_APPOINTMENT = 100;
   static const TRACK_TYPE_BID = 101;
 }
+
 class BidConstant {
   static const BID_TYPE_ADD = 2;
 }
+
 class BidStatus {
   static const BID_STATUS_ACTIVE = 1;
+}
+
+class BorderConstant {
+  static const BORDER_TOP = 1;
+  static const BORDER_BOTTOM = 2;
+  static const BORDER_LEFT_RIGHT = 3;
+  static const BORDER_NONE = 4;
+  static const BORDER_MARGIN = 4.0;
 }
 
 class ActionMenuConstant {

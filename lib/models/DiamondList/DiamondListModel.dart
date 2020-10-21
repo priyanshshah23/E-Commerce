@@ -1,6 +1,7 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../LoginModel.dart';
@@ -163,8 +164,13 @@ class Data {
     }
     if (json['list'] != null) {
       list = new List<TrackItem>();
+      diamonds = new List<DiamondModel>();
       json['list'].forEach((v) {
-        list.add(new TrackItem.fromJson(v));
+        if (v["diamond"] != null) {
+          list.add(new TrackItem.fromJson(v));
+        } else {
+          diamonds.add(new DiamondModel.fromJson(v));
+        }
       });
     }
   }
@@ -394,6 +400,8 @@ class DiamondModel {
   String fcColDesc;
   num ratio;
   bool isSelected = false;
+  bool isMatchPair = false;
+  int borderType;
   bool isAddToWatchList = false;
   bool isAddToOffer = false;
   bool isAddToBid = false;
@@ -401,6 +409,9 @@ class DiamondModel {
   String selectedOfferPer;
   String selectedOfferHour;
   bool pltFile;
+  int groupNo;
+  double marginTop=0;
+  double marginBottom=0;
 
   getSelectedDetail(int type) {
     switch (type) {
@@ -551,6 +562,7 @@ class DiamondModel {
     fcColDesc = json['fcColDesc'];
     ratio = json['ratio'];
     pltFile = json['pltFile'] ?? false;
+    groupNo = json['groupNo'] ;
 //    isSelected = json['isSelected'];
   }
 
@@ -643,6 +655,7 @@ class DiamondModel {
     data['fcColDesc'] = this.fcColDesc;
     data['ratio'] = this.ratio;
     data['pltFile'] = this.pltFile;
+    data['groupNo'] = this.groupNo;
 //    data['isSelected'] = this.isSelected;
     return data;
   }
@@ -708,7 +721,6 @@ class DiamondModel {
   }
 }
 
-
 class TrackItem {
   String createdAt;
   String updatedAt;
@@ -739,6 +751,7 @@ class TrackItem {
   String createIp;
   bool isSentReminder;
   String addedBy;
+
   //User user;
   DiamondModel diamond;
 
@@ -775,7 +788,7 @@ class TrackItem {
     this.createIp,
     this.isSentReminder,
     this.addedBy,
-  //  this.user,
+    //  this.user,
     this.diamond,
     this.userAccount,
     this.createdBy,
@@ -811,7 +824,7 @@ class TrackItem {
     createIp = json['createIp'];
     isSentReminder = json['isSentReminder'];
     addedBy = json['addedBy'];
-   // user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    // user = json['user'] != null ? new User.fromJson(json['user']) : null;
     diamond = json['diamond'] != null
         ? new DiamondModel.fromJson(json['diamond'])
         : null;

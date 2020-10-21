@@ -151,6 +151,11 @@ class DiamondConfig {
             .resolve<ServiceModule>()
             .networkService()
             .diamondBidList(dict);
+      case DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .diamondMatchPairList(dict);
     }
   }
 
@@ -503,5 +508,110 @@ class DiamondConfig {
     mainDic3["crt"] = dict3;
     caratRequest.add(mainDic3);
     return caratRequest;
+  }
+
+  void setMatchPairItem(List<DiamondModel> arraDiamond) {
+    if (moduleType == DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR) {
+      DiamondModel diamondItem;
+      if (arraDiamond.length == 1) {
+        diamondItem = arraDiamond[0];
+        diamondItem.isMatchPair = true;
+        diamondItem.borderType = BorderConstant.BORDER_NONE;
+        diamondItem.marginTop = BorderConstant.BORDER_MARGIN;
+        diamondItem.marginBottom = BorderConstant.BORDER_MARGIN;
+      } else {
+        for (int i = 0; i < arraDiamond.length; i++) {
+          diamondItem = arraDiamond[i];
+          diamondItem.isMatchPair = true;
+          if (i == 0) {
+            if (arraDiamond[i + 1].groupNo > diamondItem.groupNo) {
+              diamondItem.borderType = BorderConstant.BORDER_NONE;
+              diamondItem.marginTop = BorderConstant.BORDER_MARGIN;
+              diamondItem.marginBottom = BorderConstant.BORDER_MARGIN;
+            } else {
+              diamondItem.borderType = BorderConstant.BORDER_TOP;
+              diamondItem.marginTop = BorderConstant.BORDER_MARGIN;
+            }
+          } else if (i == arraDiamond.length - 1) {
+            if (arraDiamond[i - 1].groupNo < diamondItem.groupNo) {
+              diamondItem.borderType = BorderConstant.BORDER_NONE;
+              diamondItem.marginTop = BorderConstant.BORDER_MARGIN;
+              diamondItem.marginBottom = BorderConstant.BORDER_MARGIN;
+            } else {
+              diamondItem.borderType = BorderConstant.BORDER_BOTTOM;
+              diamondItem.marginBottom = BorderConstant.BORDER_MARGIN;
+            }
+          } else {
+            if (arraDiamond[i - 1].groupNo < diamondItem.groupNo &&
+                arraDiamond[i + 1].groupNo > diamondItem.groupNo) {
+              diamondItem.borderType = BorderConstant.BORDER_NONE;
+              diamondItem.marginTop = BorderConstant.BORDER_MARGIN;
+              diamondItem.marginBottom = BorderConstant.BORDER_MARGIN;
+            } else if (arraDiamond[i - 1].groupNo < diamondItem.groupNo) {
+              diamondItem.borderType = BorderConstant.BORDER_TOP;
+              diamondItem.marginTop = BorderConstant.BORDER_MARGIN;
+            } else if (arraDiamond[i + 1].groupNo > diamondItem.groupNo) {
+              diamondItem.borderType = BorderConstant.BORDER_BOTTOM;
+              diamondItem.marginBottom = BorderConstant.BORDER_MARGIN;
+            } else {
+              diamondItem.borderType = BorderConstant.BORDER_LEFT_RIGHT;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+BoxDecoration getBoxDecorationType(BuildContext context, int type) {
+  switch (type) {
+    case BorderConstant.BORDER_TOP:
+      return BoxDecoration(
+        border: Border(
+          top: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+          left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+          right: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+          bottom: BorderSide(width: 0, color: appTheme.whiteColor),
+        ),
+      );
+    case BorderConstant.BORDER_BOTTOM:
+      return BoxDecoration(
+        // boxShadow: getBoxShadow(context),
+        border: Border(
+          left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+          right: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+          bottom: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+          top: BorderSide(width: 0, color: appTheme.whiteColor),
+        ),
+      );
+    case BorderConstant.BORDER_LEFT_RIGHT:
+      return BoxDecoration(
+        // boxShadow: getBoxShadow(context),
+        border: Border(
+          left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+          right: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+          top: BorderSide(width: 0, color: appTheme.whiteColor),
+          bottom: BorderSide(width: 0, color: appTheme.whiteColor),
+        ),
+      );
+    case BorderConstant.BORDER_NONE:
+      return BoxDecoration(
+        //  boxShadow: getBoxShadow(context),
+        border: Border(
+          top: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+          left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+          right: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+          bottom: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+        ),
+      );
+    default:
+      return BoxDecoration(
+        border: Border(
+          top: BorderSide(width: 0, color: appTheme.whiteColor),
+          left: BorderSide(width: 0, color: appTheme.whiteColor),
+          right: BorderSide(width: 0, color: appTheme.whiteColor),
+          bottom: BorderSide(width: 0, color: appTheme.whiteColor),
+        ),
+      );
   }
 }
