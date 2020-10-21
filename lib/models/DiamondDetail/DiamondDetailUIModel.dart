@@ -10,6 +10,7 @@ class DiamondDetailUIModel {
   bool isExpand = false;
   int columns;
   String orientation;
+  bool isSelectedForComparechange;
 
   DiamondDetailUIModel(
       {this.title,
@@ -17,7 +18,8 @@ class DiamondDetailUIModel {
       this.sequence,
       this.isExpand,
       this.columns,
-      this.orientation});
+      this.orientation,
+      this.isSelectedForComparechange = false});
 
   DiamondDetailUIModel.fromJson(Map<String, dynamic> json) {
     title = json['title'];

@@ -7,12 +7,14 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondCompareWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
 import 'package:diamnow/components/Screens/More/DiamondBottomSheets.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
+import 'package:diamnow/models/DiamondDetail/DiamondDetailUIModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
@@ -56,9 +58,10 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
   @override
   void initState() {
     super.initState();
-    diamondConfig = DiamondConfig(moduleType,isCompare: true);
+    diamondConfig = DiamondConfig(moduleType, isCompare: true);
     diamondConfig.initItems();
   }
+
 
   void _onReorder(int oldIndex, int newIndex) {
     setState(
@@ -112,32 +115,44 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: appTheme.whiteColor,
-        appBar: getAppBar(
-          context,
-          R.string().screenTitle.compare,
-          bgColor: appTheme.whiteColor,
-          leadingButton: getBackButton(context),
-          centerTitle: false,
-          actionItems: getToolbarItem(),
+      backgroundColor: appTheme.whiteColor,
+      appBar: getAppBar(
+        context,
+        R.string().screenTitle.compare,
+        bgColor: appTheme.whiteColor,
+        leadingButton: getBackButton(context),
+        centerTitle: false,
+        actionItems: getToolbarItem(),
+      ),
+      bottomNavigationBar: getBottomTab(),
+      body: ReorderableListView(
+        scrollController: ScrollController(initialScrollOffset: 50),
+        onReorder: _onReorder,
+        scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.symmetric(horizontal: 8.0),
+        children: List.generate(
+          arrayDiamond.length,
+          (index) {
+            return DiamondCompareWidget(
+              diamondModel: this.arrayDiamond[index],
+              index: index,
+              key: Key(index.toString()),
+              deleteWidget: (index){
+                setState(() {
+                  arrayDiamond.removeAt(index);
+                });
+              },
+            );
+            // return Image.asset(
+            //   placeHolder,
+            //   width: getSize(200),
+            //   height: getSize(2000),
+            //   key: Key(index.toString()),
+            // );
+          },
         ),
-        bottomNavigationBar: getBottomTab(),
-        body: ReorderableListView(
-          onReorder: _onReorder,
-          scrollDirection: Axis.horizontal,
-          padding: EdgeInsets.symmetric(horizontal: 8.0),
-          children: List.generate(
-            arrayDiamond.length,
-            (index) {
-              return Image.asset(
-                placeHolder,
-                width: getSize(200),
-                height: getSize(2000),
-                key: Key(index.toString()),
-              );
-            },
-          ),
-        ));
+      ),
+    );
   }
 
   Widget getBottomTab() {
