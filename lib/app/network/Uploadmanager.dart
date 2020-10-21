@@ -30,7 +30,7 @@ Future<FileUploadResp> uploadFile(BuildContext context, String folderName,
         // return ApiConstants.PROXY_URL;
 
         //proxy all request to localhost:8888
-        // return ApiConstants.PROXY_URL;
+         return ApiConstants.PROXY_URL;
         //return "PROXY 192.168.1.4:8888";
 //        return "PROXY 192.168.225.188:8888";
         // return "PROXY 192.168.0.133:8888";

@@ -45,6 +45,9 @@ class ApiConstants {
   static const String companyInformation =
       commonUrl + "user/profile/update"; //done
   static const String quickSearch = commonUrl + "diamond/quick-search";
+  static const String personalInformationView = commonUrl + "user/view";
+  static const String companyInformationView = commonUrl + "user/profile";
+
 }
 
 class DiamondUrls {

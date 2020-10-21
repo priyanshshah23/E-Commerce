@@ -12,6 +12,7 @@ class PersonalInformationReq {
 //  String seller;
 //  String vendorNo;
   String mobile;
+  String countryCode;
 //  String account;
 //  String name;
   String address;
@@ -41,6 +42,7 @@ class PersonalInformationReq {
 //        this.seller,
 //        this.vendorNo,
         this.mobile,
+        this.countryCode,
 //        this.account,
 //        this.name,
         this.address,
@@ -64,6 +66,7 @@ class PersonalInformationReq {
     firstName = json['firstName'];
     lastName = json['lastName'];
     email = json['email'];
+    countryCode = json['countryCode'];
 //    username = json['username'];
 //    country = json['country'];
 //    state = json['state'];
@@ -120,6 +123,7 @@ class PersonalInformationReq {
 //    data['reference'] = this.reference;
     data['whatsapp'] = this.whatsapp;
     data['whatsappCounCode'] = this.whatsappCounCode;
+    data['countryCode'] = this.countryCode;
 //    data['skype'] = this.skype;
 //    data['wechat'] = this.wechat;
     return data;

@@ -60,6 +60,12 @@ abstract class NetworkService {
   @POST(ApiConstants.personalInformation)
   Future<BaseApiResp> personalInformation(@Body() PersonalInformationReq req);
 
+  @GET(ApiConstants.personalInformationView)
+  Future<BaseApiResp> personalInformationView();
+
+  @POST(ApiConstants.companyInformationView)
+  Future<BaseApiResp> companyInformationView();
+
   @POST(ApiConstants.companyInformation)
   Future<CompanyInformationResp> companyInformation(
       @Body() CompanyInformationReq req);

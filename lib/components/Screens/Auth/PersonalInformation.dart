@@ -115,7 +115,7 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
                 _formKey.currentState.save();
                 if(_mobileController.text.isNotEmpty || _whatsAppMobileController.text.isNotEmpty){
                   if(await checkValidation()) {
-                 //   callPersonalInformationApi();
+                    callPersonalInformationApi();
                   }
                 }
                 //isProfileImageUpload ? uploadDocument() : callApi();
@@ -156,6 +156,7 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
                               isProfileImageUpload = true;
                               profileImage = img;
                             });
+                            uploadDocument();
                           });
                         },
                         child: Stack(
@@ -207,6 +208,7 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
                                     isProfileImageUpload = true;
                                     profileImage = img;
                                   });
+                                  uploadDocument();
                                 });
                               },
                               child: Image.asset(
@@ -420,7 +422,7 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
         imgProfile = imagePath;
       });
     }
-    //  callApi(imgProfile: imgProfile);
+//    callApi(imgProfile: imgProfile);
   }
 
   uploadProfileImage(File imgFile, Function imagePath) async {
@@ -429,18 +431,21 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
       "",
       file: imgFile,
     ).then((result) {
-      if (result.code == CODE_OK) {
-        String imgPath =
-            result.data.files != null && result.data.files.length > 0
-                ? result.data.files.first.absolutePath
-                : "";
-        if (isStringEmpty(imgPath) == false) {
-          imagePath(imgPath);
-        }
-      }
+      print("DFB");
+      print(result.data);
+//      if (result.code == CODE_OK) {
+//        String imgPath =
+//        result.data.files != null && result.data.files.length > 0
+//            ? result.data.files.first.absolutePath
+//            : "";
+//        if (isStringEmpty(imgPath) == false) {
+//          imagePath(imgPath);
+//        }
+//      }
       return;
     });
   }
+
 
   getSkypeTextField() {
     return CommonTextfield(
@@ -1233,16 +1238,20 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
     }
   }
 
-  callPersonalInformationApi() async {
+  callPersonalInformationApi({String imagePath}) async {
     PersonalInformationReq req = PersonalInformationReq();
     req.id = app.resolve<PrefUtils>().getUserDetails().id;
     req.address = _addressLineOneController.text;
     req.firstName = _firstNameController.text;
     req.lastName = _lastNameController.text;
     req.mobile = _mobileController.text;
+    req.countryCode = selectedDialogCountryForMobile.phoneCode;
     req.whatsapp = _whatsAppMobileController.text;
-    req.whatsappCounCode = "+" + selectedDialogCountryForWhatsapp.phoneCode;
+    req.whatsappCounCode = selectedDialogCountryForWhatsapp.phoneCode;
     req.email = _emailController.text.trim();
+    if(imagePath != null) {
+      req.profileImage = imagePath;
+    }
 
     NetworkCall<BaseApiResp>()
         .makeCall(
