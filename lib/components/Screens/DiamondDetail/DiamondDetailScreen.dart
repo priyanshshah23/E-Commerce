@@ -204,7 +204,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       //
     });
 
-    Config.instance.getDiamonDetailUIJson().then((result) {
+    Config().getDiamonDetailUIJson().then((result) {
       setState(() {
         setupDiamonDetail(result);
       });

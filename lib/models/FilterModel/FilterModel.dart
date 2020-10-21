@@ -13,11 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class Config {
-  static final Config _singleton = Config._();
-  static Config get instance => _singleton;
-
-  Config._();
-
   List<Master> arrLocalData = [];
   List<TabModel> arrTabs = [];
   List<FilterOptions> arrSorting = [];

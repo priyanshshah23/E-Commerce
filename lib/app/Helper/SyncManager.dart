@@ -53,7 +53,7 @@ class SyncManager {
       }
 
       //Append static data masters
-      List<Master> arrLocalData = await Config.instance.getLocalDataJson();
+      List<Master> arrLocalData = await Config().getLocalDataJson();
       masterResp.data.masters.list.addAll(arrLocalData);
 
       await AppDatabase.instance.masterDao

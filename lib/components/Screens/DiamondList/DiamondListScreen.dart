@@ -70,7 +70,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   @override
   void initState() {
     super.initState();
-    Config.instance.getOptionsJson().then((result) {
+    Config().getOptionsJson().then((result) {
       result.forEach((element) {
         if (element.isActive) {
           optionList.add(element);
