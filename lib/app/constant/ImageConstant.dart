@@ -95,3 +95,15 @@ const String termsAndCondition = "assets/drawer/termsAndCondition.png";
 const String userTemp = "assets/drawer/user.png";
 const String bottomGradient = "assets/drawer/bottomGradient.png";
 const String edit = "assets/drawer/edit.png";
+
+//Home
+const String home_clock = "assets/Home/clock.png";
+const String home_delete = "assets/Home/delete.png";
+const String home_enquiry = "assets/Home/enquiry.png";
+const String home_enquiryBg = "assets/Home/enquiryBg.png";
+const String home_exclusive = "assets/Home/exclusive.png";
+const String home_exlusiveBg = "assets/Home/exlusiveBg.png";
+const String home_newArrival = "assets/Home/newArrival.png";
+const String home_newArrivalBg = "assets/Home/newArrivalBg.png";
+const String home_watchlist = "assets/Home/watchlist.png";
+const String home_watchlistBg = "assets/Home/watchlistBg.png";

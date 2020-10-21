@@ -99,6 +99,7 @@ flutter:
     - assets/Common/
     - assets/drawer/
     - assets/PlaceHolder/
+    - assets/Home/
     #- assets/chls/hochls.pem
     # - assets/chls.pem
 

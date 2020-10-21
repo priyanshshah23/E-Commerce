@@ -8,6 +8,7 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/components/Screens/Auth/Profile.dart';
 import 'package:diamnow/components/Screens/Auth/ProfileList.dart';
+import 'package:diamnow/components/Screens/DashBoard/Dashboard.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
@@ -96,6 +97,17 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  openDashboard(int moduleType) {
+    selectedType = moduleType;
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.ModuleType] = moduleType;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = Dashboard(
+      dict,
+      key: Key(moduleType.toString()),
+    );
+  }
+
   openSearch(int moduleType) {
     selectedType = moduleType;
     Map<String, dynamic> dict = new HashMap();
@@ -128,11 +140,14 @@ class _HomeScreenState extends State<HomeScreen> {
   manageDrawerClick(BuildContext context, int type, bool isPop) {
     if (context != null) {
       if (isPop) Navigator.pop(context);
-      if (selectedType == type) {
-        return;
-      }
+      // if (selectedType == type) {
+      //   return;
+      // }
 
       switch (type) {
+        case DiamondModuleConstant.MODULE_TYPE_HOME:
+          openDashboard(type);
+          break;
         case DiamondModuleConstant.MODULE_TYPE_SEARCH:
           openSearch(type);
           break;

@@ -30,10 +30,7 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_MY_COMMENT = 26;
   static const MODULE_TYPE_COMPARE = 27;
 
-
-
-  static const MODULE_TYPE_Home = 100;
-  static const MODULE_TYPE_OPEN_DRAWER= 1000;
+  static const MODULE_TYPE_OPEN_DRAWER = 1000;
   static const MODULE_TYPE_HOME = 100;
 }
 
@@ -60,8 +57,6 @@ class ManageCLick {
       this.remark,
       this.date});
 }
-
-
 
 class clickConstant {
   static const CLICK_TYPE_ROW = 1;
