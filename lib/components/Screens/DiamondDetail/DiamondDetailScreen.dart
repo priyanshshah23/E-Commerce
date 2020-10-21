@@ -201,9 +201,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       //
     });
 
-    Config().getDiamonDetailUIJson().then((result) {
-      // arrDiamondDetailUIModel = result;
-
+    Config.instance.getDiamonDetailUIJson().then((result) {
       setState(() {
         setupDiamonDetail(result);
       });
@@ -644,10 +642,10 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       );
     } else {
       num spacing = 0;
-      if (diamondDetailUIModel.orientation == "horizontal" &&
+      if (diamondDetailUIModel.orientation == "h" &&
           diamondDetailUIModel.columns == 2) {
         spacing = 500;
-      } else if (diamondDetailUIModel.orientation == "vertical" &&
+      } else if (diamondDetailUIModel.orientation == "v" &&
           diamondDetailUIModel.columns == 2) {
         spacing = 470;
       } else {

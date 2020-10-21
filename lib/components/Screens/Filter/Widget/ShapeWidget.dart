@@ -16,13 +16,15 @@ class ShapeWidget extends StatefulWidget {
 
 class _ShapeWidgetState extends State<ShapeWidget> {
   //show when isShowMoreSelected=false;
-  int elementsToShow = 11;
+  int elementsToShow;
   List<Master> listOfMasterView = [];
   String showMoreId = "ShowMore";
 
   @override
   void initState() {
     super.initState();
+
+    elementsToShow = widget.selectionModel.numberOfelementsToShow;
 
     if (widget.selectionModel.isShowAll == true &&
         widget.selectionModel.orientation == DisplayTypes.vertical) {

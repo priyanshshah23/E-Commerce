@@ -4,7 +4,7 @@
         "sequence": 1,
         "isExpand": false,
         "columns": 3,
-        "orientation": "horizontal",
+        "orientation": "h",
         "parameters": [
             {
                 "title": "Stone ID",
@@ -110,7 +110,7 @@
         "sequence": 2,
         "isExpand": false,
         "columns": 2,
-        "orientation": "horizontal",
+        "orientation": "h",
         "parameters": [
             {
                 "title": "Length",
@@ -200,7 +200,7 @@
         "sequence": 3,
         "isExpand": false,
         "columns": 1,
-        "orientation": "vertical",
+        "orientation": "v",
         "parameters": [
             {
                 "title": "Heart & Arrow",
@@ -233,7 +233,7 @@
         "sequence": 4,
         "isExpand": false,
         "columns": 1,
-        "orientation": "vertical",
+        "orientation": "v",
         "parameters": [
             {
                 "title": "Comment",

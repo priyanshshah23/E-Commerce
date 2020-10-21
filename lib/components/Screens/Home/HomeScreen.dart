@@ -10,6 +10,7 @@ import 'package:diamnow/components/Screens/Auth/Profile.dart';
 import 'package:diamnow/components/Screens/Auth/ProfileList.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
+import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -104,6 +105,14 @@ class _HomeScreenState extends State<HomeScreen> {
     currentWidget = FilterScreen(dict);
   }
 
+  openQuickSearch(int moduleType) {
+    selectedType = moduleType;
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.ModuleType] = moduleType;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = QuickSearchScreen(dict);
+  }
+
   openDiamondList(int moduleType) {
     selectedType = moduleType;
     Map<String, dynamic> dict = new HashMap();
@@ -135,6 +144,9 @@ class _HomeScreenState extends State<HomeScreen> {
       switch (type) {
         case DiamondModuleConstant.MODULE_TYPE_SEARCH:
           openSearch(type);
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
+          openQuickSearch(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_CART:
         case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:

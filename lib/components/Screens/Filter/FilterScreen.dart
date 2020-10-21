@@ -75,12 +75,12 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     super.initState();
     registerRsBus();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Config().getFilterJson().then((result) {
+      Config.instance.getFilterJson().then((result) {
         setState(() {
           arrList = result;
         });
       });
-      Config().getTabJson().then((result) {
+      Config.instance.getTabJson().then((result) {
         setState(() {
           arrTab = result;
         });
@@ -342,8 +342,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           setState(() {
             segmentedControlValue = val;
             controller.animateToPage(segmentedControlValue,
-                duration: Duration(milliseconds: 500),
-                curve: Curves.bounceInOut);
+                duration: Duration(milliseconds: 500), curve: Curves.easeIn);
           });
         },
         groupValue: segmentedControlValue,
