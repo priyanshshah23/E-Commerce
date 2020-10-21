@@ -3,8 +3,8 @@ import '../app.export.dart';
 class ApiConstants {
 //    static const String PROXY_URL = "PROXY 192.168.2.124:8888";
   //  static const String PROXY_URL = "PROXY 192.168.0.117:8888";
-// static const String PROXY_URL = "PROXY 192.168.0.116:8888";
- static const String PROXY_URL = "PROXY 192.168.225.188:8888";
+  static const String PROXY_URL = "PROXY 192.168.0.114:8888";
+//  static const String PROXY_URL = "PROXY 192.168.225.188:8888";
 
 // static const String PROXY_URL = "PROXY 192.168.225.121:8888"; // Brijesh
 
@@ -27,8 +27,7 @@ class ApiConstants {
   static const String diamondTrackList = commonUrl + "diamond-track/paginate";
   static const String diamondCommentList =
       commonUrl + "diamond-comment/by-user";
-  static const String diamondBidList =
-      commonUrl + "diamond-bid/paginate";
+  static const String diamondBidList = commonUrl + "diamond-bid/paginate";
 
   static const String createDiamondTrack = commonUrl + "diamond-track/create";
   static const String upsetComment = commonUrl + "diamond-comment/upsert";

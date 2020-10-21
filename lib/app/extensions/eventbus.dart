@@ -10,3 +10,6 @@ final String eventMasterForSingleItemOfGroupSelection =
     "eventMasterForSingleItemOfGroupSelection";
 final String eventMasterForGroupWidgetSelectAll =
     "eventMasterForGroupWidgetSelectAll";
+
+
+final String eventForShareCaratRangeSelected = "eventForShareCaratRangeSelected";
