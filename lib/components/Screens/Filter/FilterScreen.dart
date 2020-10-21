@@ -69,18 +69,19 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   List<BottomTabModel> arrBottomTab;
   String filterId;
   List<FilterOptions> optionList = List<FilterOptions>();
+  Config config = Config();
 
   @override
   void initState() {
     super.initState();
     registerRsBus();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Config().getFilterJson().then((result) {
+      config.getFilterJson().then((result) {
         setState(() {
           arrList = result;
         });
       });
-      Config().getTabJson().then((result) {
+      config.getTabJson().then((result) {
         setState(() {
           arrTab = result;
         });
@@ -342,8 +343,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           setState(() {
             segmentedControlValue = val;
             controller.animateToPage(segmentedControlValue,
-                duration: Duration(milliseconds: 500),
-                curve: Curves.bounceInOut);
+                duration: Duration(milliseconds: 500), curve: Curves.easeIn);
           });
         },
         groupValue: segmentedControlValue,

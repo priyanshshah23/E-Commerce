@@ -13,131 +13,161 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class Config {
-  Future<List<Master>> getLocalDataJson() async {
-    String jsonForm = await rootBundle.loadString('assets/Json/Localdata.json');
+  List<Master> arrLocalData = [];
+  List<TabModel> arrTabs = [];
+  List<FilterOptions> arrSorting = [];
+  List<FormBaseModel> arrFilter = [];
 
-    List<dynamic> fieldList = jsonDecode(jsonForm);
-    List<Master> masters = [];
-    for (int i = 0; i < fieldList.length; i++) {
-      dynamic element = fieldList[i];
-      if (element is Map<String, dynamic>) {
-        masters.add(Master.fromJson(element));
+  Future<List<Master>> getLocalDataJson() async {
+    if (isNullEmptyOrFalse(arrLocalData)) {
+      String jsonForm =
+          await rootBundle.loadString('assets/Json/Localdata.json');
+
+      List<dynamic> fieldList = jsonDecode(jsonForm);
+      for (int i = 0; i < fieldList.length; i++) {
+        dynamic element = fieldList[i];
+        if (element is Map<String, dynamic>) {
+          arrLocalData.add(Master.fromJson(element));
+        }
       }
     }
-    return masters;
+    return arrLocalData;
   }
 
   Future<List<TabModel>> getTabJson() async {
-    String jsonForm = await rootBundle.loadString('assets/Json/TabJson.json');
+    if (isNullEmptyOrFalse(arrTabs)) {
+      String jsonForm = await rootBundle.loadString('assets/Json/TabJson.json');
 
-    List<dynamic> fieldList = jsonDecode(jsonForm);
-    List<TabModel> tabModels = [];
-    for (int i = 0; i < fieldList.length; i++) {
-      dynamic element = fieldList[i];
-      if (element is Map<String, dynamic>) {
-        tabModels.add(TabModel.fromJson(element));
+      List<dynamic> fieldList = jsonDecode(jsonForm);
+
+      for (int i = 0; i < fieldList.length; i++) {
+        dynamic element = fieldList[i];
+        if (element is Map<String, dynamic>) {
+          arrTabs.add(TabModel.fromJson(element));
+        }
       }
     }
-    return tabModels;
+    return arrTabs;
   }
 
   Future<List<FilterOptions>> getOptionsJson() async {
-    String jsonForm =
-        await rootBundle.loadString('assets/Json/SortingPopup.json');
+    if (isNullEmptyOrFalse(arrSorting)) {
+      String jsonForm =
+          await rootBundle.loadString('assets/Json/SortingPopup.json');
 
-    List<dynamic> fieldList = jsonDecode(jsonForm);
-    List<FilterOptions> optionsModels = [];
-    for (int i = 0; i < fieldList.length; i++) {
-      dynamic element = fieldList[i];
-      if (element is Map<String, dynamic>) {
-        optionsModels.add(FilterOptions.fromJson(element));
+      List<dynamic> fieldList = jsonDecode(jsonForm);
+      for (int i = 0; i < fieldList.length; i++) {
+        dynamic element = fieldList[i];
+        if (element is Map<String, dynamic>) {
+          arrSorting.add(FilterOptions.fromJson(element));
+        }
       }
     }
-    return optionsModels;
+    return arrSorting;
   }
 
   Future<List<FormBaseModel>> getFilterJson() async {
-    String jsonForm =
-        await rootBundle.loadString('assets/Json/FilterJson.jsonc');
+    if (isNullEmptyOrFalse(arrFilter)) {
+      String jsonForm =
+          await rootBundle.loadString('assets/Json/FilterJson.jsonc');
 
-    List<dynamic> fieldList = jsonDecode(jsonForm);
+      List<dynamic> fieldList = jsonDecode(jsonForm);
 
-    List<FormBaseModel> formModels =
-        []; //list of onlymodels. //store formbasemodels with sequence...
-
-    for (int i = 0; i < fieldList.length; i++) {
-      dynamic element = fieldList[i];
-      if (element is Map<String, dynamic>) {
-        String viewType = element["viewType"];
-        if (element["isActive"] ?? true) {
-          if (viewType == ViewTypes.fromTo) {
-            formModels.add(FromToModel.fromJson(element));
-          } else if (viewType == ViewTypes.shapeWidget) {
-            SelectionModel selectionModel = SelectionModel.fromJson(element);
-            formModels.add(selectionModel);
-            List<Master> arrMaster =
-                await Master.getSubMaster(selectionModel.masterCode);
-            selectionModel.masters = arrMaster;
-          } else if (viewType == ViewTypes.selection) {
-            SelectionModel selectionModel = SelectionModel.fromJson(element);
-            formModels.add(selectionModel);
-            List<Master> arrMaster =
-                await Master.getSubMaster(selectionModel.masterCode);
-            selectionModel.masters = arrMaster;
-          } else if (viewType == ViewTypes.groupWidget) {
-            ColorModel colorModel = ColorModel.fromJson(element);
-            formModels.add(colorModel);
-
-            if (colorModel.showGroup) {
+      for (int i = 0; i < fieldList.length; i++) {
+        dynamic element = fieldList[i];
+        if (element is Map<String, dynamic>) {
+          String viewType = element["viewType"];
+          if (element["isActive"] ?? true) {
+            if (viewType == ViewTypes.fromTo) {
+              arrFilter.add(FromToModel.fromJson(element));
+            } else if (viewType == ViewTypes.shapeWidget) {
+              SelectionModel selectionModel = SelectionModel.fromJson(element);
+              arrFilter.add(selectionModel);
               List<Master> arrMaster =
-                  await Master.getSubMaster(colorModel.masterCode);
-              List<Master> arrGroupMaster =
-                  await Master.getSubMaster(colorModel.groupMasterCode);
-              colorModel.mainMasters = arrMaster;
-              colorModel.groupMaster = arrGroupMaster;
-              colorModel.masters = arrMaster;
-            } else if (colorModel.showWhiteFancy) {
+                  await Master.getSubMaster(selectionModel.masterCode);
+              selectionModel.masters = arrMaster;
+            } else if (viewType == ViewTypes.selection) {
+              SelectionModel selectionModel = SelectionModel.fromJson(element);
+              arrFilter.add(selectionModel);
               List<Master> arrMaster =
-                  await Master.getSubMaster(colorModel.masterCode);
-              List<Master> arrGroupMaster =
-                  await Master.getSubMaster(MasterCode.fancyColor);
+                  await Master.getSubMaster(selectionModel.masterCode);
+              selectionModel.masters = arrMaster;
+            } else if (viewType == ViewTypes.groupWidget) {
+              ColorModel colorModel = ColorModel.fromJson(element);
+              arrFilter.add(colorModel);
 
-              List<Master> intensity =
-                  await Master.getSubMaster(MasterCode.intensity);
-              List<Master> overtone =
-                  await Master.getSubMaster(MasterCode.overTone);
-              colorModel.mainMasters = arrMaster;
-              colorModel.groupMaster = arrGroupMaster;
-              colorModel.intensity = intensity;
-              colorModel.overtone = overtone;
-              colorModel.masters = arrMaster;
+              if (colorModel.showGroup) {
+                List<Master> arrMaster =
+                    await Master.getSubMaster(colorModel.masterCode);
+                List<Master> arrGroupMaster =
+                    await Master.getSubMaster(colorModel.groupMasterCode);
+                colorModel.mainMasters = arrMaster;
+                colorModel.groupMaster = arrGroupMaster;
+                colorModel.masters = arrMaster;
+              } else if (colorModel.showWhiteFancy) {
+                List<Master> arrMaster =
+                    await Master.getSubMaster(colorModel.masterCode);
+                List<Master> arrGroupMaster =
+                    await Master.getSubMaster(MasterCode.fancyColor);
+
+                List<Master> intensity =
+                    await Master.getSubMaster(MasterCode.intensity);
+                List<Master> overtone =
+                    await Master.getSubMaster(MasterCode.overTone);
+                colorModel.mainMasters = arrMaster;
+                colorModel.groupMaster = arrGroupMaster;
+                colorModel.intensity = intensity;
+                colorModel.overtone = overtone;
+                colorModel.masters = arrMaster;
+              }
+            } else if (viewType == ViewTypes.seperator) {
+              SeperatorModel seperatorModel = SeperatorModel.fromJson(element);
+              arrFilter.add(seperatorModel);
+            } else if (viewType == ViewTypes.certNo) {
+              CertNoModel seperatorModel = CertNoModel.fromJson(element);
+              arrFilter.add(seperatorModel);
+            } else if (viewType == ViewTypes.keytosymbol) {
+              KeyToSymbolModel keyToSymbol = KeyToSymbolModel.fromJson(element);
+              arrFilter.add(keyToSymbol);
+              List<Master> arrMaster =
+                  await Master.getSubMaster(keyToSymbol.masterCode);
+              keyToSymbol.masters = arrMaster;
+            } else if (viewType == ViewTypes.caratRange) {
+              SelectionModel selectionModel = SelectionModel.fromJson(element);
+              arrFilter.add(selectionModel);
+              List<Master> arrMaster = await Master.getSizeMaster();
+
+              selectionModel.masters = arrMaster;
             }
-          } else if (viewType == ViewTypes.seperator) {
-            SeperatorModel seperatorModel = SeperatorModel.fromJson(element);
-            formModels.add(seperatorModel);
-          } else if (viewType == ViewTypes.certNo) {
-            CertNoModel seperatorModel = CertNoModel.fromJson(element);
-            formModels.add(seperatorModel);
-          } else if (viewType == ViewTypes.keytosymbol) {
-            KeyToSymbolModel keyToSymbol = KeyToSymbolModel.fromJson(element);
-            formModels.add(keyToSymbol);
-            List<Master> arrMaster =
-                await Master.getSubMaster(keyToSymbol.masterCode);
-            keyToSymbol.masters = arrMaster;
-          } else if (viewType == ViewTypes.caratRange) {
-            SelectionModel selectionModel = SelectionModel.fromJson(element);
-            formModels.add(selectionModel);
-            List<Master> arrMaster = await Master.getSizeMaster();
-
-            selectionModel.masters = arrMaster;
           }
         }
       }
     }
+
     // formModels.sort((model1, model2) {
     //   return model1.sequence.compareTo(model2.sequence);
     // });
-    return formModels;
+    return arrFilter;
+  }
+
+  Future<List<DiamondDetailUIModel>> getDiamonCompareUIJson() async {
+    String jsonForm =
+        await rootBundle.loadString('assets/Json/DiamondCompare.json');
+
+    List<dynamic> fieldList = jsonDecode(jsonForm);
+    List<DiamondDetailUIModel> tabModels = [];
+    for (int i = 0; i < fieldList.length; i++) {
+      dynamic element = fieldList[i];
+      if (element is Map<String, dynamic>) {
+        tabModels.add(DiamondDetailUIModel.fromJson(element));
+      }
+    }
+
+    //sort list according to sequence.
+    // tabModels.sort((model1, model2) {
+    //   return model1.sequence.compareTo(model2.sequence);
+    // });
+    return tabModels;
   }
 
   Future<List<DiamondDetailUIModel>> getDiamonDetailUIJson() async {
@@ -222,7 +252,8 @@ class SelectionModel extends FormBaseModel {
   bool isSingleSelection;
   List<MasterSelection> masterSelection;
   List<String> caratRangeChipsToShow = [];
-
+  int numberOfelementsToShow;
+  bool showFromTo;
   SelectionModel(
       {title,
       this.masters,
@@ -247,6 +278,7 @@ class SelectionModel extends FormBaseModel {
     fromToStyle = json['fromToStyle'] != null
         ? new FromToStyle.fromJson(json['fromToStyle'])
         : null;
+    numberOfelementsToShow = json["numberOfelementsToShow"] ?? 11;
     isSingleSelection = json["isSingleSelection"] ?? false;
     if (json['masterSelection'] != null) {
       masterSelection = new List<MasterSelection>();
@@ -254,6 +286,7 @@ class SelectionModel extends FormBaseModel {
         masterSelection.add(new MasterSelection.fromJson(v));
       });
     }
+    showFromTo = json["showFromTo"] ?? true;
   }
 }
 

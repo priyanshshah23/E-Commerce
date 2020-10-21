@@ -46,59 +46,61 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
             textAlign: TextAlign.left,
           ),
           Spacer(),
-          getFromTextField(),
+          widget.selectionModel.showFromTo ? getFromTextField() : SizedBox(),
           SizedBox(width: getSize(16)),
-          getToTextField(),
+          widget.selectionModel.showFromTo ? getToTextField() : SizedBox(),
           SizedBox(width: getSize(16)),
-          InkWell(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-              if (_minValueController.text.isNotEmpty &&
-                  _maxValueController.text.isNotEmpty) {
-                if (num.parse(_minValueController.text.trim()) <=
-                    num.parse(_maxValueController.text.trim())) {
-                  String text =
-                      "${_minValueController.text}-${_maxValueController.text}";
-                  if (!widget.selectionModel.caratRangeChipsToShow
-                      .contains(text)) {
-                    widget.selectionModel.caratRangeChipsToShow.add(text);
-                    setState(() {});
-                  }
-                  _minValueController.text = "";
-                  _maxValueController.text = "";
-                } else {
-                  app.resolve<CustomDialogs>().confirmDialog(
-                        context,
-                        title: "",
-                        desc: R.string().errorString.fromValueGreateThanTo,
-                        positiveBtnTitle: R.string().commonString.ok,
-                      );
-                  _minValueController.text = "";
-                  setState(() {});
-                }
-              }
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: appTheme.colorPrimary,
-                borderRadius: BorderRadius.circular(
-                  getSize(5),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: Image.asset(
-                    plusIcon,
-                    width: getSize(16),
-                    height: getSize(16),
+          widget.selectionModel.showFromTo
+              ? InkWell(
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
+                    if (_minValueController.text.isNotEmpty &&
+                        _maxValueController.text.isNotEmpty) {
+                      if (num.parse(_minValueController.text.trim()) <=
+                          num.parse(_maxValueController.text.trim())) {
+                        String text =
+                            "${_minValueController.text}-${_maxValueController.text}";
+                        if (!widget.selectionModel.caratRangeChipsToShow
+                            .contains(text)) {
+                          widget.selectionModel.caratRangeChipsToShow.add(text);
+                          setState(() {});
+                        }
+                        _minValueController.text = "";
+                        _maxValueController.text = "";
+                      } else {
+                        app.resolve<CustomDialogs>().confirmDialog(
+                              context,
+                              title: "",
+                              desc:
+                                  R.string().errorString.fromValueGreateThanTo,
+                              positiveBtnTitle: R.string().commonString.ok,
+                            );
+                        _minValueController.text = "";
+                        setState(() {});
+                      }
+                    }
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: appTheme.colorPrimary,
+                      borderRadius: BorderRadius.circular(
+                        getSize(5),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Image.asset(
+                          plusIcon,
+                          width: getSize(16),
+                          height: getSize(16),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
-          )
+                )
+              : SizedBox()
         ]),
-        SizedBox(height: getSize(16)),
         getCaratRangeChips(),
         SizedBox(height: getSize(16)),
         SelectionWidget(widget.selectionModel)

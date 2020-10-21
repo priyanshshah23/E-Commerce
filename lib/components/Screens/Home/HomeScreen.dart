@@ -11,6 +11,7 @@ import 'package:diamnow/components/Screens/Auth/ProfileList.dart';
 import 'package:diamnow/components/Screens/DashBoard/Dashboard.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
+import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -116,6 +117,14 @@ class _HomeScreenState extends State<HomeScreen> {
     currentWidget = FilterScreen(dict);
   }
 
+  openQuickSearch(int moduleType) {
+    selectedType = moduleType;
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.ModuleType] = moduleType;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = QuickSearchScreen(dict);
+  }
+
   openDiamondList(int moduleType) {
     selectedType = moduleType;
     Map<String, dynamic> dict = new HashMap();
@@ -151,11 +160,17 @@ class _HomeScreenState extends State<HomeScreen> {
         case DiamondModuleConstant.MODULE_TYPE_SEARCH:
           openSearch(type);
           break;
+        case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
+          openQuickSearch(type);
+          break;
         case DiamondModuleConstant.MODULE_TYPE_MY_CART:
         case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
         case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
         case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
         case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
+        case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
+        case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+        case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
           openDiamondList(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_PROFILE:
@@ -191,6 +206,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   calllogout(BuildContext context) {
+    app.resolve<PrefUtils>().clearPreferenceAndDB();
+
     /*NetworkCall<BaseApiResp>()
         .makeCall(() => app.resolve<ServiceModule>().networkService().logout(),
             context,

@@ -8,11 +8,13 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
+import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../../main.dart';
 
@@ -31,7 +33,6 @@ class DiamondCalculation {
     double avgPriceCrt = 0.0;
     double avgAmount = 0.0;
     double totalamt = 0.0;
-    double termDiscAmount = 0.0;
 
     List<DiamondModel> filterList = [];
     Iterable<DiamondModel> list = arraDiamond.where((item) {
@@ -50,18 +51,15 @@ class DiamondCalculation {
     totalamt = arrValues[2];
     avgRapCrt = arrValues[3];
     avgPriceCrt = arrValues[4];
-    termDiscAmount = arrValues[5];
 
     totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt);
     totalAmount = PriceUtilities.getPrice(avgAmount);
     if (isAccountTerm) {
-      print("Discount....$avgDisc");
       totalDisc = PriceUtilities.getPercent(arrFinalValues[2]);
       totalAmount = PriceUtilities.getPrice(arrFinalValues[1]);
       totalPriceCrt = PriceUtilities.getPrice(arrFinalValues[0]);
     } else {
       avgDisc = (1 - (avgPriceCrt / avgRapCrt)) * (-100);
-      print("finalDiscount....$avgDisc");
       totalDisc = PriceUtilities.getPercent(avgDisc);
       avgAmount = arrValues[1];
     }
@@ -117,6 +115,10 @@ class DiamondConfig {
         return R.string().screenTitle.myPurchased;
       case DiamondModuleConstant.MODULE_TYPE_HOME:
         return R.string().screenTitle.home;
+      case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
+        return R.string().screenTitle.newArrival;
+      case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
+        return R.string().screenTitle.exclusiveDiamonds;
       default:
         return R.string().screenTitle.searchDiamond;
     }
@@ -126,6 +128,8 @@ class DiamondConfig {
       int moduleType, Map<String, dynamic> dict) {
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
+      case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
+      case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
         return app
             .resolve<ServiceModule>()
             .networkService()
@@ -144,6 +148,11 @@ class DiamondConfig {
             .resolve<ServiceModule>()
             .networkService()
             .diamondCommentList(dict);
+      case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .diamondBidList(dict);
     }
   }
 
@@ -247,6 +256,9 @@ class DiamondConfig {
       case ActionMenuConstant.ACTION_TYPE_OFFER:
         actionOffer(context, list);
         break;
+      case ActionMenuConstant.ACTION_TYPE_BID:
+        actionBid(context, list);
+        break;
       case ActionMenuConstant.ACTION_TYPE_APPOINTMENT:
         actionAppointment(context, list);
         break;
@@ -334,14 +346,31 @@ class DiamondConfig {
     });
   }
 
-  actionAppointment(BuildContext context, List<DiamondModel> list) {
-    showAppointmentDialog(context, (manageClick) {
+  actionBid(BuildContext context, List<DiamondModel> list) {
+    List<DiamondModel> selectedList = [];
+    DiamondModel model;
+    list.forEach((element) {
+      model = DiamondModel.fromJson(element.toJson());
+      model.isAddToBid = true;
+      selectedList.add(model);
+    });
+    showBidListDialog(context, selectedList, (manageClick) {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
-        /*callApiFoCreateTrack(
-            context, list, DiamondTrackConstant.TRACK_TYPE_APPOINTMENT,
-            isPop: true);*/
+        callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_BID,
+            isPop: true);
       }
     });
+  }
+
+  actionAppointment(BuildContext context, List<DiamondModel> list) {
+    NavigationUtilities.pushRoute(OfferViewScreen.route);
+//    showAppointmentDialog(context, (manageClick) {
+//      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
+//        /*callApiFoCreateTrack(
+//            context, list, DiamondTrackConstant.TRACK_TYPE_APPOINTMENT,
+//            isPop: true);*/
+//      }
+//    });
   }
 
   actionHold(List<DiamondModel> list) {}
@@ -354,11 +383,19 @@ class DiamondConfig {
       BuildContext context, List<DiamondModel> list, int trackType,
       {bool isPop = false, String remark, String companyName, String title}) {
     CreateDiamondTrackReq req = CreateDiamondTrackReq();
-    req.trackType = trackType;
     switch (trackType) {
       case DiamondTrackConstant.TRACK_TYPE_OFFER:
         req.remarks = remark;
         req.company = companyName;
+        break;
+      case DiamondTrackConstant.TRACK_TYPE_CART:
+      case DiamondTrackConstant.TRACK_TYPE_ENQUIRY:
+      case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
+      case DiamondTrackConstant.TRACK_TYPE_OFFER:
+        req.trackType = trackType;
+        break;
+      case DiamondTrackConstant.TRACK_TYPE_BID:
+        req.bidType = BidConstant.BID_TYPE_ADD;
         break;
     }
     DateTime dateTimeNow = DateTime.now();
@@ -383,11 +420,18 @@ class DiamondConfig {
               .add(Duration(hours: int.parse(element.selectedOfferHour)));
           diamonds.offerValidDate = dateTimeNow.toUtc().toIso8601String();
           break;
+        case DiamondTrackConstant.TRACK_TYPE_BID:
+          diamonds.vStnId = element.vStnId;
+          diamonds.bidAmount = element.getFinalAmount();
+          diamonds.bidPricePerCarat = element.getFinalRate();
+          diamonds.bidDiscount = element.getFinalDiscount();
+          break;
       }
       req.diamonds.add(diamonds);
     });
     SyncManager.instance.callApiForCreateDiamondTrack(
       context,
+      trackType,
       req,
       (resp) {
         if (isPop) {
@@ -455,5 +499,34 @@ class DiamondConfig {
         }
       },
     );
+  }
+
+  List<Map<String, dynamic>> getExclusiveDiamondReq() {
+    List<Map<String, dynamic>> caratRequest = [];
+    Map<String, dynamic> mainDic = Map<String, dynamic>();
+    Map<String, dynamic> dict = Map<String, dynamic>();
+    dict[">="] = "5.0";
+    dict["<="] = "5.99";
+    mainDic["crt"] = dict;
+    caratRequest.add(mainDic);
+    Map<String, dynamic> mainDic1 = Map<String, dynamic>();
+    Map<String, dynamic> dict1 = Map<String, dynamic>();
+    dict1[">="] = "6.0";
+    dict1["<="] = "9.99";
+    mainDic1["crt"] = dict1;
+    caratRequest.add(mainDic1);
+    Map<String, dynamic> mainDic2 = Map<String, dynamic>();
+    Map<String, dynamic> dict2 = Map<String, dynamic>();
+    dict2[">="] = "10.0";
+    dict2["<="] = "19.99";
+    mainDic2["crt"] = dict2;
+    caratRequest.add(mainDic2);
+    Map<String, dynamic> mainDic3 = Map<String, dynamic>();
+    Map<String, dynamic> dict3 = Map<String, dynamic>();
+    dict3[">="] = "20.0";
+    dict3["<="] = "100";
+    mainDic3["crt"] = dict3;
+    caratRequest.add(mainDic3);
+    return caratRequest;
   }
 }

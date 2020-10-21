@@ -115,6 +115,14 @@ class BaseTheme {
     );
   }
 
+  TextStyle get grey12HintTextStyle {
+    return TextStyle(
+      fontSize: getFontSize(12),
+      color: textGreyColor,
+      fontWeight: FontWeight.normal,
+    );
+  }
+
   TextStyle get black16TextStyle {
     return TextStyle(
         fontSize: getFontSize(16),

@@ -157,4 +157,11 @@ class PrefUtils {
     await _preferences.setString(
         keyToken, EncryptionHelper.encryptString(token));
   }
+
+  Future<void> clearPreferenceAndDB() async {
+    _preferences.clear();
+
+    await AppDatabase.instance.masterDao.deleteAllMasterItems();
+    await AppDatabase.instance.sizeMasterDao.deleteAllMasterItems();
+  }
 }

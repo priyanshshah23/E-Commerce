@@ -36,7 +36,7 @@ class _FilterByState extends State<FilterBy> {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(top: getSize(28), bottom: getSize(21)),
-            child: Text("Filter By",
+            child: Text("Sort By",
                 style: appTheme.commonAlertDialogueTitleStyle),
           ),
           ListView.builder(
@@ -44,7 +44,7 @@ class _FilterByState extends State<FilterBy> {
             shrinkWrap: true,
             itemCount: optionList.length,
             itemBuilder: (BuildContext context, int index) {
-              return GestureDetector(
+              return InkWell(
                 onTap: () {
                   optionList.forEach((element) {element.isSelected = false;});
                   optionList[index].isSelected = !optionList[index].isSelected;
@@ -56,8 +56,8 @@ class _FilterByState extends State<FilterBy> {
                   child: Row(
                     children: <Widget>[
                       Container(
-                        height: getSize(12),
-                        width: getSize(12),
+                        height: getSize(14),
+                        width: getSize(14),
                         child: Image.asset(
                           filterPopUpPath + optionList[index].icon,
                         ),
@@ -67,7 +67,7 @@ class _FilterByState extends State<FilterBy> {
                       ),
                       Expanded(
                         child: Text(optionList[index].title,
-                            style: appTheme.black12TextStyle),
+                            style: appTheme.black14TextStyle),
                       ),
                       Container(
                         height: getSize(16),

@@ -72,6 +72,9 @@ class Master {
   num fromCarat;
   num toCarat;
   List<Master> grouped = [];
+  Master mergeModel;
+  List<String> groupingIds = [];
+  String groupName;
   dynamic map;
 
   Master(
@@ -131,6 +134,8 @@ class Master {
     data['name'] = this.name;
     data['code'] = this.code;
     data['normalizeName'] = this.normalizeName;
+    data['fromCarat'] = this.fromCarat;
+    data['toCarat'] = this.toCarat;
     data['sortingSequence'] = this.sortingSequence;
     data['description'] = this.description;
     data['image'] = this.image;

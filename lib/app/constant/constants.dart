@@ -70,6 +70,13 @@ const alphaRegEx = r'[a-zA-Z]';
 const spaceRegEx = r'\s';
 const numberRegXWithDecimalAllows = r'([0-9]*[0-9]+\.)[0-9]{0,2}';
 const IMAGE_FILE_SIZE = 10.0;
+const BUSINESS_TYPE = "BUSINESS_TYPE";
+
+
+class Spacing{
+  static const num leftPadding = 20.0;
+  static const num rightPadding = 20.0;
+}
 
 //Master Code
 class MasterCode {
@@ -123,10 +130,11 @@ class MasterCode {
 }
 
 class DiamondStatus {
-  static const String available = "A";
-  static const String onMine = "M";
-  static const String office = "O";
-  static const String show = "S";
+  static const String DIAMOND_STATUS_AVAILABLE = "A";
+  static const String DIAMOND_STATUS_ON_MINE = "M";
+  static const String DIAMOND_STATUS_OFFER = "O";
+  static const String DIAMOND_STATUS_SHOW = "S";
+  static const String DIAMOND_STATUS_BID= "B";
 }
 
 class StaticPageConstant {

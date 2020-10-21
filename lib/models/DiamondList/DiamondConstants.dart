@@ -67,10 +67,19 @@ class clickConstant {
 class DiamondTrackConstant {
   static const TRACK_TYPE_CART = 1;
   static const TRACK_TYPE_WATCH_LIST = 2;
-  static const TRACK_TYPE_OFFER = 3;
+  static const TRACK_TYPE_OFFER = 4;
   static const TRACK_TYPE_ENQUIRY = 6;
   static const TRACK_TYPE_COMMENT = 99;
   static const TRACK_TYPE_APPOINTMENT = 100;
+  static const TRACK_TYPE_BID = 101;
+}
+
+class BidConstant {
+  static const BID_TYPE_ADD = 2;
+}
+
+class BidStatus {
+  static const BID_STATUS_ACTIVE = 1;
 }
 
 class ActionMenuConstant {
@@ -88,6 +97,7 @@ class ActionMenuConstant {
   static const ACTION_TYPE_STATUS = 12;
   static const ACTION_TYPE_MORE = 13;
   static const ACTION_TYPE_COMPARE = 14;
+  static const ACTION_TYPE_BID = 15;
 }
 
 class MoreMenuConstant {
