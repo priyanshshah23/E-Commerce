@@ -16,7 +16,7 @@ class ShapeWidget extends StatefulWidget {
 
 class _ShapeWidgetState extends State<ShapeWidget> {
   //show when isShowMoreSelected=false;
-  int elementsToShow = 11;
+  int elementsToShow;
   List<Master> listOfMasterView = [];
   String showMoreId = "ShowMore";
 
@@ -24,38 +24,43 @@ class _ShapeWidgetState extends State<ShapeWidget> {
   void initState() {
     super.initState();
 
-    if (widget.selectionModel.isShowAll == true &&
-        widget.selectionModel.orientation == DisplayTypes.vertical) {
-      if (widget.selectionModel.masters
-              .where((element) =>
-                  element.sId == widget.selectionModel.allLableTitle)
-              .toList()
-              .length ==
-          0) {
-        Master allMaster = Master();
-        allMaster.sId = widget.selectionModel.allLableTitle;
-        allMaster.webDisplay = widget.selectionModel.allLableTitle;
-        allMaster.isSelected = false;
+    elementsToShow = widget.selectionModel.numberOfelementsToShow;
 
-        widget.selectionModel.masters.insert(0, allMaster);
+    if (widget.selectionModel.isShowAll == true) {
+      if (widget.selectionModel.orientation == DisplayTypes.vertical) {
+        if (widget.selectionModel.masters
+                .where((element) =>
+                    element.sId == widget.selectionModel.allLableTitle)
+                .toList()
+                .length ==
+            0) {
+          Master allMaster = Master();
+          allMaster.sId = widget.selectionModel.allLableTitle;
+          allMaster.webDisplay = widget.selectionModel.allLableTitle;
+          allMaster.isSelected = false;
+
+          widget.selectionModel.masters.insert(0, allMaster);
+        }
       }
     }
-    if (widget.selectionModel.isShowMore &&
-        widget.selectionModel.orientation == DisplayTypes.vertical) {
-      if (widget.selectionModel.masters
-              .where((element) => element.sId == showMoreId)
-              .toList()
-              .length ==
-          0) {
-        Master allMaster = Master();
-        allMaster.sId = showMoreId;
-        allMaster.webDisplay = widget.selectionModel.isShowMoreSelected
-            ? R.string().commonString.showMore
-            : R.string().commonString.showLess;
-        allMaster.isSelected = false;
 
-        widget.selectionModel.masters
-            .insert(widget.selectionModel.masters.length, allMaster);
+    if (widget.selectionModel.isShowMore) {
+      if (widget.selectionModel.orientation == DisplayTypes.vertical) {
+        if (widget.selectionModel.masters
+                .where((element) => element.sId == showMoreId)
+                .toList()
+                .length ==
+            0) {
+          Master allMaster = Master();
+          allMaster.sId = showMoreId;
+          allMaster.webDisplay = widget.selectionModel.isShowMoreSelected
+              ? R.string().commonString.showMore
+              : R.string().commonString.showLess;
+          allMaster.isSelected = false;
+
+          widget.selectionModel.masters
+              .insert(widget.selectionModel.masters.length, allMaster);
+        }
       }
     }
 

@@ -110,10 +110,12 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
                       isShowAll: widget.colorModel.isShowAll,
                       orientation: widget.colorModel.orientation,
                       allLableTitle: widget.colorModel.allLableTitle,
+                      masterCode: MasterCode.intensity,
                       verticalScroll: widget.colorModel.verticalScroll,
                       apiKey: "inten");
 
                   widget.colorModel.overtoneSelection = SelectionModel(
+                      masterCode: MasterCode.overTone,
                       title: R.string().commonString.overtone,
                       masters: widget.colorModel.overtone,
                       isShowAll: widget.colorModel.isShowAll,

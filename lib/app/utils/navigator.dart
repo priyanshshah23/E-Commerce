@@ -9,10 +9,12 @@ import 'package:diamnow/components/Screens/Auth/ProfileList.dart';
 import 'package:diamnow/components/Screens/Auth/ResetPassword.dart';
 import 'package:diamnow/components/Screens/Auth/Signup.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
+import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
 import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
 import 'package:flutter/material.dart';
@@ -101,6 +103,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case LoginScreen.route:
       screen = LoginScreen();
       break;
+    case QuickSearchScreen.route:
+      screen = QuickSearchScreen(arguments);
+      break;
     case HomeScreen.route:
       screen = HomeScreen();
       break;
@@ -121,6 +126,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       break;
     case DiamondListScreen.route:
       screen = DiamondListScreen(arguments);
+      break;
+    case DiamondCompareScreen.route:
+      screen = DiamondCompareScreen(arguments);
       break;
     case ChangePassword.route:
       screen = ChangePassword();

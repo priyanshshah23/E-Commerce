@@ -26,8 +26,12 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_CHANGE_PASSWORD = 22;
   static const MODULE_TYPE_LOGOUT = 23;
   static const MODULE_TYPE_UPCOMING = 24;
-  static const MODULE_TYPE_PROFILE = 26;
-  static const MODULE_TYPE_MY_COMMENT = 25;
+  static const MODULE_TYPE_PROFILE = 25;
+  static const MODULE_TYPE_MY_COMMENT = 26;
+  static const MODULE_TYPE_COMPARE = 27;
+
+
+
   static const MODULE_TYPE_Home = 100;
   static const MODULE_TYPE_OPEN_DRAWER= 1000;
   static const MODULE_TYPE_HOME = 100;
@@ -37,6 +41,7 @@ class ArgumentConstant {
   static const ModuleType = "moduleType";
   static const IsFromDrawer = "isFromDrawer";
   static const DiamondDetail = "diamondModel";
+  static const DiamondList = "diamondList";
 }
 
 typedef ActionClick(ManageCLick manageCLick);
@@ -58,6 +63,7 @@ class ManageCLick {
 
 
 
+
 class clickConstant {
   static const CLICK_TYPE_ROW = 1;
   static const CLICK_TYPE_SELECTION = 2;
@@ -67,10 +73,17 @@ class clickConstant {
 class DiamondTrackConstant {
   static const TRACK_TYPE_CART = 1;
   static const TRACK_TYPE_WATCH_LIST = 2;
-  static const TRACK_TYPE_OFFER = 3;
+  static const TRACK_TYPE_OFFER = 4;
   static const TRACK_TYPE_ENQUIRY = 6;
   static const TRACK_TYPE_COMMENT = 99;
   static const TRACK_TYPE_APPOINTMENT = 100;
+  static const TRACK_TYPE_BID = 101;
+}
+class BidConstant {
+  static const BID_TYPE_ADD = 2;
+}
+class BidStatus {
+  static const BID_STATUS_ACTIVE = 1;
 }
 
 class ActionMenuConstant {
@@ -88,6 +101,7 @@ class ActionMenuConstant {
   static const ACTION_TYPE_STATUS = 12;
   static const ACTION_TYPE_MORE = 13;
   static const ACTION_TYPE_COMPARE = 14;
+  static const ACTION_TYPE_BID = 15;
 }
 
 class MoreMenuConstant {

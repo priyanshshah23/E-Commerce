@@ -7,6 +7,7 @@ import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
@@ -54,13 +55,11 @@ class DiamondCalculation {
     totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt);
     totalAmount = PriceUtilities.getPrice(avgAmount);
     if (isAccountTerm) {
-      print("Discount....$avgDisc");
       totalDisc = PriceUtilities.getPercent(arrFinalValues[2]);
       totalAmount = PriceUtilities.getPrice(arrFinalValues[1]);
       totalPriceCrt = PriceUtilities.getPrice(arrFinalValues[0]);
     } else {
       avgDisc = (1 - (avgPriceCrt / avgRapCrt)) * (-100);
-      print("finalDiscount....$avgDisc");
       totalDisc = PriceUtilities.getPercent(avgDisc);
       avgAmount = arrValues[1];
     }
@@ -71,20 +70,22 @@ class DiamondCalculation {
 
 class DiamondConfig {
   int moduleType;
+  bool isCompare = false;
   List<BottomTabModel> arrMoreMenu;
   List<BottomTabModel> arrBottomTab;
   List<BottomTabModel> arrStatusMenu;
   BottomMenuSetting bottomMenuSetting;
   List<BottomTabModel> toolbarList = [];
 
-  DiamondConfig(this.moduleType);
+  DiamondConfig(this.moduleType, {this.isCompare = false});
 
   initItems({bool isDetail = false}) {
     bottomMenuSetting = BottomMenuSetting(moduleType);
     toolbarList = getToolbarItem(isDetail: isDetail);
-    arrBottomTab =
-        bottomMenuSetting.getBottomMenuItems(moduleType, isDetail: isDetail);
-    arrMoreMenu = bottomMenuSetting.getMoreMenuItems(isDetail: isDetail);
+    arrBottomTab = bottomMenuSetting.getBottomMenuItems(moduleType,
+        isDetail: isDetail, isCompare: isCompare);
+    arrMoreMenu = bottomMenuSetting.getMoreMenuItems(
+        isDetail: isDetail, isCompare: isCompare);
     if (!isDetail) {
       arrStatusMenu = bottomMenuSetting.getStatusMenuItems();
     }
@@ -112,6 +113,10 @@ class DiamondConfig {
         return R.string().screenTitle.myOffer;
       case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
         return R.string().screenTitle.myPurchased;
+      case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
+        return R.string().screenTitle.newArrival;
+      case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
+        return R.string().screenTitle.exclusiveDiamonds;
       default:
         return R.string().screenTitle.searchDiamond;
     }
@@ -121,6 +126,8 @@ class DiamondConfig {
       int moduleType, Map<String, dynamic> dict) {
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
+      case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
+      case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
         return app
             .resolve<ServiceModule>()
             .networkService()
@@ -139,12 +146,24 @@ class DiamondConfig {
             .resolve<ServiceModule>()
             .networkService()
             .diamondCommentList(dict);
+      case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .diamondBidList(dict);
     }
   }
 
   List<BottomTabModel> getToolbarItem({bool isDetail = false}) {
     List<BottomTabModel> list = [];
-    if (isDetail) {
+    if (isCompare) {
+      list.add(BottomTabModel(
+          title: "",
+          image: download,
+          code: BottomCodeConstant.TBDownloadView,
+          sequence: 3,
+          isCenter: true));
+    } else if (isDetail) {
       list.add(BottomTabModel(
           title: "",
           image: share,
@@ -213,6 +232,9 @@ class DiamondConfig {
       case ActionMenuConstant.ACTION_TYPE_OFFER:
         actionOffer(context, list);
         break;
+      case ActionMenuConstant.ACTION_TYPE_BID:
+        actionBid(context, list);
+        break;
       case ActionMenuConstant.ACTION_TYPE_APPOINTMENT:
         actionAppointment(context, list);
         break;
@@ -224,6 +246,12 @@ class DiamondConfig {
         break;
       case ActionMenuConstant.ACTION_TYPE_SHARE:
         actionShare(list);
+        break;
+      case ActionMenuConstant.ACTION_TYPE_COMPARE:
+        var dict = Map<String, dynamic>();
+        dict[ArgumentConstant.DiamondList] = list;
+        dict[ArgumentConstant.ModuleType] = moduleType;
+        NavigationUtilities.pushRoute(DiamondCompareScreen.route, args: dict);
         break;
     }
   }
@@ -294,6 +322,22 @@ class DiamondConfig {
     });
   }
 
+  actionBid(BuildContext context, List<DiamondModel> list) {
+    List<DiamondModel> selectedList = [];
+    DiamondModel model;
+    list.forEach((element) {
+      model = DiamondModel.fromJson(element.toJson());
+      model.isAddToBid = true;
+      selectedList.add(model);
+    });
+    showBidListDialog(context, selectedList, (manageClick) {
+      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
+        callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_BID,
+            isPop: true);
+      }
+    });
+  }
+
   actionAppointment(BuildContext context, List<DiamondModel> list) {
     showAppointmentDialog(context, (manageClick) {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
@@ -314,11 +358,19 @@ class DiamondConfig {
       BuildContext context, List<DiamondModel> list, int trackType,
       {bool isPop = false, String remark, String companyName, String title}) {
     CreateDiamondTrackReq req = CreateDiamondTrackReq();
-    req.trackType = trackType;
     switch (trackType) {
       case DiamondTrackConstant.TRACK_TYPE_OFFER:
         req.remarks = remark;
         req.company = companyName;
+        break;
+      case DiamondTrackConstant.TRACK_TYPE_CART:
+      case DiamondTrackConstant.TRACK_TYPE_ENQUIRY:
+      case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
+      case DiamondTrackConstant.TRACK_TYPE_OFFER:
+        req.trackType = trackType;
+        break;
+      case DiamondTrackConstant.TRACK_TYPE_BID:
+        req.bidType = BidConstant.BID_TYPE_ADD;
         break;
     }
     DateTime dateTimeNow = DateTime.now();
@@ -343,11 +395,18 @@ class DiamondConfig {
               .add(Duration(hours: int.parse(element.selectedOfferHour)));
           diamonds.offerValidDate = dateTimeNow.toUtc().toIso8601String();
           break;
+        case DiamondTrackConstant.TRACK_TYPE_BID:
+          diamonds.vStnId = element.vStnId;
+          diamonds.bidAmount = element.getFinalAmount();
+          diamonds.bidPricePerCarat = element.getFinalRate();
+          diamonds.bidDiscount = element.getFinalDiscount();
+          break;
       }
       req.diamonds.add(diamonds);
     });
     SyncManager.instance.callApiForCreateDiamondTrack(
       context,
+      trackType,
       req,
       (resp) {
         if (isPop) {
@@ -415,5 +474,34 @@ class DiamondConfig {
         }
       },
     );
+  }
+
+  List<Map<String, dynamic>> getExclusiveDiamondReq() {
+    List<Map<String, dynamic>> caratRequest = [];
+    Map<String, dynamic> mainDic = Map<String, dynamic>();
+    Map<String, dynamic> dict = Map<String, dynamic>();
+    dict[">="] = "5.0";
+    dict["<="] = "5.99";
+    mainDic["crt"] = dict;
+    caratRequest.add(mainDic);
+    Map<String, dynamic> mainDic1 = Map<String, dynamic>();
+    Map<String, dynamic> dict1 = Map<String, dynamic>();
+    dict1[">="] = "6.0";
+    dict1["<="] = "9.99";
+    mainDic1["crt"] = dict1;
+    caratRequest.add(mainDic1);
+    Map<String, dynamic> mainDic2 = Map<String, dynamic>();
+    Map<String, dynamic> dict2 = Map<String, dynamic>();
+    dict2[">="] = "10.0";
+    dict2["<="] = "19.99";
+    mainDic2["crt"] = dict2;
+    caratRequest.add(mainDic2);
+    Map<String, dynamic> mainDic3 = Map<String, dynamic>();
+    Map<String, dynamic> dict3 = Map<String, dynamic>();
+    dict3[">="] = "20.0";
+    dict3["<="] = "100";
+    mainDic3["crt"] = dict3;
+    caratRequest.add(mainDic3);
+    return caratRequest;
   }
 }

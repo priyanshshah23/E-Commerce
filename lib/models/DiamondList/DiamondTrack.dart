@@ -1,5 +1,6 @@
 class CreateDiamondTrackReq {
   int trackType;
+  int bidType;
   String remarks;
   String company;
   List<Diamonds> diamonds;
@@ -8,6 +9,7 @@ class CreateDiamondTrackReq {
 
   CreateDiamondTrackReq.fromJson(Map<String, dynamic> json) {
     trackType = json['trackType'];
+    bidType = json['bidType'];
     remarks = json['remarks'];
     company = json['company'];
     if (json['diamonds'] != null) {
@@ -20,7 +22,9 @@ class CreateDiamondTrackReq {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['trackType'] = this.trackType;
+
+    if (this.bidType != null) data['bidType'] = this.bidType;
+    if (this.trackType != null) data['trackType'] = this.trackType;
     if (this.remarks != null) data['remarks'] = this.remarks;
     if (this.company != null) data['company'] = this.company;
     if (this.diamonds != null) {
@@ -33,6 +37,10 @@ class CreateDiamondTrackReq {
 class Diamonds {
   String diamond;
   String remarks;
+
+  num bidPricePerCarat;
+  num bidAmount;
+  num bidDiscount;
   num trackPricePerCarat;
   num trackAmount;
   String vStnId;
@@ -48,11 +56,17 @@ class Diamonds {
       this.trackAmount,
       this.newDiscount,
       this.trackDiscount,
+      this.bidPricePerCarat,
+      this.bidAmount,
+      this.bidDiscount,
       this.remarks});
 
   Diamonds.fromJson(Map<String, dynamic> json) {
     diamond = json['diamond'];
     diamond = json['offerValidDate'];
+    bidPricePerCarat = json['bidPricePerCarat'];
+    bidAmount = json['bidAmount'];
+    bidDiscount = json['bidDiscount'];
     trackPricePerCarat = json['trackPricePerCarat'];
     trackAmount = json['trackAmount'];
     newDiscount = json['newDiscount'];
@@ -67,6 +81,11 @@ class Diamonds {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['diamond'] = this.diamond;
+
+    if (this.bidPricePerCarat != null)
+      data['bidPricePerCarat'] = this.bidPricePerCarat;
+    if (this.bidAmount != null) data['trackPricePerCarat'] = this.bidAmount;
+    if (this.bidDiscount != null) data['bidDiscount'] = this.bidAmount;
     if (this.trackPricePerCarat != null)
       data['trackPricePerCarat'] = this.trackPricePerCarat;
     if (this.trackAmount != null) data['trackAmount'] = this.trackAmount;
@@ -82,6 +101,7 @@ class Diamonds {
     return data;
   }
 }
+
 class PlaceOrderReq {
   List<String> diamonds;
   String comment;
