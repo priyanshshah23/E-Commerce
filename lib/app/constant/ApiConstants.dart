@@ -2,11 +2,11 @@ import '../app.export.dart';
 
 class ApiConstants {
 //    static const String PROXY_URL = "PROXY 192.168.2.124:8888";
-  //  static const String PROXY_URL = "PROXY 192.168.0.117:8888";
-  static const String PROXY_URL = "PROXY localhost:8888";
+//   static const String PROXY_URL = "PROXY 192.168.0.117:8888";
+static const String PROXY_URL = "PROXY 192.168.0.116:8888";
 // static const String PROXY_URL = "PROXY 192.168.225.188:8888";
 
-//  static const String PROXY_URL = "PROXY 192.168.225.121:8888"; // Brijesh
+ // static const String PROXY_URL = "PROXY 192.168.225.121:8888"; // Brijesh
 
   static const String imageBaseURL = baseURL;
   static const String apiUrl = baseURL;
@@ -51,6 +51,9 @@ class DiamondUrls {
   static const String video = commonUrl + "viewer3/html/";
   static const String heartImage = commonUrl + "HeartImages/";
   static const String plotting = commonUrl + "PlottingImages/";
-  static const String certificate = commonUrl + "PlottingImages/";
+  static const String certificate = commonUrl + "CertiImages/";
   static const String arroImage = commonUrl + "ArrowImages/";
+  static const String videomp4 = commonUrl + "Mov/";
+
 }
+// https://s3.ap-south-1.amazonaws.com/finestargroup/CertiImages/<report_no>.pdf
