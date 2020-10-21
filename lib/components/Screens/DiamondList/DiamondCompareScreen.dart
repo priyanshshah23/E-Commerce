@@ -56,7 +56,7 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
   @override
   void initState() {
     super.initState();
-    diamondConfig = DiamondConfig(moduleType);
+    diamondConfig = DiamondConfig(moduleType,isCompare: true);
     diamondConfig.initItems();
   }
 

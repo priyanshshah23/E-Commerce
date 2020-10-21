@@ -72,21 +72,22 @@ class DiamondCalculation {
 
 class DiamondConfig {
   int moduleType;
-  bool isCompare;
+  bool isCompare=false;
   List<BottomTabModel> arrMoreMenu;
   List<BottomTabModel> arrBottomTab;
   List<BottomTabModel> arrStatusMenu;
   BottomMenuSetting bottomMenuSetting;
   List<BottomTabModel> toolbarList = [];
 
-  DiamondConfig(this.moduleType, {bool isCompare = false});
+  DiamondConfig(this.moduleType, {this.isCompare = false});
 
   initItems({bool isDetail = false}) {
     bottomMenuSetting = BottomMenuSetting(moduleType);
     toolbarList = getToolbarItem(isDetail: isDetail);
-    arrBottomTab =
-        bottomMenuSetting.getBottomMenuItems(moduleType, isDetail: isDetail,isCompare: isCompare);
-    arrMoreMenu = bottomMenuSetting.getMoreMenuItems(isDetail: isDetail,isCompare: isCompare);
+    arrBottomTab = bottomMenuSetting.getBottomMenuItems(moduleType,
+        isDetail: isDetail, isCompare: isCompare);
+    arrMoreMenu = bottomMenuSetting.getMoreMenuItems(
+        isDetail: isDetail, isCompare: isCompare);
     if (!isDetail) {
       arrStatusMenu = bottomMenuSetting.getStatusMenuItems();
     }
