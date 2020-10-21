@@ -128,10 +128,11 @@ class MasterCode {
 }
 
 class DiamondStatus {
-  static const String available = "A";
-  static const String onMine = "M";
-  static const String office = "O";
-  static const String show = "S";
+  static const String DIAMOND_STATUS_AVAILABLE = "A";
+  static const String DIAMOND_STATUS_ON_MINE = "M";
+  static const String DIAMOND_STATUS_OFFER = "O";
+  static const String DIAMOND_STATUS_SHOW = "S";
+  static const String DIAMOND_STATUS_BID= "B";
 }
 
 class StaticPageConstant {

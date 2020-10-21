@@ -39,52 +39,39 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(top: getSize(28), bottom: getSize(21)),
+                padding: EdgeInsets.only(top: getSize(28)),
                 child: Text(
                   R.string().screenTitle.addToWatchList,
                   style: appTheme.commonAlertDialogueTitleStyle,
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(left: getSize(8), right: getSize(8)),
-                child: DiamondListHeader(
-                  diamondCalculation: diamondCalculation,
-                ),
+              DiamondListHeader(
+                diamondCalculation: diamondCalculation,
               ),
               SizedBox(
                 height: getSize(10),
               ),
-              Padding(
-                padding: EdgeInsets.only(left: getSize(8), right: getSize(8)),
-                child: diamondList.length < 4
-                    ? ListView.builder(
-                        padding: EdgeInsets.only(
-                          bottom: getSize(15),
-                        ),
-                        shrinkWrap: true,
+              diamondList.length < 4
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: diamondList.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (BuildContext context, int index) {
+                        return DiamondItemWidget(
+                            item: diamondList[index], actionClick: actionClick);
+                      },
+                    )
+                  : Container(
+                      height: getSize(100) * 4,
+                      child: ListView.builder(
                         itemCount: diamondList.length,
-                        physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (BuildContext context, int index) {
                           return DiamondItemWidget(
                               item: diamondList[index],
                               actionClick: actionClick);
                         },
-                      )
-                    : Container(
-                        height: getSize(100) * 4,
-                        child: ListView.builder(
-                          padding: EdgeInsets.only(
-                            bottom: getSize(15),
-                          ),
-                          itemCount: diamondList.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return DiamondItemWidget(
-                                item: diamondList[index],
-                                actionClick: actionClick);
-                          },
-                        ),
                       ),
-              ),
+                    ),
               Padding(
                 padding: EdgeInsets.only(
                     right: getSize(10), left: getSize(26), bottom: getSize(20)),
@@ -147,58 +134,42 @@ Future showOfferListDialog(BuildContext context, List<DiamondModel> diamondList,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(top: getSize(28), bottom: getSize(21)),
+                padding: EdgeInsets.only(top: getSize(28)),
                 child: Text(
                   R.string().screenTitle.offer,
                   style: appTheme.commonAlertDialogueTitleStyle,
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(left: getSize(8), right: getSize(8)),
-                child: DiamondListHeader(
-                  diamondCalculation: diamondCalculation,
-                ),
+              DiamondListHeader(
+                diamondCalculation: diamondCalculation,
               ),
               SizedBox(
                 height: getSize(10),
               ),
-              Padding(
-                padding: EdgeInsets.only(left: getSize(8), right: getSize(8)),
-                child: diamondList.length < 4
-                    ? ListView.builder(
-                        padding: EdgeInsets.only(
-                          bottom: getSize(15),
-                        ),
-                        shrinkWrap: true,
+              diamondList.length < 4
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: diamondList.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (BuildContext context, int index) {
+                        return DiamondItemWidget(
+                            item: diamondList[index], actionClick: actionClick);
+                      },
+                    )
+                  : Container(
+                      height: getSize(100) * 4,
+                      child: ListView.builder(
                         itemCount: diamondList.length,
-                        physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (BuildContext context, int index) {
                           return DiamondItemWidget(
                               item: diamondList[index],
                               actionClick: actionClick);
                         },
-                      )
-                    : Container(
-                        height: getSize(100) * 4,
-                        child: ListView.builder(
-                          padding: EdgeInsets.only(
-                            bottom: getSize(15),
-                          ),
-                          itemCount: diamondList.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return DiamondItemWidget(
-                                item: diamondList[index],
-                                actionClick: actionClick);
-                          },
-                        ),
                       ),
-              ),
+                    ),
               Padding(
                 padding: EdgeInsets.only(
-                    right: getSize(10),
-                    left: getSize(26),
-                    bottom: getSize(20),
-                    top: getSize(20)),
+                    right: getSize(10), left: getSize(26), bottom: getSize(20)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
@@ -224,6 +195,104 @@ Future showOfferListDialog(BuildContext context, List<DiamondModel> diamondList,
                         },
                         child: Text(
                           R.string().commonString.btnContinue,
+                          style: appTheme.primary16TextStyle,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          );
+        });
+      });
+}
+
+Future showBidListDialog(BuildContext context, List<DiamondModel> diamondList,
+    ActionClick actionClick) {
+  DiamondCalculation diamondCalculation = DiamondCalculation();
+  diamondCalculation.setAverageCalculation(diamondList);
+  return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: appTheme.whiteColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(15),
+          topRight: Radius.circular(15),
+        ),
+      ),
+      builder: (context) {
+        return StatefulBuilder(builder: (context, StateSetter setSetter) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(top: getSize(28)),
+                child: Text(
+                  R.string().screenTitle.bidStone,
+                  style: appTheme.commonAlertDialogueTitleStyle,
+                ),
+              ),
+              DiamondListHeader(
+                diamondCalculation: diamondCalculation,
+              ),
+              SizedBox(
+                height: getSize(10),
+              ),
+              diamondList.length < 4
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: diamondList.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (BuildContext context, int index) {
+                        return DiamondItemWidget(
+                            item: diamondList[index], actionClick: actionClick);
+                      },
+                    )
+                  : Container(
+                      height: getSize(100) * 4,
+                      child: ListView.builder(
+                        itemCount: diamondList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return DiamondItemWidget(
+                              item: diamondList[index],
+                              actionClick: actionClick);
+                        },
+                      ),
+                    ),
+              Padding(
+                padding: EdgeInsets.only(
+                  right: getSize(10),
+                  left: getSize(26),
+                  bottom: getSize(20),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Expanded(
+                      child: FlatButton(
+                        textColor: appTheme.colorPrimary,
+                        padding: EdgeInsets.all(getSize(0)),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          R.string().commonString.cancel,
+                          style: appTheme.black16TextStyle,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: FlatButton(
+                        textColor: appTheme.colorPrimary,
+                        padding: EdgeInsets.all(getSize(0)),
+                        onPressed: () {
+                          actionClick(ManageCLick(
+                              type: clickConstant.CLICK_TYPE_CONFIRM));
+                        },
+                        child: Text(
+                          R.string().screenTitle.bidStone,
                           style: appTheme.primary16TextStyle,
                         ),
                       ),

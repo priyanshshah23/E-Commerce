@@ -34,8 +34,10 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         widget.actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_ROW));
       },
       child: Padding(
-        padding: EdgeInsets.only(left: getSize(Spacing.leftPadding),
-          right: getSize(Spacing.rightPadding),),
+        padding: EdgeInsets.only(
+          left: getSize(Spacing.leftPadding),
+          right: getSize(Spacing.rightPadding),
+        ),
         child: Container(
           margin: EdgeInsets.only(
             bottom: getSize(10),
@@ -76,6 +78,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                             getTableDepthAndAmountDetail(),
                             getWatchListDetail(),
                             getOfferDetail(),
+                            getBidDetail(),
                           ],
                         ),
                       ),
@@ -274,7 +277,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                     getText(R.string().screenTitle.finalOffer + " :"),
                     getText(widget.item.getFinalOffer().toString()),
                     getText(R.string().screenTitle.finalDisc + " :"),
-                    getText(PriceUtilities.getPercent(widget.item.getFinalDiscount())),
+                    getText(PriceUtilities.getPercent(
+                        widget.item.getFinalDiscount())),
                   ],
                 ),
               ),
@@ -284,9 +288,11 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     getText(R.string().screenTitle.finalRate + " :"),
-                    getText(PriceUtilities.getPrice(widget.item.getFinalRate())),
+                    getText(
+                        PriceUtilities.getPrice(widget.item.getFinalRate())),
                     getText(R.string().screenTitle.finalValue + " :"),
-                    getText(PriceUtilities.getPrice(widget.item.getFinalAmount())),
+                    getText(
+                        PriceUtilities.getPrice(widget.item.getFinalAmount())),
                   ],
                 ),
               ),
@@ -307,6 +313,108 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                       widget.item.selectedOfferHour = selectedValue;
                       RxBus.post(true, tag: eventBusDropDown);
                     }),
+                  ],
+                ),
+              ),
+            ],
+          )
+        : Container();
+  }
+
+  getBidDetail() {
+    return widget.item.isAddToBid
+        ? Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: getSize(5)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    getText(R.string().screenTitle.bidDisc + "(%) :"),
+                    getText(widget.item.getFinalOffer().toString()),
+                    getText(R.string().screenTitle.bidValue + " :"),
+                    getText(PriceUtilities.getPercent(
+                        widget.item.getFinalDiscount())),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: getSize(5)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    getText(R.string().screenTitle.finalRate + " :"),
+                    getText(
+                        PriceUtilities.getPrice(widget.item.getFinalRate())),
+                    getText(R.string().screenTitle.finalValue + " :"),
+                    getText(
+                        PriceUtilities.getPrice(widget.item.getFinalAmount())),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: getSize(5)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    getText(R.string().screenTitle.bidPricePerCt + " :"),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            margin: EdgeInsets.only(right: getSize(10)),
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(
+                                getSize(5),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Center(
+                                child: Image.asset(
+                                  minusIcon,
+                                  width: getSize(16),
+                                  height: getSize(16),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: getSize(5), horizontal: getSize(10)),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: appTheme.dividerColor),
+                              borderRadius: BorderRadius.circular(getSize(5))),
+                          child: getText(PriceUtilities.getPrice(
+                              widget.item.getFinalAmount())),
+                        ),
+                        GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            margin: EdgeInsets.only(left: getSize(10)),
+                            decoration: BoxDecoration(
+                              color: appTheme.colorPrimary,
+                              borderRadius: BorderRadius.circular(
+                                getSize(5),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Center(
+                                child: Image.asset(
+                                  plusIcon,
+                                  width: getSize(16),
+                                  height: getSize(16),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),

@@ -259,6 +259,13 @@ class BottomMenuSetting {
   List<BottomTabModel> getBottomMenuItems(int moduleType,
       {bool isDetail = false, bool isCompare = false}) {
     List<BottomTabModel> moreMenuList = [];
+    if (moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+      moreMenuList.add(BottomTabModel(
+          title: R.string().screenTitle.bidStone,
+          isCenter: false,
+          image: myBid,
+          type: ActionMenuConstant.ACTION_TYPE_BID));
+    }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY)
       moreMenuList.add(BottomTabModel(
           image: enquiry,
@@ -305,12 +312,15 @@ class BottomMenuSetting {
           type: ActionMenuConstant.ACTION_TYPE_OFFER));
     }
     if (!isCompare && !isDetail && isDiamondSearchModule(moduleType)) {
-      moreMenuList.add(BottomTabModel(
-          title: R.string().commonString.status,
-          isCenter: false,
-          image: status,
-          type: ActionMenuConstant.ACTION_TYPE_STATUS));
+      if (moduleType != DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+        moreMenuList.add(BottomTabModel(
+            title: R.string().commonString.status,
+            isCenter: false,
+            image: status,
+            type: ActionMenuConstant.ACTION_TYPE_STATUS));
+      }
     }
+
     moreMenuList.add(BottomTabModel(
       title: R.string().commonString.more,
       isCenter: false,
@@ -318,7 +328,7 @@ class BottomMenuSetting {
       type: ActionMenuConstant.ACTION_TYPE_MORE,
     ));
     moreMenuList.forEach((element) {
-      element.imageColor = appTheme.whiteColor;
+        element.imageColor = appTheme.whiteColor;
     });
 
     return moreMenuList;

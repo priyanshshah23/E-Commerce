@@ -122,7 +122,18 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict["filters"] = {};
         dict["filters"]["diamondSearchId"] = this.filterId;
         break;
-
+      case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
+        dict["filters"] = {};
+        dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_BID;
+        break;
+      case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
+        dict["filters"] = {};
+        dict["filters"]["or"] = diamondConfig.getExclusiveDiamondReq();
+        break;
+      case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+        dict["bidType"] = [BidConstant.BID_TYPE_ADD];
+        dict["status"] = [BidStatus.BID_STATUS_ACTIVE];
+        break;
       case DiamondModuleConstant.MODULE_TYPE_MY_CART:
         dict["trackType"] = DiamondTrackConstant.TRACK_TYPE_CART;
         break;
@@ -318,15 +329,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         body: SafeArea(
           child: Column(
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(
-                  left: getSize(Spacing.leftPadding),
-                  right: getSize(Spacing.rightPadding),
-                  top: getSize(20),
-                ),
-                child: DiamondListHeader(
-                  diamondCalculation: diamondCalculation,
-                ),
+              DiamondListHeader(
+                diamondCalculation: diamondCalculation,
               ),
               SizedBox(
                 height: getSize(20),
