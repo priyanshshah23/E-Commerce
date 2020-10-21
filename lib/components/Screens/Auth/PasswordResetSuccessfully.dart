@@ -44,7 +44,7 @@ class _PasswordResetSuccessfullyState extends State<PasswordResetSuccessfully> {
               //  backgroundColor: appTheme.buttonColor,
               borderRadius: getSize(5),
               fitWidth: true,
-              text: "Back to Sign In",
+              text: R.string().authStrings.backToSignIn,
               //isButtonEnabled: enableDisableSigninButton(),
             ),
           ),
@@ -66,7 +66,7 @@ class _PasswordResetSuccessfullyState extends State<PasswordResetSuccessfully> {
                 ),
               ),
               Text(
-                "Password reset successfully.",
+                R.string().authStrings.passwordResetSuccessfully,
                 style: appTheme.blackMedium20TitleColorblack,
                 textAlign: TextAlign.center,
               ),

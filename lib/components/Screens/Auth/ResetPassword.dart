@@ -45,7 +45,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
           child: Scaffold(
             appBar: getAppBar(
               context,
-              "Reset Password",
+              R.string().authStrings.resetPwd,
               bgColor: appTheme.whiteColor,
               leadingButton: getBackButton(context),
               centerTitle: false,
@@ -81,7 +81,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
                           padding: EdgeInsets.only(
                               top: getSize(30), bottom: getSize(40)),
                           child: Text(
-                            "Set your new password and sign in again.",
+                            R.string().authStrings.setNewPassword,
                             style: appTheme.black14TextStyle,
                             textAlign: TextAlign.center,
                           ),
@@ -109,10 +109,9 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
                                     _newPasswordController.text.trim()) {
                                   app.resolve<CustomDialogs>().confirmDialog(
                                         context,
-                                        title: "Password does not match",
-                                        desc:
-                                            "Confirm Password does not match with Password. Please enter confirm password same as Password.",
-                                        positiveBtnTitle: "Try Again",
+                                    title: R.string().authStrings.passwordNotChange,
+                                    desc: R.string().errorString.enterSamePassword,
+                                    positiveBtnTitle: R.string().commonString.btnTryAgain,
                                       );
                                 } else {
                                   _formKey.currentState.save();
@@ -129,7 +128,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
                             //  backgroundColor: appTheme.buttonColor,
                             borderRadius: getSize(5),
                             fitWidth: true,
-                            text: "Save",
+                            text: R.string().commonString.save,
                             //isButtonEnabled: enableDisableSigninButton(),
                           ),
                         ),
@@ -151,7 +150,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
       textOption: TextFieldOption(
           prefixWid: getCommonIconWidget(
               imageName: password, imageType: IconSizeType.small),
-          hintText: "Password*",
+          hintText: R.string().authStrings.password + "*",
           maxLine: 1,
           formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
           keyboardType: TextInputType.text,
@@ -179,7 +178,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
       textOption: TextFieldOption(
           prefixWid: getCommonIconWidget(
               imageName: password, imageType: IconSizeType.small),
-          hintText: "Confirm Password*",
+          hintText: R.string().authStrings.confirmPassword + "*",
           maxLine: 1,
           formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
           keyboardType: TextInputType.text,

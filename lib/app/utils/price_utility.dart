@@ -8,7 +8,7 @@ final int_oCcy = new NumberFormat("##,##,##,##0", "en_US");
 class PriceUtilities {
   static String getPrice(num price) {
     return "${R.string().commonString.doller}" +
-        oCcy.format((price ?? 0).toDouble());
+        initialZeroFormat.format((price ?? 0).toDouble());
   }
 
   static String getPriceWithInitialZero(num price) {

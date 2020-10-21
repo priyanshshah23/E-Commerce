@@ -3,7 +3,6 @@ import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/constant/constants.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
-import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
@@ -122,6 +121,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict["filters"] = {};
         dict["filters"]["diamondSearchId"] = this.filterId;
         break;
+      case DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR:
+        dict["filters"] = {};
+        dict["filters"]["diamondSearchId"] = this.filterId;
+        break;
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
         dict["filters"] = {};
         dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_BID;
@@ -172,6 +175,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           break;
         default:
           arraDiamond.addAll(diamondListResp.data.diamonds);
+          diamondConfig.setMatchPairItem(arraDiamond);
           break;
       }
       diamondList.state.listCount = arraDiamond.length;
@@ -356,18 +360,21 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 (manageClick) {
               if (manageClick.bottomTabModel.type ==
                   ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
-                arraDiamond.forEach((element) {
+                    arraDiamond.forEach((element) {
                   element.isSelected = false;
-                });
+                    });
                 manageDiamondSelection();
               } else {
                 manageBottomMenuClick(manageClick.bottomTabModel);
               }
-            }, R.string().commonString.more, isDisplaySelection: false);
+                }, R.string().commonString.more, isDisplaySelection: false);
           } else {
-            app.resolve<CustomDialogs>().errorDialog(
-                context, "Selection Error", "Please select at least one stone.",
-                btntitle: R.string().commonString.ok);
+            app.resolve<CustomDialogs>().confirmDialog(
+                  context,
+                  title: "",
+                  desc: "Please select at least one stone.",
+                  positiveBtnTitle: R.string().commonString.ok,
+                );
           }
         } else if (obj.type == ActionMenuConstant.ACTION_TYPE_STATUS) {
           showBottomSheetForMenu(context, diamondConfig.arrStatusMenu,
@@ -388,9 +395,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     } else {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-            title: "Selection Error",
+            title: "",
             desc: "Please select at least one stone.",
-            positiveBtnTitle: R.string().commonString.btnTryAgain,
+            positiveBtnTitle: R.string().commonString.ok,
           );
     }
   }

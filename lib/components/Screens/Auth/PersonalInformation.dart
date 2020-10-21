@@ -115,7 +115,7 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
                 _formKey.currentState.save();
                 if(_mobileController.text.isNotEmpty || _whatsAppMobileController.text.isNotEmpty){
                   if(await checkValidation()) {
-                 //   callPersonalInformationApi();
+                    callPersonalInformationApi();
                   }
                 }
                 //isProfileImageUpload ? uploadDocument() : callApi();
@@ -130,7 +130,7 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
             textColor: appTheme.colorPrimary,
             borderRadius: getSize(5),
             fitWidth: true,
-            text: "Edit Profile",
+            text: R.string().authStrings.editProfileTitle,
             //isButtonEnabled: enableDisableSigninButton(),
           ),
         ),
@@ -156,6 +156,7 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
                               isProfileImageUpload = true;
                               profileImage = img;
                             });
+                            uploadDocument();
                           });
                         },
                         child: Stack(
@@ -207,6 +208,7 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
                                     isProfileImageUpload = true;
                                     profileImage = img;
                                   });
+                                  uploadDocument();
                                 });
                               },
                               child: Image.asset(
@@ -420,7 +422,7 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
         imgProfile = imagePath;
       });
     }
-    //  callApi(imgProfile: imgProfile);
+//    callApi(imgProfile: imgProfile);
   }
 
   uploadProfileImage(File imgFile, Function imagePath) async {
@@ -429,25 +431,28 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
       "",
       file: imgFile,
     ).then((result) {
-      if (result.code == CODE_OK) {
-        String imgPath =
-            result.data.files != null && result.data.files.length > 0
-                ? result.data.files.first.absolutePath
-                : "";
-        if (isStringEmpty(imgPath) == false) {
-          imagePath(imgPath);
-        }
-      }
+      print("DFB");
+      print(result.data);
+//      if (result.code == CODE_OK) {
+//        String imgPath =
+//        result.data.files != null && result.data.files.length > 0
+//            ? result.data.files.first.absolutePath
+//            : "";
+//        if (isStringEmpty(imgPath) == false) {
+//          imagePath(imgPath);
+//        }
+//      }
       return;
     });
   }
+
 
   getSkypeTextField() {
     return CommonTextfield(
       //enable: enable,
       focusNode: _focusSkype,
       textOption: TextFieldOption(
-        hintText: "Skype",
+        hintText: R.string().authStrings.skype,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: phone,
@@ -490,7 +495,7 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
       //enable: enable,
       focusNode: _focusWhatsAppMobile,
       textOption: TextFieldOption(
-        hintText: "Whatsapp" + "*",
+        hintText: R.string().authStrings.whatsApp,
         prefixWid: Padding(
           padding: EdgeInsets.only(left: getSize(0)),
           child: Row(
@@ -545,7 +550,7 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
     return CommonTextfield(
         focusNode: _focusPinCode,
         textOption: TextFieldOption(
-            hintText: "PinCode*",
+            hintText: R.string().authStrings.pinCode,
             maxLine: 1,
             prefixWid: getCommonIconWidget(
                 imageName: pincode,
@@ -566,7 +571,7 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
           if (text.isEmpty) {
             return R.string().errorString.enterPinCode;
           } else if (!validatePincode(text)) {
-            return "Enter Valid PinCode.";
+            return "";
           } else {
             return null;
           }
@@ -740,7 +745,7 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
     return CommonTextfield(
       focusNode: _focusAddressLineOne,
       textOption: TextFieldOption(
-        hintText: R.string().authStrings.addressLineOne,
+        hintText: R.string().authStrings.address,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: company,
@@ -753,7 +758,7 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
         ),
         inputController: _addressLineOneController,
         formatter: [
-          WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+          //WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
           BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
         ],
         //isSecureTextField: false
@@ -890,7 +895,7 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
           focusNode: _focusCountry,
           enable: false,
           textOption: TextFieldOption(
-              hintText: "Country",
+              hintText: R.string().commonString.lblCountry,
               maxLine: 1,
               prefixWid: getCommonIconWidget(
                   imageName: country, imageType: IconSizeType.small),
@@ -946,14 +951,14 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
                 });
           }
         } else {
-          showToast("Please Select Country First", context: context);
+          showToast(R.string().commonString.countryFirst, context: context);
         }
       },
       child: CommonTextfield(
           focusNode: _focusState,
           enable: false,
           textOption: TextFieldOption(
-              hintText: "State",
+              hintText: R.string().commonString.lblState,
               maxLine: 1,
               prefixWid: getCommonIconWidget(
                   imageName: state, imageType: IconSizeType.small),
@@ -1007,10 +1012,10 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
                   });
             }
           } else {
-            showToast("Please Select State First");
+            showToast(R.string().commonString.stateFirst);
           }
         } else {
-          showToast("Please Select Country First");
+          showToast(R.string().commonString.countryFirst);
         }
       },
       child: CommonTextfield(
@@ -1019,7 +1024,7 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
           textOption: TextFieldOption(
               prefixWid: getCommonIconWidget(
                   imageName: city, imageType: IconSizeType.small),
-              hintText: "City",
+              hintText: R.string().commonString.lblCity,
               maxLine: 1,
               keyboardType: TextInputType.text,
               type: TextFieldType.DropDown,
@@ -1102,9 +1107,9 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
     }).catchError(
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            title: "Error in Fetching City List",
+            title: R.string().commonString.error,
             desc: onError.message,
-            positiveBtnTitle: "Try again",
+            positiveBtnTitle: R.string().commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
           _callApiForCityList(stateId: stateId, countryId: countryId);
         })
@@ -1152,15 +1157,15 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(
           context,
-          title: "Error in Fetching Country List",
+          title: R.string().commonString.error,
           desc: onError.message,
-          positiveBtnTitle: "Try again",
+          positiveBtnTitle: R.string().commonString.btnTryAgain,
           onClickCallback: (buttonType) {
             if (buttonType == ButtonType.PositveButtonClick) {
               _callApiForCountryList();
             }
           },
-          negativeBtnTitle: "Cancel",
+          negativeBtnTitle: R.string().commonString.cancel,
         )
       },
     );
@@ -1209,9 +1214,9 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
     }).catchError(
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            title: "Error in Fetching State List",
+            title: R.string().commonString.error,
             desc: onError.message,
-            positiveBtnTitle: "Try again",
+            positiveBtnTitle: R.string().commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
           _callApiForStateList(countryId: countryId);
         })
@@ -1223,18 +1228,30 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
     if (await isValidMobile(
         _mobileController.text.trim(), selectedDialogCountryForMobile.isoCode) ==
         false) {
-       showToast("Enter Valid Phone Number",context: context);
+       showToast(R.string().errorString.enterValidPhone,context: context);
     } else if (await isValidMobile(
         _whatsAppMobileController.text.trim(), selectedDialogCountryForWhatsapp.isoCode) ==
         false) {
-       showToast("Enter Valid Whatsapp Mobile Number",context: context);
+       showToast(R.string().errorString.enterValidWhatsappPhone,context: context);
     } else {
 
     }
   }
 
-  callPersonalInformationApi() async {
+  callPersonalInformationApi({String imagePath}) async {
     PersonalInformationReq req = PersonalInformationReq();
+    req.id = app.resolve<PrefUtils>().getUserDetails().id;
+    req.address = _addressLineOneController.text;
+    req.firstName = _firstNameController.text;
+    req.lastName = _lastNameController.text;
+    req.mobile = _mobileController.text;
+    req.countryCode = selectedDialogCountryForMobile.phoneCode;
+    req.whatsapp = _whatsAppMobileController.text;
+    req.whatsappCounCode = selectedDialogCountryForWhatsapp.phoneCode;
+    req.email = _emailController.text.trim();
+    if(imagePath != null) {
+      req.profileImage = imagePath;
+    }
 
     NetworkCall<BaseApiResp>()
         .makeCall(
@@ -1246,9 +1263,9 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
         context,
-        title: "Update Personal Information Error",
+        title: R.string().commonString.error,
         desc: onError.message,
-        positiveBtnTitle: "Try Again",
+        positiveBtnTitle: R.string().commonString.btnTryAgain,
       );
     });
   }

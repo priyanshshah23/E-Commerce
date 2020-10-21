@@ -1,9 +1,9 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
-
-import '../LoginModel.dart';
 
 class DiamondListReq {
   int page;
@@ -163,8 +163,13 @@ class Data {
     }
     if (json['list'] != null) {
       list = new List<TrackItem>();
+      diamonds = new List<DiamondModel>();
       json['list'].forEach((v) {
-        list.add(new TrackItem.fromJson(v));
+        if (v["diamond"] != null) {
+          list.add(new TrackItem.fromJson(v));
+        } else {
+          diamonds.add(new DiamondModel.fromJson(v));
+        }
       });
     }
   }
@@ -394,13 +399,18 @@ class DiamondModel {
   String fcColDesc;
   num ratio;
   bool isSelected = false;
+  bool isMatchPair = false;
+  int borderType;
   bool isAddToWatchList = false;
   bool isAddToOffer = false;
   bool isAddToBid = false;
   String selectedBackPer;
-  String selectedOfferPer;
+  String selectedOfferPer = "0.5";
   String selectedOfferHour;
   bool pltFile;
+  int groupNo;
+  double marginTop=0;
+  double marginBottom=0;
 
   getSelectedDetail(int type) {
     switch (type) {
@@ -551,6 +561,7 @@ class DiamondModel {
     fcColDesc = json['fcColDesc'];
     ratio = json['ratio'];
     pltFile = json['pltFile'] ?? false;
+    groupNo = json['groupNo'] ;
 //    isSelected = json['isSelected'];
   }
 
@@ -643,6 +654,7 @@ class DiamondModel {
     data['fcColDesc'] = this.fcColDesc;
     data['ratio'] = this.ratio;
     data['pltFile'] = this.pltFile;
+    data['groupNo'] = this.groupNo;
 //    data['isSelected'] = this.isSelected;
     return data;
   }
@@ -674,29 +686,32 @@ class DiamondModel {
     return "";
   }
 
-  String getAmount() {
-    var amount =
-        (amt.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
-
-    return R.string().commonString.doller + amount + "/Amt" ?? "";
-  }
-
-  String getPricePerCarat() {
-    var caratPerPrice =
-        (ctPr.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
-
-    return R.string().commonString.doller + caratPerPrice + "/Cts" ?? "";
-  }
-
   num getFinalRate() {
-    if (selectedOfferPer != null) {
+    if (isAddToOffer) {
+      if (selectedOfferPer != null) {
+        num quote = (-back + num.parse(selectedOfferPer));
+        num pricePerCarat = rap - ((quote * rap) / 100);
+        num lessAmt = ((pricePerCarat * 2) / 100);
+        num finalrate = pricePerCarat - lessAmt;
+        return finalrate;
+      }else{
+        num quote = (-back + num.parse(selectedOfferPer));
+        num pricePerCarat = rap - ((quote * rap) / 100);
+        num lessAmt = ((pricePerCarat * 2) / 100);
+        num finalrate = pricePerCarat - lessAmt;
+        return finalrate;
+      }
+    }else{
+      return this.ctPr - ((this.ctPr * 2) / 100);
+    }
+    /*if (selectedOfferPer != null) {
       num quote = (-back + num.parse(selectedOfferPer));
       num pricePerCarat = rap - ((quote * rap) / 100);
       num lessAmt = ((pricePerCarat * 2) / 100);
       num finalrate = pricePerCarat - lessAmt;
       return finalrate;
-    } else
-      return this.ctPr - ((this.ctPr * 2) / 100);
+    } else*/
+    return this.ctPr - ((this.ctPr * 2) / 100);
   }
 
   num getFinalDiscount() {
@@ -706,8 +721,22 @@ class DiamondModel {
   num getFinalAmount() {
     return crt * getFinalRate();
   }
-}
 
+  String getAmount() {
+    var amount =
+    (amt.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
+
+    return R.string().commonString.doller + getFinalAmount().toStringAsFixed(2) + "/Amt" ?? "";
+  }
+
+  String getPricePerCarat() {
+    var caratPerPrice =
+    (ctPr.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
+   // return PriceUtilities.getPrice(getFinalRate()) + "Cts";
+    return R.string().commonString.doller + getFinalRate().toStringAsFixed(2) + "/Cts" ?? "";
+  }
+
+}
 
 class TrackItem {
   String createdAt;
@@ -739,6 +768,7 @@ class TrackItem {
   String createIp;
   bool isSentReminder;
   String addedBy;
+
   //User user;
   DiamondModel diamond;
 
@@ -775,7 +805,7 @@ class TrackItem {
     this.createIp,
     this.isSentReminder,
     this.addedBy,
-  //  this.user,
+    //  this.user,
     this.diamond,
     this.userAccount,
     this.createdBy,
@@ -811,7 +841,7 @@ class TrackItem {
     createIp = json['createIp'];
     isSentReminder = json['isSentReminder'];
     addedBy = json['addedBy'];
-   // user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    // user = json['user'] != null ? new User.fromJson(json['user']) : null;
     diamond = json['diamond'] != null
         ? new DiamondModel.fromJson(json['diamond'])
         : null;

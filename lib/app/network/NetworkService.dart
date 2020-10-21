@@ -60,6 +60,12 @@ abstract class NetworkService {
   @POST(ApiConstants.personalInformation)
   Future<BaseApiResp> personalInformation(@Body() PersonalInformationReq req);
 
+  @GET(ApiConstants.personalInformationView)
+  Future<BaseApiResp> personalInformationView();
+
+  @POST(ApiConstants.companyInformationView)
+  Future<BaseApiResp> companyInformationView();
+
   @POST(ApiConstants.companyInformation)
   Future<CompanyInformationResp> companyInformation(
       @Body() CompanyInformationReq req);
@@ -69,6 +75,8 @@ abstract class NetworkService {
 
   @POST(ApiConstants.diamondList)
   Future<DiamondListResp> diamondListPaginate(@Body() Map<String, dynamic> req);
+  @POST(ApiConstants.diamondMatchPair)
+  Future<DiamondListResp> diamondMatchPairList(@Body() Map<String, dynamic> req);
 
   @POST(ApiConstants.diamondBidList)
   Future<DiamondListResp> diamondBidList(@Body() Map<String, dynamic> req);

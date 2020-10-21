@@ -296,19 +296,18 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         } else if (obj.code == BottomCodeConstant.filterSearch) {
           //
           print(obj.code);
-          callApiForGetFilterId();
+          callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH);
         } else if (obj.code == BottomCodeConstant.filterSaveAndSearch) {
           //
           print(obj.code);
         } else if (obj.code == BottomCodeConstant.filteMatchPair) {
-          //
-          print(obj.code);
+          callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR);
         }
       },
     );
   }
 
-  callApiForGetFilterId() {
+  callApiForGetFilterId(int moduleType) {
     Map<String, dynamic> dict = {};
     dict["isNotReturnTotal"] = true;
     dict["isReturnCountOnly"] = true;
@@ -322,6 +321,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
         dict["filterId"] = diamondListResp.data.filter.id;
         dict["filters"] = FilterRequest().createRequest(arrList);
+        dict[ArgumentConstant.ModuleType] = moduleType;
         NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
       },
       (onError) {

@@ -7,9 +7,11 @@ class ErrorString {
   final String enterEmail;
   final String enterPhone;
   final String enterSkype;
+  final String enterSamePassword;
   final String enterUsername;
   final String enterValidEmail;
   final String enterValidPhone;
+  final String enterValidWhatsappPhone;
   final String enterValidPassword;
   final String mismatchPassword;
   final String enterAddress;
@@ -43,8 +45,10 @@ class ErrorString {
   final String selectExpiryDate;
   final String pleaseEnterOTP;
   final String pleaseEnterCompanyName;
+  final String pleaseEnterCompanyCode;
   final String pleaseEnterComment;
   final String enterPinCode;
+  final String enterValidPinCode;
   final String fromValueGreateThanTo;
   final String toValueGreaterThanFrom;
 
@@ -68,6 +72,7 @@ class ErrorString {
     this.enterUsername = "Username can't be empty. Please enter Username.",
     this.enterValidEmail = 'Please enter the valid Email address.',
     this.enterValidPhone = 'Please enter the valid Mobile Number.',
+    this.enterValidWhatsappPhone = 'Please enter the valid WhatsApp Mobile Number.',
     this.enterValidPassword = 'Please enter 6 characters or long password.',
     this.mismatchPassword = 'Password and confirm password is not matching.',
     this.enterFirstName = 'Please enter the First Name.',
@@ -76,6 +81,7 @@ class ErrorString {
     this.enterName = 'Please enter name.',
     this.enterLastName = 'Please enter Last Name.',
     this.enterAddress = 'Please enter address.',
+    this.enterValidPinCode = "Enter Valid PinCode.",
     this.enterValidAddress = 'Please enter 10 characters or long address.',
     this.enterPostalCode = 'Please enter postal code.',
     this.enterValidPostalCode = 'Please enter 6 digit numeric postal code.',
@@ -103,5 +109,7 @@ class ErrorString {
         "From Value should be less than or equal to To value",
     this.toValueGreaterThanFrom =
         "To Value should be greater than or equal to From value",
+    this.pleaseEnterCompanyCode = "Please enter company code",
+    this.enterSamePassword = "Confirm Password does not match with Password. Please enter confirm password same as Password.",
   });
 }

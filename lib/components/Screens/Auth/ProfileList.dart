@@ -1,5 +1,6 @@
 
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/theme/app_theme.dart';
 import 'package:diamnow/components/Screens/Auth/ChangePassword.dart';
 import 'package:diamnow/components/Screens/Auth/CompanyInformation.dart';
@@ -22,9 +23,9 @@ class _ProfileListState extends State<ProfileList> {
 
   setPages() {
     pages = {
-      0: getSegment("Personal", 0),
-      1: getSegment("Business", 1),
-      2: getSegment("Documents", 2),
+      0: getSegment(R.string().commonString.personal, 0),
+      1: getSegment(R.string().commonString.business, 1),
+      2: getSegment(R.string().commonString.documents, 2),
     };
   }
 
@@ -50,7 +51,7 @@ class _ProfileListState extends State<ProfileList> {
     return Scaffold(
       appBar: getAppBar(
         context,
-        "My Profile",
+        R.string().commonString.profile,
         bgColor: appTheme.whiteColor,
         leadingButton: getDrawerButton(context, true),
         centerTitle: false,

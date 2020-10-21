@@ -1,6 +1,7 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
+import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:flutter/material.dart';
@@ -39,67 +40,87 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           right: getSize(Spacing.rightPadding),
         ),
         child: Container(
+          decoration: getBoxDecorationType(context, widget.item.borderType),
           margin: EdgeInsets.only(
-            bottom: getSize(10),
-            top: getSize(5),
+            bottom: getSize(widget.item.marginBottom),
+            top: getSize(widget.item.marginTop),
           ),
-          width: MathUtilities.screenWidth(context),
-          decoration: BoxDecoration(
-              color: appTheme.whiteColor,
-              boxShadow: widget.item.isSelected
-                  ? getBoxShadow(context)
-                  : [BoxShadow(color: Colors.transparent)],
-              borderRadius: BorderRadius.circular(getSize(6)),
-              border: Border.all(
-                  color: widget.item.isSelected
-                      ? appTheme.colorPrimary
-                      : appTheme.dividerColor)
-              //boxShadow: getBoxShadow(context),
-              ),
-          child: Wrap(
-            children: [
-              IntrinsicHeight(
-                child: Row(
-                  children: <Widget>[
-                    getCaratAndDiscountDetail(widget.actionClick),
-                    //   getIdColorDetail(),
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            left: getSize(10),
-                            right: getSize(10),
-                            top: getSize(8),
-                            bottom: getSize(8)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            getIdShapeDetail(),
-                            getDymentionAndCaratDetail(),
-                            getTableDepthAndAmountDetail(),
-                            getWatchListDetail(),
-                            getOfferDetail(),
-                            getBidDetail(),
-                          ],
+          child: Container(
+            margin: EdgeInsets.only(
+              bottom: getSize(widget.item.isMatchPair &&
+                      (widget.item.borderType ==
+                              BorderConstant.BORDER_LEFT_RIGHT ||
+                          widget.item.borderType == BorderConstant.BORDER_TOP)
+                  ? 1
+                  : 5),
+              top: getSize(widget.item.isMatchPair &&
+                      (widget.item.borderType ==
+                              BorderConstant.BORDER_LEFT_RIGHT ||
+                          widget.item.borderType ==
+                              BorderConstant.BORDER_BOTTOM)
+                  ? 1
+                  : 5),
+              left: getSize(widget.item.isMatchPair ? 5 : 0),
+              right: getSize(widget.item.isMatchPair ? 5 : 0),
+            ),
+            width: MathUtilities.screenWidth(context),
+            decoration: BoxDecoration(
+                color: appTheme.whiteColor,
+                boxShadow: widget.item.isSelected
+                    ? getBoxShadow(context)
+                    : [BoxShadow(color: Colors.transparent)],
+                borderRadius: BorderRadius.circular(getSize(6)),
+                border: Border.all(
+                    color: widget.item.isSelected
+                        ? appTheme.colorPrimary
+                        : appTheme.dividerColor)
+                //boxShadow: getBoxShadow(context),
+                ),
+            child: Wrap(
+              children: [
+                IntrinsicHeight(
+                  child: Row(
+                    children: <Widget>[
+                      getCaratAndDiscountDetail(widget.actionClick),
+                      //   getIdColorDetail(),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: getSize(10),
+                              right: getSize(10),
+                              top: getSize(8),
+                              bottom: getSize(8)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              getIdShapeDetail(),
+                              getDymentionAndCaratDetail(),
+                              getTableDepthAndAmountDetail(),
+                              getWatchListDetail(),
+                              getOfferDetail(),
+                              getBidDetail(),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      child: Center(
-                          child: Container(
-                        decoration: BoxDecoration(
-                            color: widget.item.getStatusColor(),
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(5),
-                                bottomLeft: Radius.circular(5))),
-                        height: getSize(26),
-                        width: getSize(4),
-                        // color: Colors.red,
-                      )),
-                    ),
-                  ],
+                      Container(
+                        child: Center(
+                            child: Container(
+                          decoration: BoxDecoration(
+                              color: widget.item.getStatusColor(),
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(5),
+                                  bottomLeft: Radius.circular(5))),
+                          height: getSize(26),
+                          width: getSize(4),
+                          // color: Colors.red,
+                        )),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -153,7 +174,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   color: appTheme.whiteColor,
                   borderRadius: BorderRadius.circular(getSize(5))),
               child: Text(
-                PriceUtilities.getPercent(widget.item?.back) ?? "",
+                PriceUtilities.getPercent(widget.item?.getFinalDiscount()) ?? "",
                 style: appTheme.green10TextStyle,
               ),
             ),
