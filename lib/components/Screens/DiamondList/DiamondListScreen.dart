@@ -316,12 +316,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       ),
       bottomNavigationBar: getBottomTab(),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.only(
-            left: getSize(20),
-            right: getSize(20),
-            top: getSize(8),
-          ),
         child: Column(
           children: <Widget>[
             Padding(
@@ -342,7 +336,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             )
           ],
         ),
-      ),
     ));
   }
 
