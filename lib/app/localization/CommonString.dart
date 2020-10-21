@@ -200,6 +200,25 @@ class CommonString {
 
   final String documents;
 
+  //Time Slot Lable
+  final String lblTimeSlot1;
+  final String lblTimeSlot2;
+  final String lblTimeSlot3;
+  final String lblTimeSlot4;
+  final String lblTimeSlot5;
+  final String lblTimeSlot6;
+  final String lblTimeSlot7;
+  final String lblTimeSlot8;
+  final String lblTimeSlot9;
+  final String lblTimeSlot10;
+  final String lblTimeSlot11;
+  final String lblTimeSlot12;
+  final String lblTimeSlot13;
+  final String lblTimeSlot14;
+  final String lblTimeSlot15;
+  final String lblTimeSlot16;
+
+
   const CommonString({
     this.all = "All",
     this.status = "Status",
@@ -391,5 +410,23 @@ class CommonString {
     this.personal = "Personal",
     this.business = "Business",
     this.documents = "Documents",
+
+    //Time Slot Lable
+    this.lblTimeSlot1 = "9:00AM - 9:30AM",
+    this.lblTimeSlot2 = "9:30AM - 10:00AM",
+    this.lblTimeSlot3 = "10:00AM - 10:30AM",
+    this.lblTimeSlot4 = "10:30AM - 11:00AM",
+    this.lblTimeSlot5 = "11:00AM - 11:30AM",
+    this.lblTimeSlot6 =  "11:30M - 12:00PM",
+    this.lblTimeSlot7 = "12:00PM - 12:30PM",
+    this.lblTimeSlot8 = "12:00PM - 12:30PM",
+    this.lblTimeSlot9 =  "12:30PM - 1:00PM",
+    this.lblTimeSlot10 =  "1:00PM - 1:30PM",
+    this.lblTimeSlot11 = "1:30PM - 2:00PM",
+    this.lblTimeSlot12 = "2:00PM - 2:30PM",
+    this.lblTimeSlot13 = "2:30PM - 3:00PM",
+    this.lblTimeSlot14 = "3:30PM - 4:00PM",
+    this.lblTimeSlot15 = "4:00PM - 4:30PM",
+    this.lblTimeSlot16 = "4:30PM - 5:00PM",
   });
 }
