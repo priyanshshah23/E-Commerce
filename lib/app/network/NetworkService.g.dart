@@ -372,4 +372,24 @@ class _NetworkService implements NetworkService {
     final value = StaticPageResp.fromJson(_result.data);
     return Future.value(value);
   }
+
+  @override
+  quickSearch(req) async {
+    ArgumentError.checkNotNull(req, 'req');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(req ?? <String, dynamic>{});
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'http://fndevelopapi.democ.in/device/v1/diamond/quick-search',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = QuickSearchResp.fromJson(_result.data);
+    return Future.value(value);
+  }
 }

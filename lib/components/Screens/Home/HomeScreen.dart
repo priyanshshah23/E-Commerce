@@ -188,6 +188,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   calllogout(BuildContext context) {
+    app.resolve<PrefUtils>().clearPreferenceAndDB();
+
     /*NetworkCall<BaseApiResp>()
         .makeCall(() => app.resolve<ServiceModule>().networkService().logout(),
             context,
