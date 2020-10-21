@@ -423,18 +423,6 @@ class DiamondModel {
     }
   }
 
-  getFinalDisc() {
-    return 0;
-  }
-
-  // getFinalRate() {
-  //   return 0;
-  // }
-
-  getFinalValue() {
-    return 0;
-  }
-
   getWatchlistPer() {
     List<String> list = [];
     if (back >= 0) {
@@ -700,7 +688,14 @@ class DiamondModel {
   }
 
   num getFinalRate() {
-    return this.ctPr - ((this.ctPr * 2) / 100);
+    if (selectedOfferPer != null) {
+      num quote = (-back + num.parse(selectedOfferPer));
+      num pricePerCarat = rap - ((quote * rap) / 100);
+      num lessAmt = ((pricePerCarat * 2) / 100);
+      num finalrate = pricePerCarat - lessAmt;
+      return finalrate;
+    } else
+      return this.ctPr - ((this.ctPr * 2) / 100);
   }
 
   num getFinalDiscount() {

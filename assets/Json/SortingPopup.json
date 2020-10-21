@@ -4,7 +4,7 @@
     "isSelected": false,
     "icon": "filterUnionArrow.png",
     "isActive": true,
-    "apiKey": "default"
+    "apiKey": ""
 
   },
   {
@@ -20,69 +20,69 @@
     "isSelected": false,
     "icon": "filterUpArrow.png",
     "isActive": true,
-    "apiKey": "priceLowToHigh"
+    "apiKey": "amt ASC"
   },
   {
     "title": "Price High to Low",
     "isSelected": false,
     "icon": "filterDownArrow.png",
     "isActive": true,
-    "apiKey": "priceHighToLow"
+    "apiKey": "amt DESC"
   },
   {
     "title": "Discount Low to High",
     "isSelected": false,
     "icon": "filterUpArrow.png",
     "isActive": true,
-    "apiKey": "discountLowToHigh"
+    "apiKey": "back ASC"
   },
   {
     "title": "Discount High to Low",
     "isSelected": false,
     "icon": "filterDownArrow.png",
     "isActive": true,
-    "apiKey": "discountHighToLow"
+    "apiKey": "back DESC"
   },
   {
     "title": "Color Low to High",
     "isSelected": false,
     "icon": "filterUpArrow.png",
     "isActive": true,
-    "apiKey": "colorLowToHigh"
+    "apiKey": "col ASC"
   },
   {
     "title": "Color High to Low",
     "isSelected": false,
     "icon": "filterDownArrow.png",
     "isActive": true,
-    "apiKey": "colorHighToLow"
+    "apiKey": "col DESC"
   },
   {
     "title": "Carat Low to High",
     "isSelected": false,
     "icon": "filterUpArrow.png",
     "isActive": true,
-    "apiKey": "caratLowToHigh"
+    "apiKey": "crt ASC"
   },
   {
     "title": "Carat High to Low",
     "isSelected": false,
     "icon": "filterDownArrow.png",
     "isActive": true,
-    "apiKey": "caratHighToLow"
+    "apiKey": "crt DESC"
   },
   {
     "title": "Clarity Low to High",
     "isSelected": false,
     "icon": "filterUpArrow.png",
     "isActive": true,
-    "apiKey": "clarityLowToHigh"
+    "apiKey": "clr ASC"
   },
   {
     "title": "Clarity High to Low",
     "isSelected": false,
     "icon": "filterDownArrow.png",
     "isActive": true,
-    "apiKey": "clarityHighToLow"
+    "apiKey": "clr DESC"
   }
 ]

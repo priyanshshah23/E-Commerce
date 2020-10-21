@@ -53,6 +53,7 @@ const String addToWatchlist = "assets/DiamondDetail/addToWatchlist.png";
 const String placeOrder = "assets/DiamondDetail/placeOrder.png";
 const String comment = "assets/DiamondDetail/comment.png";
 const String clock = "assets/DiamondDetail/clock.png";
+const String selectList = "assets/DiamondDetail/selectAllList";
 
 //PersonalInformation
 const String city = "assets/Common/city.png";
@@ -64,6 +65,7 @@ const String pincode = "assets/Common/pincode.png";
 const String offer = "assets/more/offer.png";
 const String hold = "assets/more/hold.png";
 const String clearSelection = "assets/more/clear.png";
+const String editProfile = "assets/Common/editProfile.png";
 
 //Drawer
 const String menu = "assets/drawer/menu.png";

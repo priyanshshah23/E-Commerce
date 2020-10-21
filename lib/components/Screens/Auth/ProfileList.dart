@@ -33,13 +33,13 @@ class _ProfileListState extends State<ProfileList> {
       padding: EdgeInsets.all(8),
       child: Text(
         title,
-        style: AppTheme.of(context).theme.textTheme.body1.copyWith(
-            color: index == sharedValue
-                ? AppTheme.of(context).theme.accentColor
-                : AppTheme.of(context).theme.primaryColor,
-            fontSize: getFontSize(12),
-            fontWeight: FontWeight.w700,
-            letterSpacing: 0.0),
+        style: TextStyle(
+          fontSize: getFontSize(14),
+          fontWeight: FontWeight.w500,
+          color: index != sharedValue
+              ? appTheme.colorPrimary
+              : appTheme.whiteColor,
+        ),
       ),
     );
   }
@@ -52,7 +52,7 @@ class _ProfileListState extends State<ProfileList> {
         context,
         "My Profile",
         bgColor: appTheme.whiteColor,
-        leadingButton: getBackButton(context),
+        leadingButton: getDrawerButton(context, true),
         centerTitle: false,
       ),
       body: Column(
@@ -62,9 +62,9 @@ class _ProfileListState extends State<ProfileList> {
             width: MathUtilities.screenWidth(context),
             child: CupertinoSegmentedControl<int>(
               selectedColor: appTheme.colorPrimary,
-              unselectedColor: AppTheme.of(context).theme.accentColor,
+              unselectedColor: Colors.white,
+              pressedColor: Colors.transparent,
               borderColor: appTheme.colorPrimary,
-              pressedColor: AppTheme.of(context).theme.accentColor,
               children: pages,
               onValueChanged: (int val) {
                 setState(() {
@@ -74,6 +74,7 @@ class _ProfileListState extends State<ProfileList> {
               },
               groupValue: sharedValue,
             ),
+
           ),
           SizedBox(height: getSize(20),),
           Expanded(

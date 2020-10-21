@@ -10,6 +10,7 @@ class DrawerModel {
   bool isExpand = false;
   bool isShowCount = false;
   Color countBackgroundColor = appTheme.colorPrimary;
+  Color imageColor;
   int type;
   int count;
 
@@ -21,6 +22,7 @@ class DrawerModel {
     this.isExpand = false,
     this.isShowCount = false,
     this.countBackgroundColor = Colors.red,
+    this.imageColor,
     this.count = 0,
   });
 }

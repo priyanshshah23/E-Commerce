@@ -27,7 +27,11 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_LOGOUT = 23;
   static const MODULE_TYPE_UPCOMING = 24;
   static const MODULE_TYPE_PROFILE = 25;
-  static const MODULE_TYPE_MY_COMMENT = 25;
+  static const MODULE_TYPE_MY_COMMENT = 26;
+  static const MODULE_TYPE_COMPARE = 27;
+
+
+
   static const MODULE_TYPE_Home = 100;
   static const MODULE_TYPE_OPEN_DRAWER= 1000;
   static const MODULE_TYPE_HOME = 100;
@@ -37,6 +41,7 @@ class ArgumentConstant {
   static const ModuleType = "moduleType";
   static const IsFromDrawer = "isFromDrawer";
   static const DiamondDetail = "diamondModel";
+  static const DiamondList = "diamondList";
 }
 
 typedef ActionClick(ManageCLick manageCLick);

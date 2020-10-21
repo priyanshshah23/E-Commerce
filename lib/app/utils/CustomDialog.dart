@@ -171,9 +171,6 @@ class CustomDialogs {
         btntitle: btntitle, voidCallback: voidCallBack ?? null);
   }
 
-
-
-
   void confirmDialog(BuildContext context,
       {String title,
       String desc,
@@ -224,7 +221,8 @@ Future OpenErrorDialog(BuildContext context, String title, String disc,
       builder: (context) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(getSize(15),
+            borderRadius: BorderRadius.circular(
+              getSize(15),
             ),
           ),
           child: Padding(
@@ -408,14 +406,18 @@ Future OpenConfirmationPopUp(BuildContext context,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text(
-                      title,
-                      textAlign: TextAlign.center,
-                      style: appTheme.commonAlertDialogueTitleStyle,
-                    ),
-                    SizedBox(
-                      height: getSize(21),
-                    ),
+                    isNullEmptyOrFalse(title)
+                        ? SizedBox()
+                        : Text(
+                            title,
+                            textAlign: TextAlign.center,
+                            style: appTheme.commonAlertDialogueTitleStyle,
+                          ),
+                    isNullEmptyOrFalse(title)
+                        ? SizedBox()
+                        : SizedBox(
+                            height: getSize(20),
+                          ),
                     desc.isEmpty
                         ? richText
                         : Padding(
@@ -430,10 +432,10 @@ Future OpenConfirmationPopUp(BuildContext context,
                     // SizedBox(height: getSize(20),),
                     Container(
                       margin: EdgeInsets.only(
-                          top: getSize(20),
-                          left: getSize(31),
-                          right: getSize(31),
-                          bottom: getSize(5)),
+                        top: getSize(24),
+                        left: getSize(31),
+                        right: getSize(31),
+                      ),
                       child: Row(
                         children: <Widget>[
                           negativeBtnTitle != null

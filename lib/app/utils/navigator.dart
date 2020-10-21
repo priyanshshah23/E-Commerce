@@ -9,6 +9,7 @@ import 'package:diamnow/components/Screens/Auth/ProfileList.dart';
 import 'package:diamnow/components/Screens/Auth/ResetPassword.dart';
 import 'package:diamnow/components/Screens/Auth/Signup.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
@@ -121,6 +122,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       break;
     case DiamondListScreen.route:
       screen = DiamondListScreen(arguments);
+      break;
+    case DiamondCompareScreen.route:
+      screen = DiamondCompareScreen(arguments);
       break;
     case ChangePassword.route:
       screen = ChangePassword();

@@ -19,6 +19,7 @@ import 'package:diamnow/components/widgets/shared/CountryPickerWidget.dart';
 import 'package:diamnow/models/Address/CityListModel.dart';
 import 'package:diamnow/models/Address/CountryListModel.dart';
 import 'package:diamnow/models/Address/StateListModel.dart';
+import 'package:diamnow/models/Auth/PersonalInformationModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -29,7 +30,7 @@ class PersonalInformation extends StatefulWidget {
   _PersonalInformationState createState() => _PersonalInformationState();
 }
 
-class _PersonalInformationState extends State<PersonalInformation> {
+class _PersonalInformationState extends State<PersonalInformation> with AutomaticKeepAliveClientMixin<PersonalInformation>{
   final _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
   final TextEditingController _firstNameController = TextEditingController();
@@ -94,13 +95,46 @@ class _PersonalInformationState extends State<PersonalInformation> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        appBar: getAppBar(
-          context,
-          "Personal Information",
-          bgColor: appTheme.whiteColor,
-          leadingButton: getBackButton(context),
-          centerTitle: false,
+//        appBar: getAppBar(
+//          context,
+//          "Personal Information",
+//          bgColor: appTheme.whiteColor,
+//          leadingButton: getBackButton(context),
+//          centerTitle: false,
+//        ),
+      bottomNavigationBar:  Padding(
+        padding: EdgeInsets.only(top: getSize(10), bottom: getSize(16), right: getSize(20), left: getSize(20),),
+        child: Container(
+         // padding: EdgeInsets.symmetric(vertical: getSize(30)),
+//          margin: EdgeInsets.only(top: getSize(15), left: getSize(0)),
+//          decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
+          child: AppButton.flat(
+            onTap: () async {
+              FocusScope.of(context).unfocus();
+              if (_formKey.currentState.validate()) {
+                _formKey.currentState.save();
+                if(_mobileController.text.isNotEmpty || _whatsAppMobileController.text.isNotEmpty){
+                  if(await checkValidation()) {
+                 //   callPersonalInformationApi();
+                  }
+                }
+                //isProfileImageUpload ? uploadDocument() : callApi();
+              } else {
+                setState(() {
+                  _autoValidate = true;
+                });
+              }
+              // NavigationUtilities.push(ThemeSetting());
+            },
+              backgroundColor: appTheme.colorPrimary.withOpacity(0.1),
+            textColor: appTheme.colorPrimary,
+            borderRadius: getSize(5),
+            fitWidth: true,
+            text: "Edit Profile",
+            //isButtonEnabled: enableDisableSigninButton(),
+          ),
         ),
+      ),
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(
@@ -113,14 +147,19 @@ class _PersonalInformationState extends State<PersonalInformation> {
                 children: <Widget>[
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      ClipRRect(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            getSize(60),
-                          ),
-                        ),
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          FocusScope.of(context).unfocus();
+                          openImagePickerDocuments((img) {
+                            setState(() {
+                              isProfileImageUpload = true;
+                              profileImage = img;
+                            });
+                          });
+                        },
                         child: Stack(
+                          alignment: Alignment.bottomRight,
                           children: <Widget>[
                             ClipRRect(
                               borderRadius: BorderRadius.all(
@@ -128,26 +167,53 @@ class _PersonalInformationState extends State<PersonalInformation> {
                                   getSize(60),
                                 ),
                               ),
-                              child: isProfileImageUpload
-                                  ? Image.file(
-                                      profileImage,
-                                      width: getSize(120),
-                                      height: getSize(120),
-                                      fit: BoxFit.cover,
-                                    )
-                                  : getImageView(
-                                      image ?? "",
-                                      width: getSize(120),
-                                      height: getSize(120),
-                                      placeHolderImage: placeHolder,
-                                      fit: BoxFit.cover,
+                              child: Stack(
+                                children: <Widget>[
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(
+                                        getSize(60),
+                                      ),
                                     ),
+                                    child: isProfileImageUpload
+                                        ? Image.file(
+                                            profileImage,
+                                            width: getSize(120),
+                                            height: getSize(120),
+                                            fit: BoxFit.cover,
+                                          )
+                                        : getImageView(
+                                            image ?? "",
+                                            width: getSize(120),
+                                            height: getSize(120),
+                                            placeHolderImage: placeHolder,
+                                            fit: BoxFit.cover,
+                                          ),
+                                  ),
+                                  Container(
+                                    color: isProfileImageUpload || image != ""
+                                        ? Colors.transparent
+                                        : appTheme.colorPrimary
+                                            .withOpacity(0.5),
+                                  ),
+                                ],
+                              ),
                             ),
-                            Container(
-                              color: isProfileImageUpload || image != ""
-                                  ? Colors.transparent
-                                  : appTheme.colorPrimary
-                                      .withOpacity(0.5),
+                            InkWell(
+                              onTap: () {
+                                FocusScope.of(context).unfocus();
+                                openImagePickerDocuments((img) {
+                                  setState(() {
+                                    isProfileImageUpload = true;
+                                    profileImage = img;
+                                  });
+                                });
+                              },
+                              child: Image.asset(
+                                editProfile,
+                                height: getSize(33),
+                                width: getSize(27),
+                              ),
                             ),
                           ],
                         ),
@@ -157,74 +223,74 @@ class _PersonalInformationState extends State<PersonalInformation> {
                   SizedBox(
                     height: getSize(30),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            FocusScope.of(context).unfocus();
-                            openImagePickerDocuments((img) {
-                              setState(() {
-                                isProfileImageUpload = true;
-                                profileImage = img;
-                              });
-                            });
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(getSize(20)),
-                              color: appTheme.colorPrimary,
-                            ),
-                            alignment: Alignment.center,
-                            padding:
-                                EdgeInsets.symmetric(vertical: getSize(10)),
-                            child: Text(
-                              "Upload Image",
-                              style: appTheme.black16TextStyle
-                                  .copyWith(color: appTheme.whiteColor),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: getSize(20),
-                      ),
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            FocusScope.of(context).unfocus();
-                            profileImage = File("");
-                            isProfileImageUpload = false;
-                            setState(() {});
-                            // callApi();
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(getSize(20)),
-                              color: appTheme.colorPrimary,
-                            ),
-                            alignment: Alignment.center,
-                            padding:
-                                EdgeInsets.symmetric(vertical: getSize(10)),
-                            child: Text(
-                              "Remove Profile",
-                              style: appTheme.black16TextStyle
-                                  .copyWith(color: appTheme.whiteColor),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: getSize(30),
-                  ),
+//                  Row(
+//                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                    children: <Widget>[
+//                      Expanded(
+//                        child: InkWell(
+//                          onTap: () {
+//                            FocusScope.of(context).unfocus();
+//                            openImagePickerDocuments((img) {
+//                              setState(() {
+//                                isProfileImageUpload = true;
+//                                profileImage = img;
+//                              });
+//                            });
+//                          },
+//                          child: Container(
+//                            decoration: BoxDecoration(
+//                              borderRadius: BorderRadius.circular(getSize(20)),
+//                              color: appTheme.colorPrimary,
+//                            ),
+//                            alignment: Alignment.center,
+//                            padding:
+//                                EdgeInsets.symmetric(vertical: getSize(10)),
+//                            child: Text(
+//                              "Upload Image",
+//                              style: appTheme.black16TextStyle
+//                                  .copyWith(color: appTheme.whiteColor),
+//                            ),
+//                          ),
+//                        ),
+//                      ),
+//                      SizedBox(
+//                        width: getSize(20),
+//                      ),
+//                      Expanded(
+//                        child: InkWell(
+//                          onTap: () {
+//                            FocusScope.of(context).unfocus();
+//                            profileImage = File("");
+//                            isProfileImageUpload = false;
+//                            setState(() {});
+//                            // callApi();
+//                          },
+//                          child: Container(
+//                            decoration: BoxDecoration(
+//                              borderRadius: BorderRadius.circular(getSize(20)),
+//                              color: appTheme.colorPrimary,
+//                            ),
+//                            alignment: Alignment.center,
+//                            padding:
+//                                EdgeInsets.symmetric(vertical: getSize(10)),
+//                            child: Text(
+//                              "Remove Profile",
+//                              style: appTheme.black16TextStyle
+//                                  .copyWith(color: appTheme.whiteColor),
+//                            ),
+//                          ),
+//                        ),
+//                      ),
+//                    ],
+//                  ),
+//                  SizedBox(
+//                    height: getSize(30),
+//                  ),
                   getFirstNameTextField(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  getMiddleNameTextField(),
+//                  SizedBox(
+//                    height: getSize(20),
+//                  ),
+//                  getMiddleNameTextField(),
                   SizedBox(
                     height: getSize(20),
                   ),
@@ -232,35 +298,19 @@ class _PersonalInformationState extends State<PersonalInformation> {
                   SizedBox(
                     height: getSize(20),
                   ),
+                  getMobileTextField(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
                   getAddressLineOneTextField(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  getAddressLineTwoTextField(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  getAddressLineThreeTextField(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  getEmailTextField(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  getCountryDropDown(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  getStateDropDown(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  getCityDropDown(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  getPinCodeTextField(),
+//                  SizedBox(
+//                    height: getSize(20),
+//                  ),
+//                  getAddressLineTwoTextField(),
+//                  SizedBox(
+//                    height: getSize(20),
+//                  ),
+//                  getAddressLineThreeTextField(),
                   SizedBox(
                     height: getSize(20),
                   ),
@@ -268,40 +318,35 @@ class _PersonalInformationState extends State<PersonalInformation> {
                   SizedBox(
                     height: getSize(20),
                   ),
-                  getMobileTextField(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  getSkypeTextField(),
-                  SizedBox(
-                    height: getSize(30),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: getSize(15), left: getSize(0)),
-                    decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
-                    child: AppButton.flat(
-                      onTap: () {
-                        FocusScope.of(context).unfocus();
-                        if (_formKey.currentState.validate()) {
-                          _formKey.currentState.save();
-                          if(_mobileController.text.isNotEmpty || _whatsAppMobileController.text.isNotEmpty){
-                           checkValidation();
-                          }
-                          //isProfileImageUpload ? uploadDocument() : callApi();
-                        } else {
-                          setState(() {
-                            _autoValidate = true;
-                          });
-                        }
-                        // NavigationUtilities.push(ThemeSetting());
-                      },
-                      //  backgroundColor: appTheme.buttonColor,
-                      borderRadius: getSize(5),
-                      fitWidth: true,
-                      text: "Save Personal Details",
-                      //isButtonEnabled: enableDisableSigninButton(),
-                    ),
-                  ),
+                  getEmailTextField(),
+//                  SizedBox(
+//                    height: getSize(20),
+//                  ),
+//                  getCountryDropDown(),
+//                  SizedBox(
+//                    height: getSize(20),
+//                  ),
+//                  getStateDropDown(),
+//                  SizedBox(
+//                    height: getSize(20),
+//                  ),
+//                  getCityDropDown(),
+//                  SizedBox(
+//                    height: getSize(20),
+//                  ),
+//                  getPinCodeTextField(),
+//                  SizedBox(
+//                    height: getSize(20),
+//                  ),
+//                  getWhatsAppTextField(),
+//                  SizedBox(
+//                    height: getSize(20),
+//                  ),
+//                  getMobileTextField(),
+//                  SizedBox(
+//                    height: getSize(20),
+//                  ),
+//                  getSkypeTextField(),
                 ],
               ),
             ),
@@ -1030,6 +1075,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
             context,
             isProgress: true)
         .then((resp) {
+          cityList.clear();
       cityList.addAll(resp.data);
       if (isShowDialogue) {
         showDialog(
@@ -1073,6 +1119,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
             context,
             isProgress: true)
         .then((resp) {
+          countryList.clear();
       countryList.addAll(resp.data);
       if (isShowDialogue) {
         showDialog(
@@ -1129,6 +1176,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
             context,
             isProgress: true)
         .then((resp) {
+          stateList.clear();
       stateList.addAll(resp.data);
       if (isShowDialogue) {
         showDialog(
@@ -1181,8 +1229,31 @@ class _PersonalInformationState extends State<PersonalInformation> {
         false) {
        showToast("Enter Valid Whatsapp Mobile Number",context: context);
     } else {
-      //todo
+
     }
   }
+
+  callPersonalInformationApi() async {
+    PersonalInformationReq req = PersonalInformationReq();
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().personalInformation(req),
+        context,
+        isProgress: true)
+        .then((resp) async {
+
+    }).catchError((onError) {
+      app.resolve<CustomDialogs>().confirmDialog(
+        context,
+        title: "Update Personal Information Error",
+        desc: onError.message,
+        positiveBtnTitle: "Try Again",
+      );
+    });
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 
 }

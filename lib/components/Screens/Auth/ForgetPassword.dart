@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/components/Screens/Auth/ResetPassword.dart';
 
@@ -9,9 +12,11 @@ import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/components/widgets/pinView_textFields/decoration/pin_decoration.dart';
 import 'package:diamnow/components/widgets/pinView_textFields/pin_widget.dart';
 import 'package:diamnow/components/widgets/pinView_textFields/style/obscure.dart';
+import 'package:diamnow/models/Auth/ForgetPassword.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ForgetPasswordScreen extends StatefulScreenWidget {
   static const route = "ForgetPasswordScreen";
@@ -139,10 +144,8 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                                         style: appTheme.grey16HintTextStyle),
                                     GestureDetector(
                                         onTap: () {
-                                          if (isTimerCompleted) {
-                                            _start = 30;
-                                            startTimer();
-                                            isTimerCompleted = false;
+                                          if(isTimerCompleted) {
+                                            callForgetPasswordApi(isResend: true);
                                           }
                                         },
                                         child: Text(
@@ -165,9 +168,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                                     FocusScope.of(context).unfocus();
                                     if (_formKey.currentState.validate()) {
                                       _formKey.currentState.save();
-                                      startTimer();
-                                      isApiCall = true;
-                                      setState(() {});
+                                      callForgetPasswordApi();
 //                                callLoginApi(context);
                                     } else {
                                       setState(() {
@@ -260,10 +261,10 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
         textCallback: (text) {},
         validation: (text) {
           if (text.trim().isEmpty) {
-            return R.string().errorString.enterEmail;
-          } else if (!validateEmail(text.trim())) {
+            return R.string().errorString.enterUsername;
+          } /*else if (!validateEmail(text.trim())) {
             return R.string().errorString.enterValidEmail;
-          } else {
+          }*/ else {
             return null;
           }
         },
@@ -317,7 +318,6 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
         ),
         child: PinInputTextFormField(
           key: _formKeyPin,
-          autoFocus: true,
           pinLength: 4,
           decoration: UnderlineDecoration(
             color: isOtpCheck
@@ -424,4 +424,36 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
       ),*/
         );
   }
+
+  callForgetPasswordApi({bool isResend = false}) async {
+    ForgotPasswordReq req = ForgotPasswordReq();
+    req.username = _emailController.text;
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().forgetPassword(req),
+        context,
+        isProgress: true)
+        .then((resp) async {
+      FocusScope.of(context).unfocus();
+      if(isResend) {
+        if (isTimerCompleted) {
+          _start = 30;
+          isTimerCompleted = false;
+        }
+      }
+      startTimer();
+      isApiCall = true;
+      showToast(resp.message,context: context);
+      setState(() {});
+    }).catchError((onError) {
+      app.resolve<CustomDialogs>().confirmDialog(
+        context,
+        title: "Forget Password Error",
+        desc: onError.message,
+        positiveBtnTitle: "Try Again",
+      );
+    });
+  }
+
 }
