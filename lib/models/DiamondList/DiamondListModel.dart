@@ -395,6 +395,7 @@ class DiamondModel {
   bool isSelected = false;
   bool isAddToWatchList = false;
   bool isAddToOffer = false;
+  bool isAddToBid = false;
   String selectedBackPer;
   String selectedOfferPer = "0.5";
   String selectedOfferHour;
@@ -648,16 +649,16 @@ class DiamondModel {
   Color getStatusColor() {
     Color color;
     switch (wSts) {
-      case DiamondStatus.available:
+      case DiamondStatus.DIAMOND_STATUS_AVAILABLE:
         color = appTheme.darkBlue;
         break;
-      case DiamondStatus.onMine:
+      case DiamondStatus.DIAMOND_STATUS_ON_MINE:
         color = appTheme.errorColor;
         break;
-      case DiamondStatus.office:
+      case DiamondStatus.DIAMOND_STATUS_OFFER:
         color = appTheme.errorColor;
         break;
-      case DiamondStatus.show:
+      case DiamondStatus.DIAMOND_STATUS_SHOW:
         color = appTheme.darkBlue;
         break;
     }

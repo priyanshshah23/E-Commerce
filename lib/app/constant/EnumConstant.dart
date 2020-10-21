@@ -17,8 +17,8 @@ class TabTypes {
 }
 
 class DisplayTypes {
-  static const String vertical = "vertical";
-  static const String horizontal = "horizontal";
+  static const String vertical = "v";
+  static const String horizontal = "h";
 }
 
-enum DialogueListType { Country , State, City }
+enum DialogueListType { Country, State, City }

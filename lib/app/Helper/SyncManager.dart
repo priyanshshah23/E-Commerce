@@ -110,34 +110,38 @@ class SyncManager {
 
   Future callApiForCreateDiamondTrack(
     BuildContext context,
+    int trackType,
     CreateDiamondTrackReq req,
     Function(BaseApiResp) success,
     Function(ErrorResp) failure, {
     bool isProgress = true,
   }) async {
-    if (req.trackType == DiamondTrackConstant.TRACK_TYPE_COMMENT) {
-      NetworkCall<BaseApiResp>()
-          .makeCall(
-        () => app.resolve<ServiceModule>().networkService().upsetComment(req),
-        context,
-        isProgress: isProgress,
-      )
-          .then((resp) async {
-        success(resp);
-      }).catchError((onError) => {if (onError is ErrorResp) failure(onError)});
-    } else {
-      NetworkCall<BaseApiResp>()
-          .makeCall(
-        () => app
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+      () => getTrackTypeCall(trackType, req),
+      context,
+      isProgress: isProgress,
+    )
+        .then((resp) async {
+      success(resp);
+    }).catchError((onError) => {if (onError is ErrorResp) failure(onError)});
+  }
+
+  Future<BaseApiResp> getTrackTypeCall(
+      int trackType, CreateDiamondTrackReq req) {
+    switch (trackType) {
+      case DiamondTrackConstant.TRACK_TYPE_COMMENT:
+        return app.resolve<ServiceModule>().networkService().upsetComment(req);
+      case DiamondTrackConstant.TRACK_TYPE_BID:
+        return app
             .resolve<ServiceModule>()
             .networkService()
-            .createDiamondTrack(req),
-        context,
-        isProgress: isProgress,
-      )
-          .then((resp) async {
-        success(resp);
-      }).catchError((onError) => {if (onError is ErrorResp) failure(onError)});
+            .createDiamondBid(req);
+      default:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .createDiamondTrack(req);
     }
   }
 

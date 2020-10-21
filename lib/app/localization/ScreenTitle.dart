@@ -135,6 +135,10 @@ class ScreenTitle {
   final String finalDisc;
   final String finalRate;
   final String finalValue;
+  final String bidStone;
+  final String bidDisc;
+  final String bidValue;
+  final String bidPricePerCt;
 
   final String statusHold;
   final String statusOnMemo;
@@ -150,6 +154,10 @@ class ScreenTitle {
 
   const ScreenTitle({
     this.myEnquiry = "My Enquiry",
+    this.bidPricePerCt = "Bid Price / Ct",
+    this.bidDisc = "Bid Disc",
+    this.bidValue = "Bid Value",
+    this.bidStone = "Bid Stone",
     this.myCart = "My Cart",
     this.myComment = "My Notes",
     this.compare = "Compare",

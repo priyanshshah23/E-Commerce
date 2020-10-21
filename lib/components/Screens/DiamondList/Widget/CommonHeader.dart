@@ -21,45 +21,52 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
   Widget build(BuildContext context) {
     return Container(
       width: MathUtilities.screenWidth(context),
-      child: Row(
-        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Container(
-            width: widget.diamondCalculation.pcs.length > 4
-                ? getSize(60)
-                : getSize(45),
-            padding: EdgeInsets.symmetric(
-                vertical: getSize(15), horizontal: getSize(4)),
-            decoration: BoxDecoration(
-                border: Border.all(color: appTheme.dividerColor),
-                borderRadius: BorderRadius.circular(getSize(5))),
-            child: Column(
-              children: <Widget>[
-                getDetailText(widget.diamondCalculation.pcs),
-                SizedBox(
-                  height: getSize(5),
-                ),
-                getLableText(R.string().commonString.pcs),
-              ],
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: getSize(Spacing.leftPadding),
+          right: getSize(Spacing.rightPadding),
+          top: getSize(20),
+        ),
+        child: Row(
+          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+              width: widget.diamondCalculation.pcs.length > 4
+                  ? getSize(60)
+                  : getSize(45),
+              padding: EdgeInsets.symmetric(
+                  vertical: getSize(15), horizontal: getSize(4)),
+              decoration: BoxDecoration(
+                  border: Border.all(color: appTheme.dividerColor),
+                  borderRadius: BorderRadius.circular(getSize(5))),
+              child: Column(
+                children: <Widget>[
+                  getDetailText(widget.diamondCalculation.pcs),
+                  SizedBox(
+                    height: getSize(5),
+                  ),
+                  getLableText(R.string().commonString.pcs),
+                ],
+              ),
             ),
-          ),
-          getColumn(widget.diamondCalculation.totalCarat,
-              R.string().commonString.cts),
-          getColumn(widget.diamondCalculation.totalDisc,
-              R.string().commonString.disc),
-          Expanded(
-            child: getColumn(
-                widget.diamondCalculation.totalPriceCrt,
-                R.string().commonString.avgPriceCrt +
-                    R.string().commonString.doller),
-          ),
-          Expanded(
-            child: getColumn(
-                widget.diamondCalculation.totalAmount,
-                R.string().commonString.amount +
-                    R.string().commonString.doller),
-          )
-        ],
+            getColumn(widget.diamondCalculation.totalCarat,
+                R.string().commonString.cts),
+            getColumn(widget.diamondCalculation.totalDisc,
+                R.string().commonString.disc),
+            Expanded(
+              child: getColumn(
+                  widget.diamondCalculation.totalPriceCrt,
+                  R.string().commonString.avgPriceCrt +
+                      R.string().commonString.doller),
+            ),
+            Expanded(
+              child: getColumn(
+                  widget.diamondCalculation.totalAmount,
+                  R.string().commonString.amount +
+                      R.string().commonString.doller),
+            )
+          ],
+        ),
       ),
     );
   }
