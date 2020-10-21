@@ -54,6 +54,8 @@ class DiamondUrls {
   static const String video = commonUrl + "viewer3/html/";
   static const String heartImage = commonUrl + "HeartImages/";
   static const String plotting = commonUrl + "PlottingImages/";
-  static const String certificate = commonUrl + "PlottingImages/";
+  static const String certificate = commonUrl + "CertiImages/";
   static const String arroImage = commonUrl + "ArrowImages/";
+  static const String videomp4 = commonUrl + "Mov/";
 }
+// https://s3.ap-south-1.amazonaws.com/finestargroup/CertiImages/<report_no>.pdf

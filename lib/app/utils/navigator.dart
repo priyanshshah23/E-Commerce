@@ -14,6 +14,7 @@ import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
+import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
 import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
 import 'package:flutter/material.dart';
@@ -101,6 +102,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     //   break;
     case LoginScreen.route:
       screen = LoginScreen();
+      break;
+    case QuickSearchScreen.route:
+      screen = QuickSearchScreen(arguments);
       break;
     case HomeScreen.route:
       screen = HomeScreen();
