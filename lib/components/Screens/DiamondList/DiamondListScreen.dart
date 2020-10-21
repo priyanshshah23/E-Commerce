@@ -107,7 +107,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     });
   }
 
-
   callApi(bool isRefress, {bool isLoading = false}) {
     if (isRefress) {
       arraDiamond.clear();
@@ -122,7 +121,14 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict["filters"] = {};
         dict["filters"]["diamondSearchId"] = this.filterId;
         break;
-
+      case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
+        dict["filters"] = {};
+        dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_BID;
+        break;
+      case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+        dict["bidType"] = [BidConstant.BID_TYPE_ADD];
+        dict["status"] = [BidStatus.BID_STATUS_ACTIVE];
+        break;
       case DiamondModuleConstant.MODULE_TYPE_MY_CART:
         dict["trackType"] = DiamondTrackConstant.TRACK_TYPE_CART;
         break;
@@ -216,7 +222,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           setState(() {
             if (!allSelected) {
               diamondConfig.toolbarList[0].image = selectList;
-            }else{
+            } else {
               diamondConfig.toolbarList[0].image = selectAll;
             }
           });
@@ -303,40 +309,33 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: appTheme.whiteColor,
-      appBar: getAppBar(
-        context,
-        diamondConfig.getScreenTitle(),
-        bgColor: appTheme.whiteColor,
-        leadingButton: isFromDrawer
-            ? getDrawerButton(context, true)
-            : getBackButton(context),
-        centerTitle: false,
-        actionItems: getToolbarItem(),
-      ),
-      bottomNavigationBar: getBottomTab(),
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(
-                left: getSize(Spacing.leftPadding),
-                right: getSize(Spacing.rightPadding),
-                top: getSize(20),
-              ),
-              child: DiamondListHeader(
+        backgroundColor: appTheme.whiteColor,
+        appBar: getAppBar(
+          context,
+          diamondConfig.getScreenTitle(),
+          bgColor: appTheme.whiteColor,
+          leadingButton: isFromDrawer
+              ? getDrawerButton(context, true)
+              : getBackButton(context),
+          centerTitle: false,
+          actionItems: getToolbarItem(),
+        ),
+        bottomNavigationBar: getBottomTab(),
+        body: SafeArea(
+          child: Column(
+            children: <Widget>[
+              DiamondListHeader(
                 diamondCalculation: diamondCalculation,
               ),
-            ),
-            SizedBox(
-              height: getSize(20),
-            ),
-            Expanded(
-              child: diamondList,
-            )
-          ],
-        ),
-    ));
+              SizedBox(
+                height: getSize(20),
+              ),
+              Expanded(
+                child: diamondList,
+              )
+            ],
+          ),
+        ));
   }
 
   Widget getBottomTab() {
@@ -345,23 +344,22 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       onClickCallback: (obj) {
         //
         if (obj.type == ActionMenuConstant.ACTION_TYPE_MORE) {
-
           List<DiamondModel> selectedList =
-          arraDiamond.where((element) => element.isSelected).toList();
+              arraDiamond.where((element) => element.isSelected).toList();
           if (selectedList != null && selectedList.length > 0) {
             showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
-                    (manageClick) {
-                  if (manageClick.bottomTabModel.type ==
-                      ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
-                    arraDiamond.forEach((element) {
-                      element.isSelected = false;
-                    });
-                    manageDiamondSelection();
-                  } else {
-                    manageBottomMenuClick(manageClick.bottomTabModel);
-                  }
-                }, R.string().commonString.more, isDisplaySelection: false);
-          }else{
+                (manageClick) {
+              if (manageClick.bottomTabModel.type ==
+                  ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
+                arraDiamond.forEach((element) {
+                  element.isSelected = false;
+                });
+                manageDiamondSelection();
+              } else {
+                manageBottomMenuClick(manageClick.bottomTabModel);
+              }
+            }, R.string().commonString.more, isDisplaySelection: false);
+          } else {
             app.resolve<CustomDialogs>().errorDialog(
                 context, "Selection Error", "Please select at least one stone.",
                 btntitle: R.string().commonString.ok);

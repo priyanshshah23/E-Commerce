@@ -155,6 +155,26 @@ class _NetworkService implements NetworkService {
   }
 
   @override
+  createDiamondBid(req) async {
+    ArgumentError.checkNotNull(req, 'req');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(req?.toJson() ?? <String, dynamic>{});
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'http://fndevelopapi.democ.in/device/v1/diamond-bid/create',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = BaseApiResp.fromJson(_result.data);
+    return Future.value(value);
+  }
+
+  @override
   upsetComment(req) async {
     ArgumentError.checkNotNull(req, 'req');
     const _extra = <String, dynamic>{};
@@ -303,6 +323,26 @@ class _NetworkService implements NetworkService {
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
         'http://fndevelopapi.democ.in/device/v1/diamond/paginate',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = DiamondListResp.fromJson(_result.data);
+    return Future.value(value);
+  }
+
+  @override
+  diamondBidList(req) async {
+    ArgumentError.checkNotNull(req, 'req');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(req ?? <String, dynamic>{});
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'http://fndevelopapi.democ.in/device/v1/diamond-bid/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',

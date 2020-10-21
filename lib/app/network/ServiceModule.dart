@@ -28,18 +28,18 @@ class ServiceModule {
     if (playerId != null) {
       dio.options.headers["playerId"] = playerId;
     }
-//
-//    if (kDebugMode) {
-//      (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-//          (client) {
-//        // config the http client
-//        client.findProxy = (uri) {
-//          return ApiConstants.PROXY_URL;
-//        };
-//        // you can also create a new HttpClient to dio
-////            return new HttpClient();
-//      };
-//    }
+
+    if (kDebugMode) {
+      (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+          (client) {
+        // config the http client
+        client.findProxy = (uri) {
+          return ApiConstants.PROXY_URL;
+        };
+        // you can also create a new HttpClient to dio
+//            return new HttpClient();
+      };
+    }
     return NetworkService(dio);
   }
 }

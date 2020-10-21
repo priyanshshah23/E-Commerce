@@ -70,7 +70,7 @@ class DiamondCalculation {
 
 class DiamondConfig {
   int moduleType;
-  bool isCompare=false;
+  bool isCompare = false;
   List<BottomTabModel> arrMoreMenu;
   List<BottomTabModel> arrBottomTab;
   List<BottomTabModel> arrStatusMenu;
@@ -113,6 +113,8 @@ class DiamondConfig {
         return R.string().screenTitle.myOffer;
       case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
         return R.string().screenTitle.myPurchased;
+      case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
+        return R.string().screenTitle.newArrival;
       default:
         return R.string().screenTitle.searchDiamond;
     }
@@ -122,6 +124,7 @@ class DiamondConfig {
       int moduleType, Map<String, dynamic> dict) {
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
+      case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
         return app
             .resolve<ServiceModule>()
             .networkService()
@@ -140,6 +143,11 @@ class DiamondConfig {
             .resolve<ServiceModule>()
             .networkService()
             .diamondCommentList(dict);
+      case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .diamondBidList(dict);
     }
   }
 
@@ -220,6 +228,9 @@ class DiamondConfig {
         break;
       case ActionMenuConstant.ACTION_TYPE_OFFER:
         actionOffer(context, list);
+        break;
+      case ActionMenuConstant.ACTION_TYPE_BID:
+        actionBid(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_APPOINTMENT:
         actionAppointment(context, list);
@@ -308,6 +319,22 @@ class DiamondConfig {
     });
   }
 
+  actionBid(BuildContext context, List<DiamondModel> list) {
+    List<DiamondModel> selectedList = [];
+    DiamondModel model;
+    list.forEach((element) {
+      model = DiamondModel.fromJson(element.toJson());
+      model.isAddToBid = true;
+      selectedList.add(model);
+    });
+    showBidListDialog(context, selectedList, (manageClick) {
+      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
+        callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_BID,
+            isPop: true);
+      }
+    });
+  }
+
   actionAppointment(BuildContext context, List<DiamondModel> list) {
     showAppointmentDialog(context, (manageClick) {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
@@ -328,11 +355,19 @@ class DiamondConfig {
       BuildContext context, List<DiamondModel> list, int trackType,
       {bool isPop = false, String remark, String companyName, String title}) {
     CreateDiamondTrackReq req = CreateDiamondTrackReq();
-    req.trackType = trackType;
     switch (trackType) {
       case DiamondTrackConstant.TRACK_TYPE_OFFER:
         req.remarks = remark;
         req.company = companyName;
+        break;
+      case DiamondTrackConstant.TRACK_TYPE_CART:
+      case DiamondTrackConstant.TRACK_TYPE_ENQUIRY:
+      case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
+      case DiamondTrackConstant.TRACK_TYPE_OFFER:
+        req.trackType = trackType;
+        break;
+      case DiamondTrackConstant.TRACK_TYPE_BID:
+        req.bidType = BidConstant.BID_TYPE_ADD;
         break;
     }
     DateTime dateTimeNow = DateTime.now();
@@ -357,11 +392,18 @@ class DiamondConfig {
               .add(Duration(hours: int.parse(element.selectedOfferHour)));
           diamonds.offerValidDate = dateTimeNow.toUtc().toIso8601String();
           break;
+        case DiamondTrackConstant.TRACK_TYPE_BID:
+          diamonds.vStnId = element.vStnId;
+          diamonds.bidAmount = element.getFinalAmount();
+          diamonds.bidPricePerCarat = element.getFinalRate();
+          diamonds.bidDiscount = element.getFinalDiscount();
+          break;
       }
       req.diamonds.add(diamonds);
     });
     SyncManager.instance.callApiForCreateDiamondTrack(
       context,
+      trackType,
       req,
       (resp) {
         if (isPop) {

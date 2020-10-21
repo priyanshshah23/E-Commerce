@@ -4,9 +4,9 @@ class ApiConstants {
 //    static const String PROXY_URL = "PROXY 192.168.2.124:8888";
   //  static const String PROXY_URL = "PROXY 192.168.0.117:8888";
 // static const String PROXY_URL = "PROXY 192.168.0.116:8888";
-// static const String PROXY_URL = "PROXY 192.168.225.188:8888";
+ static const String PROXY_URL = "PROXY 192.168.225.188:8888";
 
- static const String PROXY_URL = "PROXY 192.168.225.121:8888"; // Brijesh
+// static const String PROXY_URL = "PROXY 192.168.225.121:8888"; // Brijesh
 
   static const String imageBaseURL = baseURL;
   static const String apiUrl = baseURL;
@@ -27,9 +27,12 @@ class ApiConstants {
   static const String diamondTrackList = commonUrl + "diamond-track/paginate";
   static const String diamondCommentList =
       commonUrl + "diamond-comment/by-user";
+  static const String diamondBidList =
+      commonUrl + "diamond-bid/paginate";
 
   static const String createDiamondTrack = commonUrl + "diamond-track/create";
   static const String upsetComment = commonUrl + "diamond-comment/upsert";
+  static const String createDiamondBid = commonUrl + "diamond-bid/create";
 
   static const String placeOrder = commonUrl + "diamond-confirm/request";
   static const String staticPage = apiV1 + "static-page/{id}";
