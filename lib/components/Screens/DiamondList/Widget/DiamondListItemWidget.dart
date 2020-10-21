@@ -34,7 +34,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         widget.actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_ROW));
       },
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: getSize(20)),
+        padding: EdgeInsets.only(left: getSize(Spacing.leftPadding),
+          right: getSize(Spacing.rightPadding),),
         child: Container(
           margin: EdgeInsets.only(
             bottom: getSize(10),
@@ -283,9 +284,9 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     getText(R.string().screenTitle.finalRate + " :"),
-                    getText(PriceUtilities.getPercent(widget.item.getFinalRate())),
+                    getText(PriceUtilities.getPrice(widget.item.getFinalRate())),
                     getText(R.string().screenTitle.finalValue + " :"),
-                    getText(PriceUtilities.getPercent(widget.item.getFinalAmount())),
+                    getText(PriceUtilities.getPrice(widget.item.getFinalAmount())),
                   ],
                 ),
               ),

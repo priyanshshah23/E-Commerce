@@ -320,8 +320,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(
-                left: getSize(20),
-                right: getSize(20),
+                left: getSize(Spacing.leftPadding),
+                right: getSize(Spacing.rightPadding),
                 top: getSize(20),
               ),
               child: DiamondListHeader(
