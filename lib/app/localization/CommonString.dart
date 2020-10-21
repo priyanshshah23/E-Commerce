@@ -8,6 +8,9 @@ class CommonString {
   final String btnEdit;
   final String btnSubmit;
   final String btnNextCap;
+  final String selectCity;
+  final String selectState;
+  final String selectCountry;
   final String btnSaveCap;
   final String btnWithdrawCap;
   final String btnSaveAndContinueCap;
@@ -36,6 +39,8 @@ class CommonString {
   final String lblExit;
   final String openAppSetting;
   final String lblOr;
+  final String countryFirst;
+  final String stateFirst;
 
   //App Update Dialog
   final String notYetAvailable;
@@ -58,8 +63,6 @@ class CommonString {
 
   // My Vehicle List
   final String selected;
-
-  final String selectCountry;
   final String clickHere;
 
   final String lblThanx;
@@ -185,6 +188,36 @@ class CommonString {
   final String colorFancy;
   final String overtone;
   final String intensity;
+  final String selectBusinessType;
+
+  final String search;
+
+  final String profile;
+
+  final String personal;
+
+  final String business;
+
+  final String documents;
+
+  //Time Slot Lable
+  final String lblTimeSlot1;
+  final String lblTimeSlot2;
+  final String lblTimeSlot3;
+  final String lblTimeSlot4;
+  final String lblTimeSlot5;
+  final String lblTimeSlot6;
+  final String lblTimeSlot7;
+  final String lblTimeSlot8;
+  final String lblTimeSlot9;
+  final String lblTimeSlot10;
+  final String lblTimeSlot11;
+  final String lblTimeSlot12;
+  final String lblTimeSlot13;
+  final String lblTimeSlot14;
+  final String lblTimeSlot15;
+  final String lblTimeSlot16;
+
 
   const CommonString({
     this.all = "All",
@@ -216,6 +249,7 @@ class CommonString {
     this.doneCap = "DONE",
     this.cancel = "Cancel",
     this.allow = 'Allow',
+    this.countryFirst = "Please Select Country First",
     this.apply = 'Apply',
     this.cancelCap = "CANCEL",
     this.uploadCap = "UPLOAD",
@@ -237,13 +271,14 @@ class CommonString {
     this.toLbl = "To",
     this.showMore = "Show More",
     this.showLess = "Show Less",
-
+    this.selectCity = "Select City",
     //App Update Dialog
     this.notYetAvailable = "Not yet available",
     this.updateAvailable = "Update Available!",
     this.downloadAppFrom = "Download application update from",
     this.playStore = "Play Store",
     this.skipUpdate = "Skip Update",
+    this.stateFirst = "Please Select State First",
 
     // Other
     this.reallyExit = "Really exit?",
@@ -368,5 +403,30 @@ class CommonString {
     this.clarityGroup = "Clarity Group",
     this.intensity = "Intensity",
     this.overtone = "Overtone",
+    this.selectBusinessType = "Select Business Type",
+    this.selectState = "Select State",
+    this.search = "Search",
+    this.profile = "My Profile",
+    this.personal = "Personal",
+    this.business = "Business",
+    this.documents = "Documents",
+
+    //Time Slot Lable
+    this.lblTimeSlot1 = "9:00AM - 9:30AM",
+    this.lblTimeSlot2 = "9:30AM - 10:00AM",
+    this.lblTimeSlot3 = "10:00AM - 10:30AM",
+    this.lblTimeSlot4 = "10:30AM - 11:00AM",
+    this.lblTimeSlot5 = "11:00AM - 11:30AM",
+    this.lblTimeSlot6 =  "11:30M - 12:00PM",
+    this.lblTimeSlot7 = "12:00PM - 12:30PM",
+    this.lblTimeSlot8 = "12:00PM - 12:30PM",
+    this.lblTimeSlot9 =  "12:30PM - 1:00PM",
+    this.lblTimeSlot10 =  "1:00PM - 1:30PM",
+    this.lblTimeSlot11 = "1:30PM - 2:00PM",
+    this.lblTimeSlot12 = "2:00PM - 2:30PM",
+    this.lblTimeSlot13 = "2:30PM - 3:00PM",
+    this.lblTimeSlot14 = "3:30PM - 4:00PM",
+    this.lblTimeSlot15 = "4:00PM - 4:30PM",
+    this.lblTimeSlot16 = "4:30PM - 5:00PM",
   });
 }

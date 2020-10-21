@@ -37,7 +37,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       child: Scaffold(
         appBar: getAppBar(
           context,
-          "Change Password",
+          R.string().authStrings.changePassword,
           bgColor: appTheme.whiteColor,
           leadingButton: getBackButton(context),
           centerTitle: false,
@@ -87,9 +87,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                           if(_confirmPasswordController.text.trim() != _newPasswordController.text.trim()) {
                             app.resolve<CustomDialogs>().confirmDialog(
                               context,
-                              title: "Password does not match",
-                              desc: "Confirm Password does not match with Password. Please enter confirm password same as Password.",
-                              positiveBtnTitle: "Try Again",
+                              title: R.string().authStrings.passwordNotChange,
+                              desc: R.string().errorString.enterSamePassword,
+                              positiveBtnTitle: R.string().commonString.btnTryAgain,
                             );
                           } else {
                             _formKey.currentState.save();
@@ -106,7 +106,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                       //  backgroundColor: appTheme.buttonColor,
                       borderRadius: getSize(5),
                       fitWidth: true,
-                      text: "Change Password",
+                      text: R.string().authStrings.changePassword,
                       //isButtonEnabled: enableDisableSigninButton(),
                     ),
                   ),
@@ -125,7 +125,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       textOption: TextFieldOption(
           prefixWid: getCommonIconWidget(
               imageName: password, imageType: IconSizeType.small),
-          hintText: "Old Password*",
+          hintText: R.string().authStrings.oldPassword + "*",
           maxLine: 1,
           formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
           keyboardType: TextInputType.text,
@@ -153,7 +153,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       textOption: TextFieldOption(
           prefixWid: getCommonIconWidget(
               imageName: password, imageType: IconSizeType.small),
-          hintText: "New Password*",
+          hintText: R.string().authStrings.newPassword + "*",
           maxLine: 1,
           formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
           keyboardType: TextInputType.text,
@@ -181,7 +181,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       textOption: TextFieldOption(
           prefixWid: getCommonIconWidget(
               imageName: password, imageType: IconSizeType.small),
-          hintText: "Confirm Password*",
+          hintText: R.string().authStrings.confirmPassword + "*",
           maxLine: 1,
           formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
           keyboardType: TextInputType.text,
@@ -225,9 +225,9 @@ class _ChangePasswordState extends State<ChangePassword> {
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
         context,
-        title: "Change Password Error",
+        title: R.string().commonString.error,
         desc: onError.message,
-        positiveBtnTitle: "Try Again",
+        positiveBtnTitle: R.string().commonString.btnTryAgain,
       );
     });
   }

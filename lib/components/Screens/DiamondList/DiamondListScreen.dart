@@ -3,7 +3,6 @@ import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/constant/constants.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
-import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
@@ -70,7 +69,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   @override
   void initState() {
     super.initState();
-    Config.instance.getOptionsJson().then((result) {
+    Config().getOptionsJson().then((result) {
       result.forEach((element) {
         if (element.isActive) {
           optionList.add(element);
@@ -122,7 +121,18 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict["filters"] = {};
         dict["filters"]["diamondSearchId"] = this.filterId;
         break;
-
+      case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
+        dict["filters"] = {};
+        dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_BID;
+        break;
+      case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
+        dict["filters"] = {};
+        dict["filters"]["or"] = diamondConfig.getExclusiveDiamondReq();
+        break;
+      case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+        dict["bidType"] = [BidConstant.BID_TYPE_ADD];
+        dict["status"] = [BidStatus.BID_STATUS_ACTIVE];
+        break;
       case DiamondModuleConstant.MODULE_TYPE_MY_CART:
         dict["trackType"] = DiamondTrackConstant.TRACK_TYPE_CART;
         break;
@@ -318,15 +328,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         body: SafeArea(
           child: Column(
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(
-                  left: getSize(Spacing.leftPadding),
-                  right: getSize(Spacing.rightPadding),
-                  top: getSize(20),
-                ),
-                child: DiamondListHeader(
-                  diamondCalculation: diamondCalculation,
-                ),
+              DiamondListHeader(
+                diamondCalculation: diamondCalculation,
               ),
               SizedBox(
                 height: getSize(20),
@@ -352,18 +355,21 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 (manageClick) {
               if (manageClick.bottomTabModel.type ==
                   ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
-                arraDiamond.forEach((element) {
+                    arraDiamond.forEach((element) {
                   element.isSelected = false;
-                });
+                    });
                 manageDiamondSelection();
               } else {
                 manageBottomMenuClick(manageClick.bottomTabModel);
               }
-            }, R.string().commonString.more, isDisplaySelection: false);
+                }, R.string().commonString.more, isDisplaySelection: false);
           } else {
-            app.resolve<CustomDialogs>().errorDialog(
-                context, "Selection Error", "Please select at least one stone.",
-                btntitle: R.string().commonString.ok);
+            app.resolve<CustomDialogs>().confirmDialog(
+                  context,
+                  title: "",
+                  desc: "Please select at least one stone.",
+                  positiveBtnTitle: R.string().commonString.ok,
+                );
           }
         } else if (obj.type == ActionMenuConstant.ACTION_TYPE_STATUS) {
           showBottomSheetForMenu(context, diamondConfig.arrStatusMenu,
@@ -384,9 +390,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     } else {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-            title: "Selection Error",
+            title: "",
             desc: "Please select at least one stone.",
-            positiveBtnTitle: R.string().commonString.btnTryAgain,
+            positiveBtnTitle: R.string().commonString.ok,
           );
     }
   }

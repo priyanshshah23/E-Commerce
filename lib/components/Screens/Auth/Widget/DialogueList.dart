@@ -1,5 +1,6 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/models/Address/CityListModel.dart';
 import 'package:diamnow/models/Address/CountryListModel.dart';
 import 'package:diamnow/models/Address/StateListModel.dart';
@@ -97,7 +98,7 @@ class _DialogueListState extends State<DialogueList> {
                           fillColor: appTheme.textFieldBorderColor,
                           contentPadding:
                               EdgeInsets.symmetric(horizontal: getSize(20)),
-                          hintText: "Search",
+                          hintText: R.string().commonString.search,
                           suffixIcon: Icon(
                             Icons.search,
                             color: appTheme.textGreyColor,
@@ -185,11 +186,11 @@ class _DialogueListState extends State<DialogueList> {
 
   String getTitle() {
     if(widget.type == DialogueListType.City) {
-      return "Select City";
+      return R.string().commonString.selectCity;
     } else if(widget.type == DialogueListType.State) {
-      return "Select State";
+      return R.string().commonString.selectState;
     } else if(widget.type == DialogueListType.Country) {
-      return "Select Country";
+      return R.string().commonString.selectCountry;
     }
   }
 }

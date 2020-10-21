@@ -53,7 +53,7 @@ class SyncManager {
       }
 
       //Append static data masters
-      List<Master> arrLocalData = await Config.instance.getLocalDataJson();
+      List<Master> arrLocalData = await Config().getLocalDataJson();
       masterResp.data.masters.list.addAll(arrLocalData);
 
       await AppDatabase.instance.masterDao
@@ -110,34 +110,38 @@ class SyncManager {
 
   Future callApiForCreateDiamondTrack(
     BuildContext context,
+    int trackType,
     CreateDiamondTrackReq req,
     Function(BaseApiResp) success,
     Function(ErrorResp) failure, {
     bool isProgress = true,
   }) async {
-    if (req.trackType == DiamondTrackConstant.TRACK_TYPE_COMMENT) {
-      NetworkCall<BaseApiResp>()
-          .makeCall(
-        () => app.resolve<ServiceModule>().networkService().upsetComment(req),
-        context,
-        isProgress: isProgress,
-      )
-          .then((resp) async {
-        success(resp);
-      }).catchError((onError) => {if (onError is ErrorResp) failure(onError)});
-    } else {
-      NetworkCall<BaseApiResp>()
-          .makeCall(
-        () => app
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+      () => getTrackTypeCall(trackType, req),
+      context,
+      isProgress: isProgress,
+    )
+        .then((resp) async {
+      success(resp);
+    }).catchError((onError) => {if (onError is ErrorResp) failure(onError)});
+  }
+
+  Future<BaseApiResp> getTrackTypeCall(
+      int trackType, CreateDiamondTrackReq req) {
+    switch (trackType) {
+      case DiamondTrackConstant.TRACK_TYPE_COMMENT:
+        return app.resolve<ServiceModule>().networkService().upsetComment(req);
+      case DiamondTrackConstant.TRACK_TYPE_BID:
+        return app
             .resolve<ServiceModule>()
             .networkService()
-            .createDiamondTrack(req),
-        context,
-        isProgress: isProgress,
-      )
-          .then((resp) async {
-        success(resp);
-      }).catchError((onError) => {if (onError is ErrorResp) failure(onError)});
+            .createDiamondBid(req);
+      default:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .createDiamondTrack(req);
     }
   }
 
@@ -186,7 +190,6 @@ class SyncManager {
     double priceCrt = 0.0;
     double avgRapAmt = 0.0;
     double avgPriceCrt = 0.0;
-    double termDiscAmount = 0.0;
     double discount = 0.0;
 
     for (var item in diamondList) {
@@ -195,13 +198,12 @@ class SyncManager {
         calcAmount += item.amt;
         rapAvg += item.rap * item.crt;
         priceCrt += item.ctPr * item.crt;
-        termDiscAmount += item.getFinalRate();
+
       } else {
         carat += item.crt;
         calcAmount += item.amt;
         rapAvg += item.rap * item.crt;
         priceCrt += item.ctPr * item.crt;
-        termDiscAmount += item.getFinalRate();
       }
     }
     avgRapAmt = rapAvg / carat;
@@ -212,7 +214,6 @@ class SyncManager {
       rapAvg,
       avgRapAmt,
       avgPriceCrt,
-      termDiscAmount,
       discount
     ];
   }

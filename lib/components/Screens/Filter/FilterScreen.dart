@@ -69,18 +69,19 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   List<BottomTabModel> arrBottomTab;
   String filterId;
   List<FilterOptions> optionList = List<FilterOptions>();
+  Config config = Config();
 
   @override
   void initState() {
     super.initState();
     registerRsBus();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Config.instance.getFilterJson().then((result) {
+      config.getFilterJson().then((result) {
         setState(() {
           arrList = result;
         });
       });
-      Config.instance.getTabJson().then((result) {
+      config.getTabJson().then((result) {
         setState(() {
           arrTab = result;
         });
