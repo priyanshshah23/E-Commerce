@@ -55,13 +55,11 @@ class DiamondCalculation {
     totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt);
     totalAmount = PriceUtilities.getPrice(avgAmount);
     if (isAccountTerm) {
-      print("Discount....$avgDisc");
       totalDisc = PriceUtilities.getPercent(arrFinalValues[2]);
       totalAmount = PriceUtilities.getPrice(arrFinalValues[1]);
       totalPriceCrt = PriceUtilities.getPrice(arrFinalValues[0]);
     } else {
       avgDisc = (1 - (avgPriceCrt / avgRapCrt)) * (-100);
-      print("finalDiscount....$avgDisc");
       totalDisc = PriceUtilities.getPercent(avgDisc);
       avgAmount = arrValues[1];
     }
