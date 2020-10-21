@@ -673,7 +673,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                   border: Border.all(color: appTheme.borderColor),
                   color: appTheme.unSelectedBgColor,
                 ),
-                child: diamondDetailUIModel.orientation == "horizontal" &&
+                child: diamondDetailUIModel.orientation == "h" &&
                         diamondDetailUIModel.columns == 2
                     ? Padding(
                         padding: EdgeInsets.all(getSize(8)),

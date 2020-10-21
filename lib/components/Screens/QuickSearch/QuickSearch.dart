@@ -46,7 +46,9 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
 
     for (var item in arrData) {
       if (item.viewType == ViewTypes.caratRange) {
-        if (item is SelectionModel) {}
+        if (item is SelectionModel) {
+          item.showFromTo = false;
+        }
       }
     }
   }
