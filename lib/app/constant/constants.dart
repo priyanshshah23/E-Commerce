@@ -71,6 +71,11 @@ const spaceRegEx = r'\s';
 const numberRegXWithDecimalAllows = r'([0-9]*[0-9]+\.)[0-9]{0,2}';
 const IMAGE_FILE_SIZE = 10.0;
 
+class Spacing{
+  static const num leftPadding = 20.0;
+  static const num rightPadding = 20.0;
+}
+
 //Master Code
 class MasterCode {
   static const String shape = "SHAPE";

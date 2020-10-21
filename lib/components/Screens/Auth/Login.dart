@@ -384,8 +384,6 @@ class _LoginScreenState extends StatefulScreenWidgetState {
               positiveBtnTitle: R.string().commonString.ok,
             );
       }
-
-      print("Error " + onError);
     });
   }
 
