@@ -85,7 +85,7 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
   @override
   void initState() {
     super.initState();
-   // _callApiForCountryList();
+    _callApiForCountryList();
     getPersonalInformation();
   }
 
@@ -1230,13 +1230,14 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
         _mobileController.text.trim(), selectedDialogCountryForMobile.isoCode) ==
         false) {
        showToast(R.string().errorString.enterValidPhone,context: context);
+       return false;
     } else if (await isValidMobile(
         _whatsAppMobileController.text.trim(), selectedDialogCountryForWhatsapp.isoCode) ==
         false) {
        showToast(R.string().errorString.enterValidWhatsappPhone,context: context);
-    } else {
-
+       return false;
     }
+    return true;
   }
 
   callPersonalInformationApi({String imagePath}) async {
@@ -1254,13 +1255,19 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
       req.profileImage = imagePath;
     }
 
-    NetworkCall<BaseApiResp>()
+    NetworkCall<PersonalInformationViewResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().personalInformation(req),
         context,
         isProgress: true)
         .then((resp) async {
-
+      app.resolve<PrefUtils>().saveUser(resp.data);
+      app.resolve<CustomDialogs>().confirmDialog(
+        context,
+        title: R.string().commonString.successfully,
+        desc: resp.message,
+        positiveBtnTitle: R.string().commonString.ok,
+      );
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
         context,
@@ -1279,7 +1286,16 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
         context,
         isProgress: true)
         .then((resp) async {
-        print("resp-----${resp.data.name}");
+        _firstNameController.text = resp.data.firstName;
+        _lastNameController.text = resp.data.lastName;
+        _addressLineOneController.text =  resp.data.address;
+         _mobileController.text = resp.data.mobile;
+         selectedDialogCountryForMobile = CountryPickerUtils.getCountryByPhoneCode(resp.data.countryCode);
+         _whatsAppMobileController.text = resp.data.whatsapp;
+         selectedDialogCountryForWhatsapp = CountryPickerUtils.getCountryByPhoneCode(resp.data.whatsappCounCode);
+         _emailController.text = resp.data.email;
+         image = resp.data.profileImage;
+        setState(() {});
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
         context,

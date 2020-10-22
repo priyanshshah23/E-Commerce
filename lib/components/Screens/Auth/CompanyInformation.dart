@@ -16,6 +16,7 @@ import 'package:diamnow/models/Address/CityListModel.dart';
 import 'package:diamnow/models/Address/CountryListModel.dart';
 import 'package:diamnow/models/Address/StateListModel.dart';
 import 'package:diamnow/models/Auth/CompanyInformationModel.dart';
+import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -80,6 +81,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
     super.initState();
     _callApiForCountryList();
     getBusinessType();
+  //  getCompanyInformation();
 
   }
 
@@ -815,13 +817,43 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
     req.zipCode = _pinCodeController.text;
     req.sId = app.resolve<PrefUtils>().getUserDetails().id;
 
-    NetworkCall<BaseApiResp>()
+    NetworkCall<CompanyInformationViewResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().companyInformation(req),
         context,
         isProgress: true)
         .then((resp) async {
+          User user = app.resolve<PrefUtils>().getUserDetails();
+          user.account=resp.data;
+      app.resolve<PrefUtils>().saveUser(user);
+    }).catchError((onError) {
+      app.resolve<CustomDialogs>().confirmDialog(
+        context,
+        title: R.string().commonString.error,
+        desc: onError.message,
+        positiveBtnTitle: R.string().commonString.btnTryAgain,
+      );
+    });
+  }
 
+  getCompanyInformation() async {
+
+    NetworkCall<CompanyInformationViewResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().companyInformationView(),
+        context,
+        isProgress: true)
+        .then((resp) async {
+       _CompanyNameController.text = resp.data.companyName;
+//       selectedCountryItem.id = resp.data.country;
+//      resp.data.state = selectedStateItem.id;
+//      resp.data.city = selectedCityItem.id;
+     // _addressLineOneController.text = resp.data.address;
+      _addressLineOneController.text =  resp.data.address;
+      _companyCodeController.text =  resp.data.vendorCode;
+      _businessTypeController.text = resp.data.businessType;
+      _pinCodeController.text = resp.data.zipCode;
+      setState(() {});
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
         context,

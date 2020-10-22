@@ -58,7 +58,7 @@ abstract class NetworkService {
   Future<BaseApiResp> changePassword(@Body() ChangePasswordReq req);
 
   @POST(ApiConstants.personalInformation)
-  Future<BaseApiResp> personalInformation(@Body() PersonalInformationReq req);
+  Future<PersonalInformationViewResp> personalInformation(@Body() PersonalInformationReq req);
 
   @GET(ApiConstants.personalInformationView)
   Future<PersonalInformationViewResp> personalInformationView();
@@ -67,7 +67,7 @@ abstract class NetworkService {
   Future<CompanyInformationViewResp> companyInformationView();
 
   @POST(ApiConstants.companyInformation)
-  Future<CompanyInformationResp> companyInformation(
+  Future<CompanyInformationViewResp> companyInformation(
       @Body() CompanyInformationReq req);
 
   @POST(ApiConstants.placeOrder)
