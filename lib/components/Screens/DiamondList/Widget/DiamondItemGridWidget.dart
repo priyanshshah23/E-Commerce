@@ -247,7 +247,6 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
   getAmountText(String text) {
     return Text(
       text,
-      // text,
       style: appTheme.blue14TextStyle.copyWith(fontSize: getFontSize(10)),
     );
   }

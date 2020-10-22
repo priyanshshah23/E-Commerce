@@ -68,6 +68,13 @@ class DrawerSetting {
     ));
 
     drawerList.add(DrawerModel(
+      image: diamond,
+      title: R.string().screenTitle.upcoming,
+      imageColor: appTheme.colorPrimary,
+      isSelected: false,
+      type: DiamondModuleConstant.MODULE_TYPE_UPCOMING,
+    ));
+    drawerList.add(DrawerModel(
       image: enquiry,
       title: R.string().screenTitle.myEnquiry,
       imageColor: appTheme.colorPrimary,
@@ -264,76 +271,105 @@ class BottomMenuSetting {
   List<BottomTabModel> getBottomMenuItems(int moduleType,
       {bool isDetail = false, bool isCompare = false}) {
     List<BottomTabModel> moreMenuList = [];
-    if (moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
-      moreMenuList.add(BottomTabModel(
-          title: R.string().screenTitle.bidStone,
-          isCenter: false,
-          image: myBid,
-          type: ActionMenuConstant.ACTION_TYPE_BID));
-    }
-    if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY)
-      moreMenuList.add(BottomTabModel(
-          image: enquiry,
-          isCenter: false,
-          title: R.string().screenTitle.enquiry,
-          type: ActionMenuConstant.ACTION_TYPE_ENQUIRY));
-    if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST)
-      moreMenuList.add(BottomTabModel(
-          image: addToWatchlist,
-          isCenter: false,
-          title: R.string().screenTitle.addToWatchList,
-          type: ActionMenuConstant.ACTION_TYPE_WISHLIST));
-    if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_CART)
-      moreMenuList.add(BottomTabModel(
-          image: addToCart,
-          title: R.string().screenTitle.addToCart,
-          isCenter: false,
-          type: ActionMenuConstant.ACTION_TYPE_ADD_TO_CART));
 
-    if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY ||
-        moduleType == DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST ||
-        moduleType == DiamondModuleConstant.MODULE_TYPE_MY_CART ||
-        moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
-      moreMenuList.add(BottomTabModel(
-          image: placeOrder,
-          title: R.string().screenTitle.placeOrder,
-          isCenter: false,
-          type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER));
-    }
-    if (!isDiamondSearchModule(moduleType)) {
-      if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+    switch (moduleType) {
+      case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
+        if (!isDetail && !isCompare) {
+          moreMenuList.add(BottomTabModel(
+              title: R.string().screenTitle.compare,
+              isCenter: false,
+              image: compare,
+              type: ActionMenuConstant.ACTION_TYPE_COMPARE));
+          moreMenuList.add(BottomTabModel(
+              title: R.string().screenTitle.clearSelection,
+              isCenter: false,
+              image: clearSelection,
+              type: ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION));
+        }
         moreMenuList.add(BottomTabModel(
-            image: offer,
-            title: R.string().screenTitle.offer,
+            title: R.string().screenTitle.share,
             isCenter: false,
-            type: ActionMenuConstant.ACTION_TYPE_OFFER));
-      }
-    }
-    if (isDiamondSearchModule(moduleType) && isDetail) {
-      moreMenuList.add(BottomTabModel(
-          image: offer,
-          title: R.string().screenTitle.offer,
-          isCenter: false,
-          type: ActionMenuConstant.ACTION_TYPE_OFFER));
-    }
-    if (!isCompare && !isDetail && isDiamondSearchModule(moduleType)) {
-      if (moduleType != DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+            image: share,
+            type: ActionMenuConstant.ACTION_TYPE_SHARE));
         moreMenuList.add(BottomTabModel(
-            title: R.string().commonString.status,
+            title: R.string().screenTitle.download,
             isCenter: false,
-            image: status,
-            type: ActionMenuConstant.ACTION_TYPE_STATUS));
-      }
-    }
+            image: download,
+            type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
+        break;
+      default:
+        if (moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+          moreMenuList.add(BottomTabModel(
+              title: R.string().screenTitle.bidStone,
+              isCenter: false,
+              image: myBid,
+              type: ActionMenuConstant.ACTION_TYPE_BID));
+        }
+        if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY)
+          moreMenuList.add(BottomTabModel(
+              image: enquiry,
+              isCenter: false,
+              title: R.string().screenTitle.enquiry,
+              type: ActionMenuConstant.ACTION_TYPE_ENQUIRY));
+        if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST)
+          moreMenuList.add(BottomTabModel(
+              image: addToWatchlist,
+              isCenter: false,
+              title: R.string().screenTitle.addToWatchList,
+              type: ActionMenuConstant.ACTION_TYPE_WISHLIST));
+        if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_CART)
+          moreMenuList.add(BottomTabModel(
+              image: addToCart,
+              title: R.string().screenTitle.addToCart,
+              isCenter: false,
+              type: ActionMenuConstant.ACTION_TYPE_ADD_TO_CART));
 
-    moreMenuList.add(BottomTabModel(
-      title: R.string().commonString.more,
-      isCenter: false,
-      image: plusIcon,
-      type: ActionMenuConstant.ACTION_TYPE_MORE,
-    ));
+        if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY ||
+            moduleType == DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST ||
+            moduleType == DiamondModuleConstant.MODULE_TYPE_MY_CART ||
+            moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+          moreMenuList.add(BottomTabModel(
+              image: placeOrder,
+              title: R.string().screenTitle.placeOrder,
+              isCenter: false,
+              type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER));
+        }
+        if (!isDiamondSearchModule(moduleType)) {
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+            moreMenuList.add(BottomTabModel(
+                image: offer,
+                title: R.string().screenTitle.offer,
+                isCenter: false,
+                type: ActionMenuConstant.ACTION_TYPE_OFFER));
+          }
+        }
+        if (isDiamondSearchModule(moduleType) && isDetail) {
+          moreMenuList.add(BottomTabModel(
+              image: offer,
+              title: R.string().screenTitle.offer,
+              isCenter: false,
+              type: ActionMenuConstant.ACTION_TYPE_OFFER));
+        }
+        if (!isCompare && !isDetail && isDiamondSearchModule(moduleType)) {
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+            moreMenuList.add(BottomTabModel(
+                title: R.string().commonString.status,
+                isCenter: false,
+                image: status,
+                type: ActionMenuConstant.ACTION_TYPE_STATUS));
+          }
+        }
+
+        moreMenuList.add(BottomTabModel(
+          title: R.string().commonString.more,
+          isCenter: false,
+          image: plusIcon,
+          type: ActionMenuConstant.ACTION_TYPE_MORE,
+        ));
+        break;
+    }
     moreMenuList.forEach((element) {
-        element.imageColor = appTheme.whiteColor;
+      element.imageColor = appTheme.whiteColor;
     });
 
     return moreMenuList;

@@ -5,7 +5,10 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 
@@ -288,8 +291,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       onClickCallback: (obj) {
         //
         if (obj.code == BottomCodeConstant.filterSavedSearch) {
-          //
-          print(obj.code);
+          callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,isSavedSearch: true);
         } else if (obj.code == BottomCodeConstant.filterAddDemamd) {
           //
           print(obj.code);
@@ -307,22 +309,22 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     );
   }
 
-  callApiForGetFilterId(int moduleType) {
-    Map<String, dynamic> dict = {};
-    dict["isNotReturnTotal"] = true;
-    dict["isReturnCountOnly"] = true;
-    dict["filters"] = FilterRequest().createRequest(arrList);
-
+  callApiForGetFilterId(int moduleType,{bool isSavedSearch=false}) {
     SyncManager.instance.callApiForDiamondList(
       context,
-      dict,
+      FilterRequest().createRequest(arrList),
       (diamondListResp) {
-        Map<String, dynamic> dict = new HashMap();
+        if(isSavedSearch){
+          openBottomSheetForSavedSearch(context,  FilterRequest().createRequest(arrList),diamondListResp.data.filter.id);
+        }else{
+          Map<String, dynamic> dict = new HashMap();
 
-        dict["filterId"] = diamondListResp.data.filter.id;
-        dict["filters"] = FilterRequest().createRequest(arrList);
-        dict[ArgumentConstant.ModuleType] = moduleType;
-        NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+          dict["filterId"] = diamondListResp.data.filter.id;
+          dict["filters"] = FilterRequest().createRequest(arrList);
+          dict[ArgumentConstant.ModuleType] = moduleType;
+          NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+        }
+
       },
       (onError) {
         //print("Error");

@@ -45,7 +45,7 @@ class HomeDrawer extends StatelessWidget {
             ),
             Text(
               model.title,
-              style: appTheme.blackNormal12TitleColorblack.copyWith(
+              style: appTheme.blackNormal14TitleColorblack.copyWith(
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -65,7 +65,7 @@ class HomeDrawer extends StatelessWidget {
                       bottom: getSize(4)),
                   child: Text(
                     model.count.toString(),
-                    style: appTheme.blackNormal12TitleColorblack.copyWith(
+                    style: appTheme.blackNormal14TitleColorblack.copyWith(
                       fontWeight: FontWeight.w500,
                       color: appTheme.whiteColor,
                     ),

@@ -411,6 +411,7 @@ class DiamondModel {
   int groupNo;
   double marginTop=0;
   double marginBottom=0;
+  String displayTitle;
 
   bool isSelectedForComparechange = false; //for compare changes screen
 
