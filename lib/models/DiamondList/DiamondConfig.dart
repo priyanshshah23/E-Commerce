@@ -113,6 +113,8 @@ class DiamondConfig {
         return R.string().screenTitle.myOffer;
       case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
         return R.string().screenTitle.myPurchased;
+      case DiamondModuleConstant.MODULE_TYPE_HOME:
+        return R.string().screenTitle.home;
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
         return R.string().screenTitle.newArrival;
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
@@ -151,63 +153,90 @@ class DiamondConfig {
             .resolve<ServiceModule>()
             .networkService()
             .diamondBidList(dict);
+      case DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .diamondMatchPairList(dict);
     }
   }
 
   List<BottomTabModel> getToolbarItem({bool isDetail = false}) {
     List<BottomTabModel> list = [];
-    if (isCompare) {
-      list.add(BottomTabModel(
-          title: "",
-          image: download,
-          code: BottomCodeConstant.TBDownloadView,
-          sequence: 3,
-          isCenter: true));
-    } else if (isDetail) {
-      list.add(BottomTabModel(
-          title: "",
-          image: share,
-          code: BottomCodeConstant.TBShare,
-          sequence: 0,
-          isCenter: true));
-      list.add(BottomTabModel(
-          title: "",
-          image: clock,
-          code: BottomCodeConstant.TBClock,
-          sequence: 0,
-          isCenter: true));
-      list.add(BottomTabModel(
-          title: "",
-          image: download,
-          code: BottomCodeConstant.TBDownloadView,
-          sequence: 3,
-          isCenter: true));
-    } else {
-      list.add(BottomTabModel(
-          title: "",
-          image: selectAll,
-          code: BottomCodeConstant.TBSelectAll,
-          sequence: 0,
-          isCenter: true));
-      list.add(BottomTabModel(
-          title: "",
-          image: gridView,
-          code: BottomCodeConstant.TBGrideView,
-          sequence: 1,
-          isCenter: true));
-      list.add(BottomTabModel(
-          title: "",
-          image: filter,
-          code: BottomCodeConstant.TBSortView,
-          sequence: 2,
-          isCenter: true));
-      list.add(BottomTabModel(
-          title: "",
-          image: download,
-          code: BottomCodeConstant.TBDownloadView,
-          sequence: 3,
-          isCenter: true));
+
+    switch (moduleType) {
+      case DiamondModuleConstant.MODULE_TYPE_HOME:
+        list.add(BottomTabModel(
+            title: "",
+            image: notification,
+            code: BottomCodeConstant.TBNotification,
+            sequence: 1,
+            isCenter: true));
+        list.add(BottomTabModel(
+            title: "",
+            image: userTemp,
+            code: BottomCodeConstant.TBProfile,
+            sequence: 2,
+            isCenter: true));
+
+        break;
+
+      default:
+        if (isCompare) {
+          list.add(BottomTabModel(
+              title: "",
+              image: download,
+              code: BottomCodeConstant.TBDownloadView,
+              sequence: 3,
+              isCenter: true));
+        } else if (isDetail) {
+          list.add(BottomTabModel(
+              title: "",
+              image: share,
+              code: BottomCodeConstant.TBShare,
+              sequence: 0,
+              isCenter: true));
+          list.add(BottomTabModel(
+              title: "",
+              image: clock,
+              code: BottomCodeConstant.TBClock,
+              sequence: 0,
+              isCenter: true));
+          list.add(BottomTabModel(
+              title: "",
+              image: download,
+              code: BottomCodeConstant.TBDownloadView,
+              sequence: 3,
+              isCenter: true));
+        } else {
+          list.add(BottomTabModel(
+              title: "",
+              image: selectAll,
+              code: BottomCodeConstant.TBSelectAll,
+              sequence: 0,
+              isCenter: true));
+          list.add(BottomTabModel(
+              title: "",
+              image: gridView,
+              code: BottomCodeConstant.TBGrideView,
+              sequence: 1,
+              isCenter: true));
+          list.add(BottomTabModel(
+              title: "",
+              image: filter,
+              code: BottomCodeConstant.TBSortView,
+              sequence: 2,
+              isCenter: true));
+          list.add(BottomTabModel(
+              title: "",
+              image: download,
+              code: BottomCodeConstant.TBDownloadView,
+              sequence: 3,
+              isCenter: true));
+        }
+        break;
     }
+
     return list;
   }
 
@@ -504,5 +533,110 @@ class DiamondConfig {
     mainDic3["crt"] = dict3;
     caratRequest.add(mainDic3);
     return caratRequest;
+  }
+
+  void setMatchPairItem(List<DiamondModel> arraDiamond) {
+    if (moduleType == DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR) {
+      DiamondModel diamondItem;
+      if (arraDiamond.length == 1) {
+        diamondItem = arraDiamond[0];
+        diamondItem.isMatchPair = true;
+        diamondItem.borderType = BorderConstant.BORDER_NONE;
+        diamondItem.marginTop = BorderConstant.BORDER_MARGIN;
+        diamondItem.marginBottom = BorderConstant.BORDER_MARGIN;
+      } else {
+        for (int i = 0; i < arraDiamond.length; i++) {
+          diamondItem = arraDiamond[i];
+          diamondItem.isMatchPair = true;
+          if (i == 0) {
+            if (arraDiamond[i + 1].groupNo > diamondItem.groupNo) {
+              diamondItem.borderType = BorderConstant.BORDER_NONE;
+              diamondItem.marginTop = BorderConstant.BORDER_MARGIN;
+              diamondItem.marginBottom = BorderConstant.BORDER_MARGIN;
+            } else {
+              diamondItem.borderType = BorderConstant.BORDER_TOP;
+              diamondItem.marginTop = BorderConstant.BORDER_MARGIN;
+            }
+          } else if (i == arraDiamond.length - 1) {
+            if (arraDiamond[i - 1].groupNo < diamondItem.groupNo) {
+              diamondItem.borderType = BorderConstant.BORDER_NONE;
+              diamondItem.marginTop = BorderConstant.BORDER_MARGIN;
+              diamondItem.marginBottom = BorderConstant.BORDER_MARGIN;
+            } else {
+              diamondItem.borderType = BorderConstant.BORDER_BOTTOM;
+              diamondItem.marginBottom = BorderConstant.BORDER_MARGIN;
+            }
+          } else {
+            if (arraDiamond[i - 1].groupNo < diamondItem.groupNo &&
+                arraDiamond[i + 1].groupNo > diamondItem.groupNo) {
+              diamondItem.borderType = BorderConstant.BORDER_NONE;
+              diamondItem.marginTop = BorderConstant.BORDER_MARGIN;
+              diamondItem.marginBottom = BorderConstant.BORDER_MARGIN;
+            } else if (arraDiamond[i - 1].groupNo < diamondItem.groupNo) {
+              diamondItem.borderType = BorderConstant.BORDER_TOP;
+              diamondItem.marginTop = BorderConstant.BORDER_MARGIN;
+            } else if (arraDiamond[i + 1].groupNo > diamondItem.groupNo) {
+              diamondItem.borderType = BorderConstant.BORDER_BOTTOM;
+              diamondItem.marginBottom = BorderConstant.BORDER_MARGIN;
+            } else {
+              diamondItem.borderType = BorderConstant.BORDER_LEFT_RIGHT;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+BoxDecoration getBoxDecorationType(BuildContext context, int type) {
+  switch (type) {
+    case BorderConstant.BORDER_TOP:
+      return BoxDecoration(
+        border: Border(
+          top: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+          left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+          right: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+          bottom: BorderSide(width: 0, color: appTheme.whiteColor),
+        ),
+      );
+    case BorderConstant.BORDER_BOTTOM:
+      return BoxDecoration(
+        // boxShadow: getBoxShadow(context),
+        border: Border(
+          left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+          right: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+          bottom: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+          top: BorderSide(width: 0, color: appTheme.whiteColor),
+        ),
+      );
+    case BorderConstant.BORDER_LEFT_RIGHT:
+      return BoxDecoration(
+        // boxShadow: getBoxShadow(context),
+        border: Border(
+          left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+          right: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+          top: BorderSide(width: 0, color: appTheme.whiteColor),
+          bottom: BorderSide(width: 0, color: appTheme.whiteColor),
+        ),
+      );
+    case BorderConstant.BORDER_NONE:
+      return BoxDecoration(
+        //  boxShadow: getBoxShadow(context),
+        border: Border(
+          top: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+          left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+          right: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+          bottom: BorderSide(width: 1.0, color: appTheme.colorPrimary),
+        ),
+      );
+    default:
+      return BoxDecoration(
+        border: Border(
+          top: BorderSide(width: 0, color: appTheme.whiteColor),
+          left: BorderSide(width: 0, color: appTheme.whiteColor),
+          right: BorderSide(width: 0, color: appTheme.whiteColor),
+          bottom: BorderSide(width: 0, color: appTheme.whiteColor),
+        ),
+      );
   }
 }

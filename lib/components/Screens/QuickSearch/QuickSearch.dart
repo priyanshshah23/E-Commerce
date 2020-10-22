@@ -6,6 +6,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/base/BaseApiResp.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/constant/constants.dart';
+import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
@@ -19,6 +20,7 @@ import 'package:diamnow/models/Master/Master.dart';
 import 'package:diamnow/models/QuickSearch/QuickSearchModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rxbus/rxbus.dart';
 
 class QuickSearchScreen extends StatefulWidget {
   static const route = "QuickSearchScreen";
@@ -54,7 +56,7 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
   double rowWidth = getSize(80);
   List<Master> arrColors = [];
   List<Master> arrClarity = [];
-  List<CellModel> arrCell = [];
+  List<CellModel> arrCount = [];
 
   @override
   void initState() {
@@ -87,19 +89,40 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
         }
         getCombineColors().then((value) {
           arrColors = value;
-          setState(() {});
-        });
-        getCombineClarity().then((value) {
-          arrClarity = value;
-          var test = (MathUtilities.screenWidth(context) - getSize(120)) /
-              arrClarity.length;
-          outPutWidth = test < rowWidth ? rowWidth : test;
-          setState(() {});
-        });
 
-        callApiForQuickSearch();
+          getCombineClarity().then((value) {
+            arrClarity = value;
+            var test = (MathUtilities.screenWidth(context) - getSize(120)) /
+                arrClarity.length;
+            outPutWidth = test < rowWidth ? rowWidth : test;
+
+            for (var item in arrColors) {
+              item.isSelected = true;
+              arrCount.add(CellModel(cellObj: item, dataArr: value));
+            }
+            callApiForQuickSearch();
+            setState(() {});
+          });
+        });
       });
     });
+    registerRsBus();
+  }
+
+  @override
+  void dispose() {
+    RxBus.destroy(tag: eventForShareCaratRangeSelected);
+    super.dispose();
+  }
+
+  registerRsBus() {
+    RxBus.register<bool>(tag: eventForShareCaratRangeSelected).listen(
+      (event) => setState(
+        () {
+          callApiForQuickSearch();
+        },
+      ),
+    );
   }
 
   @override
@@ -117,6 +140,7 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
           children: [
             ListView.builder(
               shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
               itemCount: this.arrData.length,
               itemBuilder: (context, index) {
                 return getWidgets(this.arrData[index]);
@@ -185,7 +209,7 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
         tempClarity.add(item);
       }
     }
-    print(tempClarity);
+
     return tempClarity;
   }
 
@@ -218,7 +242,8 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
               .where((element) => element.webDisplay?.toLowerCase() == str)
               .toList();
           if (!isNullEmptyOrFalse(findIf)) {
-            for (var id in (findIf.first.grouped.map((e) => e.sId ?? ""))) {
+            for (var id
+                in (findIf.first.grouped.map((e) => e.sId ?? "").toList())) {
               item.groupingIds.add(id);
             }
           }
@@ -267,7 +292,7 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
 
   getHorizontalDataWidget() {
     return Padding(
-      padding: EdgeInsets.all(getSize(20)),
+      padding: EdgeInsets.all(getSize(16)),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(getSize(10)),
@@ -337,32 +362,37 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        for (int i = 0; i < arrClarity.length; i++)
-          for (int j = 0; j < arrColors.length; j++)
-            if (j == index)
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: getSize(0.5),
-                    color: appTheme.borderColor,
-                  ),
-                ),
-                child: Center(
-                  child: Text(
-                    arrColors[index].name,
-                    style: appTheme.blackNormal14TitleColorblack,
-                  ),
-                ),
-                width: outPutWidth,
-                height: cellHeight,
-                padding: EdgeInsets.only(left: 4, right: 4),
-                alignment: Alignment.center,
+        for (int i = 0; i < arrCount[index].dataArr.length; i++)
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                width: getSize(0.5),
+                color: appTheme.borderColor,
               ),
+            ),
+            child: Center(
+              child: Text(
+                arrCount[index].dataArr[i].count?.toString() ?? "-",
+                style: appTheme.blackNormal14TitleColorblack,
+              ),
+            ),
+            width: outPutWidth,
+            height: cellHeight,
+            padding: EdgeInsets.only(left: 4, right: 4),
+            alignment: Alignment.center,
+          ),
       ],
     );
   }
 
   callApiForQuickSearch() {
+    for (var item in arrCount) {
+      List<Master> clarity = item.dataArr;
+      for (var clr in clarity) {
+        clr.count = 0;
+      }
+    }
+
     NetworkCall<QuickSearchResp>()
         .makeCall(
       () => app
@@ -373,7 +403,64 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
       isProgress: true,
     )
         .then((resp) async {
-      print(resp);
+      for (var item in this.arrCount) {
+        Master color = item.cellObj;
+        List<String> colorId = List<String>();
+        if (color.groupingIds.length > 0) {
+          colorId = color.groupingIds;
+          colorId.add(color.sId);
+        } else {
+          colorId = color.grouped.map((e) => e.sId).toList();
+          colorId.add(color.sId);
+        }
+
+        for (var count in resp.data.list) {
+          //Color
+          if (colorId.contains(count.color)) {
+            List<Master> claritys = item.dataArr;
+
+            for (var clarity in claritys) {
+              if (clarity.webDisplay?.toLowerCase() == this.flCode ||
+                  clarity.webDisplay?.toLowerCase() == this.si2Code) {
+                //Merge Clarity
+                List<String> clarityId =
+                    clarity.grouped.map((e) => e.sId).toList();
+                clarityId.add(clarity.sId);
+
+                List<String> mergeClarity =
+                    clarity.mergeModel?.grouped?.map((e) => e.sId)?.toList() ??
+                        [];
+                mergeClarity.add(clarity.mergeModel?.sId);
+
+                if (clarityId.contains(count.clarity) ||
+                    mergeClarity.contains(count.clarity)) {
+                  clarity.count += count.count;
+                  // clarity.totalAmount += count.totalAmount
+                  // clarity.carat += count.carat
+                  // clarity.arrPrice.append(count.maxPrice)
+                  // clarity.arrPrice.append(count.minPrice)
+                }
+              } else {
+                //Another
+                List<String> clarityId =
+                    clarity.grouped.map((e) => e.sId).toList();
+                clarityId.add(clarity.sId);
+
+                if (clarityId.contains(count.clarity)) {
+                  clarity.count += count.count;
+                  // clarity.totalAmount += count.totalAmount
+                  // clarity.carat += count.carat
+                  // clarity.arrPrice.append(count.maxPrice)
+                  // clarity.arrPrice.append(count.minPrice)
+
+                }
+              }
+            }
+          }
+        }
+      }
+      print(arrCount);
+      setState(() {});
     }).catchError((onError) {
       print(onError);
     });
@@ -383,4 +470,6 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
 class CellModel {
   Master cellObj;
   List<Master> dataArr;
+
+  CellModel({this.cellObj, this.dataArr});
 }

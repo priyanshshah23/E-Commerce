@@ -121,6 +121,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict["filters"] = {};
         dict["filters"]["diamondSearchId"] = this.filterId;
         break;
+      case DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR:
+        dict["filters"] = {};
+        dict["filters"]["diamondSearchId"] = this.filterId;
+        break;
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
         dict["filters"] = {};
         dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_BID;
@@ -171,6 +175,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           break;
         default:
           arraDiamond.addAll(diamondListResp.data.diamonds);
+          diamondConfig.setMatchPairItem(arraDiamond);
           break;
       }
       diamondList.state.listCount = arraDiamond.length;

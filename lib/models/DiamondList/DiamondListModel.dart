@@ -2,6 +2,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
 
 class DiamondListReq {
@@ -162,8 +163,13 @@ class Data {
     }
     if (json['list'] != null) {
       list = new List<TrackItem>();
+      diamonds = new List<DiamondModel>();
       json['list'].forEach((v) {
-        list.add(new TrackItem.fromJson(v));
+        if (v["diamond"] != null) {
+          list.add(new TrackItem.fromJson(v));
+        } else {
+          diamonds.add(new DiamondModel.fromJson(v));
+        }
       });
     }
   }
@@ -393,6 +399,8 @@ class DiamondModel {
   String fcColDesc;
   num ratio;
   bool isSelected = false;
+  bool isMatchPair = false;
+  int borderType;
   bool isAddToWatchList = false;
   bool isAddToOffer = false;
   bool isAddToBid = false;
@@ -400,6 +408,9 @@ class DiamondModel {
   String selectedOfferPer = "0.5";
   String selectedOfferHour;
   bool pltFile;
+  int groupNo;
+  double marginTop=0;
+  double marginBottom=0;
 
   bool isSelectedForComparechange = false; //for compare changes screen
 
@@ -552,6 +563,7 @@ class DiamondModel {
     fcColDesc = json['fcColDesc'];
     ratio = json['ratio'];
     pltFile = json['pltFile'] ?? false;
+    groupNo = json['groupNo'] ;
 //    isSelected = json['isSelected'];
   }
 
@@ -644,6 +656,7 @@ class DiamondModel {
     data['fcColDesc'] = this.fcColDesc;
     data['ratio'] = this.ratio;
     data['pltFile'] = this.pltFile;
+    data['groupNo'] = this.groupNo;
 //    data['isSelected'] = this.isSelected;
     return data;
   }

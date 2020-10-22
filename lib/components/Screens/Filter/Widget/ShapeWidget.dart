@@ -1,10 +1,12 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
+import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
 import 'package:flutter/material.dart';
+import 'package:rxbus/rxbus.dart';
 
 class ShapeWidget extends StatefulWidget {
   SelectionModel selectionModel;
@@ -174,6 +176,8 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                       return InkWell(
                         onTap: () {
                           setState(() {
+                            RxBus.post(true,
+                                tag: eventForShareCaratRangeSelected);
                             if (widget.selectionModel.isShowAllSelected) {
                               widget.selectionModel.isShowAllSelected = false;
                             }
