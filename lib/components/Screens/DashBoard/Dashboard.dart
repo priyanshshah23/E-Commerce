@@ -147,43 +147,48 @@ class _DashboardState extends StatefulScreenWidgetState {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: appTheme.whiteColor,
-        appBar: getAppBar(
-          context,
-          diamondConfig.getScreenTitle(),
-          bgColor: appTheme.whiteColor,
-          leadingButton: isFromDrawer
-              ? getDrawerButton(context, true)
-              : getBackButton(context),
-          centerTitle: false,
-          actionItems: getToolbarItem(),
-        ),
-        // bottomNavigationBar: getBottomTab(),
-        body: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.only(
-              // left: getSize(20),
-              // right: getSize(20),
-              top: getSize(20),
-            ),
-            child: ListView(
-              physics: ClampingScrollPhysics(),
-              children: <Widget>[
-                getSarchTextField(),
-                if (dashboardConfig.arrTopSection.length > 0) getTopSection(),
-                getFeaturedSection(),
-                getStoneOfDaySection(),
-                getSavedSearchSection(),
-                getRecentSection(),
-                getSalesSection(),
-                SizedBox(
-                  height: getSize(20),
-                ),
-              ],
-            ),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+          backgroundColor: appTheme.whiteColor,
+          appBar: getAppBar(
+            context,
+            diamondConfig.getScreenTitle(),
+            bgColor: appTheme.whiteColor,
+            leadingButton: isFromDrawer
+                ? getDrawerButton(context, true)
+                : getBackButton(context),
+            centerTitle: false,
+            actionItems: getToolbarItem(),
           ),
-        ));
+          // bottomNavigationBar: getBottomTab(),
+          body: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.only(
+                // left: getSize(20),
+                // right: getSize(20),
+                top: getSize(20),
+              ),
+              child: ListView(
+                physics: ClampingScrollPhysics(),
+                children: <Widget>[
+                  getSarchTextField(),
+                  if (dashboardConfig.arrTopSection.length > 0) getTopSection(),
+                  getFeaturedSection(),
+                  getStoneOfDaySection(),
+                  getSavedSearchSection(),
+                  getRecentSection(),
+                  getSalesSection(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                ],
+              ),
+            ),
+          )),
+    );
   }
 
   getSarchTextField() {
