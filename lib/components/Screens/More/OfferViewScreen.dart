@@ -20,6 +20,7 @@ class OfferViewScreen extends StatefulWidget {
 class _OfferViewScreenState extends State<OfferViewScreen> {
   DateTime now = DateTime.now();
   List days;
+  var pickedDate;
   int selectedDate = -1;
   int selectedSlot = 0;
   int selectedVirtualType = -1;
@@ -131,32 +132,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsets.only(
-                left: Spacing.leftPadding,
-                right: Spacing.rightPadding,
-                bottom: getSize(10),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Available Slots",
-                    style: appTheme.black16TextStyle
-                        .copyWith(fontWeight: FontWeight.w500),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: getSize(5)),
-                    child: Text(
-                      DateUtilities().convertServerDateToFormatterString(
-                          DateTime.now().toIso8601String(),
-                          formatter: DateUtilities.mmm_yyyy),
-                      style: appTheme.black16TextStyle,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            getTopRow(),
             getDateList(),
             getTimeSlot(),
             setVirtualDropDown(virtualList, (value) {
@@ -259,6 +235,73 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  getTopRow() {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: Spacing.leftPadding,
+        right: Spacing.rightPadding,
+        bottom: getSize(10),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Available Slots",
+                style: appTheme.black16TextStyle
+                    .copyWith(fontWeight: FontWeight.w500),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: getSize(5)),
+                child: Text(
+                  DateUtilities().convertServerDateToFormatterString(
+                      DateTime.now().toIso8601String(),
+                      formatter: DateUtilities.mmm_yyyy),
+                  style: appTheme.black16TextStyle,
+                ),
+              ),
+            ],
+          ),
+          InkWell(
+            onTap: () {
+              DateUtilities().pickDateDialog(context).then((value) {
+                pickedDate = value;
+                setState(() {});
+              });
+            },
+            child: Container(
+              width: getSize(200),
+              decoration: BoxDecoration(
+                  border: Border(
+                      bottom: BorderSide(
+                          color: appTheme.dividerColor, width: getSize(2)))),
+              child: Row(
+                children: [
+                  Text(
+                    pickedDate != null
+                        ? DateUtilities().convertServerDateToFormatterString(
+                            pickedDate.toString(),
+                            formatter: DateUtilities.dd_mm_yyyy_)
+                        : "Select Custom date",
+                    style: appTheme.black16TextStyle,
+                  ),
+                  Image.asset(
+                    calender,
+                    height: getSize(20),
+                    width: getSize(20),
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
