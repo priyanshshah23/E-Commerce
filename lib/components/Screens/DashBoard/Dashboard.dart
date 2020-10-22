@@ -179,7 +179,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                   getFeaturedSection(),
                   getStoneOfDaySection(),
                   getSavedSearchSection(),
-                  getRecentSection(),
+                  // getRecentSection(),
                   getSalesSection(),
                   SizedBox(
                     height: getSize(20),
@@ -969,7 +969,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                           children: [
                             Text(
                               "12 pc oval",
-                              style: appTheme.black12TextStyle.copyWith(
+                              style: appTheme.black16TextStyle.copyWith(
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -978,7 +978,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                             ),
                             Text(
                               "May 21, 2020 at 01:43 PM",
-                              style: appTheme.black12TextStyle.copyWith(
+                              style: appTheme.black14TextStyle.copyWith(
                                 color: appTheme.textGreyColor,
                               ),
                             ),
@@ -1513,7 +1513,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                           ),
                           Text(
                             "dollyson@gmail.com",
-                            style: appTheme.blackNormal12TitleColorblack,
+                            style: appTheme.blackNormal14TitleColorblack,
                           ),
                         ],
                       ),
@@ -1532,7 +1532,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                           ),
                           Text(
                             "+91 9876543210",
-                            style: appTheme.blackNormal12TitleColorblack,
+                            style: appTheme.blackNormal14TitleColorblack,
                           ),
                         ],
                       ),

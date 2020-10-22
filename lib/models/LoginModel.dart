@@ -151,6 +151,7 @@ class User {
   int version;
   bool isTermsCondAgree;
   String termsCondAgreeAt;
+  String address;
 
 //  Null loginOtp;
   String group;
@@ -236,7 +237,7 @@ class User {
     version = json['version'];
     isTermsCondAgree = json['isTermsCondAgree'];
     termsCondAgreeAt = json['termsCondAgreeAt'];
-
+    address = json['address'];
 //    loginOtp = json['loginOtp'];
 
     group = json['group'];
@@ -304,6 +305,7 @@ class User {
     data['isIntoHide'] = this.isIntoHide;
     data['updateIp'] = this.updateIp;
     data['createIp'] = this.createIp;
+    data['address'] = this.address;
     if (this.fingerPrints != null) {
       data['fingerPrints'] = this.fingerPrints.map((v) => v.toJson()).toList();
     }

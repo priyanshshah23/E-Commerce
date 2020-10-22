@@ -270,7 +270,7 @@ class _NetworkService implements NetworkService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = BaseApiResp.fromJson(_result.data);
+    final value = PersonalInformationViewResp.fromJson(_result.data);
     return Future.value(value);
   }
 
@@ -326,7 +326,7 @@ class _NetworkService implements NetworkService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = CompanyInformationResp.fromJson(_result.data);
+    final value = CompanyInformationViewResp.fromJson(_result.data);
     return Future.value(value);
   }
 
