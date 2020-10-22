@@ -147,43 +147,48 @@ class _DashboardState extends StatefulScreenWidgetState {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: appTheme.whiteColor,
-        appBar: getAppBar(
-          context,
-          diamondConfig.getScreenTitle(),
-          bgColor: appTheme.whiteColor,
-          leadingButton: isFromDrawer
-              ? getDrawerButton(context, true)
-              : getBackButton(context),
-          centerTitle: false,
-          actionItems: getToolbarItem(),
-        ),
-        // bottomNavigationBar: getBottomTab(),
-        body: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.only(
-              // left: getSize(20),
-              // right: getSize(20),
-              top: getSize(20),
-            ),
-            child: ListView(
-              physics: ClampingScrollPhysics(),
-              children: <Widget>[
-                getSarchTextField(),
-                if (dashboardConfig.arrTopSection.length > 0) getTopSection(),
-                getFeaturedSection(),
-                getStoneOfDaySection(),
-                getSavedSearchSection(),
-                getRecentSection(),
-                getSalesSection(),
-                SizedBox(
-                  height: getSize(20),
-                ),
-              ],
-            ),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+          backgroundColor: appTheme.whiteColor,
+          appBar: getAppBar(
+            context,
+            diamondConfig.getScreenTitle(),
+            bgColor: appTheme.whiteColor,
+            leadingButton: isFromDrawer
+                ? getDrawerButton(context, true)
+                : getBackButton(context),
+            centerTitle: false,
+            actionItems: getToolbarItem(),
           ),
-        ));
+          // bottomNavigationBar: getBottomTab(),
+          body: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.only(
+                // left: getSize(20),
+                // right: getSize(20),
+                top: getSize(20),
+              ),
+              child: ListView(
+                physics: ClampingScrollPhysics(),
+                children: <Widget>[
+                  getSarchTextField(),
+                  if (dashboardConfig.arrTopSection.length > 0) getTopSection(),
+                  getFeaturedSection(),
+                  getStoneOfDaySection(),
+                  getSavedSearchSection(),
+                  getRecentSection(),
+                  getSalesSection(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                ],
+              ),
+            ),
+          )),
+    );
   }
 
   getSarchTextField() {
@@ -464,7 +469,7 @@ class _DashboardState extends StatefulScreenWidgetState {
       padding: EdgeInsets.only(
         right: getSize(20),
       ),
-      width: MathUtilities.screenWidth(context) / 2.35,
+      width: MathUtilities.screenWidth(context) / 2,
       child: Column(
         children: [
           Container(
@@ -540,129 +545,131 @@ class _DashboardState extends StatefulScreenWidgetState {
                 border: Border.all(color: appTheme.lightBGColor),
                 // boxShadow: getBoxShadow(context),
               ),
-              child: Row(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: appTheme.lightBGColor,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(5),
-                          bottomLeft: Radius.circular(5)),
-                    ),
-                    width: getSize(62),
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        top: getSize(8),
-                        left: getSize(5),
-                        right: getSize(5),
-                        bottom: getSize(8),
+              child: IntrinsicHeight(
+                child: Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: appTheme.lightBGColor,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(5),
+                            bottomLeft: Radius.circular(5)),
                       ),
-                      child: Center(
-                        child: GestureDetector(
-                          onTap: () {
-                            //
-                          },
-                          child: Column(
-                            children: [
-                              Text(
-                                "12.50",
-                                style: appTheme.blue14TextStyle.copyWith(
-                                  color: appTheme.colorPrimary,
-                                  fontSize: getFontSize(12),
-                                ),
-                              ),
-                              Text(
-                                "Carat",
-                                style: appTheme.blue14TextStyle.copyWith(
-                                  color: appTheme.colorPrimary,
-                                  fontSize: getFontSize(10),
-                                ),
-                              ),
-                              Container(
-                                alignment: Alignment.center,
-                                margin: EdgeInsets.only(top: getSize(5)),
-                                // width: getSize(55),
-                                // height: getSize(19),
-                                decoration: BoxDecoration(
-                                    color: appTheme.whiteColor,
-                                    borderRadius:
-                                        BorderRadius.circular(getSize(5))),
-                                child: Padding(
-                                  padding: EdgeInsets.all(getSize(2)),
-                                  child: Text(
-                                    "-44.33 %",
-                                    style: appTheme.green10TextStyle
-                                        .copyWith(fontSize: getFontSize(8)),
+                      width: getSize(62),
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          top: getSize(8),
+                          left: getSize(5),
+                          right: getSize(5),
+                          bottom: getSize(8),
+                        ),
+                        child: Center(
+                          child: GestureDetector(
+                            onTap: () {
+                              //
+                            },
+                            child: Column(
+                              children: [
+                                Text(
+                                  "12.50",
+                                  style: appTheme.blue14TextStyle.copyWith(
+                                    color: appTheme.colorPrimary,
+                                    fontSize: getFontSize(12),
                                   ),
                                 ),
-                              )
-                            ],
+                                Text(
+                                  "Carat",
+                                  style: appTheme.blue14TextStyle.copyWith(
+                                    color: appTheme.colorPrimary,
+                                    fontSize: getFontSize(10),
+                                  ),
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  margin: EdgeInsets.only(top: getSize(5)),
+                                  // width: getSize(55),
+                                  // height: getSize(19),
+                                  decoration: BoxDecoration(
+                                      color: appTheme.whiteColor,
+                                      borderRadius:
+                                          BorderRadius.circular(getSize(5))),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(getSize(2)),
+                                    child: Text(
+                                      "-44.33 %",
+                                      style: appTheme.green10TextStyle
+                                          .copyWith(fontSize: getFontSize(8)),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: getSize(10),
-                  ),
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      // mainAxisSize: MainAxisSize.max,
-                      children: [
-                        SizedBox(
-                          height: getSize(4),
-                        ),
-                        Row(
-                          children: [
-                            getText("191071"),
-                            // Expanded(child: Container()),
-                            Spacer(),
-                            getText(
-                              "Round",
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: getSize(6),
-                        ),
-                        Row(
-                          children: [
-                            getText("D"),
-                            Spacer(),
-                            getText("IF"),
-                            Spacer(),
-                            getText("GIA"),
-                          ],
-                        ),
-                        SizedBox(
-                          height: getSize(6),
-                        ),
-                        Row(
-                          children: <Widget>[
-                            getText("EX"),
-                            Spacer(),
-                            getDot(),
-                            Spacer(),
-                            getText("EX"),
-                            Spacer(),
-                            getDot(),
-                            Spacer(),
-                            getText("EX"),
-                          ],
-                        ),
-                        SizedBox(
-                          height: getSize(8),
-                        ),
-                      ],
+                    SizedBox(
+                      width: getSize(10),
                     ),
-                  ),
-                  SizedBox(
-                    width: getSize(10),
-                  ),
-                ],
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        // mainAxisSize: MainAxisSize.max,
+                        children: [
+                          SizedBox(
+                            height: getSize(4),
+                          ),
+                          Row(
+                            children: [
+                              getText("191071"),
+                              // Expanded(child: Container()),
+                              Spacer(),
+                              getText(
+                                "Round",
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: getSize(6),
+                          ),
+                          Row(
+                            children: [
+                              getText("D"),
+                              Spacer(),
+                              getText("IF"),
+                              Spacer(),
+                              getText("GIA"),
+                            ],
+                          ),
+                          SizedBox(
+                            height: getSize(6),
+                          ),
+                          Row(
+                            children: <Widget>[
+                              getText("EX"),
+                              Spacer(),
+                              getDot(),
+                              Spacer(),
+                              getText("EX"),
+                              Spacer(),
+                              getDot(),
+                              Spacer(),
+                              getText("EX"),
+                            ],
+                          ),
+                          SizedBox(
+                            height: getSize(8),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: getSize(10),
+                    ),
+                  ],
+                ),
               ),
             ),
           )
@@ -1073,110 +1080,115 @@ class _DashboardState extends StatefulScreenWidgetState {
           ),
           child: Row(
             children: [
-              Container(
-                // width: getSize(122),
-                width: MathUtilities.screenWidth(context) / 3.38,
-                child: Stack(
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          color: appTheme.lightBGColor,
-                          // width: getSize(30),
-                          child: SizedBox(
-                            width: getSize(30),
+              Expanded(
+                child: Container(
+                  // width: getSize(122),
+                  width: MathUtilities.screenWidth(context) / 3,
+                  child: Stack(
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            color: appTheme.lightBGColor,
+                            // width: getSize(30),
+                            child: SizedBox(
+                              width: getSize(30),
+                            ),
                           ),
-                        ),
-                        Material(
-                          color: Colors.transparent,
-                          elevation: 10,
-                          shadowColor: appTheme.shadowColor,
-                          child: Container(
-                              // width: getSize(92),
-                              width: MathUtilities.screenWidth(context) / 4.5,
-                              decoration: BoxDecoration(
-                                color: appTheme.lightBGColor,
-                                borderRadius: BorderRadius.circular(getSize(5)),
-                              ),
-                              child: Align(
-                                alignment: Alignment.centerRight,
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    left: getSize(10),
-                                    right: getSize(10),
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "12.50 \n Carat",
-                                        style:
-                                            appTheme.black14TextStyle.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          color: appTheme.colorPrimary,
+                          Material(
+                            color: Colors.transparent,
+                            elevation: 10,
+                            shadowColor: appTheme.shadowColor,
+                            child: Container(
+                                // width: getSize(92),
+                                width: MathUtilities.screenWidth(context) / 4.6,
+                                decoration: BoxDecoration(
+                                  color: appTheme.lightBGColor,
+                                  borderRadius:
+                                      BorderRadius.circular(getSize(5)),
+                                ),
+                                child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                      left: getSize(10),
+                                      right: getSize(10),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "12.50 \n Carat",
+                                          style: appTheme.black14TextStyle
+                                              .copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            color: appTheme.colorPrimary,
+                                          ),
+                                          maxLines: 2,
+                                          textAlign: TextAlign.center,
                                         ),
-                                        maxLines: 2,
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      Container(
-                                        margin:
-                                            EdgeInsets.only(top: getSize(5)),
-                                        // width: getSize(55),
-                                        // height: getSize(19),
-                                        decoration: BoxDecoration(
-                                            color: appTheme.whiteColor,
-                                            borderRadius: BorderRadius.circular(
-                                                getSize(5))),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(getSize(2)),
-                                          child: Text(
-                                            "-44.33 %",
-                                            style: appTheme.green10TextStyle
-                                                .copyWith(
-                                                    fontSize: getFontSize(8)),
+                                        Container(
+                                          margin:
+                                              EdgeInsets.only(top: getSize(5)),
+                                          // width: getSize(55),
+                                          // height: getSize(19),
+                                          decoration: BoxDecoration(
+                                              color: appTheme.whiteColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      getSize(5))),
+                                          child: Padding(
+                                            padding: EdgeInsets.all(getSize(2)),
+                                            child: Text(
+                                              "-44.33 %",
+                                              style: appTheme.green10TextStyle
+                                                  .copyWith(
+                                                      fontSize: getFontSize(8)),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
+                                )),
+                          )
+                        ],
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Material(
+                          elevation: 10,
+                          shadowColor: appTheme.shadowColor,
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(getSize(30)),
+                          child: Container(
+                            width: getSize(60),
+                            height: getSize(60),
+                            decoration: BoxDecoration(
+                              color: appTheme.whiteColor,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(getSize(10)),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(getSize(20))),
+                                child: getImageView(
+                                  "",
+                                  width: getSize(40),
+                                  height: getSize(40),
+                                  fit: BoxFit.cover,
                                 ),
-                              )),
-                        )
-                      ],
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Material(
-                        elevation: 10,
-                        shadowColor: appTheme.shadowColor,
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(getSize(30)),
-                        child: Container(
-                          width: getSize(60),
-                          height: getSize(60),
-                          decoration: BoxDecoration(
-                            color: appTheme.whiteColor,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.all(getSize(10)),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(getSize(20))),
-                              child: getImageView(
-                                "",
-                                width: getSize(40),
-                                height: getSize(40),
-                                fit: BoxFit.cover,
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Material(
@@ -1558,7 +1570,7 @@ class _DashboardState extends StatefulScreenWidgetState {
     return Text(
       text,
       style: appTheme.black12TextStyle.copyWith(
-        fontSize: getFontSize(10),
+        fontSize: getFontSize(12),
         fontWeight: fontWeight,
       ),
     );
