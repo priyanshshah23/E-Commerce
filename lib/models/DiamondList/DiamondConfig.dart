@@ -134,6 +134,7 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
+      case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
         return app
             .resolve<ServiceModule>()
             .networkService()
@@ -610,6 +611,7 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
   switch (type) {
     case BorderConstant.BORDER_TOP:
       return BoxDecoration(
+        borderRadius: BorderRadius.circular(getSize(5)),
         border: Border(
           top: BorderSide(width: 1.0, color: appTheme.colorPrimary),
           left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
@@ -620,6 +622,7 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
     case BorderConstant.BORDER_BOTTOM:
       return BoxDecoration(
         // boxShadow: getBoxShadow(context),
+        borderRadius: BorderRadius.circular(getSize(5)),
         border: Border(
           left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
           right: BorderSide(width: 1.0, color: appTheme.colorPrimary),
@@ -630,6 +633,7 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
     case BorderConstant.BORDER_LEFT_RIGHT:
       return BoxDecoration(
         // boxShadow: getBoxShadow(context),
+        borderRadius: BorderRadius.circular(getSize(5)),
         border: Border(
           left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
           right: BorderSide(width: 1.0, color: appTheme.colorPrimary),
@@ -640,6 +644,7 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
     case BorderConstant.BORDER_NONE:
       return BoxDecoration(
         //  boxShadow: getBoxShadow(context),
+        borderRadius: BorderRadius.circular(getSize(5)),
         border: Border(
           top: BorderSide(width: 1.0, color: appTheme.colorPrimary),
           left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
@@ -649,6 +654,7 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
       );
     default:
       return BoxDecoration(
+        borderRadius: BorderRadius.circular(getSize(5)),
         border: Border(
           top: BorderSide(width: 0, color: appTheme.whiteColor),
           left: BorderSide(width: 0, color: appTheme.whiteColor),

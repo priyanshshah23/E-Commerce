@@ -1162,3 +1162,86 @@ openTimeSlotDialog(BuildContext context, Key key) {
     ),
   );
 }
+
+Future openBottomSheetForSavedSearch(BuildContext context,VoidCallback onTap) {
+  final TextEditingController _titleController = TextEditingController();
+
+  return showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: appTheme.whiteColor,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(15),
+        topRight: Radius.circular(15),
+      ),
+    ),
+    builder: (context) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            "Save & Search",
+            style: appTheme.black16TextStyle,
+          ),
+          SizedBox(height: getSize(20),),
+          getFieldTitleText("Search Title"),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: getSize(20)),
+            child: CommonTextfield(
+              autoFocus: false,
+              textOption: TextFieldOption(
+                inputController: _titleController,
+                hintText: "Enter Search Title",
+                formatter: [
+                  WhitelistingTextInputFormatter(
+                      new RegExp(alphaRegEx)),
+                  BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+                ],
+                //isSecureTextField: false
+              ),
+              textCallback: (text) {},
+              inputAction: TextInputAction.done,
+              onNextPress: () {
+                FocusScope.of(context).unfocus();
+              },
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                right: getSize(10), left: getSize(26), bottom: getSize(20)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Expanded(
+                  child: FlatButton(
+                    textColor: appTheme.colorPrimary,
+                    padding: EdgeInsets.all(getSize(0)),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      R.string().commonString.cancel,
+                      style: appTheme.black16TextStyle,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: FlatButton(
+                    textColor: appTheme.colorPrimary,
+                    padding: EdgeInsets.all(getSize(0)),
+                    onPressed: () => onTap,
+                    child: Text(
+                      R.string().screenTitle.addToWatchList,
+                      style: appTheme.primary16TextStyle,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      );
+    },
+  );
+}

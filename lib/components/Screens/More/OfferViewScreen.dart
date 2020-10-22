@@ -98,21 +98,26 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
             horizontal: getSize(Spacing.leftPadding), vertical: getSize(16)),
         child: Row(
           children: [
-            Expanded(
-              child: Container(
-                // alignment: Alignment.bottomCenter,
-                padding: EdgeInsets.symmetric(
-                  vertical: getSize(15),
-                ),
-                decoration: BoxDecoration(
-                  color: appTheme.colorPrimary.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(getSize(5)),
-                ),
-                child: Text(
-                  R.string().commonString.cancel,
-                  textAlign: TextAlign.center,
-                  style: appTheme.blue14TextStyle
-                      .copyWith(fontSize: getFontSize(16)),
+            InkWell(
+              onTap: (){
+                Navigator.pop(context);
+              },
+              child: Expanded(
+                child: Container(
+                  // alignment: Alignment.bottomCenter,
+                  padding: EdgeInsets.symmetric(
+                    vertical: getSize(15),
+                  ),
+                  decoration: BoxDecoration(
+                    color: appTheme.colorPrimary.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(getSize(5)),
+                  ),
+                  child: Text(
+                    R.string().commonString.cancel,
+                    textAlign: TextAlign.center,
+                    style: appTheme.blue14TextStyle
+                        .copyWith(fontSize: getFontSize(16)),
+                  ),
                 ),
               ),
             ),
@@ -296,7 +301,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
             enable: false,
             textOption: TextFieldOption(
                 prefixWid: getCommonIconWidget(
-                    imageName: city, imageType: IconSizeType.small),
+                    imageName: company, imageType: IconSizeType.small),
                 hintText: "Select Virtual Type",
                 maxLine: 1,
                 keyboardType: TextInputType.text,
@@ -344,6 +349,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
       child: CommonTextfield(
         autoFocus: false,
         textOption: TextFieldOption(
+        maxLine: 4,
           inputController: _commentTypeController,
           hintText: "Enter Comments",
           formatter: [

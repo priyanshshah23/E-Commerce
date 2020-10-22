@@ -55,6 +55,36 @@ class MasterDao {
     }).toList();
   }
 
+  Future<List<Master>> getSubMasterFromParentCode(String code) async {
+    // Finder object can also sort data.
+    final finder = Finder(
+      filter: Filter.and([
+        Filter.equal('parentCode', code),
+        Filter.notEqual('parentId', null),
+        Filter.equal('isDeleted', false),
+        Filter.equal('isWebVisible', true),
+        Filter.equal('isActive', true),
+      ]),
+      sortOrders: [
+        SortOrder('sortingSequence'),
+      ],
+    );
+
+    final recordSnapshots = await _masterStore.find(
+      await _db,
+      finder: finder,
+    );
+
+    var arrMaster = recordSnapshots.map((snapshot) {
+      final master = Master.fromJson(snapshot.value);
+      // An ID is a key of a record from the database.
+      master.sId = snapshot.key.toString();
+      return master;
+    }).toList();
+
+    return arrMaster;
+  }
+
   Future<List<Master>> getSubMasterFromCode(String code) async {
     // Finder object can also sort data.
     final finder = Finder(

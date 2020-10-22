@@ -1,16 +1,20 @@
+import 'dart:collection';
 import 'dart:math';
 
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/Helper/Themehelper.dart';
 import 'package:diamnow/app/Libraries/horizontalTableView/horizontal_data_table.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/base/BaseApiResp.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/constant/constants.dart';
+import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CommonWidgets.dart';
 import 'package:diamnow/app/utils/math_utils.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/CaratRangeWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
@@ -19,6 +23,7 @@ import 'package:diamnow/models/Master/Master.dart';
 import 'package:diamnow/models/QuickSearch/QuickSearchModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rxbus/rxbus.dart';
 
 class QuickSearchScreen extends StatefulWidget {
   static const route = "QuickSearchScreen";
@@ -50,11 +55,13 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
   String si2Code = "si2";
   String si2DesCode = "si2-";
   var outPutWidth;
-  double cellHeight = getSize(60);
-  double rowWidth = getSize(80);
+  double cellHeight = getSize(40);
+  double rowWidth = getSize(60);
   List<Master> arrColors = [];
+  List<Master> arrShape = [];
+  List<Master> arrCarat = [];
   List<Master> arrClarity = [];
-  List<CellModel> arrCell = [];
+  List<CellModel> arrCount = [];
 
   @override
   void initState() {
@@ -68,38 +75,88 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
                   element.viewType == ViewTypes.shapeWidget ||
                   element.viewType == ViewTypes.caratRange)
               .toList();
-        });
 
-        for (var item in arrData) {
-          if (item is SelectionModel) {
-            item.isShowAll = false;
-            if (item.viewType == ViewTypes.caratRange) {
-              item.showFromTo = false;
-              item.masters
-                  .removeWhere((element) => element.sId == item.allLableTitle);
-              item.masters.first.isSelected = true;
-            } else if (item.viewType == ViewTypes.shapeWidget) {
-              item.masters
-                  .removeWhere((element) => element.sId == item.allLableTitle);
-              item.masters.first.isSelected = true;
+          for (var item in arrData) {
+            if (item is SelectionModel) {
+              item.isShowAll = false;
+              if (item.viewType == ViewTypes.caratRange) {
+                item.showFromTo = false;
+                item.masters.removeWhere(
+                    (element) => element.sId == item.allLableTitle);
+                item.masters.first.isSelected = true;
+              } else if (item.viewType == ViewTypes.shapeWidget) {
+                item.masters.removeWhere(
+                    (element) => element.sId == item.allLableTitle);
+                item.masters.first.isSelected = true;
+              }
             }
           }
-        }
-        getCombineColors().then((value) {
-          arrColors = value;
-          setState(() {});
-        });
-        getCombineClarity().then((value) {
-          arrClarity = value;
-          var test = (MathUtilities.screenWidth(context) - getSize(120)) /
-              arrClarity.length;
-          outPutWidth = test < rowWidth ? rowWidth : test;
-          setState(() {});
-        });
 
-        callApiForQuickSearch();
+          //Get carat MAster
+          if (true) {
+            FormBaseModel caratMaster = arrData.singleWhere(
+                (element) => element.viewType == ViewTypes.caratRange);
+
+            if (!isNullEmptyOrFalse(caratMaster)) {
+              if (caratMaster is SelectionModel) {
+                arrCarat = caratMaster.masters;
+                Master model = caratMaster.masters.first;
+                model.isSelected = true;
+                for (var item in model.grouped) {
+                  item.isSelected = model.isSelected;
+                }
+              }
+            }
+          }
+
+          //Get Shape MAster
+          if (true) {
+            FormBaseModel shapeMaster = arrData.singleWhere(
+                (element) => element.viewType == ViewTypes.caratRange);
+
+            if (!isNullEmptyOrFalse(shapeMaster)) {
+              if (shapeMaster is SelectionModel) {
+                arrShape = shapeMaster.masters;
+              }
+            }
+          }
+
+          Master.getSubMaster(MasterCode.color).then((value) {
+            arrColors = value;
+
+            getCombineClarity().then((value) {
+              arrClarity = value;
+              var test = (MathUtilities.screenWidth(context) - getSize(120)) /
+                  arrClarity.length;
+              outPutWidth = test < rowWidth ? rowWidth : test;
+
+              for (var item in arrColors) {
+                item.isSelected = true;
+                arrCount.add(CellModel(cellObj: item, dataArr: value));
+              }
+              callApiForQuickSearch();
+            });
+          });
+        });
       });
     });
+    registerRsBus();
+  }
+
+  @override
+  void dispose() {
+    RxBus.destroy(tag: eventForShareCaratRangeSelected);
+    super.dispose();
+  }
+
+  registerRsBus() {
+    RxBus.register<bool>(tag: eventForShareCaratRangeSelected).listen(
+      (event) => setState(
+        () {
+          callApiForQuickSearch();
+        },
+      ),
+    );
   }
 
   @override
@@ -117,12 +174,13 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
           children: [
             ListView.builder(
               shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
               itemCount: this.arrData.length,
               itemBuilder: (context, index) {
                 return getWidgets(this.arrData[index]);
               },
             ),
-            SizedBox(height: getSize(20)),
+            SizedBox(height: getSize(8)),
             isNullEmptyOrFalse(arrClarity)
                 ? SizedBox()
                 : getHorizontalDataWidget(),
@@ -185,7 +243,7 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
         tempClarity.add(item);
       }
     }
-    print(tempClarity);
+
     return tempClarity;
   }
 
@@ -218,7 +276,9 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
               .where((element) => element.webDisplay?.toLowerCase() == str)
               .toList();
           if (!isNullEmptyOrFalse(findIf)) {
-            for (var id in (findIf.first.grouped.map((e) => e.sId ?? ""))) {
+            List<String> arrStr =
+                findIf.first.grouped.map((e) => e.sId ?? "").toList();
+            for (var id in arrStr) {
               item.groupingIds.add(id);
             }
           }
@@ -267,7 +327,7 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
 
   getHorizontalDataWidget() {
     return Padding(
-      padding: EdgeInsets.all(getSize(20)),
+      padding: EdgeInsets.all(getSize(16)),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(getSize(10)),
@@ -290,17 +350,30 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
           rightSideItemBuilder: _generateRightHandSideColumnRow,
           itemCount: arrColors.length,
         ),
-        height: MediaQuery.of(context).size.height,
+        height: (arrColors.length + 1) * cellHeight + 12,
       ),
     );
   }
 
   List<Widget> _getHorizontalRow() {
     return [
-      _getTitleItemWidget(R.string().commonString.colorGroup, 200),
+      Container(
+        color: appTheme.lightBGColor,
+        child: Text(
+          R.string().commonString.colorGroup,
+          textAlign: TextAlign.center,
+          style: appTheme.primaryColor14TextStyle,
+        ),
+        width: 200,
+        height: cellHeight,
+        padding: EdgeInsets.only(left: 2, right: 2),
+        alignment: Alignment.center,
+      ),
       for (var item in arrClarity)
         _getTitleItemWidget(
-          item.name,
+          item.mergeModel != null && item.webDisplay?.toLowerCase() != "si2"
+              ? "${item.webDisplay ?? ""} / ${item.mergeModel?.webDisplay ?? ""}"
+              : item.webDisplay ?? "",
           outPutWidth,
         ),
     ];
@@ -308,9 +381,10 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
 
   Widget _getVerticalColumn(BuildContext context, int index) {
     return Container(
+      color: appTheme.lightBGColor,
       child: Text(
-        arrColors[index].name,
-        style: appTheme.blackNormal14TitleColorblack,
+        arrColors[index].webDisplay ?? "",
+        style: appTheme.primaryColor14TextStyle,
       ),
       width: 100,
       height: cellHeight,
@@ -321,6 +395,12 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
 
   Widget _getTitleItemWidget(String label, double width) {
     return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          width: getSize(0.5),
+          color: appTheme.borderColor,
+        ),
+      ),
       child: Text(
         label,
         textAlign: TextAlign.center,
@@ -337,32 +417,81 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        for (int i = 0; i < arrClarity.length; i++)
-          for (int j = 0; j < arrColors.length; j++)
-            if (j == index)
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: getSize(0.5),
-                    color: appTheme.borderColor,
-                  ),
+        for (int i = 0; i < arrCount[index].dataArr.length; i++)
+          InkWell(
+            onTap: () {
+              print("Tapped");
+              prepareStoneRequest(
+                  this.arrColors[index], this.arrClarity[index]);
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: getSize(0.5),
+                  color: appTheme.borderColor,
                 ),
-                child: Center(
-                  child: Text(
-                    arrColors[index].name,
-                    style: appTheme.blackNormal14TitleColorblack,
-                  ),
-                ),
-                width: outPutWidth,
-                height: cellHeight,
-                padding: EdgeInsets.only(left: 4, right: 4),
-                alignment: Alignment.center,
               ),
+              child: Center(
+                child: Text(
+                  arrCount[index].dataArr[i].count?.toString() ?? "-",
+                  style: appTheme.blackNormal14TitleColorblack,
+                ),
+              ),
+              width: outPutWidth,
+              height: cellHeight,
+              padding: EdgeInsets.only(left: 4, right: 4),
+              alignment: Alignment.center,
+            ),
+          ),
       ],
     );
   }
 
+//Get Stone Request
+  prepareStoneRequest(Master color, Master clarity) {
+    Map<String, dynamic> request = Map<String, dynamic>();
+    request["shp"] = Master.getSelectedId(arrShape);
+    request["or"] = Master.getSelectedCarat(arrCarat);
+    request["col"] = Master.getSelectedId([color]);
+
+    List<String> clarityRequest = Master.getSelectedId([clarity]);
+    if (isNullEmptyOrFalse(clarity.mergeModel)) {
+      Master mergerModel = clarity.mergeModel;
+      clarityRequest.add(mergerModel.sId ?? "");
+      for (var item in mergerModel.grouped) {
+        if (!clarityRequest.contains(item.sId ?? "")) {
+          clarityRequest?.add(item.sId ?? "");
+        }
+      }
+    }
+
+    request["clr"] = clarityRequest;
+    SyncManager.instance.callApiForDiamondList(
+      context,
+      request,
+      (diamondListResp) {
+        Map<String, dynamic> dict = new HashMap();
+
+        dict["filterId"] = diamondListResp.data.filter.id;
+        dict["filters"] = request;
+        dict[ArgumentConstant.ModuleType] =
+            DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH;
+        NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+      },
+      (onError) {
+        //print("Error");
+      },
+    );
+  }
+
   callApiForQuickSearch() {
+    for (var item in arrCount) {
+      List<Master> clarity = item.dataArr;
+      for (var clr in clarity) {
+        clr.count = 0;
+      }
+    }
+
     NetworkCall<QuickSearchResp>()
         .makeCall(
       () => app
@@ -373,7 +502,64 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
       isProgress: true,
     )
         .then((resp) async {
-      print(resp);
+      for (var item in this.arrCount) {
+        Master color = item.cellObj;
+        List<String> colorId = List<String>();
+        if (color.groupingIds.length > 0) {
+          colorId = color.groupingIds;
+          colorId.add(color.sId);
+        } else {
+          colorId = color.grouped.map((e) => e.sId).toList();
+          colorId.add(color.sId);
+        }
+
+        for (var count in resp.data.list) {
+          //Color
+          if (colorId.contains(count.color)) {
+            List<Master> claritys = item.dataArr;
+
+            for (var clarity in claritys) {
+              if (clarity.webDisplay?.toLowerCase() == this.flCode ||
+                  clarity.webDisplay?.toLowerCase() == this.si2Code) {
+                //Merge Clarity
+                List<String> clarityId =
+                    clarity.grouped.map((e) => e.sId).toList();
+                clarityId.add(clarity.sId);
+
+                List<String> mergeClarity =
+                    clarity.mergeModel?.grouped?.map((e) => e.sId)?.toList() ??
+                        [];
+                mergeClarity.add(clarity.mergeModel?.sId);
+
+                if (clarityId.contains(count.clarity) ||
+                    mergeClarity.contains(count.clarity)) {
+                  clarity.count += count.count;
+                  // clarity.totalAmount += count.totalAmount
+                  // clarity.carat += count.carat
+                  // clarity.arrPrice.append(count.maxPrice)
+                  // clarity.arrPrice.append(count.minPrice)
+                }
+              } else {
+                //Another
+                List<String> clarityId =
+                    clarity.grouped.map((e) => e.sId).toList();
+                clarityId.add(clarity.sId);
+
+                if (clarityId.contains(count.clarity)) {
+                  clarity.count += count.count;
+                  // clarity.totalAmount += count.totalAmount
+                  // clarity.carat += count.carat
+                  // clarity.arrPrice.append(count.maxPrice)
+                  // clarity.arrPrice.append(count.minPrice)
+
+                }
+              }
+            }
+          }
+        }
+      }
+
+      setState(() {});
     }).catchError((onError) {
       print(onError);
     });
@@ -383,4 +569,6 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
 class CellModel {
   Master cellObj;
   List<Master> dataArr;
+
+  CellModel({this.cellObj, this.dataArr});
 }

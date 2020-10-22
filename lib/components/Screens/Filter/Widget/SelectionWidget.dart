@@ -142,6 +142,9 @@ class _TagWidgetState extends State<TagWidget> {
                 child: getSingleTag(index),
                 onTap: () {
                   setState(() {
+                    if (widget.model.viewType == ViewTypes.caratRange) {
+                      RxBus.post(true, tag: eventForShareCaratRangeSelected);
+                    }
                     widget.model.masters[index].isSelected =
                         !widget.model.masters[index].isSelected;
 
@@ -603,11 +606,11 @@ class _TagWidgetState extends State<TagWidget> {
                   // crossAxisAlignment:CrossAxisAlignment.start,
                   children: List.generate(_list1.length, (index) {
                 return InkWell(
-                  child: getSingleTagForKeytoSymbol(_list1, index,index*2),
+                  child: getSingleTagForKeytoSymbol(_list1, index, index * 2),
                   onTap: () {
                     setState(() {
-                      widget.model.masters[index*2].isSelected =
-                          !widget.model.masters[index*2].isSelected;
+                      widget.model.masters[index * 2].isSelected =
+                          !widget.model.masters[index * 2].isSelected;
 
                       // getMultipleMasterSelections(index);
                     });
@@ -621,11 +624,12 @@ class _TagWidgetState extends State<TagWidget> {
                   // crossAxisAlignment:CrossAxisAlignment.start,
                   children: List.generate(_list2.length, (index) {
                 return InkWell(
-                  child: getSingleTagForKeytoSymbol(_list2, index,index*2+1),
+                  child:
+                      getSingleTagForKeytoSymbol(_list2, index, index * 2 + 1),
                   onTap: () {
                     setState(() {
-                      widget.model.masters[index*2+1].isSelected =
-                          !widget.model.masters[index*2+1].isSelected;
+                      widget.model.masters[index * 2 + 1].isSelected =
+                          !widget.model.masters[index * 2 + 1].isSelected;
 
                       // getMultipleMasterSelections(index);
                     });
@@ -640,7 +644,7 @@ class _TagWidgetState extends State<TagWidget> {
   }
 
   //code of keytosymbol
-  getSingleTagForKeytoSymbol(List<Tag> list, int indexForTagList,int index) {
+  getSingleTagForKeytoSymbol(List<Tag> list, int indexForTagList, int index) {
     return Padding(
       padding: EdgeInsets.only(right: getSize(8.0)),
       child: Container(

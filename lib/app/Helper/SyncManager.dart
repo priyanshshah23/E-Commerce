@@ -92,12 +92,17 @@ class SyncManager {
     Function failure, {
     bool isProgress = true,
   }) async {
+    Map<String, dynamic> dict = {};
+    dict["isNotReturnTotal"] = true;
+    dict["isReturnCountOnly"] = true;
+    dict["filters"] = req;
+
     NetworkCall<DiamondListResp>()
         .makeCall(
       () => app
           .resolve<ServiceModule>()
           .networkService()
-          .diamondListPaginate(req),
+          .diamondListPaginate(dict),
       context,
       isProgress: isProgress,
     )
@@ -198,7 +203,6 @@ class SyncManager {
         calcAmount += item.amt;
         rapAvg += item.rap * item.crt;
         priceCrt += item.ctPr * item.crt;
-
       } else {
         carat += item.crt;
         calcAmount += item.amt;
@@ -208,14 +212,7 @@ class SyncManager {
     }
     avgRapAmt = rapAvg / carat;
     avgPriceCrt = priceCrt / carat;
-    return [
-      carat,
-      calcAmount,
-      rapAvg,
-      avgRapAmt,
-      avgPriceCrt,
-      discount
-    ];
+    return [carat, calcAmount, rapAvg, avgRapAmt, avgPriceCrt, discount];
   }
 
   List<num> getFinalCalculations(List<DiamondModel> diamondList) {

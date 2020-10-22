@@ -58,6 +58,8 @@ class Master {
   String sId;
   String name;
   String code;
+  String parentCode;
+  bool isWebVisible;
   String normalizeName;
   String marketingDisplay;
   String webDisplay;
@@ -73,6 +75,7 @@ class Master {
   num toCarat;
   List<Master> grouped = [];
   Master mergeModel;
+  int count = 0;
   List<String> groupingIds = [];
   String groupName;
   dynamic map;
@@ -82,6 +85,7 @@ class Master {
       this.isDefault,
       this.isDeleted,
       this.marketingDisplay,
+      this.parentCode,
       this.webDisplay,
       this.sId,
       this.name,
@@ -89,6 +93,7 @@ class Master {
       this.group,
       this.sizeCategory,
       this.normalizeName,
+      this.isWebVisible = false,
       this.sortingSequence,
       this.description,
       this.image,
@@ -105,6 +110,8 @@ class Master {
     webDisplay = json['webDisplay'];
     isDeleted = json['isDeleted'];
     sizeCategory = json["sizeCategory"];
+    parentCode = json["parentCode"];
+    isWebVisible = json["isWebVisible"];
     sId = json['id'];
     name = json['name'];
     code = json['code'];
@@ -127,6 +134,8 @@ class Master {
     data['isDefault'] = this.isDefault;
     data['marketingDisplay'] = this.marketingDisplay;
     data['webDisplay'] = this.webDisplay;
+    data["parentCode"] = this.parentCode;
+    data["isWebVisible"] = this.isWebVisible;
     data['isDeleted'] = this.isDeleted;
     data['id'] = this.sId;
     data['group'] = this.group;
@@ -155,17 +164,19 @@ class Master {
     List<Master> master = [];
     List<String> mapShape = [];
     List<Master> allShapes =
-        await AppDatabase.instance.masterDao.getSubMasterFromCode(code);
-    allShapes.forEach((item) {
-      if (!mapShape.contains(item.webDisplay)) {
-        dynamic filter =
-            allShapes.where((element) => element.webDisplay == item.webDisplay);
+        await AppDatabase.instance.masterDao.getSubMasterFromParentCode(code);
 
-        item.grouped = filter.toList();
+    for (var item in allShapes) {
+      if (!mapShape.contains(item.webDisplay ?? "")) {
+        List<Master> filter = allShapes
+            .where((element) => element.webDisplay == item.webDisplay)
+            .toList();
+
+        item.grouped = filter;
         mapShape.add(item.webDisplay);
         master.add(item);
       }
-    });
+    }
 
     if (code == MasterCode.origin) {
       //If Master is Rough Origin Remove FM/CM Manually

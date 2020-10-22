@@ -413,6 +413,8 @@ class DiamondModel {
   double marginBottom=0;
   String displayTitle;
 
+  bool isSelectedForComparechange = false; //for compare changes screen
+
   getSelectedDetail(int type) {
     switch (type) {
       case DropDownItem.BACK_PER:

@@ -114,6 +114,7 @@ class ScreenTitle {
   final String enquiry;
   final String placeOrder;
   final String compare;
+  final String compareStones;
   final String addToCart;
   final String addToWatchList;
   final String comment;
@@ -173,6 +174,7 @@ class ScreenTitle {
     this.myCart = "My Cart",
     this.myComment = "My Notes",
     this.compare = "Compare",
+    this.compareStones = "Compare Stones",
     this.statusHold = "Hold",
     this.statusOnMemo = "On Memo",
     this.statusAvailable = "Available",
