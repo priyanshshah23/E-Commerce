@@ -853,17 +853,25 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
       _addressLineOneController.text =  resp.data.address;
       _companyCodeController.text =  resp.data.vendorCode;
       businessTypeList.forEach((element) {
-        print("element ${element.id == resp.data.id}");
-        if(element.id == resp.data.id) {
+        if(element.id == resp.data.businessType) {
       _businessTypeController.text = element.title;
         }
       });
       _pinCodeController.text = resp.data.zipCode;
 //      CountryList country = countryList.where((element) => element.id == resp.data.id);
       countryList.forEach((element) {
-        print("element ${element.id == resp.data.id}");
-        if(element.id == resp.data.id) {
+        if(element.id == resp.data.country) {
           _countryController.text = element.name;
+        }
+      });
+      stateList.forEach((element) {
+        if(element.id == resp.data.state) {
+          _stateController.text = element.name;
+        }
+      });
+      cityList.forEach((element) {
+        if(element.id == resp.data.city) {
+          _cityController.text = element.name;
         }
       });
 //      print("country-----${country.name}");
