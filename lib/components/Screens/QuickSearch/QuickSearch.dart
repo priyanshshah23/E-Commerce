@@ -1,5 +1,7 @@
+import 'dart:collection';
 import 'dart:math';
 
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/Helper/Themehelper.dart';
 import 'package:diamnow/app/Libraries/horizontalTableView/horizontal_data_table.dart';
 import 'package:diamnow/app/app.export.dart';
@@ -12,6 +14,7 @@ import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CommonWidgets.dart';
 import 'package:diamnow/app/utils/math_utils.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/CaratRangeWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
@@ -52,9 +55,11 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
   String si2Code = "si2";
   String si2DesCode = "si2-";
   var outPutWidth;
-  double cellHeight = getSize(60);
-  double rowWidth = getSize(80);
+  double cellHeight = getSize(40);
+  double rowWidth = getSize(60);
   List<Master> arrColors = [];
+  List<Master> arrShape = [];
+  List<Master> arrCarat = [];
   List<Master> arrClarity = [];
   List<CellModel> arrCount = [];
 
@@ -70,38 +75,67 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
                   element.viewType == ViewTypes.shapeWidget ||
                   element.viewType == ViewTypes.caratRange)
               .toList();
-        });
 
-        for (var item in arrData) {
-          if (item is SelectionModel) {
-            item.isShowAll = false;
-            if (item.viewType == ViewTypes.caratRange) {
-              item.showFromTo = false;
-              item.masters
-                  .removeWhere((element) => element.sId == item.allLableTitle);
-              item.masters.first.isSelected = true;
-            } else if (item.viewType == ViewTypes.shapeWidget) {
-              item.masters
-                  .removeWhere((element) => element.sId == item.allLableTitle);
-              item.masters.first.isSelected = true;
+          for (var item in arrData) {
+            if (item is SelectionModel) {
+              item.isShowAll = false;
+              if (item.viewType == ViewTypes.caratRange) {
+                item.showFromTo = false;
+                item.masters.removeWhere(
+                    (element) => element.sId == item.allLableTitle);
+                item.masters.first.isSelected = true;
+              } else if (item.viewType == ViewTypes.shapeWidget) {
+                item.masters.removeWhere(
+                    (element) => element.sId == item.allLableTitle);
+                item.masters.first.isSelected = true;
+              }
             }
           }
-        }
-        getCombineColors().then((value) {
-          arrColors = value;
 
-          getCombineClarity().then((value) {
-            arrClarity = value;
-            var test = (MathUtilities.screenWidth(context) - getSize(120)) /
-                arrClarity.length;
-            outPutWidth = test < rowWidth ? rowWidth : test;
+          //Get carat MAster
+          if (true) {
+            FormBaseModel caratMaster = arrData.singleWhere(
+                (element) => element.viewType == ViewTypes.caratRange);
 
-            for (var item in arrColors) {
-              item.isSelected = true;
-              arrCount.add(CellModel(cellObj: item, dataArr: value));
+            if (!isNullEmptyOrFalse(caratMaster)) {
+              if (caratMaster is SelectionModel) {
+                arrCarat = caratMaster.masters;
+                Master model = caratMaster.masters.first;
+                model.isSelected = true;
+                for (var item in model.grouped) {
+                  item.isSelected = model.isSelected;
+                }
+              }
             }
-            callApiForQuickSearch();
-            setState(() {});
+          }
+
+          //Get Shape MAster
+          if (true) {
+            FormBaseModel shapeMaster = arrData.singleWhere(
+                (element) => element.viewType == ViewTypes.caratRange);
+
+            if (!isNullEmptyOrFalse(shapeMaster)) {
+              if (shapeMaster is SelectionModel) {
+                arrShape = shapeMaster.masters;
+              }
+            }
+          }
+
+          Master.getSubMaster(MasterCode.color).then((value) {
+            arrColors = value;
+
+            getCombineClarity().then((value) {
+              arrClarity = value;
+              var test = (MathUtilities.screenWidth(context) - getSize(120)) /
+                  arrClarity.length;
+              outPutWidth = test < rowWidth ? rowWidth : test;
+
+              for (var item in arrColors) {
+                item.isSelected = true;
+                arrCount.add(CellModel(cellObj: item, dataArr: value));
+              }
+              callApiForQuickSearch();
+            });
           });
         });
       });
@@ -146,7 +180,7 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
                 return getWidgets(this.arrData[index]);
               },
             ),
-            SizedBox(height: getSize(20)),
+            SizedBox(height: getSize(8)),
             isNullEmptyOrFalse(arrClarity)
                 ? SizedBox()
                 : getHorizontalDataWidget(),
@@ -242,8 +276,9 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
               .where((element) => element.webDisplay?.toLowerCase() == str)
               .toList();
           if (!isNullEmptyOrFalse(findIf)) {
-            for (var id
-                in (findIf.first.grouped.map((e) => e.sId ?? "").toList())) {
+            List<String> arrStr =
+                findIf.first.grouped.map((e) => e.sId ?? "").toList();
+            for (var id in arrStr) {
               item.groupingIds.add(id);
             }
           }
@@ -315,17 +350,30 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
           rightSideItemBuilder: _generateRightHandSideColumnRow,
           itemCount: arrColors.length,
         ),
-        height: MediaQuery.of(context).size.height,
+        height: (arrColors.length + 1) * cellHeight + 12,
       ),
     );
   }
 
   List<Widget> _getHorizontalRow() {
     return [
-      _getTitleItemWidget(R.string().commonString.colorGroup, 200),
+      Container(
+        color: appTheme.lightBGColor,
+        child: Text(
+          R.string().commonString.colorGroup,
+          textAlign: TextAlign.center,
+          style: appTheme.primaryColor14TextStyle,
+        ),
+        width: 200,
+        height: cellHeight,
+        padding: EdgeInsets.only(left: 2, right: 2),
+        alignment: Alignment.center,
+      ),
       for (var item in arrClarity)
         _getTitleItemWidget(
-          item.name,
+          item.mergeModel != null && item.webDisplay?.toLowerCase() != "si2"
+              ? "${item.webDisplay ?? ""} / ${item.mergeModel?.webDisplay ?? ""}"
+              : item.webDisplay ?? "",
           outPutWidth,
         ),
     ];
@@ -333,9 +381,10 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
 
   Widget _getVerticalColumn(BuildContext context, int index) {
     return Container(
+      color: appTheme.lightBGColor,
       child: Text(
-        arrColors[index].name,
-        style: appTheme.blackNormal14TitleColorblack,
+        arrColors[index].webDisplay ?? "",
+        style: appTheme.primaryColor14TextStyle,
       ),
       width: 100,
       height: cellHeight,
@@ -346,6 +395,12 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
 
   Widget _getTitleItemWidget(String label, double width) {
     return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          width: getSize(0.5),
+          color: appTheme.borderColor,
+        ),
+      ),
       child: Text(
         label,
         textAlign: TextAlign.center,
@@ -363,25 +418,69 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         for (int i = 0; i < arrCount[index].dataArr.length; i++)
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                width: getSize(0.5),
-                color: appTheme.borderColor,
+          InkWell(
+            onTap: () {
+              print("Tapped");
+              prepareStoneRequest(
+                  this.arrColors[index], this.arrClarity[index]);
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: getSize(0.5),
+                  color: appTheme.borderColor,
+                ),
               ),
-            ),
-            child: Center(
-              child: Text(
-                arrCount[index].dataArr[i].count?.toString() ?? "-",
-                style: appTheme.blackNormal14TitleColorblack,
+              child: Center(
+                child: Text(
+                  arrCount[index].dataArr[i].count?.toString() ?? "-",
+                  style: appTheme.blackNormal14TitleColorblack,
+                ),
               ),
+              width: outPutWidth,
+              height: cellHeight,
+              padding: EdgeInsets.only(left: 4, right: 4),
+              alignment: Alignment.center,
             ),
-            width: outPutWidth,
-            height: cellHeight,
-            padding: EdgeInsets.only(left: 4, right: 4),
-            alignment: Alignment.center,
           ),
       ],
+    );
+  }
+
+//Get Stone Request
+  prepareStoneRequest(Master color, Master clarity) {
+    Map<String, dynamic> request = Map<String, dynamic>();
+    request["shp"] = Master.getSelectedId(arrShape);
+    request["or"] = Master.getSelectedCarat(arrCarat);
+    request["col"] = Master.getSelectedId([color]);
+
+    List<String> clarityRequest = Master.getSelectedId([clarity]);
+    if (isNullEmptyOrFalse(clarity.mergeModel)) {
+      Master mergerModel = clarity.mergeModel;
+      clarityRequest.add(mergerModel.sId ?? "");
+      for (var item in mergerModel.grouped) {
+        if (!clarityRequest.contains(item.sId ?? "")) {
+          clarityRequest?.add(item.sId ?? "");
+        }
+      }
+    }
+
+    request["clr"] = clarityRequest;
+    SyncManager.instance.callApiForDiamondList(
+      context,
+      request,
+      (diamondListResp) {
+        Map<String, dynamic> dict = new HashMap();
+
+        dict["filterId"] = diamondListResp.data.filter.id;
+        dict["filters"] = request;
+        dict[ArgumentConstant.ModuleType] =
+            DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH;
+        NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+      },
+      (onError) {
+        //print("Error");
+      },
     );
   }
 
@@ -459,7 +558,7 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
           }
         }
       }
-      print(arrCount);
+
       setState(() {});
     }).catchError((onError) {
       print(onError);
