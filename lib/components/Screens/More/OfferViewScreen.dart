@@ -1,4 +1,5 @@
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
@@ -24,7 +25,11 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
   int selectedSlot = 0;
   int selectedVirtualType = -1;
   List<SlotModel> arrSlots = [];
-  List<String> virtualList = ["Phone Call", "Web Conference", "In Person"];
+  List<String> virtualList = [
+    VirtualTypesString.phoneCall,
+    VirtualTypesString.webConference,
+    VirtualTypesString.inPerson
+  ];
   final TextEditingController _virtualTypeController = TextEditingController();
   final TextEditingController _commentTypeController = TextEditingController();
 
@@ -85,7 +90,12 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
         .toUtc();
     req["date"] = DateUtilities().getStartOfDay(date).toUtc().toIso8601String();
     req["type"] = 2;
-    req["meetingType"] = 2;
+    req["meetingType"] =
+        _virtualTypeController.text == VirtualTypesString.phoneCall
+            ? VirtualTypes.phoneCall
+            : _virtualTypeController.text == VirtualTypesString.webConference
+                ? VirtualTypes.webConference
+                : VirtualTypes.inPerson;
     req["cabinSlot"] = [
       {"id": arrSlots[selectedSlot].id ?? ""}
     ];

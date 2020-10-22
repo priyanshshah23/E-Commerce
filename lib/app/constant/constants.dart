@@ -152,3 +152,9 @@ class DiamondSearchType {
   static const int ARTICLE = 8;
   static const int COLLECTION = 9;
 }
+
+class VirtualTypesString{
+  static const String phoneCall = "Phone Call";
+  static const String webConference = "Web Conference";
+  static const String inPerson = "In Person";
+}
