@@ -109,3 +109,6 @@ const String home_newArrival = "assets/Home/newArrival.png";
 const String home_newArrivalBg = "assets/Home/newArrivalBg.png";
 const String home_watchlist = "assets/Home/watchlist.png";
 const String home_watchlistBg = "assets/Home/watchlistBg.png";
+
+const String calender = "assets/Common/calendar.png";
+
