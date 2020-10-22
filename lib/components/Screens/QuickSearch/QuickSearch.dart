@@ -592,7 +592,6 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
         });
       });
     });
-    print(arrCount.length.toString());
   }
 }
 
