@@ -10,6 +10,7 @@ class ApiConstants {
 // static const String PROXY_URL = "PROXY 192.168.225.121:8888"; // Brijesh
 
   static const String imageBaseURL = baseURL;
+
   static const String apiUrl = baseURL;
   static const String commonUrl = apiUrl + "device/v1/";
   static const String authUrl = apiUrl + "web/v1/auth/";

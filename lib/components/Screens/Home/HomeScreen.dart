@@ -43,14 +43,14 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isSwitched = false;
   double bottomPadding = 0;
   Widget currentWidget;
-  int selectedType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
+  int selectedType = DiamondModuleConstant.MODULE_TYPE_HOME;
 
   @override
   void initState() {
     super.initState();
     //SocketManager.instance.connect();
 
-    openSearch(DiamondModuleConstant.MODULE_TYPE_SEARCH);
+    openDashboard(DiamondModuleConstant.MODULE_TYPE_HOME);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       RxBus.register<DrawerEvent>(tag: eventBusTag).listen((event) {
         if (event.index == DiamondModuleConstant.MODULE_TYPE_OPEN_DRAWER) {
@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<bool> _onWillPop(BuildContext context) {
     if (!Navigator.of(context).canPop()) {
-      if (selectedType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
+      if (selectedType == DiamondModuleConstant.MODULE_TYPE_HOME) {
         app.resolve<CustomDialogs>().confirmDialog(context,
             title: APPNAME,
             desc: R.string().commonString.lblAppExit,
@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       } else {
         manageDrawerClick(
-            context, DiamondModuleConstant.MODULE_TYPE_SEARCH, false);
+            context, DiamondModuleConstant.MODULE_TYPE_HOME, false);
       }
     } else {
       return Future.value(true);
@@ -149,9 +149,9 @@ class _HomeScreenState extends State<HomeScreen> {
   manageDrawerClick(BuildContext context, int type, bool isPop) {
     if (context != null) {
       if (isPop) Navigator.pop(context);
-      // if (selectedType == type) {
-      //   return;
-      // }
+      if (selectedType == type) {
+        return;
+      }
 
       switch (type) {
         case DiamondModuleConstant.MODULE_TYPE_HOME:
