@@ -502,7 +502,8 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
       isProgress: true,
     )
         .then((resp) async {
-      for (var item in this.arrCount) {
+      callDiamondCount(resp.data.list);
+      /*for (var item in this.arrCount) {
         Master color = item.cellObj;
         List<String> colorId = List<String>();
         if (color.groupingIds.length > 0) {
@@ -557,12 +558,41 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
             }
           }
         }
-      }
+      }*/
 
       setState(() {});
     }).catchError((onError) {
       print(onError);
     });
+  }
+
+  callDiamondCount(List<QuickSearchModel> qsResultList) {
+    arrCount.forEach((colorItem) {
+      colorItem.dataArr.forEach((clarityItem) {
+        clarityItem.count = 0;
+      });
+    });
+    List<String> colorArray;
+    List<String> clarityArray;
+    qsResultList.forEach((qsResultItem) {
+      arrCount.forEach((colorItem) {
+        colorArray = [];
+        colorItem.cellObj.grouped.forEach((element) {
+          colorArray.add(element.sId);
+        });
+        colorItem.dataArr.forEach((clarityItem) {
+          clarityArray = [];
+          clarityItem.grouped.forEach((element) {
+            clarityArray.add(element.sId);
+          });
+          if (clarityArray.contains(qsResultItem.clarity) &&
+              colorArray.contains(qsResultItem.color)) {
+            clarityItem.count += qsResultItem.count;
+          }
+        });
+      });
+    });
+    print(arrCount.length.toString());
   }
 }
 
