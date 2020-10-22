@@ -5,6 +5,8 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
@@ -289,7 +291,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       onClickCallback: (obj) {
         //
         if (obj.code == BottomCodeConstant.filterSavedSearch) {
-          openBottomSheetForSavedSearch(context,(){});
+          callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,isSavedSearch: true);
         } else if (obj.code == BottomCodeConstant.filterAddDemamd) {
           //
           print(obj.code);
@@ -307,22 +309,66 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     );
   }
 
-  callApiForGetFilterId(int moduleType) {
+  callApiForGetFilterId(int moduleType,{bool isSavedSearch=false}) {
     SyncManager.instance.callApiForDiamondList(
       context,
       FilterRequest().createRequest(arrList),
       (diamondListResp) {
-        Map<String, dynamic> dict = new HashMap();
+        if(isSavedSearch){
+          openBottomSheetForSavedSearch(context,(){
+            callApiForSaveSearch(diamondListResp.data.filter.id);
+          });
+        }else{
+          Map<String, dynamic> dict = new HashMap();
 
-        dict["filterId"] = diamondListResp.data.filter.id;
-        dict["filters"] = FilterRequest().createRequest(arrList);
-        dict[ArgumentConstant.ModuleType] = moduleType;
-        NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+          dict["filterId"] = diamondListResp.data.filter.id;
+          dict["filters"] = FilterRequest().createRequest(arrList);
+          dict[ArgumentConstant.ModuleType] = moduleType;
+          NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+        }
+
       },
       (onError) {
         //print("Error");
       },
     );
+  }
+
+  callApiForSaveSearch(String filterId) {
+    Map<String, dynamic> dict = {};
+    dict["filters"] =  FilterRequest().createRequest(arrList);
+    dict["name"] = "gfgf";
+    dict["id"] = filterId;
+    dict["searchType"] = 2;
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+          () => app
+          .resolve<ServiceModule>()
+          .networkService()
+          .saveSearch(dict),
+      context,
+      isProgress: true,
+    )
+        .then((diamondListResp) async {
+        print("Success ${diamondListResp.message}");
+    }).catchError((onError) {
+      print(onError.toString());
+    });
+//    SyncManager.instance.callApiForDiamondList(
+//      context,
+//      FilterRequest().createRequest(arrList),
+//          (diamondListResp) {
+//        Map<String, dynamic> dict = new HashMap();
+//
+//        dict["filterId"] = diamondListResp.data.filter.id;
+//        dict["filters"] = FilterRequest().createRequest(arrList);
+//        dict[ArgumentConstant.ModuleType] = moduleType;
+//        NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+//      },
+//          (onError) {
+//        //print("Error");
+//      },
+//    );
   }
 
   Widget _segmentedControl() {
