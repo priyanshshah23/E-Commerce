@@ -1,5 +1,3 @@
-import 'package:diamnow/app/utils/BottomSheet.dart';
-
 const String baseURL = "http://fndevelopapi.democ.in/";
 const apiV1 = "api/v1/";
 
@@ -72,8 +70,7 @@ const numberRegXWithDecimalAllows = r'([0-9]*[0-9]+\.)[0-9]{0,2}';
 const IMAGE_FILE_SIZE = 10.0;
 const BUSINESS_TYPE = "BUSINESS_TYPE";
 
-
-class Spacing{
+class Spacing {
   static const num leftPadding = 20.0;
   static const num rightPadding = 20.0;
 }
@@ -134,12 +131,30 @@ class DiamondStatus {
   static const String DIAMOND_STATUS_ON_MINE = "M";
   static const String DIAMOND_STATUS_OFFER = "O";
   static const String DIAMOND_STATUS_SHOW = "S";
-  static const String DIAMOND_STATUS_BID= "B";
-  static const String DIAMOND_STATUS_UPCOMING= "U";
+  static const String DIAMOND_STATUS_BID = "B";
+  static const String DIAMOND_STATUS_UPCOMING = "U";
 }
 
 class StaticPageConstant {
   static const String ABOUT_US = "ABOUT_US";
   static const String PRIVACY_POLICY = "PRIVACY_POLICY";
   static const String TERMS_CONDITION = "TERMS_CONDITION";
+}
+
+class DiamondSearchType {
+  static const int RECENT = 1;
+  static const int SAVE = 2;
+  static const int DEMAND = 3;
+  static const int API_SEARCH = 4;
+  static const int PAIR_SEARCH = 5;
+  static const int VOICE_SEARCH = 6;
+  static const int LUCKY_SEARCH = 7;
+  static const int ARTICLE = 8;
+  static const int COLLECTION = 9;
+}
+
+class VirtualTypesString{
+  static const String phoneCall = "Phone Call";
+  static const String webConference = "Web Conference";
+  static const String inPerson = "In Person";
 }

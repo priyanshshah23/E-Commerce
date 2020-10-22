@@ -1,6 +1,8 @@
 import 'package:diamnow/app/Helper/Themehelper.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/math_utils.dart';
@@ -870,7 +872,7 @@ Future showPlaceOrderDialog(BuildContext context, ActionClick actionClick) {
   );
 }
 
-Future openBottomSheetForSavedSearch(BuildContext context, VoidCallback onTap) {
+Future openBottomSheetForSavedSearch(BuildContext context, Map<String, dynamic> req,String filterId) {
   final TextEditingController _titleController = TextEditingController();
 
   return showModalBottomSheet(
@@ -884,71 +886,105 @@ Future openBottomSheetForSavedSearch(BuildContext context, VoidCallback onTap) {
       ),
     ),
     builder: (context) {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            "Save & Search",
-            style: appTheme.black16TextStyle,
-          ),
-          SizedBox(
-            height: getSize(20),
-          ),
-          getFieldTitleText("Search Title"),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: getSize(20)),
-            child: CommonTextfield(
-              autoFocus: false,
-              textOption: TextFieldOption(
-                inputController: _titleController,
-                hintText: "Enter Search Title",
-                formatter: [
-                  WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
-                  BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
-                ],
-                //isSecureTextField: false
+      return Padding(
+        padding: MediaQuery.of(context).viewInsets,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: getSize(20)),
+              child: Text(
+                "Save & Search",
+                style: appTheme.black16TextStyle,
               ),
-              textCallback: (text) {},
-              inputAction: TextInputAction.done,
-              onNextPress: () {
-                FocusScope.of(context).unfocus();
-              },
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-                right: getSize(10), left: getSize(26), bottom: getSize(20)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Expanded(
-                  child: FlatButton(
-                    textColor: appTheme.colorPrimary,
-                    padding: EdgeInsets.all(getSize(0)),
-                    onPressed: () {
-                      Navigator.pop(context);
+
+            SizedBox(
+              height: getSize(20),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                getFieldTitleText("Search Title"),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: getSize(20)),
+                  child: CommonTextfield(
+                    autoFocus: false,
+                    textOption: TextFieldOption(
+                      inputController: _titleController,
+                      hintText: "Enter Search Title",
+                      formatter: [
+                        WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+                        BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+                      ],
+                      //isSecureTextField: false
+                    ),
+                    textCallback: (text) {},
+                    inputAction: TextInputAction.done,
+                    onNextPress: () {
+                      FocusScope.of(context).unfocus();
                     },
-                    child: Text(
-                      R.string().commonString.cancel,
-                      style: appTheme.black16TextStyle,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: FlatButton(
-                    textColor: appTheme.colorPrimary,
-                    padding: EdgeInsets.all(getSize(0)),
-                    onPressed: () => onTap,
-                    child: Text(
-                      R.string().screenTitle.addToWatchList,
-                      style: appTheme.primary16TextStyle,
-                    ),
                   ),
                 ),
               ],
             ),
-          )
-        ],
+            Padding(
+              padding: EdgeInsets.only(
+                  right: getSize(10), left: getSize(26), bottom: getSize(20)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Expanded(
+                    child: FlatButton(
+                      textColor: appTheme.colorPrimary,
+                      padding: EdgeInsets.all(getSize(0)),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        R.string().commonString.cancel,
+                        style: appTheme.black16TextStyle,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: FlatButton(
+                      textColor: appTheme.colorPrimary,
+                      padding: EdgeInsets.all(getSize(0)),
+                      onPressed: () {
+
+                        Map<String, dynamic> dict = {};
+                        dict["filters"] =req;
+                        dict["name"] = _titleController.text;
+                        dict["id"] = filterId;
+                        dict["searchType"] = DiamondSearchType.SAVE;
+                        NetworkCall<BaseApiResp>()
+                            .makeCall(
+                          () => app
+                              .resolve<ServiceModule>()
+                              .networkService()
+                              .saveSearch(dict),
+                          context,
+                          isProgress: true,
+                        )
+                            .then((diamondListResp) async {
+                          print("Success ${diamondListResp.message}");
+                        }).catchError((onError) {
+                          print(onError.toString());
+                        });
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        R.string().commonString.btnSubmit,
+                        style: appTheme.primary16TextStyle,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       );
     },
   );

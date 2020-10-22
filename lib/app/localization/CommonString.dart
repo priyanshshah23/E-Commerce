@@ -115,6 +115,7 @@ class CommonString {
   final String lblRideQues;
   final String lblRideDesc;
   final String ridebtnDone;
+  final String noSlotFound;
 
   // Payment screen
   final String paymentScreenTitle;
@@ -428,5 +429,7 @@ class CommonString {
     this.lblTimeSlot14 = "3:30PM - 4:00PM",
     this.lblTimeSlot15 = "4:00PM - 4:30PM",
     this.lblTimeSlot16 = "4:30PM - 5:00PM",
+
+    this.noSlotFound = "No slots found",
   });
 }

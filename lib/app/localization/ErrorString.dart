@@ -52,6 +52,12 @@ class ErrorString {
   final String fromValueGreateThanTo;
   final String toValueGreaterThanFrom;
 
+  //Office view
+  final String selectAppointmentDate;
+  final String selectTimeSlot;
+  final String selectVirtualType;
+  final String enterComments;
+
   const ErrorString({
     this.pleaseEnterCompanyName = 'Please enter company name.',
     this.pleaseEnterComment = 'Please enter comment.',
@@ -72,7 +78,8 @@ class ErrorString {
     this.enterUsername = "Username can't be empty. Please enter Username.",
     this.enterValidEmail = 'Please enter the valid Email address.',
     this.enterValidPhone = 'Please enter the valid Mobile Number.',
-    this.enterValidWhatsappPhone = 'Please enter the valid WhatsApp Mobile Number.',
+    this.enterValidWhatsappPhone =
+        'Please enter the valid WhatsApp Mobile Number.',
     this.enterValidPassword = 'Please enter 6 characters or long password.',
     this.mismatchPassword = 'Password and confirm password is not matching.',
     this.enterFirstName = 'Please enter the First Name.',
@@ -110,6 +117,13 @@ class ErrorString {
     this.toValueGreaterThanFrom =
         "To Value should be greater than or equal to From value",
     this.pleaseEnterCompanyCode = "Please enter company code",
-    this.enterSamePassword = "Confirm Password does not match with Password. Please enter confirm password same as Password.",
+    this.enterSamePassword =
+        "Confirm Password does not match with Password. Please enter confirm password same as Password.",
+
+    //Office
+    this.selectAppointmentDate = "Please select appointment date",
+    this.selectTimeSlot = "Please select tiem slot",
+    this.enterComments = "Please enter comment",
+    this.selectVirtualType = "Please select virtual type",
   });
 }
