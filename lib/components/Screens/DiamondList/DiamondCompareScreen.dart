@@ -98,6 +98,7 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
                     scale: 1,
                     child: Checkbox(
                       value: this.isCheckBoxChecked,
+                      activeColor: appTheme.colorPrimary,
                       onChanged: (bool value) {
                         setState(
                           () {
