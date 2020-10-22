@@ -219,6 +219,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             childAspectRatio: 1.009,
             mainAxisSpacing: 10,
             crossAxisSpacing: 8,
+            padding: EdgeInsets.only(
+              left: getSize(Spacing.leftPadding),
+              bottom: getSize(Spacing.leftPadding),
+              right: getSize(Spacing.rightPadding),
+            ),
             children: List.generate(arraDiamond.length, (index) {
               var item = arraDiamond[index];
               return DiamondGridItemWidget(
