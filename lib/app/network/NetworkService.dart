@@ -11,6 +11,7 @@ import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
 import 'package:diamnow/models/QuickSearch/QuickSearchModel.dart';
+import 'package:diamnow/models/Slot/SlotModel.dart';
 import 'package:diamnow/models/StaticPage/StaticPageModel.dart';
 import 'package:retrofit/retrofit.dart';
 import '../app.export.dart';
@@ -61,10 +62,10 @@ abstract class NetworkService {
   Future<BaseApiResp> personalInformation(@Body() PersonalInformationReq req);
 
   @GET(ApiConstants.personalInformationView)
-  Future<BaseApiResp> personalInformationView();
+  Future<PersonalInformationViewResp> personalInformationView();
 
   @POST(ApiConstants.companyInformationView)
-  Future<BaseApiResp> companyInformationView();
+  Future<CompanyInformationViewResp> companyInformationView();
 
   @POST(ApiConstants.companyInformation)
   Future<CompanyInformationResp> companyInformation(
@@ -75,8 +76,10 @@ abstract class NetworkService {
 
   @POST(ApiConstants.diamondList)
   Future<DiamondListResp> diamondListPaginate(@Body() Map<String, dynamic> req);
+
   @POST(ApiConstants.diamondMatchPair)
-  Future<DiamondListResp> diamondMatchPairList(@Body() Map<String, dynamic> req);
+  Future<DiamondListResp> diamondMatchPairList(
+      @Body() Map<String, dynamic> req);
 
   @POST(ApiConstants.diamondBidList)
   Future<DiamondListResp> diamondBidList(@Body() Map<String, dynamic> req);
@@ -92,4 +95,14 @@ abstract class NetworkService {
 
   @POST(ApiConstants.quickSearch)
   Future<QuickSearchResp> quickSearch(@Body() Map<String, dynamic> req);
+
+  @POST(ApiConstants.savedSearch)
+  Future<BaseApiResp> saveSearch(@Body() Map<String, dynamic> req);
+
+  //Office
+  @POST(ApiConstants.getSlots)
+  Future<SlotResp> getSlots(@Body() Map<String, dynamic> req);
+
+  @POST(ApiConstants.createOfficerequest)
+  Future<BaseApiResp> createOfficerequest(@Body() Map<String, dynamic> req);
 }

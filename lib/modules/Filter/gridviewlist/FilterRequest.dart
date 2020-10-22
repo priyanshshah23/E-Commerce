@@ -157,6 +157,9 @@ class FilterRequest {
             List<String> arrStr = Master.getSelectedId(colorModel.masters);
             if (!isNullEmptyOrFalse(arrStr)) map[element.apiKey] = arrStr;
           }
+        } else {
+          List<String> arrStr = Master.getSelectedId(colorModel.masters);
+          if (!isNullEmptyOrFalse(arrStr)) map[element.apiKey] = arrStr;
         }
       }
     }
