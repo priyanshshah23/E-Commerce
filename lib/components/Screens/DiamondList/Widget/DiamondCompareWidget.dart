@@ -20,6 +20,7 @@ class DiamondCompareWidget extends StatefulWidget {
   DeleteWidget deleteWidget;
   List<DiamondDetailUIModel> arrDiamondDetailUIModel =
       List<DiamondDetailUIModel>();
+  // ScrollController sc;
 
   DiamondCompareWidget({this.diamondModel, this.index, this.key, this.deleteWidget});
 
@@ -114,7 +115,7 @@ class _DiamondCompareWidgetState extends State<DiamondCompareWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return !isNullEmptyOrFalse(arrDiamondDetailUIModel) ?Column(
       key: key,
       children: <Widget>[
         Stack(
@@ -124,10 +125,10 @@ class _DiamondCompareWidgetState extends State<DiamondCompareWidget> {
               height: getSize(90),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: Colors.yellow,
+                // color: Colors.yellow,
                 border: Border.all(
                     color:
-                        arrDiamondDetailUIModel[0].isSelectedForComparechange ==
+                        diamondModel.isSelectedForComparechange ==
                                 true
                             ? appTheme.colorPrimary
                             : appTheme.whiteColor),
@@ -142,7 +143,7 @@ class _DiamondCompareWidgetState extends State<DiamondCompareWidget> {
               top: 0,
               left: 2,
               child: Container(
-                color: Colors.red,
+                // color: Colors.red,
                 // padding: EdgeInsets.only(left:getSize(14)),
                 alignment: Alignment.topCenter,
                 width: getSize(30),
@@ -151,10 +152,14 @@ class _DiamondCompareWidgetState extends State<DiamondCompareWidget> {
                   icon: Icon(
                     Icons.done,
                     size: getSize(18),
+                    color: diamondModel.isSelectedForComparechange ==
+                                true
+                            ? appTheme.colorPrimary
+                            : appTheme.textBlackColor,
                   ),
                   onPressed: () {
                     setState(() {
-                      arrDiamondDetailUIModel[0].isSelectedForComparechange ^=
+                      diamondModel.isSelectedForComparechange ^=
                           true;
                     });
                   },
@@ -165,7 +170,7 @@ class _DiamondCompareWidgetState extends State<DiamondCompareWidget> {
               right: 0,
               top: 0,
               child: Container(
-                color: Colors.red,
+                // color: Colors.red,
                 alignment: Alignment.center,
                 width: getSize(30),
                 height: getSize(30),
@@ -184,6 +189,7 @@ class _DiamondCompareWidgetState extends State<DiamondCompareWidget> {
         ),
         Expanded(
           child: SingleChildScrollView(
+            // controller: widget.sc,
             child: Column(
               children: <Widget>[
                 for (int i = 0; i < arrDiamondDetailUIModel.length; i++)
@@ -201,10 +207,10 @@ class _DiamondCompareWidgetState extends State<DiamondCompareWidget> {
                             decoration: BoxDecoration(
                               color: ColorConstants.compareChangesRowBgColor,
                             ),
-                            child: Text(
+                            child: isShowLabel ? Text(
                               arrDiamondDetailUIModel[i].parameters[j].title,
                               style: appTheme.blackNormal12TitleColorblack,
-                            ),
+                            ) : SizedBox()
                           ),
                           Container(
                             padding: EdgeInsets.only(left: getSize(14)),
@@ -227,7 +233,8 @@ class _DiamondCompareWidgetState extends State<DiamondCompareWidget> {
           ),
         )
       ],
-    );
+    ) :
+    SizedBox();
     // return Image.asset(
     //   placeHolder,
     //   width: getSize(200),
