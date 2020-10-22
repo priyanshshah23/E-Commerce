@@ -58,6 +58,10 @@ class _DashboardState extends StatefulScreenWidgetState {
 
     dashboardConfig = DashboardConfig();
     dashboardConfig.initItems();
+
+    setState(() {
+      //
+    });
   }
 
   List<Widget> getToolbarItem() {
@@ -165,7 +169,7 @@ class _DashboardState extends StatefulScreenWidgetState {
             child: ListView(
               physics: ClampingScrollPhysics(),
               children: <Widget>[
-                // getSarchTextField(),
+                getSarchTextField(),
                 getTopSection(),
                 getFeaturedSection(),
                 getStoneOfDaySection(),
@@ -382,14 +386,13 @@ class _DashboardState extends StatefulScreenWidgetState {
               scrollDirection: Axis.horizontal,
               shrinkWrap: true,
               crossAxisCount: 2,
-              childAspectRatio: 0.4,
+              childAspectRatio: 0.375,
               mainAxisSpacing: 10,
               crossAxisSpacing: 10,
               children:
                   List.generate(dashboardConfig.arrTopSection.length, (index) {
                 // var item = arraDiamond[index];
-                return getTopSectionGridItem(
-                    dashboardConfig.arrTopSection[index]);
+                return getRecentItem();
               }),
             ),
           )
@@ -849,6 +852,25 @@ class _DashboardState extends StatefulScreenWidgetState {
                                         ),
                                         maxLines: 2,
                                         textAlign: TextAlign.center,
+                                      ),
+                                      Container(
+                                        margin:
+                                            EdgeInsets.only(top: getSize(5)),
+                                        // width: getSize(55),
+                                        // height: getSize(19),
+                                        decoration: BoxDecoration(
+                                            color: appTheme.whiteColor,
+                                            borderRadius: BorderRadius.circular(
+                                                getSize(5))),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(getSize(2)),
+                                          child: Text(
+                                            "-44.33 %",
+                                            style: appTheme.green10TextStyle
+                                                .copyWith(
+                                                    fontSize: getFontSize(8)),
+                                          ),
+                                        ),
                                       ),
                                     ],
                                   ),

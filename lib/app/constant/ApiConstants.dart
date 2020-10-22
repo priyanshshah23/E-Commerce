@@ -1,12 +1,12 @@
 import '../app.export.dart';
 
 class ApiConstants {
-    static const String PROXY_URL = "PROXY 192.168.2.124:8888";
+  // static const String PROXY_URL = "PROXY 192.168.2.124:8888";
 //   static const String PROXY_URL = "PROXY 192.168.0.117:8888";
 // static const String PROXY_URL = "PROXY 192.168.0.116:8888";
 //  static const String PROXY_URL = "PROXY 192.168.225.188:8888";
 
-// static const String PROXY_URL = "PROXY 192.168.225.121:8888"; // Brijesh
+  static const String PROXY_URL = "PROXY 192.168.225.121:8888"; // Brijesh
 
   static const String imageBaseURL = baseURL;
   static const String apiUrl = baseURL;
@@ -24,7 +24,8 @@ class ApiConstants {
   static const String login = commonUrl + "auth/login";
 
   static const String diamondList = commonUrl + "diamond/paginate";
-  static const String diamondMatchPair = commonUrl + "match-pair/diamond/filter";
+  static const String diamondMatchPair =
+      commonUrl + "match-pair/diamond/filter";
   static const String diamondTrackList = commonUrl + "diamond-track/paginate";
   static const String diamondCommentList =
       commonUrl + "diamond-comment/by-user";
@@ -47,7 +48,6 @@ class ApiConstants {
   static const String quickSearch = commonUrl + "diamond/quick-search";
   static const String personalInformationView = commonUrl + "user/view";
   static const String companyInformationView = commonUrl + "user/profile";
-
 }
 
 class DiamondUrls {

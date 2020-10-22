@@ -8,7 +8,7 @@ import 'package:diamnow/app/constant/ApiConstants.dart';
 CachedNetworkImage getImageView(String url,
     {height = 100.0,
     width = 100.0,
-    placeHolderImage = india,
+    placeHolderImage = diamond_placeholder,
     fit: BoxFit.contain,
     BoxShape shape}) {
   String imageUrl = (url == null || url.length == 0)

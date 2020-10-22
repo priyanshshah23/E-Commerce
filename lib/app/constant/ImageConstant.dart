@@ -18,6 +18,7 @@ const String forgetPassword = "assets/auth/forgetPassword.png";
 const String resetPassword = "assets/auth/resetPassword.png";
 const String passwordResetSuccessfully =
     "assets/auth/passwordResetSuccessfully.png";
+const String diamond_placeholder = "assets/Common/diamond_placeholder.png";
 
 // DiamNow
 const String notification = "assets/diamnow/notification.png";
