@@ -130,6 +130,7 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
+      case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
         return app
             .resolve<ServiceModule>()
             .networkService()

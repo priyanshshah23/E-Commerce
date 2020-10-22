@@ -117,6 +117,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     dict["page"] = page;
     dict["limit"] = DEFAULT_LIMIT;
     switch (moduleType) {
+      case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
+        dict["filters"] = {};
+        dict["filters"]["diamondSearchId"] = this.filterId;
+        break;
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
         dict["filters"] = {};
         dict["filters"]["diamondSearchId"] = this.filterId;
@@ -167,6 +171,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
         case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
         case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
+        case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
           List<DiamondModel> list = [];
           diamondListResp.data.list.forEach((element) {
             list.add(element.diamond);
@@ -360,14 +365,14 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 (manageClick) {
               if (manageClick.bottomTabModel.type ==
                   ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
-                    arraDiamond.forEach((element) {
+                arraDiamond.forEach((element) {
                   element.isSelected = false;
-                    });
+                });
                 manageDiamondSelection();
               } else {
                 manageBottomMenuClick(manageClick.bottomTabModel);
               }
-                }, R.string().commonString.more, isDisplaySelection: false);
+            }, R.string().commonString.more, isDisplaySelection: false);
           } else {
             app.resolve<CustomDialogs>().confirmDialog(
                   context,
