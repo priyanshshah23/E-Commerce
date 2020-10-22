@@ -6,6 +6,7 @@ import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 
@@ -288,8 +289,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       onClickCallback: (obj) {
         //
         if (obj.code == BottomCodeConstant.filterSavedSearch) {
-          //
-          print(obj.code);
+          openBottomSheetForSavedSearch(context,(){});
         } else if (obj.code == BottomCodeConstant.filterAddDemamd) {
           //
           print(obj.code);
