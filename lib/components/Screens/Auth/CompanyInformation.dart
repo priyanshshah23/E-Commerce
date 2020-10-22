@@ -16,6 +16,7 @@ import 'package:diamnow/models/Address/CityListModel.dart';
 import 'package:diamnow/models/Address/CountryListModel.dart';
 import 'package:diamnow/models/Address/StateListModel.dart';
 import 'package:diamnow/models/Auth/CompanyInformationModel.dart';
+import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -80,6 +81,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
     super.initState();
     _callApiForCountryList();
     getBusinessType();
+
 
   }
 
@@ -156,10 +158,10 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                     height: getSize(20),
                   ),
                   getAddressLineOneTextField(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  getAddressLineTwoTextField(),
+//                  SizedBox(
+//                    height: getSize(20),
+//                  ),
+//                  getAddressLineTwoTextField(),
                   SizedBox(
                     height: getSize(20),
                   ),
@@ -339,7 +341,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
       inputAction: TextInputAction.next,
       onNextPress: () {
         _focusAddressLineOne.unfocus();
-        fieldFocusChange(context, _focusAddressLineTwo);
+//        fieldFocusChange(context, _focusAddressLineTwo);
       },
     );
   }
@@ -729,6 +731,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                   ));
             });
       }
+      getCompanyInformation();
     }).catchError(
           (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(
@@ -815,13 +818,65 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
     req.zipCode = _pinCodeController.text;
     req.sId = app.resolve<PrefUtils>().getUserDetails().id;
 
-    NetworkCall<BaseApiResp>()
+    NetworkCall<CompanyInformationViewResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().companyInformation(req),
         context,
         isProgress: true)
         .then((resp) async {
+          User user = app.resolve<PrefUtils>().getUserDetails();
+          user.account=resp.data;
+      app.resolve<PrefUtils>().saveUser(user);
+    }).catchError((onError) {
+      app.resolve<CustomDialogs>().confirmDialog(
+        context,
+        title: R.string().commonString.error,
+        desc: onError.message,
+        positiveBtnTitle: R.string().commonString.btnTryAgain,
+      );
+    });
+  }
 
+  getCompanyInformation() async {
+
+    NetworkCall<CompanyInformationViewResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().companyInformationView(),
+        context,
+        isProgress: true)
+        .then((resp) async {
+       _CompanyNameController.text = resp.data.companyName;
+//       selectedCountryItem.id = resp.data.country;
+//      resp.data.state = selectedStateItem.id;
+//      resp.data.city = selectedCityItem.id;
+     // _addressLineOneController.text = resp.data.address;
+      _addressLineOneController.text =  resp.data.address;
+      _companyCodeController.text =  resp.data.vendorCode;
+      businessTypeList.forEach((element) {
+        if(element.id == resp.data.businessType) {
+      _businessTypeController.text = element.title;
+        }
+      });
+      _pinCodeController.text = resp.data.zipCode;
+//      CountryList country = countryList.where((element) => element.id == resp.data.id);
+      countryList.forEach((element) {
+        if(element.id == resp.data.country) {
+          _countryController.text = element.name;
+        }
+      });
+      stateList.forEach((element) {
+        if(element.id == resp.data.state) {
+          _stateController.text = element.name;
+        }
+      });
+      cityList.forEach((element) {
+        if(element.id == resp.data.city) {
+          _cityController.text = element.name;
+        }
+      });
+//      print("country-----${country.name}");
+      //_countryController.text = countryList.where((element) => element.id == resp.data.id);
+      setState(() {});
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
         context,
