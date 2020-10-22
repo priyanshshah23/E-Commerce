@@ -34,9 +34,6 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
       ),
       builder: (context) {
         return StatefulBuilder(builder: (context, StateSetter setSetter) {
-          ActionClick actionClick = (manageClick) {
-            setSetter(() {});
-          };
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -872,7 +869,8 @@ Future showPlaceOrderDialog(BuildContext context, ActionClick actionClick) {
   );
 }
 
-Future openBottomSheetForSavedSearch(BuildContext context, Map<String, dynamic> req,String filterId) {
+Future openBottomSheetForSavedSearch(
+    BuildContext context, Map<String, dynamic> req, String filterId) {
   final TextEditingController _titleController = TextEditingController();
 
   return showModalBottomSheet(
@@ -898,7 +896,6 @@ Future openBottomSheetForSavedSearch(BuildContext context, Map<String, dynamic> 
                 style: appTheme.black16TextStyle,
               ),
             ),
-
             SizedBox(
               height: getSize(20),
             ),
@@ -952,9 +949,8 @@ Future openBottomSheetForSavedSearch(BuildContext context, Map<String, dynamic> 
                       textColor: appTheme.colorPrimary,
                       padding: EdgeInsets.all(getSize(0)),
                       onPressed: () {
-
                         Map<String, dynamic> dict = {};
-                        dict["filters"] =req;
+                        dict["filters"] = req;
                         dict["name"] = _titleController.text;
                         dict["id"] = filterId;
                         dict["searchType"] = DiamondSearchType.SAVE;
