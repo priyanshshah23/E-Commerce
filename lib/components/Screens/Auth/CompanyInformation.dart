@@ -81,7 +81,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
     super.initState();
     _callApiForCountryList();
     getBusinessType();
-  //  getCompanyInformation();
+
 
   }
 
@@ -158,10 +158,10 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                     height: getSize(20),
                   ),
                   getAddressLineOneTextField(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  getAddressLineTwoTextField(),
+//                  SizedBox(
+//                    height: getSize(20),
+//                  ),
+//                  getAddressLineTwoTextField(),
                   SizedBox(
                     height: getSize(20),
                   ),
@@ -341,7 +341,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
       inputAction: TextInputAction.next,
       onNextPress: () {
         _focusAddressLineOne.unfocus();
-        fieldFocusChange(context, _focusAddressLineTwo);
+//        fieldFocusChange(context, _focusAddressLineTwo);
       },
     );
   }
@@ -731,6 +731,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                   ));
             });
       }
+      getCompanyInformation();
     }).catchError(
           (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(
@@ -853,6 +854,24 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
       _companyCodeController.text =  resp.data.vendorCode;
       _businessTypeController.text = resp.data.businessType;
       _pinCodeController.text = resp.data.zipCode;
+//      CountryList country = countryList.where((element) => element.id == resp.data.id);
+      countryList.forEach((element) {
+        if(element.id == resp.data.country) {
+          _countryController.text = element.name;
+        }
+      });
+      stateList.forEach((element) {
+        if(element.id == resp.data.state) {
+          _stateController.text = element.name;
+        }
+      });
+      cityList.forEach((element) {
+        if(element.id == resp.data.city) {
+          _cityController.text = element.name;
+        }
+      });
+//      print("country-----${country.name}");
+      //_countryController.text = countryList.where((element) => element.id == resp.data.id);
       setState(() {});
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(

@@ -85,7 +85,7 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
   @override
   void initState() {
     super.initState();
-    _callApiForCountryList();
+   // _callApiForCountryList();
     getPersonalInformation();
   }
 
