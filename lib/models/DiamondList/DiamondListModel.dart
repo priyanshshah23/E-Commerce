@@ -411,6 +411,7 @@ class DiamondModel {
   int groupNo;
   double marginTop=0;
   double marginBottom=0;
+  String displayTitle;
 
   getSelectedDetail(int type) {
     switch (type) {

@@ -83,6 +83,7 @@ class TabConfiguration {
 class BottomTabModel extends TabConfiguration {
   String title;
   String image;
+  String selectedImage;
   String code;
   int type;
   int sequence;
@@ -92,6 +93,7 @@ class BottomTabModel extends TabConfiguration {
   BottomTabModel({
     this.title,
     this.image,
+    this.selectedImage,
     this.code,
     this.sequence,
     this.isCenter,
