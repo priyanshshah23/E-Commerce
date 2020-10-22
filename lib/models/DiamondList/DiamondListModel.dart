@@ -401,6 +401,8 @@ class DiamondModel {
   String selectedOfferHour;
   bool pltFile;
 
+  bool isSelectedForComparechange = false; //for compare changes screen
+
   getSelectedDetail(int type) {
     switch (type) {
       case DropDownItem.BACK_PER:

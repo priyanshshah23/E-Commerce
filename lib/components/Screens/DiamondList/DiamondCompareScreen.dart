@@ -50,6 +50,8 @@ class DiamondCompareScreen extends StatefulScreenWidget {
 class _DiamondCompareScreenState extends StatefulScreenWidgetState {
   int moduleType;
   List<DiamondModel> arrayDiamond;
+  bool isCheckBoxChecked = false;
+  // ScrollController sc;
 
   _DiamondCompareScreenState({this.moduleType, this.arrayDiamond});
 
@@ -60,8 +62,9 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
     super.initState();
     diamondConfig = DiamondConfig(moduleType, isCompare: true);
     diamondConfig.initItems();
-  }
 
+    // sc = ScrollController();
+  }
 
   void _onReorder(int oldIndex, int newIndex) {
     setState(
@@ -83,13 +86,25 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
           manageToolbarClick(element);
         },
         child: Padding(
-          padding: EdgeInsets.all(getSize(8.0)),
-          child: Image.asset(
-            element.image,
-            height: getSize(20),
-            width: getSize(20),
-          ),
-        ),
+            padding: EdgeInsets.all(getSize(8.0)),
+            child: Container(
+              child: Row(
+                children: <Widget>[
+                  Checkbox(
+                    value: this.isCheckBoxChecked,
+                    onChanged: (bool value) {
+                      setState(
+                        () {
+                          this.isCheckBoxChecked = value;
+                        },
+                      );
+                    },
+                  ),
+                  // SizedBox(width: getSize(5),),
+                  Text("Show only difference",style: appTheme.blackNormal12TitleColorblack,),
+                ],
+              ),
+            )),
       ));
     });
     return list;
@@ -118,7 +133,8 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
       backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(
         context,
-        R.string().screenTitle.compare,
+        R.string().screenTitle.compareStones,
+        textalign: TextAlign.left,
         bgColor: appTheme.whiteColor,
         leadingButton: getBackButton(context),
         centerTitle: false,
@@ -134,10 +150,11 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
           arrayDiamond.length,
           (index) {
             return DiamondCompareWidget(
+              // sc:sc,
               diamondModel: this.arrayDiamond[index],
               index: index,
               key: Key(index.toString()),
-              deleteWidget: (index){
+              deleteWidget: (index) {
                 setState(() {
                   arrayDiamond.removeAt(index);
                 });
