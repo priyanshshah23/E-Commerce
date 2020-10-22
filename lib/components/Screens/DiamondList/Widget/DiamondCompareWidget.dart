@@ -188,48 +188,45 @@ class _DiamondCompareWidgetState extends State<DiamondCompareWidget> {
           ],
         ),
         Expanded(
-          child: SingleChildScrollView(
-            // controller: widget.sc,
-            child: Column(
-              children: <Widget>[
-                for (int i = 0; i < arrDiamondDetailUIModel.length; i++)
-                  for (int j = 0;
-                      j < arrDiamondDetailUIModel[i].parameters.length;
-                      j++)
-                    Container(
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.only(left: getSize(14)),
-                            alignment: Alignment.centerLeft,
-                            height: getSize(30),
-                            width: getSize(150),
-                            decoration: BoxDecoration(
-                              color: ColorConstants.compareChangesRowBgColor,
-                            ),
-                            child: isShowLabel ? Text(
-                              arrDiamondDetailUIModel[i].parameters[j].title,
-                              style: appTheme.blackNormal12TitleColorblack,
-                            ) : SizedBox()
+          child: Column(
+            children: <Widget>[
+              for (int i = 0; i < arrDiamondDetailUIModel.length; i++)
+                for (int j = 0;
+                    j < arrDiamondDetailUIModel[i].parameters.length;
+                    j++)
+                  Container(
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.only(left: getSize(14)),
+                          alignment: Alignment.centerLeft,
+                          height: getSize(30),
+                          width: getSize(150),
+                          decoration: BoxDecoration(
+                            color: ColorConstants.compareChangesRowBgColor,
                           ),
-                          Container(
-                            padding: EdgeInsets.only(left: getSize(14)),
-                            alignment: Alignment.centerLeft,
-                            height: getSize(40),
-                            width: getSize(150),
-                            decoration: BoxDecoration(
-                              color: ColorConstants.white,
-                            ),
-                            child: Text(
-                              arrDiamondDetailUIModel[i].parameters[j].value,
-                              style: appTheme.blackNormal14TitleColorblack,
-                            ),
-                          )
-                        ],
-                      ),
+                          child: isShowLabel ? Text(
+                            arrDiamondDetailUIModel[i].parameters[j].title,
+                            style: appTheme.blackNormal12TitleColorblack,
+                          ) : SizedBox()
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(left: getSize(14)),
+                          alignment: Alignment.centerLeft,
+                          height: getSize(40),
+                          width: getSize(150),
+                          decoration: BoxDecoration(
+                            color: ColorConstants.white,
+                          ),
+                          child: Text(
+                            arrDiamondDetailUIModel[i].parameters[j].value,
+                            style: appTheme.blackNormal14TitleColorblack,
+                          ),
+                        )
+                      ],
                     ),
-              ],
-            ),
+                  ),
+            ],
           ),
         )
       ],
