@@ -22,10 +22,10 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
   DateTime now = DateTime.now();
   List days;
   int selectedDate = -1;
-  int selectedSlot = -1;
-  List<BottomTabModel> timeList = [];
+  int selectedSlot = 0;
+  int selectedVirtualType = -1;
   List<SlotModel> arrSlots = [];
-  List<String> virtualList = ["Phone Call", "Web Conference"];
+  List<String> virtualList = ["Phone Call", "Web Conference", "In Person"];
   final TextEditingController _virtualTypeController = TextEditingController();
   final TextEditingController _commentTypeController = TextEditingController();
 
@@ -62,6 +62,51 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
         .then((resp) async {
       arrSlots = resp.data.list;
       setState(() {});
+    }).catchError((onError) {
+      if (onError is ErrorResp) {
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              title: "",
+              desc: onError.message,
+              positiveBtnTitle: R.string().commonString.ok,
+            );
+      }
+    });
+  }
+
+  callApiForRequestForOffice() {
+    Map<String, dynamic> req = {};
+    req["purpose"] = _commentTypeController.text;
+    DateTime date = DateTime(
+            now.add(Duration(days: selectedDate)).year,
+            now.add(Duration(days: selectedDate)).month,
+            now.add(Duration(days: selectedDate)).day,
+            now.add(Duration(days: selectedDate)).hour,
+            now.add(Duration(days: selectedDate)).minute)
+        .toUtc();
+    req["date"] = DateUtilities().getStartOfDay(date).toUtc().toIso8601String();
+    req["type"] = 2;
+    req["meetingType"] = 2;
+    req["cabinSlot"] = [
+      {"id": arrSlots[selectedSlot].id ?? ""}
+    ];
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+            () => app
+                .resolve<ServiceModule>()
+                .networkService()
+                .createOfficerequest(req),
+            context,
+            isProgress: true)
+        .then((resp) async {
+      app.resolve<CustomDialogs>().confirmDialog(context,
+          title: "",
+          desc: resp.message,
+          positiveBtnTitle: R.string().commonString.ok,
+          onClickCallback: (type) {
+        Navigator.pop(context);
+      });
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
@@ -155,19 +200,59 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
               width: getSize(20),
             ),
             Expanded(
-              child: Container(
-                //alignment: Alignment.bottomCenter,
-                padding: EdgeInsets.symmetric(
-                  vertical: getSize(15),
-                ),
-                decoration: BoxDecoration(
-                    color: appTheme.colorPrimary,
-                    borderRadius: BorderRadius.circular(getSize(5)),
-                    boxShadow: getBoxShadow(context)),
-                child: Text(
-                  "Request Office View",
-                  textAlign: TextAlign.center,
-                  style: appTheme.white16TextStyle,
+              child: InkWell(
+                onTap: () {
+                  FocusScope.of(context).unfocus();
+
+                  if (selectedDate < 0) {
+                    app.resolve<CustomDialogs>().confirmDialog(
+                          context,
+                          title: "",
+                          desc: R.string().errorString.selectAppointmentDate,
+                          positiveBtnTitle: R.string().commonString.ok,
+                        );
+                    return;
+                  } else if (selectedSlot < 0) {
+                    app.resolve<CustomDialogs>().confirmDialog(
+                          context,
+                          title: "",
+                          desc: R.string().errorString.selectTimeSlot,
+                          positiveBtnTitle: R.string().commonString.ok,
+                        );
+                    return;
+                  } else if (isNullEmptyOrFalse(_virtualTypeController.text)) {
+                    app.resolve<CustomDialogs>().confirmDialog(
+                          context,
+                          title: "",
+                          desc: R.string().errorString.selectVirtualType,
+                          positiveBtnTitle: R.string().commonString.ok,
+                        );
+                    return;
+                  } else if (isNullEmptyOrFalse(_commentTypeController.text)) {
+                    app.resolve<CustomDialogs>().confirmDialog(
+                          context,
+                          title: "",
+                          desc: R.string().errorString.enterComments,
+                          positiveBtnTitle: R.string().commonString.ok,
+                        );
+                    return;
+                  }
+                  callApiForRequestForOffice();
+                },
+                child: Container(
+                  //alignment: Alignment.bottomCenter,
+                  padding: EdgeInsets.symmetric(
+                    vertical: getSize(15),
+                  ),
+                  decoration: BoxDecoration(
+                      color: appTheme.colorPrimary,
+                      borderRadius: BorderRadius.circular(getSize(5)),
+                      boxShadow: getBoxShadow(context)),
+                  child: Text(
+                    "Request Office View",
+                    textAlign: TextAlign.center,
+                    style: appTheme.white16TextStyle,
+                  ),
                 ),
               ),
             )
@@ -260,41 +345,44 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
           SizedBox(
             height: getSize(15),
           ),
-          GridView.builder(
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, childAspectRatio: 4),
-            itemCount: arrSlots.length,
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  setState(() {
-                    selectedSlot = index;
-                  });
-                },
-                child: Container(
-                  margin:
-                      EdgeInsets.only(right: getSize(5), bottom: getSize(5)),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(getSize(5)),
-                    border: Border.all(color: appTheme.borderColor),
-                    color: selectedSlot == index
-                        ? appTheme.colorPrimary
-                        : Colors.transparent,
-                  ),
-                  child: Center(
-                    child: Text(
-                      "${arrSlots[index].startTime} - ${arrSlots[index].endTime}",
-                      style: selectedSlot == index
-                          ? appTheme.white16TextStyle
-                          : appTheme.black16TextStyle,
-                    ),
-                  ),
-                ),
-              );
-            },
-          )
+          isNullEmptyOrFalse(arrSlots)
+              ? Text(R.string().commonString.noSlotFound,
+                  style: appTheme.black14TextStyle)
+              : GridView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, childAspectRatio: 4),
+                  itemCount: arrSlots.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        setState(() {
+                          selectedSlot = index;
+                        });
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            right: getSize(5), bottom: getSize(5)),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(getSize(5)),
+                          border: Border.all(color: appTheme.borderColor),
+                          color: selectedSlot == index
+                              ? appTheme.colorPrimary
+                              : Colors.transparent,
+                        ),
+                        child: Center(
+                          child: Text(
+                            "${arrSlots[index].startTime} - ${arrSlots[index].endTime}",
+                            style: selectedSlot == index
+                                ? appTheme.white16TextStyle
+                                : appTheme.black16TextStyle,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                )
         ],
       ),
     );

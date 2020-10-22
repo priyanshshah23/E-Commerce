@@ -22,3 +22,9 @@ class DisplayTypes {
 }
 
 enum DialogueListType { Country, State, City }
+
+class VirtualTypes {
+  static const int phoneCall = 1;
+  static const int webConference = 2;
+  static const int inPerson = 3;
+}

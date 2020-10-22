@@ -99,4 +99,7 @@ abstract class NetworkService {
   //Office
   @POST(ApiConstants.getSlots)
   Future<SlotResp> getSlots(@Body() Map<String, dynamic> req);
+
+  @POST(ApiConstants.createOfficerequest)
+  Future<BaseApiResp> createOfficerequest(@Body() Map<String, dynamic> req);
 }
