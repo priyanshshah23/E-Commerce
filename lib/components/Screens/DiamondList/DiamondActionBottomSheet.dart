@@ -870,17 +870,8 @@ Future showPlaceOrderDialog(BuildContext context, ActionClick actionClick) {
   );
 }
 
-Future showAppointmentDialog(BuildContext context, ActionClick actionClick) {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _timeController = TextEditingController();
-  final TextEditingController _dateController = TextEditingController();
-  final TextEditingController _companyNameController = TextEditingController();
-  final TextEditingController _roomNoController = TextEditingController();
-  final TextEditingController _salesmanController = TextEditingController();
-  final TextEditingController _commentController = TextEditingController();
-  final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>();
-  String selectedDate;
-  bool autovalid = false;
+Future openBottomSheetForSavedSearch(BuildContext context, VoidCallback onTap) {
+  final TextEditingController _titleController = TextEditingController();
 
   return showModalBottomSheet(
     context: context,
@@ -893,272 +884,72 @@ Future showAppointmentDialog(BuildContext context, ActionClick actionClick) {
       ),
     ),
     builder: (context) {
-      return StatefulBuilder(builder: (context, StateSetter setsetter) {
-        return Padding(
-          padding: MediaQuery.of(context).viewInsets,
-          child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              autovalidate: autovalid,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding:
-                        EdgeInsets.only(top: getSize(28), bottom: getSize(21)),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        R.string().screenTitle.addToOffice,
-                        style: appTheme.commonAlertDialogueTitleStyle,
-                      ),
-                    ),
-                  ),
-                  getFieldTitleText(R.string().authStrings.companyName + "*"),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: getSize(20)),
-                    child: CommonTextfield(
-                      autoFocus: false,
-                      textOption: TextFieldOption(
-                        hintText: R.string().commonString.selected,
-                        maxLine: 1,
-                        inputController: _timeController,
-                        //isSecureTextField: false
-                      ),
-                      textCallback: (text) {},
-                      validation: (text) {
-                        if (text.isEmpty) {
-                          return "Please select time.";
-                        }
-                      },
-                      inputAction: TextInputAction.next,
-                      onNextPress: () {},
-                    ),
-                  ),
-                  getFieldTitleText("Appointment Date*"),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: getSize(20)),
-                    child: InkWell(
-                      onTap: () {
-                        FocusScope.of(context).unfocus();
-                        DateUtilities()
-                            .pickDateDialog(context)
-                            .then((pickDate) {
-                          selectedDate = pickDate.toIso8601String();
-                          _dateController.text = DateUtilities()
-                              .convertServerDateToFormatterString(
-                            pickDate.toIso8601String(),
-                            formatter: DateUtilities.ddmmyyyy_,
-                          );
-//                      _dateController.text = selectedDate.toIso8601String();
-                        });
-                      },
-                      child: AbsorbPointer(
-                        child: CommonTextfield(
-                          autoFocus: false,
-                          textOption: TextFieldOption(
-                            hintText: R.string().commonString.selected,
-                            maxLine: 1,
-                            inputController: _dateController,
-                          ),
-                          textCallback: (text) {},
-                          validation: (text) {
-                            if (text.isEmpty) {
-                              return "Please select date.";
-                            }
-                          },
-                          inputAction: TextInputAction.next,
-                          onNextPress: () {},
-                        ),
-                      ),
-                    ),
-                  ),
-                  getFieldTitleText("Appointment Time*"),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: getSize(20)),
-                    child: InkWell(
-                      onTap: () {
-//                        FocusScope.of(context).unfocus();
-//                        DateUtilities()
-//                            .pickTimeDialog(context)
-//                            .then((pickTime) {
-//                          selectedDate = pickTime.toString();
-//                          _timeController.text = pickTime.toString();
-////                      _dateController.text = selectedDate.toIso8601String();
-//                        });
-                        openTimeSlotDialog(context, _tagStateKey);
-                      },
-                      child: AbsorbPointer(
-                        child: CommonTextfield(
-                          autoFocus: false,
-                          textOption: TextFieldOption(
-                            hintText: R.string().commonString.selected,
-                            maxLine: 1,
-                            inputController: _timeController,
-                            //isSecureTextField: false
-                          ),
-                          textCallback: (text) {},
-                          validation: (text) {
-                            if (text.isEmpty) {
-                              return "Please select time.";
-                            }
-                          },
-                          inputAction: TextInputAction.next,
-                          onNextPress: () {},
-                        ),
-                      ),
-                    ),
-                  ),
-                  getFieldTitleText("Room No"),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: getSize(20)),
-                    child: CommonTextfield(
-                      autoFocus: false,
-                      textOption: TextFieldOption(
-                        hintText: "Enter Room No.",
-                        maxLine: 1,
-                        inputController: _roomNoController,
-                        formatter: [
-                          WhitelistingTextInputFormatter(
-                              new RegExp(alphaRegEx)),
-                          BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
-                        ],
-                        //isSecureTextField: false
-                      ),
-                      textCallback: (text) {},
-                      inputAction: TextInputAction.next,
-                      onNextPress: () {
-                        FocusScope.of(context).unfocus();
-                      },
-                    ),
-                  ),
-                  getFieldTitleText("Salesman*"),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: getSize(20)),
-                    child: CommonTextfield(
-                      autoFocus: false,
-                      textOption: TextFieldOption(
-                        hintText: "Enter Salesman",
-                        maxLine: 1,
-                        inputController: _timeController,
-                        //isSecureTextField: false
-                      ),
-                      textCallback: (text) {},
-                      validation: (text) {
-                        if (text.isEmpty) {
-                          return "Please select time.";
-                        }
-                      },
-                      inputAction: TextInputAction.next,
-                      onNextPress: () {},
-                    ),
-                  ),
-                  getFieldTitleText(R.string().screenTitle.comment),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: getSize(20)),
-                    child: CommonTextfield(
-                      autoFocus: false,
-                      textOption: TextFieldOption(
-                        inputController: _commentController,
-                        hintText: "Enter Comments",
-                        formatter: [
-                          WhitelistingTextInputFormatter(
-                              new RegExp(alphaRegEx)),
-                          BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
-                        ],
-                        //isSecureTextField: false
-                      ),
-                      textCallback: (text) {},
-                      inputAction: TextInputAction.done,
-                      onNextPress: () {
-                        FocusScope.of(context).unfocus();
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        right: getSize(10),
-                        left: getSize(26),
-                        bottom: getSize(20)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        Expanded(
-                          child: FlatButton(
-                            textColor: appTheme.colorPrimary,
-                            padding: EdgeInsets.all(getSize(0)),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text(
-                              R.string().commonString.cancel,
-                              style: appTheme.black16TextStyle,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: FlatButton(
-                            textColor: appTheme.colorPrimary,
-                            padding: EdgeInsets.all(getSize(0)),
-                            onPressed: () {
-                              if (_formKey.currentState.validate()) {
-                                actionClick(ManageCLick(
-                                    type: clickConstant.CLICK_TYPE_CONFIRM,
-                                    remark: _commentController.text));
-                              } else {
-                                setsetter(() {
-                                  autovalid = true;
-                                });
-                              }
-                            },
-                            child: Text(
-                              R.string().screenTitle.addToOffice,
-                              style: appTheme.primary16TextStyle,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            "Save & Search",
+            style: appTheme.black16TextStyle,
+          ),
+          SizedBox(
+            height: getSize(20),
+          ),
+          getFieldTitleText("Search Title"),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: getSize(20)),
+            child: CommonTextfield(
+              autoFocus: false,
+              textOption: TextFieldOption(
+                inputController: _titleController,
+                hintText: "Enter Search Title",
+                formatter: [
+                  WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+                  BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
                 ],
+                //isSecureTextField: false
               ),
+              textCallback: (text) {},
+              inputAction: TextInputAction.done,
+              onNextPress: () {
+                FocusScope.of(context).unfocus();
+              },
             ),
           ),
-        );
-      });
+          Padding(
+            padding: EdgeInsets.only(
+                right: getSize(10), left: getSize(26), bottom: getSize(20)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Expanded(
+                  child: FlatButton(
+                    textColor: appTheme.colorPrimary,
+                    padding: EdgeInsets.all(getSize(0)),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      R.string().commonString.cancel,
+                      style: appTheme.black16TextStyle,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: FlatButton(
+                    textColor: appTheme.colorPrimary,
+                    padding: EdgeInsets.all(getSize(0)),
+                    onPressed: () => onTap,
+                    child: Text(
+                      R.string().screenTitle.addToWatchList,
+                      style: appTheme.primary16TextStyle,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      );
     },
-  );
-}
-
-openTimeSlotDialog(BuildContext context, Key key) {
-  List<BottomTabModel> arrTimeSlot = BottomTabBar.getTimeSlotList();
-  return showDialog(
-    context: context,
-    child: Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(getSize(5)),
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(getSize(15)),
-        child: Tags(
-          key: key,
-          itemCount: arrTimeSlot.length,
-          itemBuilder: (int index) {
-            final item = arrTimeSlot[index];
-            return ItemTags(
-              index: index,
-              title: item.title,
-              textStyle: appTheme.black12TextStyle,
-              borderRadius: BorderRadius.circular(getSize(10)),
-              color: appTheme.colorPrimary.withOpacity(0.5),
-              activeColor: appTheme.colorPrimary.withOpacity(0.5),
-              singleItem: true,
-              onPressed: (item) {},
-            );
-          },
-        ),
-      ),
-    ),
   );
 }

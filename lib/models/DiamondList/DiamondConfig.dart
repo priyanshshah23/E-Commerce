@@ -5,6 +5,7 @@ import 'package:diamnow/app/constant/ImageConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
@@ -119,6 +120,8 @@ class DiamondConfig {
         return R.string().screenTitle.newArrival;
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
         return R.string().screenTitle.exclusiveDiamonds;
+      case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
+        return R.string().screenTitle.upcoming;
       default:
         return R.string().screenTitle.searchDiamond;
     }
@@ -130,6 +133,8 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
+      case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
+      case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
         return app
             .resolve<ServiceModule>()
             .networkService()
@@ -212,21 +217,26 @@ class DiamondConfig {
           list.add(BottomTabModel(
               title: "",
               image: selectAll,
+              selectedImage: selectList,
               code: BottomCodeConstant.TBSelectAll,
               sequence: 0,
               isCenter: true));
-          list.add(BottomTabModel(
-              title: "",
-              image: gridView,
-              code: BottomCodeConstant.TBGrideView,
-              sequence: 1,
-              isCenter: true));
-          list.add(BottomTabModel(
-              title: "",
-              image: filter,
-              code: BottomCodeConstant.TBSortView,
-              sequence: 2,
-              isCenter: true));
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR) {
+            list.add(BottomTabModel(
+                title: "",
+                image: gridView,
+                code: BottomCodeConstant.TBGrideView,
+                sequence: 1,
+                isCenter: true));
+          }
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_UPCOMING) {
+            list.add(BottomTabModel(
+                title: "",
+                image: filter,
+                code: BottomCodeConstant.TBSortView,
+                sequence: 2,
+                isCenter: true));
+          }
           list.add(BottomTabModel(
               title: "",
               image: download,
@@ -421,9 +431,10 @@ class DiamondConfig {
           diamonds.vStnId = element.vStnId;
           diamonds.newAmount = element.getFinalAmount();
           diamonds.newPricePerCarat = element.getFinalRate();
-          dateTimeNow
-              .add(Duration(hours: int.parse(element.selectedOfferHour)));
-          diamonds.offerValidDate = dateTimeNow.toUtc().toIso8601String();
+          int hour = int.parse(element.selectedOfferHour);
+          var date = DateTime.now();
+          diamonds.offerValidDate = date.toUtc().toIso8601String();
+
           break;
         case DiamondTrackConstant.TRACK_TYPE_BID:
           diamonds.vStnId = element.vStnId;
@@ -536,7 +547,15 @@ class DiamondConfig {
   }
 
   void setMatchPairItem(List<DiamondModel> arraDiamond) {
-    if (moduleType == DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR) {
+    if (moduleType == DiamondModuleConstant.MODULE_TYPE_UPCOMING) {
+      for (int i = 0; i < arraDiamond.length; i++) {
+        if (i == 0 || (arraDiamond[i].inDt != arraDiamond[i - 1].inDt)) {
+          arraDiamond[i].displayTitle = DateUtilities()
+              .convertServerDateToFormatterString(arraDiamond[i].inDt,
+                  formatter: DateUtilities.dd_mm_yyyy);
+        }
+      }
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR) {
       DiamondModel diamondItem;
       if (arraDiamond.length == 1) {
         diamondItem = arraDiamond[0];
@@ -592,6 +611,7 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
   switch (type) {
     case BorderConstant.BORDER_TOP:
       return BoxDecoration(
+        //borderRadius: BorderRadius.circular(getSize(5)),
         border: Border(
           top: BorderSide(width: 1.0, color: appTheme.colorPrimary),
           left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
@@ -602,6 +622,7 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
     case BorderConstant.BORDER_BOTTOM:
       return BoxDecoration(
         // boxShadow: getBoxShadow(context),
+        //borderRadius: BorderRadius.circular(getSize(5)),
         border: Border(
           left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
           right: BorderSide(width: 1.0, color: appTheme.colorPrimary),
@@ -612,6 +633,7 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
     case BorderConstant.BORDER_LEFT_RIGHT:
       return BoxDecoration(
         // boxShadow: getBoxShadow(context),
+       // borderRadius: BorderRadius.circular(getSize(5)),
         border: Border(
           left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
           right: BorderSide(width: 1.0, color: appTheme.colorPrimary),
@@ -622,6 +644,7 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
     case BorderConstant.BORDER_NONE:
       return BoxDecoration(
         //  boxShadow: getBoxShadow(context),
+        //borderRadius: BorderRadius.circular(getSize(5)),
         border: Border(
           top: BorderSide(width: 1.0, color: appTheme.colorPrimary),
           left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
@@ -631,6 +654,7 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
       );
     default:
       return BoxDecoration(
+       // borderRadius: BorderRadius.circular(getSize(5)),
         border: Border(
           top: BorderSide(width: 0, color: appTheme.whiteColor),
           left: BorderSide(width: 0, color: appTheme.whiteColor),

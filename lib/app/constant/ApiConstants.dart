@@ -4,7 +4,7 @@ class ApiConstants {
   // static const String PROXY_URL = "PROXY 192.168.2.124:8888";
 //   static const String PROXY_URL = "PROXY 192.168.0.117:8888";
 // static const String PROXY_URL = "PROXY 192.168.0.116:8888";
-//  static const String PROXY_URL = "PROXY 192.168.225.188:8888";
+  // static const String PROXY_URL = "PROXY 192.168.225.188:8888";
 
   static const String PROXY_URL = "PROXY 192.168.225.121:8888"; // Brijesh
 
@@ -48,6 +48,11 @@ class ApiConstants {
   static const String quickSearch = commonUrl + "diamond/quick-search";
   static const String personalInformationView = commonUrl + "user/view";
   static const String companyInformationView = commonUrl + "user/profile";
+
+  //Office
+  static const String getSlots = commonUrl + "cabin-slot/paginate";
+  //Office
+  static const String createOfficerequest = commonUrl + "cabin-schedule/create";
 }
 
 class DiamondUrls {

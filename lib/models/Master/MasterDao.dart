@@ -60,6 +60,7 @@ class MasterDao {
     final finder = Finder(
       filter: Filter.and([
         Filter.equal('parentCode', code),
+        Filter.notEqual('parentId', null),
         Filter.equal('isDeleted', false),
         Filter.equal('isWebVisible', true),
         Filter.equal('isActive', true),

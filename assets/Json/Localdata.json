@@ -7,6 +7,7 @@
         "isDeleted": false,
         "sortingSequence": 1,
         "parentCode": "MAKE1",
+        "isWebVisible": true,
         "parentId": null
     },
     {
@@ -15,6 +16,7 @@
         "webDisplay": "2EX",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 1,
         "parentCode": "MAKE",
         "parentId": "123123123"
@@ -25,6 +27,7 @@
         "webDisplay": "3EX",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 1,
         "parentCode": "MAKE",
         "parentId": "123123123"
@@ -35,6 +38,7 @@
         "webDisplay": "3VG+",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 2,
         "parentCode": "MAKE",
         "parentId": "123123123"
@@ -45,6 +49,7 @@
         "webDisplay": "No BGM",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 2,
         "parentCode": "MAKE",
         "parentId": "123123123"
@@ -55,6 +60,7 @@
         "webDisplay": "Arrivals",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 1,
         "parentCode": "ARRIVALS",
         "parentId": null
@@ -65,7 +71,9 @@
         "webDisplay": "1 day",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 1,
+        "parentCode": "ARRIVALS",
         "parentId": "456456456"
     },
     {
@@ -74,7 +82,9 @@
         "webDisplay": "7 day",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 2,
+        "parentCode": "ARRIVALS",
         "parentId": "456456456"
     },
     {
@@ -83,7 +93,9 @@
         "webDisplay": "15 day",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 3,
+        "parentCode": "ARRIVALS",
         "parentId": "456456456"
     },
     {
@@ -92,15 +104,18 @@
         "webDisplay": "30 day",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
+        "parentCode": "ARRIVALS",
         "sortingSequence": 4,
         "parentId": "456456456"
     },
     {
         "id": "789789789",
-        "code": "STAGE",
+        "code": "STAGE1",
         "webDisplay": "stage",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 1,
         "parentCode": "STAGE",
         "parentId": null
@@ -111,7 +126,9 @@
         "webDisplay": "Memo",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 1,
+        "parentCode": "STAGE",
         "parentId": "789789789"
     },
     {
@@ -120,7 +137,9 @@
         "webDisplay": "Availble",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 2,
+        "parentCode": "STAGE",
         "parentId": "789789789"
     },
     {
@@ -129,7 +148,9 @@
         "webDisplay": "Office",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 1,
+        "parentCode": "STAGE",
         "parentId": "789789789"
     },
     {
@@ -138,15 +159,18 @@
         "webDisplay": "Show",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 2,
+        "parentCode": "STAGE",
         "parentId": "789789789"
     },
     {
         "id": "147147147",
-        "code": "COLORGROUP",
+        "code": "COLORGROUP1",
         "webDisplay": "Color Group",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 1,
         "parentCode": "COLORGROUP",
         "parentId": null
@@ -157,7 +181,9 @@
         "webDisplay": "DEF",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 1,
+        "parentCode": "COLORGROUP",
         "parentId": "147147147"
     },
     {
@@ -166,7 +192,9 @@
         "webDisplay": "GH",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 2,
+        "parentCode": "COLORGROUP",
         "parentId": "147147147"
     },
     {
@@ -175,7 +203,9 @@
         "webDisplay": "IJK",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 3,
+        "parentCode": "COLORGROUP",
         "parentId": "147147147"
     },
     {
@@ -184,15 +214,18 @@
         "webDisplay": "LMN",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 4,
+        "parentCode": "COLORGROUP",
         "parentId": "147147147"
     },
     {
         "id": "258258258",
-        "code": "CLARITYGROUP",
+        "code": "CLARITYGROUP1",
         "webDisplay": "Clarity Group",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 1,
         "parentCode": "CLATIRYGROUP",
         "parentId": null
@@ -203,7 +236,9 @@
         "webDisplay": "FL-IF",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 1,
+        "parentCode": "CLATIRYGROUP",
         "parentId": "258258258"
     },
     {
@@ -212,7 +247,9 @@
         "webDisplay": "VVS",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 2,
+        "parentCode": "CLATIRYGROUP",
         "parentId": "258258258"
     },
     {
@@ -221,7 +258,9 @@
         "webDisplay": "VS",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 3,
+        "parentCode": "CLATIRYGROUP",
         "parentId": "258258258"
     },
     {
@@ -230,15 +269,18 @@
         "webDisplay": "I",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 4,
+        "parentCode": "CLATIRYGROUP",
         "parentId": "258258258"
     },
     {
         "id": "369369369",
-        "code": "NEWARRIVALSGROUP",
+        "code": "NEWARRIVALSGROUP1",
         "webDisplay": "",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 1,
         "parentCode": "NEWARRIVALSGROUP",
         "parentId": null
@@ -249,7 +291,9 @@
         "webDisplay": "New Arrivals",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 1,
+        "parentCode": "NEWARRIVALSGROUP",
         "parentId": "369369369"
     },
     {
@@ -258,6 +302,8 @@
         "webDisplay": "Upcoming",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
+        "parentCode": "NEWARRIVALSGROUP",
         "sortingSequence": 2,
         "parentId": "369369369"
     },
@@ -267,15 +313,18 @@
         "webDisplay": "Eye Clean",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 3,
+        "parentCode": "NEWARRIVALSGROUP",
         "parentId": "369369369"
     },
     {
         "id": "159159159",
-        "code": "CANADAMARKPARENT",
+        "code": "CANADAMARKPARENT1",
         "webDisplay": "",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 1,
         "parentCode": "CANADAMARKPARENT",
         "parentId": null
@@ -286,6 +335,8 @@
         "webDisplay": "Canadamark",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
+        "parentCode": "CANADAMARKPARENT",
         "sortingSequence": 1,
         "parentId": "159159159"
     },
@@ -295,7 +346,9 @@
         "webDisplay": "Type IIA",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 2,
+        "parentCode": "CANADAMARKPARENT",
         "parentId": "159159159"
     },
     {
@@ -304,15 +357,18 @@
         "webDisplay": "XRay",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 3,
+        "parentCode": "CANADAMARKPARENT",
         "parentId": "159159159"
     },
     {
         "id": "357357357",
-        "code": "DOR",
+        "code": "DOR1",
         "webDisplay": "",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 1,
         "parentCode": "DOR",
         "parentId": null
@@ -323,7 +379,9 @@
         "webDisplay": "Inventory",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 1,
+        "parentCode": "DOR",
         "parentId": "357357357"
     },
     {
@@ -332,17 +390,20 @@
         "webDisplay": "Eligible",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 2,
+        "parentCode": "DOR",
         "parentId": "357357357"
     },
     {
         "id": "7878787878",
-        "code": "FM",
+        "code": "FM1",
         "webDisplay": "",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 1,
-        "parentCode": "DOR",
+        "parentCode": "FM",
         "parentId": null
     },
     {
@@ -351,7 +412,9 @@
         "webDisplay": "Inventory",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 1,
+        "parentCode": "FM",
         "parentId": "7878787878"
     },
     {
@@ -360,15 +423,18 @@
         "webDisplay": "Eligible",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 2,
+        "parentCode": "FM",
         "parentId": "7878787878"
     },
     {
         "id": "969696969",
-        "code": "SEAL",
+        "code": "SEAL1",
         "webDisplay": "",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 1,
         "parentCode": "SEAL",
         "parentId": null
@@ -376,19 +442,23 @@
     {
         "id": "YES",
         "code": "YES",
-        "webDisplay": "Yes",
+        "webDisplay": "YES",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 1,
+        "parentCode": "SEAL",
         "parentId": "969696969"
     },
     {
         "id": "NO",
         "code": "NO",
-        "webDisplay": "No",
+        "webDisplay": "NO",
         "isActive": true,
         "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 2,
+        "parentCode": "SEAL",
         "parentId": "969696969"
     }
 ]

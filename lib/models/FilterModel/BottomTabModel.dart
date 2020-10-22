@@ -83,6 +83,7 @@ class TabConfiguration {
 class BottomTabModel extends TabConfiguration {
   String title;
   String image;
+  String selectedImage;
   String code;
   int type;
   int sequence;
@@ -92,6 +93,7 @@ class BottomTabModel extends TabConfiguration {
   BottomTabModel({
     this.title,
     this.image,
+    this.selectedImage,
     this.code,
     this.sequence,
     this.isCenter,
@@ -219,58 +221,5 @@ class BottomTabBar {
     //     isCenter: false));
 
     return arrBootomTab;
-  }
-
-  static List<BottomTabModel> getTimeSlotList() {
-    List<BottomTabModel> arrTimeList = [];
-    arrTimeList.add(BottomTabModel(
-      title: R.string().commonString.lblTimeSlot1,
-    ));
-    arrTimeList.add(BottomTabModel(
-      title: R.string().commonString.lblTimeSlot2,
-    ));
-    arrTimeList.add(BottomTabModel(
-      title: R.string().commonString.lblTimeSlot3,
-    ));
-    arrTimeList.add(BottomTabModel(
-      title: R.string().commonString.lblTimeSlot4,
-    ));
-    arrTimeList.add(BottomTabModel(
-      title: R.string().commonString.lblTimeSlot5,
-    ));
-    arrTimeList.add(BottomTabModel(
-      title:R.string().commonString.lblTimeSlot6,
-    ));
-    arrTimeList.add(BottomTabModel(
-      title: R.string().commonString.lblTimeSlot7,
-    ));
-    arrTimeList.add(BottomTabModel(
-      title: R.string().commonString.lblTimeSlot8,
-    ));
-    arrTimeList.add(BottomTabModel(
-      title: R.string().commonString.lblTimeSlot9,
-    ));
-    arrTimeList.add(BottomTabModel(
-      title:R.string().commonString.lblTimeSlot10,
-    ));
-    arrTimeList.add(BottomTabModel(
-      title: R.string().commonString.lblTimeSlot11,
-    ));
-    arrTimeList.add(BottomTabModel(
-      title: R.string().commonString.lblTimeSlot12,
-    ));
-    arrTimeList.add(BottomTabModel(
-      title: R.string().commonString.lblTimeSlot13,
-    ));
-    arrTimeList.add(BottomTabModel(
-      title: R.string().commonString.lblTimeSlot14,
-    ));
-    arrTimeList.add(BottomTabModel(
-      title: R.string().commonString.lblTimeSlot15,
-    ));
-    arrTimeList.add(BottomTabModel(
-      title: R.string().commonString.lblTimeSlot16,
-    ));
-    return arrTimeList;
   }
 }
