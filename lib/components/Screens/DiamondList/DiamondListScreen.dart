@@ -54,7 +54,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   int moduleType;
   bool isFromDrawer;
   Map<String, dynamic> dictFilters;
-  bool allSelected = false;
 
   _DiamondListScreenState({this.filterId, this.moduleType, this.isFromDrawer});
 
@@ -133,6 +132,19 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict["filters"] = {};
         dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_BID;
         break;
+      case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
+        dict["filters"] = {};
+        dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_UPCOMING;
+        dict["filters"]["inDt"] = {};
+        var date = DateTime.now();
+        print(date.add(Duration(days: 5, hours: 5, minutes: 30)));
+        dict["filters"]["inDt"]["<="] =
+            date.add(Duration(days: 7)).toUtc().toIso8601String();
+        Map<String, dynamic> dict1 = Map<String, dynamic>();
+        dict1["inDt"] = "ASC";
+        dict["sort"] = [dict1];
+
+        break;
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
         dict["filters"] = {};
         dict["filters"]["or"] = diamondConfig.getExclusiveDiamondReq();
@@ -207,6 +219,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             childAspectRatio: 1.009,
             mainAxisSpacing: 10,
             crossAxisSpacing: 8,
+            padding: EdgeInsets.only(
+              left: getSize(Spacing.leftPadding),
+              bottom: getSize(Spacing.leftPadding),
+              right: getSize(Spacing.rightPadding),
+            ),
             children: List.generate(arraDiamond.length, (index) {
               var item = arraDiamond[index];
               return DiamondGridItemWidget(
@@ -233,20 +250,16 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     diamondConfig.toolbarList.forEach((element) {
       list.add(GestureDetector(
         onTap: () {
-          setState(() {
-            if (!allSelected) {
-              diamondConfig.toolbarList[0].image = selectList;
-            } else {
-              diamondConfig.toolbarList[0].image = selectAll;
-            }
-          });
-
           manageToolbarClick(element);
         },
         child: Padding(
           padding: EdgeInsets.all(getSize(8.0)),
           child: Image.asset(
-            element.image,
+            element.isSelected
+                ? (element.selectedImage != null
+                    ? element.selectedImage
+                    : element.image)
+                : element.image,
             height: getSize(20),
             width: getSize(20),
           ),
@@ -262,6 +275,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         setState(() {
           arraDiamond[index].isSelected = !arraDiamond[index].isSelected;
           manageDiamondSelection();
+          diamondConfig.toolbarList.forEach((element) {
+            if (element.code == BottomCodeConstant.TBSelectAll) {
+              setAllSelectImage(element);
+            }
+          });
         });
         break;
       case clickConstant.CLICK_TYPE_ROW:
@@ -276,6 +294,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   manageToolbarClick(BottomTabModel model) {
     switch (model.code) {
       case BottomCodeConstant.TBSelectAll:
+        model.isSelected = !model.isSelected;
         setSelectAllDiamond(model);
         break;
       case BottomCodeConstant.TBGrideView:
@@ -298,20 +317,18 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   }
 
   setSelectAllDiamond(BottomTabModel model) {
-    List<DiamondModel> list =
-        arraDiamond.where((element) => element.isSelected).toList();
-    if (list != null && list.length == arraDiamond.length) {
-      model.isSelected = false;
-      allSelected = false;
-    } else {
-      model.isSelected = true;
-      allSelected = true;
-    }
     arraDiamond.forEach((element) {
       element.isSelected = model.isSelected;
     });
+    setAllSelectImage(model);
     setState(() {});
     manageDiamondSelection();
+  }
+
+  setAllSelectImage(BottomTabModel model) {
+    List<DiamondModel> list =
+        arraDiamond.where((element) => element.isSelected).toList();
+    model.isSelected = (list != null && list.length == arraDiamond.length);
   }
 
   manageDiamondSelection() {
@@ -365,10 +382,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 (manageClick) {
               if (manageClick.bottomTabModel.type ==
                   ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
-                arraDiamond.forEach((element) {
-                  element.isSelected = false;
-                });
-                manageDiamondSelection();
+                clearSelection();
               } else {
                 manageBottomMenuClick(manageClick.bottomTabModel);
               }
@@ -385,11 +399,20 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           showBottomSheetForMenu(context, diamondConfig.arrStatusMenu,
               (manageClick) {}, R.string().commonString.status,
               isDisplaySelection: false);
+        } else if (obj.type == ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
+          clearSelection();
         } else {
           manageBottomMenuClick(obj);
         }
       },
     );
+  }
+
+  clearSelection() {
+    arraDiamond.forEach((element) {
+      element.isSelected = false;
+    });
+    manageDiamondSelection();
   }
 
   manageBottomMenuClick(BottomTabModel bottomTabModel) {

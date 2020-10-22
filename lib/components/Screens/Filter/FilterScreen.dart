@@ -315,9 +315,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       FilterRequest().createRequest(arrList),
       (diamondListResp) {
         if(isSavedSearch){
-          openBottomSheetForSavedSearch(context,(){
-            callApiForSaveSearch(diamondListResp.data.filter.id);
-          });
+          openBottomSheetForSavedSearch(context,  FilterRequest().createRequest(arrList),diamondListResp.data.filter.id);
         }else{
           Map<String, dynamic> dict = new HashMap();
 
@@ -332,43 +330,6 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         //print("Error");
       },
     );
-  }
-
-  callApiForSaveSearch(String filterId) {
-    Map<String, dynamic> dict = {};
-    dict["filters"] =  FilterRequest().createRequest(arrList);
-    dict["name"] = "gfgf";
-    dict["id"] = filterId;
-    dict["searchType"] = 2;
-    NetworkCall<BaseApiResp>()
-        .makeCall(
-          () => app
-          .resolve<ServiceModule>()
-          .networkService()
-          .saveSearch(dict),
-      context,
-      isProgress: true,
-    )
-        .then((diamondListResp) async {
-        print("Success ${diamondListResp.message}");
-    }).catchError((onError) {
-      print(onError.toString());
-    });
-//    SyncManager.instance.callApiForDiamondList(
-//      context,
-//      FilterRequest().createRequest(arrList),
-//          (diamondListResp) {
-//        Map<String, dynamic> dict = new HashMap();
-//
-//        dict["filterId"] = diamondListResp.data.filter.id;
-//        dict["filters"] = FilterRequest().createRequest(arrList);
-//        dict[ArgumentConstant.ModuleType] = moduleType;
-//        NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
-//      },
-//          (onError) {
-//        //print("Error");
-//      },
-//    );
   }
 
   Widget _segmentedControl() {

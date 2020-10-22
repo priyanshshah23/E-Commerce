@@ -40,6 +40,7 @@ class ScreenTitle {
   final String stoneOfTheDays;
 
   final String myEnquiry;
+  final String upcoming;
   final String myCart;
   final String myComment;
 
@@ -165,6 +166,7 @@ class ScreenTitle {
 
   const ScreenTitle({
     this.myEnquiry = "My Enquiry",
+    this.upcoming = "Upcoming",
     this.bidPricePerCt = "Bid Price / Ct",
     this.bidDisc = "Bid Disc",
     this.bidValue = "Bid Value",
