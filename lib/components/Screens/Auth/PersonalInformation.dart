@@ -85,7 +85,8 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
   @override
   void initState() {
     super.initState();
-    _callApiForCountryList();
+   // _callApiForCountryList();
+    getPersonalInformation();
   }
 
   @override
@@ -1260,6 +1261,25 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
         isProgress: true)
         .then((resp) async {
 
+    }).catchError((onError) {
+      app.resolve<CustomDialogs>().confirmDialog(
+        context,
+        title: R.string().commonString.error,
+        desc: onError.message,
+        positiveBtnTitle: R.string().commonString.btnTryAgain,
+      );
+    });
+  }
+
+  getPersonalInformation() async {
+
+    NetworkCall<PersonalInformationViewResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().personalInformationView(),
+        context,
+        isProgress: true)
+        .then((resp) async {
+        print("resp-----${resp.data.name}");
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
         context,
