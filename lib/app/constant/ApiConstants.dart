@@ -34,6 +34,7 @@ class ApiConstants {
   static const String diamondCommentList =
       commonUrl + "diamond-comment/by-user";
   static const String diamondBidList = commonUrl + "diamond-bid/paginate";
+  static const String diamondOfficeList = commonUrl + "cabin-schedule/list";
 
   static const String createDiamondTrack = commonUrl + "diamond-track/create";
   static const String upsetComment = commonUrl + "diamond-comment/upsert";

@@ -163,6 +163,11 @@ class DiamondConfig {
             .resolve<ServiceModule>()
             .networkService()
             .diamondMatchPairList(dict);
+      case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .diamondOfficeList(dict);
     }
   }
 
@@ -633,7 +638,7 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
     case BorderConstant.BORDER_LEFT_RIGHT:
       return BoxDecoration(
         // boxShadow: getBoxShadow(context),
-       // borderRadius: BorderRadius.circular(getSize(5)),
+        // borderRadius: BorderRadius.circular(getSize(5)),
         border: Border(
           left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
           right: BorderSide(width: 1.0, color: appTheme.colorPrimary),
@@ -654,7 +659,7 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
       );
     default:
       return BoxDecoration(
-       // borderRadius: BorderRadius.circular(getSize(5)),
+        // borderRadius: BorderRadius.circular(getSize(5)),
         border: Border(
           top: BorderSide(width: 0, color: appTheme.whiteColor),
           left: BorderSide(width: 0, color: appTheme.whiteColor),

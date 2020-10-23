@@ -846,10 +846,6 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
         isProgress: true)
         .then((resp) async {
        _CompanyNameController.text = resp.data.companyName;
-//       selectedCountryItem.id = resp.data.country;
-//      resp.data.state = selectedStateItem.id;
-//      resp.data.city = selectedCityItem.id;
-     // _addressLineOneController.text = resp.data.address;
       _addressLineOneController.text =  resp.data.address;
       _companyCodeController.text =  resp.data.vendorCode;
       businessTypeList.forEach((element) {
@@ -858,7 +854,6 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
         }
       });
       _pinCodeController.text = resp.data.zipCode;
-//      CountryList country = countryList.where((element) => element.id == resp.data.id);
       countryList.forEach((element) {
         if(element.id == resp.data.country) {
           _countryController.text = element.name;
@@ -874,8 +869,6 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
           _cityController.text = element.name;
         }
       });
-//      print("country-----${country.name}");
-      //_countryController.text = countryList.where((element) => element.id == resp.data.id);
       setState(() {});
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
