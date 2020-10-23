@@ -170,7 +170,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         break;
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
         dict["type"] = "stone_of_day";
-        
+        break;
 
     }
 
@@ -352,33 +352,34 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: appTheme.whiteColor,
-        appBar: getAppBar(
-          context,
-          diamondConfig.getScreenTitle(),
-          bgColor: appTheme.whiteColor,
-          leadingButton: isFromDrawer
-              ? getDrawerButton(context, true)
-              : getBackButton(context),
-          centerTitle: false,
-          actionItems: getToolbarItem(),
+      backgroundColor: appTheme.whiteColor,
+      appBar: getAppBar(
+        context,
+        diamondConfig.getScreenTitle(),
+        bgColor: appTheme.whiteColor,
+        leadingButton: isFromDrawer
+            ? getDrawerButton(context, true)
+            : getBackButton(context),
+        centerTitle: false,
+        actionItems: getToolbarItem(),
+      ),
+      bottomNavigationBar: getBottomTab(),
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            DiamondListHeader(
+              diamondCalculation: diamondCalculation,
+            ),
+            SizedBox(
+              height: getSize(20),
+            ),
+            Expanded(
+              child: diamondList,
+            )
+          ],
         ),
-        bottomNavigationBar: getBottomTab(),
-        body: SafeArea(
-          child: Column(
-            children: <Widget>[
-              DiamondListHeader(
-                diamondCalculation: diamondCalculation,
-              ),
-              SizedBox(
-                height: getSize(20),
-              ),
-              Expanded(
-                child: diamondList,
-              )
-            ],
-          ),
-        ));
+      ),
+    );
   }
 
   Widget getBottomTab() {

@@ -31,6 +31,9 @@ class ApiConstants {
   static const String diamondList = commonUrl + "diamond/paginate";
   static const String diamondMatchPair =
       commonUrl + "match-pair/diamond/filter";
+
+  static const String stoneOfTheDay = commonUrl + "featuredStone/paginate";
+
   static const String diamondTrackList = commonUrl + "diamond-track/paginate";
   static const String diamondCommentList =
       commonUrl + "diamond-comment/by-user";
@@ -59,8 +62,11 @@ class ApiConstants {
 
   //Office
   static const String getSlots = commonUrl + "cabin-slot/paginate";
-  //Office
   static const String createOfficerequest = commonUrl + "cabin-schedule/create";
+
+  //Dashboard
+  static const String dashboard = commonUrl + "user/dashboard";
+  static const String deleteSavedSearch = commonUrl + "diamond/search/delete";
 }
 
 class DiamondUrls {
