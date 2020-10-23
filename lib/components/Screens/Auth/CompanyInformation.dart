@@ -850,6 +850,12 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
           User user = app.resolve<PrefUtils>().getUserDetails();
           user.account=resp.data;
       app.resolve<PrefUtils>().saveUser(user);
+          app.resolve<CustomDialogs>().confirmDialog(
+            context,
+            title: R.string().commonString.successfully,
+            desc: resp.message,
+            positiveBtnTitle: R.string().commonString.ok,
+          );
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
         context,

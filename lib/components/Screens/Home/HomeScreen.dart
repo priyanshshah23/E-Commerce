@@ -162,6 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   openAboutUs() {
+    selectedType = DiamondModuleConstant.MODULE_TYPE_ABOUT_US;
     Map<String, dynamic> dict = new HashMap();
     dict["type"] = StaticPageConstant.ABOUT_US;
     dict[ArgumentConstant.IsFromDrawer] = true;
@@ -169,6 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   openTermsAndCondition() {
+    selectedType = DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION;
     Map<String, dynamic> dict = new HashMap();
     dict["type"] = StaticPageConstant.TERMS_CONDITION;
     dict[ArgumentConstant.IsFromDrawer] = true;
@@ -176,6 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   openPrivacyPolicy() {
+    selectedType = DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY;
     Map<String, dynamic> dict = new HashMap();
     dict["type"] = StaticPageConstant.PRIVACY_POLICY;
     dict[ArgumentConstant.IsFromDrawer] = true;
