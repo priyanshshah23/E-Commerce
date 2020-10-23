@@ -54,11 +54,15 @@ class ApiConstants {
   static const String personalInformationView = commonUrl + "user/view";
   static const String companyInformationView = commonUrl + "user/profile";
   static const String savedSearch = apiUrl + "web/v1/diamond/search/upsert";
+  static const String signInAsGuest = commonUrl + "guest/auth/login";
 
   //Office
   static const String getSlots = commonUrl + "cabin-slot/paginate";
   //Office
   static const String createOfficerequest = commonUrl + "cabin-schedule/create";
+
+  //VERSION UPDATION
+  static const getUpdation = apiV1 + "version";
 }
 
 class DiamondUrls {

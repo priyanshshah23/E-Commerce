@@ -649,7 +649,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
   }
 
   void _callApiForCityList(
-      {String stateId, String countryId, bool isShowDialogue = false}) {
+      {String stateId, String countryId, bool isShowDialogue = false, bool isGet = false, String city}) {
     CityListReq req = CityListReq();
     req.state = stateId;
     req.country = countryId;
@@ -682,6 +682,14 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                     },
                   ));
             });
+      }
+      if(isGet) {
+        cityList.forEach((element) {
+          if(element.id == city) {
+            _cityController.text = element.name;
+            selectedCityItem = element;
+          }
+        });
       }
     }).catchError(
           (onError) => {
@@ -750,7 +758,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
     );
   }
 
-  void _callApiForStateList({String countryId, bool isShowDialogue = false}) {
+  void _callApiForStateList({String countryId, bool isShowDialogue = false, bool isGet = false, String state}) {
     StateListReq req = StateListReq();
     req.country = countryId;
 
@@ -788,6 +796,15 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                     },
                   ));
             });
+      }
+      if(isGet) {
+        stateList.forEach((element) {
+          if(element.id == state) {
+            _stateController.text = element.name;
+            selectedStateItem = element;
+            _callApiForCityList(countryId: selectedCountryItem.id,stateId: selectedStateItem.id, isGet: true, city: state);
+          }
+        });
       }
     }).catchError(
           (onError) => {
@@ -857,16 +874,8 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
       countryList.forEach((element) {
         if(element.id == resp.data.country) {
           _countryController.text = element.name;
-        }
-      });
-      stateList.forEach((element) {
-        if(element.id == resp.data.state) {
-          _stateController.text = element.name;
-        }
-      });
-      cityList.forEach((element) {
-        if(element.id == resp.data.city) {
-          _cityController.text = element.name;
+          selectedCountryItem = element;
+          _callApiForStateList(countryId: element.id,isGet: true, state: resp.data.state);
         }
       });
       setState(() {});

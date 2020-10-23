@@ -33,7 +33,7 @@ class DiamondListScreen extends StatefulScreenWidget {
     if (arguments != null) {
       this.filterId = arguments["filterId"];
       if (arguments[ArgumentConstant.ModuleType] != null) {
-        moduleType =  arguments[ArgumentConstant.ModuleType];
+        moduleType = arguments[ArgumentConstant.ModuleType];
       }
       if (arguments[ArgumentConstant.IsFromDrawer] != null) {
         isFromDrawer = arguments[ArgumentConstant.IsFromDrawer];
@@ -170,8 +170,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         break;
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
         dict["type"] = "stone_of_day";
-        
-
     }
 
     NetworkCall<DiamondListResp>()
@@ -400,7 +398,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 );
           }
         } else if (obj.type == ActionMenuConstant.ACTION_TYPE_STATUS) {
-        //  showStatusDialogue();
+          showStatusDialogue();
 //          showBottomSheetForMenu(context, diamondConfig.arrStatusMenu,
 //              (manageClick) {}, R.string().commonString.status,
 //              isDisplaySelection: false);
@@ -416,30 +414,123 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   showStatusDialogue() {
     showDialog(
       context: context,
-      barrierDismissible: false,
+      barrierDismissible: true,
       builder: (_) {
-        return Container(
-          color: appTheme.whiteColor,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(
-                height: getSize(18),
+        return
+          GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Material(
+              color: Colors.transparent,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                        color: appTheme.textFieldBorderColor,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(getSize(15)),
+                        )),
+                    margin: EdgeInsets.only(
+                      left: getSize(30),
+                      right: getSize(30),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          height: getSize(20),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Status",style: appTheme.blackNormal18TitleColorblack,),
+                            Icon(Icons.info_outline, color: appTheme.colorPrimary,size: getSize(16),),
+                          ],
+                        ),
+                        SizedBox(
+                          height: getSize(10),
+                        ),
+                         ListView.builder(
+                    shrinkWrap: true,
+                          itemCount: diamondConfig.arrStatusMenu.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return getStatusDialogueRow(
+                                title: diamondConfig.arrStatusMenu[index].title,
+                                color: diamondConfig.arrStatusMenu[index].imageColor);
+                          },
+                        ),
+                        SizedBox(
+                          height: getSize(10),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              Text(
-                "Report Submitted",
-                style: AppTheme.of(context)
-                    .theme
-                    .textTheme
-                    .title
-                    .copyWith(color: ColorConstants.white),
-              ),
-            ],
-          ),
-        );
+            ),
+          );
+
+//          AlertDialog(
+//          shape: RoundedRectangleBorder(
+//            borderRadius: BorderRadius.circular(getSize(5)),
+//          ),
+//          content: Container(                  height: 66,
+//
+//            color: appTheme.whiteColor,
+//            child: Column(
+//              mainAxisSize: MainAxisSize.min,
+//              children: <Widget>[
+//                Container(
+//                  height: 66,
+////                  constraints: BoxConstraints(
+////                      minHeight: 50,
+////                      maxHeight: MathUtilities.screenHeight(context) - 300),
+//                  child: ListView.builder(
+////                    shrinkWrap: true,
+//                    itemCount: diamondConfig.arrStatusMenu.length,
+//
+//                    itemBuilder: (BuildContext context, int index) {
+//                      return getStatusDialogueRow(
+//                          title: diamondConfig.arrStatusMenu[index].title,
+//                          color: appTheme.greenColor);
+//                    },
+//                  ),
+//                ),
+//              ],
+//            ),
+//          ),
+//        );
       },
+    );
+  }
+
+  getStatusDialogueRow({Color color, String title}) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: getSize(10), horizontal: getSize(20)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            height: getSize(22),
+            width: getSize(22),
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(getSize(5)),
+            ),
+          ),
+          SizedBox(
+            width: getSize(10),
+          ),
+          Text(
+            title,
+            style: appTheme.black12TextStyle
+                .copyWith(color: appTheme.textBlackColor),
+          ),
+        ],
+      ),
     );
   }
 
