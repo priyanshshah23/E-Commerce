@@ -119,7 +119,20 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                 FocusScope.of(context).unfocus();
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
-                  callCompanyInformationApi();
+                  if(countrySelect()) {
+                     if(stateSelect()) {
+if(citySelect()) {
+callCompanyInformationApi();
+                     } else {
+                        showToast(R.string().commonString.cityFirst, context: context);
+                     }
+                     } else {
+                        showToast(R.string().commonString.stateFirst, context: context);
+                     }
+                  } else {
+                    showToast(R.string().commonString.countryFirst, context: context);
+                  }
+                  
                   //isProfileImageUpload ? uploadDocument() : callApi();
                 } else {
                   setState(() {
@@ -636,6 +649,13 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
 
   bool countrySelect() {
     if (isStringEmpty(_countryController.text.trim())) {
+      return false;
+    }
+    return true;
+  }
+
+  bool citySelect() {
+    if (isStringEmpty(_cityController.text.trim())) {
       return false;
     }
     return true;
