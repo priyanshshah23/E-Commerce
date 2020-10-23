@@ -53,6 +53,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   String filterId;
   int moduleType;
   bool isFromDrawer;
+  String sortingKey;
   Map<String, dynamic> dictFilters;
 
   _DiamondListScreenState({this.filterId, this.moduleType, this.isFromDrawer});
@@ -123,6 +124,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
         dict["filters"] = {};
         dict["filters"]["diamondSearchId"] = this.filterId;
+        if (sortingKey != null) {
+          dict["sort"] = sortingKey;
+        }
         break;
       case DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR:
         dict["filters"] = {};
@@ -323,7 +327,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           builder: (_) => FilterBy(
             optionList: optionList,
           ),
-        );
+        ).then((value) {
+          sortingKey = value;
+          callApi(true);
+        });
         break;
     }
   }
