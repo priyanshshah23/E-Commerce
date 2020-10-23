@@ -660,6 +660,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
         context,
         isProgress: true)
         .then((resp) {
+          cityList.clear();
       cityList.addAll(resp.data);
       if (isShowDialogue) {
         showDialog(
@@ -711,6 +712,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
         context,
         isProgress: true)
         .then((resp) {
+          countryList.clear();
       countryList.addAll(resp.data);
       if (isShowDialogue) {
         showDialog(
@@ -731,6 +733,8 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                       if (_countryController.text != countryList.name) {
                         _stateController.text = "";
                         _cityController.text = "";
+                        selectedStateItem = null;
+                        selectedCityItem = null;
                       }
                       selectedCountryItem = countryList;
                       _countryController.text = countryList.name;
@@ -768,6 +772,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
         context,
         isProgress: true)
         .then((resp) {
+          stateList.clear();
       stateList.addAll(resp.data);
       if (isShowDialogue) {
         showDialog(
@@ -787,6 +792,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                           StateList stateList}) {
                       if (_stateController.text != stateList.name) {
                         _cityController.text = "";
+                        selectedCityItem = null;
                       }
                       selectedStateItem = stateList;
                       _stateController.text = stateList.name;
