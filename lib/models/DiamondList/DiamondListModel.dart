@@ -4,6 +4,7 @@ import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:rxbus/rxbus.dart';
 
 class DiamondListReq {
   int page;
@@ -413,7 +414,9 @@ class DiamondModel {
   double marginBottom = 0;
   num plusAmount=0;
   num minusAmount=0;
+  bool bidPlus = false;
   String displayTitle;
+  num bidAmount;
 
   bool isSelectedForComparechange = false; //for compare changes screen
 
@@ -569,12 +572,14 @@ class DiamondModel {
     ratio = json['ratio'];
     pltFile = json['pltFile'] ?? false;
     groupNo = json['groupNo'];
+
 //    isSelected = json['isSelected'];
   }
 
   DiamondModel({bool isSelected = false}) {
     this.isSelected = isSelected;
   }
+
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -685,6 +690,10 @@ class DiamondModel {
     return color;
   }
 
+  setBidAmount() {
+    this.bidAmount = this.ctPr;
+  }
+
   String getDiamondImage() {
     if (isStringEmpty(vStnId) == false) {
       return diamondImageURL + vStnId + ".jpg";
@@ -694,6 +703,10 @@ class DiamondModel {
   }
 
   num getFinalRate() {
+    if(isAddToBid){
+      print("ctpr-isAddToBid--${ctPr}");
+      return ctPr;
+    }
     if (isAddToOffer) {
       if (selectedOfferPer != null) {
         num quote = (-back + num.parse(selectedOfferPer));
@@ -711,13 +724,6 @@ class DiamondModel {
     } else {
       return this.ctPr - ((this.ctPr * 2) / 100);
     }
-    /*if (selectedOfferPer != null) {
-      num quote = (-back + num.parse(selectedOfferPer));
-      num pricePerCarat = rap - ((quote * rap) / 100);
-      num lessAmt = ((pricePerCarat * 2) / 100);
-      num finalrate = pricePerCarat - lessAmt;
-      return finalrate;
-    } else*/
     return this.ctPr - ((this.ctPr * 2) / 100);
   }
 
@@ -727,6 +733,22 @@ class DiamondModel {
 
   num getFinalAmount() {
     return crt * getFinalRate();
+  }
+
+  num getbidAmount(){
+    num plusAmt;
+    print("ctpr-before--${ctPr}");
+    if(bidPlus){
+      plusAmt= ctPr+plusAmount;
+    }else{
+      if((ctPr-minusAmount) >= bidAmount){
+        plusAmt = ctPr-minusAmount;
+      }else{
+        plusAmt=ctPr;
+      }
+    }
+    ctPr = plusAmt;
+    return plusAmt;
   }
 
   String getAmount() {

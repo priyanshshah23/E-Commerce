@@ -24,8 +24,10 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   @override
   void initState() {
     super.initState();
+    widget.item.setBidAmount();
     if (widget.item.isAddToOffer ?? false || widget.item.isAddToBid ?? false) {
       RxBus.register<bool>(tag: eventBusDropDown).listen((event) {
+//        Future.delayed(Duration(seconds: 1));
         setState(() {});
       });
     }
@@ -406,7 +408,14 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                     Row(
                       children: [
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            setState(() {
+                              widget.item.bidPlus=false;
+                              widget.item.minusAmount = 20;
+                              widget.item.ctPr = widget.item.getbidAmount();
+                              RxBus.post(false, tag: eventBusDropDown);
+                            });
+                          },
                           child: Container(
                             margin: EdgeInsets.only(right: getSize(10)),
                             decoration: BoxDecoration(
@@ -434,12 +443,14 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                               border: Border.all(color: appTheme.dividerColor),
                               borderRadius: BorderRadius.circular(getSize(5))),
                           child: getText(PriceUtilities.getPrice(
-                              widget.item.ctPr)),
+                              widget.item.getFinalRate())),
                         ),
                         GestureDetector(
                           onTap: () {
                             setState(() {
-                              widget.item.plusAmount += 20;
+                              widget.item.bidPlus=true;
+                              widget.item.plusAmount = 20;
+                              widget.item.ctPr = widget.item.getbidAmount();
                               RxBus.post(true, tag: eventBusDropDown);
                             });
                           },
