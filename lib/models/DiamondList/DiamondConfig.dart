@@ -298,6 +298,15 @@ class DiamondConfig {
         actionShare(list);
         break;
       case ActionMenuConstant.ACTION_TYPE_COMPARE:
+        if (list.length < 2) {
+          app.resolve<CustomDialogs>().confirmDialog(
+                context,
+                title: "",
+                desc: "Please select at least 2 stone to compare.",
+                positiveBtnTitle: R.string().commonString.ok,
+              );
+          return;
+        }
         var dict = Map<String, dynamic>();
         dict[ArgumentConstant.DiamondList] = list;
         dict[ArgumentConstant.ModuleType] = moduleType;
