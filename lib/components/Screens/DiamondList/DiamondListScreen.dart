@@ -368,6 +368,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             ? getDrawerButton(context, true)
             : getBackButton(context),
         centerTitle: false,
+        textalign: TextAlign.left,
         actionItems: getToolbarItem(),
       ),
       bottomNavigationBar: getBottomTab(),

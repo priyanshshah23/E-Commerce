@@ -2,6 +2,10 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:diamnow/app/Helper/EncryptionHelper.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
@@ -9,6 +13,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:diamnow/app/app.export.dart';
 
 import 'package:unique_identifier/unique_identifier.dart';
+
+import 'BaseDialog.dart';
+import 'CustomDialog.dart';
 
 /// Wraps the [SharedPreferences].
 class PrefUtils {
@@ -158,10 +165,42 @@ class PrefUtils {
         keyToken, EncryptionHelper.encryptString(token));
   }
 
+  resetAndLogout(BuildContext context) {
+    app.resolve<PrefUtils>().clearPreferenceAndDB();
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        LoginScreen.route, (Route<dynamic> route) => false);
+  }
+
   Future<void> clearPreferenceAndDB() async {
     _preferences.clear();
-
     await AppDatabase.instance.masterDao.deleteAllMasterItems();
     await AppDatabase.instance.sizeMasterDao.deleteAllMasterItems();
   }
+}
+
+logoutFromApp(BuildContext context) {
+  app.resolve<CustomDialogs>().confirmDialog(context,
+      title: R.string().commonString.lbllogout,
+      desc: R.string().authStrings.logoutConfirmationMsg,
+      positiveBtnTitle: R.string().commonString.yes,
+      negativeBtnTitle: R.string().commonString.no,
+      onClickCallback: (buttonType) {
+        if (buttonType == ButtonType.PositveButtonClick) {
+          callLogout(context);
+        }
+      });
+}
+
+callLogout(BuildContext context) {
+  NetworkCall<BaseApiResp>()
+      .makeCall(() => app.resolve<ServiceModule>().networkService().logout(),
+      context,
+      isProgress: true)
+      .then((response) {
+    app.resolve<PrefUtils>().resetAndLogout(context);
+  }).catchError((onError) {
+    if (onError is ErrorResp) {
+      app.resolve<PrefUtils>().resetAndLogout(context);
+    }
+  });
 }

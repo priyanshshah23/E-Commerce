@@ -56,6 +56,9 @@ class _SignupScreenState extends State<SignupScreen> {
             print('Page finished loading: $url');
             app.resolve<CustomDialogs>().hideProgressDialog();
           },
+          onWebResourceError: (error) {
+            print(error);
+          },
           gestureNavigationEnabled: true,
         );
       }),
@@ -74,7 +77,13 @@ class _SignupScreenState extends State<SignupScreen> {
     return JavascriptChannel(
         name: 'RegisterCallBack',
         onMessageReceived: (JavascriptMessage message) {
-          Navigator.pop(context);
+          app.resolve<CustomDialogs>().confirmDialog(context,
+              title: "",
+              desc: message.message,
+              positiveBtnTitle: R.string().commonString.ok,
+              onClickCallback: (type) {
+            Navigator.pop(context);
+          });
         });
   }
 }

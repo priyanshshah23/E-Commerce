@@ -4,10 +4,10 @@ class ApiConstants {
   // static const String PROXY_URL = "PROXY 192.168.2.124:8888";
 //   static const String PROXY_URL = "PROXY 192.168.0.117:8888";
 // static const String PROXY_URL = "PROXY 192.168.0.116:8888";
-// static const String PROXY_URL = "PROXY 192.168.225.188:8888";
+static const String PROXY_URL = "PROXY 192.168.225.188:8888";
 //  static const String PROXY_URL = "PROXY 192.168.0.73:8888";
-  static const String PROXY_URL = "PROXY 10.0.2.2:8888";
-// static const String PROXY_URL = "PROXY 192.168.225.121:8888"; // Brijesh
+ // static const String PROXY_URL = "PROXY 10.0.2.2:8888";
+ //static const String PROXY_URL = "PROXY 192.168.225.121:8888"; // Brijesh
 //  static const String PROXY_URL = "PROXY localhost:8888"; // Brijesh
 
   static const String imageBaseURL = baseURL;
@@ -65,12 +65,12 @@ class ApiConstants {
   //Dashboard
   static const String dashboard = commonUrl + "user/dashboard";
   static const String deleteSavedSearch = commonUrl + "diamond/search/delete";
+  static const String logout = commonUrl + "auth/logout";
 }
 
 class DiamondUrls {
   static const String commonUrl =
       "https://s3.ap-south-1.amazonaws.com/finestargroup/";
-
   static const String image = commonUrl + "RealImages/";
   static const String video = commonUrl + "viewer3/html/";
   static const String heartImage = commonUrl + "HeartImages/";
