@@ -33,7 +33,7 @@ class DiamondListScreen extends StatefulScreenWidget {
     if (arguments != null) {
       this.filterId = arguments["filterId"];
       if (arguments[ArgumentConstant.ModuleType] != null) {
-        moduleType = arguments[ArgumentConstant.ModuleType];
+        moduleType =  arguments[ArgumentConstant.ModuleType];
       }
       if (arguments[ArgumentConstant.IsFromDrawer] != null) {
         isFromDrawer = arguments[ArgumentConstant.IsFromDrawer];
@@ -168,6 +168,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
         dict["isAppendDiamond"] = 1;
         break;
+      case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
+        dict["type"] = "stone_of_day";
+        
+
     }
 
     NetworkCall<DiamondListResp>()

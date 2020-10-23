@@ -101,19 +101,31 @@ class _CertNoWidgetState extends State<CertNoWidget> {
   }
 
   getRadioButton(int index, RadioButton model, dynamic onClick) {
-    return Row(
-      children: [
-        Radio(
-          value: index,
-          groupValue: _radioValue,
-          onChanged: onClick,
-          activeColor: appTheme.colorPrimary,
-        ),
-        Text(
-          model.title,
-          style: appTheme.black16TextStyle,
-        ),
-      ],
+    return InkWell(
+      onTap: () {
+        setState(() {
+          widget.certNoModel.radiobutton
+              .map((e) => e.isSelected = false)
+              .toList();
+
+          model.isSelected = true;
+          _radioValue = index;
+        });
+      },
+      child: Row(
+        children: [
+          Radio(
+            value: index,
+            groupValue: _radioValue,
+            onChanged: onClick,
+            activeColor: appTheme.colorPrimary,
+          ),
+          Text(
+            model.title,
+            style: appTheme.black16TextStyle,
+          ),
+        ],
+      ),
     );
   }
 }
