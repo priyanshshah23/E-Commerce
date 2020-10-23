@@ -5,6 +5,7 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
@@ -137,13 +138,30 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
         return Column(
           children: [
             Padding(
+              padding: EdgeInsets.only(top: getSize(8)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  getPrimaryText(arraDiamond[index].memoNo ?? ""),
+                  getPrimaryText(
+                    R.string().commonString.date +
+                        " : " +
+                        DateUtilities().convertServerDateToFormatterString(
+                            arraDiamond[index].createdAt,
+                            formatter: DateUtilities.dd_mm_yyyy),
+                  )
+                ],
+              ),
+            ),
+            Padding(
               padding: EdgeInsets.only(top: getSize(4), bottom: getSize(4)),
               child: Container(
                 width: MathUtilities.screenWidth(context),
                 decoration: BoxDecoration(
+                    boxShadow: getBoxShadow(context),
                     color: appTheme.whiteColor,
                     borderRadius: BorderRadius.circular(getSize(6)),
-                    border: Border.all(color: appTheme.dividerColor)
+                    border: Border.all(color: appTheme.colorPrimary)
                     //boxShadow: getBoxShadow(context),
                     ),
                 child: ListView.builder(
@@ -152,8 +170,8 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
                   itemCount: arraDiamond[index].memoDetails.length,
                   itemBuilder: (context, diamondIndex) {
                     return DiamondItemWidget(
-                        leftPadding: 4,
-                        rightPadding: 4,
+                        leftPadding: 4.0,
+                        rightPadding: 4.0,
                         item: arraDiamond[index].memoDetails[diamondIndex],
                         actionClick: (manageClick) {
                           manageRowClick(index, manageClick.type);
@@ -221,7 +239,11 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
 
   manageDiamondSelection() {
     fillArrayList();
-    // diamondCalculation.setAverageCalculation(arraDiamond);
+    List<DiamondModel> list = [];
+    arraDiamond.forEach((element) {
+      list.addAll(element.memoDetails);
+    });
+    diamondCalculation.setAverageCalculation(list);
     diamondList.state.setApiCalling(false);
   }
 
