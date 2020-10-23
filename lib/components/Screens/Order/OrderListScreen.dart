@@ -102,6 +102,15 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
     Map<String, dynamic> dict = {};
     dict["page"] = page;
     dict["limit"] = DEFAULT_LIMIT;
+    dict["filters"] = {};
+    switch (moduleType) {
+      case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
+        dict["filters"]["status"] = MemoConstant.MEMO_ORDER;
+        break;
+      case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
+        dict["filters"]["status"] = MemoConstant.MEMO_PURCHASE;
+        break;
+    }
 
     NetworkCall<OrderListResp>()
         .makeCall(

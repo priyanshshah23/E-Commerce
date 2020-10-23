@@ -125,4 +125,7 @@ abstract class NetworkService {
   //Delete saved search
   @POST(ApiConstants.deleteSavedSearch)
   Future<BaseApiResp> deleteSavedSearch(@Body() Map<String, dynamic> req);
+
+  @POST(ApiConstants.logout)
+  Future<BaseApiResp> logout();
 }

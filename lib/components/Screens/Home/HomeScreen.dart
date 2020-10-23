@@ -3,6 +3,8 @@ import 'dart:collection';
 
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
@@ -201,54 +203,20 @@ class _HomeScreenState extends State<HomeScreen> {
           openProfile();
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
+        case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
           openDiamondOrderList(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
           openSavedSearch();
           break;
         case DiamondModuleConstant.MODULE_TYPE_LOGOUT:
-          logout(context);
+          logoutFromApp(context);
           break;
       }
       if (type != DiamondModuleConstant.MODULE_TYPE_LOGOUT) {
         setState(() {});
       }
     }
-  }
-
-  logout(BuildContext context) {
-    app.resolve<CustomDialogs>().confirmDialog(context,
-        title: R.string().commonString.lbllogout,
-        desc: R.string().authStrings.logoutConfirmationMsg,
-        positiveBtnTitle: R.string().commonString.yes,
-        negativeBtnTitle: R.string().commonString.no,
-        onClickCallback: (buttonType) {
-      if (buttonType == ButtonType.PositveButtonClick) {
-        calllogout(context);
-        SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-        ThemeSettingsModel.of(context).updateSystemUi(isLogin: true);
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          LoginScreen.route,
-          (Route<dynamic> route) => false,
-        );
-      }
-    });
-  }
-
-  calllogout(BuildContext context) {
-    app.resolve<PrefUtils>().clearPreferenceAndDB();
-
-    /*NetworkCall<BaseApiResp>()
-        .makeCall(() => app.resolve<ServiceModule>().networkService().logout(),
-            context,
-            isProgress: true)
-        .then((response) {
-      app.resolve<PrefUtils>().resetAndLogout(context);
-    }).catchError((onError) {
-      if (onError is ErrorResp) {
-        showToast(onError.message);
-      }
-    });*/
   }
 
   @override

@@ -77,6 +77,10 @@ class DiamondTrackConstant {
 class BidConstant {
   static const BID_TYPE_ADD = 2;
 }
+class MemoConstant {
+  static const MEMO_ORDER = 1;
+  static const MEMO_PURCHASE = 2;
+}
 
 class BidStatus {
   static const BID_STATUS_ACTIVE = 1;
