@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
@@ -28,7 +29,9 @@ class StaticPageScreen extends StatefulScreenWidget {
 
 class _StaticPageScreenState extends State<StaticPageScreen> {
   StaticPageRespData data;
-  WebViewController _controller;
+//  WebViewController _controller;
+  final Completer<WebViewController> _controller =
+  Completer<WebViewController>();
 
   @override
   void initState() {
@@ -61,46 +64,58 @@ class _StaticPageScreenState extends State<StaticPageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    callApi();
+    //callApi();
     return Scaffold(
         appBar: getAppBar(
           context,
           getScreenTitle(),
           leadingButton: getDrawerButton(context,true),
         ),
-        body: Column(
-          children: <Widget>[
-            Container(
-              color: ColorConstants.white,
-              padding: EdgeInsets.only(
-                top: getSize(15),
-              ),
-              child: SafeArea(
-                child: Padding(
-                  padding:
-                      EdgeInsets.only(left: getSize(20), right: getSize(20)),
-                  child: !isNullEmptyOrFalse(data)
-                      ? WebView(
-                          initialUrl: 'about:blank',
-                          onWebViewCreated:
-                              (WebViewController webViewController) {
-                            _controller = webViewController;
-                            _loadHtmlFromAssets(data?.desc ?? "");
-                          },
-                        )
-                      : SizedBox(),
-                ),
-              ),
+        body: Container(
+          height: MathUtilities.screenHeight(context),
+          color: ColorConstants.white,
+          padding: EdgeInsets.only(
+            top: getSize(15),
+          ),
+          child: SafeArea(
+            child: Padding(
+              padding:
+                  EdgeInsets.only(left: getSize(20), right: getSize(20)),
+              child:  WebView(
+              initialUrl: "http://fndevelop.democ.in/",
+              javascriptMode: JavascriptMode.unrestricted,
+              onWebViewCreated: (WebViewController webViewController) {
+                _controller.complete(webViewController);
+              },
+              onPageStarted: (String url) {
+                app.resolve<CustomDialogs>().showProgressDialog(context, "");
+              },
+              onPageFinished: (String url) {
+                print('Page finished loading: $url');
+                app.resolve<CustomDialogs>().hideProgressDialog();
+              },
+              gestureNavigationEnabled: true,
             ),
-          ],
+//              child: !isNullEmptyOrFalse(data)
+//                  ? WebView(
+//                      initialUrl: 'http://fndevelop.democ.in/',
+//                      onWebViewCreated:
+//                          (WebViewController webViewController) {
+//                        _controller = webViewController;
+//                        _loadHtmlFromAssets(data?.desc ?? "");
+//                      },
+//                    )
+//                  : SizedBox(),
+            ),
+          ),
         ));
   }
 
-  _loadHtmlFromAssets(String desc) async {
-    _controller.loadUrl(Uri.dataFromString(desc,
-            mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
-        .toString());
-  }
+//  _loadHtmlFromAssets(String desc) async {
+//    _controller.loadUrl(Uri.dataFromString(desc,
+//            mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
+//        .toString());
+//  }
 
   Future<void> loadHtmlFromAssets(String filename, controller) async {
     String fileText = await rootBundle.loadString(filename);
