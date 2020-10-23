@@ -56,7 +56,6 @@ class ApiConstants {
 
   //Office
   static const String getSlots = commonUrl + "cabin-slot/paginate";
-  //Office
   static const String createOfficerequest = commonUrl + "cabin-schedule/create";
 }
 
