@@ -284,7 +284,7 @@ class DiamondConfig {
         actionDownload(list);
         break;
       case ActionMenuConstant.ACTION_TYPE_SHARE:
-        actionShare(list);
+        actionShare(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_COMPARE:
         var dict = Map<String, dynamic>();
@@ -392,7 +392,9 @@ class DiamondConfig {
 
   actionDownload(List<DiamondModel> list) {}
 
-  actionShare(List<DiamondModel> list) {}
+  actionShare(BuildContext context, List<DiamondModel> list) {
+    openSharePopUp(context);
+  }
 
   callApiFoCreateTrack(
       BuildContext context, List<DiamondModel> list, int trackType,
@@ -633,7 +635,7 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
     case BorderConstant.BORDER_LEFT_RIGHT:
       return BoxDecoration(
         // boxShadow: getBoxShadow(context),
-       // borderRadius: BorderRadius.circular(getSize(5)),
+        // borderRadius: BorderRadius.circular(getSize(5)),
         border: Border(
           left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
           right: BorderSide(width: 1.0, color: appTheme.colorPrimary),
@@ -654,7 +656,7 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
       );
     default:
       return BoxDecoration(
-       // borderRadius: BorderRadius.circular(getSize(5)),
+        // borderRadius: BorderRadius.circular(getSize(5)),
         border: Border(
           top: BorderSide(width: 0, color: appTheme.whiteColor),
           left: BorderSide(width: 0, color: appTheme.whiteColor),
@@ -663,4 +665,134 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
         ),
       );
   }
+}
+
+openSharePopUp(BuildContext context) {
+  List<StoneModel> stoneList = [
+    StoneModel(1, "Stock"),
+    StoneModel(2, "Cerificate"),
+    StoneModel(3, "Real Image"),
+    StoneModel(4, "Plotting Image"),
+    StoneModel(5, "Heart & Arrow"),
+    StoneModel(6, "Asset Scope"),
+    StoneModel(7, "Video"),
+  ];
+
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: StatefulBuilder(
+            builder: (context, StateSetter setsetter) {
+              return Padding(
+                padding: EdgeInsets.all(getSize(10)),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Share Stone",
+                      style: appTheme.black16TextStyle,
+                    ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: stoneList.length,
+                      itemBuilder: (context, i) {
+                        return InkWell(
+                          onTap: () {
+                            setsetter(() {
+                              stoneList[i].isSelected = !stoneList[i].isSelected;
+                            });
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: getSize(20), bottom: getSize(10)),
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  stoneList[i].isSelected
+                                      ? selectedCheckbox
+                                      : unSelectedCheckbox,
+                                  height: getSize(20),
+                                  width: getSize(20),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: getSize(10)),
+                                  child: Text(
+                                    stoneList[i].title,
+                                    style: appTheme.black14TextStyle,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              // alignment: Alignment.bottomCenter,
+                              padding: EdgeInsets.symmetric(
+                                vertical: getSize(15),
+                              ),
+                              decoration: BoxDecoration(
+                                color: appTheme.colorPrimary.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(getSize(5)),
+                              ),
+                              child: Text(
+                                R.string().commonString.cancel,
+                                textAlign: TextAlign.center,
+                                style: appTheme.blue14TextStyle
+                                    .copyWith(fontSize: getFontSize(16)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: getSize(20),
+                        ),
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+
+                            },
+                            child: Container(
+                              //alignment: Alignment.bottomCenter,
+                              padding: EdgeInsets.symmetric(
+                                vertical: getSize(15),
+                              ),
+                              decoration: BoxDecoration(
+                                  color: appTheme.colorPrimary,
+                                  borderRadius: BorderRadius.circular(getSize(5)),
+                                  boxShadow: getBoxShadow(context)),
+                              child: Text(
+                                R.string().screenTitle.share,
+                                textAlign: TextAlign.center,
+                                style: appTheme.white16TextStyle,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              );
+            },
+          ),
+        );
+      });
+}
+
+class StoneModel {
+  int id;
+  String title;
+  bool isSelected;
+
+  StoneModel(this.id, this.title, {this.isSelected = false});
 }

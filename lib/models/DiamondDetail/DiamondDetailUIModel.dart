@@ -1,6 +1,36 @@
 class DiamondDetailUIAPIKeys {
   static const String pricePerCarat = "ctPr";
   static const String amount = "amt";
+  static const String stoneId = "stoneId";
+  static const String shpNm = "shpNm";
+  static const String crt = "crt";
+  static const String shdNm = "shdNm";
+  static const String cutNm = "cutNm";
+  static const String polNm = "polNm";
+  static const String symNm = "symNm";
+  static const String fluNm = "fluNm";
+  static const String lbNm = "lbNm";
+  static const String rptNo = "rptNo";
+  static const String back = "back";
+  static const String mlkNm = "mlkNm";
+  static const String eClnNm = "eClnNm";
+  static const String length = "length";
+  static const String width = "width";
+  static const String height = "height";
+  static const String ratio = "ratio";
+  static const String depPer = "depPer";
+  static const String tblPer = "tblPer";
+  static const String cHgt = "cHgt";
+  static const String cAng = "cAng";
+  static const String pAng = "pAng";
+  static const String girdleStr = "girdleStr";
+  static const String grdlCondNm = "grdlCondNm";
+  static const String cultNm = "cultNm";
+  static const String cultCondNm = "cultCondNm";
+  static const String hANm = "hANm";
+  static const String comments = "comments";
+  static const String kToSStr = "kToSStr";
+
 }
 
 class DiamondDetailUIModel {

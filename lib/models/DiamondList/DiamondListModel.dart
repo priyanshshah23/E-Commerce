@@ -355,7 +355,7 @@ class DiamondModel {
   String polNm;
   num rap;
   num crt;
-  num back;
+  num back=0;
   num ctPr;
   num amt;
   String shpNm;
@@ -411,6 +411,8 @@ class DiamondModel {
   int groupNo;
   double marginTop=0;
   double marginBottom=0;
+  num plusAmount=0;
+  num minusAmount=0;
   String displayTitle;
 
   bool isSelectedForComparechange = false; //for compare changes screen
@@ -439,20 +441,22 @@ class DiamondModel {
 
   getWatchlistPer() {
     List<String> list = [];
-    if (back >= 0) {
-      if (selectedBackPer == null) {
-        selectedBackPer = (back + 1).toString();
+    if(back !=null){
+      if (back >= 0) {
+        if (selectedBackPer == null) {
+          selectedBackPer = (back + 1).toString();
+        }
+        list.add((back + 1).toString());
+        list.add((back + 2).toString());
+        list.add((back + 3).toString());
+      } else {
+        if (selectedBackPer == null) {
+          selectedBackPer = (back - 1).toString();
+        }
+        list.add((back - 1).toString());
+        list.add((back - 2).toString());
+        list.add((back - 3).toString());
       }
-      list.add((back + 1).toString());
-      list.add((back + 2).toString());
-      list.add((back + 3).toString());
-    } else {
-      if (selectedBackPer == null) {
-        selectedBackPer = (back - 1).toString();
-      }
-      list.add((back - 1).toString());
-      list.add((back - 2).toString());
-      list.add((back - 3).toString());
     }
     return list;
   }

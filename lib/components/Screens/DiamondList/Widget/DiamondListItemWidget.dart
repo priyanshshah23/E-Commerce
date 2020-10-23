@@ -21,7 +21,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   @override
   void initState() {
     super.initState();
-    if (widget.item.isAddToOffer ?? false) {
+    if (widget.item.isAddToOffer ?? false || widget.item.isAddToBid ?? false) {
       RxBus.register<bool>(tag: eventBusDropDown).listen((event) {
         setState(() {});
       });
@@ -427,10 +427,15 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                               border: Border.all(color: appTheme.dividerColor),
                               borderRadius: BorderRadius.circular(getSize(5))),
                           child: getText(PriceUtilities.getPrice(
-                              widget.item.getFinalAmount())),
+                              widget.item.ctPr)),
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            setState(() {
+                              widget.item.plusAmount += 20;
+                              RxBus.post(true, tag: eventBusDropDown);
+                            });
+                          },
                           child: Container(
                             margin: EdgeInsets.only(left: getSize(10)),
                             decoration: BoxDecoration(
