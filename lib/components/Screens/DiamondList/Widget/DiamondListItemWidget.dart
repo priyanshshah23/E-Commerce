@@ -10,14 +10,11 @@ import 'package:rxbus/rxbus.dart';
 class DiamondItemWidget extends StatefulWidget {
   DiamondModel item;
   ActionClick actionClick;
-  int leftPadding;
-  int rightPadding;
+  num leftPadding;
+  num rightPadding;
 
   DiamondItemWidget(
-      {this.item,
-      this.actionClick,
-      this.leftPadding ,
-      this.rightPadding });
+      {this.item, this.actionClick, this.leftPadding=0, this.rightPadding=0});
 
   @override
   _DiamondItemWidgetState createState() => _DiamondItemWidgetState();
@@ -42,8 +39,12 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       },
       child: Padding(
         padding: EdgeInsets.only(
-          left: getSize(Spacing.leftPadding),
-          right: getSize(Spacing.rightPadding),
+          left:getSize( widget.leftPadding != 0
+              ? widget.leftPadding
+              : Spacing.leftPadding),
+          right: getSize(widget.rightPadding != 0
+              ? widget.leftPadding
+              : Spacing.rightPadding),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -550,6 +551,12 @@ getText(String text) {
   return Text(
     text,
     style: appTheme.black12TextStyle,
+  );
+}
+getPrimaryText(String text) {
+  return Text(
+    text,
+    style: appTheme.primary16TextStyle,
   );
 }
 
