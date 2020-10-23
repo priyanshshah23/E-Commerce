@@ -758,7 +758,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
     );
   }
 
-  void _callApiForStateList({String countryId, bool isShowDialogue = false, bool isGet = false, String state}) {
+  void _callApiForStateList({String countryId, bool isShowDialogue = false, bool isGet = false, String state, String city}) {
     StateListReq req = StateListReq();
     req.country = countryId;
 
@@ -802,7 +802,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
           if(element.id == state) {
             _stateController.text = element.name;
             selectedStateItem = element;
-            _callApiForCityList(countryId: selectedCountryItem.id,stateId: selectedStateItem.id, isGet: true, city: state);
+            _callApiForCityList(countryId: selectedCountryItem.id,stateId: selectedStateItem.id, isGet: true, city: city);
           }
         });
       }
@@ -875,7 +875,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
         if(element.id == resp.data.country) {
           _countryController.text = element.name;
           selectedCountryItem = element;
-          _callApiForStateList(countryId: element.id,isGet: true, state: resp.data.state);
+          _callApiForStateList(countryId: element.id,isGet: true, state: resp.data.state, city: resp.data.city);
         }
       });
       setState(() {});
