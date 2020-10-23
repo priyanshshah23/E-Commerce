@@ -163,6 +163,11 @@ class DiamondConfig {
             .resolve<ServiceModule>()
             .networkService()
             .diamondMatchPairList(dict);
+      case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .stoneOfTheDay(dict);
     }
   }
 

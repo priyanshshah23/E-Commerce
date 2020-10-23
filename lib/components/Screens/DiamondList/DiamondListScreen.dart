@@ -170,7 +170,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         break;
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
         dict["type"] = "stone_of_day";
-        
+        break;
 
     }
 
@@ -188,6 +188,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
         case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
         case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
+        case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
           List<DiamondModel> list = [];
           diamondListResp.data.list.forEach((element) {
             list.add(element.diamond);

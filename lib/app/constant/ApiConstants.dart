@@ -3,13 +3,13 @@ import '../app.export.dart';
 class ApiConstants {
   // static const String PROXY_URL = "PROXY 192.168.2.124:8888";
 //   static const String PROXY_URL = "PROXY 192.168.0.117:8888";
-// static const String PROXY_URL = "PROXY 192.168.0.116:8888";
+static const String PROXY_URL = "PROXY 192.168.0.116:8888";
 // static const String PROXY_URL = "PROXY 192.168.225.188:8888";
 //  static const String PROXY_URL = "PROXY 192.168.0.73:8888";
   //static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 //  static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 // static const String PROXY_URL = "PROXY 192.168.225.121:8888"; // Brijesh
-  static const String PROXY_URL = "PROXY localhost:8888"; // Brijesh
+  // static const String PROXY_URL = "PROXY localhost:8888"; // Brijesh
 
   static const String imageBaseURL = baseURL;
 
@@ -30,6 +30,10 @@ class ApiConstants {
   static const String diamondList = commonUrl + "diamond/paginate";
   static const String diamondMatchPair =
       commonUrl + "match-pair/diamond/filter";
+
+  static const String stoneOfTheDay =
+      commonUrl + "featuredStone/paginate";
+
   static const String diamondTrackList = commonUrl + "diamond-track/paginate";
   static const String diamondCommentList =
       commonUrl + "diamond-comment/by-user";

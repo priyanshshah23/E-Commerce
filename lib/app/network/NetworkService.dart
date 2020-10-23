@@ -59,7 +59,8 @@ abstract class NetworkService {
   Future<BaseApiResp> changePassword(@Body() ChangePasswordReq req);
 
   @POST(ApiConstants.personalInformation)
-  Future<PersonalInformationViewResp> personalInformation(@Body() PersonalInformationReq req);
+  Future<PersonalInformationViewResp> personalInformation(
+      @Body() PersonalInformationReq req);
 
   @GET(ApiConstants.personalInformationView)
   Future<PersonalInformationViewResp> personalInformationView();
@@ -79,6 +80,10 @@ abstract class NetworkService {
 
   @POST(ApiConstants.diamondMatchPair)
   Future<DiamondListResp> diamondMatchPairList(
+      @Body() Map<String, dynamic> req);
+
+  @POST(ApiConstants.stoneOfTheDay)
+  Future<DiamondListResp> stoneOfTheDay(
       @Body() Map<String, dynamic> req);
 
   @POST(ApiConstants.diamondBidList)
