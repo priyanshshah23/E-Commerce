@@ -615,6 +615,130 @@ Future showNotesDialog(BuildContext context, ActionClick actionClick) {
   );
 }
 
+Future showEnquiryDialog(BuildContext context, ActionClick actionClick) {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _commentController = TextEditingController();
+  bool autovalid = false;
+
+  return showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: appTheme.whiteColor,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(15),
+        topRight: Radius.circular(15),
+      ),
+    ),
+    builder: (context) {
+      return StatefulBuilder(builder: (context, StateSetter setsetter) {
+        return Padding(
+          padding: MediaQuery.of(context).viewInsets,
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              autovalidate: autovalid,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding:
+                        EdgeInsets.only(top: getSize(28), bottom: getSize(21)),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        R.string().screenTitle.enquiry,
+                        style: appTheme.commonAlertDialogueTitleStyle,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: getSize(20),
+                        right: getSize(20),
+                        bottom: getSize(20),
+                        top: getSize(10)),
+                    child: CommonTextfield(
+                      autoFocus: false,
+                      textOption: TextFieldOption(
+                        maxLine: 3,
+                        hintText: R.string().screenTitle.remarks,
+                        inputController: _commentController,
+                        formatter: [
+                          WhitelistingTextInputFormatter(
+                              new RegExp(alphaRegEx)),
+                          BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+                        ],
+                        //isSecureTextField: false
+                      ),
+                      validation: (text) {
+                        if (text.isEmpty) {
+                          return R.string().errorString.pleaseEnterRemarks;
+                        }
+                      },
+                      textCallback: (text) {},
+                      inputAction: TextInputAction.done,
+                      onNextPress: () {
+                        FocusScope.of(context).unfocus();
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        right: getSize(10),
+                        left: getSize(26),
+                        bottom: getSize(20)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Expanded(
+                          child: FlatButton(
+                            textColor: appTheme.colorPrimary,
+                            padding: EdgeInsets.all(getSize(0)),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              R.string().commonString.cancel,
+                              style: appTheme.black16TextStyle,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: FlatButton(
+                            textColor: appTheme.colorPrimary,
+                            padding: EdgeInsets.all(getSize(0)),
+                            onPressed: () {
+                              if (_formKey.currentState.validate()) {
+                                actionClick(ManageCLick(
+                                    type: clickConstant.CLICK_TYPE_CONFIRM,
+                                    remark: _commentController.text));
+                              } else {
+                                setsetter(() {
+                                  autovalid = true;
+                                });
+                              }
+                            },
+                            child: Text(
+                              R.string().screenTitle.addEnquiry,
+                              style: appTheme.primary16TextStyle,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      });
+    },
+  );
+}
+
 Future showPlaceOrderDialog(BuildContext context, ActionClick actionClick) {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
@@ -622,6 +746,11 @@ Future showPlaceOrderDialog(BuildContext context, ActionClick actionClick) {
   final TextEditingController _commentController = TextEditingController();
   String selectedDate;
   bool autovalid = false;
+  List<String> invoiceList = [
+    InvoiceTypesString.today,
+    InvoiceTypesString.tomorrow,
+    InvoiceTypesString.later
+  ];
 
   return showModalBottomSheet(
     context: context,
@@ -705,50 +834,10 @@ Future showPlaceOrderDialog(BuildContext context, ActionClick actionClick) {
                       style: appTheme.black16TextStyle,
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: getSize(20)),
-                    child: InkWell(
-                      onTap: () {
-                        FocusScope.of(context).unfocus();
-                        DateUtilities()
-                            .pickDateDialog(context)
-                            .then((pickDate) {
-                          selectedDate = pickDate.toIso8601String();
-                          _dateController.text = DateUtilities()
-                              .convertServerDateToFormatterString(
-                            pickDate.toIso8601String(),
-                            formatter: DateUtilities.ddmmyyyy_,
-                          );
-//                      _dateController.text = selectedDate.toIso8601String();
-                        });
-                      },
-                      child: AbsorbPointer(
-                        child: CommonTextfield(
-                          autoFocus: false,
-                          textOption: TextFieldOption(
-                            hintText: R.string().commonString.selected,
-                            maxLine: 1,
-                            inputController: _dateController,
-                            formatter: [
-                              WhitelistingTextInputFormatter(
-                                  new RegExp(alphaRegEx)),
-                              BlacklistingTextInputFormatter(
-                                  RegExp(RegexForEmoji))
-                            ],
-                            //isSecureTextField: false
-                          ),
-                          textCallback: (text) {},
-                          validation: (text) {
-                            if (text.isEmpty) {
-                              return "Please select date.";
-                            }
-                          },
-                          inputAction: TextInputAction.next,
-                          onNextPress: () {},
-                        ),
-                      ),
-                    ),
-                  ),
+                  setInvoiceDropDown(context, _dateController, invoiceList,
+                      (value) {
+                    _dateController.text = value;
+                  }),
                   Padding(
                     padding: EdgeInsets.only(
                         left: getSize(20),
@@ -829,21 +918,11 @@ Future showPlaceOrderDialog(BuildContext context, ActionClick actionClick) {
                             padding: EdgeInsets.all(getSize(0)),
                             onPressed: () {
                               if (_formKey.currentState.validate()) {
-                                if (DateTime.parse(selectedDate)
-                                        .millisecondsSinceEpoch <
-                                    DateTime.now().millisecondsSinceEpoch) {
-                                  app.resolve<CustomDialogs>().errorDialog(
-                                      context,
-                                      R.string().commonString.toDate,
-                                      R.string().errorString.fromGreaterTo,
-                                      btntitle: R.string().commonString.ok);
-                                } else {
-                                  actionClick(ManageCLick(
-                                      type: clickConstant.CLICK_TYPE_CONFIRM,
-                                      remark: _commentController.text,
-                                      companyName: _nameController.text,
-                                      date: _dateController.text));
-                                }
+                                actionClick(ManageCLick(
+                                    type: clickConstant.CLICK_TYPE_CONFIRM,
+                                    remark: _commentController.text,
+                                    companyName: _nameController.text,
+                                    date: _dateController.text));
                               } else {
                                 setsetter(() {
                                   autovalid = true;
@@ -868,6 +947,60 @@ Future showPlaceOrderDialog(BuildContext context, ActionClick actionClick) {
     },
   );
 }
+
+Widget setInvoiceDropDown(
+        BuildContext context,
+        TextEditingController _dateController,
+        List<String> list,
+        Function(String) selectedValue,
+        {bool isPer = false}) =>
+    PopupMenuButton<String>(
+      shape: TooltipShapeBorder(arrowArc: 0.5),
+      onSelected: (newValue) {
+        // add this property
+        selectedValue(newValue);
+      },
+      itemBuilder: (context) => [
+        for (var item in list) getPopupItems(item),
+        PopupMenuItem(
+          height: getSize(30),
+          value: "Start",
+          child: SizedBox(),
+        ),
+      ],
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: getSize(Spacing.leftPadding),
+          right: getSize(Spacing.rightPadding),
+        ),
+        child: AbsorbPointer(
+          child: CommonTextfield(
+              enable: false,
+              textOption: TextFieldOption(
+                  hintText: R.string().errorString.selectInvoiceDate,
+                  maxLine: 1,
+                  keyboardType: TextInputType.text,
+                  type: TextFieldType.DropDown,
+                  inputController: _dateController,
+                  isSecureTextField: false),
+              textCallback: (text) {
+//                  setState(() {
+//                    checkValidation();
+//                  });
+              },
+              validation: (text) {
+                if (text.isEmpty) {
+                  return R.string().errorString.selectInvoiceDate;
+                }
+              },
+              inputAction: TextInputAction.next,
+              onNextPress: () {
+                FocusScope.of(context).unfocus();
+              }),
+        ),
+      ),
+      offset: Offset(25, 110),
+    );
 
 Future openBottomSheetForSavedSearch(
     BuildContext context, Map<String, dynamic> req, String filterId) {

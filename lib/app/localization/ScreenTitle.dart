@@ -128,6 +128,7 @@ class ScreenTitle {
   final String todayDiscPer;
   final String addOffer;
   final String addComment;
+  final String addEnquiry;
   final String addToOffice;
   final String hours;
   final String note;
@@ -184,6 +185,7 @@ class ScreenTitle {
     this.signup = "Sign up",
     this.addToOffice = "Add To Office",
     this.addComment = "Add Comment",
+    this.addEnquiry = "Add Enquiry",
     this.finalOffer = "Final Offer",
     this.finalDisc = "Final Disc",
     this.finalRate = "Final Rate",

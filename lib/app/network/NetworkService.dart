@@ -10,6 +10,7 @@ import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
+import 'package:diamnow/models/Order/OrderListModel.dart';
 import 'package:diamnow/models/QuickSearch/QuickSearchModel.dart';
 import 'package:diamnow/models/Slot/SlotModel.dart';
 import 'package:diamnow/models/StaticPage/StaticPageModel.dart';
@@ -59,7 +60,8 @@ abstract class NetworkService {
   Future<BaseApiResp> changePassword(@Body() ChangePasswordReq req);
 
   @POST(ApiConstants.personalInformation)
-  Future<PersonalInformationViewResp> personalInformation(@Body() PersonalInformationReq req);
+  Future<PersonalInformationViewResp> personalInformation(
+      @Body() PersonalInformationReq req);
 
   @GET(ApiConstants.personalInformationView)
   Future<PersonalInformationViewResp> personalInformationView();
@@ -86,6 +88,9 @@ abstract class NetworkService {
 
   @POST(ApiConstants.diamondOfficeList)
   Future<DiamondListResp> diamondOfficeList(@Body() Map<String, dynamic> req);
+
+  @POST(ApiConstants.diamondOrderList)
+  Future<OrderListResp> diamondOrderList(@Body() Map<String, dynamic> req);
 
   @POST(ApiConstants.diamondTrackList)
   Future<DiamondListResp> diamondTrackList(@Body() Map<String, dynamic> req);

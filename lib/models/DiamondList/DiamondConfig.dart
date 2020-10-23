@@ -168,6 +168,7 @@ class DiamondConfig {
             .resolve<ServiceModule>()
             .networkService()
             .diamondOfficeList(dict);
+
     }
   }
 
@@ -306,8 +307,13 @@ class DiamondConfig {
   }
 
   actionAddToEnquiry(BuildContext context, List<DiamondModel> list) {
-    callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_ENQUIRY,
-        title: "Added in Enquiry");
+    showEnquiryDialog(context, (manageClick) {
+      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
+        callApiFoCreateTrack(
+            context, list, DiamondTrackConstant.TRACK_TYPE_ENQUIRY,
+            isPop: true, remark: manageClick.remark, title: "Added in Enquiry");
+      }
+    });
   }
 
   actionAddToWishList(BuildContext context, List<DiamondModel> list) {
@@ -361,6 +367,8 @@ class DiamondConfig {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
         callApiFoCreateTrack(
             context, list, DiamondTrackConstant.TRACK_TYPE_OFFER,
+            remark: manageClick.remark,
+            companyName: manageClick.companyName,
             isPop: true);
       }
     });
@@ -407,11 +415,11 @@ class DiamondConfig {
       case DiamondTrackConstant.TRACK_TYPE_OFFER:
         req.remarks = remark;
         req.company = companyName;
+        req.trackType = trackType;
         break;
       case DiamondTrackConstant.TRACK_TYPE_CART:
       case DiamondTrackConstant.TRACK_TYPE_ENQUIRY:
       case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
-      case DiamondTrackConstant.TRACK_TYPE_OFFER:
         req.trackType = trackType;
         break;
       case DiamondTrackConstant.TRACK_TYPE_BID:
@@ -425,20 +433,24 @@ class DiamondConfig {
       diamonds = Diamonds(
           diamond: element.id,
           trackDiscount: element.back,
-          newDiscount: num.parse(element.selectedBackPer),
           trackAmount: element.amt,
           trackPricePerCarat: element.ctPr);
       switch (trackType) {
+        case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
+          diamonds.newDiscount = num.parse(element.selectedBackPer);
+          break;
         case DiamondTrackConstant.TRACK_TYPE_COMMENT:
+        case DiamondTrackConstant.TRACK_TYPE_ENQUIRY:
           diamonds.remarks = remark;
           break;
         case DiamondTrackConstant.TRACK_TYPE_OFFER:
           diamonds.vStnId = element.vStnId;
+          diamonds.newDiscount = num.parse(element.selectedBackPer);
           diamonds.newAmount = element.getFinalAmount();
           diamonds.newPricePerCarat = element.getFinalRate();
           int hour = int.parse(element.selectedOfferHour);
           var date = DateTime.now();
-          diamonds.offerValidDate = date.toUtc().toIso8601String();
+          diamonds.offerValidDate = DateTime.now().toUtc().toIso8601String();
 
           break;
         case DiamondTrackConstant.TRACK_TYPE_BID:
@@ -490,6 +502,17 @@ class DiamondConfig {
     PlaceOrderReq req = PlaceOrderReq();
     req.company = companyName;
     req.comment = remark;
+    switch (date) {
+      case InvoiceTypesString.today:
+        req.date = InvoiceTypes.today.toString();
+        break;
+      case InvoiceTypesString.tomorrow:
+        req.date = InvoiceTypes.tomorrow.toString();
+        break;
+      case InvoiceTypesString.later:
+        req.date = InvoiceTypes.later.toString();
+        break;
+    }
     req.date = date;
     req.diamonds = [];
     list.forEach((element) {

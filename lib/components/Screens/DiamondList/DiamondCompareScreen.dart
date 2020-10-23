@@ -1,5 +1,4 @@
 import 'dart:ffi';
-
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
@@ -23,6 +22,7 @@ import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:flutter/material.dart';
+import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
 class DiamondCompareScreen extends StatefulScreenWidget {
   static const route = "Diamond Compare Screen";
@@ -54,8 +54,11 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
   List<DiamondModel> arrayDiamond;
   bool isCheckBoxChecked = false;
 
+  //will store all apikeys of not unique value.
   List<String> ignorableApiKeys = [];
+
   // ScrollController sc;
+  LinkedScrollControllerGroup _controllers;
 
   _DiamondCompareScreenState({this.moduleType, this.arrayDiamond});
 
@@ -68,6 +71,7 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
     diamondConfig.initItems();
 
     // sc = ScrollController();
+    _controllers = LinkedScrollControllerGroup();
   }
 
   void _onReorder(int oldIndex, int newIndex) {
@@ -485,44 +489,48 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
       bottomNavigationBar: getBottomTab(),
       body: Padding(
         padding: EdgeInsets.only(left: getSize(20), right: getSize(20)),
-        child: ReorderableListView(
-          scrollController: ScrollController(initialScrollOffset: 50),
-          onReorder: _onReorder,
-          scrollDirection: Axis.horizontal,
-          padding: EdgeInsets.symmetric(horizontal: 8.0),
-          children: List.generate(
-            arrayDiamond.length,
-            (index) {
-              return !isCheckBoxChecked || arrayDiamond.length==1
-                  ? DiamondCompareWidget(
-                      // sc:sc,
-                      diamondModel: this.arrayDiamond[index],
-                      index: index,
-                      key: Key(index.toString()),
-                      deleteWidget: (index) {
-                        setState(() {
-                          arrayDiamond.removeAt(index);
-                        });
-                      },
-                    )
-                  : DiamondCompareWidget(
-                      ignorableApiKeys: ignorableApiKeys,
-                      diamondModel: this.arrayDiamond[index],
-                      index: index,
-                      key: Key(index.toString()),
-                      deleteWidget: (index) {
-                        setState(() {
-                          arrayDiamond.removeAt(index);
-                        });
-                      },
-                    );
-              // return Image.asset(
-              //   placeHolder,
-              //   width: getSize(200),
-              //   height: getSize(2000),
-              //   key: Key(index.toString()),
-              // );
-            },
+        child: Directionality(
+          textDirection: TextDirection.ltr,
+          child: ReorderableListView(
+            scrollController: ScrollController(initialScrollOffset: 50),
+            onReorder: _onReorder,
+            scrollDirection: Axis.horizontal,
+            padding: EdgeInsets.symmetric(horizontal: 8.0),
+            children: List.generate(
+              arrayDiamond.length,
+              (index) {
+                ScrollController sc = _controllers.addAndGet();
+                return !isCheckBoxChecked || arrayDiamond.length == 1
+                    ? DiamondCompareWidget(
+                        sc: sc,
+                        diamondModel: this.arrayDiamond[index],
+                        index: index,
+                        key: Key(index.toString()),
+                        deleteWidget: (index) {
+                          setState(() {
+                            arrayDiamond.removeAt(index);
+                          });
+                        },
+                      )
+                    : DiamondCompareWidget(
+                        ignorableApiKeys: ignorableApiKeys,
+                        diamondModel: this.arrayDiamond[index],
+                        index: index,
+                        key: Key(index.toString()),
+                        deleteWidget: (index) {
+                          setState(() {
+                            arrayDiamond.removeAt(index);
+                          });
+                        },
+                      );
+                // return Image.asset(
+                //   placeHolder,
+                //   width: getSize(200),
+                //   height: getSize(2000),
+                //   key: Key(index.toString()),
+                // );
+              },
+            ),
           ),
         ),
       ),

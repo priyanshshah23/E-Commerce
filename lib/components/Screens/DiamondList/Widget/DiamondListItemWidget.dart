@@ -10,8 +10,14 @@ import 'package:rxbus/rxbus.dart';
 class DiamondItemWidget extends StatefulWidget {
   DiamondModel item;
   ActionClick actionClick;
+  int leftPadding;
+  int rightPadding;
 
-  DiamondItemWidget({this.item, this.actionClick});
+  DiamondItemWidget(
+      {this.item,
+      this.actionClick,
+      this.leftPadding ,
+      this.rightPadding });
 
   @override
   _DiamondItemWidgetState createState() => _DiamondItemWidgetState();
@@ -471,8 +477,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           selectedValue(newValue);
         },
         itemBuilder: (context) => [
-          for (var item in backPerList)
-            getPopupItems(item, model, isPer: isPer),
+          for (var item in backPerList) getPopupItems(item, isPer: isPer),
           PopupMenuItem(
             height: getSize(30),
             value: "Start",
@@ -548,7 +553,7 @@ getText(String text) {
   );
 }
 
-getPopupItems(String per, DiamondModel model, {bool isPer = false}) {
+getPopupItems(String per, {bool isPer = false}) {
   return PopupMenuItem(
     value: per,
     height: getSize(20),
