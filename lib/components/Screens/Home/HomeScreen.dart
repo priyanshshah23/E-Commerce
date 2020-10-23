@@ -12,6 +12,7 @@ import 'package:diamnow/components/Screens/DashBoard/Dashboard.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
+import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -146,6 +147,27 @@ class _HomeScreenState extends State<HomeScreen> {
     currentWidget = ProfileList();
   }
 
+  openAboutUs() {
+    Map<String, dynamic> dict = new HashMap();
+    dict["type"] = StaticPageConstant.ABOUT_US;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = StaticPageScreen(dict);
+  }
+
+  openTermsAndCondition() {
+    Map<String, dynamic> dict = new HashMap();
+    dict["type"] = StaticPageConstant.TERMS_CONDITION;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = StaticPageScreen(dict);
+  }
+
+  openPrivacyPolicy() {
+    Map<String, dynamic> dict = new HashMap();
+    dict["type"] = StaticPageConstant.PRIVACY_POLICY;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = StaticPageScreen(dict);
+  }
+
   manageDrawerClick(BuildContext context, int type, bool isPop) {
     if (context != null) {
       if (isPop) Navigator.pop(context);
@@ -171,6 +193,15 @@ class _HomeScreenState extends State<HomeScreen> {
         case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
         case DiamondModuleConstant.MODULE_TYPE_MY_BID:
         case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
+        case DiamondModuleConstant.MODULE_TYPE_ABOUT_US:
+          openAboutUs();
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY:
+          openPrivacyPolicy();
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION:
+          openTermsAndCondition();
+          break;
         case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
           openDiamondList(type);
           break;
@@ -240,4 +271,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+
+
+
 }

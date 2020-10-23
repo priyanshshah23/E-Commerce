@@ -396,14 +396,45 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 );
           }
         } else if (obj.type == ActionMenuConstant.ACTION_TYPE_STATUS) {
-          showBottomSheetForMenu(context, diamondConfig.arrStatusMenu,
-              (manageClick) {}, R.string().commonString.status,
-              isDisplaySelection: false);
+        //  showStatusDialogue();
+//          showBottomSheetForMenu(context, diamondConfig.arrStatusMenu,
+//              (manageClick) {}, R.string().commonString.status,
+//              isDisplaySelection: false);
         } else if (obj.type == ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
           clearSelection();
         } else {
           manageBottomMenuClick(obj);
         }
+      },
+    );
+  }
+
+  showStatusDialogue() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) {
+        return Container(
+          color: appTheme.whiteColor,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                height: getSize(18),
+              ),
+              Text(
+                "Report Submitted",
+                style: AppTheme.of(context)
+                    .theme
+                    .textTheme
+                    .title
+                    .copyWith(color: ColorConstants.white),
+              ),
+            ],
+          ),
+        );
       },
     );
   }
