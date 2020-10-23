@@ -35,6 +35,7 @@ class ErrorString {
   final String drivingLicenseValidationText;
   final String PANCardValidationText;
   final String selectFromDate;
+  final String selectInvoiceDate;
   final String selectToDate;
   final String fromGreaterTo;
   final String enterTitle;
@@ -47,6 +48,7 @@ class ErrorString {
   final String pleaseEnterCompanyName;
   final String pleaseEnterCompanyCode;
   final String pleaseEnterComment;
+  final String pleaseEnterRemarks;
   final String enterPinCode;
   final String enterValidPinCode;
   final String fromValueGreateThanTo;
@@ -60,7 +62,9 @@ class ErrorString {
 
   const ErrorString({
     this.pleaseEnterCompanyName = 'Please enter company name.',
+    this.selectInvoiceDate = 'Select Invoice Date',
     this.pleaseEnterComment = 'Please enter comment.',
+    this.pleaseEnterRemarks = 'Please enter remarks.',
     this.selectExpiryDate = 'Please select expiry date.',
     this.enterOTP = 'Please enter code',
     this.pleaseEnterOTP = 'Please enter verification code.',

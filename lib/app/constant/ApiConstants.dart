@@ -4,7 +4,7 @@ class ApiConstants {
   // static const String PROXY_URL = "PROXY 192.168.2.124:8888";
 //   static const String PROXY_URL = "PROXY 192.168.0.117:8888";
 // static const String PROXY_URL = "PROXY 192.168.0.116:8888";
-//static const String PROXY_URL = "PROXY 192.168.225.188:8888";
+// static const String PROXY_URL = "PROXY 192.168.225.188:8888";
 //  static const String PROXY_URL = "PROXY 192.168.0.73:8888";
   static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 // static const String PROXY_URL = "PROXY 192.168.225.121:8888"; // Brijesh
@@ -29,10 +29,15 @@ class ApiConstants {
   static const String diamondList = commonUrl + "diamond/paginate";
   static const String diamondMatchPair =
       commonUrl + "match-pair/diamond/filter";
+
+  static const String stoneOfTheDay = commonUrl + "featuredStone/paginate";
+
   static const String diamondTrackList = commonUrl + "diamond-track/paginate";
   static const String diamondCommentList =
       commonUrl + "diamond-comment/by-user";
   static const String diamondBidList = commonUrl + "diamond-bid/paginate";
+  static const String diamondOfficeList = commonUrl + "cabin-schedule/list";
+  static const String diamondOrderList = commonUrl + "memo/paginate";
 
   static const String createDiamondTrack = commonUrl + "diamond-track/create";
   static const String upsetComment = commonUrl + "diamond-comment/upsert";
@@ -55,8 +60,11 @@ class ApiConstants {
 
   //Office
   static const String getSlots = commonUrl + "cabin-slot/paginate";
-  //Office
   static const String createOfficerequest = commonUrl + "cabin-schedule/create";
+
+  //Dashboard
+  static const String dashboard = commonUrl + "user/dashboard";
+  static const String deleteSavedSearch = commonUrl + "diamond/search/delete";
 }
 
 class DiamondUrls {

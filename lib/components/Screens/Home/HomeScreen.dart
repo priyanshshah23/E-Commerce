@@ -11,7 +11,9 @@ import 'package:diamnow/components/Screens/Auth/ProfileList.dart';
 import 'package:diamnow/components/Screens/DashBoard/Dashboard.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
+import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
+import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -136,14 +138,33 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  openDiamondOrderList(int moduleType) {
+    selectedType = moduleType;
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.ModuleType] = moduleType;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = OrderListScreen(
+      dict,
+      key: Key(moduleType.toString()),
+    );
+  }
+
   openProfile() {
     selectedType = DiamondModuleConstant.MODULE_TYPE_PROFILE;
     Map<String, dynamic> dict = new HashMap();
     dict[ArgumentConstant.ModuleType] =
         DiamondModuleConstant.MODULE_TYPE_PROFILE;
     dict[ArgumentConstant.IsFromDrawer] = true;
-//    currentWidget = Profile();
     currentWidget = ProfileList();
+  }
+
+  openSavedSearch() {
+    selectedType = DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.ModuleType] =
+        DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = SavedSearchScreen(dict);
   }
 
   manageDrawerClick(BuildContext context, int type, bool isPop) {
@@ -172,10 +193,18 @@ class _HomeScreenState extends State<HomeScreen> {
         case DiamondModuleConstant.MODULE_TYPE_MY_BID:
         case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
         case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
+        case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
+        case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
           openDiamondList(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_PROFILE:
           openProfile();
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
+          openDiamondOrderList(type);
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
+          openSavedSearch();
           break;
         case DiamondModuleConstant.MODULE_TYPE_LOGOUT:
           logout(context);

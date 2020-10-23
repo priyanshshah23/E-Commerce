@@ -391,6 +391,26 @@ class _NetworkService implements NetworkService {
   }
 
   @override
+  stoneOfTheDay(req) async {
+    ArgumentError.checkNotNull(req, 'req');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(req ?? <String, dynamic>{});
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'http://fndevelopapi.democ.in/device/v1/featuredStone/paginate',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = DiamondListResp.fromJson(_result.data);
+    return Future.value(value);
+  }
+
+  @override
   diamondBidList(req) async {
     ArgumentError.checkNotNull(req, 'req');
     const _extra = <String, dynamic>{};
@@ -407,6 +427,46 @@ class _NetworkService implements NetworkService {
             baseUrl: baseUrl),
         data: _data);
     final value = DiamondListResp.fromJson(_result.data);
+    return Future.value(value);
+  }
+
+  @override
+  diamondOfficeList(req) async {
+    ArgumentError.checkNotNull(req, 'req');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(req ?? <String, dynamic>{});
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'http://fndevelopapi.democ.in/device/v1/cabin-schedule/list',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = DiamondListResp.fromJson(_result.data);
+    return Future.value(value);
+  }
+
+  @override
+  diamondOrderList(req) async {
+    ArgumentError.checkNotNull(req, 'req');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(req ?? <String, dynamic>{});
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'http://fndevelopapi.democ.in/device/v1/memo/paginate',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = OrderListResp.fromJson(_result.data);
     return Future.value(value);
   }
 
@@ -490,6 +550,26 @@ class _NetworkService implements NetworkService {
   }
 
   @override
+  saveSearch(req) async {
+    ArgumentError.checkNotNull(req, 'req');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(req ?? <String, dynamic>{});
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'http://fndevelopapi.democ.in/web/v1/diamond/search/upsert',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = BaseApiResp.fromJson(_result.data);
+    return Future.value(value);
+  }
+
+  @override
   getSlots(req) async {
     ArgumentError.checkNotNull(req, 'req');
     const _extra = <String, dynamic>{};
@@ -530,14 +610,34 @@ class _NetworkService implements NetworkService {
   }
 
   @override
-  saveSearch(req) async {
+  dashboard(req) async {
     ArgumentError.checkNotNull(req, 'req');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://fndevelopapi.democ.in/web/v1/diamond/search/upsert',
+        'http://fndevelopapi.democ.in/device/v1/user/dashboard',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = DashboardResp.fromJson(_result.data);
+    return Future.value(value);
+  }
+
+  @override
+  deleteSavedSearch(req) async {
+    ArgumentError.checkNotNull(req, 'req');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(req ?? <String, dynamic>{});
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'http://fndevelopapi.democ.in/device/v1/diamond/search/delete',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',

@@ -182,6 +182,7 @@ class CommonString {
 
   //Colo range
   final String color;
+  final String date;
   final String colorGroup;
   final String clarity;
   final String clarityGroup;
@@ -221,6 +222,7 @@ class CommonString {
 
 
   const CommonString({
+    this.date = "Date",
     this.all = "All",
     this.status = "Status",
 

@@ -241,8 +241,12 @@ class User {
 //    loginOtp = json['loginOtp'];
 
     group = json['group'];
-    account =
-        json['account'] != null ? new Account.fromJson(json['account']) : null;
+    if (json['account'] != null) {
+      if (json['account'] is Map<String, dynamic>) {
+        account = new Account.fromJson(json['account']);
+      }
+    }
+
     accountTerm = json['accountTerm'] != null
         ? new AccountTerm.fromJson(json['accountTerm'])
         : null;
