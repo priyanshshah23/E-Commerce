@@ -158,3 +158,13 @@ class VirtualTypesString{
   static const String webConference = "Web Conference";
   static const String inPerson = "In Person";
 }
+class InvoiceTypesString{
+  static const String today = "Today";
+  static const String tomorrow = "Tommorrow";
+  static const String later = "Later";
+}
+class InvoiceTypes{
+  static const int today = 1;
+  static const int tomorrow = 2;
+  static const int later = 3;
+}

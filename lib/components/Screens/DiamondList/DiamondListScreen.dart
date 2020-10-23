@@ -187,14 +187,21 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
         case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
         case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
-        case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
-        case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
+        case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
+        case DiamondModuleConstant.MODULE_TYPE_MY_BID:
           List<DiamondModel> list = [];
           diamondListResp.data.list.forEach((element) {
-            list.add(element.diamond);
+            if (element.diamonds != null) {
+              element.diamonds.forEach((element) {
+                list.add(element);
+              });
+            } else {
+              list.add(element.diamond);
+            }
           });
           arraDiamond.addAll(list);
           break;
+
         default:
           arraDiamond.addAll(diamondListResp.data.diamonds);
           diamondConfig.setMatchPairItem(arraDiamond);

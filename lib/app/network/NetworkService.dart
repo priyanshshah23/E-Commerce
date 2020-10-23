@@ -11,6 +11,7 @@ import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
+import 'package:diamnow/models/Order/OrderListModel.dart';
 import 'package:diamnow/models/QuickSearch/QuickSearchModel.dart';
 import 'package:diamnow/models/Slot/SlotModel.dart';
 import 'package:diamnow/models/StaticPage/StaticPageModel.dart';
@@ -88,6 +89,12 @@ abstract class NetworkService {
 
   @POST(ApiConstants.diamondBidList)
   Future<DiamondListResp> diamondBidList(@Body() Map<String, dynamic> req);
+
+  @POST(ApiConstants.diamondOfficeList)
+  Future<DiamondListResp> diamondOfficeList(@Body() Map<String, dynamic> req);
+
+  @POST(ApiConstants.diamondOrderList)
+  Future<OrderListResp> diamondOrderList(@Body() Map<String, dynamic> req);
 
   @POST(ApiConstants.diamondTrackList)
   Future<DiamondListResp> diamondTrackList(@Body() Map<String, dynamic> req);
