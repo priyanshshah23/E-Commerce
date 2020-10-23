@@ -649,7 +649,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
   }
 
   void _callApiForCityList(
-      {String stateId, String countryId, bool isShowDialogue = false}) {
+      {String stateId, String countryId, bool isShowDialogue = false, bool isGet = false, String city}) {
     CityListReq req = CityListReq();
     req.state = stateId;
     req.country = countryId;
@@ -660,6 +660,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
         context,
         isProgress: true)
         .then((resp) {
+          cityList.clear();
       cityList.addAll(resp.data);
       if (isShowDialogue) {
         showDialog(
@@ -683,6 +684,14 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                   ));
             });
       }
+      if(isGet) {
+        cityList.forEach((element) {
+          if(element.id == city) {
+            _cityController.text = element.name;
+            selectedCityItem = element;
+          }
+        });
+      }
     }).catchError(
           (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
@@ -703,6 +712,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
         context,
         isProgress: true)
         .then((resp) {
+          countryList.clear();
       countryList.addAll(resp.data);
       if (isShowDialogue) {
         showDialog(
@@ -723,6 +733,8 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                       if (_countryController.text != countryList.name) {
                         _stateController.text = "";
                         _cityController.text = "";
+                        selectedStateItem = null;
+                        selectedCityItem = null;
                       }
                       selectedCountryItem = countryList;
                       _countryController.text = countryList.name;
@@ -750,7 +762,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
     );
   }
 
-  void _callApiForStateList({String countryId, bool isShowDialogue = false}) {
+  void _callApiForStateList({String countryId, bool isShowDialogue = false, bool isGet = false, String state, String city}) {
     StateListReq req = StateListReq();
     req.country = countryId;
 
@@ -760,6 +772,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
         context,
         isProgress: true)
         .then((resp) {
+          stateList.clear();
       stateList.addAll(resp.data);
       if (isShowDialogue) {
         showDialog(
@@ -779,6 +792,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                           StateList stateList}) {
                       if (_stateController.text != stateList.name) {
                         _cityController.text = "";
+                        selectedCityItem = null;
                       }
                       selectedStateItem = stateList;
                       _stateController.text = stateList.name;
@@ -788,6 +802,15 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                     },
                   ));
             });
+      }
+      if(isGet) {
+        stateList.forEach((element) {
+          if(element.id == state) {
+            _stateController.text = element.name;
+            selectedStateItem = element;
+            _callApiForCityList(countryId: selectedCountryItem.id,stateId: selectedStateItem.id, isGet: true, city: city);
+          }
+        });
       }
     }).catchError(
           (onError) => {
@@ -827,6 +850,12 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
           User user = app.resolve<PrefUtils>().getUserDetails();
           user.account=resp.data;
       app.resolve<PrefUtils>().saveUser(user);
+          app.resolve<CustomDialogs>().confirmDialog(
+            context,
+            title: R.string().commonString.successfully,
+            desc: resp.message,
+            positiveBtnTitle: R.string().commonString.ok,
+          );
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
         context,
@@ -857,16 +886,8 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
       countryList.forEach((element) {
         if(element.id == resp.data.country) {
           _countryController.text = element.name;
-        }
-      });
-      stateList.forEach((element) {
-        if(element.id == resp.data.state) {
-          _stateController.text = element.name;
-        }
-      });
-      cityList.forEach((element) {
-        if(element.id == resp.data.city) {
-          _cityController.text = element.name;
+          selectedCountryItem = element;
+          _callApiForStateList(countryId: element.id,isGet: true, state: resp.data.state, city: resp.data.city);
         }
       });
       setState(() {});

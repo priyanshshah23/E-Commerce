@@ -33,7 +33,7 @@ const successStatusCode = 200;
 const addedSuccesStatusCode = 201;
 const notFoundStatusCode = 404;
 
-const signupURl = "http://fndevelop.democ.in/signup";
+const signupURl = "http://fndevelop.democ.in/device/signup";
 const termConditionUrl = "https://loremipsum.io/";
 const privacyPolicyUrl = "https://loremipsum.io/";
 const aboutUsUrl = "https://loremipsum.io/";
@@ -153,17 +153,19 @@ class DiamondSearchType {
   static const int COLLECTION = 9;
 }
 
-class VirtualTypesString{
+class VirtualTypesString {
   static const String phoneCall = "Phone Call";
   static const String webConference = "Web Conference";
   static const String inPerson = "In Person";
 }
-class InvoiceTypesString{
+
+class InvoiceTypesString {
   static const String today = "Today";
   static const String tomorrow = "Tommorrow";
   static const String later = "Later";
 }
-class InvoiceTypes{
+
+class InvoiceTypes {
   static const int today = 1;
   static const int tomorrow = 2;
   static const int later = 3;

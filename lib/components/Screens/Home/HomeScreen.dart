@@ -16,6 +16,7 @@ import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
+import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -160,6 +161,30 @@ class _HomeScreenState extends State<HomeScreen> {
     currentWidget = ProfileList();
   }
 
+  openAboutUs() {
+    selectedType = DiamondModuleConstant.MODULE_TYPE_ABOUT_US;
+    Map<String, dynamic> dict = new HashMap();
+    dict["type"] = StaticPageConstant.ABOUT_US;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = StaticPageScreen(dict);
+  }
+
+  openTermsAndCondition() {
+    selectedType = DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION;
+    Map<String, dynamic> dict = new HashMap();
+    dict["type"] = StaticPageConstant.TERMS_CONDITION;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = StaticPageScreen(dict);
+  }
+
+  openPrivacyPolicy() {
+    selectedType = DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY;
+    Map<String, dynamic> dict = new HashMap();
+    dict["type"] = StaticPageConstant.PRIVACY_POLICY;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = StaticPageScreen(dict);
+  }
+
   openSavedSearch() {
     selectedType = DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
     Map<String, dynamic> dict = new HashMap();
@@ -194,6 +219,15 @@ class _HomeScreenState extends State<HomeScreen> {
         case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
         case DiamondModuleConstant.MODULE_TYPE_MY_BID:
         case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
+        case DiamondModuleConstant.MODULE_TYPE_ABOUT_US:
+          openAboutUs();
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY:
+          openPrivacyPolicy();
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION:
+          openTermsAndCondition();
+          break;
         case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
         case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
         case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
@@ -237,4 +271,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+
+
+
 }

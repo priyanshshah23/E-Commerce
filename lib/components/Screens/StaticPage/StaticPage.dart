@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
@@ -18,24 +19,24 @@ class StaticPageScreen extends StatefulScreenWidget {
 
   StaticPageScreen(Map<String, dynamic> arguments) {
     this.screenType = arguments["type"];
+
   }
 
   @override
   _StaticPageScreenState createState() =>
-      _StaticPageScreenState(screenType: screenType);
+      _StaticPageScreenState();
 }
 
-class _StaticPageScreenState extends StatefulScreenWidgetState {
-  String screenType;
+class _StaticPageScreenState extends State<StaticPageScreen> {
   StaticPageRespData data;
-  WebViewController _controller;
-
-  _StaticPageScreenState({this.screenType});
+//  WebViewController _controller;
+  final Completer<WebViewController> _controller =
+  Completer<WebViewController>();
 
   @override
   void initState() {
     super.initState();
-    callApi();
+
   }
 
   void callApi() {
@@ -44,7 +45,7 @@ class _StaticPageScreenState extends StatefulScreenWidgetState {
             () => app
                 .resolve<ServiceModule>()
                 .networkService()
-                .staticPage(screenType),
+                .staticPage(widget.screenType),
             context,
             isProgress: true)
         .then((staticPageResp) {
@@ -54,7 +55,7 @@ class _StaticPageScreenState extends StatefulScreenWidgetState {
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-            title: "$screenType Error",
+            title: "${widget.screenType} Error",
             desc: onError.message,
             positiveBtnTitle: "Try Again",
           );
@@ -63,45 +64,58 @@ class _StaticPageScreenState extends StatefulScreenWidgetState {
 
   @override
   Widget build(BuildContext context) {
+    //callApi();
     return Scaffold(
         appBar: getAppBar(
           context,
           getScreenTitle(),
-          leadingButton: getBackButton(context),
+          leadingButton: getDrawerButton(context,true),
         ),
-        body: Column(
-          children: <Widget>[
-            Container(
-              color: ColorConstants.white,
-              padding: EdgeInsets.only(
-                top: getSize(15),
-              ),
-              child: SafeArea(
-                child: Padding(
-                  padding:
-                      EdgeInsets.only(left: getSize(20), right: getSize(20)),
-                  child: !isNullEmptyOrFalse(data)
-                      ? WebView(
-                          initialUrl: 'about:blank',
-                          onWebViewCreated:
-                              (WebViewController webViewController) {
-                            _controller = webViewController;
-                            _loadHtmlFromAssets(data?.desc ?? "");
-                          },
-                        )
-                      : SizedBox(),
-                ),
-              ),
+        body: Container(
+          height: MathUtilities.screenHeight(context),
+          color: ColorConstants.white,
+          padding: EdgeInsets.only(
+            top: getSize(15),
+          ),
+          child: SafeArea(
+            child: Padding(
+              padding:
+                  EdgeInsets.only(left: getSize(20), right: getSize(20)),
+              child:  WebView(
+              initialUrl: "http://fndevelop.democ.in/",
+              javascriptMode: JavascriptMode.unrestricted,
+              onWebViewCreated: (WebViewController webViewController) {
+                _controller.complete(webViewController);
+              },
+              onPageStarted: (String url) {
+                app.resolve<CustomDialogs>().showProgressDialog(context, "");
+              },
+              onPageFinished: (String url) {
+                print('Page finished loading: $url');
+                app.resolve<CustomDialogs>().hideProgressDialog();
+              },
+              gestureNavigationEnabled: true,
             ),
-          ],
+//              child: !isNullEmptyOrFalse(data)
+//                  ? WebView(
+//                      initialUrl: 'http://fndevelop.democ.in/',
+//                      onWebViewCreated:
+//                          (WebViewController webViewController) {
+//                        _controller = webViewController;
+//                        _loadHtmlFromAssets(data?.desc ?? "");
+//                      },
+//                    )
+//                  : SizedBox(),
+            ),
+          ),
         ));
   }
 
-  _loadHtmlFromAssets(String desc) async {
-    _controller.loadUrl(Uri.dataFromString(desc,
-            mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
-        .toString());
-  }
+//  _loadHtmlFromAssets(String desc) async {
+//    _controller.loadUrl(Uri.dataFromString(desc,
+//            mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
+//        .toString());
+//  }
 
   Future<void> loadHtmlFromAssets(String filename, controller) async {
     String fileText = await rootBundle.loadString(filename);
@@ -111,11 +125,11 @@ class _StaticPageScreenState extends StatefulScreenWidgetState {
   }
 
   String getScreenTitle() {
-    if (screenType == StaticPageConstant.TERMS_CONDITION) {
+    if (widget.screenType == StaticPageConstant.TERMS_CONDITION) {
       return R.string().screenTitle.termsAndCondition;
-    } else if (screenType == StaticPageConstant.PRIVACY_POLICY) {
+    } else if (widget.screenType == StaticPageConstant.PRIVACY_POLICY) {
       return R.string().screenTitle.privacyPolicy;
-    } else if (screenType == StaticPageConstant.ABOUT_US) {
+    } else if (widget.screenType == StaticPageConstant.ABOUT_US) {
       return R.string().screenTitle.aboutUS;
     }
     /*else if (screenType == StaticPageConstant.CANCELLAION_POLICY) {

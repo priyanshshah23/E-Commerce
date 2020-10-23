@@ -291,13 +291,15 @@ class UserDrawerHeader extends StatelessWidget {
                                 width: getSize(12),
                               ),
                               SizedBox(width: getSize(8)),
-                              Text(
-                                app
-                                        .resolve<PrefUtils>()
-                                        .getUserDetails()
-                                        .email ??
-                                    "-",
-                                style: appTheme.black12TextStyle,
+                              Expanded(
+                                child: Text(
+                                  app
+                                          .resolve<PrefUtils>()
+                                          .getUserDetails()
+                                          .email ??
+                                      "-",
+                                  style: appTheme.black12TextStyle,
+                                ),
                               ),
                             ],
                           ),

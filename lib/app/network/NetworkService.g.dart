@@ -57,6 +57,26 @@ class _NetworkService implements NetworkService {
   }
 
   @override
+  signInAsGuest(req) async {
+    ArgumentError.checkNotNull(req, 'req');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(req?.toJson() ?? <String, dynamic>{});
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'http://fndevelopapi.democ.in/device/v1/guest/auth/login',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = LoginResp.fromJson(_result.data);
+    return Future.value(value);
+  }
+
+  @override
   cityList(req) async {
     ArgumentError.checkNotNull(req, 'req');
     const _extra = <String, dynamic>{};
@@ -664,6 +684,24 @@ class _NetworkService implements NetworkService {
             baseUrl: baseUrl),
         data: _data);
     final value = BaseApiResp.fromJson(_result.data);
+    return Future.value(value);
+  }
+
+  @override
+  getVersionUpdate() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'api/v1/version',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = VersionUpdateResp.fromJson(_result.data);
     return Future.value(value);
   }
 }

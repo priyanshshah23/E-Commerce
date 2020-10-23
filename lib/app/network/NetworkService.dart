@@ -7,6 +7,7 @@ import 'package:diamnow/models/Auth/ForgetPassword.dart';
 import 'package:diamnow/models/Auth/PersonalInformationModel.dart';
 import 'package:diamnow/models/Auth/ResetPasswordModel.dart';
 import 'package:diamnow/models/Dashboard/DashboardModel.dart';
+import 'package:diamnow/models/Auth/SignInAsGuestModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/LoginModel.dart';
@@ -15,6 +16,7 @@ import 'package:diamnow/models/Order/OrderListModel.dart';
 import 'package:diamnow/models/QuickSearch/QuickSearchModel.dart';
 import 'package:diamnow/models/Slot/SlotModel.dart';
 import 'package:diamnow/models/StaticPage/StaticPageModel.dart';
+import 'package:diamnow/models/Version/VersionUpdateResp.dart';
 import 'package:retrofit/retrofit.dart';
 import '../app.export.dart';
 
@@ -29,6 +31,9 @@ abstract class NetworkService {
 
   @POST(ApiConstants.login)
   Future<LoginResp> login(@Body() LoginReq req);
+
+  @POST(ApiConstants.signInAsGuest)
+  Future<LoginResp> signInAsGuest(@Body() SignInAsGuestReq req);
 
   @POST(ApiConstants.cityList)
   Future<CityListResp> cityList(@Body() CityListReq req);
@@ -128,4 +133,8 @@ abstract class NetworkService {
 
   @POST(ApiConstants.logout)
   Future<BaseApiResp> logout();
+
+  @GET(ApiConstants.getUpdation)
+  Future<VersionUpdateResp> getVersionUpdate();
+
 }

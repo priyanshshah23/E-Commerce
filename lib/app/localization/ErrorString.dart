@@ -8,6 +8,7 @@ class ErrorString {
   final String enterPhone;
   final String enterSkype;
   final String enterSamePassword;
+  final String versionError;
   final String enterUsername;
   final String enterValidEmail;
   final String enterValidPhone;
@@ -129,5 +130,6 @@ class ErrorString {
     this.selectTimeSlot = "Please select tiem slot",
     this.enterComments = "Please enter comment",
     this.selectVirtualType = "Please select virtual type",
+    this.versionError = "Version Error",
   });
 }
