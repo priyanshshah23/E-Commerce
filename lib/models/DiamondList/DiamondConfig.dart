@@ -163,6 +163,17 @@ class DiamondConfig {
             .resolve<ServiceModule>()
             .networkService()
             .diamondMatchPairList(dict);
+      case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .diamondOfficeList(dict);
+
+      case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .stoneOfTheDay(dict);
     }
   }
 
@@ -284,9 +295,18 @@ class DiamondConfig {
         actionDownload(list);
         break;
       case ActionMenuConstant.ACTION_TYPE_SHARE:
-        actionShare(list);
+        actionShare(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_COMPARE:
+        if (list.length < 2) {
+          app.resolve<CustomDialogs>().confirmDialog(
+                context,
+                title: "",
+                desc: "Please select at least 2 stone to compare.",
+                positiveBtnTitle: R.string().commonString.ok,
+              );
+          return;
+        }
         var dict = Map<String, dynamic>();
         dict[ArgumentConstant.DiamondList] = list;
         dict[ArgumentConstant.ModuleType] = moduleType;
@@ -301,8 +321,13 @@ class DiamondConfig {
   }
 
   actionAddToEnquiry(BuildContext context, List<DiamondModel> list) {
-    callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_ENQUIRY,
-        title: "Added in Enquiry");
+    showEnquiryDialog(context, (manageClick) {
+      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
+        callApiFoCreateTrack(
+            context, list, DiamondTrackConstant.TRACK_TYPE_ENQUIRY,
+            isPop: true, remark: manageClick.remark, title: "Added in Enquiry");
+      }
+    });
   }
 
   actionAddToWishList(BuildContext context, List<DiamondModel> list) {
@@ -356,6 +381,8 @@ class DiamondConfig {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
         callApiFoCreateTrack(
             context, list, DiamondTrackConstant.TRACK_TYPE_OFFER,
+            remark: manageClick.remark,
+            companyName: manageClick.companyName,
             isPop: true);
       }
     });
@@ -392,7 +419,9 @@ class DiamondConfig {
 
   actionDownload(List<DiamondModel> list) {}
 
-  actionShare(List<DiamondModel> list) {}
+  actionShare(BuildContext context, List<DiamondModel> list) {
+    openSharePopUp(context);
+  }
 
   callApiFoCreateTrack(
       BuildContext context, List<DiamondModel> list, int trackType,
@@ -402,11 +431,11 @@ class DiamondConfig {
       case DiamondTrackConstant.TRACK_TYPE_OFFER:
         req.remarks = remark;
         req.company = companyName;
+        req.trackType = trackType;
         break;
       case DiamondTrackConstant.TRACK_TYPE_CART:
       case DiamondTrackConstant.TRACK_TYPE_ENQUIRY:
       case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
-      case DiamondTrackConstant.TRACK_TYPE_OFFER:
         req.trackType = trackType;
         break;
       case DiamondTrackConstant.TRACK_TYPE_BID:
@@ -420,20 +449,24 @@ class DiamondConfig {
       diamonds = Diamonds(
           diamond: element.id,
           trackDiscount: element.back,
-          newDiscount: num.parse(element.selectedBackPer),
           trackAmount: element.amt,
           trackPricePerCarat: element.ctPr);
       switch (trackType) {
+        case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
+          diamonds.newDiscount = num.parse(element.selectedBackPer);
+          break;
         case DiamondTrackConstant.TRACK_TYPE_COMMENT:
+        case DiamondTrackConstant.TRACK_TYPE_ENQUIRY:
           diamonds.remarks = remark;
           break;
         case DiamondTrackConstant.TRACK_TYPE_OFFER:
           diamonds.vStnId = element.vStnId;
+          diamonds.newDiscount = num.parse(element.selectedBackPer);
           diamonds.newAmount = element.getFinalAmount();
           diamonds.newPricePerCarat = element.getFinalRate();
           int hour = int.parse(element.selectedOfferHour);
           var date = DateTime.now();
-          diamonds.offerValidDate = date.toUtc().toIso8601String();
+          diamonds.offerValidDate = DateTime.now().toUtc().toIso8601String();
 
           break;
         case DiamondTrackConstant.TRACK_TYPE_BID:
@@ -485,6 +518,17 @@ class DiamondConfig {
     PlaceOrderReq req = PlaceOrderReq();
     req.company = companyName;
     req.comment = remark;
+    switch (date) {
+      case InvoiceTypesString.today:
+        req.date = InvoiceTypes.today.toString();
+        break;
+      case InvoiceTypesString.tomorrow:
+        req.date = InvoiceTypes.tomorrow.toString();
+        break;
+      case InvoiceTypesString.later:
+        req.date = InvoiceTypes.later.toString();
+        break;
+    }
     req.date = date;
     req.diamonds = [];
     list.forEach((element) {
@@ -633,7 +677,7 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
     case BorderConstant.BORDER_LEFT_RIGHT:
       return BoxDecoration(
         // boxShadow: getBoxShadow(context),
-       // borderRadius: BorderRadius.circular(getSize(5)),
+        // borderRadius: BorderRadius.circular(getSize(5)),
         border: Border(
           left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
           right: BorderSide(width: 1.0, color: appTheme.colorPrimary),
@@ -654,7 +698,7 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
       );
     default:
       return BoxDecoration(
-       // borderRadius: BorderRadius.circular(getSize(5)),
+        // borderRadius: BorderRadius.circular(getSize(5)),
         border: Border(
           top: BorderSide(width: 0, color: appTheme.whiteColor),
           left: BorderSide(width: 0, color: appTheme.whiteColor),
@@ -663,4 +707,134 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
         ),
       );
   }
+}
+
+openSharePopUp(BuildContext context) {
+  List<StoneModel> stoneList = [
+    StoneModel(1, "Stock"),
+    StoneModel(2, "Cerificate"),
+    StoneModel(3, "Real Image"),
+    StoneModel(4, "Plotting Image"),
+    StoneModel(5, "Heart & Arrow"),
+    StoneModel(6, "Asset Scope"),
+    StoneModel(7, "Video"),
+  ];
+
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: StatefulBuilder(
+            builder: (context, StateSetter setsetter) {
+              return Padding(
+                padding: EdgeInsets.all(getSize(10)),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Share Stone",
+                      style: appTheme.black16TextStyle,
+                    ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: stoneList.length,
+                      itemBuilder: (context, i) {
+                        return InkWell(
+                          onTap: () {
+                            setsetter(() {
+                              stoneList[i].isSelected = !stoneList[i].isSelected;
+                            });
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: getSize(20), bottom: getSize(10)),
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  stoneList[i].isSelected
+                                      ? selectedCheckbox
+                                      : unSelectedCheckbox,
+                                  height: getSize(20),
+                                  width: getSize(20),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: getSize(10)),
+                                  child: Text(
+                                    stoneList[i].title,
+                                    style: appTheme.black14TextStyle,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              // alignment: Alignment.bottomCenter,
+                              padding: EdgeInsets.symmetric(
+                                vertical: getSize(15),
+                              ),
+                              decoration: BoxDecoration(
+                                color: appTheme.colorPrimary.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(getSize(5)),
+                              ),
+                              child: Text(
+                                R.string().commonString.cancel,
+                                textAlign: TextAlign.center,
+                                style: appTheme.blue14TextStyle
+                                    .copyWith(fontSize: getFontSize(16)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: getSize(20),
+                        ),
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+
+                            },
+                            child: Container(
+                              //alignment: Alignment.bottomCenter,
+                              padding: EdgeInsets.symmetric(
+                                vertical: getSize(15),
+                              ),
+                              decoration: BoxDecoration(
+                                  color: appTheme.colorPrimary,
+                                  borderRadius: BorderRadius.circular(getSize(5)),
+                                  boxShadow: getBoxShadow(context)),
+                              child: Text(
+                                R.string().screenTitle.share,
+                                textAlign: TextAlign.center,
+                                style: appTheme.white16TextStyle,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              );
+            },
+          ),
+        );
+      });
+}
+
+class StoneModel {
+  int id;
+  String title;
+  bool isSelected;
+
+  StoneModel(this.id, this.title, {this.isSelected = false});
 }

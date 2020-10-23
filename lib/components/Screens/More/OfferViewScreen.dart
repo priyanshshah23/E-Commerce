@@ -20,8 +20,8 @@ class OfferViewScreen extends StatefulWidget {
 
 class _OfferViewScreenState extends State<OfferViewScreen> {
   DateTime now = DateTime.now();
-  List days;
-  var pickedDate;
+  List<DateModel> days;
+  DateTime pickedDate;
   int selectedDate = -1;
   int selectedSlot = 0;
   int selectedVirtualType = -1;
@@ -37,16 +37,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
   @override
   void initState() {
     super.initState();
-    days = [
-      now,
-      getDate(1),
-      getDate(2),
-      getDate(3),
-      getDate(4),
-      getDate(5),
-      getDate(6)
-    ];
-
+    days = setDateList();
     callApiforTimeSlots();
   }
 
@@ -82,12 +73,8 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
   callApiForRequestForOffice() {
     Map<String, dynamic> req = {};
     req["purpose"] = _commentTypeController.text;
-    DateTime date = DateTime(
-            now.add(Duration(days: selectedDate)).year,
-            now.add(Duration(days: selectedDate)).month,
-            now.add(Duration(days: selectedDate)).day,
-            now.add(Duration(days: selectedDate)).hour,
-            now.add(Duration(days: selectedDate)).minute)
+    DateTime date = DateTime(pickedDate.year, pickedDate.month, pickedDate.day,
+            pickedDate.hour, pickedDate.minute)
         .toUtc();
     req["date"] = DateUtilities().getStartOfDay(date).toUtc().toIso8601String();
     req["type"] = 2;
@@ -191,7 +178,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                 onTap: () {
                   FocusScope.of(context).unfocus();
 
-                  if (selectedDate < 0) {
+                  if (pickedDate==null) {
                     app.resolve<CustomDialogs>().confirmDialog(
                           context,
                           title: "",
@@ -283,16 +270,24 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
             onTap: () {
               DateUtilities().pickDateDialog(context).then((value) {
                 pickedDate = value;
+                days.forEach((element) {
+                  if (value.day == element.date.day) {
+                    element.isSelected = true;
+                  } else {
+                    element.isSelected = false;
+                  }
+                });
                 setState(() {});
               });
             },
             child: Container(
-              width: getSize(200),
+              width: getSize(175),
               decoration: BoxDecoration(
                   border: Border(
                       bottom: BorderSide(
                           color: appTheme.dividerColor, width: getSize(2)))),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     pickedDate != null
@@ -328,7 +323,13 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
             return InkWell(
               onTap: () {
                 setState(() {
-                  selectedDate = index;
+                  days.forEach((element) {
+                    element.isSelected = false;
+                  });
+                  days[index].isSelected = !days[index].isSelected;
+                  if (days[index].isSelected) {
+                    pickedDate = days[index].date;
+                  }
                 });
               },
               child: Container(
@@ -341,10 +342,10 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                     bottom: getSize(15)),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(getSize(5)),
-                  color: selectedDate == index
+                  color: days[index].isSelected
                       ? appTheme.colorPrimary
                       : Colors.transparent,
-                  boxShadow: selectedDate == index
+                  boxShadow: days[index].isSelected
                       ? getBoxShadow(context)
                       : [BoxShadow(color: Colors.transparent)],
                 ),
@@ -353,10 +354,10 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                   children: [
                     Text(
                       DateUtilities().convertServerDateToFormatterString(
-                          days[index].toString(),
+                          days[index].date.toString(),
                           formatter: DateUtilities.dd),
                       textAlign: TextAlign.center,
-                      style: selectedDate == index
+                      style: days[index].isSelected
                           ? appTheme.white16TextStyle
                               .copyWith(fontWeight: FontWeight.w500)
                           : appTheme.black16TextStyle
@@ -364,10 +365,10 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                     ),
                     Text(
                       DateUtilities().convertServerDateToFormatterString(
-                          days[index].toString(),
+                          days[index].date.toString(),
                           formatter: DateUtilities.ee),
                       textAlign: TextAlign.center,
-                      style: selectedDate == index
+                      style: days[index].isSelected
                           ? appTheme.white16TextStyle
                           : appTheme.black16TextStyle,
                     ),
@@ -538,4 +539,24 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
       ),
     );
   }
+
+  List<DateModel> setDateList() {
+    return [
+      DateModel(0, now, false),
+      DateModel(1, getDate(1), false),
+      DateModel(2, getDate(2), false),
+      DateModel(3, getDate(3), false),
+      DateModel(4, getDate(4), false),
+      DateModel(5, getDate(5), false),
+      DateModel(6, getDate(6), false),
+    ];
+  }
+}
+
+class DateModel {
+  int id;
+  DateTime date;
+  bool isSelected;
+
+  DateModel(this.id, this.date, this.isSelected);
 }

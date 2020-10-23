@@ -53,6 +53,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   String filterId;
   int moduleType;
   bool isFromDrawer;
+  String sortingKey;
   Map<String, dynamic> dictFilters;
 
   _DiamondListScreenState({this.filterId, this.moduleType, this.isFromDrawer});
@@ -123,6 +124,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
         dict["filters"] = {};
         dict["filters"]["diamondSearchId"] = this.filterId;
+        if (sortingKey != null) {
+          dict["sort"] = sortingKey;
+        }
         break;
       case DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR:
         dict["filters"] = {};
@@ -170,6 +174,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         break;
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
         dict["type"] = "stone_of_day";
+        break;
+
     }
 
     NetworkCall<DiamondListResp>()
@@ -185,13 +191,21 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
         case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
         case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
-        case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
+        case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
+        case DiamondModuleConstant.MODULE_TYPE_MY_BID:
           List<DiamondModel> list = [];
           diamondListResp.data.list.forEach((element) {
-            list.add(element.diamond);
+            if (element.diamonds != null) {
+              element.diamonds.forEach((element) {
+                list.add(element);
+              });
+            } else {
+              list.add(element.diamond);
+            }
           });
           arraDiamond.addAll(list);
           break;
+
         default:
           arraDiamond.addAll(diamondListResp.data.diamonds);
           diamondConfig.setMatchPairItem(arraDiamond);
@@ -313,7 +327,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           builder: (_) => FilterBy(
             optionList: optionList,
           ),
-        );
+        ).then((value) {
+          sortingKey = value;
+          callApi(true);
+        });
         break;
     }
   }
@@ -342,33 +359,35 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: appTheme.whiteColor,
-        appBar: getAppBar(
-          context,
-          diamondConfig.getScreenTitle(),
-          bgColor: appTheme.whiteColor,
-          leadingButton: isFromDrawer
-              ? getDrawerButton(context, true)
-              : getBackButton(context),
-          centerTitle: false,
-          actionItems: getToolbarItem(),
+      backgroundColor: appTheme.whiteColor,
+      appBar: getAppBar(
+        context,
+        diamondConfig.getScreenTitle(),
+        bgColor: appTheme.whiteColor,
+        leadingButton: isFromDrawer
+            ? getDrawerButton(context, true)
+            : getBackButton(context),
+        centerTitle: false,
+        textalign: TextAlign.left,
+        actionItems: getToolbarItem(),
+      ),
+      bottomNavigationBar: getBottomTab(),
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            DiamondListHeader(
+              diamondCalculation: diamondCalculation,
+            ),
+            SizedBox(
+              height: getSize(20),
+            ),
+            Expanded(
+              child: diamondList,
+            )
+          ],
         ),
-        bottomNavigationBar: getBottomTab(),
-        body: SafeArea(
-          child: Column(
-            children: <Widget>[
-              DiamondListHeader(
-                diamondCalculation: diamondCalculation,
-              ),
-              SizedBox(
-                height: getSize(20),
-              ),
-              Expanded(
-                child: diamondList,
-              )
-            ],
-          ),
-        ));
+      ),
+    );
   }
 
   Widget getBottomTab() {

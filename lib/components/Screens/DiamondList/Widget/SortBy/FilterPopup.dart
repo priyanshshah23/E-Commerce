@@ -49,6 +49,7 @@ class _FilterByState extends State<FilterBy> {
                   optionList.forEach((element) {element.isSelected = false;});
                   optionList[index].isSelected = !optionList[index].isSelected;
                   setState(() {});
+                  Navigator.pop(context,optionList[index].apiKey);
                 },
                 child: Padding(
                   padding: EdgeInsets.symmetric(
