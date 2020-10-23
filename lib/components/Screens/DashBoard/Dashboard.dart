@@ -1,11 +1,17 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
+import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
+import 'package:diamnow/models/Dashboard/DashboardModel.dart';
 import 'package:diamnow/models/Dashbord/DashBoardConfigModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
+import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -48,6 +54,7 @@ class _DashboardState extends StatefulScreenWidgetState {
   final TextEditingController _searchController = TextEditingController();
   var _focusSearch = FocusNode();
 
+  DashboardModel dashboardModel;
   _DashboardState({this.moduleType, this.isFromDrawer});
 
   @override
@@ -60,8 +67,39 @@ class _DashboardState extends StatefulScreenWidgetState {
     dashboardConfig = DashboardConfig();
     dashboardConfig.initItems();
 
+    callApiForDashboard();
     setState(() {
       //
+    });
+  }
+
+  callApiForDashboard() {
+    Map<String, dynamic> dict = {};
+
+    dict["savedSearch"] = true;
+    dict["recentSearch"] = true;
+    dict["recentActivity"] = true;
+    dict["track"] = true;
+    dict["dashboardCount"] = true;
+    dict["seller"] = true;
+    dict["account"] = true;
+
+    NetworkCall<DashboardResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().dashboard(dict),
+            context,
+            isProgress: true)
+        .then((resp) async {
+      print(resp);
+      this.dashboardModel = resp.data;
+      setState(() {});
+    }).catchError((onError) {
+      app.resolve<CustomDialogs>().confirmDialog(
+            context,
+            title: R.string().commonString.error,
+            desc: onError.message,
+            positiveBtnTitle: R.string().commonString.btnTryAgain,
+          );
     });
   }
 
@@ -886,6 +924,14 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   getSavedSearchSection() {
+    if (isNullEmptyOrFalse(this.dashboardModel)) {
+      return SizedBox();
+    }
+
+    if (isNullEmptyOrFalse(this.dashboardModel.savedSearch)) {
+      return SizedBox();
+    }
+
     return Padding(
       padding: EdgeInsets.only(top: getSize(20)),
       child: Column(
@@ -911,19 +957,20 @@ class _DashboardState extends StatefulScreenWidgetState {
           SizedBox(
             height: getSize(20),
           ),
-          ListView(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            children: [
-              for (var i = 0; i < 5; i++) getSavedSearchItem(),
-            ],
-          )
+          ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: this.dashboardModel.savedSearch.length,
+              itemBuilder: (context, index) {
+                return getSavedSearchItem(
+                    this.dashboardModel.savedSearch[index]);
+              }),
         ],
       ),
     );
   }
 
-  getSavedSearchItem() {
+  getSavedSearchItem(SavedSearchModel model) {
     return Padding(
       padding: EdgeInsets.only(
         left: getSize(Spacing.leftPadding),
@@ -968,7 +1015,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "12 pc oval",
+                              model.name ?? "",
                               style: appTheme.black16TextStyle.copyWith(
                                 fontWeight: FontWeight.w500,
                               ),
@@ -977,7 +1024,11 @@ class _DashboardState extends StatefulScreenWidgetState {
                               height: getSize(2),
                             ),
                             Text(
-                              "May 21, 2020 at 01:43 PM",
+                              DateUtilities()
+                                  .convertServerDateToFormatterString(
+                                      model.createdAt,
+                                      formatter:
+                                          DateUtilities.dd_mmm_yy_h_mm_a),
                               style: appTheme.black14TextStyle.copyWith(
                                 color: appTheme.textGreyColor,
                               ),

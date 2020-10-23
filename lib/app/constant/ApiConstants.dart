@@ -57,6 +57,9 @@ class ApiConstants {
   //Office
   static const String getSlots = commonUrl + "cabin-slot/paginate";
   static const String createOfficerequest = commonUrl + "cabin-schedule/create";
+
+  //Dashboard
+  static const String dashboard = commonUrl + "user/dashboard";
 }
 
 class DiamondUrls {

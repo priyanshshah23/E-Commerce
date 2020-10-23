@@ -6,6 +6,7 @@ import 'package:diamnow/models/Auth/CompanyInformationModel.dart';
 import 'package:diamnow/models/Auth/ForgetPassword.dart';
 import 'package:diamnow/models/Auth/PersonalInformationModel.dart';
 import 'package:diamnow/models/Auth/ResetPasswordModel.dart';
+import 'package:diamnow/models/Dashboard/DashboardModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/LoginModel.dart';
@@ -59,7 +60,8 @@ abstract class NetworkService {
   Future<BaseApiResp> changePassword(@Body() ChangePasswordReq req);
 
   @POST(ApiConstants.personalInformation)
-  Future<PersonalInformationViewResp> personalInformation(@Body() PersonalInformationReq req);
+  Future<PersonalInformationViewResp> personalInformation(
+      @Body() PersonalInformationReq req);
 
   @GET(ApiConstants.personalInformationView)
   Future<PersonalInformationViewResp> personalInformationView();
@@ -105,4 +107,8 @@ abstract class NetworkService {
 
   @POST(ApiConstants.createOfficerequest)
   Future<BaseApiResp> createOfficerequest(@Body() Map<String, dynamic> req);
+
+  //Dashboard
+  @POST(ApiConstants.dashboard)
+  Future<DashboardResp> dashboard(@Body() Map<String, dynamic> req);
 }

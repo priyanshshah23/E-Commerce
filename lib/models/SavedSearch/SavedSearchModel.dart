@@ -69,8 +69,8 @@ class SavedSearchModel {
     this.displayData,
   });
 
-  DateTime createdAt;
-  DateTime updatedAt;
+  String createdAt;
+  String updatedAt;
   String id;
   String name;
   bool isSentReminder;
@@ -87,13 +87,15 @@ class SavedSearchModel {
 
   factory SavedSearchModel.fromJson(Map<String, dynamic> json) =>
       SavedSearchModel(
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
+        createdAt: json["createdAt"],
+        updatedAt: json["updatedAt"],
         id: json["id"],
         name: json["name"],
         isSentReminder: json["isSentReminder"],
         normalizeName: json["normalizeName"],
-        searchData: DisplayDataClass.fromJson(json["searchData"]),
+        searchData: json['searchData'] != null
+            ? DisplayDataClass.fromJson(json["searchData"])
+            : null,
         type: json["type"],
         expiryDate: json["expiryDate"],
         remark: json["remark"],
@@ -101,12 +103,14 @@ class SavedSearchModel {
         isDeleted: json["isDeleted"],
         isSendNotification: json["isSendNotification"],
         isReturnSimilar: json["isReturnSimilar"],
-        displayData: DisplayDataClass.fromJson(json["displayData"]),
+        displayData: json['displayData'] != null
+            ? DisplayDataClass.fromJson(json["displayData"])
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
+        "createdAt": createdAt,
+        "updatedAt": updatedAt,
         "id": id,
         "name": name,
         "isSentReminder": isSentReminder,
