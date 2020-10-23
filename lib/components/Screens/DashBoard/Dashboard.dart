@@ -1,3 +1,4 @@
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
@@ -83,6 +84,7 @@ class _DashboardState extends StatefulScreenWidgetState {
     dict["dashboardCount"] = true;
     dict["seller"] = true;
     dict["account"] = true;
+    dict["featuredStone"] = true;
 
     NetworkCall<DashboardResp>()
         .makeCall(
@@ -1049,7 +1051,15 @@ class _DashboardState extends StatefulScreenWidgetState {
         secondaryActions: <Widget>[
           IconSlideAction(
             onTap: () {
-              //
+              print("delete tapped");
+              SyncManager.instance.callApiForDeleteSavedSearch(
+                  context, model.id, success: (resp) {
+                this
+                    .dashboardModel
+                    .savedSearch
+                    .removeWhere((element) => element.id == model.id);
+                setState(() {});
+              });
             },
             iconWidget: Column(
               mainAxisAlignment: MainAxisAlignment.center,

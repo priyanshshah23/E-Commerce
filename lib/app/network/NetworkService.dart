@@ -84,8 +84,7 @@ abstract class NetworkService {
       @Body() Map<String, dynamic> req);
 
   @POST(ApiConstants.stoneOfTheDay)
-  Future<DiamondListResp> stoneOfTheDay(
-      @Body() Map<String, dynamic> req);
+  Future<DiamondListResp> stoneOfTheDay(@Body() Map<String, dynamic> req);
 
   @POST(ApiConstants.diamondBidList)
   Future<DiamondListResp> diamondBidList(@Body() Map<String, dynamic> req);
@@ -115,4 +114,8 @@ abstract class NetworkService {
   //Dashboard
   @POST(ApiConstants.dashboard)
   Future<DashboardResp> dashboard(@Body() Map<String, dynamic> req);
+
+  //Delete saved search
+  @POST(ApiConstants.deleteSavedSearch)
+  Future<BaseApiResp> deleteSavedSearch(@Body() Map<String, dynamic> req);
 }
