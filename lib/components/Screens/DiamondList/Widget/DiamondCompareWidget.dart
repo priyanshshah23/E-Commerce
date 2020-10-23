@@ -23,12 +23,15 @@ class DiamondCompareWidget extends StatefulWidget {
 
   List<String> ignorableApiKeys;
 
+  ScrollController sc;
+
   DiamondCompareWidget(
       {this.diamondModel,
       this.index,
       this.key,
       this.deleteWidget,
-      this.ignorableApiKeys});
+      this.ignorableApiKeys,
+      this.sc});
 
   @override
   _DiamondCompareWidgetState createState() => _DiamondCompareWidgetState(
@@ -250,7 +253,7 @@ class _DiamondCompareWidgetState extends State<DiamondCompareWidget> {
               ),
               Expanded(
                 child: SingleChildScrollView(
-                  // controller: widget.sc,
+                  controller: widget.sc,
                   child: Column(
                     children: <Widget>[
                       for (int i = 0; i < arrDiamondDetailUIModel.length; i++)
