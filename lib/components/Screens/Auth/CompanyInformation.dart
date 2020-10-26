@@ -686,9 +686,7 @@ class _CompanyInformationState extends State<CompanyInformation>
   void _callApiForCityList(
       {String stateId,
       String countryId,
-      bool isShowDialogue = false,
-      bool isGet = false,
-      String city}) {
+      bool isShowDialogue = false,}) {
     CityListReq req = CityListReq();
     req.state = stateId;
     req.country = countryId;
@@ -723,14 +721,6 @@ class _CompanyInformationState extends State<CompanyInformation>
                   ));
             });
       }
-      if (isGet) {
-        cityList.forEach((element) {
-          if (element.id == city) {
-            _cityController.text = element.name;
-            selectedCityItem = element;
-          }
-        });
-      }
     }).catchError(
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
@@ -753,6 +743,7 @@ class _CompanyInformationState extends State<CompanyInformation>
         .then((resp) {
       countryList.clear();
       countryList.addAll(resp.data);
+      getCompanyInformation();
       if (isShowDialogue) {
         showDialog(
             context: context,
@@ -782,7 +773,6 @@ class _CompanyInformationState extends State<CompanyInformation>
                   ));
             });
       }
-      getCompanyInformation();
     }).catchError(
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(
@@ -791,11 +781,8 @@ class _CompanyInformationState extends State<CompanyInformation>
           desc: onError.message,
           positiveBtnTitle: R.string().commonString.btnTryAgain,
           onClickCallback: (buttonType) {
-            if (buttonType == ButtonType.PositveButtonClick) {
               _callApiForCountryList();
-            }
           },
-          negativeBtnTitle: R.string().commonString.cancel,
         )
       },
     );
@@ -803,10 +790,7 @@ class _CompanyInformationState extends State<CompanyInformation>
 
   void _callApiForStateList(
       {String countryId,
-      bool isShowDialogue = false,
-      bool isGet = false,
-      String state,
-      String city}) {
+      bool isShowDialogue = false,}) {
     StateListReq req = StateListReq();
     req.country = countryId;
 
@@ -846,19 +830,6 @@ class _CompanyInformationState extends State<CompanyInformation>
                     },
                   ));
             });
-      }
-      if (isGet) {
-        stateList.forEach((element) {
-          if (element.id == state) {
-            _stateController.text = element.name;
-            selectedStateItem = element;
-            _callApiForCityList(
-                countryId: selectedCountryItem.id,
-                stateId: selectedStateItem.id,
-                isGet: true,
-                city: city);
-          }
-        });
       }
     }).catchError(
       (onError) => {
@@ -937,17 +908,12 @@ class _CompanyInformationState extends State<CompanyInformation>
         }
       });
       _pinCodeController.text = resp.data.zipCode;
-      countryList.forEach((element) {
-        if (element.id == resp.data.country) {
-          _countryController.text = element.name;
-          selectedCountryItem = element;
-          _callApiForStateList(
-              countryId: element.id,
-              isGet: true,
-              state: resp.data.state,
-              city: resp.data.city);
-        }
-      });
+      _countryController.text = resp.data.country.name;
+      _cityController.text = resp.data.city.name;
+      _stateController.text = resp.data.state.name;
+      selectedCountryItem = resp.data.country;
+      selectedCityItem = resp.data.city;
+      selectedStateItem = resp.data.state;
       setState(() {});
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(

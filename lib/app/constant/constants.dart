@@ -181,3 +181,8 @@ class SavedSearchType {
   static const int savedSearch = 2;
   static const int recentSearch = 1;
 }
+class UserPermission {
+  static const String dashboard = "dashboard";
+  static const String	searchDiamond = "searchDiamond";
+  static const String	quickSearch = "quickSearch";
+}

@@ -39,6 +39,8 @@ class PrefUtils {
 
   String get keyUser => "keyUser";
 
+  String get keyUserPermission => "keyUserPermission";
+
   String get keyIsUserLogin => "keyIsUserLogin";
 
   String get keyToken => "keyToken";
@@ -144,6 +146,15 @@ class PrefUtils {
   User getUserDetails() {
     var userJson = json.decode(_preferences.getString(keyUser));
     return userJson != null ? new User.fromJson(userJson) : null;
+  }
+
+  Future<void> saveUserPermission(UserPermissions user) async {
+    _preferences.setString(keyUserPermission, json.encode(user));
+  }
+
+  UserPermissions getUserPermission() {
+    var userPermissionsJson = json.decode(_preferences.getString(keyUserPermission));
+    return userPermissionsJson != null ? new UserPermissions.fromJson(userPermissionsJson) : null;
   }
 
   bool isUserLogin() {

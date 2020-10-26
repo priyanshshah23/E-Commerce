@@ -1,25 +1,38 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/components/Screens/Auth/PasswordResetSuccessfully.dart';
 
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/components/widgets/pinView_textFields/decoration/pin_decoration.dart';
 import 'package:diamnow/components/widgets/pinView_textFields/pin_widget.dart';
 import 'package:diamnow/components/widgets/pinView_textFields/style/obscure.dart';
+import 'package:diamnow/models/Auth/ResetPasswordModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ResetPassword extends StatefulScreenWidget {
   static const route = "ResetPassword";
+  String email;
+  String otpNumber;
+
+  ResetPassword(Map<String, dynamic> arguments) {
+    this.email = arguments["email"];
+    this.otpNumber = arguments["otpNumber"];
+  }
 
   @override
-  _ResetPasswordState createState() => _ResetPasswordState();
+  _ResetPasswordState createState() => _ResetPasswordState(email: email, otpNumber: otpNumber);
 }
 
 class _ResetPasswordState extends StatefulScreenWidgetState {
   final _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
+  String email;
+  String otpNumber;
 
   final TextEditingController _newPasswordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
@@ -27,6 +40,8 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
 
   var _focusNewPassword = FocusNode();
   var _focusConfirmPassword = FocusNode();
+
+  _ResetPasswordState({this.email,this.otpNumber});
 
   @override
   void initState() {
@@ -104,7 +119,6 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
                               // NavigationUtilities.pushRoute(TabBarDemo.route);
                               FocusScope.of(context).unfocus();
                               if (_formKey.currentState.validate()) {
-
                                 if (_confirmPasswordController.text.trim() !=
                                     _newPasswordController.text.trim()) {
                                   app.resolve<CustomDialogs>().confirmDialog(
@@ -117,15 +131,12 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
                                   _formKey.currentState.save();
                                   NavigationUtilities.pushRoute(PasswordResetSuccessfully.route);
                                 }
-//                                callLoginApi(context);
                               } else {
                                 setState(() {
                                   _autoValidate = true;
                                 });
                               }
-                              // NavigationUtilities.push(ThemeSetting());
                             },
-                            //  backgroundColor: appTheme.buttonColor,
                             borderRadius: getSize(5),
                             fitWidth: true,
                             text: R.string().commonString.save,
@@ -201,38 +212,28 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
     );
   }
 
-//  Future callLoginApi(BuildContext context) async {
-//    LoginReq req = LoginReq();
-//    req.username = _userNameController.text;
-//    req.password = _passwordController.text;
-//
-//    NetworkCall<LoginResp>()
-//        .makeCall(
-//            () => app.resolve<ServiceModule>().networkService().login(req),
-//        context,
-//        isProgress: true)
-//        .then((loginResp) async {
-//      // save Logged In user
-//      if (loginResp.data != null) {
-//        app.resolve<PrefUtils>().saveUser(loginResp.data.user);
-//        await app.resolve<PrefUtils>().saveUserToken(
-//          loginResp.data.token.jwt,
-//        );
-//      }
-//      print("Erroer ");
-//
-//      SyncManager.instance
-//          .callMasterSync(NavigationUtilities.key.currentContext, () async {
-//        //success
-//
-//        NavigationUtilities.pushRoute(DiamondListScreen.route);
-//      }, () {},
-//          isNetworkError: false,
-//          isProgress: true,
-//          id: loginResp.data.user.id).then((value) {});
-//    }).catchError((onError) {
-//      print("Error " + onError);
-//    });
-//  }
+  Future callResetPasswordApi(BuildContext context) async {
+    ResetPasswordReq req = ResetPasswordReq();
+    req.newPassword = _newPasswordController.text.trim();
+    req.email = email;
+    req.otpNumber = otpNumber;
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().resetPassword(req),
+        context,
+        isProgress: true)
+        .then((Resp) async {
+          showToast(Resp.message, context: context);
+        NavigationUtilities.pushReplacementNamed(LoginScreen.route);
+    }).catchError((onError) {
+      app.resolve<CustomDialogs>().confirmDialog(
+        context,
+        title: R.string().commonString.error,
+        desc: onError.message,
+        positiveBtnTitle: R.string().commonString.btnTryAgain,
+      );
+    });
+  }
 
 }

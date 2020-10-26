@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
@@ -356,13 +357,9 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                 isOtpCheck = false;
                 showOTPMsg = R.string().errorString.pleaseEnterOTP;
               } else if (pin.trim().length == 4) {
-                showOTPMsg = null;
-                isOtpTrue = true;
-//                isOtpCheck = true;
                 FocusScope.of(context).unfocus();
-                NavigationUtilities.pushRoute(ResetPassword.route);
+               callApiForVerifyOTP();
               }
-              //   callApiForEditVerifyMobile(context, pin);
             } else {
               setState(() {
                 isOtpCheck = false;
@@ -375,10 +372,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
               showOTPMsg = null;
               isOtpTrue = false;
             } else if (pin.trim().length == 4) {
-              isOtpTrue = true;
-              isOtpCheck = false;
-              NavigationUtilities.pushRoute(ResetPassword.route);
-              showOTPMsg = null;
+              callApiForVerifyOTP();
             }
             setState(() {});
           },
@@ -444,6 +438,38 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
       showToast(resp.message,context: context);
       setState(() {});
     }).catchError((onError) {
+      app.resolve<CustomDialogs>().confirmDialog(
+        context,
+        title: R.string().commonString.error,
+        desc: onError.message,
+        positiveBtnTitle: R.string().commonString.btnTryAgain,
+      );
+    });
+  }
+
+  callApiForVerifyOTP() async {
+    VerifyOTPReq req = VerifyOTPReq();
+    req.email = _emailController.text;
+    req.otpNumber = _pinEditingController.text.trim();
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().verifyOTP(req),
+        context,
+        isProgress: true)
+        .then((resp) async {
+      FocusScope.of(context).unfocus();
+      isOtpTrue = true;
+      isOtpCheck = false;
+      showOTPMsg = null;
+      Map<String, dynamic> dict = new HashMap();
+      dict["email"] = _emailController.text;
+      dict["otpNumber"] = _pinEditingController.text.trim();
+      NavigationUtilities.pushRoute(ResetPassword.route, args: dict);
+    }).catchError((onError) {
+      isOtpTrue = false;
+      isOtpCheck = false;
+      setState(() {});
       app.resolve<CustomDialogs>().confirmDialog(
         context,
         title: R.string().commonString.error,

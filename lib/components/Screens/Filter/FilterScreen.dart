@@ -7,6 +7,7 @@ import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
@@ -299,7 +300,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         } else if (obj.code == BottomCodeConstant.filterSearch) {
           //
           print(obj.code);
-          callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH);
+          callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+              isSearch: true);
         } else if (obj.code == BottomCodeConstant.filterSaveAndSearch) {
           //
           print(obj.code);
@@ -310,7 +312,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     );
   }
 
-  callApiForGetFilterId(int moduleType, {bool isSavedSearch = false}) {
+  callApiForGetFilterId(int moduleType,
+      {bool isSavedSearch = false, bool isSearch = false}) {
     SyncManager.instance.callApiForDiamondList(
       context,
       FilterRequest().createRequest(arrList),
@@ -321,12 +324,26 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               FilterRequest().createRequest(arrList),
               diamondListResp.data.filter.id);
         } else {
-          Map<String, dynamic> dict = new HashMap();
-
-          dict["filterId"] = diamondListResp.data.filter.id;
-          dict["filters"] = FilterRequest().createRequest(arrList);
-          dict[ArgumentConstant.ModuleType] = moduleType;
-          NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+          if (isSearch) {
+            if (diamondListResp.data.count == 0) {
+              app.resolve<CustomDialogs>().confirmDialog(context,
+                  desc: R.string().commonString.noDiamondFound,
+                  positiveBtnTitle: R.string().commonString.ok);
+            } else {
+              Map<String, dynamic> dict = new HashMap();
+              dict["filterId"] = diamondListResp.data.filter.id;
+              dict["filters"] = FilterRequest().createRequest(arrList);
+              dict[ArgumentConstant.ModuleType] = moduleType;
+              NavigationUtilities.pushRoute(DiamondListScreen.route,
+                  args: dict);
+            }
+          } else {
+            Map<String, dynamic> dict = new HashMap();
+            dict["filterId"] = diamondListResp.data.filter.id;
+            dict["filters"] = FilterRequest().createRequest(arrList);
+            dict[ArgumentConstant.ModuleType] = moduleType;
+            NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+          }
         }
       },
       (onError) {
