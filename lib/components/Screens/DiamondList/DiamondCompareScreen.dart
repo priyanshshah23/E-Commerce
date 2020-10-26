@@ -481,7 +481,6 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
         child: Directionality(
           textDirection: TextDirection.ltr,
           child: ReorderableListView(
-            scrollController: ScrollController(initialScrollOffset: 50),
             onReorder: _onReorder,
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -491,7 +490,6 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
                 ScrollController sc = _controllers.addAndGet();
                 return !isCheckBoxChecked || arrayDiamond.length == 1
                     ? DiamondCompareWidget(
-                        sc: sc,
                         diamondModel: this.arrayDiamond[index],
                         index: index,
                         key: Key(index.toString()),
@@ -502,7 +500,6 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
                         },
                       )
                     : DiamondCompareWidget(
-                        sc: sc,
                         ignorableApiKeys: ignorableApiKeys,
                         diamondModel: this.arrayDiamond[index],
                         index: index,

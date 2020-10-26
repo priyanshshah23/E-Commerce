@@ -23,15 +23,14 @@ class DiamondCompareWidget extends StatefulWidget {
 
   List<String> ignorableApiKeys;
 
-  ScrollController sc;
+ // ScrollController sc;
 
   DiamondCompareWidget(
       {this.diamondModel,
       this.index,
       this.key,
       this.deleteWidget,
-      this.ignorableApiKeys,
-      this.sc});
+      this.ignorableApiKeys,});
 
   @override
   _DiamondCompareWidgetState createState() => _DiamondCompareWidgetState(
@@ -248,76 +247,71 @@ class _DiamondCompareWidgetState extends State<DiamondCompareWidget> {
                   ),
                 ],
               ),
-              Expanded(
-                child: SingleChildScrollView(
-                  controller: widget.sc,
-                  child: Column(
-                    children: <Widget>[
-                      for (int i = 0; i < arrDiamondDetailUIModel.length; i++)
-                        for (int j = 0;
-                            j < arrDiamondDetailUIModel[i].parameters.length;
-                            j++)
-                          Container(
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                    padding: EdgeInsets.only(left: getSize(14)),
-                                    alignment: Alignment.centerLeft,
-                                    height: getSize(30),
-                                    width: getSize(150),
-                                    decoration: BoxDecoration(
-                                      color: ColorConstants
-                                          .compareChangesRowBgColor,
-                                      // border: Border(
-                                      //   left: BorderSide(width: getSize(0.5)),
-                                      //   right: BorderSide(width: getSize(0.5)),
-                                      // ),
-                                    ),
-                                    child: isShowLabel
-                                        ? Text(
-                                            arrDiamondDetailUIModel[i]
-                                                .parameters[j]
-                                                .title,
-                                            style: appTheme
-                                                .blackNormal12TitleColorblack,
-                                          )
-                                        : SizedBox()),
-                                Container(
-                                  padding: EdgeInsets.only(left: getSize(14)),
-                                  alignment: Alignment.centerLeft,
-                                  height: getSize(40),
-                                  width: getSize(150),
-                                  decoration: BoxDecoration(
-                                    color: ColorConstants.white,
-                                    border: index == 0
-                                        ? Border(
-                                            left: BorderSide(
-                                                width: getSize(1),
-                                                color: appTheme.dividerColor),
-                                            right: BorderSide(
-                                                width: getSize(1),
-                                                color: appTheme.dividerColor),
-                                          )
-                                        : Border(
-                                            right: BorderSide(
-                                                width: getSize(1),
-                                                color: appTheme.dividerColor),
-                                          ),
-                                  ),
-                                  child: Text(
-                                    arrDiamondDetailUIModel[i]
-                                        .parameters[j]
-                                        .value,
-                                    style:
-                                        appTheme.blackNormal14TitleColorblack,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                    ],
-                  ),
-                ),
+              Column(
+                children: <Widget>[
+                  for (int i = 0; i < arrDiamondDetailUIModel.length; i++)
+                    for (int j = 0;
+                        j < arrDiamondDetailUIModel[i].parameters.length;
+                        j++)
+                      Container(
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                                padding: EdgeInsets.only(left: getSize(14)),
+                                alignment: Alignment.centerLeft,
+                                height: getSize(30),
+                                width: getSize(150),
+                                decoration: BoxDecoration(
+                                  color: ColorConstants
+                                      .compareChangesRowBgColor,
+                                  // border: Border(
+                                  //   left: BorderSide(width: getSize(0.5)),
+                                  //   right: BorderSide(width: getSize(0.5)),
+                                  // ),
+                                ),
+                                child: isShowLabel
+                                    ? Text(
+                                        arrDiamondDetailUIModel[i]
+                                            .parameters[j]
+                                            .title,
+                                        style: appTheme
+                                            .blackNormal12TitleColorblack,
+                                      )
+                                    : SizedBox()),
+                            Container(
+                              padding: EdgeInsets.only(left: getSize(14)),
+                              alignment: Alignment.centerLeft,
+                              height: getSize(40),
+                              width: getSize(150),
+                              decoration: BoxDecoration(
+                                color: ColorConstants.white,
+                                border: index == 0
+                                    ? Border(
+                                        left: BorderSide(
+                                            width: getSize(1),
+                                            color: appTheme.dividerColor),
+                                        right: BorderSide(
+                                            width: getSize(1),
+                                            color: appTheme.dividerColor),
+                                      )
+                                    : Border(
+                                        right: BorderSide(
+                                            width: getSize(1),
+                                            color: appTheme.dividerColor),
+                                      ),
+                              ),
+                              child: Text(
+                                arrDiamondDetailUIModel[i]
+                                    .parameters[j]
+                                    .value,
+                                style:
+                                    appTheme.blackNormal14TitleColorblack,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                ],
               )
             ],
           )
