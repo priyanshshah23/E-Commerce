@@ -682,28 +682,70 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
     case BorderConstant.BORDER_TOP:
       return BoxDecoration(
         //borderRadius: BorderRadius.circular(getSize(5)),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(5),
+          topRight: Radius.circular(5),
+          bottomLeft: Radius.circular(0),
+          bottomRight: Radius.circular(0),
+        ),
         border: Border(
-          top: BorderSide(width: 1.0, color: appTheme.colorPrimary),
-          left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
-          right: BorderSide(width: 1.0, color: appTheme.colorPrimary),
-          bottom: BorderSide(width: 0, color: appTheme.whiteColor),
+          top: BorderSide(
+              width: 1.0,
+              color: appTheme.colorPrimary,
+              style: BorderStyle.solid),
+          left: BorderSide(
+              width: 1.0,
+              color: appTheme.colorPrimary,
+              style: BorderStyle.solid),
+          right: BorderSide(
+              width: 1.0,
+              color: appTheme.colorPrimary,
+              style: BorderStyle.solid),
+          bottom: BorderSide(
+              width: 1.0,
+              color: appTheme.colorPrimary,
+              style: BorderStyle.solid),
         ),
       );
     case BorderConstant.BORDER_BOTTOM:
       return BoxDecoration(
         // boxShadow: getBoxShadow(context),
         //borderRadius: BorderRadius.circular(getSize(5)),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(0),
+          topRight: Radius.circular(0),
+          bottomLeft: Radius.circular(5),
+          bottomRight: Radius.circular(5),
+        ),
         border: Border(
-          left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
-          right: BorderSide(width: 1.0, color: appTheme.colorPrimary),
-          bottom: BorderSide(width: 1.0, color: appTheme.colorPrimary),
-          top: BorderSide(width: 0, color: appTheme.whiteColor),
+          top: BorderSide(
+              width: 1.0,
+              color: appTheme.colorPrimary,
+              style: BorderStyle.solid),
+          left: BorderSide(
+              width: 1.0,
+              color: appTheme.colorPrimary,
+              style: BorderStyle.solid),
+          right: BorderSide(
+              width: 1.0,
+              color: appTheme.colorPrimary,
+              style: BorderStyle.solid),
+          bottom: BorderSide(
+              width: 1.0,
+              color: appTheme.colorPrimary,
+              style: BorderStyle.solid),
         ),
       );
     case BorderConstant.BORDER_LEFT_RIGHT:
       return BoxDecoration(
         // boxShadow: getBoxShadow(context),
         // borderRadius: BorderRadius.circular(getSize(5)),
+        // borderRadius: BorderRadius.only(
+        //   topLeft: Radius.circular(getSize(5)),
+        //   topRight: Radius.circular(2),
+        //   bottomLeft: Radius.circular(2),
+        //   bottomRight: Radius.circular(2),
+        // ),
         border: Border(
           left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
           right: BorderSide(width: 1.0, color: appTheme.colorPrimary),
@@ -714,7 +756,7 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
     case BorderConstant.BORDER_NONE:
       return BoxDecoration(
         //  boxShadow: getBoxShadow(context),
-        //borderRadius: BorderRadius.circular(getSize(5)),
+        borderRadius: BorderRadius.circular(getSize(5)),
         border: Border(
           top: BorderSide(width: 1.0, color: appTheme.colorPrimary),
           left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
@@ -724,7 +766,7 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
       );
     default:
       return BoxDecoration(
-        // borderRadius: BorderRadius.circular(getSize(5)),
+        borderRadius: BorderRadius.circular(getSize(5)),
         border: Border(
           top: BorderSide(width: 0, color: appTheme.whiteColor),
           left: BorderSide(width: 0, color: appTheme.whiteColor),
