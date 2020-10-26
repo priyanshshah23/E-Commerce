@@ -807,6 +807,7 @@ class Permissions {
     this.insert,
     this.update,
     this.delete,
+    this.downloadExcel,
   });
 
   Permissions.fromJson(Map<String, dynamic> json) {
