@@ -121,7 +121,7 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
             }
           }
 
-          Master.getSubMaster(MasterCode.color).then((value) {
+          getCombineColors().then((value) {
             arrColors = value;
             List<Master> list;
             Master master;

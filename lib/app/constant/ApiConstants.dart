@@ -9,14 +9,14 @@ class ApiConstants {
 //  static const String PROXY_URL = "PROXY 192.168.0.73:8888";
    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 // static const String PROXY_URL = "PROXY 192.168.225.121:8888"; // Brijesh
-//  static const String PROXY_URL = "PROXY localhost:8888"; // Brijesh
+  // static const String PROXY_URL = "PROXY localhost:8888"; // Brijesh
 
   static const String imageBaseURL = baseURL;
 
   static const String apiUrl = baseURL;
   static const String commonUrl = apiUrl + "device/v1/";
   static const String authUrl = apiUrl + "web/v1/auth/";
-  static const String shareAndEarn = "https://threeeco.page.link/d6o5/";
+  static const String shareAndEarn = "";
 
   static const String countryList = commonUrl + "country/paginate";
   static const String stateList = commonUrl + "state/paginate";
@@ -33,6 +33,8 @@ class ApiConstants {
       commonUrl + "match-pair/diamond/filter";
 
   static const String stoneOfTheDay = commonUrl + "featuredStone/paginate";
+
+  static const String mySaveSearch = commonUrl + "diamond/search/list";
 
   static const String diamondTrackList = commonUrl + "diamond-track/paginate";
   static const String diamondCommentList =

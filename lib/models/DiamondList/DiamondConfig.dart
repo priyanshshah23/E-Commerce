@@ -18,6 +18,7 @@ import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
+import 'package:rxbus/rxbus.dart';
 
 import '../../main.dart';
 
@@ -264,7 +265,7 @@ class DiamondConfig {
   }
 
   manageDiamondAction(BuildContext context, List<DiamondModel> list,
-      BottomTabModel bottomTabModel) {
+      BottomTabModel bottomTabModel, Function placeOrder) async {
     switch (bottomTabModel.type) {
       case ActionMenuConstant.ACTION_TYPE_ADD_TO_CART:
         actionAddToCart(context, list);
@@ -276,7 +277,7 @@ class DiamondConfig {
         actionAddToWishList(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_PLACE_ORDER:
-        actionPlaceOrder(context, list);
+        actionPlaceOrder(context, list, placeOrder);
         break;
       case ActionMenuConstant.ACTION_TYPE_COMMENT:
         actionComment(context, list);
@@ -312,7 +313,14 @@ class DiamondConfig {
         var dict = Map<String, dynamic>();
         dict[ArgumentConstant.DiamondList] = list;
         dict[ArgumentConstant.ModuleType] = moduleType;
-        NavigationUtilities.pushRoute(DiamondCompareScreen.route, args: dict);
+        // NavigationUtilities.pushRoute(DiamondCompareScreen.route, args: dict);
+        bool isBack = await Navigator.of(context).push(MaterialPageRoute(
+          settings: RouteSettings(name: DiamondCompareScreen.route),
+          builder: (context) => DiamondCompareScreen(dict),
+        ));
+        if (isBack != null && isBack) {
+          placeOrder();
+        }
         break;
     }
   }
@@ -349,10 +357,11 @@ class DiamondConfig {
     });
   }
 
-  actionPlaceOrder(BuildContext context, List<DiamondModel> list) {
+  actionPlaceOrder(
+      BuildContext context, List<DiamondModel> list, Function placeOrder) {
     showPlaceOrderDialog(context, (manageClick) {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
-        callApiFoPlaceOrder(context, list,
+        callApiFoPlaceOrder(context, list, placeOrder,
             isPop: true,
             remark: manageClick.remark,
             companyName: manageClick.companyName,
@@ -521,7 +530,8 @@ class DiamondConfig {
     );
   }
 
-  callApiFoPlaceOrder(BuildContext context, List<DiamondModel> list,
+  callApiFoPlaceOrder(
+      BuildContext context, List<DiamondModel> list, Function placeOrder,
       {bool isPop = false,
       String remark,
       String companyName,
@@ -553,12 +563,12 @@ class DiamondConfig {
         if (isPop) {
           Navigator.pop(context);
         }
-        app.resolve<CustomDialogs>().errorDialog(
-              context,
-              title,
-              resp.message,
-              btntitle: R.string().commonString.ok,
-            );
+        app.resolve<CustomDialogs>().errorDialog(context, title, resp.message,
+            btntitle: R.string().commonString.ok,
+            dismissPopup: false, voidCallBack: () {
+          Navigator.pop(context);
+          placeOrder();
+        });
       },
       (onError) {
         if (onError.message != null) {

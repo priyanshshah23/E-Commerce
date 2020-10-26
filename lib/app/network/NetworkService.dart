@@ -14,6 +14,7 @@ import 'package:diamnow/models/LoginModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
 import 'package:diamnow/models/Order/OrderListModel.dart';
 import 'package:diamnow/models/QuickSearch/QuickSearchModel.dart';
+import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:diamnow/models/Slot/SlotModel.dart';
 import 'package:diamnow/models/StaticPage/StaticPageModel.dart';
 import 'package:diamnow/models/Version/VersionUpdateResp.dart';
@@ -91,6 +92,10 @@ abstract class NetworkService {
 
   @POST(ApiConstants.stoneOfTheDay)
   Future<DiamondListResp> stoneOfTheDay(@Body() Map<String, dynamic> req);
+
+  @POST(ApiConstants.mySaveSearch)
+  Future<SavedSearchResp> mySavedSearch(
+      @Body() Map<String, dynamic> req);
 
   @POST(ApiConstants.diamondBidList)
   Future<DiamondListResp> diamondBidList(@Body() Map<String, dynamic> req);

@@ -338,6 +338,7 @@ class _HorizontalDataTableState extends State<HorizontalDataTable> {
     if (indexedWidgetBuilder != null) {
       return ListView.separated(
         controller: scrollController,
+        physics: NeverScrollableScrollPhysics(),
         itemBuilder: indexedWidgetBuilder,
         itemCount: itemCount,
         separatorBuilder: (context, index) {
@@ -345,10 +346,17 @@ class _HorizontalDataTableState extends State<HorizontalDataTable> {
         },
       );
     } else {
-      return ListView(
-        controller: scrollController,
-        children: children,
-      );
+      return scrollController == _rightHandSideListViewScrollController
+          ? ListView(
+              scrollDirection: Axis.horizontal,
+              controller: scrollController,
+              children: children,
+            )
+          : ListView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: scrollController,
+              children: children,
+            );
     }
   }
 
