@@ -621,15 +621,21 @@ class Account {
     showPublicly = json['showPublicly'];
     coverImage = json['coverImage'];
     isVerified = json['isVerified'];
-    /*country = json['country'] != null
-        ? new CountryList.fromJson(json['country'])
-        : null;
-    state = json['state'] != null
-        ? new StateList.fromJson(json['state'])
-        : null;
-    city = json['city'] != null
-        ? new CityList.fromJson(json['city'])
-        : null;*/
+    if(json["country"] is Map<String, dynamic>) {
+      country = json['country'] != null
+          ? new CountryList.fromJson(json['country'])
+          : null;
+    }
+    if(json["state"] is Map<String, dynamic>) {
+      state = json['state'] != null
+          ? new StateList.fromJson(json['state'])
+          : null;
+    }
+    if(json["city"] is Map<String, dynamic>) {
+      city = json['city'] != null
+          ? new CityList.fromJson(json['city'])
+          : null;
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -801,6 +807,7 @@ class Permissions {
     this.insert,
     this.update,
     this.delete,
+    this.downloadExcel,
   });
 
   Permissions.fromJson(Map<String, dynamic> json) {

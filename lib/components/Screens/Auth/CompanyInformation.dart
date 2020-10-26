@@ -899,22 +899,24 @@ class _CompanyInformationState extends State<CompanyInformation>
             context,
             isProgress: true)
         .then((resp) async {
-      _CompanyNameController.text = resp.data.companyName;
-      _addressLineOneController.text = resp.data.address;
-      _companyCodeController.text = resp.data.vendorCode;
-      businessTypeList.forEach((element) {
-        if (element.id == resp.data.businessType) {
-          _businessTypeController.text = element.title;
-        }
-      });
-      _pinCodeController.text = resp.data.zipCode;
-      _countryController.text = resp.data.country.name;
-      _cityController.text = resp.data.city.name;
-      _stateController.text = resp.data.state.name;
-      selectedCountryItem = resp.data.country;
-      selectedCityItem = resp.data.city;
-      selectedStateItem = resp.data.state;
-      setState(() {});
+          if(resp.data != null) {
+            _CompanyNameController.text = resp.data.companyName;
+            _addressLineOneController.text = resp.data.address;
+            _companyCodeController.text = resp.data.vendorCode;
+            businessTypeList.forEach((element) {
+              if (element.id == resp.data.businessType) {
+                _businessTypeController.text = element.title;
+              }
+            });
+            _pinCodeController.text = resp.data.zipCode;
+            _countryController.text = resp.data.country.name;
+            _cityController.text = resp.data.city.name;
+            _stateController.text = resp.data.state.name;
+            selectedCountryItem = resp.data.country;
+            selectedCityItem = resp.data.city;
+            selectedStateItem = resp.data.state;
+            setState(() {});
+          }
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,

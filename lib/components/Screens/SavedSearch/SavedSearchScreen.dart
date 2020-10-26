@@ -1,19 +1,12 @@
 import 'package:diamnow/app/Helper/Themehelper.dart';
 import 'package:diamnow/app/app.export.dart';
-import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/constant/constants.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
-import 'package:diamnow/app/network/NetworkCall.dart';
-import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CommonWidgets.dart';
 import 'package:diamnow/app/utils/math_utils.dart';
-import 'package:diamnow/components/Screens/Auth/CompanyInformation.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchItem.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
-import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
-import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
-import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -52,6 +45,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
   int segmentedControlValue = 0;
   bool keepAlive = false;
   PageController controller = PageController();
+
   _SavedSearchScreenState({this.moduleType, this.isFromDrawer});
 
   Future doAsyncStuff() async {
