@@ -48,6 +48,9 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
   @override
   void initState() {
     super.initState();
+    if(kDebugMode) {
+      _emailController.text = "honeyspatel98@gmail.com";
+    }
     _pinEditingController.clear();
   }
 
@@ -418,7 +421,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
 
   callForgetPasswordApi({bool isResend = false}) async {
     ForgotPasswordReq req = ForgotPasswordReq();
-    req.username = _emailController.text;
+    req.value = _emailController.text;
 
     NetworkCall<BaseApiResp>()
         .makeCall(

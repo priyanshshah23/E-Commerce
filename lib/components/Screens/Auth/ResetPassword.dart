@@ -129,7 +129,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
                                       );
                                 } else {
                                   _formKey.currentState.save();
-                                  NavigationUtilities.pushRoute(PasswordResetSuccessfully.route);
+                                  callResetPasswordApi();
                                 }
                               } else {
                                 setState(() {
@@ -212,7 +212,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
     );
   }
 
-  Future callResetPasswordApi(BuildContext context) async {
+  Future callResetPasswordApi() async {
     ResetPasswordReq req = ResetPasswordReq();
     req.newPassword = _newPasswordController.text.trim();
     req.email = email;
@@ -225,7 +225,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
         isProgress: true)
         .then((Resp) async {
           showToast(Resp.message, context: context);
-        NavigationUtilities.pushReplacementNamed(LoginScreen.route);
+          NavigationUtilities.pushRoute(PasswordResetSuccessfully.route);
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
         context,
