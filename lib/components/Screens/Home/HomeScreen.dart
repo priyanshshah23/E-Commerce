@@ -152,8 +152,9 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  openProfile() {
-    selectedType = DiamondModuleConstant.MODULE_TYPE_PROFILE;
+  openProfile(int moduleType) {
+    selectedType = moduleType;
+//    selectedType = DiamondModuleConstant.MODULE_TYPE_PROFILE;
     Map<String, dynamic> dict = new HashMap();
     dict[ArgumentConstant.ModuleType] =
         DiamondModuleConstant.MODULE_TYPE_PROFILE;
@@ -161,32 +162,36 @@ class _HomeScreenState extends State<HomeScreen> {
     currentWidget = ProfileList();
   }
 
-  openAboutUs() {
-    selectedType = DiamondModuleConstant.MODULE_TYPE_ABOUT_US;
+  openAboutUs(int moduleType) {
+    selectedType = moduleType;
+//    selectedType = DiamondModuleConstant.MODULE_TYPE_ABOUT_US;
     Map<String, dynamic> dict = new HashMap();
     dict["type"] = StaticPageConstant.ABOUT_US;
     dict[ArgumentConstant.IsFromDrawer] = true;
     currentWidget = StaticPageScreen(dict);
   }
 
-  openTermsAndCondition() {
-    selectedType = DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION;
+  openTermsAndCondition(int moduleType) {
+    selectedType = moduleType;
+//    selectedType = DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION;
     Map<String, dynamic> dict = new HashMap();
     dict["type"] = StaticPageConstant.TERMS_CONDITION;
     dict[ArgumentConstant.IsFromDrawer] = true;
     currentWidget = StaticPageScreen(dict);
   }
 
-  openPrivacyPolicy() {
-    selectedType = DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY;
+  openPrivacyPolicy(int moduleType) {
+    selectedType = moduleType;
+//    selectedType = DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY;
     Map<String, dynamic> dict = new HashMap();
     dict["type"] = StaticPageConstant.PRIVACY_POLICY;
     dict[ArgumentConstant.IsFromDrawer] = true;
     currentWidget = StaticPageScreen(dict);
   }
 
-  openSavedSearch() {
-    selectedType = DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
+  openSavedSearch(int moduleType) {
+    selectedType = moduleType;
+//    selectedType = DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
     Map<String, dynamic> dict = new HashMap();
     dict[ArgumentConstant.ModuleType] =
         DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
@@ -220,13 +225,13 @@ class _HomeScreenState extends State<HomeScreen> {
         case DiamondModuleConstant.MODULE_TYPE_MY_BID:
         case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
         case DiamondModuleConstant.MODULE_TYPE_ABOUT_US:
-          openAboutUs();
+          openAboutUs(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY:
-          openPrivacyPolicy();
+          openPrivacyPolicy(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION:
-          openTermsAndCondition();
+          openTermsAndCondition(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
         case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
@@ -234,14 +239,14 @@ class _HomeScreenState extends State<HomeScreen> {
           openDiamondList(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_PROFILE:
-          openProfile();
+          openProfile(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
         case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
           openDiamondOrderList(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
-          openSavedSearch();
+          openSavedSearch(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_LOGOUT:
           logoutFromApp(context);
