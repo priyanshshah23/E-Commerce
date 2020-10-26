@@ -1,5 +1,7 @@
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/Helper/Themehelper.dart';
 import 'package:diamnow/app/base/BaseList.dart';
+import 'package:diamnow/app/constant/ImageConstant.dart';
 import 'package:diamnow/app/constant/constants.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
@@ -197,8 +199,39 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(model.name ?? "-",
-                              style: appTheme.blackSemiBold18TitleColorblack),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(model.name ?? "-",
+                                  style:
+                                      appTheme.blackSemiBold18TitleColorblack),
+                              widget.searchType == SavedSearchType.savedSearch
+                                  ? Spacer()
+                                  : SizedBox(
+                                      width: getSize(16),
+                                    ),
+                              widget.searchType == SavedSearchType.savedSearch
+                                  ? InkWell(
+                                      onTap: () {
+                                        SyncManager.instance
+                                            .callApiForDeleteSavedSearch(
+                                                context, model.id ?? "",
+                                                success: (resp) {
+                                          callApi(true);
+                                        });
+                                      },
+                                      child: Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Image.asset(
+                                          home_delete,
+                                          width: getSize(20),
+                                          height: getSize(20),
+                                        ),
+                                      ),
+                                    )
+                                  : SizedBox(),
+                            ],
+                          ),
                           SizedBox(
                             height: getSize(8),
                           ),

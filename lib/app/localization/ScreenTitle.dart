@@ -165,6 +165,13 @@ class ScreenTitle {
   final String viewAll;
   final String salesPersonDetail;
 
+  final String searchTitle;
+  final String enterSearchTitle;
+  final String timeSlots;
+  final String selectCustomDate;
+  final String availableSlot;
+  final String reqOfficeView;
+
   const ScreenTitle({
     this.myEnquiry = "My Enquiry",
     this.upcoming = "Upcoming",
@@ -328,5 +335,11 @@ class ScreenTitle {
     this.viewAll = "View All",
     this.salesPersonDetail = "Sales Person Detail",
     //
+    this.searchTitle = "Search Title",
+    this.enterSearchTitle = "Enter Search Title",
+    this.timeSlots = "Time Slots",
+    this.selectCustomDate = "Select Custom date",
+    this.availableSlot = "Available Slots",
+    this.reqOfficeView = "Request Office View",
   });
 }

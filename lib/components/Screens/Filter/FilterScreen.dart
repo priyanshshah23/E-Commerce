@@ -292,8 +292,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       onClickCallback: (obj) {
         //
         if (obj.code == BottomCodeConstant.filterSavedSearch) {
-          callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-              isSavedSearch: true);
+          //
         } else if (obj.code == BottomCodeConstant.filterAddDemamd) {
           //
           print(obj.code);
@@ -305,6 +304,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         } else if (obj.code == BottomCodeConstant.filterSaveAndSearch) {
           //
           print(obj.code);
+          callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,isSavedSearch: true);
         } else if (obj.code == BottomCodeConstant.filteMatchPair) {
           callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR);
         }
