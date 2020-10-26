@@ -102,6 +102,13 @@ class BaseTheme {
         color: textColor);
   }
 
+  TextStyle get blackSemiBold18TitleColorblack {
+    return TextStyle(
+        fontSize: getFontSize(18),
+        fontWeight: FontWeight.w500,
+        color: textColor);
+  }
+
   TextStyle get blackMedium20TitleColorblack {
     return TextStyle(
         fontSize: getFontSize(20),

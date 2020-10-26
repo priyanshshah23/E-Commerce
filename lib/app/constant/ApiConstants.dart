@@ -53,10 +53,12 @@ class ApiConstants {
   static const String staticPage = apiV1 + "static-page/{id}";
   static const String forgetPassword =
       apiUrl + "web/v1/auth/forgot-password"; //done
-  static const String resetPassword = apiUrl + "admin/v1/reset-password";
+  static const String resetPassword = commonUrl + "user/reset-password";
   static const String changePassword =
       apiUrl + "web/v1/auth/reset-password-by-user"; //done
   static const String personalInformation = commonUrl + "user/update"; //done
+  static const String sendOTP = commonUrl + "user/send-otp"; //done
+  static const String verifyOTP = commonUrl + "user/verify-otp"; //done
   static const String companyInformation =
       commonUrl + "user/profile/update"; //done
   static const String quickSearch = commonUrl + "diamond/quick-search";
@@ -70,7 +72,7 @@ class ApiConstants {
   static const String createOfficerequest = commonUrl + "cabin-schedule/create";
 
   //VERSION UPDATION
-  static const getUpdation = apiV1 + "version";
+  static const getUpdation = commonUrl + "version";
 
   //Dashboard
   static const String dashboard = commonUrl + "user/dashboard";

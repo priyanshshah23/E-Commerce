@@ -12,7 +12,6 @@ import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
-import 'package:diamnow/components/Screens/SavedSearch/TabFileForSsAndRs.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
@@ -194,7 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
         DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
     dict[ArgumentConstant.IsFromDrawer] = true;
     // currentWidget = SavedSearchScreen(dict);
-    currentWidget = TabFileForSsAndRs(dict);
+    currentWidget = SavedSearchScreen(dict);
   }
 
   manageDrawerClick(BuildContext context, int type, bool isPop) {
@@ -215,14 +214,20 @@ class _HomeScreenState extends State<HomeScreen> {
           openQuickSearch(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_CART:
+          break;
         case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
+          break;
         case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+          break;
         case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
+          break;
         case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
+          break;
         case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
           openDiamondList(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+          break;
         case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
           openDashboard(type);
           break;
@@ -236,7 +241,9 @@ class _HomeScreenState extends State<HomeScreen> {
           openTermsAndCondition(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
+          break;
         case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
+          break;
         case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
           openDiamondList(type);
           break;
@@ -244,6 +251,7 @@ class _HomeScreenState extends State<HomeScreen> {
           openProfile(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
+          break;
         case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
           openDiamondOrderList(type);
           break;

@@ -152,7 +152,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       screen = ForgetPasswordScreen();
       break;
     case ResetPassword.route:
-      screen = ResetPassword();
+      screen = ResetPassword(arguments);
       break;
     case PasswordResetSuccessfully.route:
       screen = PasswordResetSuccessfully();

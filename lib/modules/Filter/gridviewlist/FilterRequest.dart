@@ -53,8 +53,10 @@ class FilterRequest {
             map[selectionModel.apiKey] = arr;
           }
         } else {
-          List<String> arrStr = Master.getSelectedId(selectionModel.masters);
-          if (!isNullEmptyOrFalse(arrStr)) map[element.apiKey] = arrStr;
+          if (selectionModel.masterCode != MasterCode.make) {
+            List<String> arrStr = Master.getSelectedId(selectionModel.masters);
+            if (!isNullEmptyOrFalse(arrStr)) map[element.apiKey] = arrStr;
+          }
         }
       }
 

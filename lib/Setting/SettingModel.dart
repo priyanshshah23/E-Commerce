@@ -4,6 +4,7 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/Home/DrawerModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
+import 'package:diamnow/models/LoginModel.dart';
 
 class DrawerSetting {
   List<DrawerModel> getDrawerItems() {

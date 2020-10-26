@@ -275,7 +275,7 @@ class Master {
 
 class MasterRespData {
   String lastSyncDate;
-
+  UserPermissions permission;
   User loggedInUser;
   Masters sizeMaster;
   Masters masters;
@@ -285,6 +285,7 @@ class MasterRespData {
     this.loggedInUser,
     this.sizeMaster,
     this.masters,
+    this.permission,
   });
 
   MasterRespData.fromJson(Map<String, dynamic> json) {
@@ -297,6 +298,7 @@ class MasterRespData {
         : null;
     masters =
         json['masters'] != null ? new Masters.fromJson(json['masters']) : null;
+    permission = json['permission'] != null ? new UserPermissions.fromJson(json['permission']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -311,7 +313,9 @@ class MasterRespData {
     if (this.masters != null) {
       data['masters'] = this.masters.toJson();
     }
-
+    if(this.permission != null) {
+      data['permission'] = this.permission.toJson();
+    }
     return data;
   }
 }
