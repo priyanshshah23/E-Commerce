@@ -170,3 +170,8 @@ class InvoiceTypes {
   static const int tomorrow = 2;
   static const int later = 3;
 }
+
+class DashboardConstants {
+  static const String stoneOfTheDay = "stone_of_day";
+  static const String best = "best";
+}
