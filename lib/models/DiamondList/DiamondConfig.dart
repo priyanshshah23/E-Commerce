@@ -116,6 +116,8 @@ class DiamondConfig {
         return R.string().screenTitle.myOffice;
       case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
         return R.string().screenTitle.myOffer;
+      case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
+        return R.string().screenTitle.myComment;
       case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
         return R.string().screenTitle.myPurchased;
       case DiamondModuleConstant.MODULE_TYPE_HOME:
@@ -410,7 +412,8 @@ class DiamondConfig {
     });
     app.resolve<CustomDialogs>().confirmDialog(context,
         title: "Disclaimer",
-        desc: "Packet No: "+list.map((item) => item.vStnId).toList().join(', ') +
+        desc: "Packet No: " +
+            list.map((item) => item.vStnId).toList().join(', ') +
             " is currently located in India and for delivery in any other country apart from india will take at least 7-10 working days.",
         negativeBtnTitle: "Quit",
         positiveBtnTitle: "I Agree", onClickCallback: (buttonType) {
@@ -750,11 +753,11 @@ openSharePopUp(BuildContext context) {
     var link = ApiConstants.shareAndEarn;
     Share.share(
         "876654878\n"
-            "Invite code : 655765757"
-            "App link : $link",
+        "Invite code : 655765757"
+        "App link : $link",
         subject: R.string().screenTitle.share,
         sharePositionOrigin:
-        Rect.fromCenter(center: Offset.zero, width: 100, height: 100));
+            Rect.fromCenter(center: Offset.zero, width: 100, height: 100));
   }
 
   return showDialog(
