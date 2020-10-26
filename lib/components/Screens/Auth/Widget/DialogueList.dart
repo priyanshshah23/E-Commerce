@@ -8,12 +8,18 @@ import 'package:flutter/material.dart';
 
 class DialogueList extends StatefulWidget {
   final List duplicateItems;
-  final Function({CityList cityList, CountryList countryList, StateList stateList}) applyFilterCallBack;
+  final Function(
+      {CityList cityList,
+      CountryList countryList,
+      StateList stateList}) applyFilterCallBack;
   var selectedItem;
   DialogueListType type;
 
   DialogueList(
-      {this.duplicateItems, this.applyFilterCallBack, this.selectedItem, this.type});
+      {this.duplicateItems,
+      this.applyFilterCallBack,
+      this.selectedItem,
+      this.type});
 
   @override
   _DialogueListState createState() =>
@@ -24,7 +30,8 @@ class _DialogueListState extends State<DialogueList> {
   TextEditingController searchController = TextEditingController();
   final List duplicateItems;
   List items = List();
-  Function({CityList cityList, CountryList countryList, StateList stateList}) applyFilterCallBack;
+  Function({CityList cityList, CountryList countryList, StateList stateList})
+      applyFilterCallBack;
   var selectedItem;
 
   _DialogueListState(
@@ -124,11 +131,12 @@ class _DialogueListState extends State<DialogueList> {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
-                            if(widget.type == DialogueListType.City) {
+                            if (widget.type == DialogueListType.City) {
                               applyFilterCallBack(cityList: items[index]);
-                            } else if(widget.type == DialogueListType.State) {
+                            } else if (widget.type == DialogueListType.State) {
                               applyFilterCallBack(stateList: items[index]);
-                            } else if(widget.type == DialogueListType.Country) {
+                            } else if (widget.type ==
+                                DialogueListType.Country) {
                               applyFilterCallBack(countryList: items[index]);
                             }
                             items[index].isActive = true;
@@ -185,12 +193,13 @@ class _DialogueListState extends State<DialogueList> {
   }
 
   String getTitle() {
-    if(widget.type == DialogueListType.City) {
+    if (widget.type == DialogueListType.City) {
       return R.string().commonString.selectCity;
-    } else if(widget.type == DialogueListType.State) {
+    } else if (widget.type == DialogueListType.State) {
       return R.string().commonString.selectState;
-    } else if(widget.type == DialogueListType.Country) {
+    } else if (widget.type == DialogueListType.Country) {
       return R.string().commonString.selectCountry;
     }
+    return "";
   }
 }
