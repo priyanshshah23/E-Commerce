@@ -418,7 +418,6 @@ class DiamondModel {
   String displayTitle;
   num bidAmount;
 
-  bool isSelectedForComparechange = false; //for compare changes screen
 
   getSelectedDetail(int type) {
     switch (type) {

@@ -20,7 +20,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class DiamondDetailScreen extends StatefulScreenWidget {
-  static const route = "Diamond Detail Screen";
+  static const route = "/DiamondDetailScreen";
 
   String filterId;
   DiamondModel diamondModel;
@@ -851,6 +851,9 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   manageBottomMenuClick(BottomTabModel bottomTabModel) {
     List<DiamondModel> selectedList = [];
     selectedList.add(diamondModel);
-    diamondConfig.manageDiamondAction(context, selectedList, bottomTabModel);
+    diamondConfig.manageDiamondAction(context, selectedList, bottomTabModel,
+        () {
+      Navigator.pop(context,true);
+    });
   }
 }

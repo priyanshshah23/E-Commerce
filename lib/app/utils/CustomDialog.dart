@@ -166,9 +166,11 @@ class CustomDialogs {
   }
 
   void errorDialog(BuildContext context, String title, String disc,
-      {String btntitle, VoidCallback voidCallBack}) {
+      {String btntitle, VoidCallback voidCallBack, bool dismissPopup = true}) {
     OpenErrorDialog(context, title, disc,
-        btntitle: btntitle, voidCallback: voidCallBack ?? null);
+        btntitle: btntitle,
+        voidCallback: voidCallBack ?? null,
+        dismissPopup: dismissPopup);
   }
 
   void confirmDialog(BuildContext context,
@@ -213,9 +215,10 @@ class ProgressDialog2 {
 }
 
 Future OpenErrorDialog(BuildContext context, String title, String disc,
-    {String btntitle, VoidCallback voidCallback}) {
+    {String btntitle, VoidCallback voidCallback, bool dismissPopup = false}) {
   return showDialog(
       context: context,
+      barrierDismissible: dismissPopup,
 //      isScrollControlled: true,
 //      backgroundColor: appTheme.whiteColor,
       builder: (context) {

@@ -1,31 +1,20 @@
-import 'dart:ffi';
 import 'package:diamnow/app/app.export.dart';
-import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
-import 'package:diamnow/app/network/NetworkCall.dart';
-import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
-import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
-import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondCompareWidget.dart';
-import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
-import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
-import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
-import 'package:diamnow/components/Screens/More/DiamondBottomSheets.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/DiamondDetail/DiamondDetailUIModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
-import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:flutter/material.dart';
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
 class DiamondCompareScreen extends StatefulScreenWidget {
-  static const route = "Diamond Compare Screen";
+  static const route = "/DiamondCompareScreen";
 
   int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
   List<DiamondModel> arrayDiamond;
@@ -508,7 +497,7 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
                         key: Key(index.toString()),
                         deleteWidget: (index) {
                           setState(() {
-                            arrayDiamond.removeAt(index);
+                            removeDiamond(index);
                           });
                         },
                       )
@@ -519,7 +508,7 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
                         key: Key(index.toString()),
                         deleteWidget: (index) {
                           setState(() {
-                            arrayDiamond.removeAt(index);
+                            removeDiamond(index);
                           });
                         },
                       );
@@ -537,15 +526,39 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
     );
   }
 
+  removeDiamond(int index) {
+    if (arrayDiamond.length > 2) {
+      arrayDiamond.removeAt(index);
+    } else {
+      app.resolve<CustomDialogs>().confirmDialog(
+            context,
+            title: "",
+            desc: R.string().errorString.diamondCompareRemove,
+            positiveBtnTitle: R.string().commonString.ok,
+          );
+    }
+  }
+
   Widget getBottomTab() {
     return BottomTabbarWidget(
       arrBottomTab: diamondConfig.arrBottomTab,
       onClickCallback: (obj) {
         if (obj.type == ActionMenuConstant.ACTION_TYPE_MORE) {
-          showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
-              (manageClick) {
-            manageBottomMenuClick(manageClick.bottomTabModel);
-          }, R.string().commonString.more, isDisplaySelection: false);
+          List<DiamondModel> selectedList =
+              arrayDiamond.where((element) => element.isSelected).toList();
+          if (selectedList != null && selectedList.length > 0) {
+            showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
+                (manageClick) {
+              manageBottomMenuClick(manageClick.bottomTabModel);
+            }, R.string().commonString.more, isDisplaySelection: false);
+          } else {
+            app.resolve<CustomDialogs>().confirmDialog(
+                  context,
+                  title: "",
+                  desc: R.string().errorString.diamondSelectionError,
+                  positiveBtnTitle: R.string().commonString.ok,
+                );
+          }
         } else {
           manageBottomMenuClick(obj);
         }
@@ -557,11 +570,17 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
     List<DiamondModel> selectedList =
         arrayDiamond.where((element) => element.isSelected).toList();
     if (selectedList != null && selectedList.length > 0) {
-      diamondConfig.manageDiamondAction(context, selectedList, bottomTabModel);
+      diamondConfig.manageDiamondAction(context, selectedList, bottomTabModel,
+          () {
+        Navigator.pop(context, true);
+      });
     } else {
-      app.resolve<CustomDialogs>().errorDialog(
-          context, "Selection", "Please select at least one stone.",
-          btntitle: R.string().commonString.ok);
+      app.resolve<CustomDialogs>().confirmDialog(
+            context,
+            title: "",
+            desc: R.string().errorString.diamondSelectionError,
+            positiveBtnTitle: R.string().commonString.ok,
+          );
     }
   }
 }

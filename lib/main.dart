@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:diamnow/app/theme/settings_models_provider.dart';
+import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
 import 'package:diamnow/components/Screens/Splash.dart';
 import 'package:diamnow/modules/ThemeSetting.dart';
 import 'package:flutter/foundation.dart';
@@ -19,18 +21,14 @@ TextDirection deviceTextDirection = TextDirection.ltr;
 
 main() {
   WidgetsFlutterBinding.ensureInitialized();
-    if (kDebugMode) {
-      rootBundle
-          .load('assets/chls.pem')
-          .then((value){
-                if (value != null)
-                  {
-                    SecurityContext.defaultContext
-                        .setTrustedCertificatesBytes(value.buffer.asUint8List());
-                  }
-              })
-          .catchError((object) => {print(object)});
-    }
+  if (kDebugMode) {
+    rootBundle.load('assets/chls.pem').then((value) {
+      if (value != null) {
+        SecurityContext.defaultContext
+            .setTrustedCertificatesBytes(value.buffer.asUint8List());
+      }
+    }).catchError((object) => {print(object)});
+  }
   app = KiwiContainer();
 
   setup();
@@ -78,6 +76,11 @@ class _BaseState extends State<Base> {
       home: Splash(),
       routes: <String, WidgetBuilder>{
         '/ThemeSetting': (BuildContext context) => ThemeSetting(),
+        DiamondCompareScreen.route: (BuildContext context) =>
+            DiamondCompareScreen(ModalRoute.of(context).settings.arguments),
+        DiamondDetailScreen.route: (BuildContext context) =>
+            DiamondDetailScreen(
+                arguments: ModalRoute.of(context).settings.arguments),
       },
       builder: _builder,
     );
