@@ -112,7 +112,7 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
           //Get Shape MAster
           if (true) {
             FormBaseModel shapeMaster = arrData.singleWhere(
-                (element) => element.viewType == ViewTypes.caratRange);
+                (element) => element.viewType == ViewTypes.shapeWidget);
 
             if (!isNullEmptyOrFalse(shapeMaster)) {
               if (shapeMaster is SelectionModel) {
@@ -121,7 +121,7 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
             }
           }
 
-          Master.getSubMaster(MasterCode.color).then((value) {
+          getCombineColors().then((value) {
             arrColors = value;
             List<Master> list;
             Master master;
@@ -331,7 +331,7 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
     Map<String, dynamic> request = {};
     SelectionModel model = arrData
         .singleWhere((element) => element.viewType == ViewTypes.shapeWidget);
-    request["shape"] = Master.getSelectedId(model.masters);
+    request["shp"] = Master.getSelectedId(model.masters);
 
     SelectionModel model1 = arrData
         .singleWhere((element) => element.viewType == ViewTypes.caratRange);
@@ -452,9 +452,10 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
         for (int i = 0; i < arrCount[index].dataArr.length; i++)
           InkWell(
             onTap: () {
-              print("Tapped");
-              prepareStoneRequest(
-                  this.arrColors[index], arrCount[index].dataArr[i]);
+              if (arrCount[index].dataArr[i].count > 0) {
+                prepareStoneRequest(
+                    this.arrColors[index], arrCount[index].dataArr[i]);
+              }
             },
             child: Container(
               decoration: BoxDecoration(
@@ -483,6 +484,7 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
   prepareStoneRequest(Master color, Master clarity) {
     Map<String, dynamic> request = Map<String, dynamic>();
     request["shp"] = Master.getSelectedId(arrShape);
+
     request["or"] = Master.getSelectedCarat(arrCarat);
     //request["col"] = Master.getSelectedId([color]);
     request["col"] = color.groupingIds;

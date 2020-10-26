@@ -166,9 +166,11 @@ class CustomDialogs {
   }
 
   void errorDialog(BuildContext context, String title, String disc,
-      {String btntitle, VoidCallback voidCallBack}) {
+      {String btntitle, VoidCallback voidCallBack, bool dismissPopup = true}) {
     OpenErrorDialog(context, title, disc,
-        btntitle: btntitle, voidCallback: voidCallBack ?? null);
+        btntitle: btntitle,
+        voidCallback: voidCallBack ?? null,
+        dismissPopup: dismissPopup);
   }
 
   void confirmDialog(BuildContext context,
@@ -213,57 +215,67 @@ class ProgressDialog2 {
 }
 
 Future OpenErrorDialog(BuildContext context, String title, String disc,
-    {String btntitle, VoidCallback voidCallback}) {
+    {String btntitle, VoidCallback voidCallback, bool dismissPopup = true}) {
+  Future<bool> _onBackPressed() {
+    if (dismissPopup) {
+      Navigator.pop(context);
+    }
+  }
+
   return showDialog(
       context: context,
+      barrierDismissible: dismissPopup,
 //      isScrollControlled: true,
 //      backgroundColor: appTheme.whiteColor,
       builder: (context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(
-              getSize(15),
+        return WillPopScope(
+          onWillPop: _onBackPressed,
+          child: Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                getSize(15),
+              ),
             ),
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(getSize(15)),
-            child: StatefulBuilder(builder: (context, StateSetter setSetter) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  title != null && title.length > 0
-                      ? Text(
-                          title,
-                          style: appTheme.commonAlertDialogueTitleStyle,
-                        )
-                      : Container(),
-                  SizedBox(
-                    height: getSize(30),
-                  ),
-                  Text(
-                    disc,
-                    textAlign: TextAlign.center,
-                    style: appTheme.commonAlertDialogueTitleStyle,
-                  ),
-                  // SizedBox(height: getSize(20),),
-                  btntitle != null
-                      ? Container(
-                          margin: EdgeInsets.only(top: getSize(30)),
-                          child: AppButton.flat(
-                            onTap: voidCallback ??
-                                () {
-                                  Navigator.pop(context);
-                                },
-                            borderRadius: 14,
-                            fitWidth: true,
-                            text: btntitle,
-                            //isButtonEnabled: enableDisableSigninButton(),
-                          ),
-                        )
-                      : SizedBox(),
-                ],
-              );
-            }),
+            child: Padding(
+              padding: EdgeInsets.all(getSize(15)),
+              child: StatefulBuilder(builder: (context, StateSetter setSetter) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    title != null && title.length > 0
+                        ? Text(
+                            title,
+                            style: appTheme.commonAlertDialogueTitleStyle,
+                          )
+                        : Container(),
+                    SizedBox(
+                      height: getSize(30),
+                    ),
+                    Text(
+                      disc,
+                      textAlign: TextAlign.center,
+                      style: appTheme.commonAlertDialogueTitleStyle,
+                    ),
+                    // SizedBox(height: getSize(20),),
+                    btntitle != null
+                        ? Container(
+                            margin: EdgeInsets.only(top: getSize(30)),
+                            child: AppButton.flat(
+                              onTap: voidCallback ??
+                                  () {
+                                    Navigator.pop(context);
+                                  },
+                              borderRadius: 14,
+                              fitWidth: true,
+                              text: btntitle,
+                              //isButtonEnabled: enableDisableSigninButton(),
+                            ),
+                          )
+                        : SizedBox(),
+                  ],
+                );
+              }),
+            ),
           ),
         );
       });

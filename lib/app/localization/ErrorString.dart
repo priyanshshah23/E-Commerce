@@ -60,8 +60,12 @@ class ErrorString {
   final String selectTimeSlot;
   final String selectVirtualType;
   final String enterComments;
+  final String diamondSelectionError;
+  final String diamondCompareRemove;
 
   const ErrorString({
+    this.diamondCompareRemove = 'At least 2 Stones are required to compare.',
+    this.diamondSelectionError = 'Please select at least one stone.',
     this.pleaseEnterCompanyName = 'Please enter company name.',
     this.selectInvoiceDate = 'Select Invoice Date',
     this.pleaseEnterComment = 'Please enter comment.',

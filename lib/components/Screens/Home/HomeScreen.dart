@@ -3,12 +3,8 @@ import 'dart:collection';
 
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
-import 'package:diamnow/app/network/NetworkCall.dart';
-import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
-import 'package:diamnow/components/Screens/Auth/Login.dart';
-import 'package:diamnow/components/Screens/Auth/Profile.dart';
 import 'package:diamnow/components/Screens/Auth/ProfileList.dart';
 import 'package:diamnow/components/Screens/DashBoard/Dashboard.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
@@ -16,6 +12,7 @@ import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
+import 'package:diamnow/components/Screens/SavedSearch/TabFileForSsAndRs.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
@@ -152,8 +149,9 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  openProfile() {
-    selectedType = DiamondModuleConstant.MODULE_TYPE_PROFILE;
+  openProfile(int moduleType) {
+    selectedType = moduleType;
+//    selectedType = DiamondModuleConstant.MODULE_TYPE_PROFILE;
     Map<String, dynamic> dict = new HashMap();
     dict[ArgumentConstant.ModuleType] =
         DiamondModuleConstant.MODULE_TYPE_PROFILE;
@@ -161,37 +159,42 @@ class _HomeScreenState extends State<HomeScreen> {
     currentWidget = ProfileList();
   }
 
-  openAboutUs() {
-    selectedType = DiamondModuleConstant.MODULE_TYPE_ABOUT_US;
+  openAboutUs(int moduleType) {
+    selectedType = moduleType;
+//    selectedType = DiamondModuleConstant.MODULE_TYPE_ABOUT_US;
     Map<String, dynamic> dict = new HashMap();
     dict["type"] = StaticPageConstant.ABOUT_US;
     dict[ArgumentConstant.IsFromDrawer] = true;
     currentWidget = StaticPageScreen(dict);
   }
 
-  openTermsAndCondition() {
-    selectedType = DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION;
+  openTermsAndCondition(int moduleType) {
+    selectedType = moduleType;
+//    selectedType = DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION;
     Map<String, dynamic> dict = new HashMap();
     dict["type"] = StaticPageConstant.TERMS_CONDITION;
     dict[ArgumentConstant.IsFromDrawer] = true;
     currentWidget = StaticPageScreen(dict);
   }
 
-  openPrivacyPolicy() {
-    selectedType = DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY;
+  openPrivacyPolicy(int moduleType) {
+    selectedType = moduleType;
+//    selectedType = DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY;
     Map<String, dynamic> dict = new HashMap();
     dict["type"] = StaticPageConstant.PRIVACY_POLICY;
     dict[ArgumentConstant.IsFromDrawer] = true;
     currentWidget = StaticPageScreen(dict);
   }
 
-  openSavedSearch() {
-    selectedType = DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
+  openSavedSearch(int moduleType) {
+    selectedType = moduleType;
+//    selectedType = DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
     Map<String, dynamic> dict = new HashMap();
     dict[ArgumentConstant.ModuleType] =
         DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
     dict[ArgumentConstant.IsFromDrawer] = true;
-    currentWidget = SavedSearchScreen(dict);
+    // currentWidget = SavedSearchScreen(dict);
+    currentWidget = TabFileForSsAndRs(dict);
   }
 
   manageDrawerClick(BuildContext context, int type, bool isPop) {
@@ -217,16 +220,20 @@ class _HomeScreenState extends State<HomeScreen> {
         case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
         case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
         case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
+          openDiamondList(type);
+          break;
         case DiamondModuleConstant.MODULE_TYPE_MY_BID:
         case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
+          openDashboard(type);
+          break;
         case DiamondModuleConstant.MODULE_TYPE_ABOUT_US:
-          openAboutUs();
+          openAboutUs(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY:
-          openPrivacyPolicy();
+          openPrivacyPolicy(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION:
-          openTermsAndCondition();
+          openTermsAndCondition(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
         case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
@@ -234,14 +241,14 @@ class _HomeScreenState extends State<HomeScreen> {
           openDiamondList(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_PROFILE:
-          openProfile();
+          openProfile(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
         case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
           openDiamondOrderList(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
-          openSavedSearch();
+          openSavedSearch(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_LOGOUT:
           logoutFromApp(context);
@@ -271,8 +278,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-
-
-
 }

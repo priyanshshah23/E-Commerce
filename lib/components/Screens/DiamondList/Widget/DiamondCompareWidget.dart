@@ -176,14 +176,11 @@ class _DiamondCompareWidgetState extends State<DiamondCompareWidget> {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         // color: Colors.yellow,
-                        border: index == 0 ||
-                                diamondModel.isSelectedForComparechange == true
+                        border: index == 0 || diamondModel.isSelected == true
                             ? (Border.all(
-                                color:
-                                    diamondModel.isSelectedForComparechange ==
-                                            true
-                                        ? appTheme.colorPrimary
-                                        : appTheme.dividerColor,
+                                color: diamondModel.isSelected == true
+                                    ? appTheme.colorPrimary
+                                    : appTheme.dividerColor,
                               ))
                             : Border(
                                 // left: BorderSide(
@@ -218,13 +215,13 @@ class _DiamondCompareWidgetState extends State<DiamondCompareWidget> {
                         icon: Icon(
                           Icons.done,
                           size: getSize(18),
-                          color: diamondModel.isSelectedForComparechange == true
+                          color: diamondModel.isSelected == true
                               ? appTheme.colorPrimary
                               : appTheme.textBlackColor,
                         ),
                         onPressed: () {
                           setState(() {
-                            diamondModel.isSelectedForComparechange ^= true;
+                            diamondModel.isSelected = !diamondModel.isSelected;
                           });
                         },
                       ),

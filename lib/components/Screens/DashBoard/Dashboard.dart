@@ -6,11 +6,13 @@ import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
+import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/Dashboard/DashboardModel.dart';
 import 'package:diamnow/models/Dashbord/DashBoardConfigModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
+import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:flutter/material.dart';
@@ -417,93 +419,128 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   getFeaturedSection() {
-    return Padding(
-      padding: EdgeInsets.only(
-        top: getSize(20),
-        left: getSize(Spacing.leftPadding),
-        right: getSize(Spacing.rightPadding),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              getTitleText(R.string().screenTitle.featuredStones),
-              Spacer(),
-              InkWell(
-                onTap: () {
-                  //
-                },
-                child: getViewAll(),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: getSize(20),
-          ),
-          Container(
-            height: getSize(200),
-            child: GridView.count(
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              crossAxisCount: 2,
-              childAspectRatio: 0.386, // without Price
-              // childAspectRatio: 0.327, // with Price
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-              children:
-                  List.generate(dashboardConfig.arrTopSection.length, (index) {
-                // var item = arraDiamond[index];
-                return getRecentItem();
-              }),
+    List<DiamondModel> arrStones = [];
+    if (!isNullEmptyOrFalse(this.dashboardModel)) {
+      if (!isNullEmptyOrFalse(this.dashboardModel.featuredStone)) {
+        List<FeaturedStone> filter = this
+            .dashboardModel
+            .featuredStone
+            .where((element) => element.type == DashboardConstants.best)
+            .toList();
+
+        if (!isNullEmptyOrFalse(filter)) {
+          arrStones = filter.first.featuredPair;
+        }
+      }
+    }
+
+    return isNullEmptyOrFalse(arrStones)
+        ? SizedBox()
+        : Padding(
+            padding: EdgeInsets.only(
+              top: getSize(20),
+              left: getSize(Spacing.leftPadding),
+              right: getSize(Spacing.rightPadding),
             ),
-          )
-        ],
-      ),
-    );
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    getTitleText(R.string().screenTitle.featuredStones),
+                    Spacer(),
+                    InkWell(
+                      onTap: () {
+                        //
+                      },
+                      child: getViewAll(),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: getSize(20),
+                ),
+                Container(
+                  height: getSize(200),
+                  child: GridView.count(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.36, // without Price
+                    // childAspectRatio: 0.327, // with Price
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    children: List.generate(arrStones.length, (index) {
+                      // var item = arraDiamond[index];
+                      return getRecentItem(arrStones[index]);
+                    }),
+                  ),
+                )
+              ],
+            ),
+          );
   }
 
   getStoneOfDaySection() {
-    return Padding(
-      padding: EdgeInsets.only(
-        top: getSize(20),
-        left: getSize(Spacing.leftPadding),
-        right: getSize(Spacing.rightPadding),
-      ),
-      child: Column(
-        // mainAxisAlignment: mainaxisal,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              getTitleText(R.string().screenTitle.stoneOfDay),
-              Spacer(),
-              InkWell(
-                onTap: () {
-                  //
-                },
-                child: getViewAll(),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: getSize(20),
-          ),
-          Container(
-            height: getSize(245),
-            child: ListView(
-              scrollDirection: Axis.horizontal,
+    List<DiamondModel> arrStones = [];
+    if (!isNullEmptyOrFalse(this.dashboardModel)) {
+      if (!isNullEmptyOrFalse(this.dashboardModel.featuredStone)) {
+        List<FeaturedStone> filter = this
+            .dashboardModel
+            .featuredStone
+            .where(
+                (element) => element.type == DashboardConstants.stoneOfTheDay)
+            .toList();
+
+        if (!isNullEmptyOrFalse(filter)) {
+          arrStones = filter.first.featuredPair;
+        }
+      }
+    }
+
+    return isNullEmptyOrFalse(arrStones)
+        ? SizedBox()
+        : Padding(
+            padding: EdgeInsets.only(
+              top: getSize(20),
+              left: getSize(Spacing.leftPadding),
+              right: getSize(Spacing.rightPadding),
+            ),
+            child: Column(
+              // mainAxisAlignment: mainaxisal,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                for (var i = 0; i < 5; i++) getStoneOfDayItem(),
+                Row(
+                  children: [
+                    getTitleText(R.string().screenTitle.stoneOfDay),
+                    Spacer(),
+                    InkWell(
+                      onTap: () {
+                        //
+                      },
+                      child: getViewAll(),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: getSize(20),
+                ),
+                Container(
+                  height: getSize(245),
+                  child: ListView.builder(
+                    itemBuilder: (context, index) {
+                      return getStoneOfDayItem(arrStones[index]);
+                    },
+                    itemCount: arrStones.length,
+                    scrollDirection: Axis.horizontal,
+                  ),
+                )
               ],
             ),
-          )
-        ],
-      ),
-    );
+          );
   }
 
-  getStoneOfDayItem() {
+  getStoneOfDayItem(DiamondModel model) {
     return Container(
       height: getSize(225),
       padding: EdgeInsets.only(
@@ -611,7 +648,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                             child: Column(
                               children: [
                                 Text(
-                                  "12.50",
+                                  "${model.crt ?? ""}",
                                   style: appTheme.blue14TextStyle.copyWith(
                                     color: appTheme.colorPrimary,
                                     fontSize: getFontSize(12),
@@ -636,9 +673,10 @@ class _DashboardState extends StatefulScreenWidgetState {
                                   child: Padding(
                                     padding: EdgeInsets.all(getSize(2)),
                                     child: Text(
-                                      "-44.33 %",
+                                      PriceUtilities.getPercent(
+                                          model.getFinalDiscount()),
                                       style: appTheme.green10TextStyle
-                                          .copyWith(fontSize: getFontSize(8)),
+                                          .copyWith(fontSize: getFontSize(9)),
                                     ),
                                   ),
                                 )
@@ -662,11 +700,11 @@ class _DashboardState extends StatefulScreenWidgetState {
                           ),
                           Row(
                             children: [
-                              getText("191071"),
+                              getText(model.stoneId ?? ""),
                               // Expanded(child: Container()),
                               Spacer(),
                               getText(
-                                "Round",
+                                model.shpNm ?? "",
                                 fontWeight: FontWeight.w500,
                               ),
                             ],
@@ -676,11 +714,17 @@ class _DashboardState extends StatefulScreenWidgetState {
                           ),
                           Row(
                             children: [
-                              getText("D"),
+                              getText(
+                                model.colNm ?? "",
+                              ),
                               Spacer(),
-                              getText("IF"),
+                              getText(
+                                model.clrNm ?? "",
+                              ),
                               Spacer(),
-                              getText("GIA"),
+                              getText(
+                                model.lbNm ?? "",
+                              ),
                             ],
                           ),
                           SizedBox(
@@ -688,15 +732,21 @@ class _DashboardState extends StatefulScreenWidgetState {
                           ),
                           Row(
                             children: <Widget>[
-                              getText("EX"),
+                              getText(
+                                model.cutNm ?? "-",
+                              ),
                               Spacer(),
                               getDot(),
                               Spacer(),
-                              getText("EX"),
+                              getText(
+                                model.polNm ?? "-",
+                              ),
                               Spacer(),
                               getDot(),
                               Spacer(),
-                              getText("EX"),
+                              getText(
+                                model.symNm ?? "-",
+                              ),
                             ],
                           ),
                           SizedBox(
@@ -847,7 +897,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                                   child: Text(
                                     "-44.33 %",
                                     style: appTheme.green10TextStyle
-                                        .copyWith(fontSize: getFontSize(8)),
+                                        .copyWith(fontSize: getFontSize(9)),
                                   ),
                                 ),
                               )
@@ -1017,7 +1067,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              model.name ?? "",
+                              model.name ?? "-",
                               style: appTheme.black16TextStyle.copyWith(
                                 fontWeight: FontWeight.w500,
                               ),
@@ -1051,7 +1101,6 @@ class _DashboardState extends StatefulScreenWidgetState {
         secondaryActions: <Widget>[
           IconSlideAction(
             onTap: () {
-              print("delete tapped");
               SyncManager.instance.callApiForDeleteSavedSearch(
                   context, model.id, success: (resp) {
                 this
@@ -1115,7 +1164,7 @@ class _DashboardState extends StatefulScreenWidgetState {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                for (var i = 0; i < 5; i++) getRecentItem(),
+                // for (var i = 0; i < 5; i++) getRecentItem(),
               ],
             ),
           )
@@ -1124,10 +1173,10 @@ class _DashboardState extends StatefulScreenWidgetState {
     );
   }
 
-  getRecentItem() {
+  getRecentItem(DiamondModel model) {
     return Padding(
       padding: EdgeInsets.only(
-        right: getSize(20),
+        // right: getSize(20),
         bottom: getSize(20),
       ),
       child: Material(
@@ -1144,7 +1193,7 @@ class _DashboardState extends StatefulScreenWidgetState {
               Expanded(
                 child: Container(
                   // width: getSize(122),
-                  width: MathUtilities.screenWidth(context) / 3,
+                  // width: MathUtilities.screenWidth(context) / 2,
                   child: Stack(
                     children: [
                       Row(
@@ -1182,7 +1231,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          "12.50 \n Carat",
+                                          "${model.crt} \n Carat",
                                           style: appTheme.black14TextStyle
                                               .copyWith(
                                             fontWeight: FontWeight.w500,
@@ -1204,10 +1253,11 @@ class _DashboardState extends StatefulScreenWidgetState {
                                           child: Padding(
                                             padding: EdgeInsets.all(getSize(2)),
                                             child: Text(
-                                              "-44.33 %",
+                                              PriceUtilities.getPercent(
+                                                  model.getFinalDiscount()),
                                               style: appTheme.green10TextStyle
                                                   .copyWith(
-                                                      fontSize: getFontSize(8)),
+                                                      fontSize: getFontSize(9)),
                                             ),
                                           ),
                                         ),
@@ -1258,7 +1308,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                 borderRadius: BorderRadius.circular(getSize(5)),
                 child: Container(
                   // width: getSize(111),
-                  width: MathUtilities.screenWidth(context) / 4,
+                  width: MathUtilities.screenWidth(context) / 3,
                   decoration: BoxDecoration(
                     color: appTheme.whiteColor,
                     borderRadius: BorderRadius.circular(getSize(5)),
@@ -1274,10 +1324,10 @@ class _DashboardState extends StatefulScreenWidgetState {
                       children: [
                         Row(
                           children: [
-                            getText("191071"),
+                            getText(model.stoneId ?? ""),
                             Spacer(),
                             getText(
-                              "Round",
+                              model.shpNm ?? "",
                               fontWeight: FontWeight.w500,
                             ),
                           ],
@@ -1287,11 +1337,11 @@ class _DashboardState extends StatefulScreenWidgetState {
                         ),
                         Row(
                           children: [
-                            getText("D"),
+                            getText(model.colNm ?? "-"),
                             Spacer(),
-                            getText("IF"),
+                            getText(model.clrNm ?? "-"),
                             Spacer(),
-                            getText("GIA"),
+                            getText(model.lbNm ?? "-"),
                           ],
                         ),
                         SizedBox(
@@ -1299,15 +1349,15 @@ class _DashboardState extends StatefulScreenWidgetState {
                         ),
                         Row(
                           children: [
-                            getText("EX"),
+                            getText(model.cutNm ?? "-"),
                             Spacer(),
                             getDot(),
                             Spacer(),
-                            getText("EX"),
+                            getText(model.polNm ?? "-"),
                             Spacer(),
                             getDot(),
                             Spacer(),
-                            getText("EX"),
+                            getText(model.symNm ?? "-"),
                           ],
                         ),
                       ],
@@ -1399,7 +1449,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                                             "-44.33 %",
                                             style: appTheme.green10TextStyle
                                                 .copyWith(
-                                                    fontSize: getFontSize(8)),
+                                                    fontSize: getFontSize(9)),
                                           ),
                                         ),
                                       ),
@@ -1514,6 +1564,13 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   getSalesSection() {
+    if (isNullEmptyOrFalse(this.dashboardModel)) {
+      return SizedBox();
+    }
+    if (isNullEmptyOrFalse(this.dashboardModel.seller)) {
+      return SizedBox();
+    }
+
     return Padding(
       // padding: EdgeInsets.only(top: getSize(20)),
       padding: EdgeInsets.only(
@@ -1553,7 +1610,9 @@ class _DashboardState extends StatefulScreenWidgetState {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Mr. Dolly Son",
+                        this.dashboardModel.seller.firstName +
+                            " " +
+                            this.dashboardModel.seller.lastName,
                         style: appTheme.black16TextStyle.copyWith(
                           color: appTheme.colorPrimary,
                           fontWeight: FontWeight.w500,
@@ -1573,7 +1632,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                             width: getSize(10),
                           ),
                           Text(
-                            "dollyson@gmail.com",
+                            this.dashboardModel.seller.email ?? "-",
                             style: appTheme.blackNormal14TitleColorblack,
                           ),
                         ],
@@ -1592,7 +1651,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                             width: getSize(10),
                           ),
                           Text(
-                            "+91 9876543210",
+                            this.dashboardModel.seller.whatsapp ?? "-",
                             style: appTheme.blackNormal14TitleColorblack,
                           ),
                         ],
