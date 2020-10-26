@@ -219,21 +219,8 @@ class _HomeScreenState extends State<HomeScreen> {
         case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
         case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
         case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
-          openDiamondList(type);
-          break;
         case DiamondModuleConstant.MODULE_TYPE_MY_BID:
         case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
-          openDashboard(type);
-          break;
-        case DiamondModuleConstant.MODULE_TYPE_ABOUT_US:
-          openAboutUs(type);
-          break;
-        case DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY:
-          openPrivacyPolicy(type);
-          break;
-        case DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION:
-          openTermsAndCondition(type);
-          break;
         case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
         case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
         case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
@@ -248,6 +235,15 @@ class _HomeScreenState extends State<HomeScreen> {
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
           openSavedSearch(type);
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_ABOUT_US:
+          openAboutUs(type);
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY:
+          openPrivacyPolicy(type);
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION:
+          openTermsAndCondition(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_LOGOUT:
           logoutFromApp(context);
