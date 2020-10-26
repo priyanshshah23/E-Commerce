@@ -25,13 +25,16 @@ class DashboardModel {
     this.savedSearch,
     this.recentSearch,
     this.featuredStone,
+    this.seller,
   });
 
+  Seller seller;
   List<FeaturedStone> featuredStone;
   List<SavedSearchModel> savedSearch;
   List<SavedSearchModel> recentSearch;
 
   factory DashboardModel.fromJson(Map<String, dynamic> json) => DashboardModel(
+        seller: Seller.fromJson(json["seller"]),
         featuredStone: List<FeaturedStone>.from(
             json["featuredStone"].map((x) => FeaturedStone.fromJson(x))),
 
@@ -42,6 +45,7 @@ class DashboardModel {
       );
 
   Map<String, dynamic> toJson() => {
+        "seller": seller.toJson(),
         "savedSearch": List<dynamic>.from(savedSearch.map((x) => x.toJson())),
         "featuredStone":
             List<dynamic>.from(featuredStone.map((x) => x.toJson())),
@@ -100,5 +104,37 @@ class FeaturedStone {
         "type": type,
         "addedBy": addedBy,
         "updatedBy": updatedBy,
+      };
+}
+
+class Seller {
+  Seller({
+    this.id,
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.whatsapp,
+  });
+
+  String id;
+  String firstName;
+  String lastName;
+  String email;
+  String whatsapp;
+
+  factory Seller.fromJson(Map<String, dynamic> json) => Seller(
+        id: json["id"],
+        firstName: json["firstName"],
+        lastName: json["lastName"],
+        email: json["email"],
+        whatsapp: json["whatsapp"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": email,
+        "whatsapp": whatsapp,
       };
 }

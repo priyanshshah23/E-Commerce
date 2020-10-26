@@ -16,6 +16,7 @@ import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
+import 'package:diamnow/components/Screens/SavedSearch/TabFileForSsAndRs.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
@@ -191,7 +192,8 @@ class _HomeScreenState extends State<HomeScreen> {
     dict[ArgumentConstant.ModuleType] =
         DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
     dict[ArgumentConstant.IsFromDrawer] = true;
-    currentWidget = SavedSearchScreen(dict);
+    // currentWidget = SavedSearchScreen(dict);
+    currentWidget = TabFileForSsAndRs(dict);
   }
 
   manageDrawerClick(BuildContext context, int type, bool isPop) {

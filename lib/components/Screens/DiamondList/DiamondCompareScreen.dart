@@ -502,6 +502,7 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
                         },
                       )
                     : DiamondCompareWidget(
+                        sc: sc,
                         ignorableApiKeys: ignorableApiKeys,
                         diamondModel: this.arrayDiamond[index],
                         index: index,

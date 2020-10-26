@@ -527,11 +527,12 @@ class _DashboardState extends StatefulScreenWidgetState {
                 ),
                 Container(
                   height: getSize(245),
-                  child: ListView(
+                  child: ListView.builder(
+                    itemBuilder: (context, index) {
+                      return getStoneOfDayItem(arrStones[index]);
+                    },
+                    itemCount: arrStones.length,
                     scrollDirection: Axis.horizontal,
-                    children: [
-                      for (var i = 0; i < 5; i++) getStoneOfDayItem(),
-                    ],
                   ),
                 )
               ],
@@ -539,7 +540,7 @@ class _DashboardState extends StatefulScreenWidgetState {
           );
   }
 
-  getStoneOfDayItem() {
+  getStoneOfDayItem(DiamondModel model) {
     return Container(
       height: getSize(225),
       padding: EdgeInsets.only(
@@ -647,7 +648,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                             child: Column(
                               children: [
                                 Text(
-                                  "12.50",
+                                  "${model.crt ?? ""}",
                                   style: appTheme.blue14TextStyle.copyWith(
                                     color: appTheme.colorPrimary,
                                     fontSize: getFontSize(12),
@@ -672,9 +673,10 @@ class _DashboardState extends StatefulScreenWidgetState {
                                   child: Padding(
                                     padding: EdgeInsets.all(getSize(2)),
                                     child: Text(
-                                      "-44.33 %",
+                                      PriceUtilities.getPercent(
+                                          model.getFinalDiscount()),
                                       style: appTheme.green10TextStyle
-                                          .copyWith(fontSize: getFontSize(8)),
+                                          .copyWith(fontSize: getFontSize(9)),
                                     ),
                                   ),
                                 )
@@ -698,11 +700,11 @@ class _DashboardState extends StatefulScreenWidgetState {
                           ),
                           Row(
                             children: [
-                              getText("191071"),
+                              getText(model.stoneId ?? ""),
                               // Expanded(child: Container()),
                               Spacer(),
                               getText(
-                                "Round",
+                                model.shpNm ?? "",
                                 fontWeight: FontWeight.w500,
                               ),
                             ],
@@ -712,11 +714,17 @@ class _DashboardState extends StatefulScreenWidgetState {
                           ),
                           Row(
                             children: [
-                              getText("D"),
+                              getText(
+                                model.colNm ?? "",
+                              ),
                               Spacer(),
-                              getText("IF"),
+                              getText(
+                                model.clrNm ?? "",
+                              ),
                               Spacer(),
-                              getText("GIA"),
+                              getText(
+                                model.lbNm ?? "",
+                              ),
                             ],
                           ),
                           SizedBox(
@@ -724,15 +732,21 @@ class _DashboardState extends StatefulScreenWidgetState {
                           ),
                           Row(
                             children: <Widget>[
-                              getText("EX"),
+                              getText(
+                                model.cutNm ?? "-",
+                              ),
                               Spacer(),
                               getDot(),
                               Spacer(),
-                              getText("EX"),
+                              getText(
+                                model.polNm ?? "-",
+                              ),
                               Spacer(),
                               getDot(),
                               Spacer(),
-                              getText("EX"),
+                              getText(
+                                model.symNm ?? "-",
+                              ),
                             ],
                           ),
                           SizedBox(
@@ -883,7 +897,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                                   child: Text(
                                     "-44.33 %",
                                     style: appTheme.green10TextStyle
-                                        .copyWith(fontSize: getFontSize(8)),
+                                        .copyWith(fontSize: getFontSize(9)),
                                   ),
                                 ),
                               )
@@ -1053,7 +1067,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              model.name ?? "",
+                              model.name ?? "-",
                               style: appTheme.black16TextStyle.copyWith(
                                 fontWeight: FontWeight.w500,
                               ),
@@ -1087,7 +1101,6 @@ class _DashboardState extends StatefulScreenWidgetState {
         secondaryActions: <Widget>[
           IconSlideAction(
             onTap: () {
-              print("delete tapped");
               SyncManager.instance.callApiForDeleteSavedSearch(
                   context, model.id, success: (resp) {
                 this
@@ -1244,7 +1257,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                                                   model.getFinalDiscount()),
                                               style: appTheme.green10TextStyle
                                                   .copyWith(
-                                                      fontSize: getFontSize(8)),
+                                                      fontSize: getFontSize(9)),
                                             ),
                                           ),
                                         ),
@@ -1324,11 +1337,11 @@ class _DashboardState extends StatefulScreenWidgetState {
                         ),
                         Row(
                           children: [
-                            getText(model.colNm ?? ""),
+                            getText(model.colNm ?? "-"),
                             Spacer(),
-                            getText(model.clrNm ?? ""),
+                            getText(model.clrNm ?? "-"),
                             Spacer(),
-                            getText(model.lbNm ?? ""),
+                            getText(model.lbNm ?? "-"),
                           ],
                         ),
                         SizedBox(
@@ -1336,15 +1349,15 @@ class _DashboardState extends StatefulScreenWidgetState {
                         ),
                         Row(
                           children: [
-                            getText(model.cutNm ?? ""),
+                            getText(model.cutNm ?? "-"),
                             Spacer(),
                             getDot(),
                             Spacer(),
-                            getText(model.polNm ?? ""),
+                            getText(model.polNm ?? "-"),
                             Spacer(),
                             getDot(),
                             Spacer(),
-                            getText(model.symNm ?? ""),
+                            getText(model.symNm ?? "-"),
                           ],
                         ),
                       ],
@@ -1436,7 +1449,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                                             "-44.33 %",
                                             style: appTheme.green10TextStyle
                                                 .copyWith(
-                                                    fontSize: getFontSize(8)),
+                                                    fontSize: getFontSize(9)),
                                           ),
                                         ),
                                       ),
@@ -1551,6 +1564,13 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   getSalesSection() {
+    if (isNullEmptyOrFalse(this.dashboardModel)) {
+      return SizedBox();
+    }
+    if (isNullEmptyOrFalse(this.dashboardModel.seller)) {
+      return SizedBox();
+    }
+
     return Padding(
       // padding: EdgeInsets.only(top: getSize(20)),
       padding: EdgeInsets.only(
@@ -1590,7 +1610,9 @@ class _DashboardState extends StatefulScreenWidgetState {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Mr. Dolly Son",
+                        this.dashboardModel.seller.firstName +
+                            " " +
+                            this.dashboardModel.seller.lastName,
                         style: appTheme.black16TextStyle.copyWith(
                           color: appTheme.colorPrimary,
                           fontWeight: FontWeight.w500,
@@ -1610,7 +1632,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                             width: getSize(10),
                           ),
                           Text(
-                            "dollyson@gmail.com",
+                            this.dashboardModel.seller.email ?? "-",
                             style: appTheme.blackNormal14TitleColorblack,
                           ),
                         ],
@@ -1629,7 +1651,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                             width: getSize(10),
                           ),
                           Text(
-                            "+91 9876543210",
+                            this.dashboardModel.seller.whatsapp ?? "-",
                             style: appTheme.blackNormal14TitleColorblack,
                           ),
                         ],
