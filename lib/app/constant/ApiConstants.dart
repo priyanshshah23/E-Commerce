@@ -8,9 +8,9 @@ class ApiConstants {
 // static const String PROXY_URL = "PROXY 192.168.225.188:8888";
 //  static const String PROXY_URL = "PROXY 192.168.0.73:8888";
   // static const String PROXY_URL = "PROXY 10.0.2.2:8888";
-//  static const String PROXY_URL = "PROXY 10.0.2.2:8888";
+  static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 // static const String PROXY_URL = "PROXY 192.168.225.121:8888"; // Brijesh
-  static const String PROXY_URL = "PROXY localhost:8888"; // Brijesh
+//  static const String PROXY_URL = "PROXY localhost:8888"; // Brijesh
 
   static const String imageBaseURL = baseURL;
 
@@ -53,6 +53,7 @@ class ApiConstants {
   static const String changePassword =
       apiUrl + "web/v1/auth/reset-password-by-user"; //done
   static const String personalInformation = commonUrl + "user/update"; //done
+  static const String sendOTP = commonUrl + "user/send-otp"; //done
   static const String companyInformation =
       commonUrl + "user/profile/update"; //done
   static const String quickSearch = commonUrl + "diamond/quick-search";
@@ -66,7 +67,7 @@ class ApiConstants {
   static const String createOfficerequest = commonUrl + "cabin-schedule/create";
 
   //VERSION UPDATION
-  static const getUpdation = apiV1 + "version";
+  static const getUpdation = commonUrl + "version";
 
   //Dashboard
   static const String dashboard = commonUrl + "user/dashboard";

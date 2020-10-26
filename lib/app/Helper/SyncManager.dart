@@ -54,6 +54,12 @@ class SyncManager {
         app.resolve<PrefUtils>().saveUser(masterResp.data.loggedInUser);
       }
 
+      if(masterResp.data.permission != null) {
+        await  app.resolve<PrefUtils>().saveUserPermission(
+          masterResp.data.permission,
+        );
+      }
+
       //Append static data masters
       List<Master> arrLocalData = await Config().getLocalDataJson();
       masterResp.data.masters.list.addAll(arrLocalData);

@@ -170,3 +170,9 @@ class InvoiceTypes {
   static const int tomorrow = 2;
   static const int later = 3;
 }
+
+class UserPermission {
+  static const String dashboard = "dashboard";
+  static const String	searchDiamond = "searchDiamond";
+  static const String	quickSearch = "quickSearch";
+}

@@ -370,6 +370,9 @@ class _LoginScreenState extends StatefulScreenWidgetState {
         await app.resolve<PrefUtils>().saveUserToken(
               loginResp.data.token.jwt,
             );
+        await  app.resolve<PrefUtils>().saveUserPermission(
+          loginResp.data.userPermissions,
+        );
       }
       SyncManager.instance
           .callMasterSync(NavigationUtilities.key.currentContext, () async {
@@ -379,7 +382,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
           isNetworkError: false,
           isProgress: true,
           id: loginResp.data.user.id).then((value) {});
-//      callVersionUpdateApi(id: loginResp.data.user.id);
+      callVersionUpdateApi(id: loginResp.data.user.id);
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
