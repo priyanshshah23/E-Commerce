@@ -552,7 +552,9 @@ class DiamondConfig {
           Navigator.pop(context);
         }
         app.resolve<CustomDialogs>().errorDialog(context, title, resp.message,
-            btntitle: R.string().commonString.ok, voidCallBack: () {
+            btntitle: R.string().commonString.ok,
+            dismissPopup: false, voidCallBack: () {
+          Navigator.pop(context);
           placeOrder();
         });
       },
