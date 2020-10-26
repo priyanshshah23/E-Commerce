@@ -410,7 +410,8 @@ class DiamondConfig {
     });
     app.resolve<CustomDialogs>().confirmDialog(context,
         title: "Disclaimer",
-        desc: "Packet No: "+list.map((item) => item.vStnId).toList().join(', ') +
+        desc: "Packet No: " +
+            list.map((item) => item.vStnId).toList().join(', ') +
             " is currently located in India and for delivery in any other country apart from india will take at least 7-10 working days.",
         negativeBtnTitle: "Quit",
         positiveBtnTitle: "I Agree", onClickCallback: (buttonType) {
@@ -679,28 +680,70 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
     case BorderConstant.BORDER_TOP:
       return BoxDecoration(
         //borderRadius: BorderRadius.circular(getSize(5)),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(5),
+          topRight: Radius.circular(5),
+          bottomLeft: Radius.circular(0),
+          bottomRight: Radius.circular(0),
+        ),
         border: Border(
-          top: BorderSide(width: 1.0, color: appTheme.colorPrimary),
-          left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
-          right: BorderSide(width: 1.0, color: appTheme.colorPrimary),
-          bottom: BorderSide(width: 0, color: appTheme.whiteColor),
+          top: BorderSide(
+              width: 1.0,
+              color: appTheme.colorPrimary,
+              style: BorderStyle.solid),
+          left: BorderSide(
+              width: 1.0,
+              color: appTheme.colorPrimary,
+              style: BorderStyle.solid),
+          right: BorderSide(
+              width: 1.0,
+              color: appTheme.colorPrimary,
+              style: BorderStyle.solid),
+          bottom: BorderSide(
+              width: 1.0,
+              color: appTheme.colorPrimary,
+              style: BorderStyle.solid),
         ),
       );
     case BorderConstant.BORDER_BOTTOM:
       return BoxDecoration(
         // boxShadow: getBoxShadow(context),
         //borderRadius: BorderRadius.circular(getSize(5)),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(0),
+          topRight: Radius.circular(0),
+          bottomLeft: Radius.circular(5),
+          bottomRight: Radius.circular(5),
+        ),
         border: Border(
-          left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
-          right: BorderSide(width: 1.0, color: appTheme.colorPrimary),
-          bottom: BorderSide(width: 1.0, color: appTheme.colorPrimary),
-          top: BorderSide(width: 0, color: appTheme.whiteColor),
+          top: BorderSide(
+              width: 1.0,
+              color: appTheme.colorPrimary,
+              style: BorderStyle.solid),
+          left: BorderSide(
+              width: 1.0,
+              color: appTheme.colorPrimary,
+              style: BorderStyle.solid),
+          right: BorderSide(
+              width: 1.0,
+              color: appTheme.colorPrimary,
+              style: BorderStyle.solid),
+          bottom: BorderSide(
+              width: 1.0,
+              color: appTheme.colorPrimary,
+              style: BorderStyle.solid),
         ),
       );
     case BorderConstant.BORDER_LEFT_RIGHT:
       return BoxDecoration(
         // boxShadow: getBoxShadow(context),
         // borderRadius: BorderRadius.circular(getSize(5)),
+        // borderRadius: BorderRadius.only(
+        //   topLeft: Radius.circular(getSize(5)),
+        //   topRight: Radius.circular(2),
+        //   bottomLeft: Radius.circular(2),
+        //   bottomRight: Radius.circular(2),
+        // ),
         border: Border(
           left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
           right: BorderSide(width: 1.0, color: appTheme.colorPrimary),
@@ -711,7 +754,7 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
     case BorderConstant.BORDER_NONE:
       return BoxDecoration(
         //  boxShadow: getBoxShadow(context),
-        //borderRadius: BorderRadius.circular(getSize(5)),
+        borderRadius: BorderRadius.circular(getSize(5)),
         border: Border(
           top: BorderSide(width: 1.0, color: appTheme.colorPrimary),
           left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
@@ -721,7 +764,7 @@ BoxDecoration getBoxDecorationType(BuildContext context, int type) {
       );
     default:
       return BoxDecoration(
-        // borderRadius: BorderRadius.circular(getSize(5)),
+        borderRadius: BorderRadius.circular(getSize(5)),
         border: Border(
           top: BorderSide(width: 0, color: appTheme.whiteColor),
           left: BorderSide(width: 0, color: appTheme.whiteColor),
@@ -750,11 +793,11 @@ openSharePopUp(BuildContext context) {
     var link = ApiConstants.shareAndEarn;
     Share.share(
         "876654878\n"
-            "Invite code : 655765757"
-            "App link : $link",
+        "Invite code : 655765757"
+        "App link : $link",
         subject: R.string().screenTitle.share,
         sharePositionOrigin:
-        Rect.fromCenter(center: Offset.zero, width: 100, height: 100));
+            Rect.fromCenter(center: Offset.zero, width: 100, height: 100));
   }
 
   return showDialog(
