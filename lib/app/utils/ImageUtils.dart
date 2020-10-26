@@ -6,16 +6,19 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/ApiConstants.dart';
 
 CachedNetworkImage getImageView(String url,
-    {height = 100.0,
+    {String finalUrl,
+    height = 100.0,
     width = 100.0,
-    placeHolderImage = diamond_placeholder,
+    placeHolderImage = diamond,
     fit: BoxFit.contain,
     BoxShape shape}) {
-  String imageUrl = (url == null || url.length == 0)
-      ? ""
-      : ((url.startsWith("images") || url.startsWith("/"))
-          ? (ApiConstants.imageBaseURL + url)
-          : url);
+  String imageUrl = !isNullEmptyOrFalse(finalUrl)
+      ? finalUrl
+      : (url == null || url.length == 0)
+          ? ""
+          : ((url.startsWith("images") || url.startsWith("/"))
+              ? (ApiConstants.imageBaseURL + url)
+              : url);
   return new CachedNetworkImage(
     height: height,
     width: width,

@@ -780,16 +780,12 @@ class UserPermissionsData {
     Permissions permissions = json['permissions'] != null
         ? new Permissions.fromJson(json['permissions'])
         : null;
-    view = json['permissions'] != null
-        ? permissions.view : null;
-    insert = json['permissions'] != null
-        ? permissions.insert : null;
-    update = json['permissions'] != null
-        ? permissions.update : null;
-    delete = json['permissions'] != null
-        ? permissions.delete : null;
-    downloadExcel = json['permissions'] != null
-        ? permissions.downloadExcel : null;
+    view = json['permissions'] != null ? permissions.view : null;
+    insert = json['permissions'] != null ? permissions.insert : null;
+    update = json['permissions'] != null ? permissions.update : null;
+    delete = json['permissions'] != null ? permissions.delete : null;
+    downloadExcel =
+        json['permissions'] != null ? permissions.downloadExcel : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -806,11 +802,12 @@ class Permissions {
   bool delete;
   bool downloadExcel;
 
-  Permissions(
-      {this.view,
-      this.insert,
-      this.update,
-      this.delete,});
+  Permissions({
+    this.view,
+    this.insert,
+    this.update,
+    this.delete,
+  });
 
   Permissions.fromJson(Map<String, dynamic> json) {
     view = json['view'];

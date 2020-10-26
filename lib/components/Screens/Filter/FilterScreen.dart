@@ -292,14 +292,16 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       onClickCallback: (obj) {
         //
         if (obj.code == BottomCodeConstant.filterSavedSearch) {
-          callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,isSavedSearch: true);
+          callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+              isSavedSearch: true);
         } else if (obj.code == BottomCodeConstant.filterAddDemamd) {
           //
           print(obj.code);
         } else if (obj.code == BottomCodeConstant.filterSearch) {
           //
           print(obj.code);
-          callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH, isSearch: true);
+          callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+              isSearch: true);
         } else if (obj.code == BottomCodeConstant.filterSaveAndSearch) {
           //
           print(obj.code);
@@ -310,16 +312,20 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     );
   }
 
-  callApiForGetFilterId(int moduleType,{bool isSavedSearch=false, bool isSearch = false}) {
+  callApiForGetFilterId(int moduleType,
+      {bool isSavedSearch = false, bool isSearch = false}) {
     SyncManager.instance.callApiForDiamondList(
       context,
       FilterRequest().createRequest(arrList),
       (diamondListResp) {
-        if(isSavedSearch){
-          openBottomSheetForSavedSearch(context,  FilterRequest().createRequest(arrList),diamondListResp.data.filter.id);
-        }else{
-          if(isSearch) {
-            if(diamondListResp.data.count == 0){
+        if (isSavedSearch) {
+          openBottomSheetForSavedSearch(
+              context,
+              FilterRequest().createRequest(arrList),
+              diamondListResp.data.filter.id);
+        } else {
+          if (isSearch) {
+            if (diamondListResp.data.count == 0) {
               app.resolve<CustomDialogs>().confirmDialog(context,
                   desc: R.string().commonString.noDiamondFound,
                   positiveBtnTitle: R.string().commonString.ok);
@@ -328,7 +334,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               dict["filterId"] = diamondListResp.data.filter.id;
               dict["filters"] = FilterRequest().createRequest(arrList);
               dict[ArgumentConstant.ModuleType] = moduleType;
-              NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+              NavigationUtilities.pushRoute(DiamondListScreen.route,
+                  args: dict);
             }
           } else {
             Map<String, dynamic> dict = new HashMap();
@@ -337,9 +344,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             dict[ArgumentConstant.ModuleType] = moduleType;
             NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
           }
-
         }
-
       },
       (onError) {
         //print("Error");
