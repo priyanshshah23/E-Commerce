@@ -219,7 +219,7 @@ class BaseTheme {
 
   TextStyle get green10TextStyle {
     return TextStyle(
-        fontSize: getFontSize(10),
+        fontSize: getFontSize(12),
         color: greenColor,
         fontWeight: FontWeight.normal);
   }
