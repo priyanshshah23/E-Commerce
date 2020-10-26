@@ -750,7 +750,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       arrData.add(displayDataKeyValue);
     }
 
-    if (!isNullEmptyOrFalse(displayDataClass.type2.empty)) {
+    if (!isNullEmptyOrFalse(displayDataClass.type2)) {
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "type2";
 
