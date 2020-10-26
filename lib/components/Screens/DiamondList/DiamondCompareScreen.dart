@@ -509,10 +509,14 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
                         deleteWidget: (index) {
                           setState(() {
                             arrayDiamond.removeAt(index);
+                            if(arrayDiamond.length==1){
+                              Navigator.of(context).pop();
+                            }
                           });
                         },
                       )
                     : DiamondCompareWidget(
+                        sc: sc,
                         ignorableApiKeys: ignorableApiKeys,
                         diamondModel: this.arrayDiamond[index],
                         index: index,
@@ -520,6 +524,9 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
                         deleteWidget: (index) {
                           setState(() {
                             arrayDiamond.removeAt(index);
+                            if(arrayDiamond.length==1){
+                              Navigator.of(context).pop();
+                            }
                           });
                         },
                       );
