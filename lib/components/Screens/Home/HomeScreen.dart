@@ -3,12 +3,8 @@ import 'dart:collection';
 
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
-import 'package:diamnow/app/network/NetworkCall.dart';
-import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
-import 'package:diamnow/components/Screens/Auth/Login.dart';
-import 'package:diamnow/components/Screens/Auth/Profile.dart';
 import 'package:diamnow/components/Screens/Auth/ProfileList.dart';
 import 'package:diamnow/components/Screens/DashBoard/Dashboard.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
@@ -222,8 +218,12 @@ class _HomeScreenState extends State<HomeScreen> {
         case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
         case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
         case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
+          openDiamondList(type);
+          break;
         case DiamondModuleConstant.MODULE_TYPE_MY_BID:
         case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
+          openDashboard(type);
+          break;
         case DiamondModuleConstant.MODULE_TYPE_ABOUT_US:
           openAboutUs(type);
           break;
@@ -276,8 +276,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-
-
-
 }

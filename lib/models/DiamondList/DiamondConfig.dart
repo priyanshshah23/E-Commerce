@@ -4,6 +4,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/ImageConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
@@ -16,6 +17,7 @@ import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
 import '../../main.dart';
 
@@ -396,10 +398,20 @@ class DiamondConfig {
       model.isAddToBid = true;
       selectedList.add(model);
     });
-    showBidListDialog(context, selectedList, (manageClick) {
-      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
-        callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_BID,
-            isPop: true);
+    app.resolve<CustomDialogs>().confirmDialog(context,
+        title: "Disclaimer",
+        desc: "Packet No: "+list.map((item) => item.vStnId).toList().join(', ') +
+            " is currently located in India and for delivery in any other country apart from india will take at least 7-10 working days.",
+        negativeBtnTitle: "Quit",
+        positiveBtnTitle: "I Agree", onClickCallback: (buttonType) {
+      if (buttonType == ButtonType.PositveButtonClick) {
+        showBidListDialog(context, selectedList, (manageClick) {
+          if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
+            callApiFoCreateTrack(
+                context, list, DiamondTrackConstant.TRACK_TYPE_BID,
+                isPop: true);
+          }
+        });
       }
     });
   }
@@ -720,6 +732,20 @@ openSharePopUp(BuildContext context) {
     StoneModel(7, "Video"),
   ];
 
+  Future<void> share() async {
+    // var url = await createDynamicLink(
+    //     referalId: PrefUtilities.getInstance().getUser().referralCode);
+
+    var link = ApiConstants.shareAndEarn;
+    Share.share(
+        "876654878\n"
+            "Invite code : 655765757"
+            "App link : $link",
+        subject: R.string().screenTitle.share,
+        sharePositionOrigin:
+        Rect.fromCenter(center: Offset.zero, width: 100, height: 100));
+  }
+
   return showDialog(
       context: context,
       builder: (context) {
@@ -742,7 +768,8 @@ openSharePopUp(BuildContext context) {
                         return InkWell(
                           onTap: () {
                             setsetter(() {
-                              stoneList[i].isSelected = !stoneList[i].isSelected;
+                              stoneList[i].isSelected =
+                                  !stoneList[i].isSelected;
                             });
                           },
                           child: Padding(
@@ -800,9 +827,7 @@ openSharePopUp(BuildContext context) {
                         ),
                         Expanded(
                           child: InkWell(
-                            onTap: () {
-
-                            },
+                            onTap: () {},
                             child: Container(
                               //alignment: Alignment.bottomCenter,
                               padding: EdgeInsets.symmetric(
@@ -810,7 +835,8 @@ openSharePopUp(BuildContext context) {
                               ),
                               decoration: BoxDecoration(
                                   color: appTheme.colorPrimary,
-                                  borderRadius: BorderRadius.circular(getSize(5)),
+                                  borderRadius:
+                                      BorderRadius.circular(getSize(5)),
                                   boxShadow: getBoxShadow(context)),
                               child: Text(
                                 R.string().screenTitle.share,

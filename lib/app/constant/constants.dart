@@ -42,6 +42,7 @@ const eventBusTag = "EventBus";
 const eventBusSocket = "EventBusSocket";
 const eventBusLogout = "EventBusLogout";
 const eventBusDropDown = "EventBusDropDown";
+const eventBusRefreshList = "DiamondListRefresh";
 
 const imagePath = "assest/icon.png";
 const String googleDocViewURL =
@@ -169,4 +170,9 @@ class InvoiceTypes {
   static const int today = 1;
   static const int tomorrow = 2;
   static const int later = 3;
+}
+
+class DashboardConstants {
+  static const String stoneOfTheDay = "stone_of_day";
+  static const String best = "best";
 }

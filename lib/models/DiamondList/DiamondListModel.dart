@@ -724,7 +724,18 @@ class DiamondModel {
     } else {
       return this.ctPr - ((this.ctPr * 2) / 100);
     }
-    return this.ctPr - ((this.ctPr * 2) / 100);
+  }
+
+  num getBidFinalRate(){
+    return getFinalRate()-((getFinalRate()*2)/100);
+  }
+
+  num getbidFinalDiscount() {
+    return (1 - (getBidFinalRate() / rap)) * (-100);
+  }
+
+  num getBidFinalAmount(){
+    return crt*getBidFinalRate();
   }
 
   num getFinalDiscount() {

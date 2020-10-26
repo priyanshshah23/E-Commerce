@@ -199,7 +199,9 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   color: appTheme.whiteColor,
                   borderRadius: BorderRadius.circular(getSize(5))),
               child: Text(
-                PriceUtilities.getPercent(widget.item?.getFinalDiscount()) ??
+                PriceUtilities.getPercent(
+                    widget.item.isAddToBid?widget.item.getbidFinalDiscount():
+                    widget.item?.getFinalDiscount()) ??
                     "",
                 style: appTheme.green10TextStyle,
               ),
@@ -378,10 +380,11 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     getText(R.string().screenTitle.bidDisc + "(%) :"),
-                    getText(widget.item.getFinalOffer().toString()),
-                    getText(R.string().screenTitle.bidValue + " :"),
                     getText(PriceUtilities.getPercent(
                         widget.item.getFinalDiscount())),
+                    getText(R.string().screenTitle.bidValue + " :"),
+                    getText(PriceUtilities.getPrice(
+                        widget.item.getFinalAmount())),
                   ],
                 ),
               ),
@@ -392,10 +395,10 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   children: <Widget>[
                     getText(R.string().screenTitle.finalRate + " :"),
                     getText(
-                        PriceUtilities.getPrice(widget.item.getFinalRate())),
+                        PriceUtilities.getPrice(widget.item.getBidFinalRate())),
                     getText(R.string().screenTitle.finalValue + " :"),
                     getText(
-                        PriceUtilities.getPrice(widget.item.getFinalAmount())),
+                        PriceUtilities.getPrice(widget.item.getBidFinalAmount())),
                   ],
                 ),
               ),
