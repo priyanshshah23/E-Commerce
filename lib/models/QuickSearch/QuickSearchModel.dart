@@ -65,9 +65,9 @@ class QuickSearchModel {
       this.range});
 
   QuickSearchModel.fromJson(Map<String, dynamic> json) {
-    color = json['color'];
-    clarity = json['clarity'];
-    shape = json['shape'];
+    color = json['col'];
+    clarity = json['clr'];
+    shape = json['shp'];
     pointer = json['pointer'];
     count = json['count'];
     carat = json['carat'];
@@ -79,9 +79,9 @@ class QuickSearchModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['color'] = this.color;
-    data['clarity'] = this.clarity;
-    data['shape'] = this.shape;
+    data['col'] = this.color;
+    data['clr'] = this.clarity;
+    data['shp'] = this.shape;
     data['pointer'] = this.pointer;
     data['count'] = this.count;
     data['carat'] = this.carat;
