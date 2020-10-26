@@ -23,14 +23,16 @@ class DiamondCompareWidget extends StatefulWidget {
 
   List<String> ignorableApiKeys;
 
- // ScrollController sc;
+  ScrollController sc;
 
   DiamondCompareWidget(
       {this.diamondModel,
       this.index,
+      this.sc,
       this.key,
       this.deleteWidget,
-      this.ignorableApiKeys,});
+      this.ignorableApiKeys})
+      : super(key: key);
 
   @override
   _DiamondCompareWidgetState createState() => _DiamondCompareWidgetState(
@@ -44,7 +46,6 @@ class _DiamondCompareWidgetState extends State<DiamondCompareWidget> {
   DiamondModel diamondModel;
   int index;
   Key key;
-  bool isShowLabel;
   List<String> ignorableApiKeys;
 
   List<DiamondDetailUIModel> arrDiamondDetailUIModel =
@@ -56,12 +57,6 @@ class _DiamondCompareWidgetState extends State<DiamondCompareWidget> {
   @override
   void initState() {
     super.initState();
-
-    if (index == 0) {
-      isShowLabel = true;
-    } else {
-      isShowLabel = false;
-    }
 
     Config().getDiamonCompareUIJson().then((result) {
       setState(() {
@@ -86,8 +81,7 @@ class _DiamondCompareWidgetState extends State<DiamondCompareWidget> {
           in diamondDetailItem.parameters) {
         //
         if (element.isActive) {
-          if (isNullEmptyOrFalse(ignorableApiKeys) ||
-              !ignorableApiKeys.contains(element.apiKey)) {
+          if (!ignorableApiKeys.contains(element.apiKey)) {
             var diamonDetailComponent = DiamondDetailUIComponentModel(
               title: element.title,
               apiKey: element.apiKey,
@@ -118,44 +112,9 @@ class _DiamondCompareWidgetState extends State<DiamondCompareWidget> {
               }
             }
             // arrDiamondDetailUIModel.add(diamondDetailUIModel);
-          } else {
-            // var diamonDetailComponent = DiamondDetailUIComponentModel(
-            //   title: element.title,
-            //   apiKey: element.apiKey,
-            //   sequence: element.sequence,
-            //   isPercentage: element.isPercentage,
-            //   isActive: element.isActive,
-            // );
-
-            // if (isStringEmpty(element.apiKey) == false) {
-            //   dynamic valueElement = diamondModel.toJson()[element.apiKey];
-            //   if (valueElement != null) {
-            //     if (element.apiKey == DiamondDetailUIAPIKeys.pricePerCarat) {
-            //       //
-            //       diamonDetailComponent.value = diamondModel.getPricePerCarat();
-            //     } else if (element.apiKey == DiamondDetailUIAPIKeys.amount) {
-            //       //
-            //       diamonDetailComponent.value = diamondModel.getAmount();
-            //     } else if (valueElement is String) {
-            //       diamonDetailComponent.value = valueElement;
-            //     } else if (valueElement is num) {
-            //       diamonDetailComponent.value = valueElement.toString();
-            //     }
-            //     if (element.isPercentage) {
-            //       diamonDetailComponent.value =
-            //           "${diamonDetailComponent.value}%";
-            //     }
-            //     diamondDetailUIModel.parameters.add(diamonDetailComponent);
-            //   }
-            // }
-          }
+          } else {}
         }
       }
-
-      //sort list according to sequence.
-      // diamondDetailUIModel.parameters.sort((model1, model2) {
-      //   return model1.sequence.compareTo(model2.sequence);
-      // });
 
       arrDiamondDetailUIModel.add(diamondDetailUIModel);
     }
@@ -247,71 +206,72 @@ class _DiamondCompareWidgetState extends State<DiamondCompareWidget> {
                   ),
                 ],
               ),
-              Column(
-                children: <Widget>[
-                  for (int i = 0; i < arrDiamondDetailUIModel.length; i++)
-                    for (int j = 0;
-                        j < arrDiamondDetailUIModel[i].parameters.length;
-                        j++)
-                      Container(
-                        child: Column(
-                          children: <Widget>[
-                            Container(
+              Expanded(
+                child: Column(
+                  children: <Widget>[
+                    for (int i = 0; i < arrDiamondDetailUIModel.length; i++)
+                      for (int j = 0;
+                          j < arrDiamondDetailUIModel[i].parameters.length;
+                          j++)
+                        Container(
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                  padding: EdgeInsets.only(left: getSize(14)),
+                                  alignment: Alignment.centerLeft,
+                                  height: getSize(30),
+                                  width: getSize(150),
+                                  decoration: BoxDecoration(
+                                    color:
+                                        ColorConstants.compareChangesRowBgColor,
+                                    // border: Border(
+                                    //   left: BorderSide(width: getSize(0.5)),
+                                    //   right: BorderSide(width: getSize(0.5)),
+                                    // ),
+                                  ),
+                                  child: index == 0
+                                      ? Text(
+                                          arrDiamondDetailUIModel[i]
+                                              .parameters[j]
+                                              .title,
+                                          style: appTheme
+                                              .blackNormal12TitleColorblack,
+                                        )
+                                      : SizedBox()),
+                              Container(
                                 padding: EdgeInsets.only(left: getSize(14)),
                                 alignment: Alignment.centerLeft,
-                                height: getSize(30),
+                                height: getSize(40),
                                 width: getSize(150),
                                 decoration: BoxDecoration(
-                                  color: ColorConstants
-                                      .compareChangesRowBgColor,
-                                  // border: Border(
-                                  //   left: BorderSide(width: getSize(0.5)),
-                                  //   right: BorderSide(width: getSize(0.5)),
-                                  // ),
+                                  color: ColorConstants.white,
+                                  border: index == 0
+                                      ? Border(
+                                          left: BorderSide(
+                                              width: getSize(1),
+                                              color: appTheme.dividerColor),
+                                          right: BorderSide(
+                                              width: getSize(1),
+                                              color: appTheme.dividerColor),
+                                        )
+                                      : Border(
+                                          right: BorderSide(
+                                              width: getSize(1),
+                                              color: appTheme.dividerColor),
+                                        ),
                                 ),
-                                child: isShowLabel
-                                    ? Text(
-                                        arrDiamondDetailUIModel[i]
-                                            .parameters[j]
-                                            .title,
-                                        style: appTheme
-                                            .blackNormal12TitleColorblack,
-                                      )
-                                    : SizedBox()),
-                            Container(
-                              padding: EdgeInsets.only(left: getSize(14)),
-                              alignment: Alignment.centerLeft,
-                              height: getSize(40),
-                              width: getSize(150),
-                              decoration: BoxDecoration(
-                                color: ColorConstants.white,
-                                border: index == 0
-                                    ? Border(
-                                        left: BorderSide(
-                                            width: getSize(1),
-                                            color: appTheme.dividerColor),
-                                        right: BorderSide(
-                                            width: getSize(1),
-                                            color: appTheme.dividerColor),
-                                      )
-                                    : Border(
-                                        right: BorderSide(
-                                            width: getSize(1),
-                                            color: appTheme.dividerColor),
-                                      ),
-                              ),
-                              child: Text(
-                                arrDiamondDetailUIModel[i]
-                                    .parameters[j]
-                                    .value,
-                                style:
-                                    appTheme.blackNormal14TitleColorblack,
-                              ),
-                            )
-                          ],
+                                child: Text(
+                                  arrDiamondDetailUIModel[i]
+                                      .parameters[j]
+                                      .value,
+                                  style: appTheme.blackNormal14TitleColorblack,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                ],
+                  ],
+                ),
               )
             ],
           )

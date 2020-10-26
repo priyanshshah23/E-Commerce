@@ -1,6 +1,7 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondCompareWidget.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
@@ -10,6 +11,7 @@ import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
+import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:flutter/material.dart';
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
@@ -42,6 +44,7 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
   int moduleType;
   List<DiamondModel> arrayDiamond;
   bool isCheckBoxChecked = false;
+  double viewHeight=1000;
 
   //will store all apikeys of not unique value.
   List<String> ignorableApiKeys = [];
@@ -58,7 +61,16 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
     super.initState();
     diamondConfig = DiamondConfig(moduleType, isCompare: true);
     diamondConfig.initItems();
+    Config().getDiamonCompareUIJson().then((result) {
+      setState(() {
+        viewHeight=0;
+        result.toList().forEach((element) {
+          viewHeight+=element.parameters.where((element) => element.isActive).length*(getSize(40)+getSize(14));
+        });
+        viewHeight+=getSize(90);
+      });
 
+    });
     // sc = ScrollController();
     _controllers = LinkedScrollControllerGroup();
   }
@@ -476,47 +488,66 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
         actionItems: getToolbarItem(),
       ),
       bottomNavigationBar: getBottomTab(),
-      body: Padding(
-        padding: EdgeInsets.only(left: getSize(20), right: getSize(20)),
-        child: Directionality(
-          textDirection: TextDirection.ltr,
-          child: ReorderableListView(
-            onReorder: _onReorder,
-            scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            children: List.generate(
-              arrayDiamond.length,
-              (index) {
-                ScrollController sc = _controllers.addAndGet();
-                return !isCheckBoxChecked || arrayDiamond.length == 1
-                    ? DiamondCompareWidget(
-                        diamondModel: this.arrayDiamond[index],
-                        index: index,
-                        key: Key(index.toString()),
-                        deleteWidget: (index) {
-                          setState(() {
-                            removeDiamond(index);
-                          });
-                        },
-                      )
-                    : DiamondCompareWidget(
-                        ignorableApiKeys: ignorableApiKeys,
-                        diamondModel: this.arrayDiamond[index],
-                        index: index,
-                        key: Key(index.toString()),
-                        deleteWidget: (index) {
-                          setState(() {
-                            removeDiamond(index);
-                          });
-                        },
-                      );
-                // return Image.asset(
-                //   placeHolder,
-                //   width: getSize(200),
-                //   height: getSize(2000),
-                //   key: Key(index.toString()),
-                // );
-              },
+      body: SingleChildScrollView(
+        child: Container(
+          height: viewHeight,
+          child: Padding(
+            padding: EdgeInsets.only(left: getSize(20), right: getSize(20)),
+            child: Directionality(
+              textDirection: TextDirection.ltr,
+              child: ReorderableListView(
+                scrollController: ScrollController(initialScrollOffset: 50),
+                onReorder: (int oldIndex, int newIndex) {
+                  setState(
+                    () {
+                      if (newIndex > oldIndex) {
+                        newIndex -= 1;
+                      }
+                      final DiamondModel item = arrayDiamond[oldIndex];
+                      arrayDiamond.removeAt(oldIndex);
+                      arrayDiamond.insert(newIndex, item);
+                    },
+                  );
+                },
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                children: List.generate(
+                  arrayDiamond.length,
+                  (index) {
+                    ScrollController sc = _controllers.addAndGet();
+                    return !isCheckBoxChecked
+                        ? DiamondCompareWidget(
+                            sc: sc,
+                            diamondModel: this.arrayDiamond[index],
+                            index: index,
+                            key: Key(index.toString()),
+                            deleteWidget: (index) {
+                              setState(() {
+                                removeDiamond(index);
+                              });
+                            },
+                          )
+                        : DiamondCompareWidget(
+                            sc: sc,
+                            ignorableApiKeys: ignorableApiKeys,
+                            diamondModel: this.arrayDiamond[index],
+                            index: index,
+                            key: Key(index.toString()),
+                            deleteWidget: (index) {
+                              setState(() {
+                                removeDiamond(index);
+                              });
+                            },
+                          );
+                    // return Image.asset(
+                    //   placeHolder,
+                    //   width: getSize(200),
+                    //   height: getSize(2000),
+                    //   key: Key(index.toString()),
+                    // );
+                  },
+                ),
+              ),
             ),
           ),
         ),
@@ -580,5 +611,23 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
             positiveBtnTitle: R.string().commonString.ok,
           );
     }
+  }
+}
+
+class ReorderListItem extends StatefulWidget {
+  List<DiamondModel>list;
+
+  ReorderListItem(this.list);
+
+  @override
+  _ReorderListItemState createState() => _ReorderListItemState();
+}
+
+class _ReorderListItemState extends State<ReorderListItem> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+
+    );
   }
 }

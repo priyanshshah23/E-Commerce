@@ -331,7 +331,7 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
     Map<String, dynamic> request = {};
     SelectionModel model = arrData
         .singleWhere((element) => element.viewType == ViewTypes.shapeWidget);
-    request["shape"] = Master.getSelectedId(model.masters);
+    request["shp"] = Master.getSelectedId(model.masters);
 
     SelectionModel model1 = arrData
         .singleWhere((element) => element.viewType == ViewTypes.caratRange);
