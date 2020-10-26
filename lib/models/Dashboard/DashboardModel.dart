@@ -26,12 +26,14 @@ class DashboardModel {
     this.recentSearch,
     this.featuredStone,
     this.seller,
+    this.tracks,
   });
 
   Seller seller;
   List<FeaturedStone> featuredStone;
   List<SavedSearchModel> savedSearch;
   List<SavedSearchModel> recentSearch;
+  Map<String, Track> tracks;
 
   factory DashboardModel.fromJson(Map<String, dynamic> json) => DashboardModel(
         seller: Seller.fromJson(json["seller"]),
@@ -42,6 +44,8 @@ class DashboardModel {
             json["savedSearch"].map((x) => SavedSearchModel.fromJson(x))),
         // recentSearch: List<SavedSearchModel>.from(
         //     json["recentSearch"].map((x) => SavedSearchModel.fromJson(x))),
+        tracks: Map.from(json["tracks"])
+            .map((k, v) => MapEntry<String, Track>(k, Track.fromJson(v))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -49,6 +53,8 @@ class DashboardModel {
         "savedSearch": List<dynamic>.from(savedSearch.map((x) => x.toJson())),
         "featuredStone":
             List<dynamic>.from(featuredStone.map((x) => x.toJson())),
+        "tracks": Map.from(tracks)
+            .map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
 
         // "recentSearch": List<dynamic>.from(recentSearch.map((x) => x.toJson())),
       };
@@ -136,5 +142,29 @@ class Seller {
         "lastName": lastName,
         "email": email,
         "whatsapp": whatsapp,
+      };
+}
+
+class Track {
+  Track({
+    this.pieces,
+    this.carat,
+    this.totals,
+  });
+
+  num pieces;
+  num carat;
+  num totals;
+
+  factory Track.fromJson(Map<String, dynamic> json) => Track(
+        pieces: json["pieces"],
+        carat: json["carat"],
+        totals: json["totals"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "pieces": pieces,
+        "carat": carat,
+        "totals": totals,
       };
 }

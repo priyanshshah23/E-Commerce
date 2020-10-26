@@ -7,6 +7,7 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
+import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/Dashboard/DashboardModel.dart';
 import 'package:diamnow/models/Dashbord/DashBoardConfigModel.dart';
@@ -19,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class Dashboard extends StatefulScreenWidget {
   static const route = "Dashboard";
@@ -59,6 +61,9 @@ class _DashboardState extends StatefulScreenWidgetState {
 
   DashboardModel dashboardModel;
   _DashboardState({this.moduleType, this.isFromDrawer});
+
+  RefreshController refreshController =
+      RefreshController(initialRefresh: false);
 
   @override
   void initState() {
@@ -211,22 +216,35 @@ class _DashboardState extends StatefulScreenWidgetState {
               padding: EdgeInsets.only(
                 // left: getSize(20),
                 // right: getSize(20),
-                top: getSize(20),
+                top: getSize(8),
               ),
-              child: ListView(
-                physics: ClampingScrollPhysics(),
-                children: <Widget>[
-                  getSarchTextField(),
-                  if (dashboardConfig.arrTopSection.length > 0) getTopSection(),
-                  getFeaturedSection(),
-                  getStoneOfDaySection(),
-                  getSavedSearchSection(),
-                  // getRecentSection(),
-                  getSalesSection(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                ],
+              child: SmartRefresher(
+                header: MaterialClassicHeader(
+                    backgroundColor: AppTheme.of(context).accentColor,
+                    color: AppTheme.of(context).theme.primaryColorLight),
+                enablePullDown: true,
+                onRefresh: () {
+                  callApiForDashboard();
+                  refreshController.refreshCompleted();
+                  refreshController.loadComplete();
+                },
+                controller: refreshController,
+                child: ListView(
+                  physics: ClampingScrollPhysics(),
+                  children: <Widget>[
+                    getSarchTextField(),
+                    if (dashboardConfig.arrTopSection.length > 0)
+                      getTopSection(),
+                    getFeaturedSection(),
+                    getStoneOfDaySection(),
+                    getSavedSearchSection(),
+                    // getRecentSection(),
+                    getSalesSection(),
+                    SizedBox(
+                      height: getSize(20),
+                    ),
+                  ],
+                ),
               ),
             ),
           )),
@@ -471,8 +489,11 @@ class _DashboardState extends StatefulScreenWidgetState {
                     mainAxisSpacing: 10,
                     crossAxisSpacing: 10,
                     children: List.generate(arrStones.length, (index) {
-                      // var item = arraDiamond[index];
-                      return getRecentItem(arrStones[index]);
+                      return InkWell(
+                          onTap: () {
+                            moveToDetail(arrStones[index]);
+                          },
+                          child: getRecentItem(arrStones[index]));
                     }),
                   ),
                 )
@@ -529,7 +550,12 @@ class _DashboardState extends StatefulScreenWidgetState {
                   height: getSize(245),
                   child: ListView.builder(
                     itemBuilder: (context, index) {
-                      return getStoneOfDayItem(arrStones[index]);
+                      return InkWell(
+                        onTap: () {
+                          moveToDetail(arrStones[index]);
+                        },
+                        child: getStoneOfDayItem(arrStones[index]),
+                      );
                     },
                     itemCount: arrStones.length,
                     scrollDirection: Axis.horizontal,
@@ -598,6 +624,9 @@ class _DashboardState extends StatefulScreenWidgetState {
                               BorderRadius.all(Radius.circular(getSize(61))),
                           child: getImageView(
                             "",
+                            finalUrl: model.img
+                                ? DiamondUrls.image + model.vStnId + ".jpg"
+                                : "",
                             width: getSize(122),
                             height: getSize(122),
                             fit: BoxFit.cover,
@@ -698,57 +727,15 @@ class _DashboardState extends StatefulScreenWidgetState {
                           SizedBox(
                             height: getSize(4),
                           ),
-                          Row(
-                            children: [
-                              getText(model.stoneId ?? ""),
-                              // Expanded(child: Container()),
-                              Spacer(),
-                              getText(
-                                model.shpNm ?? "",
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ],
-                          ),
+                          getStoneIdShape(model),
                           SizedBox(
                             height: getSize(6),
                           ),
-                          Row(
-                            children: [
-                              getText(
-                                model.colNm ?? "",
-                              ),
-                              Spacer(),
-                              getText(
-                                model.clrNm ?? "",
-                              ),
-                              Spacer(),
-                              getText(
-                                model.lbNm ?? "",
-                              ),
-                            ],
-                          ),
+                          getColorClarityLab(model),
                           SizedBox(
                             height: getSize(6),
                           ),
-                          Row(
-                            children: <Widget>[
-                              getText(
-                                model.cutNm ?? "-",
-                              ),
-                              Spacer(),
-                              getDot(),
-                              Spacer(),
-                              getText(
-                                model.polNm ?? "-",
-                              ),
-                              Spacer(),
-                              getDot(),
-                              Spacer(),
-                              getText(
-                                model.symNm ?? "-",
-                              ),
-                            ],
-                          ),
+                          getCutPolSynData(model),
                           SizedBox(
                             height: getSize(8),
                           ),
@@ -768,7 +755,7 @@ class _DashboardState extends StatefulScreenWidgetState {
     );
   }
 
-  getStoneOfDayItemWithPrice() {
+  getStoneOfDayItemWithPrice(DiamondModel model) {
     return Container(
       height: getSize(225),
       padding: EdgeInsets.only(
@@ -826,6 +813,9 @@ class _DashboardState extends StatefulScreenWidgetState {
                               BorderRadius.all(Radius.circular(getSize(61))),
                           child: getImageView(
                             "",
+                            finalUrl: model.img
+                                ? DiamondUrls.image + model.vStnId + ".jpg"
+                                : "",
                             width: getSize(122),
                             height: getSize(122),
                             fit: BoxFit.cover,
@@ -876,7 +866,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                           child: Column(
                             children: [
                               Text(
-                                "12.50 \n Carat ",
+                                "${model.crt} \n Carat ",
                                 style: appTheme.blue14TextStyle.copyWith(
                                   color: appTheme.colorPrimary,
                                   fontSize: getFontSize(12),
@@ -895,7 +885,8 @@ class _DashboardState extends StatefulScreenWidgetState {
                                 child: Padding(
                                   padding: EdgeInsets.all(getSize(2)),
                                   child: Text(
-                                    "-44.33 %",
+                                    PriceUtilities.getPercent(
+                                        model.getFinalDiscount()),
                                     style: appTheme.green10TextStyle
                                         .copyWith(fontSize: getFontSize(9)),
                                   ),
@@ -1014,8 +1005,13 @@ class _DashboardState extends StatefulScreenWidgetState {
               physics: NeverScrollableScrollPhysics(),
               itemCount: this.dashboardModel.savedSearch.length,
               itemBuilder: (context, index) {
-                return getSavedSearchItem(
-                    this.dashboardModel.savedSearch[index]);
+                return InkWell(
+                  onTap: () {
+                    //Redirect to saved search screen
+                  },
+                  child: getSavedSearchItem(
+                      this.dashboardModel.savedSearch[index]),
+                );
               }),
         ],
       ),
@@ -1289,6 +1285,11 @@ class _DashboardState extends StatefulScreenWidgetState {
                                     Radius.circular(getSize(20))),
                                 child: getImageView(
                                   "",
+                                  finalUrl: model.img
+                                      ? DiamondUrls.image +
+                                          model.vStnId +
+                                          ".jpg"
+                                      : "",
                                   width: getSize(40),
                                   height: getSize(40),
                                   fit: BoxFit.cover,
@@ -1322,44 +1323,15 @@ class _DashboardState extends StatefulScreenWidgetState {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Row(
-                          children: [
-                            getText(model.stoneId ?? ""),
-                            Spacer(),
-                            getText(
-                              model.shpNm ?? "",
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ],
-                        ),
+                        getStoneIdShape(model),
                         SizedBox(
                           height: getSize(6),
                         ),
-                        Row(
-                          children: [
-                            getText(model.colNm ?? "-"),
-                            Spacer(),
-                            getText(model.clrNm ?? "-"),
-                            Spacer(),
-                            getText(model.lbNm ?? "-"),
-                          ],
-                        ),
+                        getColorClarityLab(model),
                         SizedBox(
                           height: getSize(6),
                         ),
-                        Row(
-                          children: [
-                            getText(model.cutNm ?? "-"),
-                            Spacer(),
-                            getDot(),
-                            Spacer(),
-                            getText(model.polNm ?? "-"),
-                            Spacer(),
-                            getDot(),
-                            Spacer(),
-                            getText(model.symNm ?? "-"),
-                          ],
-                        ),
+                        getCutPolSynData(model),
                       ],
                     ),
                   ),
@@ -1716,5 +1688,60 @@ class _DashboardState extends StatefulScreenWidgetState {
             BoxDecoration(color: appTheme.dividerColor, shape: BoxShape.circle),
       ),
     );
+  }
+
+  getColorClarityLab(DiamondModel model) {
+    return Row(
+      children: [
+        getText(
+          model.colNm ?? "",
+        ),
+        Spacer(),
+        getText(
+          model.clrNm ?? "",
+        ),
+        Spacer(),
+        getText(
+          model.lbNm ?? "",
+        ),
+      ],
+    );
+  }
+
+  getStoneIdShape(DiamondModel model) {
+    return Row(
+      children: [
+        getText(model.stoneId ?? ""),
+        Spacer(),
+        getText(
+          model.shpNm ?? "",
+          fontWeight: FontWeight.w500,
+        ),
+      ],
+    );
+  }
+
+  getCutPolSynData(DiamondModel model) {
+    return Row(
+      children: [
+        getText(model.cutNm ?? "-"),
+        Spacer(),
+        getDot(),
+        Spacer(),
+        getText(model.polNm ?? "-"),
+        Spacer(),
+        getDot(),
+        Spacer(),
+        getText(model.symNm ?? "-"),
+      ],
+    );
+  }
+
+  moveToDetail(DiamondModel model) {
+    var dict = Map<String, dynamic>();
+    dict[ArgumentConstant.DiamondDetail] = model;
+    dict[ArgumentConstant.ModuleType] = DiamondModuleConstant.MODULE_TYPE_HOME;
+
+    NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
   }
 }

@@ -176,3 +176,8 @@ class DashboardConstants {
   static const String stoneOfTheDay = "stone_of_day";
   static const String best = "best";
 }
+
+class SavedSearchType {
+  static const int savedSearch = 2;
+  static const int recentSearch = 1;
+}

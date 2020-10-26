@@ -291,7 +291,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       onClickCallback: (obj) {
         //
         if (obj.code == BottomCodeConstant.filterSavedSearch) {
-          callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,isSavedSearch: true);
+          callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+              isSavedSearch: true);
         } else if (obj.code == BottomCodeConstant.filterAddDemamd) {
           //
           print(obj.code);
@@ -309,14 +310,17 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     );
   }
 
-  callApiForGetFilterId(int moduleType,{bool isSavedSearch=false}) {
+  callApiForGetFilterId(int moduleType, {bool isSavedSearch = false}) {
     SyncManager.instance.callApiForDiamondList(
       context,
       FilterRequest().createRequest(arrList),
       (diamondListResp) {
-        if(isSavedSearch){
-          openBottomSheetForSavedSearch(context,  FilterRequest().createRequest(arrList),diamondListResp.data.filter.id);
-        }else{
+        if (isSavedSearch) {
+          openBottomSheetForSavedSearch(
+              context,
+              FilterRequest().createRequest(arrList),
+              diamondListResp.data.filter.id);
+        } else {
           Map<String, dynamic> dict = new HashMap();
 
           dict["filterId"] = diamondListResp.data.filter.id;
@@ -324,7 +328,6 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           dict[ArgumentConstant.ModuleType] = moduleType;
           NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
         }
-
       },
       (onError) {
         //print("Error");
