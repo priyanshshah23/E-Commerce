@@ -1,15 +1,15 @@
 class ForgotPasswordReq {
-  String username;
+  String value;
 
-  ForgotPasswordReq({this.username});
+  ForgotPasswordReq({this.value});
 
   ForgotPasswordReq.fromJson(Map<String, dynamic> json) {
-    username = json['username'];
+    value = json['value'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['username'] = this.username;
+    data['value'] = this.value;
     return data;
   }
 }

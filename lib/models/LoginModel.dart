@@ -621,15 +621,21 @@ class Account {
     showPublicly = json['showPublicly'];
     coverImage = json['coverImage'];
     isVerified = json['isVerified'];
-    country = json['country'] != null
-        ? new CountryList.fromJson(json['country'])
-        : null;
-    state = json['state'] != null
-        ? new StateList.fromJson(json['state'])
-        : null;
-    city = json['city'] != null
-        ? new CityList.fromJson(json['city'])
-        : null;
+    if(json["country"] is Map<String, dynamic>) {
+      country = json['country'] != null
+          ? new CountryList.fromJson(json['country'])
+          : null;
+    }
+    if(json["state"] is Map<String, dynamic>) {
+      state = json['state'] != null
+          ? new StateList.fromJson(json['state'])
+          : null;
+    }
+    if(json["city"] is Map<String, dynamic>) {
+      city = json['city'] != null
+          ? new CityList.fromJson(json['city'])
+          : null;
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -774,16 +780,12 @@ class UserPermissionsData {
     Permissions permissions = json['permissions'] != null
         ? new Permissions.fromJson(json['permissions'])
         : null;
-    view = json['permissions'] != null
-        ? permissions.view : null;
-    insert = json['permissions'] != null
-        ? permissions.insert : null;
-    update = json['permissions'] != null
-        ? permissions.update : null;
-    delete = json['permissions'] != null
-        ? permissions.delete : null;
-    downloadExcel = json['permissions'] != null
-        ? permissions.downloadExcel : null;
+    view = json['permissions'] != null ? permissions.view : null;
+    insert = json['permissions'] != null ? permissions.insert : null;
+    update = json['permissions'] != null ? permissions.update : null;
+    delete = json['permissions'] != null ? permissions.delete : null;
+    downloadExcel =
+        json['permissions'] != null ? permissions.downloadExcel : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -800,11 +802,13 @@ class Permissions {
   bool delete;
   bool downloadExcel;
 
-  Permissions(
-      {this.view,
-      this.insert,
-      this.update,
-      this.delete,});
+  Permissions({
+    this.view,
+    this.insert,
+    this.update,
+    this.delete,
+    this.downloadExcel,
+  });
 
   Permissions.fromJson(Map<String, dynamic> json) {
     view = json['view'];
