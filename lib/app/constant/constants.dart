@@ -176,3 +176,8 @@ class DashboardConstants {
   static const String stoneOfTheDay = "stone_of_day";
   static const String best = "best";
 }
+class UserPermission {
+  static const String dashboard = "dashboard";
+  static const String	searchDiamond = "searchDiamond";
+  static const String	quickSearch = "quickSearch";
+}

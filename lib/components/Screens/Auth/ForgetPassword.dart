@@ -453,4 +453,35 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
     });
   }
 
+  callApiForVerifyOTP() async {
+    ForgotPasswordReq req = ForgotPasswordReq();
+    req.username = _emailController.text;
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().forgetPassword(req),
+        context,
+        isProgress: true)
+        .then((resp) async {
+      FocusScope.of(context).unfocus();
+      if(isResend) {
+        if (isTimerCompleted) {
+          _start = 30;
+          isTimerCompleted = false;
+        }
+      }
+      startTimer();
+      isApiCall = true;
+      showToast(resp.message,context: context);
+      setState(() {});
+    }).catchError((onError) {
+      app.resolve<CustomDialogs>().confirmDialog(
+        context,
+        title: R.string().commonString.error,
+        desc: onError.message,
+        positiveBtnTitle: R.string().commonString.btnTryAgain,
+      );
+    });
+  }
+
 }

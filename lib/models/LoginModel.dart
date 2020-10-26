@@ -750,23 +750,34 @@ class UserPermissions {
 
 class UserPermissionsData {
   String module;
-  Permissions permissions;
+  bool view;
+  bool insert;
+  bool update;
+  bool delete;
+  bool downloadExcel;
 
-  UserPermissionsData({this.module, this.permissions});
+  UserPermissionsData({this.module});
 
   UserPermissionsData.fromJson(Map<String, dynamic> json) {
     module = json['module'];
-    permissions = json['permissions'] != null
+    Permissions permissions = json['permissions'] != null
         ? new Permissions.fromJson(json['permissions'])
         : null;
+    view = json['permissions'] != null
+        ? permissions.view : null;
+    insert = json['permissions'] != null
+        ? permissions.insert : null;
+    update = json['permissions'] != null
+        ? permissions.update : null;
+    delete = json['permissions'] != null
+        ? permissions.delete : null;
+    downloadExcel = json['permissions'] != null
+        ? permissions.downloadExcel : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['module'] = this.module;
-    if (this.permissions != null) {
-      data['permissions'] = this.permissions.toJson();
-    }
     return data;
   }
 }
@@ -776,33 +787,20 @@ class Permissions {
   bool insert;
   bool update;
   bool delete;
-  bool uploadExcel;
   bool downloadExcel;
-  bool mailExcel;
-  bool printPDF;
-  bool all;
 
   Permissions(
       {this.view,
       this.insert,
       this.update,
-      this.delete,
-      this.uploadExcel,
-      this.downloadExcel,
-      this.mailExcel,
-      this.printPDF,
-      this.all});
+      this.delete,});
 
   Permissions.fromJson(Map<String, dynamic> json) {
     view = json['view'];
     insert = json['insert'];
     update = json['update'];
     delete = json['delete'];
-    uploadExcel = json['uploadExcel'];
     downloadExcel = json['downloadExcel'];
-    mailExcel = json['mailExcel'];
-    printPDF = json['printPDF'];
-    all = json['all'];
   }
 
   Map<String, dynamic> toJson() {
@@ -811,11 +809,7 @@ class Permissions {
     data['insert'] = this.insert;
     data['update'] = this.update;
     data['delete'] = this.delete;
-    data['uploadExcel'] = this.uploadExcel;
     data['downloadExcel'] = this.downloadExcel;
-    data['mailExcel'] = this.mailExcel;
-    data['printPDF'] = this.printPDF;
-    data['all'] = this.all;
     return data;
   }
 }

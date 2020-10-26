@@ -222,7 +222,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://fndevelopapi.democ.in/web/v1/auth/forgot-password',
+        'http://fndevelopapi.democ.in/device/v1/user/send-otp',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -713,7 +713,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'api/v1/version',
+        'http://fndevelopapi.democ.in/device/v1/version',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',

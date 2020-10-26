@@ -27,6 +27,7 @@ class CommonString {
   final String uploadCap;
   final String yesCancelCap;
   final String ok;
+  final String noDiamondFound;
   final String fetchLocationMessage;
   final String yes;
   final String no;
@@ -435,5 +436,6 @@ class CommonString {
     this.lblTimeSlot16 = "4:30PM - 5:00PM",
 
     this.noSlotFound = "No slots found",
+    this.noDiamondFound = "No Diamond Found, Please select different search parameter.",
   });
 }

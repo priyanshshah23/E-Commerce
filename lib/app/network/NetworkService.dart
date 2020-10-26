@@ -57,7 +57,7 @@ abstract class NetworkService {
   @POST(ApiConstants.upsetComment)
   Future<BaseApiResp> upsetComment(@Body() CreateDiamondTrackReq req);
 
-  @POST(ApiConstants.forgetPassword)
+  @POST(ApiConstants.sendOTP)
   Future<BaseApiResp> forgetPassword(@Body() ForgotPasswordReq req);
 
   @POST(ApiConstants.resetPassword)
