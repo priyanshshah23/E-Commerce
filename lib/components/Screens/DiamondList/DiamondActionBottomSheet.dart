@@ -1031,14 +1031,14 @@ Future openBottomSheetForSavedSearch(
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                getFieldTitleText("Search Title"),
+                getFieldTitleText(R.string().screenTitle.searchTitle),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: getSize(20)),
                   child: CommonTextfield(
                     autoFocus: false,
                     textOption: TextFieldOption(
                       inputController: _titleController,
-                      hintText: "Enter Search Title",
+                      hintText: R.string().screenTitle.enterSearchTitle,
                       formatter: [
                         WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
                         BlacklistingTextInputFormatter(RegExp(RegexForEmoji))

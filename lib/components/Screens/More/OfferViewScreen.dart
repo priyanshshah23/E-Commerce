@@ -223,7 +223,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                       borderRadius: BorderRadius.circular(getSize(5)),
                       boxShadow: getBoxShadow(context)),
                   child: Text(
-                    "Request Office View",
+                    R.string().screenTitle.reqOfficeView,
                     textAlign: TextAlign.center,
                     style: appTheme.white16TextStyle,
                   ),
@@ -251,7 +251,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Available Slots",
+                R.string().screenTitle.availableSlot,
                 style: appTheme.black16TextStyle
                     .copyWith(fontWeight: FontWeight.w500),
               ),
@@ -294,7 +294,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                         ? DateUtilities().convertServerDateToFormatterString(
                             pickedDate.toString(),
                             formatter: DateUtilities.dd_mm_yyyy_)
-                        : "Select Custom date",
+                        : R.string().screenTitle.selectCustomDate,
                     style: appTheme.black16TextStyle,
                   ),
                   Image.asset(
@@ -393,7 +393,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Time Slots",
+            R.string().screenTitle.timeSlots,
             style:
                 appTheme.black16TextStyle.copyWith(fontWeight: FontWeight.w500),
           ),
@@ -475,7 +475,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
             textOption: TextFieldOption(
                 prefixWid: getCommonIconWidget(
                     imageName: company, imageType: IconSizeType.small),
-                hintText: "Select Virtual Type",
+                hintText: R.string().commonString.selectType,
                 maxLine: 1,
                 keyboardType: TextInputType.text,
                 type: TextFieldType.DropDown,
