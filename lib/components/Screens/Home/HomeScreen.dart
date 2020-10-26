@@ -214,22 +214,27 @@ class _HomeScreenState extends State<HomeScreen> {
           openQuickSearch(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_CART:
-          break;
         case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
-          break;
         case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
-          break;
         case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
-          break;
         case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
-          break;
         case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
+        case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+        case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
+        case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
+        case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
+        case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
           openDiamondList(type);
           break;
-        case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+        case DiamondModuleConstant.MODULE_TYPE_PROFILE:
+          openProfile(type);
           break;
-        case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
-          openDashboard(type);
+        case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
+        case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
+          openDiamondOrderList(type);
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
+          openSavedSearch(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_ABOUT_US:
           openAboutUs(type);
@@ -239,24 +244,6 @@ class _HomeScreenState extends State<HomeScreen> {
           break;
         case DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION:
           openTermsAndCondition(type);
-          break;
-        case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
-          break;
-        case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
-          break;
-        case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
-          openDiamondList(type);
-          break;
-        case DiamondModuleConstant.MODULE_TYPE_PROFILE:
-          openProfile(type);
-          break;
-        case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
-          break;
-        case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
-          openDiamondOrderList(type);
-          break;
-        case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
-          openSavedSearch(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_LOGOUT:
           logoutFromApp(context);
