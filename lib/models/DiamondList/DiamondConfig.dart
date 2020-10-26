@@ -4,6 +4,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/ImageConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
@@ -16,6 +17,8 @@ import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
+import 'package:rxbus/rxbus.dart';
 
 import '../../main.dart';
 
@@ -262,7 +265,7 @@ class DiamondConfig {
   }
 
   manageDiamondAction(BuildContext context, List<DiamondModel> list,
-      BottomTabModel bottomTabModel) {
+      BottomTabModel bottomTabModel, Function placeOrder) async {
     switch (bottomTabModel.type) {
       case ActionMenuConstant.ACTION_TYPE_ADD_TO_CART:
         actionAddToCart(context, list);
@@ -274,7 +277,7 @@ class DiamondConfig {
         actionAddToWishList(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_PLACE_ORDER:
-        actionPlaceOrder(context, list);
+        actionPlaceOrder(context, list, placeOrder);
         break;
       case ActionMenuConstant.ACTION_TYPE_COMMENT:
         actionComment(context, list);
@@ -310,7 +313,14 @@ class DiamondConfig {
         var dict = Map<String, dynamic>();
         dict[ArgumentConstant.DiamondList] = list;
         dict[ArgumentConstant.ModuleType] = moduleType;
-        NavigationUtilities.pushRoute(DiamondCompareScreen.route, args: dict);
+        // NavigationUtilities.pushRoute(DiamondCompareScreen.route, args: dict);
+        bool isBack = await Navigator.of(context).push(MaterialPageRoute(
+          settings: RouteSettings(name: DiamondCompareScreen.route),
+          builder: (context) => DiamondCompareScreen(dict),
+        ));
+        if (isBack != null && isBack) {
+          placeOrder();
+        }
         break;
     }
   }
@@ -347,10 +357,11 @@ class DiamondConfig {
     });
   }
 
-  actionPlaceOrder(BuildContext context, List<DiamondModel> list) {
+  actionPlaceOrder(
+      BuildContext context, List<DiamondModel> list, Function placeOrder) {
     showPlaceOrderDialog(context, (manageClick) {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
-        callApiFoPlaceOrder(context, list,
+        callApiFoPlaceOrder(context, list, placeOrder,
             isPop: true,
             remark: manageClick.remark,
             companyName: manageClick.companyName,
@@ -396,10 +407,20 @@ class DiamondConfig {
       model.isAddToBid = true;
       selectedList.add(model);
     });
-    showBidListDialog(context, selectedList, (manageClick) {
-      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
-        callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_BID,
-            isPop: true);
+    app.resolve<CustomDialogs>().confirmDialog(context,
+        title: "Disclaimer",
+        desc: "Packet No: "+list.map((item) => item.vStnId).toList().join(', ') +
+            " is currently located in India and for delivery in any other country apart from india will take at least 7-10 working days.",
+        negativeBtnTitle: "Quit",
+        positiveBtnTitle: "I Agree", onClickCallback: (buttonType) {
+      if (buttonType == ButtonType.PositveButtonClick) {
+        showBidListDialog(context, selectedList, (manageClick) {
+          if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
+            callApiFoCreateTrack(
+                context, list, DiamondTrackConstant.TRACK_TYPE_BID,
+                isPop: true);
+          }
+        });
       }
     });
   }
@@ -509,7 +530,8 @@ class DiamondConfig {
     );
   }
 
-  callApiFoPlaceOrder(BuildContext context, List<DiamondModel> list,
+  callApiFoPlaceOrder(
+      BuildContext context, List<DiamondModel> list, Function placeOrder,
       {bool isPop = false,
       String remark,
       String companyName,
@@ -541,12 +563,12 @@ class DiamondConfig {
         if (isPop) {
           Navigator.pop(context);
         }
-        app.resolve<CustomDialogs>().errorDialog(
-              context,
-              title,
-              resp.message,
-              btntitle: R.string().commonString.ok,
-            );
+        app.resolve<CustomDialogs>().errorDialog(context, title, resp.message,
+            btntitle: R.string().commonString.ok,
+            dismissPopup: false, voidCallBack: () {
+          Navigator.pop(context);
+          placeOrder();
+        });
       },
       (onError) {
         if (onError.message != null) {
@@ -720,6 +742,20 @@ openSharePopUp(BuildContext context) {
     StoneModel(7, "Video"),
   ];
 
+  Future<void> share() async {
+    // var url = await createDynamicLink(
+    //     referalId: PrefUtilities.getInstance().getUser().referralCode);
+
+    var link = ApiConstants.shareAndEarn;
+    Share.share(
+        "876654878\n"
+            "Invite code : 655765757"
+            "App link : $link",
+        subject: R.string().screenTitle.share,
+        sharePositionOrigin:
+        Rect.fromCenter(center: Offset.zero, width: 100, height: 100));
+  }
+
   return showDialog(
       context: context,
       builder: (context) {
@@ -742,7 +778,8 @@ openSharePopUp(BuildContext context) {
                         return InkWell(
                           onTap: () {
                             setsetter(() {
-                              stoneList[i].isSelected = !stoneList[i].isSelected;
+                              stoneList[i].isSelected =
+                                  !stoneList[i].isSelected;
                             });
                           },
                           child: Padding(
@@ -800,9 +837,7 @@ openSharePopUp(BuildContext context) {
                         ),
                         Expanded(
                           child: InkWell(
-                            onTap: () {
-
-                            },
+                            onTap: () {},
                             child: Container(
                               //alignment: Alignment.bottomCenter,
                               padding: EdgeInsets.symmetric(
@@ -810,7 +845,8 @@ openSharePopUp(BuildContext context) {
                               ),
                               decoration: BoxDecoration(
                                   color: appTheme.colorPrimary,
-                                  borderRadius: BorderRadius.circular(getSize(5)),
+                                  borderRadius:
+                                      BorderRadius.circular(getSize(5)),
                                   boxShadow: getBoxShadow(context)),
                               child: Text(
                                 R.string().screenTitle.share,

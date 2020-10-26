@@ -18,6 +18,7 @@ import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:flutter/material.dart';
+import 'package:rxbus/rxbus.dart';
 
 class DiamondListScreen extends StatefulScreenWidget {
   static const route = "Diamond List Screen";
@@ -175,7 +176,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
         dict["type"] = "stone_of_day";
         break;
-
     }
 
     NetworkCall<DiamondListResp>()
@@ -225,6 +225,12 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       }
       diamondList.state.setApiCalling(false);
     });
+  }
+
+  onRefreshList() {
+    arraDiamond.clear();
+    page = DEFAULT_PAGE;
+    callApi(false);
   }
 
   fillArrayList() {
@@ -285,7 +291,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     return list;
   }
 
-  manageRowClick(int index, int type) {
+  manageRowClick(int index, int type) async {
     switch (type) {
       case clickConstant.CLICK_TYPE_SELECTION:
         setState(() {
@@ -302,7 +308,15 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         var dict = Map<String, dynamic>();
         dict[ArgumentConstant.DiamondDetail] = arraDiamond[index];
         dict[ArgumentConstant.ModuleType] = moduleType;
-        NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
+
+      //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
+        bool isBack = await Navigator.of(context).push(MaterialPageRoute(
+          settings: RouteSettings(name: DiamondDetailScreen.route),
+          builder: (context) => DiamondDetailScreen(arguments: dict),
+        ));
+        if (isBack != null && isBack) {
+          onRefreshList();
+        }
         break;
     }
   }
@@ -412,7 +426,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             app.resolve<CustomDialogs>().confirmDialog(
                   context,
                   title: "",
-                  desc: "Please select at least one stone.",
+                  desc: R.string().errorString.diamondSelectionError,
                   positiveBtnTitle: R.string().commonString.ok,
                 );
           }
@@ -435,62 +449,69 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       context: context,
       barrierDismissible: true,
       builder: (_) {
-        return
-          GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Material(
-              color: Colors.transparent,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                        color: appTheme.textFieldBorderColor,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(getSize(15)),
-                        )),
-                    margin: EdgeInsets.only(
-                      left: getSize(30),
-                      right: getSize(30),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          height: getSize(20),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Status",style: appTheme.blackNormal18TitleColorblack,),
-                            Icon(Icons.info_outline, color: appTheme.colorPrimary,size: getSize(16),),
-                          ],
-                        ),
-                        SizedBox(
-                          height: getSize(10),
-                        ),
-                         ListView.builder(
-                    shrinkWrap: true,
-                          itemCount: diamondConfig.arrStatusMenu.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return getStatusDialogueRow(
-                                title: diamondConfig.arrStatusMenu[index].title,
-                                color: diamondConfig.arrStatusMenu[index].imageColor);
-                          },
-                        ),
-                        SizedBox(
-                          height: getSize(10),
-                        ),
-                      ],
-                    ),
+        return GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Material(
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                      color: appTheme.textFieldBorderColor,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(getSize(15)),
+                      )),
+                  margin: EdgeInsets.only(
+                    left: getSize(30),
+                    right: getSize(30),
                   ),
-                ],
-              ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        height: getSize(20),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Status",
+                            style: appTheme.blackNormal18TitleColorblack,
+                          ),
+                          Icon(
+                            Icons.info_outline,
+                            color: appTheme.colorPrimary,
+                            size: getSize(16),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: getSize(10),
+                      ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: diamondConfig.arrStatusMenu.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return getStatusDialogueRow(
+                              title: diamondConfig.arrStatusMenu[index].title,
+                              color: diamondConfig
+                                  .arrStatusMenu[index].imageColor);
+                        },
+                      ),
+                      SizedBox(
+                        height: getSize(10),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          );
+          ),
+        );
 
 //          AlertDialog(
 //          shape: RoundedRectangleBorder(
@@ -528,7 +549,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   getStatusDialogueRow({Color color, String title}) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: getSize(10), horizontal: getSize(20)),
+      padding:
+          EdgeInsets.symmetric(vertical: getSize(10), horizontal: getSize(20)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -564,12 +586,15 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     List<DiamondModel> selectedList =
         arraDiamond.where((element) => element.isSelected).toList();
     if (selectedList != null && selectedList.length > 0) {
-      diamondConfig.manageDiamondAction(context, selectedList, bottomTabModel);
+      diamondConfig.manageDiamondAction(context, selectedList, bottomTabModel,
+          () {
+        onRefreshList();
+      });
     } else {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
             title: "",
-            desc: "Please select at least one stone.",
+            desc: R.string().errorString.diamondSelectionError,
             positiveBtnTitle: R.string().commonString.ok,
           );
     }
