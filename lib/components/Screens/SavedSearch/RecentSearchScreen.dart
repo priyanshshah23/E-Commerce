@@ -16,17 +16,17 @@ import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SavedSearchScreen extends StatefulScreenWidget {
-  static const route = "SavedSearchScreen";
+class RecentSearchScreen extends StatefulScreenWidget {
+  static const route = "RecentSearchScreen";
   int moduleType = DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
   bool isFromDrawer = false;
 
-  SavedSearchScreen({
+  RecentSearchScreen({
     this.moduleType,
     this.isFromDrawer,
   });
 
-  // SavedSearchScreen(
+  // RecentSearchScreen(
   //   Map<String, dynamic> arguments, {
   //   Key key,
   // }) : super(key: key) {
@@ -41,17 +41,17 @@ class SavedSearchScreen extends StatefulScreenWidget {
   // }
 
   @override
-  _SavedSearchScreenState createState() => _SavedSearchScreenState(
+  _RecentSearchScreenState createState() => _RecentSearchScreenState(
         moduleType: moduleType,
         isFromDrawer: isFromDrawer,
       );
 }
 
-class _SavedSearchScreenState extends State<SavedSearchScreen>
-    with AutomaticKeepAliveClientMixin<SavedSearchScreen> {
+class _RecentSearchScreenState extends State<RecentSearchScreen>
+    with AutomaticKeepAliveClientMixin<RecentSearchScreen> {
   int moduleType;
   bool isFromDrawer;
-  BaseList savedSearchBaseList;
+  BaseList recentSearchBaseList;
   List<SavedSearchModel> listOfSavedSearchModel = [];
   int page = DEFAULT_PAGE;
 
@@ -59,12 +59,12 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
   int sharedValue = 0;
   bool keepAlive = false;
 
-  _SavedSearchScreenState({this.moduleType, this.isFromDrawer});
+  _RecentSearchScreenState({this.moduleType, this.isFromDrawer});
 
   @override
   void initState() {
     super.initState();
-    savedSearchBaseList = BaseList(BaseListState(
+    recentSearchBaseList = BaseList(BaseListState(
 //      imagePath: noRideHistoryFound,
       noDataMsg: APPNAME,
       noDataDesc: R.string().noDataStrings.noDataFound,
@@ -90,18 +90,6 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
     });
   }
 
-  Future doAsyncStuff() async {
-    keepAlive = true;
-    updateKeepAlive();
-    // Keeping alive...
-
-    await Future.delayed(Duration(seconds: 10));
-
-    keepAlive = false;
-    updateKeepAlive();
-    // Can be disposed whenever now.
-  }
-
 
   callApi(bool isRefress, {bool isLoading = false}) {
     if (isRefress) {
@@ -112,7 +100,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
     Map<String, dynamic> dict = {};
     dict["page"] = page;
     dict["limit"] = DEFAULT_LIMIT;
-    dict["type"] = 2;
+    dict["type"] = 1;
     dict["isAppendMasters"] = true;
 
     NetworkCall<SavedSearchResp>()
@@ -122,26 +110,26 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       isProgress: !isRefress && !isLoading,
     )
         .then((savedSearchResp) async {
-      savedSearchBaseList.state.listCount = savedSearchResp.data.list.length;
-      savedSearchBaseList.state.totalCount = savedSearchResp.data.count;
+      recentSearchBaseList.state.listCount = savedSearchResp.data.list.length;
+      recentSearchBaseList.state.totalCount = savedSearchResp.data.count;
       listOfSavedSearchModel = savedSearchResp.data.list;
       fillArrayList();
       page = page + 1;
-      savedSearchBaseList.state.setApiCalling(false);
+      recentSearchBaseList.state.setApiCalling(false);
       setState(() {});
     }).catchError((onError) {
       if (isRefress) {
         listOfSavedSearchModel.clear();
-        savedSearchBaseList.state.listCount = listOfSavedSearchModel.length;
-        savedSearchBaseList.state.totalCount = listOfSavedSearchModel.length;
+        recentSearchBaseList.state.listCount = listOfSavedSearchModel.length;
+        recentSearchBaseList.state.totalCount = listOfSavedSearchModel.length;
       }
-      savedSearchBaseList.state.setApiCalling(false);
+      recentSearchBaseList.state.setApiCalling(false);
     });
   }
 
   fillArrayList() {
-    savedSearchBaseList.state.listItems = ListView.builder(
-      itemCount: savedSearchBaseList.state.listCount,
+    recentSearchBaseList.state.listItems = ListView.builder(
+      itemCount: recentSearchBaseList.state.listCount,
       itemBuilder: (BuildContext context, int index) {
         SavedSearchModel savedSearchModel = listOfSavedSearchModel[index];
         List<Map<String, dynamic>> arrData =
@@ -153,20 +141,17 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: appTheme.unSelectedBgColor,
-                      boxShadow: getBoxShadow(context),
-                      ),
+                      color: appTheme.unSelectedBgColor),
                   child: Column(
                     children: <Widget>[
                       Padding(
                         padding: EdgeInsets.all(getSize(10)),
                         child: Text(savedSearchModel?.name ?? "",
-                          style: appTheme.black16TextStyle,
+                          style: appTheme.black24TitleColor,
                         ),
                       ),
                       Divider(
                         color: appTheme.dividerColor,
-                        thickness: 2,
                       ),
                       ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
@@ -182,16 +167,16 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
                                     Expanded(
                                         child: Text(
                                       arrData[index]["key"] ?? "",
-                                      style: appTheme.black14TextStyle,
+                                      style: appTheme.grey12HintTextStyle,
                                     )),
                                     Expanded(
                                         child: Text(
                                       arrData[index]["value"] ?? "",
-                                      style: appTheme.primaryColor14TextStyle,
+                                      style: appTheme.primaryColor14TextStyle ,
                                     )),
                                   ],
                                 ),
-                                Divider(color: appTheme.dividerColor,)
+                                Divider(color: appTheme.dividerColor,),
                               ],
                             ),
                           );
@@ -213,7 +198,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "Shape";
       for (int i = 0; i < displayDataClass.shp.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.shp.join(  " , ");
+        displayDataKeyValue["value"] = displayDataClass.shp.join(",");
       }
 
       arrData.add(displayDataKeyValue);
@@ -231,7 +216,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
         }
       }
       displayDataKeyValue["key"] = "crt";
-      displayDataKeyValue["value"] = tempList.join(  " , ");
+      displayDataKeyValue["value"] = tempList.join(",");
 
       arrData.add(displayDataKeyValue);
     }
@@ -240,7 +225,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "col";
       for (int i = 0; i < displayDataClass.col.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.col.join(  " , ");
+        displayDataKeyValue["value"] = displayDataClass.col.join(",");
       }
 
       arrData.add(displayDataKeyValue);
@@ -250,7 +235,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "shd";
       for (int i = 0; i < displayDataClass.shd.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.shd.join(  " , ");
+        displayDataKeyValue["value"] = displayDataClass.shd.join(",");
       }
 
       arrData.add(displayDataKeyValue);
@@ -260,7 +245,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "clr";
       for (int i = 0; i < displayDataClass.clr.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.clr.join(  " , ");
+        displayDataKeyValue["value"] = displayDataClass.clr.join(",");
       }
 
       arrData.add(displayDataKeyValue);
@@ -270,7 +255,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "cut";
       for (int i = 0; i < displayDataClass.cut.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.cut.join(  " , ");
+        displayDataKeyValue["value"] = displayDataClass.cut.join(",");
       }
 
       arrData.add(displayDataKeyValue);
@@ -280,7 +265,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "pol";
       for (int i = 0; i < displayDataClass.pol.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.pol.join(  " , ");
+        displayDataKeyValue["value"] = displayDataClass.pol.join(",");
       }
 
       arrData.add(displayDataKeyValue);
@@ -290,7 +275,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "sym";
       for (int i = 0; i < displayDataClass.sym.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.sym.join(  " , ");
+        displayDataKeyValue["value"] = displayDataClass.sym.join(",");
       }
 
       arrData.add(displayDataKeyValue);
@@ -300,7 +285,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "hA";
       for (int i = 0; i < displayDataClass.hA.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.hA.join(  " , ");
+        displayDataKeyValue["value"] = displayDataClass.hA.join(",");
       }
 
       arrData.add(displayDataKeyValue);
@@ -310,7 +295,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "brlncy";
       for (int i = 0; i < displayDataClass.brlncy.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.brlncy.join(  " , ");
+        displayDataKeyValue["value"] = displayDataClass.brlncy.join(",");
       }
 
       arrData.add(displayDataKeyValue);
@@ -320,7 +305,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "wSts";
       for (int i = 0; i < displayDataClass.wSts.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.wSts.join(  " , ");
+        displayDataKeyValue["value"] = displayDataClass.wSts.join(",");
       }
 
       arrData.add(displayDataKeyValue);
@@ -330,7 +315,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "isCm";
       for (int i = 0; i < displayDataClass.isCm.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.isCm.join(  " , ");
+        displayDataKeyValue["value"] = displayDataClass.isCm.join(",");
       }
 
       arrData.add(displayDataKeyValue);
@@ -340,7 +325,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "isDor";
       for (int i = 0; i < displayDataClass.isDor.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.isDor.join(  " , ");
+        displayDataKeyValue["value"] = displayDataClass.isDor.join(",");
       }
 
       arrData.add(displayDataKeyValue);
@@ -350,7 +335,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "isFm";
       for (int i = 0; i < displayDataClass.isFm.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.isFm.join(  " , ");
+        displayDataKeyValue["value"] = displayDataClass.isFm.join(",");
       }
 
       arrData.add(displayDataKeyValue);
@@ -360,7 +345,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "blkTbl";
       for (int i = 0; i < displayDataClass.blkTbl.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.blkTbl.join(  " , ");
+        displayDataKeyValue["value"] = displayDataClass.blkTbl.join(",");
       }
 
       arrData.add(displayDataKeyValue);
@@ -370,7 +355,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "blkSd";
       for (int i = 0; i < displayDataClass.blkSd.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.blkSd.join(  " , ");
+        displayDataKeyValue["value"] = displayDataClass.blkSd.join(",");
       }
 
       arrData.add(displayDataKeyValue);
@@ -380,7 +365,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "wTbl";
       for (int i = 0; i < displayDataClass.wTbl.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.wTbl.join(  " , ");
+        displayDataKeyValue["value"] = displayDataClass.wTbl.join(",");
       }
 
       arrData.add(displayDataKeyValue);
@@ -390,7 +375,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "cult";
       for (int i = 0; i < displayDataClass.cult.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.cult.join(  " , ");
+        displayDataKeyValue["value"] = displayDataClass.cult.join(",");
       }
 
       arrData.add(displayDataKeyValue);
@@ -400,7 +385,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "wSd";
       for (int i = 0; i < displayDataClass.wSd.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.wSd.join(  " , ");
+        displayDataKeyValue["value"] = displayDataClass.wSd.join(",");
       }
 
       arrData.add(displayDataKeyValue);
@@ -410,7 +395,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "opTbl";
       for (int i = 0; i < displayDataClass.opTbl.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.opTbl.join(  " , ");
+        displayDataKeyValue["value"] = displayDataClass.opTbl.join(",");
       }
 
       arrData.add(displayDataKeyValue);
@@ -420,7 +405,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "opPav";
       for (int i = 0; i < displayDataClass.opPav.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.opPav.join(  " , ");
+        displayDataKeyValue["value"] = displayDataClass.opPav.join(",");
       }
 
       arrData.add(displayDataKeyValue);
@@ -430,7 +415,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "opCrwn";
       for (int i = 0; i < displayDataClass.opCrwn.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.opCrwn.join(  " , ");
+        displayDataKeyValue["value"] = displayDataClass.opCrwn.join(",");
       }
 
       arrData.add(displayDataKeyValue);
@@ -440,7 +425,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "grdl";
       for (int i = 0; i < displayDataClass.grdl.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.grdl.join(  " , ");
+        displayDataKeyValue["value"] = displayDataClass.grdl.join(",");
       }
 
       arrData.add(displayDataKeyValue);
@@ -454,7 +439,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       if (!isNullEmptyOrFalse(displayDataClass.ctPr.back) &&
           !isNullEmptyOrFalse(displayDataClass.ctPr.empty)) {
         temp = displayDataClass.ctPr.back.toString() +
-             " to " +
+            "to" +
             displayDataClass.ctPr.empty.toString();
       } else if (!isNullEmptyOrFalse(displayDataClass.ctPr.back)) {
         temp = displayDataClass.ctPr.back.toString();
@@ -473,7 +458,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       if (!isNullEmptyOrFalse(displayDataClass.back.back) &&
           !isNullEmptyOrFalse(displayDataClass.back.empty)) {
         temp = displayDataClass.back.back.toString() +
-             " to " +
+            "to" +
             displayDataClass.back.empty.toString();
       } else if (!isNullEmptyOrFalse(displayDataClass.back.back)) {
         temp = displayDataClass.back.back.toString();
@@ -492,7 +477,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       if (!isNullEmptyOrFalse(displayDataClass.tblPer.back) &&
           !isNullEmptyOrFalse(displayDataClass.tblPer.empty)) {
         temp = displayDataClass.tblPer.back.toString() +
-             " to " +
+            "to" +
             displayDataClass.tblPer.empty.toString();
       } else if (!isNullEmptyOrFalse(displayDataClass.tblPer.back)) {
         temp = displayDataClass.tblPer.back.toString();
@@ -511,7 +496,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       if (!isNullEmptyOrFalse(displayDataClass.depPer.back) &&
           !isNullEmptyOrFalse(displayDataClass.depPer.empty)) {
         temp = displayDataClass.depPer.back.toString() +
-             " to " +
+            "to" +
             displayDataClass.depPer.empty.toString();
       } else if (!isNullEmptyOrFalse(displayDataClass.depPer.back)) {
         temp = displayDataClass.depPer.back.toString();
@@ -530,7 +515,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       if (!isNullEmptyOrFalse(displayDataClass.ratio.back) &&
           !isNullEmptyOrFalse(displayDataClass.ratio.empty)) {
         temp = displayDataClass.ratio.back.toString() +
-             " to " +
+            "to" +
             displayDataClass.ratio.empty.toString();
       } else if (!isNullEmptyOrFalse(displayDataClass.ratio.back)) {
         temp = displayDataClass.ratio.back.toString();
@@ -549,7 +534,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       if (!isNullEmptyOrFalse(displayDataClass.length.back) &&
           !isNullEmptyOrFalse(displayDataClass.length.empty)) {
         temp = displayDataClass.length.back.toString() +
-             " to " +
+            "to" +
             displayDataClass.length.empty.toString();
       } else if (!isNullEmptyOrFalse(displayDataClass.length.back)) {
         temp = displayDataClass.length.back.toString();
@@ -568,7 +553,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       if (!isNullEmptyOrFalse(displayDataClass.width.back) &&
           !isNullEmptyOrFalse(displayDataClass.width.empty)) {
         temp = displayDataClass.width.back.toString() +
-             " to " +
+            "to" +
             displayDataClass.width.empty.toString();
       } else if (!isNullEmptyOrFalse(displayDataClass.width.back)) {
         temp = displayDataClass.width.back.toString();
@@ -587,7 +572,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       if (!isNullEmptyOrFalse(displayDataClass.height.back) &&
           !isNullEmptyOrFalse(displayDataClass.height.empty)) {
         temp = displayDataClass.height.back.toString() +
-             " to " +
+            "to" +
             displayDataClass.height.empty.toString();
       } else if (!isNullEmptyOrFalse(displayDataClass.height.back)) {
         temp = displayDataClass.height.back.toString();
@@ -606,7 +591,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       if (!isNullEmptyOrFalse(displayDataClass.cAng.back) &&
           !isNullEmptyOrFalse(displayDataClass.cAng.empty)) {
         temp = displayDataClass.cAng.back.toString() +
-             " to " +
+            "to" +
             displayDataClass.cAng.empty.toString();
       } else if (!isNullEmptyOrFalse(displayDataClass.cAng.back)) {
         temp = displayDataClass.cAng.back.toString();
@@ -625,7 +610,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       if (!isNullEmptyOrFalse(displayDataClass.cHgt.back) &&
           !isNullEmptyOrFalse(displayDataClass.cHgt.empty)) {
         temp = displayDataClass.cHgt.back.toString() +
-             " to " +
+            "to" +
             displayDataClass.cHgt.empty.toString();
       } else if (!isNullEmptyOrFalse(displayDataClass.cHgt.back)) {
         temp = displayDataClass.cHgt.back.toString();
@@ -644,7 +629,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       if (!isNullEmptyOrFalse(displayDataClass.grdlPer.back) &&
           !isNullEmptyOrFalse(displayDataClass.grdlPer.empty)) {
         temp = displayDataClass.grdlPer.back.toString() +
-             " to " +
+            "to" +
             displayDataClass.grdlPer.empty.toString();
       } else if (!isNullEmptyOrFalse(displayDataClass.grdlPer.back)) {
         temp = displayDataClass.grdlPer.back.toString();
@@ -663,7 +648,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       if (!isNullEmptyOrFalse(displayDataClass.pAng.back) &&
           !isNullEmptyOrFalse(displayDataClass.pAng.empty)) {
         temp = displayDataClass.pAng.back.toString() +
-             " to " +
+            "to" +
             displayDataClass.pAng.empty.toString();
       } else if (!isNullEmptyOrFalse(displayDataClass.pAng.back)) {
         temp = displayDataClass.pAng.back.toString();
@@ -682,7 +667,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       if (!isNullEmptyOrFalse(displayDataClass.pHgt.back) &&
           !isNullEmptyOrFalse(displayDataClass.pHgt.empty)) {
         temp = displayDataClass.pHgt.back.toString() +
-             " to " +
+            "to" +
             displayDataClass.pHgt.empty.toString();
       } else if (!isNullEmptyOrFalse(displayDataClass.pHgt.back)) {
         temp = displayDataClass.pHgt.back.toString();
@@ -701,7 +686,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       if (!isNullEmptyOrFalse(displayDataClass.lwr.back) &&
           !isNullEmptyOrFalse(displayDataClass.lwr.empty)) {
         temp = displayDataClass.lwr.back.toString() +
-             " to " +
+            "to" +
             displayDataClass.lwr.empty.toString();
       } else if (!isNullEmptyOrFalse(displayDataClass.lwr.back)) {
         temp = displayDataClass.lwr.back.toString();
@@ -720,7 +705,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       if (!isNullEmptyOrFalse(displayDataClass.strLn.back) &&
           !isNullEmptyOrFalse(displayDataClass.strLn.empty)) {
         temp = displayDataClass.strLn.back.toString() +
-             " to " +
+            "to" +
             displayDataClass.strLn.empty.toString();
       } else if (!isNullEmptyOrFalse(displayDataClass.strLn.back)) {
         temp = displayDataClass.strLn.back.toString();
@@ -739,7 +724,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       if (!isNullEmptyOrFalse(displayDataClass.cAng.back) &&
           !isNullEmptyOrFalse(displayDataClass.cAng.empty)) {
         temp = displayDataClass.cAng.back.toString() +
-             " to " +
+            "to" +
             displayDataClass.cAng.empty.toString();
       } else if (!isNullEmptyOrFalse(displayDataClass.cAng.back)) {
         temp = displayDataClass.cAng.back.toString();
@@ -750,7 +735,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       arrData.add(displayDataKeyValue);
     }
 
-    if (!isNullEmptyOrFalse(displayDataClass.type2.empty)) {
+    if (!isNullEmptyOrFalse(displayDataClass.type2)) {
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "type2";
 
@@ -762,7 +747,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
       Map<String, dynamic> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "kToSArr";
 
-      String temp = displayDataClass.kToSArr.kToSArrIn.join(  " , ");
+      String temp = displayDataClass.kToSArr.kToSArrIn.join(",");
       displayDataKeyValue["value"] = temp;
       arrData.add(displayDataKeyValue);
     }
@@ -770,21 +755,21 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
     // setState(() {});
   }
 
-  getSegment(String title, int index) {
-    return Padding(
-      padding: EdgeInsets.all(8),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: getFontSize(14),
-          fontWeight: FontWeight.w500,
-          color: index != sharedValue
-              ? appTheme.colorPrimary
-              : appTheme.whiteColor,
-        ),
-      ),
-    );
-  }
+  // getSegment(String title, int index) {
+  //   return Padding(
+  //     padding: EdgeInsets.all(8),
+  //     child: Text(
+  //       title,
+  //       style: TextStyle(
+  //         fontSize: getFontSize(14),
+  //         fontWeight: FontWeight.w500,
+  //         color: index != sharedValue
+  //             ? appTheme.colorPrimary
+  //             : appTheme.whiteColor,
+  //       ),
+  //     ),
+  //   );
+  // }
 
     @override
   bool get wantKeepAlive => true;
@@ -792,7 +777,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
 
   @override
   Widget build(BuildContext context) {
-    return savedSearchBaseList;
+    return recentSearchBaseList;
   }
 
   // @override

@@ -35,6 +35,8 @@ class ApiConstants {
 
   static const String stoneOfTheDay = commonUrl + "featuredStone/paginate";
 
+  static const String mySaveSearch = commonUrl + "diamond/search/list";
+
   static const String diamondTrackList = commonUrl + "diamond-track/paginate";
   static const String diamondCommentList =
       commonUrl + "diamond-comment/by-user";
