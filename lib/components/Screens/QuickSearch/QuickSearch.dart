@@ -112,7 +112,7 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
           //Get Shape MAster
           if (true) {
             FormBaseModel shapeMaster = arrData.singleWhere(
-                (element) => element.viewType == ViewTypes.caratRange);
+                (element) => element.viewType == ViewTypes.shapeWidget);
 
             if (!isNullEmptyOrFalse(shapeMaster)) {
               if (shapeMaster is SelectionModel) {
@@ -123,7 +123,22 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
 
           Master.getSubMaster(MasterCode.color).then((value) {
             arrColors = value;
+            List<Master> list;
+            Master master;
+            arrColors.forEach((element) {
+              list = [];
+              if (element.mergeModel != null) {
+                element.grouped.addAll(master.mergeModel.grouped);
+              }
 
+              element.groupingIds = [];
+              element.grouped.forEach((groupItem) {
+                element.groupingIds.add(groupItem.sId);
+              });
+              if (!element.groupingIds.contains(element.sId)) {
+                element.groupingIds.add(master.sId);
+              }
+            });
             getCombineClarity().then((value) {
               arrClarity = value;
               var test = (MathUtilities.screenWidth(context) - getSize(120)) /
@@ -132,7 +147,24 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
 
               for (var item in arrColors) {
                 item.isSelected = true;
-                arrCount.add(CellModel(cellObj: item, dataArr: value));
+                list = [];
+                arrClarity.forEach((element) {
+                  master = Master.fromJson(element.toJson());
+                  master.grouped = element.grouped;
+                  if (master.mergeModel != null) {
+                    master.grouped.addAll(master.mergeModel.grouped);
+                  }
+
+                  master.groupingIds = [];
+                  master.grouped.forEach((element) {
+                    master.groupingIds.add(element.sId);
+                  });
+                  if (!master.groupingIds.contains(master.sId)) {
+                    master.groupingIds.add(master.sId);
+                  }
+                  list.add(master);
+                });
+                arrCount.add(CellModel(cellObj: item, dataArr: list));
               }
               callApiForQuickSearch();
             });
@@ -420,9 +452,10 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
         for (int i = 0; i < arrCount[index].dataArr.length; i++)
           InkWell(
             onTap: () {
-              print("Tapped");
-              prepareStoneRequest(
-                  this.arrColors[index], this.arrClarity[index]);
+              if (arrCount[index].dataArr[i].count > 0) {
+                prepareStoneRequest(
+                    this.arrColors[index], arrCount[index].dataArr[i]);
+              }
             },
             child: Container(
               decoration: BoxDecoration(
@@ -451,10 +484,12 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
   prepareStoneRequest(Master color, Master clarity) {
     Map<String, dynamic> request = Map<String, dynamic>();
     request["shp"] = Master.getSelectedId(arrShape);
-    request["or"] = Master.getSelectedCarat(arrCarat);
-    request["col"] = Master.getSelectedId([color]);
 
-    List<String> clarityRequest = Master.getSelectedId([clarity]);
+    request["or"] = Master.getSelectedCarat(arrCarat);
+    //request["col"] = Master.getSelectedId([color]);
+    request["col"] = color.groupingIds;
+
+    /*List<String> clarityRequest = Master.getSelectedId([clarity]);
     if (isNullEmptyOrFalse(clarity.mergeModel)) {
       Master mergerModel = clarity.mergeModel;
       clarityRequest.add(mergerModel.sId ?? "");
@@ -464,8 +499,8 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
         }
       }
     }
-
-    request["clr"] = clarityRequest;
+*/
+    request["clr"] = clarity.groupingIds;
     SyncManager.instance.callApiForDiamondList(
       context,
       request,
@@ -572,27 +607,16 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
         clarityItem.count = 0;
       });
     });
-    List<String> colorArray;
-    List<String> clarityArray;
     qsResultList.forEach((qsResultItem) {
       arrCount.forEach((colorItem) {
-        colorArray = [];
-        colorItem.cellObj.grouped.forEach((element) {
-          colorArray.add(element.sId);
-        });
         colorItem.dataArr.forEach((clarityItem) {
-          clarityArray = [];
-          clarityItem.grouped.forEach((element) {
-            clarityArray.add(element.sId);
-          });
-          if (clarityArray.contains(qsResultItem.clarity) &&
-              colorArray.contains(qsResultItem.color)) {
+          if (clarityItem.groupingIds.contains(qsResultItem.clarity) &&
+              colorItem.cellObj.groupingIds.contains(qsResultItem.color)) {
             clarityItem.count += qsResultItem.count;
           }
         });
       });
     });
-    print(arrCount.length.toString());
   }
 }
 

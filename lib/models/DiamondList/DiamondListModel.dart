@@ -4,6 +4,7 @@ import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:rxbus/rxbus.dart';
 
 class DiamondListReq {
   int page;
@@ -165,7 +166,7 @@ class Data {
       list = new List<TrackItem>();
       diamonds = new List<DiamondModel>();
       json['list'].forEach((v) {
-        if (v["diamond"] != null) {
+        if (v["diamond"] != null || v["diamonds"] != null) {
           list.add(new TrackItem.fromJson(v));
         } else {
           diamonds.add(new DiamondModel.fromJson(v));
@@ -355,7 +356,7 @@ class DiamondModel {
   String polNm;
   num rap;
   num crt;
-  num back;
+  num back=0;
   num ctPr;
   num amt;
   String shpNm;
@@ -409,9 +410,13 @@ class DiamondModel {
   String selectedOfferHour;
   bool pltFile;
   int groupNo;
-  double marginTop=0;
-  double marginBottom=0;
+  double marginTop = 0;
+  double marginBottom = 0;
+  num plusAmount=0;
+  num minusAmount=0;
+  bool bidPlus = false;
   String displayTitle;
+  num bidAmount;
 
   bool isSelectedForComparechange = false; //for compare changes screen
 
@@ -439,20 +444,22 @@ class DiamondModel {
 
   getWatchlistPer() {
     List<String> list = [];
-    if (back >= 0) {
-      if (selectedBackPer == null) {
-        selectedBackPer = (back + 1).toString();
+    if(back !=null){
+      if (back >= 0) {
+        if (selectedBackPer == null) {
+          selectedBackPer = (back + 1).toString();
+        }
+        list.add((back + 1).toString());
+        list.add((back + 2).toString());
+        list.add((back + 3).toString());
+      } else {
+        if (selectedBackPer == null) {
+          selectedBackPer = (back - 1).toString();
+        }
+        list.add((back - 1).toString());
+        list.add((back - 2).toString());
+        list.add((back - 3).toString());
       }
-      list.add((back + 1).toString());
-      list.add((back + 2).toString());
-      list.add((back + 3).toString());
-    } else {
-      if (selectedBackPer == null) {
-        selectedBackPer = (back - 1).toString();
-      }
-      list.add((back - 1).toString());
-      list.add((back - 2).toString());
-      list.add((back - 3).toString());
     }
     return list;
   }
@@ -564,13 +571,15 @@ class DiamondModel {
     fcColDesc = json['fcColDesc'];
     ratio = json['ratio'];
     pltFile = json['pltFile'] ?? false;
-    groupNo = json['groupNo'] ;
+    groupNo = json['groupNo'];
+
 //    isSelected = json['isSelected'];
   }
 
   DiamondModel({bool isSelected = false}) {
     this.isSelected = isSelected;
   }
+
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -681,6 +690,10 @@ class DiamondModel {
     return color;
   }
 
+  setBidAmount() {
+    this.bidAmount = this.ctPr;
+  }
+
   String getDiamondImage() {
     if (isStringEmpty(vStnId) == false) {
       return diamondImageURL + vStnId + ".jpg";
@@ -690,6 +703,10 @@ class DiamondModel {
   }
 
   num getFinalRate() {
+    if(isAddToBid){
+      print("ctpr-isAddToBid--${ctPr}");
+      return ctPr;
+    }
     if (isAddToOffer) {
       if (selectedOfferPer != null) {
         num quote = (-back + num.parse(selectedOfferPer));
@@ -697,23 +714,16 @@ class DiamondModel {
         num lessAmt = ((pricePerCarat * 2) / 100);
         num finalrate = pricePerCarat - lessAmt;
         return finalrate;
-      }else{
+      } else {
         num quote = (-back + num.parse(selectedOfferPer));
         num pricePerCarat = rap - ((quote * rap) / 100);
         num lessAmt = ((pricePerCarat * 2) / 100);
         num finalrate = pricePerCarat - lessAmt;
         return finalrate;
       }
-    }else{
+    } else {
       return this.ctPr - ((this.ctPr * 2) / 100);
     }
-    /*if (selectedOfferPer != null) {
-      num quote = (-back + num.parse(selectedOfferPer));
-      num pricePerCarat = rap - ((quote * rap) / 100);
-      num lessAmt = ((pricePerCarat * 2) / 100);
-      num finalrate = pricePerCarat - lessAmt;
-      return finalrate;
-    } else*/
     return this.ctPr - ((this.ctPr * 2) / 100);
   }
 
@@ -725,20 +735,122 @@ class DiamondModel {
     return crt * getFinalRate();
   }
 
+  num getbidAmount(){
+    num plusAmt;
+    print("ctpr-before--${ctPr}");
+    if(bidPlus){
+      plusAmt= ctPr+plusAmount;
+    }else{
+      if((ctPr-minusAmount) >= bidAmount){
+        plusAmt = ctPr-minusAmount;
+      }else{
+        plusAmt=ctPr;
+      }
+    }
+    ctPr = plusAmt;
+    return plusAmt;
+  }
+
   String getAmount() {
     var amount =
-    (amt.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
+        (amt.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
 
-    return R.string().commonString.doller + getFinalAmount().toStringAsFixed(2) + "/Amt" ?? "";
+    return R.string().commonString.doller +
+            getFinalAmount().toStringAsFixed(2) +
+            "/Amt" ??
+        "";
   }
 
   String getPricePerCarat() {
     var caratPerPrice =
-    (ctPr.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
-   // return PriceUtilities.getPrice(getFinalRate()) + "Cts";
-    return R.string().commonString.doller + getFinalRate().toStringAsFixed(2) + "/Cts" ?? "";
+        (ctPr.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
+    // return PriceUtilities.getPrice(getFinalRate()) + "Cts";
+    return R.string().commonString.doller +
+            getFinalRate().toStringAsFixed(2) +
+            "/Cts" ??
+        "";
+  }
+}
+
+class CabinSlot {
+  String createdAt;
+  String updatedAt;
+  String id;
+  String start;
+  String end;
+  int weekDay;
+  int type;
+  int slotDurationType;
+  bool isActive;
+  String appliedFrom;
+  String appliedTo;
+  String reason;
+  bool isDeleted;
+  Null addedBy;
+  Null updatedBy;
+  Null createdBy;
+  String cabinId;
+
+  CabinSlot(
+      {this.createdAt,
+      this.updatedAt,
+      this.id,
+      this.start,
+      this.end,
+      this.weekDay,
+      this.type,
+      this.slotDurationType,
+      this.isActive,
+      this.appliedFrom,
+      this.appliedTo,
+      this.reason,
+      this.isDeleted,
+      this.addedBy,
+      this.updatedBy,
+      this.createdBy,
+      this.cabinId});
+
+  CabinSlot.fromJson(Map<String, dynamic> json) {
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    id = json['id'];
+    start = json['start'];
+    end = json['end'];
+    weekDay = json['weekDay'];
+    type = json['type'];
+    slotDurationType = json['slotDurationType'];
+    isActive = json['isActive'];
+    appliedFrom = json['appliedFrom'];
+    appliedTo = json['appliedTo'];
+    reason = json['reason'];
+    isDeleted = json['isDeleted'];
+    addedBy = json['addedBy'];
+    updatedBy = json['updatedBy'];
+    createdBy = json['createdBy'];
+    cabinId = json['cabinId'];
   }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    data['id'] = this.id;
+    data['start'] = this.start;
+    data['end'] = this.end;
+    data['weekDay'] = this.weekDay;
+    data['type'] = this.type;
+    data['slotDurationType'] = this.slotDurationType;
+    data['isActive'] = this.isActive;
+    data['appliedFrom'] = this.appliedFrom;
+    data['appliedTo'] = this.appliedTo;
+    data['reason'] = this.reason;
+    data['isDeleted'] = this.isDeleted;
+    data['addedBy'] = this.addedBy;
+    data['updatedBy'] = this.updatedBy;
+    data['createdBy'] = this.createdBy;
+    data['cabinId'] = this.cabinId;
+    return data;
+  }
 }
 
 class TrackItem {
@@ -775,6 +887,8 @@ class TrackItem {
   //User user;
   DiamondModel diamond;
 
+  List<DiamondModel> diamonds;
+  List<CabinSlot> cabinSlot;
   String userAccount;
   String createdBy;
 
@@ -848,6 +962,19 @@ class TrackItem {
     diamond = json['diamond'] != null
         ? new DiamondModel.fromJson(json['diamond'])
         : null;
+
+    if (json['cabinSlot'] != null) {
+      cabinSlot = new List<CabinSlot>();
+      json['cabinSlot'].forEach((v) {
+        cabinSlot.add(new CabinSlot.fromJson(v));
+      });
+    }
+    if (json['diamonds'] != null) {
+      diamonds = new List<DiamondModel>();
+      json['diamonds'].forEach((v) {
+        diamonds.add(new DiamondModel.fromJson(v));
+      });
+    }
     userAccount = json['userAccount'];
     createdBy = json['createdBy'];
   }

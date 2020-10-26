@@ -41,6 +41,7 @@ class CommonString {
   final String lblOr;
   final String countryFirst;
   final String stateFirst;
+  final String cityFirst;
 
   //App Update Dialog
   final String notYetAvailable;
@@ -182,6 +183,7 @@ class CommonString {
 
   //Colo range
   final String color;
+  final String date;
   final String colorGroup;
   final String clarity;
   final String clarityGroup;
@@ -221,6 +223,7 @@ class CommonString {
 
 
   const CommonString({
+    this.date = "Date",
     this.all = "All",
     this.status = "Status",
 
@@ -258,7 +261,7 @@ class CommonString {
     this.ok = "Ok",
     this.yes = "Yes",
     this.no = "No",
-    this.selectCountry = "Select Size",
+    this.selectCountry = "Select Country",
     this.clickHere = "Click Here",
     this.btnAddNewAddress = "ADD NEW ADDRESS",
     this.btnCancel = "CANCEL",
@@ -365,6 +368,7 @@ class CommonString {
     this.btnBookTicket = "Book ticket",
     this.passengerName = "Passenger name",
     this.btnTryAgain = "Try Again",
+    this.cityFirst = "Please select city first",
 
     //Dialog text
     this.enterFareDetails = 'Enter Sales Details',

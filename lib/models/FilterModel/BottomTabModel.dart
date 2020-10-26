@@ -87,6 +87,7 @@ class BottomTabModel extends TabConfiguration {
   String code;
   int type;
   int sequence;
+  Color color;
   bool isCenter = true;
   bool isSelected;
 
@@ -98,6 +99,7 @@ class BottomTabModel extends TabConfiguration {
     this.sequence,
     this.isCenter,
     this.type,
+    this.color,
     this.isSelected = false,
   });
 

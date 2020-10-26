@@ -6,14 +6,18 @@ import 'package:diamnow/models/Auth/CompanyInformationModel.dart';
 import 'package:diamnow/models/Auth/ForgetPassword.dart';
 import 'package:diamnow/models/Auth/PersonalInformationModel.dart';
 import 'package:diamnow/models/Auth/ResetPasswordModel.dart';
+import 'package:diamnow/models/Dashboard/DashboardModel.dart';
+import 'package:diamnow/models/Auth/SignInAsGuestModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
+import 'package:diamnow/models/Order/OrderListModel.dart';
 import 'package:diamnow/models/QuickSearch/QuickSearchModel.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:diamnow/models/Slot/SlotModel.dart';
 import 'package:diamnow/models/StaticPage/StaticPageModel.dart';
+import 'package:diamnow/models/Version/VersionUpdateResp.dart';
 import 'package:retrofit/retrofit.dart';
 import '../app.export.dart';
 
@@ -28,6 +32,9 @@ abstract class NetworkService {
 
   @POST(ApiConstants.login)
   Future<LoginResp> login(@Body() LoginReq req);
+
+  @POST(ApiConstants.signInAsGuest)
+  Future<LoginResp> signInAsGuest(@Body() SignInAsGuestReq req);
 
   @POST(ApiConstants.cityList)
   Future<CityListResp> cityList(@Body() CityListReq req);
@@ -84,8 +91,7 @@ abstract class NetworkService {
       @Body() Map<String, dynamic> req);
 
   @POST(ApiConstants.stoneOfTheDay)
-  Future<DiamondListResp> stoneOfTheDay(
-      @Body() Map<String, dynamic> req);
+  Future<DiamondListResp> stoneOfTheDay(@Body() Map<String, dynamic> req);
 
   @POST(ApiConstants.mySaveSearch)
   Future<SavedSearchResp> mySavedSearch(
@@ -93,6 +99,12 @@ abstract class NetworkService {
 
   @POST(ApiConstants.diamondBidList)
   Future<DiamondListResp> diamondBidList(@Body() Map<String, dynamic> req);
+
+  @POST(ApiConstants.diamondOfficeList)
+  Future<DiamondListResp> diamondOfficeList(@Body() Map<String, dynamic> req);
+
+  @POST(ApiConstants.diamondOrderList)
+  Future<OrderListResp> diamondOrderList(@Body() Map<String, dynamic> req);
 
   @POST(ApiConstants.diamondTrackList)
   Future<DiamondListResp> diamondTrackList(@Body() Map<String, dynamic> req);
@@ -115,4 +127,19 @@ abstract class NetworkService {
 
   @POST(ApiConstants.createOfficerequest)
   Future<BaseApiResp> createOfficerequest(@Body() Map<String, dynamic> req);
+
+  //Dashboard
+  @POST(ApiConstants.dashboard)
+  Future<DashboardResp> dashboard(@Body() Map<String, dynamic> req);
+
+  //Delete saved search
+  @POST(ApiConstants.deleteSavedSearch)
+  Future<BaseApiResp> deleteSavedSearch(@Body() Map<String, dynamic> req);
+
+  @POST(ApiConstants.logout)
+  Future<BaseApiResp> logout();
+
+  @GET(ApiConstants.getUpdation)
+  Future<VersionUpdateResp> getVersionUpdate();
+
 }

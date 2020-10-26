@@ -2,10 +2,14 @@ import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_pickers.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/components/widgets/shared/CountryPickerWidget.dart';
 import 'package:diamnow/components/widgets/shared/app_background.dart';
+import 'package:diamnow/models/Auth/SignInAsGuestModel.dart';
+import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -23,7 +27,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
-  final TextEditingController companyController = TextEditingController();
+  final TextEditingController _companyController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   Country selectedDialogCountry = CountryPickerUtils.getCountryByIsoCode("US");
 
@@ -61,75 +65,54 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
               leadingButton: getBackButton(context),
               centerTitle: false,
             ),
-            body: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-//                Padding(
-//                  padding: EdgeInsets.only(top: getSize(26)),
-//                  child: Row(
-//                    children: <Widget>[
-//                      getBackButton(context),
-//                      SizedBox(
-//                        width: getSize(20),
-//                      ),
-//                      Text(
-//                        R.string().authStrings.signInAsGuest,
-//                        textAlign: TextAlign.left,
-//                        style: appTheme.black24TitleColor,
-//                      ),
-//                    ],
-//                  ),
-//                ),
-                Container(
-                  padding: EdgeInsets.only(
-                    left: getSize(20),
-                    right: getSize(20),
-                    top: getSize(10),
-                  ),
-                  child: SingleChildScrollView(
-                    child: Form(
-                      key: _formKey,
-                      autovalidate: _autoValidate,
-                      child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.only(top: getSize(100)),
-                            child: getFirstNameTextField(),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: getSize(10)),
-                            child: getLastNameTextField(),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: getSize(10)),
-                            child: getEmailTextField(),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: getSize(10)),
-                            child: getMobileTextField(),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: getSize(10)),
-                            child: getCompanyTextField(),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: getSize(20),
-                            ),
-                            child: getConditionCheckBox(),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              bottom: getSize(20),
-                            ),
-                            child: getOrderCheckBox(),
-                          ),
-                        ],
+            body: Container(
+              padding: EdgeInsets.only(
+                left: getSize(20),
+                right: getSize(20),
+                top: getSize(10),
+              ),
+              child: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  autovalidate: _autoValidate,
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(top: getSize(50)),
+                        child: getFirstNameTextField(),
                       ),
-                    ),
+                      Padding(
+                        padding: EdgeInsets.only(top: getSize(10)),
+                        child: getLastNameTextField(),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: getSize(10)),
+                        child: getEmailTextField(),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: getSize(10)),
+                        child: getMobileTextField(),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: getSize(10)),
+                        child: getCompanyTextField(),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: getSize(20),
+                        ),
+                        child: getConditionCheckBox(),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          bottom: getSize(20),
+                        ),
+                        child: getOrderCheckBox(),
+                      ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
             bottomNavigationBar: Container(
               margin: EdgeInsets.only(
@@ -357,7 +340,6 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
                   isEnabled: true,
                   onSelectCountry: (Country country) async {
                     selectedDialogCountry = country;
-                    await checkValidation();
                     setState(() {});
                   },
                 ),
@@ -386,8 +368,6 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
                 isMobilevalid = true;
               });
             }
-          }else{
-            await checkValidation();
           }
         },
         validation: (text) {
@@ -420,7 +400,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
         false) {
       return showToast(R.string().errorString.enterValidPhone,context: context);
     } else {
-      return null;
+      callApi(context);
     }
   }
 
@@ -441,7 +421,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
                 borderRadius: BorderRadius.all(Radius.circular(11)),
                 borderSide: BorderSide(width: 1, color: Colors.red),
               ),
-        inputController: companyController,
+        inputController: _companyController,
         formatter: [BlacklistingTextInputFormatter(new RegExp(RegexForEmoji))],
         //isSecureTextField: false
       ),
@@ -540,4 +520,48 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
       ],
     );
   }
+
+  callApi(BuildContext context) async {
+    SignInAsGuestReq req = SignInAsGuestReq();
+    req.firstName = _firstNameController.text.trim();
+    req.lastName = _lastNameController.text.trim();
+    req.email = _emailController.text.trim();
+    req.mobile = _mobileController.text.trim();
+    req.companyName = _companyController.text.trim();
+
+    NetworkCall<LoginResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().signInAsGuest(req),
+        context,
+        isProgress: true)
+        .then((loginResp) async {
+          print(loginResp.message);
+      // save Logged In user
+//      if (loginResp.data != null) {
+//        app.resolve<PrefUtils>().saveUser(loginResp.data.user);
+//        await app.resolve<PrefUtils>().saveUserToken(
+//          loginResp.data.token.jwt,
+//        );
+//      }
+//      SyncManager.instance
+//          .callMasterSync(NavigationUtilities.key.currentContext, () async {
+//        //success
+//        AppNavigation().movetoHome(isPopAndSwitch: true);
+//      }, () {},
+//          isNetworkError: false,
+//          isProgress: true,
+//          id: loginResp.data.user.id).then((value) {});
+//      callVersionUpdateApi(id: loginResp.data.user.id);
+    }).catchError((onError) {
+      if (onError is ErrorResp) {
+        app.resolve<CustomDialogs>().confirmDialog(
+          context,
+          title: "",
+          desc: onError.message,
+          positiveBtnTitle: R.string().commonString.ok,
+        );
+      }
+    });
+  }
+
 }

@@ -10,8 +10,11 @@ import 'package:rxbus/rxbus.dart';
 class DiamondItemWidget extends StatefulWidget {
   DiamondModel item;
   ActionClick actionClick;
+  num leftPadding;
+  num rightPadding;
 
-  DiamondItemWidget({this.item, this.actionClick});
+  DiamondItemWidget(
+      {this.item, this.actionClick, this.leftPadding=0, this.rightPadding=0});
 
   @override
   _DiamondItemWidgetState createState() => _DiamondItemWidgetState();
@@ -21,8 +24,10 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   @override
   void initState() {
     super.initState();
-    if (widget.item.isAddToOffer ?? false) {
+    widget.item.setBidAmount();
+    if (widget.item.isAddToOffer ?? false || widget.item.isAddToBid ?? false) {
       RxBus.register<bool>(tag: eventBusDropDown).listen((event) {
+//        Future.delayed(Duration(seconds: 1));
         setState(() {});
       });
     }
@@ -36,8 +41,12 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       },
       child: Padding(
         padding: EdgeInsets.only(
-          left: getSize(Spacing.leftPadding),
-          right: getSize(Spacing.rightPadding),
+          left:getSize( widget.leftPadding != 0
+              ? widget.leftPadding
+              : Spacing.leftPadding),
+          right: getSize(widget.rightPadding != 0
+              ? widget.leftPadding
+              : Spacing.rightPadding),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -399,7 +408,14 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                     Row(
                       children: [
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            setState(() {
+                              widget.item.bidPlus=false;
+                              widget.item.minusAmount = 20;
+                              widget.item.ctPr = widget.item.getbidAmount();
+                              RxBus.post(false, tag: eventBusDropDown);
+                            });
+                          },
                           child: Container(
                             margin: EdgeInsets.only(right: getSize(10)),
                             decoration: BoxDecoration(
@@ -427,10 +443,17 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                               border: Border.all(color: appTheme.dividerColor),
                               borderRadius: BorderRadius.circular(getSize(5))),
                           child: getText(PriceUtilities.getPrice(
-                              widget.item.getFinalAmount())),
+                              widget.item.getFinalRate())),
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            setState(() {
+                              widget.item.bidPlus=true;
+                              widget.item.plusAmount = 20;
+                              widget.item.ctPr = widget.item.getbidAmount();
+                              RxBus.post(true, tag: eventBusDropDown);
+                            });
+                          },
                           child: Container(
                             margin: EdgeInsets.only(left: getSize(10)),
                             decoration: BoxDecoration(
@@ -471,8 +494,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           selectedValue(newValue);
         },
         itemBuilder: (context) => [
-          for (var item in backPerList)
-            getPopupItems(item, model, isPer: isPer),
+          for (var item in backPerList) getPopupItems(item, isPer: isPer),
           PopupMenuItem(
             height: getSize(30),
             value: "Start",
@@ -547,8 +569,14 @@ getText(String text) {
     style: appTheme.black12TextStyle,
   );
 }
+getPrimaryText(String text) {
+  return Text(
+    text,
+    style: appTheme.primary16TextStyle,
+  );
+}
 
-getPopupItems(String per, DiamondModel model, {bool isPer = false}) {
+getPopupItems(String per, {bool isPer = false}) {
   return PopupMenuItem(
     value: per,
     height: getSize(20),

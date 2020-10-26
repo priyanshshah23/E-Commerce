@@ -3,6 +3,8 @@ import 'dart:collection';
 
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
@@ -11,9 +13,11 @@ import 'package:diamnow/components/Screens/Auth/ProfileList.dart';
 import 'package:diamnow/components/Screens/DashBoard/Dashboard.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
+import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
 import 'package:diamnow/components/Screens/SavedSearch/TabFileForSsAndRs.dart';
+import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -138,6 +142,17 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  openDiamondOrderList(int moduleType) {
+    selectedType = moduleType;
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.ModuleType] = moduleType;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = OrderListScreen(
+      dict,
+      key: Key(moduleType.toString()),
+    );
+  }
+
   openProfile() {
     selectedType = DiamondModuleConstant.MODULE_TYPE_PROFILE;
     Map<String, dynamic> dict = new HashMap();
@@ -145,6 +160,30 @@ class _HomeScreenState extends State<HomeScreen> {
         DiamondModuleConstant.MODULE_TYPE_PROFILE;
     dict[ArgumentConstant.IsFromDrawer] = true;
     currentWidget = ProfileList();
+  }
+
+  openAboutUs() {
+    selectedType = DiamondModuleConstant.MODULE_TYPE_ABOUT_US;
+    Map<String, dynamic> dict = new HashMap();
+    dict["type"] = StaticPageConstant.ABOUT_US;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = StaticPageScreen(dict);
+  }
+
+  openTermsAndCondition() {
+    selectedType = DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION;
+    Map<String, dynamic> dict = new HashMap();
+    dict["type"] = StaticPageConstant.TERMS_CONDITION;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = StaticPageScreen(dict);
+  }
+
+  openPrivacyPolicy() {
+    selectedType = DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY;
+    Map<String, dynamic> dict = new HashMap();
+    dict["type"] = StaticPageConstant.PRIVACY_POLICY;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = StaticPageScreen(dict);
   }
 
   openSavedSearch() {
@@ -182,59 +221,40 @@ class _HomeScreenState extends State<HomeScreen> {
         case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
         case DiamondModuleConstant.MODULE_TYPE_MY_BID:
         case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
+          openDashboard(type);
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_ABOUT_US:
+          openAboutUs();
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY:
+          openPrivacyPolicy();
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION:
+          openTermsAndCondition();
+          break;
         case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
+        case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
         case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
           openDiamondList(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_PROFILE:
           openProfile();
           break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
+        case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
+          openDiamondOrderList(type);
+          break;
         case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
           openSavedSearch();
           break;
         case DiamondModuleConstant.MODULE_TYPE_LOGOUT:
-          logout(context);
+          logoutFromApp(context);
           break;
       }
       if (type != DiamondModuleConstant.MODULE_TYPE_LOGOUT) {
         setState(() {});
       }
     }
-  }
-
-  logout(BuildContext context) {
-    app.resolve<CustomDialogs>().confirmDialog(context,
-        title: R.string().commonString.lbllogout,
-        desc: R.string().authStrings.logoutConfirmationMsg,
-        positiveBtnTitle: R.string().commonString.yes,
-        negativeBtnTitle: R.string().commonString.no,
-        onClickCallback: (buttonType) {
-      if (buttonType == ButtonType.PositveButtonClick) {
-        calllogout(context);
-        SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-        ThemeSettingsModel.of(context).updateSystemUi(isLogin: true);
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          LoginScreen.route,
-          (Route<dynamic> route) => false,
-        );
-      }
-    });
-  }
-
-  calllogout(BuildContext context) {
-    app.resolve<PrefUtils>().clearPreferenceAndDB();
-
-    /*NetworkCall<BaseApiResp>()
-        .makeCall(() => app.resolve<ServiceModule>().networkService().logout(),
-            context,
-            isProgress: true)
-        .then((response) {
-      app.resolve<PrefUtils>().resetAndLogout(context);
-    }).catchError((onError) {
-      if (onError is ErrorResp) {
-        showToast(onError.message);
-      }
-    });*/
   }
 
   @override

@@ -4,8 +4,10 @@ import 'dart:io';
 
 import 'package:diamnow/app/Helper/AppDatabase.dart';
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
@@ -234,5 +236,32 @@ class SyncManager {
       totalFinalValue,
       (1 - (avgFinalValue / avgRap)) * -100
     ];
+  }
+
+  //Delete Saved search
+  callApiForDeleteSavedSearch(
+      BuildContext context, String id, {Function(BaseApiResp) success}) {
+    Map<String, dynamic> dict = {};
+    dict["id"] = id;
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+      () =>
+          app.resolve<ServiceModule>().networkService().deleteSavedSearch(dict),
+      context,
+      isProgress: true,
+    )
+        .then((resp) async {
+      success(resp);
+    }).catchError((onError) {
+      if (onError is ErrorResp) {
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              title: R.string().commonString.error,
+              desc: onError.message,
+              positiveBtnTitle: R.string().commonString.ok,
+            );
+      }
+    });
   }
 }

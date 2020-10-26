@@ -56,6 +56,7 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
 
   //will store all apikeys of not unique value.
   List<String> ignorableApiKeys = [];
+
   // ScrollController sc;
   LinkedScrollControllerGroup _controllers;
 
@@ -490,8 +491,7 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
         padding: EdgeInsets.only(left: getSize(20), right: getSize(20)),
         child: Directionality(
           textDirection: TextDirection.ltr,
-                  child: ReorderableListView(
-
+          child: ReorderableListView(
             scrollController: ScrollController(initialScrollOffset: 50),
             onReorder: _onReorder,
             scrollDirection: Axis.horizontal,
@@ -499,10 +499,10 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
             children: List.generate(
               arrayDiamond.length,
               (index) {
-                ScrollController sc  = _controllers.addAndGet();
-                return !isCheckBoxChecked || arrayDiamond.length==1
+                ScrollController sc = _controllers.addAndGet();
+                return !isCheckBoxChecked || arrayDiamond.length == 1
                     ? DiamondCompareWidget(
-                        sc:sc,
+                        sc: sc,
                         diamondModel: this.arrayDiamond[index],
                         index: index,
                         key: Key(index.toString()),

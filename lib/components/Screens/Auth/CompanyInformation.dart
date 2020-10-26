@@ -1,4 +1,3 @@
-
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_pickers.dart';
 import 'package:diamnow/app/app.export.dart';
@@ -27,27 +26,34 @@ class CompanyInformation extends StatefulWidget {
   _CompanyInformationState createState() => _CompanyInformationState();
 }
 
-class _CompanyInformationState extends State<CompanyInformation> with AutomaticKeepAliveClientMixin<CompanyInformation>{
+class _CompanyInformationState extends State<CompanyInformation>
+    with AutomaticKeepAliveClientMixin<CompanyInformation> {
   final _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
   final TextEditingController _CompanyNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _middleNameController = TextEditingController();
-  final TextEditingController _addressLineOneController = TextEditingController();
-  final TextEditingController _addressLineTwoController = TextEditingController();
-  final TextEditingController _addressLineThreeController = TextEditingController();
+  final TextEditingController _addressLineOneController =
+      TextEditingController();
+  final TextEditingController _addressLineTwoController =
+      TextEditingController();
+  final TextEditingController _addressLineThreeController =
+      TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
   final TextEditingController _companyCodeController = TextEditingController();
-  final TextEditingController _whatsAppMobileController = TextEditingController();
+  final TextEditingController _whatsAppMobileController =
+      TextEditingController();
   final TextEditingController companyController = TextEditingController();
   final TextEditingController _pinCodeController = TextEditingController();
   final TextEditingController _countryController = TextEditingController();
   final TextEditingController _stateController = TextEditingController();
   final TextEditingController _cityController = TextEditingController();
   final TextEditingController _businessTypeController = TextEditingController();
-  Country selectedDialogCountryForMobile = CountryPickerUtils.getCountryByIsoCode("US");
-  Country selectedDialogCountryForWhatsapp = CountryPickerUtils.getCountryByIsoCode("US");
+  Country selectedDialogCountryForMobile =
+      CountryPickerUtils.getCountryByIsoCode("US");
+  Country selectedDialogCountryForWhatsapp =
+      CountryPickerUtils.getCountryByIsoCode("US");
 
   var _focusCompanyName = FocusNode();
   var _focusLastName = FocusNode();
@@ -75,14 +81,11 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
   StateList selectedStateItem = StateList();
   List<SelectionPopupModel> businessTypeList = List<SelectionPopupModel>();
 
-
   @override
   void initState() {
     super.initState();
     _callApiForCountryList();
     getBusinessType();
-
-
   }
 
   getBusinessType() async {
@@ -94,6 +97,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
     }
     setState(() {});
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -108,8 +112,13 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
 //          leadingButton: getBackButton(context),
 //          centerTitle: false,
 //        ),
-        bottomNavigationBar:  Padding(
-          padding: EdgeInsets.only(top: getSize(10), bottom: getSize(16), right: getSize(20), left: getSize(20),),
+        bottomNavigationBar: Padding(
+          padding: EdgeInsets.only(
+            top: getSize(10),
+            bottom: getSize(16),
+            right: getSize(20),
+            left: getSize(20),
+          ),
           child: Container(
             // padding: EdgeInsets.symmetric(vertical: getSize(30)),
 //          margin: EdgeInsets.only(top: getSize(15), left: getSize(0)),
@@ -119,7 +128,23 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                 FocusScope.of(context).unfocus();
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
-                  callCompanyInformationApi();
+                  if (countrySelect()) {
+                    if (stateSelect()) {
+                      if (citySelect()) {
+                        callCompanyInformationApi();
+                      } else {
+                        showToast(R.string().commonString.cityFirst,
+                            context: context);
+                      }
+                    } else {
+                      showToast(R.string().commonString.stateFirst,
+                          context: context);
+                    }
+                  } else {
+                    showToast(R.string().commonString.countryFirst,
+                        context: context);
+                  }
+
                   //isProfileImageUpload ? uploadDocument() : callApi();
                 } else {
                   setState(() {
@@ -139,7 +164,8 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: getSize(20), vertical: getSize(30)),
+            padding: EdgeInsets.symmetric(
+                horizontal: getSize(20), vertical: getSize(30)),
             child: Form(
               key: _formKey,
               autovalidate: _autoValidate,
@@ -150,7 +176,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                   SizedBox(
                     height: getSize(20),
                   ),
-                  popupList(businessTypeList,  (value) {
+                  popupList(businessTypeList, (value) {
                     _businessTypeController.text = value;
                   }),
                   //getBusinessTypeDropDown(),
@@ -241,8 +267,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                 imageType: IconSizeType.small,
                 color: Colors.black),
             formatter: [
-              BlacklistingTextInputFormatter(
-                  new RegExp(RegexForTextField))
+              BlacklistingTextInputFormatter(new RegExp(RegexForTextField))
             ],
             keyboardType: TextInputType.number,
             inputController: _pinCodeController,
@@ -286,12 +311,12 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
         ),
         inputController: _CompanyNameController,
         formatter: [
-         // WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+          // WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
           BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
         ],
         //isSecureTextField: false
       ),
-      textCallback: (text) { },
+      textCallback: (text) {},
       validation: (text) {
         if (text.trim().isEmpty) {
           return R.string().authStrings.enterCompanyName;
@@ -324,12 +349,12 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
         ),
         inputController: _addressLineOneController,
         formatter: [
-        //  WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+          //  WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
           BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
         ],
         //isSecureTextField: false
       ),
-      textCallback: (text) { },
+      textCallback: (text) {},
       validation: (text) {
         if (text.trim().isEmpty) {
           return R.string().errorString.enterAddress;
@@ -363,12 +388,12 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
         ),
         inputController: _addressLineTwoController,
         formatter: [
-         // WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+          // WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
           BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
         ],
         //isSecureTextField: false
       ),
-      textCallback: (text) { },
+      textCallback: (text) {},
       validation: (text) {
         if (text.trim().isEmpty) {
           return R.string().errorString.enterAddress;
@@ -403,8 +428,8 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                       duplicateItems: countryList,
                       applyFilterCallBack: (
                           {CityList cityList,
-                            CountryList countryList,
-                            StateList stateList}) {
+                          CountryList countryList,
+                          StateList stateList}) {
                         if (_countryController.text != countryList.name) {
                           _stateController.text = "";
                           _cityController.text = "";
@@ -462,8 +487,8 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                         duplicateItems: stateList,
                         applyFilterCallBack: (
                             {CityList cityList,
-                              CountryList countryList,
-                              StateList stateList}) {
+                            CountryList countryList,
+                            StateList stateList}) {
                           if (_stateController.text != stateList.name) {
                             _cityController.text = "";
                           }
@@ -529,8 +554,8 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                           duplicateItems: cityList,
                           applyFilterCallBack: (
                               {CityList cityList,
-                                CountryList countryList,
-                                StateList stateList}) {
+                              CountryList countryList,
+                              StateList stateList}) {
                             selectedCityItem = cityList;
                             _cityController.text = cityList.name;
                           },
@@ -594,9 +619,9 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
     );
   }
 
-  Widget popupList(List<SelectionPopupModel> backPerList,
-      Function(String) selectedValue,
-      {bool isPer = false}) =>
+  Widget popupList(
+          List<SelectionPopupModel> backPerList, Function(String) selectedValue,
+          {bool isPer = false}) =>
       PopupMenuButton<String>(
         shape: TooltipShapeBorder(arrowArc: 0.5),
         onSelected: (newValue) {
@@ -604,8 +629,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
           selectedValue(newValue);
         },
         itemBuilder: (context) => [
-          for (var item in backPerList)
-            getPopupItems(item.title),
+          for (var item in backPerList) getPopupItems(item.title),
           PopupMenuItem(
             height: getSize(30),
             value: "Start",
@@ -616,8 +640,9 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
         offset: Offset(25, 110),
       );
 
-
-  getPopupItems(String per, ) {
+  getPopupItems(
+    String per,
+  ) {
     return PopupMenuItem(
       value: per,
       height: getSize(20),
@@ -627,7 +652,10 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text(per, style: appTheme.black16TextStyle,)
+            Text(
+              per,
+              style: appTheme.black16TextStyle,
+            )
           ],
         ),
       ),
@@ -641,6 +669,13 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
     return true;
   }
 
+  bool citySelect() {
+    if (isStringEmpty(_cityController.text.trim())) {
+      return false;
+    }
+    return true;
+  }
+
   bool stateSelect() {
     if (isStringEmpty(_stateController.text.trim())) {
       return false;
@@ -649,7 +684,11 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
   }
 
   void _callApiForCityList(
-      {String stateId, String countryId, bool isShowDialogue = false}) {
+      {String stateId,
+      String countryId,
+      bool isShowDialogue = false,
+      bool isGet = false,
+      String city}) {
     CityListReq req = CityListReq();
     req.state = stateId;
     req.country = countryId;
@@ -657,9 +696,10 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
     NetworkCall<CityListResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().cityList(req),
-        context,
-        isProgress: true)
+            context,
+            isProgress: true)
         .then((resp) {
+      cityList.clear();
       cityList.addAll(resp.data);
       if (isShowDialogue) {
         showDialog(
@@ -675,23 +715,31 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                     duplicateItems: cityList,
                     applyFilterCallBack: (
                         {CityList cityList,
-                          CountryList countryList,
-                          StateList stateList}) {
+                        CountryList countryList,
+                        StateList stateList}) {
                       selectedCityItem = cityList;
                       _cityController.text = cityList.name;
                     },
                   ));
             });
       }
+      if (isGet) {
+        cityList.forEach((element) {
+          if (element.id == city) {
+            _cityController.text = element.name;
+            selectedCityItem = element;
+          }
+        });
+      }
     }).catchError(
-          (onError) => {
+      (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
             title: R.string().commonString.error,
             desc: onError.message,
             positiveBtnTitle: R.string().commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
-              _callApiForCityList(stateId: stateId, countryId: countryId);
-            })
+          _callApiForCityList(stateId: stateId, countryId: countryId);
+        })
       },
     );
   }
@@ -700,9 +748,10 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
     NetworkCall<CountryListResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().countryList(),
-        context,
-        isProgress: true)
+            context,
+            isProgress: true)
         .then((resp) {
+      countryList.clear();
       countryList.addAll(resp.data);
       if (isShowDialogue) {
         showDialog(
@@ -718,11 +767,13 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                     duplicateItems: countryList,
                     applyFilterCallBack: (
                         {CityList cityList,
-                          CountryList countryList,
-                          StateList stateList}) {
+                        CountryList countryList,
+                        StateList stateList}) {
                       if (_countryController.text != countryList.name) {
                         _stateController.text = "";
                         _cityController.text = "";
+                        selectedStateItem = null;
+                        selectedCityItem = null;
                       }
                       selectedCountryItem = countryList;
                       _countryController.text = countryList.name;
@@ -733,7 +784,7 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
       }
       getCompanyInformation();
     }).catchError(
-          (onError) => {
+      (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(
           context,
           title: R.string().commonString.error,
@@ -750,16 +801,22 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
     );
   }
 
-  void _callApiForStateList({String countryId, bool isShowDialogue = false}) {
+  void _callApiForStateList(
+      {String countryId,
+      bool isShowDialogue = false,
+      bool isGet = false,
+      String state,
+      String city}) {
     StateListReq req = StateListReq();
     req.country = countryId;
 
     NetworkCall<StateListResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().stateList(req),
-        context,
-        isProgress: true)
+            context,
+            isProgress: true)
         .then((resp) {
+      stateList.clear();
       stateList.addAll(resp.data);
       if (isShowDialogue) {
         showDialog(
@@ -775,10 +832,11 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                     duplicateItems: stateList,
                     applyFilterCallBack: (
                         {CityList cityList,
-                          CountryList countryList,
-                          StateList stateList}) {
+                        CountryList countryList,
+                        StateList stateList}) {
                       if (_stateController.text != stateList.name) {
                         _cityController.text = "";
+                        selectedCityItem = null;
                       }
                       selectedStateItem = stateList;
                       _stateController.text = stateList.name;
@@ -789,15 +847,28 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
                   ));
             });
       }
+      if (isGet) {
+        stateList.forEach((element) {
+          if (element.id == state) {
+            _stateController.text = element.name;
+            selectedStateItem = element;
+            _callApiForCityList(
+                countryId: selectedCountryItem.id,
+                stateId: selectedStateItem.id,
+                isGet: true,
+                city: city);
+          }
+        });
+      }
     }).catchError(
-          (onError) => {
+      (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
             title: R.string().commonString.error,
             desc: onError.message,
             positiveBtnTitle: R.string().commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
-              _callApiForStateList(countryId: countryId);
-            })
+          _callApiForStateList(countryId: countryId);
+        })
       },
     );
   }
@@ -808,10 +879,11 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
     req.country = selectedCountryItem.id;
     req.state = selectedStateItem.id;
     req.city = selectedCityItem.id;
-    req.address = _addressLineOneController.text + " " + _addressLineTwoController.text;
+    req.address =
+        _addressLineOneController.text + " " + _addressLineTwoController.text;
     req.vendorCode = _companyCodeController.text;
     businessTypeList.forEach((element) {
-      if(element.title == _businessTypeController.text.trim()) {
+      if (element.title == _businessTypeController.text.trim()) {
         req.businessType = element.id;
       }
     });
@@ -820,67 +892,73 @@ class _CompanyInformationState extends State<CompanyInformation> with AutomaticK
 
     NetworkCall<CompanyInformationViewResp>()
         .makeCall(
-            () => app.resolve<ServiceModule>().networkService().companyInformation(req),
-        context,
-        isProgress: true)
+            () => app
+                .resolve<ServiceModule>()
+                .networkService()
+                .companyInformation(req),
+            context,
+            isProgress: true)
         .then((resp) async {
-          User user = app.resolve<PrefUtils>().getUserDetails();
-          user.account=resp.data;
+      User user = app.resolve<PrefUtils>().getUserDetails();
+      user.account = resp.data;
       app.resolve<PrefUtils>().saveUser(user);
+      app.resolve<CustomDialogs>().confirmDialog(
+            context,
+            title: R.string().commonString.successfully,
+            desc: resp.message,
+            positiveBtnTitle: R.string().commonString.ok,
+          );
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
-        context,
-        title: R.string().commonString.error,
-        desc: onError.message,
-        positiveBtnTitle: R.string().commonString.btnTryAgain,
-      );
+            context,
+            title: R.string().commonString.error,
+            desc: onError.message,
+            positiveBtnTitle: R.string().commonString.btnTryAgain,
+          );
     });
   }
 
   getCompanyInformation() async {
-
     NetworkCall<CompanyInformationViewResp>()
         .makeCall(
-            () => app.resolve<ServiceModule>().networkService().companyInformationView(),
-        context,
-        isProgress: true)
+            () => app
+                .resolve<ServiceModule>()
+                .networkService()
+                .companyInformationView(),
+            context,
+            isProgress: true)
         .then((resp) async {
-       _CompanyNameController.text = resp.data.companyName;
-      _addressLineOneController.text =  resp.data.address;
-      _companyCodeController.text =  resp.data.vendorCode;
+      _CompanyNameController.text = resp.data.companyName;
+      _addressLineOneController.text = resp.data.address;
+      _companyCodeController.text = resp.data.vendorCode;
       businessTypeList.forEach((element) {
-        if(element.id == resp.data.businessType) {
-      _businessTypeController.text = element.title;
+        if (element.id == resp.data.businessType) {
+          _businessTypeController.text = element.title;
         }
       });
       _pinCodeController.text = resp.data.zipCode;
       countryList.forEach((element) {
-        if(element.id == resp.data.country) {
+        if (element.id == resp.data.country) {
           _countryController.text = element.name;
-        }
-      });
-      stateList.forEach((element) {
-        if(element.id == resp.data.state) {
-          _stateController.text = element.name;
-        }
-      });
-      cityList.forEach((element) {
-        if(element.id == resp.data.city) {
-          _cityController.text = element.name;
+          selectedCountryItem = element;
+          _callApiForStateList(
+              countryId: element.id,
+              isGet: true,
+              state: resp.data.state,
+              city: resp.data.city);
         }
       });
       setState(() {});
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
-        context,
-        title: R.string().commonString.error,
-        desc: onError.message,
-        positiveBtnTitle: R.string().commonString.btnTryAgain,
-      );
+            context,
+            title: R.string().commonString.error,
+            desc: onError.message,
+            positiveBtnTitle: R.string().commonString.btnTryAgain,
+          );
     });
   }
 
   @override
   bool get wantKeepAlive => true;
-
 }
