@@ -42,6 +42,7 @@ const eventBusTag = "EventBus";
 const eventBusSocket = "EventBusSocket";
 const eventBusLogout = "EventBusLogout";
 const eventBusDropDown = "EventBusDropDown";
+const eventBusRefreshList = "DiamondListRefresh";
 
 const imagePath = "assest/icon.png";
 const String googleDocViewURL =
