@@ -1,4 +1,9 @@
+import 'package:country_pickers/country.dart';
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/models/Address/CityListModel.dart';
+import 'package:diamnow/models/Address/CountryListModel.dart';
+import 'package:diamnow/models/Address/StateListModel.dart';
+import 'package:flutter/widgets.dart';
 
 class LoginReq {
   String username;
@@ -546,9 +551,9 @@ class Account {
   bool showPublicly;
   String coverImage;
   int isVerified;
-  String country;
-  String state;
-  String city;
+  CountryList country;
+  StateList state;
+  CityList city;
 
   Account.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
@@ -616,9 +621,15 @@ class Account {
     showPublicly = json['showPublicly'];
     coverImage = json['coverImage'];
     isVerified = json['isVerified'];
-    country = json['country'];
-    state = json['state'];
-    city = json['city'];
+    country = json['country'] != null
+        ? new CountryList.fromJson(json['country'])
+        : null;
+    state = json['state'] != null
+        ? new StateList.fromJson(json['state'])
+        : null;
+    city = json['city'] != null
+        ? new CityList.fromJson(json['city'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
