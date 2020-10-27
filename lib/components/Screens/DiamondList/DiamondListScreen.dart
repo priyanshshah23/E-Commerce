@@ -158,6 +158,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict["bidType"] = [BidConstant.BID_TYPE_ADD];
         dict["status"] = [BidStatus.BID_STATUS_ACTIVE];
         break;
+      case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
+        dict["trackType"] = DiamondTrackConstant.TRACK_TYPE_REMINDER;
+        break;
       case DiamondModuleConstant.MODULE_TYPE_MY_CART:
         dict["trackType"] = DiamondTrackConstant.TRACK_TYPE_CART;
         break;
@@ -190,6 +193,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
         case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
         case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+        case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
         case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
         case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
         case DiamondModuleConstant.MODULE_TYPE_MY_BID:
@@ -271,9 +275,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     List<Widget> list = [];
     diamondConfig.toolbarList.forEach((element) {
       list.add(GestureDetector(
-        onTap:  arraDiamond!=null && arraDiamond.length >0?(){
-          manageToolbarClick(element);
-        }:null,
+        onTap: arraDiamond != null && arraDiamond.length > 0
+            ? () {
+                manageToolbarClick(element);
+              }
+            : null,
         child: Padding(
           padding: EdgeInsets.all(getSize(8.0)),
           child: Image.asset(
@@ -309,7 +315,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict[ArgumentConstant.DiamondDetail] = arraDiamond[index];
         dict[ArgumentConstant.ModuleType] = moduleType;
 
-      //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
+        //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
         bool isBack = await Navigator.of(context).push(MaterialPageRoute(
           settings: RouteSettings(name: DiamondDetailScreen.route),
           builder: (context) => DiamondDetailScreen(arguments: dict),
@@ -405,43 +411,46 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   }
 
   Widget getBottomTab() {
-    return arraDiamond!=null && arraDiamond.length >0?BottomTabbarWidget(
-      arrBottomTab: diamondConfig.arrBottomTab,
-      onClickCallback: (obj) {
-        //
-        if (obj.type == ActionMenuConstant.ACTION_TYPE_MORE) {
-          List<DiamondModel> selectedList =
-              arraDiamond.where((element) => element.isSelected).toList();
-          if (selectedList != null && selectedList.length > 0) {
-            showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
-                (manageClick) {
-              if (manageClick.bottomTabModel.type ==
-                  ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
-                clearSelection();
-              } else {
-                manageBottomMenuClick(manageClick.bottomTabModel);
-              }
-            }, R.string().commonString.more, isDisplaySelection: false);
-          } else {
-            app.resolve<CustomDialogs>().confirmDialog(
-                  context,
-                  title: "",
-                  desc: R.string().errorString.diamondSelectionError,
-                  positiveBtnTitle: R.string().commonString.ok,
-                );
-          }
-        } else if (obj.type == ActionMenuConstant.ACTION_TYPE_STATUS) {
-          showStatusDialogue();
+    return arraDiamond != null && arraDiamond.length > 0
+        ? BottomTabbarWidget(
+            arrBottomTab: diamondConfig.arrBottomTab,
+            onClickCallback: (obj) {
+              //
+              if (obj.type == ActionMenuConstant.ACTION_TYPE_MORE) {
+                List<DiamondModel> selectedList =
+                    arraDiamond.where((element) => element.isSelected).toList();
+                if (selectedList != null && selectedList.length > 0) {
+                  showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
+                      (manageClick) {
+                    if (manageClick.bottomTabModel.type ==
+                        ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
+                      clearSelection();
+                    } else {
+                      manageBottomMenuClick(manageClick.bottomTabModel);
+                    }
+                  }, R.string().commonString.more, isDisplaySelection: false);
+                } else {
+                  app.resolve<CustomDialogs>().confirmDialog(
+                        context,
+                        title: "",
+                        desc: R.string().errorString.diamondSelectionError,
+                        positiveBtnTitle: R.string().commonString.ok,
+                      );
+                }
+              } else if (obj.type == ActionMenuConstant.ACTION_TYPE_STATUS) {
+                showStatusDialogue();
 //          showBottomSheetForMenu(context, diamondConfig.arrStatusMenu,
 //              (manageClick) {}, R.string().commonString.status,
 //              isDisplaySelection: false);
-        } else if (obj.type == ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
-          clearSelection();
-        } else {
-          manageBottomMenuClick(obj);
-        }
-      },
-    ):SizedBox();
+              } else if (obj.type ==
+                  ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
+                clearSelection();
+              } else {
+                manageBottomMenuClick(obj);
+              }
+            },
+          )
+        : SizedBox();
   }
 
   showStatusDialogue() {

@@ -224,7 +224,7 @@ class _DashboardState extends StatefulScreenWidgetState {
         break;
       case BottomCodeConstant.TBProfile:
         // Go to Profile
-        NavigationUtilities.pushRoute(MyAccountScreen.route);
+        openProfile();
         break;
     }
   }
@@ -1783,5 +1783,11 @@ class _DashboardState extends StatefulScreenWidgetState {
     dict[ArgumentConstant.ModuleType] = DiamondModuleConstant.MODULE_TYPE_HOME;
 
     NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
+  }
+
+  openProfile() {
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.IsFromDrawer] = false;
+    NavigationUtilities.pushRoute(MyAccountScreen.route, args: dict);
   }
 }

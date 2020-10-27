@@ -29,9 +29,9 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_MY_COMMENT = 26;
   static const MODULE_TYPE_MY_REMINDER = 27;
   static const MODULE_TYPE_MANAGE_ADDRESS = 28;
-  static const MODULE_TYPE_COMPARE = 27;
-  static const MODULE_TYPE_MATCH_PAIR = 28;
-  static const MODULE_TYPE_RECENT_SEARCH = 29;
+  static const MODULE_TYPE_COMPARE = 29;
+  static const MODULE_TYPE_MATCH_PAIR = 30;
+  static const MODULE_TYPE_RECENT_SEARCH = 31;
   static const MODULE_TYPE_OPEN_DRAWER = 1000;
   static const MODULE_TYPE_HOME = 100;
 }
@@ -62,10 +62,14 @@ class ModulePermissionConstant {
   static const permission_purchase = "purchase";
   static const permission_stone_of_the_day = "stoneoftheday";
   static const permission_appointment = "appointment";
-  static const permission_notification = "notification";
+  static const permission_address = "address";
 
-  static const permission_exclusive = "exclusive";
   static const permission_auction = "auction";
+  static const permission_exclusive = "exclusive";
+  static const permission_bid = "bid";
+  static const permission_hold = "hold";
+  static const permission_offer = "offer";
+  static const permission_notification = "notification";
 }
 
 class PermissionType {
@@ -115,9 +119,9 @@ class DiamondTrackConstant {
   static const TRACK_TYPE_WATCH_LIST = 2;
   static const TRACK_TYPE_OFFICE = 3;
   static const TRACK_TYPE_OFFER = 4;
-  static const TRACK_TYPE_REMINER = 5;
+  static const TRACK_TYPE_REMINDER = 5;
   static const TRACK_TYPE_ENQUIRY = 6;
-  static const TRACK_TYPE_REMINDER = 7;
+  static const TRACK_TYPE_SHIPMENT = 7;
   static const TRACK_TYPE_SHOWSELECTED = 8;
   static const TRACK_TYPE_COMMENT = 99;
   static const TRACK_TYPE_APPOINTMENT = 100;
