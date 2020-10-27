@@ -22,7 +22,8 @@ class SavedSearchItemWidget extends StatefulWidget {
   _SavedSearchItemWidgetState createState() => _SavedSearchItemWidgetState();
 }
 
-class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget> {
+class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
+    with AutomaticKeepAliveClientMixin<SavedSearchItemWidget> {
   int page = DEFAULT_PAGE;
   BaseList savedSearchBaseList;
   BaseList recentSearchList;
@@ -837,8 +838,55 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.searchType == SavedSearchType.savedSearch) {
+      savedSearchBaseList = BaseList(BaseListState(
+//      imagePath: noRideHistoryFound,
+        noDataMsg: APPNAME,
+        noDataDesc: R.string().noDataStrings.noDataFound,
+        refreshBtn: R.string().commonString.refresh,
+        enablePullDown: true,
+        enablePullUp: true,
+        onPullToRefress: () {
+          callApi(true);
+        },
+        onRefress: () {
+          callApi(true);
+        },
+        onLoadMore: () {
+          callApi(false, isLoading: true);
+        },
+      ));
+      setState(() {
+        //
+      });
+    } else {
+      recentSearchList = BaseList(BaseListState(
+//      imagePath: noRideHistoryFound,
+        noDataMsg: APPNAME,
+        noDataDesc: R.string().noDataStrings.noDataFound,
+        refreshBtn: R.string().commonString.refresh,
+        enablePullDown: true,
+        enablePullUp: true,
+        onPullToRefress: () {
+          callApi(true);
+        },
+        onRefress: () {
+          callApi(true);
+        },
+        onLoadMore: () {
+          callApi(false, isLoading: true);
+        },
+      ));
+
+      setState(() {
+        //
+      });
+    }
     return widget.searchType == SavedSearchType.savedSearch
         ? savedSearchBaseList ?? SizedBox()
         : recentSearchList ?? SizedBox();
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

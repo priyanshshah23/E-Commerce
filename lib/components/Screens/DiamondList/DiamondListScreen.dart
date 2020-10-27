@@ -271,9 +271,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     List<Widget> list = [];
     diamondConfig.toolbarList.forEach((element) {
       list.add(GestureDetector(
-        onTap: () {
+        onTap:  arraDiamond!=null && arraDiamond.length >0?(){
           manageToolbarClick(element);
-        },
+        }:null,
         child: Padding(
           padding: EdgeInsets.all(getSize(8.0)),
           child: Image.asset(
@@ -405,7 +405,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   }
 
   Widget getBottomTab() {
-    return BottomTabbarWidget(
+    return arraDiamond!=null && arraDiamond.length >0?BottomTabbarWidget(
       arrBottomTab: diamondConfig.arrBottomTab,
       onClickCallback: (obj) {
         //
@@ -441,7 +441,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           manageBottomMenuClick(obj);
         }
       },
-    );
+    ):SizedBox();
   }
 
   showStatusDialogue() {
