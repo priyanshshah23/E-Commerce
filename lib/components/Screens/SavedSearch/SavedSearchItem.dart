@@ -35,51 +35,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
   @override
   void initState() {
     super.initState();
-    if (widget.searchType == SavedSearchType.savedSearch) {
-      savedSearchBaseList = BaseList(BaseListState(
-//      imagePath: noRideHistoryFound,
-        noDataMsg: APPNAME,
-        noDataDesc: R.string().noDataStrings.noDataFound,
-        refreshBtn: R.string().commonString.refresh,
-        enablePullDown: true,
-        enablePullUp: true,
-        onPullToRefress: () {
-          callApi(true);
-        },
-        onRefress: () {
-          callApi(true);
-        },
-        onLoadMore: () {
-          callApi(false, isLoading: true);
-        },
-      ));
-
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        callApi(false);
-      });
-    } else {
-      recentSearchList = BaseList(BaseListState(
-//      imagePath: noRideHistoryFound,
-        noDataMsg: APPNAME,
-        noDataDesc: R.string().noDataStrings.noDataFound,
-        refreshBtn: R.string().commonString.refresh,
-        enablePullDown: true,
-        enablePullUp: true,
-        onPullToRefress: () {
-          callApi(true);
-        },
-        onRefress: () {
-          callApi(true);
-        },
-        onLoadMore: () {
-          callApi(false, isLoading: true);
-        },
-      ));
-
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        callApi(false);
-      });
-    }
+    callBaseList();
   }
 
   callApi(bool isRefress, {bool isLoading = false}) {
@@ -849,8 +805,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
     // setState(() {});
   }
 
-  @override
-  Widget build(BuildContext context) {
+  callBaseList(){
     if (widget.searchType == SavedSearchType.savedSearch) {
       savedSearchBaseList = BaseList(BaseListState(
 //      imagePath: noRideHistoryFound,
@@ -888,6 +843,11 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
         },
       ));
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    callBaseList();
     return widget.searchType == SavedSearchType.savedSearch
         ? savedSearchBaseList ?? SizedBox()
         : recentSearchList ?? SizedBox();

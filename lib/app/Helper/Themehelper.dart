@@ -139,6 +139,13 @@ class BaseTheme {
         fontWeight: FontWeight.normal);
   }
 
+  TextStyle get black18TextStyle {
+    return TextStyle(
+        fontSize: getFontSize(18),
+        color: textColor,
+        fontWeight: FontWeight.w500);
+  }
+
   TextStyle get primary16TextStyle {
     return TextStyle(
         fontSize: getFontSize(16),

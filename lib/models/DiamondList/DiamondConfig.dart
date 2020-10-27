@@ -11,17 +11,14 @@ import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
-import 'package:diamnow/components/Screens/Home/DrawerModel.dart';
 import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
-import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
-import 'package:rxbus/rxbus.dart';
 
 import '../../main.dart';
 
@@ -887,7 +884,15 @@ openSharePopUp(BuildContext context) {
 class StoneModel {
   int id;
   String title;
+  String subtitle;
+  String image;
   bool isSelected;
 
-  StoneModel(this.id, this.title, {this.isSelected = false});
+  StoneModel(
+    this.id,
+    this.title, {
+    this.subtitle,
+    this.image = "",
+    this.isSelected = false,
+  });
 }
