@@ -204,6 +204,7 @@ class DrawerSetting {
       drawerList.add(DrawerModel(
         image: myBid,
         title: R.string().screenTitle.myBid,
+        imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_BID,
       ));
@@ -214,6 +215,7 @@ class DrawerSetting {
       drawerList.add(DrawerModel(
         image: myHold,
         title: R.string().screenTitle.myHold,
+        imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_HOLD,
       ));
@@ -235,6 +237,7 @@ class DrawerSetting {
       drawerList.add(DrawerModel(
         image: myOrder,
         title: R.string().screenTitle.myOrder,
+        imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_ORDER,
       ));
@@ -245,6 +248,7 @@ class DrawerSetting {
       drawerList.add(DrawerModel(
         image: myOffice,
         title: R.string().screenTitle.myOffice,
+        imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_OFFICE,
       ));
@@ -255,6 +259,7 @@ class DrawerSetting {
       drawerList.add(DrawerModel(
         image: myOffer,
         title: R.string().screenTitle.myOffer,
+        imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_OFFER,
       ));
@@ -266,6 +271,7 @@ class DrawerSetting {
         image: myPurchased,
         title: R.string().screenTitle.myPurchased,
         isSelected: false,
+        imageColor: appTheme.colorPrimary,
         type: DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE,
       ));
     if (app
@@ -295,6 +301,7 @@ class DrawerSetting {
       drawerList.add(DrawerModel(
         image: myDemand,
         title: R.string().screenTitle.myDemand,
+        imageColor: appTheme.colorPrimary,
         isSelected: false,
         isShowDivider: true,
         type: DiamondModuleConstant.MODULE_TYPE_MY_DEMAND,
@@ -304,9 +311,10 @@ class DrawerSetting {
         .getModulePermission(ModulePermissionConstant.permission_address)
         .view)
       drawerList.add(DrawerModel(
-        image: "",
+        image: manageAddress,
         title: R.string().screenTitle.manageAddress,
         isSelected: false,
+        imageColor: appTheme.colorPrimary,
         type: DiamondModuleConstant.MODULE_TYPE_MANAGE_ADDRESS,
       ));
     drawerList.add(DrawerModel(
