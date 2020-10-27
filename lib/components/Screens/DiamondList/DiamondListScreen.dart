@@ -475,19 +475,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                       SizedBox(
                         height: getSize(20),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Status",
-                            style: appTheme.blackNormal18TitleColorblack,
-                          ),
-                          Icon(
-                            Icons.info_outline,
-                            color: appTheme.colorPrimary,
-                            size: getSize(16),
-                          ),
-                        ],
+                      Text(
+                        "Status",
+                        style: appTheme.blackNormal18TitleColorblack,
                       ),
                       SizedBox(
                         height: getSize(10),
