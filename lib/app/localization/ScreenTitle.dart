@@ -46,6 +46,7 @@ class ScreenTitle {
   final String myComments;
   final String myComment;
   final String myReminder;
+  final String reminder;
 
   final String myWatchlist;
   final String myBid;
@@ -353,6 +354,7 @@ class ScreenTitle {
     this.reqOfficeView = "Request Office View",
     this.myComments = "My Comment",
     this.myReminder = "My Reminder",
+    this.reminder = "Reminder",
     this.manageAddress = "Manage Addresses",
     this.myAccount = "My Account",
   });

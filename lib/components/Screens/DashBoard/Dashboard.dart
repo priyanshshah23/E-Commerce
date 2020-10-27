@@ -64,6 +64,7 @@ class _DashboardState extends StatefulScreenWidgetState {
   var _focusSearch = FocusNode();
 
   DashboardModel dashboardModel;
+
   _DashboardState({this.moduleType, this.isFromDrawer});
 
   RefreshController refreshController =
@@ -289,6 +290,12 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   getSarchTextField() {
+    if (!(app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_searchDiamond)
+        .view)) {
+      return SizedBox();
+    }
     return Padding(
       padding: EdgeInsets.only(
         left: getSize(Spacing.leftPadding),
@@ -478,16 +485,21 @@ class _DashboardState extends StatefulScreenWidgetState {
 
   getFeaturedSection() {
     List<DiamondModel> arrStones = [];
-    if (!isNullEmptyOrFalse(this.dashboardModel)) {
-      if (!isNullEmptyOrFalse(this.dashboardModel.featuredStone)) {
-        List<FeaturedStone> filter = this
-            .dashboardModel
-            .featuredStone
-            .where((element) => element.type == DashboardConstants.best)
-            .toList();
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_featured)
+        .view) {
+      if (!isNullEmptyOrFalse(this.dashboardModel)) {
+        if (!isNullEmptyOrFalse(this.dashboardModel.featuredStone)) {
+          List<FeaturedStone> filter = this
+              .dashboardModel
+              .featuredStone
+              .where((element) => element.type == DashboardConstants.best)
+              .toList();
 
-        if (!isNullEmptyOrFalse(filter)) {
-          arrStones = filter.first.featuredPair;
+          if (!isNullEmptyOrFalse(filter)) {
+            arrStones = filter.first.featuredPair;
+          }
         }
       }
     }
@@ -524,7 +536,8 @@ class _DashboardState extends StatefulScreenWidgetState {
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
                     crossAxisCount: 2,
-                    childAspectRatio: 0.36, // without Price
+                    childAspectRatio: 0.36,
+                    // without Price
                     // childAspectRatio: 0.327, // with Price
                     mainAxisSpacing: 10,
                     crossAxisSpacing: 10,
@@ -544,17 +557,23 @@ class _DashboardState extends StatefulScreenWidgetState {
 
   getStoneOfDaySection() {
     List<DiamondModel> arrStones = [];
-    if (!isNullEmptyOrFalse(this.dashboardModel)) {
-      if (!isNullEmptyOrFalse(this.dashboardModel.featuredStone)) {
-        List<FeaturedStone> filter = this
-            .dashboardModel
-            .featuredStone
-            .where(
-                (element) => element.type == DashboardConstants.stoneOfTheDay)
-            .toList();
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(
+            ModulePermissionConstant.permission_stone_of_the_day)
+        .view) {
+      if (!isNullEmptyOrFalse(this.dashboardModel)) {
+        if (!isNullEmptyOrFalse(this.dashboardModel.featuredStone)) {
+          List<FeaturedStone> filter = this
+              .dashboardModel
+              .featuredStone
+              .where(
+                  (element) => element.type == DashboardConstants.stoneOfTheDay)
+              .toList();
 
-        if (!isNullEmptyOrFalse(filter)) {
-          arrStones = filter.first.featuredPair;
+          if (!isNullEmptyOrFalse(filter)) {
+            arrStones = filter.first.featuredPair;
+          }
         }
       }
     }
@@ -1012,6 +1031,12 @@ class _DashboardState extends StatefulScreenWidgetState {
     }
 
     if (isNullEmptyOrFalse(this.dashboardModel.savedSearch)) {
+      return SizedBox();
+    }
+    if (!(app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_mySavedSearch)
+        .view)) {
       return SizedBox();
     }
 

@@ -21,11 +21,10 @@ class MyAccountScreen extends StatefulWidget {
   static const route = "MyAccountScreen";
   bool isFromDrawer;
 
-
   MyAccountScreen(
-      Map<String, dynamic> arguments, {
-        Key key,
-      }) : super(key: key) {
+    Map<String, dynamic> arguments, {
+    Key key,
+  }) : super(key: key) {
     if (arguments != null) {
       if (arguments[ArgumentConstant.IsFromDrawer] != null) {
         isFromDrawer = arguments[ArgumentConstant.IsFromDrawer];
@@ -34,22 +33,18 @@ class MyAccountScreen extends StatefulWidget {
   }
 
   @override
-  _MyAccountScreenState createState() => _MyAccountScreenState(isFromDrawer: isFromDrawer);
+  _MyAccountScreenState createState() =>
+      _MyAccountScreenState(isFromDrawer: isFromDrawer);
 }
 
 class _MyAccountScreenState extends State<MyAccountScreen> {
   List<DrawerModel> accountItems = DrawerSetting().getAccountListItems();
   bool isFromDrawer;
 
-
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      RxBus.register<DrawerEvent>(tag: eventBusTag).listen((event) {
-          manageDrawerClick(context, event.index, event.isPop);
-      });
-    });
+    WidgetsBinding.instance.addPostFrameCallback((_) async {});
   }
 
   _MyAccountScreenState({this.isFromDrawer = false});
@@ -62,40 +57,25 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 //      }
 
       switch (type) {
-        case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
-          openDiamondList(type);
-          break;
-        case DiamondModuleConstant.MODULE_TYPE_MY_CART:
-         openDiamondList(type);
-          break;
-        case DiamondModuleConstant.MODULE_TYPE_MY_BID:
-          openDiamondList(type);
-          break;
-        case DiamondModuleConstant.MODULE_TYPE_MY_HOLD:
-          break;
-        case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
-        openDiamondList(type);
-        break;
         case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
-          break;
-        case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
-        openDiamondList(type);
-        break;
-        case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
-        openDiamondList(type);
-        break;
         case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
           openDiamondOrderList(type);
           break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
+        case DiamondModuleConstant.MODULE_TYPE_MY_CART:
+        case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+        case DiamondModuleConstant.MODULE_TYPE_MY_HOLD:
+        case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
+        case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
+        case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+        case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
         case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
           openDiamondList(type);
           break;
-        case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
-          break;
         case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
-        break;
+          break;
         case DiamondModuleConstant.MODULE_TYPE_MANAGE_ADDRESS:
-        break;
+          break;
         case DiamondModuleConstant.MODULE_TYPE_CHANGE_PASSWORD:
           NavigationUtilities.pushRoute(ChangePassword.route);
           break;
@@ -116,7 +96,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     Map<String, dynamic> dict = new HashMap();
     dict[ArgumentConstant.ModuleType] = moduleType;
     dict[ArgumentConstant.IsFromDrawer] = false;
-    NavigationUtilities.pushRoute(OrderListScreen.route,args: dict);
+    NavigationUtilities.pushRoute(OrderListScreen.route, args: dict);
   }
 
   openSavedSearch(int moduleType) {
@@ -124,7 +104,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     dict[ArgumentConstant.ModuleType] =
         DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
     dict[ArgumentConstant.IsFromDrawer] = false;
-    NavigationUtilities.pushRoute(SavedSearchScreen.route,args: dict);
+    NavigationUtilities.pushRoute(SavedSearchScreen.route, args: dict);
   }
 
   openProfile() {
@@ -132,7 +112,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     dict[ArgumentConstant.IsFromDrawer] = false;
     NavigationUtilities.pushRoute(MyAccountScreen.route, args: dict);
   }
-
 
   Widget getDrawerItem(
       BuildContext context, DrawerModel model, VoidCallback callback) {
@@ -151,7 +130,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(top: getSize(10), bottom: getSize(10)),
+                  padding:
+                      EdgeInsets.only(top: getSize(10), bottom: getSize(10)),
                   child: Image.asset(model.image,
                       color: model.imageColor != null ? model.imageColor : null,
                       width: getSize(22),
@@ -167,13 +147,15 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                   ),
                 ),
                 Spacer(),
-                  Container(
-                    child: Icon(Icons.arrow_forward_ios, size: getSize(14),)
-                  ),
+                Container(
+                    child: Icon(
+                  Icons.arrow_forward_ios,
+                  size: getSize(14),
+                )),
               ],
             ),
           ),
-          if(model.isShowDivider)
+          if (model.isShowDivider)
             Container(
               margin: EdgeInsets.symmetric(vertical: getSize(10)),
               height: getSize(1),
@@ -190,7 +172,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       onTap: () {
         Map<String, dynamic> dict = new HashMap();
         dict[ArgumentConstant.IsFromDrawer] = false;
-        NavigationUtilities.pushRoute(ProfileList.route,args: dict);
+        NavigationUtilities.pushRoute(ProfileList.route, args: dict);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -218,7 +200,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                     ),
                     child: ClipRRect(
                       borderRadius:
-                      BorderRadius.all(Radius.circular(getSize(25))),
+                          BorderRadius.all(Radius.circular(getSize(25))),
                       child: getImageView(
                         app.resolve<PrefUtils>().getUserDetails().photoId,
                         placeHolderImage: userTemp,
@@ -236,9 +218,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                           children: [
                             Text(
                               app
-                                  .resolve<PrefUtils>()
-                                  .getUserDetails()
-                                  .getFullName() ??
+                                      .resolve<PrefUtils>()
+                                      .getUserDetails()
+                                      .getFullName() ??
                                   "-",
                               style: appTheme.black16TextStyle.copyWith(
                                 fontWeight: FontWeight.w500,
@@ -248,9 +230,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         ),
                         SizedBox(height: getSize(6)),
                         if (isStringEmpty(app
-                            .resolve<PrefUtils>()
-                            .getUserDetails()
-                            .email) ==
+                                .resolve<PrefUtils>()
+                                .getUserDetails()
+                                .email) ==
                             false)
                           Row(
                             children: [
@@ -261,7 +243,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                               ),
                               SizedBox(width: getSize(8)),
                               Text(
-                                app.resolve<PrefUtils>().getUserDetails().email ??
+                                app
+                                        .resolve<PrefUtils>()
+                                        .getUserDetails()
+                                        .email ??
                                     "-",
                                 style: appTheme.black12TextStyle,
                               ),
@@ -277,16 +262,16 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                             ),
                             SizedBox(width: getSize(8)),
                             if (isStringEmpty(app
-                                .resolve<PrefUtils>()
-                                .getUserDetails()
-                                .countryCode) ==
+                                    .resolve<PrefUtils>()
+                                    .getUserDetails()
+                                    .countryCode) ==
                                 false)
                               Image.asset(
                                 CountryPickerUtils.getFlagImageAssetPath(
                                     CountryPickerUtils.getCountryByPhoneCode(app
-                                        .resolve<PrefUtils>()
-                                        .getUserDetails()
-                                        .countryCode)
+                                            .resolve<PrefUtils>()
+                                            .getUserDetails()
+                                            .countryCode)
                                         .isoCode),
                                 height: getSize(12),
                                 width: getSize(16),
@@ -323,11 +308,13 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       ],
     ));
 
-    list.add(SizedBox(height: getSize(10),));
+    list.add(SizedBox(
+      height: getSize(10),
+    ));
 
     for (int i = 0; i < accountItems.length; i++) {
       list.add(getDrawerItem(context, accountItems[i], () {
-        RxBus.post(DrawerEvent(accountItems[i].type, false), tag: eventBusTag);
+        manageDrawerClick(context, accountItems[i].type, false);
       }));
     }
 
@@ -361,36 +348,35 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         centerTitle: false,
       ),
       body: Container(
-      margin: EdgeInsets.zero,
-      child: ClipRRect(
-        borderRadius: BorderRadius.only(
-            topRight: Radius.circular(getSize(26)),
-            bottomRight: Radius.circular(getSize(26))),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius:
-            BorderRadius.only(topRight: Radius.circular(26)),
-            color: AppTheme.of(context).theme.primaryColor,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              // UserDrawerHeader(), // if you want to set static
-              Expanded(
-                child: Container(
-                    padding: EdgeInsets.fromLTRB(getSize(0),
-                        getSize(12), getSize(0), getSize(0)),
-                    // color: AppTheme.of(context).theme.primaryColor,
-                    child: ListView(
-                        padding: EdgeInsets.all(getSize(0)),
-                        //shrinkWrap: true,
-                        children: getDrawerList(context))),
-              )
-            ],
+        margin: EdgeInsets.zero,
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(getSize(26)),
+              bottomRight: Radius.circular(getSize(26))),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(topRight: Radius.circular(26)),
+              color: AppTheme.of(context).theme.primaryColor,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                // UserDrawerHeader(), // if you want to set static
+                Expanded(
+                  child: Container(
+                      padding: EdgeInsets.fromLTRB(
+                          getSize(0), getSize(12), getSize(0), getSize(0)),
+                      // color: AppTheme.of(context).theme.primaryColor,
+                      child: ListView(
+                          padding: EdgeInsets.all(getSize(0)),
+                          //shrinkWrap: true,
+                          children: getDrawerList(context))),
+                )
+              ],
+            ),
           ),
         ),
       ),
-    ),
     );
   }
 
@@ -400,7 +386,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     dict[ArgumentConstant.IsFromDrawer] = false;
     NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
   }
-
 
   openMyWatchList(int type) {
     Map<String, dynamic> dict = new HashMap();
@@ -415,8 +400,4 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     dict[ArgumentConstant.IsFromDrawer] = false;
     NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
   }
-
-
-
-
 }
