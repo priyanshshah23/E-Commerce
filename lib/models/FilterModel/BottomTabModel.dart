@@ -126,13 +126,13 @@ class BottomTabBar {
   static List<BottomTabModel> getFilterScreenBottomTabs() {
     List<BottomTabModel> arrBootomTab = List<BottomTabModel>();
     arrBootomTab.add(BottomTabModel(
-        title: "Saved Search",
+        title: R.string().screenTitle.savedSearch,
         image: savedSearch,
         code: BottomCodeConstant.filterSavedSearch,
         sequence: 0,
         isCenter: false));
     arrBootomTab.add(BottomTabModel(
-        title: "Add Demand",
+        title: R.string().screenTitle.addDemand,
         image: addDemand,
         code: BottomCodeConstant.filterAddDemamd,
         sequence: 1,
@@ -144,83 +144,17 @@ class BottomTabBar {
         sequence: 2,
         isCenter: true));
     arrBootomTab.add(BottomTabModel(
-        title: "Save & Search",
+        title: R.string().screenTitle.savedAndSearch,
         image: saveAndSearch,
         code: BottomCodeConstant.filterSaveAndSearch,
         sequence: 3,
         isCenter: false));
     arrBootomTab.add(BottomTabModel(
-        title: "Match Pair",
+        title: R.string().screenTitle.matchPair,
         image: matchPair,
         code: BottomCodeConstant.filteMatchPair,
         sequence: 4,
         isCenter: false));
-
-    return arrBootomTab;
-  }
-
-  static List<BottomTabModel> getDiamondListScreenBottomTabs() {
-    List<BottomTabModel> arrBootomTab = List<BottomTabModel>();
-    arrBootomTab.add(BottomTabModel(
-        title: "Show Selected",
-        image: showSelected,
-        code: BottomCodeConstant.dLShowSelected,
-        sequence: 0,
-        isCenter: false));
-    arrBootomTab.add(BottomTabModel(
-        title: "Compare",
-        image: compare,
-        code: BottomCodeConstant.dLCompare,
-        sequence: 1,
-        isCenter: false));
-    arrBootomTab.add(BottomTabModel(
-        title: "More",
-        image: plusIcon,
-        code: BottomCodeConstant.dLMore,
-        sequence: 2,
-        isCenter: false));
-    arrBootomTab.add(BottomTabModel(
-        title: "Status",
-        image: status,
-        code: BottomCodeConstant.dLStatus,
-        sequence: 3,
-        isCenter: false));
-
-    return arrBootomTab;
-  }
-
-  static List<BottomTabModel> getDiamondDetailScreenBottomTabs() {
-    List<BottomTabModel> arrBootomTab = List<BottomTabModel>();
-    arrBootomTab.add(BottomTabModel(
-        title: "Enquiry",
-        image: enquiry,
-        code: BottomCodeConstant.dDEnquiry,
-        sequence: 0,
-        isCenter: false));
-    arrBootomTab.add(BottomTabModel(
-        title: "Add to Cart",
-        image: addToCart,
-        code: BottomCodeConstant.dDAddToCart,
-        sequence: 1,
-        isCenter: false));
-    arrBootomTab.add(BottomTabModel(
-        title: "More",
-        image: plusIcon,
-        code: BottomCodeConstant.dDMore,
-        sequence: 2,
-        isCenter: false));
-    arrBootomTab.add(BottomTabModel(
-        title: "Place Order",
-        image: placeOrder,
-        code: BottomCodeConstant.dDPlaceOrder,
-        sequence: 3,
-        isCenter: false));
-    // arrBootomTab.add(BottomTabModel(
-    //     title: "Comment",
-    //     image: comment,
-    //     code: BottomCodeConstant.dDComment,
-    //     sequence: 4,
-    //     isCenter: false));
 
     return arrBootomTab;
   }

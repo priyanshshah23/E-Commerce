@@ -70,7 +70,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   int _currentIndex = 0;
   bool isLoading = true;
   bool isErroWhileLoading = false;
-  List<BottomTabModel> arrBottomTab;
   DiamondConfig diamondConfig;
   int moduleType;
 
@@ -199,7 +198,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     );
     _controller.addListener(_handleTabSelection);
 
-    arrBottomTab = BottomTabBar.getDiamondDetailScreenBottomTabs();
     setState(() {
       //
     });

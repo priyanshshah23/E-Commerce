@@ -237,26 +237,28 @@ class UserDrawerHeader extends StatelessWidget {
           children: <Widget>[
             Container(
               child: InkWell(
-                onTap: ()=>_navigateToUserScreen(),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     // circle avatar
-                    Container(
-                      height: getSize(50),
-                      width: getSize(50),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
-                      child: ClipRRect(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(getSize(25))),
-                        child: getImageView(
-                          app.resolve<PrefUtils>().getUserDetails().photoId,
-                          placeHolderImage: userTemp,
-                          height: getSize(50),
-                          width: getSize(50),
-                          fit: BoxFit.cover,
+                    InkWell(
+                      onTap: ()=>_navigateToUserScreen(),
+                      child: Container(
+                        height: getSize(50),
+                        width: getSize(50),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: ClipRRect(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(getSize(25))),
+                          child: getImageView(
+                            app.resolve<PrefUtils>().getUserDetails().photoId,
+                            placeHolderImage: userTemp,
+                            height: getSize(50),
+                            width: getSize(50),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
@@ -280,7 +282,7 @@ class UserDrawerHeader extends StatelessWidget {
                               Spacer(),
                               InkWell(
                                 onTap: () {
-                                  _navigateToUserScreen();
+                                 Navigator.pop(context);
                                 },
                                 child: Image.asset(
                                   cancel,

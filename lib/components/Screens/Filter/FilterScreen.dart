@@ -303,22 +303,57 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       onClickCallback: (obj) {
         //
         if (obj.code == BottomCodeConstant.filterSavedSearch) {
-          //
+          if (app
+              .resolve<PrefUtils>()
+              .getModulePermission(
+                  ModulePermissionConstant.permission_mySavedSearch)
+              .view) {
+            // place code
+          } else {
+            app.resolve<CustomDialogs>().accessDenideDialog(context);
+          }
         } else if (obj.code == BottomCodeConstant.filterAddDemamd) {
-          //
-          print(obj.code);
+          if (app
+              .resolve<PrefUtils>()
+              .getModulePermission(ModulePermissionConstant.permission_myDemand)
+              .insert) {
+            // place code
+          } else {
+            app.resolve<CustomDialogs>().accessDenideDialog(context);
+          }
         } else if (obj.code == BottomCodeConstant.filterSearch) {
-          //
-          print(obj.code);
-          callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-              isSearch: true);
+          if (app
+              .resolve<PrefUtils>()
+              .getModulePermission(
+                  ModulePermissionConstant.permission_searchResult)
+              .view) {
+            callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+                isSearch: true);
+            // place code
+          } else {
+            app.resolve<CustomDialogs>().accessDenideDialog(context);
+          }
         } else if (obj.code == BottomCodeConstant.filterSaveAndSearch) {
-          //
-          print(obj.code);
-          callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-              isSavedSearch: true);
+          if (app
+              .resolve<PrefUtils>()
+              .getModulePermission(
+                  ModulePermissionConstant.permission_mySavedSearch)
+              .insert) {
+            callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+                isSavedSearch: true);
+          } else {
+            app.resolve<CustomDialogs>().accessDenideDialog(context);
+          }
         } else if (obj.code == BottomCodeConstant.filteMatchPair) {
-          callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR);
+          if (app
+              .resolve<PrefUtils>()
+              .getModulePermission(
+                  ModulePermissionConstant.permission_matchPair)
+              .view) {
+            callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR);
+          } else {
+            app.resolve<CustomDialogs>().accessDenideDialog(context);
+          }
         }
       },
     );
