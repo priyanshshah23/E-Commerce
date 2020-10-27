@@ -29,6 +29,7 @@ class ScreenTitle {
   final String newRequest;
   final String otpVerifyDesc;
   final String diamondDetail;
+  final String myAccount;
 
 // drawer
   final String home;
@@ -130,6 +131,7 @@ class ScreenTitle {
   final String expDiscPer;
   final String todayDiscPer;
   final String addOffer;
+  final String addDemand;
   final String addComment;
   final String addEnquiry;
   final String addToOffice;
@@ -164,6 +166,8 @@ class ScreenTitle {
   final String featuredStones;
   final String stoneOfDay;
   final String savedSearch;
+  final String savedAndSearch;
+  final String matchPair;
   final String recentSearch;
   final String viewAll;
   final String salesPersonDetail;
@@ -177,6 +181,9 @@ class ScreenTitle {
 
   const ScreenTitle({
     this.myEnquiry = "My Enquiry",
+    this.addDemand = "Add Demand",
+    this.matchPair = "Match Pair",
+    this.savedAndSearch = "Save & Search",
     this.upcoming = "Upcoming",
     this.bidPricePerCt = "Bid Price / Ct",
     this.bidDisc = "Bid Disc",
@@ -279,6 +286,7 @@ class ScreenTitle {
     this.myOffer = "My Offer",
     this.myPurchased = "My Purchased",
     this.mySavedSearch = "My Saved Search",
+    this.savedSearch = "Saved Search",
     this.myDemand = "My Demand",
     this.aboutUs = "About Us",
     this.contactUs = "Contact Us",
@@ -333,7 +341,6 @@ class ScreenTitle {
     this.exclusive = "Exclusive",
     this.featuredStones = "Featured Stones",
     this.stoneOfDay = "Stones of Day",
-    this.savedSearch = "Saved Search",
     this.recentSearch = "Recent Search",
     this.viewAll = "View All",
     this.salesPersonDetail = "Sales Person Detail",
@@ -347,5 +354,6 @@ class ScreenTitle {
     this.myComments = "My Comment",
     this.myReminder = "My Reminder",
     this.manageAddress = "Manage Addresses",
+    this.myAccount = "My Account",
   });
 }

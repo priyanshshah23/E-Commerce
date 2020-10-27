@@ -153,8 +153,46 @@ class PrefUtils {
   }
 
   UserPermissions getUserPermission() {
-    var userPermissionsJson = json.decode(_preferences.getString(keyUserPermission));
-    return userPermissionsJson != null ? new UserPermissions.fromJson(userPermissionsJson) : null;
+    var userPermissionsJson =
+        json.decode(_preferences.getString(keyUserPermission));
+    return userPermissionsJson != null
+        ? new UserPermissions.fromJson(userPermissionsJson)
+        : null;
+  }
+
+  UserPermissionsData getModulePermission(String module) {
+    UserPermissions permissions = getUserPermission();
+    UserPermissionsData data;
+    if (permissions != null &&
+        permissions.data != null &&
+        permissions.data.length > 0) {
+      permissions.data.forEach((element) {
+        if (element.module == module) {
+          element.view = element.permissions?.view ?? false;
+          element.insert = element.permissions?.insert ?? false;
+          element.update = element.permissions?.update ?? false;
+          element.delete = element.permissions?.delete ?? false;
+          element.downloadExcel = element.permissions?.downloadExcel ?? false;
+          if (permissions != null && (element.permissions?.all ?? false)) {
+            element.view = true;
+            element.insert = true;
+            element.update = true;
+            element.delete = true;
+            element.downloadExcel = true;
+          }
+          data = element;
+        }
+      });
+    }
+    if (data == null) {
+      data = UserPermissionsData(module: module);
+      data.view = true;
+      data.insert = true;
+      data.update = true;
+      data.delete = true;
+      data.downloadExcel = true;
+    }
+    return data;
   }
 
   bool isUserLogin() {
@@ -196,17 +234,17 @@ logoutFromApp(BuildContext context) {
       positiveBtnTitle: R.string().commonString.yes,
       negativeBtnTitle: R.string().commonString.no,
       onClickCallback: (buttonType) {
-        if (buttonType == ButtonType.PositveButtonClick) {
-          callLogout(context);
-        }
-      });
+    if (buttonType == ButtonType.PositveButtonClick) {
+      callLogout(context);
+    }
+  });
 }
 
 callLogout(BuildContext context) {
   NetworkCall<BaseApiResp>()
-      .makeCall(() => app.resolve<ServiceModule>().networkService().logout(),
-      context,
-      isProgress: true)
+      .makeCall(
+          () => app.resolve<ServiceModule>().networkService().logout(), context,
+          isProgress: true)
       .then((response) {
     app.resolve<PrefUtils>().resetAndLogout(context);
   }).catchError((onError) {

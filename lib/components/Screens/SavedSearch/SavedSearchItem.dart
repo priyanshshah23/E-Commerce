@@ -195,9 +195,11 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text(model.name ?? "-",
-                                  style:
-                                      appTheme.blackSemiBold18TitleColorblack),
+                              widget.searchType == SavedSearchType.savedSearch
+                                  ? Text(model.name ?? "-",
+                                      style: appTheme
+                                          .blackSemiBold18TitleColorblack)
+                                  : SizedBox(),
                               widget.searchType == SavedSearchType.savedSearch
                                   ? Spacer()
                                   : SizedBox(
