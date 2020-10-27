@@ -29,11 +29,59 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_MY_COMMENT = 26;
   static const MODULE_TYPE_MY_REMINDER = 27;
   static const MODULE_TYPE_MANAGE_ADDRESS = 28;
-  static const MODULE_TYPE_COMPARE = 27;
-  static const MODULE_TYPE_MATCH_PAIR = 28;
-  static const MODULE_TYPE_RECENT_SEARCH = 29;
+  static const MODULE_TYPE_COMPARE = 29;
+  static const MODULE_TYPE_MATCH_PAIR = 30;
+  static const MODULE_TYPE_RECENT_SEARCH = 31;
   static const MODULE_TYPE_OPEN_DRAWER = 1000;
   static const MODULE_TYPE_HOME = 100;
+}
+
+class ModulePermissionConstant {
+  static const permission_dashboard = "dashboard";
+  static const permission_searchDiamond = "searchDiamond";
+  static const permission_fancySearch = "fancySearch";
+  static const permission_quickSearch = "quickSearch";
+  static const permission_mySavedSearch = "mySavedSearch";
+  static const permission_myDemand = "myDemand";
+  static const permission_searchResult = "searchResult";
+  static const permission_compare = "compare";
+  static const permission_showSelected = "showSelected";
+  static const permission_matchPair = "matchPair";
+  static const permission_iAmLucky = "iAmLucky";
+  static const permission_parcelList = "parcelList";
+  static const permission_newGoods = "newGoods";
+  static const permission_bestOfHK = "bestOfHK";
+  static const permission_upcomingDiamonds = "upcomingDiamonds";
+  static const permission_cart = "cart";
+  static const permission_reminder = "reminder";
+  static const permission_watchlist = "watchlist";
+  static const permission_comment = "comment";
+  static const permission_enquiry = "enquiry";
+  static const permission_upcoming = "upcomingDiamonds";
+  static const permission_order = "order";
+  static const permission_purchase = "purchase";
+  static const permission_stone_of_the_day = "stoneoftheday";
+  static const permission_appointment = "appointment";
+  static const permission_address = "address";
+
+  static const permission_auction = "auction";
+  static const permission_exclusive = "exclusive";
+  static const permission_bid = "bid";
+  static const permission_hold = "hold";
+  static const permission_offer = "offer";
+  static const permission_notification = "notification";
+}
+
+class PermissionType {
+  static const permission_view = "view";
+  static const permission_insert = "insert";
+  static const permission_update = "update";
+  static const permission_delete = "delete";
+  static const permission_uploadExcel = "uploadExcel";
+  static const permission_downloadExcel = "downloadExcel";
+  static const permission_mailExcel = "mailExcel";
+  static const permission_printPDF = "printPDF";
+  static const permission_all = "all";
 }
 
 class ArgumentConstant {
@@ -71,9 +119,9 @@ class DiamondTrackConstant {
   static const TRACK_TYPE_WATCH_LIST = 2;
   static const TRACK_TYPE_OFFICE = 3;
   static const TRACK_TYPE_OFFER = 4;
-  static const TRACK_TYPE_REMINER = 5;
+  static const TRACK_TYPE_REMINDER = 5;
   static const TRACK_TYPE_ENQUIRY = 6;
-  static const TRACK_TYPE_REMINDER = 7;
+  static const TRACK_TYPE_SHIPMENT = 7;
   static const TRACK_TYPE_SHOWSELECTED = 8;
   static const TRACK_TYPE_COMMENT = 99;
   static const TRACK_TYPE_APPOINTMENT = 100;

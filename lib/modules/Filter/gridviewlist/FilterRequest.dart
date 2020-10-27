@@ -173,12 +173,32 @@ class FilterRequest {
 }
 
 class FilterDataSource {
-  prepareFilterDataSource(
+  List<FormBaseModel> prepareFilterDataSource(
       List<FormBaseModel> arrFilter, DisplayDataClass searchData) {
     Map<String, dynamic> dict = searchData.toJson();
     for (var item in arrFilter) {
-      
-      // dict[item.apiKey]
+      if (item is KeyToSymbolModel) {
+      } else if (item.viewType == ViewTypes.caratRange) {
+      } else if (item.viewType == ViewTypes.fromTo) {
+        if (item is FromToModel) {
+          if (!isNullEmptyOrFalse(dict[item.apiKey])) {
+            item.valueFrom = dict[item.apiKey][">="];
+            item.valueTo = dict[item.apiKey]["<="];
+          }
+        }
+      } else {
+        if (item is SelectionModel) {
+          print(item.apiKey);
+          if (!isNullEmptyOrFalse(dict[item.apiKey])) {
+            item.masters.forEach((element) {
+              if (dict[item.apiKey].contains(element.sId)) {
+                element.isSelected = true;
+              }
+            });
+          }
+        }
+      }
     }
+    return arrFilter;
   }
 }
