@@ -27,6 +27,7 @@ class DashboardModel {
     this.featuredStone,
     this.seller,
     this.tracks,
+    this.dashboardCount,
   });
 
   Seller seller;
@@ -34,6 +35,7 @@ class DashboardModel {
   List<SavedSearchModel> savedSearch;
   List<SavedSearchModel> recentSearch;
   Map<String, Track> tracks;
+  List<DashboardCount> dashboardCount;
 
   factory DashboardModel.fromJson(Map<String, dynamic> json) => DashboardModel(
         seller: Seller.fromJson(json["seller"]),
@@ -42,10 +44,12 @@ class DashboardModel {
 
         savedSearch: List<SavedSearchModel>.from(
             json["savedSearch"].map((x) => SavedSearchModel.fromJson(x))),
-        // recentSearch: List<SavedSearchModel>.from(
-        //     json["recentSearch"].map((x) => SavedSearchModel.fromJson(x))),
+        // // recentSearch: List<SavedSearchModel>.from(
+        // //     json["recentSearch"].map((x) => SavedSearchModel.fromJson(x))),
         tracks: Map.from(json["tracks"])
             .map((k, v) => MapEntry<String, Track>(k, Track.fromJson(v))),
+        dashboardCount: List<DashboardCount>.from(
+            json["dashboardCount"].map((x) => DashboardCount.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -55,6 +59,8 @@ class DashboardModel {
             List<dynamic>.from(featuredStone.map((x) => x.toJson())),
         "tracks": Map.from(tracks)
             .map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
+        "dashboardCount":
+            List<dynamic>.from(dashboardCount.map((x) => x.toJson())),
 
         // "recentSearch": List<dynamic>.from(recentSearch.map((x) => x.toJson())),
       };
@@ -166,5 +172,86 @@ class Track {
         "pieces": pieces,
         "carat": carat,
         "totals": totals,
+      };
+}
+
+class DashboardCount {
+  DashboardCount({
+    this.id,
+    this.name,
+    this.isSentReminder,
+    this.normalizeName,
+    this.searchData,
+    this.type,
+    this.expiryDate,
+    this.remark,
+    this.isActive,
+    this.isDeleted,
+    this.isSendNotification,
+    this.isReturnSimilar,
+    this.searchCount,
+    this.updateIp,
+    this.createIp,
+    this.user,
+    this.account,
+  });
+
+  String id;
+  String name;
+  bool isSentReminder;
+  String normalizeName;
+  SearchData searchData;
+  int type;
+  String expiryDate;
+  String remark;
+  bool isActive;
+  bool isDeleted;
+  bool isSendNotification;
+  bool isReturnSimilar;
+  int searchCount;
+  String updateIp;
+  String createIp;
+
+  String user;
+  String account;
+
+  factory DashboardCount.fromJson(Map<String, dynamic> json) => DashboardCount(
+        id: json["id"],
+        name: json["name"],
+        isSentReminder: json["isSentReminder"],
+        normalizeName: json["normalizeName"],
+        searchData: SearchData.fromJson(json["searchData"]),
+        type: json["type"],
+        expiryDate: json["expiryDate"],
+        remark: json["remark"],
+        isActive: json["isActive"],
+        isDeleted: json["isDeleted"],
+        isSendNotification: json["isSendNotification"],
+        isReturnSimilar: json["isReturnSimilar"],
+        searchCount: json["searchCount"],
+        updateIp: json["updateIp"],
+        createIp: json["createIp"],
+        user: json["user"],
+        account: json["account"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "isSentReminder": isSentReminder,
+        "normalizeName": normalizeName,
+        "searchData": searchData.toJson(),
+        "type": type,
+        "expiryDate": expiryDate,
+        "remark": remark,
+        "isActive": isActive,
+        "isDeleted": isDeleted,
+        "isSendNotification": isSendNotification,
+        "isReturnSimilar": isReturnSimilar,
+        "searchCount": searchCount,
+        "updateIp": updateIp,
+        "createIp": createIp,
+        "user": user,
+        "account": account,
       };
 }

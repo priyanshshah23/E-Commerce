@@ -5,6 +5,7 @@ import 'package:diamnow/app/constant/ImageConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
+import 'package:diamnow/app/utils/CustomBorder.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
@@ -679,6 +680,65 @@ class DiamondConfig {
         }
       }
     }
+  }
+}
+
+RoundedBorderPainter getPaintingType(BuildContext context, int type) {
+  switch (type) {
+    case BorderConstant.BORDER_TOP:
+      return RoundedBorderPainter(
+        topRadius: 6,
+        bottomRadius: 0,
+        strokeWidth: 1,
+        bottomBorderColor: Colors.transparent,
+        leftBorderColor: appTheme.colorPrimary,
+        rightBorderColor: appTheme.colorPrimary,
+        topBorderColor: appTheme.colorPrimary,
+      );
+
+    case BorderConstant.BORDER_BOTTOM:
+      return RoundedBorderPainter(
+        topRadius: 0,
+        bottomRadius: 6,
+        strokeWidth: 1,
+        bottomBorderColor:appTheme.colorPrimary,
+        leftBorderColor: appTheme.colorPrimary,
+        rightBorderColor: appTheme.colorPrimary,
+        topBorderColor:  Colors.transparent,
+      );
+
+    case BorderConstant.BORDER_LEFT_RIGHT:
+      return RoundedBorderPainter(
+        topRadius: 0,
+        bottomRadius: 0,
+        strokeWidth: 1,
+        bottomBorderColor: Colors.transparent,
+        leftBorderColor: appTheme.colorPrimary,
+        rightBorderColor: appTheme.colorPrimary,
+        topBorderColor: Colors.transparent,
+      );
+
+    case BorderConstant.BORDER_NONE:
+      return RoundedBorderPainter(
+        topRadius: 6,
+        bottomRadius: 6,
+        strokeWidth: 1,
+        bottomBorderColor: appTheme.colorPrimary,
+        leftBorderColor: appTheme.colorPrimary,
+        rightBorderColor: appTheme.colorPrimary,
+        topBorderColor: appTheme.colorPrimary,
+      );
+
+    default:
+      return RoundedBorderPainter(
+        topRadius: 0,
+        bottomRadius: 0,
+        strokeWidth: 1,
+        bottomBorderColor: Colors.transparent,
+        leftBorderColor: Colors.transparent,
+        rightBorderColor: Colors.transparent,
+        topBorderColor: Colors.transparent,
+      );
   }
 }
 

@@ -69,8 +69,12 @@ class clickConstant {
 class DiamondTrackConstant {
   static const TRACK_TYPE_CART = 1;
   static const TRACK_TYPE_WATCH_LIST = 2;
+  static const TRACK_TYPE_OFFICE = 3;
   static const TRACK_TYPE_OFFER = 4;
+  static const TRACK_TYPE_REMINER = 5;
   static const TRACK_TYPE_ENQUIRY = 6;
+  static const TRACK_TYPE_REMINDER = 7;
+  static const TRACK_TYPE_SHOWSELECTED = 8;
   static const TRACK_TYPE_COMMENT = 99;
   static const TRACK_TYPE_APPOINTMENT = 100;
   static const TRACK_TYPE_BID = 101;
