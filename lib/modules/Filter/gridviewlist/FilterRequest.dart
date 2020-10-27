@@ -1,6 +1,7 @@
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/constant/constants.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/app/utils/string_utils.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/CaratRangeWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
@@ -178,7 +179,6 @@ class FilterDataSource {
     Map<String, dynamic> dict = searchData.toJson();
     for (var item in arrFilter) {
       if (item is KeyToSymbolModel) {
-      } else if (item.viewType == ViewTypes.caratRange) {
       } else if (item.viewType == ViewTypes.fromTo) {
         if (item is FromToModel) {
           if (!isNullEmptyOrFalse(dict[item.apiKey])) {
@@ -188,13 +188,30 @@ class FilterDataSource {
         }
       } else {
         if (item is SelectionModel) {
-          print(item.apiKey);
-          if (!isNullEmptyOrFalse(dict[item.apiKey])) {
-            item.masters.forEach((element) {
-              if (dict[item.apiKey].contains(element.sId)) {
-                element.isSelected = true;
-              }
-            });
+          if (item.viewType == ViewTypes.caratRange) {
+            if (!isNullEmptyOrFalse(dict["or"])) {
+              List<dynamic> arr = dict["or"];
+
+              arr.forEach((ele) {
+                Map<String, dynamic> dict = ele[item.apiKey];
+                for (var model in item.masters) {
+                  if (double.parse(model.fromCarat.toStringAsFixed(2)) ==
+                          double.parse(dict[">="]) &&
+                      double.parse(dict["<="]) ==
+                          double.parse(model.toCarat.toStringAsFixed(2))) {
+                    model.isSelected = true;
+                  }
+                }
+              });
+            }
+          } else {
+            if (!isNullEmptyOrFalse(dict[item.apiKey])) {
+              item.masters.forEach((element) {
+                if (dict[item.apiKey].contains(element.sId)) {
+                  element.isSelected = true;
+                }
+              });
+            }
           }
         }
       }
