@@ -42,7 +42,9 @@ class ScreenTitle {
   final String myEnquiry;
   final String upcoming;
   final String myCart;
+  final String myComments;
   final String myComment;
+  final String myReminder;
 
   final String myWatchlist;
   final String myBid;
@@ -53,6 +55,7 @@ class ScreenTitle {
   final String myPurchased;
   final String mySavedSearch;
   final String myDemand;
+  final String manageAddress;
   final String aboutUs;
   final String contactUs;
   final String changePassword;
@@ -341,5 +344,8 @@ class ScreenTitle {
     this.selectCustomDate = "Select Custom date",
     this.availableSlot = "Available Slots",
     this.reqOfficeView = "Request Office View",
+    this.myComments = "My Comment",
+    this.myReminder = "My Reminder",
+    this.manageAddress = "Manage Addresses",
   });
 }

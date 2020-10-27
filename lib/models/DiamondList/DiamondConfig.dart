@@ -5,11 +5,13 @@ import 'package:diamnow/app/constant/ImageConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
+import 'package:diamnow/app/utils/CustomBorder.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
+import 'package:diamnow/components/Screens/Home/DrawerModel.dart';
 import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
@@ -79,6 +81,7 @@ class DiamondConfig {
   List<BottomTabModel> arrMoreMenu;
   List<BottomTabModel> arrBottomTab;
   List<BottomTabModel> arrStatusMenu;
+  List<DrawerModel> arrAccountList;
   BottomMenuSetting bottomMenuSetting;
   List<BottomTabModel> toolbarList = [];
 
@@ -94,6 +97,7 @@ class DiamondConfig {
     if (!isDetail) {
       arrStatusMenu = bottomMenuSetting.getStatusMenuItems();
     }
+    arrAccountList = getAccountListItems();
   }
 
   String getScreenTitle() {
@@ -128,6 +132,8 @@ class DiamondConfig {
         return R.string().screenTitle.exclusiveDiamonds;
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
         return R.string().screenTitle.upcoming;
+      case DiamondModuleConstant.MODULE_TYPE_PROFILE:
+        return R.string().screenTitle.myProfile;
       default:
         return R.string().screenTitle.searchDiamond;
     }
@@ -265,6 +271,103 @@ class DiamondConfig {
     }
 
     return list;
+  }
+
+  List<DrawerModel> getAccountListItems() {
+    List<DrawerModel> drawerList = [];
+        drawerList.add(DrawerModel(
+          image: myWatchlist,
+          title: R.string().screenTitle.myWatchlist,
+          imageColor: appTheme.colorPrimary,
+          isSelected: false,
+          type: DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST,
+        ));
+        drawerList.add(DrawerModel(
+            image: addToCart,
+            title: R.string().screenTitle.myCart,
+            imageColor: appTheme.colorPrimary,
+            isSelected: false,
+            type: DiamondModuleConstant.MODULE_TYPE_MY_CART));
+        drawerList.add(DrawerModel(
+          image: myBid,
+          title: R.string().screenTitle.myBid,
+          isSelected: false,
+          type: DiamondModuleConstant.MODULE_TYPE_MY_BID,
+        ));
+        drawerList.add(DrawerModel(
+          image: myHold,
+          title: R.string().screenTitle.myHold,
+          isSelected: false,
+          type: DiamondModuleConstant.MODULE_TYPE_MY_HOLD,
+        ));
+    drawerList.add(DrawerModel(
+      image: enquiry,
+      title: R.string().screenTitle.myEnquiry,
+      imageColor: appTheme.colorPrimary,
+      isSelected: false,
+      type: DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY,
+    ));
+    drawerList.add(DrawerModel(
+      image: myOrder,
+      title: R.string().screenTitle.myOrder,
+      isSelected: false,
+      type: DiamondModuleConstant.MODULE_TYPE_MY_ORDER,
+    ));
+    drawerList.add(DrawerModel(
+      image: myOffice,
+      title: R.string().screenTitle.myOffice,
+      isSelected: false,
+      type: DiamondModuleConstant.MODULE_TYPE_MY_OFFICE,
+    ));
+    drawerList.add(DrawerModel(
+      image: myOffer,
+      title: R.string().screenTitle.myOffer,
+      isSelected: false,
+      type: DiamondModuleConstant.MODULE_TYPE_MY_OFFER,
+    ));
+    drawerList.add(DrawerModel(
+      image: myPurchased,
+      title: R.string().screenTitle.myPurchased,
+      isSelected: false,
+      type: DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE,
+    ));
+    drawerList.add(DrawerModel(
+        image: comment,
+        title: R.string().screenTitle.myComments,
+        imageColor: appTheme.colorPrimary,
+        isSelected: false,
+        type: DiamondModuleConstant.MODULE_TYPE_MY_COMMENT));
+    drawerList.add(DrawerModel(
+        image: reminder,
+        title: R.string().screenTitle.myReminder,
+        imageColor: appTheme.colorPrimary,
+        isSelected: false,
+        type: DiamondModuleConstant.MODULE_TYPE_MY_REMINDER));
+    drawerList.add(DrawerModel(
+      image: myDemand,
+      title: R.string().screenTitle.myDemand,
+      isSelected: false,
+      type: DiamondModuleConstant.MODULE_TYPE_MY_DEMAND,
+    ));
+    drawerList.add(DrawerModel(
+      image: "",
+      title: R.string().screenTitle.manageAddress,
+      isSelected: false,
+      type: DiamondModuleConstant.MODULE_TYPE_MANAGE_ADDRESS,
+    ));
+    drawerList.add(DrawerModel(
+      image: changePassword,
+      title: R.string().screenTitle.changePassword,
+      isSelected: false,
+      type: DiamondModuleConstant.MODULE_TYPE_CHANGE_PASSWORD,
+    ));
+    drawerList.add(DrawerModel(
+      image: logout,
+      title: R.string().screenTitle.logout,
+      isSelected: false,
+      type: DiamondModuleConstant.MODULE_TYPE_LOGOUT,
+    ));
+    return drawerList;
   }
 
   manageDiamondAction(BuildContext context, List<DiamondModel> list,
@@ -674,6 +777,65 @@ class DiamondConfig {
         }
       }
     }
+  }
+}
+
+RoundedBorderPainter getPaintingType(BuildContext context, int type) {
+  switch (type) {
+    case BorderConstant.BORDER_TOP:
+      return RoundedBorderPainter(
+        topRadius: 6,
+        bottomRadius: 0,
+        strokeWidth: 1,
+        bottomBorderColor: Colors.transparent,
+        leftBorderColor: appTheme.colorPrimary,
+        rightBorderColor: appTheme.colorPrimary,
+        topBorderColor: appTheme.colorPrimary,
+      );
+
+    case BorderConstant.BORDER_BOTTOM:
+      return RoundedBorderPainter(
+        topRadius: 0,
+        bottomRadius: 6,
+        strokeWidth: 1,
+        bottomBorderColor:appTheme.colorPrimary,
+        leftBorderColor: appTheme.colorPrimary,
+        rightBorderColor: appTheme.colorPrimary,
+        topBorderColor:  Colors.transparent,
+      );
+
+    case BorderConstant.BORDER_LEFT_RIGHT:
+      return RoundedBorderPainter(
+        topRadius: 0,
+        bottomRadius: 0,
+        strokeWidth: 1,
+        bottomBorderColor: Colors.transparent,
+        leftBorderColor: appTheme.colorPrimary,
+        rightBorderColor: appTheme.colorPrimary,
+        topBorderColor: Colors.transparent,
+      );
+
+    case BorderConstant.BORDER_NONE:
+      return RoundedBorderPainter(
+        topRadius: 6,
+        bottomRadius: 6,
+        strokeWidth: 1,
+        bottomBorderColor: appTheme.colorPrimary,
+        leftBorderColor: appTheme.colorPrimary,
+        rightBorderColor: appTheme.colorPrimary,
+        topBorderColor: appTheme.colorPrimary,
+      );
+
+    default:
+      return RoundedBorderPainter(
+        topRadius: 0,
+        bottomRadius: 0,
+        strokeWidth: 1,
+        bottomBorderColor: Colors.transparent,
+        leftBorderColor: Colors.transparent,
+        rightBorderColor: Colors.transparent,
+        topBorderColor: Colors.transparent,
+      );
   }
 }
 

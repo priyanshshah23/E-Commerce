@@ -93,7 +93,7 @@ class SavedSearchModel {
         name: json["name"],
         isSentReminder: json["isSentReminder"],
         normalizeName: json["normalizeName"],
-        searchData: json['searchData'] != null
+        searchData: !isNullEmptyOrFalse(json['searchData'])
             ? DisplayDataClass.fromJson(json["searchData"])
             : null,
         type: json["type"],
@@ -103,7 +103,7 @@ class SavedSearchModel {
         isDeleted: json["isDeleted"],
         isSendNotification: json["isSendNotification"],
         isReturnSimilar: json["isReturnSimilar"],
-        displayData: json['displayData'] != null
+        displayData: !isNullEmptyOrFalse(json['displayData'])
             ? DisplayDataClass.fromJson(json["displayData"])
             : null,
       );
@@ -246,7 +246,9 @@ class DisplayDataClass {
             : List<String>.from(json["brlncy"].map((x) => x)),
         wSts: json["wSts"] == null
             ? null
-            : List<String>.from(json["wSts"].map((x) => x)),
+            : (json["wSts"] is String)
+                ? [json["wSts"]]
+                : List<String>.from(json["wSts"].map((x) => x)),
         ctPr: json["ctPr"] == null ? null : Back.fromJson(json["ctPr"]),
         back: json["back"] == null ? null : Back.fromJson(json["back"]),
         isCm: json["isCm"] == null
@@ -255,9 +257,9 @@ class DisplayDataClass {
         isDor: json["isDor"] == null
             ? null
             : List<String>.from(json["isDor"].map((x) => x)),
-        isFm: json["isFm"] == null
-            ? null
-            : List<String>.from(json["isFm"].map((x) => x)),
+        // isFm: json["isFm"] == null
+        //     ? null
+        //     : List<String>.from(json["isFm"].map((x) => x)),
         type2: json["type2"] == null ? null : Type2.fromJson(json["type2"]),
         tblPer: json["tblPer"] == null ? null : Back.fromJson(json["tblPer"]),
         depPer: json["depPer"] == null ? null : Back.fromJson(json["depPer"]),
