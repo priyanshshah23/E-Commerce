@@ -113,6 +113,7 @@ class clickConstant {
   static const CLICK_TYPE_ROW = 1;
   static const CLICK_TYPE_SELECTION = 2;
   static const CLICK_TYPE_CONFIRM = 3;
+  static const CLICK_TYPE_DELETE = 4;
 }
 
 class DiamondTrackConstant {
@@ -167,6 +168,7 @@ class ActionMenuConstant {
   static const ACTION_TYPE_COMPARE = 14;
   static const ACTION_TYPE_BID = 15;
   static const ACTION_TYPE_REMINDER= 16;
+  static const ACTION_TYPE_DELETE= 17;
 }
 
 class MoreMenuConstant {

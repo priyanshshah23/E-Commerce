@@ -619,3 +619,4 @@ bool isDiamondSearchModule(int moduleType) {
       return false;
   }
 }
+
