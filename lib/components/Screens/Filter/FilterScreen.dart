@@ -292,19 +292,13 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       onClickCallback: (obj) {
         //
         if (obj.code == BottomCodeConstant.filterSavedSearch) {
-          //
         } else if (obj.code == BottomCodeConstant.filterAddDemamd) {
-          //
-          print(obj.code);
         } else if (obj.code == BottomCodeConstant.filterSearch) {
-          //
-          print(obj.code);
           callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
               isSearch: true);
         } else if (obj.code == BottomCodeConstant.filterSaveAndSearch) {
-          //
-          print(obj.code);
-          callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,isSavedSearch: true);
+          callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+              isSavedSearch: true);
         } else if (obj.code == BottomCodeConstant.filteMatchPair) {
           callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR);
         }

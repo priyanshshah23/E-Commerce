@@ -36,6 +36,50 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_HOME = 100;
 }
 
+class ModulePermissionConstant {
+  static const permission_dashboard = "dashboard";
+  static const permission_searchDiamond = "searchDiamond";
+  static const permission_fancySearch = "fancySearch";
+  static const permission_quickSearch = "quickSearch";
+  static const permission_mySavedSearch = "mySavedSearch";
+  static const permission_myDemand = "myDemand";
+  static const permission_searchResult = "searchResult";
+  static const permission_compare = "compare";
+  static const permission_showSelected = "showSelected";
+  static const permission_matchPair = "matchPair";
+  static const permission_iAmLucky = "iAmLucky";
+  static const permission_parcelList = "parcelList";
+  static const permission_newGoods = "newGoods";
+  static const permission_bestOfHK = "bestOfHK";
+  static const permission_upcomingDiamonds = "upcomingDiamonds";
+  static const permission_cart = "cart";
+  static const permission_reminder = "reminder";
+  static const permission_watchlist = "watchlist";
+  static const permission_comment = "comment";
+  static const permission_enquiry = "enquiry";
+  static const permission_upcoming = "upcomingDiamonds";
+  static const permission_order = "order";
+  static const permission_purchase = "purchase";
+  static const permission_stone_of_the_day = "stoneoftheday";
+  static const permission_appointment = "appointment";
+  static const permission_notification = "notification";
+
+  static const permission_exclusive = "exclusive";
+  static const permission_auction = "auction";
+}
+
+class PermissionType {
+  static const permission_view = "view";
+  static const permission_insert = "insert";
+  static const permission_update = "update";
+  static const permission_delete = "delete";
+  static const permission_uploadExcel = "uploadExcel";
+  static const permission_downloadExcel = "downloadExcel";
+  static const permission_mailExcel = "mailExcel";
+  static const permission_printPDF = "printPDF";
+  static const permission_all = "all";
+}
+
 class ArgumentConstant {
   static const ModuleType = "moduleType";
   static const IsFromDrawer = "isFromDrawer";
