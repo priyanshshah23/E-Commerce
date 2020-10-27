@@ -23,57 +23,68 @@ class HomeDrawer extends StatelessWidget {
       BuildContext context, DrawerModel model, VoidCallback callback) {
     return InkWell(
       onTap: callback,
-      child: Padding(
-        padding: EdgeInsets.only(
-          left: getSize(20),
-          right: getSize(20),
-        ),
-        child: Row(
-          // mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(top: getSize(10), bottom: getSize(10)),
-              child: Image.asset(model.image,
-                  color: model.imageColor != null ? model.imageColor : null,
-                  width: getSize(22),
-                  height: getSize(22)),
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+              left: getSize(20),
+              right: getSize(20),
             ),
-            SizedBox(
-              width: getSize(12),
-            ),
-            Text(
-              model.title,
-              style: appTheme.blackNormal14TitleColorblack.copyWith(
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            Spacer(),
-            if (model.isShowCount && model.count > 0)
-              Container(
-                decoration: BoxDecoration(
-                    color: model.countBackgroundColor,
-                    borderRadius: BorderRadius.circular(
-                      getSize(5),
-                    )),
-                child: Padding(
-                  padding: EdgeInsets.only(
-                      left: getSize(6),
-                      right: getSize(6),
-                      top: getSize(4),
-                      bottom: getSize(4)),
-                  child: Text(
-                    model.count.toString(),
-                    style: appTheme.blackNormal14TitleColorblack.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: appTheme.whiteColor,
-                    ),
+            child: Row(
+              // mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(top: getSize(10), bottom: getSize(10)),
+                  child: Image.asset(model.image,
+                      color: model.imageColor != null ? model.imageColor : null,
+                      width: getSize(22),
+                      height: getSize(22)),
+                ),
+                SizedBox(
+                  width: getSize(12),
+                ),
+                Text(
+                  model.title,
+                  style: appTheme.blackNormal14TitleColorblack.copyWith(
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
-              ),
-          ],
-        ),
+                Spacer(),
+                if (model.isShowCount && model.count > 0)
+                  Container(
+                    decoration: BoxDecoration(
+                        color: model.countBackgroundColor,
+                        borderRadius: BorderRadius.circular(
+                          getSize(5),
+                        )),
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          left: getSize(6),
+                          right: getSize(6),
+                          top: getSize(4),
+                          bottom: getSize(4)),
+                      child: Text(
+                        model.count.toString(),
+                        style: appTheme.blackNormal14TitleColorblack.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: appTheme.whiteColor,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          if(model.isShowDivider)
+          Container(
+            margin: EdgeInsets.symmetric(vertical: getSize(10)),
+            height: getSize(1),
+            width: MathUtilities.screenWidth(context),
+            color: appTheme.dividerColor.withOpacity(0.5),
+          )
+        ],
       ),
     );
   }
