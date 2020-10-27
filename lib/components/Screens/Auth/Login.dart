@@ -435,6 +435,15 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                         isProgress: true,
                         id: id).then((value) {});
                   }
+                } else {
+                  SyncManager.instance
+                      .callMasterSync(NavigationUtilities.key.currentContext, () async {
+                    //success
+                    AppNavigation().movetoHome(isPopAndSwitch: true);
+                  }, () {},
+                      isNetworkError: false,
+                      isProgress: true,
+                      id: id).then((value) {});
                 }
               } else {
                 print("Android");
@@ -457,6 +466,15 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                         isProgress: true,
                         id: id).then((value) {});
                   }
+                } else {
+                  SyncManager.instance
+                      .callMasterSync(NavigationUtilities.key.currentContext, () async {
+                    //success
+                    AppNavigation().movetoHome(isPopAndSwitch: true);
+                  }, () {},
+                      isNetworkError: false,
+                      isProgress: true,
+                      id: id).then((value) {});
                 }
               }
             },
