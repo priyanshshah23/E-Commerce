@@ -6,6 +6,7 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Auth/ProfileList.dart';
+import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
 import 'package:diamnow/components/Screens/DashBoard/Dashboard.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
@@ -155,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
     dict[ArgumentConstant.ModuleType] =
         DiamondModuleConstant.MODULE_TYPE_PROFILE;
     dict[ArgumentConstant.IsFromDrawer] = true;
-    currentWidget = ProfileList();
+    currentWidget = MyAccountScreen();
   }
 
   openAboutUs(int moduleType) {

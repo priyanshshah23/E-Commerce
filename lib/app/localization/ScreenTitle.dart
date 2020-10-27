@@ -29,6 +29,7 @@ class ScreenTitle {
   final String newRequest;
   final String otpVerifyDesc;
   final String diamondDetail;
+  final String myAccount;
 
 // drawer
   final String home;
@@ -347,5 +348,6 @@ class ScreenTitle {
     this.myComments = "My Comment",
     this.myReminder = "My Reminder",
     this.manageAddress = "Manage Addresses",
+    this.myAccount = "My Account",
   });
 }

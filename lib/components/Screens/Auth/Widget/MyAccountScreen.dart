@@ -1,5 +1,8 @@
+import 'package:country_pickers/country_pickers.dart';
 import 'package:diamnow/Setting/SettingModel.dart';
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/Screens/Home/DrawerModel.dart';
 import 'package:diamnow/components/Screens/Home/HomeDrawer.dart';
 import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
@@ -86,10 +89,139 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     );
   }
 
+  Widget _buildAvatarRow(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: appTheme.whiteColor,
+        border: Border(bottom: BorderSide(color: appTheme.dividerColor)),
+      ),
+      padding: EdgeInsets.only(
+        top: getSize(20),
+        bottom: getSize(20),
+        left: getSize(16),
+        right: getSize(16),
+      ),
+      child: Column(
+        children: <Widget>[
+          Container(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                // circle avatar
+                Container(
+                  height: getSize(50),
+                  width: getSize(50),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                  ),
+                  child: ClipRRect(
+                    borderRadius:
+                    BorderRadius.all(Radius.circular(getSize(25))),
+                    child: getImageView(
+                      app.resolve<PrefUtils>().getUserDetails().photoId,
+                      placeHolderImage: userTemp,
+                      height: getSize(50),
+                      width: getSize(50),
+                    ),
+                  ),
+                ),
+                SizedBox(width: getSize(10)),
+                //username
+                Expanded(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            app
+                                .resolve<PrefUtils>()
+                                .getUserDetails()
+                                .getFullName() ??
+                                "-",
+                            style: appTheme.black16TextStyle.copyWith(
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: getSize(6)),
+                      if (isStringEmpty(app
+                          .resolve<PrefUtils>()
+                          .getUserDetails()
+                          .email) ==
+                          false)
+                        Row(
+                          children: [
+                            Image.asset(
+                              email,
+                              height: getSize(12),
+                              width: getSize(12),
+                            ),
+                            SizedBox(width: getSize(8)),
+                            Text(
+                              app.resolve<PrefUtils>().getUserDetails().email ??
+                                  "-",
+                              style: appTheme.black12TextStyle,
+                            ),
+                          ],
+                        ),
+                      SizedBox(height: getSize(6)),
+                      Row(
+                        children: [
+                          Image.asset(
+                            phone,
+                            height: getSize(14),
+                            width: getSize(12),
+                          ),
+                          SizedBox(width: getSize(8)),
+                          if (isStringEmpty(app
+                              .resolve<PrefUtils>()
+                              .getUserDetails()
+                              .countryCode) ==
+                              false)
+                            Image.asset(
+                              CountryPickerUtils.getFlagImageAssetPath(
+                                  CountryPickerUtils.getCountryByPhoneCode(app
+                                      .resolve<PrefUtils>()
+                                      .getUserDetails()
+                                      .countryCode)
+                                      .isoCode),
+                              height: getSize(12),
+                              width: getSize(16),
+                              fit: BoxFit.fill,
+                              package: "country_pickers",
+                            ),
+                          SizedBox(width: getSize(8)),
+                          Text(
+                            app.resolve<PrefUtils>().getUserDetails().phone ??
+                                "-",
+                            style: appTheme.black12TextStyle,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   List<Widget> getDrawerList(BuildContext context) {
     List<Widget> list = List<Widget>();
 
-    list.add(UserDrawerHeader());
+    list.add(Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        _buildAvatarRow(context),
+      ],
+    ));
+
+    list.add(SizedBox(height: getSize(10),));
+
     for (int i = 0; i < accountItems.length; i++) {
       list.add(getDrawerItem(context, accountItems[i], () {
         //RxBus.post(DrawerEvent(accountItems[i].type, true), tag: eventBusTag);
@@ -100,7 +232,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       Container(
         child: Padding(
           padding: EdgeInsets.only(
-              left: getSize(20), top: getSize(16), bottom: getSize(10)),
+              left: getSize(20), top: getSize(16), bottom: getSize(30)),
           child: Text(
             "App Version 1.0.0",
             style: appTheme.blackNormal12TitleColorblack.copyWith(
@@ -116,46 +248,40 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: getAppBar(
+        context,
+        R.string().screenTitle.myAccount,
+        bgColor: appTheme.whiteColor,
+        leadingButton: getBackButton(context),
+        centerTitle: false,
+      ),
       body: Container(
       margin: EdgeInsets.zero,
       child: ClipRRect(
         borderRadius: BorderRadius.only(
             topRight: Radius.circular(getSize(26)),
             bottomRight: Radius.circular(getSize(26))),
-        child: Drawer(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius:
-              BorderRadius.only(topRight: Radius.circular(26)),
-              color: AppTheme.of(context).theme.primaryColor,
-            ),
-            child: Stack(
-              children: [
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    child: Image.asset(bottomGradient),
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    // UserDrawerHeader(), // if you want to set static
-                    Expanded(
-                      child: Container(
-                          padding: EdgeInsets.fromLTRB(getSize(0),
-                              getSize(12), getSize(0), getSize(0)),
-                          // color: AppTheme.of(context).theme.primaryColor,
-                          child: ListView(
-                              padding: EdgeInsets.all(getSize(0)),
-                              //shrinkWrap: true,
-                              children: getDrawerList(context))),
-                    )
-                  ],
-                ),
-                //
-              ],
-            ),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius:
+            BorderRadius.only(topRight: Radius.circular(26)),
+            color: AppTheme.of(context).theme.primaryColor,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              // UserDrawerHeader(), // if you want to set static
+              Expanded(
+                child: Container(
+                    padding: EdgeInsets.fromLTRB(getSize(0),
+                        getSize(12), getSize(0), getSize(0)),
+                    // color: AppTheme.of(context).theme.primaryColor,
+                    child: ListView(
+                        padding: EdgeInsets.all(getSize(0)),
+                        //shrinkWrap: true,
+                        children: getDrawerList(context))),
+              )
+            ],
           ),
         ),
       ),
