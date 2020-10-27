@@ -213,37 +213,37 @@ class UserDrawerHeader extends StatelessWidget {
      // elevation: 10,
      // shadowColor: appTheme.shadowColor,
       borderRadius: BorderRadius.circular(getSize(5)),
-      child: Container(
-        decoration: BoxDecoration(
-          color: appTheme.whiteColor,
-          borderRadius: BorderRadius.circular(getSize(5)),
-        //  border: Border.all(color: appTheme.dividerColor),
-          // boxShadow: [
-          //   BoxShadow(
-          //     color: appTheme.shadowColor,
-          //     spreadRadius: 1,
-          //     blurRadius: 20,
-          //     offset: Offset(0, 3), // changes position of shadow
-          //   ),
-          // ],
-        ),
-        padding: EdgeInsets.only(
-          top: getSize(20),
-          bottom: getSize(20),
+      child: InkWell(
+        onTap: ()=>_navigateToUserScreen(),
+        child: Container(
+          decoration: BoxDecoration(
+            color: appTheme.whiteColor,
+            borderRadius: BorderRadius.circular(getSize(5)),
+          //  border: Border.all(color: appTheme.dividerColor),
+            // boxShadow: [
+            //   BoxShadow(
+            //     color: appTheme.shadowColor,
+            //     spreadRadius: 1,
+            //     blurRadius: 20,
+            //     offset: Offset(0, 3), // changes position of shadow
+            //   ),
+            // ],
+          ),
+          padding: EdgeInsets.only(
+            top: getSize(20),
+            bottom: getSize(20),
 //          left: getSize(16),
-          right: getSize(16),
-        ),
-        child: Column(
-          children: <Widget>[
-            Container(
-              child: InkWell(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    // circle avatar
-                    InkWell(
-                      onTap: ()=>_navigateToUserScreen(),
-                      child: Container(
+            right: getSize(16),
+          ),
+          child: Column(
+            children: <Widget>[
+              Container(
+                child: InkWell(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      // circle avatar
+                      Container(
                         height: getSize(50),
                         width: getSize(50),
                         decoration: BoxDecoration(
@@ -261,37 +261,36 @@ class UserDrawerHeader extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(width: getSize(10)),
-                    //username
-                    Expanded(
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                app
-                                        .resolve<PrefUtils>()
-                                        .getUserDetails()
-                                        .getFullName() ??
-                                    "",
-                                style: appTheme.black16TextStyle.copyWith(
-                                  fontWeight: FontWeight.w500,
+                      SizedBox(width: getSize(10)),
+                      //username
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  app
+                                          .resolve<PrefUtils>()
+                                          .getUserDetails()
+                                          .getFullName() ??
+                                      "",
+                                  style: appTheme.black16TextStyle.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
-                              ),
-                              Spacer(),
-                              InkWell(
-                                onTap: () {
-                                 Navigator.pop(context);
-                                },
-                                child: Image.asset(
-                                  cancel,
-                                  height: getSize(18),
-                                  width: getSize(18),
+                                Spacer(),
+                                InkWell(
+                                  onTap: () {
+                                   Navigator.pop(context);
+                                  },
+                                  child: Image.asset(
+                                    cancel,
+                                    height: getSize(18),
+                                    width: getSize(18),
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
+                              ],
+                            ),
 //                        SizedBox(height: getSize(6)),
 //                        if (isStringEmpty(app
 //                                .resolve<PrefUtils>()
@@ -352,14 +351,15 @@ class UserDrawerHeader extends StatelessWidget {
 //                            ),
 //                          ],
 //                        ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

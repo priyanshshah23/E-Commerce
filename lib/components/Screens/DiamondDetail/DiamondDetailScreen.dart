@@ -864,99 +864,102 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
               borderRadius: BorderRadius.circular(getSize(15)),
             ),
             backgroundColor: appTheme.whiteColor,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "Add reminder",
-                  style: appTheme.black18TextStyle,
-                ),
-                GridView.builder(
-                    shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 1.5,
-                    ),
-                    itemCount: reminderList.length,
-                    itemBuilder: (context, i) {
-                      return Padding(
-                        padding: EdgeInsets.only(top: getSize(20)),
-                        child: Column(
-                          children: [
-                            Image.asset(
-                              reminderList[i].image,
-                              height: getSize(40),
-                              width: getSize(40),
-                            ),
-                            Text(
-                              reminderList[i].title,
-                              style: appTheme.black16TextStyle,
-                            ),
-                            Text(
-                              reminderList[i].subtitle,
-                              style: appTheme.black16TextStyle,
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: getSize(Spacing.leftPadding), vertical: getSize(16)),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            // alignment: Alignment.bottomCenter,
-                            padding: EdgeInsets.symmetric(
-                              vertical: getSize(15),
-                            ),
-                            decoration: BoxDecoration(
-                              color: appTheme.colorPrimary.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(getSize(5)),
-                            ),
-                            child: Text(
-                              R.string().commonString.cancel,
-                              textAlign: TextAlign.center,
-                              style: appTheme.blue14TextStyle
-                                  .copyWith(fontSize: getFontSize(16)),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: getSize(20),
-                      ),
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            FocusScope.of(context).unfocus();
-                          },
-                          child: Container(
-                            //alignment: Alignment.bottomCenter,
-                            padding: EdgeInsets.symmetric(
-                              vertical: getSize(15),
-                            ),
-                            decoration: BoxDecoration(
-                                color: appTheme.colorPrimary,
-                                borderRadius: BorderRadius.circular(getSize(5)),
-                                boxShadow: getBoxShadow(context)),
-                            child: Text(
-                              R.string().commonString.btnSubmit,
-                              textAlign: TextAlign.center,
-                              style: appTheme.white16TextStyle,
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
+            child: Padding(
+              padding: EdgeInsets.only(top: getSize(10)),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Add reminder",
+                    style: appTheme.black18TextStyle,
                   ),
-                ),
-              ],
+                  GridView.builder(
+                      shrinkWrap: true,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 1.5,
+                      ),
+                      itemCount: reminderList.length,
+                      itemBuilder: (context, i) {
+                        return Padding(
+                          padding: EdgeInsets.only(top: getSize(20)),
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                reminderList[i].image,
+                                height: getSize(40),
+                                width: getSize(40),
+                              ),
+                              Text(
+                                reminderList[i].title,
+                                style: appTheme.black16TextStyle,
+                              ),
+                              Text(
+                                reminderList[i].subtitle,
+                                style: appTheme.black16TextStyle,
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: getSize(Spacing.leftPadding), vertical: getSize(16)),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              // alignment: Alignment.bottomCenter,
+                              padding: EdgeInsets.symmetric(
+                                vertical: getSize(15),
+                              ),
+                              decoration: BoxDecoration(
+                                color: appTheme.colorPrimary.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(getSize(5)),
+                              ),
+                              child: Text(
+                                R.string().commonString.cancel,
+                                textAlign: TextAlign.center,
+                                style: appTheme.blue14TextStyle
+                                    .copyWith(fontSize: getFontSize(16)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: getSize(20),
+                        ),
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              FocusScope.of(context).unfocus();
+                            },
+                            child: Container(
+                              //alignment: Alignment.bottomCenter,
+                              padding: EdgeInsets.symmetric(
+                                vertical: getSize(15),
+                              ),
+                              decoration: BoxDecoration(
+                                  color: appTheme.colorPrimary,
+                                  borderRadius: BorderRadius.circular(getSize(5)),
+                                  boxShadow: getBoxShadow(context)),
+                              child: Text(
+                                R.string().commonString.btnSubmit,
+                                textAlign: TextAlign.center,
+                                style: appTheme.white16TextStyle,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         });

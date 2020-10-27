@@ -372,14 +372,27 @@ class BottomMenuSetting {
           image: comment,
           title: R.string().screenTitle.comment,
           type: ActionMenuConstant.ACTION_TYPE_COMMENT));
-    if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) if (app
-        .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_offer)
-        .insert)
-      moreMenuList.add(BottomTabModel(
-          image: offer,
-          title: R.string().screenTitle.offer,
-          type: ActionMenuConstant.ACTION_TYPE_OFFER));
+
+    if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_REMINDER) {
+      if (app
+          .resolve<PrefUtils>()
+          .getModulePermission(ModulePermissionConstant.permission_reminder)
+          .insert)
+        moreMenuList.add(BottomTabModel(
+            image: reminder,
+            title: R.string().screenTitle.reminder,
+            type: ActionMenuConstant.ACTION_TYPE_REMINDER));
+    }
+    if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+      if (app
+          .resolve<PrefUtils>()
+          .getModulePermission(ModulePermissionConstant.permission_offer)
+          .insert)
+        moreMenuList.add(BottomTabModel(
+            image: offer,
+            title: R.string().screenTitle.offer,
+            type: ActionMenuConstant.ACTION_TYPE_OFFER));
+    }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) if (app
         .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_appointment)

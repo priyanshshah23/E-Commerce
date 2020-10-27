@@ -64,6 +64,7 @@ class ModulePermissionConstant {
   static const permission_appointment = "appointment";
   static const permission_address = "address";
 
+  static const permission_featured = "featured";
   static const permission_auction = "auction";
   static const permission_exclusive = "exclusive";
   static const permission_bid = "bid";
@@ -165,6 +166,7 @@ class ActionMenuConstant {
   static const ACTION_TYPE_MORE = 13;
   static const ACTION_TYPE_COMPARE = 14;
   static const ACTION_TYPE_BID = 15;
+  static const ACTION_TYPE_REMINDER= 16;
 }
 
 class MoreMenuConstant {
