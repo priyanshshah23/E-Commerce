@@ -192,12 +192,17 @@ class DiamondConfig {
 
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_HOME:
-        list.add(BottomTabModel(
-            title: "",
-            image: notification,
-            code: BottomCodeConstant.TBNotification,
-            sequence: 1,
-            isCenter: true));
+        if (app
+            .resolve<PrefUtils>()
+            .getModulePermission(
+                ModulePermissionConstant.permission_notification)
+            .view)
+          list.add(BottomTabModel(
+              title: "",
+              image: notification,
+              code: BottomCodeConstant.TBNotification,
+              sequence: 1,
+              isCenter: true));
         list.add(BottomTabModel(
             title: "",
             image: userTemp,
@@ -209,6 +214,7 @@ class DiamondConfig {
 
       default:
         if (isCompare) {
+
           list.add(BottomTabModel(
               title: "",
               image: download,
@@ -270,8 +276,6 @@ class DiamondConfig {
 
     return list;
   }
-
-
 
   manageDiamondAction(BuildContext context, List<DiamondModel> list,
       BottomTabModel bottomTabModel, Function placeOrder) async {
@@ -701,10 +705,10 @@ RoundedBorderPainter getPaintingType(BuildContext context, int type) {
         topRadius: 0,
         bottomRadius: 6,
         strokeWidth: 1,
-        bottomBorderColor:appTheme.colorPrimary,
+        bottomBorderColor: appTheme.colorPrimary,
         leftBorderColor: appTheme.colorPrimary,
         rightBorderColor: appTheme.colorPrimary,
-        topBorderColor:  Colors.transparent,
+        topBorderColor: Colors.transparent,
       );
 
     case BorderConstant.BORDER_LEFT_RIGHT:
@@ -742,105 +746,6 @@ RoundedBorderPainter getPaintingType(BuildContext context, int type) {
   }
 }
 
-BoxDecoration getBoxDecorationType(BuildContext context, int type) {
-  switch (type) {
-    case BorderConstant.BORDER_TOP:
-      return BoxDecoration(
-        //borderRadius: BorderRadius.circular(getSize(5)),
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(5),
-          topRight: Radius.circular(5),
-          bottomLeft: Radius.circular(0),
-          bottomRight: Radius.circular(0),
-        ),
-        border: Border(
-          top: BorderSide(
-              width: 1.0,
-              color: appTheme.colorPrimary,
-              style: BorderStyle.solid),
-          left: BorderSide(
-              width: 1.0,
-              color: appTheme.colorPrimary,
-              style: BorderStyle.solid),
-          right: BorderSide(
-              width: 1.0,
-              color: appTheme.colorPrimary,
-              style: BorderStyle.solid),
-          bottom: BorderSide(
-              width: 1.0,
-              color: appTheme.colorPrimary,
-              style: BorderStyle.solid),
-        ),
-      );
-    case BorderConstant.BORDER_BOTTOM:
-      return BoxDecoration(
-        // boxShadow: getBoxShadow(context),
-        //borderRadius: BorderRadius.circular(getSize(5)),
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(0),
-          topRight: Radius.circular(0),
-          bottomLeft: Radius.circular(5),
-          bottomRight: Radius.circular(5),
-        ),
-        border: Border(
-          top: BorderSide(
-              width: 1.0,
-              color: appTheme.colorPrimary,
-              style: BorderStyle.solid),
-          left: BorderSide(
-              width: 1.0,
-              color: appTheme.colorPrimary,
-              style: BorderStyle.solid),
-          right: BorderSide(
-              width: 1.0,
-              color: appTheme.colorPrimary,
-              style: BorderStyle.solid),
-          bottom: BorderSide(
-              width: 1.0,
-              color: appTheme.colorPrimary,
-              style: BorderStyle.solid),
-        ),
-      );
-    case BorderConstant.BORDER_LEFT_RIGHT:
-      return BoxDecoration(
-        // boxShadow: getBoxShadow(context),
-        // borderRadius: BorderRadius.circular(getSize(5)),
-        // borderRadius: BorderRadius.only(
-        //   topLeft: Radius.circular(getSize(5)),
-        //   topRight: Radius.circular(2),
-        //   bottomLeft: Radius.circular(2),
-        //   bottomRight: Radius.circular(2),
-        // ),
-        border: Border(
-          left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
-          right: BorderSide(width: 1.0, color: appTheme.colorPrimary),
-          top: BorderSide(width: 0, color: appTheme.whiteColor),
-          bottom: BorderSide(width: 0, color: appTheme.whiteColor),
-        ),
-      );
-    case BorderConstant.BORDER_NONE:
-      return BoxDecoration(
-        //  boxShadow: getBoxShadow(context),
-        borderRadius: BorderRadius.circular(getSize(5)),
-        border: Border(
-          top: BorderSide(width: 1.0, color: appTheme.colorPrimary),
-          left: BorderSide(width: 1.0, color: appTheme.colorPrimary),
-          right: BorderSide(width: 1.0, color: appTheme.colorPrimary),
-          bottom: BorderSide(width: 1.0, color: appTheme.colorPrimary),
-        ),
-      );
-    default:
-      return BoxDecoration(
-        borderRadius: BorderRadius.circular(getSize(5)),
-        border: Border(
-          top: BorderSide(width: 0, color: appTheme.whiteColor),
-          left: BorderSide(width: 0, color: appTheme.whiteColor),
-          right: BorderSide(width: 0, color: appTheme.whiteColor),
-          bottom: BorderSide(width: 0, color: appTheme.whiteColor),
-        ),
-      );
-  }
-}
 
 openSharePopUp(BuildContext context) {
   List<StoneModel> stoneList = [

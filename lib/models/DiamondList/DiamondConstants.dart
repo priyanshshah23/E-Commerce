@@ -62,10 +62,14 @@ class ModulePermissionConstant {
   static const permission_purchase = "purchase";
   static const permission_stone_of_the_day = "stoneoftheday";
   static const permission_appointment = "appointment";
-  static const permission_notification = "notification";
+  static const permission_address = "address";
 
-  static const permission_exclusive = "exclusive";
   static const permission_auction = "auction";
+  static const permission_exclusive = "exclusive";
+  static const permission_bid = "bid";
+  static const permission_hold = "hold";
+  static const permission_offer = "offer";
+  static const permission_notification = "notification";
 }
 
 class PermissionType {
