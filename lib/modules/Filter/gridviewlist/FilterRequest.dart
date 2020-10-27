@@ -3,8 +3,10 @@ import 'package:diamnow/app/constant/constants.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/string_utils.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/CaratRangeWidget.dart';
+import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
+import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 
 class FilterRequest {
   Map<String, dynamic> createRequest(List<FormBaseModel> list) {
@@ -167,5 +169,16 @@ class FilterRequest {
     }
 
     return map;
+  }
+}
+
+class FilterDataSource {
+  prepareFilterDataSource(
+      List<FormBaseModel> arrFilter, DisplayDataClass searchData) {
+    Map<String, dynamic> dict = searchData.toJson();
+    for (var item in arrFilter) {
+      
+      // dict[item.apiKey]
+    }
   }
 }

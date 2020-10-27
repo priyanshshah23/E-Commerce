@@ -10,6 +10,7 @@ import 'package:diamnow/components/Screens/Auth/ResetPassword.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Signup.dart';
 import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
+import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
@@ -167,6 +168,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       break;
     case OfferViewScreen.route:
       screen = OfferViewScreen();
+      break;
+    case MyAccountScreen.route:
+      screen = MyAccountScreen();
       break;
   }
 
