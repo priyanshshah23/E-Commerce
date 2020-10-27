@@ -5,20 +5,35 @@ import 'package:diamnow/app/theme/app_theme.dart';
 import 'package:diamnow/components/Screens/Auth/ChangePassword.dart';
 import 'package:diamnow/components/Screens/Auth/CompanyInformation.dart';
 import 'package:diamnow/components/Screens/Auth/PersonalInformation.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProfileList extends StatefulWidget {
   static const route = "ProfileList";
+  bool isFromDrawer;
+
+
+  ProfileList(
+      Map<String, dynamic> arguments, {
+        Key key,
+      }) : super(key: key) {
+    if (arguments != null) {
+      if (arguments[ArgumentConstant.IsFromDrawer] != null) {
+        isFromDrawer = arguments[ArgumentConstant.IsFromDrawer];
+      }
+    }
+  }
 
   @override
-  _ProfileListState createState() => _ProfileListState();
+  _ProfileListState createState() => _ProfileListState(isFromDrawer: isFromDrawer);
 }
 
 class _ProfileListState extends State<ProfileList> {
   PageController _controller = PageController();
   int sharedValue = 0;
   Map<int, Widget> pages;
+  bool isFromDrawer = false;
 
 
   setPages() {
@@ -28,6 +43,8 @@ class _ProfileListState extends State<ProfileList> {
       2: getSegment(R.string().commonString.documents, 2),
     };
   }
+
+  _ProfileListState({this.isFromDrawer});
 
   getSegment(String title, int index) {
     return Padding(
@@ -53,7 +70,9 @@ class _ProfileListState extends State<ProfileList> {
         context,
         R.string().commonString.profile,
         bgColor: appTheme.whiteColor,
-        leadingButton: getDrawerButton(context, true),
+        leadingButton: isFromDrawer
+            ? getDrawerButton(context, true)
+            : getBackButton(context),
         centerTitle: false,
       ),
       body: Column(
@@ -95,7 +114,7 @@ class _ProfileListState extends State<ProfileList> {
                 } else if (position == 1) {
                   return CompanyInformation();
                 } else {
-                  return ChangePassword();
+                  return Scaffold();
                 }
               },
             ),

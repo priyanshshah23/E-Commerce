@@ -1,23 +1,138 @@
+import 'dart:collection';
+
 import 'package:country_pickers/country_pickers.dart';
 import 'package:diamnow/Setting/SettingModel.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
+import 'package:diamnow/components/Screens/Auth/ChangePassword.dart';
+import 'package:diamnow/components/Screens/Auth/ProfileList.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Home/DrawerModel.dart';
 import 'package:diamnow/components/Screens/Home/HomeDrawer.dart';
 import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
+import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
+import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/material.dart';
 import 'package:rxbus/rxbus.dart';
 
 class MyAccountScreen extends StatefulWidget {
   static const route = "MyAccountScreen";
+  bool isFromDrawer;
+
+
+  MyAccountScreen(
+      Map<String, dynamic> arguments, {
+        Key key,
+      }) : super(key: key) {
+    if (arguments != null) {
+      if (arguments[ArgumentConstant.IsFromDrawer] != null) {
+        isFromDrawer = arguments[ArgumentConstant.IsFromDrawer];
+      }
+    }
+  }
 
   @override
-  _MyAccountScreenState createState() => _MyAccountScreenState();
+  _MyAccountScreenState createState() => _MyAccountScreenState(isFromDrawer: isFromDrawer);
 }
 
 class _MyAccountScreenState extends State<MyAccountScreen> {
   List<DrawerModel> accountItems = DrawerSetting().getAccountListItems();
+  bool isFromDrawer;
+
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      RxBus.register<DrawerEvent>(tag: eventBusTag).listen((event) {
+          manageDrawerClick(context, event.index, event.isPop);
+      });
+    });
+  }
+
+  _MyAccountScreenState({this.isFromDrawer = false});
+
+  manageDrawerClick(BuildContext context, int type, bool isPop) {
+    if (context != null) {
+      if (isPop) Navigator.pop(context);
+//      if (selectedType == type) {
+//        return;
+//      }
+
+      switch (type) {
+        case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
+          openDiamondList(type);
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_CART:
+         openDiamondList(type);
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+          openDiamondList(type);
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_HOLD:
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
+        openDiamondList(type);
+        break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
+        openDiamondList(type);
+        break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+        openDiamondList(type);
+        break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
+          openDiamondOrderList(type);
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
+          openDiamondList(type);
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
+        break;
+        case DiamondModuleConstant.MODULE_TYPE_MANAGE_ADDRESS:
+        break;
+        case DiamondModuleConstant.MODULE_TYPE_CHANGE_PASSWORD:
+          NavigationUtilities.pushRoute(ChangePassword.route);
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_LOGOUT:
+          logoutFromApp(context);
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_PROFILE:
+          openProfile();
+          break;
+      }
+      if (type != DiamondModuleConstant.MODULE_TYPE_LOGOUT) {
+        setState(() {});
+      }
+    }
+  }
+
+  openDiamondOrderList(int moduleType) {
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.ModuleType] = moduleType;
+    dict[ArgumentConstant.IsFromDrawer] = false;
+    NavigationUtilities.pushRoute(OrderListScreen.route,args: dict);
+  }
+
+  openSavedSearch(int moduleType) {
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.ModuleType] =
+        DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
+    dict[ArgumentConstant.IsFromDrawer] = false;
+    NavigationUtilities.pushRoute(SavedSearchScreen.route,args: dict);
+  }
+
+  openProfile() {
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.IsFromDrawer] = false;
+    NavigationUtilities.pushRoute(MyAccountScreen.route, args: dict);
+  }
+
 
   Widget getDrawerItem(
       BuildContext context, DrawerModel model, VoidCallback callback) {
@@ -71,122 +186,129 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   }
 
   Widget _buildAvatarRow(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: appTheme.whiteColor,
-        border: Border(bottom: BorderSide(color: appTheme.dividerColor)),
-      ),
-      padding: EdgeInsets.only(
-        top: getSize(20),
-        bottom: getSize(20),
-        left: getSize(16),
-        right: getSize(16),
-      ),
-      child: Column(
-        children: <Widget>[
-          Container(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                // circle avatar
-                Container(
-                  height: getSize(50),
-                  width: getSize(50),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  child: ClipRRect(
-                    borderRadius:
-                    BorderRadius.all(Radius.circular(getSize(25))),
-                    child: getImageView(
-                      app.resolve<PrefUtils>().getUserDetails().photoId,
-                      placeHolderImage: userTemp,
-                      height: getSize(50),
-                      width: getSize(50),
+    return InkWell(
+      onTap: () {
+        Map<String, dynamic> dict = new HashMap();
+        dict[ArgumentConstant.IsFromDrawer] = false;
+        NavigationUtilities.pushRoute(ProfileList.route,args: dict);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: appTheme.whiteColor,
+          border: Border(bottom: BorderSide(color: appTheme.dividerColor)),
+        ),
+        padding: EdgeInsets.only(
+          top: getSize(20),
+          bottom: getSize(20),
+          left: getSize(16),
+          right: getSize(16),
+        ),
+        child: Column(
+          children: <Widget>[
+            Container(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  // circle avatar
+                  Container(
+                    height: getSize(50),
+                    width: getSize(50),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: ClipRRect(
+                      borderRadius:
+                      BorderRadius.all(Radius.circular(getSize(25))),
+                      child: getImageView(
+                        app.resolve<PrefUtils>().getUserDetails().photoId,
+                        placeHolderImage: userTemp,
+                        height: getSize(50),
+                        width: getSize(50),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(width: getSize(10)),
-                //username
-                Expanded(
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            app
-                                .resolve<PrefUtils>()
-                                .getUserDetails()
-                                .getFullName() ??
-                                "-",
-                            style: appTheme.black16TextStyle.copyWith(
-                              fontWeight: FontWeight.w500,
+                  SizedBox(width: getSize(10)),
+                  //username
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              app
+                                  .resolve<PrefUtils>()
+                                  .getUserDetails()
+                                  .getFullName() ??
+                                  "-",
+                              style: appTheme.black16TextStyle.copyWith(
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
+                          ],
+                        ),
+                        SizedBox(height: getSize(6)),
+                        if (isStringEmpty(app
+                            .resolve<PrefUtils>()
+                            .getUserDetails()
+                            .email) ==
+                            false)
+                          Row(
+                            children: [
+                              Image.asset(
+                                email,
+                                height: getSize(12),
+                                width: getSize(12),
+                              ),
+                              SizedBox(width: getSize(8)),
+                              Text(
+                                app.resolve<PrefUtils>().getUserDetails().email ??
+                                    "-",
+                                style: appTheme.black12TextStyle,
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      SizedBox(height: getSize(6)),
-                      if (isStringEmpty(app
-                          .resolve<PrefUtils>()
-                          .getUserDetails()
-                          .email) ==
-                          false)
+                        SizedBox(height: getSize(6)),
                         Row(
                           children: [
                             Image.asset(
-                              email,
-                              height: getSize(12),
+                              phone,
+                              height: getSize(14),
                               width: getSize(12),
                             ),
                             SizedBox(width: getSize(8)),
+                            if (isStringEmpty(app
+                                .resolve<PrefUtils>()
+                                .getUserDetails()
+                                .countryCode) ==
+                                false)
+                              Image.asset(
+                                CountryPickerUtils.getFlagImageAssetPath(
+                                    CountryPickerUtils.getCountryByPhoneCode(app
+                                        .resolve<PrefUtils>()
+                                        .getUserDetails()
+                                        .countryCode)
+                                        .isoCode),
+                                height: getSize(12),
+                                width: getSize(16),
+                                fit: BoxFit.fill,
+                                package: "country_pickers",
+                              ),
+                            SizedBox(width: getSize(8)),
                             Text(
-                              app.resolve<PrefUtils>().getUserDetails().email ??
+                              app.resolve<PrefUtils>().getUserDetails().phone ??
                                   "-",
                               style: appTheme.black12TextStyle,
                             ),
                           ],
                         ),
-                      SizedBox(height: getSize(6)),
-                      Row(
-                        children: [
-                          Image.asset(
-                            phone,
-                            height: getSize(14),
-                            width: getSize(12),
-                          ),
-                          SizedBox(width: getSize(8)),
-                          if (isStringEmpty(app
-                              .resolve<PrefUtils>()
-                              .getUserDetails()
-                              .countryCode) ==
-                              false)
-                            Image.asset(
-                              CountryPickerUtils.getFlagImageAssetPath(
-                                  CountryPickerUtils.getCountryByPhoneCode(app
-                                      .resolve<PrefUtils>()
-                                      .getUserDetails()
-                                      .countryCode)
-                                      .isoCode),
-                              height: getSize(12),
-                              width: getSize(16),
-                              fit: BoxFit.fill,
-                              package: "country_pickers",
-                            ),
-                          SizedBox(width: getSize(8)),
-                          Text(
-                            app.resolve<PrefUtils>().getUserDetails().phone ??
-                                "-",
-                            style: appTheme.black12TextStyle,
-                          ),
-                        ],
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -205,7 +327,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
     for (int i = 0; i < accountItems.length; i++) {
       list.add(getDrawerItem(context, accountItems[i], () {
-        //RxBus.post(DrawerEvent(accountItems[i].type, true), tag: eventBusTag);
+        RxBus.post(DrawerEvent(accountItems[i].type, false), tag: eventBusTag);
       }));
     }
 
@@ -233,7 +355,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         context,
         R.string().screenTitle.myAccount,
         bgColor: appTheme.whiteColor,
-        leadingButton: getBackButton(context),
+        leadingButton: isFromDrawer
+            ? getDrawerButton(context, true)
+            : getBackButton(context),
         centerTitle: false,
       ),
       body: Container(
@@ -269,6 +393,30 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     ),
     );
   }
+
+  openDiamondList(int moduleType) {
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.ModuleType] = moduleType;
+    dict[ArgumentConstant.IsFromDrawer] = false;
+    NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+  }
+
+
+  openMyWatchList(int type) {
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.ModuleType] = type;
+    dict[ArgumentConstant.IsFromDrawer] = false;
+    NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+  }
+
+  openMyOffer(int type) {
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.ModuleType] = type;
+    dict[ArgumentConstant.IsFromDrawer] = false;
+    NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+  }
+
+
 
 
 }

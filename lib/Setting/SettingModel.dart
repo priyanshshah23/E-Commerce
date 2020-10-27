@@ -292,25 +292,29 @@ class DrawerSetting {
       image: myDemand,
       title: R.string().screenTitle.myDemand,
       isSelected: false,
+      imageColor: appTheme.colorPrimary,
       isShowDivider: true,
       type: DiamondModuleConstant.MODULE_TYPE_MY_DEMAND,
     ));
     drawerList.add(DrawerModel(
-      image: "",
+      image: manageAddress,
       title: R.string().screenTitle.manageAddress,
       isSelected: false,
+      imageColor: appTheme.colorPrimary,
       type: DiamondModuleConstant.MODULE_TYPE_MANAGE_ADDRESS,
     ));
     drawerList.add(DrawerModel(
       image: changePassword,
       title: R.string().screenTitle.changePassword,
       isSelected: false,
+      imageColor: appTheme.colorPrimary,
       type: DiamondModuleConstant.MODULE_TYPE_CHANGE_PASSWORD,
     ));
     drawerList.add(DrawerModel(
       image: logout,
       title: R.string().screenTitle.logout,
       isSelected: false,
+      imageColor: appTheme.colorPrimary,
       type: DiamondModuleConstant.MODULE_TYPE_LOGOUT,
     ));
     return drawerList;

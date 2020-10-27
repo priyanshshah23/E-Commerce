@@ -159,7 +159,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       screen = PasswordResetSuccessfully();
       break;
     case ProfileList.route:
-      screen = ProfileList();
+      screen = ProfileList(arguments);
       break;
     case DiamondDetailScreen.route:
       screen = DiamondDetailScreen(
@@ -170,7 +170,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       screen = OfferViewScreen();
       break;
     case MyAccountScreen.route:
-      screen = MyAccountScreen();
+      screen = MyAccountScreen(arguments);
       break;
   }
 

@@ -198,6 +198,12 @@ class _HomeScreenState extends State<HomeScreen> {
     currentWidget = SavedSearchScreen(dict);
   }
 
+  openProfile() {
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.IsFromDrawer] = false;
+    NavigationUtilities.pushRoute(MyAccountScreen.route,args: dict);
+  }
+
   manageDrawerClick(BuildContext context, int type, bool isPop) {
     if (context != null) {
       if (isPop) Navigator.pop(context);
@@ -229,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
           openDiamondList(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_PROFILE:
-          NavigationUtilities.pushRoute(MyAccountScreen.route);
+          openProfile();
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
         case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
@@ -275,4 +281,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+
 }
