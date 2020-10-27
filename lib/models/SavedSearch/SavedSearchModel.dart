@@ -394,16 +394,28 @@ class Back {
 class KToSArr {
   KToSArr({
     this.kToSArrIn,
+    this.kToSArrnIn,
   });
 
   List<String> kToSArrIn;
+  List<String> kToSArrnIn;
 
   factory KToSArr.fromJson(Map<String, dynamic> json) => KToSArr(
-        kToSArrIn: List<String>.from(json["in"].map((x) => x)),
+        kToSArrIn: json["in"] == null
+            ? null
+            : List<String>.from(json["in"].map((x) => x)),
+        kToSArrnIn: json["nin"] == null
+            ? null
+            : List<String>.from(json["nin"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
-        "in": List<dynamic>.from(kToSArrIn.map((x) => x)),
+        "in": kToSArrIn == null
+            ? null
+            : List<dynamic>.from(kToSArrIn.map((x) => x)),
+        "nin": kToSArrnIn == null
+            ? null
+            : List<dynamic>.from(kToSArrnIn.map((x) => x)),
       };
 }
 

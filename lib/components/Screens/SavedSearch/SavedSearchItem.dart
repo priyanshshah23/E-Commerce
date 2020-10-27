@@ -270,9 +270,9 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
 
   getDisplayData(DisplayDataClass displayDataClass) {
     List<Map<String, String>> arrData = [];
-  // if(displayDataClass.shp != null){
+    // if(displayDataClass.shp != null){
 
-  // }
+    // }
     if (!isNullEmptyOrFalse(displayDataClass)) {
       if (!isNullEmptyOrFalse(displayDataClass.shp)) {
         Map<String, String> displayDataKeyValue = {};
@@ -828,9 +828,13 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
       if (!isNullEmptyOrFalse(displayDataClass.kToSArr)) {
         Map<String, String> displayDataKeyValue = {};
         displayDataKeyValue["key"] = "Key to Symbol";
-
-        String temp = displayDataClass.kToSArr.kToSArrIn.join(", ");
-        displayDataKeyValue["value"] = temp;
+        if (!isNullEmptyOrFalse(displayDataClass.kToSArr.kToSArrIn)) {
+          String temp = displayDataClass.kToSArr.kToSArrIn.join(", ");
+          displayDataKeyValue["value"] = temp;
+        } else {
+          String temp = displayDataClass.kToSArr.kToSArrnIn.join(", ");
+          displayDataKeyValue["value"] = temp;
+        }
         arrData.add(displayDataKeyValue);
       }
 
