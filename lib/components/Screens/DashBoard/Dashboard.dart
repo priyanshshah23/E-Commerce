@@ -78,13 +78,13 @@ class _DashboardState extends StatefulScreenWidgetState {
     dashboardConfig = DashboardConfig();
     dashboardConfig.initItems();
 
-    callApiForDashboard();
+    callApiForDashboard(false);
     setState(() {
       //
     });
   }
 
-  callApiForDashboard() {
+  callApiForDashboard(bool isRefress, {bool isLoading = false}) {
     Map<String, dynamic> dict = {};
 
     dict["savedSearch"] = true;
@@ -100,7 +100,7 @@ class _DashboardState extends StatefulScreenWidgetState {
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().dashboard(dict),
             context,
-            isProgress: true)
+            isProgress: !isRefress && !isLoading)
         .then((resp) async {
       print(resp);
       this.dashboardModel = resp.data;
@@ -259,7 +259,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                     color: AppTheme.of(context).theme.primaryColorLight),
                 enablePullDown: true,
                 onRefresh: () {
-                  callApiForDashboard();
+                  callApiForDashboard(true);
                   refreshController.refreshCompleted();
                   refreshController.loadComplete();
                 },
