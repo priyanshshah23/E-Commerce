@@ -112,3 +112,6 @@ const String home_watchlistBg = "assets/Home/watchlistBg.png";
 
 const String calender = "assets/Common/calendar.png";
 
+// MyDemand icons
+const String saved_icon = "assets/diamnow/saved.png";
+const String edit_icon = "assets/diamnow/edit.png";
