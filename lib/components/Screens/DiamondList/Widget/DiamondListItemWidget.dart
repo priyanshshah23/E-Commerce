@@ -1,5 +1,6 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/CustomBorder.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
@@ -14,7 +15,10 @@ class DiamondItemWidget extends StatefulWidget {
   num rightPadding;
 
   DiamondItemWidget(
-      {this.item, this.actionClick, this.leftPadding=0, this.rightPadding=0});
+      {this.item,
+      this.actionClick,
+      this.leftPadding = 0,
+      this.rightPadding = 0});
 
   @override
   _DiamondItemWidgetState createState() => _DiamondItemWidgetState();
@@ -41,7 +45,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       },
       child: Padding(
         padding: EdgeInsets.only(
-          left:getSize( widget.leftPadding != 0
+          left: getSize(widget.leftPadding != 0
               ? widget.leftPadding
               : Spacing.leftPadding),
           right: getSize(widget.rightPadding != 0
@@ -61,91 +65,101 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                     ),
                   )
                 : Container(),
-            Container(
+            /* Container(
               decoration: getBoxDecorationType(context, widget.item.borderType),
               margin: EdgeInsets.only(
                 bottom: getSize(widget.item.marginBottom),
                 top: getSize(widget.item.marginTop),
               ),
-              child: Container(
-                margin: EdgeInsets.only(
-                  bottom: getSize(widget.item.isMatchPair &&
-                          (widget.item.borderType ==
-                                  BorderConstant.BORDER_LEFT_RIGHT ||
-                              widget.item.borderType ==
-                                  BorderConstant.BORDER_TOP)
-                      ? 1
-                      : 5),
-                  top: getSize(widget.item.isMatchPair &&
-                          (widget.item.borderType ==
-                                  BorderConstant.BORDER_LEFT_RIGHT ||
-                              widget.item.borderType ==
-                                  BorderConstant.BORDER_BOTTOM)
-                      ? 1
-                      : 5),
-                  left: getSize(widget.item.isMatchPair ? 5 : 0),
-                  right: getSize(widget.item.isMatchPair ? 5 : 0),
-                ),
-                width: MathUtilities.screenWidth(context),
-                decoration: BoxDecoration(
-                    color: appTheme.whiteColor,
-                    boxShadow: widget.item.isSelected
-                        ? getBoxShadow(context)
-                        : [BoxShadow(color: Colors.transparent)],
-                    borderRadius: BorderRadius.circular(getSize(6)),
-                    border: Border.all(
-                        color: widget.item.isSelected
-                            ? appTheme.colorPrimary
-                            : appTheme.dividerColor)
-                    //boxShadow: getBoxShadow(context),
-                    ),
-                child: Wrap(
-                  children: [
-                    IntrinsicHeight(
-                      child: Row(
-                        children: <Widget>[
-                          getCaratAndDiscountDetail(widget.actionClick),
-                          //   getIdColorDetail(),
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: getSize(10),
-                                  right: getSize(10),
-                                  top: getSize(8),
-                                  bottom: getSize(8)),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  getIdShapeDetail(),
-                                  getDymentionAndCaratDetail(),
-                                  getTableDepthAndAmountDetail(),
-                                  getWatchListDetail(),
-                                  getOfferDetail(),
-                                  getBidDetail(),
-                                ],
+              child: */
+            Container(
+              margin: EdgeInsets.only(
+                bottom: getSize(widget.item.marginBottom),
+                top: getSize(widget.item.marginTop),
+              ),
+              child: CustomPaint(
+                painter: getPaintingType(context, widget.item.borderType),
+                child: Container(
+                  margin: EdgeInsets.only(
+                    bottom: getSize(widget.item.isMatchPair &&
+                            (widget.item.borderType ==
+                                    BorderConstant.BORDER_LEFT_RIGHT ||
+                                widget.item.borderType ==
+                                    BorderConstant.BORDER_TOP)
+                        ? getSize(1)
+                        : getSize(5)),
+                    top: getSize(widget.item.isMatchPair &&
+                            (widget.item.borderType ==
+                                    BorderConstant.BORDER_LEFT_RIGHT ||
+                                widget.item.borderType ==
+                                    BorderConstant.BORDER_BOTTOM)
+                        ? getSize(1)
+                        : getSize(5)),
+                    left: getSize(widget.item.isMatchPair ? getSize(5): 0),
+                    right: getSize(widget.item.isMatchPair ? getSize(5) : 0),
+                  ),
+                  width: MathUtilities.screenWidth(context),
+                  decoration: BoxDecoration(
+                      color: appTheme.whiteColor,
+                      boxShadow: widget.item.isSelected
+                          ? getBoxShadow(context)
+                          : [BoxShadow(color: Colors.transparent)],
+                      borderRadius: BorderRadius.circular(getSize(6)),
+                      border: Border.all(
+                          color: widget.item.isSelected
+                              ? appTheme.colorPrimary
+                              : appTheme.dividerColor)
+                      //boxShadow: getBoxShadow(context),
+                      ),
+                  child: Wrap(
+                    children: [
+                      IntrinsicHeight(
+                        child: Row(
+                          children: <Widget>[
+                            getCaratAndDiscountDetail(widget.actionClick),
+                            //   getIdColorDetail(),
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    left: getSize(10),
+                                    right: getSize(10),
+                                    top: getSize(8),
+                                    bottom: getSize(8)),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    getIdShapeDetail(),
+                                    getDymentionAndCaratDetail(),
+                                    getTableDepthAndAmountDetail(),
+                                    getWatchListDetail(),
+                                    getOfferDetail(),
+                                    getBidDetail(),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          Container(
-                            child: Center(
-                                child: Container(
-                              decoration: BoxDecoration(
-                                  color: widget.item.getStatusColor(),
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(5),
-                                      bottomLeft: Radius.circular(5))),
-                              height: getSize(26),
-                              width: getSize(4),
-                              // color: Colors.red,
-                            )),
-                          ),
-                        ],
+                            Container(
+                              child: Center(
+                                  child: Container(
+                                decoration: BoxDecoration(
+                                    color: widget.item.getStatusColor(),
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(5),
+                                        bottomLeft: Radius.circular(5))),
+                                height: getSize(26),
+                                width: getSize(4),
+                                // color: Colors.red,
+                              )),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
+            // ),
           ],
         ),
       ),
@@ -199,9 +213,9 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   color: appTheme.whiteColor,
                   borderRadius: BorderRadius.circular(getSize(5))),
               child: Text(
-                PriceUtilities.getPercent(
-                    widget.item.isAddToBid?widget.item.getbidFinalDiscount():
-                    widget.item?.getFinalDiscount()) ??
+                PriceUtilities.getPercent(widget.item.isAddToBid
+                        ? widget.item.getbidFinalDiscount()
+                        : widget.item?.getFinalDiscount()) ??
                     "",
                 style: appTheme.green10TextStyle,
               ),
@@ -383,8 +397,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                     getText(PriceUtilities.getPercent(
                         widget.item.getFinalDiscount())),
                     getText(R.string().screenTitle.bidValue + " :"),
-                    getText(PriceUtilities.getPrice(
-                        widget.item.getFinalAmount())),
+                    getText(
+                        PriceUtilities.getPrice(widget.item.getFinalAmount())),
                   ],
                 ),
               ),
@@ -397,8 +411,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                     getText(
                         PriceUtilities.getPrice(widget.item.getBidFinalRate())),
                     getText(R.string().screenTitle.finalValue + " :"),
-                    getText(
-                        PriceUtilities.getPrice(widget.item.getBidFinalAmount())),
+                    getText(PriceUtilities.getPrice(
+                        widget.item.getBidFinalAmount())),
                   ],
                 ),
               ),
@@ -413,7 +427,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                         GestureDetector(
                           onTap: () {
                             setState(() {
-                              widget.item.bidPlus=false;
+                              widget.item.bidPlus = false;
                               widget.item.minusAmount = 20;
                               widget.item.ctPr = widget.item.getbidAmount();
                               RxBus.post(false, tag: eventBusDropDown);
@@ -451,7 +465,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                         GestureDetector(
                           onTap: () {
                             setState(() {
-                              widget.item.bidPlus=true;
+                              widget.item.bidPlus = true;
                               widget.item.plusAmount = 20;
                               widget.item.ctPr = widget.item.getbidAmount();
                               RxBus.post(true, tag: eventBusDropDown);
@@ -572,6 +586,7 @@ getText(String text) {
     style: appTheme.black12TextStyle,
   );
 }
+
 getPrimaryText(String text) {
   return Text(
     text,
