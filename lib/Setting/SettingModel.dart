@@ -66,9 +66,10 @@ class DrawerSetting {
       isShowCount: true,
       countBackgroundColor: fromHex("#003365"),
       count: 15,
+      isShowDivider: true,
     ));
 
-    drawerList.add(DrawerModel(
+  /*  drawerList.add(DrawerModel(
       image: diamond,
       title: R.string().screenTitle.upcoming,
       imageColor: appTheme.colorPrimary,
@@ -144,19 +145,19 @@ class DrawerSetting {
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE,
     ));
-
+*/
     drawerList.add(DrawerModel(
       image: mySavedSearch,
       title: R.string().screenTitle.mySavedSearch,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH,
     ));
-
     drawerList.add(DrawerModel(
-      image: myDemand,
-      title: R.string().screenTitle.myDemand,
+      image: recentSearch,
+      title: R.string().screenTitle.recentSearch,
       isSelected: false,
-      type: DiamondModuleConstant.MODULE_TYPE_MY_DEMAND,
+      type: DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH,
+      isShowDivider: true,
     ));
     drawerList.add(DrawerModel(
       image: termsAndCondition,
@@ -182,7 +183,7 @@ class DrawerSetting {
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_CONTACT_US,
     ));
-    drawerList.add(DrawerModel(
+    /*drawerList.add(DrawerModel(
       image: changePassword,
       title: R.string().screenTitle.changePassword,
       isSelected: false,
@@ -193,7 +194,7 @@ class DrawerSetting {
       title: R.string().screenTitle.myProfile,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_PROFILE,
-    ));
+    ));*/
     drawerList.add(DrawerModel(
       image: logout,
       title: R.string().screenTitle.logout,
