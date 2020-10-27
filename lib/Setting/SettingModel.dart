@@ -324,6 +324,7 @@ class DrawerSetting {
       imageColor: appTheme.colorPrimary,
       type: DiamondModuleConstant.MODULE_TYPE_CHANGE_PASSWORD,
     ));
+
     drawerList.add(DrawerModel(
       image: logout,
       title: R.string().screenTitle.logout,

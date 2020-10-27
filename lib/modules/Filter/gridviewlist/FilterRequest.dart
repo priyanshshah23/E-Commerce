@@ -179,6 +179,24 @@ class FilterDataSource {
     Map<String, dynamic> dict = searchData.toJson();
     for (var item in arrFilter) {
       if (item is KeyToSymbolModel) {
+        if (!isNullEmptyOrFalse(dict[item.apiKey])) {
+          Map<String, dynamic> data = dict[item.apiKey];
+          item.listOfRadio.forEach((element) {
+            element.isSelected = false;
+          });
+          for (var model in item.listOfRadio) {
+            if (data.keys.contains(model.apiKey)) {
+              if (!isNullEmptyOrFalse(data[model.apiKey])) {
+                model.isSelected = true;
+                item.masters.forEach((element) {
+                  if (data[model.apiKey].contains(element.sId)) {
+                    element.isSelected = true;
+                  }
+                });
+              }
+            }
+          }
+        }
       } else if (item.viewType == ViewTypes.fromTo) {
         if (item is FromToModel) {
           if (!isNullEmptyOrFalse(dict[item.apiKey])) {
@@ -192,17 +210,21 @@ class FilterDataSource {
             if (!isNullEmptyOrFalse(dict["or"])) {
               List<dynamic> arr = dict["or"];
 
-              arr.forEach((ele) {
-                Map<String, dynamic> dict = ele[item.apiKey];
-                for (var model in item.masters) {
-                  if (double.parse(model.fromCarat.toStringAsFixed(2)) ==
-                          double.parse(dict[">="]) &&
-                      double.parse(dict["<="]) ==
-                          double.parse(model.toCarat.toStringAsFixed(2))) {
-                    model.isSelected = true;
-                  }
+              List<dynamic> arrSelected =
+                  arr.map((e) => e[item.apiKey]).toList();
+
+              for (var model in arrSelected) {
+                List<Master> arrMaster = item.masters
+                    .where((element) => element.name == model["<="])
+                    .toList();
+                if (!isNullEmptyOrFalse(arrMaster)) {
+                  arrMaster.first.isSelected = true;
+                } else {
+                  print("chips to select");
+                  item.caratRangeChipsToShow
+                      .add("${model[">="]}-${model["<="]}");
                 }
-              });
+              }
             }
           } else {
             if (!isNullEmptyOrFalse(dict[item.apiKey])) {
