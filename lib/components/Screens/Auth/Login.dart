@@ -374,14 +374,6 @@ class _LoginScreenState extends StatefulScreenWidgetState {
           loginResp.data.userPermissions,
         );
       }
-      SyncManager.instance
-          .callMasterSync(NavigationUtilities.key.currentContext, () async {
-        //success
-        AppNavigation().movetoHome(isPopAndSwitch: true);
-      }, () {},
-          isNetworkError: false,
-          isProgress: true,
-          id: loginResp.data.user.id).then((value) {});
       callVersionUpdateApi(id: loginResp.data.user.id);
     }).catchError((onError) {
       if (onError is ErrorResp) {
@@ -443,15 +435,6 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                         isProgress: true,
                         id: id).then((value) {});
                   }
-                } else {
-                  SyncManager.instance
-                      .callMasterSync(NavigationUtilities.key.currentContext, () async {
-                    //success
-                    AppNavigation().movetoHome(isPopAndSwitch: true);
-                  }, () {},
-                      isNetworkError: false,
-                      isProgress: true,
-                      id: id).then((value) {});
                 }
               } else {
                 print("Android");
@@ -474,15 +457,6 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                         isProgress: true,
                         id: id).then((value) {});
                   }
-                } else {
-                  SyncManager.instance
-                      .callMasterSync(NavigationUtilities.key.currentContext, () async {
-                    //success
-                    AppNavigation().movetoHome(isPopAndSwitch: true);
-                  }, () {},
-                      isNetworkError: false,
-                      isProgress: true,
-                      id: id).then((value) {});
                 }
               }
             },
