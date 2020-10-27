@@ -64,6 +64,7 @@ class ModulePermissionConstant {
   static const permission_appointment = "appointment";
   static const permission_address = "address";
 
+  static const permission_featured = "featured";
   static const permission_auction = "auction";
   static const permission_exclusive = "exclusive";
   static const permission_bid = "bid";
