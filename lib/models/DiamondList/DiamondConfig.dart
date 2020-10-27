@@ -108,6 +108,8 @@ class DiamondConfig {
         return R.string().screenTitle.myOffer;
       case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
         return R.string().screenTitle.myEnquiry;
+      case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
+        return R.string().screenTitle.myReminder;
       case DiamondModuleConstant.MODULE_TYPE_MY_BID:
         return R.string().screenTitle.myBid;
       case DiamondModuleConstant.MODULE_TYPE_MY_HOLD:
@@ -154,6 +156,7 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
       case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
       case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+      case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
         return app
             .resolve<ServiceModule>()
             .networkService()
@@ -214,7 +217,6 @@ class DiamondConfig {
 
       default:
         if (isCompare) {
-
           list.add(BottomTabModel(
               title: "",
               image: download,
@@ -745,7 +747,6 @@ RoundedBorderPainter getPaintingType(BuildContext context, int type) {
       );
   }
 }
-
 
 openSharePopUp(BuildContext context) {
   List<StoneModel> stoneList = [
