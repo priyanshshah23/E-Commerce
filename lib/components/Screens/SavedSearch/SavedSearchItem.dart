@@ -1,5 +1,6 @@
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/Helper/Themehelper.dart';
+import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/constant/ImageConstant.dart';
 import 'package:diamnow/app/constant/constants.dart';
@@ -9,7 +10,9 @@ import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/math_utils.dart';
 import 'package:diamnow/app/utils/string_utils.dart';
+import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/main.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -150,7 +153,15 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
           SavedSearchModel savedSearchModel = arrList[index];
           List<Map<String, dynamic>> arrData =
               getDisplayData(savedSearchModel.displayData);
-          return getItemWidget(savedSearchModel, arrData);
+          return InkWell(
+            onTap: () {
+              Map<String, dynamic> dict = {};
+              dict["searchData"] = arrList[index].searchData;
+              dict[ArgumentConstant.IsFromDrawer] = false;
+              NavigationUtilities.pushRoute(FilterScreen.route, args: dict);
+            },
+            child: getItemWidget(savedSearchModel, arrData),
+          );
         },
       );
     } else {
