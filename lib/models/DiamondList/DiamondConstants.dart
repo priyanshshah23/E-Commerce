@@ -28,6 +28,8 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_UPCOMING = 24;
   static const MODULE_TYPE_PROFILE = 25;
   static const MODULE_TYPE_MY_COMMENT = 26;
+  static const MODULE_TYPE_MY_REMINDER = 27;
+  static const MODULE_TYPE_MANAGE_ADDRESS = 28;
   static const MODULE_TYPE_COMPARE = 27;
   static const MODULE_TYPE_MATCH_PAIR= 28;
   static const MODULE_TYPE_OPEN_DRAWER = 1000;
