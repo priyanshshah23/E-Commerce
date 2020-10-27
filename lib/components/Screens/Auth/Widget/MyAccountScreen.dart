@@ -52,27 +52,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                   ),
                 ),
                 Spacer(),
-                if (model.isShowCount && model.count > 0)
                   Container(
-                    decoration: BoxDecoration(
-                        color: model.countBackgroundColor,
-                        borderRadius: BorderRadius.circular(
-                          getSize(5),
-                        )),
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: getSize(6),
-                          right: getSize(6),
-                          top: getSize(4),
-                          bottom: getSize(4)),
-                      child: Text(
-                        model.count.toString(),
-                        style: appTheme.blackNormal14TitleColorblack.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: appTheme.whiteColor,
-                        ),
-                      ),
-                    ),
+                    child: Icon(Icons.arrow_forward_ios, size: getSize(14),)
                   ),
               ],
             ),

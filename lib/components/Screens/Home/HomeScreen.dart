@@ -5,6 +5,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/components/Screens/Auth/Profile.dart';
 import 'package:diamnow/components/Screens/Auth/ProfileList.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
 import 'package:diamnow/components/Screens/DashBoard/Dashboard.dart';
@@ -149,15 +150,15 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  openProfile(int moduleType) {
-    selectedType = moduleType;
-//    selectedType = DiamondModuleConstant.MODULE_TYPE_PROFILE;
-    Map<String, dynamic> dict = new HashMap();
-    dict[ArgumentConstant.ModuleType] =
-        DiamondModuleConstant.MODULE_TYPE_PROFILE;
-    dict[ArgumentConstant.IsFromDrawer] = true;
-    currentWidget = MyAccountScreen();
-  }
+//  openProfile(int moduleType) {
+//    selectedType = moduleType;
+////    selectedType = DiamondModuleConstant.MODULE_TYPE_PROFILE;
+//    Map<String, dynamic> dict = new HashMap();
+//    dict[ArgumentConstant.ModuleType] =
+//        DiamondModuleConstant.MODULE_TYPE_PROFILE;
+//    dict[ArgumentConstant.IsFromDrawer] = true;
+//    currentWidget = Profile();
+//  }
 
   openAboutUs(int moduleType) {
     selectedType = moduleType;
@@ -228,7 +229,7 @@ class _HomeScreenState extends State<HomeScreen> {
           openDiamondList(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_PROFILE:
-          openProfile(type);
+          NavigationUtilities.pushRoute(MyAccountScreen.route);
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
         case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:

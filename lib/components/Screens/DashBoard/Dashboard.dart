@@ -9,6 +9,7 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
+import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
@@ -223,6 +224,7 @@ class _DashboardState extends StatefulScreenWidgetState {
         break;
       case BottomCodeConstant.TBProfile:
         // Go to Profile
+        NavigationUtilities.pushRoute(MyAccountScreen.route);
         break;
     }
   }
