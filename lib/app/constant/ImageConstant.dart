@@ -112,4 +112,5 @@ const String home_watchlistBg = "assets/Home/watchlistBg.png";
 
 const String calender = "assets/Common/calendar.png";
 const String reminder = "assets/DiamondDetail/reminder.png";
+const String recentSearch = "assets/drawer/saved.png";
 

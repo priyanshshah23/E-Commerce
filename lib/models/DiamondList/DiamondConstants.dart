@@ -1,5 +1,4 @@
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
-import 'package:flutter/cupertino.dart';
 
 class DiamondModuleConstant {
   static const MODULE_TYPE_SEARCH = 1;
@@ -31,7 +30,8 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_MY_REMINDER = 27;
   static const MODULE_TYPE_MANAGE_ADDRESS = 28;
   static const MODULE_TYPE_COMPARE = 27;
-  static const MODULE_TYPE_MATCH_PAIR= 28;
+  static const MODULE_TYPE_MATCH_PAIR = 28;
+  static const MODULE_TYPE_RECENT_SEARCH = 29;
   static const MODULE_TYPE_OPEN_DRAWER = 1000;
   static const MODULE_TYPE_HOME = 100;
 }
@@ -79,6 +79,7 @@ class DiamondTrackConstant {
 class BidConstant {
   static const BID_TYPE_ADD = 2;
 }
+
 class MemoConstant {
   static const MEMO_ORDER = 1;
   static const MEMO_PURCHASE = 2;
