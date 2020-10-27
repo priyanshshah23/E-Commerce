@@ -20,7 +20,7 @@ class DashboardConfig {
     List<DashbordTopSection> arr = List<DashbordTopSection>();
     arr.add(DashbordTopSection(
       title: R.string().screenTitle.newArrival,
-      value: "250",
+      value: "0",
       image: home_newArrival,
       bgImage: home_newArrivalBg,
       type: DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL,
@@ -31,7 +31,7 @@ class DashboardConfig {
 
     arr.add(DashbordTopSection(
       title: R.string().screenTitle.watchlist,
-      value: "75",
+      value: "0",
       image: home_watchlist,
       bgImage: home_watchlistBg,
       type: DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST,
@@ -42,7 +42,7 @@ class DashboardConfig {
 
     arr.add(DashbordTopSection(
       title: R.string().screenTitle.exclusive,
-      value: "50",
+      value: "0",
       image: home_exclusive,
       bgImage: home_exlusiveBg,
       type: DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND,
@@ -53,7 +53,7 @@ class DashboardConfig {
 
     arr.add(DashbordTopSection(
       title: R.string().screenTitle.enquiry,
-      value: "25",
+      value: "0",
       image: home_enquiry,
       bgImage: home_enquiryBg,
       type: DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY,
