@@ -510,7 +510,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               .resolve<PrefUtils>()
               .getModulePermission(ModulePermissionConstant.permission_myDemand)
               .insert) {
-                MyDemandDialog(context);
+            if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList)))
+              MyDemandDialog(context);
+            else {
+              showToast("Please, select at least one filter",context:context);
+            }
             // place code
           } else {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
@@ -533,8 +537,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               .getModulePermission(
                   ModulePermissionConstant.permission_mySavedSearch)
               .insert) {
-            callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-                isSavedSearch: true);
+            if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList)))
+                callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+                    isSavedSearch: true);
+            else
+              showToast("Please, select at least one filter",context:context);
           } else {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
           }

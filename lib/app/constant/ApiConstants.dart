@@ -3,7 +3,7 @@ import '../app.export.dart';
 class ApiConstants {
 //   static const String PROXY_URL = "PROXY 192.168.2.124:8888";
 //   static const String PROXY_URL = "PROXY 192.168.0.117:8888";
-//static const String PROXY_URL = "PROXY 192.168.0.116:8888";
+static const String PROXY_URL = "PROXY 192.168.0.116:8888";
   //static const String PROXY_URL = "PROXY 192.168.43.252:8888";
   // static const String PROXY_URL = "PROXY 192.168.225.188:8888";
 //  static const String PROXY_URL = "PROXY 192.168.225.188:8888";
@@ -11,7 +11,11 @@ class ApiConstants {
 //  static const String PROXY_URL = "PROXY 192.168.0.73:8888";
    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 // static const String PROXY_URL = "PROXY 192.168.225.121:8888"; // Brijesh
+<<<<<<< HEAD
+  // static const String PROXY_URL = "PROXY localhost:8888"; // Brijesh
+=======
 //  static const String PROXY_URL = "PROXY localhost:8888"; // Brijesh
+>>>>>>> ce2336838c79c72381d386fc75cd32964e77aab2
   //static const String PROXY_URL = "PROXY localhost:8888"; // Brijesh
 
   static const String imageBaseURL = baseURL;

@@ -120,6 +120,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     dict["limit"] = DEFAULT_LIMIT;
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
+      case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
         dict["filters"] = {};
         dict["filters"]["diamondSearchId"] = this.filterId;
         break;
@@ -181,7 +182,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict["type"] = "stone_of_day";
         break;
     }
-
     NetworkCall<DiamondListResp>()
         .makeCall(
       () => diamondConfig.getApiCall(moduleType, dict),
@@ -198,6 +198,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
         case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
         case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+        // case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
           List<DiamondModel> list = [];
           DiamondModel diamondModel;
           diamondListResp.data.list.forEach((element) {
