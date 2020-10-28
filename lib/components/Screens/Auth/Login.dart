@@ -375,8 +375,8 @@ class _LoginScreenState extends StatefulScreenWidgetState {
           loginResp.data.userPermissions,
         );
       }
-      NavigationUtilities.pushRoute(Notifications.route);
-     // callVersionUpdateApi(id: loginResp.data.user.id);
+//      NavigationUtilities.pushRoute(Notifications.route);
+      callVersionUpdateApi(id: loginResp.data.user.id);
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
