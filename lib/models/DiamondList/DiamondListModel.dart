@@ -735,6 +735,10 @@ class DiamondModel {
   }
 
   num getBidFinalRate(){
+    DateTime now = DateTime.now();
+    if(now.hour>=15 || (now.hour<=10 && now.month<30)){
+      return getFinalRate()-((getFinalRate()*2.5)/100);
+    }
     return getFinalRate()-((getFinalRate()*2)/100);
   }
 

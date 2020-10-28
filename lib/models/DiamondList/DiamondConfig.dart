@@ -60,18 +60,18 @@ class DiamondCalculation {
     avgRapCrt = arrValues[3];
     avgPriceCrt = arrValues[4];
 
-    totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt);
-    totalAmount = PriceUtilities.getPrice(avgAmount);
+    totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt??0);
+    totalAmount = PriceUtilities.getPrice(avgAmount??0);
     if (isAccountTerm) {
-      totalDisc = PriceUtilities.getPercent(arrFinalValues[2]);
-      totalAmount = PriceUtilities.getPrice(arrFinalValues[1]);
-      totalPriceCrt = PriceUtilities.getPrice(arrFinalValues[0]);
+      totalDisc = PriceUtilities.getPercent(arrFinalValues[2]??0);
+      totalAmount = PriceUtilities.getPrice(arrFinalValues[1]??0);
+      totalPriceCrt = PriceUtilities.getPrice(arrFinalValues[0]??0);
     } else {
       avgDisc = (1 - (avgPriceCrt / avgRapCrt)) * (-100);
-      totalDisc = PriceUtilities.getPercent(avgDisc);
+      totalDisc = PriceUtilities.getPercent(avgDisc??0);
       avgAmount = arrValues[1];
     }
-    totalCarat = PriceUtilities.getDoubleValue(carat);
+    totalCarat = PriceUtilities.getDoubleValue(carat??0);
     pcs = filterList.length.toString();
   }
 }
@@ -457,7 +457,7 @@ class DiamondConfig {
         showBidListDialog(context, selectedList, (manageClick) {
           if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
             callApiFoCreateTrack(
-                context, list, DiamondTrackConstant.TRACK_TYPE_BID,
+                context, selectedList, DiamondTrackConstant.TRACK_TYPE_BID,
                 isPop: true);
           }
         });
