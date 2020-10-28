@@ -85,6 +85,8 @@ class SavedSearchModel {
   bool isReturnSimilar;
   DisplayDataClass displayData;
 
+  bool isExpand = false;
+
   factory SavedSearchModel.fromJson(Map<String, dynamic> json) =>
       SavedSearchModel(
         createdAt: json["createdAt"],
@@ -381,8 +383,8 @@ class Back {
   String empty;
 
   factory Back.fromJson(Map<String, dynamic> json) => Back(
-        back: json[">="],
-        empty: json["<="],
+        back: json[">="] is int ? json[">="].toString() :json[">="],
+        empty: json["<="]is int ? json["<="].toString() :json["<="],
       );
 
   Map<String, dynamic> toJson() => {

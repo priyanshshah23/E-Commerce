@@ -126,9 +126,9 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
   getItemWidget(SavedSearchModel model, List<Map<String, dynamic>> arr) {
     return Padding(
       padding: EdgeInsets.only(
-        left: getSize(10),
+        left: getSize(5),
         top: getSize(16),
-        right: getSize(10),
+        right: getSize(5),
       ),
       child: Container(
         decoration: BoxDecoration(
@@ -141,9 +141,11 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
           child: Column(
             children: <Widget>[
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Text(
@@ -230,24 +232,88 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
               SizedBox(
                 height: getSize(20),
               ),
-              for (var item in arr)
-                Row(children: [
-                  Text(
-                    "${item["key"] ?? ""} :",
-                    textAlign: TextAlign.left,
-                    style: appTheme.grey16HintTextStyle,
+              // if (arr.length <= 5 || model.isExpand)
+              listOfSelectedFilter(arr),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () {
+                      // model.isExpand ^= true;
+                      // myDemandBaseList.state.setApiCalling(false);
+                      // fillArrayList();
+                    },
+                    child: Text(
+                      "View Details",
+                      textAlign: TextAlign.center,
+                      style: appTheme.primaryColor14TextStyle,
+                    ),
                   ),
-                  SizedBox(width: getSize(16)),
-                  Expanded(
-                    child: Text(item["value"] ?? "",
-                        textAlign: TextAlign.right,
-                        style: appTheme.primaryColor14TextStyle),
-                  ),
-                ]),
+                ],
+              ),
+
+              // if (arr.length > 5 && !model.isExpand)
+              // Column(
+              //   children: <Widget>[
+              //     for (int i = 0; i < 5; i++)
+              //       Row(children: [
+              //         Text(
+              //           "${arr[i]["key"] ?? ""} :",
+              //           textAlign: TextAlign.left,
+              //           style: appTheme.grey16HintTextStyle,
+              //         ),
+              //         SizedBox(width: getSize(16)),
+              //         Expanded(
+              //           child: Text(arr[i]["value"] ?? "",
+              //               textAlign: TextAlign.right,
+              //               style: appTheme.primaryColor14TextStyle),
+              //         ),
+              //       ]),
+              //     Row(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: <Widget>[
+              //         GestureDetector(
+              //           onTap: () {
+              //             model.isExpand ^= true;
+              //             myDemandBaseList.state.setApiCalling(false);
+              //             fillArrayList();
+              //           },
+              //           child: Text(
+              //             "View Details",
+              //             textAlign: TextAlign.center,
+              //             style: appTheme.primaryColor14TextStyle,
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ],
+              // )
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Column listOfSelectedFilter(List<Map<String, dynamic>> arr) {
+    int length = arr.length > 5 ? 5 : arr.length;
+    return Column(
+      children: <Widget>[
+        for (int i = 0; i < length; i++)
+          Row(children: [
+            Text(
+              "${arr[i]["key"] ?? ""} :",
+              textAlign: TextAlign.left,
+              style: appTheme.grey16HintTextStyle,
+            ),
+            SizedBox(width: getSize(16)),
+            Expanded(
+              child: Text(arr[i]["value"] ?? "",
+                  textAlign: TextAlign.right,
+                  style: appTheme.primaryColor14TextStyle),
+            ),
+          ]),
+      ],
     );
   }
 
@@ -800,7 +866,7 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
         Map<String, String> displayDataKeyValue = {};
         displayDataKeyValue["key"] = "type2";
 
-        displayDataKeyValue["value"] = displayDataClass.type2.empty;
+        displayDataKeyValue["value"] = displayDataClass.type2.empty.toString();
         arrData.add(displayDataKeyValue);
       }
     }
@@ -839,7 +905,7 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
       body: Padding(
         padding: EdgeInsets.symmetric(
             horizontal: getSize(20), vertical: getSize(10)),
-        child: myDemandBaseList
+        child: myDemandBaseList,
       ),
     );
   }
