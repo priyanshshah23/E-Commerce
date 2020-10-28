@@ -12,6 +12,7 @@ import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
 import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
+import 'package:diamnow/components/widgets/shared/CommonDateTimePicker.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
@@ -1022,29 +1023,6 @@ openSharePopUp(BuildContext context) {
 
 openAddReminder(BuildContext context) {
 
-  String _selectedDate;
-
-//  void selectionChanged(DateRangePickerSelectionChangedArgs args) {
-//    _selectedDate = DateFormat('dd MMMM, yyyy').format(args.value);
-//    SchedulerBinding.instance.addPostFrameCallback((duration) {
-////    setState(() {});
-////  });
-//    });
-//        }
-//
-//        getDateRangePicker() {
-//      return Container(
-//          height: getSize(250),
-//          child: Card(
-//              child: SfDateRangePicker(
-//                initialDisplayDate: DateTime.now(),
-//                minDate: DateTime.now(),
-//                view: DateRangePickerView.month,
-//                selectionMode: DateRangePickerSelectionMode.single,
-////              onSelectionChanged: selectionChanged,
-//              )));
-//    }
-
     List<StoneModel> reminderList = [
         StoneModel(0, "Later today", subtitle: "6:00 pm", image: sunrise),
         StoneModel(1, "Tomorrow", subtitle: " Fri 8:00 am", image: sun),
@@ -1087,9 +1065,10 @@ openAddReminder(BuildContext context) {
                             reminderList[i].isSelected =
                             !reminderList[i].isSelected;
                             setState(() {});
-//                            if(reminderList[i]==reminderList.length){
-//
-//                            }
+                            if(i==reminderList.length-1){
+                              print(i);
+                              openDateTimeDialog(context);
+                            }
                           },
                           child: Padding(
                             padding: EdgeInsets.only(top: getSize(20)),

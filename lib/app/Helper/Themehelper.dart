@@ -231,6 +231,14 @@ class BaseTheme {
         fontWeight: FontWeight.normal);
   }
 
+  TextStyle get blue20TextStyle {
+    return TextStyle(
+        fontSize: getFontSize(20),
+        color: colorPrimary,
+        fontWeight: FontWeight.w600);
+  }
+
+
   TextStyle get green10TextStyle {
     return TextStyle(
         fontSize: getFontSize(12),
