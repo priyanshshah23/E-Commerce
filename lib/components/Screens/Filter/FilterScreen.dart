@@ -482,7 +482,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       isProgress: true,
     )
         .then((diamondListResp) async {
-      showToast("Demand Added Successfully",context: context);
+      showToast("Demand Added Successfully", context: context);
     }).catchError((onError) {
       print(onError.toString());
     });
@@ -509,6 +509,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               .resolve<PrefUtils>()
               .getModulePermission(ModulePermissionConstant.permission_myDemand)
               .insert) {
+                MyDemandDialog(context);
             // place code
           } else {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
