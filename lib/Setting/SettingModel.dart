@@ -39,10 +39,10 @@ class DrawerSetting {
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH,
       ));
-   /* if (app
+    if (app
         .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_newGoods)
-        .view)*/
+        .view)
       drawerList.add(DrawerModel(
         image: newArrival,
         title: R.string().screenTitle.newArrival,
@@ -232,6 +232,17 @@ class DrawerSetting {
       ));
     if (app
         .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_appointment)
+        .view)
+      drawerList.add(DrawerModel(
+        image: myOffice,
+        title: R.string().screenTitle.myOffice,
+        imageColor: appTheme.colorPrimary,
+        isSelected: false,
+        type: DiamondModuleConstant.MODULE_TYPE_MY_OFFICE,
+      ));
+    if (app
+        .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_order)
         .view)
       drawerList.add(DrawerModel(
@@ -336,6 +347,55 @@ class DrawerSetting {
   }
 }
 
+isDisplayDelete(int moduleType) {
+  bool isDisplay = false;
+  switch (moduleType) {
+    case DiamondModuleConstant.MODULE_TYPE_MY_CART:
+      if (app
+          .resolve<PrefUtils>()
+          .getModulePermission(ModulePermissionConstant.permission_cart)
+          .delete) isDisplay = true;
+      break;
+    case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
+      if (app
+          .resolve<PrefUtils>()
+          .getModulePermission(ModulePermissionConstant.permission_comment)
+          .delete) isDisplay = true;
+      break;
+    case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
+      if (app
+          .resolve<PrefUtils>()
+          .getModulePermission(ModulePermissionConstant.permission_watchlist)
+          .delete) isDisplay = true;
+      break;
+    case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
+      if (app
+          .resolve<PrefUtils>()
+          .getModulePermission(ModulePermissionConstant.permission_enquiry)
+          .delete) isDisplay = true;
+      break;
+    case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+      if (app
+          .resolve<PrefUtils>()
+          .getModulePermission(ModulePermissionConstant.permission_offer)
+          .delete) isDisplay = true;
+      break;
+    case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
+      if (app
+          .resolve<PrefUtils>()
+          .getModulePermission(ModulePermissionConstant.permission_reminder)
+          .delete) isDisplay = true;
+      break;
+    case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+      if (app
+          .resolve<PrefUtils>()
+          .getModulePermission(ModulePermissionConstant.permission_bid)
+          .delete) isDisplay = true;
+      break;
+  }
+  return isDisplay;
+}
+
 class BottomMenuSetting {
   int moduleType;
 
@@ -406,68 +466,11 @@ class BottomMenuSetting {
         title: R.string().screenTitle.hold,
         type: ActionMenuConstant.ACTION_TYPE_HOLD));*/
     if (!isCompare) {
-      switch (moduleType) {
-        case DiamondModuleConstant.MODULE_TYPE_MY_CART:
-          if (app
-              .resolve<PrefUtils>()
-              .getModulePermission(ModulePermissionConstant.permission_cart)
-              .delete)
-            moreMenuList.add(BottomTabModel(
-                image: home_delete,
-                title: R.string().screenTitle.delete,
-                type: ActionMenuConstant.ACTION_TYPE_DELETE));
-          break;
-          case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
-          if (app
-              .resolve<PrefUtils>()
-              .getModulePermission(ModulePermissionConstant.permission_comment)
-              .delete)
-            moreMenuList.add(BottomTabModel(
-                image: home_delete,
-                title: R.string().screenTitle.delete,
-                type: ActionMenuConstant.ACTION_TYPE_DELETE));
-          break;
-        case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
-          if (app
-              .resolve<PrefUtils>()
-              .getModulePermission(
-                  ModulePermissionConstant.permission_watchlist)
-              .delete)
-            moreMenuList.add(BottomTabModel(
-                image: home_delete,
-                title: R.string().screenTitle.delete,
-                type: ActionMenuConstant.ACTION_TYPE_DELETE));
-          break;
-        case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
-          if (app
-              .resolve<PrefUtils>()
-              .getModulePermission(ModulePermissionConstant.permission_enquiry)
-              .delete)
-            moreMenuList.add(BottomTabModel(
-                image: home_delete,
-                title: R.string().screenTitle.delete,
-                type: ActionMenuConstant.ACTION_TYPE_DELETE));
-          break;
-        case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
-          if (app
-              .resolve<PrefUtils>()
-              .getModulePermission(ModulePermissionConstant.permission_offer)
-              .delete)
-            moreMenuList.add(BottomTabModel(
-                image: home_delete,
-                title: R.string().screenTitle.delete,
-                type: ActionMenuConstant.ACTION_TYPE_DELETE));
-          break;
-        case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
-          if (app
-              .resolve<PrefUtils>()
-              .getModulePermission(ModulePermissionConstant.permission_reminder)
-              .delete)
-            moreMenuList.add(BottomTabModel(
-                image: home_delete,
-                title: R.string().screenTitle.delete,
-                type: ActionMenuConstant.ACTION_TYPE_DELETE));
-          break;
+      if (isDisplayDelete(moduleType)) {
+        moreMenuList.add(BottomTabModel(
+            image: home_delete,
+            title: R.string().screenTitle.delete,
+            type: ActionMenuConstant.ACTION_TYPE_DELETE));
       }
     }
     moreMenuList.add(BottomTabModel(

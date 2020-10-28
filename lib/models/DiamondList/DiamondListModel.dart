@@ -426,6 +426,7 @@ class DiamondModel {
   TrackDiamonds trackItemReminder;
   TrackDiamonds trackItemComment;
   TrackDiamonds trackItemBid;
+  TrackDiamonds trackItemOffice;
 
 
   getSelectedDetail(int type) {

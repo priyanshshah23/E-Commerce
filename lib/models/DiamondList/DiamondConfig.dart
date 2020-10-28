@@ -600,7 +600,7 @@ class DiamondConfig {
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_BID:
           req.id.add(element.trackItemBid?.trackId ?? "");
-          trackType = DiamondTrackConstant.TRACK_TYPE_COMMENT;
+          trackType = DiamondTrackConstant.TRACK_TYPE_BID;
           break;
       }
     });
@@ -717,6 +717,9 @@ class DiamondConfig {
                 break;
               case DiamondTrackConstant.TRACK_TYPE_COMMENT:
                 list[i].trackItemComment = diamond;
+                break;
+              case DiamondTrackConstant.TRACK_TYPE_BID:
+                list[i].trackItemBid = diamond;
                 break;
             }
         });
