@@ -149,6 +149,7 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
       case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
+      case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
         return app
             .resolve<ServiceModule>()
             .networkService()
@@ -544,9 +545,9 @@ class DiamondConfig {
           break;
         case DiamondTrackConstant.TRACK_TYPE_BID:
           diamonds.vStnId = element.vStnId;
-          diamonds.bidAmount = element.getFinalAmount();
-          diamonds.bidPricePerCarat = element.getFinalRate();
-          diamonds.bidDiscount = element.getFinalDiscount();
+          diamonds.bidAmount = element.getBidFinalAmount();
+          diamonds.bidPricePerCarat = element.getBidFinalRate();
+          diamonds.bidDiscount = element.getbidFinalDiscount();
           break;
       }
       req.diamonds.add(diamonds);

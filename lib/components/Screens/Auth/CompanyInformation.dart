@@ -433,6 +433,8 @@ class _CompanyInformationState extends State<CompanyInformation>
                         if (_countryController.text != countryList.name) {
                           _stateController.text = "";
                           _cityController.text = "";
+                          this.cityList.clear();
+                          this.stateList.clear();
                         }
                         selectedCountryItem = countryList;
                         _countryController.text = countryList.name;
@@ -491,6 +493,7 @@ class _CompanyInformationState extends State<CompanyInformation>
                             StateList stateList}) {
                           if (_stateController.text != stateList.name) {
                             _cityController.text = "";
+                            this.cityList.clear();
                           }
                           selectedStateItem = stateList;
                           _stateController.text = stateList.name;
@@ -765,6 +768,8 @@ class _CompanyInformationState extends State<CompanyInformation>
                         _cityController.text = "";
                         selectedStateItem = null;
                         selectedCityItem = null;
+                        this.cityList.clear();
+                        this.stateList.clear();
                       }
                       selectedCountryItem = countryList;
                       _countryController.text = countryList.name;
@@ -821,6 +826,7 @@ class _CompanyInformationState extends State<CompanyInformation>
                       if (_stateController.text != stateList.name) {
                         _cityController.text = "";
                         selectedCityItem = null;
+                        this.cityList.clear();
                       }
                       selectedStateItem = stateList;
                       _stateController.text = stateList.name;

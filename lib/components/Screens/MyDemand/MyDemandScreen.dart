@@ -1,3 +1,6 @@
+import 'dart:collection';
+
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/Helper/Themehelper.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/base/BaseList.dart';
@@ -5,9 +8,13 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CommonWidgets.dart';
+import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/math_utils.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
+import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
+import 'package:diamnow/modules/Filter/gridviewlist/FilterRequest.dart';
 import 'package:flutter/material.dart';
 
 class MyDemandScreen extends StatefulWidget {
@@ -39,6 +46,8 @@ class MyDemandScreen extends StatefulWidget {
 class _MyDemandScreenState extends State<MyDemandScreen> {
   int moduleType;
   bool isFromDrawer;
+
+  DateUtilities dateUtilities = DateUtilities();
 
   BaseList myDemandBaseList;
   List<SavedSearchModel> arrList = [];
@@ -146,6 +155,7 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                 children: <Widget>[
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Text(
@@ -155,6 +165,8 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                       SizedBox(height: getSize(4)),
                       Text(
                         model.expiryDate,
+                        // dateUtilities
+                        //     .convertDateToFormatterString(model.expiryDate),
                         style: appTheme.blackNormal12TitleColorblack,
                       ),
                     ],
@@ -177,7 +189,11 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                             height: getSize(20),
                           ),
                           onPressed: () {
-                            // MyDemandDialog(context);
+                            Map<String, dynamic> dict = {};
+                            dict["searchData"] = model.searchData;
+                            dict[ArgumentConstant.IsFromDrawer] = false;
+                            NavigationUtilities.pushRoute(FilterScreen.route,
+                                args: dict);
                           },
                         ),
                       ),
@@ -199,7 +215,10 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                             height: getSize(15),
                           ),
                           onPressed: () {
-                            // MyDemandDialog(context);
+                            SyncManager.instance.callApiForDeleteSavedSearch(
+                                context, model.id ?? "", success: (resp) {
+                              callApi(true);
+                            });
                           },
                         ),
                       ),
@@ -221,7 +240,12 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                             height: getSize(20),
                           ),
                           onPressed: () {
-                            // MyDemandDialog(context);
+                            Map<String, dynamic> dict = new HashMap();
+                            dict["filterId"] = model.id;
+                            dict[ArgumentConstant.ModuleType] = moduleType;
+                            NavigationUtilities.pushRoute(
+                                DiamondListScreen.route,
+                                args: dict);
                           },
                         ),
                       ),
@@ -232,62 +256,45 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
               SizedBox(
                 height: getSize(20),
               ),
-              // if (arr.length <= 5 || model.isExpand)
-              listOfSelectedFilter(arr),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      // model.isExpand ^= true;
-                      // myDemandBaseList.state.setApiCalling(false);
-                      // fillArrayList();
-                    },
-                    child: Text(
-                      "View Details",
-                      textAlign: TextAlign.center,
-                      style: appTheme.primaryColor14TextStyle,
+              if (arr.length <= 5) listOfSelectedFilter(arr, model),
+              if (arr.length > 5 && model.isExpand)
+                listOfSelectedFilter(arr, model),
+              if (arr.length > 5 && !model.isExpand)
+                Column(
+                  children: <Widget>[
+                    for (int i = 0; i < 5; i++)
+                      Row(children: [
+                        Text(
+                          "${arr[i]["key"] ?? ""} :",
+                          textAlign: TextAlign.left,
+                          style: appTheme.grey16HintTextStyle,
+                        ),
+                        SizedBox(width: getSize(16)),
+                        Expanded(
+                          child: Text(arr[i]["value"] ?? "",
+                              textAlign: TextAlign.right,
+                              style: appTheme.primaryColor14TextStyle),
+                        ),
+                      ]),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        GestureDetector(
+                          onTap: () {
+                            model.isExpand ^= true;
+                            myDemandBaseList.state.setApiCalling(false);
+                            fillArrayList();
+                          },
+                          child: Text(
+                            "View Details",
+                            textAlign: TextAlign.center,
+                            style: appTheme.primaryColor14TextStyle,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-
-              // if (arr.length > 5 && !model.isExpand)
-              // Column(
-              //   children: <Widget>[
-              //     for (int i = 0; i < 5; i++)
-              //       Row(children: [
-              //         Text(
-              //           "${arr[i]["key"] ?? ""} :",
-              //           textAlign: TextAlign.left,
-              //           style: appTheme.grey16HintTextStyle,
-              //         ),
-              //         SizedBox(width: getSize(16)),
-              //         Expanded(
-              //           child: Text(arr[i]["value"] ?? "",
-              //               textAlign: TextAlign.right,
-              //               style: appTheme.primaryColor14TextStyle),
-              //         ),
-              //       ]),
-              //     Row(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       children: <Widget>[
-              //         GestureDetector(
-              //           onTap: () {
-              //             model.isExpand ^= true;
-              //             myDemandBaseList.state.setApiCalling(false);
-              //             fillArrayList();
-              //           },
-              //           child: Text(
-              //             "View Details",
-              //             textAlign: TextAlign.center,
-              //             style: appTheme.primaryColor14TextStyle,
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //   ],
-              // )
+                  ],
+                )
             ],
           ),
         ),
@@ -295,24 +302,50 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
     );
   }
 
-  Column listOfSelectedFilter(List<Map<String, dynamic>> arr) {
-    int length = arr.length > 5 ? 5 : arr.length;
+  Column listOfSelectedFilter(
+      List<Map<String, dynamic>> arr, SavedSearchModel savedSearchModel) {
+    int length = arr.length;
     return Column(
       children: <Widget>[
         for (int i = 0; i < length; i++)
-          Row(children: [
-            Text(
-              "${arr[i]["key"] ?? ""} :",
-              textAlign: TextAlign.left,
-              style: appTheme.grey16HintTextStyle,
-            ),
-            SizedBox(width: getSize(16)),
-            Expanded(
-              child: Text(arr[i]["value"] ?? "",
-                  textAlign: TextAlign.right,
-                  style: appTheme.primaryColor14TextStyle),
-            ),
-          ]),
+          Row(
+            children: [
+              Text(
+                "${arr[i]["key"] ?? ""} :",
+                textAlign: TextAlign.left,
+                style: appTheme.grey16HintTextStyle,
+              ),
+              SizedBox(width: getSize(16)),
+              Expanded(
+                child: Text(arr[i]["value"] ?? "",
+                    textAlign: TextAlign.right,
+                    style: appTheme.primaryColor14TextStyle),
+              ),
+            ],
+          ),
+        savedSearchModel.isExpand && arr.length > 5
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () {
+                      savedSearchModel.isExpand ^= true;
+                      myDemandBaseList.state.setApiCalling(false);
+                      fillArrayList();
+                    },
+                    child: Column(
+                      children: <Widget>[
+                        Text(
+                          "View Less Details",
+                          textAlign: TextAlign.center,
+                          style: appTheme.primaryColor14TextStyle,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            : SizedBox(),
       ],
     );
   }

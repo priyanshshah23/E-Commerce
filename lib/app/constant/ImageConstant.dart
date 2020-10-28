@@ -115,6 +115,9 @@ const String reminder = "assets/DiamondDetail/reminder.png";
 const String recentSearch = "assets/drawer/saved.png";
 const String cancel = "assets/Common/closecross.png";
 const String manageAddress = "assets/DiamondDetail/manageAddress.png";
+const String searchIcon = "assets/DiamondDetail/search.png";
+const String selectedIcon = "assets/DiamondDetail/selectedIcon.png";
+const String unselectedIcon = "assets/DiamondDetail/unselectedIcon.png";
 
 // MyDemand icons
 const String saved_icon = "assets/diamnow/saved.png";
