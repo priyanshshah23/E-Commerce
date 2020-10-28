@@ -83,11 +83,62 @@ class _NotificationsState extends StatefulScreenWidgetState {
   fillArrayList() {
 //    notificationList.state.totalCount = 10;
     notificationList.state.listCount = 10;
-    notificationList.state.listItems = ListView.builder(
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        return getNotificationItem();
-      },
+    notificationList.state.listItems = ListView(
+//      crossAxisAlignment: CrossAxisAlignment.start,
+      shrinkWrap: true,
+      children: [
+        Container(
+            margin: EdgeInsets.only(
+              left: getSize(20),
+              right: getSize(20),
+            ),
+            child: Text(
+              "Today",
+              style: appTheme.primary16TextStyle,
+            )),
+        ListView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: 3,
+          itemBuilder: (context, index) {
+            return getNotificationItem();
+          },
+        ),
+        Container(
+            margin: EdgeInsets.only(
+              left: getSize(20),
+              right: getSize(20),
+            ),
+            child: Text(
+              "Yesterday",
+              style: appTheme.black16TextStyle,
+            )),
+        ListView.builder(
+          itemCount: 2,
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            return getNotificationItem();
+          },
+        ),
+        Container(
+            margin: EdgeInsets.only(
+              left: getSize(20),
+              right: getSize(20),
+            ),
+            child: Text(
+              "Past",
+              style: appTheme.black16TextStyle,
+            )),
+        ListView.builder(
+          itemCount: 4,
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            return getNotificationItem();
+          },
+        ),
+      ],
     );
   }
 
@@ -106,7 +157,11 @@ class _NotificationsState extends StatefulScreenWidgetState {
             leadingButton: getBackButton(context),
             centerTitle: false,
           ),
-          body: notificationList,
+          body: Column(
+            children: [
+              Expanded(child: notificationList),
+            ],
+          ),
         ),
       ),
     );
@@ -134,7 +189,7 @@ class _NotificationsState extends StatefulScreenWidgetState {
                           top: getSize(20),
                         ),
                         padding: EdgeInsets.only(
-                          left : getSize(35),
+                          left: getSize(35),
                           right: getSize(10),
                           top: getSize(10),
                           bottom: getSize(10),
@@ -161,11 +216,14 @@ class _NotificationsState extends StatefulScreenWidgetState {
                               Text(
                                 "Order Placed",
                                 style: appTheme.black16TextStyle.copyWith(
-                                  fontWeight: FontWeight.w500,),
+                                  fontWeight: FontWeight.w500,
+                                ),
                                 maxLines: 2,
                                 textAlign: TextAlign.start,
                               ),
-                              SizedBox(height: getSize(5),),
+                              SizedBox(
+                                height: getSize(5),
+                              ),
                               Text(
                                 "Your Order Placed Successfully. Your Memo No:- ORD000064",
                                 style: appTheme.black14TextStyle,
@@ -173,7 +231,9 @@ class _NotificationsState extends StatefulScreenWidgetState {
                                 maxLines: 2,
                                 textAlign: TextAlign.start,
                               ),
-                              SizedBox(height: getSize(8),),
+                              SizedBox(
+                                height: getSize(8),
+                              ),
                               Row(
                                 children: [
                                   Expanded(
@@ -186,7 +246,8 @@ class _NotificationsState extends StatefulScreenWidgetState {
                                         Expanded(
                                           child: Text(
                                             "20",
-                                            style: appTheme.black12TextStyleBold,
+                                            style:
+                                                appTheme.black12TextStyleBold,
                                           ),
                                         ),
                                       ],
@@ -202,7 +263,8 @@ class _NotificationsState extends StatefulScreenWidgetState {
                                         Expanded(
                                           child: Text(
                                             "15.10",
-                                            style: appTheme.black12TextStyleBold,
+                                            style:
+                                                appTheme.black12TextStyleBold,
                                           ),
                                         ),
                                       ],
@@ -218,7 +280,8 @@ class _NotificationsState extends StatefulScreenWidgetState {
                                         Expanded(
                                           child: Text(
                                             PriceUtilities.getPrice(100),
-                                            style: appTheme.black12TextStyleBold,
+                                            style:
+                                                appTheme.black12TextStyleBold,
                                           ),
                                         ),
                                       ],
@@ -226,7 +289,9 @@ class _NotificationsState extends StatefulScreenWidgetState {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: getSize(5),),
+                              SizedBox(
+                                height: getSize(5),
+                              ),
                               Text(
                                 "10 Mins ago",
                                 style: appTheme.grey14HintTextStyle,
