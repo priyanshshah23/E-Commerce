@@ -300,7 +300,7 @@ class DiamondConfig {
         actionPlaceOrder(context, list, refreshList);
         break;
       case ActionMenuConstant.ACTION_TYPE_REMINDER:
-        actionReminder(context,list);
+        actionReminder(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_COMMENT:
         actionComment(context, list);
@@ -483,12 +483,20 @@ class DiamondConfig {
   }
 
   actionReminder(BuildContext context, List<DiamondModel> list) {
-    openAddReminder(context);
+    openAddReminder(context, (manageClick) {
+      callApiFoCreateTrack(
+          context, list, DiamondTrackConstant.TRACK_TYPE_REMINDER,
+          date: manageClick.date, isPop: true);
+    });
   }
 
   callApiFoCreateTrack(
       BuildContext context, List<DiamondModel> list, int trackType,
-      {bool isPop = false, String remark, String companyName, String title}) {
+      {bool isPop = false,
+      String remark,
+      String companyName,
+      String date,
+      String title}) {
     CreateDiamondTrackReq req = CreateDiamondTrackReq();
     switch (trackType) {
       case DiamondTrackConstant.TRACK_TYPE_OFFER:
@@ -499,6 +507,7 @@ class DiamondConfig {
       case DiamondTrackConstant.TRACK_TYPE_CART:
       case DiamondTrackConstant.TRACK_TYPE_ENQUIRY:
       case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
+      case DiamondTrackConstant.TRACK_TYPE_REMINDER:
         req.trackType = trackType;
         break;
       case DiamondTrackConstant.TRACK_TYPE_BID:
@@ -1023,8 +1032,7 @@ openSharePopUp(BuildContext context) {
       });
 }
 
-openAddReminder(BuildContext context) {
-
+openAddReminder(BuildContext context, ActionClick actionClick) {
   String _selectedDate;
 
 //  void selectionChanged(DateRangePickerSelectionChangedArgs args) {
@@ -1048,14 +1056,18 @@ openAddReminder(BuildContext context) {
 //              )));
 //    }
 
-    List<StoneModel> reminderList = [
-        StoneModel(0, "Later today", subtitle: "6:00 pm", image: sunrise),
-        StoneModel(1, "Tomorrow", subtitle: " Fri 8:00 am", image: sun),
-        StoneModel(2, "Next week", subtitle: "Thu 8:00 am", image: calender_week),
-        StoneModel(3, "Choose another", subtitle: "Date & time", image: calender),
-      ];
+  List<StoneModel> reminderList = [
+    StoneModel(ReminderType.ReminderTypeToday, "Later today",
+        subtitle: "6:00 pm", image: sunrise),
+    StoneModel(ReminderType.ReminderTypeTomorrow, "Tomorrow",
+        subtitle: " Fri 8:00 am", image: sun),
+    StoneModel(ReminderType.ReminderTypeNextWeek, "Next week",
+        subtitle: "Thu 8:00 am", image: calender_week),
+    StoneModel(ReminderType.ReminderTypeCustom, "Choose another",
+        subtitle: "Date & time", image: calender),
+  ];
 
-    return showDialog(
+  return showDialog(
     context: context,
     builder: (context) {
       return Dialog(
@@ -1084,23 +1096,22 @@ openAddReminder(BuildContext context) {
                       itemBuilder: (context, i) {
                         return InkWell(
                           onTap: () {
-                            reminderList.forEach((element) {
-                              element.isSelected = false;
-                            });
-                            reminderList[i].isSelected =
-                            !reminderList[i].isSelected;
+                            if (reminderList[i].id !=
+                                ReminderType.ReminderTypeCustom) {
+                              reminderList.forEach((element) {
+                                element.isSelected = false;
+                              });
+                              reminderList[i].isSelected =
+                                  !reminderList[i].isSelected;
+                            } else {}
                             setState(() {});
-//                            if(reminderList[i]==reminderList.length){
-//
-//                            }
                           },
                           child: Padding(
                             padding: EdgeInsets.only(top: getSize(20)),
                             child: Column(
                               children: [
                                 Padding(
-                                  padding:
-                                  EdgeInsets.only(bottom: getSize(5)),
+                                  padding: EdgeInsets.only(bottom: getSize(5)),
                                   child: Image.asset(
                                     reminderList[i].image,
                                     height: getSize(40),
@@ -1170,7 +1181,59 @@ openAddReminder(BuildContext context) {
                         Expanded(
                           child: InkWell(
                             onTap: () {
-                              FocusScope.of(context).unfocus();
+                              StoneModel stoneModel;
+                              reminderList.forEach((element) {
+                                if (element.isSelected) {
+                                  stoneModel = element;
+                                }
+                              });
+                              if (stoneModel != null) {
+                                DateTime dateTime = DateTime.now();
+
+                                String date =
+                                    dateTime.toUtc().toIso8601String();
+                                switch (stoneModel.id) {
+                                  case ReminderType.ReminderTypeToday:
+                                    DateTime dt = DateTime(
+                                        dateTime.year,
+                                        dateTime.month,
+                                        dateTime.day,
+                                        18,
+                                        0,
+                                        0,
+                                        0);
+                                    date = dt.toUtc().toIso8601String();
+                                    break;
+                                  case ReminderType.ReminderTypeTomorrow:
+                                    DateTime dt = DateTime(
+                                        dateTime.year,
+                                        dateTime.month,
+                                        dateTime.day,
+                                        8,
+                                        0,
+                                        0,
+                                        0);
+                                    dt.add(Duration(days: 1));
+                                    date = dt.toUtc().toIso8601String();
+                                    break;
+                                  case ReminderType.ReminderTypeToday:
+                                    DateTime dt = DateTime(
+                                        dateTime.year,
+                                        dateTime.month,
+                                        dateTime.day,
+                                        18,
+                                        0,
+                                        0,
+                                        0);
+
+                                    date = dt.toUtc().toIso8601String();
+                                    break;
+                                }
+                                Navigator.pop(context);
+                                actionClick(ManageCLick(
+                                    type: clickConstant.CLICK_TYPE_CONFIRM,
+                                    date: date));
+                              } else {}
                             },
                             child: Container(
                               //alignment: Alignment.bottomCenter,
@@ -1180,7 +1243,7 @@ openAddReminder(BuildContext context) {
                               decoration: BoxDecoration(
                                   color: appTheme.colorPrimary,
                                   borderRadius:
-                                  BorderRadius.circular(getSize(5)),
+                                      BorderRadius.circular(getSize(5)),
                                   boxShadow: getBoxShadow(context)),
                               child: Text(
                                 R.string().commonString.btnSubmit,
