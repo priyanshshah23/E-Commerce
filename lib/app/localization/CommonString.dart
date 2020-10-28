@@ -4,6 +4,7 @@ class CommonString {
   // button caption
   final String btnSkip;
   final String btnContinue;
+  final String notifications;
   final String btnContinueCap;
   final String btnEdit;
   final String btnSubmit;
@@ -11,6 +12,9 @@ class CommonString {
   final String selectCity;
   final String selectState;
   final String selectCountry;
+  final String searchCity;
+  final String searchState;
+  final String searchCountry;
   final String btnSaveCap;
   final String btnWithdrawCap;
   final String btnSaveAndContinueCap;
@@ -404,5 +408,9 @@ class CommonString {
     this.noDiamondFound = "No Diamond Found, Please select different search parameter.",
 
     this.selectType = "Select Virtual Type",
+    this.searchCity = "Search city",
+    this.searchCountry = "Search Country",
+    this.searchState = "Search state",
+    this.notifications = "Notification",
   });
 }

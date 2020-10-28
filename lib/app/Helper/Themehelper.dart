@@ -102,6 +102,13 @@ class BaseTheme {
         color: textColor);
   }
 
+  TextStyle get blackNormal18TitleColorPrimary {
+    return TextStyle(
+        fontSize: getFontSize(18),
+        fontWeight: FontWeight.normal,
+        color: colorPrimary);
+  }
+
   TextStyle get blackSemiBold18TitleColorblack {
     return TextStyle(
         fontSize: getFontSize(18),
@@ -151,6 +158,13 @@ class BaseTheme {
         fontSize: getFontSize(12),
         color: textColor,
         fontWeight: FontWeight.normal);
+  }
+
+  TextStyle get black12TextStyleBold {
+    return TextStyle(
+        fontSize: getFontSize(12),
+        color: textColor,
+        fontWeight: FontWeight.bold);
   }
 
   TextStyle get grey12TextStyle {

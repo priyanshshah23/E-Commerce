@@ -37,7 +37,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       child: Scaffold(
         appBar: getAppBar(
           context,
-          R.string().authStrings.changePassword,
+          R.string().commonString.notifications,
           bgColor: appTheme.whiteColor,
           leadingButton: getBackButton(context),
           centerTitle: false,
@@ -84,17 +84,8 @@ class _ChangePasswordState extends State<ChangePassword> {
                         // NavigationUtilities.pushRoute(TabBarDemo.route);
                         FocusScope.of(context).unfocus();
                         if (_formKey.currentState.validate()) {
-                          if(_confirmPasswordController.text.trim() != _newPasswordController.text.trim()) {
-                            app.resolve<CustomDialogs>().confirmDialog(
-                              context,
-                              title: R.string().authStrings.passwordNotChange,
-                              desc: R.string().errorString.enterSamePassword,
-                              positiveBtnTitle: R.string().commonString.btnTryAgain,
-                            );
-                          } else {
                             _formKey.currentState.save();
                             callChangePasswordApi();
-                          }
 //                      callLoginApi(context);
                         } else {
                           setState(() {
@@ -163,6 +154,8 @@ class _ChangePasswordState extends State<ChangePassword> {
       validation: (text) {
         if (text.isEmpty) {
           return R.string().errorString.enterPassword;
+        } else if(!validateStructure(text)) {
+          return R.string().errorString.wrongPassword;
         } else {
           return null;
         }
@@ -191,8 +184,8 @@ class _ChangePasswordState extends State<ChangePassword> {
       validation: (text) {
         if (text.isEmpty) {
           return R.string().errorString.enterPassword;
-        } else if(!validateStructure(text)) {
-          return R.string().errorString.wrongPassword;
+        } else if(text != _newPasswordController.text.trim()) {
+          return R.string().errorString.enterSamePassword;
         } else {
           return null;
         }
@@ -221,6 +214,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       _confirmPasswordController.clear();
       _autoValidate = false;
       showToast(resp.message,context: context);
+      Navigator.pop(context);
       setState(() {});
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(

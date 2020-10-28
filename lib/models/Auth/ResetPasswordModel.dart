@@ -7,14 +7,14 @@ class ResetPasswordReq {
 
   ResetPasswordReq.fromJson(Map<String, dynamic> json) {
     otpNumber = json['otpNumber'];
-    email = json['email'];
+    email = json['value'];
     newPassword = json['newPassword'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['otpNumber'] = this.otpNumber;
-    data['email'] = this.email;
+    data['value'] = this.email;
     data['newPassword'] = this.newPassword;
     return data;
   }
