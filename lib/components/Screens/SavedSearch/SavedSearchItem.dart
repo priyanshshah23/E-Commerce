@@ -7,7 +7,6 @@ import 'package:diamnow/app/constant/constants.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
-import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/math_utils.dart';
 import 'package:diamnow/app/utils/string_utils.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
@@ -19,6 +18,7 @@ import 'package:flutter/material.dart';
 
 class SavedSearchItemWidget extends StatefulWidget {
   int searchType;
+
   SavedSearchItemWidget(this.searchType);
 
   @override
@@ -41,30 +41,29 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
     });
   }
 
-  callBaseList(){
-      savedSearchBaseList = BaseList(BaseListState(
-        noDataMsg: APPNAME,
-        noDataDesc: R.string().noDataStrings.noDataFound,
-        refreshBtn: R.string().commonString.refresh,
-        enablePullDown: true,
-        enablePullUp: true,
-        isApiCalling: true,
-        onPullToRefress: () {
-          callApi(true);
-        },
-        onRefress: () {
-          callApi(true);
-        },
-        onLoadMore: () {
-          callApi(false, isLoading: true);
-        },
-      ));
+  callBaseList() {
+    savedSearchBaseList = BaseList(BaseListState(
+      noDataMsg: APPNAME,
+      noDataDesc: R.string().noDataStrings.noDataFound,
+      refreshBtn: R.string().commonString.refresh,
+      enablePullDown: true,
+      enablePullUp: true,
+      isApiCalling: true,
+      onPullToRefress: () {
+        callApi(true);
+      },
+      onRefress: () {
+        callApi(true);
+      },
+      onLoadMore: () {
+        callApi(false, isLoading: true);
+      },
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
-    return
-    savedSearchBaseList ;
+    return savedSearchBaseList;
   }
 
   callApi(bool isRefress, {bool isLoading = false}) {
@@ -88,29 +87,31 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
       isProgress: !isRefress && !isLoading,
     )
         .then((savedSearchResp) async {
-        savedSearchBaseList.state.listCount = savedSearchResp.data.list.length;
-        savedSearchBaseList.state.totalCount = savedSearchResp.data.count;
-        arrList.addAll(savedSearchResp.data.list);
-        fillArrayList();
-        page = page + 1;
-        savedSearchBaseList.state.setApiCalling(false);
+      print("sucess");
+      savedSearchBaseList.state.listCount = savedSearchResp.data.list.length;
+      savedSearchBaseList.state.totalCount = savedSearchResp.data.count;
+      arrList.addAll(savedSearchResp.data.list);
+      fillArrayList();
+      page = page + 1;
+      savedSearchBaseList.state.setApiCalling(false);
     }).catchError((onError) {
       if (isRefress) {
         arrList.clear();
-          savedSearchBaseList.state.listCount = arrList.length;
-          savedSearchBaseList.state.totalCount = arrList.length;
+        savedSearchBaseList.state.listCount = arrList.length;
+        savedSearchBaseList.state.totalCount = arrList.length;
       }
-        savedSearchBaseList.state.setApiCalling(false);
+      savedSearchBaseList.state.setApiCalling(false);
     });
   }
 
   fillArrayList() {
-      savedSearchBaseList.state.listItems = ListView.builder(
-        itemCount: savedSearchBaseList.state.listCount,
-        itemBuilder: (BuildContext context, int index) {
-          SavedSearchModel savedSearchModel = arrList[index];
-          List<Map<String, dynamic>> arrData =
-              getDisplayData(savedSearchModel.displayData);
+    savedSearchBaseList.state.listItems = ListView.builder(
+      itemCount: arrList.length,
+      itemBuilder: (BuildContext context, int index) {
+        SavedSearchModel savedSearchModel = arrList[index];
+        List<Map<String, dynamic>> arrData =
+            getDisplayData(savedSearchModel.displayData);
+        if (widget.searchType == SavedSearchType.savedSearch) {
           return InkWell(
             onTap: () {
               Map<String, dynamic> dict = {};
@@ -120,8 +121,11 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
             },
             child: getItemWidget(savedSearchModel, arrData),
           );
-        },
-      );
+        } else {
+          return getItemWidget(savedSearchModel, arrData);
+        }
+      },
+    );
   }
 
   getItemWidget(SavedSearchModel model, List<Map<String, dynamic>> arr) {
@@ -801,7 +805,6 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
 
     return arrData;
   }
-
 
   @override
   bool get wantKeepAlive => true;
