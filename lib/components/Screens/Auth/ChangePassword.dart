@@ -37,7 +37,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       child: Scaffold(
         appBar: getAppBar(
           context,
-          R.string().commonString.notifications,
+          R.string().authStrings.changePassword,
           bgColor: appTheme.whiteColor,
           leadingButton: getBackButton(context),
           centerTitle: false,
