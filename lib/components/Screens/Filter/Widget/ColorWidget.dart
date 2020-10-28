@@ -31,6 +31,20 @@ class _ColorWidgetState extends State<ColorWidget> {
         allMaster.webDisplay = widget.colorModel.allLableTitle;
         allMaster.isSelected = false;
 
+        List<Master> arrSelectedMaster = widget.colorModel.masters
+            .where((element) => element.isSelected)
+            .toList();
+        if (!isNullEmptyOrFalse(arrSelectedMaster)) {
+          arrSelectedMaster.length == widget.colorModel.masters.length
+              ? allMaster.isSelected = true
+              : allMaster.isSelected = false;
+
+          if (allMaster.isSelected == true) {
+            widget.colorModel.groupMaster.forEach((element) {
+              element.isSelected = true;
+            });
+          }
+        }
         widget.colorModel.groupMaster.insert(0, allMaster);
       }
     }

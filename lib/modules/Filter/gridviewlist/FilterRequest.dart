@@ -123,7 +123,7 @@ class FilterRequest {
 
       if (element.viewType == ViewTypes.caratRange) {
         List<Map<String, dynamic>> caratRequest =
-            Master.getSelectedCarat((element as SelectionModel).masters);
+            Master.getSelectedCarat((element as SelectionModel).masters) ?? [];
 
         for (var item in (element as SelectionModel).caratRangeChipsToShow) {
           Map<String, dynamic> mainDic = Map<String, dynamic>();
@@ -132,7 +132,8 @@ class FilterRequest {
           dict["<="] = item.split("-")[1];
 
           mainDic["crt"] = dict;
-          caratRequest.add(mainDic);
+
+          if (!isNullEmptyOrFalse(mainDic)) caratRequest.add(mainDic);
         }
         if (!isNullEmptyOrFalse(caratRequest)) map["or"] = caratRequest;
       }
@@ -175,7 +176,7 @@ class FilterRequest {
       }
     }
     if (!isNullEmptyOrFalse(arrWsts)) {
-      map["wsts"] = arrWsts;
+      map["wSts"] = arrWsts;
     }
     return map;
   }
@@ -213,8 +214,15 @@ class FilterDataSource {
           }
         }
       } else {
-        if (item is SelectionModel) {
-          print(item.apiKey);
+        if (item is ColorModel) {
+          for (int i = 0; i < item.masters.length; i++) {
+            Master element = item.masters[i];
+            if (dict[item.apiKey].contains(element.sId)) {
+              element.isSelected = true;
+            }
+            item.onSelectionClick(i);
+          }
+        } else if (item is SelectionModel) {
           if (item.viewType == ViewTypes.caratRange) {
             if (!isNullEmptyOrFalse(dict["or"])) {
               List<dynamic> arr = dict["or"];
@@ -224,7 +232,10 @@ class FilterDataSource {
 
               for (var model in arrSelected) {
                 List<Master> arrMaster = item.masters
-                    .where((element) => element.name == model["<="])
+                    .where((element) =>
+                        element.fromCarat.toString() ==
+                            model[">="].toString() &&
+                        element.toCarat.toString() == model["<="].toString())
                     .toList();
                 if (!isNullEmptyOrFalse(arrMaster)) {
                   arrMaster.first.isSelected = true;

@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
+import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/models/DiamondDetail/DiamondDetailUIModel.dart';
@@ -11,6 +12,7 @@ import 'package:diamnow/models/Master/Master.dart';
 import 'package:diamnow/modules/Filter/gridviewlist/KeyToSymbol.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:rxbus/rxbus.dart';
 
 class Config {
   List<Master> arrLocalData = [];
@@ -287,6 +289,82 @@ class SelectionModel extends FormBaseModel {
       });
     }
     showFromTo = json["showFromTo"] ?? true;
+  }
+
+  void onSelectionClick(int index) {
+    if (isShowAll == true) {
+      if (masters[index].sId == allLableTitle) {
+        if (masters[0].isSelected == true) {
+          masters.forEach((element) {
+            element.isSelected = true;
+          });
+
+          //Group Logic is Selected
+          if (viewType == ViewTypes.groupWidget) {
+            Map<String, bool> m = Map<String, bool>();
+            m[masterCode] = masters[index].isSelected;
+            RxBus.post(m, tag: eventMasterForGroupWidgetSelectAll);
+          }
+        } else {
+          masters.forEach((element) {
+            element.isSelected = false;
+          });
+
+          //Group Logic is Selected
+          if (viewType == ViewTypes.groupWidget) {
+            Map<String, bool> m = Map<String, bool>();
+            m[masterCode] = masters[index].isSelected;
+            RxBus.post(m, tag: eventMasterForGroupWidgetSelectAll);
+          }
+        }
+      } else {
+        if (masters[index].sId == allLableTitle) {
+          masters.forEach((element) {
+            element.isSelected = false;
+          });
+        } else {
+          if (masters
+                  .where((element) =>
+                      element.isSelected == true &&
+                      element.sId != allLableTitle)
+                  .toList()
+                  .length ==
+              masters.length - 1) {
+            masters[0].isSelected = true;
+          } else {
+            masters[0].isSelected = false;
+            Map<String, dynamic> m = Map<String, dynamic>();
+            m["masterCode"] = masterCode;
+            m["isSelected"] = masters[index].isSelected;
+            m["selectedMasterCode"] = masters[index].code;
+            m["masterSelection"] = masterSelection;
+            if (viewType == ViewTypes.groupWidget) {
+              m["isGroupSelected"] =
+                  (this as ColorModel).isGroupSelected;
+              RxBus.post(m, tag: eventMasterForSingleItemOfGroupSelection);
+            }
+          }
+        }
+      }
+    } else {
+      if (masters[index].code == MasterCode.eyecleanStatic) {
+        Master.getSubMaster(MasterCode.eyeClean).then((result) {
+          if (!isNullEmptyOrFalse(result)) {
+            for (var master in result) {
+              if (master.code.toLowerCase() == "y") {
+                Map<String, dynamic> map = {};
+
+                map["eCln"] = [master.sId];
+                if (master.isSelected) masters[index].map = map;
+
+                break;
+              }
+            }
+          }
+        });
+      }
+    }
+
   }
 }
 
