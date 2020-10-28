@@ -274,9 +274,9 @@ class DisplayDataClass {
         isDor: json["isDor"] == null
             ? null
             : List<String>.from(json["isDor"].map((x) => x)),
-        // isFm: json["isFm"] == null
-        //     ? null
-        //     : List<String>.from(json["isFm"].map((x) => x)),
+        isFm: json["isFm"] == null
+            ? null
+            : List<String>.from(json["isFm"].map((x) => x)),
         type2: json["type2"] == null ? null : Type2.fromJson(json["type2"]),
         tblPer: json["tblPer"] == null ? null : Back.fromJson(json["tblPer"]),
         depPer: json["depPer"] == null ? null : Back.fromJson(json["depPer"]),

@@ -13,6 +13,7 @@ class FilterRequest {
   Map<String, dynamic> createRequest(List<FormBaseModel> list) {
     Map<String, dynamic> map = {};
     List<String> arrWsts = [];
+    List<String> arrStage = [];
     for (var element in list) {
       if (element.viewType == ViewTypes.selection) {
         SelectionModel selectionModel = element as SelectionModel;
@@ -54,10 +55,13 @@ class FilterRequest {
             map[selectionModel.apiKey] = arr;
           }
         } else {
+          print(selectionModel.masterCode);
           if (selectionModel.masterCode == MasterCode.stage) {
-            List<String> arrStr = Master.getSelectedId(selectionModel.masters);
-            arrWsts.addAll(arrStr);
-            if (!isNullEmptyOrFalse(arrStr)) map[element.apiKey] = arrWsts;
+            arrStage = Master.getSelectedId(selectionModel.masters);
+
+            if (!isNullEmptyOrFalse(arrStage)) {
+              arrWsts.addAll(arrStage);
+            }
           } else if (selectionModel.masterCode != MasterCode.make) {
             List<String> arrStr = Master.getSelectedId(selectionModel.masters);
             if (!isNullEmptyOrFalse(arrStr)) map[element.apiKey] = arrStr;
@@ -170,7 +174,9 @@ class FilterRequest {
         }
       }
     }
-
+    if (!isNullEmptyOrFalse(arrWsts)) {
+      map["wsts"] = arrWsts;
+    }
     return map;
   }
 }
@@ -208,6 +214,7 @@ class FilterDataSource {
         }
       } else {
         if (item is SelectionModel) {
+          print(item.apiKey);
           if (item.viewType == ViewTypes.caratRange) {
             if (!isNullEmptyOrFalse(dict["or"])) {
               List<dynamic> arr = dict["or"];
@@ -251,15 +258,41 @@ class FilterDataSource {
                     }
                   });
                 }
-                if (!isNullEmptyOrFalse(dict["isDor"])) {
+
+                if (model.code == MasterCode.eyecleanStatic) {}
+              }
+            } else if (item.masterCode == MasterCode.newarrivalsgroup) {
+              for (var model in item.masters) {
+                if (!isNullEmptyOrFalse(dict["wSts"])) {
                   item.masters.forEach((element) {
-                    if (dict["isDor"].contains(element.sId)) {
-                      element.isSelected = true;
+                    if (element.code == MasterCode.newarrivals) {
+                      if (dict["wSts"].contains("B")) {
+                        element.isSelected = true;
+                      }
+                    } else if (element.code == MasterCode.upcoming) {
+                      if (dict["wSts"].contains("U")) {
+                        element.isSelected = true;
+                      }
                     }
                   });
                 }
-                if (model.code == MasterCode.stage) {}
                 if (model.code == MasterCode.eyecleanStatic) {}
+              }
+            } else if (item.masterCode == MasterCode.dor) {
+              if (!isNullEmptyOrFalse(dict["isDor"])) {
+                item.masters.forEach((element) {
+                  if (dict["isDor"].contains(element.code)) {
+                    element.isSelected = true;
+                  }
+                });
+              }
+            } else if (item.masterCode == MasterCode.fm) {
+              if (!isNullEmptyOrFalse(dict["isFm"])) {
+                item.masters.forEach((element) {
+                  if (dict["isFm"].contains(element.code)) {
+                    element.isSelected = true;
+                  }
+                });
               }
             } else if (!isNullEmptyOrFalse(dict[item.apiKey])) {
               item.masters.forEach((element) {
