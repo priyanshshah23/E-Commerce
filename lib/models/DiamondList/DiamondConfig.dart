@@ -12,6 +12,7 @@ import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
 import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
+import 'package:diamnow/components/widgets/shared/CommonDateTimePicker.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
@@ -486,7 +487,7 @@ class DiamondConfig {
     openAddReminder(context, (manageClick) {
       callApiFoCreateTrack(
           context, list, DiamondTrackConstant.TRACK_TYPE_REMINDER,
-          date: manageClick.date, isPop: true);
+          date: manageClick.date);
     });
   }
 
@@ -1033,29 +1034,6 @@ openSharePopUp(BuildContext context) {
 }
 
 openAddReminder(BuildContext context, ActionClick actionClick) {
-  String _selectedDate;
-
-//  void selectionChanged(DateRangePickerSelectionChangedArgs args) {
-//    _selectedDate = DateFormat('dd MMMM, yyyy').format(args.value);
-//    SchedulerBinding.instance.addPostFrameCallback((duration) {
-////    setState(() {});
-////  });
-//    });
-//        }
-//
-//        getDateRangePicker() {
-//      return Container(
-//          height: getSize(250),
-//          child: Card(
-//              child: SfDateRangePicker(
-//                initialDisplayDate: DateTime.now(),
-//                minDate: DateTime.now(),
-//                view: DateRangePickerView.month,
-//                selectionMode: DateRangePickerSelectionMode.single,
-////              onSelectionChanged: selectionChanged,
-//              )));
-//    }
-
   List<StoneModel> reminderList = [
     StoneModel(ReminderType.ReminderTypeToday, "Later today",
         subtitle: "6:00 pm", image: sunrise),
@@ -1066,7 +1044,6 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
     StoneModel(ReminderType.ReminderTypeCustom, "Choose another",
         subtitle: "Date & time", image: calender),
   ];
-
   return showDialog(
     context: context,
     builder: (context) {
@@ -1103,7 +1080,25 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
                               });
                               reminderList[i].isSelected =
                                   !reminderList[i].isSelected;
-                            } else {}
+                            } else {
+                              openDateTimeDialog(context, (manageClick) {
+                                reminderList.forEach((element) {
+                                  element.isSelected = false;
+                                  if (element.id ==
+                                      ReminderType.ReminderTypeCustom) {
+                                    element.isSelected = true;
+                                    element.selectedDate = manageClick.date;
+                                    element.subtitle = DateUtilities()
+                                        .convertServerDateToFormatterString(
+                                            element.selectedDate,
+                                            formatter: DateUtilities
+                                                .dd_mm_yyyy_hh_mm_ss);
+                                  }
+                                });
+
+                                setState(() {});
+                              });
+                            }
                             setState(() {});
                           },
                           child: Padding(
@@ -1135,7 +1130,7 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
                                 ),
                                 Text(
                                   reminderList[i].subtitle,
-                                  style: appTheme.black16TextStyle.copyWith(
+                                  style: appTheme.black12TextStyle.copyWith(
                                     color: reminderList[i].isSelected
                                         ? appTheme.colorPrimary
                                         : appTheme.textBlackColor,
@@ -1216,7 +1211,7 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
                                     dt.add(Duration(days: 1));
                                     date = dt.toUtc().toIso8601String();
                                     break;
-                                  case ReminderType.ReminderTypeToday:
+                                  case ReminderType.ReminderTypeNextWeek:
                                     DateTime dt = DateTime(
                                         dateTime.year,
                                         dateTime.month,
@@ -1227,6 +1222,9 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
                                         0);
 
                                     date = dt.toUtc().toIso8601String();
+                                    break;
+                                  case ReminderType.ReminderTypeCustom:
+                                    date = stoneModel.selectedDate;
                                     break;
                                 }
                                 Navigator.pop(context);
@@ -1272,6 +1270,7 @@ class StoneModel {
   String subtitle;
   String image;
   bool isSelected;
+  String selectedDate;
 
   StoneModel(
     this.id,
