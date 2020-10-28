@@ -387,8 +387,10 @@ class Back {
   String empty;
 
   factory Back.fromJson(Map<String, dynamic> json) => Back(
-        back: json[">="] is int ? json[">="].toString() :json[">="],
-        empty: json["<="]is int ? json["<="].toString() :json["<="],
+    // back: json[">="],
+    // empty: json["<="]
+        back: json[">="] is num ? json[">="].toString() :json[">="],
+        empty: json["<="]is num ? json["<="].toString() :json["<="],
       );
 
   Map<String, dynamic> toJson() => {
