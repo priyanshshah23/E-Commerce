@@ -277,8 +277,12 @@ class DiamondConfig {
   }
 
   manageDiamondAction(BuildContext context, List<DiamondModel> list,
-      BottomTabModel bottomTabModel, Function placeOrder) async {
+      BottomTabModel bottomTabModel, Function refreshList,
+      {bool moduleType}) async {
     switch (bottomTabModel.type) {
+      case ActionMenuConstant.ACTION_TYPE_DELETE:
+        actionDelete(context, list,refreshList);
+        break;
       case ActionMenuConstant.ACTION_TYPE_ADD_TO_CART:
         actionAddToCart(context, list);
         break;
@@ -289,7 +293,7 @@ class DiamondConfig {
         actionAddToWishList(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_PLACE_ORDER:
-        actionPlaceOrder(context, list, placeOrder);
+        actionPlaceOrder(context, list, refreshList);
         break;
       case ActionMenuConstant.ACTION_TYPE_COMMENT:
         actionComment(context, list);
@@ -331,13 +335,17 @@ class DiamondConfig {
           builder: (context) => DiamondCompareScreen(dict),
         ));
         if (isBack != null && isBack) {
-          placeOrder();
+          refreshList();
         }
         break;
     }
   }
 
   actionAddToCart(BuildContext context, List<DiamondModel> list) {
+    callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,
+        title: "Added in Cart");
+  }
+  actionDelete(BuildContext context, List<DiamondModel> list, Function refreshList) {
     callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,
         title: "Added in Cart");
   }
