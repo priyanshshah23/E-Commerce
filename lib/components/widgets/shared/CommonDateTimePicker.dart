@@ -109,7 +109,7 @@ class _DateTimeDialogState extends State<DateTimeDialog>
             ),
           ),
           Container(
-            height: getSize(350),
+            height: getSize(270),
             child: PageView.builder(
               onPageChanged: (index) {
                 _onPageChange(index);
