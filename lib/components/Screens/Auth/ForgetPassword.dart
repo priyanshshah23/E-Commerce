@@ -33,6 +33,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
   bool isButtonEnabled = true;
   bool _autoValidate = false;
   bool isApiCall = false;
+  var _focusPinTextField = FocusNode();
   // bool isButtonEnabled = false;
   bool isOtpCheck = true; // true when screen load first time for grey color
   bool isOtpTrue = false; // to manage error color and success color
@@ -45,11 +46,13 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
   int _start = 30;
   bool isTimerCompleted = false;
 
+  bool autoFocus = true;
+
   @override
   void initState() {
     super.initState();
     if(kDebugMode) {
-      _emailController.text = "honeyspatel98@gmail.com";
+      _emailController.text = "mobileuser";
     }
     _pinEditingController.clear();
   }
@@ -93,6 +96,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
               leadingButton: isApiCall
                   ? getBackButton(context, ontap: () {
                       isApiCall = false;
+                      _timer.cancel();
                       setState(() {});
                     })
                   : getBackButton(context),
@@ -240,7 +244,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
       child: CommonTextfield(
         focusNode: _focusEmail,
         textOption: TextFieldOption(
-          hintText: R.string().authStrings.emaillbl,
+          hintText: R.string().authStrings.emailAndUname,
           maxLine: 1,
           prefixWid: getCommonIconWidget(
               imageName: email,
@@ -319,6 +323,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
         ),
         child: PinInputTextFormField(
           key: _formKeyPin,
+          autoFocus: autoFocus,
           pinLength: 4,
           decoration: UnderlineDecoration(
             color: isOtpCheck
@@ -350,6 +355,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                 editingValidator: DecimalNumberEditingRegexValidator(4)),
           ],
           keyboardType: TextInputType.number,
+          focusNode: _focusPinTextField,
           autovalidate: true,
           onSubmit: (pin) {
             setState(() {});
@@ -434,11 +440,13 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
         if (isTimerCompleted) {
           _start = 30;
           isTimerCompleted = false;
+          autoFocus = false;
         }
       }
-      startTimer();
+      isTimerCompleted = false;
       isApiCall = true;
-      showToast(resp.message,context: context);
+      _start = 30;
+      startTimer();
       setState(() {});
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(

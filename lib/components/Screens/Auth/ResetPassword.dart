@@ -119,18 +119,8 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
                               // NavigationUtilities.pushRoute(TabBarDemo.route);
                               FocusScope.of(context).unfocus();
                               if (_formKey.currentState.validate()) {
-                                if (_confirmPasswordController.text.trim() !=
-                                    _newPasswordController.text.trim()) {
-                                  app.resolve<CustomDialogs>().confirmDialog(
-                                        context,
-                                    title: R.string().authStrings.passwordNotChange,
-                                    desc: R.string().errorString.enterSamePassword,
-                                    positiveBtnTitle: R.string().commonString.btnTryAgain,
-                                      );
-                                } else {
                                   _formKey.currentState.save();
                                   callResetPasswordApi();
-                                }
                               } else {
                                 setState(() {
                                   _autoValidate = true;
@@ -171,6 +161,8 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
       validation: (text) {
         if (text.isEmpty) {
           return R.string().errorString.enterPassword;
+        } else if(!validateStructure(text)) {
+          return R.string().errorString.wrongPassword;
         } else {
           return null;
         }
@@ -199,8 +191,8 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
       validation: (text) {
         if (text.isEmpty) {
           return R.string().errorString.enterPassword;
-        } else if(!validateStructure(text)) {
-          return R.string().errorString.wrongPassword;
+        } else if(text != _newPasswordController.text.trim()) {
+          return R.string().errorString.enterSamePassword;
         } else {
           return null;
         }

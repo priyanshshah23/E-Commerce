@@ -16,6 +16,7 @@ import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
+import 'package:diamnow/components/Screens/Notification/Notifications.dart';
 import 'package:diamnow/components/Screens/Version/VersionUpdate.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
@@ -56,7 +57,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
     super.initState();
     if (kDebugMode) {
       _userNameController.text = "mobileUser";
-      _passwordController.text = "123";
+      _passwordController.text = "Test@123";
     }
   }
 
@@ -374,6 +375,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
           loginResp.data.userPermissions,
         );
       }
+//      NavigationUtilities.pushRoute(Notifications.route);
       callVersionUpdateApi(id: loginResp.data.user.id);
     }).catchError((onError) {
       if (onError is ErrorResp) {

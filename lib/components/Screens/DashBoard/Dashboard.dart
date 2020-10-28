@@ -12,6 +12,7 @@ import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
+import 'package:diamnow/components/Screens/Notification/Notifications.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/Dashboard/DashboardModel.dart';
 import 'package:diamnow/models/Dashbord/DashBoardConfigModel.dart';
@@ -176,35 +177,40 @@ class _DashboardState extends StatefulScreenWidgetState {
                 ),
               )
             : (element.code == BottomCodeConstant.TBNotification)
-                ? Padding(
-                    padding: EdgeInsets.all(getSize(8.0)),
-                    child: Center(
-                      child: Stack(
-                        children: [
-                          Image.asset(
-                            element.image,
-                            height: getSize(24),
-                            width: getSize(24),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: getSize(14.0), top: getSize(0.0)),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                shape: BoxShape.circle,
-                                // borderRadius: BorderRadius.circular(getSize(5)),
-                                border: Border.all(
-                                    color: appTheme.whiteColor,
-                                    width: getSize(2)),
+                ? InkWell(
+                    onTap: () {
+                      NavigationUtilities.pushRoute(Notifications.route);
+                    },
+                    child: Padding(
+                        padding: EdgeInsets.all(getSize(8.0)),
+                        child: Center(
+                          child: Stack(
+                            children: [
+                              Image.asset(
+                                element.image,
+                                height: getSize(24),
+                                width: getSize(24),
                               ),
-                              height: getSize(10),
-                              width: getSize(10),
-                            ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: getSize(14.0), top: getSize(0.0)),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    shape: BoxShape.circle,
+                                    // borderRadius: BorderRadius.circular(getSize(5)),
+                                    border: Border.all(
+                                        color: appTheme.whiteColor,
+                                        width: getSize(2)),
+                                  ),
+                                  height: getSize(10),
+                                  width: getSize(10),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ))
+                        )),
+                  )
                 : Padding(
                     padding: EdgeInsets.all(getSize(8.0)),
                     child: Image.asset(

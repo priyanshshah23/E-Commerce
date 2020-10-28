@@ -208,17 +208,17 @@ class DrawerSetting {
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_BID,
       ));
-    if (app
-        .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_hold)
-        .view)
-      drawerList.add(DrawerModel(
-        image: myHold,
-        title: R.string().screenTitle.myHold,
-        imageColor: appTheme.colorPrimary,
-        isSelected: false,
-        type: DiamondModuleConstant.MODULE_TYPE_MY_HOLD,
-      ));
+//    if (app
+//        .resolve<PrefUtils>()
+//        .getModulePermission(ModulePermissionConstant.permission_hold)
+//        .view)
+//      drawerList.add(DrawerModel(
+//        image: myHold,
+//        title: R.string().screenTitle.myHold,
+//        imageColor: appTheme.colorPrimary,
+//        isSelected: false,
+//        type: DiamondModuleConstant.MODULE_TYPE_MY_HOLD,
+//      ));
     if (app
         .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_enquiry)

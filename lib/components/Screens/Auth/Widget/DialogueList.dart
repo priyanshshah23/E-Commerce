@@ -51,39 +51,20 @@ class _DialogueListState extends State<DialogueList> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
+            SizedBox(
+              height: getSize(20),
+            ),
             Container(
-                decoration: BoxDecoration(
-                  color: appTheme.textBlackColor,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(getSize(25)),
-                      topRight: Radius.circular(getSize(25))),
-                ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: getSize(20), vertical: getSize(20)),
+                      horizontal: getSize(20), vertical: getSize(10)),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Expanded(
-                        child: Text(
-                          getTitle(),
-                          style: AppTheme.of(context)
-                              .theme
-                              .textTheme
-                              .subhead
-                              .copyWith(
-                                  fontWeight: FontWeight.w500,
-                                  color: ColorConstants.white),
-                        ),
+                      Text(
+                        getTitle(),
+                        style: appTheme.blackMedium20TitleColorblack,
                       ),
-                      GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Icon(
-                            Icons.clear,
-                            size: getSize(16),
-                            color: ColorConstants.white,
-                          ))
                     ],
                   ),
                 )),
@@ -101,21 +82,18 @@ class _DialogueListState extends State<DialogueList> {
                       },
                       controller: searchController,
                       decoration: InputDecoration(
-                          filled: true,
-                          fillColor: appTheme.textFieldBorderColor,
                           contentPadding:
                               EdgeInsets.symmetric(horizontal: getSize(20)),
-                          hintText: R.string().commonString.search,
-                          suffixIcon: Icon(
-                            Icons.search,
-                            color: appTheme.textGreyColor,
-                          ),
+                          hintText: getHintText(),
+                          hintStyle: appTheme.blackNormal18TitleColorblack,
+                          suffixIcon:  getCommonIconWidget(
+                              imageName: search, imageType: IconSizeType.medium),
                           focusedBorder: OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(30.0))),
+                                  BorderRadius.all(Radius.circular(5.0))),
                           border: OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(30.0)))),
+                                  BorderRadius.all(Radius.circular(5.0)))),
                     ),
                   ),
                   SizedBox(
@@ -144,13 +122,18 @@ class _DialogueListState extends State<DialogueList> {
                           },
                           child: Padding(
                             padding:
-                                EdgeInsets.symmetric(vertical: getSize(10)),
+                                EdgeInsets.symmetric(vertical: getSize(10), horizontal: getSize(20)),
                             child: Row(
                               children: <Widget>[
-                                Expanded(child: Text(items[index].name)),
-                                selectedItem.name == items[index].name
-                                    ? Icon(Icons.done)
-                                    : SizedBox()
+                                Expanded(child: Text(items[index].name, style: selectedItem != null && selectedItem.name == items[index].name ? appTheme.blackNormal18TitleColorPrimary : appTheme.blackNormal18TitleColorblack,)),
+                                SizedBox(
+                                  width: getSize(10),
+                                ),
+                                Container(
+                                  height: getSize(16),
+                                  width: getSize(16),
+                                  child: selectedItem != null && selectedItem.name == items[index].name ?  Image.asset(selectedIcon) :  Image.asset(unselectedIcon),
+                                ),
                               ],
                             ),
                           ),
@@ -199,6 +182,17 @@ class _DialogueListState extends State<DialogueList> {
       return R.string().commonString.selectState;
     } else if (widget.type == DialogueListType.Country) {
       return R.string().commonString.selectCountry;
+    }
+    return "";
+  }
+
+  String getHintText() {
+    if (widget.type == DialogueListType.City) {
+      return R.string().commonString.searchCity;
+    } else if (widget.type == DialogueListType.State) {
+      return R.string().commonString.searchState;
+    } else if (widget.type == DialogueListType.Country) {
+      return R.string().commonString.searchCountry;
     }
     return "";
   }
