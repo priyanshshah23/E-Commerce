@@ -712,7 +712,6 @@ class DiamondModel {
 
   num getFinalRate() {
     if(isAddToBid){
-      print("ctpr-isAddToBid--${ctPr}");
       return ctPr;
     }
     if (isAddToOffer) {

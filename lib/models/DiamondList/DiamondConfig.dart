@@ -536,9 +536,9 @@ class DiamondConfig {
           break;
         case DiamondTrackConstant.TRACK_TYPE_BID:
           diamonds.vStnId = element.vStnId;
-          diamonds.bidAmount = element.getFinalAmount();
-          diamonds.bidPricePerCarat = element.getFinalRate();
-          diamonds.bidDiscount = element.getFinalDiscount();
+          diamonds.bidAmount = element.getBidFinalAmount();
+          diamonds.bidPricePerCarat = element.getBidFinalRate();
+          diamonds.bidDiscount = element.getbidFinalDiscount();
           break;
       }
       req.diamonds.add(diamonds);
