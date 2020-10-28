@@ -28,9 +28,8 @@ class _FromToWidgetState extends State<FromToWidget> {
   @override
   void initState() {
     super.initState();
-    // _focusMaxValue.addListener(() {
-    //   print("Has focus: ${_focusMaxValue.hasFocus}");
-    // });
+    _minValueController.text = widget.fromTomodel.valueFrom;
+    _maxValueController.text = widget.fromTomodel.valueTo;
   }
 
   @override

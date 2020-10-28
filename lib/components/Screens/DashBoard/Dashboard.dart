@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
@@ -7,7 +9,9 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
+import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/Dashboard/DashboardModel.dart';
 import 'package:diamnow/models/Dashbord/DashBoardConfigModel.dart';
@@ -60,6 +64,7 @@ class _DashboardState extends StatefulScreenWidgetState {
   var _focusSearch = FocusNode();
 
   DashboardModel dashboardModel;
+
   _DashboardState({this.moduleType, this.isFromDrawer});
 
   RefreshController refreshController =
@@ -75,13 +80,13 @@ class _DashboardState extends StatefulScreenWidgetState {
     dashboardConfig = DashboardConfig();
     dashboardConfig.initItems();
 
-    callApiForDashboard();
+    callApiForDashboard(false);
     setState(() {
       //
     });
   }
 
-  callApiForDashboard() {
+  callApiForDashboard(bool isRefress, {bool isLoading = false}) {
     Map<String, dynamic> dict = {};
 
     dict["savedSearch"] = true;
@@ -97,19 +102,51 @@ class _DashboardState extends StatefulScreenWidgetState {
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().dashboard(dict),
             context,
-            isProgress: true)
+            isProgress: !isRefress && !isLoading)
         .then((resp) async {
       print(resp);
       this.dashboardModel = resp.data;
+      setTopCountData();
       setState(() {});
     }).catchError((onError) {
-      app.resolve<CustomDialogs>().confirmDialog(
-            context,
-            title: R.string().commonString.error,
-            desc: onError.message,
-            positiveBtnTitle: R.string().commonString.btnTryAgain,
-          );
+      print(onError);
+      if (onError is ErrorResp) {
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              title: R.string().commonString.error,
+              desc: onError.message,
+              positiveBtnTitle: R.string().commonString.btnTryAgain,
+            );
+      }
     });
+  }
+
+  setTopCountData() {
+    for (var item in dashboardConfig.arrTopSection) {
+      if (item.type == DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND) {
+        DashboardCount dash = this.dashboardModel.dashboardCount.singleWhere(
+            (element) => element.name.toLowerCase() == "finestar_exclusive");
+        if (!isNullEmptyOrFalse(dash)) {
+          item.value = "${dash.searchCount}";
+        } else {
+          item.value = "0";
+        }
+      } else if (item.type == DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
+        item.value =
+            "${this.dashboardModel.tracks[DiamondTrackConstant.TRACK_TYPE_ENQUIRY.toString()].pieces}";
+      } else if (item.type == DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST) {
+        item.value =
+            "${this.dashboardModel.tracks[DiamondTrackConstant.TRACK_TYPE_WATCH_LIST.toString()].pieces}";
+      } else if (item.type == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+        DashboardCount dash = this.dashboardModel.dashboardCount.singleWhere(
+            (element) => element.name.toLowerCase() == "new arrival");
+        if (!isNullEmptyOrFalse(dash)) {
+          item.value = "${dash.searchCount}";
+        } else {
+          item.value = "0";
+        }
+      }
+    }
   }
 
   List<Widget> getToolbarItem() {
@@ -188,6 +225,7 @@ class _DashboardState extends StatefulScreenWidgetState {
         break;
       case BottomCodeConstant.TBProfile:
         // Go to Profile
+        openProfile();
         break;
     }
   }
@@ -224,7 +262,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                     color: AppTheme.of(context).theme.primaryColorLight),
                 enablePullDown: true,
                 onRefresh: () {
-                  callApiForDashboard();
+                  callApiForDashboard(true);
                   refreshController.refreshCompleted();
                   refreshController.loadComplete();
                 },
@@ -252,6 +290,12 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   getSarchTextField() {
+    if (!(app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_searchDiamond)
+        .view)) {
+      return SizedBox();
+    }
     return Padding(
       padding: EdgeInsets.only(
         left: getSize(Spacing.leftPadding),
@@ -354,7 +398,6 @@ class _DashboardState extends StatefulScreenWidgetState {
                   crossAxisSpacing: 10,
                   children: List.generate(dashboardConfig.arrTopSection.length,
                       (index) {
-                    // var item = arraDiamond[index];
                     return getTopSectionGridItem(
                         dashboardConfig.arrTopSection[index]);
                   }),
@@ -373,7 +416,11 @@ class _DashboardState extends StatefulScreenWidgetState {
   getTopSectionGridItem(DashbordTopSection model) {
     return InkWell(
       onTap: () {
-        //
+        Map<String, dynamic> dict = new HashMap();
+        dict[ArgumentConstant.ModuleType] = model.type;
+        dict[ArgumentConstant.IsFromDrawer] = false;
+        NavigationUtilities.pushRoute(DiamondListScreen.route,
+            type: RouteType.fade, args: dict);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -438,16 +485,21 @@ class _DashboardState extends StatefulScreenWidgetState {
 
   getFeaturedSection() {
     List<DiamondModel> arrStones = [];
-    if (!isNullEmptyOrFalse(this.dashboardModel)) {
-      if (!isNullEmptyOrFalse(this.dashboardModel.featuredStone)) {
-        List<FeaturedStone> filter = this
-            .dashboardModel
-            .featuredStone
-            .where((element) => element.type == DashboardConstants.best)
-            .toList();
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_featured)
+        .view) {
+      if (!isNullEmptyOrFalse(this.dashboardModel)) {
+        if (!isNullEmptyOrFalse(this.dashboardModel.featuredStone)) {
+          List<FeaturedStone> filter = this
+              .dashboardModel
+              .featuredStone
+              .where((element) => element.type == DashboardConstants.best)
+              .toList();
 
-        if (!isNullEmptyOrFalse(filter)) {
-          arrStones = filter.first.featuredPair;
+          if (!isNullEmptyOrFalse(filter)) {
+            arrStones = filter.first.featuredPair;
+          }
         }
       }
     }
@@ -484,7 +536,8 @@ class _DashboardState extends StatefulScreenWidgetState {
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
                     crossAxisCount: 2,
-                    childAspectRatio: 0.36, // without Price
+                    childAspectRatio: 0.36,
+                    // without Price
                     // childAspectRatio: 0.327, // with Price
                     mainAxisSpacing: 10,
                     crossAxisSpacing: 10,
@@ -504,17 +557,23 @@ class _DashboardState extends StatefulScreenWidgetState {
 
   getStoneOfDaySection() {
     List<DiamondModel> arrStones = [];
-    if (!isNullEmptyOrFalse(this.dashboardModel)) {
-      if (!isNullEmptyOrFalse(this.dashboardModel.featuredStone)) {
-        List<FeaturedStone> filter = this
-            .dashboardModel
-            .featuredStone
-            .where(
-                (element) => element.type == DashboardConstants.stoneOfTheDay)
-            .toList();
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(
+            ModulePermissionConstant.permission_stone_of_the_day)
+        .view) {
+      if (!isNullEmptyOrFalse(this.dashboardModel)) {
+        if (!isNullEmptyOrFalse(this.dashboardModel.featuredStone)) {
+          List<FeaturedStone> filter = this
+              .dashboardModel
+              .featuredStone
+              .where(
+                  (element) => element.type == DashboardConstants.stoneOfTheDay)
+              .toList();
 
-        if (!isNullEmptyOrFalse(filter)) {
-          arrStones = filter.first.featuredPair;
+          if (!isNullEmptyOrFalse(filter)) {
+            arrStones = filter.first.featuredPair;
+          }
         }
       }
     }
@@ -912,9 +971,9 @@ class _DashboardState extends StatefulScreenWidgetState {
                         ),
                         Row(
                           children: [
-                            getText("191071"),
+                            getText(model.stoneId ?? "-"),
                             Spacer(),
-                            getAmountText("13,992.50/Cts"),
+                            getAmountText(model.getPricePerCarat()),
                           ],
                         ),
                         SizedBox(
@@ -923,11 +982,11 @@ class _DashboardState extends StatefulScreenWidgetState {
                         Row(
                           children: [
                             getText(
-                              "Round",
+                              model.shpNm ?? "",
                               fontWeight: FontWeight.w500,
                             ),
                             Spacer(),
-                            getAmountText("13,992.50/Amt"),
+                            getAmountText(model.getAmount()),
                           ],
                         ),
                         SizedBox(
@@ -935,17 +994,17 @@ class _DashboardState extends StatefulScreenWidgetState {
                         ),
                         Row(
                           children: <Widget>[
-                            getText("D"),
+                            getText(model.colNm ?? ""),
                             Spacer(),
-                            getText("IF"),
+                            getText(model.clrNm ?? ""),
                             Spacer(),
-                            getText("EX"),
+                            getText(model.cutNm ?? ""),
                             getDot(),
-                            getText("EX"),
+                            getText(model.polNm ?? ""),
                             getDot(),
-                            getText("EX"),
+                            getText(model.symNm ?? ""),
                             Spacer(),
-                            getText("GIA"),
+                            getText(model.lbNm ?? ""),
                           ],
                         ),
                         SizedBox(
@@ -972,6 +1031,12 @@ class _DashboardState extends StatefulScreenWidgetState {
     }
 
     if (isNullEmptyOrFalse(this.dashboardModel.savedSearch)) {
+      return SizedBox();
+    }
+    if (!(app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_mySavedSearch)
+        .view)) {
       return SizedBox();
     }
 
@@ -1743,5 +1808,11 @@ class _DashboardState extends StatefulScreenWidgetState {
     dict[ArgumentConstant.ModuleType] = DiamondModuleConstant.MODULE_TYPE_HOME;
 
     NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
+  }
+
+  openProfile() {
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.IsFromDrawer] = false;
+    NavigationUtilities.pushRoute(MyAccountScreen.route, args: dict);
   }
 }

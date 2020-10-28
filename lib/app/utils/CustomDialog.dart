@@ -173,6 +173,15 @@ class CustomDialogs {
         dismissPopup: dismissPopup);
   }
 
+  void accessDenideDialog(BuildContext context){
+    app.resolve<CustomDialogs>().errorDialog(
+      context,
+      "",
+      R.string().errorString.accessDenide,
+      btntitle: R.string().commonString.ok,
+    );
+  }
+
   void confirmDialog(BuildContext context,
       {String title,
       String desc,

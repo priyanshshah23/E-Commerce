@@ -36,8 +36,7 @@ class SavedSearchScreen extends StatefulScreenWidget {
       );
 }
 
-class _SavedSearchScreenState extends State<SavedSearchScreen>
-    with AutomaticKeepAliveClientMixin<SavedSearchScreen> {
+class _SavedSearchScreenState extends State<SavedSearchScreen> {
   int moduleType;
   bool isFromDrawer;
 
@@ -48,18 +47,6 @@ class _SavedSearchScreenState extends State<SavedSearchScreen>
 
   _SavedSearchScreenState({this.moduleType, this.isFromDrawer});
 
-  Future doAsyncStuff() async {
-    keepAlive = true;
-    updateKeepAlive();
-
-    await Future.delayed(Duration(seconds: 10));
-
-    keepAlive = false;
-    updateKeepAlive();
-  }
-
-  @override
-  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {

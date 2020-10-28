@@ -103,6 +103,8 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
 //          leadingButton: getBackButton(context),
 //          centerTitle: false,
 //        ),
+        resizeToAvoidBottomPadding: true,
+        resizeToAvoidBottomInset: false,
       bottomNavigationBar:  Padding(
         padding: EdgeInsets.only(top: getSize(10), bottom: getSize(16), right: getSize(20), left: getSize(20),),
         child: Container(

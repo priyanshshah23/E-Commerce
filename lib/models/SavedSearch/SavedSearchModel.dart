@@ -93,7 +93,7 @@ class SavedSearchModel {
         name: json["name"],
         isSentReminder: json["isSentReminder"],
         normalizeName: json["normalizeName"],
-        searchData: json['searchData'] != null
+        searchData: !isNullEmptyOrFalse(json['searchData'])
             ? DisplayDataClass.fromJson(json["searchData"])
             : null,
         type: json["type"],
@@ -103,7 +103,7 @@ class SavedSearchModel {
         isDeleted: json["isDeleted"],
         isSendNotification: json["isSendNotification"],
         isReturnSimilar: json["isReturnSimilar"],
-        displayData: json['displayData'] != null
+        displayData: !isNullEmptyOrFalse(json['displayData'])
             ? DisplayDataClass.fromJson(json["displayData"])
             : null,
       );
@@ -133,6 +133,7 @@ class DisplayDataClass {
     this.or,
     this.col,
     this.shd,
+    this.flu,
     this.clr,
     this.cut,
     this.pol,
@@ -169,13 +170,18 @@ class DisplayDataClass {
     this.opCrwn,
     this.grdl,
     this.kToSArr,
+    this.loc,
+    this.lb,
   });
 
   List<String> shp;
   List<Or> or;
   List<String> col;
   List<String> shd;
+  List<String> flu;
   List<String> clr;
+  List<String> loc;
+  List<String> lb;
   List<String> cut;
   List<String> pol;
   List<String> sym;
@@ -223,6 +229,15 @@ class DisplayDataClass {
         col: json["col"] == null
             ? null
             : List<String>.from(json["col"].map((x) => x)),
+        flu: json["flu"] == null
+            ? null
+            : List<String>.from(json["flu"].map((x) => x)),
+        lb: json["lb"] == null
+            ? null
+            : List<String>.from(json["lb"].map((x) => x)),
+        loc: json["loc"] == null
+            ? null
+            : List<String>.from(json["loc"].map((x) => x)),
         shd: json["shd"] == null
             ? null
             : List<String>.from(json["shd"].map((x) => x)),
@@ -246,7 +261,9 @@ class DisplayDataClass {
             : List<String>.from(json["brlncy"].map((x) => x)),
         wSts: json["wSts"] == null
             ? null
-            : List<String>.from(json["wSts"].map((x) => x)),
+            : (json["wSts"] is String)
+                ? [json["wSts"]]
+                : List<String>.from(json["wSts"].map((x) => x)),
         ctPr: json["ctPr"] == null ? null : Back.fromJson(json["ctPr"]),
         back: json["back"] == null ? null : Back.fromJson(json["back"]),
         isCm: json["isCm"] == null
@@ -255,9 +272,9 @@ class DisplayDataClass {
         isDor: json["isDor"] == null
             ? null
             : List<String>.from(json["isDor"].map((x) => x)),
-        isFm: json["isFm"] == null
-            ? null
-            : List<String>.from(json["isFm"].map((x) => x)),
+        // isFm: json["isFm"] == null
+        //     ? null
+        //     : List<String>.from(json["isFm"].map((x) => x)),
         type2: json["type2"] == null ? null : Type2.fromJson(json["type2"]),
         tblPer: json["tblPer"] == null ? null : Back.fromJson(json["tblPer"]),
         depPer: json["depPer"] == null ? null : Back.fromJson(json["depPer"]),
@@ -308,6 +325,9 @@ class DisplayDataClass {
         "shp": shp == null ? null : List<dynamic>.from(shp.map((x) => x)),
         "or": or == null ? null : List<dynamic>.from(or.map((x) => x.toJson())),
         "col": col == null ? null : List<dynamic>.from(col.map((x) => x)),
+        "flu": flu == null ? null : List<dynamic>.from(flu.map((x) => x)),
+        "loc": loc == null ? null : List<dynamic>.from(loc.map((x) => x)),
+        "lb": lb == null ? null : List<dynamic>.from(lb.map((x) => x)),
         "shd": shd == null ? null : List<dynamic>.from(shd.map((x) => x)),
         "clr": clr == null ? null : List<dynamic>.from(clr.map((x) => x)),
         "cut": cut == null ? null : List<dynamic>.from(cut.map((x) => x)),
@@ -374,16 +394,28 @@ class Back {
 class KToSArr {
   KToSArr({
     this.kToSArrIn,
+    this.kToSArrnIn,
   });
 
   List<String> kToSArrIn;
+  List<String> kToSArrnIn;
 
   factory KToSArr.fromJson(Map<String, dynamic> json) => KToSArr(
-        kToSArrIn: List<String>.from(json["in"].map((x) => x)),
+        kToSArrIn: json["in"] == null
+            ? null
+            : List<String>.from(json["in"].map((x) => x)),
+        kToSArrnIn: json["nin"] == null
+            ? null
+            : List<String>.from(json["nin"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
-        "in": List<dynamic>.from(kToSArrIn.map((x) => x)),
+        "in": kToSArrIn == null
+            ? null
+            : List<dynamic>.from(kToSArrIn.map((x) => x)),
+        "nin": kToSArrnIn == null
+            ? null
+            : List<dynamic>.from(kToSArrnIn.map((x) => x)),
       };
 }
 

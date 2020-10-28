@@ -32,6 +32,7 @@ import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/FilterModel/TabModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
+import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:diamnow/modules/Filter/gridviewlist/FilterRequest.dart';
 import 'package:diamnow/modules/Filter/gridviewlist/KeyToSymbol.dart';
 import 'package:flutter/cupertino.dart';
@@ -48,6 +49,7 @@ class FilterScreen extends StatefulScreenWidget {
 
   int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
   bool isFromDrawer = false;
+  DisplayDataClass dictSearchData;
 
   FilterScreen(Map<String, dynamic> arguments) {
     if (arguments != null) {
@@ -57,19 +59,24 @@ class FilterScreen extends StatefulScreenWidget {
       if (arguments[ArgumentConstant.IsFromDrawer] != null) {
         isFromDrawer = arguments[ArgumentConstant.IsFromDrawer];
       }
+      if (arguments["searchData"] != null) {
+        dictSearchData = arguments["searchData"];
+      }
     }
   }
 
   @override
   _FilterScreenState createState() =>
-      _FilterScreenState(moduleType, isFromDrawer);
+      _FilterScreenState(moduleType, isFromDrawer,
+          dictSearchData: dictSearchData);
 }
 
 class _FilterScreenState extends StatefulScreenWidgetState {
   int moduleType;
   bool isFromDrawer;
+  DisplayDataClass dictSearchData;
 
-  _FilterScreenState(this.moduleType, this.isFromDrawer);
+  _FilterScreenState(this.moduleType, this.isFromDrawer, {this.dictSearchData});
 
   int segmentedControlValue = 0;
   PageController controller = PageController();
@@ -93,6 +100,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       config.getFilterJson().then((result) {
         setState(() {
           arrList = result;
+          if (!isNullEmptyOrFalse(this.dictSearchData)) {
+            arrList = FilterDataSource()
+                .prepareFilterDataSource(arrList, this.dictSearchData);
+          }
         });
       });
       config.getTabJson().then((result) {
@@ -484,22 +495,57 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       onClickCallback: (obj) {
         //
         if (obj.code == BottomCodeConstant.filterSavedSearch) {
-          //
+          if (app
+              .resolve<PrefUtils>()
+              .getModulePermission(
+                  ModulePermissionConstant.permission_mySavedSearch)
+              .view) {
+            // place code
+          } else {
+            app.resolve<CustomDialogs>().accessDenideDialog(context);
+          }
         } else if (obj.code == BottomCodeConstant.filterAddDemamd) {
-          //
-          MyDemandDialog(context);
+          if (app
+              .resolve<PrefUtils>()
+              .getModulePermission(ModulePermissionConstant.permission_myDemand)
+              .insert) {
+            // place code
+          } else {
+            app.resolve<CustomDialogs>().accessDenideDialog(context);
+          }
         } else if (obj.code == BottomCodeConstant.filterSearch) {
-          //
-          print(obj.code);
-          callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-              isSearch: true);
+          if (app
+              .resolve<PrefUtils>()
+              .getModulePermission(
+                  ModulePermissionConstant.permission_searchResult)
+              .view) {
+            callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+                isSearch: true);
+            // place code
+          } else {
+            app.resolve<CustomDialogs>().accessDenideDialog(context);
+          }
         } else if (obj.code == BottomCodeConstant.filterSaveAndSearch) {
-          //
-          print(obj.code);
-          callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-              isSavedSearch: true);
+          if (app
+              .resolve<PrefUtils>()
+              .getModulePermission(
+                  ModulePermissionConstant.permission_mySavedSearch)
+              .insert) {
+            callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+                isSavedSearch: true);
+          } else {
+            app.resolve<CustomDialogs>().accessDenideDialog(context);
+          }
         } else if (obj.code == BottomCodeConstant.filteMatchPair) {
-          callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR);
+          if (app
+              .resolve<PrefUtils>()
+              .getModulePermission(
+                  ModulePermissionConstant.permission_matchPair)
+              .view) {
+            callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR);
+          } else {
+            app.resolve<CustomDialogs>().accessDenideDialog(context);
+          }
         }
       },
     );

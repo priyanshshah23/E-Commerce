@@ -71,6 +71,12 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
         });
       }
     }
+
+    for (int i = 0; i < widget.keyToSymbol.listOfRadio.length; i++) {
+      if (widget.keyToSymbol.listOfRadio[i].isSelected) {
+        _radioValue = i;
+      }
+    }
     //code for showMore & showLess functionality.
     // for (var masterIndex = 0; masterIndex < elementsToShow; masterIndex++) {
     //   listOfMasterView.add(widget.keyToSymbol.masters[masterIndex]);
