@@ -155,7 +155,7 @@ class _TagWidgetState extends State<TagWidget> {
                     widget.model.masters[index].isSelected =
                         !widget.model.masters[index].isSelected;
 
-                    onSelectionClick(index);
+                    widget.model.onSelectionClick(index);
                   });
                 },
               );
@@ -272,7 +272,7 @@ class _TagWidgetState extends State<TagWidget> {
                       widget.model.masters[index].isSelected =
                           !widget.model.masters[index].isSelected;
 
-                      onSelectionClick(index);
+                      widget.model.onSelectionClick(index);
                     });
                   },
                 );
@@ -495,82 +495,7 @@ class _TagWidgetState extends State<TagWidget> {
               MasterCode.symmetry.toLowerCase()) {
         RxBus.post(false, tag: eventMasterForDeSelectMake);
       }
-      onSelectionClick(index);
-    }
-  }
-
-  void onSelectionClick(int index) {
-    if (widget.model.isShowAll == true) {
-      if (widget.model.masters[index].sId == widget.model.allLableTitle) {
-        if (widget.model.masters[0].isSelected == true) {
-          widget.model.masters.forEach((element) {
-            element.isSelected = true;
-          });
-
-          //Group Logic is Selected
-          if (widget.model.viewType == ViewTypes.groupWidget) {
-            Map<String, bool> m = Map<String, bool>();
-            m[widget.model.masterCode] = widget.model.masters[index].isSelected;
-            RxBus.post(m, tag: eventMasterForGroupWidgetSelectAll);
-          }
-        } else {
-          widget.model.masters.forEach((element) {
-            element.isSelected = false;
-          });
-
-          //Group Logic is Selected
-          if (widget.model.viewType == ViewTypes.groupWidget) {
-            Map<String, bool> m = Map<String, bool>();
-            m[widget.model.masterCode] = widget.model.masters[index].isSelected;
-            RxBus.post(m, tag: eventMasterForGroupWidgetSelectAll);
-          }
-        }
-      } else {
-        if (widget.model.masters[index].sId == widget.model.allLableTitle) {
-          widget.model.masters.forEach((element) {
-            element.isSelected = false;
-          });
-        } else {
-          if (widget.model.masters
-                  .where((element) =>
-                      element.isSelected == true &&
-                      element.sId != widget.model.allLableTitle)
-                  .toList()
-                  .length ==
-              widget.model.masters.length - 1) {
-            widget.model.masters[0].isSelected = true;
-          } else {
-            widget.model.masters[0].isSelected = false;
-            Map<String, dynamic> m = Map<String, dynamic>();
-            m["masterCode"] = widget.model.masterCode;
-            m["isSelected"] = widget.model.masters[index].isSelected;
-            m["selectedMasterCode"] = widget.model.masters[index].code;
-            m["masterSelection"] = widget.model.masterSelection;
-            if (widget.model.viewType == ViewTypes.groupWidget) {
-              m["isGroupSelected"] =
-                  (widget.model as ColorModel).isGroupSelected;
-              RxBus.post(m, tag: eventMasterForSingleItemOfGroupSelection);
-            }
-          }
-        }
-      }
-    } else {
-      if (widget.model.masters[index].code == MasterCode.eyecleanStatic) {
-        Master.getSubMaster(MasterCode.eyeClean).then((result) {
-          if (!isNullEmptyOrFalse(result)) {
-            for (var master in result) {
-              if (master.code.toLowerCase() == "y") {
-                Map<String, dynamic> map = {};
-
-                map["eCln"] = [master.sId];
-                if (master.isSelected) widget.model.masters[index].map = map;
-
-                break;
-              }
-            }
-          }
-        });
-      }
+      widget.model.onSelectionClick(index);
     }
   }
 
