@@ -80,6 +80,7 @@ class DiamondConfig {
   List<BottomTabModel> arrStatusMenu;
   BottomMenuSetting bottomMenuSetting;
   List<BottomTabModel> toolbarList = [];
+  TrackBlockData trackBlockData;
 
   DiamondConfig(this.moduleType, {this.isCompare = false});
 
@@ -278,10 +279,10 @@ class DiamondConfig {
 
   manageDiamondAction(BuildContext context, List<DiamondModel> list,
       BottomTabModel bottomTabModel, Function refreshList,
-      {bool moduleType}) async {
+      {int moduleType}) async {
     switch (bottomTabModel.type) {
       case ActionMenuConstant.ACTION_TYPE_DELETE:
-        actionDelete(context, list,refreshList);
+        actionDelete(context, list, moduleType, refreshList);
         break;
       case ActionMenuConstant.ACTION_TYPE_ADD_TO_CART:
         actionAddToCart(context, list);
@@ -345,9 +346,19 @@ class DiamondConfig {
     callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,
         title: "Added in Cart");
   }
-  actionDelete(BuildContext context, List<DiamondModel> list, Function refreshList) {
-    callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,
-        title: "Added in Cart");
+
+  actionDelete(BuildContext context, List<DiamondModel> list, int moduleType,
+      Function refreshList) {
+    app.resolve<CustomDialogs>().confirmDialog(context,
+        title: "",
+        desc: R.string().errorString.deleteStoneMsg,
+        positiveBtnTitle: R.string().commonString.yes,
+        negativeBtnTitle: R.string().commonString.no,
+        onClickCallback: (PositveButtonClick) {
+      if (PositveButtonClick == ButtonType.PositveButtonClick) {
+        callApiForDeleteTrack(context, list, moduleType, refreshList);
+      }
+    });
   }
 
   actionAddToEnquiry(BuildContext context, List<DiamondModel> list) {
@@ -551,6 +562,73 @@ class DiamondConfig {
     );
   }
 
+  callApiForDeleteTrack(BuildContext context, List<DiamondModel> list,
+      int moduleType, Function refreshList) {
+    TrackDelReq req = TrackDelReq();
+    int trackType;
+    req.id = [];
+    list.forEach((element) {
+      switch (moduleType) {
+        case DiamondModuleConstant.MODULE_TYPE_MY_CART:
+          req.trackType = DiamondTrackConstant.TRACK_TYPE_CART;
+          req.id.add(element.trackItemCart?.trackId ?? "");
+          trackType = req.trackType;
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
+          req.trackType = DiamondTrackConstant.TRACK_TYPE_WATCH_LIST;
+          req.id.add(element.trackItemWatchList?.trackId ?? "");
+          trackType = req.trackType;
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
+          req.trackType = DiamondTrackConstant.TRACK_TYPE_ENQUIRY;
+          req.id.add(element.trackItemEnquiry?.trackId ?? "");
+          trackType = req.trackType;
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+          req.trackType = DiamondTrackConstant.TRACK_TYPE_OFFER;
+          req.id.add(element.trackItemOffer?.trackId ?? "");
+          trackType = req.trackType;
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
+          req.trackType = DiamondTrackConstant.TRACK_TYPE_REMINDER;
+          req.id.add(element.trackItemReminder?.trackId ?? "");
+          trackType = req.trackType;
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
+          req.id.add(element.trackItemComment?.trackId ?? "");
+          trackType = DiamondTrackConstant.TRACK_TYPE_COMMENT;
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+          req.id.add(element.trackItemBid?.trackId ?? "");
+          trackType = DiamondTrackConstant.TRACK_TYPE_COMMENT;
+          break;
+      }
+    });
+    SyncManager.instance.callApiForDeleteDiamondTrack(
+      context,
+      trackType,
+      req,
+      (resp) {
+        app.resolve<CustomDialogs>().errorDialog(context, "", resp.message,
+            btntitle: R.string().commonString.ok,
+            dismissPopup: false, voidCallBack: () {
+          Navigator.pop(context);
+          refreshList();
+        });
+      },
+      (onError) {
+        if (onError.message != null) {
+          app.resolve<CustomDialogs>().errorDialog(
+                context,
+                "",
+                onError.message,
+                btntitle: R.string().commonString.ok,
+              );
+        }
+      },
+    );
+  }
+
   callApiFoPlaceOrder(
       BuildContext context, List<DiamondModel> list, Function placeOrder,
       {bool isPop = false,
@@ -602,6 +680,49 @@ class DiamondConfig {
         }
       },
     );
+  }
+
+  callApiForBlock(BuildContext context, List<DiamondModel> list,
+      Function(TrackBlockData) success,
+      {bool isProgress = false}) {
+    TrackDataReq req =
+        TrackDataReq(blockType: [DiamondBlockType.HOLD, DiamondBlockType.MEMO]);
+    SyncManager.instance.callApiForBlock(context, req, (resp) {
+      trackBlockData = resp.data;
+      setBlockDetail(resp.data, list, success);
+    }, (onError) {}, isProgress: isProgress);
+  }
+
+  setBlockDetail(TrackBlockData trackBlockData, List<DiamondModel> list,
+      Function(TrackBlockData) success) {
+    for (int i = 0; i < list.length; i++) {
+      trackBlockData.inTrackDiamonds.forEach((element) {
+        element.diamonds.forEach((diamond) {
+          if (list[i].id == diamond.id)
+            switch (element.iId) {
+              case DiamondTrackConstant.TRACK_TYPE_CART:
+                list[i].trackItemCart = diamond;
+                break;
+              case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
+                list[i].trackItemWatchList = diamond;
+                break;
+              case DiamondTrackConstant.TRACK_TYPE_ENQUIRY:
+                list[i].trackItemEnquiry = diamond;
+                break;
+              case DiamondTrackConstant.TRACK_TYPE_OFFER:
+                list[i].trackItemOffer = diamond;
+                break;
+              case DiamondTrackConstant.TRACK_TYPE_REMINDER:
+                list[i].trackItemReminder = diamond;
+                break;
+              case DiamondTrackConstant.TRACK_TYPE_COMMENT:
+                list[i].trackItemComment = diamond;
+                break;
+            }
+        });
+      });
+    }
+    success(trackBlockData);
   }
 
   List<Map<String, dynamic>> getExclusiveDiamondReq() {
