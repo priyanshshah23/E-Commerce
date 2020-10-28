@@ -114,6 +114,7 @@ class ScreenTitle {
 
   final String title;
   final String description;
+  final String delete;
 
   //Menu Items
   final String enquiry;
@@ -182,6 +183,7 @@ class ScreenTitle {
 
   const ScreenTitle({
     this.myEnquiry = "My Enquiry",
+    this.delete = "Delete",
     this.addDemand = "Add Demand",
     this.matchPair = "Match Pair",
     this.savedAndSearch = "Save & Search",

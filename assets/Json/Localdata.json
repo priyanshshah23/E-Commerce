@@ -227,7 +227,7 @@
         "isDeleted": false,
         "isWebVisible": true,
         "sortingSequence": 1,
-        "parentCode": "CLATIRYGROUP",
+        "parentCode": "CLARITYGROUP",
         "parentId": null
     },
     {
@@ -238,7 +238,7 @@
         "isDeleted": false,
         "isWebVisible": true,
         "sortingSequence": 1,
-        "parentCode": "CLATIRYGROUP",
+        "parentCode": "CLARITYGROUP",
         "parentId": "258258258"
     },
     {
@@ -249,7 +249,7 @@
         "isDeleted": false,
         "isWebVisible": true,
         "sortingSequence": 2,
-        "parentCode": "CLATIRYGROUP",
+        "parentCode": "CLARITYGROUP",
         "parentId": "258258258"
     },
     {
@@ -260,7 +260,7 @@
         "isDeleted": false,
         "isWebVisible": true,
         "sortingSequence": 3,
-        "parentCode": "CLATIRYGROUP",
+        "parentCode": "CLARITYGROUP",
         "parentId": "258258258"
     },
     {
@@ -271,7 +271,7 @@
         "isDeleted": false,
         "isWebVisible": true,
         "sortingSequence": 4,
-        "parentCode": "CLATIRYGROUP",
+        "parentCode": "CLARITYGROUP",
         "parentId": "258258258"
     },
     {

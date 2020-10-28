@@ -100,6 +100,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       config.getFilterJson().then((result) {
         setState(() {
           arrList = result;
+          
           if (!isNullEmptyOrFalse(this.dictSearchData)) {
             arrList = FilterDataSource()
                 .prepareFilterDataSource(arrList, this.dictSearchData);

@@ -200,13 +200,16 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         case DiamondModuleConstant.MODULE_TYPE_MY_BID:
         // case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
           List<DiamondModel> list = [];
+          DiamondModel diamondModel;
           diamondListResp.data.list.forEach((element) {
             if (element.diamonds != null) {
-              element.diamonds.forEach((element) {
-                list.add(element);
+              element.diamonds.forEach((diamonds) {
+                list.add(diamonds);
               });
             } else {
-              list.add(element.diamond);
+              diamondModel = element.diamond;
+
+              list.add(diamondModel);
             }
           });
           arraDiamond.addAll(list);
@@ -220,6 +223,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       diamondList.state.listCount = arraDiamond.length;
       diamondList.state.totalCount = diamondListResp.data.count;
       manageDiamondSelection();
+      callBlockApi(isProgress: true);
       page = page + 1;
       diamondList.state.setApiCalling(false);
       setState(() {});
@@ -276,6 +280,19 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   });
             },
           );
+  }
+
+  callBlockApi({bool isProgress = false}) {
+    if (page == DEFAULT_PAGE) {
+      diamondConfig.callApiForBlock(context, arraDiamond, (resp) {
+        fillArrayList();
+      }, isProgress: isProgress);
+    } else {
+      diamondConfig.setBlockDetail(diamondConfig.trackBlockData, arraDiamond,
+          (resp) {
+        fillArrayList();
+      });
+    }
   }
 
   getRightAction(ActionClick actionClick) {
@@ -351,15 +368,19 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     return list;
   }
 
+  callDeleteDiamond(List<DiamondModel> selectedList) {
+    diamondConfig.manageDiamondAction(context, selectedList,
+        BottomTabModel(type: ActionMenuConstant.ACTION_TYPE_DELETE), () {
+      onRefreshList();
+    }, moduleType: moduleType);
+  }
+
   manageRowClick(int index, int type) async {
     switch (type) {
       case clickConstant.CLICK_TYPE_DELETE:
         List<DiamondModel> selectedList = [];
         selectedList.add(arraDiamond[index]);
-        diamondConfig.manageDiamondAction(context, selectedList,
-            BottomTabModel(type: ActionMenuConstant.ACTION_TYPE_DELETE), () {
-          onRefreshList();
-        });
+        callDeleteDiamond(selectedList);
         break;
       case clickConstant.CLICK_TYPE_SELECTION:
         setState(() {
@@ -647,10 +668,14 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     List<DiamondModel> selectedList =
         arraDiamond.where((element) => element.isSelected).toList();
     if (selectedList != null && selectedList.length > 0) {
-      diamondConfig.manageDiamondAction(context, selectedList, bottomTabModel,
-          () {
-        onRefreshList();
-      });
+      if (bottomTabModel.type == ActionMenuConstant.ACTION_TYPE_DELETE) {
+        callDeleteDiamond(selectedList);
+      } else {
+        diamondConfig.manageDiamondAction(context, selectedList, bottomTabModel,
+            () {
+          onRefreshList();
+        });
+      }
     } else {
       app.resolve<CustomDialogs>().confirmDialog(
             context,

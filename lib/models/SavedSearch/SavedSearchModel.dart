@@ -278,7 +278,9 @@ class DisplayDataClass {
             : List<String>.from(json["isDor"].map((x) => x)),
         isFm: json["isFm"] == null
             ? null
-            : List<String>.from(json["isFm"].map((x) => x)),
+            : json["isFm"] is List<dynamic>
+                ? List<String>.from(json["isFm"].map((x) => x))
+                : null,
         type2: json["type2"] == null ? null : Type2.fromJson(json["type2"]),
         tblPer: json["tblPer"] == null ? null : Back.fromJson(json["tblPer"]),
         depPer: json["depPer"] == null ? null : Back.fromJson(json["depPer"]),
@@ -387,10 +389,8 @@ class Back {
   String empty;
 
   factory Back.fromJson(Map<String, dynamic> json) => Back(
-    // back: json[">="],
-    // empty: json["<="]
-        back: json[">="] is num ? json[">="].toString() :json[">="],
-        empty: json["<="]is num ? json["<="].toString() :json["<="],
+        back: json[">="] is num ? json[">="].toString() : json[">="],
+        empty: json["<="] is num ? json["<="].toString() : json["<="],
       );
 
   Map<String, dynamic> toJson() => {

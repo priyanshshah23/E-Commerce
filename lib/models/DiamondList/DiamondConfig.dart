@@ -12,13 +12,17 @@ import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
 import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
+import 'package:diamnow/components/widgets/shared/CommonDateTimePicker.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:intl/intl.dart';
 import 'package:share/share.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../main.dart';
 
@@ -80,6 +84,7 @@ class DiamondConfig {
   List<BottomTabModel> arrStatusMenu;
   BottomMenuSetting bottomMenuSetting;
   List<BottomTabModel> toolbarList = [];
+  TrackBlockData trackBlockData;
 
   DiamondConfig(this.moduleType, {this.isCompare = false});
 
@@ -279,10 +284,10 @@ class DiamondConfig {
 
   manageDiamondAction(BuildContext context, List<DiamondModel> list,
       BottomTabModel bottomTabModel, Function refreshList,
-      {bool moduleType}) async {
+      {int moduleType}) async {
     switch (bottomTabModel.type) {
       case ActionMenuConstant.ACTION_TYPE_DELETE:
-        actionDelete(context, list,refreshList);
+        actionDelete(context, list, moduleType, refreshList);
         break;
       case ActionMenuConstant.ACTION_TYPE_ADD_TO_CART:
         actionAddToCart(context, list);
@@ -295,6 +300,9 @@ class DiamondConfig {
         break;
       case ActionMenuConstant.ACTION_TYPE_PLACE_ORDER:
         actionPlaceOrder(context, list, refreshList);
+        break;
+      case ActionMenuConstant.ACTION_TYPE_REMINDER:
+        actionReminder(context,list);
         break;
       case ActionMenuConstant.ACTION_TYPE_COMMENT:
         actionComment(context, list);
@@ -346,9 +354,19 @@ class DiamondConfig {
     callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,
         title: "Added in Cart");
   }
-  actionDelete(BuildContext context, List<DiamondModel> list, Function refreshList) {
-    callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,
-        title: "Added in Cart");
+
+  actionDelete(BuildContext context, List<DiamondModel> list, int moduleType,
+      Function refreshList) {
+    app.resolve<CustomDialogs>().confirmDialog(context,
+        title: "",
+        desc: R.string().errorString.deleteStoneMsg,
+        positiveBtnTitle: R.string().commonString.yes,
+        negativeBtnTitle: R.string().commonString.no,
+        onClickCallback: (PositveButtonClick) {
+      if (PositveButtonClick == ButtonType.PositveButtonClick) {
+        callApiForDeleteTrack(context, list, moduleType, refreshList);
+      }
+    });
   }
 
   actionAddToEnquiry(BuildContext context, List<DiamondModel> list) {
@@ -466,6 +484,10 @@ class DiamondConfig {
     openSharePopUp(context);
   }
 
+  actionReminder(BuildContext context, List<DiamondModel> list) {
+    openAddReminder(context);
+  }
+
   callApiFoCreateTrack(
       BuildContext context, List<DiamondModel> list, int trackType,
       {bool isPop = false, String remark, String companyName, String title}) {
@@ -552,6 +574,73 @@ class DiamondConfig {
     );
   }
 
+  callApiForDeleteTrack(BuildContext context, List<DiamondModel> list,
+      int moduleType, Function refreshList) {
+    TrackDelReq req = TrackDelReq();
+    int trackType;
+    req.id = [];
+    list.forEach((element) {
+      switch (moduleType) {
+        case DiamondModuleConstant.MODULE_TYPE_MY_CART:
+          req.trackType = DiamondTrackConstant.TRACK_TYPE_CART;
+          req.id.add(element.trackItemCart?.trackId ?? "");
+          trackType = req.trackType;
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
+          req.trackType = DiamondTrackConstant.TRACK_TYPE_WATCH_LIST;
+          req.id.add(element.trackItemWatchList?.trackId ?? "");
+          trackType = req.trackType;
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
+          req.trackType = DiamondTrackConstant.TRACK_TYPE_ENQUIRY;
+          req.id.add(element.trackItemEnquiry?.trackId ?? "");
+          trackType = req.trackType;
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+          req.trackType = DiamondTrackConstant.TRACK_TYPE_OFFER;
+          req.id.add(element.trackItemOffer?.trackId ?? "");
+          trackType = req.trackType;
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
+          req.trackType = DiamondTrackConstant.TRACK_TYPE_REMINDER;
+          req.id.add(element.trackItemReminder?.trackId ?? "");
+          trackType = req.trackType;
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
+          req.id.add(element.trackItemComment?.trackId ?? "");
+          trackType = DiamondTrackConstant.TRACK_TYPE_COMMENT;
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+          req.id.add(element.trackItemBid?.trackId ?? "");
+          trackType = DiamondTrackConstant.TRACK_TYPE_COMMENT;
+          break;
+      }
+    });
+    SyncManager.instance.callApiForDeleteDiamondTrack(
+      context,
+      trackType,
+      req,
+      (resp) {
+        app.resolve<CustomDialogs>().errorDialog(context, "", resp.message,
+            btntitle: R.string().commonString.ok,
+            dismissPopup: false, voidCallBack: () {
+          Navigator.pop(context);
+          refreshList();
+        });
+      },
+      (onError) {
+        if (onError.message != null) {
+          app.resolve<CustomDialogs>().errorDialog(
+                context,
+                "",
+                onError.message,
+                btntitle: R.string().commonString.ok,
+              );
+        }
+      },
+    );
+  }
+
   callApiFoPlaceOrder(
       BuildContext context, List<DiamondModel> list, Function placeOrder,
       {bool isPop = false,
@@ -603,6 +692,49 @@ class DiamondConfig {
         }
       },
     );
+  }
+
+  callApiForBlock(BuildContext context, List<DiamondModel> list,
+      Function(TrackBlockData) success,
+      {bool isProgress = false}) {
+    TrackDataReq req =
+        TrackDataReq(blockType: [DiamondBlockType.HOLD, DiamondBlockType.MEMO]);
+    SyncManager.instance.callApiForBlock(context, req, (resp) {
+      trackBlockData = resp.data;
+      setBlockDetail(resp.data, list, success);
+    }, (onError) {}, isProgress: isProgress);
+  }
+
+  setBlockDetail(TrackBlockData trackBlockData, List<DiamondModel> list,
+      Function(TrackBlockData) success) {
+    for (int i = 0; i < list.length; i++) {
+      trackBlockData.inTrackDiamonds.forEach((element) {
+        element.diamonds.forEach((diamond) {
+          if (list[i].id == diamond.id)
+            switch (element.iId) {
+              case DiamondTrackConstant.TRACK_TYPE_CART:
+                list[i].trackItemCart = diamond;
+                break;
+              case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
+                list[i].trackItemWatchList = diamond;
+                break;
+              case DiamondTrackConstant.TRACK_TYPE_ENQUIRY:
+                list[i].trackItemEnquiry = diamond;
+                break;
+              case DiamondTrackConstant.TRACK_TYPE_OFFER:
+                list[i].trackItemOffer = diamond;
+                break;
+              case DiamondTrackConstant.TRACK_TYPE_REMINDER:
+                list[i].trackItemReminder = diamond;
+                break;
+              case DiamondTrackConstant.TRACK_TYPE_COMMENT:
+                list[i].trackItemComment = diamond;
+                break;
+            }
+        });
+      });
+    }
+    success(trackBlockData);
   }
 
   List<Map<String, dynamic>> getExclusiveDiamondReq() {
@@ -888,6 +1020,164 @@ openSharePopUp(BuildContext context) {
           ),
         );
       });
+}
+
+openAddReminder(BuildContext context) {
+
+    List<StoneModel> reminderList = [
+        StoneModel(0, "Later today", subtitle: "6:00 pm", image: sunrise),
+        StoneModel(1, "Tomorrow", subtitle: " Fri 8:00 am", image: sun),
+        StoneModel(2, "Next week", subtitle: "Thu 8:00 am", image: calender_week),
+        StoneModel(3, "Choose another", subtitle: "Date & time", image: calender),
+      ];
+
+    return showDialog(
+    context: context,
+    builder: (context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(getSize(15)),
+        ),
+        backgroundColor: appTheme.whiteColor,
+        child: StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Padding(
+              padding: EdgeInsets.only(top: getSize(10)),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Add reminder",
+                    style: appTheme.black18TextStyle,
+                  ),
+                  GridView.builder(
+                      shrinkWrap: true,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 1.4,
+                      ),
+                      itemCount: reminderList.length,
+                      itemBuilder: (context, i) {
+                        return InkWell(
+                          onTap: () {
+                            reminderList.forEach((element) {
+                              element.isSelected = false;
+                            });
+                            reminderList[i].isSelected =
+                            !reminderList[i].isSelected;
+                            setState(() {});
+                            if(i==reminderList.length-1){
+                              print(i);
+                              openDateTimeDialog(context);
+                            }
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(top: getSize(20)),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding:
+                                  EdgeInsets.only(bottom: getSize(5)),
+                                  child: Image.asset(
+                                    reminderList[i].image,
+                                    height: getSize(40),
+                                    width: getSize(40),
+                                    color: reminderList[i].isSelected
+                                        ? appTheme.colorPrimary
+                                        : appTheme.textBlackColor,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: getSize(5)),
+                                  child: Text(
+                                    reminderList[i].title,
+                                    style: appTheme.black16TextStyle.copyWith(
+                                      color: reminderList[i].isSelected
+                                          ? appTheme.colorPrimary
+                                          : appTheme.textBlackColor,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  reminderList[i].subtitle,
+                                  style: appTheme.black16TextStyle.copyWith(
+                                    color: reminderList[i].isSelected
+                                        ? appTheme.colorPrimary
+                                        : appTheme.textBlackColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: getSize(Spacing.leftPadding),
+                        vertical: getSize(16)),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              // alignment: Alignment.bottomCenter,
+                              padding: EdgeInsets.symmetric(
+                                vertical: getSize(15),
+                              ),
+                              decoration: BoxDecoration(
+                                color: appTheme.colorPrimary.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(getSize(5)),
+                              ),
+                              child: Text(
+                                R.string().commonString.cancel,
+                                textAlign: TextAlign.center,
+                                style: appTheme.blue14TextStyle
+                                    .copyWith(fontSize: getFontSize(16)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: getSize(20),
+                        ),
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              FocusScope.of(context).unfocus();
+                            },
+                            child: Container(
+                              //alignment: Alignment.bottomCenter,
+                              padding: EdgeInsets.symmetric(
+                                vertical: getSize(15),
+                              ),
+                              decoration: BoxDecoration(
+                                  color: appTheme.colorPrimary,
+                                  borderRadius:
+                                  BorderRadius.circular(getSize(5)),
+                                  boxShadow: getBoxShadow(context)),
+                              child: Text(
+                                R.string().commonString.btnSubmit,
+                                textAlign: TextAlign.center,
+                                style: appTheme.white16TextStyle,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      );
+    },
+  );
 }
 
 class StoneModel {
