@@ -87,7 +87,7 @@ class Diamonds {
     if (this.bidPricePerCarat != null)
       data['bidPricePerCarat'] = this.bidPricePerCarat;
     if (this.bidAmount != null) data['trackPricePerCarat'] = this.bidAmount;
-    if (this.bidDiscount != null) data['bidDiscount'] = this.bidAmount;
+    if (this.bidDiscount != null) data['bidDiscount'] = this.bidDiscount;
     if (this.trackPricePerCarat != null)
       data['trackPricePerCarat'] = this.trackPricePerCarat;
     if (this.trackAmount != null) data['trackAmount'] = this.trackAmount;
