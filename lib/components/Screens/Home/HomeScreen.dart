@@ -11,6 +11,7 @@ import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
 import 'package:diamnow/components/Screens/DashBoard/Dashboard.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
+import 'package:diamnow/components/Screens/MyDemand/MyDemandScreen.dart';
 import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
@@ -198,6 +199,16 @@ class _HomeScreenState extends State<HomeScreen> {
     currentWidget = SavedSearchScreen(dict);
   }
 
+  openMyDemand(int moduleType){
+    selectedType = moduleType;
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.ModuleType] =
+        DiamondModuleConstant.MODULE_TYPE_MY_DEMAND;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    // currentWidget = SavedSearchScreen(dict);
+    currentWidget = MyDemandScreen(dict);
+  }
+  
   openProfile() {
     Map<String, dynamic> dict = new HashMap();
     dict[ArgumentConstant.IsFromDrawer] = false;
@@ -255,6 +266,9 @@ class _HomeScreenState extends State<HomeScreen> {
           break;
         case DiamondModuleConstant.MODULE_TYPE_LOGOUT:
           logoutFromApp(context);
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
+          openMyDemand(type);
           break;
       }
       if (type != DiamondModuleConstant.MODULE_TYPE_LOGOUT) {

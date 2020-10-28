@@ -85,6 +85,8 @@ class SavedSearchModel {
   bool isReturnSimilar;
   DisplayDataClass displayData;
 
+  bool isExpand = false;
+
   factory SavedSearchModel.fromJson(Map<String, dynamic> json) =>
       SavedSearchModel(
         createdAt: json["createdAt"],
@@ -172,6 +174,7 @@ class DisplayDataClass {
     this.kToSArr,
     this.loc,
     this.lb,
+    this.isXray,
   });
 
   List<String> shp;
@@ -217,6 +220,7 @@ class DisplayDataClass {
   List<String> opCrwn;
   List<String> grdl;
   KToSArr kToSArr;
+  bool isXray;
 
   factory DisplayDataClass.fromJson(Map<String, dynamic> json) =>
       DisplayDataClass(
@@ -272,9 +276,11 @@ class DisplayDataClass {
         isDor: json["isDor"] == null
             ? null
             : List<String>.from(json["isDor"].map((x) => x)),
-        // isFm: json["isFm"] == null
-        //     ? null
-        //     : List<String>.from(json["isFm"].map((x) => x)),
+        isFm: json["isFm"] == null
+            ? null
+            : json["isFm"] is List<dynamic>
+                ? List<String>.from(json["isFm"].map((x) => x))
+                : null,
         type2: json["type2"] == null ? null : Type2.fromJson(json["type2"]),
         tblPer: json["tblPer"] == null ? null : Back.fromJson(json["tblPer"]),
         depPer: json["depPer"] == null ? null : Back.fromJson(json["depPer"]),
@@ -319,6 +325,7 @@ class DisplayDataClass {
             : List<String>.from(json["grdl"].map((x) => x)),
         kToSArr:
             json["kToSArr"] == null ? null : KToSArr.fromJson(json["kToSArr"]),
+        isXray: json["isXray"] == null ? null : json["isXray"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -368,6 +375,7 @@ class DisplayDataClass {
             opCrwn == null ? null : List<dynamic>.from(opCrwn.map((x) => x)),
         "grdl": grdl == null ? null : List<dynamic>.from(grdl.map((x) => x)),
         "kToSArr": kToSArr == null ? null : kToSArr.toJson(),
+        "isXray": isXray == null ? null : isXray,
       };
 }
 
@@ -381,8 +389,8 @@ class Back {
   String empty;
 
   factory Back.fromJson(Map<String, dynamic> json) => Back(
-        back: json[">="],
-        empty: json["<="],
+        back: json[">="] is num ? json[">="].toString() : json[">="],
+        empty: json["<="] is num ? json["<="].toString() : json["<="],
       );
 
   Map<String, dynamic> toJson() => {

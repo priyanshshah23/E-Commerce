@@ -18,6 +18,7 @@ import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
 import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
+import 'package:diamnow/components/Screens/MyDemand/MyDemandScreen.dart';
 import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
@@ -171,6 +172,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       break;
     case MyAccountScreen.route:
       screen = MyAccountScreen(arguments);
+      break;
+    case MyDemandScreen.route:
+      screen = MyDemandScreen(arguments);
       break;
   }
 
