@@ -39,10 +39,10 @@ class DrawerSetting {
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH,
       ));
-    if (app
+   /* if (app
         .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_newGoods)
-        .view)
+        .view)*/
       drawerList.add(DrawerModel(
         image: newArrival,
         title: R.string().screenTitle.newArrival,
@@ -324,6 +324,7 @@ class DrawerSetting {
       imageColor: appTheme.colorPrimary,
       type: DiamondModuleConstant.MODULE_TYPE_CHANGE_PASSWORD,
     ));
+
     drawerList.add(DrawerModel(
       image: logout,
       title: R.string().screenTitle.logout,
@@ -404,7 +405,71 @@ class BottomMenuSetting {
         image: hold,
         title: R.string().screenTitle.hold,
         type: ActionMenuConstant.ACTION_TYPE_HOLD));*/
-
+    if (!isCompare) {
+      switch (moduleType) {
+        case DiamondModuleConstant.MODULE_TYPE_MY_CART:
+          if (app
+              .resolve<PrefUtils>()
+              .getModulePermission(ModulePermissionConstant.permission_cart)
+              .delete)
+            moreMenuList.add(BottomTabModel(
+                image: home_delete,
+                title: R.string().screenTitle.delete,
+                type: ActionMenuConstant.ACTION_TYPE_DELETE));
+          break;
+          case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
+          if (app
+              .resolve<PrefUtils>()
+              .getModulePermission(ModulePermissionConstant.permission_comment)
+              .delete)
+            moreMenuList.add(BottomTabModel(
+                image: home_delete,
+                title: R.string().screenTitle.delete,
+                type: ActionMenuConstant.ACTION_TYPE_DELETE));
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
+          if (app
+              .resolve<PrefUtils>()
+              .getModulePermission(
+                  ModulePermissionConstant.permission_watchlist)
+              .delete)
+            moreMenuList.add(BottomTabModel(
+                image: home_delete,
+                title: R.string().screenTitle.delete,
+                type: ActionMenuConstant.ACTION_TYPE_DELETE));
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
+          if (app
+              .resolve<PrefUtils>()
+              .getModulePermission(ModulePermissionConstant.permission_enquiry)
+              .delete)
+            moreMenuList.add(BottomTabModel(
+                image: home_delete,
+                title: R.string().screenTitle.delete,
+                type: ActionMenuConstant.ACTION_TYPE_DELETE));
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+          if (app
+              .resolve<PrefUtils>()
+              .getModulePermission(ModulePermissionConstant.permission_offer)
+              .delete)
+            moreMenuList.add(BottomTabModel(
+                image: home_delete,
+                title: R.string().screenTitle.delete,
+                type: ActionMenuConstant.ACTION_TYPE_DELETE));
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
+          if (app
+              .resolve<PrefUtils>()
+              .getModulePermission(ModulePermissionConstant.permission_reminder)
+              .delete)
+            moreMenuList.add(BottomTabModel(
+                image: home_delete,
+                title: R.string().screenTitle.delete,
+                type: ActionMenuConstant.ACTION_TYPE_DELETE));
+          break;
+      }
+    }
     moreMenuList.add(BottomTabModel(
         image: download,
         title: R.string().screenTitle.download,

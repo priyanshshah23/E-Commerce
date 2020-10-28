@@ -18,6 +18,7 @@ import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:rxbus/rxbus.dart';
 
 class DiamondListScreen extends StatefulScreenWidget {
@@ -119,6 +120,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     dict["limit"] = DEFAULT_LIMIT;
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
+      case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
         dict["filters"] = {};
         dict["filters"]["diamondSearchId"] = this.filterId;
         break;
@@ -180,7 +182,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict["type"] = "stone_of_day";
         break;
     }
-
     NetworkCall<DiamondListResp>()
         .makeCall(
       () => diamondConfig.getApiCall(moduleType, dict),
@@ -197,14 +198,18 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
         case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
         case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+        // case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
           List<DiamondModel> list = [];
+          DiamondModel diamondModel;
           diamondListResp.data.list.forEach((element) {
             if (element.diamonds != null) {
-              element.diamonds.forEach((element) {
-                list.add(element);
+              element.diamonds.forEach((diamonds) {
+                list.add(diamonds);
               });
             } else {
-              list.add(element.diamond);
+              diamondModel = element.diamond;
+
+              list.add(diamondModel);
             }
           });
           arraDiamond.addAll(list);
@@ -218,6 +223,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       diamondList.state.listCount = arraDiamond.length;
       diamondList.state.totalCount = diamondListResp.data.count;
       manageDiamondSelection();
+      callBlockApi(isProgress: true);
       page = page + 1;
       diamondList.state.setApiCalling(false);
       setState(() {});
@@ -238,6 +244,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   }
 
   fillArrayList() {
+    SlidableController controller = SlidableController();
     diamondList.state.listItems = isGrid
         ? GridView.count(
             shrinkWrap: true,
@@ -263,12 +270,76 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             itemCount: arraDiamond.length,
             itemBuilder: (context, index) {
               return DiamondItemWidget(
+                  controller: controller,
                   item: arraDiamond[index],
+                  list: getRightAction((manageClick) {
+                    manageRowClick(index, manageClick.type);
+                  }),
                   actionClick: (manageClick) {
                     manageRowClick(index, manageClick.type);
                   });
             },
           );
+  }
+
+  callBlockApi({bool isProgress = false}) {
+    if (page == DEFAULT_PAGE) {
+      diamondConfig.callApiForBlock(context, arraDiamond, (resp) {
+        fillArrayList();
+      }, isProgress: isProgress);
+    } else {
+      diamondConfig.setBlockDetail(diamondConfig.trackBlockData, arraDiamond,
+          (resp) {
+        fillArrayList();
+      });
+    }
+  }
+
+  getRightAction(ActionClick actionClick) {
+    List<Widget> list = [];
+    switch (moduleType) {
+      case DiamondModuleConstant.MODULE_TYPE_MY_CART:
+      case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
+      case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
+      case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+      case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
+      case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
+        list.add(
+          IntrinsicHeight(
+            child: IconSlideAction(
+              onTap: () {
+                actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_DELETE));
+              },
+              iconWidget: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: fromHex("#FFE7E7"),
+                      border: Border.all(color: fromHex("#FF4D4D")),
+                      shape: BoxShape.circle,
+                    ),
+                    height: getSize(40),
+                    width: getSize(40),
+                    child: Padding(
+                      padding: EdgeInsets.all(getSize(10)),
+                      child: Image.asset(
+                        home_delete,
+                        // height: getSize(20),
+                        // width: getSize(20),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+    }
+
+    return list;
   }
 
   List<Widget> getToolbarItem() {
@@ -297,8 +368,20 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     return list;
   }
 
+  callDeleteDiamond(List<DiamondModel> selectedList) {
+    diamondConfig.manageDiamondAction(context, selectedList,
+        BottomTabModel(type: ActionMenuConstant.ACTION_TYPE_DELETE), () {
+      onRefreshList();
+    }, moduleType: moduleType);
+  }
+
   manageRowClick(int index, int type) async {
     switch (type) {
+      case clickConstant.CLICK_TYPE_DELETE:
+        List<DiamondModel> selectedList = [];
+        selectedList.add(arraDiamond[index]);
+        callDeleteDiamond(selectedList);
+        break;
       case clickConstant.CLICK_TYPE_SELECTION:
         setState(() {
           arraDiamond[index].isSelected = !arraDiamond[index].isSelected;
@@ -585,10 +668,14 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     List<DiamondModel> selectedList =
         arraDiamond.where((element) => element.isSelected).toList();
     if (selectedList != null && selectedList.length > 0) {
-      diamondConfig.manageDiamondAction(context, selectedList, bottomTabModel,
-          () {
-        onRefreshList();
-      });
+      if (bottomTabModel.type == ActionMenuConstant.ACTION_TYPE_DELETE) {
+        callDeleteDiamond(selectedList);
+      } else {
+        diamondConfig.manageDiamondAction(context, selectedList, bottomTabModel,
+            () {
+          onRefreshList();
+        });
+      }
     } else {
       app.resolve<CustomDialogs>().confirmDialog(
             context,

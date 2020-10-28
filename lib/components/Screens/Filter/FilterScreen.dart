@@ -7,6 +7,7 @@ import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
@@ -36,8 +37,12 @@ import 'package:diamnow/modules/Filter/gridviewlist/FilterRequest.dart';
 import 'package:diamnow/modules/Filter/gridviewlist/KeyToSymbol.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:rxbus/rxbus.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class FilterScreen extends StatefulScreenWidget {
   static const route = "FilterScreen";
@@ -82,6 +87,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   List<FilterOptions> optionList = List<FilterOptions>();
   Config config = Config();
 
+  final TextEditingController _diamondTitleTextField = TextEditingController();
+  var _focusDiamondTitleTextField = FocusNode();
+  final _formKey = GlobalKey<FormState>();
+  bool _autoValidate = false;
+
   @override
   void initState() {
     super.initState();
@@ -90,6 +100,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       config.getFilterJson().then((result) {
         setState(() {
           arrList = result;
+          
           if (!isNullEmptyOrFalse(this.dictSearchData)) {
             arrList = FilterDataSource()
                 .prepareFilterDataSource(arrList, this.dictSearchData);
@@ -297,6 +308,188 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     );
   }
 
+  //my demand popUP
+  String _selectedDate;
+  String diamondTitle;
+
+  Future MyDemandDialog(BuildContext context,
+      {String title,
+      String desc,
+      String positiveBtnTitle,
+      String negativeBtnTitle,
+      OnClickCallback onClickCallback,
+      VoidCallback voidCallback,
+      bool dismissPopup: true,
+      bool barrierDismissible: true,
+      RichText richText}) {
+    Future<bool> _onBackPressed() {
+      if (dismissPopup) {
+        Navigator.pop(context);
+      }
+    }
+
+    void selectionChanged(DateRangePickerSelectionChangedArgs args) {
+      _selectedDate = DateFormat('dd MMMM, yyyy').format(args.value);
+      SchedulerBinding.instance.addPostFrameCallback((duration) {
+        setState(() {});
+      });
+    }
+
+    Widget getDateRangePicker() {
+      return Container(
+          height: getSize(250),
+          child: Card(
+              child: SfDateRangePicker(
+            initialDisplayDate: DateTime.now(),
+            minDate: DateTime.now(),
+            view: DateRangePickerView.month,
+            selectionMode: DateRangePickerSelectionMode.single,
+            onSelectionChanged: selectionChanged,
+          )));
+    }
+
+    return showDialog(
+      barrierDismissible: barrierDismissible,
+      context: context,
+      builder: (BuildContext context) {
+        return WillPopScope(
+          onWillPop: _onBackPressed,
+          child: StatefulBuilder(
+            builder: (context, setState) {
+              //SystemChrome.setEnabledSystemUIOverlays([]);
+
+              return Dialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(getSize(15)))),
+                child: SingleChildScrollView(
+                  child: Container(
+                    width: MathUtilities.screenWidth(context),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: getSize(20), vertical: getSize(20)),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: getSize(10)),
+                          child: Text(
+                            "Add demand",
+                            style: appTheme.blackSemiBold18TitleColorblack,
+                          ),
+                        ),
+                        Form(
+                          key: _formKey,
+                          autovalidate: _autoValidate,
+                          child: getDiamondTitleTextField(),
+                        ),
+                        getDateRangePicker(),
+                        Padding(
+                          padding: EdgeInsets.only(top: getSize(8)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.circular(getSize(5))),
+                                width: getSize(130),
+                                height: getSize(50),
+                                child: AppButton.flat(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  text: "Cancel",
+                                  textColor: ColorConstants.colorPrimary,
+                                  backgroundColor: ColorConstants
+                                      .backgroundColorForCancleButton,
+                                ),
+                              ),
+                              Container(
+                                width: getSize(130),
+                                height: getSize(50),
+                                child: AppButton.flat(
+                                  onTap: () {
+                                    FocusScope.of(context).unfocus();
+                                    if (_formKey.currentState.validate()) {
+                                      diamondTitle =
+                                          _diamondTitleTextField.text ?? "";
+
+                                      print(_selectedDate);
+                                      print(_diamondTitleTextField.text);
+                                      callApiForAddDemand();
+                                      _diamondTitleTextField.text = "";
+                                      Navigator.pop(context);
+                                    } else {
+                                      _autoValidate = true;
+                                    }
+                                  },
+                                  text: "Submit",
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  getDiamondTitleTextField() {
+    return CommonTextfield(
+      focusNode: _focusDiamondTitleTextField,
+      textOption: TextFieldOption(
+        prefixWid: getCommonIconWidget(
+            imageName: saved_icon, imageType: IconSizeType.small),
+        hintText: "Demand Title",
+        maxLine: 1,
+        formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
+        keyboardType: TextInputType.text,
+        inputController: _diamondTitleTextField,
+      ),
+      textCallback: (text) {},
+      validation: (text) {
+        if (text.isEmpty) {
+          return "Please enter Demand Title.";
+        } else {
+          return null;
+        }
+      },
+      inputAction: TextInputAction.next,
+      onNextPress: () {
+        _focusDiamondTitleTextField.unfocus();
+        FocusScope.of(context).requestFocus(_focusDiamondTitleTextField);
+      },
+    );
+  }
+
+  callApiForAddDemand() {
+    Map<String, dynamic> dict = {};
+    dict["filter"] = FilterRequest().createRequest(arrList);
+    dict["name"] = diamondTitle;
+    dict["searchType"] = DiamondSearchType.DEMAND;
+    dict["expiryDate"] = _selectedDate;
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+      () => app.resolve<ServiceModule>().networkService().saveSearch(dict),
+      context,
+      isProgress: true,
+    )
+        .then((diamondListResp) async {
+      showToast("Demand Added Successfully", context: context);
+    }).catchError((onError) {
+      print(onError.toString());
+    });
+  }
+  //my demand popup end.
+
   Widget getBottomTab() {
     return BottomTabbarWidget(
       arrBottomTab: arrBottomTab,
@@ -317,6 +510,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               .resolve<PrefUtils>()
               .getModulePermission(ModulePermissionConstant.permission_myDemand)
               .insert) {
+            if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList)))
+              MyDemandDialog(context);
+            else {
+              showToast("Please, select at least one filter",context:context);
+            }
             // place code
           } else {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
@@ -339,8 +537,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               .getModulePermission(
                   ModulePermissionConstant.permission_mySavedSearch)
               .insert) {
-            callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-                isSavedSearch: true);
+            if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList)))
+                callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+                    isSavedSearch: true);
+            else
+              showToast("Please, select at least one filter",context:context);
           } else {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
           }

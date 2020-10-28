@@ -63,9 +63,11 @@ class ErrorString {
   final String diamondSelectionError;
   final String diamondCompareRemove;
   final String accessDenide;
+  final String deleteStoneMsg;
 
   const ErrorString({
     this.accessDenide='Access denied',
+    this.deleteStoneMsg='Are you sure you want to delete stone(s)',
     this.diamondCompareRemove = 'At least 2 Stones are required to compare.',
     this.diamondSelectionError = 'Please select at least one stone.',
     this.pleaseEnterCompanyName = 'Please enter company name.',

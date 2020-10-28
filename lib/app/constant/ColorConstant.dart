@@ -20,6 +20,7 @@ class ColorConstants {
   static Color lightgrey = fromHex("#F6F6F6");
   static Color errorText = fromHex('#D60505');
   static Color compareChangesRowBgColor = fromHex("#F8F8F8");
+  static Color backgroundColorForCancleButton = fromHex("#EEF1FC");
 
 
 

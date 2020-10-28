@@ -62,13 +62,15 @@ dependencies:
   custom_localization:
     path: ./custom_localization
   encrypt: ^4.0.0
-  webview_flutter: ^1.0.5
+  # webview_flutter: ^1.0.5
   material_segmented_control: ^2.1.0+1
   url_launcher: ^5.7.2
   flutter_tags: ^0.4.9
   flutter_slidable: ^0.5.7
   linked_scroll_controller: ^0.1.2
   share: 0.6.4+3
+  syncfusion_flutter_datepicker: ^18.3.44-beta
+  flutter_time_picker_spinner: 1.0.6+1
   # flutter_tags: ^0.1.9
 
 
@@ -103,7 +105,7 @@ flutter:
     - assets/drawer/
     - assets/PlaceHolder/
     - assets/Home/
-    #- assets/chls/hochls.pem
+      #- assets/chls/hochls.pem
     # - assets/chls.pem
 
 

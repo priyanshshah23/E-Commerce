@@ -11,6 +11,7 @@ import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Home/DrawerModel.dart';
 import 'package:diamnow/components/Screens/Home/HomeDrawer.dart';
 import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
+import 'package:diamnow/components/Screens/MyDemand/MyDemandScreen.dart';
 import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
@@ -73,6 +74,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           openDiamondList(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
+          openMyDemand(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_MANAGE_ADDRESS:
           break;
@@ -99,6 +101,16 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     NavigationUtilities.pushRoute(OrderListScreen.route, args: dict);
   }
 
+  openMyDemand(int moduleType){
+    // selectedType = moduleType;
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.ModuleType] =
+        moduleType;
+    dict[ArgumentConstant.IsFromDrawer] = false;
+    NavigationUtilities.pushRoute(MyDemandScreen.route, args: dict);
+    // currentWidget = MyDemandScreen(dict);
+  }
+
   openSavedSearch(int moduleType) {
     Map<String, dynamic> dict = new HashMap();
     dict[ArgumentConstant.ModuleType] =
@@ -115,6 +127,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
   Widget getDrawerItem(
       BuildContext context, DrawerModel model, VoidCallback callback) {
+
+
     return InkWell(
       onTap: callback,
       child: Column(

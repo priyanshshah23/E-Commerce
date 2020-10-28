@@ -1,11 +1,8 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
-import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
-import 'package:diamnow/components/Screens/Auth/Login.dart';
-import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/DiamondDetail/DiamondDetailUIModel.dart';
@@ -16,7 +13,10 @@ import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class DiamondDetailScreen extends StatefulScreenWidget {
@@ -72,6 +72,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   bool isErroWhileLoading = false;
   DiamondConfig diamondConfig;
   int moduleType;
+
 
   List<DiamondDetailImagePagerModel> arrImages =
       List<DiamondDetailImagePagerModel>();
@@ -851,7 +852,9 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     selectedList.add(diamondModel);
     diamondConfig.manageDiamondAction(context, selectedList, bottomTabModel,
         () {
-      Navigator.pop(context,true);
-    });
+      Navigator.pop(context, true);
+    }, moduleType: moduleType);
   }
+
+
 }

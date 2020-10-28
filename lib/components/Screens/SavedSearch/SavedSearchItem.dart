@@ -7,7 +7,6 @@ import 'package:diamnow/app/constant/constants.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
-import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/math_utils.dart';
 import 'package:diamnow/app/utils/string_utils.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
@@ -19,6 +18,7 @@ import 'package:flutter/material.dart';
 
 class SavedSearchItemWidget extends StatefulWidget {
   int searchType;
+
   SavedSearchItemWidget(this.searchType);
 
   @override
@@ -35,51 +35,35 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
   @override
   void initState() {
     super.initState();
-    if (widget.searchType == SavedSearchType.savedSearch) {
-      savedSearchBaseList = BaseList(BaseListState(
-//      imagePath: noRideHistoryFound,
-        noDataMsg: APPNAME,
-        noDataDesc: R.string().noDataStrings.noDataFound,
-        refreshBtn: R.string().commonString.refresh,
-        enablePullDown: true,
-        enablePullUp: true,
-        onPullToRefress: () {
-          callApi(true);
-        },
-        onRefress: () {
-          callApi(true);
-        },
-        onLoadMore: () {
-          callApi(false, isLoading: true);
-        },
-      ));
+    callBaseList();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      callApi(false);
+    });
+  }
 
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        callApi(false);
-      });
-    } else {
-      recentSearchList = BaseList(BaseListState(
-//      imagePath: noRideHistoryFound,
-        noDataMsg: APPNAME,
-        noDataDesc: R.string().noDataStrings.noDataFound,
-        refreshBtn: R.string().commonString.refresh,
-        enablePullDown: true,
-        enablePullUp: true,
-        onPullToRefress: () {
-          callApi(true);
-        },
-        onRefress: () {
-          callApi(true);
-        },
-        onLoadMore: () {
-          callApi(false, isLoading: true);
-        },
-      ));
+  callBaseList() {
+    savedSearchBaseList = BaseList(BaseListState(
+      noDataMsg: APPNAME,
+      noDataDesc: R.string().noDataStrings.noDataFound,
+      refreshBtn: R.string().commonString.refresh,
+      enablePullDown: true,
+      enablePullUp: true,
+      isApiCalling: true,
+      onPullToRefress: () {
+        callApi(true);
+      },
+      onRefress: () {
+        callApi(true);
+      },
+      onLoadMore: () {
+        callApi(false, isLoading: true);
+      },
+    ));
+  }
 
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        callApi(false);
-      });
-    }
+  @override
+  Widget build(BuildContext context) {
+    return savedSearchBaseList;
   }
 
   callApi(bool isRefress, {bool isLoading = false}) {
@@ -103,48 +87,31 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
       isProgress: !isRefress && !isLoading,
     )
         .then((savedSearchResp) async {
-      if (widget.searchType == SavedSearchType.savedSearch) {
-        savedSearchBaseList.state.listCount = savedSearchResp.data.list.length;
-        savedSearchBaseList.state.totalCount = savedSearchResp.data.count;
-        arrList.addAll(savedSearchResp.data.list);
-        fillArrayList();
-        page = page + 1;
-        savedSearchBaseList.state.setApiCalling(false);
-      } else {
-        recentSearchList.state.listCount = savedSearchResp.data.list.length;
-        recentSearchList.state.totalCount = savedSearchResp.data.count;
-        arrList.addAll(savedSearchResp.data.list);
-        fillArrayList();
-        page = page + 1;
-        recentSearchList.state.setApiCalling(false);
-      }
+      print("sucess");
+      savedSearchBaseList.state.listCount = savedSearchResp.data.list.length;
+      savedSearchBaseList.state.totalCount = savedSearchResp.data.count;
+      arrList.addAll(savedSearchResp.data.list);
+      fillArrayList();
+      page = page + 1;
+      savedSearchBaseList.state.setApiCalling(false);
     }).catchError((onError) {
       if (isRefress) {
         arrList.clear();
-        if (widget.searchType == SavedSearchType.savedSearch) {
-          savedSearchBaseList.state.listCount = arrList.length;
-          savedSearchBaseList.state.totalCount = arrList.length;
-        } else {
-          recentSearchList.state.listCount = arrList.length;
-          recentSearchList.state.totalCount = arrList.length;
-        }
+        savedSearchBaseList.state.listCount = arrList.length;
+        savedSearchBaseList.state.totalCount = arrList.length;
       }
-      if (widget.searchType == SavedSearchType.savedSearch) {
-        savedSearchBaseList.state.setApiCalling(false);
-      } else {
-        recentSearchList.state.setApiCalling(false);
-      }
+      savedSearchBaseList.state.setApiCalling(false);
     });
   }
 
   fillArrayList() {
-    if (widget.searchType == SavedSearchType.savedSearch) {
-      savedSearchBaseList.state.listItems = ListView.builder(
-        itemCount: savedSearchBaseList.state.listCount,
-        itemBuilder: (BuildContext context, int index) {
-          SavedSearchModel savedSearchModel = arrList[index];
-          List<Map<String, dynamic>> arrData =
-              getDisplayData(savedSearchModel.displayData);
+    savedSearchBaseList.state.listItems = ListView.builder(
+      itemCount: arrList.length,
+      itemBuilder: (BuildContext context, int index) {
+        SavedSearchModel savedSearchModel = arrList[index];
+        List<Map<String, dynamic>> arrData =
+            getDisplayData(savedSearchModel.displayData);
+        if (widget.searchType == SavedSearchType.savedSearch) {
           return InkWell(
             onTap: () {
               Map<String, dynamic> dict = {};
@@ -154,19 +121,11 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
             },
             child: getItemWidget(savedSearchModel, arrData),
           );
-        },
-      );
-    } else {
-      recentSearchList.state.listItems = ListView.builder(
-        itemCount: recentSearchList.state.listCount,
-        itemBuilder: (BuildContext context, int index) {
-          SavedSearchModel savedSearchModel = arrList[index];
-          List<Map<String, dynamic>> arrData =
-              getDisplayData(savedSearchModel.displayData);
+        } else {
           return getItemWidget(savedSearchModel, arrData);
-        },
-      );
-    }
+        }
+      },
+    );
   }
 
   getItemWidget(SavedSearchModel model, List<Map<String, dynamic>> arr) {
@@ -189,7 +148,6 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                 border: Border.all(
                   color: appTheme.lightBGColor,
                 ),
-                // boxShadow: getBoxShadow(context),
               ),
               child: Padding(
                 padding: EdgeInsets.fromLTRB(
@@ -270,9 +228,9 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
 
   getDisplayData(DisplayDataClass displayDataClass) {
     List<Map<String, String>> arrData = [];
-  // if(displayDataClass.shp != null){
+    // if(displayDataClass.shp != null){
 
-  // }
+    // }
     if (!isNullEmptyOrFalse(displayDataClass)) {
       if (!isNullEmptyOrFalse(displayDataClass.shp)) {
         Map<String, String> displayDataKeyValue = {};
@@ -828,9 +786,13 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
       if (!isNullEmptyOrFalse(displayDataClass.kToSArr)) {
         Map<String, String> displayDataKeyValue = {};
         displayDataKeyValue["key"] = "Key to Symbol";
-
-        String temp = displayDataClass.kToSArr.kToSArrIn.join(", ");
-        displayDataKeyValue["value"] = temp;
+        if (!isNullEmptyOrFalse(displayDataClass.kToSArr.kToSArrIn)) {
+          String temp = displayDataClass.kToSArr.kToSArrIn.join(", ");
+          displayDataKeyValue["value"] = temp;
+        } else {
+          String temp = displayDataClass.kToSArr.kToSArrnIn.join(", ");
+          displayDataKeyValue["value"] = temp;
+        }
         arrData.add(displayDataKeyValue);
       }
 
@@ -842,51 +804,6 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
     }
 
     return arrData;
-    // setState(() {});
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (widget.searchType == SavedSearchType.savedSearch) {
-      savedSearchBaseList = BaseList(BaseListState(
-//      imagePath: noRideHistoryFound,
-        noDataMsg: APPNAME,
-        noDataDesc: R.string().noDataStrings.noDataFound,
-        refreshBtn: R.string().commonString.refresh,
-        enablePullDown: true,
-        enablePullUp: true,
-        onPullToRefress: () {
-          callApi(true);
-        },
-        onRefress: () {
-          callApi(true);
-        },
-        onLoadMore: () {
-          callApi(false, isLoading: true);
-        },
-      ));
-    } else {
-      recentSearchList = BaseList(BaseListState(
-//      imagePath: noRideHistoryFound,
-        noDataMsg: APPNAME,
-        noDataDesc: R.string().noDataStrings.noDataFound,
-        refreshBtn: R.string().commonString.refresh,
-        enablePullDown: true,
-        enablePullUp: true,
-        onPullToRefress: () {
-          callApi(true);
-        },
-        onRefress: () {
-          callApi(true);
-        },
-        onLoadMore: () {
-          callApi(false, isLoading: true);
-        },
-      ));
-    }
-    return widget.searchType == SavedSearchType.savedSearch
-        ? savedSearchBaseList ?? SizedBox()
-        : recentSearchList ?? SizedBox();
   }
 
   @override

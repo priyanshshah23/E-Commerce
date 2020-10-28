@@ -6,6 +6,8 @@ import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:rxbus/rxbus.dart';
 
+import 'DiamondTrack.dart';
+
 class DiamondListReq {
   int page;
   int limit;
@@ -417,6 +419,13 @@ class DiamondModel {
   bool bidPlus = false;
   String displayTitle;
   num bidAmount;
+  TrackDiamonds trackItemCart;
+  TrackDiamonds trackItemWatchList;
+  TrackDiamonds trackItemEnquiry;
+  TrackDiamonds trackItemOffer;
+  TrackDiamonds trackItemReminder;
+  TrackDiamonds trackItemComment;
+  TrackDiamonds trackItemBid;
 
 
   getSelectedDetail(int type) {
@@ -703,7 +712,6 @@ class DiamondModel {
 
   num getFinalRate() {
     if(isAddToBid){
-      print("ctpr-isAddToBid--${ctPr}");
       return ctPr;
     }
     if (isAddToOffer) {

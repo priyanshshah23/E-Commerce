@@ -73,7 +73,7 @@ class BaseListState extends State<BaseList> {
     return SmartRefresher(
         header: MaterialClassicHeader(
           backgroundColor: appTheme.colorPrimary,
-          color: appTheme.colorPrimary,
+          color: appTheme.whiteColor,
         ),
         enablePullDown: enablePullDown,
         enablePullUp: enablePullUp && listCount > 0 && listCount < totalCount,

@@ -86,6 +86,14 @@ abstract class NetworkService {
   @POST(ApiConstants.placeOrder)
   Future<BaseApiResp> placeOrder(@Body() PlaceOrderReq req);
 
+  @POST(ApiConstants.diamondTrackDelete)
+  Future<BaseApiResp> diamondTrackDelete(@Body() TrackDelReq req);
+
+  @POST(ApiConstants.diamondComentDelete)
+  Future<BaseApiResp> diamondComentDelete(@Body() TrackDelReq req);
+  @POST(ApiConstants.diamondBidDelete)
+  Future<BaseApiResp> diamondBidDelete(@Body() TrackDelReq req);
+
   @POST(ApiConstants.diamondList)
   Future<DiamondListResp> diamondListPaginate(@Body() Map<String, dynamic> req);
 
@@ -97,8 +105,7 @@ abstract class NetworkService {
   Future<DiamondListResp> stoneOfTheDay(@Body() Map<String, dynamic> req);
 
   @POST(ApiConstants.mySaveSearch)
-  Future<SavedSearchResp> mySavedSearch(
-      @Body() Map<String, dynamic> req);
+  Future<SavedSearchResp> mySavedSearch(@Body() Map<String, dynamic> req);
 
   @POST(ApiConstants.diamondBidList)
   Future<DiamondListResp> diamondBidList(@Body() Map<String, dynamic> req);
@@ -108,6 +115,9 @@ abstract class NetworkService {
 
   @POST(ApiConstants.diamondOrderList)
   Future<OrderListResp> diamondOrderList(@Body() Map<String, dynamic> req);
+
+  @POST(ApiConstants.diamondBlockList)
+  Future<TrackBlockResp> diamondBlockList(@Body() TrackDataReq req);
 
   @POST(ApiConstants.diamondTrackList)
   Future<DiamondListResp> diamondTrackList(@Body() Map<String, dynamic> req);
@@ -144,5 +154,4 @@ abstract class NetworkService {
 
   @GET(ApiConstants.getUpdation)
   Future<VersionUpdateResp> getVersionUpdate();
-
 }

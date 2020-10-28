@@ -12,7 +12,8 @@ import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 class FilterRequest {
   Map<String, dynamic> createRequest(List<FormBaseModel> list) {
     Map<String, dynamic> map = {};
-
+    List<String> arrWsts = [];
+    List<String> arrStage = [];
     for (var element in list) {
       if (element.viewType == ViewTypes.selection) {
         SelectionModel selectionModel = element as SelectionModel;
@@ -31,9 +32,7 @@ class FilterRequest {
               } else if (item.code == MasterCode.xray) {
                 map["isXray"] = true;
               } else if (item.code == MasterCode.newarrivals) {
-                map["wSts"] = "B";
-              } else if (item.code == MasterCode.stage) {
-                map["wSts"] = "B";
+                arrWsts.add("B");
               } else if (item.code == MasterCode.eyecleanStatic) {
                 if (!isNullEmptyOrFalse(item.map))
                   map.addAll(item.map as Map<String, dynamic>);
@@ -56,7 +55,14 @@ class FilterRequest {
             map[selectionModel.apiKey] = arr;
           }
         } else {
-          if (selectionModel.masterCode != MasterCode.make) {
+          print(selectionModel.masterCode);
+          if (selectionModel.masterCode == MasterCode.stage) {
+            arrStage = Master.getSelectedId(selectionModel.masters);
+
+            if (!isNullEmptyOrFalse(arrStage)) {
+              arrWsts.addAll(arrStage);
+            }
+          } else if (selectionModel.masterCode != MasterCode.make) {
             List<String> arrStr = Master.getSelectedId(selectionModel.masters);
             if (!isNullEmptyOrFalse(arrStr)) map[element.apiKey] = arrStr;
           }
@@ -117,7 +123,7 @@ class FilterRequest {
 
       if (element.viewType == ViewTypes.caratRange) {
         List<Map<String, dynamic>> caratRequest =
-            Master.getSelectedCarat((element as SelectionModel).masters);
+            Master.getSelectedCarat((element as SelectionModel).masters) ?? [];
 
         for (var item in (element as SelectionModel).caratRangeChipsToShow) {
           Map<String, dynamic> mainDic = Map<String, dynamic>();
@@ -126,7 +132,8 @@ class FilterRequest {
           dict["<="] = item.split("-")[1];
 
           mainDic["crt"] = dict;
-          caratRequest.add(mainDic);
+
+          if (!isNullEmptyOrFalse(mainDic)) caratRequest.add(mainDic);
         }
         if (!isNullEmptyOrFalse(caratRequest)) map["or"] = caratRequest;
       }
@@ -168,7 +175,9 @@ class FilterRequest {
         }
       }
     }
-
+    if (!isNullEmptyOrFalse(arrWsts)) {
+      map["wSts"] = arrWsts;
+    }
     return map;
   }
 }
@@ -179,6 +188,24 @@ class FilterDataSource {
     Map<String, dynamic> dict = searchData.toJson();
     for (var item in arrFilter) {
       if (item is KeyToSymbolModel) {
+        if (!isNullEmptyOrFalse(dict[item.apiKey])) {
+          Map<String, dynamic> data = dict[item.apiKey];
+          item.listOfRadio.forEach((element) {
+            element.isSelected = false;
+          });
+          for (var model in item.listOfRadio) {
+            if (data.keys.contains(model.apiKey)) {
+              if (!isNullEmptyOrFalse(data[model.apiKey])) {
+                model.isSelected = true;
+                item.masters.forEach((element) {
+                  if (data[model.apiKey].contains(element.sId)) {
+                    element.isSelected = true;
+                  }
+                });
+              }
+            }
+          }
+        }
       } else if (item.viewType == ViewTypes.fromTo) {
         if (item is FromToModel) {
           if (!isNullEmptyOrFalse(dict[item.apiKey])) {
@@ -187,25 +214,98 @@ class FilterDataSource {
           }
         }
       } else {
-        if (item is SelectionModel) {
+        if (item is ColorModel) {
+          for (int i = 0; i < item.masters.length; i++) {
+            Master element = item.masters[i];
+            if (dict[item.apiKey].contains(element.sId)) {
+              element.isSelected = true;
+            }
+            item.onSelectionClick(i);
+          }
+        } else if (item is SelectionModel) {
           if (item.viewType == ViewTypes.caratRange) {
             if (!isNullEmptyOrFalse(dict["or"])) {
               List<dynamic> arr = dict["or"];
 
-              arr.forEach((ele) {
-                Map<String, dynamic> dict = ele[item.apiKey];
-                for (var model in item.masters) {
-                  if (double.parse(model.fromCarat.toStringAsFixed(2)) ==
-                          double.parse(dict[">="]) &&
-                      double.parse(dict["<="]) ==
-                          double.parse(model.toCarat.toStringAsFixed(2))) {
-                    model.isSelected = true;
-                  }
+              List<dynamic> arrSelected =
+                  arr.map((e) => e[item.apiKey]).toList();
+
+              for (var model in arrSelected) {
+                List<Master> arrMaster = item.masters
+                    .where((element) =>
+                        element.fromCarat.toString() ==
+                            model[">="].toString() &&
+                        element.toCarat.toString() == model["<="].toString())
+                    .toList();
+                if (!isNullEmptyOrFalse(arrMaster)) {
+                  arrMaster.first.isSelected = true;
+                } else {
+                  item.caratRangeChipsToShow
+                      .add("${model[">="]}-${model["<="]}");
                 }
-              });
+              }
             }
           } else {
-            if (!isNullEmptyOrFalse(dict[item.apiKey])) {
+            if (item.masterCode == MasterCode.canadamarkparent) {
+              for (var model in item.masters) {
+                if (!isNullEmptyOrFalse(dict["isCm"])) {
+                  item.masters.forEach((element) {
+                    if (element.code == MasterCode.canadamark) {
+                      element.isSelected = true;
+                    }
+                  });
+                }
+                if (!isNullEmptyOrFalse(dict["type2"])) {
+                  item.masters.forEach((element) {
+                    if (element.code == MasterCode.typeiia) {
+                      element.isSelected = true;
+                    }
+                  });
+                }
+                if (!isNullEmptyOrFalse(dict["isXray"])) {
+                  item.masters.forEach((element) {
+                    if (element.code == MasterCode.xray) {
+                      element.isSelected = true;
+                    }
+                  });
+                }
+
+                if (model.code == MasterCode.eyecleanStatic) {}
+              }
+            } else if (item.masterCode == MasterCode.newarrivalsgroup) {
+              for (var model in item.masters) {
+                if (!isNullEmptyOrFalse(dict["wSts"])) {
+                  item.masters.forEach((element) {
+                    if (element.code == MasterCode.newarrivals) {
+                      if (dict["wSts"].contains("B")) {
+                        element.isSelected = true;
+                      }
+                    } else if (element.code == MasterCode.upcoming) {
+                      if (dict["wSts"].contains("U")) {
+                        element.isSelected = true;
+                      }
+                    }
+                  });
+                }
+                if (model.code == MasterCode.eyecleanStatic) {}
+              }
+            } else if (item.masterCode == MasterCode.dor) {
+              if (!isNullEmptyOrFalse(dict["isDor"])) {
+                item.masters.forEach((element) {
+                  if (dict["isDor"].contains(element.code)) {
+                    element.isSelected = true;
+                  }
+                });
+              }
+            } else if (item.masterCode == MasterCode.fm) {
+              if (!isNullEmptyOrFalse(dict["isFm"])) {
+                item.masters.forEach((element) {
+                  if (dict["isFm"].contains(element.code)) {
+                    element.isSelected = true;
+                  }
+                });
+              }
+            } else if (!isNullEmptyOrFalse(dict[item.apiKey])) {
               item.masters.forEach((element) {
                 if (dict[item.apiKey].contains(element.sId)) {
                   element.isSelected = true;
