@@ -853,7 +853,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     diamondConfig.manageDiamondAction(context, selectedList, bottomTabModel,
         () {
       Navigator.pop(context, true);
-    });
+    }, moduleType: moduleType);
   }
 
   openAddReminder() {
@@ -939,8 +939,8 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                         }),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: getSize(Spacing.leftPadding),
-                          vertical: getSize(16)),
+                        horizontal: getSize(Spacing.leftPadding),
+                        vertical: getSize(16)),
                       child: Row(
                         children: [
                           Expanded(
@@ -955,8 +955,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                                 ),
                                 decoration: BoxDecoration(
                                   color: appTheme.colorPrimary.withOpacity(0.1),
-                                  borderRadius:
-                                      BorderRadius.circular(getSize(5)),
+                                borderRadius: BorderRadius.circular(getSize(5)),
                                 ),
                                 child: Text(
                                   R.string().commonString.cancel,

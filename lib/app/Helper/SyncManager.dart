@@ -54,10 +54,10 @@ class SyncManager {
         app.resolve<PrefUtils>().saveUser(masterResp.data.loggedInUser);
       }
 
-      if(masterResp.data.permission != null) {
-        await  app.resolve<PrefUtils>().saveUserPermission(
-          masterResp.data.permission,
-        );
+      if (masterResp.data.permission != null) {
+        await app.resolve<PrefUtils>().saveUserPermission(
+              masterResp.data.permission,
+            );
       }
 
       //Append static data masters
@@ -140,6 +140,25 @@ class SyncManager {
     }).catchError((onError) => {if (onError is ErrorResp) failure(onError)});
   }
 
+  Future callApiForDeleteDiamondTrack(
+    BuildContext context,
+    int trackType,
+    TrackDelReq req,
+    Function(BaseApiResp) success,
+    Function(ErrorResp) failure, {
+    bool isProgress = true,
+  }) async {
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+      () => getTrackDelTypeCall(trackType, req),
+      context,
+      isProgress: isProgress,
+    )
+        .then((resp) async {
+      success(resp);
+    }).catchError((onError) => {if (onError is ErrorResp) failure(onError)});
+  }
+
   Future<BaseApiResp> getTrackTypeCall(
       int trackType, CreateDiamondTrackReq req) {
     switch (trackType) {
@@ -158,6 +177,28 @@ class SyncManager {
     }
   }
 
+  Future<BaseApiResp> getTrackDelTypeCall(int trackType, TrackDelReq req) {
+    switch (trackType) {
+      case DiamondTrackConstant.TRACK_TYPE_COMMENT:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .diamondComentDelete(req);
+        break;
+        case DiamondTrackConstant.TRACK_TYPE_BID:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .diamondBidDelete(req);
+        break;
+      default:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .diamondTrackDelete(req);
+    }
+  }
+
   Future callApiForPlaceOrder(
     BuildContext context,
     PlaceOrderReq req,
@@ -168,6 +209,24 @@ class SyncManager {
     NetworkCall<BaseApiResp>()
         .makeCall(
       () => app.resolve<ServiceModule>().networkService().placeOrder(req),
+      context,
+      isProgress: isProgress,
+    )
+        .then((resp) async {
+      success(resp);
+    }).catchError((onError) => {if (onError is ErrorResp) failure(onError)});
+  }
+
+  Future callApiForBlock(
+    BuildContext context,
+    TrackDataReq req,
+    Function(TrackBlockResp) success,
+    Function(ErrorResp) failure, {
+    bool isProgress = false,
+  }) async {
+    NetworkCall<TrackBlockResp>()
+        .makeCall(
+      () => app.resolve<ServiceModule>().networkService().diamondBlockList(req),
       context,
       isProgress: isProgress,
     )
@@ -245,8 +304,8 @@ class SyncManager {
   }
 
   //Delete Saved search
-  callApiForDeleteSavedSearch(
-      BuildContext context, String id, {Function(BaseApiResp) success}) {
+  callApiForDeleteSavedSearch(BuildContext context, String id,
+      {Function(BaseApiResp) success}) {
     Map<String, dynamic> dict = {};
     dict["id"] = id;
 
