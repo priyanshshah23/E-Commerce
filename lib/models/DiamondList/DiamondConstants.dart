@@ -116,6 +116,11 @@ class clickConstant {
   static const CLICK_TYPE_DELETE = 4;
 }
 
+class DiamondBlockType {
+  static const HOLD = 1;
+  static const MEMO = 2;
+}
+
 class DiamondTrackConstant {
   static const TRACK_TYPE_CART = 1;
   static const TRACK_TYPE_WATCH_LIST = 2;
@@ -167,8 +172,8 @@ class ActionMenuConstant {
   static const ACTION_TYPE_MORE = 13;
   static const ACTION_TYPE_COMPARE = 14;
   static const ACTION_TYPE_BID = 15;
-  static const ACTION_TYPE_REMINDER= 16;
-  static const ACTION_TYPE_DELETE= 17;
+  static const ACTION_TYPE_REMINDER = 16;
+  static const ACTION_TYPE_DELETE = 17;
 }
 
 class MoreMenuConstant {
