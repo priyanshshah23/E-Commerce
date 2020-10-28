@@ -12,7 +12,8 @@ import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 class FilterRequest {
   Map<String, dynamic> createRequest(List<FormBaseModel> list) {
     Map<String, dynamic> map = {};
-
+    List<String> arrWsts = [];
+    List<String> arrStage = [];
     for (var element in list) {
       if (element.viewType == ViewTypes.selection) {
         SelectionModel selectionModel = element as SelectionModel;
@@ -31,9 +32,7 @@ class FilterRequest {
               } else if (item.code == MasterCode.xray) {
                 map["isXray"] = true;
               } else if (item.code == MasterCode.newarrivals) {
-                map["wSts"] = "B";
-              } else if (item.code == MasterCode.stage) {
-                map["wSts"] = "B";
+                arrWsts.add("B");
               } else if (item.code == MasterCode.eyecleanStatic) {
                 if (!isNullEmptyOrFalse(item.map))
                   map.addAll(item.map as Map<String, dynamic>);
@@ -56,7 +55,14 @@ class FilterRequest {
             map[selectionModel.apiKey] = arr;
           }
         } else {
-          if (selectionModel.masterCode != MasterCode.make) {
+          print(selectionModel.masterCode);
+          if (selectionModel.masterCode == MasterCode.stage) {
+            arrStage = Master.getSelectedId(selectionModel.masters);
+
+            if (!isNullEmptyOrFalse(arrStage)) {
+              arrWsts.addAll(arrStage);
+            }
+          } else if (selectionModel.masterCode != MasterCode.make) {
             List<String> arrStr = Master.getSelectedId(selectionModel.masters);
             if (!isNullEmptyOrFalse(arrStr)) map[element.apiKey] = arrStr;
           }
@@ -168,7 +174,9 @@ class FilterRequest {
         }
       }
     }
-
+    if (!isNullEmptyOrFalse(arrWsts)) {
+      map["wsts"] = arrWsts;
+    }
     return map;
   }
 }
@@ -206,6 +214,7 @@ class FilterDataSource {
         }
       } else {
         if (item is SelectionModel) {
+          print(item.apiKey);
           if (item.viewType == ViewTypes.caratRange) {
             if (!isNullEmptyOrFalse(dict["or"])) {
               List<dynamic> arr = dict["or"];
@@ -220,14 +229,72 @@ class FilterDataSource {
                 if (!isNullEmptyOrFalse(arrMaster)) {
                   arrMaster.first.isSelected = true;
                 } else {
-                  print("chips to select");
                   item.caratRangeChipsToShow
                       .add("${model[">="]}-${model["<="]}");
                 }
               }
             }
           } else {
-            if (!isNullEmptyOrFalse(dict[item.apiKey])) {
+            if (item.masterCode == MasterCode.canadamarkparent) {
+              for (var model in item.masters) {
+                if (!isNullEmptyOrFalse(dict["isCm"])) {
+                  item.masters.forEach((element) {
+                    if (element.code == MasterCode.canadamark) {
+                      element.isSelected = true;
+                    }
+                  });
+                }
+                if (!isNullEmptyOrFalse(dict["type2"])) {
+                  item.masters.forEach((element) {
+                    if (element.code == MasterCode.typeiia) {
+                      element.isSelected = true;
+                    }
+                  });
+                }
+                if (!isNullEmptyOrFalse(dict["isXray"])) {
+                  item.masters.forEach((element) {
+                    if (element.code == MasterCode.xray) {
+                      element.isSelected = true;
+                    }
+                  });
+                }
+
+                if (model.code == MasterCode.eyecleanStatic) {}
+              }
+            } else if (item.masterCode == MasterCode.newarrivalsgroup) {
+              for (var model in item.masters) {
+                if (!isNullEmptyOrFalse(dict["wSts"])) {
+                  item.masters.forEach((element) {
+                    if (element.code == MasterCode.newarrivals) {
+                      if (dict["wSts"].contains("B")) {
+                        element.isSelected = true;
+                      }
+                    } else if (element.code == MasterCode.upcoming) {
+                      if (dict["wSts"].contains("U")) {
+                        element.isSelected = true;
+                      }
+                    }
+                  });
+                }
+                if (model.code == MasterCode.eyecleanStatic) {}
+              }
+            } else if (item.masterCode == MasterCode.dor) {
+              if (!isNullEmptyOrFalse(dict["isDor"])) {
+                item.masters.forEach((element) {
+                  if (dict["isDor"].contains(element.code)) {
+                    element.isSelected = true;
+                  }
+                });
+              }
+            } else if (item.masterCode == MasterCode.fm) {
+              if (!isNullEmptyOrFalse(dict["isFm"])) {
+                item.masters.forEach((element) {
+                  if (dict["isFm"].contains(element.code)) {
+                    element.isSelected = true;
+                  }
+                });
+              }
+            } else if (!isNullEmptyOrFalse(dict[item.apiKey])) {
               item.masters.forEach((element) {
                 if (dict[item.apiKey].contains(element.sId)) {
                   element.isSelected = true;

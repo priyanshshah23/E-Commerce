@@ -36,6 +36,9 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
   void initState() {
     super.initState();
     callBaseList();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      callApi(false);
+    });
   }
 
   callApi(bool isRefress, {bool isLoading = false}) {

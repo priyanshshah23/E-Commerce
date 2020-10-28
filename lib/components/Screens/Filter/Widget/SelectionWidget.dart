@@ -61,8 +61,15 @@ class _TagWidgetState extends State<TagWidget> {
         Master allMaster = Master();
         allMaster.sId = widget.model.allLableTitle;
         allMaster.webDisplay = widget.model.allLableTitle;
-        allMaster.isSelected = false;
 
+        List<Master> arrSelectedMaster = widget.model.masters
+            .where((element) => element.isSelected)
+            .toList();
+        if (!isNullEmptyOrFalse(arrSelectedMaster)) {
+          arrSelectedMaster.length == widget.model.masters.length
+              ? allMaster.isSelected = true
+              : allMaster.isSelected = false;
+        }
         widget.model.masters.insert(0, allMaster);
       }
     }
