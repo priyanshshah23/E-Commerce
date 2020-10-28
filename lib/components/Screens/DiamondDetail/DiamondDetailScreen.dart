@@ -13,7 +13,9 @@ import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -70,7 +72,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   bool isErroWhileLoading = false;
   DiamondConfig diamondConfig;
   int moduleType;
-  List<StoneModel> reminderList = List<StoneModel>();
+
 
   List<DiamondDetailImagePagerModel> arrImages =
       List<DiamondDetailImagePagerModel>();
@@ -87,7 +89,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
 
   @override
   void initState() {
-    reminderList = getReminderList();
     isErroWhileLoading = false;
     super.initState();
     setupData();
@@ -420,7 +421,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       case BottomCodeConstant.TBShare:
         break;
       case BottomCodeConstant.TBClock:
-        openAddReminder();
         break;
       case BottomCodeConstant.TBDownloadView:
         break;
@@ -856,182 +856,5 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     }, moduleType: moduleType);
   }
 
-  openAddReminder() {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(getSize(15)),
-          ),
-          backgroundColor: appTheme.whiteColor,
-          child: StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-              return Padding(
-                padding: EdgeInsets.only(top: getSize(10)),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      "Add reminder",
-                      style: appTheme.black18TextStyle,
-                    ),
-                    GridView.builder(
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 1.4,
-                        ),
-                        itemCount: reminderList.length,
-                        itemBuilder: (context, i) {
-                          return InkWell(
-                            onTap: () {
-                              reminderList.forEach((element) {
-                                element.isSelected = false;
-                              });
-                              reminderList[i].isSelected =
-                                  !reminderList[i].isSelected;
-                              setState(() {});
-                              if(reminderList[i]==reminderList.length){
 
-                              }
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.only(top: getSize(20)),
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.only(bottom: getSize(5)),
-                                    child: Image.asset(
-                                      reminderList[i].image,
-                                      height: getSize(40),
-                                      width: getSize(40),
-                                      color: reminderList[i].isSelected
-                                          ? appTheme.colorPrimary
-                                          : appTheme.textBlackColor,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: getSize(5)),
-                                    child: Text(
-                                      reminderList[i].title,
-                                      style: appTheme.black16TextStyle.copyWith(
-                                        color: reminderList[i].isSelected
-                                            ? appTheme.colorPrimary
-                                            : appTheme.textBlackColor,
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    reminderList[i].subtitle,
-                                    style: appTheme.black16TextStyle.copyWith(
-                                      color: reminderList[i].isSelected
-                                          ? appTheme.colorPrimary
-                                          : appTheme.textBlackColor,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        }),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: getSize(Spacing.leftPadding),
-                        vertical: getSize(16)),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: Container(
-                                // alignment: Alignment.bottomCenter,
-                                padding: EdgeInsets.symmetric(
-                                  vertical: getSize(15),
-                                ),
-                                decoration: BoxDecoration(
-                                  color: appTheme.colorPrimary.withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(getSize(5)),
-                                ),
-                                child: Text(
-                                  R.string().commonString.cancel,
-                                  textAlign: TextAlign.center,
-                                  style: appTheme.blue14TextStyle
-                                      .copyWith(fontSize: getFontSize(16)),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: getSize(20),
-                          ),
-                          Expanded(
-                            child: InkWell(
-                              onTap: () {
-                                FocusScope.of(context).unfocus();
-                              },
-                              child: Container(
-                                //alignment: Alignment.bottomCenter,
-                                padding: EdgeInsets.symmetric(
-                                  vertical: getSize(15),
-                                ),
-                                decoration: BoxDecoration(
-                                    color: appTheme.colorPrimary,
-                                    borderRadius:
-                                        BorderRadius.circular(getSize(5)),
-                                    boxShadow: getBoxShadow(context)),
-                                child: Text(
-                                  R.string().commonString.btnSubmit,
-                                  textAlign: TextAlign.center,
-                                  style: appTheme.white16TextStyle,
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        );
-      },
-    );
-  }
-
-//
-//
-//  void selectionChanged(DateRangePickerSelectionChangedArgs args) {
-//    _selectedDate = DateFormat('dd MMMM, yyyy').format(args.value);
-//    SchedulerBinding.instance.addPostFrameCallback((duration) {
-//      setState(() {});
-//    });
-//  }
-
-  Widget getDateRangePicker() {
-    return Container(
-        height: getSize(250),
-        child: Card(
-            child: SfDateRangePicker(
-              initialDisplayDate: DateTime.now(),
-              minDate: DateTime.now(),
-              view: DateRangePickerView.month,
-              selectionMode: DateRangePickerSelectionMode.single,
-//              onSelectionChanged: selectionChanged,
-            )));
-  }
-  List<StoneModel> getReminderList() {
-    return [
-      StoneModel(0, "Later today", subtitle: "6:00 pm", image: sunrise),
-      StoneModel(1, "Tomorrow", subtitle: " Fri 8:00 am", image: sun),
-      StoneModel(2, "Next week", subtitle: "Thu 8:00 am", image: calender_week),
-      StoneModel(3, "Choose another", subtitle: "Date & time", image: calender),
-    ];
-  }
 }
