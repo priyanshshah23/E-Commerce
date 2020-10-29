@@ -224,6 +224,8 @@ class CommonString {
   final String chooseAnother;
   final String dateTime;
 
+  final String diamNow;
+
   //Add demand && Saved search
   final String addDemand;
   final String demandTitle;
@@ -464,6 +466,7 @@ class CommonString {
     this.nextWeek = "Next week",
     this.chooseAnother = "Choose another",
     this.dateTime = "Date & time",
-    this.language = "Language"
+    this.language = "Language",
+    this.diamNow = "DiamNow",
   });
 }
