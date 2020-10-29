@@ -300,6 +300,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               var item = arraDiamond[index];
               return DiamondGridItemWidget(
                   item: item,
+                  list: getRightAction((manageClick) {
+                    manageRowClick(index, manageClick.type);
+                  }),
                   actionClick: (manageClick) {
                     manageRowClick(index, manageClick.type);
                   });
