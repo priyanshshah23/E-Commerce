@@ -6,8 +6,8 @@
     "apiKey": "shp",
     "numberOfelementsToShow": 7,
     "masterCode": "SHAPE",
-    "verticalScroll": true,
-    "orientation": "v",
+    "verticalScroll": false,
+    "orientation": "h",
     "isShowAll": true,
     "isShowMore": true,
     "tab": "basic",
@@ -22,7 +22,9 @@
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Carat Range",
@@ -33,7 +35,7 @@
     "masterCode": "Size",
     "verticalScroll": false,
     "orientation": "v",
-    "isShowAll": true,
+    "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
     "isWhiteColor": false,
@@ -56,7 +58,9 @@
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Color",
@@ -70,7 +74,7 @@
     "showWhiteFancy": false,
     "verticalScroll": false,
     "orientation": "v",
-    "isShowAll": true,
+    "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
     "sequence": 5,
@@ -135,7 +139,9 @@
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Color Shade",
@@ -146,7 +152,7 @@
     "masterCode": "SHADE",
     "verticalScroll": false,
     "orientation": "v",
-    "isShowAll": true,
+    "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
     "isWhiteColor": false,
@@ -161,7 +167,9 @@
     "color": "#E3E3E3",
     "tab": "basic",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Clarity",
@@ -174,7 +182,7 @@
     "masterCode": "CLARITY",
     "verticalScroll": false,
     "orientation": "v",
-    "isShowAll": true,
+    "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
     "sequence": 9,
@@ -238,7 +246,9 @@
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Fluorescence",
@@ -262,7 +272,9 @@
     "color": "#E3E3E3",
     "tab": "basic",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Lab",
@@ -286,7 +298,9 @@
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Arrivals",
@@ -317,7 +331,9 @@
     "color": "#E3E3E3",
     "tab": "basic",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Location",
@@ -341,7 +357,9 @@
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Make",
@@ -500,7 +518,9 @@
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "H & A",
@@ -552,7 +572,9 @@
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "",
@@ -576,7 +598,9 @@
     "color": "#E3E3E3",
     "tab": "basic",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Price / Carat",
@@ -605,7 +629,9 @@
     "color": "#E3E3E3",
     "tab": "basic",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Disc %",
@@ -634,7 +660,9 @@
     "color": "#E3E3E3",
     "tab": "basic",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "DOR",
@@ -672,7 +700,9 @@
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "",
@@ -715,7 +745,9 @@
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Depth%",
@@ -744,7 +776,9 @@
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Ratio",
@@ -773,7 +807,9 @@
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Length",
@@ -802,7 +838,9 @@
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Width",
@@ -831,7 +869,9 @@
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Depth",
@@ -860,7 +900,9 @@
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Crown Angle",
@@ -889,7 +931,9 @@
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Crown Height%",
@@ -918,7 +962,9 @@
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Girdle%",
@@ -947,7 +993,9 @@
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Pav. Angle",
@@ -976,7 +1024,9 @@
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Pavilion Height",
@@ -1005,7 +1055,9 @@
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Lower Half",
@@ -1034,7 +1086,9 @@
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Star Length",
@@ -1063,7 +1117,9 @@
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Culet",
@@ -1087,7 +1143,9 @@
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Culet Condition",
@@ -1111,7 +1169,9 @@
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Girdle",
@@ -1135,7 +1195,9 @@
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Girdle Condition",
@@ -1159,7 +1221,9 @@
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Eye Clean",
@@ -1183,7 +1247,9 @@
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "megaTitle": "Black Inclusion",
@@ -1222,7 +1288,9 @@
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "megaTitle": "White Inclusion",
@@ -1261,7 +1329,9 @@
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Open On Table",
@@ -1285,7 +1355,9 @@
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Open On Pavillion",
@@ -1309,7 +1381,9 @@
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Open On Crown",
@@ -1333,7 +1407,9 @@
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Seal",
@@ -1357,7 +1433,9 @@
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Milky",
@@ -1381,7 +1459,9 @@
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "keyToSymbol",
@@ -1404,7 +1484,7 @@
     "masterCode": "KEY_TO_SYMBOLS",
     "verticalScroll": false,
     "orientation": "v",
-    "isShowAll": true,
+    "isShowAll": false,
     "isShowMore": false,
     "tab": "advance",
     "sequence": 72,

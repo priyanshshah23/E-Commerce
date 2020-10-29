@@ -52,27 +52,21 @@ class _TagWidgetState extends State<TagWidget> {
   @override
   void initState() {
     super.initState();
-    if (widget.model.isShowAll == true) {
-      if (widget.model.masters
-              .where((element) => element.sId == widget.model.allLableTitle)
-              .toList()
-              .length ==
-          0) {
-        Master allMaster = Master();
-        allMaster.sId = widget.model.allLableTitle;
-        allMaster.webDisplay = widget.model.allLableTitle;
 
-        List<Master> arrSelectedMaster = widget.model.masters
-            .where((element) => element.isSelected)
-            .toList();
-        if (!isNullEmptyOrFalse(arrSelectedMaster)) {
-          arrSelectedMaster.length == widget.model.masters.length
-              ? allMaster.isSelected = true
-              : allMaster.isSelected = false;
-        }
-        widget.model.masters.insert(0, allMaster);
+    List<Master> allMaster = widget.model.masters
+        .where((element) => element.sId == widget.model.allLableTitle)
+        .toList();
+    List<Master> arrSelectedMaster =
+        widget.model.masters.where((element) => element.isSelected).toList();
+
+    if (!isNullEmptyOrFalse(arrSelectedMaster)) {
+      if (!isNullEmptyOrFalse(allMaster)) {
+        arrSelectedMaster.length == widget.model.masters.length
+            ? allMaster.first.isSelected = true
+            : allMaster.first.isSelected = false;
       }
     }
+
     if (widget.model.masterCode.toLowerCase() ==
         MasterCode.keyToSymbol.toLowerCase()) {
       widget.model.title = "";
