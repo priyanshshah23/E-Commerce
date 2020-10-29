@@ -20,6 +20,10 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: () {
+        widget.actionClick(ManageCLick(
+            type: clickConstant.CLICK_TYPE_ROW));
+      },
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
