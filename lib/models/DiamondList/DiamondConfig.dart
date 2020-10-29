@@ -330,7 +330,7 @@ class DiamondConfig {
           app.resolve<CustomDialogs>().confirmDialog(
                 context,
                 title: "",
-                desc: "Please select at least 2 stone to compare.",
+                desc: R.string().commonString.enter2Stone,
                 positiveBtnTitle: R.string().commonString.ok,
               );
           return;
@@ -447,12 +447,12 @@ class DiamondConfig {
       selectedList.add(model);
     });
     app.resolve<CustomDialogs>().confirmDialog(context,
-        title: "Disclaimer",
-        desc: "Packet No: " +
+        title: R.string().screenTitle.declaimer,
+        desc: R.string().commonString.packetNo +
             list.map((item) => item.vStnId).toList().join(', ') +
-            " is currently located in India and for delivery in any other country apart from india will take at least 7-10 working days.",
-        negativeBtnTitle: "Quit",
-        positiveBtnTitle: "I Agree", onClickCallback: (buttonType) {
+           R.string().commonString.bidDesc,
+        negativeBtnTitle: R.string().commonString.quit,
+        positiveBtnTitle: R.string().commonString.agree, onClickCallback: (buttonType) {
       if (buttonType == ButtonType.PositveButtonClick) {
         showBidListDialog(context, selectedList, (manageClick) {
           if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
@@ -935,7 +935,7 @@ openSharePopUp(BuildContext context) {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "Share Stone",
+                      R.string().screenTitle.shareStone,
                       style: appTheme.black16TextStyle,
                     ),
                     ListView.builder(
@@ -1036,14 +1036,14 @@ openSharePopUp(BuildContext context) {
 
 openAddReminder(BuildContext context, ActionClick actionClick) {
   List<StoneModel> reminderList = [
-    StoneModel(ReminderType.ReminderTypeToday, "Later today",
+    StoneModel(ReminderType.ReminderTypeToday, R.string().commonString.laterToday,
         subtitle: "6:00 pm", image: sunrise),
-    StoneModel(ReminderType.ReminderTypeTomorrow, "Tomorrow",
+    StoneModel(ReminderType.ReminderTypeTomorrow, R.string().commonString.toMorrow,
         subtitle: " Fri 8:00 am", image: sun),
-    StoneModel(ReminderType.ReminderTypeNextWeek, "Next week",
+    StoneModel(ReminderType.ReminderTypeNextWeek, R.string().commonString.nextWeek,
         subtitle: "Thu 8:00 am", image: calender_week),
-    StoneModel(ReminderType.ReminderTypeCustom, "Choose another",
-        subtitle: "Date & time", image: calender),
+    StoneModel(ReminderType.ReminderTypeCustom, R.string().commonString.chooseAnother,
+        subtitle: R.string().commonString.dateTime, image: calender),
   ];
   return showDialog(
     context: context,
@@ -1061,7 +1061,7 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    "Add reminder",
+                    R.string().screenTitle.addRemider,
                     style: appTheme.black18TextStyle,
                   ),
                   GridView.builder(

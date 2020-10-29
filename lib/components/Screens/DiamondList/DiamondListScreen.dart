@@ -288,7 +288,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         ? GridView.count(
             shrinkWrap: true,
             crossAxisCount: 2,
-            childAspectRatio: 1.009,
+            childAspectRatio: 0.8,
             mainAxisSpacing: 10,
             crossAxisSpacing: 8,
             padding: EdgeInsets.only(

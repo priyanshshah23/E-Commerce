@@ -180,6 +180,10 @@ class ScreenTitle {
   final String selectCustomDate;
   final String availableSlot;
   final String reqOfficeView;
+  final String declaimer;
+
+  final String shareStone;
+  final String addRemider;
 
   const ScreenTitle({
     this.myEnquiry = "My Enquiry",
@@ -359,5 +363,9 @@ class ScreenTitle {
     this.reminder = "Reminder",
     this.manageAddress = "Manage Addresses",
     this.myAccount = "My Account",
+    this.declaimer = "Disclaimer",
+
+    this.shareStone = "Share Stone",
+    this.addRemider = "Add reminder",
   });
 }
