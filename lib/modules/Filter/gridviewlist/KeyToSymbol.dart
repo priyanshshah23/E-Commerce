@@ -87,19 +87,35 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
 
   int _radioValue = 0;
 
-  void _handleRadioValueChange(int value) {
-    setState(() {
-      _radioValue = value;
+  getRadioButton(int index, RadioButton model, dynamic onClick) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          widget.keyToSymbol.listOfRadio
+              .map((e) => e.isSelected = false)
+              .toList();
 
-      if (_radioValue == 0) {
-        widget.keyToSymbol.listOfRadio[0].isSelected = true;
-        widget.keyToSymbol.listOfRadio[1].isSelected = false;
-      } else {
-        widget.keyToSymbol.listOfRadio[1].isSelected = true;
-        widget.keyToSymbol.listOfRadio[0].isSelected = false;
-      }
-    });
+          model.isSelected = true;
+          _radioValue = index;
+        });
+      },
+      child: Row(
+        children: [
+          Radio(
+            value: index,
+            groupValue: _radioValue,
+            onChanged: onClick,
+            activeColor: appTheme.colorPrimary,
+          ),
+          Text(
+            model.title,
+            style: appTheme.black16TextStyle,
+          ),
+        ],
+      ),
+    );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -115,26 +131,21 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
               textAlign: TextAlign.left,
             ),
             Row(
-              children: <Widget>[
-                Radio(
-                  value: 0,
-                  groupValue: _radioValue,
-                  onChanged: _handleRadioValueChange,
-                ),
-                Text(
-                  widget.keyToSymbol.listOfRadio[0].title,
-                  style: appTheme.blackNormal14TitleColorblack,
-                ),
-                Radio(
-                  value: 1,
-                  groupValue: _radioValue,
-                  onChanged: _handleRadioValueChange,
-                ),
-                Text(
-                  widget.keyToSymbol.listOfRadio[1].title,
-                  style: appTheme.blackNormal14TitleColorblack,
-                ),
-              ],
+              mainAxisSize: MainAxisSize.min,
+              children: List.generate(widget.keyToSymbol.listOfRadio.length, (index) {
+                var item = widget.keyToSymbol.listOfRadio[index];
+                return getRadioButton(index, item, (int value) {
+                  //
+                  setState(() {
+                    widget.keyToSymbol.listOfRadio
+                        .map((e) => e.isSelected = false)
+                        .toList();
+
+                    item.isSelected = true;
+                    _radioValue = value;
+                  });
+                });
+              }),
             ),
           ],
         ),
