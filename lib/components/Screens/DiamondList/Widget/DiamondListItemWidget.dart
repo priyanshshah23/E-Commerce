@@ -1,6 +1,5 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
-import 'package:diamnow/app/utils/CustomBorder.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
@@ -119,7 +118,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                         border: Border.all(
                             color: widget.item.isSelected
                                 ? appTheme.colorPrimary
-                                : appTheme.dividerColor)
+                                : appTheme.dividerColor.withOpacity(0.5))
                         //boxShadow: getBoxShadow(context),
                         ),
                     child: Wrap(
@@ -197,7 +196,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           ),
           color: widget.item.isSelected
               ? appTheme.colorPrimary
-              : appTheme.dividerColor,
+              : appTheme.dividerColor.withOpacity(0.5),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

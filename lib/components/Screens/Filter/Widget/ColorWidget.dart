@@ -62,7 +62,7 @@ class _ColorWidgetState extends State<ColorWidget> {
               widget.colorModel.masterCode == MasterCode.color
                   ? R.string().commonString.color
                   : R.string().commonString.clarity,
-              style: appTheme.blackNormal18TitleColorblack,
+              style: appTheme.blackMedium16TitleColorblack,
               textAlign: TextAlign.left,
             ),
             Spacer(),
@@ -82,8 +82,8 @@ class _ColorWidgetState extends State<ColorWidget> {
                               widget.colorModel.isGroupSelected == false
                                   ? selectedFilter
                                   : unselectedFilter,
-                              width: getSize(24),
-                              height: getSize(24),
+                              width: getSize(18),
+                              height: getSize(18),
                             )
                           : SizedBox(),
                       widget.colorModel.showRadio
@@ -132,8 +132,8 @@ class _ColorWidgetState extends State<ColorWidget> {
                               widget.colorModel.isGroupSelected == true
                                   ? selectedFilter
                                   : unselectedFilter,
-                              width: getSize(24),
-                              height: getSize(24),
+                              width: getSize(18),
+                              height: getSize(18),
                             )
                           : SizedBox(),
                       widget.colorModel.showRadio

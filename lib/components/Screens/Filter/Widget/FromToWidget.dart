@@ -42,7 +42,7 @@ class _FromToWidgetState extends State<FromToWidget> {
           children: <Widget>[
             Text(
               widget.fromTomodel?.title ?? "-",
-              style: appTheme.blackNormal18TitleColorblack,
+              style: appTheme.blackMedium16TitleColorblack,
             ),
             !widget.fromTomodel.fromToStyle.showUnderline
                 ? SizedBox(height: getSize(16))
@@ -51,9 +51,9 @@ class _FromToWidgetState extends State<FromToWidget> {
               children: <Widget>[
                 Expanded(
                   child: Container(
-                    height: getSize(50),
+                    height: getSize(40),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(getSize(10)),
+                      borderRadius: BorderRadius.circular(getSize(5)),
                       border: Border.all(
                         width: getSize(1.0),
                         color: widget.fromTomodel.fromToStyle.showUnderline
@@ -69,9 +69,9 @@ class _FromToWidgetState extends State<FromToWidget> {
                 ),
                 Expanded(
                   child: Container(
-                    height: getSize(50),
+                    height: getSize(40),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(getSize(10)),
+                      borderRadius: BorderRadius.circular(getSize(5)),
                       border: Border.all(
                         width: getSize(1.0),
                         color: widget.fromTomodel.fromToStyle.showUnderline
@@ -83,6 +83,9 @@ class _FromToWidgetState extends State<FromToWidget> {
                   ),
                 ),
               ],
+            ),
+            SizedBox(
+              height: getSize(12),
             ),
           ],
         ),
