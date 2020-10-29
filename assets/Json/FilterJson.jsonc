@@ -6,9 +6,9 @@
     "apiKey": "shp",
     "numberOfelementsToShow": 7,
     "masterCode": "SHAPE",
-    "verticalScroll": true,
-    "orientation": "v",
-    "isShowAll": true,
+    "verticalScroll": false,
+    "orientation": "h",
+    "isShowAll": false,
     "isShowMore": true,
     "tab": "basic",
     "sequence": 1,
@@ -17,12 +17,14 @@
   {
     "viewType": "seperator",
     "sequence": 2,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Carat Range",
@@ -33,7 +35,7 @@
     "masterCode": "Size",
     "verticalScroll": false,
     "orientation": "v",
-    "isShowAll": true,
+    "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
     "isWhiteColor": false,
@@ -41,8 +43,8 @@
     "isActive": true,
     "showFromTo": true,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -51,12 +53,14 @@
   {
     "viewType": "seperator",
     "sequence": 4,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Color",
@@ -70,7 +74,7 @@
     "showWhiteFancy": false,
     "verticalScroll": false,
     "orientation": "v",
-    "isShowAll": true,
+    "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
     "sequence": 5,
@@ -132,10 +136,13 @@
     "viewType": "seperator",
     "sequence": 6,
     "height": 1,
+    "isActive": false,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Color Shade",
@@ -146,7 +153,7 @@
     "masterCode": "SHADE",
     "verticalScroll": false,
     "orientation": "v",
-    "isShowAll": true,
+    "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
     "isWhiteColor": false,
@@ -156,12 +163,14 @@
   {
     "viewType": "seperator",
     "sequence": 8,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Clarity",
@@ -174,7 +183,7 @@
     "masterCode": "CLARITY",
     "verticalScroll": false,
     "orientation": "v",
-    "isShowAll": true,
+    "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
     "sequence": 9,
@@ -233,12 +242,14 @@
   {
     "viewType": "seperator",
     "sequence": 10,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Fluorescence",
@@ -257,12 +268,14 @@
   {
     "viewType": "seperator",
     "sequence": 12,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Lab",
@@ -281,12 +294,14 @@
   {
     "viewType": "seperator",
     "sequence": 14,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Arrivals",
@@ -302,8 +317,8 @@
     "sequence": 15,
     "isActive": false,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -317,7 +332,9 @@
     "color": "#E3E3E3",
     "tab": "basic",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Location",
@@ -336,15 +353,17 @@
   {
     "viewType": "seperator",
     "sequence": 18,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
-    "title": "Make",
+    "title": "",
     "viewType": "selection",
     "allLableTitle": "All",
     "isSingleSelection": true,
@@ -495,12 +514,14 @@
   {
     "viewType": "seperator",
     "sequence": 23,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "H & A",
@@ -547,12 +568,14 @@
   {
     "viewType": "seperator",
     "sequence": 27,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "",
@@ -571,12 +594,14 @@
   {
     "viewType": "seperator",
     "sequence": 27,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Price / Carat",
@@ -590,8 +615,8 @@
     "maxValue": 100,
     "minValue": -10,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -600,12 +625,14 @@
   {
     "viewType": "seperator",
     "sequence": 29,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Disc %",
@@ -619,8 +646,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -629,12 +656,14 @@
   {
     "viewType": "seperator",
     "sequence": 31,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "DOR",
@@ -667,12 +696,14 @@
   {
     "viewType": "seperator",
     "sequence": 69,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "",
@@ -700,8 +731,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -710,12 +741,14 @@
   {
     "viewType": "seperator",
     "sequence": 33,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Depth%",
@@ -729,8 +762,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -739,12 +772,14 @@
   {
     "viewType": "seperator",
     "sequence": 35,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Ratio",
@@ -758,8 +793,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -768,12 +803,14 @@
   {
     "viewType": "seperator",
     "sequence": 37,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Length",
@@ -787,8 +824,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -797,12 +834,14 @@
   {
     "viewType": "seperator",
     "sequence": 39,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Width",
@@ -816,8 +855,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -826,12 +865,14 @@
   {
     "viewType": "seperator",
     "sequence": 41,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Depth",
@@ -845,8 +886,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -855,12 +896,14 @@
   {
     "viewType": "seperator",
     "sequence": 43,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Crown Angle",
@@ -874,8 +917,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -884,12 +927,14 @@
   {
     "viewType": "seperator",
     "sequence": 45,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Crown Height%",
@@ -903,8 +948,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -913,12 +958,14 @@
   {
     "viewType": "seperator",
     "sequence": 47,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Girdle%",
@@ -932,8 +979,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -942,12 +989,14 @@
   {
     "viewType": "seperator",
     "sequence": 49,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Pav. Angle",
@@ -961,8 +1010,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -971,12 +1020,14 @@
   {
     "viewType": "seperator",
     "sequence": 51,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Pavilion Height",
@@ -990,8 +1041,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1000,12 +1051,14 @@
   {
     "viewType": "seperator",
     "sequence": 53,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Lower Half",
@@ -1019,8 +1072,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1029,12 +1082,14 @@
   {
     "viewType": "seperator",
     "sequence": 55,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
     "leftPadding": 0,
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Star Length",
@@ -1048,8 +1103,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1058,12 +1113,14 @@
   {
     "viewType": "seperator",
     "sequence": 57,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Culet",
@@ -1082,12 +1139,14 @@
   {
     "viewType": "seperator",
     "sequence": 59,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Culet Condition",
@@ -1106,12 +1165,14 @@
   {
     "viewType": "seperator",
     "sequence": 61,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Girdle",
@@ -1130,12 +1191,14 @@
   {
     "viewType": "seperator",
     "sequence": 63,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Girdle Condition",
@@ -1154,12 +1217,14 @@
   {
     "viewType": "seperator",
     "sequence": 65,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Eye Clean",
@@ -1178,12 +1243,14 @@
   {
     "viewType": "seperator",
     "sequence": 69,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "megaTitle": "Black Inclusion",
@@ -1217,12 +1284,14 @@
   {
     "viewType": "seperator",
     "sequence": 69,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "megaTitle": "White Inclusion",
@@ -1256,12 +1325,14 @@
   {
     "viewType": "seperator",
     "sequence": 69,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Open On Table",
@@ -1280,12 +1351,14 @@
   {
     "viewType": "seperator",
     "sequence": 69,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Open On Pavillion",
@@ -1304,12 +1377,14 @@
   {
     "viewType": "seperator",
     "sequence": 69,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Open On Crown",
@@ -1328,12 +1403,14 @@
   {
     "viewType": "seperator",
     "sequence": 69,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Seal",
@@ -1352,12 +1429,14 @@
   {
     "viewType": "seperator",
     "sequence": 69,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Milky",
@@ -1376,12 +1455,14 @@
   {
     "viewType": "seperator",
     "sequence": 71,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "advance",
-    "rightPadding": 0
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "keyToSymbol",
@@ -1404,7 +1485,7 @@
     "masterCode": "KEY_TO_SYMBOLS",
     "verticalScroll": false,
     "orientation": "v",
-    "isShowAll": true,
+    "isShowAll": false,
     "isShowMore": false,
     "tab": "advance",
     "sequence": 72,

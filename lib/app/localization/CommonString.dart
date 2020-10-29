@@ -209,7 +209,19 @@ class CommonString {
 
   final String documents;
   final String selectType;
+  final String enter2Stone;
 
+  final String bidDesc;
+  final String packetNo;
+  final String quit;
+  final String agree;
+
+  //Reminder
+  final String laterToday;
+  final String toMorrow;
+  final String nextWeek;
+  final String chooseAnother;
+  final String dateTime;
 
   const CommonString({
     this.date = "Date",
@@ -404,15 +416,27 @@ class CommonString {
     this.personal = "Personal",
     this.business = "Business",
     this.documents = "Documents",
-
     this.noSlotFound = "No slots found",
-    this.noDiamondFound = "No Diamond Found, Please select different search parameter.",
-
+    this.noDiamondFound =
+        "No Diamond Found, Please select different search parameter.",
     this.selectType = "Select Virtual Type",
     this.searchCity = "Search city",
     this.searchCountry = "Search Country",
     this.searchState = "Search state",
     this.notifications = "Notification",
+    this.enter2Stone = "Please select at least 2 stone to compare.",
+    this.bidDesc =
+        " is currently located in India and for delivery in any other country apart from india will take at least 7-10 working days.",
+    this.packetNo = "Packet No: ",
+    this.quit = "Quit",
+    this.agree = "I Agree",
+
+    //Reminder
+    this.laterToday = "Later today",
+    this.toMorrow = "Tomorrow",
+    this.nextWeek = "Next week",
+    this.chooseAnother = "Choose another",
+    this.dateTime = "Date & time",
     this.language = "Language"
   });
 }

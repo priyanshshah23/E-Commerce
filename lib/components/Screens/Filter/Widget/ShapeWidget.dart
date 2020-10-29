@@ -87,7 +87,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
       children: <Widget>[
         Text(
           widget.selectionModel.title ?? "-",
-          style: appTheme.blackNormal18TitleColorblack,
+          style: appTheme.blackMedium16TitleColorblack,
           textAlign: TextAlign.left,
         ),
         SizedBox(
@@ -268,7 +268,7 @@ class ShapeItemWidget extends StatelessWidget {
               : ((obj.isSelected) || (selectionModel.isShowAllSelected))
                   ? appTheme.selectedFilterColor
                   : appTheme.unSelectedBgColor,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(40),
           border: Border.all(
             color: obj.sId == showMoreId
                 ? appTheme.borderColor
@@ -276,7 +276,7 @@ class ShapeItemWidget extends StatelessWidget {
                     ? appTheme.colorPrimary
                     : appTheme.borderColor,
           )),
-      padding: const EdgeInsets.all(8),
+      padding: EdgeInsets.all(getSize(8)),
       child: obj != null
           ? Column(
               mainAxisSize: MainAxisSize.min,
@@ -285,7 +285,12 @@ class ShapeItemWidget extends StatelessWidget {
               children: <Widget>[
                 obj.sId != selectionModel.allLableTitle &&
                         (obj.sId != showMoreId)
-                    ? obj.getShapeImage(obj.isSelected)
+                    ? Container(
+                        width: selectionModel.orientation ==
+                                DisplayTypes.horizontal
+                            ? getSize(90)
+                            : 0,
+                        child: obj.getShapeImage(obj.isSelected))
                     : SizedBox(),
                 Padding(
                   padding: EdgeInsets.only(top: getSize(12.0)),

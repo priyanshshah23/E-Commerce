@@ -1,3 +1,4 @@
+import 'package:diamnow/Setting/SettingModel.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/constant/constants.dart';
@@ -15,10 +16,12 @@ import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
+import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:intl/intl.dart';
 import 'package:rxbus/rxbus.dart';
 
 class DiamondListScreen extends StatefulScreenWidget {
@@ -201,6 +204,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         // case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
           List<DiamondModel> list = [];
           DiamondModel diamondModel;
+          TrackDiamonds trackDiamonds;
           diamondListResp.data.list.forEach((element) {
             if (element.diamonds != null) {
               element.diamonds.forEach((diamonds) {
@@ -208,7 +212,37 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               });
             } else {
               diamondModel = element.diamond;
-
+              trackDiamonds = TrackDiamonds(
+                  id: diamondModel.id,
+                  trackId: element.id,
+                  remarks: element.remarks,
+                  reminderDate: element.reminderDate);
+              switch (moduleType) {
+                case DiamondModuleConstant.MODULE_TYPE_MY_CART:
+                  diamondModel.trackItemCart = trackDiamonds;
+                  break;
+                case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
+                  diamondModel.trackItemWatchList = trackDiamonds;
+                  break;
+                case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
+                  diamondModel.trackItemEnquiry = trackDiamonds;
+                  break;
+                case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+                  diamondModel.trackItemOffer = trackDiamonds;
+                  break;
+                case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
+                  diamondModel.trackItemReminder = trackDiamonds;
+                  break;
+                case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
+                  diamondModel.trackItemComment = trackDiamonds;
+                  break;
+                case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
+                  diamondModel.trackItemOffice = trackDiamonds;
+                  break;
+                case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+                  diamondModel.trackItemBid = trackDiamonds;
+                  break;
+              }
               list.add(diamondModel);
             }
           });
@@ -223,16 +257,18 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       diamondList.state.listCount = arraDiamond.length;
       diamondList.state.totalCount = diamondListResp.data.count;
       manageDiamondSelection();
-      callBlockApi(isProgress: true);
+      //callBlockApi(isProgress: true);
       page = page + 1;
       diamondList.state.setApiCalling(false);
-      setState(() {});
+
     }).catchError((onError) {
-      if (isRefress) {
+      if (page == DEFAULT_PAGE) {
         arraDiamond.clear();
         diamondList.state.listCount = arraDiamond.length;
         diamondList.state.totalCount = arraDiamond.length;
+        manageDiamondSelection();
       }
+
       diamondList.state.setApiCalling(false);
     });
   }
@@ -244,12 +280,15 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   }
 
   fillArrayList() {
+    if (arraDiamond.length == 0) {
+      return;
+    }
     SlidableController controller = SlidableController();
     diamondList.state.listItems = isGrid
         ? GridView.count(
             shrinkWrap: true,
             crossAxisCount: 2,
-            childAspectRatio: 1.009,
+            childAspectRatio: 0.8,
             mainAxisSpacing: 10,
             crossAxisSpacing: 8,
             padding: EdgeInsets.only(
@@ -261,6 +300,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               var item = arraDiamond[index];
               return DiamondGridItemWidget(
                   item: item,
+                  list: getRightAction((manageClick) {
+                    manageRowClick(index, manageClick.type);
+                  }),
                   actionClick: (manageClick) {
                     manageRowClick(index, manageClick.type);
                   });
@@ -297,46 +339,40 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   getRightAction(ActionClick actionClick) {
     List<Widget> list = [];
-    switch (moduleType) {
-      case DiamondModuleConstant.MODULE_TYPE_MY_CART:
-      case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
-      case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
-      case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
-      case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
-      case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
-        list.add(
-          IntrinsicHeight(
-            child: IconSlideAction(
-              onTap: () {
-                actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_DELETE));
-              },
-              iconWidget: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: fromHex("#FFE7E7"),
-                      border: Border.all(color: fromHex("#FF4D4D")),
-                      shape: BoxShape.circle,
-                    ),
-                    height: getSize(40),
-                    width: getSize(40),
-                    child: Padding(
-                      padding: EdgeInsets.all(getSize(10)),
-                      child: Image.asset(
-                        home_delete,
-                        // height: getSize(20),
-                        // width: getSize(20),
-                      ),
+    if (isDisplayDelete(moduleType)) {
+      list.add(
+        IntrinsicHeight(
+          child: IconSlideAction(
+            onTap: () {
+              actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_DELETE));
+            },
+            iconWidget: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: fromHex("#FFE7E7"),
+                    border: Border.all(color: fromHex("#FF4D4D")),
+                    shape: BoxShape.circle,
+                  ),
+                  height: getSize(40),
+                  width: getSize(40),
+                  child: Padding(
+                    padding: EdgeInsets.all(getSize(10)),
+                    child: Image.asset(
+                      home_delete,
+                      // height: getSize(20),
+                      // width: getSize(20),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        );
+        ),
+      );
     }
 
     return list;
@@ -457,6 +493,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     fillArrayList();
     diamondCalculation.setAverageCalculation(arraDiamond);
     diamondList.state.setApiCalling(false);
+    setState(() {});
   }
 
   @override

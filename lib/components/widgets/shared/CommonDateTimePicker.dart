@@ -3,13 +3,14 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-Future openDateTimeDialog(BuildContext context) {
+Future openDateTimeDialog(BuildContext context, ActionClick actionClick) {
   return showDialog(
       context: context,
       builder: (context) {
@@ -18,12 +19,16 @@ Future openDateTimeDialog(BuildContext context) {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(getSize(15)),
           ),
-          child: DateTimeDialog(),
+          child: DateTimeDialog(actionClick),
         );
       });
 }
 
 class DateTimeDialog extends StatefulWidget {
+  ActionClick actionClick;
+
+  DateTimeDialog(this.actionClick);
+
   @override
   _DateTimeDialogState createState() => _DateTimeDialogState();
 }
@@ -33,7 +38,7 @@ class _DateTimeDialogState extends State<DateTimeDialog>
   PageController _controller = PageController();
   TabController _tabController;
   int sharedValue = 0;
-  DateTime _time = DateTime.now();
+  DateTime selectedDate = DateTime.now();
   List<TabTitle> tabList;
 
   @override
@@ -79,7 +84,7 @@ class _DateTimeDialogState extends State<DateTimeDialog>
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: getSize(20),bottom: getSize(20)),
+            padding: EdgeInsets.only(top: getSize(20), bottom: getSize(20)),
             child: TabBar(
               onTap: (index) {
                 _controller.jumpToPage(index);
@@ -118,17 +123,18 @@ class _DateTimeDialogState extends State<DateTimeDialog>
               controller: _controller,
               itemCount: tabList.length,
               itemBuilder: (context, position) {
-                if(position==0){
+                if (position == 0) {
                   return getDateRangePicker();
-                }else{
-                 return getTimeRangePicker();
+                } else {
+                  return getTimeRangePicker();
                 }
               },
             ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: getSize(Spacing.leftPadding), vertical: getSize(16)),
+                horizontal: getSize(Spacing.leftPadding),
+                vertical: getSize(16)),
             child: Row(
               children: [
                 Expanded(
@@ -160,7 +166,9 @@ class _DateTimeDialogState extends State<DateTimeDialog>
                 Expanded(
                   child: InkWell(
                     onTap: () {
-                      FocusScope.of(context).unfocus();
+                      Navigator.pop(context);
+                      widget.actionClick(ManageCLick(
+                          date: selectedDate.toUtc().toIso8601String()));
                     },
                     child: Container(
                       //alignment: Alignment.bottomCenter,
@@ -187,12 +195,12 @@ class _DateTimeDialogState extends State<DateTimeDialog>
     );
   }
 
-  String _selectedDate;
-
   void selectionChanged(DateRangePickerSelectionChangedArgs args) {
-    _selectedDate = DateFormat('dd MMMM, yyyy').format(args.value);
+    DateTime dt = args.value;
+    selectedDate = DateTime(dt.year, dt.month, dt.day, selectedDate.hour,
+        selectedDate.minute, selectedDate.second, selectedDate.millisecond);
     SchedulerBinding.instance.addPostFrameCallback((duration) {
-//    setState(() {});
+//    setState(() {});addPostFrameCallback
 //  });
     });
   }
@@ -213,7 +221,9 @@ class _DateTimeDialogState extends State<DateTimeDialog>
     return Column(
       children: [
         Text(
-          DateUtilities().convertServerDateToFormatterString(_time.toString(),formatter: DateUtilities.hh_mm_a),
+          DateUtilities().convertServerDateToFormatterString(
+              selectedDate.toIso8601String(),
+              formatter: DateUtilities.hh_mm_a),
           style: appTheme.blackMedium20TitleColorblack,
         ),
         TimePickerSpinner(
@@ -225,7 +235,14 @@ class _DateTimeDialogState extends State<DateTimeDialog>
           isForce2Digits: true,
           onTimeChange: (time) {
             setState(() {
-              _time = time;
+              selectedDate = DateTime(
+                  selectedDate.year,
+                  selectedDate.month,
+                  selectedDate.day,
+                  time.hour,
+                  time.minute,
+                  time.second,
+                  time.millisecond);
             });
           },
         ),

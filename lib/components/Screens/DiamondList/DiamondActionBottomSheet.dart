@@ -809,7 +809,7 @@ Future showPlaceOrderDialog(BuildContext context, ActionClick actionClick) {
                       ),
                       validation: (text) {
                         if (text.isEmpty) {
-                          return "Please enter company name.";
+                          return R.string().authStrings.enterCompanyName;
                         }
                       },
                       textCallback: (text) {},

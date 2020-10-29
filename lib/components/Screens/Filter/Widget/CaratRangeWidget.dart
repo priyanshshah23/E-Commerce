@@ -42,13 +42,41 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
         Row(children: [
           Text(
             "Carat Range",
-            style: appTheme.blackNormal18TitleColorblack,
+            style: appTheme.blackMedium16TitleColorblack,
             textAlign: TextAlign.left,
           ),
           Spacer(),
-          widget.selectionModel.showFromTo ? getFromTextField() : SizedBox(),
+          widget.selectionModel.showFromTo
+              ? Container(
+                  height: getSize(30),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(getSize(5)),
+                    border: Border.all(
+                      width: getSize(1.0),
+                      color: widget.selectionModel.fromToStyle.showUnderline
+                          ? Colors.transparent
+                          : appTheme.borderColor,
+                    ),
+                  ),
+                  child: Center(child: getFromTextField()),
+                )
+              : SizedBox(),
           SizedBox(width: getSize(16)),
-          widget.selectionModel.showFromTo ? getToTextField() : SizedBox(),
+          widget.selectionModel.showFromTo
+              ? Container(
+                  height: getSize(30),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(getSize(5)),
+                    border: Border.all(
+                      width: getSize(1.0),
+                      color: widget.selectionModel.fromToStyle.showUnderline
+                          ? Colors.transparent
+                          : appTheme.borderColor,
+                    ),
+                  ),
+                  child: Center(child: getToTextField()),
+                )
+              : SizedBox(),
           SizedBox(width: getSize(16)),
           widget.selectionModel.showFromTo
               ? InkWell(

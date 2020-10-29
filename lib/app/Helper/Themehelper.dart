@@ -102,6 +102,13 @@ class BaseTheme {
         color: textColor);
   }
 
+  TextStyle get blackMedium16TitleColorblack {
+    return TextStyle(
+        fontSize: getFontSize(16),
+        fontWeight: FontWeight.w400,
+        color: textColor);
+  }
+
   TextStyle get blackNormal18TitleColorPrimary {
     return TextStyle(
         fontSize: getFontSize(18),
@@ -251,7 +258,6 @@ class BaseTheme {
         color: colorPrimary,
         fontWeight: FontWeight.w600);
   }
-
 
   TextStyle get green10TextStyle {
     return TextStyle(
