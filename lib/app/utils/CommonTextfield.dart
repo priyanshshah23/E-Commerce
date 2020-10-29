@@ -19,6 +19,7 @@ class CommonTextfield extends StatefulWidget {
   final bool autoFocus;
   final bool autoCorrect;
   final bool alignment;
+  final bool readOnly;
   final OnValidation validation;
   TextStyle hintStyleText;
 
@@ -35,7 +36,8 @@ class CommonTextfield extends StatefulWidget {
       this.enable = true,
       this.validation,
       this.autoCorrect = true,
-      this.hintStyleText});
+      this.hintStyleText,
+      this.readOnly = false});
 
   @override
   _CommonTextfieldState createState() => _CommonTextfieldState();
@@ -70,6 +72,12 @@ class _CommonTextfieldState extends State<CommonTextfield> {
         textAlignVertical: TextAlignVertical(y: 0.1),
         autocorrect: widget.autoCorrect,
         enabled: widget.enable,
+        readOnly: widget.readOnly,
+        onTap: () {
+          if (widget.tapCallback != null) {
+            widget.tapCallback();
+          }
+        },
         maxLines: widget.textOption.maxLine,
         textInputAction: widget.inputAction ?? TextInputAction.done,
         focusNode: widget.focusNode ?? null,

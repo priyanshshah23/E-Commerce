@@ -152,7 +152,8 @@ class DiamondConfig {
         return R.string().screenTitle.placeAnOffer;
       case DiamondTrackConstant.TRACK_TYPE_BID:
         return R.string().screenTitle.bidStone;
-
+      case DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER:
+        return R.string().screenTitle.placeOrder;
       default:
         return R.string().screenTitle.addToWatchList;
     }
@@ -423,7 +424,8 @@ class DiamondConfig {
   }
 
   openDiamondActionAcreen(
-      BuildContext context, int actionType, List<DiamondModel> list) async {
+      BuildContext context, int actionType, List<DiamondModel> list,
+      {Function placeOrder}) async {
     var dict = Map<String, dynamic>();
     dict[ArgumentConstant.DiamondList] = list;
     dict[ArgumentConstant.ModuleType] = moduleType;
@@ -432,11 +434,24 @@ class DiamondConfig {
       settings: RouteSettings(name: DiamondActionScreen.route),
       builder: (context) => DiamondActionScreen(dict),
     ));
+    if (isBack != null && isBack && placeOrder != null) {
+      placeOrder();
+    }
   }
 
   actionPlaceOrder(
       BuildContext context, List<DiamondModel> list, Function placeOrder) {
-    showPlaceOrderDialog(context, (manageClick) {
+    List<DiamondModel> selectedList = [];
+    DiamondModel model;
+    list.forEach((element) {
+      model = DiamondModel.fromJson(element.toJson());
+      selectedList.add(model);
+    });
+
+    openDiamondActionAcreen(
+        context, DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER, selectedList,
+        placeOrder: placeOrder);
+    /*showPlaceOrderDialog(context, (manageClick) {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
         callApiFoPlaceOrder(context, list, placeOrder,
             isPop: true,
@@ -444,7 +459,7 @@ class DiamondConfig {
             companyName: manageClick.companyName,
             date: manageClick.date);
       }
-    });
+    });*/
   }
 
   actionComment(BuildContext context, List<DiamondModel> list) {
@@ -480,7 +495,7 @@ class DiamondConfig {
   }
 
   actionAll(BuildContext context, List<DiamondModel> list, int trackType,
-      {String remark, String companyName}) {
+      {String remark, String companyName, String date}) {
     switch (trackType) {
       case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
         callApiFoCreateTrack(
@@ -503,6 +518,11 @@ class DiamondConfig {
       case DiamondTrackConstant.TRACK_TYPE_BID:
         callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_BID,
             isPop: true, title: R.string().screenTitle.addedInBid);
+        break;
+      case DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER:
+        callApiFoPlaceOrder(context, list, () {
+          Navigator.pop(context, true);
+        }, isPop: true, remark: remark, companyName: companyName, date: date);
         break;
     }
   }
@@ -605,10 +625,8 @@ class DiamondConfig {
           diamonds.newPricePerCarat = element.getFinalRate();
           int hour = int.parse(element.selectedOfferHour);
           var date = DateTime.now();
-
           date.add(Duration(hours: hour));
           diamonds.offerValidDate = date.toUtc().toIso8601String();
-
           break;
         case DiamondTrackConstant.TRACK_TYPE_BID:
           diamonds.vStnId = element.vStnId;
@@ -626,9 +644,6 @@ class DiamondConfig {
       (resp) {
         if (isPop) {
           Navigator.pop(context);
-          if (trackType == DiamondTrackConstant.TRACK_TYPE_OFFER) {
-            Navigator.pop(context);
-          }
         }
         app.resolve<CustomDialogs>().errorDialog(
               context,
@@ -738,7 +753,6 @@ class DiamondConfig {
         req.date = InvoiceTypes.later.toString();
         break;
     }
-    req.date = date;
     req.diamonds = [];
     list.forEach((element) {
       req.diamonds.add(element.id);
@@ -747,9 +761,6 @@ class DiamondConfig {
       context,
       req,
       (resp) {
-        if (isPop) {
-          Navigator.pop(context);
-        }
         app.resolve<CustomDialogs>().errorDialog(context, title, resp.message,
             btntitle: R.string().commonString.ok,
             dismissPopup: false, voidCallBack: () {

@@ -5,6 +5,7 @@ import 'package:diamnow/app/constant/constants.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
@@ -13,6 +14,7 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWid
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
+import 'package:diamnow/components/widgets/shared/CommonDateTimePicker.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
@@ -24,6 +26,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:rxbus/rxbus.dart';
+
+import 'DiamondActionBottomSheet.dart';
 
 class DiamondActionScreen extends StatefulScreenWidget {
   static const route = "DiamondActionScreen";
@@ -61,10 +65,17 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _commentController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
   bool autovalid = false;
   int moduleType;
   int actionType;
   List<DiamondModel> diamondList;
+  String selectedDate;
+  List<String> invoiceList = [
+    InvoiceTypesString.today,
+    InvoiceTypesString.tomorrow,
+    InvoiceTypesString.later
+  ];
 
   _DiamondActionScreenState(
       {this.moduleType, this.actionType, this.diamondList});
@@ -111,7 +122,8 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                 },
               ),
             ),
-            getOfferDetail()
+            getOfferDetail(),
+            getOrderDetail(),
           ],
         ),
       ),
@@ -154,9 +166,12 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
               onTap: () {
                 switch (actionType) {
                   case DiamondTrackConstant.TRACK_TYPE_OFFER:
+                  case DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER:
                     if (_formKey.currentState.validate()) {
                       diamondConfig.actionAll(context, diamondList, actionType,
-                          remark: _commentController.text);
+                          remark: _commentController.text,
+                          date: selectedDate,
+                          companyName: _nameController.text);
                     } else {
                       setState(() {
                         autovalid = true;
@@ -203,11 +218,39 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    getDateTextField(),
+                    Container(
+                      height: getSize(8),
+                    ),
+                    getCommentTextField(),
+                  ],
+                ),
+              ),
+            ),
+          );
+  }
+
+  getOrderDetail() {
+    return actionType != DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER
+        ? Container()
+        : Padding(
+            padding: MediaQuery.of(context).viewInsets,
+            child: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                autovalidate: autovalid,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: getSize(20)),
                       child: CommonTextfield(
                         autoFocus: false,
                         textOption: TextFieldOption(
+                          prefixWid: getCommonIconWidget(
+                              imageName: company,
+                              imageType: IconSizeType.small),
                           hintText: R.string().authStrings.companyName,
                           maxLine: 1,
                           inputController: _nameController,
@@ -221,10 +264,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                         ),
                         validation: (text) {
                           if (text.isEmpty) {
-                            return R
-                                .string()
-                                .errorString
-                                .pleaseEnterCompanyName;
+                            return R.string().authStrings.enterCompanyName;
                           }
                         },
                         textCallback: (text) {},
@@ -234,26 +274,46 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                         },
                       ),
                     ),
+                    Container(
+                      height: getSize(8),
+                    ),
+                    setInvoiceDropDown(context, _dateController, invoiceList,
+                        (value) {
+                      selectedDate = value;
+                      _dateController.text = value;
+                    }),
+                    Container(
+                      height: getSize(8),
+                    ),
                     getCommentTextField(),
                     Padding(
-                      padding: EdgeInsets.only(
-                          left: getSize(20),
-                          right: getSize(20),
-                          bottom: getSize(5),
-                          top: getSize(10)),
-                      child: Text(
-                        R.string().screenTitle.note,
-                        style: appTheme.black16TextStyle,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: getSize(20),
-                          right: getSize(20),
-                          bottom: getSize(5)),
-                      child: Text(
-                        R.string().screenTitle.offerMsg,
-                        style: appTheme.black12TextStyle,
+                      padding:  EdgeInsets.only(top: getSize(8)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(
+                              left: getSize(20),
+                              right: getSize(20),
+                              bottom: getSize(5),
+                            ),
+                            child: Text(
+                              R.string().screenTitle.note+":",
+                              style: appTheme.error12TextStyle,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                right: getSize(20), bottom: getSize(5)),
+                            child: Expanded(
+                              child: Text(
+                                R.string().screenTitle.orderMsg,
+                                overflow: TextOverflow.clip,
+                                style: appTheme.error12TextStyle,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -263,9 +323,59 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
           );
   }
 
+  openDatePicker() {
+    openDateTimeDialog(context, (manageClick) {
+      setState(() {
+        selectedDate = manageClick.date;
+        _dateController.text = DateUtilities()
+            .convertServerDateToFormatterString(selectedDate,
+                formatter: DateUtilities.dd_mm_yyyy_);
+      });
+    }, isTime: false, title: R.string().commonString.selectDate);
+  }
+
+  getDateTextField() {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: getSize(Spacing.leftPadding),
+        right: getSize(Spacing.rightPadding),
+      ),
+      child: CommonTextfield(
+          readOnly: true,
+          tapCallback: () {
+            openDatePicker();
+          },
+          textOption: TextFieldOption(
+              prefixWid: getCommonIconWidget(
+                  imageName: company, imageType: IconSizeType.small),
+              hintText: R.string().commonString.offerVelidTill,
+              maxLine: 1,
+              keyboardType: TextInputType.text,
+              inputController: _dateController,
+              isSecureTextField: false),
+          textCallback: (text) {
+//                  setState(() {
+//                    checkValidation();
+//                  });
+          },
+          validation: (text) {
+            if (text.isEmpty) {
+              return R.string().errorString.pleaseSelectOfferTillDate;
+            }
+          },
+          inputAction: TextInputAction.next,
+          onNextPress: () {
+            FocusScope.of(context).unfocus();
+          }),
+    );
+  }
+
   getCommentTextField() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: Spacing.leftPadding),
+      padding: EdgeInsets.only(
+        left: getSize(Spacing.leftPadding),
+        right: getSize(Spacing.rightPadding),
+      ),
       child: CommonTextfield(
         autoFocus: false,
         textOption: TextFieldOption(

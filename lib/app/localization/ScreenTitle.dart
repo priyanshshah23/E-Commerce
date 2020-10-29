@@ -193,7 +193,7 @@ class ScreenTitle {
   const ScreenTitle({
     this.placeAnOffer = "Place an Offer",
     this.addedInWatchList = "Added in Watchlist",
-    this.addedInOffer = "Added in Offer",
+    this.addedInOffer = "Offer Submitted",
     this.addedInCart = "Added in Cart",
     this.addedInBid = "Added in Bid",
     this.myEnquiry = "My Enquiry",

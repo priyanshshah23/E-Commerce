@@ -188,6 +188,13 @@ class BaseTheme {
         fontWeight: FontWeight.normal);
   }
 
+  TextStyle get error12TextStyle {
+    return TextStyle(
+        fontSize: getFontSize(12),
+        color: errorColor,
+        fontWeight: FontWeight.normal);
+  }
+
   TextStyle get black12TextStyleBold {
     return TextStyle(
         fontSize: getFontSize(12),

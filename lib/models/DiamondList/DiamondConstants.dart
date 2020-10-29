@@ -140,6 +140,7 @@ class DiamondTrackConstant {
   static const TRACK_TYPE_COMMENT = 99;
   static const TRACK_TYPE_APPOINTMENT = 100;
   static const TRACK_TYPE_BID = 101;
+  static const TRACK_TYPE_PLACE_ORDER = 102;
 }
 
 class BidConstant {

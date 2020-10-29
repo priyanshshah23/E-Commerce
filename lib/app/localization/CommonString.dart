@@ -211,6 +211,7 @@ class CommonString {
   final String documents;
   final String selectType;
   final String enter2Stone;
+  final String offerVelidTill;
 
   final String bidDesc;
   final String packetNo;
@@ -223,9 +224,14 @@ class CommonString {
   final String nextWeek;
   final String chooseAnother;
   final String dateTime;
+  final String selectDate;
+  final String selectTime;
 
   const CommonString({
     this.date = "Date",
+    this.selectTime = "Select Time",
+    this.selectDate = "Select Date",
+    this.offerVelidTill = "Offer Valid Till",
     this.all = "All",
     this.status = "Status",
 

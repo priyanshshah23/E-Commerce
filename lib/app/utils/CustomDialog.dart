@@ -173,13 +173,13 @@ class CustomDialogs {
         dismissPopup: dismissPopup);
   }
 
-  void accessDenideDialog(BuildContext context){
+  void accessDenideDialog(BuildContext context) {
     app.resolve<CustomDialogs>().errorDialog(
-      context,
-      "",
-      R.string().errorString.accessDenide,
-      btntitle: R.string().commonString.ok,
-    );
+          context,
+          "",
+          R.string().errorString.accessDenide,
+          btntitle: R.string().commonString.ok,
+        );
   }
 
   void confirmDialog(BuildContext context,
@@ -274,7 +274,7 @@ Future OpenErrorDialog(BuildContext context, String title, String disc,
                                   () {
                                     Navigator.pop(context);
                                   },
-                              borderRadius: 14,
+                              borderRadius: 5,
                               fitWidth: true,
                               text: btntitle,
                               //isButtonEnabled: enableDisableSigninButton(),

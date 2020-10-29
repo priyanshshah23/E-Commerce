@@ -10,7 +10,10 @@ import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-Future openDateTimeDialog(BuildContext context, ActionClick actionClick) {
+Future openDateTimeDialog(BuildContext context, ActionClick actionClick,
+    {bool isDate = true,
+    bool isTime = true,
+    String title = "Select Date & Time"}) {
   return showDialog(
       context: context,
       builder: (context) {
@@ -19,15 +22,23 @@ Future openDateTimeDialog(BuildContext context, ActionClick actionClick) {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(getSize(15)),
           ),
-          child: DateTimeDialog(actionClick),
+          child: DateTimeDialog(
+            actionClick,
+            isDate: isDate,
+            isTime: isTime,
+            title: title,
+          ),
         );
       });
 }
 
 class DateTimeDialog extends StatefulWidget {
   ActionClick actionClick;
+  String title;
+  bool isDate;
+  bool isTime;
 
-  DateTimeDialog(this.actionClick);
+  DateTimeDialog(this.actionClick, {this.title, this.isDate, this.isTime});
 
   @override
   _DateTimeDialogState createState() => _DateTimeDialogState();
@@ -79,58 +90,65 @@ class _DateTimeDialogState extends State<DateTimeDialog>
           Padding(
             padding: EdgeInsets.only(top: getSize(20)),
             child: Text(
-              "Select Date & Time",
+              widget.title,
               style: appTheme.black16TextStyle,
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(top: getSize(20), bottom: getSize(20)),
-            child: TabBar(
-              onTap: (index) {
-                _controller.jumpToPage(index);
-              },
-              isScrollable: true,
-              controller: _tabController,
+          widget.isDate && widget.isTime
+              ? Padding(
+                  padding:
+                      EdgeInsets.only(top: getSize(20), bottom: getSize(20)),
+                  child: TabBar(
+                    onTap: (index) {
+                      _controller.jumpToPage(index);
+                    },
+                    isScrollable: true,
+                    controller: _tabController,
 //            labelStyle: Theme.of(context)
 //                .textTheme
 //                .headline
 //                .copyWith(fontSize: getSize(18)),
-              unselectedLabelColor: Colors.black,
-              labelColor: Colors.black,
-              indicatorSize: TabBarIndicatorSize.label,
-              indicator: LineTabIndicator(
-                  color: appTheme.colorPrimary,
-                  height: getSize(3),
-                  width: getSize(30)),
-              tabs: tabList.map((item) {
-                return Padding(
-                  padding: EdgeInsets.only(bottom: getSize(10)),
-                  child: Text(
-                    item.title,
-                    style: appTheme.black16TextStyle,
+                    unselectedLabelColor: Colors.black,
+                    labelColor: Colors.black,
+                    indicatorSize: TabBarIndicatorSize.label,
+                    indicator: LineTabIndicator(
+                        color: appTheme.colorPrimary,
+                        height: getSize(3),
+                        width: getSize(30)),
+                    tabs: tabList.map((item) {
+                      return Padding(
+                        padding: EdgeInsets.only(bottom: getSize(10)),
+                        child: Text(
+                          item.title,
+                          style: appTheme.black16TextStyle,
+                        ),
+                      );
+                    }).toList(),
                   ),
-                );
-              }).toList(),
-            ),
-          ),
-          Container(
-            height: getSize(270),
-            child: PageView.builder(
-              onPageChanged: (index) {
-                _onPageChange(index);
-              },
-              //physics: NeverScrollableScrollPhysics(),
-              controller: _controller,
-              itemCount: tabList.length,
-              itemBuilder: (context, position) {
-                if (position == 0) {
-                  return getDateRangePicker();
-                } else {
-                  return getTimeRangePicker();
-                }
-              },
-            ),
-          ),
+                )
+              : Container(),
+          widget.isDate && widget.isTime
+              ? Container(
+                  height: getSize(270),
+                  child: PageView.builder(
+                    onPageChanged: (index) {
+                      _onPageChange(index);
+                    },
+                    //physics: NeverScrollableScrollPhysics(),
+                    controller: _controller,
+                    itemCount: tabList.length,
+                    itemBuilder: (context, position) {
+                      if (position == 0) {
+                        return getDateRangePicker();
+                      } else {
+                        return getTimeRangePicker();
+                      }
+                    },
+                  ),
+                )
+              : Container(),
+          widget.isDate && !widget.isTime ? getDateRangePicker() : Container(),
+          !widget.isDate && widget.isTime ? getTimeRangePicker() : Container(),
           Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: getSize(Spacing.leftPadding),
