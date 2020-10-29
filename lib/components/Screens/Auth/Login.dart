@@ -63,7 +63,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
     super.initState();
     if (kDebugMode) {
       _userNameController.text = "mobileUser";
-      _passwordController.text = "123";
+      _passwordController.text = "Test@12345";
     }
   }
 

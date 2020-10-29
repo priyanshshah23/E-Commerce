@@ -128,3 +128,4 @@ const String sun = "assets/diamnow/sun.png";
 const String sunrise = "assets/diamnow/sunrise.png";
 const String dropDown = "assets/auth/dropDown.png";
 const String languageIcon = "assets/auth/languageIcon.png";
+const String cameraPlaceHolder = "assets/auth/cameraPlaceHolder.png";

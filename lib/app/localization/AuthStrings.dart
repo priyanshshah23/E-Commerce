@@ -12,6 +12,7 @@ class AuthStrings {
   final String requiredField;
   final String saveCompanyDetails;
   final String setNewPassword;
+  final String promotionText;
 
   final String clickHere;
   final String moveToLogIn;
@@ -146,6 +147,9 @@ class AuthStrings {
   final String passwordResetSuccessfully;
 
   final String signUp;
+  final String termsAndCondition;
+  final String mustAgreeTermsAndCondition;
+  final String forgotPasswordTitle;
 
   const AuthStrings({
     // Login
@@ -281,5 +285,9 @@ class AuthStrings {
     this.emailAndUname = "Email/UserName",
     this.signUp = "Sign Up",
     this.requiredField = "*",
+    this.promotionText = "Promotional offers, newsletters and stock updates",
+    this.termsAndCondition = "Terms and Condition",
+    this.mustAgreeTermsAndCondition = "You must agree to terms and condition to Sign In as Guest User",
+    this.forgotPasswordTitle = "Forgot Password",
   });
 }

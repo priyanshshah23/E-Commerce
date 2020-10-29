@@ -91,7 +91,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
           child: Scaffold(
             appBar: getAppBar(
               context,
-              R.string().authStrings.forgotPassword,
+              R.string().authStrings.forgotPasswordTitle,
               bgColor: appTheme.whiteColor,
               leadingButton: isApiCall
                   ? getBackButton(context, ontap: () {
@@ -474,7 +474,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
       isOtpCheck = false;
       showOTPMsg = null;
       Map<String, dynamic> dict = new HashMap();
-      dict["email"] = _emailController.text;
+      dict["value"] = _emailController.text;
       dict["otpNumber"] = _pinEditingController.text.trim();
       NavigationUtilities.pushRoute(ResetPassword.route, args: dict);
     }).catchError((onError) {

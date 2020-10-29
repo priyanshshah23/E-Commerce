@@ -132,7 +132,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
                             }
                             FocusScope.of(context).unfocus();
                             if (_formKey.currentState.validate()) {
-                              if(_mobileController.text.isNotEmpty){
+                              if(_mobileController.text.isNotEmpty && termCondition){
                                 checkValidation();
                               }
                             } else {
@@ -516,7 +516,11 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
               onTap: () {
                 setState(() {
                   termCondition = !termCondition;
-                  showTermValidation = false;
+                  if(termCondition) {
+                    showTermValidation = false;
+                  } else {
+                    showTermValidation = true;
+                  }
                 });
               },
               child: Image.asset(
@@ -529,7 +533,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
               width: getSize(10),
             ),
             Text(
-              "Terms and Condition*",
+              R.string().authStrings.termsAndCondition + R.string().authStrings.requiredField,
               style: appTheme.black14TextStyle,
             )
           ],
@@ -539,7 +543,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
           child: Padding(
             padding: EdgeInsets.only(top: getSize(10)),
             child: Text(
-              "You must agree to terms and condition to Sign In as Guest User",
+              R.string().authStrings.mustAgreeTermsAndCondition,
               style: appTheme.error16TextStyle,
             ),
           ),
@@ -567,7 +571,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
           width: getSize(10),
         ),
         Text(
-          "Promotional offers, newsletters and stock updates",
+          R.string().authStrings.promotionText,
           style: appTheme.black14TextStyle,
         )
       ],
@@ -602,7 +606,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
           context,
-          title: "",
+          title: R.string().commonString.error,
           desc: onError.message,
           positiveBtnTitle: R.string().commonString.ok,
         );
