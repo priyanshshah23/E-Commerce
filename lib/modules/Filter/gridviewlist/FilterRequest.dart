@@ -4,6 +4,7 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/app/utils/string_utils.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/CaratRangeWidget.dart';
+import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
@@ -213,11 +214,12 @@ class FilterDataSource {
             item.valueTo = dict[item.apiKey]["<="];
           }
         }
-      } else {
+      }
+      else {
         if (item is ColorModel) {
           for (int i = 0; i < item.masters.length; i++) {
             Master element = item.masters[i];
-            if (dict[item.apiKey].contains(element.sId)) {
+            if (!isNullEmptyOrFalse(dict[item.apiKey]) && dict[item.apiKey].contains(element.sId)) {
               element.isSelected = true;
             }
             item.onSelectionClick(i);
