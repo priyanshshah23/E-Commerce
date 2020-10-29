@@ -78,6 +78,7 @@ class DateUtilities {
   static const kSourceFormat = "yyyy-MM-dd'T'HH:mm:ssZ";
   static const String dd_mm_yyyy_hh_mm = "dd-MM-yyyy HH:mm";
   static const String dd_mm_yyyy_hh_mm_ss_a = "dd/MM/yyyy',' hh:mm a";
+  static const String dd_mm_yyyy_hh_mm_ss = "dd MMM yyyy',' hh:mm a";
   static const String dd_mm_yyyy_n_mm_ss_a = "dd/MM/yyyy'\n' hh:mm a";
   static const String dd_mm_yyyy = "dd MMM yyyy";
   static const String dd_eee = "dd\nEE";

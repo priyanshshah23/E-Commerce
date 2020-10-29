@@ -114,7 +114,11 @@ class _ProfileListState extends State<ProfileList> {
                 } else if (position == 1) {
                   return CompanyInformation();
                 } else {
-                  return Scaffold();
+                  return Scaffold(
+                    body: Center(
+                      child: Text("No Documents Found"),
+                    ),
+                  );
                 }
               },
             ),

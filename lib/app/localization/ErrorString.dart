@@ -131,7 +131,7 @@ class ErrorString {
         "To Value should be greater than or equal to From value",
     this.pleaseEnterCompanyCode = "Please enter company code",
     this.enterSamePassword =
-        "Confirm Password does not match with Password. Please enter confirm password same as Password.",
+        "Confirm Password does not match with New Password. Please enter confirm password same as New Password.",
 
     //Office
     this.selectAppointmentDate = "Please select appointment date",

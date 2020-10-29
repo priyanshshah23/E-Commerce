@@ -60,18 +60,18 @@ class DiamondCalculation {
     avgRapCrt = arrValues[3];
     avgPriceCrt = arrValues[4];
 
-    totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt);
-    totalAmount = PriceUtilities.getPrice(avgAmount);
+    totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt??0);
+    totalAmount = PriceUtilities.getPrice(avgAmount??0);
     if (isAccountTerm) {
-      totalDisc = PriceUtilities.getPercent(arrFinalValues[2]);
-      totalAmount = PriceUtilities.getPrice(arrFinalValues[1]);
-      totalPriceCrt = PriceUtilities.getPrice(arrFinalValues[0]);
+      totalDisc = PriceUtilities.getPercent(arrFinalValues[2]??0);
+      totalAmount = PriceUtilities.getPrice(arrFinalValues[1]??0);
+      totalPriceCrt = PriceUtilities.getPrice(arrFinalValues[0]??0);
     } else {
       avgDisc = (1 - (avgPriceCrt / avgRapCrt)) * (-100);
-      totalDisc = PriceUtilities.getPercent(avgDisc);
+      totalDisc = PriceUtilities.getPercent(avgDisc??0);
       avgAmount = arrValues[1];
     }
-    totalCarat = PriceUtilities.getDoubleValue(carat);
+    totalCarat = PriceUtilities.getDoubleValue(carat??0);
     pcs = filterList.length.toString();
   }
 }
@@ -302,7 +302,7 @@ class DiamondConfig {
         actionPlaceOrder(context, list, refreshList);
         break;
       case ActionMenuConstant.ACTION_TYPE_REMINDER:
-        actionReminder(context,list);
+        actionReminder(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_COMMENT:
         actionComment(context, list);
@@ -457,7 +457,7 @@ class DiamondConfig {
         showBidListDialog(context, selectedList, (manageClick) {
           if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
             callApiFoCreateTrack(
-                context, list, DiamondTrackConstant.TRACK_TYPE_BID,
+                context, selectedList, DiamondTrackConstant.TRACK_TYPE_BID,
                 isPop: true);
           }
         });
@@ -485,12 +485,20 @@ class DiamondConfig {
   }
 
   actionReminder(BuildContext context, List<DiamondModel> list) {
-    openAddReminder(context);
+    openAddReminder(context, (manageClick) {
+      callApiFoCreateTrack(
+          context, list, DiamondTrackConstant.TRACK_TYPE_REMINDER,
+          date: manageClick.date);
+    });
   }
 
   callApiFoCreateTrack(
       BuildContext context, List<DiamondModel> list, int trackType,
-      {bool isPop = false, String remark, String companyName, String title}) {
+      {bool isPop = false,
+      String remark,
+      String companyName,
+      String date,
+      String title}) {
     CreateDiamondTrackReq req = CreateDiamondTrackReq();
     switch (trackType) {
       case DiamondTrackConstant.TRACK_TYPE_OFFER:
@@ -501,6 +509,7 @@ class DiamondConfig {
       case DiamondTrackConstant.TRACK_TYPE_CART:
       case DiamondTrackConstant.TRACK_TYPE_ENQUIRY:
       case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
+      case DiamondTrackConstant.TRACK_TYPE_REMINDER:
         req.trackType = trackType;
         break;
       case DiamondTrackConstant.TRACK_TYPE_BID:
@@ -536,9 +545,9 @@ class DiamondConfig {
           break;
         case DiamondTrackConstant.TRACK_TYPE_BID:
           diamonds.vStnId = element.vStnId;
-          diamonds.bidAmount = element.getFinalAmount();
-          diamonds.bidPricePerCarat = element.getFinalRate();
-          diamonds.bidDiscount = element.getFinalDiscount();
+          diamonds.bidAmount = element.getBidFinalAmount();
+          diamonds.bidPricePerCarat = element.getBidFinalRate();
+          diamonds.bidDiscount = element.getbidFinalDiscount();
           break;
       }
       req.diamonds.add(diamonds);
@@ -612,7 +621,7 @@ class DiamondConfig {
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_BID:
           req.id.add(element.trackItemBid?.trackId ?? "");
-          trackType = DiamondTrackConstant.TRACK_TYPE_COMMENT;
+          trackType = DiamondTrackConstant.TRACK_TYPE_BID;
           break;
       }
     });
@@ -729,6 +738,9 @@ class DiamondConfig {
                 break;
               case DiamondTrackConstant.TRACK_TYPE_COMMENT:
                 list[i].trackItemComment = diamond;
+                break;
+              case DiamondTrackConstant.TRACK_TYPE_BID:
+                list[i].trackItemBid = diamond;
                 break;
             }
         });
@@ -1022,16 +1034,18 @@ openSharePopUp(BuildContext context) {
       });
 }
 
-openAddReminder(BuildContext context) {
-
-    List<StoneModel> reminderList = [
-        StoneModel(0, "Later today", subtitle: "6:00 pm", image: sunrise),
-        StoneModel(1, "Tomorrow", subtitle: " Fri 8:00 am", image: sun),
-        StoneModel(2, "Next week", subtitle: "Thu 8:00 am", image: calender_week),
-        StoneModel(3, "Choose another", subtitle: "Date & time", image: calender),
-      ];
-
-    return showDialog(
+openAddReminder(BuildContext context, ActionClick actionClick) {
+  List<StoneModel> reminderList = [
+    StoneModel(ReminderType.ReminderTypeToday, "Later today",
+        subtitle: "6:00 pm", image: sunrise),
+    StoneModel(ReminderType.ReminderTypeTomorrow, "Tomorrow",
+        subtitle: " Fri 8:00 am", image: sun),
+    StoneModel(ReminderType.ReminderTypeNextWeek, "Next week",
+        subtitle: "Thu 8:00 am", image: calender_week),
+    StoneModel(ReminderType.ReminderTypeCustom, "Choose another",
+        subtitle: "Date & time", image: calender),
+  ];
+  return showDialog(
     context: context,
     builder: (context) {
       return Dialog(
@@ -1060,24 +1074,40 @@ openAddReminder(BuildContext context) {
                       itemBuilder: (context, i) {
                         return InkWell(
                           onTap: () {
-                            reminderList.forEach((element) {
-                              element.isSelected = false;
-                            });
-                            reminderList[i].isSelected =
-                            !reminderList[i].isSelected;
-                            setState(() {});
-                            if(i==reminderList.length-1){
-                              print(i);
-                              openDateTimeDialog(context);
+                            if (reminderList[i].id !=
+                                ReminderType.ReminderTypeCustom) {
+                              reminderList.forEach((element) {
+                                element.isSelected = false;
+                              });
+                              reminderList[i].isSelected =
+                                  !reminderList[i].isSelected;
+                            } else {
+                              openDateTimeDialog(context, (manageClick) {
+                                reminderList.forEach((element) {
+                                  element.isSelected = false;
+                                  if (element.id ==
+                                      ReminderType.ReminderTypeCustom) {
+                                    element.isSelected = true;
+                                    element.selectedDate = manageClick.date;
+                                    element.subtitle = DateUtilities()
+                                        .convertServerDateToFormatterString(
+                                            element.selectedDate,
+                                            formatter: DateUtilities
+                                                .dd_mm_yyyy_hh_mm_ss);
+                                  }
+                                });
+
+                                setState(() {});
+                              });
                             }
+                            setState(() {});
                           },
                           child: Padding(
                             padding: EdgeInsets.only(top: getSize(20)),
                             child: Column(
                               children: [
                                 Padding(
-                                  padding:
-                                  EdgeInsets.only(bottom: getSize(5)),
+                                  padding: EdgeInsets.only(bottom: getSize(5)),
                                   child: Image.asset(
                                     reminderList[i].image,
                                     height: getSize(40),
@@ -1101,7 +1131,7 @@ openAddReminder(BuildContext context) {
                                 ),
                                 Text(
                                   reminderList[i].subtitle,
-                                  style: appTheme.black16TextStyle.copyWith(
+                                  style: appTheme.black12TextStyle.copyWith(
                                     color: reminderList[i].isSelected
                                         ? appTheme.colorPrimary
                                         : appTheme.textBlackColor,
@@ -1147,7 +1177,62 @@ openAddReminder(BuildContext context) {
                         Expanded(
                           child: InkWell(
                             onTap: () {
-                              FocusScope.of(context).unfocus();
+                              StoneModel stoneModel;
+                              reminderList.forEach((element) {
+                                if (element.isSelected) {
+                                  stoneModel = element;
+                                }
+                              });
+                              if (stoneModel != null) {
+                                DateTime dateTime = DateTime.now();
+
+                                String date =
+                                    dateTime.toUtc().toIso8601String();
+                                switch (stoneModel.id) {
+                                  case ReminderType.ReminderTypeToday:
+                                    DateTime dt = DateTime(
+                                        dateTime.year,
+                                        dateTime.month,
+                                        dateTime.day,
+                                        18,
+                                        0,
+                                        0,
+                                        0);
+                                    date = dt.toUtc().toIso8601String();
+                                    break;
+                                  case ReminderType.ReminderTypeTomorrow:
+                                    DateTime dt = DateTime(
+                                        dateTime.year,
+                                        dateTime.month,
+                                        dateTime.day,
+                                        8,
+                                        0,
+                                        0,
+                                        0);
+                                    dt.add(Duration(days: 1));
+                                    date = dt.toUtc().toIso8601String();
+                                    break;
+                                  case ReminderType.ReminderTypeNextWeek:
+                                    DateTime dt = DateTime(
+                                        dateTime.year,
+                                        dateTime.month,
+                                        dateTime.day,
+                                        18,
+                                        0,
+                                        0,
+                                        0);
+
+                                    date = dt.toUtc().toIso8601String();
+                                    break;
+                                  case ReminderType.ReminderTypeCustom:
+                                    date = stoneModel.selectedDate;
+                                    break;
+                                }
+                                Navigator.pop(context);
+                                actionClick(ManageCLick(
+                                    type: clickConstant.CLICK_TYPE_CONFIRM,
+                                    date: date));
+                              } else {}
                             },
                             child: Container(
                               //alignment: Alignment.bottomCenter,
@@ -1157,7 +1242,7 @@ openAddReminder(BuildContext context) {
                               decoration: BoxDecoration(
                                   color: appTheme.colorPrimary,
                                   borderRadius:
-                                  BorderRadius.circular(getSize(5)),
+                                      BorderRadius.circular(getSize(5)),
                                   boxShadow: getBoxShadow(context)),
                               child: Text(
                                 R.string().commonString.btnSubmit,
@@ -1186,6 +1271,7 @@ class StoneModel {
   String subtitle;
   String image;
   bool isSelected;
+  String selectedDate;
 
   StoneModel(
     this.id,

@@ -73,6 +73,12 @@ class ModulePermissionConstant {
   static const permission_notification = "notification";
 }
 
+class ReminderType{
+  static const  ReminderTypeToday =1;
+  static const  ReminderTypeTomorrow =2;
+  static const  ReminderTypeNextWeek=3;
+  static const  ReminderTypeCustom =4;
+}
 class PermissionType {
   static const permission_view = "view";
   static const permission_insert = "insert";

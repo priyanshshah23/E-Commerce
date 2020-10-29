@@ -3,10 +3,10 @@ import '../app.export.dart';
 class ApiConstants {
 //   static const String PROXY_URL = "PROXY 192.168.2.124:8888";
 //   static const String PROXY_URL = "PROXY 192.168.0.117:8888";
-static const String PROXY_URL = "PROXY 192.168.0.116:8888";
+//static const String PROXY_URL = "PROXY 192.168.0.116:8888";
   //static const String PROXY_URL = "PROXY 192.168.43.252:8888";
   // static const String PROXY_URL = "PROXY 192.168.225.188:8888";
-//  static const String PROXY_URL = "PROXY 192.168.225.188:8888";
+  static const String PROXY_URL = "PROXY 192.168.225.188:8888";
 
 //  static const String PROXY_URL = "PROXY 192.168.0.73:8888";
   //  static const String PROXY_URL = "PROXY 10.0.2.2:8888";
@@ -84,8 +84,7 @@ static const String PROXY_URL = "PROXY 192.168.0.116:8888";
   static const String diamondTrackDelete = commonUrl + "diamond-track/delete";
   static const String diamondComentDelete =
       commonUrl + "diamond-comment/delete";
-  static const String diamondBidDelete =
-      commonUrl + "diamond-bid/delete";
+  static const String diamondBidDelete = commonUrl + "diamond-bid/delete";
 }
 
 class DiamondUrls {

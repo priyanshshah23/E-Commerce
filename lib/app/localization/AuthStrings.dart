@@ -21,6 +21,7 @@ class AuthStrings {
 // Forgot Password
   final String emailAddress;
   final String emaillbl;
+  final String emailAndUname;
 
 //Reset Passworg
   final String resetPwdDesc;
@@ -270,9 +271,10 @@ class AuthStrings {
     this.sendOTP = "Send OTP",
     this.resendNow = "Resend Now",
     this.didNotReceiveOTP = "If you didn't receive an OTP!",
-    this.sendOTPToEmail = "We will send an OTP to your entered email address. Please enter the email address.",
+    this.sendOTPToEmail = "We will send an OTP to your entered email address or user name. Please enter the email address or user name.",
     this.enterOTP = "The OTP has been sent to your registered Email address. Please enter the OTP.",
     this.backToSignIn = "Back to Sign In",
     this.passwordResetSuccessfully = "Password reset successfully.",
+    this.emailAndUname = "Email/UserName",
   });
 }

@@ -426,6 +426,7 @@ class DiamondModel {
   TrackDiamonds trackItemReminder;
   TrackDiamonds trackItemComment;
   TrackDiamonds trackItemBid;
+  TrackDiamonds trackItemOffice;
 
 
   getSelectedDetail(int type) {
@@ -712,7 +713,6 @@ class DiamondModel {
 
   num getFinalRate() {
     if(isAddToBid){
-      print("ctpr-isAddToBid--${ctPr}");
       return ctPr;
     }
     if (isAddToOffer) {
@@ -735,6 +735,10 @@ class DiamondModel {
   }
 
   num getBidFinalRate(){
+    DateTime now = DateTime.now();
+    if(now.hour>=15 || (now.hour<=10 && now.month<30)){
+      return getFinalRate()-((getFinalRate()*2.5)/100);
+    }
     return getFinalRate()-((getFinalRate()*2)/100);
   }
 
