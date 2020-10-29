@@ -10,6 +10,7 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondActionScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
 import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
 import 'package:diamnow/components/widgets/shared/CommonDateTimePicker.dart';
@@ -138,6 +139,22 @@ class DiamondConfig {
         return R.string().screenTitle.myProfile;
       default:
         return R.string().screenTitle.searchDiamond;
+    }
+  }
+
+  String getActionScreenTitle(int actionType) {
+    switch (actionType) {
+      case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
+        return R.string().screenTitle.addToWatchList;
+      case DiamondTrackConstant.TRACK_TYPE_CART:
+        return R.string().screenTitle.addToCart;
+      case DiamondTrackConstant.TRACK_TYPE_OFFER:
+        return R.string().screenTitle.placeAnOffer;
+      case DiamondTrackConstant.TRACK_TYPE_BID:
+        return R.string().screenTitle.bidStone;
+
+      default:
+        return R.string().screenTitle.addToWatchList;
     }
   }
 
@@ -351,8 +368,15 @@ class DiamondConfig {
   }
 
   actionAddToCart(BuildContext context, List<DiamondModel> list) {
-    callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,
-        title: "Added in Cart");
+    List<DiamondModel> selectedList = [];
+    DiamondModel model;
+    list.forEach((element) {
+      model = DiamondModel.fromJson(element.toJson());
+      selectedList.add(model);
+    });
+
+    openDiamondActionAcreen(
+        context, DiamondTrackConstant.TRACK_TYPE_CART, selectedList);
   }
 
   actionDelete(BuildContext context, List<DiamondModel> list, int moduleType,
@@ -387,13 +411,27 @@ class DiamondConfig {
       model.isAddToWatchList = true;
       selectedList.add(model);
     });
-    showWatchListDialog(context, selectedList, (manageClick) {
+    openDiamondActionAcreen(
+        context, DiamondTrackConstant.TRACK_TYPE_WATCH_LIST, selectedList);
+    /*showWatchListDialog(context, selectedList, (manageClick) {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
         callApiFoCreateTrack(
             context, list, DiamondTrackConstant.TRACK_TYPE_WATCH_LIST,
             isPop: true, title: "Added in Watchlist");
       }
-    });
+    });*/
+  }
+
+  openDiamondActionAcreen(
+      BuildContext context, int actionType, List<DiamondModel> list) async {
+    var dict = Map<String, dynamic>();
+    dict[ArgumentConstant.DiamondList] = list;
+    dict[ArgumentConstant.ModuleType] = moduleType;
+    dict[ArgumentConstant.ActionType] = actionType;
+    bool isBack = await Navigator.of(context).push(MaterialPageRoute(
+      settings: RouteSettings(name: DiamondActionScreen.route),
+      builder: (context) => DiamondActionScreen(dict),
+    ));
   }
 
   actionPlaceOrder(
@@ -427,7 +465,10 @@ class DiamondConfig {
       model.isAddToOffer = true;
       selectedList.add(model);
     });
-    showOfferListDialog(context, selectedList, (manageClick) {
+
+    openDiamondActionAcreen(
+        context, DiamondTrackConstant.TRACK_TYPE_OFFER, selectedList);
+    /* showOfferListDialog(context, selectedList, (manageClick) {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
         callApiFoCreateTrack(
             context, list, DiamondTrackConstant.TRACK_TYPE_OFFER,
@@ -435,7 +476,35 @@ class DiamondConfig {
             companyName: manageClick.companyName,
             isPop: true);
       }
-    });
+    });*/
+  }
+
+  actionAll(BuildContext context, List<DiamondModel> list, int trackType,
+      {String remark, String companyName}) {
+    switch (trackType) {
+      case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
+        callApiFoCreateTrack(
+            context, list, DiamondTrackConstant.TRACK_TYPE_WATCH_LIST,
+            isPop: true, title: R.string().screenTitle.addedInWatchList);
+        break;
+      case DiamondTrackConstant.TRACK_TYPE_CART:
+        callApiFoCreateTrack(
+            context, list, DiamondTrackConstant.TRACK_TYPE_CART,
+            isPop: true, title: R.string().screenTitle.addedInCart);
+        break;
+      case DiamondTrackConstant.TRACK_TYPE_OFFER:
+        callApiFoCreateTrack(
+            context, list, DiamondTrackConstant.TRACK_TYPE_OFFER,
+            remark: remark,
+            companyName: companyName,
+            isPop: true,
+            title: R.string().screenTitle.addedInOffer);
+        break;
+      case DiamondTrackConstant.TRACK_TYPE_BID:
+        callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_BID,
+            isPop: true, title: R.string().screenTitle.addedInBid);
+        break;
+    }
   }
 
   actionBid(BuildContext context, List<DiamondModel> list) {
@@ -450,30 +519,26 @@ class DiamondConfig {
         title: R.string().screenTitle.declaimer,
         desc: R.string().commonString.packetNo +
             list.map((item) => item.vStnId).toList().join(', ') +
-           R.string().commonString.bidDesc,
+            R.string().commonString.bidDesc,
         negativeBtnTitle: R.string().commonString.quit,
-        positiveBtnTitle: R.string().commonString.agree, onClickCallback: (buttonType) {
+        positiveBtnTitle: R.string().commonString.agree,
+        onClickCallback: (buttonType) {
       if (buttonType == ButtonType.PositveButtonClick) {
-        showBidListDialog(context, selectedList, (manageClick) {
+        openDiamondActionAcreen(
+            context, DiamondTrackConstant.TRACK_TYPE_BID, selectedList);
+        /*showBidListDialog(context, selectedList, (manageClick) {
           if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
             callApiFoCreateTrack(
                 context, selectedList, DiamondTrackConstant.TRACK_TYPE_BID,
                 isPop: true);
           }
-        });
+        });*/
       }
     });
   }
 
   actionAppointment(BuildContext context, List<DiamondModel> list) {
     NavigationUtilities.pushRoute(OfferViewScreen.route);
-//    showAppointmentDialog(context, (manageClick) {
-//      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
-//        /*callApiFoCreateTrack(
-//            context, list, DiamondTrackConstant.TRACK_TYPE_APPOINTMENT,
-//            isPop: true);*/
-//      }
-//    });
   }
 
   actionHold(List<DiamondModel> list) {}
@@ -1038,13 +1103,17 @@ openSharePopUp(BuildContext context) {
 
 openAddReminder(BuildContext context, ActionClick actionClick) {
   List<StoneModel> reminderList = [
-    StoneModel(ReminderType.ReminderTypeToday, R.string().commonString.laterToday,
+    StoneModel(
+        ReminderType.ReminderTypeToday, R.string().commonString.laterToday,
         subtitle: "6:00 pm", image: sunrise),
-    StoneModel(ReminderType.ReminderTypeTomorrow, R.string().commonString.toMorrow,
+    StoneModel(
+        ReminderType.ReminderTypeTomorrow, R.string().commonString.toMorrow,
         subtitle: " Fri 8:00 am", image: sun),
-    StoneModel(ReminderType.ReminderTypeNextWeek, R.string().commonString.nextWeek,
+    StoneModel(
+        ReminderType.ReminderTypeNextWeek, R.string().commonString.nextWeek,
         subtitle: "Thu 8:00 am", image: calender_week),
-    StoneModel(ReminderType.ReminderTypeCustom, R.string().commonString.chooseAnother,
+    StoneModel(
+        ReminderType.ReminderTypeCustom, R.string().commonString.chooseAnother,
         subtitle: R.string().commonString.dateTime, image: calender),
   ];
   return showDialog(
