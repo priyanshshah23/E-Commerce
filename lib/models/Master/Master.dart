@@ -260,15 +260,15 @@ class Master {
       return Image.asset(
         "assets/shape/${strCode.toLowerCase()}.png",
         color: appTheme.colorPrimary,
-        width: getSize(28),
-        height: getSize(28),
+        width: getSize(32),
+        height: getSize(32),
       );
     }
     return Image.asset(
       "assets/shape/${strCode.toLowerCase()}.png",
       color: Colors.black,
-      width: getSize(28),
-      height: getSize(28),
+      width: getSize(32),
+      height: getSize(32),
     );
   }
 }

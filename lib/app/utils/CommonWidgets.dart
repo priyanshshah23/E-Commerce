@@ -229,6 +229,7 @@ Widget getAppBar(BuildContext context, String title,
     title: isTitleShow
         ? Text(
             title,
+            overflow: TextOverflow.ellipsis,
             style: appTheme.blackMedium20TitleColorblack,
             textAlign: textalign ?? TextAlign.center,
           )

@@ -106,7 +106,7 @@ flutter:
     - assets/PlaceHolder/
     - assets/Home/
     #- assets/chls/hochls.pem
-    - assets/chls.pem
+    # - assets/chls.pem
 
 
   fonts:

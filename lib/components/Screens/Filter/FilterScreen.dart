@@ -332,8 +332,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           Text(
             title,
             style: segmentedControlValue == index
-                ? appTheme.blackMedium16TitleColorblack
-                : appTheme.grey16HintTextStyle,
+                ? appTheme.blackSemiBold18TitleColorblack
+                : appTheme.greySemibold18TitleColor,
           ),
           Padding(
             padding: EdgeInsets.only(top: getSize(8)),
@@ -730,7 +730,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(8.0),
+            top: getSize(12.0),
             bottom: getSize(8)),
         child: SelectionWidget(model),
       );
@@ -739,7 +739,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(8.0),
+            top: getSize(12.0),
             bottom: getSize(8)),
         child: FromToWidget(model),
       );
@@ -748,7 +748,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(8.0),
+            top: getSize(12.0),
             bottom: getSize(8)),
         child: CertNoWidget(model),
       );
@@ -757,7 +757,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(8.0),
+            top: getSize(12),
             bottom: getSize(8)),
         child: KeyToSymbolWidget(model),
       );
@@ -766,7 +766,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(8.0),
+            top: getSize(12),
             bottom: getSize(8)),
         child: (model as ColorModel).showGroup
             ? ColorWidget(model)
@@ -777,7 +777,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(8.0),
+            top: getSize(12),
             bottom: getSize(8)),
         child: CaratRangeWidget(model),
       );
@@ -786,7 +786,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(8.0),
+            top: getSize(12.0),
             bottom: getSize(8)),
         child: ShapeWidget(model),
       );
