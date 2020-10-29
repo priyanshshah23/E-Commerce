@@ -412,7 +412,7 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
 
   getDiamondImageView() {
     return Material(
-      elevation: 12,
+      elevation: 10,
       shadowColor: appTheme.shadowColor,
       color: Colors.transparent,
       borderRadius: BorderRadius.circular(getSize(75)),
