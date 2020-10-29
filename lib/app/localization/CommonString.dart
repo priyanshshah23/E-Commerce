@@ -210,7 +210,32 @@ class CommonString {
   final String selectType;
 
 
+  //Add demand && Saved search
+  final String addDemand;
+  final String demandTitle;
+  final String pleaseEnterDemandTitle;
+  final String demandAddedSuccessfully;
+  final String selectAtleastOneFilter;
+  final String savedSearch;
+  final String searchSavedSearch;
+  final String viewDetails;
+  final String viewLessDetails;
+  final String myDemand;
+
+
   const CommonString({
+    //Add demand
+    this.addDemand = "Add demand",
+    this.demandTitle = "Demand Title",
+    this.pleaseEnterDemandTitle = "Please enter Demand Title",
+    this.demandAddedSuccessfully = "Demand Added Successfully",
+    this.selectAtleastOneFilter = "Please, select at least one filter",
+    this.savedSearch = "Saved Search",
+    this.searchSavedSearch = "Search Saved Search",
+    this.viewDetails = "View Details",
+    this.viewLessDetails = "View Less Details",
+    this.myDemand = "My Demand",
+
     this.date = "Date",
     this.all = "All",
     this.status = "Status",

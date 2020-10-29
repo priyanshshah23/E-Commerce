@@ -124,6 +124,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
+      case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
         dict["filters"] = {};
         dict["filters"]["diamondSearchId"] = this.filterId;
         break;

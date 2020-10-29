@@ -21,7 +21,7 @@ class DisplayTypes {
   static const String horizontal = "h";
 }
 
-enum DialogueListType { Country, State, City }
+enum DialogueListType { Country, State, City, SAVEDSEARCH }
 
 class VirtualTypes {
   static const int phoneCall = 1;
