@@ -606,9 +606,10 @@ class DiamondConfig {
           diamonds.newPricePerCarat = element.getFinalRate();
           int hour = int.parse(element.selectedOfferHour);
           var date = DateTime.now();
+          var dt = DateTime(
+              date.year, date.month, date.day, date.hour + hour, date.minute);
 
-          date.add(Duration(hours: hour));
-          diamonds.offerValidDate = date.toUtc().toIso8601String();
+          diamonds.offerValidDate = dt.toUtc().toIso8601String();
 
           break;
         case DiamondTrackConstant.TRACK_TYPE_BID:
