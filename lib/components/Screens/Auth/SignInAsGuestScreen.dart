@@ -442,7 +442,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
         if (text.trim().isEmpty) {
           isCompanyValid = false;
 
-          return "Please enter Company Name.";
+          return R.string().authStrings.enterCompanyName;
         } else {
           return null;
         }
