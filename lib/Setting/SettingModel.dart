@@ -104,7 +104,7 @@ class DrawerSetting {
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH,
       ));
-    if (app
+    /*if (app
         .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_mySavedSearch)
         .view)
@@ -114,7 +114,7 @@ class DrawerSetting {
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH,
         isShowDivider: true,
-      ));
+      ));*/
     drawerList.add(DrawerModel(
       image: termsAndCondition,
       title: R.string().screenTitle.termsAndCondition,

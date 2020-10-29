@@ -27,7 +27,7 @@ class NetworkCall<T extends BaseApiResp> {
 
         if (resp != null) {
           hideDialog(isProgress);
-          if (resp.code == CODE_OK)
+          if (resp.code == CODE_OK || resp.code == CODE_SUCCESS)
             return resp;
           else if (resp.code == CODE_UNAUTHORIZED) {
             if (app.resolve<PrefUtils>().isUserLogin()) {
