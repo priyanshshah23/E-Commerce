@@ -119,7 +119,11 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
                 _formKey.currentState.save();
                 if(_mobileController.text.isNotEmpty || _whatsAppMobileController.text.isNotEmpty){
                   if(await checkValidation()) {
-                    callPersonalInformationApi();
+                    if(isProfileImageUpload) {
+                      uploadDocument();
+                    } else {
+                      callPersonalInformationApi();
+                    }
                   }
                 }
                 //isProfileImageUpload ? uploadDocument() : callApi();
@@ -160,7 +164,6 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
                               isProfileImageUpload = true;
                               profileImage = img;
                             });
-                            uploadDocument();
                           });
                         },
                         child: Stack(
@@ -426,7 +429,7 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
         imgProfile = imagePath;
       });
     }
-//    callApi(imgProfile: imgProfile);
+    callPersonalInformationApi(imagePath: imgProfile);
   }
 
   uploadProfileImage(File imgFile, Function imagePath) async {

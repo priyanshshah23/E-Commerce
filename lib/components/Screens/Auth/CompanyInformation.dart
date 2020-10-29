@@ -73,7 +73,6 @@ class _CompanyInformationState extends State<CompanyInformation>
   var _focusWhatsAppMobile = FocusNode();
 
   bool isPasswordSame = true;
-
   List<CityList> cityList = List<CityList>();
   CityList selectedCityItem = CityList();
   List<CountryList> countryList = List<CountryList>();
@@ -81,6 +80,7 @@ class _CompanyInformationState extends State<CompanyInformation>
   List<StateList> stateList = List<StateList>();
   StateList selectedStateItem = StateList();
   List<SelectionPopupModel> businessTypeList = List<SelectionPopupModel>();
+  SelectionPopupModel selectedBusinessType;
 
   @override
   void initState() {
@@ -180,7 +180,7 @@ class _CompanyInformationState extends State<CompanyInformation>
                   popupList(businessTypeList, (value) {
                     _businessTypeController.text = value;
                   }),
-                  //getBusinessTypeDropDown(),
+//                  getBusinessTypeDropDown(),
                   SizedBox(
                     height: getSize(20),
                   ),
@@ -604,27 +604,51 @@ class _CompanyInformationState extends State<CompanyInformation>
 
   getBusinessTypeDropDown() {
     return AbsorbPointer(
-      child: CommonTextfield(
-          focusNode: _focusBusinessType,
-          enable: false,
-          textOption: TextFieldOption(
-              prefixWid: getCommonIconWidget(
-                  imageName: city, imageType: IconSizeType.small),
-              hintText: R.string().commonString.selectBusinessType,
-              maxLine: 1,
-              keyboardType: TextInputType.text,
-              type: TextFieldType.DropDown,
-              inputController: _businessTypeController,
-              isSecureTextField: false),
-          textCallback: (text) {
+      child: GestureDetector(
+//        onTap: () {
+//          showDialog(
+//              context: context,
+//              builder: (BuildContext context) {
+//                return Dialog(
+//                    shape: RoundedRectangleBorder(
+//                      borderRadius: BorderRadius.circular(getSize(25)),
+//                    ),
+//                    child: DialogueList(
+//                      type: DialogueListType.BusinessType,
+//                      selectedItem: selectedBusinessType,
+//                      duplicateItems: businessTypeList,
+//                      applyFilterCallBack: (
+//                          {CityList cityList,
+//                            CountryList countryList,
+//                            StateList stateList,
+//                            SavedSearchModel savedSearchModel}) {
+//                      _businessTypeController.text =
+//                      },
+//                    ));
+//              });
+//        },
+        child: CommonTextfield(
+            focusNode: _focusBusinessType,
+            enable: false,
+            textOption: TextFieldOption(
+                prefixWid: getCommonIconWidget(
+                    imageName: city, imageType: IconSizeType.small),
+                hintText: R.string().commonString.selectBusinessType,
+                maxLine: 1,
+                keyboardType: TextInputType.text,
+                type: TextFieldType.DropDown,
+                inputController: _businessTypeController,
+                isSecureTextField: false),
+            textCallback: (text) {
 //                  setState(() {
 //                    checkValidation();
 //                  });
-          },
-          inputAction: TextInputAction.next,
-          onNextPress: () {
-            FocusScope.of(context).unfocus();
-          }),
+            },
+            inputAction: TextInputAction.next,
+            onNextPress: () {
+              FocusScope.of(context).unfocus();
+            }),
+      ),
     );
   }
 
