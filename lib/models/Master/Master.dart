@@ -256,14 +256,14 @@ class Master {
 
   Widget getShapeImage(bool isSelected) {
     String strCode = webDisplay.split(" ").join("");
-    // if (isSelected) {
-    //   return Image.asset(
-    //     "assets/shape/${strCode.toLowerCase()}selected.png",
-    //     color: appTheme.colorPrimary,
-    //     width: getSize(28),
-    //     height: getSize(28),
-    //   );
-    // }
+    if (isSelected) {
+      return Image.asset(
+        "assets/shape/${strCode.toLowerCase()}.png",
+        color: appTheme.colorPrimary,
+        width: getSize(28),
+        height: getSize(28),
+      );
+    }
     return Image.asset(
       "assets/shape/${strCode.toLowerCase()}.png",
       color: Colors.black,
@@ -298,7 +298,9 @@ class MasterRespData {
         : null;
     masters =
         json['masters'] != null ? new Masters.fromJson(json['masters']) : null;
-    permission = json['permission'] != null ? new UserPermissions.fromJson(json['permission']) : null;
+    permission = json['permission'] != null
+        ? new UserPermissions.fromJson(json['permission'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -313,7 +315,7 @@ class MasterRespData {
     if (this.masters != null) {
       data['masters'] = this.masters.toJson();
     }
-    if(this.permission != null) {
+    if (this.permission != null) {
       data['permission'] = this.permission.toJson();
     }
     return data;

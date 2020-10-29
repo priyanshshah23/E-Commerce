@@ -60,18 +60,18 @@ class DiamondCalculation {
     avgRapCrt = arrValues[3];
     avgPriceCrt = arrValues[4];
 
-    totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt??0);
-    totalAmount = PriceUtilities.getPrice(avgAmount??0);
+    totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt ?? 0);
+    totalAmount = PriceUtilities.getPrice(avgAmount ?? 0);
     if (isAccountTerm) {
-      totalDisc = PriceUtilities.getPercent(arrFinalValues[2]??0);
-      totalAmount = PriceUtilities.getPrice(arrFinalValues[1]??0);
-      totalPriceCrt = PriceUtilities.getPrice(arrFinalValues[0]??0);
+      totalDisc = PriceUtilities.getPercent(arrFinalValues[2] ?? 0);
+      totalAmount = PriceUtilities.getPrice(arrFinalValues[1] ?? 0);
+      totalPriceCrt = PriceUtilities.getPrice(arrFinalValues[0] ?? 0);
     } else {
       avgDisc = (1 - (avgPriceCrt / avgRapCrt)) * (-100);
-      totalDisc = PriceUtilities.getPercent(avgDisc??0);
+      totalDisc = PriceUtilities.getPercent(avgDisc ?? 0);
       avgAmount = arrValues[1];
     }
-    totalCarat = PriceUtilities.getDoubleValue(carat??0);
+    totalCarat = PriceUtilities.getDoubleValue(carat ?? 0);
     pcs = filterList.length.toString();
   }
 }
@@ -540,7 +540,9 @@ class DiamondConfig {
           diamonds.newPricePerCarat = element.getFinalRate();
           int hour = int.parse(element.selectedOfferHour);
           var date = DateTime.now();
-          diamonds.offerValidDate = DateTime.now().toUtc().toIso8601String();
+
+          date.add(Duration(hours: hour));
+          diamonds.offerValidDate = date.toUtc().toIso8601String();
 
           break;
         case DiamondTrackConstant.TRACK_TYPE_BID:

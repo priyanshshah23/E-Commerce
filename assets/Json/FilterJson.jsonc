@@ -8,7 +8,7 @@
     "masterCode": "SHAPE",
     "verticalScroll": false,
     "orientation": "h",
-    "isShowAll": true,
+    "isShowAll": false,
     "isShowMore": true,
     "tab": "basic",
     "sequence": 1,
@@ -17,7 +17,7 @@
   {
     "viewType": "seperator",
     "sequence": 2,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -43,8 +43,8 @@
     "isActive": true,
     "showFromTo": true,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -53,7 +53,7 @@
   {
     "viewType": "seperator",
     "sequence": 4,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -136,6 +136,7 @@
     "viewType": "seperator",
     "sequence": 6,
     "height": 1,
+    "isActive": false,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
@@ -162,7 +163,7 @@
   {
     "viewType": "seperator",
     "sequence": 8,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
@@ -241,7 +242,7 @@
   {
     "viewType": "seperator",
     "sequence": 10,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -267,7 +268,7 @@
   {
     "viewType": "seperator",
     "sequence": 12,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
@@ -293,7 +294,7 @@
   {
     "viewType": "seperator",
     "sequence": 14,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -316,8 +317,8 @@
     "sequence": 15,
     "isActive": false,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -352,7 +353,7 @@
   {
     "viewType": "seperator",
     "sequence": 18,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -362,7 +363,7 @@
     "bottomPadding": 4
   },
   {
-    "title": "Make",
+    "title": "",
     "viewType": "selection",
     "allLableTitle": "All",
     "isSingleSelection": true,
@@ -513,7 +514,7 @@
   {
     "viewType": "seperator",
     "sequence": 23,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -567,7 +568,7 @@
   {
     "viewType": "seperator",
     "sequence": 27,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -593,7 +594,7 @@
   {
     "viewType": "seperator",
     "sequence": 27,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
@@ -614,8 +615,8 @@
     "maxValue": 100,
     "minValue": -10,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -624,7 +625,7 @@
   {
     "viewType": "seperator",
     "sequence": 29,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
@@ -645,8 +646,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -655,7 +656,7 @@
   {
     "viewType": "seperator",
     "sequence": 31,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
@@ -695,7 +696,7 @@
   {
     "viewType": "seperator",
     "sequence": 69,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -730,8 +731,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -740,7 +741,7 @@
   {
     "viewType": "seperator",
     "sequence": 33,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -761,8 +762,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -771,7 +772,7 @@
   {
     "viewType": "seperator",
     "sequence": 35,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -792,8 +793,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -802,7 +803,7 @@
   {
     "viewType": "seperator",
     "sequence": 37,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -823,8 +824,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -833,7 +834,7 @@
   {
     "viewType": "seperator",
     "sequence": 39,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -854,8 +855,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -864,7 +865,7 @@
   {
     "viewType": "seperator",
     "sequence": 41,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -885,8 +886,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -895,7 +896,7 @@
   {
     "viewType": "seperator",
     "sequence": 43,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -916,8 +917,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -926,7 +927,7 @@
   {
     "viewType": "seperator",
     "sequence": 45,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -947,8 +948,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -957,7 +958,7 @@
   {
     "viewType": "seperator",
     "sequence": 47,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -978,8 +979,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -988,7 +989,7 @@
   {
     "viewType": "seperator",
     "sequence": 49,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -1009,8 +1010,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1019,7 +1020,7 @@
   {
     "viewType": "seperator",
     "sequence": 51,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -1040,8 +1041,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1050,7 +1051,7 @@
   {
     "viewType": "seperator",
     "sequence": 53,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -1071,8 +1072,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1081,7 +1082,7 @@
   {
     "viewType": "seperator",
     "sequence": 55,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -1102,8 +1103,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1112,7 +1113,7 @@
   {
     "viewType": "seperator",
     "sequence": 57,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1138,7 +1139,7 @@
   {
     "viewType": "seperator",
     "sequence": 59,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1164,7 +1165,7 @@
   {
     "viewType": "seperator",
     "sequence": 61,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1190,7 +1191,7 @@
   {
     "viewType": "seperator",
     "sequence": 63,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1216,7 +1217,7 @@
   {
     "viewType": "seperator",
     "sequence": 65,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1242,7 +1243,7 @@
   {
     "viewType": "seperator",
     "sequence": 69,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1283,7 +1284,7 @@
   {
     "viewType": "seperator",
     "sequence": 69,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1324,7 +1325,7 @@
   {
     "viewType": "seperator",
     "sequence": 69,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1350,7 +1351,7 @@
   {
     "viewType": "seperator",
     "sequence": 69,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1376,7 +1377,7 @@
   {
     "viewType": "seperator",
     "sequence": 69,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1402,7 +1403,7 @@
   {
     "viewType": "seperator",
     "sequence": 69,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1428,7 +1429,7 @@
   {
     "viewType": "seperator",
     "sequence": 69,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1454,7 +1455,7 @@
   {
     "viewType": "seperator",
     "sequence": 71,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,

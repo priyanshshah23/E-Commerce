@@ -120,13 +120,13 @@ class _TagWidgetState extends State<TagWidget> {
                 textAlign: TextAlign.left,
               ),
         !isNullEmptyOrFalse(widget.model.megaTitle)
-            ? SizedBox(height: getSize(16))
+            ? SizedBox(height: getSize(20))
             : SizedBox(),
         isNullEmptyOrFalse(widget.model.title)
             ? SizedBox()
             : Text(
                 widget.model.title ?? "",
-                style: appTheme.blackNormal18TitleColorblack,
+                style: appTheme.blackMedium16TitleColorblack,
                 textAlign: TextAlign.left,
               ),
         isNullEmptyOrFalse(widget.model.title)
@@ -156,50 +156,52 @@ class _TagWidgetState extends State<TagWidget> {
             },
           ),
         ),
+        SizedBox(height: getSize(12))
       ],
     );
   }
 
   Widget getHorizontalOrientation() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+    return Column(
       children: [
-        isNullEmptyOrFalse(widget.model.title)
-            ? SizedBox()
-            : Container(
-                width: getSize(80),
-                child: Text(
-                  widget.model.title ?? "",
-                  style: appTheme.blackNormal14TitleColorblack,
-                  textAlign: TextAlign.left,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              width: getSize(80),
+              child: Text(
+                widget.model.title ?? "",
+                style: appTheme.blackNormal14TitleColorblack,
+                textAlign: TextAlign.left,
+              ),
+            ),
+            SizedBox(width: getSize(30)),
+            Expanded(
+              child: Container(
+                height: getSize(40),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: widget.model.masters.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      child: getSingleTag(index),
+                      onTap: () {
+                        setState(() {
+                          widget.model.masters[index].isSelected =
+                              !widget.model.masters[index].isSelected;
+
+                          getMultipleMasterSelections(index);
+                        });
+                      },
+                    );
+                  },
                 ),
               ),
-        isNullEmptyOrFalse(widget.model.title)
-            ? SizedBox()
-            : SizedBox(width: getSize(30)),
-        Expanded(
-          child: Container(
-            height: getSize(40),
-            child: ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: widget.model.masters.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  child: getSingleTag(index),
-                  onTap: () {
-                    setState(() {
-                      widget.model.masters[index].isSelected =
-                          !widget.model.masters[index].isSelected;
-
-                      getMultipleMasterSelections(index);
-                    });
-                  },
-                );
-              },
             ),
-          ),
+          ],
         ),
+        SizedBox(height: getSize(8))
       ],
     );
   }
@@ -224,10 +226,10 @@ class _TagWidgetState extends State<TagWidget> {
         ),
         child: Padding(
           padding: EdgeInsets.only(
-              top: getSize(8.0),
-              bottom: getSize(8.0),
-              right: getSize(16.0),
-              left: getSize(16.0)),
+              top: getSize(6.0),
+              bottom: getSize(6.0),
+              right: getSize(12.0),
+              left: getSize(12.0)),
           child: Center(
             child: Text(
               widget.model.masters[index].webDisplay,
@@ -247,7 +249,7 @@ class _TagWidgetState extends State<TagWidget> {
       children: [
         Expanded(
           child: Container(
-            height: getSize(100),
+            height: getSize(110),
             child: ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
@@ -274,6 +276,7 @@ class _TagWidgetState extends State<TagWidget> {
             ),
           ),
         ),
+        SizedBox(height: getSize(12))
       ],
     );
   }
@@ -324,6 +327,7 @@ class _TagWidgetState extends State<TagWidget> {
             },
           ),
         ),
+        SizedBox(height: getSize(8))
       ],
     );
   }

@@ -393,6 +393,16 @@ class SelectionModel extends FormBaseModel {
             }
           }
         });
+      } else {
+        Map<String, dynamic> m = Map<String, dynamic>();
+        m["masterCode"] = masterCode;
+        m["isSelected"] = masters[index].isSelected;
+        m["selectedMasterCode"] = masters[index].code;
+        m["masterSelection"] = masterSelection;
+        if (viewType == ViewTypes.groupWidget) {
+          m["isGroupSelected"] = (this as ColorModel).isGroupSelected;
+          RxBus.post(m, tag: eventMasterForSingleItemOfGroupSelection);
+        }
       }
     }
   }
