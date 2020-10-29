@@ -435,17 +435,15 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
       "",
       file: imgFile,
     ).then((result) {
-      print("DFB");
-      print(result.data);
-//      if (result.code == CODE_OK) {
-//        String imgPath =
-//        result.data.files != null && result.data.files.length > 0
-//            ? result.data.files.first.absolutePath
-//            : "";
-//        if (isStringEmpty(imgPath) == false) {
-//          imagePath(imgPath);
-//        }
-//      }
+      if (result.code == CODE_OK) {
+        String imgPath =
+        result.data.files != null && result.data.files.length > 0
+            ? result.data.files.first.absolutePath
+            : "";
+        if (isStringEmpty(imgPath) == false) {
+          imagePath(imgPath);
+        }
+      }
       return;
     });
   }

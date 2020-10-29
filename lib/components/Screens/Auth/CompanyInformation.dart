@@ -572,10 +572,10 @@ class _CompanyInformationState extends State<CompanyInformation>
                   });
             }
           } else {
-            showToast(R.string().commonString.stateFirst);
+            showToast(R.string().commonString.stateFirst, context: context);
           }
         } else {
-          showToast(R.string().commonString.countryFirst);
+          showToast(R.string().commonString.countryFirst, context: context);
         }
       },
       child: CommonTextfield(

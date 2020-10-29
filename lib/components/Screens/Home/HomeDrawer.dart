@@ -1,5 +1,6 @@
 import 'package:country_pickers/country_pickers.dart';
 import 'package:diamnow/Setting/SettingModel.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/Screens/Home/DrawerModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
@@ -25,6 +26,13 @@ class HomeDrawer extends StatelessWidget {
       onTap: callback,
       child: Column(
         children: [
+          if(model.isShowUpperDivider)
+            Container(
+              margin: EdgeInsets.symmetric(vertical: getSize(10)),
+              height: getSize(1),
+              width: MathUtilities.screenWidth(context),
+              color: appTheme.dividerColor.withOpacity(0.5),
+            ),
           Padding(
             padding: EdgeInsets.only(
               left: getSize(20),
@@ -92,7 +100,36 @@ class HomeDrawer extends StatelessWidget {
   List<Widget> getDrawerList(BuildContext context) {
     List<Widget> list = List<Widget>();
 
-    list.add(UserDrawerHeader());
+//    list.add(UserDrawerHeader());
+
+    list.add(Container(
+      color: appTheme.drawerTitleColor,
+      child: Row(
+        // mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(top: getSize(10), bottom: getSize(10),left: getSize(20), right: getSize(20),),
+            child: Image.asset(drawerLogo,
+                width: getSize(22),
+                height: getSize(22)),
+          ),
+          SizedBox(
+            width: getSize(12),
+          ),
+          Text(
+            R.string().commonString.diamNow,
+            style: appTheme.blackNormal14TitleColorblack.copyWith(
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    ));
+
+    list.add(SizedBox(height: getSize(10),));
+
     for (int i = 0; i < drawerItems.length; i++) {
       list.add(getDrawerItem(context, drawerItems[i], () {
         RxBus.post(DrawerEvent(drawerItems[i].type, true), tag: eventBusTag);

@@ -62,6 +62,7 @@ class BaseTheme {
   Color get statusOffer => fromHex("#FF4DB8");
   Color get statusMyHold => fromHex("#F1951E");
   Color get textGray => fromHex("#7B7E84");
+  Color get drawerTitleColor => fromHex("#EEF1FC");
   Color get lightColorPrimary => fromHex("#EEF1FC");
 
   Color get shadowColorWithoutOpacity => fromHex("#7D9EF6").withOpacity(0.1);
