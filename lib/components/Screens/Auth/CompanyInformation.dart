@@ -298,7 +298,7 @@ class _CompanyInformationState extends State<CompanyInformation>
       autoFocus: false,
       focusNode: _focusCompanyName,
       textOption: TextFieldOption(
-        hintText: R.string().authStrings.companyName + "*",
+        hintText: R.string().authStrings.companyName + R.string().authStrings.requiredField,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: user,

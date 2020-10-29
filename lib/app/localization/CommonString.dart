@@ -47,6 +47,7 @@ class CommonString {
   final String countryFirst;
   final String stateFirst;
   final String cityFirst;
+  final String language;
 
   //App Update Dialog
   final String notYetAvailable;
@@ -412,5 +413,6 @@ class CommonString {
     this.searchCountry = "Search Country",
     this.searchState = "Search state",
     this.notifications = "Notification",
+    this.language = "Language"
   });
 }

@@ -9,6 +9,7 @@ class AuthStrings {
   final String inLogin;
   final String welcome;
   final String enterCompanyName;
+  final String requiredField;
   final String saveCompanyDetails;
   final String setNewPassword;
 
@@ -144,6 +145,8 @@ class AuthStrings {
 
   final String passwordResetSuccessfully;
 
+  final String signUp;
+
   const AuthStrings({
     // Login
     this.setNewPassword = "Set your new password and sign in again.",
@@ -178,7 +181,7 @@ class AuthStrings {
     // Forgot Password
     this.emaillbl = "Email",
     this.searchInventory = "Search product",
-    this.emailAddress = "Email address*",
+    this.emailAddress = "Email Address*",
     this.offlineFilter =
         "Unable to find the desired solitaire? We can help you get the best deal from our offline inventory.",
     //Enter Mobile Number
@@ -276,5 +279,7 @@ class AuthStrings {
     this.backToSignIn = "Back to Sign In",
     this.passwordResetSuccessfully = "Password reset successfully.",
     this.emailAndUname = "Email/UserName",
+    this.signUp = "Sign Up",
+    this.requiredField = "*",
   });
 }
