@@ -28,6 +28,7 @@ class Config {
       List<dynamic> fieldList = jsonDecode(jsonForm);
       for (int i = 0; i < fieldList.length; i++) {
         dynamic element = fieldList[i];
+
         if (element is Map<String, dynamic>) {
           arrLocalData.add(Master.fromJson(element));
         }
@@ -45,7 +46,9 @@ class Config {
       for (int i = 0; i < fieldList.length; i++) {
         dynamic element = fieldList[i];
         if (element is Map<String, dynamic>) {
-          arrTabs.add(TabModel.fromJson(element));
+          if (element["isActive"] ?? true) {
+            arrTabs.add(TabModel.fromJson(element));
+          }
         }
       }
     }
@@ -85,15 +88,24 @@ class Config {
             } else if (viewType == ViewTypes.shapeWidget) {
               SelectionModel selectionModel = SelectionModel.fromJson(element);
               arrFilter.add(selectionModel);
+
               List<Master> arrMaster =
                   await Master.getSubMaster(selectionModel.masterCode);
               selectionModel.masters = arrMaster;
+
+              if (selectionModel.isShowAll == true) {
+                appendAllTitle(selectionModel);
+              }
             } else if (viewType == ViewTypes.selection) {
               SelectionModel selectionModel = SelectionModel.fromJson(element);
               arrFilter.add(selectionModel);
               List<Master> arrMaster =
                   await Master.getSubMaster(selectionModel.masterCode);
               selectionModel.masters = arrMaster;
+
+              if (selectionModel.isShowAll == true) {
+                appendAllTitle(selectionModel);
+              }
             } else if (viewType == ViewTypes.groupWidget) {
               ColorModel colorModel = ColorModel.fromJson(element);
               arrFilter.add(colorModel);
@@ -134,12 +146,20 @@ class Config {
               List<Master> arrMaster =
                   await Master.getSubMaster(keyToSymbol.masterCode);
               keyToSymbol.masters = arrMaster;
+
+              if (keyToSymbol.isShowAll == true) {
+                appendAllTitle(keyToSymbol);
+              }
             } else if (viewType == ViewTypes.caratRange) {
               SelectionModel selectionModel = SelectionModel.fromJson(element);
               arrFilter.add(selectionModel);
               List<Master> arrMaster = await Master.getSizeMaster();
 
               selectionModel.masters = arrMaster;
+
+              if (selectionModel.isShowAll == true) {
+                appendAllTitle(selectionModel);
+              }
             }
           }
         }
@@ -190,6 +210,21 @@ class Config {
     //   return model1.sequence.compareTo(model2.sequence);
     // });
     return tabModels;
+  }
+
+  appendAllTitle(SelectionModel model) {
+    Master allMaster = Master();
+    allMaster.sId = model.allLableTitle;
+    allMaster.webDisplay = model.allLableTitle;
+
+    List<Master> arrSelectedMaster =
+        model.masters.where((element) => element.isSelected).toList();
+    if (!isNullEmptyOrFalse(arrSelectedMaster)) {
+      arrSelectedMaster.length == model.masters.length
+          ? allMaster.isSelected = true
+          : allMaster.isSelected = false;
+    }
+    model.masters.insert(0, allMaster);
   }
 }
 
@@ -339,8 +374,7 @@ class SelectionModel extends FormBaseModel {
             m["selectedMasterCode"] = masters[index].code;
             m["masterSelection"] = masterSelection;
             if (viewType == ViewTypes.groupWidget) {
-              m["isGroupSelected"] =
-                  (this as ColorModel).isGroupSelected;
+              m["isGroupSelected"] = (this as ColorModel).isGroupSelected;
               RxBus.post(m, tag: eventMasterForSingleItemOfGroupSelection);
             }
           }
@@ -362,9 +396,18 @@ class SelectionModel extends FormBaseModel {
             }
           }
         });
+      } else {
+        Map<String, dynamic> m = Map<String, dynamic>();
+        m["masterCode"] = masterCode;
+        m["isSelected"] = masters[index].isSelected;
+        m["selectedMasterCode"] = masters[index].code;
+        m["masterSelection"] = masterSelection;
+        if (viewType == ViewTypes.groupWidget) {
+          m["isGroupSelected"] = (this as ColorModel).isGroupSelected;
+          RxBus.post(m, tag: eventMasterForSingleItemOfGroupSelection);
+        }
       }
     }
-
   }
 }
 
@@ -394,12 +437,16 @@ class SeperatorModel extends SelectionModel {
   Color color;
   num leftPadding;
   num rightPadding;
+  num topPadding;
+  num bottomPadding;
 
   SeperatorModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     height = json["height"] ?? 1;
     color = fromHex(json['color'] ?? "#E3E3E3");
     leftPadding = json['leftPadding'] ?? 0;
-    rightPadding = json["rightPadding"] ?? 0;
+    rightPadding = json['rightPadding'] ?? 0;
+    topPadding = json["topPadding"] ?? 0;
+    bottomPadding = json["bottomPadding"] ?? 0;
   }
 }
 

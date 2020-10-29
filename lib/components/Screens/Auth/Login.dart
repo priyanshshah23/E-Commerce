@@ -14,6 +14,7 @@ import 'package:diamnow/components/Screens/Auth/Signup.dart';
 import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
 import 'package:diamnow/components/Screens/Notification/Notifications.dart';
@@ -50,6 +51,11 @@ class _LoginScreenState extends StatefulScreenWidgetState {
   bool _isPasswordValid = false;
   bool isButtonEnabled = true;
   bool _autoValidate = false;
+  List<String> language = <String>[
+    "English", "French", "Chinese", "Japanese", "Italian", "Spanish", "Germany", "Hebrew", "Arabic",
+  ];
+
+  String selectedLanguage = R.string().commonString.language;
 
   @override
   void initState() {
@@ -57,7 +63,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
     super.initState();
     if (kDebugMode) {
       _userNameController.text = "mobileUser";
-      _passwordController.text = "Test@123";
+      _passwordController.text = "Test@12345";
     }
   }
 
@@ -91,14 +97,84 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text(
-                                  R.string().authStrings.welcome,
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: appTheme.textBlackColor,
-                                    fontSize: getFontSize(24),
-                                  ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      R.string().authStrings.welcome,
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: appTheme.textBlackColor,
+                                        fontSize: getFontSize(24),
+                                      ),
+                                    ),
+                                    Expanded(child: SizedBox()),
+                                    PopupMenuButton<String>(
+                                      onSelected: (newValue) {
+                                        // add this property
+                                        selectedLanguage = newValue;
+                                        setState(() {});
+                                      },
+                                      itemBuilder: (context) => [
+                                        for (var item in language)
+                                          PopupMenuItem(
+                                            value: item,
+                                            height: getSize(20),
+                                            child: Container(
+                                              width: getSize(85),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: <Widget>[
+                                                  Text(
+                                                    item,
+                                                    style: appTheme.black14TextStyle,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                      ],
+                                      child: Container(
+                                        width: getSize(170),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: getSize(10),
+                                            vertical: getSize(5)),
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: appTheme.textGreyColor)),
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                                height: getSize(10),
+                                                width: getSize(10),
+                                                child: Image.asset(languageIcon)),
+                                            SizedBox(
+                                              width: getSize(10),
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                selectedLanguage,
+                                                style: selectedLanguage ==
+                                                        R
+                                                            .string()
+                                                            .commonString
+                                                            .language
+                                                    ? appTheme.grey14HintTextStyle
+                                                    : appTheme.black14TextStyle,
+                                              ),
+                                            ),
+                                            Container(
+                                                height: getSize(10),
+                                                width: getSize(10),
+                                                child: Image.asset(dropDown)),
+                                          ],
+                                        ),
+                                      ),
+                                      offset: Offset(25, 110),
+                                    )
+                                  ],
                                 ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -201,7 +277,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                             .withOpacity(0.1),
                                         borderRadius: getSize(5),
                                         fitWidth: true,
-                                        text: "Sign In as Guest",
+                                        text: R.string().authStrings.signInAsGuest,
                                         //isButtonEnabled: enableDisableSigninButton(),
                                       ),
                                     ),
@@ -229,7 +305,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                       children: <Widget>[
                         Text(R.string().authStrings.haveRegisterCode,
                             style: appTheme.grey16HintTextStyle),
-                        Text(" Sign Up", style: appTheme.darkBlue16TextStyle),
+                        Text(" " + R.string().authStrings.signUp, style: appTheme.darkBlue16TextStyle),
                       ],
                     ),
                   ),
@@ -303,7 +379,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
       textOption: TextFieldOption(
           prefixWid: getCommonIconWidget(
               imageName: password, imageType: IconSizeType.small),
-          hintText: R.string().authStrings.password + "*",
+          hintText: R.string().authStrings.password + R.string().authStrings.requiredField,
           maxLine: 1,
           formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
           keyboardType: TextInputType.text,
@@ -326,7 +402,8 @@ class _LoginScreenState extends StatefulScreenWidgetState {
         if (text.isEmpty) {
           _isPasswordValid = false;
           return R.string().errorString.enterPassword;
-        } /* else if(!validateStructure(text)) {
+        }
+        /* else if(!validateStructure(text)) {
           return R.string().errorString.wrongPassword;
         } */
         else {
@@ -371,9 +448,9 @@ class _LoginScreenState extends StatefulScreenWidgetState {
         await app.resolve<PrefUtils>().saveUserToken(
               loginResp.data.token.jwt,
             );
-        await  app.resolve<PrefUtils>().saveUserPermission(
-          loginResp.data.userPermissions,
-        );
+        await app.resolve<PrefUtils>().saveUserPermission(
+              loginResp.data.userPermissions,
+            );
       }
 //      NavigationUtilities.pushRoute(Notifications.route);
       callVersionUpdateApi(id: loginResp.data.user.id);
@@ -381,7 +458,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
               context,
-              title: "",
+              title: R.string().commonString.error,
               desc: onError.message,
               positiveBtnTitle: R.string().commonString.ok,
             );
@@ -393,16 +470,16 @@ class _LoginScreenState extends StatefulScreenWidgetState {
     NetworkCall<VersionUpdateResp>()
         .makeCall(
             () => app
-            .resolve<ServiceModule>()
-            .networkService()
-            .getVersionUpdate(),
-        context,
-        isProgress: true)
+                .resolve<ServiceModule>()
+                .networkService()
+                .getVersionUpdate(),
+            context,
+            isProgress: true)
         .then(
-          (resp) {
+      (resp) {
         if (resp.data != null) {
           PackageInfo.fromPlatform().then(
-                (PackageInfo packageInfo) {
+            (PackageInfo packageInfo) {
               print(packageInfo.buildNumber);
               String appName = packageInfo.appName;
               String packageName = packageInfo.packageName;
@@ -410,7 +487,6 @@ class _LoginScreenState extends StatefulScreenWidgetState {
               String buildNumber = packageInfo.buildNumber;
 
               if (Platform.isIOS) {
-                print("iOS");
                 if (resp.data.ios != null) {
                   num respVersion = resp.data.ios.number;
                   if (num.parse(version) < respVersion) {
@@ -428,8 +504,8 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                       );
                     }
                   } else {
-                    SyncManager.instance
-                        .callMasterSync(NavigationUtilities.key.currentContext, () async {
+                    SyncManager.instance.callMasterSync(
+                        NavigationUtilities.key.currentContext, () async {
                       //success
                       AppNavigation().movetoHome(isPopAndSwitch: true);
                     }, () {},
@@ -438,8 +514,8 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                         id: id).then((value) {});
                   }
                 } else {
-                  SyncManager.instance
-                      .callMasterSync(NavigationUtilities.key.currentContext, () async {
+                  SyncManager.instance.callMasterSync(
+                      NavigationUtilities.key.currentContext, () async {
                     //success
                     AppNavigation().movetoHome(isPopAndSwitch: true);
                   }, () {},
@@ -448,7 +524,6 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                       id: id).then((value) {});
                 }
               } else {
-                print("Android");
                 if (resp.data.android != null) {
                   num respVersion = resp.data.android.number;
                   if (num.parse(buildNumber) < respVersion) {
@@ -459,8 +534,8 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                       );
                     }
                   } else {
-                    SyncManager.instance
-                        .callMasterSync(NavigationUtilities.key.currentContext, () async {
+                    SyncManager.instance.callMasterSync(
+                        NavigationUtilities.key.currentContext, () async {
                       //success
                       AppNavigation().movetoHome(isPopAndSwitch: true);
                     }, () {},
@@ -469,8 +544,8 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                         id: id).then((value) {});
                   }
                 } else {
-                  SyncManager.instance
-                      .callMasterSync(NavigationUtilities.key.currentContext, () async {
+                  SyncManager.instance.callMasterSync(
+                      NavigationUtilities.key.currentContext, () async {
                     //success
                     AppNavigation().movetoHome(isPopAndSwitch: true);
                   }, () {},
@@ -484,16 +559,14 @@ class _LoginScreenState extends StatefulScreenWidgetState {
         }
       },
     ).catchError(
-          (onError) => {
-          app.resolve<CustomDialogs>().confirmDialog(
-          context,
-          title: R.string().errorString.versionError,
-          desc: onError.message,
-          positiveBtnTitle: R.string().commonString.btnTryAgain,
+      (onError) => {
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            title: R.string().errorString.versionError,
+            desc: onError.message,
+            positiveBtnTitle: R.string().commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
-              callVersionUpdateApi(id: id);
-            }
-          ),
+          callVersionUpdateApi(id: id);
+        }),
       },
     );
   }

@@ -93,6 +93,7 @@ class PermissionType {
 
 class ArgumentConstant {
   static const ModuleType = "moduleType";
+  static const ActionType = "actionType";
   static const IsFromDrawer = "isFromDrawer";
   static const DiamondDetail = "diamondModel";
   static const DiamondList = "diamondList";

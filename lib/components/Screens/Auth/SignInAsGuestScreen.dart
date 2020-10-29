@@ -1,17 +1,27 @@
+import 'dart:collection';
+import 'dart:io';
+
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_pickers.dart';
+import 'package:diamnow/app/AppConfiguration/AppNavigation.dart';
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/components/Screens/Auth/Login.dart';
+import 'package:diamnow/components/Screens/Auth/Signup.dart';
+import 'package:diamnow/components/Screens/Version/VersionUpdate.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/components/widgets/shared/CountryPickerWidget.dart';
 import 'package:diamnow/components/widgets/shared/app_background.dart';
 import 'package:diamnow/models/Auth/SignInAsGuestModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
+import 'package:diamnow/models/Version/VersionUpdateResp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:package_info/package_info.dart';
 
 class GuestSignInScreen extends StatefulScreenWidget {
   static const route = "Guest SignIn Screen";
@@ -82,19 +92,19 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
                         child: getFirstNameTextField(),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: getSize(10)),
+                        padding: EdgeInsets.only(top: getSize(15)),
                         child: getLastNameTextField(),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: getSize(10)),
+                        padding: EdgeInsets.only(top: getSize(15)),
                         child: getEmailTextField(),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: getSize(10)),
+                        padding: EdgeInsets.only(top: getSize(15)),
                         child: getMobileTextField(),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: getSize(10)),
+                        padding: EdgeInsets.only(top: getSize(15)),
                         child: getCompanyTextField(),
                       ),
                       Padding(
@@ -109,38 +119,83 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
                         ),
                         child: getOrderCheckBox(),
                       ),
+                      Container(
+                        margin: EdgeInsets.only(
+                            top: getSize(10),
+                            bottom: getSize(16),
+                        ),
+                        decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
+                        child: AppButton.flat(
+                          onTap: () {
+                            if (termCondition == false) {
+                              showTermValidation = true;
+                            }
+                            FocusScope.of(context).unfocus();
+                            if (_formKey.currentState.validate()) {
+                              if(_mobileController.text.isNotEmpty && termCondition){
+                                checkValidation();
+                              }
+                            } else {
+                              setState(() {
+                                _autoValidate = true;
+                              });
+
+                            }
+                          },
+                          fitWidth: true,
+                          borderRadius: getSize(5),
+                          text: R.string().authStrings.signInAsGuest,
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                        EdgeInsets.only(top: getSize(10)),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            R.string().commonString.lblOr,
+                            style: appTheme.grey16HintTextStyle,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                            top: getSize(10), left: getSize(0)),
+                        child: AppButton.flat(
+                          onTap: () {
+                            NavigationUtilities.pushRoute(
+                                LoginScreen.route);
+                          },
+                          textColor: appTheme.colorPrimary,
+                          backgroundColor: appTheme.colorPrimary
+                              .withOpacity(0.1),
+                          borderRadius: getSize(5),
+                          fitWidth: true,
+                          text: R.string().authStrings.signInCap,
+                          //isButtonEnabled: enableDisableSigninButton(),
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
             ),
             bottomNavigationBar: Container(
-              margin: EdgeInsets.only(
-                  top: getSize(10),
-                  bottom: getSize(16),
-                  left: getSize(20),
-                  right: getSize(20)),
-              decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
-              child: AppButton.flat(
+//              alignment: Alignment.bottomCenter,
+              margin: EdgeInsets.all(getSize(15)),
+              child: InkWell(
                 onTap: () {
-                  if (termCondition == false) {
-                    showTermValidation = true;
-                  }
-                  FocusScope.of(context).unfocus();
-                  if (_formKey.currentState.validate()) {
-                    if(_mobileController.text.isNotEmpty){
-                      checkValidation();
-                    }
-                  } else {
-                    setState(() {
-                      _autoValidate = true;
-                    });
-
-                  }
+                  NavigationUtilities.pushRoute(SignupScreen.route);
                 },
-                fitWidth: true,
-                borderRadius: getSize(5),
-                text: R.string().authStrings.signInAsGuest,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(R.string().authStrings.haveRegisterCode,
+                        style: appTheme.grey16HintTextStyle),
+                    Text(" " + R.string().authStrings.signUp, style: appTheme.darkBlue16TextStyle),
+                  ],
+                ),
               ),
             ),
           ),
@@ -262,7 +317,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
     return CommonTextfield(
       focusNode: _focusEmail,
       textOption: TextFieldOption(
-        hintText: R.string().authStrings.emaillbl,
+        hintText: R.string().authStrings.emailAddress,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: email,
@@ -301,7 +356,6 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
         }
       },
       validation: (text) {
-        print('test ${text.isEmpty}');
         if (text.trim().isEmpty) {
           return R.string().errorString.enterEmail;
         } else if (!validateEmail(text.trim())) {
@@ -324,7 +378,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
         //enable: enable,
         focusNode: _focusMobile,
         textOption: TextFieldOption(
-          hintText: R.string().authStrings.mobileNumber + "*",
+          hintText: R.string().authStrings.mobileNumber + R.string().authStrings.requiredField,
           prefixWid: Padding(
             padding: EdgeInsets.only(left: getSize(0)),
             child: Row(
@@ -408,7 +462,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
     return CommonTextfield(
       focusNode: _focusAddress,
       textOption: TextFieldOption(
-        hintText: "Company Name*",
+        hintText: R.string().authStrings.companyName + R.string().authStrings.requiredField,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: company,
@@ -441,8 +495,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
       validation: (text) {
         if (text.trim().isEmpty) {
           isCompanyValid = false;
-
-          return "Please enter Company Name.";
+          return R.string().authStrings.enterCompanyName;
         } else {
           return null;
         }
@@ -463,7 +516,11 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
               onTap: () {
                 setState(() {
                   termCondition = !termCondition;
-                  showTermValidation = false;
+                  if(termCondition) {
+                    showTermValidation = false;
+                  } else {
+                    showTermValidation = true;
+                  }
                 });
               },
               child: Image.asset(
@@ -476,7 +533,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
               width: getSize(10),
             ),
             Text(
-              "Terms and Condition*",
+              R.string().authStrings.termsAndCondition + R.string().authStrings.requiredField,
               style: appTheme.black14TextStyle,
             )
           ],
@@ -486,7 +543,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
           child: Padding(
             padding: EdgeInsets.only(top: getSize(10)),
             child: Text(
-              "You must agree to terms and condition to Sign In as Guest User",
+              R.string().authStrings.mustAgreeTermsAndCondition,
               style: appTheme.error16TextStyle,
             ),
           ),
@@ -514,7 +571,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
           width: getSize(10),
         ),
         Text(
-          "Promotional offers, newsletters and stock updates",
+          R.string().authStrings.promotionText,
           style: appTheme.black14TextStyle,
         )
       ],
@@ -535,33 +592,132 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
         context,
         isProgress: true)
         .then((loginResp) async {
-          print(loginResp.message);
-      // save Logged In user
-//      if (loginResp.data != null) {
-//        app.resolve<PrefUtils>().saveUser(loginResp.data.user);
-//        await app.resolve<PrefUtils>().saveUserToken(
-//          loginResp.data.token.jwt,
-//        );
-//      }
-//      SyncManager.instance
-//          .callMasterSync(NavigationUtilities.key.currentContext, () async {
-//        //success
-//        AppNavigation().movetoHome(isPopAndSwitch: true);
-//      }, () {},
-//          isNetworkError: false,
-//          isProgress: true,
-//          id: loginResp.data.user.id).then((value) {});
-//      callVersionUpdateApi(id: loginResp.data.user.id);
+      if (loginResp.data != null) {
+        app.resolve<PrefUtils>().saveUser(loginResp.data.user);
+        await app.resolve<PrefUtils>().saveUserToken(
+          loginResp.data.token.jwt,
+        );
+        await app.resolve<PrefUtils>().saveUserPermission(
+          loginResp.data.userPermissions,
+        );
+      }
+      callVersionUpdateApi(id: loginResp.data.user.id);
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
           context,
-          title: "",
+          title: R.string().commonString.error,
           desc: onError.message,
           positiveBtnTitle: R.string().commonString.ok,
         );
       }
     });
   }
+  void callVersionUpdateApi({String id}) {
+    NetworkCall<VersionUpdateResp>()
+        .makeCall(
+            () => app
+            .resolve<ServiceModule>()
+            .networkService()
+            .getVersionUpdate(),
+        context,
+        isProgress: true)
+        .then(
+          (resp) {
+        if (resp.data != null) {
+          PackageInfo.fromPlatform().then(
+                (PackageInfo packageInfo) {
+              print(packageInfo.buildNumber);
+              String appName = packageInfo.appName;
+              String packageName = packageInfo.packageName;
+              String version = packageInfo.version;
+              String buildNumber = packageInfo.buildNumber;
+
+              if (Platform.isIOS) {
+                if (resp.data.ios != null) {
+                  num respVersion = resp.data.ios.number;
+                  if (num.parse(version) < respVersion) {
+                    bool hardUpdate = resp.data.ios.isHardUpdate;
+                    Map<String, dynamic> dict = new HashMap();
+                    dict["isHardUpdate"] = hardUpdate;
+                    dict["oncomplete"] = () {
+                      Navigator.pop(context);
+                    };
+                    print(hardUpdate);
+                    if (hardUpdate == true) {
+                      NavigationUtilities.pushReplacementNamed(
+                        VersionUpdate.route,
+                        args: dict,
+                      );
+                    }
+                  } else {
+                    SyncManager.instance.callMasterSync(
+                        NavigationUtilities.key.currentContext, () async {
+                      //success
+                      AppNavigation().movetoHome(isPopAndSwitch: true);
+                    }, () {},
+                        isNetworkError: false,
+                        isProgress: true,
+                        id: id).then((value) {});
+                  }
+                } else {
+                  SyncManager.instance.callMasterSync(
+                      NavigationUtilities.key.currentContext, () async {
+                    //success
+                    AppNavigation().movetoHome(isPopAndSwitch: true);
+                  }, () {},
+                      isNetworkError: false,
+                      isProgress: true,
+                      id: id).then((value) {});
+                }
+              } else {
+                if (resp.data.android != null) {
+                  num respVersion = resp.data.android.number;
+                  if (num.parse(buildNumber) < respVersion) {
+                    bool hardUpdate = resp.data.android.isHardUpdate;
+                    if (hardUpdate == true) {
+                      NavigationUtilities.pushReplacementNamed(
+                        VersionUpdate.route,
+                      );
+                    }
+                  } else {
+                    SyncManager.instance.callMasterSync(
+                        NavigationUtilities.key.currentContext, () async {
+                      //success
+                      AppNavigation().movetoHome(isPopAndSwitch: true);
+                    }, () {},
+                        isNetworkError: false,
+                        isProgress: true,
+                        id: id).then((value) {});
+                  }
+                } else {
+                  SyncManager.instance.callMasterSync(
+                      NavigationUtilities.key.currentContext, () async {
+                    //success
+                    AppNavigation().movetoHome(isPopAndSwitch: true);
+                  }, () {},
+                      isNetworkError: false,
+                      isProgress: true,
+                      id: id).then((value) {});
+                }
+              }
+            },
+          );
+        }
+      },
+    ).catchError(
+          (onError) => {
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            title: R.string().errorString.versionError,
+            desc: onError.message,
+            positiveBtnTitle: R.string().commonString.btnTryAgain,
+            onClickCallback: (PositveButtonClick) {
+              callVersionUpdateApi(id: id);
+            }),
+      },
+    );
+  }
+
+
 
 }

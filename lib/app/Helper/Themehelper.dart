@@ -95,10 +95,31 @@ class BaseTheme {
         color: textColor);
   }
 
+  TextStyle get primaryNormal12TitleColor{
+    return TextStyle(
+        fontSize: getFontSize(12),
+        fontWeight: FontWeight.normal,
+        color: colorPrimary);
+  }
+
+  TextStyle get blackNormal16TitleColorblack {
+    return TextStyle(
+        fontSize: getFontSize(16),
+        fontWeight: FontWeight.normal,
+        color: textColor);
+  }
+
   TextStyle get blackNormal18TitleColorblack {
     return TextStyle(
         fontSize: getFontSize(18),
         fontWeight: FontWeight.normal,
+        color: textColor);
+  }
+
+  TextStyle get blackMedium16TitleColorblack {
+    return TextStyle(
+        fontSize: getFontSize(16),
+        fontWeight: FontWeight.w400,
         color: textColor);
   }
 
@@ -203,6 +224,14 @@ class BaseTheme {
     );
   }
 
+  TextStyle get greySemibold18TitleColor {
+    return TextStyle(
+      fontSize: getFontSize(18),
+      color: textGreyColor,
+      fontWeight: FontWeight.w500,
+    );
+  }
+
   TextStyle get darkBlue16TextStyle {
     return TextStyle(
         fontSize: getFontSize(16),
@@ -251,7 +280,6 @@ class BaseTheme {
         color: colorPrimary,
         fontWeight: FontWeight.w600);
   }
-
 
   TextStyle get green10TextStyle {
     return TextStyle(

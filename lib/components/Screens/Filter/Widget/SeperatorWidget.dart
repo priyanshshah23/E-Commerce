@@ -15,15 +15,17 @@ class _SeperatorWidget extends State<SeperatorWidget> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-          left: double.parse(widget.seperatorModel.leftPadding.toString()),
-          right: double.parse(widget.seperatorModel.rightPadding.toString()),
-          top: getSize(12),
-          bottom: getSize(12)),
+          left: getSize(
+              double.parse(widget.seperatorModel.leftPadding.toString())),
+          right: getSize(
+              double.parse(widget.seperatorModel.rightPadding.toString())),
+          top: getSize(
+              double.parse(widget.seperatorModel.topPadding.toString())),
+          bottom: getSize(
+              double.parse(widget.seperatorModel.bottomPadding.toString()))),
       child: Container(
         color: widget.seperatorModel.color,
-        height: getSize(
-          double.parse(widget.seperatorModel.height.toString()),
-        ),
+        height: getSize(double.parse(widget.seperatorModel.height.toString())),
       ),
     );
   }

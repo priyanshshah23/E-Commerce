@@ -5,7 +5,7 @@ const apiV1 = "api/v1/";
 const DEVICE_TYPE_ANDROID = 1; //Android
 const DEVICE_TYPE_IOS = 2; //IOS
 const DEFAULT_PAGE = 1;
-const DEFAULT_LIMIT = 10;
+const DEFAULT_LIMIT = 100;
 const SUCCESS = 1;
 const FAIL = 2;
 
@@ -15,6 +15,7 @@ const APPNAME = "Diamnow";
 const STRIPE_KEY = "pk_test_ZCG3mwYMaOFEFAdpcQtkNIZ300fxNZXXOj";
 
 const CODE_OK = "OK";
+const CODE_SUCCESS = "SUCCESS";
 const E_FORBIDDEN = "E_FORBIDDEN";
 
 const MISMATCHED_TIME_ZONE = "MISMATCHED_TIME_ZONE";

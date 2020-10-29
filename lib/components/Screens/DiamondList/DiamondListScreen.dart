@@ -202,7 +202,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
         case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
         case DiamondModuleConstant.MODULE_TYPE_MY_BID:
-        // case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
+          // case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
           List<DiamondModel> list = [];
           DiamondModel diamondModel;
           TrackDiamonds trackDiamonds;
@@ -261,7 +261,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       //callBlockApi(isProgress: true);
       page = page + 1;
       diamondList.state.setApiCalling(false);
-
     }).catchError((onError) {
       if (page == DEFAULT_PAGE) {
         arraDiamond.clear();
@@ -289,7 +288,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         ? GridView.count(
             shrinkWrap: true,
             crossAxisCount: 2,
-            childAspectRatio: 1.009,
+            childAspectRatio: 0.8,
             mainAxisSpacing: 10,
             crossAxisSpacing: 8,
             padding: EdgeInsets.only(
@@ -301,6 +300,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               var item = arraDiamond[index];
               return DiamondGridItemWidget(
                   item: item,
+                  list: getRightAction((manageClick) {
+                    manageRowClick(index, manageClick.type);
+                  }),
                   actionClick: (manageClick) {
                     manageRowClick(index, manageClick.type);
                   });
@@ -386,7 +388,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               }
             : null,
         child: Padding(
-          padding: EdgeInsets.all(getSize(8.0)),
+          padding: EdgeInsets.only(right: getSize(8.0), left: getSize(8.0)),
           child: Image.asset(
             element.isSelected
                 ? (element.selectedImage != null

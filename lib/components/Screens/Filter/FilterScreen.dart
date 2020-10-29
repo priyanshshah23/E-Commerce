@@ -293,10 +293,20 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             body: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                isNullEmptyOrFalse(arrTab)
-                    ? SizedBox()
-                    : SizedBox(height: getSize(16)),
-                isNullEmptyOrFalse(arrTab) ? SizedBox() : _segmentedControl(),
+                Padding(
+                  padding: EdgeInsets.only(top: getSize(16)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      for (int i = 0; i < arrTab.length; i++)
+                        setTitleOfSegment(arrTab[i].title, i)
+                    ],
+                  ),
+                ),
+                // isNullEmptyOrFalse(arrTab)
+                //     ? SizedBox()
+                //     : SizedBox(height: getSize(16)),
+                // isNullEmptyOrFalse(arrTab) ? SizedBox() : _segmentedControl(),
                 Expanded(
                   child: Container(
                     margin: EdgeInsets.only(top: getSize(16)),
@@ -313,7 +323,45 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     );
   }
 
-  callApiForAddDemand(String selectedDate, String diamondTitle) {
+  setTitleOfSegment(String title, int index) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          segmentedControlValue = index;
+          controller.animateToPage(segmentedControlValue,
+              duration: Duration(milliseconds: 500), curve: Curves.easeIn);
+        });
+      },
+      child: Column(
+        children: [
+          Text(
+            title,
+            style: segmentedControlValue == index
+                ? appTheme.blackSemiBold18TitleColorblack
+                : appTheme.greySemibold18TitleColor,
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: getSize(8)),
+            child: Container(
+                height: getSize(3),
+                width: getSize(50),
+                color: segmentedControlValue == index
+                    ? appTheme.colorPrimary
+                    : Colors.transparent),
+          ),
+        ],
+      ),
+    );
+  }
+
+  //my demand popUP
+  String _selectedDate;
+  String diamondTitle;
+
+  
+
+    callApiForAddDemand(String selectedDate, String diamondTitle) {
+
     Map<String, dynamic> dict = {};
     dict["filter"] = FilterRequest().createRequest(arrList);
     dict["name"] = diamondTitle;
@@ -635,7 +683,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(8.0),
+            top: getSize(12.0),
             bottom: getSize(8)),
         child: SelectionWidget(model),
       );
@@ -644,7 +692,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(8.0),
+            top: getSize(12.0),
             bottom: getSize(8)),
         child: FromToWidget(model),
       );
@@ -653,7 +701,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(8.0),
+            top: getSize(12.0),
             bottom: getSize(8)),
         child: CertNoWidget(model),
       );
@@ -662,7 +710,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(8.0),
+            top: getSize(12),
             bottom: getSize(8)),
         child: KeyToSymbolWidget(model),
       );
@@ -671,7 +719,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(8.0),
+            top: getSize(12),
             bottom: getSize(8)),
         child: (model as ColorModel).showGroup
             ? ColorWidget(model)
@@ -682,7 +730,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(8.0),
+            top: getSize(12),
             bottom: getSize(8)),
         child: CaratRangeWidget(model),
       );
@@ -691,7 +739,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(8.0),
+            top: getSize(12.0),
             bottom: getSize(8)),
         child: ShapeWidget(model),
       );

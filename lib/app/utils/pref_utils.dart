@@ -184,7 +184,8 @@ class PrefUtils {
         }
       });
     }
-    if (data == null) {
+    //if (data == null) {
+    if (true) {
       data = UserPermissionsData(module: module);
       data.view = true;
       data.insert = true;

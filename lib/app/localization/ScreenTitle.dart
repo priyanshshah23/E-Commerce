@@ -180,8 +180,22 @@ class ScreenTitle {
   final String selectCustomDate;
   final String availableSlot;
   final String reqOfficeView;
+  final String declaimer;
+
+  final String shareStone;
+  final String addRemider;
+  final String addedInWatchList;
+  final String addedInCart;
+  final String addedInOffer;
+  final String addedInBid;
+  final String placeAnOffer;
 
   const ScreenTitle({
+    this.placeAnOffer = "Place an Offer",
+    this.addedInWatchList = "Added in Watchlist",
+    this.addedInOffer = "Added in Offer",
+    this.addedInCart = "Added in Cart",
+    this.addedInBid = "Added in Bid",
     this.myEnquiry = "My Enquiry",
     this.delete = "Delete",
     this.addDemand = "Add Demand",
@@ -359,5 +373,9 @@ class ScreenTitle {
     this.reminder = "Reminder",
     this.manageAddress = "Manage Addresses",
     this.myAccount = "My Account",
+    this.declaimer = "Disclaimer",
+
+    this.shareStone = "Share Stone",
+    this.addRemider = "Add reminder",
   });
 }

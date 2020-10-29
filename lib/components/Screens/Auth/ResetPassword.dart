@@ -16,22 +16,22 @@ import 'package:flutter/services.dart';
 
 class ResetPassword extends StatefulScreenWidget {
   static const route = "ResetPassword";
-  String email;
+  String value;
   String otpNumber;
 
   ResetPassword(Map<String, dynamic> arguments) {
-    this.email = arguments["email"];
+    this.value = arguments["value"];
     this.otpNumber = arguments["otpNumber"];
   }
 
   @override
-  _ResetPasswordState createState() => _ResetPasswordState(email: email, otpNumber: otpNumber);
+  _ResetPasswordState createState() => _ResetPasswordState(value: value, otpNumber: otpNumber);
 }
 
 class _ResetPasswordState extends StatefulScreenWidgetState {
   final _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
-  String email;
+  String value;
   String otpNumber;
 
   final TextEditingController _newPasswordController = TextEditingController();
@@ -41,7 +41,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
   var _focusNewPassword = FocusNode();
   var _focusConfirmPassword = FocusNode();
 
-  _ResetPasswordState({this.email,this.otpNumber});
+  _ResetPasswordState({this.value,this.otpNumber});
 
   @override
   void initState() {
@@ -151,7 +151,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
       textOption: TextFieldOption(
           prefixWid: getCommonIconWidget(
               imageName: password, imageType: IconSizeType.small),
-          hintText: R.string().authStrings.password + "*",
+          hintText: R.string().authStrings.password + R.string().authStrings.requiredField,
           maxLine: 1,
           formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
           keyboardType: TextInputType.text,
@@ -181,7 +181,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
       textOption: TextFieldOption(
           prefixWid: getCommonIconWidget(
               imageName: password, imageType: IconSizeType.small),
-          hintText: R.string().authStrings.confirmPassword + "*",
+          hintText: R.string().authStrings.confirmPassword + R.string().authStrings.requiredField,
           maxLine: 1,
           formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
           keyboardType: TextInputType.text,
@@ -207,7 +207,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
   Future callResetPasswordApi() async {
     ResetPasswordReq req = ResetPasswordReq();
     req.newPassword = _newPasswordController.text.trim();
-    req.email = email;
+    req.value = value;
     req.otpNumber = otpNumber;
 
     NetworkCall<BaseApiResp>()
@@ -216,7 +216,6 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
         context,
         isProgress: true)
         .then((Resp) async {
-          showToast(Resp.message, context: context);
           NavigationUtilities.pushRoute(PasswordResetSuccessfully.route);
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
