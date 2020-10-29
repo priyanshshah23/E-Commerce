@@ -474,64 +474,65 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
         map[DiamondDetailUIAPIKeys.kToSStr]
             .add(compareDetailList[i].diamondModel.kToSStr.toString());
       }
+
     }
 
     for (int i = 0; i < map.length; i++) {
-      if (map[DiamondDetailUIAPIKeys.amount].length == 1)
+      if (map[DiamondDetailUIAPIKeys.amount].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.amount);
-      if (map[DiamondDetailUIAPIKeys.pricePerCarat].length == 1)
+      if (map[DiamondDetailUIAPIKeys.pricePerCarat].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.pricePerCarat);
-      if (map[DiamondDetailUIAPIKeys.stoneId].length == 1)
+      if (map[DiamondDetailUIAPIKeys.stoneId].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.stoneId);
-      if (map[DiamondDetailUIAPIKeys.shpNm].length == 1)
+      if (map[DiamondDetailUIAPIKeys.shpNm].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.shpNm);
-      if (map[DiamondDetailUIAPIKeys.crt].length == 1)
+      if (map[DiamondDetailUIAPIKeys.crt].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.crt);
-      if (map[DiamondDetailUIAPIKeys.shdNm].length == 1)
+      if (map[DiamondDetailUIAPIKeys.shdNm].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.shdNm);
-      if (map[DiamondDetailUIAPIKeys.cutNm].length == 1)
+      if (map[DiamondDetailUIAPIKeys.cutNm].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.cutNm);
-      if (map[DiamondDetailUIAPIKeys.polNm].length == 1)
+      if (map[DiamondDetailUIAPIKeys.polNm].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.polNm);
-      if (map[DiamondDetailUIAPIKeys.symNm].length == 1)
+      if (map[DiamondDetailUIAPIKeys.symNm].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.symNm);
-      if (map[DiamondDetailUIAPIKeys.fluNm].length == 1)
+      if (map[DiamondDetailUIAPIKeys.fluNm].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.fluNm);
-      if (map[DiamondDetailUIAPIKeys.lbNm].length == 1)
+      if (map[DiamondDetailUIAPIKeys.lbNm].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.lbNm);
-      if (map[DiamondDetailUIAPIKeys.rptNo].length == 1)
+      if (map[DiamondDetailUIAPIKeys.rptNo].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.rptNo);
-      if (map[DiamondDetailUIAPIKeys.back].length == 1)
+      if (map[DiamondDetailUIAPIKeys.back].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.back);
-      if (map[DiamondDetailUIAPIKeys.eClnNm].length == 1)
+      if (map[DiamondDetailUIAPIKeys.eClnNm].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.eClnNm);
-      if (map[DiamondDetailUIAPIKeys.length].length == 1)
+      if (map[DiamondDetailUIAPIKeys.length].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.length);
-      if (map[DiamondDetailUIAPIKeys.width].length == 1)
+      if (map[DiamondDetailUIAPIKeys.width].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.width);
-      if (map[DiamondDetailUIAPIKeys.height].length == 1)
+      if (map[DiamondDetailUIAPIKeys.height].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.height);
-      if (map[DiamondDetailUIAPIKeys.ratio].length == 1)
+      if (map[DiamondDetailUIAPIKeys.ratio].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.ratio);
-      if (map[DiamondDetailUIAPIKeys.depPer].length == 1)
+      if (map[DiamondDetailUIAPIKeys.depPer].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.depPer);
-      if (map[DiamondDetailUIAPIKeys.tblPer].length == 1)
+      if (map[DiamondDetailUIAPIKeys.tblPer].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.tblPer);
-      if (map[DiamondDetailUIAPIKeys.cHgt].length == 1)
+      if (map[DiamondDetailUIAPIKeys.cHgt].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.cHgt);
-      if (map[DiamondDetailUIAPIKeys.cAng].length == 1)
+      if (map[DiamondDetailUIAPIKeys.cAng].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.cAng);
-      if (map[DiamondDetailUIAPIKeys.pAng].length == 1)
+      if (map[DiamondDetailUIAPIKeys.pAng].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.pAng);
-      if (map[DiamondDetailUIAPIKeys.girdleStr].length == 1)
+      if (map[DiamondDetailUIAPIKeys.girdleStr].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.girdleStr);
-      if (map[DiamondDetailUIAPIKeys.grdlCondNm].length == 1)
+      if (map[DiamondDetailUIAPIKeys.grdlCondNm].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.grdlCondNm);
-      if (map[DiamondDetailUIAPIKeys.cultNm].length == 1)
+      if (map[DiamondDetailUIAPIKeys.cultNm].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.cultNm);
-      if (map[DiamondDetailUIAPIKeys.hANm].length == 1)
+      if (map[DiamondDetailUIAPIKeys.hANm].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.hANm);
-      if (map[DiamondDetailUIAPIKeys.kToSStr].length == 1)
+      if (map[DiamondDetailUIAPIKeys.kToSStr].length <= 1)
         ignorableApiKeys.add(DiamondDetailUIAPIKeys.kToSStr);
     }
     setCompareList();
@@ -685,8 +686,8 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
                         )),
               child: getImageView(
                   DiamondUrls.image + compareModel.diamondModel.vStnId + ".jpg",
-                  height: getSize(150),
-                  width: getSize(90),
+                  height: getSize(120),
+                  width: getSize(60),
                   fit: BoxFit.scaleDown),
             ),
             Positioned(
