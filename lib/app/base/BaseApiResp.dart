@@ -8,7 +8,7 @@ class BaseApiResp {
   BaseApiResp.fromJson(Map<String, dynamic> json) {
     message = json['message'];
 
-    status =  json.containsKey('status') ? json['status'] : 0;
+  //  status =  json.containsKey('status') ? json['status'] : 0;
 
     code = json['code'];
   }

@@ -10,7 +10,7 @@ class DiamondGridItemWidget extends StatefulWidget {
   ActionClick actionClick;
   List<Widget> list;
 
-  DiamondGridItemWidget({this.item, this.actionClick,this.list});
+  DiamondGridItemWidget({this.item, this.actionClick, this.list});
 
   @override
   _DiamondGridItemWidgetState createState() => _DiamondGridItemWidgetState();
@@ -35,8 +35,7 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
                   : [BoxShadow(color: Colors.transparent)],
               color: appTheme.whiteColor,
               borderRadius: BorderRadius.circular(getSize(5)),
-              border: Border.all(
-                  color: appTheme.dividerColor.withOpacity(0.5)),
+              border: Border.all(color: appTheme.dividerColor.withOpacity(0.5)),
             ),
             child: Column(
               children: [
@@ -73,7 +72,8 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
                               child: GestureDetector(
                                 onTap: () {
                                   widget.actionClick(ManageCLick(
-                                      type: clickConstant.CLICK_TYPE_SELECTION));
+                                      type:
+                                          clickConstant.CLICK_TYPE_SELECTION));
                                 },
                                 child: Column(
                                   children: [
@@ -102,14 +102,16 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
                                       // height: getSize(19),
                                       decoration: BoxDecoration(
                                           color: appTheme.whiteColor,
-                                          borderRadius:
-                                              BorderRadius.circular(getSize(5))),
+                                          borderRadius: BorderRadius.circular(
+                                              getSize(5))),
                                       child: Padding(
                                         padding: EdgeInsets.all(getSize(2)),
                                         child: Text(
-                                          widget.item?.back.toString() + " %" ?? "",
+                                          widget.item?.back.toString() + " %" ??
+                                              "",
                                           style: appTheme.green10TextStyle
-                                              .copyWith(fontSize: getFontSize(8)),
+                                              .copyWith(
+                                                  fontSize: getFontSize(8)),
                                         ),
                                       ),
                                     )
@@ -124,7 +126,7 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
                         ),
                         Expanded(
                           child: Container(
-                          //  color: Colors.red,
+                            //  color: Colors.red,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.end,
@@ -137,7 +139,7 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
                                   children: [
                                     getText(widget.item?.vStnId ?? ""),
                                     // Expanded(child: Container()),
-                                    Spacer(),
+
                                     getAmountText(
                                         widget.item?.getPricePerCarat() ?? ""),
                                   ],
@@ -149,7 +151,8 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
                                   children: [
                                     getText(widget.item?.shpNm ?? ""),
                                     Spacer(),
-                                    getAmountText(widget.item?.getAmount() ?? ""),
+                                    getAmountText(
+                                        widget.item?.getAmount() ?? ""),
                                   ],
                                 ),
                                 SizedBox(
@@ -427,7 +430,6 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
     );
   }
 
-
   getDiamondImageView() {
     return Material(
       elevation: 10,
@@ -444,17 +446,15 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
         child: Padding(
           padding: EdgeInsets.all(getSize(20)),
           child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(getSize(75))),
-                                  child: getImageView(
-                                    widget.item.getDiamondImage(),
+            borderRadius: BorderRadius.all(Radius.circular(getSize(75))),
+            child: getImageView(widget.item.getDiamondImage(),
 //                                    finalUrl: model.img
 //                                        ? DiamondUrls.image +
 //                                        model.vStnId +
 //                                        ".jpg"
 //                                        : "",
-                                  placeHolderImage: diamond,
-                                    fit: BoxFit.cover
-                                  ),
+                placeHolderImage: diamond,
+                fit: BoxFit.cover),
           ),
         ),
       ),
@@ -471,9 +471,12 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
   }
 
   getAmountText(String text) {
-    return Text(
-      text,
-      style: appTheme.blue14TextStyle.copyWith(fontSize: getFontSize(10)),
+    return Expanded(
+      child: Text(
+        text,
+        overflow: TextOverflow.ellipsis,
+        style: appTheme.blue14TextStyle.copyWith(fontSize: getFontSize(10)),
+      ),
     );
   }
 }

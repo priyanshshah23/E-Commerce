@@ -96,6 +96,20 @@ class BaseTheme {
         color: textColor);
   }
 
+  TextStyle get primaryNormal12TitleColor{
+    return TextStyle(
+        fontSize: getFontSize(12),
+        fontWeight: FontWeight.normal,
+        color: colorPrimary);
+  }
+
+  TextStyle get blackNormal16TitleColorblack {
+    return TextStyle(
+        fontSize: getFontSize(16),
+        fontWeight: FontWeight.normal,
+        color: textColor);
+  }
+
   TextStyle get blackNormal18TitleColorblack {
     return TextStyle(
         fontSize: getFontSize(18),
@@ -213,6 +227,14 @@ class BaseTheme {
   TextStyle get grey16HintTextStyle {
     return TextStyle(
       fontSize: getFontSize(16),
+      color: textGreyColor,
+      fontWeight: FontWeight.w500,
+    );
+  }
+
+  TextStyle get greySemibold18TitleColor {
+    return TextStyle(
+      fontSize: getFontSize(18),
       color: textGreyColor,
       fontWeight: FontWeight.w500,
     );

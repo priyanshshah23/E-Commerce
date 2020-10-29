@@ -104,13 +104,14 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
               "KeyToSymbol",
-              style: appTheme.blackNormal18TitleColorblack,
+              style: appTheme.blackMedium16TitleColorblack,
               textAlign: TextAlign.left,
             ),
             Row(
@@ -134,9 +135,6 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
                   style: appTheme.blackNormal14TitleColorblack,
                 ),
               ],
-            ),
-            SizedBox(
-              height: getSize(15.0),
             ),
           ],
         ),

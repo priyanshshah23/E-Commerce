@@ -1613,7 +1613,9 @@ class _DashboardState extends StatefulScreenWidgetState {
     if (isNullEmptyOrFalse(this.dashboardModel.seller)) {
       return SizedBox();
     }
-
+    if (isNullEmptyOrFalse(this.dashboardModel.seller.id)) {
+      return SizedBox();
+    }
     return Padding(
       // padding: EdgeInsets.only(top: getSize(20)),
       padding: EdgeInsets.only(
@@ -1652,9 +1654,8 @@ class _DashboardState extends StatefulScreenWidgetState {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        this.dashboardModel.seller.firstName +
-                            " " +
+                        Text(
+                        this.dashboardModel.seller.firstName + " " +
                             this.dashboardModel.seller.lastName,
                         style: appTheme.black16TextStyle.copyWith(
                           color: appTheme.colorPrimary,

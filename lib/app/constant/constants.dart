@@ -15,6 +15,7 @@ const APPNAME = "Diamnow";
 const STRIPE_KEY = "pk_test_ZCG3mwYMaOFEFAdpcQtkNIZ300fxNZXXOj";
 
 const CODE_OK = "OK";
+const CODE_SUCCESS = "SUCCESS";
 const E_FORBIDDEN = "E_FORBIDDEN";
 
 const MISMATCHED_TIME_ZONE = "MISMATCHED_TIME_ZONE";

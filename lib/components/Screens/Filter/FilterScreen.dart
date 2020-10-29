@@ -10,9 +10,13 @@ import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
+import 'package:diamnow/components/Screens/Auth/Widget/DialogueList.dart';
+import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
+import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
+import 'package:diamnow/components/Screens/Filter/Widget/AddDemand.dart';
 
 import 'package:diamnow/components/Screens/Filter/Widget/CertNoWidget.dart';
 
@@ -26,6 +30,9 @@ import 'package:diamnow/components/Screens/Filter/Widget/SeperatorWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
 import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
+import 'package:diamnow/models/Address/CityListModel.dart';
+import 'package:diamnow/models/Address/CountryListModel.dart';
+import 'package:diamnow/models/Address/StateListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
@@ -87,10 +94,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   List<FilterOptions> optionList = List<FilterOptions>();
   Config config = Config();
 
-  final TextEditingController _diamondTitleTextField = TextEditingController();
-  var _focusDiamondTitleTextField = FocusNode();
-  final _formKey = GlobalKey<FormState>();
-  bool _autoValidate = false;
+  //PopUp data for savedsearch...
+  List<SavedSearchModel> listOfSavedSearchModel = [];
 
   @override
   void initState() {
@@ -100,7 +105,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       config.getFilterJson().then((result) {
         setState(() {
           arrList = result;
-          
+
           if (!isNullEmptyOrFalse(this.dictSearchData)) {
             arrList = FilterDataSource()
                 .prepareFilterDataSource(arrList, this.dictSearchData);
@@ -288,10 +293,20 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             body: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                isNullEmptyOrFalse(arrTab)
-                    ? SizedBox()
-                    : SizedBox(height: getSize(16)),
-                isNullEmptyOrFalse(arrTab) ? SizedBox() : _segmentedControl(),
+                Padding(
+                  padding: EdgeInsets.only(top: getSize(16)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      for (int i = 0; i < arrTab.length; i++)
+                        setTitleOfSegment(arrTab[i].title, i)
+                    ],
+                  ),
+                ),
+                // isNullEmptyOrFalse(arrTab)
+                //     ? SizedBox()
+                //     : SizedBox(height: getSize(16)),
+                // isNullEmptyOrFalse(arrTab) ? SizedBox() : _segmentedControl(),
                 Expanded(
                   child: Container(
                     margin: EdgeInsets.only(top: getSize(16)),
@@ -308,173 +323,50 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     );
   }
 
+  setTitleOfSegment(String title, int index) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          segmentedControlValue = index;
+          controller.animateToPage(segmentedControlValue,
+              duration: Duration(milliseconds: 500), curve: Curves.easeIn);
+        });
+      },
+      child: Column(
+        children: [
+          Text(
+            title,
+            style: segmentedControlValue == index
+                ? appTheme.blackSemiBold18TitleColorblack
+                : appTheme.greySemibold18TitleColor,
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: getSize(8)),
+            child: Container(
+                height: getSize(3),
+                width: getSize(50),
+                color: segmentedControlValue == index
+                    ? appTheme.colorPrimary
+                    : Colors.transparent),
+          ),
+        ],
+      ),
+    );
+  }
+
   //my demand popUP
   String _selectedDate;
   String diamondTitle;
 
-  Future MyDemandDialog(BuildContext context,
-      {String title,
-      String desc,
-      String positiveBtnTitle,
-      String negativeBtnTitle,
-      OnClickCallback onClickCallback,
-      VoidCallback voidCallback,
-      bool dismissPopup: true,
-      bool barrierDismissible: true,
-      RichText richText}) {
-    Future<bool> _onBackPressed() {
-      if (dismissPopup) {
-        Navigator.pop(context);
-      }
-    }
+  
 
-    void selectionChanged(DateRangePickerSelectionChangedArgs args) {
-      _selectedDate = DateFormat('dd MMMM, yyyy').format(args.value);
-      SchedulerBinding.instance.addPostFrameCallback((duration) {
-        setState(() {});
-      });
-    }
+    callApiForAddDemand(String selectedDate, String diamondTitle) {
 
-    Widget getDateRangePicker() {
-      return Container(
-          height: getSize(250),
-          child: Card(
-              child: SfDateRangePicker(
-            initialDisplayDate: DateTime.now(),
-            minDate: DateTime.now(),
-            view: DateRangePickerView.month,
-            selectionMode: DateRangePickerSelectionMode.single,
-            onSelectionChanged: selectionChanged,
-          )));
-    }
-
-    return showDialog(
-      barrierDismissible: barrierDismissible,
-      context: context,
-      builder: (BuildContext context) {
-        return WillPopScope(
-          onWillPop: _onBackPressed,
-          child: StatefulBuilder(
-            builder: (context, setState) {
-              //SystemChrome.setEnabledSystemUIOverlays([]);
-
-              return Dialog(
-                shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(getSize(15)))),
-                child: SingleChildScrollView(
-                  child: Container(
-                    width: MathUtilities.screenWidth(context),
-                    padding: EdgeInsets.symmetric(
-                        horizontal: getSize(20), vertical: getSize(20)),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: getSize(10)),
-                          child: Text(
-                            "Add demand",
-                            style: appTheme.blackSemiBold18TitleColorblack,
-                          ),
-                        ),
-                        Form(
-                          key: _formKey,
-                          autovalidate: _autoValidate,
-                          child: getDiamondTitleTextField(),
-                        ),
-                        getDateRangePicker(),
-                        Padding(
-                          padding: EdgeInsets.only(top: getSize(8)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(getSize(5))),
-                                width: getSize(130),
-                                height: getSize(50),
-                                child: AppButton.flat(
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  text: "Cancel",
-                                  textColor: ColorConstants.colorPrimary,
-                                  backgroundColor: ColorConstants
-                                      .backgroundColorForCancleButton,
-                                ),
-                              ),
-                              Container(
-                                width: getSize(130),
-                                height: getSize(50),
-                                child: AppButton.flat(
-                                  onTap: () {
-                                    FocusScope.of(context).unfocus();
-                                    if (_formKey.currentState.validate()) {
-                                      diamondTitle =
-                                          _diamondTitleTextField.text ?? "";
-
-                                      print(_selectedDate);
-                                      print(_diamondTitleTextField.text);
-                                      callApiForAddDemand();
-                                      _diamondTitleTextField.text = "";
-                                      Navigator.pop(context);
-                                    } else {
-                                      _autoValidate = true;
-                                    }
-                                  },
-                                  text: "Submit",
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-        );
-      },
-    );
-  }
-
-  getDiamondTitleTextField() {
-    return CommonTextfield(
-      focusNode: _focusDiamondTitleTextField,
-      textOption: TextFieldOption(
-        prefixWid: getCommonIconWidget(
-            imageName: saved_icon, imageType: IconSizeType.small),
-        hintText: "Demand Title",
-        maxLine: 1,
-        formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
-        keyboardType: TextInputType.text,
-        inputController: _diamondTitleTextField,
-      ),
-      textCallback: (text) {},
-      validation: (text) {
-        if (text.isEmpty) {
-          return "Please enter Demand Title.";
-        } else {
-          return null;
-        }
-      },
-      inputAction: TextInputAction.next,
-      onNextPress: () {
-        _focusDiamondTitleTextField.unfocus();
-        FocusScope.of(context).requestFocus(_focusDiamondTitleTextField);
-      },
-    );
-  }
-
-  callApiForAddDemand() {
     Map<String, dynamic> dict = {};
     dict["filter"] = FilterRequest().createRequest(arrList);
     dict["name"] = diamondTitle;
     dict["searchType"] = DiamondSearchType.DEMAND;
-    dict["expiryDate"] = _selectedDate;
+    dict["expiryDate"] = selectedDate;
 
     NetworkCall<BaseApiResp>()
         .makeCall(
@@ -483,12 +375,112 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       isProgress: true,
     )
         .then((diamondListResp) async {
-      showToast("Demand Added Successfully", context: context);
+      showToast(R.string().commonString.demandAddedSuccessfully,
+          context: context);
     }).catchError((onError) {
       print(onError.toString());
     });
   }
+
   //my demand popup end.
+  getAddDemand() {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(getSize(25)),
+          ),
+          child: AddDemand(
+              arrList: arrList,
+              applyCallBack: ({String selectedDate, String diamondTitle}) {
+                callApiForAddDemand(selectedDate, diamondTitle);
+              }),
+        );
+      },
+    );
+  }
+
+  getSavedSearchPopUp() {
+    
+
+    if (!isNullEmptyOrFalse(listOfSavedSearchModel)) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(getSize(25)),
+            ),
+            child: DialogueList(
+              type: DialogueListType.SAVEDSEARCH,
+              selectedItem: listOfSavedSearchModel[0],
+              duplicateItems: listOfSavedSearchModel,
+              applyFilterCallBack: ({
+                CityList cityList,
+                CountryList countryList,
+                StateList stateList,
+                SavedSearchModel savedSearchModel,
+              }) {
+                Map<String, dynamic> dict = new HashMap();
+                dict["filterId"] = savedSearchModel.id;
+                dict[ArgumentConstant.ModuleType] =
+                    DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
+                NavigationUtilities.pushRoute(
+                  DiamondListScreen.route,
+                  args: dict,
+                );
+              },
+            ),
+          );
+        },
+      );
+    } else {
+      Map<String, dynamic> dict = {};
+      dict["type"] = SavedSearchType.savedSearch;
+      dict["isAppendMasters"] = true;
+
+      NetworkCall<SavedSearchResp>()
+          .makeCall(
+        () => app.resolve<ServiceModule>().networkService().mySavedSearch(dict),
+        context,
+      )
+          .then((savedSearchResp) async {
+            listOfSavedSearchModel = savedSearchResp.data.list;
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(getSize(25)),
+              ),
+              child: DialogueList(
+                type: DialogueListType.SAVEDSEARCH,
+                selectedItem: savedSearchResp.data.list[0],
+                duplicateItems: savedSearchResp.data.list,
+                applyFilterCallBack: ({
+                  CityList cityList,
+                  CountryList countryList,
+                  StateList stateList,
+                  SavedSearchModel savedSearchModel,
+                }) {
+                  Map<String, dynamic> dict = new HashMap();
+                  dict["filterId"] = savedSearchModel.id;
+                  dict[ArgumentConstant.ModuleType] =
+                      DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
+                  NavigationUtilities.pushRoute(
+                    DiamondListScreen.route,
+                    args: dict,
+                  );
+                },
+              ),
+            );
+          },
+        );
+      });
+    }
+  }
 
   Widget getBottomTab() {
     return BottomTabbarWidget(
@@ -501,7 +493,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               .getModulePermission(
                   ModulePermissionConstant.permission_mySavedSearch)
               .view) {
-            // place code
+            getSavedSearchPopUp();
           } else {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
           }
@@ -511,9 +503,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               .getModulePermission(ModulePermissionConstant.permission_myDemand)
               .insert) {
             if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList)))
-              MyDemandDialog(context);
+              getAddDemand();
             else {
-              showToast("Please, select at least one filter",context:context);
+              showToast(R.string().commonString.selectAtleastOneFilter,
+                  context: context);
             }
             // place code
           } else {
@@ -538,10 +531,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                   ModulePermissionConstant.permission_mySavedSearch)
               .insert) {
             if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList)))
-                callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-                    isSavedSearch: true);
+              callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+                  isSavedSearch: true);
             else
-              showToast("Please, select at least one filter",context:context);
+              showToast(R.string().commonString.selectAtleastOneFilter,
+                  context: context);
           } else {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
           }
@@ -689,7 +683,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(8.0),
+            top: getSize(12.0),
             bottom: getSize(8)),
         child: SelectionWidget(model),
       );
@@ -698,7 +692,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(8.0),
+            top: getSize(12.0),
             bottom: getSize(8)),
         child: FromToWidget(model),
       );
@@ -707,7 +701,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(8.0),
+            top: getSize(12.0),
             bottom: getSize(8)),
         child: CertNoWidget(model),
       );
@@ -716,7 +710,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(8.0),
+            top: getSize(12),
             bottom: getSize(8)),
         child: KeyToSymbolWidget(model),
       );
@@ -725,7 +719,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(8.0),
+            top: getSize(12),
             bottom: getSize(8)),
         child: (model as ColorModel).showGroup
             ? ColorWidget(model)
@@ -736,7 +730,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(8.0),
+            top: getSize(12),
             bottom: getSize(8)),
         child: CaratRangeWidget(model),
       );
@@ -745,7 +739,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(8.0),
+            top: getSize(12.0),
             bottom: getSize(8)),
         child: ShapeWidget(model),
       );

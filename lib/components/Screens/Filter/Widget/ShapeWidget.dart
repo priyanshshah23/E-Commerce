@@ -296,7 +296,9 @@ class ShapeItemWidget extends StatelessWidget {
                   padding: EdgeInsets.only(top: getSize(12.0)),
                   child: Text(obj.webDisplay.toLowerCase().capitalize(),
                       textAlign: TextAlign.center,
-                      style: appTheme.blackNormal12TitleColorblack),
+                      style: obj.isSelected
+                          ? appTheme.primaryNormal12TitleColor
+                          : appTheme.blackNormal12TitleColorblack),
                 ),
               ],
             )
