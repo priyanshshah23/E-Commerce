@@ -28,6 +28,7 @@ class Config {
       List<dynamic> fieldList = jsonDecode(jsonForm);
       for (int i = 0; i < fieldList.length; i++) {
         dynamic element = fieldList[i];
+
         if (element is Map<String, dynamic>) {
           arrLocalData.add(Master.fromJson(element));
         }
@@ -45,7 +46,9 @@ class Config {
       for (int i = 0; i < fieldList.length; i++) {
         dynamic element = fieldList[i];
         if (element is Map<String, dynamic>) {
-          arrTabs.add(TabModel.fromJson(element));
+          if (element["isActive"] ?? true) {
+            arrTabs.add(TabModel.fromJson(element));
+          }
         }
       }
     }
