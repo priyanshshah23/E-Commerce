@@ -100,7 +100,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       config.getFilterJson().then((result) {
         setState(() {
           arrList = result;
-          
+
           if (!isNullEmptyOrFalse(this.dictSearchData)) {
             arrList = FilterDataSource()
                 .prepareFilterDataSource(arrList, this.dictSearchData);
@@ -288,10 +288,20 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             body: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                isNullEmptyOrFalse(arrTab)
-                    ? SizedBox()
-                    : SizedBox(height: getSize(16)),
-                isNullEmptyOrFalse(arrTab) ? SizedBox() : _segmentedControl(),
+                Padding(
+                  padding: EdgeInsets.only(top: getSize(16)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      for (int i = 0; i < arrTab.length; i++)
+                        setTitleOfSegment(arrTab[i].title, i)
+                    ],
+                  ),
+                ),
+                // isNullEmptyOrFalse(arrTab)
+                //     ? SizedBox()
+                //     : SizedBox(height: getSize(16)),
+                // isNullEmptyOrFalse(arrTab) ? SizedBox() : _segmentedControl(),
                 Expanded(
                   child: Container(
                     margin: EdgeInsets.only(top: getSize(16)),
@@ -304,6 +314,37 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               ],
             ),
             bottomNavigationBar: getBottomTab()),
+      ),
+    );
+  }
+
+  setTitleOfSegment(String title, int index) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          segmentedControlValue = index;
+          controller.animateToPage(segmentedControlValue,
+              duration: Duration(milliseconds: 500), curve: Curves.easeIn);
+        });
+      },
+      child: Column(
+        children: [
+          Text(
+            title,
+            style: segmentedControlValue == index
+                ? appTheme.blackMedium16TitleColorblack
+                : appTheme.grey16HintTextStyle,
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: getSize(8)),
+            child: Container(
+                height: getSize(3),
+                width: getSize(50),
+                color: segmentedControlValue == index
+                    ? appTheme.colorPrimary
+                    : Colors.transparent),
+          ),
+        ],
       ),
     );
   }
@@ -513,7 +554,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList)))
               MyDemandDialog(context);
             else {
-              showToast("Please, select at least one filter",context:context);
+              showToast("Please, select at least one filter", context: context);
             }
             // place code
           } else {
@@ -538,10 +579,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                   ModulePermissionConstant.permission_mySavedSearch)
               .insert) {
             if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList)))
-                callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-                    isSavedSearch: true);
+              callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+                  isSavedSearch: true);
             else
-              showToast("Please, select at least one filter",context:context);
+              showToast("Please, select at least one filter", context: context);
           } else {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
           }
