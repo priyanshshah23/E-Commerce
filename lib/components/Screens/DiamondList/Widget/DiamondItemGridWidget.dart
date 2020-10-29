@@ -8,8 +8,9 @@ import 'package:flutter/material.dart';
 class DiamondGridItemWidget extends StatefulWidget {
   DiamondModel item;
   ActionClick actionClick;
+  List<Widget> list;
 
-  DiamondGridItemWidget({this.item, this.actionClick});
+  DiamondGridItemWidget({this.item, this.actionClick,this.list});
 
   @override
   _DiamondGridItemWidgetState createState() => _DiamondGridItemWidgetState();
@@ -25,165 +26,177 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
           Container(
             margin: EdgeInsets.only(top: getSize(75)),
             decoration: BoxDecoration(
+              boxShadow: widget.item.isSelected
+                  ? getBoxShadow(context)
+                  : [BoxShadow(color: Colors.transparent)],
               color: appTheme.whiteColor,
               borderRadius: BorderRadius.circular(getSize(5)),
               border: Border.all(
-                  color: appTheme.dividerColor),
+                  color: appTheme.dividerColor.withOpacity(0.5)),
             ),
             child: Column(
               children: [
                 Expanded(child: SizedBox()),
                 IntrinsicHeight(
-                  child: Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(getSize(5)),
+                      border: Border.all(
                           color: widget.item.isSelected
                               ? appTheme.colorPrimary
-                              : appTheme.lightBGColor,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(5),
-                              bottomLeft: Radius.circular(5)),
-                        ),
-                        width: getSize(48),
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            top: getSize(8),
-                            left: getSize(5),
-                            right: getSize(5),
-                            bottom: getSize(5),
+                              : appTheme.lightBGColor),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: widget.item.isSelected
+                                ? appTheme.colorPrimary
+                                : appTheme.lightBGColor,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(5),
+                                bottomLeft: Radius.circular(5)),
                           ),
-                          child: Center(
-                            child: GestureDetector(
-                              onTap: () {
-                                widget.actionClick(ManageCLick(
-                                    type: clickConstant.CLICK_TYPE_SELECTION));
-                              },
-                              child: Column(
-                                children: [
-                                  Text(
-                                    widget.item?.crt.toString() ?? "",
-                                    style: appTheme.blue14TextStyle.copyWith(
-                                      color: widget.item.isSelected
-                                          ? appTheme.whiteColor
-                                          : appTheme.colorPrimary,
-                                      fontSize: getFontSize(12),
-                                    ),
-                                  ),
-                                  Text(
-                                    R.string().commonString.carat,
-                                    style: appTheme.blue14TextStyle.copyWith(
-                                      color: widget.item.isSelected
-                                          ? appTheme.whiteColor
-                                          : appTheme.colorPrimary,
-                                      fontSize: getFontSize(10),
-                                    ),
-                                  ),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    margin: EdgeInsets.only(top: getSize(5)),
-                                    // width: getSize(55),
-                                    // height: getSize(19),
-                                    decoration: BoxDecoration(
-                                        color: appTheme.whiteColor,
-                                        borderRadius:
-                                            BorderRadius.circular(getSize(5))),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(getSize(2)),
-                                      child: Text(
-                                        widget.item?.back.toString() + " %" ?? "",
-                                        style: appTheme.green10TextStyle
-                                            .copyWith(fontSize: getFontSize(8)),
+                          width: getSize(48),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              top: getSize(8),
+                              left: getSize(5),
+                              right: getSize(5),
+                              bottom: getSize(5),
+                            ),
+                            child: Center(
+                              child: GestureDetector(
+                                onTap: () {
+                                  widget.actionClick(ManageCLick(
+                                      type: clickConstant.CLICK_TYPE_SELECTION));
+                                },
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      widget.item?.crt.toString() ?? "",
+                                      style: appTheme.blue14TextStyle.copyWith(
+                                        color: widget.item.isSelected
+                                            ? appTheme.whiteColor
+                                            : appTheme.colorPrimary,
+                                        fontSize: getFontSize(12),
                                       ),
                                     ),
-                                  )
-                                ],
+                                    Text(
+                                      R.string().commonString.carat,
+                                      style: appTheme.blue14TextStyle.copyWith(
+                                        color: widget.item.isSelected
+                                            ? appTheme.whiteColor
+                                            : appTheme.colorPrimary,
+                                        fontSize: getFontSize(10),
+                                      ),
+                                    ),
+                                    Container(
+                                      alignment: Alignment.center,
+                                      margin: EdgeInsets.only(top: getSize(5)),
+                                      // width: getSize(55),
+                                      // height: getSize(19),
+                                      decoration: BoxDecoration(
+                                          color: appTheme.whiteColor,
+                                          borderRadius:
+                                              BorderRadius.circular(getSize(5))),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(getSize(2)),
+                                        child: Text(
+                                          widget.item?.back.toString() + " %" ?? "",
+                                          style: appTheme.green10TextStyle
+                                              .copyWith(fontSize: getFontSize(8)),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        width: getSize(2),
-                      ),
-                      Expanded(
-                        child: Container(
-                          color: Colors.red,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            // mainAxisSize: MainAxisSize.max,
-                            children: [
-                              SizedBox(
-                                height: getSize(4),
-                              ),
-                              Row(
-                                children: [
-                                  getText(widget.item?.vStnId ?? ""),
-                                  // Expanded(child: Container()),
-                                  Spacer(),
-                                  getAmountText(
-                                      widget.item?.getPricePerCarat() ?? ""),
-                                ],
-                              ),
-                              SizedBox(
-                                height: getSize(6),
-                              ),
-                              Row(
-                                children: [
-                                  getText(widget.item?.shpNm ?? ""),
-                                  Spacer(),
-                                  getAmountText(widget.item?.getAmount() ?? ""),
-                                ],
-                              ),
-                              SizedBox(
-                                height: getSize(6),
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  getText(widget.item?.colNm ?? ""),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      left: getSize(5),
-                                      right: getSize(5),
+                        SizedBox(
+                          width: getSize(2),
+                        ),
+                        Expanded(
+                          child: Container(
+                          //  color: Colors.red,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              // mainAxisSize: MainAxisSize.max,
+                              children: [
+                                SizedBox(
+                                  height: getSize(4),
+                                ),
+                                Row(
+                                  children: [
+                                    getText(widget.item?.vStnId ?? ""),
+                                    // Expanded(child: Container()),
+                                    Spacer(),
+                                    getAmountText(
+                                        widget.item?.getPricePerCarat() ?? ""),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: getSize(6),
+                                ),
+                                Row(
+                                  children: [
+                                    getText(widget.item?.shpNm ?? ""),
+                                    Spacer(),
+                                    getAmountText(widget.item?.getAmount() ?? ""),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: getSize(6),
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    getText(widget.item?.colNm ?? ""),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        left: getSize(5),
+                                        right: getSize(5),
+                                      ),
+                                      child: getText(widget.item?.clrNm ?? ""),
                                     ),
-                                    child: getText(widget.item?.clrNm ?? ""),
-                                  ),
-                                  getText(widget.item?.cutNm ?? ""),
-                                  Container(
-                                    height: getSize(4),
-                                    width: getSize(4),
-                                    decoration: BoxDecoration(
-                                        color: appTheme.dividerColor,
-                                        shape: BoxShape.circle),
-                                  ),
-                                  getText(widget.item?.polNm ?? ""),
-                                  Container(
-                                    height: getSize(4),
-                                    width: getSize(4),
-                                    decoration: BoxDecoration(
-                                        color: appTheme.dividerColor,
-                                        shape: BoxShape.circle),
-                                  ),
-                                  getText(widget.item?.symNm ?? ""),
-                                  // SizedBox(
-                                  //   width: getSize(6),
-                                  // ),
-                                  Spacer(),
-                                  getText(widget.item?.lbNm ?? "")
-                                ],
-                              ),
-                              SizedBox(
-                                height: getSize(8),
-                              ),
-                            ],
+                                    getText(widget.item?.cutNm ?? ""),
+                                    Container(
+                                      height: getSize(4),
+                                      width: getSize(4),
+                                      decoration: BoxDecoration(
+                                          color: appTheme.dividerColor,
+                                          shape: BoxShape.circle),
+                                    ),
+                                    getText(widget.item?.polNm ?? ""),
+                                    Container(
+                                      height: getSize(4),
+                                      width: getSize(4),
+                                      decoration: BoxDecoration(
+                                          color: appTheme.dividerColor,
+                                          shape: BoxShape.circle),
+                                    ),
+                                    getText(widget.item?.symNm ?? ""),
+                                    // SizedBox(
+                                    //   width: getSize(6),
+                                    // ),
+                                    Spacer(),
+                                    getText(widget.item?.lbNm ?? "")
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: getSize(8),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        width: getSize(2),
-                      ),
-                    ],
+                        SizedBox(
+                          width: getSize(2),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -192,7 +205,8 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
           getDiamondImageView()
         ],
       ),
-    );return GestureDetector(
+    );
+    return GestureDetector(
       onTap: () {
         widget.actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_ROW));
       },
@@ -424,7 +438,7 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
           shape: BoxShape.circle,
         ),
         child: Padding(
-          padding: EdgeInsets.all(getSize(10)),
+          padding: EdgeInsets.all(getSize(20)),
           child: ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(getSize(75))),
                                   child: getImageView(
@@ -435,6 +449,7 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
 //                                        ".jpg"
 //                                        : "",
                                   placeHolderImage: diamond,
+                                    fit: BoxFit.cover
                                   ),
           ),
         ),
