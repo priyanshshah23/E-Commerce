@@ -129,3 +129,7 @@ const String sunrise = "assets/diamnow/sunrise.png";
 const String dropDown = "assets/auth/dropDown.png";
 const String languageIcon = "assets/auth/languageIcon.png";
 const String cameraPlaceHolder = "assets/auth/cameraPlaceHolder.png";
+const String drawerLogo = "assets/Common/drawerLogo.png";
+const String bidImage = "assets/Common/bidImage.png";
+const String myDemandImage = "assets/Common/myDemand.png";
+

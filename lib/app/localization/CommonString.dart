@@ -223,6 +223,8 @@ class CommonString {
   final String chooseAnother;
   final String dateTime;
 
+  final String diamNow;
+
   const CommonString({
     this.date = "Date",
     this.all = "All",
@@ -437,6 +439,7 @@ class CommonString {
     this.nextWeek = "Next week",
     this.chooseAnother = "Choose another",
     this.dateTime = "Date & time",
-    this.language = "Language"
+    this.language = "Language",
+    this.diamNow = "DiamNow",
   });
 }

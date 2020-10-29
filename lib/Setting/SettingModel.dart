@@ -91,7 +91,6 @@ class DrawerSetting {
         isShowCount: true,
         countBackgroundColor: fromHex("#003365"),
         count: 15,
-        isShowDivider: true,
       ));
 
     if (app
@@ -102,6 +101,8 @@ class DrawerSetting {
         image: mySavedSearch,
         title: R.string().screenTitle.mySavedSearch,
         isSelected: false,
+        isShowDivider: true,
+        isShowUpperDivider: true,
         type: DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH,
       ));
     /*if (app
@@ -202,7 +203,7 @@ class DrawerSetting {
         .getModulePermission(ModulePermissionConstant.permission_bid)
         .view)
       drawerList.add(DrawerModel(
-        image: myBid,
+        image: bidImage,
         title: R.string().screenTitle.myBid,
         imageColor: appTheme.colorPrimary,
         isSelected: false,
@@ -310,7 +311,7 @@ class DrawerSetting {
         .getModulePermission(ModulePermissionConstant.permission_myDemand)
         .view)
       drawerList.add(DrawerModel(
-        image: myDemand,
+        image: myDemandImage,
         title: R.string().screenTitle.myDemand,
         imageColor: appTheme.colorPrimary,
         isSelected: false,

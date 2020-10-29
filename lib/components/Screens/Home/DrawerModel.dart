@@ -14,6 +14,7 @@ class DrawerModel {
   Color imageColor;
   int type;
   int count;
+  bool isShowUpperDivider = false;
 
   DrawerModel({
     this.image,
@@ -26,5 +27,6 @@ class DrawerModel {
     this.countBackgroundColor = Colors.red,
     this.imageColor,
     this.count = 0,
+    this.isShowUpperDivider = false,
   });
 }
