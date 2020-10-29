@@ -192,8 +192,7 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
           getDiamondImageView()
         ],
       ),
-    );
-    return GestureDetector(
+    );return GestureDetector(
       onTap: () {
         widget.actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_ROW));
       },
@@ -427,24 +426,16 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
         child: Padding(
           padding: EdgeInsets.all(getSize(10)),
           child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(getSize(20))),
-              child: Image.asset(
-                diamond,
-                width: getSize(40),
-                height: getSize(40),
-                fit: BoxFit.cover,
-              )
-//                                  child: getImageView(
-//                                    "",
+              borderRadius: BorderRadius.all(Radius.circular(getSize(75))),
+                                  child: getImageView(
+                                    widget.item.getDiamondImage(),
 //                                    finalUrl: model.img
 //                                        ? DiamondUrls.image +
 //                                        model.vStnId +
 //                                        ".jpg"
 //                                        : "",
-//                                    width: getSize(40),
-//                                    height: getSize(40),
-//                                    fit: BoxFit.cover,
-//                                  ),
+                                  placeHolderImage: diamond,
+                                  ),
           ),
         ),
       ),
