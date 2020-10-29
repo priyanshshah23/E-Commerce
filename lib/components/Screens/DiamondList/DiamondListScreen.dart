@@ -8,8 +8,10 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondExpandItemWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondSquareGridItemWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
@@ -124,6 +126,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
+      case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
         dict["filters"] = {};
         dict["filters"]["diamondSearchId"] = this.filterId;
         break;
@@ -287,8 +290,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         ? GridView.count(
             shrinkWrap: true,
             crossAxisCount: 2,
-            childAspectRatio: 0.8,
-            mainAxisSpacing: 10,
+//            childAspectRatio: 0.8,
+      childAspectRatio: 1,
+
+      mainAxisSpacing: 10,
             crossAxisSpacing: 8,
             padding: EdgeInsets.only(
               left: getSize(Spacing.leftPadding),
@@ -297,6 +302,14 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             ),
             children: List.generate(arraDiamond.length, (index) {
               var item = arraDiamond[index];
+              return DiamondSquareGridItem(
+                  item: item,
+                  list: getRightAction((manageClick) {
+                    manageRowClick(index, manageClick.type);
+                  }),
+                  actionClick: (manageClick) {
+                    manageRowClick(index, manageClick.type);
+                  });
               return DiamondGridItemWidget(
                   item: item,
                   list: getRightAction((manageClick) {
@@ -310,6 +323,14 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         : ListView.builder(
             itemCount: arraDiamond.length,
             itemBuilder: (context, index) {
+//              return DiamondExpandItemWidget(
+//                  item: arraDiamond[index],
+//                  list: getRightAction((manageClick) {
+//                    manageRowClick(index, manageClick.type);
+//                  }),
+//                  actionClick: (manageClick) {
+//                    manageRowClick(index, manageClick.type);
+//                  });
               return DiamondItemWidget(
                   controller: controller,
                   item: arraDiamond[index],

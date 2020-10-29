@@ -20,6 +20,7 @@ import 'package:diamnow/models/Address/CityListModel.dart';
 import 'package:diamnow/models/Address/CountryListModel.dart';
 import 'package:diamnow/models/Address/StateListModel.dart';
 import 'package:diamnow/models/Auth/PersonalInformationModel.dart';
+import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -879,7 +880,8 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
                       applyFilterCallBack: (
                           {CityList cityList,
                           CountryList countryList,
-                          StateList stateList}) {
+                          StateList stateList,
+                          SavedSearchModel savedSearchModel}) {
                         if (_countryController.text != countryList.name) {
                           _stateController.text = "";
                           _cityController.text = "";
@@ -938,7 +940,8 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
                         applyFilterCallBack: (
                             {CityList cityList,
                             CountryList countryList,
-                            StateList stateList}) {
+                            StateList stateList,
+                            SavedSearchModel savedSearchModel}) {
                           if (_stateController.text != stateList.name) {
                             _cityController.text = "";
                           }
@@ -1005,7 +1008,8 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
                           applyFilterCallBack: (
                               {CityList cityList,
                               CountryList countryList,
-                              StateList stateList}) {
+                              StateList stateList,
+                              SavedSearchModel savedSearchModel}) {
                             selectedCityItem = cityList;
                             _cityController.text = cityList.name;
                           },
@@ -1098,7 +1102,8 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
                     applyFilterCallBack: (
                         {CityList cityList,
                         CountryList countryList,
-                        StateList stateList}) {
+                        StateList stateList,
+                        SavedSearchModel savedSearchModel}) {
                       selectedCityItem = cityList;
                       _cityController.text = cityList.name;
                     },
@@ -1142,7 +1147,8 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
                     applyFilterCallBack: (
                         {CityList cityList,
                         CountryList countryList,
-                        StateList stateList}) {
+                        StateList stateList,
+                        SavedSearchModel savedSearchModel}) {
                       if (_countryController.text != countryList.name) {
                         _stateController.text = "";
                         _cityController.text = "";
@@ -1199,7 +1205,8 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
                     applyFilterCallBack: (
                         {CityList cityList,
                         CountryList countryList,
-                        StateList stateList}) {
+                        StateList stateList,
+                        SavedSearchModel savedSearchModel}) {
                       if (_stateController.text != stateList.name) {
                         _cityController.text = "";
                       }
