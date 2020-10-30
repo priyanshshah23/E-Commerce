@@ -8,6 +8,7 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
+import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/DialogueList.dart';
@@ -414,17 +415,12 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               borderRadius: BorderRadius.circular(getSize(25)),
             ),
             child: DialogueList(
-              type: DialogueListType.SAVEDSEARCH,
-              selectedItem: listOfSavedSearchModel[0],
-              duplicateItems: listOfSavedSearchModel,
-              applyFilterCallBack: ({
-                CityList cityList,
-                CountryList countryList,
-                StateList stateList,
-                SavedSearchModel savedSearchModel,
-              }) {
+              title: R.string().commonString.savedSearch,
+              hintText: R.string().commonString.searchSavedSearch,
+             // selectionOptions: listOfSavedSearchModel,--------------------------------------
+              applyFilterCallBack: (model) {
                 Map<String, dynamic> dict = new HashMap();
-                dict["filterId"] = savedSearchModel.id;
+                dict["filterId"] = model.id;
                 dict[ArgumentConstant.ModuleType] =
                     DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
                 NavigationUtilities.pushRoute(
@@ -456,17 +452,12 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 borderRadius: BorderRadius.circular(getSize(25)),
               ),
               child: DialogueList(
-                type: DialogueListType.SAVEDSEARCH,
-                selectedItem: savedSearchResp.data.list[0],
-                duplicateItems: savedSearchResp.data.list,
-                applyFilterCallBack: ({
-                  CityList cityList,
-                  CountryList countryList,
-                  StateList stateList,
-                  SavedSearchModel savedSearchModel,
-                }) {
+                hintText: R.string().commonString.searchSavedSearch,
+                title: R.string().commonString.savedSearch,
+               // selectionOptions: savedSearchResp.data.list,-----------------------------------
+                applyFilterCallBack: (model) {
                   Map<String, dynamic> dict = new HashMap();
-                  dict["filterId"] = savedSearchModel.id;
+                  dict["filterId"] = model.id;
                   dict[ArgumentConstant.ModuleType] =
                       DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
                   NavigationUtilities.pushRoute(

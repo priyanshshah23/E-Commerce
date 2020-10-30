@@ -237,6 +237,7 @@ class CommonString {
   final String selectAtleastOneFilter;
   final String savedSearch;
   final String searchSavedSearch;
+  final String searchBusinessType;
   final String viewDetails;
   final String viewLessDetails;
   final String myDemand;
@@ -477,5 +478,6 @@ class CommonString {
     this.language = "Language",
     this.diamNow = "DiamNow",
     this.noDocument = "No Documents Found",
+    this.searchBusinessType = "Search Business Type",
   });
 }
