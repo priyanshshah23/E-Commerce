@@ -4,6 +4,7 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/theme/app_theme.dart';
 import 'package:diamnow/components/Screens/Auth/ChangePassword.dart';
 import 'package:diamnow/components/Screens/Auth/CompanyInformation.dart';
+import 'package:diamnow/components/Screens/Auth/Documents.dart';
 import 'package:diamnow/components/Screens/Auth/PersonalInformation.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
@@ -114,11 +115,7 @@ class _ProfileListState extends State<ProfileList> {
                 } else if (position == 1) {
                   return CompanyInformation();
                 } else {
-                  return Scaffold(
-                    body: Center(
-                      child: Text("No Documents Found"),
-                    ),
-                  );
+                  return Documents();
                 }
               },
             ),

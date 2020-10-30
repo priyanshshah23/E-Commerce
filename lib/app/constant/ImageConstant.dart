@@ -135,4 +135,5 @@ const String cameraPlaceHolder = "assets/auth/cameraPlaceHolder.png";
 const String drawerLogo = "assets/Common/drawerLogo.png";
 const String bidImage = "assets/Common/bidImage.png";
 const String myDemandImage = "assets/Common/myDemand.png";
+const String documentPlaceHolder = "assets/Common/documentPlaceHolder.png";
 

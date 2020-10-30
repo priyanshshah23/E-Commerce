@@ -91,6 +91,8 @@ class _NotificationsState extends StatefulScreenWidgetState {
             margin: EdgeInsets.only(
               left: getSize(20),
               right: getSize(20),
+              top: getSize(20),
+              bottom: getSize(20),
             ),
             child: Text(
               "Today",
@@ -101,13 +103,15 @@ class _NotificationsState extends StatefulScreenWidgetState {
           physics: NeverScrollableScrollPhysics(),
           itemCount: 3,
           itemBuilder: (context, index) {
-            return getNotificationItem();
+            return getNotificationItem(isShowShadow: true);
           },
         ),
         Container(
             margin: EdgeInsets.only(
               left: getSize(20),
               right: getSize(20),
+              top: getSize(20),
+              bottom: getSize(20),
             ),
             child: Text(
               "Yesterday",
@@ -125,6 +129,8 @@ class _NotificationsState extends StatefulScreenWidgetState {
             margin: EdgeInsets.only(
               left: getSize(20),
               right: getSize(20),
+              top: getSize(20),
+              bottom: getSize(20),
             ),
             child: Text(
               "Past",
@@ -167,7 +173,7 @@ class _NotificationsState extends StatefulScreenWidgetState {
     );
   }
 
-  getNotificationItem() {
+  getNotificationItem({bool isShowShadow = false}) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -184,25 +190,26 @@ class _NotificationsState extends StatefulScreenWidgetState {
                   children: [
                     Container(
                         margin: EdgeInsets.only(
-                          left: getSize(30),
+                        //  left: getSize(30),
                           bottom: getSize(20),
-                          top: getSize(20),
                         ),
                         padding: EdgeInsets.only(
-                          left: getSize(35),
+                         // left: getSize(35),
+                          left: getSize(10),
                           right: getSize(10),
                           top: getSize(10),
                           bottom: getSize(10),
                         ),
                         decoration: BoxDecoration(
                           color: appTheme.whiteColor,
-                          boxShadow: [
+                          boxShadow: isShowShadow ? [
                             BoxShadow(
                                 color: appTheme.textBlackColor.withOpacity(0.1),
                                 blurRadius: getSize(10),
                                 spreadRadius: getSize(2),
                                 offset: Offset(0, 8)),
-                          ],
+                          ] : null,
+                          border: isShowShadow ? null : Border.all(color: appTheme.dividerColor),
                           borderRadius: BorderRadius.circular(getSize(5)),
                         ),
                         child: Padding(
@@ -215,7 +222,7 @@ class _NotificationsState extends StatefulScreenWidgetState {
                             children: [
                               Text(
                                 "Order Placed",
-                                style: appTheme.black16TextStyle.copyWith(
+                                style: appTheme.black14TextStyle.copyWith(
                                   fontWeight: FontWeight.w500,
                                 ),
                                 maxLines: 2,
@@ -226,13 +233,13 @@ class _NotificationsState extends StatefulScreenWidgetState {
                               ),
                               Text(
                                 "Your Order Placed Successfully. Your Memo No:- ORD000064",
-                                style: appTheme.black14TextStyle,
+                                style: appTheme.black12TextStyle,
                                 softWrap: true,
                                 maxLines: 2,
                                 textAlign: TextAlign.start,
                               ),
                               SizedBox(
-                                height: getSize(8),
+                                height: getSize(5),
                               ),
                               Row(
                                 children: [
@@ -294,14 +301,14 @@ class _NotificationsState extends StatefulScreenWidgetState {
                               ),
                               Text(
                                 "10 Mins ago",
-                                style: appTheme.grey14HintTextStyle,
+                                style: appTheme.grey12HintTextStyle,
                                 maxLines: 2,
                                 textAlign: TextAlign.start,
                               ),
                             ],
                           ),
                         )),
-                    getImageView(),
+//                    getImageView(),
                   ],
                 ),
               ),
