@@ -4,6 +4,7 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/models/Address/CityListModel.dart';
 import 'package:diamnow/models/Address/CountryListModel.dart';
 import 'package:diamnow/models/Address/StateListModel.dart';
+import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:flutter/material.dart';
 
 class DialogueList extends StatefulWidget {
@@ -11,7 +12,9 @@ class DialogueList extends StatefulWidget {
   final Function(
       {CityList cityList,
       CountryList countryList,
-      StateList stateList}) applyFilterCallBack;
+      StateList stateList,
+      SavedSearchModel savedSearchModel,
+      }) applyFilterCallBack;
   var selectedItem;
   DialogueListType type;
 
@@ -30,7 +33,7 @@ class _DialogueListState extends State<DialogueList> {
   TextEditingController searchController = TextEditingController();
   final List duplicateItems;
   List items = List();
-  Function({CityList cityList, CountryList countryList, StateList stateList})
+  Function({CityList cityList, CountryList countryList, StateList stateList, SavedSearchModel savedSearchModel,})
       applyFilterCallBack;
   var selectedItem;
 
@@ -109,6 +112,7 @@ class _DialogueListState extends State<DialogueList> {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
+                            Navigator.of(context).pop();
                             if (widget.type == DialogueListType.City) {
                               applyFilterCallBack(cityList: items[index]);
                             } else if (widget.type == DialogueListType.State) {
@@ -116,9 +120,12 @@ class _DialogueListState extends State<DialogueList> {
                             } else if (widget.type ==
                                 DialogueListType.Country) {
                               applyFilterCallBack(countryList: items[index]);
+                            } else if (widget.type ==
+                                DialogueListType.SAVEDSEARCH) {
+                              applyFilterCallBack(savedSearchModel: items[index]);
                             }
                             items[index].isActive = true;
-                            Navigator.pop(context);
+                           
                           },
                           child: Padding(
                             padding:
@@ -182,6 +189,8 @@ class _DialogueListState extends State<DialogueList> {
       return R.string().commonString.selectState;
     } else if (widget.type == DialogueListType.Country) {
       return R.string().commonString.selectCountry;
+    } else if(widget.type == DialogueListType.SAVEDSEARCH) {
+      return R.string().commonString.savedSearch;
     }
     return "";
   }
@@ -193,6 +202,8 @@ class _DialogueListState extends State<DialogueList> {
       return R.string().commonString.searchState;
     } else if (widget.type == DialogueListType.Country) {
       return R.string().commonString.searchCountry;
+    } else if (widget.type == DialogueListType.SAVEDSEARCH) {
+      return R.string().commonString.searchSavedSearch;
     }
     return "";
   }

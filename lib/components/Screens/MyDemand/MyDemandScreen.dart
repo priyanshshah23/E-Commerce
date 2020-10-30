@@ -1,5 +1,5 @@
 import 'dart:collection';
-
+import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/Helper/Themehelper.dart';
 import 'package:diamnow/app/app.export.dart';
@@ -8,6 +8,7 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CommonWidgets.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/math_utils.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
@@ -215,10 +216,26 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                             height: getSize(15),
                           ),
                           onPressed: () {
-                            SyncManager.instance.callApiForDeleteSavedSearch(
-                                context, model.id ?? "", success: (resp) {
-                              callApi(true);
-                            });
+                            app.resolve<CustomDialogs>().confirmDialog(
+                              context,
+                              barrierDismissible: true,
+                              title: "",
+                              desc: "You really want to delete ${model.name}.",
+                              positiveBtnTitle: R.string().commonString.ok,
+                              negativeBtnTitle: R.string().commonString.cancel,
+                              onClickCallback: (buttonType) {
+                                if (buttonType ==
+                                    ButtonType.PositveButtonClick) {
+                                  SyncManager.instance
+                                      .callApiForDeleteSavedSearch(
+                                          context, model.id ?? "",
+                                          success: (resp) {
+                                    callApi(true);
+                                  });
+                                }
+                                
+                              },
+                            );
                           },
                         ),
                       ),
@@ -286,7 +303,7 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                             fillArrayList();
                           },
                           child: Text(
-                            "View Details",
+                            R.string().commonString.viewDetails,
                             textAlign: TextAlign.center,
                             style: appTheme.primaryColor14TextStyle,
                           ),
@@ -336,7 +353,7 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          "View Less Details",
+                          R.string().commonString.viewLessDetails,
                           textAlign: TextAlign.center,
                           style: appTheme.primaryColor14TextStyle,
                         ),
@@ -928,7 +945,7 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
     return Scaffold(
       appBar: getAppBar(
         context,
-        "My Demand",
+        R.string().commonString.myDemand,
         centerTitle: false,
         bgColor: appTheme.whiteColor,
         leadingButton: isFromDrawer

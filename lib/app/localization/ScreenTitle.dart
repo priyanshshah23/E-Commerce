@@ -233,7 +233,7 @@ class ScreenTitle {
     this.addOffer = "Add Offer",
     this.expDiscPer = "Exp Disc%",
     this.todayDiscPer = "Today's Disc%",
-    this.searchDiamond = "Search Diamond",
+    this.searchDiamond = "Search Result",
     this.basic = "Basic",
     this.advanced = "Advanced",
     this.stoneIdCertNo = "StoneID/Cert No",

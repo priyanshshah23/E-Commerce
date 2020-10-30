@@ -56,7 +56,6 @@ class FilterRequest {
             map[selectionModel.apiKey] = arr;
           }
         } else {
-          print(selectionModel.masterCode);
           if (selectionModel.masterCode == MasterCode.stage) {
             arrStage = Master.getSelectedId(selectionModel.masters);
 
@@ -214,12 +213,12 @@ class FilterDataSource {
             item.valueTo = dict[item.apiKey]["<="];
           }
         }
-      }
-      else {
+      } else {
         if (item is ColorModel) {
           for (int i = 0; i < item.masters.length; i++) {
             Master element = item.masters[i];
-            if (!isNullEmptyOrFalse(dict[item.apiKey]) && dict[item.apiKey].contains(element.sId)) {
+            if (!isNullEmptyOrFalse(dict[item.apiKey]) &&
+                dict[item.apiKey].contains(element.sId)) {
               element.isSelected = true;
             }
             item.onSelectionClick(i);

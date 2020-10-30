@@ -19,27 +19,19 @@ Future<FileUploadResp> uploadFile(BuildContext context, String folderName,
     List<int> bytes,
     bool pdfUpload = false}) async {
   var dio = Dio();
-  dio.options.baseUrl = ApiConstants.documentUpload;
+  dio.options.baseUrl = baseURL + ApiConstants.documentUpload;
 
   if (kDebugMode) {
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (client) {
       // config the http client
       client.findProxy = (uri) {
-        //proxy all request to localhost:8888
-        // return ApiConstants.PROXY_URL;
-
-        //proxy all request to localhost:8888
          return ApiConstants.PROXY_URL;
-        //return "PROXY 192.168.1.4:8888";
-//        return "PROXY 192.168.225.188:8888";
-        // return "PROXY 192.168.0.133:8888";
       };
       // you can also create a new HttpClient to dio
       // return new HttpClient();
     };
   }
-
   Response response;
   var formData1 =
       await formdata(folderName, files: files, file: file, bytes: bytes);

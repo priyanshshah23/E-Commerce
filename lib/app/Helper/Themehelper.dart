@@ -62,6 +62,8 @@ class BaseTheme {
   Color get statusOffer => fromHex("#FF4DB8");
   Color get statusMyHold => fromHex("#F1951E");
   Color get textGray => fromHex("#7B7E84");
+  Color get drawerTitleColor => fromHex("#EEF1FC");
+  Color get lightColorPrimary => fromHex("#EEF1FC");
 
   Color get shadowColorWithoutOpacity => fromHex("#7D9EF6").withOpacity(0.1);
   Color get shadowColor => shadowColorWithoutOpacity.withOpacity(0.1);
@@ -165,6 +167,13 @@ class BaseTheme {
         fontSize: getFontSize(16),
         color: textColor,
         fontWeight: FontWeight.normal);
+  }
+
+  TextStyle get blue16TextStyle {
+    return TextStyle(
+        fontSize: getFontSize(16),
+        color: colorPrimary,
+        fontWeight: FontWeight.w500);
   }
 
   TextStyle get black18TextStyle {
@@ -277,6 +286,13 @@ class BaseTheme {
   TextStyle get blue14TextStyle {
     return TextStyle(
         fontSize: getFontSize(14),
+        color: colorPrimary,
+        fontWeight: FontWeight.normal);
+  }
+
+  TextStyle get blue10TextStyle {
+    return TextStyle(
+        fontSize: getFontSize(10),
         color: colorPrimary,
         fontWeight: FontWeight.normal);
   }

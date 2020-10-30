@@ -8,8 +8,10 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondExpandItemWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondSquareGridItemWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
@@ -70,6 +72,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   DiamondCalculation diamondCalculation = DiamondCalculation();
   List<FilterOptions> optionList = List<FilterOptions>();
   bool isGrid = false;
+  int viewTypeCount=0;
 
   @override
   void initState() {
@@ -124,6 +127,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
+      case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
         dict["filters"] = {};
         dict["filters"]["diamondSearchId"] = this.filterId;
         break;
@@ -283,12 +287,46 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       return;
     }
     SlidableController controller = SlidableController();
-    diamondList.state.listItems = isGrid
-        ? GridView.count(
+    diamondList.state.listItems = viewTypeCount==0?
+    ListView.builder(
+            itemCount: arraDiamond.length,
+            itemBuilder: (context, index) {
+//              return DiamondExpandItemWidget(
+//                  item: arraDiamond[index],
+//                  list: getRightAction((manageClick) {
+//                    manageRowClick(index, manageClick.type);
+//                  }),
+//                  actionClick: (manageClick) {
+//                    manageRowClick(index, manageClick.type);
+//                  });
+              return DiamondItemWidget(
+                  controller: controller,
+                  item: arraDiamond[index],
+                  list: getRightAction((manageClick) {
+                    manageRowClick(index, manageClick.type);
+                  }),
+                  actionClick: (manageClick) {
+                    manageRowClick(index, manageClick.type);
+                  });
+            },
+          ):viewTypeCount==1?ListView.builder(
+      itemCount: arraDiamond.length,
+      itemBuilder: (context, index) {
+              return DiamondExpandItemWidget(
+                  item: arraDiamond[index],
+                  list: getRightAction((manageClick) {
+                    manageRowClick(index, manageClick.type);
+                  }),
+                  actionClick: (manageClick) {
+                    manageRowClick(index, manageClick.type);
+                  });
+
+      },
+    ):viewTypeCount==2?GridView.count(
             shrinkWrap: true,
             crossAxisCount: 2,
             childAspectRatio: 0.8,
-            mainAxisSpacing: 10,
+      mainAxisSpacing: 10,
             crossAxisSpacing: 8,
             padding: EdgeInsets.only(
               left: getSize(Spacing.leftPadding),
@@ -306,21 +344,85 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                     manageRowClick(index, manageClick.type);
                   });
             }),
-          )
-        : ListView.builder(
-            itemCount: arraDiamond.length,
-            itemBuilder: (context, index) {
-              return DiamondItemWidget(
-                  controller: controller,
-                  item: arraDiamond[index],
-                  list: getRightAction((manageClick) {
-                    manageRowClick(index, manageClick.type);
-                  }),
-                  actionClick: (manageClick) {
-                    manageRowClick(index, manageClick.type);
-                  });
-            },
-          );
+          ):GridView.count(
+      shrinkWrap: true,
+      crossAxisCount: 2,
+      childAspectRatio: 0.8,
+      mainAxisSpacing: 10,
+      crossAxisSpacing: 8,
+      padding: EdgeInsets.only(
+        left: getSize(Spacing.leftPadding),
+        bottom: getSize(Spacing.leftPadding),
+        right: getSize(Spacing.rightPadding),
+      ),
+      children: List.generate(arraDiamond.length, (index) {
+        var item = arraDiamond[index];
+        return DiamondSquareGridItem(
+            item: item,
+            list: getRightAction((manageClick) {
+              manageRowClick(index, manageClick.type);
+            }),
+            actionClick: (manageClick) {
+              manageRowClick(index, manageClick.type);
+            });
+      }),
+    );
+//    diamondList.state.listItems = isGrid
+//        ? GridView.count(
+//            shrinkWrap: true,
+//            crossAxisCount: 2,
+////            childAspectRatio: 0.8,
+//      childAspectRatio: 1,
+//
+//      mainAxisSpacing: 10,
+//            crossAxisSpacing: 8,
+//            padding: EdgeInsets.only(
+//              left: getSize(Spacing.leftPadding),
+//              bottom: getSize(Spacing.leftPadding),
+//              right: getSize(Spacing.rightPadding),
+//            ),
+//            children: List.generate(arraDiamond.length, (index) {
+//              var item = arraDiamond[index];
+//              return DiamondSquareGridItem(
+//                  item: item,
+//                  list: getRightAction((manageClick) {
+//                    manageRowClick(index, manageClick.type);
+//                  }),
+//                  actionClick: (manageClick) {
+//                    manageRowClick(index, manageClick.type);
+//                  });
+//              return DiamondGridItemWidget(
+//                  item: item,
+//                  list: getRightAction((manageClick) {
+//                    manageRowClick(index, manageClick.type);
+//                  }),
+//                  actionClick: (manageClick) {
+//                    manageRowClick(index, manageClick.type);
+//                  });
+//            }),
+//          )
+//        : ListView.builder(
+//            itemCount: arraDiamond.length,
+//            itemBuilder: (context, index) {
+////              return DiamondExpandItemWidget(
+////                  item: arraDiamond[index],
+////                  list: getRightAction((manageClick) {
+////                    manageRowClick(index, manageClick.type);
+////                  }),
+////                  actionClick: (manageClick) {
+////                    manageRowClick(index, manageClick.type);
+////                  });
+//              return DiamondItemWidget(
+//                  controller: controller,
+//                  item: arraDiamond[index],
+//                  list: getRightAction((manageClick) {
+//                    manageRowClick(index, manageClick.type);
+//                  }),
+//                  actionClick: (manageClick) {
+//                    manageRowClick(index, manageClick.type);
+//                  });
+//            },
+//          );
   }
 
   callBlockApi({bool isProgress = false}) {
@@ -452,7 +554,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         setSelectAllDiamond(model);
         break;
       case BottomCodeConstant.TBGrideView:
-        isGrid = !isGrid;
+        viewTypeCount+=1;
+        if(viewTypeCount==4){
+          viewTypeCount=0;
+        }
         fillArrayList();
         diamondList.state.setApiCalling(false);
         break;

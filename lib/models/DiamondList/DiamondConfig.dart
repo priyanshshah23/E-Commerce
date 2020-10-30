@@ -168,6 +168,7 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
       case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
+      case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
         return app
             .resolve<ServiceModule>()
             .networkService()
@@ -625,8 +626,11 @@ class DiamondConfig {
           diamonds.newPricePerCarat = element.getFinalRate();
           int hour = int.parse(element.selectedOfferHour);
           var date = DateTime.now();
-          date.add(Duration(hours: hour));
-          diamonds.offerValidDate = date.toUtc().toIso8601String();
+          var dt = DateTime(
+              date.year, date.month, date.day, date.hour + hour, date.minute);
+
+          diamonds.offerValidDate = dt.toUtc().toIso8601String();
+
           break;
         case DiamondTrackConstant.TRACK_TYPE_BID:
           diamonds.vStnId = element.vStnId;
@@ -753,6 +757,7 @@ class DiamondConfig {
         req.date = InvoiceTypes.later.toString();
         break;
     }
+    req.date = date;
     req.diamonds = [];
     list.forEach((element) {
       req.diamonds.add(element.id);
