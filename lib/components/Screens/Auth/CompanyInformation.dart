@@ -299,7 +299,8 @@ class _CompanyInformationState extends State<CompanyInformation>
       autoFocus: false,
       focusNode: _focusCompanyName,
       textOption: TextFieldOption(
-        hintText: R.string().authStrings.companyName + R.string().authStrings.requiredField,
+        hintText: R.string().authStrings.companyName +
+            R.string().authStrings.requiredField,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: user,
@@ -427,11 +428,12 @@ class _CompanyInformationState extends State<CompanyInformation>
                   type: DialogueListType.Country,
                   selectedItem: selectedCountryItem,
                   duplicateItems: countryList,
-                  applyFilterCallBack: (
-                      {CityList cityList,
-                      CountryList countryList,
-                      StateList stateList,
-                      SavedSearchModel savedSearchModel,}) {
+                  applyFilterCallBack: ({
+                    CityList cityList,
+                    CountryList countryList,
+                    StateList stateList,
+                    SavedSearchModel savedSearchModel,
+                  }) {
                     if (_countryController.text != countryList.name) {
                       _stateController.text = "";
                       _cityController.text = "";
@@ -491,11 +493,12 @@ class _CompanyInformationState extends State<CompanyInformation>
                         type: DialogueListType.State,
                         selectedItem: selectedStateItem,
                         duplicateItems: stateList,
-                        applyFilterCallBack: (
-                            {CityList cityList,
-                            CountryList countryList,
-                            StateList stateList,
-                            SavedSearchModel savedSearchModel,}) {
+                        applyFilterCallBack: ({
+                          CityList cityList,
+                          CountryList countryList,
+                          StateList stateList,
+                          SavedSearchModel savedSearchModel,
+                        }) {
                           if (_stateController.text != stateList.name) {
                             _cityController.text = "";
                             this.cityList.clear();
@@ -560,11 +563,12 @@ class _CompanyInformationState extends State<CompanyInformation>
                           type: DialogueListType.City,
                           selectedItem: selectedCityItem,
                           duplicateItems: cityList,
-                          applyFilterCallBack: (
-                              {CityList cityList,
-                              CountryList countryList,
-                              StateList stateList,
-                              SavedSearchModel savedSearchModel,}) {
+                          applyFilterCallBack: ({
+                            CityList cityList,
+                            CountryList countryList,
+                            StateList stateList,
+                            SavedSearchModel savedSearchModel,
+                          }) {
                             selectedCityItem = cityList;
                             _cityController.text = cityList.name;
                           },
@@ -745,11 +749,12 @@ class _CompanyInformationState extends State<CompanyInformation>
                     type: DialogueListType.City,
                     selectedItem: selectedCityItem,
                     duplicateItems: cityList,
-                    applyFilterCallBack: (
-                        {CityList cityList,
-                        CountryList countryList,
-                        StateList stateList,
-                        SavedSearchModel savedSearchModel,}) {
+                    applyFilterCallBack: ({
+                      CityList cityList,
+                      CountryList countryList,
+                      StateList stateList,
+                      SavedSearchModel savedSearchModel,
+                    }) {
                       selectedCityItem = cityList;
                       _cityController.text = cityList.name;
                     },
@@ -791,11 +796,12 @@ class _CompanyInformationState extends State<CompanyInformation>
                     type: DialogueListType.Country,
                     selectedItem: selectedCountryItem,
                     duplicateItems: countryList,
-                    applyFilterCallBack: (
-                        {CityList cityList,
-                        CountryList countryList,
-                        StateList stateList,
-                        SavedSearchModel savedSearchModel,}) {
+                    applyFilterCallBack: ({
+                      CityList cityList,
+                      CountryList countryList,
+                      StateList stateList,
+                      SavedSearchModel savedSearchModel,
+                    }) {
                       if (_countryController.text != countryList.name) {
                         _stateController.text = "";
                         _cityController.text = "";
@@ -853,11 +859,12 @@ class _CompanyInformationState extends State<CompanyInformation>
                     type: DialogueListType.State,
                     selectedItem: selectedStateItem,
                     duplicateItems: stateList,
-                    applyFilterCallBack: (
-                        {CityList cityList,
-                        CountryList countryList,
-                        StateList stateList,
-                        SavedSearchModel savedSearchModel,}) {
+                    applyFilterCallBack: ({
+                      CityList cityList,
+                      CountryList countryList,
+                      StateList stateList,
+                      SavedSearchModel savedSearchModel,
+                    }) {
                       if (_stateController.text != stateList.name) {
                         _cityController.text = "";
                         selectedCityItem = null;

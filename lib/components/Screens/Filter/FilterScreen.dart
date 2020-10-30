@@ -358,10 +358,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   String _selectedDate;
   String diamondTitle;
 
-  
-
-    callApiForAddDemand(String selectedDate, String diamondTitle) {
-
+  callApiForAddDemand(String selectedDate, String diamondTitle) {
     Map<String, dynamic> dict = {};
     dict["filter"] = FilterRequest().createRequest(arrList);
     dict["name"] = diamondTitle;
@@ -389,6 +386,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return Dialog(
+          insetPadding: EdgeInsets.symmetric(
+              horizontal: getSize(20), vertical: getSize(20)),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(getSize(25)),
           ),
@@ -403,8 +402,6 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   }
 
   getSavedSearchPopUp() {
-    
-
     if (!isNullEmptyOrFalse(listOfSavedSearchModel)) {
       showDialog(
         context: context,
@@ -447,7 +444,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         context,
       )
           .then((savedSearchResp) async {
-            listOfSavedSearchModel = savedSearchResp.data.list;
+        listOfSavedSearchModel = savedSearchResp.data.list;
         showDialog(
           context: context,
           builder: (BuildContext context) {

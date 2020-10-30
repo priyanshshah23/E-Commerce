@@ -1125,10 +1125,12 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
         subtitle: "6:00 pm", image: sunrise),
     StoneModel(
         ReminderType.ReminderTypeTomorrow, R.string().commonString.toMorrow,
-        subtitle: " ${dateUtilities.getTomorrowDay(DateTime.now())} 8:00 am", image: sun),
+        subtitle: " ${dateUtilities.getTomorrowDay(DateTime.now())} 8:00 am",
+        image: sun),
     StoneModel(
         ReminderType.ReminderTypeNextWeek, R.string().commonString.nextWeek,
-        subtitle: "${dateUtilities.getNextWeekDay(DateTime.now())} 8:00 am", image: calender_week),
+        subtitle: "${dateUtilities.getNextWeekDay(DateTime.now())} 8:00 am",
+        image: calender_week),
     StoneModel(
         ReminderType.ReminderTypeCustom, R.string().commonString.chooseAnother,
         subtitle: R.string().commonString.dateTime, image: calender),
@@ -1137,6 +1139,9 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
     context: context,
     builder: (context) {
       return Dialog(
+        insetPadding: EdgeInsets.symmetric(
+            horizontal: getSize(20), vertical: getSize(20)),
+        // contentPadding: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(getSize(15)),
         ),
@@ -1144,7 +1149,7 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
         child: StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return Padding(
-              padding: EdgeInsets.only(top: getSize(10)),
+              padding: EdgeInsets.only(top: getSize(30), bottom: getSize(20)),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -1152,6 +1157,7 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
                     R.string().screenTitle.addRemider,
                     style: appTheme.black18TextStyle,
                   ),
+                  SizedBox(height: getSize(20)),
                   GridView.builder(
                       shrinkWrap: true,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -1195,7 +1201,7 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
                             child: Column(
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.only(bottom: getSize(5)),
+                                  padding: EdgeInsets.only(bottom: getSize(8)),
                                   child: Image.asset(
                                     reminderList[i].image,
                                     height: getSize(40),

@@ -418,12 +418,14 @@ Future OpenConfirmationPopUp(BuildContext context,
             //SystemChrome.setEnabledSystemUIOverlays([]);
 
             return Dialog(
+              insetPadding: EdgeInsets.symmetric(
+                  horizontal: getSize(20), vertical: getSize(20)),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(getSize(15)))),
               child: Container(
                 width: MathUtilities.screenWidth(context),
                 padding: EdgeInsets.symmetric(
-                    horizontal: getSize(10), vertical: getSize(29)),
+                    horizontal: getSize(20), vertical: getSize(29)),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
