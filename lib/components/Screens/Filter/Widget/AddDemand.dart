@@ -133,17 +133,15 @@ class _AddDemandState extends State<AddDemand> {
   Widget getDateRangePicker() {
     return Container(
       height: getSize(250),
-      child: Card(
-        child: SfDateRangePicker(
-          initialDisplayDate: DateTime.now(),
-          minDate: DateTime.now(),
-          selectionColor: appTheme.colorPrimary,
-          todayHighlightColor: appTheme.colorPrimary,
-          initialSelectedDate: DateTime.now(),
-          view: DateRangePickerView.month,
-          selectionMode: DateRangePickerSelectionMode.single,
-          onSelectionChanged: selectionChanged,
-        ),
+      child: SfDateRangePicker(
+        initialDisplayDate: DateTime.now(),
+        minDate: DateTime.now(),
+        selectionColor: appTheme.colorPrimary,
+        todayHighlightColor: appTheme.colorPrimary,
+        initialSelectedDate: DateTime.now(),
+        view: DateRangePickerView.month,
+        selectionMode: DateRangePickerSelectionMode.single,
+        onSelectionChanged: selectionChanged,
       ),
     );
   }
