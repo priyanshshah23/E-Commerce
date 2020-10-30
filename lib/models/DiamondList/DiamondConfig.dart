@@ -1118,16 +1118,17 @@ openSharePopUp(BuildContext context) {
 }
 
 openAddReminder(BuildContext context, ActionClick actionClick) {
+  DateUtilities dateUtilities = DateUtilities();
   List<StoneModel> reminderList = [
     StoneModel(
         ReminderType.ReminderTypeToday, R.string().commonString.laterToday,
         subtitle: "6:00 pm", image: sunrise),
     StoneModel(
         ReminderType.ReminderTypeTomorrow, R.string().commonString.toMorrow,
-        subtitle: " Fri 8:00 am", image: sun),
+        subtitle: " ${dateUtilities.getTomorrowDay(DateTime.now())} 8:00 am", image: sun),
     StoneModel(
         ReminderType.ReminderTypeNextWeek, R.string().commonString.nextWeek,
-        subtitle: "Thu 8:00 am", image: calender_week),
+        subtitle: "${dateUtilities.getNextWeekDay(DateTime.now())} 8:00 am", image: calender_week),
     StoneModel(
         ReminderType.ReminderTypeCustom, R.string().commonString.chooseAnother,
         subtitle: R.string().commonString.dateTime, image: calender),

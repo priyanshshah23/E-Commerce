@@ -73,7 +73,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   DiamondConfig diamondConfig;
   int moduleType;
 
-
   List<DiamondDetailImagePagerModel> arrImages =
       List<DiamondDetailImagePagerModel>();
 
@@ -293,105 +292,78 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       ),
       bottomNavigationBar: getBottomTab(),
       body: SafeArea(
-        child: Padding(
-            padding: EdgeInsets.only(
-                top: getSize(20), left: getSize(20), right: getSize(20)),
-            child: Container(
-              child: ListView(
-                shrinkWrap: true,
-                physics: ClampingScrollPhysics(),
-                children: <Widget>[
+        child: Container(
+          // color: Colors.red,
+          child: ListView(
+            shrinkWrap: true,
+            physics: ClampingScrollPhysics(),
+            children: <Widget>[
+              Stack(
+                children: [
                   Container(
-                    child: Center(
-                      child: Container(
-                        height: getSize(36),
-                        decoration: BoxDecoration(
-                            color: appTheme.whiteColor,
-                            borderRadius: BorderRadius.circular(getSize(5)),
-                            border: Border.all(color: appTheme.colorPrimary)),
-                        child: SingleChildScrollView(
-                          physics: ClampingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            // scrollDirection: Axis.horizontal,
-                            children: [
-                              for (var i = 0; i < arrImages.length; i++)
-                                InkWell(
-                                  onTap: () {
-                                    _controller.index = i;
-                                    _handleTabSelection();
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: arrImages[i].isSelected
-                                          ? appTheme.colorPrimary
-                                          : Colors.transparent,
-                                      border: Border(
-                                        left: BorderSide(
-                                          color: appTheme.colorPrimary,
-                                          width: (i == 0)
-                                              ? getSize(0)
-                                              : getSize(0.5),
-                                        ),
-                                        right: BorderSide(
-                                          color: appTheme.colorPrimary,
-                                          width: (i == arrImages.length - 1)
-                                              ? getSize(0)
-                                              : getSize(0.5),
-                                        ),
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                          top: getSize(8),
-                                          bottom: getSize(8),
-                                          left: getSize(20),
-                                          right: getSize(20)),
-                                      child: Center(
-                                        child: Text(
-                                          arrImages[i].title,
-                                          style: appTheme.black14TextStyle
-                                              .copyWith(
-                                                  color: arrImages[i].isSelected
-                                                      ? appTheme.whiteColor
-                                                      : appTheme.colorPrimary),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  Container(
-                    // color: Colors.yellow,
+                    color: Colors.yellow,
                     width: double.infinity,
-                    height: getSize(370),
-                    child: TabBarView(
-                      controller: _controller,
+                    height: getSize(286),
+                    child: getImage(),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: Row(
                       children: <Widget>[
-                        for (var i = 0; i < arrImages.length; i++)
-                          getTabBlock(arrImages[i]),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            getRowItem("Image"),
+                            getRowItem("Image"),
+                            getRowItem("Image"),
+                          ],
+                        )
                       ],
                     ),
-                  ),
-                  //
-                  SizedBox(
-                    height: getSize(16),
-                  ),
-                  getDiamondDetailComponents(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
+                  )
                 ],
               ),
-            )),
+              //
+              SizedBox(
+                height: getSize(16),
+              ),
+              getDiamondDetailComponents(),
+              SizedBox(
+                height: getSize(20),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  getRowItem(String type) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: getSize(10)),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(getSize(5)),
+            border: Border.all(color: appTheme.borderColor)),
+        child: Padding(
+          padding: EdgeInsets.all(getSize(10)),
+          child: Row(
+            children: <Widget>[
+              Image.asset(gallary),
+              SizedBox(
+                width: getSize(10),
+              ),
+              for (var model in arrImages)
+                model.title == type
+                    ? Text(
+                        model.arr.length.toString(),
+                        style: appTheme.primaryColor14TextStyle,
+                      )
+                    : SizedBox(),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -427,6 +399,14 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     }
   }
 
+  getImage() {
+    for (var model in arrImages) {
+      if (model.title == "Image") {
+        return getTabBlock(model);
+      }
+    }
+  }
+
   Widget getTabBlock(DiamondDetailImagePagerModel model) {
     return (model.isImage == false)
         ? Container(
@@ -458,7 +438,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         : Column(
             children: [
               Container(
-                height: getSize(300),
+                height: getSize(286),
                 decoration: BoxDecoration(
                     color: appTheme.whiteColor,
                     // color: Colors.yellow,
@@ -486,97 +466,97 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
               //   height: getSize(16),
               // ),
               // model.arr != null && model.arr.length > 0
-              if (!isNullEmptyOrFalse(model.arr))
-                Container(
-                  // margin: EdgeInsets.only(top:getSize(16)),
-                  // color: Colors.red,
-                  height: getSize(70),
-                  child: Row(
-                    children: [
-                      // Image.asset(
-                      //   filterUnionArrow,
-                      //   width: getSize(14),
-                      //   height: getSize(14),
-                      // ),
-                      Icon(Icons.chevron_left),
-                      SizedBox(
-                        width: getSize(8),
-                      ),
-                      Expanded(
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: [
-                            for (var i = 0; i < model.arr.length; i++)
-                              Padding(
-                                padding: EdgeInsets.only(right: getSize(8)),
-                                child: InkWell(
-                                  onTap: () {
-                                    //
-                                    model.arr = model.arr.map((e) {
-                                      e.isSelected = false;
-                                      return e;
-                                    }).toList();
-                                    model.arr[i].isSelected = true;
-                                    model.subIndex = i;
-                                    setState(() {
-                                      //
-                                    });
-                                  },
-                                  child: Column(
-                                    children: <Widget>[
-                                      Container(
-                                        height: getSize(50),
-                                        width: getSize(70),
-                                        decoration: BoxDecoration(
-                                            color: appTheme.whiteColor,
-                                            // color: Colors.green,
-                                            borderRadius: BorderRadius.circular(
-                                                getSize(5)),
-                                            border: Border.all(
-                                                color: model.arr[i].isSelected
-                                                    ? appTheme.colorPrimary
-                                                    : appTheme.lightBGColor)),
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              left: getSize(4),
-                                              right: getSize(4),
-                                              top: getSize(4),
-                                              bottom: getSize(4)),
-                                          child: getImageView(
-                                            model.arr[i].url,
-                                            height: getSize(30),
-                                            width: getSize(30),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            EdgeInsets.only(top: getSize(3)),
-                                        child: Text(
-                                          model.arr[i].title,
-                                          style: appTheme
-                                              .blackNormal14TitleColorblack,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              )
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: getSize(8),
-                      ),
-                      // Image.asset(
-                      //   filterRightArrow,
-                      //   width: getSize(14),
-                      //   height: getSize(14),
-                      // ),
-                      Icon(Icons.chevron_right),
-                    ],
-                  ),
-                ),
+              // if (!isNullEmptyOrFalse(model.arr))
+              //   Container(
+              //     // margin: EdgeInsets.only(top:getSize(16)),
+              //     // color: Colors.red,
+              //     height: getSize(70),
+              //     child: Row(
+              //       children: [
+              //         // Image.asset(
+              //         //   filterUnionArrow,
+              //         //   width: getSize(14),
+              //         //   height: getSize(14),
+              //         // ),
+              //         Icon(Icons.chevron_left),
+              //         SizedBox(
+              //           width: getSize(8),
+              //         ),
+              //         Expanded(
+              //           child: ListView(
+              //             scrollDirection: Axis.horizontal,
+              //             children: [
+              //               for (var i = 0; i < model.arr.length; i++)
+              //                 Padding(
+              //                   padding: EdgeInsets.only(right: getSize(8)),
+              //                   child: InkWell(
+              //                     onTap: () {
+              //                       //
+              //                       model.arr = model.arr.map((e) {
+              //                         e.isSelected = false;
+              //                         return e;
+              //                       }).toList();
+              //                       model.arr[i].isSelected = true;
+              //                       model.subIndex = i;
+              //                       setState(() {
+              //                         //
+              //                       });
+              //                     },
+              //                     child: Column(
+              //                       children: <Widget>[
+              //                         Container(
+              //                           height: getSize(50),
+              //                           width: getSize(70),
+              //                           decoration: BoxDecoration(
+              //                               color: appTheme.whiteColor,
+              //                               // color: Colors.green,
+              //                               borderRadius: BorderRadius.circular(
+              //                                   getSize(5)),
+              //                               border: Border.all(
+              //                                   color: model.arr[i].isSelected
+              //                                       ? appTheme.colorPrimary
+              //                                       : appTheme.lightBGColor)),
+              //                           child: Padding(
+              //                             padding: EdgeInsets.only(
+              //                                 left: getSize(4),
+              //                                 right: getSize(4),
+              //                                 top: getSize(4),
+              //                                 bottom: getSize(4)),
+              //                             child: getImageView(
+              //                               model.arr[i].url,
+              //                               height: getSize(30),
+              //                               width: getSize(30),
+              //                             ),
+              //                           ),
+              //                         ),
+              //                         Padding(
+              //                           padding:
+              //                               EdgeInsets.only(top: getSize(3)),
+              //                           child: Text(
+              //                             model.arr[i].title,
+              //                             style: appTheme
+              //                                 .blackNormal14TitleColorblack,
+              //                           ),
+              //                         )
+              //                       ],
+              //                     ),
+              //                   ),
+              //                 )
+              //             ],
+              //           ),
+              //         ),
+              //         SizedBox(
+              //           width: getSize(8),
+              //         ),
+              //         // Image.asset(
+              //         //   filterRightArrow,
+              //         //   width: getSize(14),
+              //         //   height: getSize(14),
+              //         // ),
+              //         Icon(Icons.chevron_right),
+              //       ],
+              //     ),
+              //   ),
             ],
           );
   }
@@ -855,6 +835,4 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       Navigator.pop(context, true);
     }, moduleType: moduleType);
   }
-
-
 }

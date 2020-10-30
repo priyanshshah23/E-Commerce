@@ -57,20 +57,23 @@ class _AddDemandState extends State<AddDemand> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.symmetric(vertical: getSize(10)),
+              padding: EdgeInsets.only(bottom: getSize(20)),
               child: Text(
                 R.string().commonString.addDemand,
                 style: appTheme.blackSemiBold18TitleColorblack,
               ),
             ),
-            Form(
-              key: _formKey,
-              autovalidate: _autoValidate,
-              child: getDiamondTitleTextField(),
+            Padding(
+              padding: EdgeInsets.only(bottom: getSize(10)),
+              child: Form(
+                key: _formKey,
+                autovalidate: _autoValidate,
+                child: getDiamondTitleTextField(),
+              ),
             ),
             getDateRangePicker(),
             Padding(
-              padding: EdgeInsets.only(top: getSize(8)),
+              padding: EdgeInsets.only(top: getSize(20)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -136,6 +139,7 @@ class _AddDemandState extends State<AddDemand> {
           minDate: DateTime.now(),
           selectionColor: appTheme.colorPrimary,
           todayHighlightColor: appTheme.colorPrimary,
+          initialSelectedDate: DateTime.now(),
           view: DateRangePickerView.month,
           selectionMode: DateRangePickerSelectionMode.single,
           onSelectionChanged: selectionChanged,
