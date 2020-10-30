@@ -52,29 +52,54 @@ class NavigationUtilities {
     ));
   }
 
-  /// A convenience method to push a new [route] to the [Navigator].
-  static void pushRoute(String route,
-      {RouteType type = RouteType.fade, Map args}) {
+  static Future<dynamic> pushRoute(String route,
+      {RouteType type = RouteType.fade, Map args}) async {
     if (args == null) {
       args = Map<String, dynamic>();
     }
     args["routeType"] = type;
-    key.currentState.pushNamed(route, arguments: args);
+    return await key.currentState.pushNamed(
+      route,
+      arguments: args,
+    );
   }
 
   /// A convenience method to push a named replacement route.
-  static void pushReplacementNamed(String route,
+  static Future<dynamic> pushReplacementNamed(String route,
       {RouteType type = RouteType.fade, Map args}) {
     if (args == null) {
       args = Map<String, dynamic>();
     }
     args["routeType"] = type;
-
     key.currentState.pushReplacementNamed(
       route,
       arguments: args,
     );
   }
+
+  /// A convenience method to push a new [route] to the [Navigator].
+//  static void pushRoute(String route,
+//      {RouteType type = RouteType.fade, Map args}) {
+//    if (args == null) {
+//      args = Map<String, dynamic>();
+//    }
+//    args["routeType"] = type;
+//    key.currentState.pushNamed(route, arguments: args);
+//  }
+//
+//  /// A convenience method to push a named replacement route.
+//  static void pushReplacementNamed(String route,
+//      {RouteType type = RouteType.fade, Map args}) {
+//    if (args == null) {
+//      args = Map<String, dynamic>();
+//    }
+//    args["routeType"] = type;
+//
+//    key.currentState.pushReplacementNamed(
+//      route,
+//      arguments: args,
+//    );
+//  }
 
   /// Returns a [RoutePredicate] similar to [ModalRoute.withName] except it
   /// compares a list of route names.

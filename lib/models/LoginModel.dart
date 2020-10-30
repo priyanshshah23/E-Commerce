@@ -554,6 +554,7 @@ class Account {
   CountryList country;
   StateList state;
   CityList city;
+  List<Kyc> kyc;
 
   Account.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
@@ -621,6 +622,10 @@ class Account {
     showPublicly = json['showPublicly'];
     coverImage = json['coverImage'];
     isVerified = json['isVerified'];
+    if (json['kyc'] != null) {
+      kyc = new List<Kyc>();
+      json['kyc'].forEach((v) { kyc.add(new Kyc.fromJson(v)); });
+    }
     if (json["country"] is Map<String, dynamic>) {
       country = json['country'] != null
           ? new CountryList.fromJson(json['country'])
@@ -682,6 +687,9 @@ class Account {
         this.isSubscribeForNewGoodFavourite;
     data['isSubscribeForNewGoodPurchase'] = this.isSubscribeForNewGoodPurchase;
     data['isSubscribeForNotification'] = this.isSubscribeForNotification;
+    if (this.kyc != null) {
+      data['kyc'] = this.kyc.map((v) => v.toJson()).toList();
+    }
     data['gstNo'] = this.gstNo;
     data['panNo'] = this.panNo;
     data['verifyBy'] = this.verifyBy;
@@ -706,6 +714,22 @@ class Account {
     data['country'] = this.country;
     data['state'] = this.state;
     data['city'] = this.city;
+    return data;
+  }
+}
+
+class Kyc {
+  String path;
+
+  Kyc({this.path});
+
+  Kyc.fromJson(Map<String, dynamic> json) {
+    path = json['path'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['path'] = this.path;
     return data;
   }
 }

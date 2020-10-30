@@ -93,7 +93,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                 top: getSize(20),
                                 left: getSize(20),
                                 right: getSize(20),
-                                bottom: getSize(10)),
+                                bottom: getSize(10),),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[

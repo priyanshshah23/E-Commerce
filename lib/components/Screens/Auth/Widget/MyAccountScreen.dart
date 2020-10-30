@@ -186,7 +186,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       onTap: () {
         Map<String, dynamic> dict = new HashMap();
         dict[ArgumentConstant.IsFromDrawer] = false;
-        NavigationUtilities.pushRoute(ProfileList.route, args: dict);
+        NavigationUtilities.pushRoute(ProfileList.route, args: dict).then((value) {
+          setState(() {});
+        });
       },
       child: Container(
         decoration: BoxDecoration(
@@ -216,8 +218,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                       borderRadius:
                           BorderRadius.all(Radius.circular(getSize(25))),
                       child: getImageView(
-                        app.resolve<PrefUtils>().getUserDetails().photoId,
-                        placeHolderImage: userTemp,
+                        app.resolve<PrefUtils>().getUserDetails().profileImage,
+                        placeHolderImage: placeHolder,
                         height: getSize(50),
                         width: getSize(50),
                       ),
