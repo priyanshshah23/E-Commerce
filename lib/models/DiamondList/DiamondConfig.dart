@@ -638,6 +638,10 @@ class DiamondConfig {
           diamonds.bidPricePerCarat = element.getBidFinalRate();
           diamonds.bidDiscount = element.getbidFinalDiscount();
           break;
+
+        case DiamondTrackConstant.TRACK_TYPE_REMINDER:
+          diamonds.reminderDate = date;
+          break;
       }
       req.diamonds.add(diamonds);
     });
@@ -1284,23 +1288,16 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
                                     dateTime.toUtc().toIso8601String();
                                 switch (stoneModel.id) {
                                   case ReminderType.ReminderTypeToday:
-                                    DateTime dt = DateTime(
-                                        dateTime.year,
-                                        dateTime.month,
-                                        dateTime.day,
-                                        18,
-                                        0,
-                                        0,
-                                        0);
+                                    DateTime dt = DateTime(dateTime.year,
+                                        dateTime.month, dateTime.day, 18, 0, 0);
                                     date = dt.toUtc().toIso8601String();
                                     break;
                                   case ReminderType.ReminderTypeTomorrow:
                                     DateTime dt = DateTime(
                                         dateTime.year,
                                         dateTime.month,
-                                        dateTime.day,
+                                        dateTime.day + 1,
                                         8,
-                                        0,
                                         0,
                                         0);
                                     dt.add(Duration(days: 1));
@@ -1310,9 +1307,8 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
                                     DateTime dt = DateTime(
                                         dateTime.year,
                                         dateTime.month,
-                                        dateTime.day,
-                                        18,
-                                        0,
+                                        dateTime.day + 7,
+                                        8,
                                         0,
                                         0);
 
