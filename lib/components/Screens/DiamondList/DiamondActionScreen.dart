@@ -95,6 +95,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appTheme.whiteColor,
+      resizeToAvoidBottomInset: false,
       appBar: getAppBar(
         context,
         diamondConfig.getActionScreenTitle(actionType),
@@ -105,26 +106,39 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
       ),
       bottomNavigationBar: getBottomTab(),
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            DiamondListHeader(
-              diamondCalculation: diamondCalculation,
-            ),
-            SizedBox(
-              height: getSize(20),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: diamondList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return DiamondItemWidget(
-                      item: diamondList[index], actionClick: (manageClick) {});
-                },
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              DiamondListHeader(
+                diamondCalculation: diamondCalculation,
               ),
-            ),
-            getOfferDetail(),
-            getOrderDetail(),
-          ],
+              SizedBox(
+                height: getSize(20),
+              ),
+              Container(
+                child: ListView.builder(
+                  // primary: false,
+                  shrinkWrap: true,
+                  itemCount: diamondList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return DiamondItemWidget(
+                        item: diamondList[index],
+                        actionClick: (manageClick) {});
+                  },
+                ),
+              ),
+              SizedBox(
+                height: getSize(20),
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  getOfferDetail(),
+                  getOrderDetail(),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -287,7 +301,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                     ),
                     getCommentTextField(),
                     Padding(
-                      padding:  EdgeInsets.only(top: getSize(8)),
+                      padding: EdgeInsets.only(top: getSize(8)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -298,7 +312,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                               bottom: getSize(5),
                             ),
                             child: Text(
-                              R.string().screenTitle.note+":",
+                              R.string().screenTitle.note + ":",
                               style: appTheme.error12TextStyle,
                             ),
                           ),

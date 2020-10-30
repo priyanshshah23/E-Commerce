@@ -39,6 +39,7 @@ class CreateDiamondTrackReq {
 class Diamonds {
   String diamond;
   String remarks;
+  String reminderDate;
 
   num bidPricePerCarat;
   num bidAmount;
@@ -52,16 +53,18 @@ class Diamonds {
   num newAmount;
   num newDiscount;
 
-  Diamonds(
-      {this.diamond,
-      this.trackPricePerCarat,
-      this.trackAmount,
-      this.newDiscount,
-      this.trackDiscount,
-      this.bidPricePerCarat,
-      this.bidAmount,
-      this.bidDiscount,
-      this.remarks});
+  Diamonds({
+    this.diamond,
+    this.trackPricePerCarat,
+    this.trackAmount,
+    this.newDiscount,
+    this.trackDiscount,
+    this.bidPricePerCarat,
+    this.bidAmount,
+    this.bidDiscount,
+    this.remarks,
+    this.reminderDate,
+  });
 
   Diamonds.fromJson(Map<String, dynamic> json) {
     diamond = json['diamond'];
@@ -78,6 +81,7 @@ class Diamonds {
     newPricePerCarat = json['newPricePerCarat'];
     newAmount = json['newAmount'];
     vStnId = json['vStnId'];
+    reminderDate = json['reminderDate'];
   }
 
   Map<String, dynamic> toJson() {
@@ -100,6 +104,7 @@ class Diamonds {
       data['newPricePerCarat'] = this.newPricePerCarat;
     if (this.newAmount != null) data['newAmount'] = this.newAmount;
     if (this.vStnId != null) data['vStnId'] = this.vStnId;
+    if (this.reminderDate != null) data['reminderDate'] = this.reminderDate;
     return data;
   }
 }
@@ -170,7 +175,8 @@ class TrackBlockResp extends BaseApiResp {
   TrackBlockResp({this.data});
 
   TrackBlockResp.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
-    data = json['data'] != null ? new TrackBlockData.fromJson(json['data']) : null;
+    data =
+        json['data'] != null ? new TrackBlockData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {

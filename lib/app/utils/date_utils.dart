@@ -73,6 +73,34 @@ class DateUtilities {
     }
   }
 
+  String getNextWeekDay(DateTime date){
+    final nextWeekDay = DateTime(date.year, date.month, date.day + 7);
+    return getDayFromWeekDay(nextWeekDay.weekday);
+  }
+  
+  String getTomorrowDay(DateTime date){
+    final tomorrow = DateTime(date.year, date.month, date.day + 1);
+    return (getDayFromWeekDay(tomorrow.weekday));
+  }
+
+  String getDayFromWeekDay(int weekDay){
+    if(weekDay == 1){
+      return "Mon";
+    } else if(weekDay == 2){
+      return "Tue";
+    } else if(weekDay == 3){
+      return "Wed";
+    } else if(weekDay == 4){
+      return "Thur";
+    } else if(weekDay == 5){
+      return "Fri";
+    } else if(weekDay == 6){
+      return "Sat";
+    } else{
+      return "Sun";
+    }
+  }
+
   static const String kMainSourceFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 
   static const kSourceFormat = "yyyy-MM-dd'T'HH:mm:ssZ";
