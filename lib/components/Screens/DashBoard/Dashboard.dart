@@ -166,12 +166,11 @@ class _DashboardState extends StatefulScreenWidgetState {
                       borderRadius:
                           BorderRadius.all(Radius.circular(getSize(15))),
                       child: getImageView(
-                        "",
-                        placeHolderImage: element.image,
-                        height: getSize(30),
-                        width: getSize(30),
-                        fit: BoxFit.cover,
-                      ),
+                          app.resolve<PrefUtils>().getUserDetails().profileImage,
+                          placeHolderImage: placeHolder,
+                          height: getSize(30),
+                          width: getSize(30),
+                        ),
                     ),
                   ),
                 ),
@@ -1820,6 +1819,8 @@ class _DashboardState extends StatefulScreenWidgetState {
   openProfile() {
     Map<String, dynamic> dict = new HashMap();
     dict[ArgumentConstant.IsFromDrawer] = false;
-    NavigationUtilities.pushRoute(MyAccountScreen.route, args: dict);
+    NavigationUtilities.pushRoute(MyAccountScreen.route, args: dict).then((value) {
+      setState(() {});
+    });
   }
 }

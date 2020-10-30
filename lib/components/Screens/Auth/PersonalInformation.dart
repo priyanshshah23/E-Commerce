@@ -429,7 +429,6 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
         imgProfile = imagePath;
       });
     }
-    callPersonalInformationApi(imagePath: imgProfile);
   }
 
   uploadProfileImage(File imgFile, Function imagePath) async {
@@ -440,11 +439,12 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
     ).then((result) {
       if (result.code == CODE_OK) {
         String imgPath =
-        result.data.files != null && result.data.files.length > 0
-            ? result.data.files.first.absolutePath
+        result.detail.files != null && result.detail.files.length > 0
+            ? result.detail.files.first.absolutePath
             : "";
-        if (isStringEmpty(imgPath) == false) {
+        if (isNullEmptyOrFalse(imgPath) == false) {
           imagePath(imgPath);
+          callPersonalInformationApi(imagePath: imgPath);
         }
       }
       return;

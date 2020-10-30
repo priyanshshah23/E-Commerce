@@ -241,6 +241,8 @@ class CommonString {
   final String viewLessDetails;
   final String myDemand;
 
+  final String noDocument;
+
 
   const CommonString({
     //Add demand
@@ -474,5 +476,6 @@ class CommonString {
     this.dateTime = "Date & time",
     this.language = "Language",
     this.diamNow = "DiamNow",
+    this.noDocument = "No Documents Found",
   });
 }
