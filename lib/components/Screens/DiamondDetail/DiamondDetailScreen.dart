@@ -301,7 +301,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
               Stack(
                 children: [
                   Container(
-                    color: Colors.yellow,
+                    // color: Colors.yellow,
                     width: double.infinity,
                     height: getSize(286),
                     child: getImage(),
