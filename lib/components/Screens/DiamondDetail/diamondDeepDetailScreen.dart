@@ -204,7 +204,7 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
       children: <Widget>[
         Text(arrImages[index].title,style: appTheme.blackMedium16TitleColorblack,),
         Container(
-          // color: Colors.red,
+         
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -270,30 +270,8 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
     return (model.isImage == false)
         ? Container(
             height: getSize(245),
-            child: Stack(
-              fit: StackFit.loose,
-              children: [
-                FutureBuilder<Widget>(
-                    future: getPDFView(context, model),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<Widget> snapshot) {
-                      if (snapshot.hasData) return snapshot.data;
-
-                      return Container(
-                        color: appTheme.whiteColor,
-                        child: Image.asset(splashLogo),
-                      );
-                    }),
-                // !isErroWhileLoading ?Icon(Icons.title) :SizedBox(),
-                if (isLoading)
-                  Center(
-                    child: SpinKitFadingCircle(
-                      color: appTheme.colorPrimary,
-                      size: getSize(30),
-                    ),
-                  ),
-              ],
-            ),
+            width : getSize(200),
+            child:getPDFView(context, model),
           )
         : Container(
             margin: EdgeInsets.only(right:getSize(10)),
@@ -317,18 +295,13 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
           );
   }
 
-  Future<WebView> getPDFView(
+  getPDFView(
     BuildContext context,
     DiamondDetailImagePagerModel model,
-  ) async {
-    String pdfUrl = (model.url == null || model.url.length == 0)
-        ? ""
-        : ((model.url.startsWith("images") || model.url.startsWith("/"))
-            ? (ApiConstants.imageBaseURL + model.url)
-            : model.url);
-    print( model.url);
+  )  {
+    
     return WebView(
-      
+       
       initialUrl: model.url,
       onPageStarted: (url) {
         // app.resolve<CustomDialogs>().showProgressDialog(context, "");
