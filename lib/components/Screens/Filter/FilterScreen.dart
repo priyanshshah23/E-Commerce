@@ -415,9 +415,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               title: R.string().commonString.savedSearch,
               hintText: R.string().commonString.searchSavedSearch,
               selectionOptions: saveSearchList,
-              applyFilterCallBack: (model) {
+              applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
                 Map<String, dynamic> dict = new HashMap();
-                dict["filterId"] = model.id;
+                dict["filterId"] = selectedItem.id;
                 dict[ArgumentConstant.ModuleType] =
                     DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
                 NavigationUtilities.pushRoute(
@@ -454,9 +454,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 hintText: R.string().commonString.searchSavedSearch,
                 title: R.string().commonString.savedSearch,
                 selectionOptions: saveSearchList,
-                applyFilterCallBack: (model) {
+                applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
                   Map<String, dynamic> dict = new HashMap();
-                  dict["filterId"] = model.id;
+                  dict["filterId"] = selectedItem.id;
                   dict[ArgumentConstant.ModuleType] =
                       DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
                   NavigationUtilities.pushRoute(

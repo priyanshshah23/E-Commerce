@@ -435,8 +435,8 @@ class _CompanyInformationState extends State<CompanyInformation>
                   title: R.string().commonString.selectCountry,
                   hintText: R.string().commonString.searchCountry,
                   selectionOptions: countryList,
-                  applyFilterCallBack: (model) {
-                    if (_countryController.text.toLowerCase() != model.title.toLowerCase()) {
+                  applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
+                    if (_countryController.text.toLowerCase() != selectedItem.title.toLowerCase()) {
                       _stateController.text = "";
                       _cityController.text = "";
                       this.cityList.clear();
@@ -447,10 +447,10 @@ class _CompanyInformationState extends State<CompanyInformation>
                       selectedStateItem = -1;
                     }
                     countryList.forEach((value) => value.isSelected = false);
-                    countryList.firstWhere((value) => value == model).isSelected = true;
-                    selectedCountryItem = countryList.indexOf(model);
-                    _countryController.text = model.title;
-                    _callApiForStateList(countryId: model.id);
+                    countryList.firstWhere((value) => value == selectedItem).isSelected = true;
+                    selectedCountryItem = countryList.indexOf(selectedItem);
+                    _countryController.text = selectedItem.title;
+                    _callApiForStateList(countryId: selectedItem.id);
                   },
                 ),
               );
@@ -501,20 +501,20 @@ class _CompanyInformationState extends State<CompanyInformation>
                         title: R.string().commonString.selectState,
                         hintText: R.string().commonString.searchState,
                         selectionOptions: stateList,
-                        applyFilterCallBack: (model) {
-                          if (_stateController.text != model.title) {
+                        applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
+                          if (_stateController.text != selectedItem.title) {
                             _cityController.text = "";
                             this.cityList.clear();
                             selectedCityItem = -1;
                             cityList.forEach((element) {element.isSelected = false;});
                           }
                           stateList.forEach((value) => value.isSelected = false);
-                          stateList.firstWhere((value) => value == model).isSelected = true;
-                          selectedStateItem = stateList.indexOf(model);
-                          _stateController.text = model.title;
+                          stateList.firstWhere((value) => value == selectedItem).isSelected = true;
+                          selectedStateItem = stateList.indexOf(selectedItem);
+                          _stateController.text = selectedItem.title;
                           _callApiForCityList(
                               countryId: countryList[selectedCountryItem].id,
-                              stateId: model.id);
+                              stateId: selectedItem.id);
                         },
                       ));
                 });
@@ -570,11 +570,11 @@ class _CompanyInformationState extends State<CompanyInformation>
                           title: R.string().commonString.selectCity,
                           hintText: R.string().commonString.searchCity,
                           selectionOptions: cityList,
-                          applyFilterCallBack: (model) {
+                          applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
                             cityList.forEach((value) => value.isSelected = false);
-                            cityList.firstWhere((value) => value == model).isSelected = true;
-                            selectedCityItem = cityList.indexOf(model);
-                            _cityController.text = model.title;
+                            cityList.firstWhere((value) => value == selectedItem).isSelected = true;
+                            selectedCityItem = cityList.indexOf(selectedItem);
+                            _cityController.text = selectedItem.title;
                           },
                         ));
                   });
@@ -624,11 +624,11 @@ class _CompanyInformationState extends State<CompanyInformation>
                       title: R.string().commonString.selectBusinessType,
                       hintText: R.string().commonString.searchBusinessType,
                       selectionOptions: businessTypeList,
-                      applyFilterCallBack: (model) {
+                      applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
                         businessTypeList.forEach((value) => value.isSelected = false);
-                        businessTypeList.firstWhere((value) => value == model).isSelected = true;
-                        selectedBusinessItem = businessTypeList.indexOf(model);
-                        _businessTypeController.text = model.title;
+                        businessTypeList.firstWhere((value) => value == selectedItem).isSelected = true;
+                        selectedBusinessItem = businessTypeList.indexOf(selectedItem);
+                        _businessTypeController.text = selectedItem.title;
                       }));
             });
       },
@@ -756,11 +756,11 @@ class _CompanyInformationState extends State<CompanyInformation>
                     title: R.string().commonString.selectCity,
                     hintText: R.string().commonString.searchCity,
                     selectionOptions: cityList,
-                    applyFilterCallBack: (model) {
+                    applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
                       cityList.forEach((value) => value.isSelected = false);
-                      cityList.firstWhere((value) => value == model).isSelected = true;
-                      selectedCityItem = cityList.indexOf(model);
-                      _cityController.text = model.title;
+                      cityList.firstWhere((value) => value == selectedItem).isSelected = true;
+                      selectedCityItem = cityList.indexOf(selectedItem);
+                      _cityController.text = selectedItem.title;
                     },
                   ));
             });
@@ -807,18 +807,18 @@ class _CompanyInformationState extends State<CompanyInformation>
                     title: R.string().commonString.selectCountry,
                     hintText: R.string().commonString.searchCountry,
                     selectionOptions: countryList,
-                    applyFilterCallBack: (model) {
-                      if (_countryController.text != model.title) {
+                    applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
+                      if (_countryController.text != selectedItem.title) {
                         _stateController.text = "";
                         _cityController.text = "";
                         this.cityList.clear();
                         this.stateList.clear();
                       }
                       countryList.forEach((value) => value.isSelected = false);
-                      countryList.firstWhere((value) => value == model).isSelected = true;
-                      selectedCountryItem = countryList.indexOf(model);
-                      _countryController.text = model.title;
-                      _callApiForStateList(countryId: model.id);
+                      countryList.firstWhere((value) => value == selectedItem).isSelected = true;
+                      selectedCountryItem = countryList.indexOf(selectedItem);
+                      _countryController.text = selectedItem.title;
+                      _callApiForStateList(countryId: selectedItem.id);
                     },
                   ));
             });
@@ -872,18 +872,18 @@ class _CompanyInformationState extends State<CompanyInformation>
                     title: R.string().commonString.selectState,
                     hintText: R.string().commonString.searchState,
                     selectionOptions: stateList,
-                    applyFilterCallBack: (model) {
-                      if (_stateController.text != model.title) {
+                    applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
+                      if (_stateController.text != selectedItem.title) {
                         _cityController.text = "";
                         this.cityList.clear();
                       }
                       stateList.forEach((value) => value.isSelected = false);
-                      stateList.firstWhere((value) => value == model).isSelected = true;
-                      selectedStateItem = stateList.indexOf(model);
-                      _stateController.text = model.title;
+                      stateList.firstWhere((value) => value == selectedItem).isSelected = true;
+                      selectedStateItem = stateList.indexOf(selectedItem);
+                      _stateController.text = selectedItem.title;
                       _callApiForCityList(
                           countryId: countryList[selectedCountryItem].id,
-                          stateId: model.id);
+                          stateId: selectedItem.id);
                     },
                   ));
             });
