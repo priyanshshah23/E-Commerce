@@ -88,9 +88,8 @@ class _AddDemandState extends State<AddDemand> {
                         },
                         borderRadius: getSize(5),
                         text: R.string().commonString.cancel,
-                        textColor: ColorConstants.colorPrimary,
-                        backgroundColor:
-                            ColorConstants.backgroundColorForCancleButton,
+                        textColor: appTheme.colorPrimary,
+                        backgroundColor: appTheme.lightColorPrimary,
                       ),
                     ),
                   ),

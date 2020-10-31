@@ -12,7 +12,10 @@ class ThemeHelper {
 
   static Stream<String> appthemeString = controller.stream;
 
-  static Map<String, BaseTheme> _supportedThemes = {};
+  static Map<String, BaseTheme> _supportedThemes = {
+    "white": BaseTheme(),
+    "dark": DarkTheme(),
+  };
 
   static BaseTheme _getDefaultTheme() {
     //return default strings if locale is not set
@@ -34,6 +37,11 @@ class ThemeHelper {
     _appTheme = _newTheme;
     controller.add(_newTheme);
   }
+}
+
+class DarkTheme extends BaseTheme {
+  @override
+  Color get colorPrimary => Colors.pink;
 }
 
 class BaseTheme {
@@ -289,7 +297,7 @@ class BaseTheme {
         color: colorPrimary,
         fontWeight: FontWeight.normal);
   }
-  
+
   TextStyle get blue12TextStyle {
     return TextStyle(
         fontSize: getFontSize(12),

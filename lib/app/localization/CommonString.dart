@@ -31,6 +31,7 @@ class CommonString {
   final String uploadCap;
   final String yesCancelCap;
   final String ok;
+  final String home;
   final String noDiamondFound;
   final String fetchLocationMessage;
   final String yes;
@@ -188,6 +189,15 @@ class CommonString {
   final String confirmStone;
   final String confirm;
 
+  final String goToMyOrder;
+  final String goToMyWatchList;
+  final String gotToMyHold;
+  final String gotToMyEnquiry;
+  final String gotToMyOffer;
+  final String gotToMyBid;
+  final String gotToMyReminder;
+  final String gotToMyComments;
+
   //Colo range
   final String color;
   final String date;
@@ -244,7 +254,6 @@ class CommonString {
 
   final String noDocument;
 
-
   const CommonString({
     //Add demand
     this.addDemand = "Add demand",
@@ -257,7 +266,6 @@ class CommonString {
     this.viewDetails = "View Details",
     this.viewLessDetails = "View Less Details",
     this.myDemand = "My Demand",
-
     this.date = "Date",
     this.selectTime = "Select Time",
     this.selectDate = "Select Date",
@@ -297,6 +305,15 @@ class CommonString {
     this.uploadCap = "UPLOAD",
     this.yesCancelCap = "YES, CANCEL",
     this.ok = "Ok",
+    this.home = "Home",
+    this.goToMyWatchList = "Go to My Watchlist",
+    this.goToMyOrder = "Go to My Order",
+    this.gotToMyOffer = "Go to My Offer",
+    this.gotToMyHold = "Go to My Hold",
+    this.gotToMyEnquiry = "Go to My Enquiry",
+    this.gotToMyBid = "Go to My Bid",
+    this.gotToMyReminder = "Go to My Reminder",
+    this.gotToMyComments = "Go to My Notes",
     this.yes = "Yes",
     this.no = "No",
     this.selectCountry = "Select Country",
