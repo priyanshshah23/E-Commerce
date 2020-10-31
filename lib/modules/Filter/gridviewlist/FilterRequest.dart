@@ -232,12 +232,12 @@ class FilterDataSource {
                   arr.map((e) => e[item.apiKey]).toList();
 
               for (var model in arrSelected) {
-                List<Master> arrMaster = item.masters
-                    .where((element) =>
-                        element.fromCarat.toString() ==
-                            model[">="].toString() &&
-                        element.toCarat.toString() == model["<="].toString())
-                    .toList();
+                List<Master> arrMaster = item.masters.where((element) {
+                  return element.group.split("-")[0].toString() ==
+                          model[">="].toString() &&
+                      element.group.split("-")[1].toString() ==
+                          model["<="].toString();
+                }).toList();
                 if (!isNullEmptyOrFalse(arrMaster)) {
                   arrMaster.first.isSelected = true;
                 } else {

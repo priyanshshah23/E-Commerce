@@ -4,6 +4,7 @@ import 'package:diamnow/app/theme/settings_models_provider.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Splash.dart';
 import 'package:diamnow/modules/ThemeSetting.dart';
 import 'package:flutter/foundation.dart';
@@ -79,6 +80,8 @@ class _BaseState extends State<Base> {
         '/ThemeSetting': (BuildContext context) => ThemeSetting(),
         DiamondCompareScreen.route: (BuildContext context) =>
             DiamondCompareScreen(ModalRoute.of(context).settings.arguments),
+        DiamondListScreen.route: (BuildContext context) =>
+            DiamondListScreen(ModalRoute.of(context).settings.arguments),
         DiamondActionScreen.route: (BuildContext context) =>
             DiamondActionScreen(ModalRoute.of(context).settings.arguments),
         DiamondDetailScreen.route: (BuildContext context) =>

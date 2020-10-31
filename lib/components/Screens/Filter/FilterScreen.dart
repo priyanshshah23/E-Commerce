@@ -408,16 +408,18 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         context: context,
         builder: (BuildContext context) {
           return Dialog(
+            insetPadding: EdgeInsets.symmetric(
+                horizontal: getSize(20), vertical: getSize(20)),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(getSize(25)),
             ),
-            child: DialogueList(
+            child: SelectionDialogue(
               title: R.string().commonString.savedSearch,
               hintText: R.string().commonString.searchSavedSearch,
               selectionOptions: saveSearchList,
-              applyFilterCallBack: (model) {
+              applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
                 Map<String, dynamic> dict = new HashMap();
-                dict["filterId"] = model.id;
+                dict["filterId"] = selectedItem.id;
                 dict[ArgumentConstant.ModuleType] =
                     DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
                 NavigationUtilities.pushRoute(
@@ -443,21 +445,22 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         for (var item in savedSearchResp.data.list) {
             saveSearchList.add(SelectionPopupModel(item.id, item.name, isSelected: false));
         };
-        saveSearchList.first.isSelected = true;
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return Dialog(
+              insetPadding: EdgeInsets.symmetric(
+                  horizontal: getSize(20), vertical: getSize(20)),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(getSize(25)),
               ),
-              child: DialogueList(
+              child: SelectionDialogue(
                 hintText: R.string().commonString.searchSavedSearch,
                 title: R.string().commonString.savedSearch,
                 selectionOptions: saveSearchList,
-                applyFilterCallBack: (model) {
+                applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
                   Map<String, dynamic> dict = new HashMap();
-                  dict["filterId"] = model.id;
+                  dict["filterId"] = selectedItem.id;
                   dict[ArgumentConstant.ModuleType] =
                       DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
                   NavigationUtilities.pushRoute(

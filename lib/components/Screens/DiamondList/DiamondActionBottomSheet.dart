@@ -492,6 +492,8 @@ Future showNotesDialog(BuildContext context, ActionClick actionClick) {
       return StatefulBuilder(
         builder: (context, setState) {
           return Dialog(
+            insetPadding: EdgeInsets.symmetric(
+                horizontal: getSize(20), vertical: getSize(20)),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(getSize(15)))),
             child: StatefulBuilder(builder: (context, StateSetter setsetter) {
@@ -1027,8 +1029,7 @@ Widget setInvoiceDropDown(
                   hintText: R.string().errorString.selectInvoiceDate,
                   maxLine: 1,
                   prefixWid: getCommonIconWidget(
-                      imageName: company,
-                      imageType: IconSizeType.small),
+                      imageName: company, imageType: IconSizeType.small),
                   keyboardType: TextInputType.text,
                   type: TextFieldType.DropDown,
                   inputController: _dateController,

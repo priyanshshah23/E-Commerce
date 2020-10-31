@@ -12,7 +12,10 @@ class ThemeHelper {
 
   static Stream<String> appthemeString = controller.stream;
 
-  static Map<String, BaseTheme> _supportedThemes = {};
+  static Map<String, BaseTheme> _supportedThemes = {
+    "white": BaseTheme(),
+    "dark": DarkTheme(),
+  };
 
   static BaseTheme _getDefaultTheme() {
     //return default strings if locale is not set
@@ -34,6 +37,11 @@ class ThemeHelper {
     _appTheme = _newTheme;
     controller.add(_newTheme);
   }
+}
+
+class DarkTheme extends BaseTheme {
+  @override
+  Color get colorPrimary => Colors.pink;
 }
 
 class BaseTheme {
@@ -197,6 +205,21 @@ class BaseTheme {
         fontWeight: FontWeight.normal);
   }
 
+  TextStyle get grey12TextStyle {
+    return TextStyle(
+        fontSize: getFontSize(12),
+        color: textGreyColor,
+        fontWeight: FontWeight.normal);
+  }
+
+  TextStyle get black12TextStyleMedium {
+    return TextStyle(
+        fontSize: getFontSize(12),
+        color: textColor,
+        fontWeight: FontWeight.w500);
+  }
+
+
   TextStyle get error12TextStyle {
     return TextStyle(
         fontSize: getFontSize(12),
@@ -209,13 +232,6 @@ class BaseTheme {
         fontSize: getFontSize(12),
         color: textColor,
         fontWeight: FontWeight.bold);
-  }
-
-  TextStyle get grey12TextStyle {
-    return TextStyle(
-        fontSize: getFontSize(12),
-        color: textGreyColor,
-        fontWeight: FontWeight.normal);
   }
 
   TextStyle get white16TextStyle {
@@ -289,7 +305,7 @@ class BaseTheme {
         color: colorPrimary,
         fontWeight: FontWeight.normal);
   }
-  
+
   TextStyle get blue12TextStyle {
     return TextStyle(
         fontSize: getFontSize(12),

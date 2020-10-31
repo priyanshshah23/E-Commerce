@@ -456,29 +456,42 @@ Future OpenConfirmationPopUp(BuildContext context,
                     Container(
                       margin: EdgeInsets.only(
                         top: getSize(24),
-                        left: getSize(31),
-                        right: getSize(31),
                       ),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           negativeBtnTitle != null
-                              ? InkWell(
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                    if (onClickCallback != null) {
-                                      onClickCallback(
-                                          ButtonType.NagativeButtonClick);
-                                    }
-                                  },
-                                  child: Container(
-                                    child: Padding(
-                                      padding: EdgeInsets.all(getSize(16)),
-                                      child: Text(
-                                        negativeBtnTitle,
-                                        style: appTheme
-                                            .commonAlertDialogueDescStyle
-                                            .copyWith(
-                                                color: appTheme.textColor),
+                              ? Expanded(
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      if (onClickCallback != null) {
+                                        onClickCallback(
+                                            ButtonType.NagativeButtonClick);
+                                      }
+                                    },
+                                    child: Container(
+                                      height: getSize(50),
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(getSize(5)),
+                                        color: appTheme.lightColorPrimary,
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                            getSize(8),
+                                            getSize(16),
+                                            getSize(8),
+                                            getSize(16)),
+                                        child: Text(
+                                          negativeBtnTitle,
+                                          textAlign: TextAlign.center,
+                                          style: appTheme
+                                              .commonAlertDialogueDescStyle
+                                              .copyWith(
+                                                  color: appTheme.colorPrimary,
+                                                  fontSize: getFontSize(15)),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -490,7 +503,7 @@ Future OpenConfirmationPopUp(BuildContext context,
                                 )
                               : SizedBox(),
                           Expanded(
-                            child: AppButton.flat(
+                            child: InkWell(
                               onTap: () {
                                 if (dismissPopup) {
                                   Navigator.pop(context);
@@ -500,10 +513,22 @@ Future OpenConfirmationPopUp(BuildContext context,
                                       ButtonType.PositveButtonClick);
                                 }
                               },
-                              borderRadius: 5,
-                              fitWidth: true,
-                              text: positiveBtnTitle,
-                              //isButtonEnabled: enableDisableSigninButton(),
+                              child: Container(
+                                height: getSize(50),
+                                decoration: BoxDecoration(
+                                    color: appTheme.colorPrimary,
+                                    borderRadius:
+                                        BorderRadius.circular(getSize(5)),
+                                    boxShadow: getBoxShadow(context)),
+                                child: Padding(
+                                  padding: EdgeInsets.all(getSize(16)),
+                                  child: Text(
+                                    positiveBtnTitle,
+                                    textAlign: TextAlign.center,
+                                    style: appTheme.white16TextStyle,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ],

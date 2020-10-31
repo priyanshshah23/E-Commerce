@@ -10,6 +10,9 @@ import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
+import 'package:diamnow/components/Screens/DashBoard/Widget/FeaturedStone.dart';
+import 'package:diamnow/components/Screens/DashBoard/Widget/RecentSearch.dart';
+import 'package:diamnow/components/Screens/DashBoard/Widget/StonesOfDay.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Notification/Notifications.dart';
@@ -281,7 +284,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                     getFeaturedSection(),
                     getStoneOfDaySection(),
                     getSavedSearchSection(),
-                    // getRecentSection(),
+                     getRecentSection(),
                     getSalesSection(),
                     SizedBox(
                       height: getSize(20),
@@ -489,6 +492,7 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   getFeaturedSection() {
+    return FeaturedStoneWidget();
     List<DiamondModel> arrStones = [];
     if (app
         .resolve<PrefUtils>()
@@ -561,6 +565,7 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   getStoneOfDaySection() {
+    return StoneOfDayWidget();
     List<DiamondModel> arrStones = [];
     if (app
         .resolve<PrefUtils>()
@@ -1211,6 +1216,7 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   getRecentSection() {
+    return RecentSearchWidget();
     return Padding(
       padding: EdgeInsets.only(
         left: getSize(Spacing.leftPadding),

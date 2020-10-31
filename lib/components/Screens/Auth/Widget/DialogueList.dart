@@ -8,33 +8,40 @@ import 'package:diamnow/models/Address/StateListModel.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:flutter/material.dart';
 
-class DialogueList extends StatefulWidget {
+class SelectionDialogue extends StatefulWidget {
   List<SelectionPopupModel> selectionOptions;
-  Function(SelectionPopupModel) applyFilterCallBack;
+  Function({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) applyFilterCallBack;
   String title = "Select Item";
   String hintText = "Search Item";
+  bool isSearchEnable;
+  bool isMultiSelectionEnable;
 
-  DialogueList(
+  SelectionDialogue(
       {this.selectionOptions,
       this.applyFilterCallBack,
       this.hintText,
-      this.title});
+      this.title,
+      this.isSearchEnable = true,
+      this.isMultiSelectionEnable = false,});
 
   @override
-  _DialogueListState createState() =>
-      _DialogueListState(selectionOptions, applyFilterCallBack,hintText,title);
+  _SelectionDialogueState createState() =>
+      _SelectionDialogueState(selectionOptions, applyFilterCallBack,hintText,title,isSearchEnable,isMultiSelectionEnable);
 }
 
-class _DialogueListState extends State<DialogueList> {
+class _SelectionDialogueState extends State<SelectionDialogue> {
   TextEditingController searchController = TextEditingController();
   List<SelectionPopupModel> selectionOptions;
   List<SelectionPopupModel> items = List();
-  Function(SelectionPopupModel) applyFilterCallBack;
+  Function({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) applyFilterCallBack;
   String title = "Select Item";
   String hintText = "Search Item";
+  bool isSearchEnable;
+  bool isMultiSelectionEnable;
 
-  _DialogueListState(
-      this.selectionOptions, this.applyFilterCallBack, this.hintText, this.title);
+
+  _SelectionDialogueState(
+      this.selectionOptions, this.applyFilterCallBack, this.hintText, this.title, this.isSearchEnable,this.isMultiSelectionEnable);
 
   @override
   void initState() {
@@ -73,7 +80,7 @@ class _DialogueListState extends State<DialogueList> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Container(
+                  isSearchEnable ? Container(
                     height: getSize(50),
                     child: TextField(
                       onChanged: (value) {
@@ -95,10 +102,10 @@ class _DialogueListState extends State<DialogueList> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5.0)))),
                     ),
-                  ),
-                  SizedBox(
+                  ) : SizedBox(),
+                  isSearchEnable ? SizedBox(
                     height: getSize(5),
-                  ),
+                  ) : SizedBox(),
                   ConstrainedBox(
                     constraints: BoxConstraints(
                         minHeight: 50,
@@ -109,8 +116,13 @@ class _DialogueListState extends State<DialogueList> {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pop();
-                              applyFilterCallBack(items[index]);
+                            if(isMultiSelectionEnable) {
+                              items[index].isSelected = !items[index].isSelected;
+                              setState(() {});
+                            } else {
+                              Navigator.of(context).pop();
+                              applyFilterCallBack(selectedItem : items[index]);
+                            }
                           },
                           child: Padding(
                             padding: EdgeInsets.symmetric(
@@ -144,6 +156,71 @@ class _DialogueListState extends State<DialogueList> {
                       },
                     ),
                   ),
+                  isMultiSelectionEnable ? Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: getSize(Spacing.leftPadding),
+                        vertical: getSize(16)),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              // alignment: Alignment.bottomCenter,
+                              padding: EdgeInsets.symmetric(
+                                vertical: getSize(15),
+                              ),
+                              decoration: BoxDecoration(
+                                color: appTheme.colorPrimary.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(getSize(5)),
+                              ),
+                              child: Text(
+                                R.string().commonString.cancel,
+                                textAlign: TextAlign.center,
+                                style: appTheme.blue14TextStyle
+                                    .copyWith(fontSize: getFontSize(16)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: getSize(20),
+                        ),
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              List<SelectionPopupModel> dummyList = List<SelectionPopupModel>();
+                              items.forEach((element) {
+                                if(element.isSelected) {
+                                  dummyList.add(element);
+                                }
+                              });
+                              applyFilterCallBack(multiSelectedItem : dummyList);
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              //alignment: Alignment.bottomCenter,
+                              padding: EdgeInsets.symmetric(
+                                vertical: getSize(15),
+                              ),
+                              decoration: BoxDecoration(
+                                  color: appTheme.colorPrimary,
+                                  borderRadius:
+                                  BorderRadius.circular(getSize(5)),
+                                  boxShadow: getBoxShadow(context)),
+                              child: Text(
+                                R.string().commonString.btnSubmit,
+                                textAlign: TextAlign.center,
+                                style: appTheme.white16TextStyle,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ) : SizedBox(),
                 ],
               ),
             ),
