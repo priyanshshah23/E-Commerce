@@ -91,13 +91,17 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   actionExtentRatio: 0.2,
                   child: Container(
                     margin: EdgeInsets.only(
-                      bottom: getSize(widget.item.isMatchPair &&
-                              (widget.item.borderType ==
-                                      BorderConstant.BORDER_LEFT_RIGHT ||
-                                  widget.item.borderType ==
-                                      BorderConstant.BORDER_TOP)
-                          ? getSize(1)
-                          : getSize(5)),
+                      bottom: getSize(
+                        widget.item.isMatchPair &&
+                                (widget.item.borderType ==
+                                        BorderConstant.BORDER_LEFT_RIGHT ||
+                                    widget.item.borderType ==
+                                        BorderConstant.BORDER_TOP)
+                            ? getSize(1)
+                            : widget.item.isAddToWatchList
+                                ? getSize(2)
+                                : getSize(5),
+                      ),
                       top: getSize(widget.item.isMatchPair &&
                               (widget.item.borderType ==
                                       BorderConstant.BORDER_LEFT_RIGHT ||
@@ -141,7 +145,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                       getIdShapeDetail(),
                                       getDymentionAndCaratDetail(),
                                       getTableDepthAndAmountDetail(),
-                                      getWatchListDetail(),
+                                      // getWatchListDetail(),
                                       getOfferDetail(),
                                       getBidDetail(),
                                     ],
@@ -170,6 +174,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 ),
               ),
             ),
+            getWatchListDetail(),
             // ),
           ],
         ),
@@ -318,18 +323,43 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
     DropDownItem item = DropDownItem(widget.item, DropDownItem.BACK_PER);
     return widget.item.isAddToWatchList
         ? Padding(
-            padding: EdgeInsets.only(top: getSize(5)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                getText(R.string().screenTitle.todayDiscPer + " :"),
-                getText(PriceUtilities.getPercent(widget.item?.back) ?? ""),
-                getText(R.string().screenTitle.expDiscPer + " :"),
-                popupList(widget.item, backPerList, item, (selectedValue) {
-                  widget.item.selectedBackPer = selectedValue;
-                  RxBus.post(true, tag: eventBusDropDown);
-                }, isPer: true),
-              ],
+            padding: EdgeInsets.only(bottom: getSize(8.0)),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(getSize(5)),
+                border: Border.all(color: appTheme.dividerColor),
+              ),
+              height: getSize(40),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      color: appTheme.borderColor,
+                      child: Center(
+                        child: Text(
+                          R.string().screenTitle.expDiscPer + " :",
+                          style: appTheme.black12TextStyle,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: getSize(1),
+                    child: Container(
+                      color: appTheme.borderColor,
+                      height: getSize(40),
+                    ),
+                  ),
+                  Expanded(
+                    child: popupList(widget.item, backPerList, item,
+                        (selectedValue) {
+                      widget.item.selectedBackPer = selectedValue;
+                      RxBus.post(true, tag: eventBusDropDown);
+                    }, isPer: true),
+                  ),
+                ],
+              ),
             ),
           )
         : Container();
@@ -561,18 +591,19 @@ class _DropDownItemState extends State<DropDownItem> {
     return Container(
       padding:
           EdgeInsets.symmetric(vertical: getSize(1), horizontal: getSize(10)),
-      decoration: BoxDecoration(
-          border: Border.all(color: appTheme.dividerColor),
-          borderRadius: BorderRadius.circular(getSize(5))),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          getText(widget.model.getSelectedDetail(widget.type)),
+          Text(
+            widget.model.getSelectedDetail(widget.type),
+            style: appTheme.black14TextStyle,
+          ),
           SizedBox(
             height: getSize(5),
           ),
           Icon(
             Icons.arrow_drop_down,
-            size: getSize(20),
+            size: getSize(24),
           ),
         ],
       ),

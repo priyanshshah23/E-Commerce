@@ -231,7 +231,7 @@ class ScreenTitle {
     this.note = "Note",
     this.hours = "Hours",
     this.addOffer = "Add Offer",
-    this.expDiscPer = "Exp Disc%",
+    this.expDiscPer = "Expected Discount%",
     this.todayDiscPer = "Today's Disc%",
     this.searchDiamond = "Search Result",
     this.basic = "Basic",
@@ -374,7 +374,6 @@ class ScreenTitle {
     this.manageAddress = "Manage Addresses",
     this.myAccount = "My Account",
     this.declaimer = "Disclaimer",
-
     this.shareStone = "Share Stone",
     this.addRemider = "Add reminder",
   });
