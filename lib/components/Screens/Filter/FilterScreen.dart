@@ -443,7 +443,6 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         for (var item in savedSearchResp.data.list) {
             saveSearchList.add(SelectionPopupModel(item.id, item.name, isSelected: false));
         };
-        saveSearchList.first.isSelected = true;
         showDialog(
           context: context,
           builder: (BuildContext context) {
