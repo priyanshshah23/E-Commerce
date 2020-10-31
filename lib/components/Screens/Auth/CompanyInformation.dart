@@ -34,16 +34,16 @@ class _CompanyInformationState extends State<CompanyInformation>
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _middleNameController = TextEditingController();
   final TextEditingController _addressLineOneController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController _addressLineTwoController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController _addressLineThreeController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
   final TextEditingController _companyCodeController = TextEditingController();
   final TextEditingController _whatsAppMobileController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController companyController = TextEditingController();
   final TextEditingController _pinCodeController = TextEditingController();
   final TextEditingController _countryController = TextEditingController();
@@ -51,9 +51,9 @@ class _CompanyInformationState extends State<CompanyInformation>
   final TextEditingController _cityController = TextEditingController();
   final TextEditingController _businessTypeController = TextEditingController();
   Country selectedDialogCountryForMobile =
-      CountryPickerUtils.getCountryByIsoCode("US");
+  CountryPickerUtils.getCountryByIsoCode("US");
   Country selectedDialogCountryForWhatsapp =
-      CountryPickerUtils.getCountryByIsoCode("US");
+  CountryPickerUtils.getCountryByIsoCode("US");
 
   var _focusCompanyName = FocusNode();
   var _focusLastName = FocusNode();
@@ -436,11 +436,15 @@ class _CompanyInformationState extends State<CompanyInformation>
                   hintText: R.string().commonString.searchCountry,
                   selectionOptions: countryList,
                   applyFilterCallBack: (model) {
-                    if (_countryController.text != model.title) {
+                    if (_countryController.text.toLowerCase() != model.title.toLowerCase()) {
                       _stateController.text = "";
                       _cityController.text = "";
                       this.cityList.clear();
                       this.stateList.clear();
+                      cityList.forEach((element) {element.isSelected = false;});
+                      stateList.forEach((element) {element.isSelected = false;});
+                      selectedCityItem = -1;
+                      selectedStateItem = -1;
                     }
                     countryList.forEach((value) => value.isSelected = false);
                     countryList.firstWhere((value) => value == model).isSelected = true;
@@ -501,6 +505,8 @@ class _CompanyInformationState extends State<CompanyInformation>
                           if (_stateController.text != model.title) {
                             _cityController.text = "";
                             this.cityList.clear();
+                            selectedCityItem = -1;
+                            cityList.forEach((element) {element.isSelected = false;});
                           }
                           stateList.forEach((value) => value.isSelected = false);
                           stateList.firstWhere((value) => value == model).isSelected = true;
@@ -550,7 +556,7 @@ class _CompanyInformationState extends State<CompanyInformation>
             if (cityList == null || cityList.length == 0) {
               _callApiForCityList(
                   countryId: countryList[selectedCountryItem].id,
-                  stateId: stateList[selectedStateItem].id,
+                  stateId: selectedStateItem == -1 ? userAccount.state.id : stateList[selectedStateItem].id,
                   isShowDialogue: true);
             } else {
               showDialog(
@@ -617,13 +623,13 @@ class _CompanyInformationState extends State<CompanyInformation>
                   child: DialogueList(
                       title: R.string().commonString.selectBusinessType,
                       hintText: R.string().commonString.searchBusinessType,
-              selectionOptions: businessTypeList,
-              applyFilterCallBack: (model) {
-                businessTypeList.forEach((value) => value.isSelected = false);
-                businessTypeList.firstWhere((value) => value == model).isSelected = true;
-                selectedBusinessItem = businessTypeList.indexOf(model);
-              _businessTypeController.text = model.title;
-              }));
+                      selectionOptions: businessTypeList,
+                      applyFilterCallBack: (model) {
+                        businessTypeList.forEach((value) => value.isSelected = false);
+                        businessTypeList.firstWhere((value) => value == model).isSelected = true;
+                        selectedBusinessItem = businessTypeList.indexOf(model);
+                        _businessTypeController.text = model.title;
+                      }));
             });
       },
       child: CommonTextfield(
@@ -651,8 +657,8 @@ class _CompanyInformationState extends State<CompanyInformation>
   }
 
   Widget popupList(
-          List<SelectionPopupModel> backPerList, Function(String) selectedValue,
-          {bool isPer = false}) =>
+      List<SelectionPopupModel> backPerList, Function(String) selectedValue,
+      {bool isPer = false}) =>
       PopupMenuButton<String>(
         shape: TooltipShapeBorder(arrowArc: 0.5),
         onSelected: (newValue) {
@@ -672,8 +678,8 @@ class _CompanyInformationState extends State<CompanyInformation>
       );
 
   getPopupItems(
-    String per,
-  ) {
+      String per,
+      ) {
     return PopupMenuItem(
       value: per,
       height: getSize(20),
@@ -726,8 +732,8 @@ class _CompanyInformationState extends State<CompanyInformation>
     NetworkCall<CityListResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().cityList(req),
-            context,
-            isProgress: true)
+        context,
+        isProgress: true)
         .then((resp) {
       cityList.clear();
       for (var item in resp.data) {
@@ -760,14 +766,14 @@ class _CompanyInformationState extends State<CompanyInformation>
             });
       }
     }).catchError(
-      (onError) => {
+          (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
             title: R.string().commonString.error,
             desc: onError.message,
             positiveBtnTitle: R.string().commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
-          _callApiForCityList(stateId: stateId, countryId: countryId);
-        })
+              _callApiForCityList(stateId: stateId, countryId: countryId);
+            })
       },
     );
   }
@@ -776,8 +782,8 @@ class _CompanyInformationState extends State<CompanyInformation>
     NetworkCall<CountryListResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().countryList(),
-            context,
-            isProgress: true)
+        context,
+        isProgress: true)
         .then((resp) {
       countryList.clear();
       for (var item in resp.data) {
@@ -818,7 +824,7 @@ class _CompanyInformationState extends State<CompanyInformation>
             });
       }
     }).catchError(
-      (onError) => {
+          (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(
           context,
           title: R.string().commonString.error,
@@ -842,8 +848,8 @@ class _CompanyInformationState extends State<CompanyInformation>
     NetworkCall<StateListResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().stateList(req),
-            context,
-            isProgress: true)
+        context,
+        isProgress: true)
         .then((resp) {
       stateList.clear();
       for (var item in resp.data) {
@@ -883,14 +889,14 @@ class _CompanyInformationState extends State<CompanyInformation>
             });
       }
     }).catchError(
-      (onError) => {
+          (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
             title: R.string().commonString.error,
             desc: onError.message,
             positiveBtnTitle: R.string().commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
-          _callApiForStateList(countryId: countryId);
-        })
+              _callApiForStateList(countryId: countryId);
+            })
       },
     );
   }
@@ -915,28 +921,28 @@ class _CompanyInformationState extends State<CompanyInformation>
     NetworkCall<CompanyInformationViewResp>()
         .makeCall(
             () => app
-                .resolve<ServiceModule>()
-                .networkService()
-                .companyInformation(req),
-            context,
-            isProgress: true)
+            .resolve<ServiceModule>()
+            .networkService()
+            .companyInformation(req),
+        context,
+        isProgress: true)
         .then((resp) async {
       User user = app.resolve<PrefUtils>().getUserDetails();
       user.account = resp.data;
       app.resolve<PrefUtils>().saveUser(user);
       app.resolve<CustomDialogs>().confirmDialog(
-            context,
-            title: R.string().commonString.successfully,
-            desc: resp.message,
-            positiveBtnTitle: R.string().commonString.ok,
-          );
+        context,
+        title: R.string().commonString.successfully,
+        desc: resp.message,
+        positiveBtnTitle: R.string().commonString.ok,
+      );
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
-            context,
-            title: R.string().commonString.error,
-            desc: onError.message,
-            positiveBtnTitle: R.string().commonString.btnTryAgain,
-          );
+        context,
+        title: R.string().commonString.error,
+        desc: onError.message,
+        positiveBtnTitle: R.string().commonString.btnTryAgain,
+      );
     });
   }
 
@@ -944,11 +950,11 @@ class _CompanyInformationState extends State<CompanyInformation>
     NetworkCall<CompanyInformationViewResp>()
         .makeCall(
             () => app
-                .resolve<ServiceModule>()
-                .networkService()
-                .companyInformationView(),
-            context,
-            isProgress: true)
+            .resolve<ServiceModule>()
+            .networkService()
+            .companyInformationView(),
+        context,
+        isProgress: true)
         .then((resp) async {
       if (resp.data != null) {
         userAccount = resp.data;
@@ -958,6 +964,8 @@ class _CompanyInformationState extends State<CompanyInformation>
         businessTypeList.forEach((element) {
           if (element.id == resp.data.businessType) {
             _businessTypeController.text = element.title;
+            selectedBusinessItem = businessTypeList.indexOf(element);
+            element.isSelected = true;
           }
         });
         _pinCodeController.text = resp.data.zipCode;
@@ -967,27 +975,30 @@ class _CompanyInformationState extends State<CompanyInformation>
         countryList.forEach((element) {
           if(element.id == resp.data.country.id) {
             selectedCountryItem =  countryList.indexOf(element);
+            element.isSelected = true;
           }
         });
         cityList.forEach((element) {
           if(element.id == resp.data.city.id) {
             selectedCityItem =  cityList.indexOf(element);
+            element.isSelected = true;
           }
         });
         stateList.forEach((element) {
           if(element.id == resp.data.state.id) {
             selectedStateItem =  stateList.indexOf(element);
+            element.isSelected = true;
           }
         });
         setState(() {});
       }
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
-            context,
-            title: R.string().commonString.error,
-            desc: onError.message,
-            positiveBtnTitle: R.string().commonString.btnTryAgain,
-          );
+        context,
+        title: R.string().commonString.error,
+        desc: onError.message,
+        positiveBtnTitle: R.string().commonString.btnTryAgain,
+      );
     });
   }
 
