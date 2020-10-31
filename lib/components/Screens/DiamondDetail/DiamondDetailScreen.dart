@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+// import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -84,7 +84,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
 
   //new design
   int currTab = 0;
-  ItemScrollController _scrollController = ItemScrollController();
+  // ItemScrollController _scrollController = ItemScrollController();
   ScrollController _scrollController1;
   double offSetForTab = 0.0;
   int tabIndex = 0;
@@ -102,13 +102,15 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         //print("offset = ${_scrollController.offset}");
         offSetForTab = _scrollController1.position.pixels ?? 0.0;
         mapOfInitialPixels.forEach((key, value){
-
+          if(_scrollController1.position.pixels >= value){
+            currTab = key;
+          }
         });
         // currTab = _scrollController1.position.pixels
         // currTab = value!=0 ? (_scrollController1.position.pixels) / value : 0;
         // print("value" + value.toString());
-        currTab = tabIndex;
-        print("tabIndex tab: " + tabIndex.toString());
+        // currTab = tabIndex;
+        print("currTab tab: " + currTab.toString());
         print(_scrollController1.position.pixels);
         setState(() {});
       });
