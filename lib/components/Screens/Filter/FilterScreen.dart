@@ -408,6 +408,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         context: context,
         builder: (BuildContext context) {
           return Dialog(
+            insetPadding: EdgeInsets.symmetric(
+                horizontal: getSize(20), vertical: getSize(20)),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(getSize(25)),
             ),
@@ -447,6 +449,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           context: context,
           builder: (BuildContext context) {
             return Dialog(
+              insetPadding: EdgeInsets.symmetric(
+                  horizontal: getSize(20), vertical: getSize(20)),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(getSize(25)),
               ),
