@@ -291,14 +291,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         ? ListView.builder(
             itemCount: arraDiamond.length,
             itemBuilder: (context, index) {
-//              return DiamondExpandItemWidget(
-//                  item: arraDiamond[index],
-//                  list: getRightAction((manageClick) {
-//                    manageRowClick(index, manageClick.type);
-//                  }),
-//                  actionClick: (manageClick) {
-//                    manageRowClick(index, manageClick.type);
-//                  });
               return DiamondItemWidget(
                   controller: controller,
                   item: arraDiamond[index],
@@ -485,7 +477,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   List<Widget> getToolbarItem() {
     List<Widget> list = [];
-    diamondConfig.toolbarList.forEach((element) {
+    for (int i = 0; i < diamondConfig.toolbarList.length; i++) {
+      var element = diamondConfig.toolbarList[i];
       list.add(GestureDetector(
         onTap: arraDiamond != null && arraDiamond.length > 0
             ? () {
@@ -493,7 +486,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               }
             : null,
         child: Padding(
-          padding: EdgeInsets.only(right: getSize(8.0), left: getSize(8.0)),
+          padding: EdgeInsets.only(
+              right: i == diamondConfig.toolbarList.length - 1
+                  ? getSize(20)
+                  : getSize(8),
+              left: getSize(8.0)),
           child: Image.asset(
             element.isSelected
                 ? (element.selectedImage != null
@@ -505,7 +502,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           ),
         ),
       ));
-    });
+    }
+
     return list;
   }
 
