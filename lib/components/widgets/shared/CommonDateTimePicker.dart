@@ -18,6 +18,8 @@ Future openDateTimeDialog(BuildContext context, ActionClick actionClick,
       context: context,
       builder: (context) {
         return Dialog(
+          insetPadding: EdgeInsets.symmetric(
+              horizontal: getSize(20), vertical: getSize(20)),
           backgroundColor: appTheme.whiteColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(getSize(15)),
@@ -88,16 +90,16 @@ class _DateTimeDialogState extends State<DateTimeDialog>
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: EdgeInsets.only(top: getSize(20)),
+            padding: EdgeInsets.only(top: getSize(30)),
             child: Text(
               widget.title,
-              style: appTheme.black16TextStyle,
+              style: appTheme.blackSemiBold18TitleColorblack,
             ),
           ),
           widget.isDate && widget.isTime
               ? Padding(
                   padding:
-                      EdgeInsets.only(top: getSize(20), bottom: getSize(20)),
+                      EdgeInsets.only(top: getSize(30), bottom: getSize(20)),
                   child: TabBar(
                     onTap: (index) {
                       _controller.jumpToPage(index);
@@ -114,10 +116,10 @@ class _DateTimeDialogState extends State<DateTimeDialog>
                     indicator: LineTabIndicator(
                         color: appTheme.colorPrimary,
                         height: getSize(3),
-                        width: getSize(30)),
+                        width: getSize(50)),
                     tabs: tabList.map((item) {
                       return Padding(
-                        padding: EdgeInsets.only(bottom: getSize(10)),
+                        padding: EdgeInsets.only(bottom: getSize(20)),
                         child: Text(
                           item.title,
                           style: appTheme.black16TextStyle,
@@ -128,31 +130,33 @@ class _DateTimeDialogState extends State<DateTimeDialog>
                 )
               : Container(),
           widget.isDate && widget.isTime
-              ? Container(
-                  height: getSize(270),
-                  child: PageView.builder(
-                    onPageChanged: (index) {
-                      _onPageChange(index);
-                    },
-                    //physics: NeverScrollableScrollPhysics(),
-                    controller: _controller,
-                    itemCount: tabList.length,
-                    itemBuilder: (context, position) {
-                      if (position == 0) {
-                        return getDateRangePicker();
-                      } else {
-                        return getTimeRangePicker();
-                      }
-                    },
+              ? Padding(
+                  padding:
+                      EdgeInsets.only(left: getSize(30), right: getSize(20)),
+                  child: Container(
+                    height: getSize(270),
+                    child: PageView.builder(
+                      onPageChanged: (index) {
+                        _onPageChange(index);
+                      },
+                      //physics: NeverScrollableScrollPhysics(),
+                      controller: _controller,
+                      itemCount: tabList.length,
+                      itemBuilder: (context, position) {
+                        if (position == 0) {
+                          return getDateRangePicker();
+                        } else {
+                          return getTimeRangePicker();
+                        }
+                      },
+                    ),
                   ),
                 )
               : Container(),
           widget.isDate && !widget.isTime ? getDateRangePicker() : Container(),
           !widget.isDate && widget.isTime ? getTimeRangePicker() : Container(),
           Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: getSize(Spacing.leftPadding),
-                vertical: getSize(16)),
+            padding: EdgeInsets.all(getSize(20)),
             child: Row(
               children: [
                 Expanded(
@@ -249,7 +253,7 @@ class _DateTimeDialogState extends State<DateTimeDialog>
           normalTextStyle: appTheme.black16TextStyle,
           highlightedTextStyle: appTheme.blue20TextStyle,
           spacing: 50,
-          itemHeight: 80,
+          itemHeight: 70,
           isForce2Digits: true,
           onTimeChange: (time) {
             setState(() {

@@ -45,6 +45,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        FocusScope.of(context).unfocus();
         widget.actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_ROW));
       },
       child: Padding(
@@ -98,7 +99,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                     widget.item.borderType ==
                                         BorderConstant.BORDER_TOP)
                             ? getSize(1)
-                            : widget.item.isAddToWatchList
+                            : (widget.item.isAddToWatchList ||
+                                    widget.item.isAddToOffer)
                                 ? getSize(2)
                                 : getSize(5),
                       ),
@@ -175,6 +177,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               ),
             ),
             getWatchListDetail(),
+            getOfferValues(),
             // ),
           ],
         ),
@@ -366,10 +369,6 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   }
 
   getOfferDetail() {
-    List<String> offerPer = widget.item.getOfferPer();
-    List<String> offerHour = widget.item.getOfferHour();
-    DropDownItem itemOffer = DropDownItem(widget.item, DropDownItem.QUOTE);
-    DropDownItem itemHour = DropDownItem(widget.item, DropDownItem.HOURS);
     return widget.item.isAddToOffer
         ? Column(
             children: [
@@ -400,29 +399,98 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   ],
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(top: getSize(5)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    getText(R.string().screenTitle.offer + " :"),
-                    popupList(widget.item, offerPer, itemOffer,
-                        (selectedValue) {
-                      widget.item.selectedOfferPer = selectedValue;
-                      RxBus.post(true, tag: eventBusDropDown);
-                    }),
-                    getText(R.string().screenTitle.hours + " :"),
-                    popupList(widget.item, offerHour, itemHour,
-                        (selectedValue) {
-                      widget.item.selectedOfferHour = selectedValue;
-                      RxBus.post(true, tag: eventBusDropDown);
-                    }),
-                  ],
-                ),
-              ),
             ],
           )
         : Container();
+  }
+
+  getOfferValues() {
+    List<String> offerPer = widget.item.getOfferPer();
+    List<String> offerHour = widget.item.getOfferHour();
+    DropDownItem itemOffer = DropDownItem(widget.item, DropDownItem.QUOTE);
+    DropDownItem itemHour = DropDownItem(widget.item, DropDownItem.HOURS);
+    return widget.item.isAddToOffer
+        ? Padding(
+            padding: EdgeInsets.only(bottom: getSize(8)),
+            child: Container(
+              height: getSize(40),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: getSize(40),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(getSize(5)),
+                        border: Border.all(color: appTheme.dividerColor),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Expanded(
+                            child: Container(
+                              color: appTheme.borderColor,
+                              child: Center(
+                                child: getText(
+                                    R.string().screenTitle.offer + " :"),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                              child: Container(
+                            child: Center(
+                              child: popupList(widget.item, offerPer, itemOffer,
+                                  (selectedValue) {
+                                widget.item.selectedOfferPer = selectedValue;
+                                RxBus.post(true, tag: eventBusDropDown);
+                              }),
+                            ),
+                          )),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: getSize(16)),
+                  Expanded(
+                    child: Container(
+                      height: getSize(40),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(getSize(5)),
+                        border: Border.all(color: appTheme.dividerColor),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Expanded(
+                            child: Container(
+                              color: appTheme.borderColor,
+                              child: Center(
+                                child: getText(
+                                    R.string().screenTitle.hours + " :"),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              child: Center(
+                                child:
+                                    popupList(widget.item, offerHour, itemHour,
+                                        (selectedValue) {
+                                  widget.item.selectedOfferHour = selectedValue;
+                                  RxBus.post(true, tag: eventBusDropDown);
+                                }),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        : SizedBox();
   }
 
   getBidDetail() {

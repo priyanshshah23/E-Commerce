@@ -301,32 +301,30 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                     ),
                     getCommentTextField(),
                     Padding(
-                      padding: EdgeInsets.only(top: getSize(8)),
+                      padding: EdgeInsets.only(
+                        left: getSize(20),
+                        right: getSize(20),
+                        bottom: getSize(5),
+                        top: getSize(8),
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: getSize(20),
-                              right: getSize(20),
-                              bottom: getSize(5),
-                            ),
+                          Expanded(
                             child: Text(
-                              R.string().screenTitle.note + ":",
+                              R.string().screenTitle.note +
+                                  " : " +
+                                  R.string().screenTitle.orderMsg,
                               style: appTheme.error12TextStyle,
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                right: getSize(20), bottom: getSize(5)),
-                            child: Expanded(
-                              child: Text(
-                                R.string().screenTitle.orderMsg,
-                                overflow: TextOverflow.clip,
-                                style: appTheme.error12TextStyle,
-                              ),
-                            ),
-                          ),
+                          // Expanded(
+                          //   child: Text(
+                          //     R.string().screenTitle.orderMsg,
+                          //     style: appTheme.error12TextStyle,
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),

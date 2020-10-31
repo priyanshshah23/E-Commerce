@@ -101,8 +101,8 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       ..addListener(() {
         //print("offset = ${_scrollController.offset}");
         offSetForTab = _scrollController1.position.pixels ?? 0.0;
-        mapOfInitialPixels.forEach((key, value){
-          if(_scrollController1.position.pixels >= value){
+        mapOfInitialPixels.forEach((key, value) {
+          if (_scrollController1.position.pixels >= value) {
             currTab = key;
           }
         });
