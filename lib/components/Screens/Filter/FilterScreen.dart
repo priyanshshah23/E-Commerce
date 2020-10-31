@@ -411,7 +411,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(getSize(25)),
             ),
-            child: DialogueList(
+            child: SelectionDialogue(
               title: R.string().commonString.savedSearch,
               hintText: R.string().commonString.searchSavedSearch,
               selectionOptions: saveSearchList,
@@ -450,7 +450,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(getSize(25)),
               ),
-              child: DialogueList(
+              child: SelectionDialogue(
                 hintText: R.string().commonString.searchSavedSearch,
                 title: R.string().commonString.savedSearch,
                 selectionOptions: saveSearchList,

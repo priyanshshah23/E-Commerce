@@ -431,7 +431,7 @@ class _CompanyInformationState extends State<CompanyInformation>
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(getSize(25)),
                 ),
-                child: DialogueList(
+                child: SelectionDialogue(
                   title: R.string().commonString.selectCountry,
                   hintText: R.string().commonString.searchCountry,
                   selectionOptions: countryList,
@@ -497,7 +497,7 @@ class _CompanyInformationState extends State<CompanyInformation>
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(getSize(25)),
                       ),
-                      child: DialogueList(
+                      child: SelectionDialogue(
                         title: R.string().commonString.selectState,
                         hintText: R.string().commonString.searchState,
                         selectionOptions: stateList,
@@ -566,7 +566,7 @@ class _CompanyInformationState extends State<CompanyInformation>
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(getSize(25)),
                         ),
-                        child: DialogueList(
+                        child: SelectionDialogue(
                           title: R.string().commonString.selectCity,
                           hintText: R.string().commonString.searchCity,
                           selectionOptions: cityList,
@@ -620,7 +620,7 @@ class _CompanyInformationState extends State<CompanyInformation>
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(getSize(25)),
                   ),
-                  child: DialogueList(
+                  child: SelectionDialogue(
                       title: R.string().commonString.selectBusinessType,
                       hintText: R.string().commonString.searchBusinessType,
                       selectionOptions: businessTypeList,
@@ -752,7 +752,7 @@ class _CompanyInformationState extends State<CompanyInformation>
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(getSize(25)),
                   ),
-                  child: DialogueList(
+                  child: SelectionDialogue(
                     title: R.string().commonString.selectCity,
                     hintText: R.string().commonString.searchCity,
                     selectionOptions: cityList,
@@ -803,7 +803,7 @@ class _CompanyInformationState extends State<CompanyInformation>
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(getSize(25)),
                   ),
-                  child: DialogueList(
+                  child: SelectionDialogue(
                     title: R.string().commonString.selectCountry,
                     hintText: R.string().commonString.searchCountry,
                     selectionOptions: countryList,
@@ -868,7 +868,7 @@ class _CompanyInformationState extends State<CompanyInformation>
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(getSize(25)),
                   ),
-                  child: DialogueList(
+                  child: SelectionDialogue(
                     title: R.string().commonString.selectState,
                     hintText: R.string().commonString.searchState,
                     selectionOptions: stateList,

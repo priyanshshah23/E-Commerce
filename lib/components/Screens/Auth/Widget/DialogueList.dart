@@ -8,7 +8,7 @@ import 'package:diamnow/models/Address/StateListModel.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:flutter/material.dart';
 
-class DialogueList extends StatefulWidget {
+class SelectionDialogue extends StatefulWidget {
   List<SelectionPopupModel> selectionOptions;
   Function({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) applyFilterCallBack;
   String title = "Select Item";
@@ -16,7 +16,7 @@ class DialogueList extends StatefulWidget {
   bool isSearchEnable;
   bool isMultiSelectionEnable;
 
-  DialogueList(
+  SelectionDialogue(
       {this.selectionOptions,
       this.applyFilterCallBack,
       this.hintText,
@@ -25,11 +25,11 @@ class DialogueList extends StatefulWidget {
       this.isMultiSelectionEnable = false,});
 
   @override
-  _DialogueListState createState() =>
-      _DialogueListState(selectionOptions, applyFilterCallBack,hintText,title,isSearchEnable,isMultiSelectionEnable);
+  _SelectionDialogueState createState() =>
+      _SelectionDialogueState(selectionOptions, applyFilterCallBack,hintText,title,isSearchEnable,isMultiSelectionEnable);
 }
 
-class _DialogueListState extends State<DialogueList> {
+class _SelectionDialogueState extends State<SelectionDialogue> {
   TextEditingController searchController = TextEditingController();
   List<SelectionPopupModel> selectionOptions;
   List<SelectionPopupModel> items = List();
@@ -40,7 +40,7 @@ class _DialogueListState extends State<DialogueList> {
   bool isMultiSelectionEnable;
 
 
-  _DialogueListState(
+  _SelectionDialogueState(
       this.selectionOptions, this.applyFilterCallBack, this.hintText, this.title, this.isSearchEnable,this.isMultiSelectionEnable);
 
   @override
