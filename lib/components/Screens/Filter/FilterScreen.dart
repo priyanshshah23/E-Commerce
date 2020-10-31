@@ -8,6 +8,7 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
+import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/DialogueList.dart';
@@ -358,10 +359,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   String _selectedDate;
   String diamondTitle;
 
-  
-
-    callApiForAddDemand(String selectedDate, String diamondTitle) {
-
+  callApiForAddDemand(String selectedDate, String diamondTitle) {
     Map<String, dynamic> dict = {};
     dict["filter"] = FilterRequest().createRequest(arrList);
     dict["name"] = diamondTitle;
@@ -389,6 +387,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return Dialog(
+          insetPadding: EdgeInsets.symmetric(
+              horizontal: getSize(20), vertical: getSize(20)),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(getSize(25)),
           ),
@@ -403,8 +403,6 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   }
 
   getSavedSearchPopUp() {
-    
-
     if (!isNullEmptyOrFalse(listOfSavedSearchModel)) {
       showDialog(
         context: context,
@@ -414,17 +412,12 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               borderRadius: BorderRadius.circular(getSize(25)),
             ),
             child: DialogueList(
-              type: DialogueListType.SAVEDSEARCH,
-              selectedItem: listOfSavedSearchModel[0],
-              duplicateItems: listOfSavedSearchModel,
-              applyFilterCallBack: ({
-                CityList cityList,
-                CountryList countryList,
-                StateList stateList,
-                SavedSearchModel savedSearchModel,
-              }) {
+              title: R.string().commonString.savedSearch,
+              hintText: R.string().commonString.searchSavedSearch,
+             // selectionOptions: listOfSavedSearchModel,--------------------------------------
+              applyFilterCallBack: (model) {
                 Map<String, dynamic> dict = new HashMap();
-                dict["filterId"] = savedSearchModel.id;
+                dict["filterId"] = model.id;
                 dict[ArgumentConstant.ModuleType] =
                     DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
                 NavigationUtilities.pushRoute(
@@ -447,7 +440,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         context,
       )
           .then((savedSearchResp) async {
-            listOfSavedSearchModel = savedSearchResp.data.list;
+        listOfSavedSearchModel = savedSearchResp.data.list;
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -456,17 +449,12 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 borderRadius: BorderRadius.circular(getSize(25)),
               ),
               child: DialogueList(
-                type: DialogueListType.SAVEDSEARCH,
-                selectedItem: savedSearchResp.data.list[0],
-                duplicateItems: savedSearchResp.data.list,
-                applyFilterCallBack: ({
-                  CityList cityList,
-                  CountryList countryList,
-                  StateList stateList,
-                  SavedSearchModel savedSearchModel,
-                }) {
+                hintText: R.string().commonString.searchSavedSearch,
+                title: R.string().commonString.savedSearch,
+//                selectionOptions: savedSearchResp.data.list,----------------------------------------
+                applyFilterCallBack: (model) {
                   Map<String, dynamic> dict = new HashMap();
-                  dict["filterId"] = savedSearchModel.id;
+                  dict["filterId"] = model.id;
                   dict[ArgumentConstant.ModuleType] =
                       DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
                   NavigationUtilities.pushRoute(

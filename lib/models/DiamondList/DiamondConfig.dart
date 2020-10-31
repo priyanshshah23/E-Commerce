@@ -638,6 +638,10 @@ class DiamondConfig {
           diamonds.bidPricePerCarat = element.getBidFinalRate();
           diamonds.bidDiscount = element.getbidFinalDiscount();
           break;
+
+        case DiamondTrackConstant.TRACK_TYPE_REMINDER:
+          diamonds.reminderDate = date;
+          break;
       }
       req.diamonds.add(diamonds);
     });
@@ -1125,10 +1129,12 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
         subtitle: "6:00 pm", image: sunrise),
     StoneModel(
         ReminderType.ReminderTypeTomorrow, R.string().commonString.toMorrow,
-        subtitle: " ${dateUtilities.getTomorrowDay(DateTime.now())} 8:00 am", image: sun),
+        subtitle: " ${dateUtilities.getTomorrowDay(DateTime.now())} 8:00 am",
+        image: sun),
     StoneModel(
         ReminderType.ReminderTypeNextWeek, R.string().commonString.nextWeek,
-        subtitle: "${dateUtilities.getNextWeekDay(DateTime.now())} 8:00 am", image: calender_week),
+        subtitle: "${dateUtilities.getNextWeekDay(DateTime.now())} 8:00 am",
+        image: calender_week),
     StoneModel(
         ReminderType.ReminderTypeCustom, R.string().commonString.chooseAnother,
         subtitle: R.string().commonString.dateTime, image: calender),
@@ -1137,6 +1143,9 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
     context: context,
     builder: (context) {
       return Dialog(
+        insetPadding: EdgeInsets.symmetric(
+            horizontal: getSize(20), vertical: getSize(20)),
+        // contentPadding: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(getSize(15)),
         ),
@@ -1144,7 +1153,7 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
         child: StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return Padding(
-              padding: EdgeInsets.only(top: getSize(10)),
+              padding: EdgeInsets.only(top: getSize(30), bottom: getSize(20)),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -1152,6 +1161,7 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
                     R.string().screenTitle.addRemider,
                     style: appTheme.black18TextStyle,
                   ),
+                  SizedBox(height: getSize(20)),
                   GridView.builder(
                       shrinkWrap: true,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -1195,7 +1205,7 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
                             child: Column(
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.only(bottom: getSize(5)),
+                                  padding: EdgeInsets.only(bottom: getSize(8)),
                                   child: Image.asset(
                                     reminderList[i].image,
                                     height: getSize(40),
@@ -1278,23 +1288,16 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
                                     dateTime.toUtc().toIso8601String();
                                 switch (stoneModel.id) {
                                   case ReminderType.ReminderTypeToday:
-                                    DateTime dt = DateTime(
-                                        dateTime.year,
-                                        dateTime.month,
-                                        dateTime.day,
-                                        18,
-                                        0,
-                                        0,
-                                        0);
+                                    DateTime dt = DateTime(dateTime.year,
+                                        dateTime.month, dateTime.day, 18, 0, 0);
                                     date = dt.toUtc().toIso8601String();
                                     break;
                                   case ReminderType.ReminderTypeTomorrow:
                                     DateTime dt = DateTime(
                                         dateTime.year,
                                         dateTime.month,
-                                        dateTime.day,
+                                        dateTime.day + 1,
                                         8,
-                                        0,
                                         0,
                                         0);
                                     dt.add(Duration(days: 1));
@@ -1304,9 +1307,8 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
                                     DateTime dt = DateTime(
                                         dateTime.year,
                                         dateTime.month,
-                                        dateTime.day,
-                                        18,
-                                        0,
+                                        dateTime.day + 7,
+                                        8,
                                         0,
                                         0);
 

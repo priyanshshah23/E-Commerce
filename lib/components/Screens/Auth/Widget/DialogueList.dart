@@ -1,6 +1,7 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/models/Address/CityListModel.dart';
 import 'package:diamnow/models/Address/CountryListModel.dart';
 import 'package:diamnow/models/Address/StateListModel.dart';
@@ -8,41 +9,36 @@ import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:flutter/material.dart';
 
 class DialogueList extends StatefulWidget {
-  final List duplicateItems;
-  final Function(
-      {CityList cityList,
-      CountryList countryList,
-      StateList stateList,
-      SavedSearchModel savedSearchModel,
-      }) applyFilterCallBack;
-  var selectedItem;
-  DialogueListType type;
+  List<SelectionPopupModel> selectionOptions;
+  Function(SelectionPopupModel) applyFilterCallBack;
+  String title = "Select Item";
+  String hintText = "Search Item";
 
   DialogueList(
-      {this.duplicateItems,
+      {this.selectionOptions,
       this.applyFilterCallBack,
-      this.selectedItem,
-      this.type});
+      this.hintText,
+      this.title});
 
   @override
   _DialogueListState createState() =>
-      _DialogueListState(duplicateItems, applyFilterCallBack, selectedItem);
+      _DialogueListState(selectionOptions, applyFilterCallBack,hintText,title);
 }
 
 class _DialogueListState extends State<DialogueList> {
   TextEditingController searchController = TextEditingController();
-  final List duplicateItems;
-  List items = List();
-  Function({CityList cityList, CountryList countryList, StateList stateList, SavedSearchModel savedSearchModel,})
-      applyFilterCallBack;
-  var selectedItem;
+  List<SelectionPopupModel> selectionOptions;
+  List<SelectionPopupModel> items = List();
+  Function(SelectionPopupModel) applyFilterCallBack;
+  String title = "Select Item";
+  String hintText = "Search Item";
 
   _DialogueListState(
-      this.duplicateItems, this.applyFilterCallBack, this.selectedItem);
+      this.selectionOptions, this.applyFilterCallBack, this.hintText, this.title);
 
   @override
   void initState() {
-    items.addAll(duplicateItems);
+    items.addAll(selectionOptions);
     super.initState();
   }
 
@@ -59,18 +55,18 @@ class _DialogueListState extends State<DialogueList> {
             ),
             Container(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: getSize(20), vertical: getSize(10)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        getTitle(),
-                        style: appTheme.blackMedium20TitleColorblack,
-                      ),
-                    ],
+              padding: EdgeInsets.symmetric(
+                  horizontal: getSize(20), vertical: getSize(10)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    title,
+                    style: appTheme.blackMedium20TitleColorblack,
                   ),
-                )),
+                ],
+              ),
+            )),
             Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: getSize(20), vertical: getSize(20)),
@@ -81,16 +77,17 @@ class _DialogueListState extends State<DialogueList> {
                     height: getSize(50),
                     child: TextField(
                       onChanged: (value) {
-                        filterSearchResults(value);
+                          filterSearchResults(value);
                       },
                       controller: searchController,
                       decoration: InputDecoration(
                           contentPadding:
                               EdgeInsets.symmetric(horizontal: getSize(20)),
-                          hintText: getHintText(),
+                          hintText: hintText,
                           hintStyle: appTheme.blackNormal18TitleColorblack,
-                          suffixIcon:  getCommonIconWidget(
-                              imageName: search, imageType: IconSizeType.medium),
+                          suffixIcon: getCommonIconWidget(
+                              imageName: search,
+                              imageType: IconSizeType.medium),
                           focusedBorder: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5.0))),
@@ -113,33 +110,32 @@ class _DialogueListState extends State<DialogueList> {
                         return GestureDetector(
                           onTap: () {
                             Navigator.of(context).pop();
-                            if (widget.type == DialogueListType.City) {
-                              applyFilterCallBack(cityList: items[index]);
-                            } else if (widget.type == DialogueListType.State) {
-                              applyFilterCallBack(stateList: items[index]);
-                            } else if (widget.type ==
-                                DialogueListType.Country) {
-                              applyFilterCallBack(countryList: items[index]);
-                            } else if (widget.type ==
-                                DialogueListType.SAVEDSEARCH) {
-                              applyFilterCallBack(savedSearchModel: items[index]);
-                            }
-                            items[index].isActive = true;
-                           
+                              applyFilterCallBack(items[index]);
                           },
                           child: Padding(
-                            padding:
-                                EdgeInsets.symmetric(vertical: getSize(10), horizontal: getSize(20)),
+                            padding: EdgeInsets.symmetric(
+                                vertical: getSize(10), horizontal: getSize(20)),
                             child: Row(
                               children: <Widget>[
-                                Expanded(child: Text(items[index].name, style: selectedItem != null && selectedItem.name == items[index].name ? appTheme.blackNormal18TitleColorPrimary : appTheme.blackNormal18TitleColorblack,)),
+                                Expanded(
+                                    child: Text(
+                                            items[index].title,
+                                            style: items[index].isSelected
+                                                ? appTheme
+                                                    .blackNormal18TitleColorPrimary
+                                                : appTheme
+                                                    .blackNormal18TitleColorblack,
+                                          )
+                                ),
                                 SizedBox(
                                   width: getSize(10),
                                 ),
                                 Container(
                                   height: getSize(16),
                                   width: getSize(16),
-                                  child: selectedItem != null && selectedItem.name == items[index].name ?  Image.asset(selectedIcon) :  Image.asset(unselectedIcon),
+                                  child: items[index].isSelected
+                                          ? Image.asset(selectedIcon)
+                                          : Image.asset(unselectedIcon),
                                 ),
                               ],
                             ),
@@ -159,15 +155,15 @@ class _DialogueListState extends State<DialogueList> {
 
   void filterSearchResults(String query) {
     query = query.toLowerCase();
-    List dummySearchList = List();
-    dummySearchList.addAll(duplicateItems);
+    List<SelectionPopupModel> dummySearchList = List<SelectionPopupModel>();
+    dummySearchList.addAll(selectionOptions);
     if (query.isNotEmpty) {
-      List dummyListData = List();
+      List<SelectionPopupModel> dummyListData = List<SelectionPopupModel>();
       dummySearchList.forEach((item) {
-        item.name = item.name.toLowerCase();
-        if (item.name.contains(query)) {
-          dummyListData.add(item);
-        }
+          item.title = item.title.toLowerCase();
+          if (item.title.contains(query)) {
+            dummyListData.add(item);
+          }
       });
       setState(() {
         items.clear();
@@ -177,34 +173,9 @@ class _DialogueListState extends State<DialogueList> {
     } else {
       setState(() {
         items.clear();
-        items.addAll(duplicateItems);
+        items.addAll(selectionOptions);
       });
     }
   }
 
-  String getTitle() {
-    if (widget.type == DialogueListType.City) {
-      return R.string().commonString.selectCity;
-    } else if (widget.type == DialogueListType.State) {
-      return R.string().commonString.selectState;
-    } else if (widget.type == DialogueListType.Country) {
-      return R.string().commonString.selectCountry;
-    } else if(widget.type == DialogueListType.SAVEDSEARCH) {
-      return R.string().commonString.savedSearch;
-    }
-    return "";
-  }
-
-  String getHintText() {
-    if (widget.type == DialogueListType.City) {
-      return R.string().commonString.searchCity;
-    } else if (widget.type == DialogueListType.State) {
-      return R.string().commonString.searchState;
-    } else if (widget.type == DialogueListType.Country) {
-      return R.string().commonString.searchCountry;
-    } else if (widget.type == DialogueListType.SAVEDSEARCH) {
-      return R.string().commonString.searchSavedSearch;
-    }
-    return "";
-  }
 }
