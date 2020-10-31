@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -81,19 +82,73 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
 
   _DiamondDetailScreenState(this.diamondModel, this.moduleType);
 
-  //DiamondDetailUIModel
+  //new design
+  int currTab = 0;
+  ItemScrollController _scrollController = ItemScrollController();
+  ScrollController _scrollController1;
+  double offSetForTab = 0.0;
+  int tabIndex = 0;
+  Map<int, double> mapOfInitialPixels = {};
 
   @override
   bool get wantKeepAlive => true;
 
   @override
   void initState() {
-    isErroWhileLoading = false;
     super.initState();
+    getPrefixSum();
+    _scrollController1 = ScrollController()
+      ..addListener(() {
+        //print("offset = ${_scrollController.offset}");
+        offSetForTab = _scrollController1.position.pixels ?? 0.0;
+        mapOfInitialPixels.forEach((key, value){
+
+        });
+        // currTab = _scrollController1.position.pixels
+        // currTab = value!=0 ? (_scrollController1.position.pixels) / value : 0;
+        // print("value" + value.toString());
+        currTab = tabIndex;
+        print("tabIndex tab: " + tabIndex.toString());
+        print(_scrollController1.position.pixels);
+        setState(() {});
+      });
+
+    isErroWhileLoading = false;
+
     setupData();
 
     diamondConfig = DiamondConfig(moduleType);
     diamondConfig.initItems(isDetail: true);
+  }
+
+  getPrefixSum() {
+    double value = 0;
+    int i, j;
+    for (j = 0; j < arrDiamondDetailUIModel.length; j++) {
+      for (i = 0; i < arrDiamondDetailUIModel.length; i++) {
+        value += i == 0
+            ? getSize(302)
+            : arrDiamondDetailUIModel[i - 1].columns > 1
+                ? ((arrDiamondDetailUIModel[i - 1].parameters.length /
+                                arrDiamondDetailUIModel[i - 1].columns)
+                            .floor()) *
+                        getSize(90) +
+                    getSize(175)
+                : ((arrDiamondDetailUIModel[i - 1].parameters.length /
+                                arrDiamondDetailUIModel[i - 1].columns)
+                            .floor()) *
+                        getSize(37) +
+                    getSize(175);
+        if (i == j) break;
+      }
+      mapOfInitialPixels[j] = value;
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController1.dispose();
+    super.dispose();
   }
 
   setupData() {
@@ -291,78 +346,32 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         actionItems: getToolbarItem(),
       ),
       bottomNavigationBar: getBottomTab(),
-      body: SafeArea(
-        child: Container(
-          // color: Colors.red,
-          child: ListView(
-            shrinkWrap: true,
-            physics: ClampingScrollPhysics(),
-            children: <Widget>[
-              Stack(
-                children: [
-                  Container(
-                    // color: Colors.yellow,
-                    width: double.infinity,
-                    height: getSize(286),
-                    child: getImage(),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: Row(
-                      children: <Widget>[
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            getRowItem("Image"),
-                            getRowItem("Image"),
-                            getRowItem("Image"),
-                          ],
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              //
-              SizedBox(
-                height: getSize(16),
-              ),
-              getDiamondDetailComponents(),
-              SizedBox(
-                height: getSize(20),
-              ),
-            ],
-          ),
-        ),
-      ),
+      body: getDiamondDetailComponents(),
     );
   }
 
-  getRowItem(String type) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: getSize(10)),
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(getSize(5)),
-            border: Border.all(color: appTheme.borderColor)),
-        child: Padding(
-          padding: EdgeInsets.all(getSize(10)),
-          child: Row(
-            children: <Widget>[
-              Image.asset(gallary),
-              SizedBox(
-                width: getSize(10),
-              ),
-              for (var model in arrImages)
-                model.title == type
-                    ? Text(
-                        model.arr.length.toString(),
-                        style: appTheme.primaryColor14TextStyle,
-                      )
-                    : SizedBox(),
-            ],
-          ),
+  getRowItem(String type, String img) {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(getSize(5)),
+          border: Border.all(color: appTheme.borderColor),
+          color: appTheme.unSelectedBgColor),
+      child: Padding(
+        padding: EdgeInsets.all(getSize(10)),
+        child: Row(
+          children: <Widget>[
+            Image.asset(img),
+            SizedBox(
+              width: getSize(10),
+            ),
+            for (var model in arrImages)
+              model.title == type
+                  ? Text(
+                      model.arr.length.toString(),
+                      style: appTheme.primaryColor14TextStyle,
+                    )
+                  : SizedBox(),
+          ],
         ),
       ),
     );
@@ -402,7 +411,12 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   getImage() {
     for (var model in arrImages) {
       if (model.title == "Image") {
-        return getTabBlock(model);
+        return getImageView(
+          model.url,
+          height: getSize(286),
+          width: MathUtilities.screenWidth(context),
+          fit: BoxFit.fitWidth,
+        );
       }
     }
   }
@@ -444,22 +458,15 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                     // color: Colors.yellow,
                     borderRadius: BorderRadius.circular(getSize(5)),
                     border: Border.all(color: appTheme.lightBGColor)),
-                child: Padding(
-                  padding: EdgeInsets.only(
-                      top: getSize(20),
-                      bottom: getSize(20),
-                      left: getSize(16),
-                      right: getSize(16)),
-                  child: getImageView(
-                    (model.arr != null &&
-                            model.arr.length > 0 &&
-                            isStringEmpty(model.url) == false)
-                        ? model.arr[model.subIndex].url
-                        : model.url,
-                    height: getSize(260),
-                    width: MathUtilities.screenWidth(context),
-                    fit: BoxFit.scaleDown,
-                  ),
+                child: getImageView(
+                  (model.arr != null &&
+                          model.arr.length > 0 &&
+                          isStringEmpty(model.url) == false)
+                      ? model.arr[model.subIndex].url
+                      : model.url,
+                  height: getSize(260),
+                  width: MathUtilities.screenWidth(context),
+                  fit: BoxFit.scaleDown,
                 ),
               ),
               // SizedBox(
@@ -562,57 +569,189 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   }
 
   //will show all tabs.
+
   Widget getDiamondDetailComponents() {
-    //
-    return Container(
-      child: Column(
-        children: [
-          for (int i = 0; i < arrDiamondDetailUIModel.length; i++)
-            InkWell(
-              onTap: () {
-                //
-                setState(() {
-                  arrDiamondDetailUIModel[i].isExpand =
-                      !arrDiamondDetailUIModel[i].isExpand;
-                });
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                    color: appTheme.whiteColor,
-                    // borderRadius: BorderRadius.circular(getSize(5)),
-                    border: Border.all(color: appTheme.lightBGColor)),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        top: getSize(20),
-                        bottom: getSize(20),
-                        left: getSize(8),
-                        right: getSize(8),
-                      ),
-                      child: Row(
-                        children: [
-                          getSection(arrDiamondDetailUIModel[i].title),
-                          Spacer(),
-                          Icon(
-                            arrDiamondDetailUIModel[i].isExpand == true
-                                ? Icons.expand_less
-                                : Icons.expand_more,
-                            color: appTheme.textColor,
+    print(offSetForTab);
+    return Column(
+      children: <Widget>[
+        _scrollController1.hasClients
+            ? offSetForTab >= getSize(302.0)
+                ? Container(
+                    margin: EdgeInsets.only(
+                        left: getSize(20),
+                        right: getSize(20),
+                        top: getSize(0),
+                        bottom: getSize(0)),
+                    height: getSize(30),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: arrDiamondDetailUIModel.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: EdgeInsets.only(right: getSize(30)),
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                double value = 0;
+                                int i;
+                                for (i = 0;
+                                    i < arrDiamondDetailUIModel.length;
+                                    i++) {
+                                  value += i == 0
+                                      ? getSize(302)
+                                      : arrDiamondDetailUIModel[i - 1].columns >
+                                              1
+                                          ? ((arrDiamondDetailUIModel[i - 1]
+                                                              .parameters
+                                                              .length /
+                                                          arrDiamondDetailUIModel[
+                                                                  i - 1]
+                                                              .columns)
+                                                      .floor()) *
+                                                  getSize(90) +
+                                              getSize(175)
+                                          : ((arrDiamondDetailUIModel[i - 1]
+                                                              .parameters
+                                                              .length /
+                                                          arrDiamondDetailUIModel[
+                                                                  i - 1]
+                                                              .columns)
+                                                      .floor()) *
+                                                  getSize(37) +
+                                              getSize(175);
+
+                                  if (i == index) break;
+                                }
+                                tabIndex = i;
+                                print("tabIndex inner" + tabIndex.toString());
+
+                                // value += index==0 ? getSize(332) : ((arrDiamondDetailUIModel[index-1].parameters.length/arrDiamondDetailUIModel[index-1].columns)+1)*90;
+
+                                _scrollController1.jumpTo(value.toDouble());
+                              });
+                            },
+                            child: Text(
+                              arrDiamondDetailUIModel[index].title,
+                              style: appTheme.blackNormal18TitleColorblack,
+                            ),
                           ),
+                        );
+                      },
+                    ),
+                  )
+                : SizedBox()
+            : SizedBox(),
+        Expanded(
+          child: ListView.builder(
+            controller: _scrollController1,
+            itemCount: arrDiamondDetailUIModel.length + 1,
+            itemBuilder: (context, index) {
+              if (index == 0)
+                return Stack(
+                  fit: StackFit.loose,
+                  overflow: Overflow.visible,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: getSize(286),
+                      child: getImage(),
+                    ),
+                    Positioned(
+                      bottom: -18,
+                      right: 0,
+                      child: Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: getSize(20),
+                                right: getSize(20),
+                                top: getSize(0),
+                                bottom: getSize(0)),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                getRowItem("Image", gallary),
+                                SizedBox(
+                                  width: getSize(10),
+                                ),
+                                getRowItem("Image", playButton),
+                                SizedBox(
+                                  width: getSize(10),
+                                ),
+                                getRowItem("Image", medal),
+                              ],
+                            ),
+                          )
                         ],
                       ),
-                    ),
-                    arrDiamondDetailUIModel[i].isExpand
-                        ? getDiamondDetailUIComponent(
-                            arrDiamondDetailUIModel[i])
-                        : SizedBox(),
+                    )
                   ],
+                );
+              return Padding(
+                padding: index == 1
+                    ? EdgeInsets.only(
+                        left: getSize(20),
+                        right: getSize(20),
+                        top: getSize(30),
+                        bottom: getSize(0))
+                    : EdgeInsets.only(
+                        left: getSize(20),
+                        right: getSize(20),
+                        top: getSize(0),
+                        bottom: getSize(0)),
+                child: InkWell(
+                  onTap: () {
+                    //
+                    setState(() {
+                      arrDiamondDetailUIModel[index - 1].isExpand =
+                          !arrDiamondDetailUIModel[index - 1].isExpand;
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: appTheme.whiteColor,
+                        // borderRadius: BorderRadius.circular(getSize(5)),
+                        // color: appTheme.lightBGColor
+                        border: Border.all(color: Colors.red)),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: getSize(30),
+                            bottom: getSize(30),
+                            left: getSize(20),
+                            right: getSize(20),
+                          ),
+                          child: Row(
+                            children: [
+                              getSection(
+                                  arrDiamondDetailUIModel[index - 1].title),
+                              Spacer(),
+                              Icon(
+                                arrDiamondDetailUIModel[index - 1].isExpand ==
+                                        true
+                                    ? Icons.expand_less
+                                    : Icons.expand_more,
+                                color: appTheme.textColor,
+                              ),
+                            ],
+                          ),
+                        ),
+                        arrDiamondDetailUIModel[index - 1].isExpand
+                            ? getDiamondDetailUIComponent(
+                                arrDiamondDetailUIModel[index - 1],
+                              )
+                            : SizedBox(),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ),
-        ],
-      ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 
@@ -672,7 +811,8 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
             return Container(
               decoration: BoxDecoration(
                 // borderRadius: BorderRadius.circular(3.0),
-                border: Border.all(color: appTheme.borderColor),
+                // color: appTheme.borderColor
+                border: Border.all(color: Colors.red),
                 color: appTheme.unSelectedBgColor,
               ),
               child:
