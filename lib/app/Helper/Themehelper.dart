@@ -97,7 +97,7 @@ class BaseTheme {
         color: textColor);
   }
 
-  TextStyle get primaryNormal12TitleColor{
+  TextStyle get primaryNormal12TitleColor {
     return TextStyle(
         fontSize: getFontSize(12),
         fontWeight: FontWeight.normal,
@@ -286,6 +286,13 @@ class BaseTheme {
   TextStyle get blue14TextStyle {
     return TextStyle(
         fontSize: getFontSize(14),
+        color: colorPrimary,
+        fontWeight: FontWeight.normal);
+  }
+  
+  TextStyle get blue12TextStyle {
+    return TextStyle(
+        fontSize: getFontSize(12),
         color: colorPrimary,
         fontWeight: FontWeight.normal);
   }

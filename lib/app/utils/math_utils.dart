@@ -11,9 +11,9 @@ dynamic getSize(double px) {
 
 dynamic getFontSize(double px) {
   return px *
-          (MathUtilities.screenWidth(
-                  NavigationUtilities.key.currentState.overlay.context) /
-              414) ;
+      (MathUtilities.screenWidth(
+              NavigationUtilities.key.currentState.overlay.context) /
+          414);
 }
 
 dynamic getPercentageWidth(double percentage) {
@@ -25,7 +25,8 @@ dynamic getPercentageWidth(double percentage) {
 
 class MathUtilities {
   static screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
-  static screenWidthDensity(BuildContext context) => MediaQuery.of(context).devicePixelRatio;
+  static screenWidthDensity(BuildContext context) =>
+      MediaQuery.of(context).devicePixelRatio;
 
   static screenHeight(BuildContext context) =>
       MediaQuery.of(context).size.height;
@@ -35,6 +36,4 @@ class MathUtilities {
 
   static safeAreaBottomHeight(BuildContext context) =>
       MediaQuery.of(context).padding.bottom;
-
-
 }
