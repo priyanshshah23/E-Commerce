@@ -205,6 +205,21 @@ class BaseTheme {
         fontWeight: FontWeight.normal);
   }
 
+  TextStyle get grey12TextStyle {
+    return TextStyle(
+        fontSize: getFontSize(12),
+        color: textGreyColor,
+        fontWeight: FontWeight.normal);
+  }
+
+  TextStyle get black12TextStyleMedium {
+    return TextStyle(
+        fontSize: getFontSize(12),
+        color: textColor,
+        fontWeight: FontWeight.w500);
+  }
+
+
   TextStyle get error12TextStyle {
     return TextStyle(
         fontSize: getFontSize(12),
@@ -217,13 +232,6 @@ class BaseTheme {
         fontSize: getFontSize(12),
         color: textColor,
         fontWeight: FontWeight.bold);
-  }
-
-  TextStyle get grey12TextStyle {
-    return TextStyle(
-        fontSize: getFontSize(12),
-        color: textGreyColor,
-        fontWeight: FontWeight.normal);
   }
 
   TextStyle get white16TextStyle {
