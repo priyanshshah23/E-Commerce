@@ -96,7 +96,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   Config config = Config();
 
   //PopUp data for savedsearch...
-  List<SavedSearchModel> listOfSavedSearchModel = [];
+  List<SelectionPopupModel> saveSearchList = List<SelectionPopupModel>();
 
   @override
   void initState() {
@@ -403,7 +403,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   }
 
   getSavedSearchPopUp() {
-    if (!isNullEmptyOrFalse(listOfSavedSearchModel)) {
+    if (!isNullEmptyOrFalse(saveSearchList)) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -414,7 +414,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             child: DialogueList(
               title: R.string().commonString.savedSearch,
               hintText: R.string().commonString.searchSavedSearch,
-             // selectionOptions: listOfSavedSearchModel,--------------------------------------
+              selectionOptions: saveSearchList,
               applyFilterCallBack: (model) {
                 Map<String, dynamic> dict = new HashMap();
                 dict["filterId"] = model.id;
@@ -440,7 +440,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         context,
       )
           .then((savedSearchResp) async {
-        listOfSavedSearchModel = savedSearchResp.data.list;
+        for (var item in savedSearchResp.data.list) {
+            saveSearchList.add(SelectionPopupModel(item.id, item.name, isSelected: false));
+        };
+        saveSearchList.first.isSelected = true;
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -451,7 +454,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               child: DialogueList(
                 hintText: R.string().commonString.searchSavedSearch,
                 title: R.string().commonString.savedSearch,
-//                selectionOptions: savedSearchResp.data.list,----------------------------------------
+                selectionOptions: saveSearchList,
                 applyFilterCallBack: (model) {
                   Map<String, dynamic> dict = new HashMap();
                   dict["filterId"] = model.id;
