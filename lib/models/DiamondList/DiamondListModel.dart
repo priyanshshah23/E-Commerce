@@ -368,6 +368,8 @@ class DiamondModel {
   num strLn;
   String symNm;
   num tblPer;
+  num newDiscount;
+  num newAmount;
   String pktType;
   String hANm;
   String vStnId;
@@ -525,6 +527,8 @@ class DiamondModel {
     cAng = json['cAng'];
     cHgt = json['cHgt'];
     cultNm = json['cultNm'];
+    newDiscount = json["newDiscount"];
+    newAmount = json["newAmount"];
     cutNm = json['cutNm'];
     depPer = json['depPer'];
     img = json['img'] ?? false;
@@ -603,6 +607,8 @@ class DiamondModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
+    data["newDiscount"] = this.newDiscount;
+    data["newAmount"] = this.newAmount;
     data["memoNo"] = this.memoNo;
     data['stoneId'] = this.stoneId;
     data['pltId'] = this.pltId;
