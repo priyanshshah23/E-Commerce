@@ -146,15 +146,10 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
           label: Text(
               widget.selectionModel.caratRangeChipsToShow[index].toString()),
           backgroundColor: appTheme.unSelectedBgColor,
-          deleteIcon: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(getSize(20)),
-                color: appTheme.buttonColor),
-            child: Icon(
-              Icons.clear,
-              color: appTheme.unSelectedBgColor,
-              size: getSize(16),
-            ),
+          deleteIcon: Icon(
+            Icons.clear,
+            color: appTheme.textColor,
+            size: getSize(16),
           ),
           shape: StadiumBorder(side: BorderSide(color: appTheme.colorPrimary)),
           onDeleted: () {
