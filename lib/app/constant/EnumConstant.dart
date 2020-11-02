@@ -28,3 +28,9 @@ class VirtualTypes {
   static const int webConference = 2;
   static const int inPerson = 3;
 }
+
+class OrderInvoiceData {
+  static const int today = 1;
+  static const int tommorow = 2;
+  static const int later = 3;
+}

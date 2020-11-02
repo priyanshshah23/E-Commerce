@@ -1,6 +1,9 @@
+import 'dart:collection';
+
 import 'package:diamnow/Setting/SettingModel.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/constant/ImageConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
@@ -12,6 +15,7 @@ import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
 import 'package:diamnow/components/widgets/shared/CommonDateTimePicker.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
@@ -653,24 +657,100 @@ class DiamondConfig {
         if (isPop) {
           Navigator.pop(context);
         }
-        app.resolve<CustomDialogs>().errorDialog(
-              context,
-              title,
-              resp.message,
-              btntitle: R.string().commonString.ok,
-            );
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            title: title,
+            desc: resp.message,
+            positiveBtnTitle: R.string().commonString.ok,
+            negativeBtnTitle: getNegativeButtonTitle(trackType),
+            onClickCallback: (type) {
+          if (type == ButtonType.NagativeButtonClick) {
+            openDiamondList(trackType);
+          }
+        });
       },
       (onError) {
         if (onError.message != null) {
-          app.resolve<CustomDialogs>().errorDialog(
+          app.resolve<CustomDialogs>().confirmDialog(
                 context,
-                "",
-                onError.message,
-                btntitle: R.string().commonString.ok,
+                title: "",
+                desc: onError.message,
+                positiveBtnTitle: R.string().commonString.ok,
               );
         }
       },
     );
+  }
+
+  String getNegativeButtonTitle(int trackType) {
+    switch (trackType) {
+      case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
+        return R.string().commonString.goToMyWatchList;
+
+      case DiamondTrackConstant.TRACK_TYPE_COMMENT:
+        return R.string().commonString.gotToMyComments;
+      case DiamondTrackConstant.TRACK_TYPE_ENQUIRY:
+        return R.string().commonString.gotToMyEnquiry;
+      case DiamondTrackConstant.TRACK_TYPE_OFFER:
+        return R.string().commonString.gotToMyOffer;
+      case DiamondTrackConstant.TRACK_TYPE_BID:
+        return R.string().commonString.gotToMyBid;
+
+      case DiamondTrackConstant.TRACK_TYPE_REMINDER:
+        return R.string().commonString.gotToMyReminder;
+
+      case DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER:
+        return R.string().commonString.goToMyOrder;
+      default:
+        return null;
+    }
+  }
+
+  openDiamondList(int trackType) {
+    Map<String, dynamic> dict = new HashMap();
+    switch (trackType) {
+      case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
+        dict[ArgumentConstant.ModuleType] =
+            DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST;
+        break;
+
+      case DiamondTrackConstant.TRACK_TYPE_COMMENT:
+        dict[ArgumentConstant.ModuleType] =
+            DiamondModuleConstant.MODULE_TYPE_MY_COMMENT;
+        break;
+
+      case DiamondTrackConstant.TRACK_TYPE_ENQUIRY:
+        dict[ArgumentConstant.ModuleType] =
+            DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY;
+        break;
+
+      case DiamondTrackConstant.TRACK_TYPE_OFFER:
+        dict[ArgumentConstant.ModuleType] =
+            DiamondModuleConstant.MODULE_TYPE_MY_OFFER;
+        break;
+
+      case DiamondTrackConstant.TRACK_TYPE_BID:
+        dict[ArgumentConstant.ModuleType] =
+            DiamondModuleConstant.MODULE_TYPE_MY_BID;
+        break;
+
+      case DiamondTrackConstant.TRACK_TYPE_REMINDER:
+        dict[ArgumentConstant.ModuleType] =
+            DiamondModuleConstant.MODULE_TYPE_MY_REMINDER;
+        break;
+
+      case DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER:
+        dict[ArgumentConstant.ModuleType] =
+            DiamondModuleConstant.MODULE_TYPE_MY_ORDER;
+        break;
+
+      default:
+        dict[ArgumentConstant.ModuleType] =
+            DiamondModuleConstant.MODULE_TYPE_SEARCH;
+        break;
+    }
+
+    dict[ArgumentConstant.IsFromDrawer] = false;
+    NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
   }
 
   callApiForDeleteTrack(BuildContext context, List<DiamondModel> list,
@@ -752,16 +832,16 @@ class DiamondConfig {
     req.comment = remark;
     switch (date) {
       case InvoiceTypesString.today:
-        req.date = InvoiceTypes.today.toString();
+        req.date = OrderInvoiceData.today.toString();
         break;
       case InvoiceTypesString.tomorrow:
-        req.date = InvoiceTypes.tomorrow.toString();
+        req.date = OrderInvoiceData.tommorow.toString();
         break;
       case InvoiceTypesString.later:
-        req.date = InvoiceTypes.later.toString();
+        req.date = OrderInvoiceData.later.toString();
         break;
     }
-    req.date = date;
+
     req.diamonds = [];
     list.forEach((element) {
       req.diamonds.add(element.id);

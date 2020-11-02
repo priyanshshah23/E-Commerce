@@ -260,7 +260,7 @@ class ShapeItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: selectionModel.orientation == DisplayTypes.horizontal
-          ? getSize(90)
+          ? getSize(80)
           : 0,
       decoration: BoxDecoration(
           color: obj.sId == showMoreId
@@ -276,7 +276,7 @@ class ShapeItemWidget extends StatelessWidget {
                     ? appTheme.colorPrimary
                     : appTheme.borderColor,
           )),
-      padding: EdgeInsets.all(getSize(8)),
+      padding: EdgeInsets.all(getSize(6)),
       child: obj != null
           ? Column(
               mainAxisSize: MainAxisSize.min,

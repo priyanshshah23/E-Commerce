@@ -121,6 +121,7 @@ const String manageAddress = "assets/DiamondDetail/manageAddress.png";
 const String searchIcon = "assets/DiamondDetail/search.png";
 const String selectedIcon = "assets/DiamondDetail/selectedIcon.png";
 const String unselectedIcon = "assets/DiamondDetail/unselectedIcon.png";
+const String reset = "assets/Common/Reset.png";
 
 // MyDemand icons
 const String saved_icon = "assets/diamnow/saved.png";
@@ -136,4 +137,3 @@ const String drawerLogo = "assets/Common/drawerLogo.png";
 const String bidImage = "assets/Common/bidImage.png";
 const String myDemandImage = "assets/Common/myDemand.png";
 const String documentPlaceHolder = "assets/Common/documentPlaceHolder.png";
-

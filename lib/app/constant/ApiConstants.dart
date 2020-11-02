@@ -3,7 +3,7 @@ import '../app.export.dart';
 class ApiConstants {
 //   static const String PROXY_URL = "PROXY 192.168.2.124:8888";
 //   static const String PROXY_URL = "PROXY 192.168.0.117:8888";
-//static const String PROXY_URL = "PROXY 192.168.0.116:8888";
+// static const String PROXY_URL = "PROXY 192.168.0.116:8888";
   //static const String PROXY_URL = "PROXY 192.168.43.252:8888";
 //  static const String PROXY_URL = "PROXY 192.168.225.188:8888";
 
@@ -97,5 +97,11 @@ class DiamondUrls {
   static const String certificate = commonUrl + "CertiImages/";
   static const String arroImage = commonUrl + "ArrowImages/";
   static const String videomp4 = commonUrl + "Mov/";
+  static const String roughVideo = commonUrl + "MFG/RoughVideo/";
+  static const String polVideo = commonUrl + "viewer3/mp4_videos/";
+  static const String assetImage = commonUrl + "AssetScopeImages/";
 }
 // https://s3.ap-south-1.amazonaws.com/finestargroup/CertiImages/<report_no>.pdf
+// https://s3.ap-south-1.amazonaws.com/finestargroup/MFG/RoughVideo/<packet_no>.html
+// https://s3.ap-south-1.amazonaws.com/finestargroup/viewer3/mp4_videos/<packet_no>.mp4
+// https://s3.ap-south-1.amazonaws.com/finestargroup/AssetScopeImages/<packet_no>.jpg

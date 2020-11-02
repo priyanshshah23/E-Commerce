@@ -329,6 +329,8 @@ class DiamondModel {
   String rptNo;
   bool certFile;
   bool videoFile;
+  bool roughVdo;
+  bool polVdo;
   bool hAFile;
   String clrNm;
   String colNm;
@@ -507,6 +509,8 @@ class DiamondModel {
     rptNo = json['rptNo'];
     certFile = json['certFile'] ?? false;
     videoFile = json['videoFile'] ?? false;
+    polVdo = json['polVdo'] ?? false;
+    roughVdo = json['roughVdo'] ?? false;
     hAFile = json['hAFile'] ?? false;
     clrNm = json['clrNm'];
     colNm = json['colNm'];
@@ -602,6 +606,8 @@ class DiamondModel {
     data['rptNo'] = this.rptNo;
     data['certFile'] = this.certFile;
     data['videoFile'] = this.videoFile;
+    data['polVdo'] = this.polVdo;
+    data['roughVdo'] = this.roughVdo;
     data['hAFile'] = this.hAFile;
     data['clrNm'] = this.clrNm;
     data['colNm'] = this.colNm;
