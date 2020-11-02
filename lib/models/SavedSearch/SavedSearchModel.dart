@@ -34,15 +34,18 @@ class Data {
   Data({
     this.list,
     this.count,
+    this.savedSearchModel,
   });
 
+  SavedSearchModel savedSearchModel;
   List<SavedSearchModel> list;
   int count;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        list: List<SavedSearchModel>.from(
-            json["list"].map((x) => SavedSearchModel.fromJson(x))),
-        count: json["count"],
+        list: isNullEmptyOrFalse(json["list"]) == false ? List<SavedSearchModel>.from(
+            json["list"].map((x) => SavedSearchModel.fromJson(x))) : null,
+        count: !isNullEmptyOrFalse(json["count"]) ? json["count"] : null,
+        savedSearchModel:  SavedSearchModel.fromJson(json),
       );
 
   Map<String, dynamic> toJson() => {
@@ -51,7 +54,7 @@ class Data {
       };
 }
 
-class SavedSearchModel {
+class SavedSearchModel{
   SavedSearchModel({
     this.createdAt,
     this.updatedAt,

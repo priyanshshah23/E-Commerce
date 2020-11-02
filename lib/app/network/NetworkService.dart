@@ -132,7 +132,7 @@ abstract class NetworkService {
   Future<QuickSearchResp> quickSearch(@Body() Map<String, dynamic> req);
 
   @POST(ApiConstants.savedSearch)
-  Future<BaseApiResp> saveSearch(@Body() Map<String, dynamic> req);
+  Future<SavedSearchResp> saveSearch(@Body() Map<String, dynamic> req);
 
   //Office
   @POST(ApiConstants.getSlots)

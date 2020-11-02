@@ -72,6 +72,7 @@ class BaseTheme {
   Color get textGray => fromHex("#7B7E84");
   Color get drawerTitleColor => fromHex("#EEF1FC");
   Color get lightColorPrimary => fromHex("#EEF1FC");
+  Color get redColor => fromHex("#FF4D4D");
 
   Color get shadowColorWithoutOpacity => fromHex("#7D9EF6").withOpacity(0.1);
   Color get shadowColor => shadowColorWithoutOpacity.withOpacity(0.1);
@@ -110,6 +111,34 @@ class BaseTheme {
         fontSize: getFontSize(12),
         fontWeight: FontWeight.normal,
         color: colorPrimary);
+  }
+
+  TextStyle get greenPrimaryNormal12TitleColor {
+    return TextStyle(
+        fontSize: getFontSize(12),
+        fontWeight: FontWeight.normal,
+        color: greenColor);
+  }
+
+  TextStyle get redPrimaryNormal12TitleColor {
+    return TextStyle(
+        fontSize: getFontSize(12),
+        fontWeight: FontWeight.normal,
+        color: redColor);
+  }
+
+  TextStyle get greenPrimaryNormal14TitleColor {
+    return TextStyle(
+        fontSize: getFontSize(14),
+        fontWeight: FontWeight.normal,
+        color: greenColor);
+  }
+
+  TextStyle get redPrimaryNormal14TitleColor {
+    return TextStyle(
+        fontSize: getFontSize(14),
+        fontWeight: FontWeight.normal,
+        color: redColor);
   }
 
   TextStyle get blackNormal16TitleColorblack {

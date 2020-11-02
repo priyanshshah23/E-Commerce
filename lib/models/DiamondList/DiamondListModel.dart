@@ -360,7 +360,7 @@ class DiamondModel {
   String polNm;
   num rap;
   num crt;
-  num back=0;
+  num back = 0;
   num ctPr;
   num amt;
   String shpNm;
@@ -368,6 +368,8 @@ class DiamondModel {
   num strLn;
   String symNm;
   num tblPer;
+  num newDiscount;
+  num newAmount;
   String pktType;
   String hANm;
   String vStnId;
@@ -386,6 +388,9 @@ class DiamondModel {
   String mines;
   bool isSeal;
   String inDt;
+  String memoNo;
+  String offerValidDate;
+  int offerStatus;
   String brlncyNm;
   bool isXray;
   bool arrowFile;
@@ -416,10 +421,12 @@ class DiamondModel {
   int groupNo;
   double marginTop = 0;
   double marginBottom = 0;
-  num plusAmount=0;
-  num minusAmount=0;
+  num plusAmount = 0;
+  num minusAmount = 0;
   bool bidPlus = false;
   String displayTitle;
+  String displayDesc;
+  bool showCheckBox = false;
   num bidAmount;
   TrackDiamonds trackItemCart;
   TrackDiamonds trackItemWatchList;
@@ -429,7 +436,6 @@ class DiamondModel {
   TrackDiamonds trackItemComment;
   TrackDiamonds trackItemBid;
   TrackDiamonds trackItemOffice;
-
 
   getSelectedDetail(int type) {
     switch (type) {
@@ -455,7 +461,7 @@ class DiamondModel {
 
   getWatchlistPer() {
     List<String> list = [];
-    if(back !=null){
+    if (back != null) {
       if (back >= 0) {
         if (selectedBackPer == null) {
           selectedBackPer = (back + 1).toString();
@@ -500,6 +506,9 @@ class DiamondModel {
   }
 
   DiamondModel.fromJson(Map<String, dynamic> json) {
+    memoNo = json["memoNo"];
+    offerStatus = json["offerStatus"];
+    offerValidDate = json["offerValidDate"];
     id = json['id'];
     stoneId = json['stoneId'];
     pltId = json['pltId'] ?? "";
@@ -518,6 +527,8 @@ class DiamondModel {
     cAng = json['cAng'];
     cHgt = json['cHgt'];
     cultNm = json['cultNm'];
+    newDiscount = json["newDiscount"];
+    newAmount = json["newAmount"];
     cutNm = json['cutNm'];
     depPer = json['depPer'];
     img = json['img'] ?? false;
@@ -593,10 +604,12 @@ class DiamondModel {
     this.isSelected = isSelected;
   }
 
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
+    data["newDiscount"] = this.newDiscount;
+    data["newAmount"] = this.newAmount;
+    data["memoNo"] = this.memoNo;
     data['stoneId'] = this.stoneId;
     data['pltId'] = this.pltId;
     data['report_no'] = this.certId;
@@ -718,7 +731,7 @@ class DiamondModel {
   }
 
   num getFinalRate() {
-    if(isAddToBid){
+    if (isAddToBid) {
       return ctPr;
     }
     if (isAddToOffer) {
@@ -740,20 +753,20 @@ class DiamondModel {
     }
   }
 
-  num getBidFinalRate(){
+  num getBidFinalRate() {
     DateTime now = DateTime.now();
-    if(now.hour>=15 || (now.hour<=10 && now.month<30)){
-      return getFinalRate()-((getFinalRate()*2.5)/100);
+    if (now.hour >= 15 || (now.hour <= 10 && now.month < 30)) {
+      return getFinalRate() - ((getFinalRate() * 2.5) / 100);
     }
-    return getFinalRate()-((getFinalRate()*2)/100);
+    return getFinalRate() - ((getFinalRate() * 2) / 100);
   }
 
   num getbidFinalDiscount() {
     return (1 - (getBidFinalRate() / rap)) * (-100);
   }
 
-  num getBidFinalAmount(){
-    return crt*getBidFinalRate();
+  num getBidFinalAmount() {
+    return crt * getBidFinalRate();
   }
 
   num getFinalDiscount() {
@@ -764,16 +777,16 @@ class DiamondModel {
     return crt * getFinalRate();
   }
 
-  num getbidAmount(){
+  num getbidAmount() {
     num plusAmt;
     print("ctpr-before--${ctPr}");
-    if(bidPlus){
-      plusAmt= ctPr+plusAmount;
-    }else{
-      if((ctPr-minusAmount) >= bidAmount){
-        plusAmt = ctPr-minusAmount;
-      }else{
-        plusAmt=ctPr;
+    if (bidPlus) {
+      plusAmt = ctPr + plusAmount;
+    } else {
+      if ((ctPr - minusAmount) >= bidAmount) {
+        plusAmt = ctPr - minusAmount;
+      } else {
+        plusAmt = ctPr;
       }
     }
     ctPr = plusAmt;

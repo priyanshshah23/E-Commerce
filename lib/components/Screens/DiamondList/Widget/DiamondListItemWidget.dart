@@ -16,6 +16,7 @@ class DiamondItemWidget extends StatefulWidget {
   SlidableController controller;
   List<Widget> list;
   DiamondCalculation groupDiamondCalculation;
+  int moduleType;
 
   DiamondItemWidget(
       {this.item,
@@ -23,8 +24,9 @@ class DiamondItemWidget extends StatefulWidget {
       this.leftPadding = 0,
       this.rightPadding = 0,
       this.controller,
-      this.groupDiamondCalculation,
-      this.list});
+      this.list,
+      this.moduleType});
+      this.groupDiamondCalculation,});
 
   @override
   _DiamondItemWidgetState createState() => _DiamondItemWidgetState();
@@ -149,8 +151,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                       getIdShapeDetail(),
                                       getDymentionAndCaratDetail(),
                                       getTableDepthAndAmountDetail(),
-                                      // getWatchListDetail(),
-                                      getOfferDetail(),
+                                      getWatchlistData(),
+                                      getOfferData(),
                                       getBidDetail(),
                                     ],
                                   ),
@@ -391,6 +393,38 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
     );
   }
 
+  //Watch list
+  getWatchlistData() {
+    return widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST
+        ? Padding(
+            padding: EdgeInsets.only(top: getSize(8.0)),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(getSize(5)),
+                border: Border.all(color: appTheme.lightColorPrimary),
+                color: appTheme.lightColorPrimary,
+              ),
+              height: getSize(30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        R.string().screenTitle.expDiscPer +
+                            " : " +
+                            "${widget.item.newDiscount}%",
+                        style: appTheme.black12TextStyleMedium,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        : Container();
+  }
+
   getWatchListDetail() {
     List<String> backPerList = widget.item.getWatchlistPer();
     DropDownItem item = DropDownItem(widget.item, DropDownItem.BACK_PER);
@@ -430,6 +464,38 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                       widget.item.selectedBackPer = selectedValue;
                       RxBus.post(true, tag: eventBusDropDown);
                     }, isPer: true),
+                  ),
+                ],
+              ),
+            ),
+          )
+        : Container();
+  }
+
+  //Offer detail
+  getOfferData() {
+    return widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER
+        ? Padding(
+            padding: EdgeInsets.only(top: getSize(8.0)),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(getSize(5)),
+                border: Border.all(color: appTheme.lightColorPrimary),
+                color: appTheme.lightColorPrimary,
+              ),
+              height: getSize(30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        R.string().commonString.offerPricePerCarat +
+                            " : " +
+                            PriceUtilities.getPrice(widget.item.newAmount),
+                        style: appTheme.black12TextStyleMedium,
+                      ),
+                    ),
                   ),
                 ],
               ),

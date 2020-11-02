@@ -137,3 +137,11 @@ const String drawerLogo = "assets/Common/drawerLogo.png";
 const String bidImage = "assets/Common/bidImage.png";
 const String myDemandImage = "assets/Common/myDemand.png";
 const String documentPlaceHolder = "assets/Common/documentPlaceHolder.png";
+
+
+//SavedSearch
+const String showLess = "assets/diamnow/showLess.png";
+const String showMore = "assets/diamnow/showMore.png";
+const String delete_icon = "assets/diamnow/delete_icon.png";
+const String delete_icon_medium = "assets/diamnow/delete_icon1.png";
+const String saved_medium = "assets/diamnow/saved_medium.png";

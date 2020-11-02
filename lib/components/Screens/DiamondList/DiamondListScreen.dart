@@ -227,12 +227,17 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   break;
                 case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
                   diamondModel.trackItemWatchList = trackDiamonds;
+                  diamondModel.newDiscount = element.newDiscount;
                   break;
                 case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
                   diamondModel.trackItemEnquiry = trackDiamonds;
                   break;
                 case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
                   diamondModel.trackItemOffer = trackDiamonds;
+                  diamondModel.memoNo = element.memoNo;
+                  diamondModel.offerValidDate = element.offerValidDate;
+                  diamondModel.offerStatus = element.offerStatus;
+                  diamondModel.newAmount = element.newAmount;
                   break;
                 case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
                   diamondModel.trackItemReminder = trackDiamonds;
@@ -255,9 +260,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
         default:
           arraDiamond.addAll(diamondListResp.data.diamonds);
-          diamondConfig.setMatchPairItem(arraDiamond);
           break;
       }
+      diamondConfig.setMatchPairItem(arraDiamond);
       diamondList.state.listCount = arraDiamond.length;
       diamondList.state.totalCount = diamondListResp.data.count;
       manageDiamondSelection();
@@ -293,6 +298,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             itemBuilder: (context, index) {
               return DiamondItemWidget(
                   controller: controller,
+                  moduleType: moduleType,
                   item: arraDiamond[index],
                   list: getRightAction((manageClick) {
                     manageRowClick(index, manageClick.type);
