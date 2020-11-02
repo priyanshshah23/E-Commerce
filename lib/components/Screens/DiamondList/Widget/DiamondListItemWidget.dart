@@ -25,7 +25,7 @@ class DiamondItemWidget extends StatefulWidget {
       this.rightPadding = 0,
       this.controller,
       this.list,
-      this.moduleType});
+      this.moduleType,
       this.groupDiamondCalculation,});
 
   @override
