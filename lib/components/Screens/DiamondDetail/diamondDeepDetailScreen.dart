@@ -34,8 +34,6 @@ class DiamondDeepDetailScreen extends StatefulScreenWidget {
 }
 
 class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
-  TabController _controller;
-  int _currentIndex = 0;
   bool isLoading = true;
   bool isErroWhileLoading = false;
   DiamondConfig diamondConfig;
@@ -52,14 +50,15 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
   ScrollController _scrollController1;
   double offSetForTab = 0.0;
   Map<int, double> mapOfInitialPixels = {};
+  final _pageController = PageController(viewportFraction: 0.9);
 
   _DiamondDeepDetailScreenState(this.arrImages, this.diamondModel);
 
   @override
   void initState() {
     super.initState();
-    getScrollControllerEventListener();
     getPrefixSum();
+    getScrollControllerEventListener();
 
     isErroWhileLoading = false;
     diamondConfig = DiamondConfig(moduleType);
@@ -87,10 +86,14 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
     int i, j;
     for (j = 0; j < arrImages.length; j++) {
       value = 0;
-      for (i = 0; i < arrImages.length; i++) {
-        value += getSize(280);
+      if (j == 0)
+        value = 0;
+      else {
+        for (i = 1; i < arrImages.length; i++) {
+          value += getSize(300);
 
-        if (i == j) break;
+          if (i == j) break;
+        }
       }
       mapOfInitialPixels[j] = value;
     }
@@ -184,10 +187,11 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
             itemBuilder: (context, index) {
               return Padding(
                 padding: EdgeInsets.only(
-                    left: getSize(20),
-                    right: getSize(20),
-                    top: getSize(0),
-                    bottom: getSize(25)),
+                  left: getSize(20),
+                  right: getSize(20),
+                  top: getSize(0),
+                  bottom: getSize(25),
+                ),
                 child: getListViewItem(index),
               );
             },
@@ -202,22 +206,26 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Text(arrImages[index].title,style: appTheme.blackMedium16TitleColorblack,),
+        Text(
+          arrImages[index].title,
+          style: appTheme.blackMedium16TitleColorblack,
+        ),
         Container(
-         
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
           ),
-          margin: EdgeInsets.only(top:getSize(10)),
+          margin: EdgeInsets.only(top: getSize(10)),
           height: getSize(245),
-          child: ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: arrImages[index].arr.length,
-              itemBuilder: (BuildContext context, int i) {
-                return getTabBlock(arrImages[index].arr[i]);
-              },
-            ),
+          child: PageView.builder(
+            // physics: New,
+            // shrinkWrap: true,
+            controller: _pageController,
+            scrollDirection: Axis.horizontal,
+            itemCount: arrImages[index].arr.length,
+            itemBuilder: (BuildContext context, int i) {
+              return getTabBlock(arrImages[index].arr[i]);
+            },
+          ),
         ),
       ],
     );
@@ -226,12 +234,13 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
   jumpToAnyTabFromTabBarClick(int index) {
     double value = 0;
     int i;
-    for (i = 0; i < arrImages.length; i++) {
-      value += getSize(280);
+    if (index > 0) {
+      for (i = 1; i < arrImages.length; i++) {
+        value += getSize(300);
 
-      if (i == index) break;
+        if (i == index) break;
+      }
     }
-
     _scrollController1.jumpTo(value.toDouble());
   }
 
@@ -270,18 +279,33 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
     return (model.isImage == false)
         ? Container(
             height: getSize(245),
-            width : getSize(200),
-            child:getPDFView(context, model),
+            width: getSize(354),
+            child: Stack(
+              children: [
+                FutureBuilder<Widget>(
+                    future: getPDFView(context, model),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+                      if (snapshot.hasData) return snapshot.data;
+
+                      return Container(
+                        color: appTheme.whiteColor,
+                        child: Image.asset(splashLogo),
+                      );
+                    }),
+                // !isErroWhileLoading ?Icon(Icons.title) :SizedBox(),
+                if (isLoading)
+                  Center(
+                    child: SpinKitFadingCircle(
+                      color: appTheme.colorPrimary,
+                      size: getSize(30),
+                    ),
+                  ),
+              ],
+            ),
           )
         : Container(
-            margin: EdgeInsets.only(right:getSize(10)),
-            height: getSize(245),
-            width: getSize(354),
-            decoration: BoxDecoration(
-                color: appTheme.whiteColor,
-                // color: Colors.yellow,
-                borderRadius: BorderRadius.circular(getSize(5)),
-                border: Border.all(color: appTheme.lightBGColor)),
+            margin: EdgeInsets.only(right: getSize(10)),
             child: getImageView(
                 (model.arr != null &&
                         model.arr.length > 0 &&
@@ -290,38 +314,41 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
                     : model.url,
                 height: getSize(245),
                 width: getSize(354),
-                fit: BoxFit.fill
-              ),
+                fit: BoxFit.fill,
+                shape: BoxDecoration(
+                    color: appTheme.whiteColor,
+                    // color: Colors.yellow,
+                    borderRadius: BorderRadius.circular(getSize(20)),
+                    border: Border.all(color: appTheme.lightBGColor))),
           );
   }
 
-  getPDFView(
+  Future<WebView> getPDFView(
     BuildContext context,
     DiamondDetailImagePagerModel model,
-  )  {
-    
+  ) async {
+    // if (!model.isImage) print(model.url);
     return WebView(
-       
-      initialUrl: model.url,
-      onPageStarted: (url) {
-        // app.resolve<CustomDialogs>().showProgressDialog(context, "");
-        setState(() {
-          isLoading = true;
-        });
-      },
-      onPageFinished: (finish) {
-        // app.resolve<CustomDialogs>().hideProgressDialog();
-        setState(() {
-          isLoading = false;
-        });
-      },
-      // onWebResourceError: (error) {
-      //   setState(() {
-      //     isErroWhileLoading = true;
-      //   });
-      // },
-      javascriptMode: JavascriptMode.unrestricted,
-    );
+        initialUrl: model.url,
+        onPageStarted: (url) {
+          // app.resolve<CustomDialogs>().showProgressDialog(context, "");
+          setState(() {
+            isLoading = true;
+          });
+        },
+        onPageFinished: (finish) {
+          // app.resolve<CustomDialogs>().hideProgressDialog();
+          setState(() {
+            isLoading = false;
+          });
+        },
+        onWebResourceError: (error) {
+          print(error);
+          setState(() {
+            isErroWhileLoading = true;
+          });
+        },
+        javascriptMode: JavascriptMode.unrestricted);
   }
 
   Widget getBottomTab() {
