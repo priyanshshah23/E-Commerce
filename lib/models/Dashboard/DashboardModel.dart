@@ -41,7 +41,8 @@ class DashboardModel {
         seller: Seller.fromJson(json["seller"]),
         featuredStone: List<FeaturedStone>.from(
             json["featuredStone"].map((x) => FeaturedStone.fromJson(x))),
-
+      recentSearch: List<SavedSearchModel>.from(
+          json["recentSearch"].map((x) => SavedSearchModel.fromJson(x))),
         savedSearch: List<SavedSearchModel>.from(
             json["savedSearch"].map((x) => SavedSearchModel.fromJson(x))),
         // // recentSearch: List<SavedSearchModel>.from(

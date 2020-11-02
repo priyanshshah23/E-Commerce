@@ -217,6 +217,8 @@ class CommonString {
   final String personal;
 
   final String business;
+  final String shape;
+
 
   final String documents;
   final String selectType;
@@ -496,5 +498,6 @@ class CommonString {
     this.diamNow = "DiamNow",
     this.noDocument = "No Documents Found",
     this.searchBusinessType = "Search Business Type",
+    this.shape = "Shape",
   });
 }
