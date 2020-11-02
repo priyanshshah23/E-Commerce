@@ -37,7 +37,7 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
             height: getSize(20),
           ),
           Container(
-            height: getSize(200),
+            height: getSize(170),
 //              child: ListView.builder(
 //                itemCount: 5,
 //                scrollDirection: Axis.horizontal,
@@ -51,10 +51,9 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
               crossAxisCount: 2,
 //              childAspectRatio: 0.36,
               // without Price
-              childAspectRatio: 0.255,
+              childAspectRatio: 0.272,
               // with Price
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
+              mainAxisSpacing: 15,
               children: List.generate(
                 5,
                 (index) {
@@ -75,11 +74,11 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
   getRecentItem() {
     return Padding(
       padding: EdgeInsets.only(
-        right: getSize(20),
         bottom: getSize(20),
       ),
       child: Container(
-        padding: EdgeInsets.only( left: getSize(10),
+        padding: EdgeInsets.only(
+          left: getSize(10),
           top: getSize(10),
           bottom: getSize(10),),
         decoration: BoxDecoration(
@@ -94,120 +93,159 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
           ],
           borderRadius: BorderRadius.circular(getSize(5)),
         ),
-        child: Row(
+        child: Stack(
+          alignment: Alignment.centerRight,
           children: [
-            Container(
-              width: getSize(60),
-              height: getSize(60),
-              decoration: BoxDecoration(
-                color: appTheme.textGreyColor,
-                borderRadius: BorderRadius.circular(getSize(2)),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(getSize(10)),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(getSize(2)),
-                  child: getImageView(
-                    "",
-                    finalUrl: "",
-                    width: getSize(40),
-                    height: getSize(40),
-                    fit: BoxFit.cover,
+            Row(
+              children: [
+                Container(
+                  width: getSize(49),
+                  height: getSize(39),
+                  decoration: BoxDecoration(
+                    color: appTheme.textGreyColor,
+                    borderRadius: BorderRadius.circular(getSize(2)),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(getSize(2)),
+                    child: getImageView(
+                      "",
+                      finalUrl: "",
+                      width: getSize(49),
+                      height: getSize(39),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
-            ),
-            Container(
-              width: getSize(267),
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: getSize(10),
-                  right: getSize(10),
+                Container(
+                  width: getSize(252),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: getSize(10),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: MathUtilities.screenWidth(context) / 8.5,
+                              child: getText("1234567898",
+                                  style: appTheme.black12TextStyle),
+                            ),
+                            SizedBox(
+                              width: getSize(3),
+                            ),
+                            Container(
+                              width: MathUtilities.screenWidth(context) / 10,
+                              child: getText("ROUND",
+                                  style: appTheme.black12TextStyleMedium),
+                            ),
+                            SizedBox(
+                              width: getSize(3),
+                            ),
+                            Container(
+                              width: MathUtilities.screenWidth(context) / 4.5,
+                              child: getText("12.50 Carat",
+                                  style: appTheme.primaryColor14TextStyle),
+                            ),
+                            SizedBox(
+                              width: getSize(3),
+                            ),
+                            Container(
+                              width: MathUtilities.screenWidth(context) / 9,
+                              child:  getText("-44.03%",
+                                  style: appTheme.blue12TextStyle),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: getSize(5),
+                        ),
+                        Row(
+//                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: MathUtilities.screenWidth(context) / 8.5,
+                              child: getText("D", style: appTheme.black12TextStyle),
+                            ),
+                            SizedBox(
+                              width: getSize(3),
+                            ),
+                            Container(
+                              width: MathUtilities.screenWidth(context) / 10,
+                              child:getText("IF", style: appTheme.black12TextStyle),
+                            ),
+                            SizedBox(
+                              width: getSize(3),
+                            ),
+                            Container(
+                              width: MathUtilities.screenWidth(context) / 4.5,
+                              child: getColorClarityLab(),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(right: getSize(3)),
+                              alignment: Alignment.centerRight,
+                              width: MathUtilities.screenWidth(context) / 9,
+                              child:  getText("GIA", style: appTheme.black12TextStyle),
+                            ),
+                          ],
+                        ),
+                        /*Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            getText("1910756465454641", style: appTheme.black12TextStyle),
+                            SizedBox(height: getSize(5),),
+                            getText("D", style: appTheme.black12TextStyle),
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            getText("ROUND", style: appTheme.black12TextStyleMedium),
+                            SizedBox(height: getSize(5),),
+                            getText("IF", style: appTheme.black12TextStyle),
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            getText("12.50 Carat", style: appTheme.primaryColor14TextStyle),
+                            SizedBox(height: getSize(5),),
+                            getColorClarityLab(),
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            getText("-44.03%", style: appTheme.blue12TextStyle),
+                            SizedBox(height: getSize(5),),
+                            getText("GIA",style: appTheme.black12TextStyle),
+                          ],
+                        )*/
+                      ],
+                    ),
+                  ),
                 ),
-                child: Column(
-//                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Row(
-                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        getText("19167894567",
-                            style: appTheme.black12TextStyle),
-                        SizedBox(
-                          width: getSize(5),
-                        ),
-                        getText("ROUND",
-                            style: appTheme.black12TextStyleMedium),
-                        SizedBox(
-                          width: getSize(5),
-                        ),
-                        getText("12.50 Carat",
-                            style: appTheme.primaryColor14TextStyle),
-                        SizedBox(
-                          width: getSize(5),
-                        ),
-                        getText("-44.03%",
-                            style: appTheme.blue12TextStyle),
-                      ],
-                    ),
-                    SizedBox(
-                      height: getSize(5),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        getText("D", style: appTheme.black12TextStyle),
-                        SizedBox(
-                          width: getSize(5),
-                        ),
-                        getText("IF", style: appTheme.black12TextStyle),
-                        SizedBox(
-                          width: getSize(5),
-                        ),
-                        getColorClarityLab(),
-                        SizedBox(
-                          width: getSize(5),
-                        ),
-                        getText("GIA", style: appTheme.black12TextStyle),
-                      ],
-                    ),
-                    /*Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        getText("1910756465454641", style: appTheme.black12TextStyle),
-                        SizedBox(height: getSize(5),),
-                        getText("D", style: appTheme.black12TextStyle),
-                      ],
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        getText("ROUND", style: appTheme.black12TextStyleMedium),
-                        SizedBox(height: getSize(5),),
-                        getText("IF", style: appTheme.black12TextStyle),
-                      ],
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        getText("12.50 Carat", style: appTheme.primaryColor14TextStyle),
-                        SizedBox(height: getSize(5),),
-                        getColorClarityLab(),
-                      ],
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        getText("-44.03%", style: appTheme.blue12TextStyle),
-                        SizedBox(height: getSize(5),),
-                        getText("GIA",style: appTheme.black12TextStyle),
-                      ],
-                    )*/
-                  ],
+              ],
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Container(
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(5),
+                          bottomLeft: Radius.circular(5))),
+                  height: getSize(26),
+                  width: getSize(4),
+                  // color: Colors.red,
                 ),
               ),
             ),
