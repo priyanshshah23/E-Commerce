@@ -217,6 +217,8 @@ class CommonString {
   final String personal;
 
   final String business;
+  final String shape;
+
 
   final String documents;
   final String selectType;
@@ -505,5 +507,6 @@ class CommonString {
     this.minutes= "Minutes",
     this.seconds= "Seconds",
     this.bidEndsIn= "Bid ends in:",
+    this.shape = "Shape",
   });
 }

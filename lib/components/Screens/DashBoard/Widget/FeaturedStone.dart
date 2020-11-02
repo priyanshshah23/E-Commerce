@@ -2,9 +2,16 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
+import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
+import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:flutter/material.dart';
 
 class FeaturedStoneWidget extends StatefulWidget {
+  List<DiamondModel> diamondList;
+
+  FeaturedStoneWidget({this.diamondList});
+
   @override
   _FeaturedStoneWidgetState createState() => _FeaturedStoneWidgetState();
 }
@@ -12,7 +19,9 @@ class FeaturedStoneWidget extends StatefulWidget {
 class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return isNullEmptyOrFalse(widget.diamondList)
+        ? SizedBox()
+        : Padding(
       padding: EdgeInsets.only(
         top: getSize(20),
         left: getSize(Spacing.leftPadding),
@@ -55,13 +64,13 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
               // with Price
               mainAxisSpacing: 15,
               children: List.generate(
-                5,
+                widget.diamondList.length,
                 (index) {
                   return InkWell(
                       onTap: () {
-//                      moveToDetail();
+                      moveToDetail(widget.diamondList[index]);
                       },
-                      child: getRecentItem());
+                      child: getRecentItem(widget.diamondList[index]));
                 },
               ),
             ),
@@ -71,7 +80,15 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
     );
   }
 
-  getRecentItem() {
+  moveToDetail(DiamondModel model) {
+    var dict = Map<String, dynamic>();
+    dict[ArgumentConstant.DiamondDetail] = model;
+    dict[ArgumentConstant.ModuleType] = DiamondModuleConstant.MODULE_TYPE_HOME;
+    NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
+  }
+
+
+  getRecentItem(DiamondModel model) {
     return Padding(
       padding: EdgeInsets.only(
         bottom: getSize(20),
@@ -131,7 +148,7 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
                           children: [
                             Container(
                               width: MathUtilities.screenWidth(context) / 8.5,
-                              child: getText("1234567898",
+                              child: getText(model.vStnId,
                                   style: appTheme.black12TextStyle),
                             ),
                             SizedBox(
@@ -139,7 +156,7 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
                             ),
                             Container(
                               width: MathUtilities.screenWidth(context) / 10,
-                              child: getText("ROUND",
+                              child: getText(model.shpNm,
                                   style: appTheme.black12TextStyleMedium),
                             ),
                             SizedBox(
@@ -147,7 +164,7 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
                             ),
                             Container(
                               width: MathUtilities.screenWidth(context) / 4.5,
-                              child: getText("12.50 Carat",
+                              child: getText("${model.crt} \n Carat",
                                   style: appTheme.primaryColor14TextStyle),
                             ),
                             SizedBox(
@@ -155,7 +172,7 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
                             ),
                             Container(
                               width: MathUtilities.screenWidth(context) / 9,
-                              child:  getText("-44.03%",
+                              child:  getText(PriceUtilities.getPercent(model.back),
                                   style: appTheme.blue12TextStyle),
                             ),
                           ],
@@ -168,27 +185,27 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
                           children: [
                             Container(
                               width: MathUtilities.screenWidth(context) / 8.5,
-                              child: getText("D", style: appTheme.black12TextStyle),
+                              child: getText(model.colNm, style: appTheme.black12TextStyle),
                             ),
                             SizedBox(
                               width: getSize(3),
                             ),
                             Container(
                               width: MathUtilities.screenWidth(context) / 10,
-                              child:getText("IF", style: appTheme.black12TextStyle),
+                              child:getText(model.clrNm, style: appTheme.black12TextStyle),
                             ),
                             SizedBox(
                               width: getSize(3),
                             ),
                             Container(
                               width: MathUtilities.screenWidth(context) / 4.5,
-                              child: getColorClarityLab(),
+                              child: getColorClarityLab(model),
                             ),
                             Container(
                               padding: EdgeInsets.only(right: getSize(3)),
                               alignment: Alignment.centerRight,
                               width: MathUtilities.screenWidth(context) / 9,
-                              child:  getText("GIA", style: appTheme.black12TextStyle),
+                              child:  getText(model.lbNm, style: appTheme.black12TextStyle),
                             ),
                           ],
                         ),
@@ -238,21 +255,21 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
     );
   }
 
-  getColorClarityLab() {
+  getColorClarityLab(DiamondModel model) {
     return Row(
       children: [
         getText(
-          "123",
+          model.colNm ?? "",
           style: appTheme.black12TextStyle,
         ),
-        getDot(),
+        Spacer(),
         getText(
-          "456",
+          model.clrNm ?? "",
           style: appTheme.black12TextStyle,
         ),
-        getDot(),
+        Spacer(),
         getText(
-          "789",
+          model.lbNm ?? "",
           style: appTheme.black12TextStyle,
         ),
       ],

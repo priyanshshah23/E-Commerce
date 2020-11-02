@@ -2,9 +2,15 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
+import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:flutter/material.dart';
 
 class StoneOfDayWidget extends StatefulWidget {
+  List<DiamondModel> stoneList;
+
+  StoneOfDayWidget({this.stoneList});
+
+
   @override
   _StoneOfDayWidgetState createState() => _StoneOfDayWidgetState();
 }
@@ -12,7 +18,9 @@ class StoneOfDayWidget extends StatefulWidget {
 class _StoneOfDayWidgetState extends State<StoneOfDayWidget> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return isNullEmptyOrFalse(widget.stoneList)
+        ? SizedBox()
+        : Padding(
       padding: EdgeInsets.only(
         top: getSize(20),
         left: getSize(Spacing.leftPadding),
@@ -38,39 +46,38 @@ class _StoneOfDayWidgetState extends State<StoneOfDayWidget> {
           ),
           Container(
               height: getSize(180),
-              child: ListView.builder(
-                itemCount: 5,
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, int index) {
-                  return getRecentItem();
-                },
-              )
-//            child: GridView.count(
-//              scrollDirection: Axis.horizontal,
-//              shrinkWrap: true,
-//              crossAxisCount: 2,
-////              childAspectRatio: 0.36,
-//              // without Price
-//               childAspectRatio: 0.327, // with Price
+//              child: ListView.builder(
+//                itemCount: 5,
+//                shrinkWrap: true,
+//                scrollDirection: Axis.horizontal,
+//                itemBuilder: (BuildContext context, int index) {
+//                  return getRecentItem();
+//                },
+//              )
+            child: GridView.count(
+              scrollDirection: Axis.horizontal,
+              shrinkWrap: true,
+              crossAxisCount: 1,
+//              childAspectRatio: 0.36,
+              // without Price
+              childAspectRatio: 0.626, // with Price
 //              mainAxisSpacing: 10,
-//              crossAxisSpacing: 10,
-//              children: List.generate(5, (index) {
-//                return InkWell(
-//                    onTap: () {
-////                      moveToDetail();
-//                    },
-//                    child: getRecentItem());
-//              },
-//              ),
-//            ),
+              children: List.generate( widget.stoneList.length, (index) {
+                return InkWell(
+                    onTap: () {
+//                      moveToDetail();
+                    },
+                    child: getRecentItem(widget.stoneList[index]));
+              },
+              ),
+            ),
               )
         ],
       ),
     );
   }
 
-  getRecentItem() {
+  getRecentItem(DiamondModel model) {
     return Padding(
       padding: EdgeInsets.only(
         top: getSize(10),
@@ -134,7 +141,7 @@ class _StoneOfDayWidgetState extends State<StoneOfDayWidget> {
                               children: [
                                 Container(
                                   width: MathUtilities.screenWidth(context) / 8.5,
-                                  child: getText("1234567898",
+                                  child: getText(model.vStnId,
                                       style: appTheme.black12TextStyle),
                                 ),
                                 SizedBox(
@@ -142,7 +149,7 @@ class _StoneOfDayWidgetState extends State<StoneOfDayWidget> {
                                 ),
                                 Container(
                                   width: MathUtilities.screenWidth(context) / 10,
-                                  child: getText("ROUND",
+                                  child: getText(model.shpNm,
                                       style: appTheme.black12TextStyleMedium),
                                 ),
                                 SizedBox(
@@ -150,7 +157,7 @@ class _StoneOfDayWidgetState extends State<StoneOfDayWidget> {
                                 ),
                                 Container(
                                   width: MathUtilities.screenWidth(context) / 4.5,
-                                  child: getText("12.50 Carat",
+                                  child: getText("${model.crt} \n ${R.string().commonString.carat}",
                                       style: appTheme.primaryColor14TextStyle),
                                 ),
                                 SizedBox(
@@ -158,7 +165,7 @@ class _StoneOfDayWidgetState extends State<StoneOfDayWidget> {
                                 ),
                                 Container(
                                   width: MathUtilities.screenWidth(context) / 9,
-                                  child:  getText("-44.03%",
+                                  child:  getText(PriceUtilities.getPercent(model.back),
                                       style: appTheme.blue12TextStyle),
                                 ),
                               ],
@@ -171,27 +178,27 @@ class _StoneOfDayWidgetState extends State<StoneOfDayWidget> {
                               children: [
                                 Container(
                                   width: MathUtilities.screenWidth(context) / 8.5,
-                                  child: getText("D", style: appTheme.black12TextStyle),
+                                  child: getText(model.colNm, style: appTheme.black12TextStyle),
                                 ),
                                 SizedBox(
                                   width: getSize(3),
                                 ),
                                 Container(
                                   width: MathUtilities.screenWidth(context) / 10,
-                                  child:getText("IF", style: appTheme.black12TextStyle),
+                                  child:getText(model.clrNm, style: appTheme.black12TextStyle),
                                 ),
                                 SizedBox(
                                   width: getSize(3),
                                 ),
                                 Container(
                                   width: MathUtilities.screenWidth(context) / 4.5,
-                                  child: getColorClarityLab(),
+                                  child: getColorClarityLab(model),
                                 ),
                                 Container(
                                   padding: EdgeInsets.only(right: getSize(3)),
                                   alignment: Alignment.centerRight,
                                   width: MathUtilities.screenWidth(context) / 9,
-                                  child:  getText("GIA", style: appTheme.black12TextStyle),
+                                  child:  getText(model.lbNm, style: appTheme.black12TextStyle),
                                 ),
                               ],
                             ),
@@ -243,21 +250,21 @@ class _StoneOfDayWidgetState extends State<StoneOfDayWidget> {
     );
   }
 
-  getColorClarityLab() {
+  getColorClarityLab(DiamondModel model) {
     return Row(
       children: [
         getText(
-          "123",
+          model.colNm ?? "",
           style: appTheme.black12TextStyle,
         ),
         getDot(),
         getText(
-          "456",
+          model.clrNm ?? "",
           style: appTheme.black12TextStyle,
         ),
         getDot(),
         getText(
-          "789",
+          model.lbNm ?? "",
           style: appTheme.black12TextStyle,
         ),
       ],

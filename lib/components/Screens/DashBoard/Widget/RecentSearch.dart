@@ -1,10 +1,14 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
-import 'package:diamnow/app/utils/ImageUtils.dart';
-import 'package:diamnow/app/utils/price_utility.dart';
+import 'package:diamnow/app/utils/date_utils.dart';
+import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:flutter/material.dart';
 
 class RecentSearchWidget extends StatefulWidget {
+  List<SavedSearchModel> recentSearch;
+
+  RecentSearchWidget({this.recentSearch});
+
   @override
   _RecentSearchWidgetState createState() => _RecentSearchWidgetState();
 }
@@ -12,7 +16,9 @@ class RecentSearchWidget extends StatefulWidget {
 class _RecentSearchWidgetState extends State<RecentSearchWidget> {
   @override
   Widget build(BuildContext context) {
-    return  Padding(
+    return isNullEmptyOrFalse(widget.recentSearch)
+        ? SizedBox()
+        :  Padding(
       padding: EdgeInsets.only(
         top: getSize(20),
         left: getSize(Spacing.leftPadding),
@@ -39,36 +45,18 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
           Container(
               height: getSize(160),
               child: ListView.builder(
-                itemCount: 5,
+                itemCount: widget.recentSearch.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
-                  return getRecentItem();
+                  return getRecentItem(widget.recentSearch[index]);
                 },)
-//            child: GridView.count(
-//              scrollDirection: Axis.horizontal,
-//              shrinkWrap: true,
-//              crossAxisCount: 2,
-////              childAspectRatio: 0.36,
-//              // without Price
-//               childAspectRatio: 0.327, // with Price
-//              mainAxisSpacing: 10,
-//              crossAxisSpacing: 10,
-//              children: List.generate(5, (index) {
-//                return InkWell(
-//                    onTap: () {
-////                      moveToDetail();
-//                    },
-//                    child: getRecentItem());
-//              },
-//              ),
-//            ),
           )
         ],
       ),
     );
   }
 
-  getRecentItem() {
+  getRecentItem(SavedSearchModel recentSearch) {
     return Padding(
       padding: EdgeInsets.only(
         top: getSize(10),
@@ -83,7 +71,7 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
         ),
         child: Column(
           children: [
-           getText("21-10-2020 at 01:43 PM"),
+           getText(recentSearch.getCreatedDate()),
             Divider(height: getSize(20),color: appTheme.textGreyColor,),
             Expanded(
               child: Column(
@@ -91,29 +79,32 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
                 children: [
                 Expanded(
                   child: Row(
-                    children: [
-                      getText("Shape", style: appTheme.grey12TextStyle),
-                      SizedBox(width: getSize(5),),
-                      getText("Round, Pear"),
-                    ],
+                    children:  isNullEmptyOrFalse(recentSearch.searchData)
+                        ? [getText("All")] :
+                    getWidgets(recentSearch.searchData,recentSearch.searchData.shp,R.string().commonString.shape),
                   ),
                 ),
                   Expanded(
                     child: Row(
                       children: [
-                        getText("Carat", style: appTheme.grey12TextStyle),
+                        getText(R.string().commonString.carat, style: appTheme.grey12TextStyle),
                         SizedBox(width: getSize(5),),
-                        getText("7.05, 12.05"),
+                        isNullEmptyOrFalse(recentSearch.searchData) ||
+                            isNullEmptyOrFalse(recentSearch.searchData.or) ||
+                            isNullEmptyOrFalse(recentSearch.searchData.or.first)||
+                            isNullEmptyOrFalse(recentSearch.searchData.or.first.crt)||
+                            isNullEmptyOrFalse(recentSearch.searchData.or.first.crt.back)||
+                            isNullEmptyOrFalse(recentSearch.searchData.or.first.crt.empty)
+                            ? getText("All") :
+                        getText("${recentSearch.searchData.or.first.crt.back}, ${recentSearch.searchData.or.first.crt.empty}")
                       ],
                     ),
                   ),
                   Expanded(
                     child: Row(
-                      children: [
-                        getText("Color", style: appTheme.grey12TextStyle),
-                        SizedBox(width: getSize(5),),
-                        getText("D, E, F"),
-                      ],
+                      children: isNullEmptyOrFalse(recentSearch.searchData)
+                          ? [getText("All")] :
+                        getWidgets(recentSearch.searchData,recentSearch.searchData.col,R.string().commonString.color),
                     ),
                   ),
                 ],
@@ -147,9 +138,6 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
   getText(String text, {TextStyle style}) {
     return Text(
       text,
-      softWrap: true,
-      overflow: TextOverflow.ellipsis,
-      maxLines: 1,
       textAlign: TextAlign.left,
       style: style ?? appTheme.black12TextStyle,
     );
@@ -165,6 +153,22 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
         BoxDecoration(color: appTheme.dividerColor, shape: BoxShape.circle),
       ),
     );
+  }
+
+  getWidgets(DisplayDataClass searchData, List<String> searchList, String title) {
+    List<Widget> list = List();
+    list.add( getText(title, style: appTheme.grey12TextStyle),);
+    list.add( SizedBox(width: getSize(5),),);
+    if(isNullEmptyOrFalse(searchData)) {
+      list.add(getText("All"));
+    } else if(isNullEmptyOrFalse(searchList)) {
+      list.add(getText("All"));
+    } else {
+      for (var i = 0; i < searchList.length; i++) {
+        i == searchList.length-1 ? list.add(getText(searchList[i])) : list.add(getText("${searchList[i]},"));
+      }
+    }
+    return list;
   }
 
 }
