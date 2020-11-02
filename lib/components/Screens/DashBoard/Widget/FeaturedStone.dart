@@ -192,42 +192,6 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
                             ),
                           ],
                         ),
-                        /*Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            getText("1910756465454641", style: appTheme.black12TextStyle),
-                            SizedBox(height: getSize(5),),
-                            getText("D", style: appTheme.black12TextStyle),
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            getText("ROUND", style: appTheme.black12TextStyleMedium),
-                            SizedBox(height: getSize(5),),
-                            getText("IF", style: appTheme.black12TextStyle),
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            getText("12.50 Carat", style: appTheme.primaryColor14TextStyle),
-                            SizedBox(height: getSize(5),),
-                            getColorClarityLab(),
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            getText("-44.03%", style: appTheme.blue12TextStyle),
-                            SizedBox(height: getSize(5),),
-                            getText("GIA",style: appTheme.black12TextStyle),
-                          ],
-                        )*/
                       ],
                     ),
                   ),
