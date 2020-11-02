@@ -57,7 +57,6 @@ class ModulePermissionConstant {
   static const permission_watchlist = "watchlist";
   static const permission_comment = "comment";
   static const permission_enquiry = "enquiry";
-  static const permission_upcoming = "upcomingDiamonds";
   static const permission_order = "order";
   static const permission_purchase = "purchase";
   static const permission_stone_of_the_day = "stoneoftheday";
