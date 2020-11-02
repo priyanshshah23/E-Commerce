@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/Helper/Themehelper.dart';
 import 'package:diamnow/app/app.export.dart';
@@ -7,9 +9,12 @@ import 'package:diamnow/app/constant/constants.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/math_utils.dart';
 import 'package:diamnow/app/utils/string_utils.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/main.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
@@ -113,15 +118,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
         List<Map<String, dynamic>> arrData =
             getDisplayData(savedSearchModel.displayData);
         if (widget.searchType == SavedSearchType.savedSearch) {
-          return InkWell(
-            onTap: () {
-              Map<String, dynamic> dict = {};
-              dict["searchData"] = arrList[index].searchData;
-              dict[ArgumentConstant.IsFromDrawer] = false;
-              NavigationUtilities.pushRoute(FilterScreen.route, args: dict);
-            },
-            child: getItemWidget(savedSearchModel, arrData),
-          );
+          return getItemWidget(savedSearchModel, arrData);
         } else {
           return getItemWidget(savedSearchModel, arrData);
         }
@@ -166,9 +163,40 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               widget.searchType == SavedSearchType.savedSearch
-                                  ? Text(model.name ?? "-",
-                                      style: appTheme
-                                          .blackSemiBold18TitleColorblack)
+                                  ? Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              bottom: getSize(5.0)),
+                                          child: Text(model.name ?? "-",
+                                              style: appTheme
+                                                  .blackNormal16TitleColorblack),
+                                        ),
+                                        // Expiry date code
+                                        // Row(
+                                        //   mainAxisSize: MainAxisSize.min,
+                                        //   children: [
+                                        //     Text(
+                                        //       "Expiry Date :",
+                                        //       style:
+                                        //           appTheme.grey12HintTextStyle,
+                                        //     ),
+                                        //     SizedBox(width: getSize(5)),
+                                        //     Text(
+                                        //         DateUtilities().convertServerDateToFormatterString(
+                                        //                 model.createdAt ?? "",
+                                        //                 formatter: DateUtilities
+                                        //                     .dd_mmm_yy_h_mm_a) ??
+                                        //             "-",
+                                        //         style: appTheme
+                                        //             .blackNormal12TitleColorblack)
+                                        //   ],
+                                        // )
+                                      ],
+                                    )
                                   : widget.searchType ==
                                           SavedSearchType.recentSearch
                                       ? Text(
@@ -186,45 +214,139 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                   : SizedBox(
                                       width: getSize(16),
                                     ),
-                              widget.searchType == SavedSearchType.savedSearch
-                                  ? InkWell(
+                              widget.searchType ==
+                                          SavedSearchType.savedSearch &&
+                                      arr.length > 3
+                                  ? GestureDetector(
                                       onTap: () {
-                                        SyncManager.instance
-                                            .callApiForDeleteSavedSearch(
-                                                context, model.id ?? "",
-                                                success: (resp) {
-                                          callApi(true);
-                                        });
+                                        model.isExpand ^= true;
+                                        savedSearchBaseList.state
+                                            .setApiCalling(false);
+                                        fillArrayList();
                                       },
-                                      child: Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Image.asset(
-                                          home_delete,
-                                          width: getSize(20),
-                                          height: getSize(20),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                                bottom: BorderSide(
+                                          color: appTheme.colorPrimary,
+                                          width: 1.0,
+                                        ))),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                  right: getSize(3)),
+                                              child: Text(
+                                                R
+                                                    .string()
+                                                    .commonString
+                                                    .viewDetails,
+                                                textAlign: TextAlign.center,
+                                                style: appTheme
+                                                    .primaryColor14TextStyle,
+                                              ),
+                                            ),
+                                            model.isExpand
+                                                ? Image.asset(showLess)
+                                                : Image.asset(showMore),
+                                          ],
                                         ),
                                       ),
                                     )
                                   : SizedBox(),
                             ],
                           ),
-                          SizedBox(
-                            height: getSize(8),
-                          ),
-                          for (var item in arr)
-                            Row(children: [
-                              Text(
-                                "${item["key"] ?? ""} :",
-                                textAlign: TextAlign.left,
-                                style: appTheme.grey16HintTextStyle,
-                              ),
-                              SizedBox(width: getSize(16)),
-                              Expanded(
-                                child: Text(item["value"] ?? "",
-                                    textAlign: TextAlign.right,
-                                    style: appTheme.primaryColor14TextStyle),
-                              ),
-                            ]),
+                          widget.searchType == SavedSearchType.savedSearch
+                              ? SizedBox(
+                                  height: getSize(25),
+                                )
+                              : SizedBox(),
+                          if (arr.length <= 3 &&
+                              widget.searchType == SavedSearchType.savedSearch)
+                            listOfSelectedFilter(arr, model, arr.length),
+                          if (arr.length > 3 &&
+                              model.isExpand &&
+                              widget.searchType == SavedSearchType.savedSearch)
+                            listOfSelectedFilter(arr, model, arr.length),
+                          if (arr.length > 3 &&
+                              !model.isExpand &&
+                              widget.searchType == SavedSearchType.savedSearch)
+                            listOfSelectedFilter(arr, model, 3),
+                          if( widget.searchType ==
+                                          SavedSearchType.recentSearch)
+                            listOfSelectedFilter(arr, model, arr.length),
+                          widget.searchType == SavedSearchType.savedSearch
+                              ? Padding(
+                                  padding: EdgeInsets.only(
+                                    left: getSize(15),
+                                    right: getSize(15),
+                                    top: getSize(10),
+                                    bottom: getSize(10),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      getPreviewItem(
+                                          "Modify",
+                                          edit_icon,
+                                          appTheme
+                                              .greenPrimaryNormal14TitleColor,
+                                          () {
+                                        Map<String, dynamic> dict = {};
+                                        dict["searchData"] = model.searchData;
+                                        dict[ArgumentConstant.IsFromDrawer] =
+                                            false;
+                                        NavigationUtilities.pushRoute(
+                                            FilterScreen.route,
+                                            args: dict);
+                                      }),
+                                      getPreviewItem("Delete", delete_icon_medium,
+                                          appTheme.redPrimaryNormal14TitleColor,
+                                          () {
+                                        app
+                                            .resolve<CustomDialogs>()
+                                            .confirmDialog(
+                                          context,
+                                          barrierDismissible: true,
+                                          title: "",
+                                          desc:
+                                              "You really want to delete ${model.name}.",
+                                          positiveBtnTitle:
+                                              R.string().commonString.ok,
+                                          negativeBtnTitle:
+                                              R.string().commonString.cancel,
+                                          onClickCallback: (buttonType) {
+                                            if (buttonType ==
+                                                ButtonType.PositveButtonClick) {
+                                              SyncManager.instance
+                                                  .callApiForDeleteSavedSearch(
+                                                      context, model.id ?? "",
+                                                      success: (resp) {
+                                                callApi(true);
+                                              });
+                                            }
+                                          },
+                                        );
+                                      }),
+                                      getPreviewItem("Search", saved_medium,
+                                          appTheme.primaryColor14TextStyle,
+                                          () {
+                                        Map<String, dynamic> dict =
+                                            new HashMap();
+                                        dict["filterId"] = model.id;
+                                        dict[ArgumentConstant.ModuleType] =
+                                            DiamondModuleConstant
+                                                .MODULE_TYPE_MY_SAVED_SEARCH;
+                                        NavigationUtilities.pushRoute(
+                                            DiamondListScreen.route,
+                                            args: dict);
+                                      }),
+                                    ],
+                                  ),
+                                )
+                              : SizedBox(),
                         ],
                       ),
                     ),
@@ -235,6 +357,62 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
           )
         ],
       ),
+    );
+  }
+
+  getPreviewItem(String txt, String img, TextStyle textStyle, Function onTap) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: getSize(40),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+               width: getSize(15),
+              height: getSize(15),
+              child: Image.asset(
+                img,
+               
+              ),
+            ),
+            SizedBox(
+              width: getSize(8),
+            ),
+            Text(
+              txt,
+              style: textStyle,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Column listOfSelectedFilter(List<Map<String, dynamic>> arr,
+      SavedSearchModel savedSearchModel, int length) {
+    return Column(
+      children: <Widget>[
+        for (int i = 0; i < length; i++)
+          Padding(
+            padding: EdgeInsets.only(top:getSize(10)),
+            child: Row(
+              children: [
+                Text(
+                  "${arr[i]["key"] ?? ""} :",
+                  textAlign: TextAlign.left,
+                  style: appTheme.grey16HintTextStyle,
+                ),
+                SizedBox(width: getSize(16)),
+                Expanded(
+                  child: Text(arr[i]["value"] ?? "",
+                      textAlign: TextAlign.right,
+                      style: appTheme.blackNormal16TitleColorblack),
+                ),
+              ],
+            ),
+          ),
+      ],
     );
   }
 

@@ -587,7 +587,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               .insert) {
             if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList)))
               callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-                  isSavedSearch: true);
+                  isSavedSearch: true,isSearch: true);
             else
               showToast(R.string().commonString.selectAtleastOneFilter,
                   context: context);
@@ -619,7 +619,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           openBottomSheetForSavedSearch(
               context,
               FilterRequest().createRequest(arrList),
-              diamondListResp.data.filter.id);
+              diamondListResp.data.filter.id,
+              isSearch: isSearch
+              );
         } else {
           if (isSearch) {
             if (diamondListResp.data.count == 0) {

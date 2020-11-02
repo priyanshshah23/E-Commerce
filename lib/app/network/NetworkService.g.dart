@@ -705,7 +705,7 @@ class _NetworkService implements NetworkService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = BaseApiResp.fromJson(_result.data);
+    final value = SavedSearchResp.fromJson(_result.data);
     return Future.value(value);
   }
 

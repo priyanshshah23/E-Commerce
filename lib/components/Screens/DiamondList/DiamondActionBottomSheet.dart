@@ -1,12 +1,17 @@
+import 'dart:collection';
+
 import 'package:diamnow/app/Helper/Themehelper.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/math_utils.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
+import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
+import 'package:diamnow/modules/Filter/gridviewlist/FilterRequest.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -1054,7 +1059,8 @@ Widget setInvoiceDropDown(
     );
 
 Future openBottomSheetForSavedSearch(
-    BuildContext context, Map<String, dynamic> req, String filterId) {
+    BuildContext context, Map<String, dynamic> req, String filterId,
+    {isSearch = false}) {
   final TextEditingController _titleController = TextEditingController();
 
   return showModalBottomSheet(
@@ -1138,7 +1144,7 @@ Future openBottomSheetForSavedSearch(
                         dict["name"] = _titleController.text;
                         dict["id"] = filterId;
                         dict["searchType"] = DiamondSearchType.SAVE;
-                        NetworkCall<BaseApiResp>()
+                        NetworkCall<SavedSearchResp>()
                             .makeCall(
                           () => app
                               .resolve<ServiceModule>()
@@ -1148,7 +1154,18 @@ Future openBottomSheetForSavedSearch(
                           isProgress: true,
                         )
                             .then((diamondListResp) async {
-                          Navigator.pop(context);
+                              Navigator.pop(context);
+                          if (isSearch) {
+                            Map<String, dynamic> dict = new HashMap();
+                            dict["filterId"] = diamondListResp.data.savedSearchModel.id;
+                            dict["filters"] =
+                                req;
+                            dict[ArgumentConstant.ModuleType] = DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
+                            NavigationUtilities.pushRoute(
+                                DiamondListScreen.route,
+                                args: dict);
+                          }
+                          // Navigator.pop(context);
                         }).catchError((onError) {
                           print(onError.toString());
                         });
