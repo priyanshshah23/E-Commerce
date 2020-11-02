@@ -169,11 +169,11 @@ class _DashboardState extends StatefulScreenWidgetState {
                       borderRadius:
                           BorderRadius.all(Radius.circular(getSize(15))),
                       child: getImageView(
-                          app.resolve<PrefUtils>().getUserDetails().profileImage,
-                          placeHolderImage: placeHolder,
-                          height: getSize(30),
-                          width: getSize(30),
-                        ),
+                        app.resolve<PrefUtils>().getUserDetails().profileImage,
+                        placeHolderImage: placeHolder,
+                        height: getSize(30),
+                        width: getSize(30),
+                      ),
                     ),
                   ),
                 ),
@@ -284,7 +284,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                     getFeaturedSection(),
                     getStoneOfDaySection(),
                     getSavedSearchSection(),
-                     getRecentSection(),
+                    getRecentSection(),
                     getSalesSection(),
                     SizedBox(
                       height: getSize(20),
@@ -1659,8 +1659,9 @@ class _DashboardState extends StatefulScreenWidgetState {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                        Text(
-                        this.dashboardModel.seller.firstName + " " +
+                      Text(
+                        this.dashboardModel.seller.firstName +
+                            " " +
                             this.dashboardModel.seller.lastName,
                         style: appTheme.black16TextStyle.copyWith(
                           color: appTheme.colorPrimary,
@@ -1825,7 +1826,8 @@ class _DashboardState extends StatefulScreenWidgetState {
   openProfile() {
     Map<String, dynamic> dict = new HashMap();
     dict[ArgumentConstant.IsFromDrawer] = false;
-    NavigationUtilities.pushRoute(MyAccountScreen.route, args: dict).then((value) {
+    NavigationUtilities.pushRoute(MyAccountScreen.route, args: dict)
+        .then((value) {
       setState(() {});
     });
   }

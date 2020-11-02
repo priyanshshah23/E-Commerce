@@ -123,5 +123,5 @@ flutter:
         - asset: assets/fonts/Avenir-Light.ttf
           weight: 300
         - asset: assets/fonts/Avenir-Roman.ttf
-         
+          weight: 200
        

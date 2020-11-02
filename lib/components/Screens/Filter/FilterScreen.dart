@@ -282,15 +282,70 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       },
       child: AppBackground(
         child: Scaffold(
-            appBar: getAppBar(
-              context,
-              R.string().screenTitle.searchDiamond,
-              bgColor: appTheme.whiteColor,
-              leadingButton: isFromDrawer
-                  ? getDrawerButton(context, true)
-                  : getBackButton(context),
-              centerTitle: false,
-            ),
+            appBar: getAppBar(context, R.string().screenTitle.searchDiamond,
+                bgColor: appTheme.whiteColor,
+                leadingButton: isFromDrawer
+                    ? getDrawerButton(context, true)
+                    : getBackButton(context),
+                centerTitle: false,
+                actionItems: [
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        arrList.forEach((element) {
+                          if (element is SelectionModel) {
+                            element.masters.forEach((element) {
+                              element.isSelected = false;
+                            });
+                            element.caratRangeChipsToShow = [];
+                          }
+                          if (element is KeyToSymbolModel) {
+                            element.masters.forEach((element) {
+                              element.isSelected = false;
+                            });
+                          }
+                          if (element is FromToModel) {
+                            element.valueFrom = "";
+                            element.valueTo = "";
+                          }
+                          if (element is ColorModel) {
+                            element.masters.forEach((element) {
+                              element.isSelected = false;
+                            });
+                            element.groupMaster.forEach((element) {
+                              element.isSelected = false;
+                            });
+                            element.intensity.forEach((element) {
+                              element.isSelected = false;
+                            });
+                            element.overtone.forEach((element) {
+                              element.isSelected = false;
+                            });
+                          }
+                        });
+                      });
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          right: getSize(8.0), left: getSize(8.0)),
+                      child: Image.asset(
+                        reset,
+                        height: getSize(20),
+                        width: getSize(20),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        right: getSize(Spacing.rightPadding),
+                        left: getSize(8.0)),
+                    child: Image.asset(
+                      notification,
+                      height: getSize(20),
+                      width: getSize(20),
+                    ),
+                  ),
+                ]),
             body: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -417,7 +472,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               title: R.string().commonString.savedSearch,
               hintText: R.string().commonString.searchSavedSearch,
               selectionOptions: saveSearchList,
-              applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
+              applyFilterCallBack: (
+                  {SelectionPopupModel selectedItem,
+                  List<SelectionPopupModel> multiSelectedItem}) {
                 Map<String, dynamic> dict = new HashMap();
                 dict["filterId"] = selectedItem.id;
                 dict[ArgumentConstant.ModuleType] =
@@ -443,8 +500,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       )
           .then((savedSearchResp) async {
         for (var item in savedSearchResp.data.list) {
-            saveSearchList.add(SelectionPopupModel(item.id, item.name, isSelected: false));
-        };
+          saveSearchList
+              .add(SelectionPopupModel(item.id, item.name, isSelected: false));
+        }
+        ;
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -458,7 +517,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 hintText: R.string().commonString.searchSavedSearch,
                 title: R.string().commonString.savedSearch,
                 selectionOptions: saveSearchList,
-                applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
+                applyFilterCallBack: (
+                    {SelectionPopupModel selectedItem,
+                    List<SelectionPopupModel> multiSelectedItem}) {
                   Map<String, dynamic> dict = new HashMap();
                   dict["filterId"] = selectedItem.id;
                   dict[ArgumentConstant.ModuleType] =

@@ -208,7 +208,7 @@ class _TagWidgetState extends State<TagWidget> {
 
   getSingleTag(int index) {
     return Padding(
-      padding: EdgeInsets.only(right: getSize(8.0)),
+      padding: EdgeInsets.only(right: getSize(10.0)),
       child: Container(
         decoration: BoxDecoration(
           color: widget.model.masters[index].isSelected
