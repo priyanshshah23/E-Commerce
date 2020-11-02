@@ -259,6 +259,7 @@ class CommonString {
   final String minutes;
   final String seconds;
   final String bidEndsIn;
+  final String offerPricePerCarat;
 
   const CommonString({
     //Add demand
@@ -404,6 +405,8 @@ class CommonString {
     this.lblRideDesc =
         "Lorem ipsum dolor sit amet, consetetur sadipscing elitr,",
     this.ridebtnDone = "Done",
+    this.offerPricePerCarat = "Offered Price (Cts)",
+
 
     // View Ride
     this.dropOffText = "Dropoff",
