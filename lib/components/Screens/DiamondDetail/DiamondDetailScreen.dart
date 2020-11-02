@@ -286,7 +286,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           title: "H&A",
           url: DiamondUrls.heartImage + diamondModel.vStnId + ".jpg",
           isSelected: true,
-          isImage: false,
+          isImage: true,
         ),
       );
     }
