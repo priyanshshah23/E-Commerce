@@ -54,7 +54,9 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
   @override
   void dispose() {
     // Cancels the timer when the page is disposed.
-    _timer.cancel();
+    if(_timer != null) {
+      _timer.cancel();
+    }
 
     super.dispose();
   }

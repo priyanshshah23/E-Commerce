@@ -220,7 +220,7 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
               child: Container(
                 child: Container(
                   decoration: BoxDecoration(
-                      color: Colors.red,
+                      color: model.getStatusColor(),
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(5),
                           bottomLeft: Radius.circular(5))),

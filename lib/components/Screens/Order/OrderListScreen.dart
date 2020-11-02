@@ -60,6 +60,7 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
   List<OrderItem> arraDiamond = List<OrderItem>();
   int page = DEFAULT_PAGE;
   DiamondCalculation diamondCalculation = DiamondCalculation();
+  DiamondCalculation groupDiamondCalculation = DiamondCalculation();
 
   @override
   void initState() {
@@ -144,6 +145,7 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
           left: getSize(Spacing.leftPadding),
           right: getSize(Spacing.rightPadding)),
       itemBuilder: (context, index) {
+        groupDiamondCalculation.setAverageCalculation(arraDiamond[index].memoDetails);
         return Column(
           children: [
             Padding(
@@ -181,6 +183,7 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
                     return DiamondItemWidget(
                         leftPadding: 4.0,
                         rightPadding: 4.0,
+                        groupDiamondCalculation: diamondIndex == arraDiamond[index].memoDetails.length-1 ? groupDiamondCalculation : null,
                         item: arraDiamond[index].memoDetails[diamondIndex],
                         actionClick: (manageClick) {
                           manageRowClick(index, manageClick.type);
