@@ -37,7 +37,7 @@ class DiamondCalculation {
   String totalPriceCrt = "0";
   String totalAmount = "0";
   String pcs = "0";
-  bool isAccountTerm = true;
+  bool isAccountTerm = false;
 
   setAverageCalculation(List<DiamondModel> arraDiamond) {
     double carat = 0.0;
@@ -946,6 +946,17 @@ class DiamondConfig {
   }
 
   void setMatchPairItem(List<DiamondModel> arraDiamond) {
+    // if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+    //   for (int i = 0; i < arraDiamond.length; i++) {
+    //     if (i == 0 || (arraDiamond[i].memoNo != arraDiamond[i - 1].memoNo)) {
+    //       arraDiamond[i].displayTitle = "#${arraDiamond[i].memoNo}";
+    //       arraDiamond[i].displayDesc = DateUtilities()
+    //           .convertServerDateToFormatterString(arraDiamond[i].offerValidDate,
+    //               formatter: DateUtilities.dd_mm_yyyy);
+    //       arraDiamond[i].showCheckBox = true;
+    //     }
+    //   }
+    // } else
     if (moduleType == DiamondModuleConstant.MODULE_TYPE_UPCOMING) {
       for (int i = 0; i < arraDiamond.length; i++) {
         if (i == 0 || (arraDiamond[i].inDt != arraDiamond[i - 1].inDt)) {

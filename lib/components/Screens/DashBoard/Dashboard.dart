@@ -29,6 +29,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Dashboard extends StatefulScreenWidget {
   static const route = "Dashboard";
@@ -63,6 +64,7 @@ class _DashboardState extends StatefulScreenWidgetState {
   bool isFromDrawer;
   DiamondConfig diamondConfig;
   DashboardConfig dashboardConfig;
+  String emailURL;
 
   final TextEditingController _searchController = TextEditingController();
   var _focusSearch = FocusNode();
@@ -110,6 +112,7 @@ class _DashboardState extends StatefulScreenWidgetState {
         .then((resp) async {
       print(resp);
       this.dashboardModel = resp.data;
+      emailURL = this.dashboardModel.seller.email;
       setTopCountData();
       setState(() {});
     }).catchError((onError) {
@@ -492,7 +495,7 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   getFeaturedSection() {
-    return FeaturedStoneWidget();
+
     List<DiamondModel> arrStones = [];
     if (app
         .resolve<PrefUtils>()
@@ -512,7 +515,7 @@ class _DashboardState extends StatefulScreenWidgetState {
         }
       }
     }
-
+    return FeaturedStoneWidget(diamondList: arrStones,);
     return isNullEmptyOrFalse(arrStones)
         ? SizedBox()
         : Padding(
@@ -565,7 +568,6 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   getStoneOfDaySection() {
-    return StoneOfDayWidget();
     List<DiamondModel> arrStones = [];
     if (app
         .resolve<PrefUtils>()
@@ -588,6 +590,7 @@ class _DashboardState extends StatefulScreenWidgetState {
       }
     }
 
+    return StoneOfDayWidget(stoneList: arrStones,);
     return isNullEmptyOrFalse(arrStones)
         ? SizedBox()
         : Padding(
@@ -1216,7 +1219,20 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   getRecentSection() {
-    return RecentSearchWidget();
+    if (isNullEmptyOrFalse(this.dashboardModel)) {
+      return SizedBox();
+    }
+
+    if (isNullEmptyOrFalse(this.dashboardModel.recentSearch)) {
+      return SizedBox();
+    }
+    if (!(app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_mySavedSearch)
+        .view)) {
+      return SizedBox();
+    }
+    return RecentSearchWidget(recentSearch: this.dashboardModel.recentSearch,);
     return Padding(
       padding: EdgeInsets.only(
         left: getSize(Spacing.leftPadding),
@@ -1671,40 +1687,54 @@ class _DashboardState extends StatefulScreenWidgetState {
                       SizedBox(
                         height: getSize(10),
                       ),
-                      Row(
-                        children: [
-                          Image.asset(
-                            email,
-                            width: getSize(16),
-                            height: getSize(16),
-                          ),
-                          SizedBox(
-                            width: getSize(10),
-                          ),
-                          Text(
-                            this.dashboardModel.seller.email ?? "-",
-                            style: appTheme.blackNormal14TitleColorblack,
-                          ),
-                        ],
+                      InkWell(
+                        onTap: () async {
+                          if(!isNullEmptyOrFalse(this.dashboardModel.seller.email)) {
+                            _openMail(this.dashboardModel.seller.email);
+                          }
+                        },
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              email,
+                              width: getSize(16),
+                              height: getSize(16),
+                            ),
+                            SizedBox(
+                              width: getSize(10),
+                            ),
+                            Text(
+                              this.dashboardModel.seller.email ?? "-",
+                              style: appTheme.blackNormal14TitleColorblack,
+                            ),
+                          ],
+                        ),
                       ),
                       SizedBox(
                         height: getSize(10),
                       ),
-                      Row(
-                        children: [
-                          Image.asset(
-                            phone,
-                            width: getSize(16),
-                            height: getSize(16),
-                          ),
-                          SizedBox(
-                            width: getSize(10),
-                          ),
-                          Text(
-                            this.dashboardModel.seller.whatsapp ?? "-",
-                            style: appTheme.blackNormal14TitleColorblack,
-                          ),
-                        ],
+                      InkWell(
+                        onTap: () {
+                          if(!isNullEmptyOrFalse(this.dashboardModel.seller.whatsapp)) {
+                            _openDialPad(this.dashboardModel.seller.whatsapp);
+                          }
+                        },
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              phone,
+                              width: getSize(16),
+                              height: getSize(16),
+                            ),
+                            SizedBox(
+                              width: getSize(10),
+                            ),
+                            Text(
+                              this.dashboardModel.seller.whatsapp ?? "-",
+                              style: appTheme.blackNormal14TitleColorblack,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -1716,6 +1746,25 @@ class _DashboardState extends StatefulScreenWidgetState {
       ),
     );
   }
+
+  _openMail(String email) async {
+    String uri = 'mailto:?subject=DiamNow&body=DiamNow';
+    if (await canLaunch(uri)) {
+      await launch(uri);
+    } else {
+      throw 'Could not launch $uri';
+    }
+  }
+
+  _openDialPad(String whatsapp) async {
+      String uri = 'tel$whatsapp';
+      if (await canLaunch(uri)) {
+        await launch(uri);
+      } else {
+        throw 'Could not launch $uri';
+      }
+  }
+
 
   getTitleText(String title) {
     return Text(

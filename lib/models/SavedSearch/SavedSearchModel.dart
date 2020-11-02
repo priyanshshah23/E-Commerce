@@ -3,6 +3,7 @@
 //     final savedSearchResp = savedSearchRespFromJson(jsonString);
 
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/utils/date_utils.dart';
 
 class SavedSearchResp extends BaseApiResp {
   SavedSearchResp({
@@ -130,6 +131,14 @@ class SavedSearchModel{
         "isReturnSimilar": isReturnSimilar,
         "displayData": displayData.toJson(),
       };
+
+  getCreatedDate() {
+    return DateUtilities().convertServerDateToFormatterString(
+      this.createdAt ?? DateTime.now().toString(),
+      formatter: DateUtilities.dd_mm_yyyy_hh_mm_ss_aa,
+    );
+  }
+
 }
 
 class DisplayDataClass {

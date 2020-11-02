@@ -80,6 +80,16 @@ class DrawerSetting {
       ));
     if (app
         .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_upcomingDiamonds)
+        .view)
+      drawerList.add(DrawerModel(
+        image: quickSearch,
+        title: R.string().screenTitle.upcoming,
+        isSelected: false,
+        type: DiamondModuleConstant.MODULE_TYPE_UPCOMING,
+      ));
+    if (app
+        .resolve<PrefUtils>()
         .getModulePermission(
             ModulePermissionConstant.permission_stone_of_the_day)
         .view)
@@ -92,7 +102,6 @@ class DrawerSetting {
         countBackgroundColor: fromHex("#003365"),
         count: 15,
       ));
-
     if (app
         .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_mySavedSearch)
@@ -252,17 +261,6 @@ class DrawerSetting {
         imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_ORDER,
-      ));
-    if (app
-        .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_appointment)
-        .view)
-      drawerList.add(DrawerModel(
-        image: myOffice,
-        title: R.string().screenTitle.myOffice,
-        imageColor: appTheme.colorPrimary,
-        isSelected: false,
-        type: DiamondModuleConstant.MODULE_TYPE_MY_OFFICE,
       ));
     if (app
         .resolve<PrefUtils>()
