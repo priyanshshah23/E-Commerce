@@ -7,6 +7,7 @@ import 'package:diamnow/app/constant/constants.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/math_utils.dart';
 import 'package:diamnow/app/utils/string_utils.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
@@ -168,7 +169,18 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                   ? Text(model.name ?? "-",
                                       style: appTheme
                                           .blackSemiBold18TitleColorblack)
-                                  : SizedBox(),
+                                  : widget.searchType ==
+                                          SavedSearchType.recentSearch
+                                      ? Text(
+                                          DateUtilities()
+                                                  .convertServerDateToFormatterString(
+                                                      model.createdAt ?? "",
+                                                      formatter: DateUtilities
+                                                          .dd_mmm_yy_h_mm_a) ??
+                                              "-",
+                                          style: appTheme
+                                              .blackMedium16TitleColorblack)
+                                      : SizedBox(),
                               widget.searchType == SavedSearchType.savedSearch
                                   ? Spacer()
                                   : SizedBox(
@@ -228,9 +240,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
 
   getDisplayData(DisplayDataClass displayDataClass) {
     List<Map<String, String>> arrData = [];
-    // if(displayDataClass.shp != null){
 
-    // }
     if (!isNullEmptyOrFalse(displayDataClass)) {
       if (!isNullEmptyOrFalse(displayDataClass.shp)) {
         Map<String, String> displayDataKeyValue = {};
@@ -795,12 +805,11 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
         }
         arrData.add(displayDataKeyValue);
       }
-
-      if (isNullEmptyOrFalse(arrData)) {
-        Map<String, String> displayDataKeyValue = {};
-        displayDataKeyValue["key"] = "All All All All All";
-        arrData.add(displayDataKeyValue);
-      }
+    }
+    if (isNullEmptyOrFalse(arrData)) {
+      Map<String, String> displayDataKeyValue = {};
+      displayDataKeyValue["key"] = "All All All All All";
+      arrData.add(displayDataKeyValue);
     }
 
     return arrData;
