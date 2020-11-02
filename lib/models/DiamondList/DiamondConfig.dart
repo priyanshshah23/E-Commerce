@@ -66,7 +66,6 @@ class DiamondCalculation {
     avgPriceCrt = arrValues[4];
 
     totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt ?? 0);
-    totalAmount = PriceUtilities.getPrice(avgAmount ?? 0);
     if (isAccountTerm) {
       totalDisc = PriceUtilities.getPercent(arrFinalValues[2] ?? 0);
       totalAmount = PriceUtilities.getPrice(arrFinalValues[1] ?? 0);
@@ -76,6 +75,7 @@ class DiamondCalculation {
       totalDisc = PriceUtilities.getPercent(avgDisc ?? 0);
       avgAmount = arrValues[1];
     }
+    totalAmount = PriceUtilities.getPrice(avgAmount ?? 0);
     totalCarat = PriceUtilities.getDoubleValue(carat ?? 0);
     pcs = filterList.length.toString();
   }
