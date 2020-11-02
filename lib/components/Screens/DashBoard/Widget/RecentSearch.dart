@@ -80,7 +80,11 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
                 Expanded(
                   child: Row(
                     children:  isNullEmptyOrFalse(recentSearch.searchData)
-                        ? [getText("All")] :
+                        ? [
+                      getText(R.string().commonString.shape, style: appTheme.grey12TextStyle),
+                      SizedBox(width: getSize(5),),
+                          getText("All")
+                    ] :
                     getWidgets(recentSearch.searchData,recentSearch.searchData.shp,R.string().commonString.shape),
                   ),
                 ),
@@ -103,7 +107,11 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
                   Expanded(
                     child: Row(
                       children: isNullEmptyOrFalse(recentSearch.searchData)
-                          ? [getText("All")] :
+                          ? [
+                        getText(R.string().commonString.color, style: appTheme.grey12TextStyle),
+                        SizedBox(width: getSize(5),),
+                            getText("All")
+                      ] :
                         getWidgets(recentSearch.searchData,recentSearch.searchData.col,R.string().commonString.color),
                     ),
                   ),
