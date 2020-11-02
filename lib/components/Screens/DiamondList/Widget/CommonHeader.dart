@@ -37,13 +37,13 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
       isTimerCompleted = false;
       var currentTime = DateTime.now();
       var strBlindBid = DateTime(
-          currentTime.year, currentTime.month, currentTime.day, 10, 59, 0);
+          currentTime.year, currentTime.month, currentTime.day + 1, 10, 59, 0);
       var strLookandBid = DateTime(
           currentTime.year, currentTime.month, currentTime.day, 14, 59, 0);
       difference = strLookandBid.difference(currentTime);
 
       if (strLookandBid.difference(currentTime).inSeconds < 0) {
-        difference = currentTime.difference(strBlindBid);
+        difference = strBlindBid.difference(currentTime);
       }
 
       totalSeconds = difference.inSeconds;
@@ -68,7 +68,9 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
           if (totalSeconds < 1) {
             timer.cancel();
             isTimerCompleted = true;
-            calcualteDifference();
+            Future.delayed(Duration(seconds: 65), () {
+              calcualteDifference();
+            });
           } else {
             totalSeconds = totalSeconds - 1;
           }
