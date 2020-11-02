@@ -623,6 +623,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           children: <Widget>[
             DiamondListHeader(
               diamondCalculation: diamondCalculation,
+              moduleType: moduleType,
             ),
             SizedBox(
               height: getSize(20),

@@ -37,7 +37,7 @@ class DiamondCalculation {
   String totalPriceCrt = "0";
   String totalAmount = "0";
   String pcs = "0";
-  bool isAccountTerm = true;
+  bool isAccountTerm = false;
 
   setAverageCalculation(List<DiamondModel> arraDiamond) {
     double carat = 0.0;
