@@ -255,6 +255,10 @@ class CommonString {
   final String myDemand;
 
   final String noDocument;
+  final String hours;
+  final String minutes;
+  final String seconds;
+  final String bidEndsIn;
 
   const CommonString({
     //Add demand
@@ -498,6 +502,11 @@ class CommonString {
     this.diamNow = "DiamNow",
     this.noDocument = "No Documents Found",
     this.searchBusinessType = "Search Business Type",
+
+    this.hours = "Hours",
+    this.minutes= "Minutes",
+    this.seconds= "Seconds",
+    this.bidEndsIn= "Bid ends in:",
     this.shape = "Shape",
   });
 }
