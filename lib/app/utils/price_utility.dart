@@ -21,6 +21,10 @@ class PriceUtilities {
     return oCcy.format((price ?? 0).toDouble()) + '%';
   }
 
+  static String getPercentWithoutPercentSign(num price) {
+    return oCcy.format((price ?? 0).toDouble());
+  }
+
   static String getIntPercent(num price) {
     return int_oCcy.format((price ?? 0).toInt()) + '%';
   }

@@ -107,6 +107,13 @@ class BaseTheme {
         color: textColor);
   }
 
+  TextStyle get dividerColorNormal12Title {
+    return TextStyle(
+        fontSize: getFontSize(12),
+        fontWeight: FontWeight.normal,
+        color: dividerColor);
+  }
+
   TextStyle get primaryNormal12TitleColor {
     return TextStyle(
         fontSize: getFontSize(12),
