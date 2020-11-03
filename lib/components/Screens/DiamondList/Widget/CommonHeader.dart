@@ -95,7 +95,7 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
       padding: EdgeInsets.only(
         left: getSize(Spacing.leftPadding),
         right: getSize(Spacing.rightPadding),
-        top: getSize(20),
+        top: getSize(8),
       ),
       child: Column(children: [
         Container(

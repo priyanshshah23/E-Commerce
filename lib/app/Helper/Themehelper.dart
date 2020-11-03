@@ -51,6 +51,7 @@ class BaseTheme {
   Color get bgColor => fromHex("#6E8FE7");
   Color get dividerColor => fromHex("#E3E3E3");
   Color get textBlackColor => Colors.black;
+  Color get blackColor => Colors.black;
   Color get whiteColor => Colors.white;
   Color get textGreyColor => fromHex("#C7C7C7");
   Color get buttonColor => fromHex("#6E8FE7");
@@ -244,6 +245,13 @@ class BaseTheme {
   TextStyle get grey12TextStyle {
     return TextStyle(
         fontSize: getFontSize(12),
+        color: textGreyColor,
+        fontWeight: FontWeight.normal);
+  }
+
+  TextStyle get grey14TextStyle {
+    return TextStyle(
+        fontSize: getFontSize(14),
         color: textGreyColor,
         fontWeight: FontWeight.normal);
   }
