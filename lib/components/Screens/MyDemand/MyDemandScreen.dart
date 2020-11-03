@@ -136,233 +136,265 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
   getItemWidget(SavedSearchModel model, List<Map<String, dynamic>> arr) {
     return Padding(
       padding: EdgeInsets.only(
-        left: getSize(5),
+        left: getSize(20),
         top: getSize(16),
-        right: getSize(5),
+        right: getSize(20),
       ),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(getSize(5)),
-          border: Border.all(color: appTheme.borderColor),
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: getSize(10), vertical: getSize(12)),
-          child: Column(
-            children: <Widget>[
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Text(
-                        model.name,
-                        style: appTheme.black16TextStyle,
-                      ),
-                      SizedBox(height: getSize(4)),
-                      Text(
-                        model.expiryDate,
-                        // dateUtilities
-                        //     .convertDateToFormatterString(model.expiryDate),
-                        style: appTheme.blackNormal12TitleColorblack,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Container(
-                        alignment: Alignment.center,
-                        width: getSize(40),
-                        height: getSize(40),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(getSize(35)),
-                            border:
-                                Border.all(color: ColorConstants.borderColor)),
-                        child: IconButton(
-                          icon: Image.asset(
-                            edit_icon,
-                            width: getSize(20),
-                            height: getSize(20),
-                          ),
-                          onPressed: () {
-                            Map<String, dynamic> dict = {};
-                            dict["searchData"] = model.searchData;
-                            dict[ArgumentConstant.IsFromDrawer] = false;
-                            NavigationUtilities.pushRoute(FilterScreen.route,
-                                args: dict);
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        width: getSize(10),
-                      ),
-                      Container(
-                        alignment: Alignment.center,
-                        width: getSize(40),
-                        height: getSize(40),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(getSize(35)),
-                            border:
-                                Border.all(color: ColorConstants.borderColor)),
-                        child: IconButton(
-                          icon: Image.asset(
-                            home_delete,
-                            width: getSize(15),
-                            height: getSize(15),
-                          ),
-                          onPressed: () {
-                            app.resolve<CustomDialogs>().confirmDialog(
-                              context,
-                              barrierDismissible: true,
-                              title: "",
-                              desc: "You really want to delete ${model.name}.",
-                              positiveBtnTitle: R.string().commonString.ok,
-                              negativeBtnTitle: R.string().commonString.cancel,
-                              onClickCallback: (buttonType) {
-                                if (buttonType ==
-                                    ButtonType.PositveButtonClick) {
-                                  SyncManager.instance
-                                      .callApiForDeleteSavedSearch(
-                                          context, model.id ?? "",
-                                          success: (resp) {
-                                    callApi(true);
-                                  });
-                                }
-                                
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        width: getSize(10),
-                      ),
-                      Container(
-                        alignment: Alignment.center,
-                        width: getSize(40),
-                        height: getSize(40),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(getSize(35)),
-                            border:
-                                Border.all(color: ColorConstants.borderColor)),
-                        child: IconButton(
-                          icon: Image.asset(
-                            saved_icon,
-                            width: getSize(20),
-                            height: getSize(20),
-                          ),
-                          onPressed: () {
-                            Map<String, dynamic> dict = new HashMap();
-                            dict["filterId"] = model.id;
-                            dict[ArgumentConstant.ModuleType] = moduleType;
-                            NavigationUtilities.pushRoute(
-                                DiamondListScreen.route,
-                                args: dict);
-                          },
-                        ),
-                      ),
-                    ],
-                  )
-                ],
+      child: Column(
+        children: [
+          Material(
+            elevation: 10,
+            shadowColor: appTheme.shadowColor,
+            borderRadius: BorderRadius.circular(getSize(5)),
+            child: Container(
+              decoration: BoxDecoration(
+                color: appTheme.whiteColor,
+                borderRadius: BorderRadius.circular(getSize(5)),
+                border: Border.all(
+                  color: appTheme.lightBGColor,
+                ),
               ),
-              SizedBox(
-                height: getSize(20),
-              ),
-              if (arr.length <= 5) listOfSelectedFilter(arr, model),
-              if (arr.length > 5 && model.isExpand)
-                listOfSelectedFilter(arr, model),
-              if (arr.length > 5 && !model.isExpand)
-                Column(
-                  children: <Widget>[
-                    for (int i = 0; i < 5; i++)
-                      Row(children: [
-                        Text(
-                          "${arr[i]["key"] ?? ""} :",
-                          textAlign: TextAlign.left,
-                          style: appTheme.grey16HintTextStyle,
-                        ),
-                        SizedBox(width: getSize(16)),
-                        Expanded(
-                          child: Text(arr[i]["value"] ?? "",
-                              textAlign: TextAlign.right,
-                              style: appTheme.primaryColor14TextStyle),
-                        ),
-                      ]),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        GestureDetector(
-                          onTap: () {
-                            model.isExpand ^= true;
-                            myDemandBaseList.state.setApiCalling(false);
-                            fillArrayList();
-                          },
-                          child: Text(
-                            R.string().commonString.viewDetails,
-                            textAlign: TextAlign.center,
-                            style: appTheme.primaryColor14TextStyle,
+              child: Padding(
+                padding: EdgeInsets.only(
+                    left:getSize(16), top:getSize(16), right:getSize(16),),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.only(bottom: getSize(5.0)),
+                                    child: Text(model.name ?? "-",
+                                        style: appTheme
+                                            .blackNormal16TitleColorblack),
+                                  ),
+                                  // Expiry date code
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        "Expiry Date :",
+                                        style: appTheme.grey14HintTextStyle,
+                                      ),
+                                      SizedBox(width: getSize(5)),
+                                      Text(
+                                        model.expiryDate ?? "-",
+                                        style: appTheme
+                                            .blackNormal14TitleColorblack,
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                              Spacer(),
+                              arr.length > 3
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        model.isExpand ^= true;
+                                        myDemandBaseList.state
+                                            .setApiCalling(false);
+                                        fillArrayList();
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                                bottom: BorderSide(
+                                          color: appTheme.colorPrimary,
+                                          width: 1.0,
+                                        ))),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                  right: getSize(3)),
+                                              child: Text(
+                                                R
+                                                    .string()
+                                                    .commonString
+                                                    .viewDetails,
+                                                textAlign: TextAlign.center,
+                                                style: appTheme
+                                                    .primaryColor14TextStyle,
+                                              ),
+                                            ),
+                                            model.isExpand
+                                                ? Image.asset(showLess)
+                                                : Image.asset(showMore),
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  : SizedBox(),
+                            ],
                           ),
-                        ),
-                      ],
+                          SizedBox(
+                            height: getSize(16),
+                          ),
+                          Divider(color: appTheme.dividerColor,),
+                          SizedBox(
+                            height: getSize(6),
+                          ),
+                          if (arr.length <= 3)
+                            listOfSelectedFilter(arr, model, arr.length),
+                          if (arr.length > 3 && model.isExpand)
+                            listOfSelectedFilter(arr, model, arr.length),
+                          if (arr.length > 3 && !model.isExpand)
+                            listOfSelectedFilter(arr, model, 3),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              // left: getSize(16),
+                              // right: getSize(16),
+                              top: getSize(11),
+                              bottom: getSize(11),
+                            ),
+                            child: Container(
+                              padding: EdgeInsets.only(top:getSize(8),bottom:getSize(8)),
+                              decoration: BoxDecoration(
+                                border: Border(top:BorderSide(color: appTheme.dividerColor))
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  getPreviewItem(
+                                      R.string().commonString.modify,
+                                      edit_icon,
+                                      appTheme.greenPrimaryNormal14TitleColor,
+                                      () {
+                                    Map<String, dynamic> dict = {};
+                                    dict["searchData"] = model.searchData;
+                                    dict[ArgumentConstant.IsFromDrawer] = false;
+                                    NavigationUtilities.pushRoute(
+                                        FilterScreen.route,
+                                        args: dict);
+                                  }),
+                                  getPreviewItem(
+                                      R.string().commonString.delete,
+                                      delete_icon_medium,
+                                      appTheme.redPrimaryNormal14TitleColor, () {
+                                    app.resolve<CustomDialogs>().confirmDialog(
+                                      context,
+                                      barrierDismissible: true,
+                                      title: "",
+                                      desc:
+                                          "You really want to delete ${model.name}.",
+                                      positiveBtnTitle:
+                                          R.string().commonString.ok,
+                                      negativeBtnTitle:
+                                          R.string().commonString.cancel,
+                                      onClickCallback: (buttonType) {
+                                        if (buttonType ==
+                                            ButtonType.PositveButtonClick) {
+                                          SyncManager.instance
+                                              .callApiForDeleteSavedSearch(
+                                                  context, model.id ?? "",
+                                                  success: (resp) {
+                                            callApi(true);
+                                          });
+                                        }
+                                      },
+                                    );
+                                  }),
+                                  getPreviewItem(
+                                    R.string().commonString.search,
+                                    saved_medium,
+                                    appTheme.primaryColor14TextStyle,
+                                    () {
+                                      Map<String, dynamic> dict = new HashMap();
+                                      dict["filterId"] = model.id;
+                                      dict[ArgumentConstant.ModuleType] =
+                                          DiamondModuleConstant
+                                              .MODULE_TYPE_MY_SAVED_SEARCH;
+                                      NavigationUtilities.pushRoute(
+                                          DiamondListScreen.route,
+                                          args: dict);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
-                )
-            ],
-          ),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  getPreviewItem(String txt, String img, TextStyle textStyle, Function onTap) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: getSize(40),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: getSize(30),
+              height: getSize(30),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(getSize(15)),
+                border: Border.all(color: appTheme.borderColor)
+              ),
+              child: Image.asset(
+                img,
+              ),
+            ),
+            SizedBox(
+              width: getSize(8),
+            ),
+            Text(
+              txt,
+              style: textStyle,
+            )
+          ],
         ),
       ),
     );
   }
 
-  Column listOfSelectedFilter(
-      List<Map<String, dynamic>> arr, SavedSearchModel savedSearchModel) {
-    int length = arr.length;
+  Column listOfSelectedFilter(List<Map<String, dynamic>> arr,
+      SavedSearchModel savedSearchModel, int length) {
     return Column(
       children: <Widget>[
         for (int i = 0; i < length; i++)
-          Row(
-            children: [
-              Text(
-                "${arr[i]["key"] ?? ""} :",
-                textAlign: TextAlign.left,
-                style: appTheme.grey16HintTextStyle,
-              ),
-              SizedBox(width: getSize(16)),
-              Expanded(
-                child: Text(arr[i]["value"] ?? "",
-                    textAlign: TextAlign.right,
-                    style: appTheme.primaryColor14TextStyle),
-              ),
-            ],
+          Padding(
+            padding: EdgeInsets.only(top: getSize(10)),
+            child: Row(
+              children: [
+                Text(
+                  "${arr[i]["key"] ?? ""} :",
+                  textAlign: TextAlign.left,
+                  style: appTheme.grey16HintTextStyle,
+                ),
+                SizedBox(width: getSize(16)),
+                Expanded(
+                  child: Text(arr[i]["value"] ?? "",
+                      textAlign: TextAlign.right,
+                      style: appTheme.blackNormal16TitleColorblack),
+                ),
+              ],
+            ),
           ),
-        savedSearchModel.isExpand && arr.length > 5
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      savedSearchModel.isExpand ^= true;
-                      myDemandBaseList.state.setApiCalling(false);
-                      fillArrayList();
-                    },
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                          R.string().commonString.viewLessDetails,
-                          textAlign: TextAlign.center,
-                          style: appTheme.primaryColor14TextStyle,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              )
-            : SizedBox(),
       ],
     );
   }
@@ -952,11 +984,7 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
             ? getDrawerButton(context, true)
             : getBackButton(context),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: getSize(20), vertical: getSize(10)),
-        child: myDemandBaseList,
-      ),
+      body: myDemandBaseList,
     );
   }
 }
