@@ -472,6 +472,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               title: R.string().commonString.savedSearch,
               hintText: R.string().commonString.searchSavedSearch,
               selectionOptions: saveSearchList,
+              
               applyFilterCallBack: (
                   {SelectionPopupModel selectedItem,
                   List<SelectionPopupModel> multiSelectedItem}) {

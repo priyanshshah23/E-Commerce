@@ -142,8 +142,8 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                 : ((arrDiamondDetailUIModel[i - 1].parameters.length /
                                 arrDiamondDetailUIModel[i - 1].columns)
                             .floor()) *
-                        getSize(37) +
-                    getSize(175);
+                        getSize(34) +
+                    getSize(173);
         if (i == j) break;
       }
       mapOfInitialPixels[j] = value;
@@ -666,174 +666,184 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   // }
 
   Widget getDiamondDetailComponents() {
-    return Stack(
-      children: <Widget>[
-        
-        ListView.builder(
-          controller: _scrollController1,
-          itemCount: arrDiamondDetailUIModel.length + 1,
-          itemBuilder: (context, index) {
-            if (index == 0)
-              return Stack(
-                fit: StackFit.loose,
-                overflow: Overflow.visible,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: getSize(286),
-                    child: getImage(),
-                  ),
-                  Positioned(
-                    bottom: -18,
-                    right: 0,
-                    child: Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: getSize(20),
-                              right: getSize(20),
-                              top: getSize(0),
-                              bottom: getSize(0)),
+    return !isNullEmptyOrFalse((arrDiamondDetailUIModel))
+        ? Stack(
+            children: <Widget>[
+              ListView.builder(
+                controller: _scrollController1,
+                itemCount: arrDiamondDetailUIModel.length + 1,
+                itemBuilder: (context, index) {
+                  if (index == 0)
+                    return Stack(
+                      fit: StackFit.loose,
+                      overflow: Overflow.visible,
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          height: getSize(286),
+                          child: getImage(),
+                        ),
+                        Positioned(
+                          bottom: -18,
+                          right: 0,
                           child: Row(
-                            mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
-                              getRowItem("Image", gallary),
-                              SizedBox(
-                                width: getSize(10),
-                              ),
-                              getRowItem("Video", playButton),
-                              SizedBox(
-                                width: getSize(10),
-                              ),
-                              getRowItem("Certificate", medal),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: getSize(20),
+                                    right: getSize(20),
+                                    top: getSize(0),
+                                    bottom: getSize(0)),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    getRowItem("Image", gallary),
+                                    SizedBox(
+                                      width: getSize(10),
+                                    ),
+                                    getRowItem("Video", playButton),
+                                    SizedBox(
+                                      width: getSize(10),
+                                    ),
+                                    getRowItem("Certificate", medal),
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                         )
                       ],
-                    ),
-                  )
-                ],
-              );
-            return Padding(
-              padding: index == 1
-                  ? EdgeInsets.only(
-                      left: getSize(20),
-                      right: getSize(20),
-                      top: getSize(30),
-                      bottom: getSize(0))
-                  : EdgeInsets.only(
-                      left: getSize(20),
-                      right: getSize(20),
-                      top: getSize(0),
-                      bottom: getSize(0)),
-              child: InkWell(
-                onTap: () {
-                  //
-                  setState(() {
-                    arrDiamondDetailUIModel[index - 1].isExpand =
-                        !arrDiamondDetailUIModel[index - 1].isExpand;
-                  });
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: appTheme.whiteColor,
-                      // borderRadius: BorderRadius.circular(getSize(5)),
-                      // color: appTheme.lightBGColor
-                      border: Border.all(color: appTheme.lightBGColor)),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: getSize(30),
-                          bottom: getSize(30),
-                          left: getSize(20),
-                          right: getSize(20),
-                        ),
-                        child: Row(
+                    );
+                  return Padding(
+                    padding: index == 1
+                        ? EdgeInsets.only(
+                            left: getSize(20),
+                            right: getSize(20),
+                            top: getSize(30),
+                            bottom: getSize(0))
+                        : EdgeInsets.only(
+                            left: getSize(20),
+                            right: getSize(20),
+                            top: getSize(0),
+                            bottom: getSize(0)),
+                    child: InkWell(
+                      onTap: () {
+                        //
+                        setState(() {
+                          arrDiamondDetailUIModel[index - 1].isExpand =
+                              !arrDiamondDetailUIModel[index - 1].isExpand;
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: appTheme.whiteColor,
+                            // borderRadius: BorderRadius.circular(getSize(5)),
+                            // color: appTheme.lightBGColor
+                            border: Border.all(color: appTheme.lightBGColor)),
+                        child: Column(
                           children: [
-                            getSection(
-                                arrDiamondDetailUIModel[index - 1].title),
-                            Spacer(),
-                            Icon(
-                              arrDiamondDetailUIModel[index - 1].isExpand ==
-                                      true
-                                  ? Icons.expand_less
-                                  : Icons.expand_more,
-                              color: appTheme.textColor,
+                            Padding(
+                              padding: EdgeInsets.only(
+                                top: getSize(30),
+                                bottom: getSize(30),
+                                left: getSize(20),
+                                right: getSize(20),
+                              ),
+                              child: Row(
+                                children: [
+                                  getSection(
+                                      arrDiamondDetailUIModel[index - 1].title),
+                                  Spacer(),
+                                  Icon(
+                                    arrDiamondDetailUIModel[index - 1]
+                                                .isExpand ==
+                                            true
+                                        ? Icons.expand_less
+                                        : Icons.expand_more,
+                                    color: appTheme.textColor,
+                                  ),
+                                ],
+                              ),
                             ),
+                            arrDiamondDetailUIModel[index - 1].isExpand
+                                ? getDiamondDetailUIComponent(
+                                    arrDiamondDetailUIModel[index - 1],
+                                  )
+                                : SizedBox(),
                           ],
                         ),
                       ),
-                      arrDiamondDetailUIModel[index - 1].isExpand
-                          ? getDiamondDetailUIComponent(
-                              arrDiamondDetailUIModel[index - 1],
-                            )
-                          : SizedBox(),
-                    ],
-                  ),
-                ),
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
-        _scrollController1.hasClients
-            ? offSetForTab >= getSize(302.0)
-                ? Container(
-                  color: appTheme.whiteColor,
-                  margin: EdgeInsets.only(
-                      left: getSize(20),
-                      right: getSize(20),
-                      top: getSize(0),
-                      bottom: getSize(0)),
-                  height: getSize(52),
-                  child: ScrollablePositionedList.builder(
-                    itemScrollController: _sc,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: arrDiamondDetailUIModel.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: EdgeInsets.only(right: getSize(30)),
-                        child: InkWell(
-                          onTap: () {
-                            setState(() {
-                              jumpToAnyTabFromTabBarClick(index);
-                            });
-                          },
-                          child: Column(
-                            children: <Widget>[
-                              Text(
-                                arrDiamondDetailUIModel[index].title,
-                                style:
-                                    appTheme.blackNormal18TitleColorblack,
-                              ),
-                              index == currTab
-                                  ? Padding(
-                                      padding: EdgeInsets.only(
-                                          top: getSize(8)),
-                                      child: Container(
-                                        width: getSize(50),
-                                        height: getSize(3),
-                                        decoration: BoxDecoration(
-                                          color: appTheme.colorPrimary,
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(3),
-                                              topRight:
-                                                  Radius.circular(3)),
-                                        ),
+              _scrollController1.hasClients
+                  ? offSetForTab >= getSize(302.0)
+                      ? Container(
+                          color: appTheme.whiteColor,
+                          margin: EdgeInsets.only(
+                              left: getSize(20),
+                              right: getSize(20),
+                              top: getSize(0),
+                              bottom: getSize(0)),
+                          height: getSize(52),
+                          child: ScrollablePositionedList.builder(
+                            itemScrollController: _sc,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: arrDiamondDetailUIModel.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding: EdgeInsets.only(right: getSize(30)),
+                                child: InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      jumpToAnyTabFromTabBarClick(index);
+                                    });
+                                  },
+                                  child: Column(
+                                    children: <Widget>[
+                                      Text(
+                                        arrDiamondDetailUIModel[index].title,
+                                        style: appTheme
+                                            .blackNormal18TitleColorblack,
                                       ),
-                                    )
-                                  : SizedBox(),
-                            ],
+                                      index == currTab
+                                          ? Padding(
+                                              padding: EdgeInsets.only(
+                                                  top: getSize(8)),
+                                              child: Container(
+                                                width: getSize(50),
+                                                height: getSize(3),
+                                                decoration: BoxDecoration(
+                                                  color: appTheme.colorPrimary,
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                          topLeft: Radius
+                                                              .circular(3),
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  3)),
+                                                ),
+                                              ),
+                                            )
+                                          : SizedBox(),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                )
-                : SizedBox()
-            : SizedBox(),
-      ],
-    );
+                        )
+                      : SizedBox()
+                  : SizedBox(),
+            ],
+          )
+        : Center(
+            child: SpinKitFadingCircle(
+              color: appTheme.colorPrimary,
+              size: getSize(30),
+            ),
+          );
   }
 
   jumpToAnyTabFromTabBarClick(int index) {
@@ -851,8 +861,8 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
               : ((arrDiamondDetailUIModel[i - 1].parameters.length /
                               arrDiamondDetailUIModel[i - 1].columns)
                           .floor()) *
-                      getSize(37) +
-                  getSize(175);
+                      getSize(34) +
+                  getSize(173);
 
       if (i == index) break;
     }

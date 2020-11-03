@@ -3,7 +3,7 @@
         "title": "Basic Details",
         "sequence": 1,
         "isExpand": false,
-        "columns": 3,
+        "columns": 1,
         "orientation": "h",
         "parameters": [
             {
@@ -109,7 +109,7 @@
         "title": "Measurements",
         "sequence": 2,
         "isExpand": false,
-        "columns": 2,
+        "columns": 1,
         "orientation": "h",
         "parameters": [
             {

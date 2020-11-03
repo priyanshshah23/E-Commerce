@@ -261,7 +261,14 @@ class CommonString {
   final String bidEndsIn;
   final String offerPricePerCarat;
 
+  //SavedSearch
+  final String modify;
+  final String delete;
+
   const CommonString({
+    //SavedSearch
+    this.modify = "Modify",
+    this.delete = "Delete",
     //Add demand
     this.addDemand = "Add demand",
     this.demandTitle = "Demand Title",

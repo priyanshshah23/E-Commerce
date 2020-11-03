@@ -142,13 +142,13 @@ class _SelectionDialogueState extends State<SelectionDialogue> {
                                 SizedBox(
                                   width: getSize(10),
                                 ),
-                                Container(
+                                isMultiSelectionEnable ? Container(
                                   height: getSize(16),
                                   width: getSize(16),
                                   child: items[index].isSelected
                                           ? Image.asset(selectedIcon)
                                           : Image.asset(unselectedIcon),
-                                ),
+                                ) : SizedBox(),
                               ],
                             ),
                           ),

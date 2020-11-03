@@ -80,7 +80,8 @@ class DrawerSetting {
       ));
     if (app
         .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_upcomingDiamonds)
+        .getModulePermission(
+            ModulePermissionConstant.permission_upcomingDiamonds)
         .view)
       drawerList.add(DrawerModel(
         image: quickSearch,
@@ -404,62 +405,77 @@ class BottomMenuSetting {
       {bool isDetail = false, bool isCompare = false}) {
     List<BottomTabModel> moreMenuList = [];
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ORDER) {
-      if (app
-          .resolve<PrefUtils>()
-          .getModulePermission(ModulePermissionConstant.permission_order)
-          .insert)
-        moreMenuList.add(BottomTabModel(
-            image: placeOrder,
-            title: R.string().screenTitle.placeOrder,
-            type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER));
+      if (moduleType != DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+        if (app
+            .resolve<PrefUtils>()
+            .getModulePermission(ModulePermissionConstant.permission_order)
+            .insert)
+          moreMenuList.add(BottomTabModel(
+              image: placeOrder,
+              title: R.string().screenTitle.placeOrder,
+              type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER));
+      }
     }
     if (!isDetail && !isCompare) {
+      if (moduleType != DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+        if (app
+            .resolve<PrefUtils>()
+            .getModulePermission(ModulePermissionConstant.permission_compare)
+            .view)
+          moreMenuList.add(BottomTabModel(
+              image: compare,
+              title: R.string().screenTitle.compare,
+              type: ActionMenuConstant.ACTION_TYPE_COMPARE));
+      }
+    }
+    if (moduleType != DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
       if (app
           .resolve<PrefUtils>()
-          .getModulePermission(ModulePermissionConstant.permission_compare)
-          .view)
+          .getModulePermission(ModulePermissionConstant.permission_comment)
+          .insert)
         moreMenuList.add(BottomTabModel(
-            image: compare,
-            title: R.string().screenTitle.compare,
-            type: ActionMenuConstant.ACTION_TYPE_COMPARE));
+            image: comment,
+            title: R.string().screenTitle.comment,
+            type: ActionMenuConstant.ACTION_TYPE_COMMENT));
     }
-    if (app
-        .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_comment)
-        .insert)
-      moreMenuList.add(BottomTabModel(
-          image: comment,
-          title: R.string().screenTitle.comment,
-          type: ActionMenuConstant.ACTION_TYPE_COMMENT));
 
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_REMINDER) {
-      if (app
-          .resolve<PrefUtils>()
-          .getModulePermission(ModulePermissionConstant.permission_reminder)
-          .insert)
-        moreMenuList.add(BottomTabModel(
-            image: reminder,
-            title: R.string().screenTitle.reminder,
-            type: ActionMenuConstant.ACTION_TYPE_REMINDER));
+      if (moduleType != DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+        if (app
+            .resolve<PrefUtils>()
+            .getModulePermission(ModulePermissionConstant.permission_reminder)
+            .insert)
+          moreMenuList.add(BottomTabModel(
+              image: reminder,
+              title: R.string().screenTitle.reminder,
+              type: ActionMenuConstant.ACTION_TYPE_REMINDER));
+      }
     }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
-      if (app
-          .resolve<PrefUtils>()
-          .getModulePermission(ModulePermissionConstant.permission_offer)
-          .insert)
-        moreMenuList.add(BottomTabModel(
-            image: offer,
-            title: R.string().screenTitle.offer,
-            type: ActionMenuConstant.ACTION_TYPE_OFFER));
+      if (moduleType != DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+        if (app
+            .resolve<PrefUtils>()
+            .getModulePermission(ModulePermissionConstant.permission_offer)
+            .insert)
+          moreMenuList.add(BottomTabModel(
+              image: offer,
+              title: R.string().screenTitle.offer,
+              type: ActionMenuConstant.ACTION_TYPE_OFFER));
+      }
     }
-    if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) if (app
-        .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_appointment)
-        .insert)
-      moreMenuList.add(BottomTabModel(
-          image: company,
-          title: R.string().screenTitle.officeView,
-          type: ActionMenuConstant.ACTION_TYPE_APPOINTMENT));
+    if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
+      if (moduleType != DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+        if (app
+            .resolve<PrefUtils>()
+            .getModulePermission(
+                ModulePermissionConstant.permission_appointment)
+            .insert)
+          moreMenuList.add(BottomTabModel(
+              image: company,
+              title: R.string().screenTitle.officeView,
+              type: ActionMenuConstant.ACTION_TYPE_APPOINTMENT));
+      }
+    }
     /* moreMenuList.add(BottomTabModel(
         image: hold,
         title: R.string().screenTitle.hold,
@@ -492,6 +508,49 @@ class BottomMenuSetting {
     List<BottomTabModel> moreMenuList = [];
 
     switch (moduleType) {
+      case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
+        if (app
+            .resolve<PrefUtils>()
+            .getModulePermission(ModulePermissionConstant.permission_bid)
+            .insert)
+          moreMenuList.add(BottomTabModel(
+              title: R.string().screenTitle.bidStone,
+              isCenter: false,
+              image: myBid,
+              type: ActionMenuConstant.ACTION_TYPE_BID));
+
+        if (app
+            .resolve<PrefUtils>()
+            .getModulePermission(ModulePermissionConstant.permission_watchlist)
+            .insert)
+          moreMenuList.add(BottomTabModel(
+              image: addToWatchlist,
+              isCenter: false,
+              title: R.string().screenTitle.addToWatchList,
+              type: ActionMenuConstant.ACTION_TYPE_WISHLIST));
+        moreMenuList.add(BottomTabModel(
+            image: addToWatchlist,
+            isCenter: false,
+            title: R.string().screenTitle.finalCalculation,
+            type: ActionMenuConstant.ACTION_TYPE_FINAL_CALCULATION));
+        if (!isDetail && !isCompare) {
+          if (app
+              .resolve<PrefUtils>()
+              .getModulePermission(ModulePermissionConstant.permission_compare)
+              .view)
+            moreMenuList.add(BottomTabModel(
+                title: R.string().screenTitle.compare,
+                isCenter: false,
+                image: compare,
+                type: ActionMenuConstant.ACTION_TYPE_COMPARE));
+        }
+        moreMenuList.add(BottomTabModel(
+          title: R.string().commonString.more,
+          isCenter: false,
+          image: plusIcon,
+          type: ActionMenuConstant.ACTION_TYPE_MORE,
+        ));
+        break;
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
         if (!isDetail && !isCompare) {
           if (app
@@ -521,17 +580,6 @@ class BottomMenuSetting {
             type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
         break;
       default:
-        if (moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
-          if (app
-              .resolve<PrefUtils>()
-              .getModulePermission(ModulePermissionConstant.permission_bid)
-              .insert)
-            moreMenuList.add(BottomTabModel(
-                title: R.string().screenTitle.bidStone,
-                isCenter: false,
-                image: myBid,
-                type: ActionMenuConstant.ACTION_TYPE_BID));
-        }
         if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
           if (app
               .resolve<PrefUtils>()
