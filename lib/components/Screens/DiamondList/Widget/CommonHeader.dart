@@ -251,7 +251,10 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
   getLableText(String text) {
     return Text(
       text,
-      style: appTheme.black16TextStyle.copyWith(fontSize: getFontSize(10)),
+      style: widget.moduleType ==
+              DiamondModuleConstant.MODULE_TYPE_FINAL_CALCULATION
+          ? appTheme.white16TextStyle.copyWith(fontSize: getFontSize(10))
+          : appTheme.black16TextStyle.copyWith(fontSize: getFontSize(10)),
     );
   }
 }
