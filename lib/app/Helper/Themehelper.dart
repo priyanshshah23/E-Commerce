@@ -170,6 +170,20 @@ class BaseTheme {
         color: textColor);
   }
 
+  TextStyle get blackMedium14TitleColorblack {
+    return TextStyle(
+        fontSize: getFontSize(14),
+        fontWeight: FontWeight.w500,
+        color: textColor);
+  }
+
+  TextStyle get blackMedium12TitleColorblack {
+    return TextStyle(
+        fontSize: getFontSize(12),
+        fontWeight: FontWeight.w400,
+        color: textColor);
+  }
+
   TextStyle get blackNormal18TitleColorPrimary {
     return TextStyle(
         fontSize: getFontSize(18),
