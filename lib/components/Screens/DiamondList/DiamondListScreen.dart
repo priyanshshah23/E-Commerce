@@ -606,16 +606,23 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   manageDiamondSelection() {
     fillArrayList();
     diamondCalculation.setAverageCalculation(arraDiamond);
-    diamondFinalCalculation.setAverageCalculation(arraDiamond,
-        isFinalCalculation: true);
+    if (moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+      diamondFinalCalculation.setAverageCalculation(arraDiamond,
+          isFinalCalculation: true);
+    }
     diamondList.state.setApiCalling(false);
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    bool isVisible =
-        arraDiamond.where((element) => element.isSelected).toList().length > 0;
+    bool isVisible = false;
+    if (!isNullEmptyOrFalse(arraDiamond)) {
+      isVisible =
+          arraDiamond.where((element) => element.isSelected).toList().length >
+              0;
+    }
+
     return Scaffold(
       backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(

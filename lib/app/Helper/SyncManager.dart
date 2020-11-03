@@ -185,7 +185,7 @@ class SyncManager {
             .networkService()
             .diamondComentDelete(req);
         break;
-        case DiamondTrackConstant.TRACK_TYPE_BID:
+      case DiamondTrackConstant.TRACK_TYPE_BID:
         return app
             .resolve<ServiceModule>()
             .networkService()
