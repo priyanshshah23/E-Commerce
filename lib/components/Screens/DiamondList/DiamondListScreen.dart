@@ -605,8 +605,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   manageDiamondSelection() {
     fillArrayList();
-    diamondCalculation.setAverageCalculation(arraDiamond,
-        isFinalCalculation: true);
+    diamondCalculation.setAverageCalculation(arraDiamond);
     diamondFinalCalculation.setAverageCalculation(arraDiamond,
         isFinalCalculation: true);
     diamondList.state.setApiCalling(false);
@@ -615,6 +614,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   @override
   Widget build(BuildContext context) {
+    bool isVisible =
+        arraDiamond.where((element) => element.isSelected).toList().length > 0;
     return Scaffold(
       backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(
@@ -643,8 +644,13 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               child: diamondList,
             ),
             this.moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL
-                ? FinalCalculationWidget(
-                    arraDiamond, this.diamondFinalCalculation)
+                ? AnimatedOpacity(
+                    // If the widget is visible, animate to 0.0 (invisible).
+                    // If the widget is hidden, animate to 1.0 (fully visible).
+                    opacity: isVisible ? 1.0 : 0.0,
+                    duration: Duration(milliseconds: 500),
+                    child: FinalCalculationWidget(
+                        arraDiamond, this.diamondFinalCalculation))
                 : SizedBox(),
           ],
         ),

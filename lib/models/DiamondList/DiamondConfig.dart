@@ -76,8 +76,9 @@ class DiamondCalculation {
       avgDisc = (1 - (avgPriceCrt / avgRapCrt)) * (-100);
       totalDisc = PriceUtilities.getPercent(avgDisc ?? 0);
       avgAmount = arrValues[1];
+      totalAmount = PriceUtilities.getPrice(avgAmount ?? 0);
     }
-    totalAmount = PriceUtilities.getPrice(avgAmount ?? 0);
+
     totalCarat = PriceUtilities.getDoubleValue(carat ?? 0);
     pcs = filterList.length.toString();
   }
