@@ -101,11 +101,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     NavigationUtilities.pushRoute(OrderListScreen.route, args: dict);
   }
 
-  openMyDemand(int moduleType){
+  openMyDemand(int moduleType) {
     // selectedType = moduleType;
     Map<String, dynamic> dict = new HashMap();
-    dict[ArgumentConstant.ModuleType] =
-        moduleType;
+    dict[ArgumentConstant.ModuleType] = moduleType;
     dict[ArgumentConstant.IsFromDrawer] = false;
     NavigationUtilities.pushRoute(MyDemandScreen.route, args: dict);
     // currentWidget = MyDemandScreen(dict);
@@ -127,8 +126,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
   Widget getDrawerItem(
       BuildContext context, DrawerModel model, VoidCallback callback) {
-
-
     return InkWell(
       onTap: callback,
       child: Column(
@@ -186,7 +183,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       onTap: () {
         Map<String, dynamic> dict = new HashMap();
         dict[ArgumentConstant.IsFromDrawer] = false;
-        NavigationUtilities.pushRoute(ProfileList.route, args: dict).then((value) {
+        NavigationUtilities.pushRoute(ProfileList.route, args: dict)
+            .then((value) {
           setState(() {});
         });
       },
@@ -220,6 +218,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                       child: getImageView(
                         app.resolve<PrefUtils>().getUserDetails().profileImage,
                         placeHolderImage: placeHolder,
+                        fit: BoxFit.fill,
                         height: getSize(50),
                         width: getSize(50),
                       ),
@@ -381,7 +380,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                 Expanded(
                   child: Container(
                       padding: EdgeInsets.fromLTRB(
-                          getSize(0), getSize(12), getSize(0), getSize(0)),
+                          getSize(0), getSize(0), getSize(0), getSize(0)),
                       // color: AppTheme.of(context).theme.primaryColor,
                       child: ListView(
                           padding: EdgeInsets.all(getSize(0)),

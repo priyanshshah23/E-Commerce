@@ -24,6 +24,7 @@ import 'package:diamnow/components/Screens/MyDemand/MyDemandScreen.dart';
 import 'package:diamnow/components/Screens/Notification/Notifications.dart';
 import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
+import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
 import 'package:flutter/material.dart';
 
@@ -165,6 +166,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       break;
     case DiamondCompareScreen.route:
       screen = DiamondCompareScreen(arguments);
+      break;
+    case SavedSearchScreen.route:
+      screen = SavedSearchScreen(arguments);
       break;
     case DiamondActionScreen.route:
       screen = DiamondActionScreen(arguments);

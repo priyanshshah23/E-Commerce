@@ -259,9 +259,15 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                           ),
                           widget.searchType == SavedSearchType.savedSearch
                               ? SizedBox(
-                                  height: getSize(25),
+                                  height: getSize(16),
                                 )
                               : SizedBox(),
+                          widget.searchType == SavedSearchType.savedSearch
+                          ? Divider(color: appTheme.dividerColor,) : SizedBox(),
+                          widget.searchType == SavedSearchType.savedSearch ?
+                          SizedBox(
+                            height: getSize(6),
+                          ) : SizedBox(),
                           if (arr.length <= 3 &&
                               widget.searchType == SavedSearchType.savedSearch)
                             listOfSelectedFilter(arr, model, arr.length),
@@ -279,71 +285,77 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                           widget.searchType == SavedSearchType.savedSearch
                               ? Padding(
                                   padding: EdgeInsets.only(
-                                    left: getSize(15),
-                                    right: getSize(15),
-                                    top: getSize(10),
-                                    bottom: getSize(10),
+                                    // left: getSize(15),
+                                    // right: getSize(15),
+                                    top: getSize(11),
+                                    bottom: getSize(11),
                                   ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      getPreviewItem(
-                                          R.string().commonString.modify,
-                                          edit_icon,
-                                          appTheme
-                                              .greenPrimaryNormal14TitleColor,
-                                          () {
-                                        Map<String, dynamic> dict = {};
-                                        dict["searchData"] = model.searchData;
-                                        dict[ArgumentConstant.IsFromDrawer] =
-                                            false;
-                                        NavigationUtilities.pushRoute(
-                                            FilterScreen.route,
-                                            args: dict);
-                                      }),
-                                      getPreviewItem(R.string().commonString.delete, delete_icon_medium,
-                                          appTheme.redPrimaryNormal14TitleColor,
-                                          () {
-                                        app
-                                            .resolve<CustomDialogs>()
-                                            .confirmDialog(
-                                          context,
-                                          barrierDismissible: true,
-                                          title: "",
-                                          desc:
-                                              "You really want to delete ${model.name}.",
-                                          positiveBtnTitle:
-                                              R.string().commonString.ok,
-                                          negativeBtnTitle:
-                                              R.string().commonString.cancel,
-                                          onClickCallback: (buttonType) {
-                                            if (buttonType ==
-                                                ButtonType.PositveButtonClick) {
-                                              SyncManager.instance
-                                                  .callApiForDeleteSavedSearch(
-                                                      context, model.id ?? "",
-                                                      success: (resp) {
-                                                callApi(true);
-                                              });
-                                            }
-                                          },
-                                        );
-                                      }),
-                                      getPreviewItem(R.string().commonString.search, saved_medium,
-                                          appTheme.primaryColor14TextStyle,
-                                          () {
-                                        Map<String, dynamic> dict =
-                                            new HashMap();
-                                        dict["filterId"] = model.id;
-                                        dict[ArgumentConstant.ModuleType] =
-                                            DiamondModuleConstant
-                                                .MODULE_TYPE_MY_SAVED_SEARCH;
-                                        NavigationUtilities.pushRoute(
-                                            DiamondListScreen.route,
-                                            args: dict);
-                                      }),
-                                    ],
+                                  child: Container(
+                                    padding: EdgeInsets.only(top:getSize(8),bottom:getSize(8)),
+                              decoration: BoxDecoration(
+                                border: Border(top:BorderSide(color: appTheme.dividerColor))
+                              ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        getPreviewItem(
+                                            R.string().commonString.modify,
+                                            edit_icon,
+                                            appTheme
+                                                .greenPrimaryNormal14TitleColor,
+                                            () {
+                                          Map<String, dynamic> dict = {};
+                                          dict["searchData"] = model.searchData;
+                                          dict[ArgumentConstant.IsFromDrawer] =
+                                              false;
+                                          NavigationUtilities.pushRoute(
+                                              FilterScreen.route,
+                                              args: dict);
+                                        }),
+                                        getPreviewItem(R.string().commonString.delete, delete_icon_medium,
+                                            appTheme.redPrimaryNormal14TitleColor,
+                                            () {
+                                          app
+                                              .resolve<CustomDialogs>()
+                                              .confirmDialog(
+                                            context,
+                                            barrierDismissible: true,
+                                            title: "",
+                                            desc:
+                                                "You really want to delete ${model.name}.",
+                                            positiveBtnTitle:
+                                                R.string().commonString.ok,
+                                            negativeBtnTitle:
+                                                R.string().commonString.cancel,
+                                            onClickCallback: (buttonType) {
+                                              if (buttonType ==
+                                                  ButtonType.PositveButtonClick) {
+                                                SyncManager.instance
+                                                    .callApiForDeleteSavedSearch(
+                                                        context, model.id ?? "",
+                                                        success: (resp) {
+                                                  callApi(true);
+                                                });
+                                              }
+                                            },
+                                          );
+                                        }),
+                                        getPreviewItem(R.string().commonString.search, saved_medium,
+                                            appTheme.primaryColor14TextStyle,
+                                            () {
+                                          Map<String, dynamic> dict =
+                                              new HashMap();
+                                          dict["filterId"] = model.id;
+                                          dict[ArgumentConstant.ModuleType] =
+                                              DiamondModuleConstant
+                                                  .MODULE_TYPE_MY_SAVED_SEARCH;
+                                          NavigationUtilities.pushRoute(
+                                              DiamondListScreen.route,
+                                              args: dict);
+                                        }),
+                                      ],
+                                    ),
                                   ),
                                 )
                               : SizedBox(),
@@ -369,8 +381,13 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-               width: getSize(15),
-              height: getSize(15),
+               width: getSize(30),
+              height: getSize(30),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(getSize(15)),
+                border: Border.all(color: appTheme.borderColor)
+              ),
               child: Image.asset(
                 img,
                

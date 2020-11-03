@@ -119,6 +119,7 @@ class ScreenTitle {
   //Menu Items
   final String enquiry;
   final String placeOrder;
+  final String cancelStone;
   final String compare;
   final String compareStones;
   final String addToCart;
@@ -352,6 +353,7 @@ class ScreenTitle {
     this.offer = "Offer",
     this.officeView = "Office View",
     this.placeOrder = "Place Order",
+    this.cancelStone = "Cancel Stone",
     this.share = "Share",
     this.searchResult = "Search Result",
 

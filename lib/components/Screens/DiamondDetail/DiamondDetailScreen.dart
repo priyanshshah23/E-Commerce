@@ -148,9 +148,9 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       }
       mapOfInitialPixels[j] = value;
     }
-    mapOfInitialPixels.forEach((key, value) {
-      print("${key} => ${value}");
-    });
+    // mapOfInitialPixels.forEach((key, value) {
+    //   print("${key} => ${value}");
+    // });
   }
 
   @override
@@ -197,10 +197,10 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       );
     }
 
-    print("ArrowImage     " +
-        DiamondUrls.arroImage +
-        diamondModel.vStnId +
-        ".jpg");
+    // print("ArrowImage     " +
+    //     DiamondUrls.arroImage +
+    //     diamondModel.vStnId +
+    //     ".jpg");
 
     if (diamondModel.assetFile) {
       arrOfImages.add(
@@ -223,7 +223,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
             arr: arrOfImages),
       );
     }
-    print("Image    " + DiamondUrls.image + diamondModel.vStnId + ".jpg");
+    // print("Image    " + DiamondUrls.image + diamondModel.vStnId + ".jpg");
 
     //list of videofile
     List<DiamondDetailImagePagerModel> arrOfVideos =
@@ -274,7 +274,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       );
     }
 
-    print("Video    " + DiamondUrls.videomp4 + diamondModel.vStnId + ".mp4");
+    // print("Video    " + DiamondUrls.videomp4 + diamondModel.vStnId + ".mp4");
 
     //List of H&A
     List<DiamondDetailImagePagerModel> arrOfHA =
@@ -301,7 +301,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
             arr: arrOfHA),
       );
     }
-    print("H&A    " + DiamondUrls.heartImage + diamondModel.vStnId + ".jpg");
+    // print("H&A    " + DiamondUrls.heartImage + diamondModel.vStnId + ".jpg");
 
     //List of certificate
     List<DiamondDetailImagePagerModel> arrOfCertificates =
@@ -329,10 +329,10 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       );
     }
 
-    print("Certificate    " +
-        DiamondUrls.certificate +
-        diamondModel.rptNo +
-        ".pdf");
+    // print("Certificate    " +
+    //     DiamondUrls.certificate +
+    //     diamondModel.rptNo +
+    //     ".pdf");
 
     // _controller = TabController(
     //   vsync: this,

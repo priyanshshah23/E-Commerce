@@ -12,6 +12,7 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondExpandItemW
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondSquareGridItemWidget.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/FinalCalculation.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
@@ -70,6 +71,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   List<DiamondModel> arraDiamond = List<DiamondModel>();
   int page = DEFAULT_PAGE;
   DiamondCalculation diamondCalculation = DiamondCalculation();
+  DiamondCalculation diamondFinalCalculation = DiamondCalculation();
   List<FilterOptions> optionList = List<FilterOptions>();
   bool isGrid = false;
   int viewTypeCount = 0;
@@ -128,6 +130,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
       case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
+      case DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH:
         dict["filters"] = {};
         dict["filters"]["diamondSearchId"] = this.filterId;
         break;
@@ -604,12 +607,23 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   manageDiamondSelection() {
     fillArrayList();
     diamondCalculation.setAverageCalculation(arraDiamond);
+    if (moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+      diamondFinalCalculation.setAverageCalculation(arraDiamond,
+          isFinalCalculation: true);
+    }
     diamondList.state.setApiCalling(false);
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    bool isVisible = false;
+    if (!isNullEmptyOrFalse(arraDiamond)) {
+      isVisible =
+          arraDiamond.where((element) => element.isSelected).toList().length >
+              0;
+    }
+
     return Scaffold(
       backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(
@@ -632,11 +646,20 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               moduleType: moduleType,
             ),
             SizedBox(
-              height: getSize(20),
+              height: getSize(16),
             ),
             Expanded(
               child: diamondList,
-            )
+            ),
+            this.moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL
+                ? AnimatedOpacity(
+                    // If the widget is visible, animate to 0.0 (invisible).
+                    // If the widget is hidden, animate to 1.0 (fully visible).
+                    opacity: isVisible ? 1.0 : 0.0,
+                    duration: Duration(milliseconds: 500),
+                    child: FinalCalculationWidget(
+                        arraDiamond, this.diamondFinalCalculation))
+                : SizedBox(),
           ],
         ),
       ),
@@ -835,6 +858,4 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           );
     }
   }
-
-  
 }

@@ -11,6 +11,7 @@ import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dar
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/FinalCalculation.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
@@ -71,6 +72,9 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
   int actionType;
   List<DiamondModel> diamondList;
   String selectedDate;
+  bool isAllSelected = false;
+  bool isCMChargesApplied = false;
+
   List<String> invoiceList = [
     InvoiceTypesString.today,
     InvoiceTypesString.tomorrow,
@@ -82,11 +86,19 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
 
   DiamondConfig diamondConfig;
   DiamondCalculation diamondCalculation = DiamondCalculation();
-
+  DiamondCalculation diamondFinalCalculation = DiamondCalculation();
   @override
   void initState() {
     super.initState();
-    diamondConfig = DiamondConfig(moduleType);
+    if (this.actionType == DiamondTrackConstant.TRACK_TYPE_FINAL_CALCULATION) {
+      diamondConfig =
+          DiamondConfig(DiamondModuleConstant.MODULE_TYPE_FINAL_CALCULATION);
+    } else {
+      diamondConfig = DiamondConfig(moduleType);
+    }
+
+    diamondFinalCalculation.setAverageCalculation(diamondList,
+        isFinalCalculation: true);
     diamondCalculation.setAverageCalculation(diamondList);
     diamondConfig.initItems();
   }
@@ -103,8 +115,16 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
         leadingButton: getBackButton(context),
         centerTitle: false,
         textalign: TextAlign.left,
+        actionItems: [
+          this.actionType == DiamondTrackConstant.TRACK_TYPE_FINAL_CALCULATION
+              ? getActionItems()
+              : SizedBox()
+        ],
       ),
-      bottomNavigationBar: getBottomTab(),
+      bottomNavigationBar:
+          this.actionType == DiamondTrackConstant.TRACK_TYPE_FINAL_CALCULATION
+              ? getBottomTabForFinalCalculation()
+              : getBottomTab(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -120,10 +140,22 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                   // primary: false,
                   shrinkWrap: true,
                   itemCount: diamondList.length,
+                  physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (BuildContext context, int index) {
                     return DiamondItemWidget(
                         item: diamondList[index],
-                        actionClick: (manageClick) {});
+                        actionClick: (manageClick) {
+                          setState(() {
+                            if (this.actionType ==
+                                DiamondTrackConstant
+                                    .TRACK_TYPE_FINAL_CALCULATION) {
+                              diamondList[index].isSelected =
+                                  !diamondList[index].isSelected;
+                              diamondCalculation
+                                  .setAverageCalculation(diamondList);
+                            }
+                          });
+                        });
                   },
                 ),
               ),
@@ -136,7 +168,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                   getOfferDetail(),
                   getOrderDetail(),
                 ],
-              )
+              ),
             ],
           ),
         ),
@@ -144,6 +176,58 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
     );
   }
 
+  //Get Action Items for Final calculation
+  Widget getActionItems() {
+    return Row(children: [
+      InkWell(
+        onTap: () {
+          setState(() {
+            isAllSelected = !isAllSelected;
+
+            diamondList.forEach((element) {
+              element.isSelected = isAllSelected;
+            });
+          });
+        },
+        child: Padding(
+          padding: EdgeInsets.only(right: getSize(8), left: getSize(8.0)),
+          child: Image.asset(
+            !isAllSelected ? selectAll : selectList,
+            height: getSize(20),
+            width: getSize(20),
+          ),
+        ),
+      ),
+      InkWell(
+        onTap: () {
+          setState(() {
+            isCMChargesApplied = !isCMChargesApplied;
+          });
+        },
+        child: Row(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(right: getSize(8), left: getSize(8.0)),
+              child: Image.asset(
+                isCMChargesApplied ? selectedCheckbox : unSelectedCheckbox,
+                height: getSize(20),
+                width: getSize(20),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(right: getSize(20)),
+              child: Text(
+                "CM Charges",
+                style: appTheme.black14TextStyle,
+              ),
+            ),
+          ],
+        ),
+      )
+    ]);
+  }
+
+  Widget getBottomTabForNewArrival() {}
   Widget getBottomTab() {
     return Padding(
       padding: EdgeInsets.all(getSize(Spacing.leftPadding)),
@@ -407,5 +491,39 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
         },
       ),
     );
+  }
+
+  Widget getBottomTabForFinalCalculation() {
+    return isNullEmptyOrFalse(this.diamondList) == false
+        ? Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              FinalCalculationWidget(diamondList, diamondFinalCalculation),
+              BottomTabbarWidget(
+                arrBottomTab: diamondConfig.arrBottomTab,
+                onClickCallback: (obj) {
+                  //Click handle
+                  manageBottomMenuClick(obj);
+                },
+              ),
+            ],
+          )
+        : SizedBox();
+  }
+
+  manageBottomMenuClick(BottomTabModel bottomTabModel) {
+    List<DiamondModel> selectedList =
+        diamondList.where((element) => element.isSelected).toList();
+    if (selectedList != null && selectedList.length > 0) {
+      diamondConfig.manageDiamondAction(
+          context, selectedList, bottomTabModel, () {});
+    } else {
+      app.resolve<CustomDialogs>().confirmDialog(
+            context,
+            title: "",
+            desc: R.string().errorString.diamondSelectionError,
+            positiveBtnTitle: R.string().commonString.ok,
+          );
+    }
   }
 }

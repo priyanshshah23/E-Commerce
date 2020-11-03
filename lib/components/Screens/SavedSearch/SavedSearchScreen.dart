@@ -15,6 +15,7 @@ class SavedSearchScreen extends StatefulScreenWidget {
   int moduleType = DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
   bool isFromDrawer = false;
 
+
   SavedSearchScreen(
     Map<String, dynamic> arguments, {
     Key key,
@@ -40,13 +41,18 @@ class _SavedSearchScreenState extends State<SavedSearchScreen> {
   int moduleType;
   bool isFromDrawer;
 
-  PageController _controller = PageController();
   int segmentedControlValue = 0;
   bool keepAlive = false;
   PageController controller = PageController();
 
   _SavedSearchScreenState({this.moduleType, this.isFromDrawer});
 
+  @override
+  void initState() {
+    super.initState();
+    if(moduleType == DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH)
+      segmentedControlValue = 1;
+  }
 
   @override
   Widget build(BuildContext context) {

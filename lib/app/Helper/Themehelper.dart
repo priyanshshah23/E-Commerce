@@ -51,6 +51,7 @@ class BaseTheme {
   Color get bgColor => fromHex("#6E8FE7");
   Color get dividerColor => fromHex("#E3E3E3");
   Color get textBlackColor => Colors.black;
+  Color get blackColor => Colors.black;
   Color get whiteColor => Colors.white;
   Color get textGreyColor => fromHex("#C7C7C7");
   Color get buttonColor => fromHex("#6E8FE7");
@@ -106,6 +107,13 @@ class BaseTheme {
         color: textColor);
   }
 
+  TextStyle get dividerColorNormal12Title {
+    return TextStyle(
+        fontSize: getFontSize(12),
+        fontWeight: FontWeight.normal,
+        color: dividerColor);
+  }
+
   TextStyle get primaryNormal12TitleColor {
     return TextStyle(
         fontSize: getFontSize(12),
@@ -158,6 +166,20 @@ class BaseTheme {
   TextStyle get blackMedium16TitleColorblack {
     return TextStyle(
         fontSize: getFontSize(16),
+        fontWeight: FontWeight.w400,
+        color: textColor);
+  }
+
+  TextStyle get blackMedium14TitleColorblack {
+    return TextStyle(
+        fontSize: getFontSize(14),
+        fontWeight: FontWeight.w500,
+        color: textColor);
+  }
+
+  TextStyle get blackMedium12TitleColorblack {
+    return TextStyle(
+        fontSize: getFontSize(12),
         fontWeight: FontWeight.w400,
         color: textColor);
   }
@@ -261,7 +283,6 @@ class BaseTheme {
         color: textColor,
         fontWeight: FontWeight.w500);
   }
-
 
   TextStyle get error12TextStyle {
     return TextStyle(

@@ -40,15 +40,16 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
       var strLookandBid = DateTime(
           currentTime.year, currentTime.month, currentTime.day, 14, 59, 0);
 
-      if (currentTime.isBefore(DateTime(
+      if (currentTime.isAfter(DateTime(
+          currentTime.year, currentTime.month, currentTime.day, 14, 59, 0))) {
+        strBlindBid = DateTime(currentTime.year, currentTime.month,
+            currentTime.day + 1, 10, 59, 0);
+        difference = strBlindBid.difference(currentTime);
+      } else if (currentTime.isBefore(DateTime(
           currentTime.year, currentTime.month, currentTime.day, 10, 59, 0))) {
-        if (strBlindBid.isSameDate(currentTime)) {
-          strBlindBid = DateTime(
-              currentTime.year, currentTime.month, currentTime.day, 10, 59, 0);
-        } else {
-          strBlindBid = DateTime(currentTime.year, currentTime.month,
-              currentTime.day + 1, 10, 59, 0);
-        }
+        strBlindBid = DateTime(
+            currentTime.year, currentTime.month, currentTime.day, 10, 59, 0);
+
         difference = strBlindBid.difference(currentTime);
       } else {
         difference = strLookandBid.difference(currentTime);
@@ -95,7 +96,7 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
       padding: EdgeInsets.only(
         left: getSize(Spacing.leftPadding),
         right: getSize(Spacing.rightPadding),
-        top: getSize(20),
+        top: getSize(8),
       ),
       child: Column(children: [
         Container(
@@ -251,7 +252,10 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
   getLableText(String text) {
     return Text(
       text,
-      style: appTheme.black16TextStyle.copyWith(fontSize: getFontSize(10)),
+      style: widget.moduleType ==
+              DiamondModuleConstant.MODULE_TYPE_FINAL_CALCULATION
+          ? appTheme.white16TextStyle.copyWith(fontSize: getFontSize(10))
+          : appTheme.black16TextStyle.copyWith(fontSize: getFontSize(10)),
     );
   }
 }

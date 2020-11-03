@@ -332,6 +332,7 @@ class DiamondModel {
   bool roughVdo;
   bool polVdo;
   bool hAFile;
+  String mlk;
   String clrNm;
   String colNm;
   String lbCmt;
@@ -412,6 +413,7 @@ class DiamondModel {
   bool isMatchPair = false;
   int borderType;
   bool isAddToWatchList = false;
+  bool isFinalCalculation = false;
   bool isAddToOffer = false;
   bool isAddToBid = false;
   String selectedBackPer;
@@ -521,13 +523,14 @@ class DiamondModel {
     polVdo = json['polVdo'] ?? false;
     roughVdo = json['roughVdo'] ?? false;
     hAFile = json['hAFile'] ?? false;
+    mlk = json['mlk'] ?? "-";
     clrNm = json['clrNm'];
     colNm = json['colNm'];
     lbCmt = json['lbCmt'];
     cAng = json['cAng'];
     cHgt = json['cHgt'];
     cultNm = json['cultNm'];
-    newDiscount = json["newDiscount"];
+    newDiscount = json["newDiscount"] ?? 0;
     newAmount = json["newAmount"];
     cutNm = json['cutNm'];
     depPer = json['depPer'];
@@ -549,11 +552,11 @@ class DiamondModel {
     pAng = json['pAng'];
     pHgt = json['pHgt'];
     polNm = json['polNm'];
-    rap = json['rap'];
-    crt = json['crt'];
+    rap = json['rap'] ?? 0;
+    crt = json['crt'] ?? 0;
     back = json['back'];
-    ctPr = json['ctPr'];
-    amt = json['amt'];
+    ctPr = json['ctPr'] ?? 0;
+    amt = json['amt'] ?? 0;
     shpNm = json['shpNm'];
     shdNm = json['shdNm'];
     strLn = json['strLn'];
@@ -622,6 +625,7 @@ class DiamondModel {
     data['polVdo'] = this.polVdo;
     data['roughVdo'] = this.roughVdo;
     data['hAFile'] = this.hAFile;
+    data['mlk'] = this.mlk;
     data['clrNm'] = this.clrNm;
     data['colNm'] = this.colNm;
     data['lbCmt'] = this.lbCmt;
@@ -975,10 +979,10 @@ class TrackItem {
     memoNo = json['memoNo'];
     reminderDate = json['reminderDate'];
     trackPricePerCarat = json['trackPricePerCarat'];
-    trackDiscount = json['trackDiscount'];
+    trackDiscount = json['trackDiscount'] ?? 0;
     trackAmount = json['trackAmount'];
     newPricePerCarat = json['newPricePerCarat'];
-    newDiscount = json['newDiscount'];
+    newDiscount = json['newDiscount'] ?? 0;
     newAmount = json['newAmount'];
     offerStatus = json['offerStatus'];
     offerValidDate = json['offerValidDate'];

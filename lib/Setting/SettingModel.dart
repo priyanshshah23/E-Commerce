@@ -579,6 +579,30 @@ class BottomMenuSetting {
             image: download,
             type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
         break;
+
+      case DiamondModuleConstant.MODULE_TYPE_FINAL_CALCULATION:
+        if (app
+            .resolve<PrefUtils>()
+            .getModulePermission(ModulePermissionConstant.permission_order)
+            .insert) {
+          moreMenuList.add(BottomTabModel(
+              image: placeOrder,
+              title: R.string().screenTitle.placeOrder,
+              isCenter: false,
+              type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER));
+        }
+        moreMenuList.add(BottomTabModel(
+            image: cancelStone,
+            title: R.string().screenTitle.cancelStone,
+            isCenter: false,
+            type: ActionMenuConstant.ACTION_TYPE_CANCEL_STONE));
+        moreMenuList.add(BottomTabModel(
+            title: R.string().screenTitle.share,
+            isCenter: false,
+            image: share,
+            type: ActionMenuConstant.ACTION_TYPE_SHARE));
+
+        break;
       default:
         if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
           if (app
