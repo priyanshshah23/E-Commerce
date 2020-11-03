@@ -1,6 +1,11 @@
+import 'dart:collection';
+
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
+import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,65 +24,85 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
   Widget build(BuildContext context) {
     return isNullEmptyOrFalse(widget.recentSearch)
         ? SizedBox()
-        :  Padding(
-      padding: EdgeInsets.only(
-        top: getSize(20),
-        left: getSize(Spacing.leftPadding),
-        right: getSize(Spacing.rightPadding),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              getTitleText(R.string().screenTitle.recentSearch),
-              Spacer(),
-              InkWell(
-                onTap: () {
-                  //
-                },
-                child: getViewAll(),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: getSize(20),
-          ),
-          Container(
-              height: getSize(150),
-              child: GridView.count(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                crossAxisCount: 1,
-//              childAspectRatio: 0.36,
-                // without Price
-                childAspectRatio: 0.7, // with Price
-//              mainAxisSpacing: 10,
-                children: List.generate( widget.recentSearch.length, (index) {
-                  return InkWell(
+        : Padding(
+            padding: EdgeInsets.only(
+              top: getSize(20),
+              left: getSize(Spacing.leftPadding),
+              right: getSize(Spacing.rightPadding),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    getTitleText(R.string().screenTitle.recentSearch),
+                    Spacer(),
+                    InkWell(
                       onTap: () {
-//                      moveToDetail();
+                        //
+                        Map<String, dynamic> dict = new HashMap();
+                        dict[ArgumentConstant.ModuleType] =
+                            DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH;
+                        dict[ArgumentConstant.IsFromDrawer] = false;
+
+                        NavigationUtilities.pushRoute(SavedSearchScreen.route,
+                            args: dict);
                       },
-                      child: getRecentItem(widget.recentSearch[index]));
-                },
+                      child: getViewAll(),
+                    ),
+                  ],
                 ),
-              ),
+                SizedBox(
+                  height: getSize(20),
+                ),
+                Container(
+                  height: getSize(150),
+                  child: GridView.count(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    crossAxisCount: 1,
+//              childAspectRatio: 0.36,
+                    // without Price
+                    childAspectRatio: 0.7, // with Price
+//              mainAxisSpacing: 10,
+                    children: List.generate(
+                      widget.recentSearch.length,
+                      (index) {
+                        return InkWell(
+                            onTap: () {
+//                      moveToDetail();
+                              Map<String, dynamic> dict = new HashMap();
+                              dict[ArgumentConstant.ModuleType] =
+                                  DiamondModuleConstant
+                                      .MODULE_TYPE_RECENT_SEARCH;
+                              dict[ArgumentConstant.IsFromDrawer] = false;
+                              dict["filterId"] = widget.recentSearch[index].id;
+                              NavigationUtilities.pushRoute(
+                                  DiamondListScreen.route,
+                                  args: dict);
+                            },
+                            child: getRecentItem(widget.recentSearch[index]));
+                      },
+                    ),
+                  ),
 //              child: ListView.builder(
 //                itemCount: widget.recentSearch.length,
 //                scrollDirection: Axis.horizontal,
 //                itemBuilder: (BuildContext context, int index) {
 //                  return getRecentItem(widget.recentSearch[index]);
 //                },)
-          )
-        ],
-      ),
-    );
+                )
+              ],
+            ),
+          );
   }
 
   getRecentItem(SavedSearchModel recentSearch) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical:getSize(10), horizontal: getSize(10)),
-      padding: EdgeInsets.symmetric(vertical:getSize(10), horizontal: getSize(14)),
+      margin:
+          EdgeInsets.symmetric(vertical: getSize(10), horizontal: getSize(10)),
+      padding:
+          EdgeInsets.symmetric(vertical: getSize(10), horizontal: getSize(14)),
       decoration: BoxDecoration(
         color: appTheme.whiteColor,
         border: Border.all(color: appTheme.textGreyColor),
@@ -86,61 +111,77 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-           getText(recentSearch.getCreatedDate(), style: appTheme.black14TextStyle),
-          Divider(color: appTheme.textGreyColor,),
+            getText(recentSearch.getCreatedDate(),
+                style: appTheme.black14TextStyle),
+            Divider(
+              color: appTheme.textGreyColor,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                    getText(R.string().commonString.shape, style: appTheme.grey14TextStyle),
-                    SizedBox(width : getSize(5)),
-                    isNullEmptyOrFalse(recentSearch.displayData)  ||  isNullEmptyOrFalse(recentSearch.displayData.shp)
-                        ?  getText("All", style: appTheme.black14TextStyle) : Flexible(
-                      child: Text(
-                        recentSearch.displayData.shp.map((item) {
-                          return item;
-                        }).toList().join(", "),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        softWrap: true,
-                          style: appTheme.black14TextStyle
-                      ),
-                    ),
-                  ],
-            ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  getText(R.string().commonString.carat, style: appTheme.grey14TextStyle),
-                  SizedBox(width : getSize(5)),
-                  isNullEmptyOrFalse(recentSearch.displayData) ||
-                      isNullEmptyOrFalse(recentSearch.displayData.or) ||
-                      isNullEmptyOrFalse(recentSearch.displayData.or.first)||
-                      isNullEmptyOrFalse(recentSearch.displayData.or.first.crt)||
-                      isNullEmptyOrFalse(recentSearch.displayData.or.first.crt.back)||
-                      isNullEmptyOrFalse(recentSearch.displayData.or.first.crt.empty)
-                      ? getText("All", style: appTheme.black14TextStyle) :
-                  getText("${recentSearch.displayData.or.first.crt.back}, ${recentSearch.displayData.or.first.crt.empty}", style: appTheme.black14TextStyle)
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                      getText(R.string().commonString.color, style: appTheme.grey14TextStyle),
-                      SizedBox(width : getSize(5)),
-                      isNullEmptyOrFalse(recentSearch.displayData) ||  isNullEmptyOrFalse(recentSearch.displayData.col)
-                          ? getText("All", style: appTheme.black14TextStyle) : Flexible(
+                getText(R.string().commonString.shape,
+                    style: appTheme.grey14TextStyle),
+                SizedBox(width: getSize(5)),
+                isNullEmptyOrFalse(recentSearch.displayData) ||
+                        isNullEmptyOrFalse(recentSearch.displayData.shp)
+                    ? getText("All", style: appTheme.black14TextStyle)
+                    : Flexible(
                         child: Text(
-                            recentSearch.displayData.col.map((item) {
-                              return item;
-                            }).toList().join(", "),
+                            recentSearch.displayData.shp
+                                .map((item) {
+                                  return item;
+                                })
+                                .toList()
+                                .join(", "),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                             softWrap: true,
-                            style: appTheme.black14TextStyle
-                        ),
+                            style: appTheme.black14TextStyle),
                       ),
-                    ]
-              )
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                getText(R.string().commonString.carat,
+                    style: appTheme.grey14TextStyle),
+                SizedBox(width: getSize(5)),
+                isNullEmptyOrFalse(recentSearch.displayData) ||
+                        isNullEmptyOrFalse(recentSearch.displayData.or) ||
+                        isNullEmptyOrFalse(recentSearch.displayData.or.first) ||
+                        isNullEmptyOrFalse(
+                            recentSearch.displayData.or.first.crt) ||
+                        isNullEmptyOrFalse(
+                            recentSearch.displayData.or.first.crt.back) ||
+                        isNullEmptyOrFalse(
+                            recentSearch.displayData.or.first.crt.empty)
+                    ? getText("All", style: appTheme.black14TextStyle)
+                    : getText(
+                        "${recentSearch.displayData.or.first.crt.back}, ${recentSearch.displayData.or.first.crt.empty}",
+                        style: appTheme.black14TextStyle)
+              ],
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              getText(R.string().commonString.color,
+                  style: appTheme.grey14TextStyle),
+              SizedBox(width: getSize(5)),
+              isNullEmptyOrFalse(recentSearch.displayData) ||
+                      isNullEmptyOrFalse(recentSearch.displayData.col)
+                  ? getText("All", style: appTheme.black14TextStyle)
+                  : Flexible(
+                      child: Text(
+                          recentSearch.displayData.col
+                              .map((item) {
+                                return item;
+                              })
+                              .toList()
+                              .join(", "),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          softWrap: true,
+                          style: appTheme.black14TextStyle),
+                    ),
+            ])
           ],
         ),
       ),
@@ -175,5 +216,4 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
       style: style ?? appTheme.black14TextStyle,
     );
   }
-
 }

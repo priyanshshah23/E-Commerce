@@ -1076,7 +1076,8 @@ class _DashboardState extends StatefulScreenWidgetState {
                     dict[ArgumentConstant.ModuleType] =
                         DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
                     dict[ArgumentConstant.IsFromDrawer] = false;
-                    NavigationUtilities.pushRoute(SavedSearchScreen.route, args: dict );
+                    NavigationUtilities.pushRoute(SavedSearchScreen.route,
+                        args: dict);
                   },
                   child: getViewAll(),
                 ),
@@ -1093,7 +1094,13 @@ class _DashboardState extends StatefulScreenWidgetState {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    //Redirect to saved search screen
+                    Map<String, dynamic> dict = new HashMap();
+                    dict[ArgumentConstant.ModuleType] =
+                        DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
+                    dict[ArgumentConstant.IsFromDrawer] = false;
+                    dict["filterId"] = dashboardModel.savedSearch[index].id;
+                    NavigationUtilities.pushRoute(DiamondListScreen.route,
+                        args: dict);
                   },
                   child: getSavedSearchItem(
                       this.dashboardModel.savedSearch[index]),
