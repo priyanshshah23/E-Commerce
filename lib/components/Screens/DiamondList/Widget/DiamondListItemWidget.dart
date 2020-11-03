@@ -151,6 +151,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                     children: <Widget>[
                                       getIdShapeDetail(),
                                       getDymentionAndCaratDetail(),
+                                      getMeasurementAndColorDetails(),
                                       getTableDepthAndAmountDetail(),
                                       getWatchlistData(),
                                       getOfferData(),
@@ -330,6 +331,18 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           Expanded(child: Container()),
           getText(widget.item?.shpNm ?? ""),
           Expanded(child: Container()),
+          getAmountText(widget.item?.getPricePerCarat() ?? ""),
+        ],
+      ),
+    );
+  }
+
+  getDymentionAndCaratDetail() {
+    return Padding(
+      padding: EdgeInsets.only(top: getSize(5)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
           Padding(
             padding: EdgeInsets.only(
               right: getSize(10),
@@ -360,22 +373,29 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               ),
               getText(widget.item?.symNm ?? ""),
             ],
-          )
+          ),
+          getAmountText(widget.item?.getAmount() ?? ""),
+
+          
+          
         ],
       ),
     );
   }
 
-  getDymentionAndCaratDetail() {
+  getMeasurementAndColorDetails() {
     return Padding(
       padding: EdgeInsets.only(top: getSize(5)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          getText(widget.item?.fluNm ?? ""),
-          getText(widget.item?.msrmnt ?? ""),
+          
           getText(widget.item?.lbNm ?? ""),
-          getAmountText(widget.item?.getPricePerCarat() ?? ""),
+          
+          getTextWithLabel(widget.item?.shdNm ?? "","S : "),
+          // getText(widget.item?.msrmnt ?? ""),
+          getTextWithLabel(widget.item?.msrmnt ?? "","M : ")
+          
         ],
       ),
     );
@@ -387,10 +407,14 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          getText(widget.item?.shpNm ?? ""),
-          getText(PriceUtilities.getPercent(widget.item?.tblPer ?? 0) + "T"),
-          getText(PriceUtilities.getPercent(widget.item?.depPer ?? 0) + "D"),
-          getAmountText(widget.item?.getAmount() ?? ""),
+          
+
+          getText(widget.item?.fluNm ?? ""),
+          getTextWithLabel(widget.item?.mlk ?? "-","M : "),
+          // PriceUtilities.getPercent(widget.item?.depPer ?? 0)
+          getTextWithLabel(PriceUtilities.getPercentWithoutPercentSign(widget.item?.depPer ?? 0) , "D : "),
+          getTextWithLabel(PriceUtilities.getPercentWithoutPercentSign(widget.item?.tblPer ?? 0) , "T : "),
+          // getAmountText(widget.item?.getAmount() ?? ""),
         ],
       ),
     );
@@ -833,6 +857,19 @@ getText(String text) {
   return Text(
     text,
     style: appTheme.black12TextStyle,
+  );
+}
+
+getTextWithLabel(String text,String label) {
+  return Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Text(label,style: appTheme.dividerColorNormal12Title,),
+      Text(
+        text,
+        style: appTheme.black12TextStyle,
+      ),
+    ],
   );
 }
 
