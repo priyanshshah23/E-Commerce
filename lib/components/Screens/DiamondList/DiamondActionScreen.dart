@@ -112,7 +112,10 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
               : SizedBox()
         ],
       ),
-      bottomNavigationBar: getBottomTab(),
+      bottomNavigationBar:
+          this.actionType == DiamondTrackConstant.TRACK_TYPE_FINAL_CALCULATION
+              ? getBottomTabForFinalCalculation()
+              : getBottomTab(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -479,5 +482,49 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
         },
       ),
     );
+  }
+
+  Widget getBottomTabForFinalCalculation() {
+    return isNullEmptyOrFalse(this.diamondList) == false
+        ? BottomTabbarWidget(
+            arrBottomTab: diamondConfig.arrBottomTab,
+            onClickCallback: (obj) {
+              //
+              if (obj.type == ActionMenuConstant.ACTION_TYPE_MORE) {
+                List<DiamondModel> selectedList =
+                    diamondList.where((element) => element.isSelected).toList();
+                if (selectedList != null && selectedList.length > 0) {
+                  showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
+                      (manageClick) {
+                    manageBottomMenuClick(manageClick.bottomTabModel);
+                  }, R.string().commonString.more, isDisplaySelection: false);
+                } else {
+                  app.resolve<CustomDialogs>().confirmDialog(
+                        context,
+                        title: "",
+                        desc: R.string().errorString.diamondSelectionError,
+                        positiveBtnTitle: R.string().commonString.ok,
+                      );
+                }
+              }
+            },
+          )
+        : SizedBox();
+  }
+
+  manageBottomMenuClick(BottomTabModel bottomTabModel) {
+    List<DiamondModel> selectedList =
+        diamondList.where((element) => element.isSelected).toList();
+    if (selectedList != null && selectedList.length > 0) {
+      diamondConfig.manageDiamondAction(
+          context, selectedList, bottomTabModel, () {});
+    } else {
+      app.resolve<CustomDialogs>().confirmDialog(
+            context,
+            title: "",
+            desc: R.string().errorString.diamondSelectionError,
+            positiveBtnTitle: R.string().commonString.ok,
+          );
+    }
   }
 }

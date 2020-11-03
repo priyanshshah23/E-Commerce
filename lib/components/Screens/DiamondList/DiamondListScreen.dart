@@ -638,7 +638,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             Expanded(
               child: diamondList,
             ),
-            FinalCalculationWidget(arraDiamond),
+            this.moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL
+                ? FinalCalculationWidget(arraDiamond)
+                : SizedBox(),
           ],
         ),
       ),

@@ -579,6 +579,35 @@ class BottomMenuSetting {
             image: download,
             type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
         break;
+
+      case DiamondModuleConstant.MODULE_TYPE_FINAL_CALCULATION:
+        if (!isDetail && !isCompare) {
+          if (app
+              .resolve<PrefUtils>()
+              .getModulePermission(ModulePermissionConstant.permission_compare)
+              .view)
+            moreMenuList.add(BottomTabModel(
+                title: R.string().screenTitle.compare,
+                isCenter: false,
+                image: compare,
+                type: ActionMenuConstant.ACTION_TYPE_COMPARE));
+          moreMenuList.add(BottomTabModel(
+              title: R.string().screenTitle.clearSelection,
+              isCenter: false,
+              image: clearSelection,
+              type: ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION));
+        }
+        moreMenuList.add(BottomTabModel(
+            title: R.string().screenTitle.share,
+            isCenter: false,
+            image: share,
+            type: ActionMenuConstant.ACTION_TYPE_SHARE));
+        moreMenuList.add(BottomTabModel(
+            title: R.string().screenTitle.download,
+            isCenter: false,
+            image: download,
+            type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
+        break;
       default:
         if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
           if (app
