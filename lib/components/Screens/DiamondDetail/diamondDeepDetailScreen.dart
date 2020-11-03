@@ -329,6 +329,7 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
   ) async {
     // if (!model.isImage) print(model.url);
     return WebView(
+        
         initialUrl: model.url,
         onPageStarted: (url) {
           // app.resolve<CustomDialogs>().showProgressDialog(context, "");

@@ -16,6 +16,7 @@ import 'package:diamnow/components/Screens/DashBoard/Widget/StonesOfDay.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Notification/Notifications.dart';
+import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/Dashboard/DashboardModel.dart';
 import 'package:diamnow/models/Dashbord/DashBoardConfigModel.dart';
@@ -495,7 +496,6 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   getFeaturedSection() {
-
     List<DiamondModel> arrStones = [];
     if (app
         .resolve<PrefUtils>()
@@ -515,7 +515,9 @@ class _DashboardState extends StatefulScreenWidgetState {
         }
       }
     }
-    return FeaturedStoneWidget(diamondList: arrStones,);
+    return FeaturedStoneWidget(
+      diamondList: arrStones,
+    );
     return isNullEmptyOrFalse(arrStones)
         ? SizedBox()
         : Padding(
@@ -590,7 +592,9 @@ class _DashboardState extends StatefulScreenWidgetState {
       }
     }
 
-    return StoneOfDayWidget(stoneList: arrStones,);
+    return StoneOfDayWidget(
+      stoneList: arrStones,
+    );
     return isNullEmptyOrFalse(arrStones)
         ? SizedBox()
         : Padding(
@@ -1068,7 +1072,11 @@ class _DashboardState extends StatefulScreenWidgetState {
                 Spacer(),
                 InkWell(
                   onTap: () {
-                    //
+                    Map<String, dynamic> dict = new HashMap();
+                    dict[ArgumentConstant.ModuleType] =
+                        DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
+                    dict[ArgumentConstant.IsFromDrawer] = false;
+                    NavigationUtilities.pushRoute(SavedSearchScreen.route, args: dict );
                   },
                   child: getViewAll(),
                 ),
@@ -1232,7 +1240,9 @@ class _DashboardState extends StatefulScreenWidgetState {
         .view)) {
       return SizedBox();
     }
-    return RecentSearchWidget(recentSearch: this.dashboardModel.recentSearch,);
+    return RecentSearchWidget(
+      recentSearch: this.dashboardModel.recentSearch,
+    );
     return Padding(
       padding: EdgeInsets.only(
         left: getSize(Spacing.leftPadding),
@@ -1689,7 +1699,8 @@ class _DashboardState extends StatefulScreenWidgetState {
                       ),
                       InkWell(
                         onTap: () async {
-                          if(!isNullEmptyOrFalse(this.dashboardModel.seller.email)) {
+                          if (!isNullEmptyOrFalse(
+                              this.dashboardModel.seller.email)) {
                             _openMail(this.dashboardModel.seller.email);
                           }
                         },
@@ -1715,7 +1726,8 @@ class _DashboardState extends StatefulScreenWidgetState {
                       ),
                       InkWell(
                         onTap: () {
-                          if(!isNullEmptyOrFalse(this.dashboardModel.seller.whatsapp)) {
+                          if (!isNullEmptyOrFalse(
+                              this.dashboardModel.seller.whatsapp)) {
                             _openDialPad(this.dashboardModel.seller.whatsapp);
                           }
                         },
@@ -1753,28 +1765,27 @@ class _DashboardState extends StatefulScreenWidgetState {
       await launch(uri);
     } else {
       app.resolve<CustomDialogs>().confirmDialog(
-        context,
-        title: R.string().commonString.error,
-        desc: "Could not launch $uri",
-        positiveBtnTitle: R.string().commonString.ok,
-      );
+            context,
+            title: R.string().commonString.error,
+            desc: "Could not launch $uri",
+            positiveBtnTitle: R.string().commonString.ok,
+          );
     }
   }
 
   _openDialPad(String whatsapp) async {
-      String uri = 'tel:$whatsapp';
-      if (await canLaunch(uri)) {
-        await launch(uri);
-      } else {
-        app.resolve<CustomDialogs>().confirmDialog(
-          context,
-          title: R.string().commonString.error,
-          desc: "Could not launch $uri",
-          positiveBtnTitle: R.string().commonString.ok,
-        );
-      }
+    String uri = 'tel:$whatsapp';
+    if (await canLaunch(uri)) {
+      await launch(uri);
+    } else {
+      app.resolve<CustomDialogs>().confirmDialog(
+            context,
+            title: R.string().commonString.error,
+            desc: "Could not launch $uri",
+            positiveBtnTitle: R.string().commonString.ok,
+          );
+    }
   }
-
 
   getTitleText(String title) {
     return Text(
