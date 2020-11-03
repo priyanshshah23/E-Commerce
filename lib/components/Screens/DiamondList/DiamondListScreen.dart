@@ -71,6 +71,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   List<DiamondModel> arraDiamond = List<DiamondModel>();
   int page = DEFAULT_PAGE;
   DiamondCalculation diamondCalculation = DiamondCalculation();
+  DiamondCalculation diamondFinalCalculation = DiamondCalculation();
   List<FilterOptions> optionList = List<FilterOptions>();
   bool isGrid = false;
   int viewTypeCount = 0;
@@ -604,7 +605,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   manageDiamondSelection() {
     fillArrayList();
-    diamondCalculation.setAverageCalculation(arraDiamond);
+    diamondCalculation.setAverageCalculation(arraDiamond,
+        isFinalCalculation: true);
+    diamondFinalCalculation.setAverageCalculation(arraDiamond,
+        isFinalCalculation: true);
     diamondList.state.setApiCalling(false);
     setState(() {});
   }
@@ -639,7 +643,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               child: diamondList,
             ),
             this.moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL
-                ? FinalCalculationWidget(arraDiamond)
+                ? FinalCalculationWidget(
+                    arraDiamond, this.diamondFinalCalculation)
                 : SizedBox(),
           ],
         ),

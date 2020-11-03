@@ -8,21 +8,14 @@ import 'package:flutter/cupertino.dart';
 
 class FinalCalculationWidget extends StatefulWidget {
   List<DiamondModel> arrList;
-  FinalCalculationWidget(this.arrList);
+  DiamondCalculation finalCalculation;
+  FinalCalculationWidget(this.arrList, this.finalCalculation);
 
   @override
   _FinalCalculationWidgetState createState() => _FinalCalculationWidgetState();
 }
 
 class _FinalCalculationWidgetState extends State<FinalCalculationWidget> {
-  DiamondCalculation diamondCalculation = DiamondCalculation();
-
-  @override
-  void initState() {
-    super.initState();
-    diamondCalculation.setAverageCalculation(widget.arrList);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,7 +43,7 @@ class _FinalCalculationWidgetState extends State<FinalCalculationWidget> {
               bottom: getSize(20.0),
             ),
             child: DiamondListHeader(
-              diamondCalculation: diamondCalculation,
+              diamondCalculation: widget.finalCalculation,
               moduleType: DiamondModuleConstant.MODULE_TYPE_FINAL_CALCULATION,
             ),
           )

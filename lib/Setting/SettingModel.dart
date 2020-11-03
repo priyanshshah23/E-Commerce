@@ -581,32 +581,27 @@ class BottomMenuSetting {
         break;
 
       case DiamondModuleConstant.MODULE_TYPE_FINAL_CALCULATION:
-        if (!isDetail && !isCompare) {
-          if (app
-              .resolve<PrefUtils>()
-              .getModulePermission(ModulePermissionConstant.permission_compare)
-              .view)
-            moreMenuList.add(BottomTabModel(
-                title: R.string().screenTitle.compare,
-                isCenter: false,
-                image: compare,
-                type: ActionMenuConstant.ACTION_TYPE_COMPARE));
+        if (app
+            .resolve<PrefUtils>()
+            .getModulePermission(ModulePermissionConstant.permission_order)
+            .insert) {
           moreMenuList.add(BottomTabModel(
-              title: R.string().screenTitle.clearSelection,
+              image: placeOrder,
+              title: R.string().screenTitle.placeOrder,
               isCenter: false,
-              image: clearSelection,
-              type: ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION));
+              type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER));
         }
+        moreMenuList.add(BottomTabModel(
+            image: cancelStone,
+            title: R.string().screenTitle.cancelStone,
+            isCenter: false,
+            type: ActionMenuConstant.ACTION_TYPE_CANCEL_STONE));
         moreMenuList.add(BottomTabModel(
             title: R.string().screenTitle.share,
             isCenter: false,
             image: share,
             type: ActionMenuConstant.ACTION_TYPE_SHARE));
-        moreMenuList.add(BottomTabModel(
-            title: R.string().screenTitle.download,
-            isCenter: false,
-            image: download,
-            type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
+
         break;
       default:
         if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {

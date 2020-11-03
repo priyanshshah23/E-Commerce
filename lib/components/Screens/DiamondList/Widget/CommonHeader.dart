@@ -40,15 +40,16 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
       var strLookandBid = DateTime(
           currentTime.year, currentTime.month, currentTime.day, 14, 59, 0);
 
-      if (currentTime.isBefore(DateTime(
+      if (currentTime.isAfter(DateTime(
+          currentTime.year, currentTime.month, currentTime.day, 14, 59, 0))) {
+        strBlindBid = DateTime(currentTime.year, currentTime.month,
+            currentTime.day + 1, 10, 59, 0);
+        difference = strBlindBid.difference(currentTime);
+      } else if (currentTime.isBefore(DateTime(
           currentTime.year, currentTime.month, currentTime.day, 10, 59, 0))) {
-        if (strBlindBid.isSameDate(currentTime)) {
-          strBlindBid = DateTime(
-              currentTime.year, currentTime.month, currentTime.day, 10, 59, 0);
-        } else {
-          strBlindBid = DateTime(currentTime.year, currentTime.month,
-              currentTime.day + 1, 10, 59, 0);
-        }
+        strBlindBid = DateTime(
+            currentTime.year, currentTime.month, currentTime.day, 10, 59, 0);
+
         difference = strBlindBid.difference(currentTime);
       } else {
         difference = strLookandBid.difference(currentTime);
