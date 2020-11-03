@@ -249,6 +249,13 @@ class BaseTheme {
         fontWeight: FontWeight.normal);
   }
 
+  TextStyle get grey14TextStyle {
+    return TextStyle(
+        fontSize: getFontSize(14),
+        color: textGreyColor,
+        fontWeight: FontWeight.normal);
+  }
+
   TextStyle get black12TextStyleMedium {
     return TextStyle(
         fontSize: getFontSize(12),

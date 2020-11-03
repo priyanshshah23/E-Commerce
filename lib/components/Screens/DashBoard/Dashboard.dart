@@ -1752,16 +1752,26 @@ class _DashboardState extends StatefulScreenWidgetState {
     if (await canLaunch(uri)) {
       await launch(uri);
     } else {
-      throw 'Could not launch $uri';
+      app.resolve<CustomDialogs>().confirmDialog(
+        context,
+        title: R.string().commonString.error,
+        desc: "Could not launch $uri",
+        positiveBtnTitle: R.string().commonString.ok,
+      );
     }
   }
 
   _openDialPad(String whatsapp) async {
-      String uri = 'tel$whatsapp';
+      String uri = 'tel:$whatsapp';
       if (await canLaunch(uri)) {
         await launch(uri);
       } else {
-        throw 'Could not launch $uri';
+        app.resolve<CustomDialogs>().confirmDialog(
+          context,
+          title: R.string().commonString.error,
+          desc: "Could not launch $uri",
+          positiveBtnTitle: R.string().commonString.ok,
+        );
       }
   }
 
