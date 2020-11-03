@@ -3,6 +3,7 @@ class CommonString {
 
   // button caption
   final String btnSkip;
+  final String share;
   final String btnContinue;
   final String notifications;
   final String btnContinueCap;
@@ -49,6 +50,7 @@ class CommonString {
   final String stateFirst;
   final String cityFirst;
   final String language;
+  final String download;
 
   //App Update Dialog
   final String notYetAvailable;
@@ -518,5 +520,7 @@ class CommonString {
     this.seconds= "Seconds",
     this.bidEndsIn= "Bid ends in:",
     this.shape = "Shape",
+    this.download = "Download",
+    this.share = "Share",
   });
 }

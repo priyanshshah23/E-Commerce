@@ -16,6 +16,7 @@ import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
+import 'package:diamnow/components/Screens/Filter/Widget/DownLoadAndShareDialogue.dart';
 import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
 import 'package:diamnow/components/widgets/shared/CommonDateTimePicker.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
@@ -343,7 +344,7 @@ class DiamondConfig {
         actionHold(list);
         break;
       case ActionMenuConstant.ACTION_TYPE_DOWNLOAD:
-        actionDownload(list);
+        actionDownload(context,list);
         break;
       case ActionMenuConstant.ACTION_TYPE_SHARE:
         actionShare(context, list);
@@ -568,10 +569,41 @@ class DiamondConfig {
 
   actionHold(List<DiamondModel> list) {}
 
-  actionDownload(List<DiamondModel> list) {}
+  actionDownload(BuildContext context, List<DiamondModel> list, ) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          insetPadding: EdgeInsets.symmetric(
+              horizontal: getSize(20), vertical: getSize(20)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(getSize(25)),
+          ),
+          child: DownLoadAndShareDialogue(
+            title: R.string().commonString.download,
+          ),
+        );
+      },
+    );
+  }
 
   actionShare(BuildContext context, List<DiamondModel> list) {
-    openSharePopUp(context);
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          insetPadding: EdgeInsets.symmetric(
+              horizontal: getSize(20), vertical: getSize(20)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(getSize(25)),
+          ),
+          child: DownLoadAndShareDialogue(
+            title: R.string().commonString.share,
+          ),
+        );
+      },
+    );
+//    openSharePopUp(context);
   }
 
   actionReminder(BuildContext context, List<DiamondModel> list) {

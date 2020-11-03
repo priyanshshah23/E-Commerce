@@ -291,6 +291,20 @@ class BaseTheme {
         fontWeight: FontWeight.normal);
   }
 
+  TextStyle get black16RomanTextStyle {
+    return TextStyle(
+        fontSize: getFontSize(16),
+        color: textColor,
+        fontWeight: FontWeight.w500);
+  }
+
+  TextStyle get black14RomanTextStyle {
+    return TextStyle(
+        fontSize: getFontSize(14),
+        color: textColor,
+        fontWeight: FontWeight.w500);
+  }
+
   TextStyle get grey16HintTextStyle {
     return TextStyle(
       fontSize: getFontSize(16),

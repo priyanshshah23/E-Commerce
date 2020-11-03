@@ -49,10 +49,7 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
                 crossAxisCount: 1,
-//              childAspectRatio: 0.36,
-                // without Price
-                childAspectRatio: 0.7, // with Price
-//              mainAxisSpacing: 10,
+                childAspectRatio: 0.7,
                 children: List.generate( widget.recentSearch.length, (index) {
                   return InkWell(
                       onTap: () {
@@ -62,12 +59,6 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
                 },
                 ),
               ),
-//              child: ListView.builder(
-//                itemCount: widget.recentSearch.length,
-//                scrollDirection: Axis.horizontal,
-//                itemBuilder: (BuildContext context, int index) {
-//                  return getRecentItem(widget.recentSearch[index]);
-//                },)
           )
         ],
       ),

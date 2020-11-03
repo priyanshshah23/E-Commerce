@@ -34,3 +34,5 @@ class OrderInvoiceData {
   static const int tommorow = 2;
   static const int later = 3;
 }
+
+enum DownloadDataType { Images, Video, Certificate, Excel, Rough }
