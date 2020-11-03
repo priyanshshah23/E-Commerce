@@ -289,7 +289,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
                                       getPreviewItem(
-                                          "Modify",
+                                          R.string().commonString.modify,
                                           edit_icon,
                                           appTheme
                                               .greenPrimaryNormal14TitleColor,
@@ -302,7 +302,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                             FilterScreen.route,
                                             args: dict);
                                       }),
-                                      getPreviewItem("Delete", delete_icon_medium,
+                                      getPreviewItem(R.string().commonString.delete, delete_icon_medium,
                                           appTheme.redPrimaryNormal14TitleColor,
                                           () {
                                         app
@@ -330,7 +330,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                           },
                                         );
                                       }),
-                                      getPreviewItem("Search", saved_medium,
+                                      getPreviewItem(R.string().commonString.search, saved_medium,
                                           appTheme.primaryColor14TextStyle,
                                           () {
                                         Map<String, dynamic> dict =
