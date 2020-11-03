@@ -123,6 +123,7 @@ class ScreenTitle {
   final String compareStones;
   final String addToCart;
   final String addToWatchList;
+  final String finalCalculation;
   final String comment;
   final String offer;
   final String officeView;
@@ -344,6 +345,7 @@ class ScreenTitle {
     this.download = "Download",
     this.addToCart = "Add to Cart",
     this.addToWatchList = "Add to Watchlist",
+    this.finalCalculation = "Final Calculation",
     this.clearSelection = "Clear Selection",
     this.comment = "Comments",
     this.hold = "Hold",
