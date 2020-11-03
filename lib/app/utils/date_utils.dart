@@ -120,6 +120,7 @@ class DateUtilities {
   static const String yyyy_mm_dd = "yyyy-MM-dd";
 
   static const String ddmmyyyy_ = "dd/MM/yyyy";
+  static const String ddmmyywithdash = "dd-MM-yyyy";
   static const String hh_mm_ss = "HH:mm:ss";
   static const String hh_mm_a = "hh:mm a";
   static const String h_mm_a = "h:mm a";
