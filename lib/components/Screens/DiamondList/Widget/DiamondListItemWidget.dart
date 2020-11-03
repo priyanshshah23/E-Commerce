@@ -15,6 +15,7 @@ class DiamondItemWidget extends StatefulWidget {
   num rightPadding;
   SlidableController controller;
   List<Widget> list;
+  DiamondCalculation groupDiamondCalculation;
   int moduleType;
 
   DiamondItemWidget(
@@ -24,7 +25,8 @@ class DiamondItemWidget extends StatefulWidget {
       this.rightPadding = 0,
       this.controller,
       this.list,
-      this.moduleType});
+      this.moduleType,
+      this.groupDiamondCalculation,});
 
   @override
   _DiamondItemWidgetState createState() => _DiamondItemWidgetState();
@@ -129,7 +131,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                 : appTheme.dividerColor.withOpacity(0.5))
                         //boxShadow: getBoxShadow(context),
                         ),
-                    child: Wrap(
+                    child: Column(
                       children: [
                         IntrinsicHeight(
                           child: Row(
@@ -172,6 +174,32 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                             ],
                           ),
                         ),
+                        if(!isNullEmptyOrFalse(widget.groupDiamondCalculation))
+                        Padding(
+                          padding: EdgeInsets.only(top: getSize(8)),
+                          child: Row(
+                            children: <Widget>[
+                              getColumn(
+                                  widget.groupDiamondCalculation.pcs , R.string().commonString.pcs,1),
+
+                              getColumn(widget.groupDiamondCalculation.totalCarat,
+                                  R.string().commonString.cts,2),
+
+                              getColumn(widget.groupDiamondCalculation.totalDisc,
+                                  R.string().commonString.disc,2),
+
+                              getColumn(
+                                  widget.groupDiamondCalculation.totalPriceCrt,
+                                  R.string().commonString.avgPriceCrt +
+                                      R.string().commonString.doller,3),
+
+                              getColumn(
+                                  widget.groupDiamondCalculation.totalAmount,
+                                  R.string().commonString.amount +
+                                      R.string().commonString.doller,3)
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -184,6 +212,48 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           ],
         ),
       ),
+    );
+  }
+
+
+  getColumn(String text, String lable, int flex) {
+    return Expanded(
+      flex: flex,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(getSize(5)),
+          border: Border.all(color: appTheme.textGreyColor),
+        ),
+        padding:
+        EdgeInsets.symmetric(vertical: getSize(15), horizontal: getSize(4)),
+        child: Column(
+          children: <Widget>[
+            getDetailText(text),
+            SizedBox(
+              height: getSize(5),
+            ),
+            getLableText(lable),
+          ],
+        ),
+      ),
+    );
+  }
+
+  getDetailText(String text) {
+    return Text(
+      text,
+      style: appTheme.blue14TextStyle,
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+
+  getLableText(String text) {
+    return Text(
+      text,
+      softWrap: true,
+      overflow: TextOverflow.ellipsis,
+      maxLines: 1,
+      style: appTheme.black16TextStyle.copyWith(fontSize: getFontSize(10)),
     );
   }
 

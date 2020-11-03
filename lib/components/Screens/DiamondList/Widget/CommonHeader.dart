@@ -36,14 +36,22 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
     if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
       isTimerCompleted = false;
       var currentTime = DateTime.now();
-      var strBlindBid = DateTime(
-          currentTime.year, currentTime.month, currentTime.day + 1, 10, 59, 0);
+      var strBlindBid = DateTime.now();
       var strLookandBid = DateTime(
           currentTime.year, currentTime.month, currentTime.day, 14, 59, 0);
-      difference = strLookandBid.difference(currentTime);
 
-      if (strLookandBid.difference(currentTime).inSeconds < 0) {
+      if (currentTime.isBefore(DateTime(
+          currentTime.year, currentTime.month, currentTime.day, 10, 59, 0))) {
+        if (strBlindBid.isSameDate(currentTime)) {
+          strBlindBid = DateTime(
+              currentTime.year, currentTime.month, currentTime.day, 10, 59, 0);
+        } else {
+          strBlindBid = DateTime(currentTime.year, currentTime.month,
+              currentTime.day + 1, 10, 59, 0);
+        }
         difference = strBlindBid.difference(currentTime);
+      } else {
+        difference = strLookandBid.difference(currentTime);
       }
 
       totalSeconds = difference.inSeconds;
@@ -54,7 +62,9 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
   @override
   void dispose() {
     // Cancels the timer when the page is disposed.
-    _timer.cancel();
+    if (_timer != null) {
+      _timer.cancel();
+    }
 
     super.dispose();
   }
@@ -243,5 +253,13 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
       text,
       style: appTheme.black16TextStyle.copyWith(fontSize: getFontSize(10)),
     );
+  }
+}
+
+extension DateOnlyCompare on DateTime {
+  bool isSameDate(DateTime other) {
+    return this.year == other.year &&
+        this.month == other.month &&
+        this.day == other.day;
   }
 }

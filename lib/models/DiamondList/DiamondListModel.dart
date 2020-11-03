@@ -797,20 +797,14 @@ class DiamondModel {
     var amount =
         (amt.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
 
-    return R.string().commonString.doller +
-            getFinalAmount().toStringAsFixed(2) +
-            "/Amt" ??
-        "";
+    return PriceUtilities.getPrice(getFinalAmount()) + "/Amt" ?? "";
   }
 
   String getPricePerCarat() {
     var caratPerPrice =
         (ctPr.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
     // return PriceUtilities.getPrice(getFinalRate()) + "Cts";
-    return R.string().commonString.doller +
-            getFinalRate().toStringAsFixed(2) +
-            "/Cts" ??
-        "";
+    return PriceUtilities.getPrice(getFinalRate()) + "/Cts" ?? "";
   }
 }
 

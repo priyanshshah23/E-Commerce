@@ -34,6 +34,7 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_RECENT_SEARCH = 31;
   static const MODULE_TYPE_OPEN_DRAWER = 1000;
   static const MODULE_TYPE_HOME = 100;
+  static const MODULE_TYPE_FINAL_CALCULATION = 101;
 }
 
 class ModulePermissionConstant {
@@ -181,6 +182,7 @@ class ActionMenuConstant {
   static const ACTION_TYPE_BID = 15;
   static const ACTION_TYPE_REMINDER = 16;
   static const ACTION_TYPE_DELETE = 17;
+  static const ACTION_TYPE_FINAL_CALCULATION = 18;
 }
 
 class MoreMenuConstant {

@@ -66,7 +66,6 @@ class DiamondCalculation {
     avgPriceCrt = arrValues[4];
 
     totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt ?? 0);
-    totalAmount = PriceUtilities.getPrice(avgAmount ?? 0);
     if (isAccountTerm) {
       totalDisc = PriceUtilities.getPercent(arrFinalValues[2] ?? 0);
       totalAmount = PriceUtilities.getPrice(arrFinalValues[1] ?? 0);
@@ -76,6 +75,7 @@ class DiamondCalculation {
       totalDisc = PriceUtilities.getPercent(avgDisc ?? 0);
       avgAmount = arrValues[1];
     }
+    totalAmount = PriceUtilities.getPrice(avgAmount ?? 0);
     totalCarat = PriceUtilities.getDoubleValue(carat ?? 0);
     pcs = filterList.length.toString();
   }
@@ -946,18 +946,17 @@ class DiamondConfig {
   }
 
   void setMatchPairItem(List<DiamondModel> arraDiamond) {
-    // if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
-    //   for (int i = 0; i < arraDiamond.length; i++) {
-    //     if (i == 0 || (arraDiamond[i].memoNo != arraDiamond[i - 1].memoNo)) {
-    //       arraDiamond[i].displayTitle = "#${arraDiamond[i].memoNo}";
-    //       arraDiamond[i].displayDesc = DateUtilities()
-    //           .convertServerDateToFormatterString(arraDiamond[i].offerValidDate,
-    //               formatter: DateUtilities.dd_mm_yyyy);
-    //       arraDiamond[i].showCheckBox = true;
-    //     }
-    //   }
-    // } else
-    if (moduleType == DiamondModuleConstant.MODULE_TYPE_UPCOMING) {
+    if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+      for (int i = 0; i < arraDiamond.length; i++) {
+        if (i == 0 || (arraDiamond[i].memoNo != arraDiamond[i - 1].memoNo)) {
+          // arraDiamond[i].displayTitle = "#${arraDiamond[i].memoNo}";
+          arraDiamond[i].displayTitle = DateUtilities()
+              .convertServerDateToFormatterString(arraDiamond[i].offerValidDate,
+                  formatter: DateUtilities.dd_mm_yyyy);
+          arraDiamond[i].showCheckBox = true;
+        }
+      }
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_UPCOMING) {
       for (int i = 0; i < arraDiamond.length; i++) {
         if (i == 0 || (arraDiamond[i].inDt != arraDiamond[i - 1].inDt)) {
           arraDiamond[i].displayTitle = DateUtilities()
