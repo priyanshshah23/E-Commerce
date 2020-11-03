@@ -73,12 +73,13 @@ class ModulePermissionConstant {
   static const permission_notification = "notification";
 }
 
-class ReminderType{
-  static const  ReminderTypeToday =1;
-  static const  ReminderTypeTomorrow =2;
-  static const  ReminderTypeNextWeek=3;
-  static const  ReminderTypeCustom =4;
+class ReminderType {
+  static const ReminderTypeToday = 1;
+  static const ReminderTypeTomorrow = 2;
+  static const ReminderTypeNextWeek = 3;
+  static const ReminderTypeCustom = 4;
 }
+
 class PermissionType {
   static const permission_view = "view";
   static const permission_insert = "insert";
@@ -184,6 +185,7 @@ class ActionMenuConstant {
   static const ACTION_TYPE_REMINDER = 16;
   static const ACTION_TYPE_DELETE = 17;
   static const ACTION_TYPE_FINAL_CALCULATION = 18;
+  static const ACTION_TYPE_CANCEL_STONE = 19;
 }
 
 class MoreMenuConstant {

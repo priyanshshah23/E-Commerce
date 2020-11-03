@@ -11,6 +11,7 @@ import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dar
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/FinalCalculation.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
@@ -85,11 +86,19 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
 
   DiamondConfig diamondConfig;
   DiamondCalculation diamondCalculation = DiamondCalculation();
-
+  DiamondCalculation diamondFinalCalculation = DiamondCalculation();
   @override
   void initState() {
     super.initState();
-    diamondConfig = DiamondConfig(moduleType);
+    if (this.actionType == DiamondTrackConstant.TRACK_TYPE_FINAL_CALCULATION) {
+      diamondConfig =
+          DiamondConfig(DiamondModuleConstant.MODULE_TYPE_FINAL_CALCULATION);
+    } else {
+      diamondConfig = DiamondConfig(moduleType);
+    }
+
+    diamondFinalCalculation.setAverageCalculation(diamondList,
+        isFinalCalculation: true);
     diamondCalculation.setAverageCalculation(diamondList);
     diamondConfig.initItems();
   }
@@ -159,7 +168,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                   getOfferDetail(),
                   getOrderDetail(),
                 ],
-              )
+              ),
             ],
           ),
         ),
@@ -486,28 +495,18 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
 
   Widget getBottomTabForFinalCalculation() {
     return isNullEmptyOrFalse(this.diamondList) == false
-        ? BottomTabbarWidget(
-            arrBottomTab: diamondConfig.arrBottomTab,
-            onClickCallback: (obj) {
-              //
-              if (obj.type == ActionMenuConstant.ACTION_TYPE_MORE) {
-                List<DiamondModel> selectedList =
-                    diamondList.where((element) => element.isSelected).toList();
-                if (selectedList != null && selectedList.length > 0) {
-                  showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
-                      (manageClick) {
-                    manageBottomMenuClick(manageClick.bottomTabModel);
-                  }, R.string().commonString.more, isDisplaySelection: false);
-                } else {
-                  app.resolve<CustomDialogs>().confirmDialog(
-                        context,
-                        title: "",
-                        desc: R.string().errorString.diamondSelectionError,
-                        positiveBtnTitle: R.string().commonString.ok,
-                      );
-                }
-              }
-            },
+        ? Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              FinalCalculationWidget(diamondList, diamondFinalCalculation),
+              BottomTabbarWidget(
+                arrBottomTab: diamondConfig.arrBottomTab,
+                onClickCallback: (obj) {
+                  //Click handle
+                  manageBottomMenuClick(obj);
+                },
+              ),
+            ],
           )
         : SizedBox();
   }
