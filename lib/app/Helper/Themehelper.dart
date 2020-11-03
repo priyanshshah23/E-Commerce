@@ -284,7 +284,6 @@ class BaseTheme {
         fontWeight: FontWeight.w500);
   }
 
-
   TextStyle get error12TextStyle {
     return TextStyle(
         fontSize: getFontSize(12),

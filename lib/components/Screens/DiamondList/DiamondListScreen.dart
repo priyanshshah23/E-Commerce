@@ -638,7 +638,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               moduleType: moduleType,
             ),
             SizedBox(
-              height: getSize(20),
+              height: getSize(16),
             ),
             Expanded(
               child: diamondList,
