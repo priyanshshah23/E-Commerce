@@ -51,6 +51,7 @@ class BaseTheme {
   Color get bgColor => fromHex("#6E8FE7");
   Color get dividerColor => fromHex("#E3E3E3");
   Color get textBlackColor => Colors.black;
+  Color get blackColor => Colors.black;
   Color get whiteColor => Colors.white;
   Color get textGreyColor => fromHex("#C7C7C7");
   Color get buttonColor => fromHex("#6E8FE7");

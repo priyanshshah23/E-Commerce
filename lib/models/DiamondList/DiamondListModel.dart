@@ -412,6 +412,7 @@ class DiamondModel {
   bool isMatchPair = false;
   int borderType;
   bool isAddToWatchList = false;
+  bool isFinalCalculation = false;
   bool isAddToOffer = false;
   bool isAddToBid = false;
   String selectedBackPer;

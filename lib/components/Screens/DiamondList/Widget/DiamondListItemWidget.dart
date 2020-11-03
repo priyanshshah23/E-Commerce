@@ -18,15 +18,16 @@ class DiamondItemWidget extends StatefulWidget {
   DiamondCalculation groupDiamondCalculation;
   int moduleType;
 
-  DiamondItemWidget(
-      {this.item,
-      this.actionClick,
-      this.leftPadding = 0,
-      this.rightPadding = 0,
-      this.controller,
-      this.list,
-      this.moduleType,
-      this.groupDiamondCalculation,});
+  DiamondItemWidget({
+    this.item,
+    this.actionClick,
+    this.leftPadding = 0,
+    this.rightPadding = 0,
+    this.controller,
+    this.list,
+    this.moduleType,
+    this.groupDiamondCalculation,
+  });
 
   @override
   _DiamondItemWidgetState createState() => _DiamondItemWidgetState();
@@ -174,32 +175,35 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                             ],
                           ),
                         ),
-                        if(!isNullEmptyOrFalse(widget.groupDiamondCalculation))
-                        Padding(
-                          padding: EdgeInsets.only(top: getSize(8)),
-                          child: Row(
-                            children: <Widget>[
-                              getColumn(
-                                  widget.groupDiamondCalculation.pcs , R.string().commonString.pcs,1),
-
-                              getColumn(widget.groupDiamondCalculation.totalCarat,
-                                  R.string().commonString.cts,2),
-
-                              getColumn(widget.groupDiamondCalculation.totalDisc,
-                                  R.string().commonString.disc,2),
-
-                              getColumn(
-                                  widget.groupDiamondCalculation.totalPriceCrt,
-                                  R.string().commonString.avgPriceCrt +
-                                      R.string().commonString.doller,3),
-
-                              getColumn(
-                                  widget.groupDiamondCalculation.totalAmount,
-                                  R.string().commonString.amount +
-                                      R.string().commonString.doller,3)
-                            ],
+                        if (!isNullEmptyOrFalse(widget.groupDiamondCalculation))
+                          Padding(
+                            padding: EdgeInsets.only(top: getSize(8)),
+                            child: Row(
+                              children: <Widget>[
+                                getColumn(widget.groupDiamondCalculation.pcs,
+                                    R.string().commonString.pcs, 1),
+                                getColumn(
+                                    widget.groupDiamondCalculation.totalCarat,
+                                    R.string().commonString.cts,
+                                    2),
+                                getColumn(
+                                    widget.groupDiamondCalculation.totalDisc,
+                                    R.string().commonString.disc,
+                                    2),
+                                getColumn(
+                                    widget
+                                        .groupDiamondCalculation.totalPriceCrt,
+                                    R.string().commonString.avgPriceCrt +
+                                        R.string().commonString.doller,
+                                    3),
+                                getColumn(
+                                    widget.groupDiamondCalculation.totalAmount,
+                                    R.string().commonString.amount +
+                                        R.string().commonString.doller,
+                                    3)
+                              ],
+                            ),
                           ),
-                        ),
                       ],
                     ),
                   ),
@@ -215,7 +219,6 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
     );
   }
 
-
   getColumn(String text, String lable, int flex) {
     return Expanded(
       flex: flex,
@@ -225,7 +228,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           border: Border.all(color: appTheme.textGreyColor),
         ),
         padding:
-        EdgeInsets.symmetric(vertical: getSize(15), horizontal: getSize(4)),
+            EdgeInsets.symmetric(vertical: getSize(15), horizontal: getSize(4)),
         child: Column(
           children: <Widget>[
             getDetailText(text),
@@ -265,8 +268,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       child: Container(
         padding: EdgeInsets.only(
           top: getSize(8),
-          left: getSize(10),
-          right: getSize(10),
+          left: getSize(8),
+          right: getSize(8),
           bottom: getSize(8),
         ),
         decoration: BoxDecoration(

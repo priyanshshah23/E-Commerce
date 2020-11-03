@@ -74,8 +74,8 @@ const IMAGE_FILE_SIZE = 10.0;
 const BUSINESS_TYPE = "BUSINESS_TYPE";
 
 class Spacing {
-  static const num leftPadding = 20.0;
-  static const num rightPadding = 20.0;
+  static const num leftPadding = 16.0;
+  static const num rightPadding = 16.0;
 }
 
 //Master Code

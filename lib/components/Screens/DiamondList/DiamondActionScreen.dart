@@ -71,6 +71,9 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
   int actionType;
   List<DiamondModel> diamondList;
   String selectedDate;
+  bool isAllSelected = false;
+  bool isCMChargesApplied = false;
+
   List<String> invoiceList = [
     InvoiceTypesString.today,
     InvoiceTypesString.tomorrow,
@@ -103,6 +106,11 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
         leadingButton: getBackButton(context),
         centerTitle: false,
         textalign: TextAlign.left,
+        actionItems: [
+          this.actionType == DiamondTrackConstant.TRACK_TYPE_FINAL_CALCULATION
+              ? getActionItems()
+              : SizedBox()
+        ],
       ),
       bottomNavigationBar: getBottomTab(),
       body: SafeArea(
@@ -120,10 +128,22 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                   // primary: false,
                   shrinkWrap: true,
                   itemCount: diamondList.length,
+                  physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (BuildContext context, int index) {
                     return DiamondItemWidget(
                         item: diamondList[index],
-                        actionClick: (manageClick) {});
+                        actionClick: (manageClick) {
+                          setState(() {
+                            if (this.actionType ==
+                                DiamondTrackConstant
+                                    .TRACK_TYPE_FINAL_CALCULATION) {
+                              diamondList[index].isSelected =
+                                  !diamondList[index].isSelected;
+                              diamondCalculation
+                                  .setAverageCalculation(diamondList);
+                            }
+                          });
+                        });
                   },
                 ),
               ),
@@ -144,6 +164,58 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
     );
   }
 
+  //Get Action Items for Final calculation
+  Widget getActionItems() {
+    return Row(children: [
+      InkWell(
+        onTap: () {
+          setState(() {
+            isAllSelected = !isAllSelected;
+
+            diamondList.forEach((element) {
+              element.isSelected = isAllSelected;
+            });
+          });
+        },
+        child: Padding(
+          padding: EdgeInsets.only(right: getSize(8), left: getSize(8.0)),
+          child: Image.asset(
+            !isAllSelected ? selectAll : selectList,
+            height: getSize(20),
+            width: getSize(20),
+          ),
+        ),
+      ),
+      InkWell(
+        onTap: () {
+          setState(() {
+            isCMChargesApplied = !isCMChargesApplied;
+          });
+        },
+        child: Row(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(right: getSize(8), left: getSize(8.0)),
+              child: Image.asset(
+                isCMChargesApplied ? selectedCheckbox : unSelectedCheckbox,
+                height: getSize(20),
+                width: getSize(20),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(right: getSize(20)),
+              child: Text(
+                "CM Charges",
+                style: appTheme.black14TextStyle,
+              ),
+            ),
+          ],
+        ),
+      )
+    ]);
+  }
+
+  Widget getBottomTabForNewArrival() {}
   Widget getBottomTab() {
     return Padding(
       padding: EdgeInsets.all(getSize(Spacing.leftPadding)),

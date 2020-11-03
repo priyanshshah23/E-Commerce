@@ -39,7 +39,9 @@ class DiamondCalculation {
   String pcs = "0";
   bool isAccountTerm = false;
 
-  setAverageCalculation(List<DiamondModel> arraDiamond) {
+  setAverageCalculation(List<DiamondModel> arraDiamond,
+      {bool isFinalCalculation = false}) {
+    isAccountTerm = isFinalCalculation;
     double carat = 0.0;
     double avgDisc = 0.0;
     double avgRapCrt = 0.0;
@@ -158,6 +160,8 @@ class DiamondConfig {
         return R.string().screenTitle.bidStone;
       case DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER:
         return R.string().screenTitle.placeOrder;
+      case DiamondTrackConstant.TRACK_TYPE_FINAL_CALCULATION:
+        return R.string().screenTitle.finalCalculation;
       default:
         return R.string().screenTitle.addToWatchList;
     }
@@ -309,6 +313,9 @@ class DiamondConfig {
       BottomTabModel bottomTabModel, Function refreshList,
       {int moduleType}) async {
     switch (bottomTabModel.type) {
+      case ActionMenuConstant.ACTION_TYPE_FINAL_CALCULATION:
+        actionForFinalCalculation(context, list);
+        break;
       case ActionMenuConstant.ACTION_TYPE_DELETE:
         actionDelete(context, list, moduleType, refreshList);
         break;
@@ -383,6 +390,18 @@ class DiamondConfig {
 
     openDiamondActionAcreen(
         context, DiamondTrackConstant.TRACK_TYPE_CART, selectedList);
+  }
+
+  actionForFinalCalculation(BuildContext context, List<DiamondModel> list) {
+    List<DiamondModel> selectedList = [];
+    DiamondModel model;
+    list.forEach((element) {
+      model = DiamondModel.fromJson(element.toJson());
+      model.isFinalCalculation = true;
+      selectedList.add(model);
+    });
+    openDiamondActionAcreen(context,
+        DiamondTrackConstant.TRACK_TYPE_FINAL_CALCULATION, selectedList);
   }
 
   actionDelete(BuildContext context, List<DiamondModel> list, int moduleType,

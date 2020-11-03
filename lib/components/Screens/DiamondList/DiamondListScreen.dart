@@ -12,6 +12,7 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondExpandItemW
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondSquareGridItemWidget.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/FinalCalculation.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
@@ -636,7 +637,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             ),
             Expanded(
               child: diamondList,
-            )
+            ),
+            FinalCalculationWidget(arraDiamond),
           ],
         ),
       ),
@@ -835,6 +837,4 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           );
     }
   }
-
-  
 }
