@@ -145,6 +145,8 @@ class DiamondConfig {
         return R.string().screenTitle.upcoming;
       case DiamondModuleConstant.MODULE_TYPE_PROFILE:
         return R.string().screenTitle.myProfile;
+      case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
+        return R.string().screenTitle.stoneOfDay;
       default:
         return R.string().screenTitle.searchDiamond;
     }
@@ -353,7 +355,7 @@ class DiamondConfig {
         actionHold(list);
         break;
       case ActionMenuConstant.ACTION_TYPE_DOWNLOAD:
-        actionDownload(context,list);
+        actionDownload(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_SHARE:
         actionShare(context, list);
@@ -590,7 +592,10 @@ class DiamondConfig {
 
   actionHold(List<DiamondModel> list) {}
 
-  actionDownload(BuildContext context, List<DiamondModel> list, ) {
+  actionDownload(
+    BuildContext context,
+    List<DiamondModel> list,
+  ) {
     showDialog(
       context: context,
       builder: (BuildContext context) {

@@ -515,9 +515,9 @@ class _DashboardState extends StatefulScreenWidgetState {
         }
       }
     }
-    return FeaturedStoneWidget(
-      diamondList: arrStones,
-    );
+    // return FeaturedStoneWidget(
+    //   diamondList: arrStones,
+    // );
     return isNullEmptyOrFalse(arrStones)
         ? SizedBox()
         : Padding(
@@ -592,9 +592,9 @@ class _DashboardState extends StatefulScreenWidgetState {
       }
     }
 
-    return StoneOfDayWidget(
-      stoneList: arrStones,
-    );
+    // return StoneOfDayWidget(
+    //   stoneList: arrStones,
+    // );
     return isNullEmptyOrFalse(arrStones)
         ? SizedBox()
         : Padding(
