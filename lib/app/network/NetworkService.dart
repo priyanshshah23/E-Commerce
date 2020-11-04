@@ -15,6 +15,7 @@ import 'package:diamnow/models/Master/Master.dart';
 import 'package:diamnow/models/Order/OrderListModel.dart';
 import 'package:diamnow/models/QuickSearch/QuickSearchModel.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
+import 'package:diamnow/models/Share/ShareThroughEmail.dart';
 import 'package:diamnow/models/Slot/SlotModel.dart';
 import 'package:diamnow/models/StaticPage/StaticPageModel.dart';
 import 'package:diamnow/models/Version/VersionUpdateResp.dart';
@@ -91,11 +92,15 @@ abstract class NetworkService {
 
   @POST(ApiConstants.diamondComentDelete)
   Future<BaseApiResp> diamondComentDelete(@Body() TrackDelReq req);
+
   @POST(ApiConstants.diamondBidDelete)
   Future<BaseApiResp> diamondBidDelete(@Body() TrackDelReq req);
 
   @POST(ApiConstants.diamondList)
   Future<DiamondListResp> diamondListPaginate(@Body() Map<String, dynamic> req);
+
+  @POST(ApiConstants.shareThroughEmail)
+  Future<BaseApiResp> shareThroughEmail(@Body() ShareThroughEmailReq req);
 
   @POST(ApiConstants.diamondMatchPair)
   Future<DiamondListResp> diamondMatchPairList(

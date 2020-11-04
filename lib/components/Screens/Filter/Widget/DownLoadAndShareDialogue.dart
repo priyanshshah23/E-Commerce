@@ -1,8 +1,13 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/models/Share/ShareThroughEmail.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DownLoadAndShareDialogue extends StatefulWidget {
   String title = "";
@@ -36,7 +41,6 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
   bool isAllExcelSelected = false;
   bool isAllRoughSelected = false;
 
-
   _DownLoadAndShareDialogueState(
     this.title,
   );
@@ -51,7 +55,7 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
   Widget build(BuildContext context) {
     return Padding(
       padding:
-          EdgeInsets.symmetric(horizontal: getSize(20), vertical: getSize(15)),
+          EdgeInsets.symmetric(horizontal: getSize(20), vertical: getSize(30)),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -79,23 +83,25 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
           SizedBox(
             height: getSize(15),
           ),
-         ConstrainedBox(
-           constraints: BoxConstraints(
-               minHeight: 50,
-               maxHeight: MathUtilities.screenHeight(context) - 160),
-           child: ListView(
-             physics: BouncingScrollPhysics(),
-             shrinkWrap: true,
-             children: [
-               getRowWithTitle(title: "Images", type: DownloadDataType.Images,firstList: firstImageList, secondList: secondImageList),
-               getRowWithTitle(title: "Video", type: DownloadDataType.Video,firstList: firstVideoList, secondList: secondVideoList),
-               getRowWithTitle(title: "Certificate", type: DownloadDataType.Certificate,firstList: firstCertificateList,secondList: secondCertificateList),
-               getRowWithTitle(title: "Excel", type: DownloadDataType.Excel,firstList: firstExcelList),
-               getRowWithTitle(title: "Rough", type: DownloadDataType.Rough,firstList: firstRoughList, secondList: secondRoughList),
-             ],
+         Expanded(
+           child: ConstrainedBox(
+             constraints: BoxConstraints(
+                 minHeight: 50,
+                 maxHeight: MathUtilities.screenHeight(context) - 200),
+             child: ListView(
+               physics: BouncingScrollPhysics(),
+               shrinkWrap: true,
+               children: [
+                 getRowWithTitle(title: "Images", type: DownloadDataType.Images,firstList: firstImageList, secondList: secondImageList),
+                 getRowWithTitle(title: "Video", type: DownloadDataType.Video,firstList: firstVideoList, secondList: secondVideoList),
+                 getRowWithTitle(title: "Certificate", type: DownloadDataType.Certificate,firstList: firstCertificateList,secondList: secondCertificateList),
+                 getRowWithTitle(title: "Excel", type: DownloadDataType.Excel,firstList: firstExcelList),
+                 getRowWithTitle(title: "Rough", type: DownloadDataType.Rough,firstList: firstRoughList, secondList: secondRoughList),
+               ],
+             ),
            ),
          ),
-         Row(
+          title == R.string().commonString.share ? Row(
            children: [
              Expanded(
                child: InkWell(
@@ -104,6 +110,76 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                  },
                  child: Container(
                    height: getSize(46),
+                    alignment: Alignment.center,
+                   decoration: BoxDecoration(
+                     color: appTheme.whatsAppColor,
+                     borderRadius: BorderRadius.circular(getSize(5)),
+                   ),
+                   child: Text(
+                     "WhatsApp",
+                     textAlign: TextAlign.center,
+                     style: appTheme.white16TextStyle,
+                   ),
+                 ),
+               ),
+             ),
+             SizedBox(
+               width: getSize(16),
+             ),
+             Expanded(
+               child: InkWell(
+                 onTap: () {
+                   //callEmailApi();
+                   _openMail();
+                 },
+                 child: Container(
+                   height: getSize(46),
+                   alignment: Alignment.center,
+                   decoration: BoxDecoration(
+                       color: appTheme.gmailColor,
+                       borderRadius: BorderRadius.circular(getSize(5)),
+                      ),
+                   child: Text(
+                     "Gmail",
+                     textAlign: TextAlign.center,
+                     style: appTheme.white16TextStyle,
+                   ),
+                 ),
+               ),
+             ),
+             SizedBox(
+               width: getSize(16),
+             ),
+             Expanded(
+               child: InkWell(
+                 onTap: () {
+                   Navigator.pop(context);
+                 },
+                 child: Container(
+                   height: getSize(46),
+                   alignment: Alignment.center,
+                   decoration: BoxDecoration(
+                       color: appTheme.skypeColor,
+                       borderRadius: BorderRadius.circular(getSize(5)),
+                      ),
+                   child: Text(
+                     "Skype",
+                     textAlign: TextAlign.center,
+                     style: appTheme.white16TextStyle,
+                   ),
+                 ),
+               ),
+             )
+           ],
+         ) : Row(
+            children: [
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    height: getSize(46),
                     alignment: Alignment.center,
                    decoration: BoxDecoration(
                      color: appTheme.colorPrimary.withOpacity(0.1),
@@ -148,6 +224,41 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
     );
   }
 
+  _openMail() async {
+    String uri = 'mailto:?subject=DiamNow&body=DiamNow';
+    if (await canLaunch(uri)) {
+      await launch(uri);
+    } else {
+      app.resolve<CustomDialogs>().confirmDialog(
+        context,
+        title: R.string().commonString.error,
+        desc: "Could not launch $uri",
+        positiveBtnTitle: R.string().commonString.ok,
+      );
+    }
+  }
+
+//  callEmailApi() async {
+//    ShareThroughEmailReq req = ShareThroughEmailReq();
+//
+//    NetworkCall<BaseApiResp>()
+//        .makeCall(
+//            () => app.resolve<ServiceModule>().networkService().shareThroughEmail(req),
+//        context,
+//        isProgress: true)
+//        .then((resp) async {
+//          showToast("Email Send Successfully");
+//      Navigator.pop(context);
+//    }).catchError((onError) {
+//      app.resolve<CustomDialogs>().confirmDialog(
+//        context,
+//        title: R.string().commonString.error,
+//        desc: onError.message,
+//        positiveBtnTitle: R.string().commonString.btnTryAgain,
+//      );
+//    });
+//  }
+
   getRowWithTitle({String title,DownloadDataType type, List<SelectionPopupModel> firstList, List<SelectionPopupModel> secondList}) {
     bool titleBool;
     return Column(
@@ -155,19 +266,19 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
         InkWell(
           highlightColor: Colors.transparent,
           onTap: () {
-            if(type == DownloadDataType.Images) {
+            if (type == DownloadDataType.Images) {
               this.isAllImageSelected = !this.isAllImageSelected;
               titleBool = isAllImageSelected;
-            } else if(type == DownloadDataType.Video) {
+            } else if (type == DownloadDataType.Video) {
               this.isAllVideoSelected = !this.isAllVideoSelected;
               titleBool = isAllVideoSelected;
-            } else if(type == DownloadDataType.Excel) {
+            } else if (type == DownloadDataType.Excel) {
               this.isAllExcelSelected = !this.isAllExcelSelected;
               titleBool = isAllExcelSelected;
-            } else if(type == DownloadDataType.Rough) {
+            } else if (type == DownloadDataType.Rough) {
               this.isAllRoughSelected = !this.isAllRoughSelected;
               titleBool = isAllRoughSelected;
-            } else if(type == DownloadDataType.Certificate) {
+            } else if (type == DownloadDataType.Certificate) {
               this.isAllCertificateSelected = !this.isAllCertificateSelected;
               titleBool = isAllCertificateSelected;
             }
@@ -197,25 +308,29 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
               Container(
                 height: getSize(16),
                 width: getSize(16),
-                child: Image.asset(getConditionValue(type) ? selectedFilter : unselectedFilter),
+                child: Image.asset(getConditionValue(type)
+                    ? selectedFilter
+                    : unselectedFilter),
               ),
               SizedBox(
                 width: getSize(8),
               ),
               Text(
                 title,
-                style: appTheme.black16RomanTextStyle,
+                style: appTheme.black16MediumTextStyle,
               )
             ],
           ),
         ),
         Padding(
           padding: EdgeInsets.only(
-              left: getSize(15), top: getSize(15), bottom: getSize(29)),
+              left: getSize(15), top: getSize(8), bottom: getSize(19)),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               firstList != null ? Expanded(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     ListView.builder(
                       physics: BouncingScrollPhysics(),
@@ -228,13 +343,19 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                           onTap: () {
                             firstList[index].isSelected = !firstList[index].isSelected;
                             if(!firstList[index].isSelected) {
-                              disableValue(type);
+                              enableDisableValue(type, false);
                             }
+                            var containFirst = firstList.where((element) => element.isSelected == false);
+                            var containSecond = secondList.where((element) => element.isSelected == false);
+                              if(containFirst.isEmpty && containSecond.isEmpty){
+                                enableDisableValue(type, true);
+                              }
                             setState(() {});
                           },
                           child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: getSize(4)),
+                            padding: EdgeInsets.symmetric(vertical: getSize(6)),
                             child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
                                   height: getSize(16),
@@ -246,7 +367,7 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                                 ),
                                 Text(
                                   firstList[index].title,
-                                  style: appTheme.black14RomanTextStyle,
+                                  style: appTheme.black14W300TextStyle,
                                 )
                               ],
                             ),
@@ -260,6 +381,7 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
               secondList != null ? Expanded
                 (
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     ListView.builder(
                       physics: BouncingScrollPhysics(),
@@ -271,11 +393,20 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                           highlightColor: Colors.transparent,
                           onTap: () {
                             secondList[index].isSelected = !secondList[index].isSelected;
+                            if(!secondList[index].isSelected) {
+                              enableDisableValue(type, false);
+                            }
+                            var containFirst = firstList.where((element) => element.isSelected == false);
+                            var containSecond = secondList.where((element) => element.isSelected == false);
+                            if(containFirst.isEmpty && containSecond.isEmpty){
+                              enableDisableValue(type, true);
+                            }
                             setState(() {});
                           },
                           child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: getSize(4)),
+                            padding: EdgeInsets.symmetric(vertical: getSize(6)),
                             child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
                                   height: getSize(16),
@@ -287,7 +418,7 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                                 ),
                                 Text(
                                   secondList[index].title,
-                                  style: appTheme.black14RomanTextStyle,
+                                  style: appTheme.black14W300TextStyle,
                                 )
                               ],
                             ),
@@ -327,32 +458,38 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
   }
 
   getConditionValue(DownloadDataType type) {
-    if(type == DownloadDataType.Images) {
-       return isAllImageSelected;
-    } else if(type == DownloadDataType.Video) {
+    if (type == DownloadDataType.Images) {
+      return isAllImageSelected;
+    } else if (type == DownloadDataType.Video) {
       return isAllVideoSelected;
-    } else if(type == DownloadDataType.Excel) {
+    } else if (type == DownloadDataType.Excel) {
       return isAllExcelSelected;
-    } else if(type == DownloadDataType.Rough) {
+    } else if (type == DownloadDataType.Rough) {
       return isAllRoughSelected;
-    } else if(type == DownloadDataType.Certificate) {
+    } else if (type == DownloadDataType.Certificate) {
       return isAllCertificateSelected;
     }
   }
 
-  void disableValue(DownloadDataType type) {
+  void enableDisableValue(DownloadDataType type, bool value) {
     if(type == DownloadDataType.Images) {
-      isAllImageSelected = false;
+      isAllImageSelected = value;
     } else if(type == DownloadDataType.Video) {
-      isAllVideoSelected = false;
+      isAllVideoSelected = value;
     } else if(type == DownloadDataType.Excel) {
-      isAllExcelSelected = false;
+      isAllExcelSelected = value;
     } else if(type == DownloadDataType.Rough) {
-      isAllRoughSelected = false;
+      isAllRoughSelected = value;
     } else if(type == DownloadDataType.Certificate) {
-      isAllCertificateSelected = false;
+      isAllCertificateSelected = value;
     }
   }
 
+  isShareOrDownload(String title) {
+    if(title == "Share") {
+      return false;
+    }
+
+  }
 
 }

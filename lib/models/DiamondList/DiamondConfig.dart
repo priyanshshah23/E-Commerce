@@ -601,7 +601,7 @@ class DiamondConfig {
       builder: (BuildContext context) {
         return Dialog(
           insetPadding: EdgeInsets.symmetric(
-              horizontal: getSize(20), vertical: getSize(20)),
+              horizontal: getSize(20), vertical: getSize(5)),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(getSize(25)),
           ),
@@ -614,21 +614,78 @@ class DiamondConfig {
   }
 
   actionShare(BuildContext context, List<DiamondModel> list) {
-    showDialog(
+    List<BottomTabModel> shareOption =  List<BottomTabModel>();
+    shareOption.add(BottomTabModel(
+      title: "Gmail",
+      image: diamond,
+    ));
+    shareOption.add(BottomTabModel(
+      title: "Hangout",
+      image: diamond,
+    ));
+    shareOption.add(BottomTabModel(
+      title: "To Drive",
+      image: diamond,
+    ));
+    shareOption.add(BottomTabModel(
+      title: "Facebook",
+      image: diamond,
+    ));
+    shareOption.add(BottomTabModel(
+      title: "WhatsApp",
+      image: diamond,
+    ));
+    showModalBottomSheet(
       context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          insetPadding: EdgeInsets.symmetric(
-              horizontal: getSize(20), vertical: getSize(20)),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(getSize(25)),
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+          borderRadius:
+          BorderRadius.vertical(top: Radius.circular(25.0))),
+      builder: (_) => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(height: getSize(30),),
+          Text(R.string().commonString.share, style: appTheme.black18TextStyle,),
+          SizedBox(height: getSize(18),),
+          Container(
+            child: GridView.count(
+              childAspectRatio: 1.4,
+              shrinkWrap: true,
+              crossAxisCount: 3,
+              children: List.generate(shareOption.length, (index) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                        height: getSize(33),
+                        width : getSize(47),
+                        child: Image.asset(shareOption[index].image)),
+                    SizedBox(height: getSize(10),),
+                    Text(shareOption[index].title, style: appTheme.black16TextStyle,),
+                  ],
+                );
+              },
+              ),
+            ),
           ),
-          child: DownLoadAndShareDialogue(
-            title: R.string().commonString.share,
-          ),
-        );
-      },
+        ],
+      ),
     );
+//    showDialog(
+//      context: context,
+//      builder: (BuildContext context) {
+//        return Dialog(
+//          insetPadding: EdgeInsets.symmetric(
+//              horizontal: getSize(20), vertical: getSize(20)),
+//          shape: RoundedRectangleBorder(
+//            borderRadius: BorderRadius.circular(getSize(25)),
+//          ),
+//          child: DownLoadAndShareDialogue(
+//            title: R.string().commonString.share,
+//          ),
+//        );
+//      },
+//    );
 //    openSharePopUp(context);
   }
 

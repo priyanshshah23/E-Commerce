@@ -2,7 +2,7 @@
     {
         "title": "Basic Details",
         "sequence": 1,
-        "isExpand": false,
+        "isExpand": true,
         "columns": 1,
         "orientation": "h",
         "parameters": [
@@ -108,7 +108,7 @@
     {
         "title": "Measurements",
         "sequence": 2,
-        "isExpand": false,
+        "isExpand": true,
         "columns": 1,
         "orientation": "h",
         "parameters": [
@@ -198,7 +198,7 @@
     {
         "title": "Inclusion Details",
         "sequence": 3,
-        "isExpand": false,
+        "isExpand": true,
         "columns": 1,
         "orientation": "v",
         "parameters": [
@@ -298,7 +298,6 @@
                 "sequence": 1,
                 "isActive": true
             },
-
             {
                 "title": "Heart & Arrow",
                 "apiKey": "hANm",
@@ -323,7 +322,6 @@
                 "sequence": 1,
                 "isActive": true
             },
-
             {
                 "title": "Heart & Arrow",
                 "apiKey": "hANm",
@@ -359,7 +357,7 @@
     {
         "title": "Other",
         "sequence": 4,
-        "isExpand": false,
+        "isExpand": true,
         "columns": 1,
         "orientation": "v",
         "parameters": [
@@ -458,203 +456,241 @@
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
-            },{
+            },
+            {
                 "title": "Keywords",
                 "apiKey": "kToSStr",
                 "sequence": 2,
                 "isActive": true
             }
-
         ]
     }
 ]

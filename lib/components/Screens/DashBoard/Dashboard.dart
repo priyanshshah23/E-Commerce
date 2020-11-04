@@ -536,6 +536,12 @@ class _DashboardState extends StatefulScreenWidgetState {
                     InkWell(
                       onTap: () {
                         //
+                        Map<String, dynamic> dict = new HashMap();
+                        dict[ArgumentConstant.ModuleType] =
+                            DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND;
+                        dict[ArgumentConstant.IsFromDrawer] = false;
+                        NavigationUtilities.pushRoute(DiamondListScreen.route,
+                            args: dict);
                       },
                       child: getViewAll(),
                     ),
@@ -613,7 +619,12 @@ class _DashboardState extends StatefulScreenWidgetState {
                     Spacer(),
                     InkWell(
                       onTap: () {
-                        //
+                        Map<String, dynamic> dict = new HashMap();
+                        dict[ArgumentConstant.ModuleType] =
+                            DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY;
+                        dict[ArgumentConstant.IsFromDrawer] = false;
+                        NavigationUtilities.pushRoute(DiamondListScreen.route,
+                            args: dict);
                       },
                       child: getViewAll(),
                     ),
@@ -1401,7 +1412,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                                       : "",
                                   width: getSize(40),
                                   height: getSize(40),
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.fill,
                                 ),
                               ),
                             ),
