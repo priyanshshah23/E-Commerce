@@ -216,7 +216,7 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                    ),
                  ),
                ),
-             )
+             ),
            ],
          ),
         ],

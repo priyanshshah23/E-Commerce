@@ -8,10 +8,12 @@ import 'package:diamnow/app/constant/ImageConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
+import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CustomBorder.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
+import 'package:diamnow/components/Screens/Auth/Widget/DialogueList.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
@@ -596,6 +598,16 @@ class DiamondConfig {
     BuildContext context,
     List<DiamondModel> list,
   ) {
+    List<SelectionPopupModel> downloadOptionList = List<SelectionPopupModel>();
+    List<SelectionPopupModel>  selectedOptions = List<SelectionPopupModel>();
+    downloadOptionList.add(SelectionPopupModel("1", "Excel",));
+    downloadOptionList.add(SelectionPopupModel("2", "Certificate",));
+    downloadOptionList.add(SelectionPopupModel("3", "Real Image",));
+    downloadOptionList.add(SelectionPopupModel("4", "Plotting Image",));
+    downloadOptionList.add(SelectionPopupModel("5", "Heart & Arrow",));
+    downloadOptionList.add(SelectionPopupModel("6", "Asset Scope",));
+    downloadOptionList.add(SelectionPopupModel("7", "Video",));
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -605,9 +617,20 @@ class DiamondConfig {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(getSize(25)),
           ),
-          child: DownLoadAndShareDialogue(
+          child: SelectionDialogue(
+            isSearchEnable: false,
             title: R.string().commonString.download,
+            isMultiSelectionEnable: true,
+            positiveButtonTitle: R.string().commonString.download,
+            selectionOptions: downloadOptionList,
+            applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
+              selectedOptions = multiSelectedItem;
+              print("length---${selectedOptions.length}");
+            },
           ),
+//          child: DownLoadAndShareDialogue(
+//            title: R.string().commonString.download,
+//          ),
         );
       },
     );
@@ -967,10 +990,10 @@ class DiamondConfig {
       (resp) {
         app.resolve<CustomDialogs>().errorDialog(context, title, resp.message,
             btntitle: R.string().commonString.ok,
-            dismissPopup: false, voidCallBack: () {
-          Navigator.pop(context);
-          placeOrder();
-        });
+            dismissPopup: false,voidCallBack: () {
+               Navigator.pop(context);
+              placeOrder();
+            });
       },
       (onError) {
         if (onError.message != null) {

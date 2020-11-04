@@ -227,7 +227,7 @@ class ScreenTitle {
     this.finalRate = "Final Rate",
     this.finalValue = "Final Value",
     this.orderMsg =
-        "1) The prices mentioned over here are fixed and hence not negotiable. \n2) The Grading, patterns & parameters mentioned on our website beyond GIA's grading is solely our perspective based on examinations conducted by our grading department and we do not hold ourself responsible for any conflicts in this regard.",
+        "1) The prices mentioned over here are fixed and hence not negotiable. \n2) The grading, parameters mentioned on our website beyond GIA's Grading.",
     this.offerMsg =
         "Offered stone will directly be confirmed if the price gets approved so we request you to be sure before offering. Any stone(s) put in Offer list is not kept on hold for you as it is available for other customer's as well.",
     this.note = "Note",

@@ -1034,7 +1034,7 @@ Widget setInvoiceDropDown(
                   hintText: R.string().errorString.selectInvoiceDate,
                   maxLine: 1,
                   prefixWid: getCommonIconWidget(
-                      imageName: company, imageType: IconSizeType.small),
+                      imageName: calender, imageType: IconSizeType.small),
                   keyboardType: TextInputType.text,
                   type: TextFieldType.DropDown,
                   inputController: _dateController,

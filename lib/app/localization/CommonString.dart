@@ -267,6 +267,10 @@ class CommonString {
   final String modify;
   final String delete;
 
+  final String placeOrder;
+
+  final String enterComment;
+
   const CommonString({
     //SavedSearch
     this.modify = "Modify",
@@ -522,5 +526,7 @@ class CommonString {
     this.shape = "Shape",
     this.download = "Download",
     this.share = "Share",
+    this.placeOrder = "Place order",
+    this.enterComment = "Please Enter Comment",
   });
 }

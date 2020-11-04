@@ -15,6 +15,8 @@ class SelectionDialogue extends StatefulWidget {
   String hintText = "Search Item";
   bool isSearchEnable;
   bool isMultiSelectionEnable;
+  String positiveButtonTitle;
+  String negativeButtonTitle;
 
   SelectionDialogue(
       {this.selectionOptions,
@@ -22,11 +24,13 @@ class SelectionDialogue extends StatefulWidget {
       this.hintText,
       this.title,
       this.isSearchEnable = true,
-      this.isMultiSelectionEnable = false,});
+      this.isMultiSelectionEnable = false,
+      this.negativeButtonTitle,
+      this.positiveButtonTitle});
 
   @override
   _SelectionDialogueState createState() =>
-      _SelectionDialogueState(selectionOptions, applyFilterCallBack,hintText,title,isSearchEnable,isMultiSelectionEnable);
+      _SelectionDialogueState(selectionOptions, applyFilterCallBack,hintText,title,isSearchEnable,isMultiSelectionEnable, positiveButtonTitle,negativeButtonTitle);
 }
 
 class _SelectionDialogueState extends State<SelectionDialogue> {
@@ -38,10 +42,11 @@ class _SelectionDialogueState extends State<SelectionDialogue> {
   String hintText = "Search Item";
   bool isSearchEnable;
   bool isMultiSelectionEnable;
-
+  String positiveButtonTitle;
+  String negativeButtonTitle;
 
   _SelectionDialogueState(
-      this.selectionOptions, this.applyFilterCallBack, this.hintText, this.title, this.isSearchEnable,this.isMultiSelectionEnable);
+      this.selectionOptions, this.applyFilterCallBack, this.hintText, this.title, this.isSearchEnable,this.isMultiSelectionEnable, this.positiveButtonTitle, this.negativeButtonTitle);
 
   @override
   void initState() {
@@ -177,7 +182,7 @@ class _SelectionDialogueState extends State<SelectionDialogue> {
                                 borderRadius: BorderRadius.circular(getSize(5)),
                               ),
                               child: Text(
-                                R.string().commonString.cancel,
+                                negativeButtonTitle != null ? negativeButtonTitle : R.string().commonString.cancel,
                                 textAlign: TextAlign.center,
                                 style: appTheme.blue14TextStyle
                                     .copyWith(fontSize: getFontSize(16)),
@@ -211,7 +216,7 @@ class _SelectionDialogueState extends State<SelectionDialogue> {
                                   BorderRadius.circular(getSize(5)),
                                   boxShadow: getBoxShadow(context)),
                               child: Text(
-                                R.string().commonString.btnSubmit,
+                                positiveButtonTitle != null ? positiveButtonTitle : R.string().commonString.btnSubmit,
                                 textAlign: TextAlign.center,
                                 style: appTheme.white16TextStyle,
                               ),

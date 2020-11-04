@@ -12,6 +12,7 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart'
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/FinalCalculation.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/PlaceOrderPopUp.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
@@ -275,16 +276,21 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                 switch (actionType) {
                   case DiamondTrackConstant.TRACK_TYPE_OFFER:
                   case DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER:
-                    if (_formKey.currentState.validate()) {
-                      diamondConfig.actionAll(context, diamondList, actionType,
-                          remark: _commentController.text,
-                          date: selectedDate,
-                          companyName: _nameController.text);
-                    } else {
-                      setState(() {
-                        autovalid = true;
-                      });
-                    }
+                showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                return Dialog(
+                insetPadding: EdgeInsets.symmetric(
+                horizontal: getSize(20), vertical: getSize(20)),
+                shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(getSize(25)),
+                ),
+                child: PlaceOrderPopUp(
+                  diamondConfig: diamondConfig,
+                  diamondList: diamondList,
+                  actionType: actionType,
+                ));
+                });
                     break;
                   default:
                     diamondConfig.actionAll(context, diamondList, actionType);
@@ -338,92 +344,93 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
   getOrderDetail() {
     return actionType != DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER
         ? Container()
-        : Padding(
-            padding: MediaQuery.of(context).viewInsets,
-            child: SingleChildScrollView(
-              child: Form(
-                key: _formKey,
-                autovalidate: autovalid,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: getSize(20)),
-                      child: CommonTextfield(
-                        autoFocus: false,
-                        textOption: TextFieldOption(
-                          prefixWid: getCommonIconWidget(
-                              imageName: company,
-                              imageType: IconSizeType.small),
-                          hintText: R.string().authStrings.companyName,
-                          maxLine: 1,
-                          inputController: _nameController,
-                          formatter: [
-                            WhitelistingTextInputFormatter(
-                                new RegExp(alphaRegEx)),
-                            BlacklistingTextInputFormatter(
-                                RegExp(RegexForEmoji))
-                          ],
-                          //isSecureTextField: false
-                        ),
-                        validation: (text) {
-                          if (text.isEmpty) {
-                            return R.string().authStrings.enterCompanyName;
-                          }
-                        },
-                        textCallback: (text) {},
-                        inputAction: TextInputAction.next,
-                        onNextPress: () {
-                          FocusScope.of(context).unfocus();
-                        },
-                      ),
-                    ),
-                    Container(
-                      height: getSize(8),
-                    ),
-                    setInvoiceDropDown(context, _dateController, invoiceList,
-                        (value) {
-                      selectedDate = value;
-                      _dateController.text = value;
-                    }),
-                    Container(
-                      height: getSize(8),
-                    ),
-                    getCommentTextField(),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: getSize(20),
-                        right: getSize(20),
-                        bottom: getSize(5),
-                        top: getSize(8),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              R.string().screenTitle.note +
-                                  " : " +
-                                  R.string().screenTitle.orderMsg,
-                              style: appTheme.error12TextStyle,
-                            ),
-                          ),
-                          // Expanded(
-                          //   child: Text(
-                          //     R.string().screenTitle.orderMsg,
-                          //     style: appTheme.error12TextStyle,
-                          //   ),
-                          // ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
+        : Container();
+//        : Padding(
+//            padding: MediaQuery.of(context).viewInsets,
+//            child: SingleChildScrollView(
+//              child: Form(
+//                key: _formKey,
+//                autovalidate: autovalid,
+//                child: Column(
+//                  mainAxisSize: MainAxisSize.min,
+//                  crossAxisAlignment: CrossAxisAlignment.start,
+//                  children: <Widget>[
+//                    Padding(
+//                      padding: EdgeInsets.symmetric(horizontal: getSize(20)),
+//                      child: CommonTextfield(
+//                        autoFocus: false,
+//                        textOption: TextFieldOption(
+//                          prefixWid: getCommonIconWidget(
+//                              imageName: company,
+//                              imageType: IconSizeType.small),
+//                          hintText: R.string().authStrings.companyName,
+//                          maxLine: 1,
+//                          inputController: _nameController,
+//                          formatter: [
+//                            WhitelistingTextInputFormatter(
+//                                new RegExp(alphaRegEx)),
+//                            BlacklistingTextInputFormatter(
+//                                RegExp(RegexForEmoji))
+//                          ],
+//                          //isSecureTextField: false
+//                        ),
+//                        validation: (text) {
+//                          if (text.isEmpty) {
+//                            return R.string().authStrings.enterCompanyName;
+//                          }
+//                        },
+//                        textCallback: (text) {},
+//                        inputAction: TextInputAction.next,
+//                        onNextPress: () {
+//                          FocusScope.of(context).unfocus();
+//                        },
+//                      ),
+//                    ),
+//                    Container(
+//                      height: getSize(8),
+//                    ),
+//                    setInvoiceDropDown(context, _dateController, invoiceList,
+//                        (value) {
+//                      selectedDate = value;
+//                      _dateController.text = value;
+//                    }),
+//                    Container(
+//                      height: getSize(8),
+//                    ),
+//                    getCommentTextField(),
+//                    Padding(
+//                      padding: EdgeInsets.only(
+//                        left: getSize(20),
+//                        right: getSize(20),
+//                        bottom: getSize(5),
+//                        top: getSize(8),
+//                      ),
+//                      child: Row(
+//                        mainAxisAlignment: MainAxisAlignment.start,
+//                        crossAxisAlignment: CrossAxisAlignment.start,
+//                        children: [
+//                          Expanded(
+//                            child: Text(
+//                              R.string().screenTitle.note +
+//                                  " : " +
+//                                  R.string().screenTitle.orderMsg,
+//                              style: appTheme.error12TextStyle,
+//                            ),
+//                          ),
+//                          // Expanded(
+//                          //   child: Text(
+//                          //     R.string().screenTitle.orderMsg,
+//                          //     style: appTheme.error12TextStyle,
+//                          //   ),
+//                          // ),
+//                        ],
+//                      ),
+//                    ),
+//                  ],
+//                ),
+//              ),
+//            ),
+//          );
   }
 
   openDatePicker() {
