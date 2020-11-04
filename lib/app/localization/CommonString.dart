@@ -266,6 +266,7 @@ class CommonString {
   //SavedSearch
   final String modify;
   final String delete;
+  final String deleteItem;
 
   final String placeOrder;
 
@@ -528,5 +529,6 @@ class CommonString {
     this.share = "Share",
     this.placeOrder = "Place order",
     this.enterComment = "Please Enter Comment",
+    this.deleteItem = "Are you sure you want to delete?",
   });
 }

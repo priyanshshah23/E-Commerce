@@ -26,6 +26,7 @@ import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
+import 'package:diamnow/components/Screens/Version/VersionUpdate.dart';
 import 'package:flutter/material.dart';
 
 import 'fade_route.dart';
@@ -172,6 +173,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       break;
     case DiamondActionScreen.route:
       screen = DiamondActionScreen(arguments);
+      break;
+    case VersionUpdate.route:
+      screen = VersionUpdate(arguments);
       break;
     case ChangePassword.route:
       screen = ChangePassword();

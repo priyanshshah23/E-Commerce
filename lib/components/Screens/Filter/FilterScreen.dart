@@ -350,7 +350,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: getSize(16)),
+                  padding: EdgeInsets.only(top: getSize(8)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -365,7 +365,6 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 // isNullEmptyOrFalse(arrTab) ? SizedBox() : _segmentedControl(),
                 Expanded(
                   child: Container(
-                    margin: EdgeInsets.only(top: getSize(16)),
                     color: Colors.transparent,
                     child: isNullEmptyOrFalse(arrList)
                         ? SizedBox()
@@ -448,6 +447,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             borderRadius: BorderRadius.circular(getSize(25)),
           ),
           child: AddDemand(
+            title: R.string().commonString.addDemand,
               arrList: arrList,
               applyCallBack: ({String selectedDate, String diamondTitle}) {
                 callApiForAddDemand(selectedDate, diamondTitle);
