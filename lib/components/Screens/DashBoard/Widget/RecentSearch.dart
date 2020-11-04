@@ -24,59 +24,65 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
   Widget build(BuildContext context) {
     return isNullEmptyOrFalse(widget.recentSearch)
         ? SizedBox()
-        :  Padding(
-      padding: EdgeInsets.only(
-        top: getSize(20),
-        left: getSize(Spacing.leftPadding),
-        right: getSize(Spacing.rightPadding),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              getTitleText(R.string().screenTitle.recentSearch),
-              Spacer(),
-              InkWell(
-                onTap: () {
-                  //
-                },
-                child: getViewAll(),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: getSize(20),
-          ),
-          Container(
-              height: getSize(150),
-              child: GridView.count(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                crossAxisCount: 1,
-                childAspectRatio: 0.7,
-                children: List.generate( widget.recentSearch.length, (index) {
-                  return InkWell(
+        : Padding(
+            padding: EdgeInsets.only(
+              top: getSize(20),
+              left: getSize(Spacing.leftPadding),
+              right: getSize(Spacing.rightPadding),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    getTitleText(R.string().screenTitle.recentSearch),
+                    Spacer(),
+                    InkWell(
                       onTap: () {
-//                      moveToDetail();
                         Map<String, dynamic> dict = new HashMap();
                         dict[ArgumentConstant.ModuleType] =
-                            DiamondModuleConstant
-                                .MODULE_TYPE_RECENT_SEARCH;
+                            DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH;
                         dict[ArgumentConstant.IsFromDrawer] = false;
-                        dict["filterId"] = widget.recentSearch[index].id;
-                        NavigationUtilities.pushRoute(
-                            DiamondListScreen.route,
+                        NavigationUtilities.pushRoute(SavedSearchScreen.route,
                             args: dict);
                       },
-                      child: getRecentItem(widget.recentSearch[index]));
-                },
+                      child: getViewAll(),
+                    ),
+                  ],
                 ),
-              ),
-          )
-        ],
-      ),
-    );
+                SizedBox(
+                  height: getSize(20),
+                ),
+                Container(
+                  height: getSize(150),
+                  child: GridView.count(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    crossAxisCount: 1,
+                    childAspectRatio: 0.7,
+                    children: List.generate(
+                      widget.recentSearch.length,
+                      (index) {
+                        return InkWell(
+                            onTap: () {
+                              Map<String, dynamic> dict = new HashMap();
+                              dict[ArgumentConstant.ModuleType] =
+                                  DiamondModuleConstant
+                                      .MODULE_TYPE_RECENT_SEARCH;
+                              dict[ArgumentConstant.IsFromDrawer] = false;
+                              dict["filterId"] = widget.recentSearch[index].id;
+                              NavigationUtilities.pushRoute(
+                                  DiamondListScreen.route,
+                                  args: dict);
+                            },
+                            child: getRecentItem(widget.recentSearch[index]));
+                      },
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
   }
 
   getRecentItem(SavedSearchModel recentSearch) {
@@ -87,7 +93,8 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
           EdgeInsets.symmetric(vertical: getSize(10), horizontal: getSize(14)),
       decoration: BoxDecoration(
         color: appTheme.whiteColor,
-        border: Border.all(color: appTheme.textGreyColor),
+        borderRadius: BorderRadius.circular(getSize(5)),
+        border: Border.all(color: appTheme.borderColor),
       ),
       child: IntrinsicWidth(
         child: Column(

@@ -30,26 +30,24 @@ class DiamondDetailUIAPIKeys {
   static const String hANm = "hANm";
   static const String comments = "comments";
   static const String kToSStr = "kToSStr";
-
 }
 
 class DiamondDetailUIModel {
   String title;
   int sequence;
   List<DiamondDetailUIComponentModel> parameters;
-  bool isExpand = false;
+  bool isExpand;
   int columns;
   String orientation;
-  
 
-  DiamondDetailUIModel(
-      {this.title,
-      this.parameters,
-      this.sequence,
-      this.isExpand,
-      this.columns,
-      this.orientation,
-      });
+  DiamondDetailUIModel({
+    this.title,
+    this.parameters,
+    this.sequence,
+    this.isExpand = true,
+    this.columns,
+    this.orientation,
+  });
 
   DiamondDetailUIModel.fromJson(Map<String, dynamic> json) {
     title = json['title'];
