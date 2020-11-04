@@ -74,6 +74,9 @@ class BaseTheme {
   Color get drawerTitleColor => fromHex("#EEF1FC");
   Color get lightColorPrimary => fromHex("#EEF1FC");
   Color get redColor => fromHex("#FF4D4D");
+  Color get whatsAppColor => fromHex("#55CD6C");
+  Color get gmailColor => fromHex("#DB4436");
+  Color get skypeColor => fromHex("#03A9F4");
 
   Color get shadowColorWithoutOpacity => fromHex("#7D9EF6").withOpacity(0.1);
   Color get shadowColor => shadowColorWithoutOpacity.withOpacity(0.1);
@@ -312,18 +315,18 @@ class BaseTheme {
         fontWeight: FontWeight.normal);
   }
 
-  TextStyle get black16RomanTextStyle {
+  TextStyle get black16MediumTextStyle {
     return TextStyle(
         fontSize: getFontSize(16),
         color: textColor,
         fontWeight: FontWeight.w500);
   }
 
-  TextStyle get black14RomanTextStyle {
+  TextStyle get black14W300TextStyle {
     return TextStyle(
         fontSize: getFontSize(14),
         color: textColor,
-        fontWeight: FontWeight.w500);
+        fontWeight: FontWeight.w300);
   }
 
   TextStyle get grey16HintTextStyle {
