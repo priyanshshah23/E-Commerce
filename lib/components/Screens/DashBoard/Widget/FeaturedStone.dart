@@ -60,7 +60,7 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
               crossAxisCount: 2,
 //              childAspectRatio: 0.36,
               // without Price
-              childAspectRatio: 0.272,
+              childAspectRatio: 0.268,
               // with Price
               mainAxisSpacing: 15,
               children: List.generate(
@@ -146,34 +146,46 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
                         Row(
                           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              width: MathUtilities.screenWidth(context) / 8.5,
-                              child: getText(model.vStnId,
-                                  style: appTheme.black12TextStyle),
+                            Expanded(
+                              flex: 3,
+                              child: Container(
+                                width: MathUtilities.screenWidth(context) / 8.5,
+                                child: getText(model.vStnId,
+                                    style: appTheme.black12TextStyle),
+                              ),
                             ),
                             SizedBox(
                               width: getSize(3),
                             ),
-                            Container(
-                              width: MathUtilities.screenWidth(context) / 10,
-                              child: getText(model.shpNm,
-                                  style: appTheme.black12TextStyleMedium),
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                width: MathUtilities.screenWidth(context) / 10,
+                                child: getText(model.shpNm,
+                                    style: appTheme.black12TextStyleMedium),
+                              ),
                             ),
                             SizedBox(
                               width: getSize(3),
                             ),
-                            Container(
-                              width: MathUtilities.screenWidth(context) / 4.5,
-                              child: getText("${model.crt} \n Carat",
-                                  style: appTheme.primaryColor14TextStyle),
+                            Expanded(
+                              flex: 3,
+                              child: Container(
+                                width: MathUtilities.screenWidth(context) / 4.5,
+                                child: getText("${model.crt} Carat",
+                                    style: appTheme.primaryColor14TextStyle),
+                              ),
                             ),
                             SizedBox(
                               width: getSize(3),
                             ),
-                            Container(
-                              width: MathUtilities.screenWidth(context) / 9,
-                              child:  getText(PriceUtilities.getPercent(model.back),
-                                  style: appTheme.blue12TextStyle),
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                width: MathUtilities.screenWidth(context) / 9,
+                                child:  getText(PriceUtilities.getPercent(model.back),
+                                    style: appTheme.blue12TextStyle),
+                              ),
                             ),
                           ],
                         ),
@@ -183,29 +195,42 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
                         Row(
 //                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              width: MathUtilities.screenWidth(context) / 8.5,
-                              child: getText(model.colNm, style: appTheme.black12TextStyle),
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                width: MathUtilities.screenWidth(context) / 8.5,
+                                child: getText(model.colNm, style: appTheme.black12TextStyle),
+                              ),
                             ),
                             SizedBox(
                               width: getSize(3),
                             ),
-                            Container(
-                              width: MathUtilities.screenWidth(context) / 10,
-                              child:getText(model.clrNm, style: appTheme.black12TextStyle),
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                width: MathUtilities.screenWidth(context) / 10,
+                                child:getText(model.clrNm, style: appTheme.black12TextStyle),
+                              ),
                             ),
                             SizedBox(
                               width: getSize(3),
                             ),
-                            Container(
-                              width: MathUtilities.screenWidth(context) / 4.5,
-                              child: getColorClarityLab(model),
+                            Expanded(
+                              flex: 4,
+                              child: Container(
+                                alignment: Alignment.center,
+                                width: MathUtilities.screenWidth(context) / 4.5,
+                                child: getColorClarityLab(model),
+                              ),
                             ),
-                            Container(
-                              padding: EdgeInsets.only(right: getSize(3)),
-                              alignment: Alignment.centerRight,
-                              width: MathUtilities.screenWidth(context) / 9,
-                              child:  getText(model.lbNm, style: appTheme.black12TextStyle),
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                padding: EdgeInsets.only(right: getSize(3)),
+                                alignment: Alignment.centerRight,
+                                width: MathUtilities.screenWidth(context) / 9,
+                                child:  getText(model.lbNm, style: appTheme.black12TextStyle),
+                              ),
                             ),
                           ],
                         ),
@@ -262,12 +287,12 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
           model.colNm ?? "",
           style: appTheme.black12TextStyle,
         ),
-        Spacer(),
+        getDot(),
         getText(
           model.clrNm ?? "",
           style: appTheme.black12TextStyle,
         ),
-        Spacer(),
+        getDot(),
         getText(
           model.lbNm ?? "",
           style: appTheme.black12TextStyle,

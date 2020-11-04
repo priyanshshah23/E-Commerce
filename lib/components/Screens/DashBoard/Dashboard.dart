@@ -508,71 +508,70 @@ class _DashboardState extends StatefulScreenWidgetState {
               .featuredStone
               .where((element) => element.type == DashboardConstants.best)
               .toList();
-
           if (!isNullEmptyOrFalse(filter)) {
             arrStones = filter.first.featuredPair;
           }
         }
       }
     }
-    // return FeaturedStoneWidget(
-    //   diamondList: arrStones,
-    // );
-    return isNullEmptyOrFalse(arrStones)
-        ? SizedBox()
-        : Padding(
-            padding: EdgeInsets.only(
-              top: getSize(20),
-              left: getSize(Spacing.leftPadding),
-              right: getSize(Spacing.rightPadding),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    getTitleText(R.string().screenTitle.featuredStones),
-                    Spacer(),
-                    InkWell(
-                      onTap: () {
-                        //
-                        Map<String, dynamic> dict = new HashMap();
-                        dict[ArgumentConstant.ModuleType] =
-                            DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND;
-                        dict[ArgumentConstant.IsFromDrawer] = false;
-                        NavigationUtilities.pushRoute(DiamondListScreen.route,
-                            args: dict);
-                      },
-                      child: getViewAll(),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: getSize(20),
-                ),
-                Container(
-                  height: getSize(200),
-                  child: GridView.count(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.36,
-                    // without Price
-                    // childAspectRatio: 0.327, // with Price
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
-                    children: List.generate(arrStones.length, (index) {
-                      return InkWell(
-                          onTap: () {
-                            moveToDetail(arrStones[index]);
-                          },
-                          child: getRecentItem(arrStones[index]));
-                    }),
-                  ),
-                )
-              ],
-            ),
-          );
+     return FeaturedStoneWidget(
+       diamondList: arrStones,
+     );
+//    return isNullEmptyOrFalse(arrStones)
+//        ? SizedBox()
+//        : Padding(
+//            padding: EdgeInsets.only(
+//              top: getSize(20),
+//              left: getSize(Spacing.leftPadding),
+//              right: getSize(Spacing.rightPadding),
+//            ),
+//            child: Column(
+//              crossAxisAlignment: CrossAxisAlignment.start,
+//              children: [
+//                Row(
+//                  children: [
+//                    getTitleText(R.string().screenTitle.featuredStones),
+//                    Spacer(),
+//                    InkWell(
+//                      onTap: () {
+//                        //
+//                        Map<String, dynamic> dict = new HashMap();
+//                        dict[ArgumentConstant.ModuleType] =
+//                            DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND;
+//                        dict[ArgumentConstant.IsFromDrawer] = false;
+//                        NavigationUtilities.pushRoute(DiamondListScreen.route,
+//                            args: dict);
+//                      },
+//                      child: getViewAll(),
+//                    ),
+//                  ],
+//                ),
+//                SizedBox(
+//                  height: getSize(20),
+//                ),
+//                Container(
+//                  height: getSize(200),
+//                  child: GridView.count(
+//                    scrollDirection: Axis.horizontal,
+//                    shrinkWrap: true,
+//                    crossAxisCount: 2,
+//                    childAspectRatio: 0.36,
+//                    // without Price
+//                    // childAspectRatio: 0.327, // with Price
+//                    mainAxisSpacing: 10,
+//                    crossAxisSpacing: 10,
+//                    children: List.generate(arrStones.length, (index) {
+//                      return InkWell(
+//                          onTap: () {
+//                            moveToDetail(arrStones[index]);
+//                          },
+//                          child: getRecentItem(arrStones[index]));
+//                    }),
+//                  ),
+//                )
+//              ],
+//            ),
+//          );
   }
 
   getStoneOfDaySection() {
@@ -598,59 +597,59 @@ class _DashboardState extends StatefulScreenWidgetState {
       }
     }
 
-    // return StoneOfDayWidget(
-    //   stoneList: arrStones,
-    // );
-    return isNullEmptyOrFalse(arrStones)
-        ? SizedBox()
-        : Padding(
-            padding: EdgeInsets.only(
-              top: getSize(20),
-              left: getSize(Spacing.leftPadding),
-              right: getSize(Spacing.rightPadding),
-            ),
-            child: Column(
-              // mainAxisAlignment: mainaxisal,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    getTitleText(R.string().screenTitle.stoneOfDay),
-                    Spacer(),
-                    InkWell(
-                      onTap: () {
-                        Map<String, dynamic> dict = new HashMap();
-                        dict[ArgumentConstant.ModuleType] =
-                            DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY;
-                        dict[ArgumentConstant.IsFromDrawer] = false;
-                        NavigationUtilities.pushRoute(DiamondListScreen.route,
-                            args: dict);
-                      },
-                      child: getViewAll(),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: getSize(20),
-                ),
-                Container(
-                  height: getSize(245),
-                  child: ListView.builder(
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          moveToDetail(arrStones[index]);
-                        },
-                        child: getStoneOfDayItem(arrStones[index]),
-                      );
-                    },
-                    itemCount: arrStones.length,
-                    scrollDirection: Axis.horizontal,
-                  ),
-                )
-              ],
-            ),
-          );
+     return StoneOfDayWidget(
+       stoneList: arrStones,
+     );
+//    return isNullEmptyOrFalse(arrStones)
+//        ? SizedBox()
+//        : Padding(
+//            padding: EdgeInsets.only(
+//              top: getSize(20),
+//              left: getSize(Spacing.leftPadding),
+//              right: getSize(Spacing.rightPadding),
+//            ),
+//            child: Column(
+//              // mainAxisAlignment: mainaxisal,
+//              crossAxisAlignment: CrossAxisAlignment.start,
+//              children: [
+//                Row(
+//                  children: [
+//                    getTitleText(R.string().screenTitle.stoneOfDay),
+//                    Spacer(),
+//                    InkWell(
+//                      onTap: () {
+//                        Map<String, dynamic> dict = new HashMap();
+//                        dict[ArgumentConstant.ModuleType] =
+//                            DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY;
+//                        dict[ArgumentConstant.IsFromDrawer] = false;
+//                        NavigationUtilities.pushRoute(DiamondListScreen.route,
+//                            args: dict);
+//                      },
+//                      child: getViewAll(),
+//                    ),
+//                  ],
+//                ),
+//                SizedBox(
+//                  height: getSize(20),
+//                ),
+//                Container(
+//                  height: getSize(245),
+//                  child: ListView.builder(
+//                    itemBuilder: (context, index) {
+//                      return InkWell(
+//                        onTap: () {
+//                          moveToDetail(arrStones[index]);
+//                        },
+//                        child: getStoneOfDayItem(arrStones[index]),
+//                      );
+//                    },
+//                    itemCount: arrStones.length,
+//                    scrollDirection: Axis.horizontal,
+//                  ),
+//                )
+//              ],
+//            ),
+//          );
   }
 
   getStoneOfDayItem(DiamondModel model) {
