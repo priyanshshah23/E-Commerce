@@ -7,6 +7,7 @@ import 'package:diamnow/app/utils/CommonWidgets.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
+import 'package:diamnow/components/Screens/Filter/Widget/AddDemand.dart';
 import 'package:diamnow/models/Slot/SlotModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,6 +23,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
   DateTime now = DateTime.now();
   List<DateModel> days;
   DateTime pickedDate;
+  String pd;
   int selectedDate = -1;
   int selectedSlot = 0;
   int selectedVirtualType = -1;
@@ -270,17 +272,40 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
           ),
           InkWell(
             onTap: () {
-              DateUtilities().pickDateDialog(context).then((value) {
-                pickedDate = value;
-                days.forEach((element) {
-                  if (value.day == element.date.day) {
-                    element.isSelected = true;
-                  } else {
-                    element.isSelected = false;
-                  }
-                });
-                setState(() {});
-              });
+              showDialog(
+                context: context,
+                barrierDismissible: true,
+                builder: (BuildContext context) {
+                  return Dialog(
+                    insetPadding: EdgeInsets.symmetric(
+                        horizontal: getSize(20), vertical: getSize(20)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(getSize(25)),
+                    ),
+                    child: AddDemand(
+                        title: "OfferView",
+                        isShowTextField: false,
+                        applyCallBack: (
+                            {String selectedDate, String diamondTitle}) {
+                          // pd = DateUtilities().getDateFromString(selectedDate);
+                          pd = selectedDate;
+                          setState(() {});
+                        }),
+                  );
+                },
+              );
+
+              // DateUtilities().pickDateDialog(context).then((value) {
+              //   pickedDate = value;
+              //   days.forEach((element) {
+              //     if (value.day == element.date.day) {
+              //       element.isSelected = true;
+              //     } else {
+              //       element.isSelected = false;
+              //     }
+              //   });
+              //   setState(() {});
+              // });
             },
             child: Container(
               width: getSize(175),
@@ -292,11 +317,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    pickedDate != null
-                        ? DateUtilities().convertServerDateToFormatterString(
-                            pickedDate.toString(),
-                            formatter: DateUtilities.dd_mm_yyyy_)
-                        : R.string().screenTitle.selectCustomDate,
+                    pd != null ? pd : R.string().screenTitle.selectCustomDate,
                     style: appTheme.black16TextStyle,
                   ),
                   Image.asset(

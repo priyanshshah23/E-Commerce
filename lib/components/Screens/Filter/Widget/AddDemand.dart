@@ -18,23 +18,28 @@ import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class AddDemand extends StatefulWidget {
+  String title;
   List<FormBaseModel> arrList;
   Function({String selectedDate, String diamondTitle}) applyCallBack;
+  bool isShowTextField ;
   AddDemand({
+    this.title,
     this.arrList,
     this.applyCallBack,
+    this.isShowTextField = true,
   });
 
   @override
   _AddDemandState createState() =>
-      _AddDemandState(applyCallBack: this.applyCallBack);
+      _AddDemandState(applyCallBack: this.applyCallBack,title: this.title);
 }
 
 class _AddDemandState extends State<AddDemand> {
   List<FormBaseModel> arrList;
   Function({String selectedDate, String diamondTitle}) applyCallBack;
-  _AddDemandState({this.arrList, this.applyCallBack});
-
+  _AddDemandState({this.arrList, this.applyCallBack,this.title});
+  
+  String title;
   String _selectedDate;
   String diamondTitle;
   final TextEditingController _diamondTitleTextField = TextEditingController();
@@ -58,18 +63,20 @@ class _AddDemandState extends State<AddDemand> {
             Padding(
               padding: EdgeInsets.only(bottom: getSize(20)),
               child: Text(
-                R.string().commonString.addDemand,
+                widget.title ?? "",
                 style: appTheme.blackSemiBold18TitleColorblack,
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(bottom: getSize(20)),
-              child: Form(
-                key: _formKey,
-                autovalidate: _autoValidate,
-                child: getDiamondTitleTextField(),
-              ),
-            ),
+            widget.isShowTextField
+                ? Padding(
+                    padding: EdgeInsets.only(bottom: getSize(20)),
+                    child: Form(
+                      key: _formKey,
+                      autovalidate: _autoValidate,
+                      child: getDiamondTitleTextField(),
+                    ),
+                  )
+                : SizedBox(),
             getDateRangePicker(),
             Padding(
               padding: EdgeInsets.only(top: getSize(20), bottom: getSize(20)),
@@ -105,19 +112,28 @@ class _AddDemandState extends State<AddDemand> {
                       child: AppButton.flat(
                         onTap: () {
                           FocusScope.of(context).unfocus();
-                          if (_formKey.currentState.validate()) {
-                            diamondTitle = _diamondTitleTextField.text ?? "";
+                          if (widget.isShowTextField) {
+                            if (_formKey.currentState.validate()) {
+                              diamondTitle = _diamondTitleTextField.text ?? "";
 
-                            print(_selectedDate);
-                            print(_diamondTitleTextField.text);
-                            // callApiForAddDemand();
-                            _diamondTitleTextField.text = "";
-                            Navigator.pop(context);
-                            widget.applyCallBack(
-                                selectedDate: _selectedDate,
-                                diamondTitle: diamondTitle);
+                              print(_selectedDate);
+                              print(_diamondTitleTextField.text);
+                              // callApiForAddDemand();
+                              _diamondTitleTextField.text = "";
+                              Navigator.pop(context);
+                              widget.applyCallBack(
+                                  selectedDate: _selectedDate,
+                                  diamondTitle: diamondTitle);
+                            } else {
+                              _autoValidate = true;
+                            }
                           } else {
-                            _autoValidate = true;
+                           
+                            widget.applyCallBack(
+                              selectedDate: _selectedDate,
+              
+                            );
+                             Navigator.pop(context);
                           }
                         },
                         borderRadius: getSize(5),
