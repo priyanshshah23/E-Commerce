@@ -476,13 +476,18 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
 
   List<Widget> getToolbarItem() {
     List<Widget> list = [];
-    diamondConfig.toolbarList.forEach((element) {
+    for (int i = 0; i < diamondConfig.toolbarList.length; i++) {
+      var element = diamondConfig.toolbarList[i];
       list.add(GestureDetector(
         onTap: () {
           manageToolbarClick(element);
         },
         child: Padding(
-          padding: EdgeInsets.all(getSize(8.0)),
+          padding: EdgeInsets.only(
+              right: i == diamondConfig.toolbarList.length - 1
+                  ? getSize(Spacing.rightPadding)
+                  : getSize(8),
+              left: getSize(8.0)),
           child: Image.asset(
             element.image,
             height: getSize(20),
@@ -490,7 +495,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           ),
         ),
       ));
-    });
+    }
     return list;
   }
 

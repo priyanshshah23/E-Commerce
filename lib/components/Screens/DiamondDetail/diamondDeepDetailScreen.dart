@@ -246,13 +246,18 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
 
   List<Widget> getToolbarItem() {
     List<Widget> list = [];
-    diamondConfig.toolbarList.forEach((element) {
+    for (int i = 0; i < diamondConfig.toolbarList.length; i++) {
+      var element = diamondConfig.toolbarList[i];
       list.add(GestureDetector(
         onTap: () {
           manageToolbarClick(element);
         },
         child: Padding(
-          padding: EdgeInsets.all(getSize(8.0)),
+          padding: EdgeInsets.only(
+              right: i == diamondConfig.toolbarList.length - 1
+                  ? getSize(Spacing.rightPadding)
+                  : getSize(8),
+              left: getSize(8.0)),
           child: Image.asset(
             element.image,
             height: getSize(20),
@@ -260,7 +265,7 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
           ),
         ),
       ));
-    });
+    }
     return list;
   }
 
@@ -329,7 +334,6 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
   ) async {
     // if (!model.isImage) print(model.url);
     return WebView(
-        
         initialUrl: model.url,
         onPageStarted: (url) {
           // app.resolve<CustomDialogs>().showProgressDialog(context, "");

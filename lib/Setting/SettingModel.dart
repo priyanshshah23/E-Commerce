@@ -65,19 +65,19 @@ class DrawerSetting {
         countBackgroundColor: fromHex("#288F5A"),
         count: 25,
       ));
-    if (app
-        .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_auction)
-        .view)
-      drawerList.add(DrawerModel(
-        image: diamondOnAuction,
-        title: R.string().screenTitle.diamondOnAuction,
-        isSelected: false,
-        type: DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION,
-        isShowCount: true,
-        countBackgroundColor: fromHex("#9C2AC4"),
-        count: 50,
-      ));
+    // if (app
+    //     .resolve<PrefUtils>()
+    //     .getModulePermission(ModulePermissionConstant.permission_auction)
+    //     .view)
+    //   drawerList.add(DrawerModel(
+    //     image: diamondOnAuction,
+    //     title: R.string().screenTitle.diamondOnAuction,
+    //     isSelected: false,
+    //     type: DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION,
+    //     isShowCount: true,
+    //     countBackgroundColor: fromHex("#9C2AC4"),
+    //     count: 50,
+    //   ));
     if (app
         .resolve<PrefUtils>()
         .getModulePermission(

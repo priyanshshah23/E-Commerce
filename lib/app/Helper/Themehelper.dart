@@ -15,6 +15,7 @@ class ThemeHelper {
   static Map<String, BaseTheme> _supportedThemes = {
     "white": BaseTheme(),
     "dark": DarkTheme(),
+    "pnShah": PnShahTheme(),
   };
 
   static BaseTheme _getDefaultTheme() {
@@ -42,6 +43,11 @@ class ThemeHelper {
 class DarkTheme extends BaseTheme {
   @override
   Color get colorPrimary => Colors.pink;
+}
+
+class PnShahTheme extends BaseTheme {
+  @override
+  Color get colorPrimary => Colors.green;
 }
 
 class BaseTheme {

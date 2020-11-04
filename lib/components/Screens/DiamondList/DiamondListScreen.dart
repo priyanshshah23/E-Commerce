@@ -497,7 +497,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         child: Padding(
           padding: EdgeInsets.only(
               right: i == diamondConfig.toolbarList.length - 1
-                  ? getSize(20)
+                  ? getSize(Spacing.rightPadding)
                   : getSize(8),
               left: getSize(8.0)),
           child: Image.asset(

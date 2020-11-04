@@ -97,10 +97,14 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
       diamondConfig = DiamondConfig(moduleType);
     }
 
+    manageDiamondCalculation();
+    diamondConfig.initItems();
+  }
+
+  manageDiamondCalculation() {
     diamondFinalCalculation.setAverageCalculation(diamondList,
         isFinalCalculation: true);
     diamondCalculation.setAverageCalculation(diamondList);
-    diamondConfig.initItems();
   }
 
   @override
@@ -187,6 +191,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
             diamondList.forEach((element) {
               element.isSelected = isAllSelected;
             });
+            manageDiamondCalculation();
           });
         },
         child: Padding(
@@ -494,11 +499,24 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
   }
 
   Widget getBottomTabForFinalCalculation() {
+    bool isVisible = false;
+    if (!isNullEmptyOrFalse(diamondList)) {
+      isVisible =
+          diamondList.where((element) => element.isSelected).toList().length >
+              0;
+    }
     return isNullEmptyOrFalse(this.diamondList) == false
         ? Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              FinalCalculationWidget(diamondList, diamondFinalCalculation),
+              AnimatedOpacity(
+                // If the widget is visible, animate to 0.0 (invisible).
+                // If the widget is hidden, animate to 1.0 (fully visible).
+                opacity: isVisible ? 1.0 : 0.0,
+                duration: Duration(milliseconds: 500),
+                child: FinalCalculationWidget(
+                    diamondList, diamondFinalCalculation),
+              ),
               BottomTabbarWidget(
                 arrBottomTab: diamondConfig.arrBottomTab,
                 onClickCallback: (obj) {
@@ -515,8 +533,14 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
     List<DiamondModel> selectedList =
         diamondList.where((element) => element.isSelected).toList();
     if (selectedList != null && selectedList.length > 0) {
-      diamondConfig.manageDiamondAction(
-          context, selectedList, bottomTabModel, () {});
+      if (bottomTabModel.type == ActionMenuConstant.ACTION_TYPE_CANCEL_STONE) {
+        print(bottomTabModel.type);
+      } else {
+        diamondConfig.manageDiamondAction(context, selectedList, bottomTabModel,
+            () {
+          print(bottomTabModel.type);
+        });
+      }
     } else {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
