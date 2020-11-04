@@ -51,7 +51,7 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
   Widget build(BuildContext context) {
     return Padding(
       padding:
-          EdgeInsets.symmetric(horizontal: getSize(20), vertical: getSize(20)),
+          EdgeInsets.symmetric(horizontal: getSize(20), vertical: getSize(15)),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -103,7 +103,7 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                    Navigator.pop(context);
                  },
                  child: Container(
-                   height: getSize(50),
+                   height: getSize(40),
                     alignment: Alignment.center,
                    decoration: BoxDecoration(
                      color: appTheme.colorPrimary.withOpacity(0.1),
@@ -127,7 +127,7 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                    Navigator.pop(context);
                  },
                  child: Container(
-                   height: getSize(50),
+                   height: getSize(40),
                    alignment: Alignment.center,
                    decoration: BoxDecoration(
                        color: appTheme.colorPrimary,
