@@ -263,11 +263,15 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                 )
                               : SizedBox(),
                           widget.searchType == SavedSearchType.savedSearch
-                          ? Divider(color: appTheme.dividerColor,) : SizedBox(),
-                          widget.searchType == SavedSearchType.savedSearch ?
-                          SizedBox(
-                            height: getSize(6),
-                          ) : SizedBox(),
+                              ? Divider(
+                                  color: appTheme.dividerColor,
+                                )
+                              : SizedBox(),
+                          widget.searchType == SavedSearchType.savedSearch
+                              ? SizedBox(
+                                  height: getSize(6),
+                                )
+                              : SizedBox(),
                           if (arr.length <= 3 &&
                               widget.searchType == SavedSearchType.savedSearch)
                             listOfSelectedFilter(arr, model, arr.length),
@@ -279,8 +283,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                               !model.isExpand &&
                               widget.searchType == SavedSearchType.savedSearch)
                             listOfSelectedFilter(arr, model, 3),
-                          if( widget.searchType ==
-                                          SavedSearchType.recentSearch)
+                          if (widget.searchType == SavedSearchType.recentSearch)
                             listOfSelectedFilter(arr, model, arr.length),
                           widget.searchType == SavedSearchType.savedSearch
                               ? Padding(
@@ -291,10 +294,12 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                     bottom: getSize(11),
                                   ),
                                   child: Container(
-                                    padding: EdgeInsets.only(top:getSize(8),bottom:getSize(8)),
-                              decoration: BoxDecoration(
-                                border: Border(top:BorderSide(color: appTheme.dividerColor))
-                              ),
+                                    padding: EdgeInsets.only(
+                                        top: getSize(8), bottom: getSize(8)),
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            top: BorderSide(
+                                                color: appTheme.dividerColor))),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceAround,
@@ -313,8 +318,11 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                               FilterScreen.route,
                                               args: dict);
                                         }),
-                                        getPreviewItem(R.string().commonString.delete, delete_icon_medium,
-                                            appTheme.redPrimaryNormal14TitleColor,
+                                        getPreviewItem(
+                                            R.string().commonString.delete,
+                                            delete_icon_medium,
+                                            appTheme
+                                                .redPrimaryNormal14TitleColor,
                                             () {
                                           app
                                               .resolve<CustomDialogs>()
@@ -322,15 +330,18 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                             context,
                                             barrierDismissible: true,
                                             title: "",
-                                            desc:
-                                                "You really want to delete ${model.name}.",
+                                            desc: R
+                                                .string()
+                                                .commonString
+                                                .deleteItem,
                                             positiveBtnTitle:
                                                 R.string().commonString.ok,
                                             negativeBtnTitle:
                                                 R.string().commonString.cancel,
                                             onClickCallback: (buttonType) {
                                               if (buttonType ==
-                                                  ButtonType.PositveButtonClick) {
+                                                  ButtonType
+                                                      .PositveButtonClick) {
                                                 SyncManager.instance
                                                     .callApiForDeleteSavedSearch(
                                                         context, model.id ?? "",
@@ -341,7 +352,9 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                             },
                                           );
                                         }),
-                                        getPreviewItem(R.string().commonString.search, saved_medium,
+                                        getPreviewItem(
+                                            R.string().commonString.search,
+                                            saved_medium,
                                             appTheme.primaryColor14TextStyle,
                                             () {
                                           Map<String, dynamic> dict =
@@ -381,16 +394,14 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-               width: getSize(30),
+              width: getSize(30),
               height: getSize(30),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(getSize(15)),
-                border: Border.all(color: appTheme.borderColor)
-              ),
+                  borderRadius: BorderRadius.circular(getSize(15)),
+                  border: Border.all(color: appTheme.borderColor)),
               child: Image.asset(
                 img,
-               
               ),
             ),
             SizedBox(
@@ -412,7 +423,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
       children: <Widget>[
         for (int i = 0; i < length; i++)
           Padding(
-            padding: EdgeInsets.only(top:getSize(10)),
+            padding: EdgeInsets.only(top: getSize(10)),
             child: Row(
               children: [
                 Text(

@@ -1,5 +1,7 @@
 import 'package:diamnow/app/Helper/Themehelper.dart';
+import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/utils/math_utils.dart';
+import 'package:diamnow/app/utils/pref_utils.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
@@ -41,7 +43,7 @@ class _FinalCalculationWidgetState extends State<FinalCalculationWidget> {
                   top: getSize(20.0),
                 ),
                 child: Text(
-                  "Note : The additional 2.00% on amount value has already been added in the final calculation.",
+                  "Note : The additional ${app.resolve<PrefUtils>().getUserDetails().accountTerm.extraPer}% on amount value has already been added in the final calculation.",
                   style: appTheme.redPrimaryNormal12TitleColor,
                 ),
               ),

@@ -266,6 +266,7 @@ class CommonString {
   //SavedSearch
   final String modify;
   final String delete;
+  final String deleteItem;
 
   const CommonString({
     //SavedSearch
@@ -522,5 +523,6 @@ class CommonString {
     this.shape = "Shape",
     this.download = "Download",
     this.share = "Share",
+    this.deleteItem = "Are you sure you want to delete?",
   });
 }
