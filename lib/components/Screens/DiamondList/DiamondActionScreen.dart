@@ -97,10 +97,14 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
       diamondConfig = DiamondConfig(moduleType);
     }
 
+    manageDiamondCalculation();
+    diamondConfig.initItems();
+  }
+
+  manageDiamondCalculation() {
     diamondFinalCalculation.setAverageCalculation(diamondList,
         isFinalCalculation: true);
     diamondCalculation.setAverageCalculation(diamondList);
-    diamondConfig.initItems();
   }
 
   @override
@@ -187,6 +191,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
             diamondList.forEach((element) {
               element.isSelected = isAllSelected;
             });
+            manageDiamondCalculation();
           });
         },
         child: Padding(
@@ -227,10 +232,21 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
     ]);
   }
 
-  Widget getBottomTabForNewArrival() {}
   Widget getBottomTab() {
-    return Padding(
-      padding: EdgeInsets.all(getSize(Spacing.leftPadding)),
+    return Container(
+      decoration: new BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 5.0,
+            spreadRadius: 1.0, //extend the shadow
+            offset: Offset(
+              0, // Move to right 10  horizontally
+              1, // Move to bottom 10 Vertically
+            ),
+          )
+        ],
+      ),
       child: Row(
         children: [
           Expanded(
@@ -239,25 +255,19 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                 Navigator.pop(context);
               },
               child: Container(
-                // alignment: Alignment.bottomCenter,
+                color: appTheme.whiteColor,
+                height: getSize(50),
                 padding: EdgeInsets.symmetric(
                   vertical: getSize(15),
-                ),
-                decoration: BoxDecoration(
-                  color: appTheme.colorPrimary.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(getSize(5)),
                 ),
                 child: Text(
                   R.string().commonString.cancel,
                   textAlign: TextAlign.center,
                   style: appTheme.blue14TextStyle
-                      .copyWith(fontSize: getFontSize(16)),
+                      .copyWith(fontSize: getFontSize(16), fontWeight: FontWeight.w500),
                 ),
               ),
             ),
-          ),
-          SizedBox(
-            width: getSize(20),
           ),
           Expanded(
             child: InkWell(
@@ -282,14 +292,11 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                 }
               },
               child: Container(
-                //alignment: Alignment.bottomCenter,
+                height: getSize(50),
                 padding: EdgeInsets.symmetric(
                   vertical: getSize(15),
                 ),
-                decoration: BoxDecoration(
-                    color: appTheme.colorPrimary,
-                    borderRadius: BorderRadius.circular(getSize(5)),
-                    boxShadow: getBoxShadow(context)),
+                color: appTheme.colorPrimary,
                 child: Text(
                   R.string().commonString.confirm,
                   textAlign: TextAlign.center,
@@ -494,11 +501,24 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
   }
 
   Widget getBottomTabForFinalCalculation() {
+    bool isVisible = false;
+    if (!isNullEmptyOrFalse(diamondList)) {
+      isVisible =
+          diamondList.where((element) => element.isSelected).toList().length >
+              0;
+    }
     return isNullEmptyOrFalse(this.diamondList) == false
         ? Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              FinalCalculationWidget(diamondList, diamondFinalCalculation),
+              AnimatedOpacity(
+                // If the widget is visible, animate to 0.0 (invisible).
+                // If the widget is hidden, animate to 1.0 (fully visible).
+                opacity: isVisible ? 1.0 : 0.0,
+                duration: Duration(milliseconds: 500),
+                child: FinalCalculationWidget(
+                    diamondList, diamondFinalCalculation),
+              ),
               BottomTabbarWidget(
                 arrBottomTab: diamondConfig.arrBottomTab,
                 onClickCallback: (obj) {
@@ -515,8 +535,14 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
     List<DiamondModel> selectedList =
         diamondList.where((element) => element.isSelected).toList();
     if (selectedList != null && selectedList.length > 0) {
-      diamondConfig.manageDiamondAction(
-          context, selectedList, bottomTabModel, () {});
+      if (bottomTabModel.type == ActionMenuConstant.ACTION_TYPE_CANCEL_STONE) {
+        print(bottomTabModel.type);
+      } else {
+        diamondConfig.manageDiamondAction(context, selectedList, bottomTabModel,
+            () {
+          print(bottomTabModel.type);
+        });
+      }
     } else {
       app.resolve<CustomDialogs>().confirmDialog(
             context,

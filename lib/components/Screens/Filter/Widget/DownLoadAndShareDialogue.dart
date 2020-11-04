@@ -41,7 +41,6 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
   bool isAllExcelSelected = false;
   bool isAllRoughSelected = false;
 
-
   _DownLoadAndShareDialogueState(
     this.title,
   );
@@ -182,44 +181,44 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                   child: Container(
                     height: getSize(46),
                     alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: appTheme.colorPrimary.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(getSize(5)),
-                    ),
-                    child: Text(
-                      R.string().commonString.cancel,
-                      textAlign: TextAlign.center,
-                      style: appTheme.blue14TextStyle
-                          .copyWith(fontSize: getFontSize(16)),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: getSize(20),
-              ),
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    height: getSize(46),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: appTheme.colorPrimary,
-                        borderRadius: BorderRadius.circular(getSize(5)),
-                        boxShadow: getBoxShadow(context)),
-                    child: Text(
-                      R.string().commonString.download,
-                      textAlign: TextAlign.center,
-                      style: appTheme.white16TextStyle,
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
+                   decoration: BoxDecoration(
+                     color: appTheme.colorPrimary.withOpacity(0.1),
+                     borderRadius: BorderRadius.circular(getSize(5)),
+                   ),
+                   child: Text(
+                     R.string().commonString.cancel,
+                     textAlign: TextAlign.center,
+                     style: appTheme.blue14TextStyle
+                         .copyWith(fontSize: getFontSize(16)),
+                   ),
+                 ),
+               ),
+             ),
+             SizedBox(
+               width: getSize(20),
+             ),
+             Expanded(
+               child: InkWell(
+                 onTap: () {
+                   Navigator.pop(context);
+                 },
+                 child: Container(
+                   height: getSize(46),
+                   alignment: Alignment.center,
+                   decoration: BoxDecoration(
+                       color: appTheme.colorPrimary,
+                       borderRadius: BorderRadius.circular(getSize(5)),
+                       boxShadow: getBoxShadow(context)),
+                   child: Text(
+                     R.string().commonString.download,
+                     textAlign: TextAlign.center,
+                     style: appTheme.white16TextStyle,
+                   ),
+                 ),
+               ),
+             )
+           ],
+         ),
         ],
       ),
     );
@@ -267,19 +266,19 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
         InkWell(
           highlightColor: Colors.transparent,
           onTap: () {
-            if(type == DownloadDataType.Images) {
+            if (type == DownloadDataType.Images) {
               this.isAllImageSelected = !this.isAllImageSelected;
               titleBool = isAllImageSelected;
-            } else if(type == DownloadDataType.Video) {
+            } else if (type == DownloadDataType.Video) {
               this.isAllVideoSelected = !this.isAllVideoSelected;
               titleBool = isAllVideoSelected;
-            } else if(type == DownloadDataType.Excel) {
+            } else if (type == DownloadDataType.Excel) {
               this.isAllExcelSelected = !this.isAllExcelSelected;
               titleBool = isAllExcelSelected;
-            } else if(type == DownloadDataType.Rough) {
+            } else if (type == DownloadDataType.Rough) {
               this.isAllRoughSelected = !this.isAllRoughSelected;
               titleBool = isAllRoughSelected;
-            } else if(type == DownloadDataType.Certificate) {
+            } else if (type == DownloadDataType.Certificate) {
               this.isAllCertificateSelected = !this.isAllCertificateSelected;
               titleBool = isAllCertificateSelected;
             }
@@ -309,7 +308,9 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
               Container(
                 height: getSize(16),
                 width: getSize(16),
-                child: Image.asset(getConditionValue(type) ? selectedFilter : unselectedFilter),
+                child: Image.asset(getConditionValue(type)
+                    ? selectedFilter
+                    : unselectedFilter),
               ),
               SizedBox(
                 width: getSize(8),
@@ -457,15 +458,15 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
   }
 
   getConditionValue(DownloadDataType type) {
-    if(type == DownloadDataType.Images) {
-       return isAllImageSelected;
-    } else if(type == DownloadDataType.Video) {
+    if (type == DownloadDataType.Images) {
+      return isAllImageSelected;
+    } else if (type == DownloadDataType.Video) {
       return isAllVideoSelected;
-    } else if(type == DownloadDataType.Excel) {
+    } else if (type == DownloadDataType.Excel) {
       return isAllExcelSelected;
-    } else if(type == DownloadDataType.Rough) {
+    } else if (type == DownloadDataType.Rough) {
       return isAllRoughSelected;
-    } else if(type == DownloadDataType.Certificate) {
+    } else if (type == DownloadDataType.Certificate) {
       return isAllCertificateSelected;
     }
   }

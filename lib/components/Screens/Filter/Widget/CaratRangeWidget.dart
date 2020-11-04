@@ -143,6 +143,7 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
       children: List<Widget>.generate(
           widget.selectionModel.caratRangeChipsToShow.length, (int index) {
         return Chip(
+          // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(getSize(10))),
           label: Text(
               widget.selectionModel.caratRangeChipsToShow[index].toString()),
           backgroundColor: appTheme.unSelectedBgColor,
@@ -151,7 +152,7 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
             color: appTheme.textColor,
             size: getSize(16),
           ),
-          shape: StadiumBorder(side: BorderSide(color: appTheme.colorPrimary)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(getSize(5)),side: BorderSide(color: appTheme.colorPrimary)),
           onDeleted: () {
             setState(() {
               widget.selectionModel.caratRangeChipsToShow.removeWhere((entry) {

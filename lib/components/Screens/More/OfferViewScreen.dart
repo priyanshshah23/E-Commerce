@@ -142,9 +142,20 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: getSize(Spacing.leftPadding), vertical: getSize(16)),
+      bottomNavigationBar: Container(
+        decoration: new BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 5.0,
+              spreadRadius: 1.0, //extend the shadow
+              offset: Offset(
+                0, // Move to right 10  horizontally
+                1, // Move to bottom 10 Vertically
+              ),
+            )
+          ],
+        ),
         child: Row(
           children: [
             Expanded(
@@ -153,32 +164,26 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                   Navigator.pop(context);
                 },
                 child: Container(
-                  // alignment: Alignment.bottomCenter,
+                  height: getSize(50),
+                  color: appTheme.whiteColor,
                   padding: EdgeInsets.symmetric(
                     vertical: getSize(15),
-                  ),
-                  decoration: BoxDecoration(
-                    color: appTheme.colorPrimary.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(getSize(5)),
                   ),
                   child: Text(
                     R.string().commonString.cancel,
                     textAlign: TextAlign.center,
-                    style: appTheme.blue14TextStyle
-                        .copyWith(fontSize: getFontSize(16)),
+                    style: appTheme.blue14TextStyle.copyWith(
+                        fontSize: getFontSize(16), fontWeight: FontWeight.w500),
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              width: getSize(20),
             ),
             Expanded(
               child: InkWell(
                 onTap: () {
                   FocusScope.of(context).unfocus();
 
-                  if (pickedDate==null) {
+                  if (pickedDate == null) {
                     app.resolve<CustomDialogs>().confirmDialog(
                           context,
                           title: "",
@@ -214,14 +219,11 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                   callApiForRequestForOffice();
                 },
                 child: Container(
-                  //alignment: Alignment.bottomCenter,
+                  height: getSize(50),
+                  color: appTheme.colorPrimary,
                   padding: EdgeInsets.symmetric(
                     vertical: getSize(15),
                   ),
-                  decoration: BoxDecoration(
-                      color: appTheme.colorPrimary,
-                      borderRadius: BorderRadius.circular(getSize(5)),
-                      boxShadow: getBoxShadow(context)),
                   child: Text(
                     R.string().screenTitle.reqOfficeView,
                     textAlign: TextAlign.center,

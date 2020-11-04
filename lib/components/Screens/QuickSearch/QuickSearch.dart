@@ -204,10 +204,6 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
         body: ListView(
           shrinkWrap: true,
           children: [
-            isNullEmptyOrFalse(arrClarity)
-                ? SizedBox()
-                : getHorizontalDataWidget(),
-            SizedBox(height: getSize(8)),
             ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
@@ -216,6 +212,10 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
                 return getWidgets(this.arrData[index]);
               },
             ),
+            SizedBox(height: getSize(8)),
+            isNullEmptyOrFalse(arrClarity)
+                ? SizedBox()
+                : getHorizontalDataWidget(),
           ],
         ));
   }
