@@ -95,61 +95,54 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
              ],
            ),
          ),
-         Padding(
-            padding: EdgeInsets.only(bottom: getSize(15)),
-            child: Row(
-              children: [
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      // alignment: Alignment.bottomCenter,
-                      padding: EdgeInsets.symmetric(
-                        vertical: getSize(15),
-                      ),
-                      decoration: BoxDecoration(
-                        color: appTheme.colorPrimary.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(getSize(5)),
-                      ),
-                      child: Text(
-                        R.string().commonString.cancel,
-                        textAlign: TextAlign.center,
-                        style: appTheme.blue14TextStyle
-                            .copyWith(fontSize: getFontSize(16)),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: getSize(20),
-                ),
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      //alignment: Alignment.bottomCenter,
-                      padding: EdgeInsets.symmetric(
-                        vertical: getSize(15),
-                      ),
-                      decoration: BoxDecoration(
-                          color: appTheme.colorPrimary,
-                          borderRadius: BorderRadius.circular(getSize(5)),
-                          boxShadow: getBoxShadow(context)),
-                      child: Text(
-                        R.string().commonString.download,
-                        textAlign: TextAlign.center,
-                        style: appTheme.white16TextStyle,
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
+         Row(
+           children: [
+             Expanded(
+               child: InkWell(
+                 onTap: () {
+                   Navigator.pop(context);
+                 },
+                 child: Container(
+                   height: getSize(50),
+                    alignment: Alignment.center,
+                   decoration: BoxDecoration(
+                     color: appTheme.colorPrimary.withOpacity(0.1),
+                     borderRadius: BorderRadius.circular(getSize(5)),
+                   ),
+                   child: Text(
+                     R.string().commonString.cancel,
+                     textAlign: TextAlign.center,
+                     style: appTheme.blue14TextStyle
+                         .copyWith(fontSize: getFontSize(16)),
+                   ),
+                 ),
+               ),
+             ),
+             SizedBox(
+               width: getSize(20),
+             ),
+             Expanded(
+               child: InkWell(
+                 onTap: () {
+                   Navigator.pop(context);
+                 },
+                 child: Container(
+                   height: getSize(50),
+                   alignment: Alignment.center,
+                   decoration: BoxDecoration(
+                       color: appTheme.colorPrimary,
+                       borderRadius: BorderRadius.circular(getSize(5)),
+                       boxShadow: getBoxShadow(context)),
+                   child: Text(
+                     R.string().commonString.download,
+                     textAlign: TextAlign.center,
+                     style: appTheme.white16TextStyle,
+                   ),
+                 ),
+               ),
+             )
+           ],
+         ),
         ],
       ),
     );
