@@ -447,6 +447,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             borderRadius: BorderRadius.circular(getSize(25)),
           ),
           child: AddDemand(
+            title: R.string().commonString.addDemand,
               arrList: arrList,
               applyCallBack: ({String selectedDate, String diamondTitle}) {
                 callApiForAddDemand(selectedDate, diamondTitle);
