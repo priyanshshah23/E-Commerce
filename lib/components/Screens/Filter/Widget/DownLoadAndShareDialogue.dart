@@ -82,7 +82,7 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
          ConstrainedBox(
            constraints: BoxConstraints(
                minHeight: 50,
-               maxHeight: MathUtilities.screenHeight(context) - 100),
+               maxHeight: MathUtilities.screenHeight(context) - 160),
            child: ListView(
              physics: BouncingScrollPhysics(),
              shrinkWrap: true,
@@ -103,7 +103,7 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                    Navigator.pop(context);
                  },
                  child: Container(
-                   height: getSize(40),
+                   height: getSize(46),
                     alignment: Alignment.center,
                    decoration: BoxDecoration(
                      color: appTheme.colorPrimary.withOpacity(0.1),
@@ -127,7 +127,7 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                    Navigator.pop(context);
                  },
                  child: Container(
-                   height: getSize(40),
+                   height: getSize(46),
                    alignment: Alignment.center,
                    decoration: BoxDecoration(
                        color: appTheme.colorPrimary,
