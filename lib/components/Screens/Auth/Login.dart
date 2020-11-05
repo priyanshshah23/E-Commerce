@@ -495,9 +495,15 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                     Map<String, dynamic> dict = new HashMap();
                     dict["isHardUpdate"] = hardUpdate;
                     dict["oncomplete"] = () {
-                      Navigator.pop(context);
+                      SyncManager.instance.callMasterSync(
+                          NavigationUtilities.key.currentContext, () async {
+                        //success
+                        AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+                      }, () {},
+                          isNetworkError: false,
+                          isProgress: true,
+                          id: id).then((value) {});
                     };
-
                     if (hardUpdate == true) {
                       app.resolve<PrefUtils>().saveSkipUpdate(false);
                       NavigationUtilities.pushReplacementNamed(
@@ -530,7 +536,14 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                     Map<String, dynamic> dict = new HashMap();
                     dict["isHardUpdate"] = hardUpdate;
                     dict["oncomplete"] = () {
-                      Navigator.pop(context);
+                      SyncManager.instance.callMasterSync(
+                          NavigationUtilities.key.currentContext, () async {
+                        //success
+                        AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+                      }, () {},
+                          isNetworkError: false,
+                          isProgress: true,
+                          id: id).then((value) {});
                     };
                     if (hardUpdate == true) {
                       app.resolve<PrefUtils>().saveSkipUpdate(false);

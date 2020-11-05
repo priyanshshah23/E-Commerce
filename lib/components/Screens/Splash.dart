@@ -51,7 +51,7 @@ class _SplashState extends State<Splash> {
 //        NavigationUtilities.pushRoute(CompanyInformation.route);
 //      NavigationUtilities.pushRoute(Notifications.route);
       callVersionUpdateApi();
-      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+//      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
      //  NavigationUtilities.pushRoute(ForgetPasswordScreen.route);
 //      AppNavigation().movetoHome(isPopAndSwitch: true);
     } else {
@@ -88,7 +88,7 @@ class _SplashState extends State<Splash> {
                     Map<String, dynamic> dict = new HashMap();
                     dict["isHardUpdate"] = hardUpdate;
                     dict["oncomplete"] = () {
-                      Navigator.pop(context);
+                      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                     };
 
                     if (hardUpdate == true) {
@@ -116,7 +116,7 @@ class _SplashState extends State<Splash> {
                     Map<String, dynamic> dict = new HashMap();
                     dict["isHardUpdate"] = hardUpdate;
                     dict["oncomplete"] = () {
-                      Navigator.pop(context);
+                      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                     };
                     if (hardUpdate == true) {
                       app.resolve<PrefUtils>().saveSkipUpdate(false);
