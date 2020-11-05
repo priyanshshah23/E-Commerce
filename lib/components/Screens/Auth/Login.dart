@@ -514,6 +514,15 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                         NavigationUtilities.pushReplacementNamed(
                             VersionUpdate.route,
                             args: dict);
+                      } else {
+                        SyncManager.instance.callMasterSync(
+                            NavigationUtilities.key.currentContext, () async {
+                          //success
+                          AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+                        }, () {},
+                            isNetworkError: false,
+                            isProgress: true,
+                            id: id).then((value) {});
                       }
                     }
                   } else {
@@ -531,7 +540,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                 print("Android");
                 if (resp.data.android != null) {
                   num respVersion = resp.data.android.number;
-                  if (num.parse(buildNumber) <= respVersion) {
+                  if (num.parse(buildNumber) < respVersion) {
                     bool hardUpdate = resp.data.android.isHardUpdate;
                     Map<String, dynamic> dict = new HashMap();
                     dict["isHardUpdate"] = hardUpdate;
@@ -548,11 +557,20 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                     if (hardUpdate == true) {
                       app.resolve<PrefUtils>().saveSkipUpdate(false);
                       NavigationUtilities.pushReplacementNamed(
-                          VersionUpdate.route);
+                          VersionUpdate.route, args: dict);
                     } else {
                       if (app.resolve<PrefUtils>().getSkipUpdate() == false) {
                         NavigationUtilities.pushReplacementNamed(
-                            VersionUpdate.route);
+                            VersionUpdate.route, args: dict);
+                      } else {
+                        SyncManager.instance.callMasterSync(
+                            NavigationUtilities.key.currentContext, () async {
+                          //success
+                          AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+                        }, () {},
+                            isNetworkError: false,
+                            isProgress: true,
+                            id: id).then((value) {});
                       }
                     }
                   } else {

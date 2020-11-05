@@ -101,6 +101,8 @@ class _SplashState extends State<Splash> {
                         NavigationUtilities.pushReplacementNamed(
                             VersionUpdate.route,
                             args: dict);
+                      }  else {
+                        AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                       }
                     }
                   } else {
@@ -114,18 +116,20 @@ class _SplashState extends State<Splash> {
                   if (num.parse(buildNumber) < respVersion) {
                     bool hardUpdate = resp.data.android.isHardUpdate;
                     Map<String, dynamic> dict = new HashMap();
-                    dict["isHardUpdate"] = hardUpdate;
+                    dict["isHardUpdate"] = true;
                     dict["oncomplete"] = () {
                       AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                     };
                     if (hardUpdate == true) {
                       app.resolve<PrefUtils>().saveSkipUpdate(false);
                       NavigationUtilities.pushReplacementNamed(
-                          VersionUpdate.route);
+                          VersionUpdate.route, args: dict);
                     } else {
                       if (app.resolve<PrefUtils>().getSkipUpdate() == false) {
                         NavigationUtilities.pushReplacementNamed(
-                            VersionUpdate.route);
+                            VersionUpdate.route, args: dict);
+                      } else {
+                        AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                       }
                     }
                   } else {
