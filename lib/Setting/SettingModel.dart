@@ -65,19 +65,19 @@ class DrawerSetting {
         countBackgroundColor: fromHex("#288F5A"),
         count: 25,
       ));
-    // if (app
-    //     .resolve<PrefUtils>()
-    //     .getModulePermission(ModulePermissionConstant.permission_auction)
-    //     .view)
-    //   drawerList.add(DrawerModel(
-    //     image: diamondOnAuction,
-    //     title: R.string().screenTitle.diamondOnAuction,
-    //     isSelected: false,
-    //     type: DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION,
-    //     isShowCount: true,
-    //     countBackgroundColor: fromHex("#9C2AC4"),
-    //     count: 50,
-    //   ));
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_auction)
+        .view)
+      drawerList.add(DrawerModel(
+        image: diamondOnAuction,
+        title: R.string().screenTitle.diamondOnAuction,
+        isSelected: false,
+        type: DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION,
+        isShowCount: true,
+        countBackgroundColor: fromHex("#9C2AC4"),
+        count: 50,
+      ));
     if (app
         .resolve<PrefUtils>()
         .getModulePermission(
@@ -405,7 +405,7 @@ class BottomMenuSetting {
       {bool isDetail = false, bool isCompare = false}) {
     List<BottomTabModel> moreMenuList = [];
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ORDER) {
-      if (moduleType != DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+      if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
         if (app
             .resolve<PrefUtils>()
             .getModulePermission(ModulePermissionConstant.permission_order)
@@ -417,7 +417,7 @@ class BottomMenuSetting {
       }
     }
     if (!isDetail && !isCompare) {
-      if (moduleType != DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+      if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
         if (app
             .resolve<PrefUtils>()
             .getModulePermission(ModulePermissionConstant.permission_compare)
@@ -428,7 +428,7 @@ class BottomMenuSetting {
               type: ActionMenuConstant.ACTION_TYPE_COMPARE));
       }
     }
-    if (moduleType != DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+    if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
       if (app
           .resolve<PrefUtils>()
           .getModulePermission(ModulePermissionConstant.permission_comment)
@@ -440,7 +440,7 @@ class BottomMenuSetting {
     }
 
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_REMINDER) {
-      if (moduleType != DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+      if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
         if (app
             .resolve<PrefUtils>()
             .getModulePermission(ModulePermissionConstant.permission_reminder)
@@ -452,7 +452,7 @@ class BottomMenuSetting {
       }
     }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
-      if (moduleType != DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+      if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
         if (app
             .resolve<PrefUtils>()
             .getModulePermission(ModulePermissionConstant.permission_offer)
@@ -464,7 +464,7 @@ class BottomMenuSetting {
       }
     }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
-      if (moduleType != DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+      if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
         if (app
             .resolve<PrefUtils>()
             .getModulePermission(
@@ -508,7 +508,7 @@ class BottomMenuSetting {
     List<BottomTabModel> moreMenuList = [];
 
     switch (moduleType) {
-      case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
+      case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
         if (app
             .resolve<PrefUtils>()
             .getModulePermission(ModulePermissionConstant.permission_bid)
@@ -529,7 +529,7 @@ class BottomMenuSetting {
               title: R.string().screenTitle.addToWatchList,
               type: ActionMenuConstant.ACTION_TYPE_WISHLIST));
         moreMenuList.add(BottomTabModel(
-            image: addToWatchlist,
+            image: finalCalculation,
             isCenter: false,
             title: R.string().screenTitle.finalCalculation,
             type: ActionMenuConstant.ACTION_TYPE_FINAL_CALCULATION));
@@ -678,7 +678,7 @@ class BottomMenuSetting {
                 type: ActionMenuConstant.ACTION_TYPE_OFFER));
         }
         if (!isCompare && !isDetail && isDiamondSearchModule(moduleType)) {
-          if (moduleType != DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
             moreMenuList.add(BottomTabModel(
                 title: R.string().commonString.status,
                 isCenter: false,
@@ -751,6 +751,7 @@ bool isDiamondSearchModule(int moduleType) {
     case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
     case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
     case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
+    case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
     case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
     case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
       return true;

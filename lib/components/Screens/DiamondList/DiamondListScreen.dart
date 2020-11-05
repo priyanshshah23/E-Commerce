@@ -149,6 +149,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict["filters"] = {};
         dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_BID;
         break;
+      case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
+        dict["filters"] = {};
+        dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_BID;
+        break;
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
         dict["filters"] = {};
         dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_UPCOMING;
@@ -607,7 +611,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   manageDiamondSelection() {
     fillArrayList();
     diamondCalculation.setAverageCalculation(arraDiamond);
-    if (moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+    if (moduleType == DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
       diamondFinalCalculation.setAverageCalculation(arraDiamond,
           isFinalCalculation: true);
     }
@@ -651,7 +655,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             Expanded(
               child: diamondList,
             ),
-            this.moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL
+            this.moduleType == DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION
                 ? AnimatedOpacity(
                     // If the widget is visible, animate to 0.0 (invisible).
                     // If the widget is hidden, animate to 1.0 (fully visible).
