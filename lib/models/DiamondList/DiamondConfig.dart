@@ -640,23 +640,39 @@ class DiamondConfig {
     List<BottomTabModel> shareOption =  List<BottomTabModel>();
     shareOption.add(BottomTabModel(
       title: "Gmail",
-      image: diamond,
+      image: gmail,
+      onTap: () {
+        openURLWithApp("mailto:?subject=DiamNow&body=DiamNow", context);
+      }
     ));
     shareOption.add(BottomTabModel(
       title: "Hangout",
-      image: diamond,
+      image: hangout,
+      onTap: () {
+
+      }
     ));
     shareOption.add(BottomTabModel(
       title: "To Drive",
-      image: diamond,
+      image: drive,
+      onTap: () {
+
+      }
     ));
     shareOption.add(BottomTabModel(
       title: "Facebook",
-      image: diamond,
+      image: facebook,
+      onTap: () {
+//        openURLWithApp("fb://profile", context);
+        openURLWithApp("fb.me/", context);
+      }
     ));
     shareOption.add(BottomTabModel(
       title: "WhatsApp",
-      image: diamond,
+      image: whatsapp,
+      onTap: () {
+        openURLWithApp("whatsapp://send?phone=9099726618&text=Hello!", context);
+      }
     ));
     showModalBottomSheet(
       context: context,
@@ -676,16 +692,21 @@ class DiamondConfig {
               shrinkWrap: true,
               crossAxisCount: 3,
               children: List.generate(shareOption.length, (index) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                        height: getSize(33),
-                        width : getSize(47),
-                        child: Image.asset(shareOption[index].image)),
-                    SizedBox(height: getSize(10),),
-                    Text(shareOption[index].title, style: appTheme.black16TextStyle,),
-                  ],
+                return InkWell(
+                  onTap: () {
+                    shareOption[index].onTap();
+                  },
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                          height: getSize(33),
+                          width : getSize(47),
+                          child: Image.asset(shareOption[index].image)),
+                      SizedBox(height: getSize(10),),
+                      Text(shareOption[index].title, style: appTheme.black16TextStyle,),
+                    ],
+                  ),
                 );
               },
               ),

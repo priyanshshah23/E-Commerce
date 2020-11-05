@@ -654,7 +654,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
                     SyncManager.instance.callMasterSync(
                         NavigationUtilities.key.currentContext, () async {
                       //success
-                      AppNavigation().movetoHome(isPopAndSwitch: true);
+                      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                     }, () {},
                         isNetworkError: false,
                         isProgress: true,
@@ -664,7 +664,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
                   SyncManager.instance.callMasterSync(
                       NavigationUtilities.key.currentContext, () async {
                     //success
-                    AppNavigation().movetoHome(isPopAndSwitch: true);
+                    AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                   }, () {},
                       isNetworkError: false,
                       isProgress: true,
@@ -684,7 +684,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
                     SyncManager.instance.callMasterSync(
                         NavigationUtilities.key.currentContext, () async {
                       //success
-                      AppNavigation().movetoHome(isPopAndSwitch: true);
+                      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                     }, () {},
                         isNetworkError: false,
                         isProgress: true,
@@ -694,7 +694,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
                   SyncManager.instance.callMasterSync(
                       NavigationUtilities.key.currentContext, () async {
                     //success
-                    AppNavigation().movetoHome(isPopAndSwitch: true);
+                    AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                   }, () {},
                       isNetworkError: false,
                       isProgress: true,

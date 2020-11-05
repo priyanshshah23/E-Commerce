@@ -23,6 +23,7 @@ class _VersionUpdateState extends State<VersionUpdate> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print("isHardUpdate ${widget.isHardUpdate}");
     print("init");
   }
 

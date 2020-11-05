@@ -8,10 +8,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:rxbus/rxbus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../app.export.dart';
 import '../constant/ColorConstant.dart';
 import '../theme/app_theme.dart';
+import 'CustomDialog.dart';
 
 getBackButton(BuildContext context,
     {bool isWhite = false, double height, double width, VoidCallback ontap}) {
@@ -439,4 +441,18 @@ getFieldTitleText(String text) {
       style: appTheme.black16TextStyle,
     ),
   );
+}
+
+
+openURLWithApp(String uri, BuildContext context) async {
+  if (await canLaunch(uri)) {
+    await launch(uri);
+  } else {
+    app.resolve<CustomDialogs>().confirmDialog(
+      context,
+      title: R.string().commonString.error,
+      desc: "Could not launch $uri",
+      positiveBtnTitle: R.string().commonString.ok,
+    );
+  }
 }

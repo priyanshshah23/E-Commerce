@@ -484,7 +484,6 @@ class _LoginScreenState extends StatefulScreenWidgetState {
               String packageName = packageInfo.packageName;
               String version = packageInfo.version;
               String buildNumber = packageInfo.buildNumber;
-
               if (Platform.isIOS) {
                 print("iOS");
                 if (resp.data.ios != null) {
@@ -515,7 +514,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                     SyncManager.instance.callMasterSync(
                         NavigationUtilities.key.currentContext, () async {
                       //success
-                      AppNavigation().movetoHome(isPopAndSwitch: true);
+                      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                     }, () {},
                         isNetworkError: false,
                         isProgress: true,
@@ -526,8 +525,13 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                 print("Android");
                 if (resp.data.android != null) {
                   num respVersion = resp.data.android.number;
-                  if (num.parse(buildNumber) < respVersion) {
+                  if (num.parse(buildNumber) <= respVersion) {
                     bool hardUpdate = resp.data.android.isHardUpdate;
+                    Map<String, dynamic> dict = new HashMap();
+                    dict["isHardUpdate"] = hardUpdate;
+                    dict["oncomplete"] = () {
+                      Navigator.pop(context);
+                    };
                     if (hardUpdate == true) {
                       app.resolve<PrefUtils>().saveSkipUpdate(false);
                       NavigationUtilities.pushReplacementNamed(
@@ -542,7 +546,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                     SyncManager.instance.callMasterSync(
                         NavigationUtilities.key.currentContext, () async {
                       //success
-                      AppNavigation().movetoHome(isPopAndSwitch: true);
+                      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                     }, () {},
                         isNetworkError: false,
                         isProgress: true,

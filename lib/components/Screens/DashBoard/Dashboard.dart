@@ -1718,7 +1718,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                         onTap: () async {
                           if (!isNullEmptyOrFalse(
                               this.dashboardModel.seller.email)) {
-                            _openMail(this.dashboardModel.seller.email);
+                            openURLWithApp("mailto:?subject=DiamNow&body=DiamNow", context);
                           }
                         },
                         child: Row(
@@ -1745,7 +1745,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                         onTap: () {
                           if (!isNullEmptyOrFalse(
                               this.dashboardModel.seller.whatsapp)) {
-                            _openDialPad(this.dashboardModel.seller.whatsapp);
+                            openURLWithApp("tel://${this.dashboardModel.seller.whatsapp}", context);
                           }
                         },
                         child: Row(
@@ -1774,34 +1774,6 @@ class _DashboardState extends StatefulScreenWidgetState {
         ],
       ),
     );
-  }
-
-  _openMail(String email) async {
-    String uri = 'mailto:?subject=DiamNow&body=DiamNow';
-    if (await canLaunch(uri)) {
-      await launch(uri);
-    } else {
-      app.resolve<CustomDialogs>().confirmDialog(
-            context,
-            title: R.string().commonString.error,
-            desc: "Could not launch $uri",
-            positiveBtnTitle: R.string().commonString.ok,
-          );
-    }
-  }
-
-  _openDialPad(String whatsapp) async {
-    String uri = 'tel://$whatsapp';
-    if (await canLaunch(uri)) {
-      await launch(uri);
-    } else {
-      app.resolve<CustomDialogs>().confirmDialog(
-            context,
-            title: R.string().commonString.error,
-            desc: "Could not launch $uri",
-            positiveBtnTitle: R.string().commonString.ok,
-          );
-    }
   }
 
   getTitleText(String title) {
