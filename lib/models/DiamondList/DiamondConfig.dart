@@ -139,6 +139,8 @@ class DiamondConfig {
         return R.string().screenTitle.myPurchased;
       case DiamondModuleConstant.MODULE_TYPE_HOME:
         return R.string().screenTitle.home;
+      case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
+        return R.string().screenTitle.diamondOnAuction;
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
         return R.string().screenTitle.newArrival;
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
@@ -179,6 +181,7 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
+      case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
       case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
@@ -599,14 +602,35 @@ class DiamondConfig {
     List<DiamondModel> list,
   ) {
     List<SelectionPopupModel> downloadOptionList = List<SelectionPopupModel>();
-    List<SelectionPopupModel>  selectedOptions = List<SelectionPopupModel>();
-    downloadOptionList.add(SelectionPopupModel("1", "Excel",));
-    downloadOptionList.add(SelectionPopupModel("2", "Certificate",));
-    downloadOptionList.add(SelectionPopupModel("3", "Real Image",));
-    downloadOptionList.add(SelectionPopupModel("4", "Plotting Image",));
-    downloadOptionList.add(SelectionPopupModel("5", "Heart & Arrow",));
-    downloadOptionList.add(SelectionPopupModel("6", "Asset Scope",));
-    downloadOptionList.add(SelectionPopupModel("7", "Video",));
+    List<SelectionPopupModel> selectedOptions = List<SelectionPopupModel>();
+    downloadOptionList.add(SelectionPopupModel(
+      "1",
+      "Excel",
+    ));
+    downloadOptionList.add(SelectionPopupModel(
+      "2",
+      "Certificate",
+    ));
+    downloadOptionList.add(SelectionPopupModel(
+      "3",
+      "Real Image",
+    ));
+    downloadOptionList.add(SelectionPopupModel(
+      "4",
+      "Plotting Image",
+    ));
+    downloadOptionList.add(SelectionPopupModel(
+      "5",
+      "Heart & Arrow",
+    ));
+    downloadOptionList.add(SelectionPopupModel(
+      "6",
+      "Asset Scope",
+    ));
+    downloadOptionList.add(SelectionPopupModel(
+      "7",
+      "Video",
+    ));
 
     showDialog(
       context: context,
@@ -623,7 +647,9 @@ class DiamondConfig {
             isMultiSelectionEnable: true,
             positiveButtonTitle: R.string().commonString.download,
             selectionOptions: downloadOptionList,
-            applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
+            applyFilterCallBack: (
+                {SelectionPopupModel selectedItem,
+                List<SelectionPopupModel> multiSelectedItem}) {
               selectedOptions = multiSelectedItem;
               print("length---${selectedOptions.length}");
             },
@@ -941,10 +967,10 @@ class DiamondConfig {
       (resp) {
         app.resolve<CustomDialogs>().errorDialog(context, title, resp.message,
             btntitle: R.string().commonString.ok,
-            dismissPopup: false,voidCallBack: () {
-               Navigator.pop(context);
-              placeOrder();
-            });
+            dismissPopup: false, voidCallBack: () {
+          Navigator.pop(context);
+          placeOrder();
+        });
       },
       (onError) {
         if (onError.message != null) {

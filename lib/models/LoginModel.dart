@@ -624,7 +624,9 @@ class Account {
     isVerified = json['isVerified'];
     if (json['kyc'] != null) {
       kyc = new List<Kyc>();
-      json['kyc'].forEach((v) { kyc.add(new Kyc.fromJson(v)); });
+      json['kyc'].forEach((v) {
+        kyc.add(new Kyc.fromJson(v));
+      });
     }
     if (json["country"] is Map<String, dynamic>) {
       country = json['country'] != null
@@ -802,13 +804,12 @@ class UserPermissionsData {
     permissions = json['permissions'] != null
         ? new Permissions.fromJson(json['permissions'])
         : null;
-
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['module'] = this.module;
-    data['permissions'] =this.permissions;
+    data['permissions'] = this.permissions;
     return data;
   }
 }
@@ -857,13 +858,13 @@ class AccountTerm {
   String id;
   String deliveryType;
   String deliveryDays;
-  int extraAmt;
-  int extraPer;
-  int rapPer;
-  int creditLimit;
-  int memoLimit;
-  int adatCommission;
-  int brokerCommission;
+  num extraAmt;
+  num extraPer;
+  num rapPer;
+  num creditLimit;
+  num memoLimit;
+  num adatCommission;
+  num brokerCommission;
   int type;
   String dFTermId;
   bool isApproved;

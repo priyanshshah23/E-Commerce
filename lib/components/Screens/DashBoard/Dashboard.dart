@@ -166,17 +166,21 @@ class _DashboardState extends StatefulScreenWidgetState {
         },
         child: (element.code == BottomCodeConstant.TBProfile)
             ? Container(
+                width: getSize(44),
+                height: getSize(44),
                 child: Padding(
-                  padding: EdgeInsets.all(getSize(8.0)),
+                  padding: EdgeInsets.only(
+                      left: getSize(8.0), right: getSize(Spacing.rightPadding)),
                   child: Center(
                     child: ClipRRect(
                       borderRadius:
-                          BorderRadius.all(Radius.circular(getSize(15))),
+                          BorderRadius.all(Radius.circular(getSize(22))),
                       child: getImageView(
                         app.resolve<PrefUtils>().getUserDetails().profileImage,
                         placeHolderImage: placeHolder,
                         height: getSize(30),
                         width: getSize(30),
+                        fit: BoxFit.fitWidth,
                       ),
                     ),
                   ),
@@ -514,9 +518,9 @@ class _DashboardState extends StatefulScreenWidgetState {
         }
       }
     }
-     return FeaturedStoneWidget(
-       diamondList: arrStones,
-     );
+    return FeaturedStoneWidget(
+      diamondList: arrStones,
+    );
 //    return isNullEmptyOrFalse(arrStones)
 //        ? SizedBox()
 //        : Padding(
@@ -597,9 +601,9 @@ class _DashboardState extends StatefulScreenWidgetState {
       }
     }
 
-     return StoneOfDayWidget(
-       stoneList: arrStones,
-     );
+    return StoneOfDayWidget(
+      stoneList: arrStones,
+    );
 //    return isNullEmptyOrFalse(arrStones)
 //        ? SizedBox()
 //        : Padding(
@@ -1718,7 +1722,9 @@ class _DashboardState extends StatefulScreenWidgetState {
                         onTap: () async {
                           if (!isNullEmptyOrFalse(
                               this.dashboardModel.seller.email)) {
-                            openURLWithApp("mailto:?subject=DiamNow&body=DiamNow", context);
+                            openURLWithApp(
+                                "mailto:?subject=DiamNow&body=DiamNow",
+                                context);
                           }
                         },
                         child: Row(
@@ -1745,7 +1751,9 @@ class _DashboardState extends StatefulScreenWidgetState {
                         onTap: () {
                           if (!isNullEmptyOrFalse(
                               this.dashboardModel.seller.whatsapp)) {
-                            openURLWithApp("tel://${this.dashboardModel.seller.whatsapp}", context);
+                            openURLWithApp(
+                                "tel://${this.dashboardModel.seller.whatsapp}",
+                                context);
                           }
                         },
                         child: Row(
