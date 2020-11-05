@@ -125,6 +125,7 @@ class _VersionUpdateState extends State<VersionUpdate> {
               padding: EdgeInsets.only(top: getSize(16)),
               child: AppButton.flat(
                 onTap: () {
+                  app.resolve<PrefUtils>().saveSkipUpdate(true);
                   widget.oncomplete();
                 },
                 borderRadius: 14,
