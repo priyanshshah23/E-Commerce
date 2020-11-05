@@ -90,6 +90,7 @@ class BottomTabModel extends TabConfiguration {
   Color color;
   bool isCenter = true;
   bool isSelected;
+  VoidCallback onTap;
 
   BottomTabModel({
     this.title,
@@ -101,6 +102,7 @@ class BottomTabModel extends TabConfiguration {
     this.type,
     this.color,
     this.isSelected = false,
+    this.onTap,
   });
 
   BottomTabModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {

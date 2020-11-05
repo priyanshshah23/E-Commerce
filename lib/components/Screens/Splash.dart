@@ -51,11 +51,11 @@ class _SplashState extends State<Splash> {
 //        NavigationUtilities.pushRoute(CompanyInformation.route);
 //      NavigationUtilities.pushRoute(Notifications.route);
       callVersionUpdateApi();
-      AppNavigation().movetoHome(isPopAndSwitch: true);
+//      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
      //  NavigationUtilities.pushRoute(ForgetPasswordScreen.route);
 //      AppNavigation().movetoHome(isPopAndSwitch: true);
     } else {
-      AppNavigation().movetoLogin(isPopAndSwitch: true);
+      AppNavigation.shared.movetoLogin(isPopAndSwitch: true);
     }
   }
 
@@ -77,7 +77,6 @@ class _SplashState extends State<Splash> {
               String packageName = packageInfo.packageName;
               String version = packageInfo.version;
               String buildNumber = packageInfo.buildNumber;
-
               if (Platform.isIOS) {
                 print("iOS");
                 if (resp.data.ios != null) {
@@ -89,7 +88,7 @@ class _SplashState extends State<Splash> {
                     Map<String, dynamic> dict = new HashMap();
                     dict["isHardUpdate"] = hardUpdate;
                     dict["oncomplete"] = () {
-                      Navigator.pop(context);
+                      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                     };
 
                     if (hardUpdate == true) {
@@ -102,10 +101,12 @@ class _SplashState extends State<Splash> {
                         NavigationUtilities.pushReplacementNamed(
                             VersionUpdate.route,
                             args: dict);
+                      }  else {
+                        AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                       }
                     }
                   } else {
-                    AppNavigation().movetoHome(isPopAndSwitch: true);
+                    AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                   }
                 }
               } else {
@@ -114,18 +115,25 @@ class _SplashState extends State<Splash> {
                   num respVersion = resp.data.android.number;
                   if (num.parse(buildNumber) < respVersion) {
                     bool hardUpdate = resp.data.android.isHardUpdate;
+                    Map<String, dynamic> dict = new HashMap();
+                    dict["isHardUpdate"] = true;
+                    dict["oncomplete"] = () {
+                      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+                    };
                     if (hardUpdate == true) {
                       app.resolve<PrefUtils>().saveSkipUpdate(false);
                       NavigationUtilities.pushReplacementNamed(
-                          VersionUpdate.route);
+                          VersionUpdate.route, args: dict);
                     } else {
                       if (app.resolve<PrefUtils>().getSkipUpdate() == false) {
                         NavigationUtilities.pushReplacementNamed(
-                            VersionUpdate.route);
+                            VersionUpdate.route, args: dict);
+                      } else {
+                        AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                       }
                     }
                   } else {
-                    AppNavigation().movetoHome(isPopAndSwitch: true);
+                    AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                   }
                 }
               }

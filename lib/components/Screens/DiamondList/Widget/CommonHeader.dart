@@ -33,7 +33,7 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
   }
 
   calcualteDifference() {
-    if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+    if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
       isTimerCompleted = false;
       var currentTime = DateTime.now();
       var strBlindBid = DateTime.now();
@@ -138,7 +138,7 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
             ],
           ),
         ),
-        widget.moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL
+        widget.moduleType == DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION
             ? Padding(
                 padding: EdgeInsets.only(top: getSize(2.0)),
                 child: Container(

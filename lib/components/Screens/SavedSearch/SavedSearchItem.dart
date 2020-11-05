@@ -120,7 +120,17 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
         if (widget.searchType == SavedSearchType.savedSearch) {
           return getItemWidget(savedSearchModel, arrData);
         } else {
-          return getItemWidget(savedSearchModel, arrData);
+          return InkWell(
+              onTap: () {
+                Map<String, dynamic> dict = Map<String, dynamic>();
+                dict[ArgumentConstant.ModuleType] =
+                    DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH;
+                dict[ArgumentConstant.IsFromDrawer] = false;
+                dict["filterId"] = arrList[index].id;
+                NavigationUtilities.pushRoute(DiamondListScreen.route,
+                    args: dict);
+              },
+              child: getItemWidget(savedSearchModel, arrData));
         }
       },
     );
@@ -175,26 +185,6 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                               style: appTheme
                                                   .blackNormal16TitleColorblack),
                                         ),
-                                        // Expiry date code
-                                        // Row(
-                                        //   mainAxisSize: MainAxisSize.min,
-                                        //   children: [
-                                        //     Text(
-                                        //       "Expiry Date :",
-                                        //       style:
-                                        //           appTheme.grey12HintTextStyle,
-                                        //     ),
-                                        //     SizedBox(width: getSize(5)),
-                                        //     Text(
-                                        //         DateUtilities().convertServerDateToFormatterString(
-                                        //                 model.createdAt ?? "",
-                                        //                 formatter: DateUtilities
-                                        //                     .dd_mmm_yy_h_mm_a) ??
-                                        //             "-",
-                                        //         style: appTheme
-                                        //             .blackNormal12TitleColorblack)
-                                        //   ],
-                                        // )
                                       ],
                                     )
                                   : widget.searchType ==

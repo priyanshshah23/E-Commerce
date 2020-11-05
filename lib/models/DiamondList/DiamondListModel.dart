@@ -743,11 +743,11 @@ class DiamondModel {
         num quote = (-back + num.parse(selectedOfferPer));
         num pricePerCarat = rap - ((quote * rap) / 100);
         num lessAmt = ((pricePerCarat *
-                app
+                (-app
                     .resolve<PrefUtils>()
                     .getUserDetails()
                     .accountTerm
-                    .extraPer) /
+                    .extraPer)) /
             100);
         num finalrate = pricePerCarat - lessAmt;
         return finalrate;
@@ -755,24 +755,29 @@ class DiamondModel {
         num quote = (-back + num.parse(selectedOfferPer));
         num pricePerCarat = rap - ((quote * rap) / 100);
         num lessAmt = ((pricePerCarat *
-                app
+                (-app
                     .resolve<PrefUtils>()
                     .getUserDetails()
                     .accountTerm
-                    .extraPer) /
+                    .extraPer)) /
             100);
         num finalrate = pricePerCarat - lessAmt;
         return finalrate;
       }
     } else {
-      return this.ctPr -
-          ((this.ctPr *
-                  app
-                      .resolve<PrefUtils>()
-                      .getUserDetails()
-                      .accountTerm
-                      .extraPer) /
-              100);
+      DateTime now = DateTime.now();
+      if (now.hour >= 15 || (now.hour <= 11 && now.month < 30)) {
+        var totalctpr = this.ctPr *
+            ((-app.resolve<PrefUtils>().getUserDetails().accountTerm.extraPer) +
+                0.5);
+        var extractpr = totalctpr / 100;
+        return this.ctPr - extractpr;
+      }
+      var totalctpr = this.ctPr *
+          (-app.resolve<PrefUtils>().getUserDetails().accountTerm.extraPer);
+      var extractpr = totalctpr / 100;
+
+      return this.ctPr - extractpr;
     }
   }
 
@@ -781,21 +786,21 @@ class DiamondModel {
     if (now.hour >= 15 || (now.hour <= 10 && now.month < 30)) {
       return getFinalRate() -
           ((getFinalRate() *
-                  (app
+                  ((-app
                           .resolve<PrefUtils>()
                           .getUserDetails()
                           .accountTerm
-                          .extraPer +
+                          .extraPer) +
                       0.5)) /
               100);
     }
     return getFinalRate() -
         ((getFinalRate() *
-                app
+                (-app
                     .resolve<PrefUtils>()
                     .getUserDetails()
                     .accountTerm
-                    .extraPer) /
+                    .extraPer)) /
             100);
   }
 

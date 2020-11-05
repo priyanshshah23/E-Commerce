@@ -140,6 +140,8 @@ class DiamondConfig {
         return R.string().screenTitle.myPurchased;
       case DiamondModuleConstant.MODULE_TYPE_HOME:
         return R.string().screenTitle.home;
+      case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
+        return R.string().screenTitle.diamondOnAuction;
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
         return R.string().screenTitle.newArrival;
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
@@ -180,6 +182,7 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
+      case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
       case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
@@ -604,37 +607,30 @@ class DiamondConfig {
     downloadOptionList.add(SelectionPopupModel(
       "1",
       "Excel",
-      fileType: DownloadAndShareDialogueConstant.excel
     ));
     downloadOptionList.add(SelectionPopupModel(
       "2",
       "Certificate",
-      fileType: DownloadAndShareDialogueConstant.certificate
     ));
     downloadOptionList.add(SelectionPopupModel(
       "3",
       "Real Image",
-      fileType: DownloadAndShareDialogueConstant.realImage1
     ));
     downloadOptionList.add(SelectionPopupModel(
       "4",
       "Plotting Image",
-      fileType: DownloadAndShareDialogueConstant.plottingImg
     ));
     downloadOptionList.add(SelectionPopupModel(
       "5",
       "Heart & Arrow",
-      fileType: DownloadAndShareDialogueConstant.heartAndArrowImg
     ));
     downloadOptionList.add(SelectionPopupModel(
       "6",
       "Asset Scope",
-      fileType: DownloadAndShareDialogueConstant.assetScopeImg
     ));
     downloadOptionList.add(SelectionPopupModel(
       "7",
       "Video",
-      fileType: DownloadAndShareDialogueConstant.video1
     ));
 
     showDialog(
@@ -682,25 +678,29 @@ class DiamondConfig {
   actionShare(BuildContext context, List<DiamondModel> list) {
     List<BottomTabModel> shareOption = List<BottomTabModel>();
     shareOption.add(BottomTabModel(
-      title: "Gmail",
-      image: diamond,
-    ));
+        title: "Gmail",
+        image: gmail,
+        onTap: () {
+          openURLWithApp("mailto:?subject=DiamNow&body=DiamNow", context);
+        }));
+    shareOption
+        .add(BottomTabModel(title: "Hangout", image: hangout, onTap: () {}));
+    shareOption
+        .add(BottomTabModel(title: "To Drive", image: drive, onTap: () {}));
     shareOption.add(BottomTabModel(
-      title: "Hangout",
-      image: diamond,
-    ));
+        title: "Facebook",
+        image: facebook,
+        onTap: () {
+//        openURLWithApp("fb://profile", context);
+          openURLWithApp("fb.me/", context);
+        }));
     shareOption.add(BottomTabModel(
-      title: "To Drive",
-      image: diamond,
-    ));
-    shareOption.add(BottomTabModel(
-      title: "Facebook",
-      image: diamond,
-    ));
-    shareOption.add(BottomTabModel(
-      title: "WhatsApp",
-      image: diamond,
-    ));
+        title: "WhatsApp",
+        image: whatsapp,
+        onTap: () {
+          openURLWithApp(
+              "whatsapp://send?phone=9099726618&text=Hello!", context);
+        }));
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -727,21 +727,26 @@ class DiamondConfig {
               children: List.generate(
                 shareOption.length,
                 (index) {
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                          height: getSize(33),
-                          width: getSize(47),
-                          child: Image.asset(shareOption[index].image)),
-                      SizedBox(
-                        height: getSize(10),
-                      ),
-                      Text(
-                        shareOption[index].title,
-                        style: appTheme.black16TextStyle,
-                      ),
-                    ],
+                  return InkWell(
+                    onTap: () {
+                      shareOption[index].onTap();
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                            height: getSize(33),
+                            width: getSize(47),
+                            child: Image.asset(shareOption[index].image)),
+                        SizedBox(
+                          height: getSize(10),
+                        ),
+                        Text(
+                          shareOption[index].title,
+                          style: appTheme.black16TextStyle,
+                        ),
+                      ],
+                    ),
                   );
                 },
               ),

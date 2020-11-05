@@ -23,6 +23,7 @@ class _VersionUpdateState extends State<VersionUpdate> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print("isHardUpdate ${widget.isHardUpdate}");
     print("init");
   }
 
@@ -124,6 +125,7 @@ class _VersionUpdateState extends State<VersionUpdate> {
               padding: EdgeInsets.only(top: getSize(16)),
               child: AppButton.flat(
                 onTap: () {
+                  app.resolve<PrefUtils>().saveSkipUpdate(true);
                   widget.oncomplete();
                 },
                 borderRadius: 14,

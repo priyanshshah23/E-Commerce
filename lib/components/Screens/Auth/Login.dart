@@ -484,7 +484,6 @@ class _LoginScreenState extends StatefulScreenWidgetState {
               String packageName = packageInfo.packageName;
               String version = packageInfo.version;
               String buildNumber = packageInfo.buildNumber;
-
               if (Platform.isIOS) {
                 print("iOS");
                 if (resp.data.ios != null) {
@@ -496,9 +495,15 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                     Map<String, dynamic> dict = new HashMap();
                     dict["isHardUpdate"] = hardUpdate;
                     dict["oncomplete"] = () {
-                      Navigator.pop(context);
+                      SyncManager.instance.callMasterSync(
+                          NavigationUtilities.key.currentContext, () async {
+                        //success
+                        AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+                      }, () {},
+                          isNetworkError: false,
+                          isProgress: true,
+                          id: id).then((value) {});
                     };
-
                     if (hardUpdate == true) {
                       app.resolve<PrefUtils>().saveSkipUpdate(false);
                       NavigationUtilities.pushReplacementNamed(
@@ -509,13 +514,22 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                         NavigationUtilities.pushReplacementNamed(
                             VersionUpdate.route,
                             args: dict);
+                      } else {
+                        SyncManager.instance.callMasterSync(
+                            NavigationUtilities.key.currentContext, () async {
+                          //success
+                          AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+                        }, () {},
+                            isNetworkError: false,
+                            isProgress: true,
+                            id: id).then((value) {});
                       }
                     }
                   } else {
                     SyncManager.instance.callMasterSync(
                         NavigationUtilities.key.currentContext, () async {
                       //success
-                      AppNavigation().movetoHome(isPopAndSwitch: true);
+                      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                     }, () {},
                         isNetworkError: false,
                         isProgress: true,
@@ -528,21 +542,42 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                   num respVersion = resp.data.android.number;
                   if (num.parse(buildNumber) < respVersion) {
                     bool hardUpdate = resp.data.android.isHardUpdate;
+                    Map<String, dynamic> dict = new HashMap();
+                    dict["isHardUpdate"] = hardUpdate;
+                    dict["oncomplete"] = () {
+                      SyncManager.instance.callMasterSync(
+                          NavigationUtilities.key.currentContext, () async {
+                        //success
+                        AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+                      }, () {},
+                          isNetworkError: false,
+                          isProgress: true,
+                          id: id).then((value) {});
+                    };
                     if (hardUpdate == true) {
                       app.resolve<PrefUtils>().saveSkipUpdate(false);
                       NavigationUtilities.pushReplacementNamed(
-                          VersionUpdate.route);
+                          VersionUpdate.route, args: dict);
                     } else {
                       if (app.resolve<PrefUtils>().getSkipUpdate() == false) {
                         NavigationUtilities.pushReplacementNamed(
-                            VersionUpdate.route);
+                            VersionUpdate.route, args: dict);
+                      } else {
+                        SyncManager.instance.callMasterSync(
+                            NavigationUtilities.key.currentContext, () async {
+                          //success
+                          AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+                        }, () {},
+                            isNetworkError: false,
+                            isProgress: true,
+                            id: id).then((value) {});
                       }
                     }
                   } else {
                     SyncManager.instance.callMasterSync(
                         NavigationUtilities.key.currentContext, () async {
                       //success
-                      AppNavigation().movetoHome(isPopAndSwitch: true);
+                      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                     }, () {},
                         isNetworkError: false,
                         isProgress: true,

@@ -1,9 +1,15 @@
 import '../app.export.dart';
 
 class ApiConstants {
+<<<<<<< HEAD
  static const String PROXY_URL = "PROXY 192.168.0.116:8888";
 //  static const String PROXY_URL = "PROXY 192.168.0.114:8888";
     // static const String PROXY_URL = "PROXY 10.0.2.2:8888";
+=======
+  // static const String PROXY_URL = "PROXY 192.168.2.124:8888";
+  static const String PROXY_URL = "PROXY 192.168.0.114:8888";
+//    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
+>>>>>>> 7d12be654371e562adc626a9349216ce55671409
 
   static const String imageBaseURL = baseURL;
 
