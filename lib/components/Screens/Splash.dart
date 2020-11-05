@@ -1,8 +1,14 @@
 import 'dart:async';
+import 'dart:collection';
+import 'dart:io';
 
 import 'package:diamnow/app/AppConfiguration/AppNavigation.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Auth/CompanyInformation.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/components/Screens/Auth/Profile.dart';
@@ -14,10 +20,13 @@ import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
 import 'package:diamnow/components/Screens/Notification/Notifications.dart';
+import 'package:diamnow/models/Version/VersionUpdateResp.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info/package_info.dart';
 
 import 'Auth/ForgetPassword.dart';
+import 'Version/VersionUpdate.dart';
 
 class Splash extends StatefulWidget {
   static const route = "/splash";
@@ -41,12 +50,100 @@ class _SplashState extends State<Splash> {
       // NavigationUtilities.pushRoute(FilterScreen.route);
 //        NavigationUtilities.pushRoute(CompanyInformation.route);
 //      NavigationUtilities.pushRoute(Notifications.route);
+      callVersionUpdateApi();
       AppNavigation().movetoHome(isPopAndSwitch: true);
      //  NavigationUtilities.pushRoute(ForgetPasswordScreen.route);
 //      AppNavigation().movetoHome(isPopAndSwitch: true);
     } else {
       AppNavigation().movetoLogin(isPopAndSwitch: true);
     }
+  }
+
+  void callVersionUpdateApi() {
+    NetworkCall<VersionUpdateResp>()
+        .makeCall(
+            () => app
+            .resolve<ServiceModule>()
+            .networkService()
+            .getVersionUpdate(),
+        context,
+        isProgress: true)
+        .then(
+          (resp) {
+        if (resp.data != null) {
+          PackageInfo.fromPlatform().then(
+                (PackageInfo packageInfo) {
+              String appName = packageInfo.appName;
+              String packageName = packageInfo.packageName;
+              String version = packageInfo.version;
+              String buildNumber = packageInfo.buildNumber;
+
+              if (Platform.isIOS) {
+                print("iOS");
+                if (resp.data.ios != null) {
+                  num respVersion = resp.data.ios.number;
+
+                  if (num.parse(version) < respVersion) {
+                    bool hardUpdate = resp.data.ios.isHardUpdate;
+
+                    Map<String, dynamic> dict = new HashMap();
+                    dict["isHardUpdate"] = hardUpdate;
+                    dict["oncomplete"] = () {
+                      Navigator.pop(context);
+                    };
+
+                    if (hardUpdate == true) {
+                      app.resolve<PrefUtils>().saveSkipUpdate(false);
+                      NavigationUtilities.pushReplacementNamed(
+                          VersionUpdate.route,
+                          args: dict);
+                    } else {
+                      if (app.resolve<PrefUtils>().getSkipUpdate() == false) {
+                        NavigationUtilities.pushReplacementNamed(
+                            VersionUpdate.route,
+                            args: dict);
+                      }
+                    }
+                  } else {
+                    AppNavigation().movetoHome(isPopAndSwitch: true);
+                  }
+                }
+              } else {
+                print("Android");
+                if (resp.data.android != null) {
+                  num respVersion = resp.data.android.number;
+                  if (num.parse(buildNumber) < respVersion) {
+                    bool hardUpdate = resp.data.android.isHardUpdate;
+                    if (hardUpdate == true) {
+                      app.resolve<PrefUtils>().saveSkipUpdate(false);
+                      NavigationUtilities.pushReplacementNamed(
+                          VersionUpdate.route);
+                    } else {
+                      if (app.resolve<PrefUtils>().getSkipUpdate() == false) {
+                        NavigationUtilities.pushReplacementNamed(
+                            VersionUpdate.route);
+                      }
+                    }
+                  } else {
+                    AppNavigation().movetoHome(isPopAndSwitch: true);
+                  }
+                }
+              }
+            },
+          );
+        }
+      },
+    ).catchError(
+          (onError) => {
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            title: R.string().errorString.versionError,
+            desc: onError.message,
+            positiveBtnTitle: R.string().commonString.btnTryAgain,
+            onClickCallback: (PositveButtonClick) {
+              callVersionUpdateApi();
+            }),
+      },
+    );
   }
 
   @override

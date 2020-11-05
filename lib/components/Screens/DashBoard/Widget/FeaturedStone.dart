@@ -220,7 +220,7 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
                               child: Container(
                                 alignment: Alignment.center,
                                 width: MathUtilities.screenWidth(context) / 4.5,
-                                child: getColorClarityLab(model),
+                                child: getCutPolSynData(model),
                               ),
                             ),
                             Expanded(
@@ -280,21 +280,22 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
     );
   }
 
-  getColorClarityLab(DiamondModel model) {
+  getCutPolSynData(DiamondModel model) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         getText(
-          model.colNm ?? "",
+          model.cutNm ?? "-",
           style: appTheme.black12TextStyle,
         ),
         getDot(),
         getText(
-          model.clrNm ?? "",
+          model.polNm ?? "-",
           style: appTheme.black12TextStyle,
         ),
         getDot(),
         getText(
-          model.lbNm ?? "",
+          model.symNm ?? "-",
           style: appTheme.black12TextStyle,
         ),
       ],

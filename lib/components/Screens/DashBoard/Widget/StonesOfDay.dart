@@ -128,106 +128,106 @@ class _StoneOfDayWidgetState extends State<StoneOfDayWidget> {
                     ),
                     Container(
                       width: getSize(252),
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          left: getSize(10),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  flex: 3,
-                                  child: Container(
-                                    width: MathUtilities.screenWidth(context) / 8.5,
-                                    child: getText(model.vStnId,
-                                        style: appTheme.black12TextStyle),
-                                  ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                flex: 3,
+                                child: Container(
+                                  alignment: Alignment.centerLeft,
+                                  width: MathUtilities.screenWidth(context) / 8.5,
+                                  child: getText(model.vStnId,
+                                      style: appTheme.black12TextStyle),
                                 ),
-                                SizedBox(
-                                  width: getSize(3),
+                              ),
+                              SizedBox(
+                                width: getSize(3),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child: getText(model.shpNm,
+                                      style: appTheme.black12TextStyleMedium),
                                 ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Container(
-                                    width: MathUtilities.screenWidth(context) / 10,
-                                    child: getText(model.shpNm,
-                                        style: appTheme.black12TextStyleMedium),
-                                  ),
+                              ),
+                              SizedBox(
+                                width: getSize(3),
+                              ),
+                              Expanded(
+                                flex: 3,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  width: MathUtilities.screenWidth(context) / 4.5,
+                                  child: getText("${model.crt} ${R.string().commonString.carat}",
+                                      style: appTheme.primaryColor14TextStyle),
                                 ),
-                                SizedBox(
-                                  width: getSize(3),
+                              ),
+                              SizedBox(
+                                width: getSize(3),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Container(
+                                  alignment: Alignment.centerRight,
+                                  child:  getText(PriceUtilities.getPercent(model.back),
+                                      style: appTheme.blue12TextStyle),
                                 ),
-                                Expanded(
-                                  flex: 3,
-                                  child: Container(
-                                    width: MathUtilities.screenWidth(context) / 4.5,
-                                    child: getText("${model.crt} ${R.string().commonString.carat}",
-                                        style: appTheme.primaryColor14TextStyle),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: getSize(3),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Container(
-                                    width: MathUtilities.screenWidth(context) / 9,
-                                    child:  getText(PriceUtilities.getPercent(model.back),
-                                        style: appTheme.blue12TextStyle),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: getSize(3),
-                            ),
-                            Row(
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: getSize(3),
+                          ),
+                          Row(
 //                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  flex: 2,
-                                  child: Container(
-                                    width: MathUtilities.screenWidth(context) / 8.5,
-                                    child: getText(model.colNm, style: appTheme.black12TextStyle),
-                                  ),
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: Container(
+                                  alignment: Alignment.centerLeft,
+                                  width: MathUtilities.screenWidth(context) / 8.5,
+                                  child: getText(model.colNm, style: appTheme.black12TextStyle),
                                 ),
-                                SizedBox(
-                                  width: getSize(3),
+                              ),
+                              SizedBox(
+                                width: getSize(3),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  width: MathUtilities.screenWidth(context) / 10,
+                                  child:getText(model.clrNm, style: appTheme.black12TextStyle),
                                 ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Container(
-                                    width: MathUtilities.screenWidth(context) / 10,
-                                    child:getText(model.clrNm, style: appTheme.black12TextStyle),
-                                  ),
+                              ),
+                              SizedBox(
+                                width: getSize(3),
+                              ),
+                              Expanded(
+                                flex: 4,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  width: MathUtilities.screenWidth(context) / 4.5,
+                                  child: getCutPolSynData(model),
                                 ),
-                                SizedBox(
-                                  width: getSize(3),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Container(
+                                  padding: EdgeInsets.only(right: getSize(3)),
+                                  alignment: Alignment.centerRight,
+                                  width: MathUtilities.screenWidth(context) / 9,
+                                  child:  getText(model.lbNm, style: appTheme.black12TextStyle),
                                 ),
-                                Expanded(
-                                  flex: 4,
-                                  child: Container(
-                                    width: MathUtilities.screenWidth(context) / 4.5,
-                                    child: getColorClarityLab(model),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Container(
-                                    padding: EdgeInsets.only(right: getSize(3)),
-                                    alignment: Alignment.centerRight,
-                                    width: MathUtilities.screenWidth(context) / 9,
-                                    child:  getText(model.lbNm, style: appTheme.black12TextStyle),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -274,21 +274,22 @@ class _StoneOfDayWidgetState extends State<StoneOfDayWidget> {
     );
   }
 
-  getColorClarityLab(DiamondModel model) {
+  getCutPolSynData(DiamondModel model) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         getText(
-          model.colNm ?? "",
+          model.cutNm ?? "-",
           style: appTheme.black12TextStyle,
         ),
         getDot(),
         getText(
-          model.clrNm ?? "",
+          model.polNm ?? "-",
           style: appTheme.black12TextStyle,
         ),
         getDot(),
         getText(
-          model.lbNm ?? "",
+          model.symNm ?? "-",
           style: appTheme.black12TextStyle,
         ),
       ],
@@ -301,7 +302,6 @@ class _StoneOfDayWidgetState extends State<StoneOfDayWidget> {
       softWrap: true,
       overflow: TextOverflow.ellipsis,
       maxLines: 1,
-      textAlign: TextAlign.left,
       style: style ?? appTheme.black12TextStyle,
     );
   }

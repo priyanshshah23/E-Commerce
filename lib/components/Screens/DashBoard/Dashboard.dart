@@ -1791,7 +1791,7 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   _openDialPad(String whatsapp) async {
-    String uri = 'tel:$whatsapp';
+    String uri = 'tel://$whatsapp';
     if (await canLaunch(uri)) {
       await launch(uri);
     } else {

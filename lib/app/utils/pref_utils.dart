@@ -45,6 +45,8 @@ class PrefUtils {
 
   String get keyToken => "keyToken";
 
+  String get skipUpdate => 'skipUpdate';
+
   bool isHomeVisible;
 
   Future<void> init() async {
@@ -123,6 +125,14 @@ class PrefUtils {
 
   void saveShowThemeSelection(bool showThemeSelection) {
     _preferences.setBool(keyIsShowThemeSelection, showThemeSelection);
+  }
+
+  void saveSkipUpdate(bool val) {
+    _preferences.setBool(skipUpdate, val);
+  }
+
+  bool getSkipUpdate() {
+    return getBool(skipUpdate);
   }
 
   String getMasterSyncDate() {

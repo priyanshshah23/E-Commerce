@@ -479,29 +479,37 @@ class _LoginScreenState extends StatefulScreenWidgetState {
       (resp) {
         if (resp.data != null) {
           PackageInfo.fromPlatform().then(
-            (PackageInfo packageInfo) {
-              print(packageInfo.buildNumber);
+                (PackageInfo packageInfo) {
               String appName = packageInfo.appName;
               String packageName = packageInfo.packageName;
               String version = packageInfo.version;
               String buildNumber = packageInfo.buildNumber;
 
               if (Platform.isIOS) {
+                print("iOS");
                 if (resp.data.ios != null) {
                   num respVersion = resp.data.ios.number;
+
                   if (num.parse(version) < respVersion) {
                     bool hardUpdate = resp.data.ios.isHardUpdate;
+
                     Map<String, dynamic> dict = new HashMap();
                     dict["isHardUpdate"] = hardUpdate;
                     dict["oncomplete"] = () {
                       Navigator.pop(context);
                     };
-                    print(hardUpdate);
+
                     if (hardUpdate == true) {
+                      app.resolve<PrefUtils>().saveSkipUpdate(false);
                       NavigationUtilities.pushReplacementNamed(
-                        VersionUpdate.route,
-                        args: dict,
-                      );
+                          VersionUpdate.route,
+                          args: dict);
+                    } else {
+                      if (app.resolve<PrefUtils>().getSkipUpdate() == false) {
+                        NavigationUtilities.pushReplacementNamed(
+                            VersionUpdate.route,
+                            args: dict);
+                      }
                     }
                   } else {
                     SyncManager.instance.callMasterSync(
@@ -513,25 +521,22 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                         isProgress: true,
                         id: id).then((value) {});
                   }
-                } else {
-                  SyncManager.instance.callMasterSync(
-                      NavigationUtilities.key.currentContext, () async {
-                    //success
-                    AppNavigation().movetoHome(isPopAndSwitch: true);
-                  }, () {},
-                      isNetworkError: false,
-                      isProgress: true,
-                      id: id).then((value) {});
                 }
               } else {
+                print("Android");
                 if (resp.data.android != null) {
                   num respVersion = resp.data.android.number;
                   if (num.parse(buildNumber) < respVersion) {
                     bool hardUpdate = resp.data.android.isHardUpdate;
                     if (hardUpdate == true) {
+                      app.resolve<PrefUtils>().saveSkipUpdate(false);
                       NavigationUtilities.pushReplacementNamed(
-                        VersionUpdate.route,
-                      );
+                          VersionUpdate.route);
+                    } else {
+                      if (app.resolve<PrefUtils>().getSkipUpdate() == false) {
+                        NavigationUtilities.pushReplacementNamed(
+                            VersionUpdate.route);
+                      }
                     }
                   } else {
                     SyncManager.instance.callMasterSync(
@@ -543,15 +548,6 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                         isProgress: true,
                         id: id).then((value) {});
                   }
-                } else {
-                  SyncManager.instance.callMasterSync(
-                      NavigationUtilities.key.currentContext, () async {
-                    //success
-                    AppNavigation().movetoHome(isPopAndSwitch: true);
-                  }, () {},
-                      isNetworkError: false,
-                      isProgress: true,
-                      id: id).then((value) {});
                 }
               }
             },
