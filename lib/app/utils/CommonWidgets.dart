@@ -451,7 +451,7 @@ openURLWithApp(String uri, BuildContext context) async {
     app.resolve<CustomDialogs>().confirmDialog(
       context,
       title: R.string().commonString.error,
-      desc: "Could not launch $uri",
+      desc: "Could not launch",
       positiveBtnTitle: R.string().commonString.ok,
     );
   }
