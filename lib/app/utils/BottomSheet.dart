@@ -133,21 +133,24 @@ class SelectionPopupModel {
   String title;
   bool isSelected;
   int type;
-  int rideType;
+  int fileType;
+  String url;
 
   SelectionPopupModel.fromJson(Map<String, dynamic> parsedJson) {
     id = parsedJson["id"] ?? "";
     title = parsedJson["name"] ?? "";
     isSelected = parsedJson["isSelected"] ?? false;
+    url = parsedJson["url"] ?? "";
   }
 
   SelectionPopupModel(String id, String title,
-      {bool isSelected = false, int type, int ridetype}) {
+      {bool isSelected = false, int type, int fileType,String url}) {
     this.id = id;
     this.title = title;
     this.isSelected = isSelected;
     this.type = type;
-    this.rideType = ridetype;
+    this.fileType = fileType;
+    this.url = url;
   }
 }
 

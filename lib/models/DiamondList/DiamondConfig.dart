@@ -24,6 +24,7 @@ import 'package:diamnow/components/widgets/shared/CommonDateTimePicker.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
+import 'package:diamnow/models/DiamondList/download.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -599,14 +600,42 @@ class DiamondConfig {
     List<DiamondModel> list,
   ) {
     List<SelectionPopupModel> downloadOptionList = List<SelectionPopupModel>();
-    List<SelectionPopupModel>  selectedOptions = List<SelectionPopupModel>();
-    downloadOptionList.add(SelectionPopupModel("1", "Excel",));
-    downloadOptionList.add(SelectionPopupModel("2", "Certificate",));
-    downloadOptionList.add(SelectionPopupModel("3", "Real Image",));
-    downloadOptionList.add(SelectionPopupModel("4", "Plotting Image",));
-    downloadOptionList.add(SelectionPopupModel("5", "Heart & Arrow",));
-    downloadOptionList.add(SelectionPopupModel("6", "Asset Scope",));
-    downloadOptionList.add(SelectionPopupModel("7", "Video",));
+    List<SelectionPopupModel> selectedOptions = List<SelectionPopupModel>();
+    downloadOptionList.add(SelectionPopupModel(
+      "1",
+      "Excel",
+      fileType: DownloadAndShareDialogueConstant.excel
+    ));
+    downloadOptionList.add(SelectionPopupModel(
+      "2",
+      "Certificate",
+      fileType: DownloadAndShareDialogueConstant.certificate
+    ));
+    downloadOptionList.add(SelectionPopupModel(
+      "3",
+      "Real Image",
+      fileType: DownloadAndShareDialogueConstant.realImage1
+    ));
+    downloadOptionList.add(SelectionPopupModel(
+      "4",
+      "Plotting Image",
+      fileType: DownloadAndShareDialogueConstant.plottingImg
+    ));
+    downloadOptionList.add(SelectionPopupModel(
+      "5",
+      "Heart & Arrow",
+      fileType: DownloadAndShareDialogueConstant.heartAndArrowImg
+    ));
+    downloadOptionList.add(SelectionPopupModel(
+      "6",
+      "Asset Scope",
+      fileType: DownloadAndShareDialogueConstant.assetScopeImg
+    ));
+    downloadOptionList.add(SelectionPopupModel(
+      "7",
+      "Video",
+      fileType: DownloadAndShareDialogueConstant.video1
+    ));
 
     showDialog(
       context: context,
@@ -623,9 +652,23 @@ class DiamondConfig {
             isMultiSelectionEnable: true,
             positiveButtonTitle: R.string().commonString.download,
             selectionOptions: downloadOptionList,
-            applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
+            applyFilterCallBack: (
+                {SelectionPopupModel selectedItem,
+                List<SelectionPopupModel> multiSelectedItem}) {
               selectedOptions = multiSelectedItem;
-              print("length---${selectedOptions.length}");
+              // Navigator.pop(context);
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Dialog(
+                      insetPadding: EdgeInsets.symmetric(
+                          horizontal: getSize(20), vertical: getSize(5)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(getSize(25)),
+                      ),
+                      child: Download(allDiamondPreviewThings: selectedOptions,diamondList: list,),
+                    );
+                  });
             },
           ),
 //          child: DownLoadAndShareDialogue(
@@ -637,7 +680,7 @@ class DiamondConfig {
   }
 
   actionShare(BuildContext context, List<DiamondModel> list) {
-    List<BottomTabModel> shareOption =  List<BottomTabModel>();
+    List<BottomTabModel> shareOption = List<BottomTabModel>();
     shareOption.add(BottomTabModel(
       title: "Gmail",
       image: diamond,
@@ -662,32 +705,45 @@ class DiamondConfig {
       context: context,
       isScrollControlled: true,
       shape: RoundedRectangleBorder(
-          borderRadius:
-          BorderRadius.vertical(top: Radius.circular(25.0))),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
       builder: (_) => Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(height: getSize(30),),
-          Text(R.string().commonString.share, style: appTheme.black18TextStyle,),
-          SizedBox(height: getSize(18),),
+          SizedBox(
+            height: getSize(30),
+          ),
+          Text(
+            R.string().commonString.share,
+            style: appTheme.black18TextStyle,
+          ),
+          SizedBox(
+            height: getSize(18),
+          ),
           Container(
             child: GridView.count(
               childAspectRatio: 1.4,
               shrinkWrap: true,
               crossAxisCount: 3,
-              children: List.generate(shareOption.length, (index) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                        height: getSize(33),
-                        width : getSize(47),
-                        child: Image.asset(shareOption[index].image)),
-                    SizedBox(height: getSize(10),),
-                    Text(shareOption[index].title, style: appTheme.black16TextStyle,),
-                  ],
-                );
-              },
+              children: List.generate(
+                shareOption.length,
+                (index) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                          height: getSize(33),
+                          width: getSize(47),
+                          child: Image.asset(shareOption[index].image)),
+                      SizedBox(
+                        height: getSize(10),
+                      ),
+                      Text(
+                        shareOption[index].title,
+                        style: appTheme.black16TextStyle,
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
           ),
@@ -990,10 +1046,10 @@ class DiamondConfig {
       (resp) {
         app.resolve<CustomDialogs>().errorDialog(context, title, resp.message,
             btntitle: R.string().commonString.ok,
-            dismissPopup: false,voidCallBack: () {
-               Navigator.pop(context);
-              placeOrder();
-            });
+            dismissPopup: false, voidCallBack: () {
+          Navigator.pop(context);
+          placeOrder();
+        });
       },
       (onError) {
         if (onError.message != null) {

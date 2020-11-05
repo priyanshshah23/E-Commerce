@@ -32,7 +32,7 @@ main() {
     }).catchError((object) => {print(object)});
   }
   app = KiwiContainer();
-
+  HttpOverrides.global = new MyHttpOverrides();
   setup();
   runApp(SettingsModelsProvider(
     child: GlobalModelsProvider(
@@ -98,5 +98,13 @@ class _BaseState extends State<Base> {
         Expanded(child: child),
       ],
     );
+  }
+}
+
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
   }
 }

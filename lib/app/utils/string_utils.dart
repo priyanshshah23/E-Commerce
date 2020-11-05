@@ -2,6 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:libphonenumber/libphonenumber.dart';
 
+bool isUrlContainsImgOrVideo(String url){
+  List<String> type = url.split(".");
+  if(type.last == "jpg" || type.last == "pdf" || type.last=="png" || type.last=="mp4" || type.last=="avi" || type.last=="jpeg" || type.last=="3gp"){
+    return true;
+  }
+  return false;
+}
+
+String getExtensionOfUrl(String url){
+  List<String> type = url.split(".");
+  return type.last;
+}
+
 /// Removes the timezone to allow [DateTime] to parse the string.
 String formatAppDateString(String string) {
   final List sanitized = string.split(" ")
