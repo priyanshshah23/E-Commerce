@@ -73,6 +73,8 @@ dependencies:
   flutter_time_picker_spinner: 1.0.6+1
   scrollable_positioned_list: ^0.1.8
   flutter_money_formatter: any
+  permission_handler: ^4.4.0+hotfix.2
+  downloads_path_provider_28: ^0.1.0
 
   # flutter_tags: ^0.1.9
 

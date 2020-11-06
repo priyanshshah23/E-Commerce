@@ -1,9 +1,15 @@
 import '../app.export.dart';
 
 class ApiConstants {
+<<<<<<< HEAD
+ static const String PROXY_URL = "PROXY 192.168.0.116:8888";
+//  static const String PROXY_URL = "PROXY 192.168.0.114:8888";
+    // static const String PROXY_URL = "PROXY 10.0.2.2:8888";
+=======
   // static const String PROXY_URL = "PROXY 192.168.2.124:8888";
   static const String PROXY_URL = "PROXY 192.168.0.114:8888";
 //    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
+>>>>>>> 7d12be654371e562adc626a9349216ce55671409
 
   static const String imageBaseURL = baseURL;
 
@@ -92,6 +98,14 @@ class DiamondUrls {
   static const String roughVideo = commonUrl + "MFG/RoughVideo/";
   static const String polVideo = commonUrl + "viewer3/mp4_videos/";
   static const String assetImage = commonUrl + "AssetScopeImages/";
+  static const String flouresenceImg = commonUrl + "FlsImages/";
+  static const String idealScopeImg = commonUrl + "IDEAL_White_BG/";
+  static const String darkFieldImg = commonUrl + "Dark_Field_White_BG/";
+  static const String faceUpImg = commonUrl + "Office_Light_Black_BG/";
+  static const String realImg2 = commonUrl + "viewer3/RealImages/";
+  static const String type2A = commonUrl + "TYPE_IIA/";
+  static const String roughScopeImg = commonUrl + "MFG/RoughImages/";
+  static const String image3D = commonUrl + "MFG/PlanImages/";
 }
 // https://s3.ap-south-1.amazonaws.com/finestargroup/CertiImages/<report_no>.pdf
 // https://s3.ap-south-1.amazonaws.com/finestargroup/MFG/RoughVideo/<packet_no>.html

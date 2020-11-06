@@ -196,14 +196,16 @@ class _SelectionDialogueState extends State<SelectionDialogue> {
                         Expanded(
                           child: InkWell(
                             onTap: () {
+                              Navigator.pop(context);
                               List<SelectionPopupModel> dummyList = List<SelectionPopupModel>();
                               items.forEach((element) {
                                 if(element.isSelected) {
                                   dummyList.add(element);
                                 }
                               });
+                              
                               applyFilterCallBack(multiSelectedItem : dummyList);
-                              Navigator.pop(context);
+                              
                             },
                             child: Container(
                               //alignment: Alignment.bottomCenter,

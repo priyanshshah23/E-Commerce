@@ -36,3 +36,24 @@ class OrderInvoiceData {
 }
 
 enum DownloadDataType { Images, Video, Certificate, Excel, Rough }
+
+class DownloadAndShareDialogueConstant {
+  static const int realImage1 = 1;
+  static const int plottingImg = 2;
+  static const int assetScopeImg = 3;
+  static const int faceUpImg = 4;
+  static const int idealScopeImg = 5;
+  static const int realImage2 = 6;
+  static const int heartAndArrowImg = 7;
+  static const int arrowImg = 8;
+  static const int darkFieldImg = 9;
+  static const int flouresenceImg = 10;
+  static const int video1 = 11;
+  static const int video2 = 12;
+  static const int certificate = 13;
+  static const int typeIIA = 14;
+  static const int excel = 15;
+  static const int roughScope = 16;
+  static const int roughVideo = 17;
+  static const int img3D = 18;
+}
