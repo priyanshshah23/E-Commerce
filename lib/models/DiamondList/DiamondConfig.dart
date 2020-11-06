@@ -607,30 +607,37 @@ class DiamondConfig {
     downloadOptionList.add(SelectionPopupModel(
       "1",
       "Excel",
+      fileType: DownloadAndShareDialogueConstant.excel
     ));
     downloadOptionList.add(SelectionPopupModel(
       "2",
       "Certificate",
+      fileType: DownloadAndShareDialogueConstant.certificate
     ));
     downloadOptionList.add(SelectionPopupModel(
       "3",
       "Real Image",
+      fileType: DownloadAndShareDialogueConstant.realImage1
     ));
     downloadOptionList.add(SelectionPopupModel(
       "4",
       "Plotting Image",
+      fileType: DownloadAndShareDialogueConstant.plottingImg
     ));
     downloadOptionList.add(SelectionPopupModel(
       "5",
       "Heart & Arrow",
+      fileType: DownloadAndShareDialogueConstant.heartAndArrowImg
     ));
     downloadOptionList.add(SelectionPopupModel(
       "6",
       "Asset Scope",
+      fileType: DownloadAndShareDialogueConstant.assetScopeImg
     ));
     downloadOptionList.add(SelectionPopupModel(
       "7",
       "Video",
+      fileType: DownloadAndShareDialogueConstant.video1
     ));
 
     showDialog(

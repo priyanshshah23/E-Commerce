@@ -9,7 +9,6 @@ import 'package:diamnow/app/utils/string_utils.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:downloads_path_provider_28/downloads_path_provider_28.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_udid/flutter_udid.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:path/path.dart' as path;
@@ -167,7 +166,7 @@ class _DownloadState extends State<Download> {
       SelectionPopupModel element = allDiamondPreviewThings[i];
       if (element.isSelected && isUrlContainsImgOrVideo(element.url)) {
         await downloadFile(
-            element.url, element.title + await FlutterUdid.udid +"."+ getExtensionOfUrl(element.url), 0,
+            element.url, element.title +"."+ getExtensionOfUrl(element.url), 0,
             (value) {
           callBack(value);
         });
