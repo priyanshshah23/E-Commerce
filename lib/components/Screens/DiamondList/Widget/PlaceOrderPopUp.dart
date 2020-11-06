@@ -20,16 +20,15 @@ class PlaceOrderPopUp extends StatefulWidget {
   DiamondConfig diamondConfig;
   int actionType;
   List<DiamondModel> diamondList;
-
-  PlaceOrderPopUp({this.diamondConfig,this.actionType,this.diamondList});
+  Function(String selectedDate) callBack;
+  PlaceOrderPopUp(
+      {this.diamondConfig, this.actionType, this.diamondList, this.callBack});
 
   @override
-  _PlaceOrderPopUpState createState() =>
-      _PlaceOrderPopUpState(
-          diamondConfig: diamondConfig,
-        actionType: actionType,
-        diamondList: diamondList
-      );
+  _PlaceOrderPopUpState createState() => _PlaceOrderPopUpState(
+      diamondConfig: diamondConfig,
+      actionType: actionType,
+      diamondList: diamondList);
 }
 
 class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
@@ -49,9 +48,8 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
   int actionType;
   List<DiamondModel> diamondList;
 
-
-  _PlaceOrderPopUpState({this.diamondConfig,this.diamondList,this.actionType});
-
+  _PlaceOrderPopUpState(
+      {this.diamondConfig, this.diamondList, this.actionType});
 
   @override
   void initState() {
@@ -89,16 +87,14 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
                       autoFocus: false,
                       textOption: TextFieldOption(
                         prefixWid: getCommonIconWidget(
-                            imageName: company,
-                            imageType: IconSizeType.small),
+                            imageName: company, imageType: IconSizeType.small),
                         hintText: R.string().authStrings.companyName,
                         maxLine: 1,
                         inputController: _nameController,
                         formatter: [
                           WhitelistingTextInputFormatter(
                               new RegExp(alphaRegEx)),
-                          BlacklistingTextInputFormatter(
-                              RegExp(RegexForEmoji))
+                          BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
                         ],
                         //isSecureTextField: false
                       ),
@@ -118,10 +114,10 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
                     height: getSize(8),
                   ),
                   setInvoiceDropDown(context, _dateController, invoiceList,
-                          (value) {
-                        selectedPopUpDate = value;
-                        _dateController.text = value;
-                      }),
+                      (value) {
+                    selectedPopUpDate = value;
+                    _dateController.text = value;
+                  }),
                   Container(
                     height: getSize(8),
                   ),
@@ -142,12 +138,12 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          R.string().screenTitle.note  + " : ",
+                          R.string().screenTitle.note + " : ",
                           style: appTheme.error14TextStyle,
                         ),
                         Expanded(
                           child: Text(
-                             R.string().screenTitle.orderMsg,
+                            R.string().screenTitle.orderMsg,
                             style: appTheme.error14TextStyle,
                           ),
                         ),
@@ -198,11 +194,9 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
                   Expanded(
                     child: InkWell(
                       onTap: () {
+                        Navigator.pop(context);
                         if (_formKey.currentState.validate()) {
-                          diamondConfig.actionAll(context, diamondList, actionType,
-                              remark: _commentController.text,
-                              date: selectedPopUpDate,
-                              companyName: _nameController.text);
+                          widget.callBack(selectedPopUpDate);
                         } else {
                           setState(() {
                             autovalid = true;
@@ -216,11 +210,10 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
                         ),
                         decoration: BoxDecoration(
                             color: appTheme.colorPrimary,
-                            borderRadius:
-                            BorderRadius.circular(getSize(5)),
+                            borderRadius: BorderRadius.circular(getSize(5)),
                             boxShadow: getBoxShadow(context)),
                         child: Text(
-                           R.string().commonString.btnSubmit,
+                          R.string().commonString.btnSubmit,
                           textAlign: TextAlign.center,
                           style: appTheme.white16TextStyle,
                         ),
@@ -255,7 +248,7 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
           //isSecureTextField: false
         ),
         validation: (text) {
-          if(text.isEmpty) {
+          if (text.isEmpty) {
             return R.string().commonString.enterComment;
           }
         },
@@ -268,13 +261,12 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
     );
   }
 
-
-
   getInvoiceDateTextField() {
     return InkWell(
       highlightColor: Colors.transparent,
       onTap: () {
-        showDialog(context: context,
+        showDialog(
+            context: context,
             builder: (BuildContext context) {
               return Dialog(
                   insetPadding: EdgeInsets.symmetric(
@@ -285,13 +277,14 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
                   child: OpenDatePickerWidget(
                     onSubmit: (date) {
                       selectedDate = date;
-                      _dateController.text = DateUtilities().getFormattedDateString(selectedDate,formatter: DateUtilities.dd_mm_yyyy);
+                      _dateController.text = DateUtilities()
+                          .getFormattedDateString(selectedDate,
+                              formatter: DateUtilities.dd_mm_yyyy);
                       Navigator.pop(context);
                     },
                     selectedDate: selectedDate,
                   ));
-            }
-        );
+            });
       },
       child: Padding(
         padding: EdgeInsets.only(
@@ -299,7 +292,7 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
           right: getSize(Spacing.rightPadding),
         ),
         child: CommonTextfield(
-          enable: false,
+            enable: false,
             textOption: TextFieldOption(
                 hintText: R.string().errorString.selectInvoiceDate,
                 maxLine: 1,
@@ -325,6 +318,4 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
       ),
     );
   }
-
-
 }

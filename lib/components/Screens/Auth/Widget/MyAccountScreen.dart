@@ -144,7 +144,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                   padding:
                       EdgeInsets.only(top: getSize(10), bottom: getSize(10)),
                   child: Image.asset(model.image,
-                      // color: model.imageColor != null ? model.imageColor : null,
+                      color: model.imageColor != null ? model.imageColor : null,
                       width: getSize(22),
                       height: getSize(22)),
                 ),
