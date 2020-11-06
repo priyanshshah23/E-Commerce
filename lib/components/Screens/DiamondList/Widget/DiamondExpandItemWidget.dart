@@ -2,6 +2,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +42,7 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
                 border: Border.all(
                   color: widget.item.isSelected
                       ? appTheme.colorPrimary
-                      : appTheme.dividerColor.withOpacity(0.5),
+                      : appTheme.dividerColor,
                 ),
                 color: widget.item.isSelected
                     ? appTheme.lightColorPrimary
@@ -49,7 +50,7 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
                 boxShadow: widget.item.isSelected
                     ? [
                         BoxShadow(
-                            color: appTheme.colorPrimary.withOpacity(0.05),
+                            color: appTheme.colorPrimary,
                             blurRadius: getSize(8),
                             spreadRadius: getSize(2),
                             offset: Offset(0, 8)),
@@ -68,7 +69,9 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
                           height: getSize(96),
                         ),
                         getFirstRow(),
-                        getLastRow()
+                        getSecondRow(),
+                        getThirdRow(),
+                        getFourthRow(),
                       ],
                     ),
                   ),
@@ -116,92 +119,178 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
     return Padding(
       padding: EdgeInsets.only(
         top: getSize(10),
-        bottom: getSize(5),
         right: getSize(5),
       ),
       child: Row(
 //        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          getText(widget.item?.vStnId ?? ""),
-          Expanded(child: Container()),
-          getText(widget.item?.shpNm ?? ""),
-          Expanded(child: Container()),
-          Text(
-            PriceUtilities.getDoubleValue(widget.item?.crt ?? 0),
-            style: appTheme.blue16TextStyle,
+          Expanded(
+            flex: 3,
+            child: getText(widget.item?.vStnId ?? "",
+                appTheme.blackNormal14TitleColorblack),
           ),
-          SizedBox(
-            width: getSize(5),
+          Expanded(
+            flex: 2,
+            child: getText(widget.item?.shpNm ?? "",
+                appTheme.blackMedium14TitleColorblack),
           ),
-          Text(
-            R.string().commonString.carat,
-            style: appTheme.blue16TextStyle,
+          Expanded(
+            flex: 2,
+            child: Text(
+              PriceUtilities.getDoubleValue(widget.item?.crt ?? 0),
+              style: appTheme.blue16TextStyle,
+              textAlign: TextAlign.right,
+            ),
           ),
-          Expanded(child: Container()),
-          Text(
-            PriceUtilities.getPercent(widget.item?.getFinalDiscount()??0),
-            style: appTheme.blue14TextStyle,
+          Expanded(
+            flex: 2,
+            child: Text(
+              " " + R.string().commonString.carat,
+              style: appTheme.blue16TextStyle,
+            ),
           ),
-          Expanded(child: Container()),
-          getAmountText(widget.item?.getPricePerCarat() ?? ""),
+          Expanded(
+            flex: 2,
+            child: Text(
+              PriceUtilities.getPercent(widget.item?.getFinalDiscount() ?? 0),
+              style: appTheme.blue14TextStyle,
+              textAlign: TextAlign.right,
+            ),
+          ),
         ],
       ),
     );
   }
 
-  getLastRow() {
+  getSecondRow() {
     return Padding(
-      padding: EdgeInsets.only(
-        right: getSize(5),
-      ),
+      padding: EdgeInsets.only(top: getSize(4), bottom: getSize(4)),
       child: Row(
         children: [
-          Padding(
-            padding: EdgeInsets.only(
-              right: getSize(10),
+          Expanded(
+            flex: 2,
+            child: getText(widget.item?.colNm ?? "",
+                appTheme.blackMedium14TitleColorblack),
+          ),
+          Expanded(
+            flex: 2,
+            child: getText(widget.item?.clrNm ?? "",
+                appTheme.blackMedium14TitleColorblack),
+          ),
+          Expanded(
+            flex: 2,
+            child: Row(
+              children: <Widget>[
+                getText(widget.item?.cutNm ?? "",
+                    appTheme.blackMedium14TitleColorblack),
+                Container(
+                  height: getSize(4),
+                  width: getSize(4),
+                  decoration: BoxDecoration(
+                      color: appTheme.dividerColor, shape: BoxShape.circle),
+                ),
+                getText(widget.item?.polNm ?? "",
+                    appTheme.blackMedium14TitleColorblack),
+                Container(
+                  height: getSize(4),
+                  width: getSize(4),
+                  decoration: BoxDecoration(
+                      color: appTheme.dividerColor, shape: BoxShape.circle),
+                ),
+                getText(widget.item?.symNm ?? "",
+                    appTheme.blackMedium14TitleColorblack),
+              ],
             ),
-            child: getText(widget.item?.colNm ?? ""),
           ),
-          Padding(
-            padding: EdgeInsets.only(
-              right: getSize(10),
+          Expanded(
+            flex: 4,
+            child: getAmountText(
+              widget.item?.getPricePerCarat() ?? "",
+              align: TextAlign.right,
             ),
-            child: getText(widget.item?.clrNm ?? ""),
           ),
-          Row(
-            children: <Widget>[
-              getText(widget.item?.cutNm ?? ""),
-              Container(
-                height: getSize(4),
-                width: getSize(4),
-                decoration: BoxDecoration(
-                    color: appTheme.dividerColor, shape: BoxShape.circle),
-              ),
-              getText(widget.item?.polNm ?? ""),
-              Container(
-                height: getSize(4),
-                width: getSize(4),
-                decoration: BoxDecoration(
-                    color: appTheme.dividerColor, shape: BoxShape.circle),
-              ),
-              getText(widget.item?.symNm ?? ""),
-            ],
-          ),
-          Expanded(child: Container()),
-          getText(widget.item?.msrmnt ?? ""),
-          Expanded(child: Container()),
-          getText(widget.item?.lbNm ?? ""),
-          Expanded(child: Container()),
-          getAmountText(widget.item?.getAmount() ?? ""),
         ],
       ),
     );
   }
 
-  getText(String text) {
+  getThirdRow() {
+    return Padding(
+      padding: EdgeInsets.only(top: getSize(4), bottom: getSize(4)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Expanded(
+            flex: 2,
+            child: getText(
+                widget.item?.lbNm ?? "", appTheme.blackMedium12TitleColorblack),
+          ),
+          Expanded(
+            flex: 2,
+            child: getTextWithLabel(widget.item?.shdNm ?? "", "S : "),
+          ),
+          // getText(widget.item?.msrmnt ?? ""),
+          Expanded(
+            flex: 2,
+            child: getText(
+                widget.item?.fluNm ?? "", appTheme.blackMedium12TitleColorblack,
+                align: TextAlign.right),
+          ),
+
+          Expanded(
+            flex: 4,
+            child: getAmountText(
+              widget.item?.getAmount() ?? "",
+              align: TextAlign.right,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  getFourthRow() {
+    return Padding(
+      padding: EdgeInsets.only(top: getSize(4)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            flex: 2,
+            child: getTextWithLabel(widget.item?.mlk ?? "-", "M : ",
+                aligmentOfRow: MainAxisAlignment.start),
+          ),
+          // PriceUtilities.getPercent(widget.item?.depPer ?? 0)
+          Expanded(
+            flex: 2,
+            child: getTextWithLabel(
+                PriceUtilities.getPercentWithoutPercentSign(
+                    widget.item?.depPer ?? 0),
+                "D : "),
+          ),
+          Expanded(
+            flex: 2,
+            child: getTextWithLabel(
+                PriceUtilities.getPercentWithoutPercentSign(
+                    widget.item?.tblPer ?? 0),
+                "T : "),
+          ),
+          Expanded(
+            flex: 4,
+            child: getTextWithLabel(widget.item?.msrmnt ?? "", "M : ",
+                align: TextAlign.right),
+          ),
+          // getAmountText(widget.item?.getAmount() ?? ""),
+        ],
+      ),
+    );
+  }
+
+  getText(String text, TextStyle style, {TextAlign align}) {
     return Text(
       text,
-      style: appTheme.black12TextStyle,
+      textAlign: align ?? TextAlign.left,
+      style: style,
     );
   }
 
@@ -212,10 +301,11 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
     );
   }
 
-  getAmountText(String text) {
+  getAmountText(String text, {TextAlign align}) {
     return Text(
       text,
-      style: appTheme.blue14TextStyle.copyWith(fontSize: getFontSize(12)),
+      textAlign: align ?? TextAlign.left,
+      style: appTheme.blue14TextStyle.copyWith(fontSize: getFontSize(14)),
     );
   }
 }
