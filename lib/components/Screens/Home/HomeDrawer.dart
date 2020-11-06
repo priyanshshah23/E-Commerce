@@ -26,7 +26,7 @@ class HomeDrawer extends StatelessWidget {
       onTap: callback,
       child: Column(
         children: [
-          if(model.isShowUpperDivider)
+          if (model.isShowUpperDivider)
             Container(
               margin: EdgeInsets.symmetric(vertical: getSize(10)),
               height: getSize(1),
@@ -44,9 +44,10 @@ class HomeDrawer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(top: getSize(10), bottom: getSize(10)),
+                  padding:
+                      EdgeInsets.only(top: getSize(10), bottom: getSize(10)),
                   child: Image.asset(model.image,
-                      // color: model.imageColor != null ? model.imageColor : null,
+                      color: model.imageColor != null ? model.imageColor : null,
                       width: getSize(22),
                       height: getSize(22)),
                 ),
@@ -85,13 +86,13 @@ class HomeDrawer extends StatelessWidget {
               ],
             ),
           ),
-          if(model.isShowDivider)
-          Container(
-            margin: EdgeInsets.symmetric(vertical: getSize(10)),
-            height: getSize(1),
-            width: MathUtilities.screenWidth(context),
-            color: appTheme.dividerColor.withOpacity(0.5),
-          )
+          if (model.isShowDivider)
+            Container(
+              margin: EdgeInsets.symmetric(vertical: getSize(10)),
+              height: getSize(1),
+              width: MathUtilities.screenWidth(context),
+              color: appTheme.dividerColor.withOpacity(0.5),
+            )
         ],
       ),
     );
@@ -110,10 +111,14 @@ class HomeDrawer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(top: getSize(10), bottom: getSize(10),left: getSize(20), right: getSize(20),),
+            padding: EdgeInsets.only(
+              top: getSize(10),
+              bottom: getSize(10),
+              left: getSize(20),
+              right: getSize(20),
+            ),
             child: Image.asset(drawerLogo,
-                width: getSize(22),
-                height: getSize(22)),
+                width: getSize(22), height: getSize(22)),
           ),
           SizedBox(
             width: getSize(12),
@@ -128,7 +133,9 @@ class HomeDrawer extends StatelessWidget {
       ),
     ));
 
-    list.add(SizedBox(height: getSize(10),));
+    list.add(SizedBox(
+      height: getSize(10),
+    ));
 
     for (int i = 0; i < drawerItems.length; i++) {
       list.add(getDrawerItem(context, drawerItems[i], () {
@@ -247,16 +254,16 @@ class UserDrawerHeader extends StatelessWidget {
 
   Widget _buildAvatarRow(BuildContext context) {
     return Material(
-     // elevation: 10,
-     // shadowColor: appTheme.shadowColor,
+      // elevation: 10,
+      // shadowColor: appTheme.shadowColor,
       borderRadius: BorderRadius.circular(getSize(5)),
       child: InkWell(
-        onTap: ()=>_navigateToUserScreen(),
+        onTap: () => _navigateToUserScreen(),
         child: Container(
           decoration: BoxDecoration(
             color: appTheme.whiteColor,
             borderRadius: BorderRadius.circular(getSize(5)),
-          //  border: Border.all(color: appTheme.dividerColor),
+            //  border: Border.all(color: appTheme.dividerColor),
             // boxShadow: [
             //   BoxShadow(
             //     color: appTheme.shadowColor,
@@ -318,7 +325,7 @@ class UserDrawerHeader extends StatelessWidget {
                                 Spacer(),
                                 InkWell(
                                   onTap: () {
-                                   Navigator.pop(context);
+                                    Navigator.pop(context);
                                   },
                                   child: Image.asset(
                                     cancel,
