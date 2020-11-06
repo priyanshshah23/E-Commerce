@@ -32,7 +32,8 @@ class PersonalInformation extends StatefulWidget {
   _PersonalInformationState createState() => _PersonalInformationState();
 }
 
-class _PersonalInformationState extends State<PersonalInformation> with AutomaticKeepAliveClientMixin<PersonalInformation>{
+class _PersonalInformationState extends State<PersonalInformation>
+    with AutomaticKeepAliveClientMixin<PersonalInformation> {
   final _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
   final TextEditingController _firstNameController = TextEditingController();
@@ -87,7 +88,7 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
   @override
   void initState() {
     super.initState();
-   // _callApiForCountryList();
+    // _callApiForCountryList();
     getPersonalInformation();
   }
 
@@ -100,40 +101,44 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
       child: Scaffold(
         resizeToAvoidBottomPadding: true,
         resizeToAvoidBottomInset: false,
-      bottomNavigationBar:  Padding(
-        padding: EdgeInsets.only(top: getSize(10), bottom: getSize(16), right: getSize(20), left: getSize(20),),
-        child: Container(
-          child: AppButton.flat(
-            onTap: () async {
-              FocusScope.of(context).unfocus();
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-                if(_mobileController.text.isNotEmpty || _whatsAppMobileController.text.isNotEmpty){
-                  if(await checkValidation()) {
-                    if(isProfileImageUpload) {
-                      uploadDocument();
-                    } else {
+        bottomNavigationBar: Padding(
+          padding: EdgeInsets.only(
+            top: getSize(10),
+            bottom: getSize(16),
+            right: getSize(20),
+            left: getSize(20),
+          ),
+          child: Container(
+            child: AppButton.flat(
+              onTap: () async {
+                FocusScope.of(context).unfocus();
+                if (_formKey.currentState.validate()) {
+                  _formKey.currentState.save();
+                  if (_mobileController.text.isNotEmpty ||
+                      _whatsAppMobileController.text.isNotEmpty) {
+                    if (await checkValidation()) {
+                      if (isProfileImageUpload) {
+                        await uploadDocument();
+                      }
                       callPersonalInformationApi();
                     }
                   }
+                } else {
+                  setState(() {
+                    _autoValidate = true;
+                  });
                 }
-                //isProfileImageUpload ? uploadDocument() : callApi();
-              } else {
-                setState(() {
-                  _autoValidate = true;
-                });
-              }
-              // NavigationUtilities.push(ThemeSetting());
-            },
+                // NavigationUtilities.push(ThemeSetting());
+              },
               backgroundColor: appTheme.colorPrimary.withOpacity(0.1),
-            textColor: appTheme.colorPrimary,
-            borderRadius: getSize(5),
-            fitWidth: true,
-            text: R.string().authStrings.editProfileTitle,
-            //isButtonEnabled: enableDisableSigninButton(),
+              textColor: appTheme.colorPrimary,
+              borderRadius: getSize(5),
+              fitWidth: true,
+              text: R.string().authStrings.editProfileTitle,
+              //isButtonEnabled: enableDisableSigninButton(),
+            ),
           ),
         ),
-      ),
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(
@@ -201,12 +206,12 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
                             InkWell(
                               onTap: () {
                                 FocusScope.of(context).unfocus();
-                                openImagePickerDocuments((img) {
+                                openImagePickerDocuments((img) async {
                                   setState(() {
                                     isProfileImageUpload = true;
                                     profileImage = img;
                                   });
-                                  uploadDocument();
+                                  await uploadDocument();
                                 });
                               },
                               child: Image.asset(
@@ -320,16 +325,16 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
   }
 
   uploadProfileImage(File imgFile, Function imagePath) async {
-    await uploadFile(
+    uploadFile(
       context,
       "",
       file: imgFile,
     ).then((result) {
       if (result.code == CODE_OK) {
         String imgPath =
-        result.detail.files != null && result.detail.files.length > 0
-            ? result.detail.files.first.absolutePath
-            : "";
+            result.detail.files != null && result.detail.files.length > 0
+                ? result.detail.files.first.absolutePath
+                : "";
         if (isNullEmptyOrFalse(imgPath) == false) {
           imagePath(imgPath);
           callPersonalInformationApi(imagePath: imgPath);
@@ -566,16 +571,17 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
   }
 
   checkValidation() async {
-    if (await isValidMobile(
-        _mobileController.text.trim(), selectedDialogCountryForMobile.isoCode) ==
+    if (await isValidMobile(_mobileController.text.trim(),
+            selectedDialogCountryForMobile.isoCode) ==
         false) {
-       showToast(R.string().errorString.enterValidPhone,context: context);
-       return false;
-    } else if (await isValidMobile(
-        _whatsAppMobileController.text.trim(), selectedDialogCountryForWhatsapp.isoCode) ==
+      showToast(R.string().errorString.enterValidPhone, context: context);
+      return false;
+    } else if (await isValidMobile(_whatsAppMobileController.text.trim(),
+            selectedDialogCountryForWhatsapp.isoCode) ==
         false) {
-       showToast(R.string().errorString.enterValidWhatsappPhone,context: context);
-       return false;
+      showToast(R.string().errorString.enterValidWhatsappPhone,
+          context: context);
+      return false;
     }
     return true;
   }
@@ -591,62 +597,73 @@ class _PersonalInformationState extends State<PersonalInformation> with Automati
     req.whatsapp = _whatsAppMobileController.text;
     req.whatsappCounCode = selectedDialogCountryForWhatsapp.phoneCode;
     req.email = _emailController.text.trim();
-    if(imagePath != null) {
+    if (imagePath != null) {
       req.profileImage = imagePath;
     }
 
     NetworkCall<PersonalInformationViewResp>()
         .makeCall(
-            () => app.resolve<ServiceModule>().networkService().personalInformation(req),
-        context,
-        isProgress: true)
+            () => app
+                .resolve<ServiceModule>()
+                .networkService()
+                .personalInformation(req),
+            context,
+            isProgress: true)
         .then((resp) async {
+      if (resp.data.accountTerm == null) {
+        var oldAccTerm = app.resolve<PrefUtils>().getUserDetails().accountTerm;
+        resp.data.accountTerm = oldAccTerm;
+      }
+
       app.resolve<PrefUtils>().saveUser(resp.data);
       app.resolve<CustomDialogs>().confirmDialog(
-        context,
-        title: R.string().commonString.successfully,
-        desc: resp.message,
-        positiveBtnTitle: R.string().commonString.ok,
-      );
+            context,
+            title: R.string().commonString.successfully,
+            desc: resp.message,
+            positiveBtnTitle: R.string().commonString.ok,
+          );
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
-        context,
-        title: R.string().commonString.error,
-        desc: onError.message,
-        positiveBtnTitle: R.string().commonString.btnTryAgain,
-      );
+            context,
+            title: R.string().commonString.error,
+            desc: onError.message,
+            positiveBtnTitle: R.string().commonString.btnTryAgain,
+          );
     });
   }
 
   getPersonalInformation() async {
-
     NetworkCall<PersonalInformationViewResp>()
         .makeCall(
-            () => app.resolve<ServiceModule>().networkService().personalInformationView(),
-        context,
-        isProgress: true)
+            () => app
+                .resolve<ServiceModule>()
+                .networkService()
+                .personalInformationView(),
+            context,
+            isProgress: true)
         .then((resp) async {
-        _firstNameController.text = resp.data.firstName;
-        _lastNameController.text = resp.data.lastName;
-        _addressLineOneController.text =  resp.data.address;
-         _mobileController.text = resp.data.mobile;
-         selectedDialogCountryForMobile = CountryPickerUtils.getCountryByPhoneCode(resp.data.countryCode);
-         _whatsAppMobileController.text = resp.data.whatsapp;
-         selectedDialogCountryForWhatsapp = CountryPickerUtils.getCountryByPhoneCode(resp.data.whatsappCounCode);
-         _emailController.text = resp.data.email;
-         image = resp.data.profileImage;
-        setState(() {});
+      _firstNameController.text = resp.data.firstName;
+      _lastNameController.text = resp.data.lastName;
+      _addressLineOneController.text = resp.data.address;
+      _mobileController.text = resp.data.mobile;
+      selectedDialogCountryForMobile =
+          CountryPickerUtils.getCountryByPhoneCode(resp.data.countryCode);
+      _whatsAppMobileController.text = resp.data.whatsapp;
+      selectedDialogCountryForWhatsapp =
+          CountryPickerUtils.getCountryByPhoneCode(resp.data.whatsappCounCode);
+      _emailController.text = resp.data.email;
+      image = resp.data.profileImage;
+      setState(() {});
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
-        context,
-        title: R.string().commonString.error,
-        desc: onError.message,
-        positiveBtnTitle: R.string().commonString.btnTryAgain,
-      );
+            context,
+            title: R.string().commonString.error,
+            desc: onError.message,
+            positiveBtnTitle: R.string().commonString.btnTryAgain,
+          );
     });
   }
 
   @override
   bool get wantKeepAlive => true;
-
 }

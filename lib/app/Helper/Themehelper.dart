@@ -189,7 +189,7 @@ class BaseTheme {
   TextStyle get blackMedium12TitleColorblack {
     return TextStyle(
         fontSize: getFontSize(12),
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w500,
         color: textColor);
   }
 

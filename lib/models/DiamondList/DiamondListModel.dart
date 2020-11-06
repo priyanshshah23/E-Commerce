@@ -768,10 +768,10 @@ class DiamondModel {
       DateTime now = DateTime.now();
       if (now.hour >= 15 || (now.hour <= 11 && now.month < 30)) {
         var totalctpr = this.ctPr *
-            ((-app.resolve<PrefUtils>().getUserDetails().accountTerm.extraPer) +
-                0.5);
+            ((-app.resolve<PrefUtils>().getUserDetails().accountTerm.extraPer));
         var extractpr = totalctpr / 100;
-        return this.ctPr - extractpr;
+        var dblExtractpr = extractpr * 0.5 / 100;
+        return this.ctPr - extractpr - dblExtractpr;
       }
       var totalctpr = this.ctPr *
           (-app.resolve<PrefUtils>().getUserDetails().accountTerm.extraPer);

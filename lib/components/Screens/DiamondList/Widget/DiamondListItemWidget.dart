@@ -913,25 +913,6 @@ getText(String text, TextStyle style) {
   );
 }
 
-getTextWithLabel(String text, String label,
-    {TextAlign align = TextAlign.left}) {
-  return Row(
-    mainAxisSize: MainAxisSize.min,
-    mainAxisAlignment: MainAxisAlignment.end,
-    children: [
-      Text(label,
-          textAlign: align,
-          style: appTheme.dividerColorNormal12Title.copyWith(
-              fontWeight: FontWeight.bold,
-              color: appTheme.textColor.withOpacity(0.3))),
-      Text(
-        text,
-        style: appTheme.black12TextStyle,
-      ),
-    ],
-  );
-}
-
 getPrimaryText(String text) {
   return Text(
     text,
@@ -989,4 +970,23 @@ class TooltipShapeBorder extends ShapeBorder {
 
   @override
   ShapeBorder scale(double t) => this;
+}
+
+getTextWithLabel(String text, String label,
+    {TextAlign align = TextAlign.left, MainAxisAlignment aligmentOfRow}) {
+  return Row(
+    mainAxisSize: MainAxisSize.min,
+    mainAxisAlignment: aligmentOfRow ?? MainAxisAlignment.end,
+    children: [
+      Text(label,
+          textAlign: align,
+          style: appTheme.dividerColorNormal12Title.copyWith(
+              fontWeight: FontWeight.bold,
+              color: appTheme.textColor.withOpacity(0.3))),
+      Text(
+        text,
+        style: appTheme.black12TextStyle,
+      ),
+    ],
+  );
 }
