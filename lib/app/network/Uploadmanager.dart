@@ -26,7 +26,9 @@ Future<FileUploadResp> uploadFile(BuildContext context, String folderName,
         (client) {
       // config the http client
       client.findProxy = (uri) {
-         return ApiConstants.PROXY_URL;
+        return Platform.isAndroid
+            ? "PROXY 10.0.2.2:8888"
+            : ApiConstants.PROXY_URL;
       };
       // you can also create a new HttpClient to dio
       // return new HttpClient();
@@ -39,22 +41,24 @@ Future<FileUploadResp> uploadFile(BuildContext context, String folderName,
   var uploadProgressWidget = UploadProgress(
     state: _UploadProgressState(),
   );
-  if (!uploadProgressWidget._isDialogShown) {
-    print("progress show Dialog");
-    uploadProgressWidget._isDialogShown = true;
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return uploadProgressWidget;
-        });
-  }
+
   try {
     response = await dio.post(
       //"/upload",
       ApiConstants.documentUpload,
       data: formData1,
       onSendProgress: (received, total) {
+        if (!uploadProgressWidget._isDialogShown) {
+          print("progress show Dialog");
+          uploadProgressWidget._isDialogShown = true;
+          showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return uploadProgressWidget;
+              });
+        }
+
         print(received.toString() + " progress " + total.toString());
         if (total != -1) {
           var perc = (((received * 100) / total) / 100);
@@ -185,32 +189,36 @@ class _UploadProgressState extends State<UploadProgress> {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(getSize(25)),
-      ),
-      elevation: 0.0,
+    return WillPopScope(
+      onWillPop: () {
+        return Future.value(false);
+      },
+      child: Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(getSize(25)),
+        ),
+        elevation: 0.0,
 
-      // height: MathUtilities.screenHeight(context),
-      // backgroundColor: Colors.transparent,
-      child: Padding(
-        padding: EdgeInsets.all(getSize(20)),
-        child: Wrap(
-          children: <Widget>[
-            Container(
-              alignment: Alignment.center,
-              color: Colors.white,
-              child: Column(
-                children: <Widget>[
-                  getTitleText(context, "Uploading", ColorConstants.black,
-                      fontSize: getSize(20)),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: getSize(20),
-                        bottom: getSize(16),
-                        right: getSize(8),
-                        left: getSize(8)),
-                    child: SizedBox(),
+        // height: MathUtilities.screenHeight(context),
+        // backgroundColor: Colors.transparent,
+        child: Padding(
+          padding: EdgeInsets.all(getSize(20)),
+          child: Wrap(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.center,
+                color: Colors.white,
+                child: Column(
+                  children: <Widget>[
+                    getTitleText(context, "Uploading", ColorConstants.black,
+                        fontSize: getSize(20)),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: getSize(20),
+                          bottom: getSize(16),
+                          right: getSize(8),
+                          left: getSize(8)),
+                      child: SizedBox(),
 //                    child: new LinearPercentIndicator(
 //                      width: MathUtilities.screenWidth(context) - getSize(150),
 //                      lineHeight: 14.0,
@@ -225,11 +233,12 @@ class _UploadProgressState extends State<UploadProgress> {
 //                      backgroundColor: ColorConstants.introgrey,
 //                      progressColor: appTheme.colorPrimary,
 //                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

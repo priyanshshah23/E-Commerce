@@ -34,7 +34,9 @@ class ServiceModule {
           (client) {
         // config the http client
         client.findProxy = (uri) {
-          return ApiConstants.PROXY_URL;
+          return Platform.isAndroid
+              ? "PROXY 10.0.2.2:8888"
+              : ApiConstants.PROXY_URL;
         };
         // you can also create a new HttpClient to dio
 //            return new HttpClient();
