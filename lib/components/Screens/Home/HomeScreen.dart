@@ -67,6 +67,15 @@ class _HomeScreenState extends State<HomeScreen> {
         //app.resolve<PrefUtils>().resetAndLogout(context);
       });
 
+      app.resolve<CustomDialogs>().confirmDialog(context,
+          title: R.string().authStrings.uploadKYC,
+          desc: R.string().authStrings.uploadKycDesc,
+          positiveBtnTitle: R.string().commonString.upload,
+          negativeBtnTitle: R.string().commonString.btnSkip,
+          onClickCallback: (click) {
+//
+      });
+
       /*Timer(
         Duration(seconds: 2),
         () => (checkVersionUpdate(context)),
@@ -199,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
     currentWidget = SavedSearchScreen(dict);
   }
 
-  openMyDemand(int moduleType){
+  openMyDemand(int moduleType) {
     selectedType = moduleType;
     Map<String, dynamic> dict = new HashMap();
     dict[ArgumentConstant.ModuleType] =
@@ -208,11 +217,11 @@ class _HomeScreenState extends State<HomeScreen> {
     // currentWidget = SavedSearchScreen(dict);
     currentWidget = MyDemandScreen(dict);
   }
-  
+
   openProfile() {
     Map<String, dynamic> dict = new HashMap();
     dict[ArgumentConstant.IsFromDrawer] = false;
-    NavigationUtilities.pushRoute(MyAccountScreen.route,args: dict);
+    NavigationUtilities.pushRoute(MyAccountScreen.route, args: dict);
   }
 
   manageDrawerClick(BuildContext context, int type, bool isPop) {
@@ -298,6 +307,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-
 }
