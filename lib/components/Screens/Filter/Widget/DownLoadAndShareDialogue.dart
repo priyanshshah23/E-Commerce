@@ -55,6 +55,21 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
     super.initState();
   }
 
+   checkValidation() {
+    var totalList =( firstImageList +
+        secondImageList +
+        firstVideoList +
+        secondVideoList +
+        firstCertificateList + secondCertificateList +
+        firstExcelList +
+    firstRoughList + secondRoughList).where((element) {
+      return element.isSelected;
+    }).toList();
+
+
+    return !isNullEmptyOrFalse(totalList);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -131,6 +146,12 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                       child: InkWell(
                         onTap: () {
                           Navigator.pop(context);
+                          if (checkValidation()) {
+                            openURLWithApp(
+                                "whatsapp://send?phone=&text=Hello!", context);
+                          } else {
+                            showToast("Please select any", context: context);
+                          }
                         },
                         child: Container(
                           height: getSize(46),
@@ -155,6 +176,13 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                         onTap: () {
                           //callEmailApi();
                           _openMail();
+                          if (checkValidation()) {
+                            openURLWithApp(
+                                "mailto:?subject=DiamNow&body=DiamNow",
+                                context);
+                          } else {
+                            showToast("Please select any", context: context);
+                          }
                         },
                         child: Container(
                           height: getSize(46),
@@ -178,6 +206,11 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                       child: InkWell(
                         onTap: () {
                           Navigator.pop(context);
+                          if (checkValidation()) {
+                            openURLWithApp("skype:", context);
+                          } else {
+                            showToast("Please select any", context: context);
+                          }
                         },
                         child: Container(
                           height: getSize(46),
@@ -224,9 +257,8 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                     ),
                     Expanded(
                       child: InkWell(
-                        onTap: () async{
-                          //  write code.
-                          // await doDownLoad();
+                        onTap: () {
+                          Navigator.pop(context);
                         },
                         child: Container(
                           height: getSize(46),
@@ -242,7 +274,7 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                           ),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
         ],
@@ -266,8 +298,8 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
             positiveBtnTitle: R.string().commonString.ok,
           );
     }
+ 
   }
-
 //  callEmailApi() async {
 //    ShareThroughEmailReq req = ShareThroughEmailReq();
 //

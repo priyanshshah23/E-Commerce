@@ -675,101 +675,30 @@ class DiamondConfig {
     );
   }
 
+  _onShare(BuildContext context) async {
+    final RenderBox box = context.findRenderObject();
+    await Share.share("Dear Sir / Madam Greetings of the day from Finestar Team. Please have a look at below stock file.",
+        subject: "DiamNow",
+        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+  }
+
   actionShare(BuildContext context, List<DiamondModel> list) {
-    List<BottomTabModel> shareOption = List<BottomTabModel>();
-    shareOption.add(BottomTabModel(
-        title: "Gmail",
-        image: gmail,
-        onTap: () {
-          openURLWithApp("mailto:?subject=DiamNow&body=DiamNow", context);
-        }));
-    shareOption
-        .add(BottomTabModel(title: "Hangout", image: hangout, onTap: () {}));
-    shareOption
-        .add(BottomTabModel(title: "To Drive", image: drive, onTap: () {}));
-    shareOption.add(BottomTabModel(
-        title: "Facebook",
-        image: facebook,
-        onTap: () {
-//        openURLWithApp("fb://profile", context);
-          openURLWithApp("fb.me/", context);
-        }));
-    shareOption.add(BottomTabModel(
-        title: "WhatsApp",
-        image: whatsapp,
-        onTap: () {
-          openURLWithApp(
-              "whatsapp://send?phone=9099726618&text=Hello!", context);
-        }));
-    showModalBottomSheet(
+//    _onShare(context);
+    showDialog(
       context: context,
-      isScrollControlled: true,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
-      builder: (_) => Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(
-            height: getSize(30),
+      builder: (BuildContext context) {
+        return Dialog(
+          insetPadding: EdgeInsets.symmetric(
+              horizontal: getSize(20), vertical: getSize(20)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(getSize(25)),
           ),
-          Text(
-            R.string().commonString.share,
-            style: appTheme.black18TextStyle,
+          child: DownLoadAndShareDialogue(
+            title: R.string().commonString.share,
           ),
-          SizedBox(
-            height: getSize(18),
-          ),
-          Container(
-            child: GridView.count(
-              childAspectRatio: 1.4,
-              shrinkWrap: true,
-              crossAxisCount: 3,
-              children: List.generate(
-                shareOption.length,
-                (index) {
-                  return InkWell(
-                    onTap: () {
-                      shareOption[index].onTap();
-                    },
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                            height: getSize(33),
-                            width: getSize(47),
-                            child: Image.asset(shareOption[index].image)),
-                        SizedBox(
-                          height: getSize(10),
-                        ),
-                        Text(
-                          shareOption[index].title,
-                          style: appTheme.black16TextStyle,
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
-//    showDialog(
-//      context: context,
-//      builder: (BuildContext context) {
-//        return Dialog(
-//          insetPadding: EdgeInsets.symmetric(
-//              horizontal: getSize(20), vertical: getSize(20)),
-//          shape: RoundedRectangleBorder(
-//            borderRadius: BorderRadius.circular(getSize(25)),
-//          ),
-//          child: DownLoadAndShareDialogue(
-//            title: R.string().commonString.share,
-//          ),
-//        );
-//      },
-//    );
 //    openSharePopUp(context);
   }
 
