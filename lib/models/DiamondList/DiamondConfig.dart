@@ -604,79 +604,72 @@ class DiamondConfig {
   ) {
     List<SelectionPopupModel> downloadOptionList = List<SelectionPopupModel>();
     List<SelectionPopupModel> selectedOptions = List<SelectionPopupModel>();
-    downloadOptionList.add(SelectionPopupModel(
-      "1",
-      "Excel",
-      fileType: DownloadAndShareDialogueConstant.excel
-    ));
-    downloadOptionList.add(SelectionPopupModel(
-      "2",
-      "Certificate",
-      fileType: DownloadAndShareDialogueConstant.certificate
-    ));
-    downloadOptionList.add(SelectionPopupModel(
-      "3",
-      "Real Image",
-      fileType: DownloadAndShareDialogueConstant.realImage1
-    ));
-    downloadOptionList.add(SelectionPopupModel(
-      "4",
-      "Plotting Image",
-      fileType: DownloadAndShareDialogueConstant.plottingImg
-    ));
-    downloadOptionList.add(SelectionPopupModel(
-      "5",
-      "Heart & Arrow",
-      fileType: DownloadAndShareDialogueConstant.heartAndArrowImg
-    ));
-    downloadOptionList.add(SelectionPopupModel(
-      "6",
-      "Asset Scope",
-      fileType: DownloadAndShareDialogueConstant.assetScopeImg
-    ));
-    downloadOptionList.add(SelectionPopupModel(
-      "7",
-      "Video",
-      fileType: DownloadAndShareDialogueConstant.video1
-    ));
+    downloadOptionList.add(SelectionPopupModel("1", "Excel",
+        fileType: DownloadAndShareDialogueConstant.excel));
+    downloadOptionList.add(SelectionPopupModel("2", "Certificate",
+        fileType: DownloadAndShareDialogueConstant.certificate));
+    downloadOptionList.add(SelectionPopupModel("3", "Real Image",
+        fileType: DownloadAndShareDialogueConstant.realImage1));
+    downloadOptionList.add(SelectionPopupModel("4", "Plotting Image",
+        fileType: DownloadAndShareDialogueConstant.plottingImg));
+    downloadOptionList.add(SelectionPopupModel("5", "Heart & Arrow",
+        fileType: DownloadAndShareDialogueConstant.heartAndArrowImg));
+    downloadOptionList.add(SelectionPopupModel("6", "Asset Scope",
+        fileType: DownloadAndShareDialogueConstant.assetScopeImg));
+    downloadOptionList.add(SelectionPopupModel("7", "Video",
+        fileType: DownloadAndShareDialogueConstant.video1));
 
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (BuildContext context) {
-        return Dialog(
-          insetPadding: EdgeInsets.symmetric(
-              horizontal: getSize(20), vertical: getSize(5)),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(getSize(25)),
-          ),
-          child: SelectionDialogue(
-            isSearchEnable: false,
-            title: R.string().commonString.download,
-            isMultiSelectionEnable: true,
-            positiveButtonTitle: R.string().commonString.download,
-            selectionOptions: downloadOptionList,
-            applyFilterCallBack: (
-                {SelectionPopupModel selectedItem,
-                List<SelectionPopupModel> multiSelectedItem}) {
-              selectedOptions = multiSelectedItem;
-              // Navigator.pop(context);
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Dialog(
-                      insetPadding: EdgeInsets.symmetric(
-                          horizontal: getSize(20), vertical: getSize(5)),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(getSize(25)),
-                      ),
-                      child: Download(allDiamondPreviewThings: selectedOptions,diamondList: list,),
-                    );
-                  });
-            },
-          ),
+        return WillPopScope(
+          onWillPop: () {
+            return Future.value(false);
+          },
+          child: Dialog(
+            insetPadding: EdgeInsets.symmetric(
+                horizontal: getSize(20), vertical: getSize(5)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(getSize(25)),
+            ),
+            child: SelectionDialogue(
+              isSearchEnable: false,
+              title: R.string().commonString.download,
+              isMultiSelectionEnable: true,
+              positiveButtonTitle: R.string().commonString.download,
+              selectionOptions: downloadOptionList,
+              applyFilterCallBack: (
+                  {SelectionPopupModel selectedItem,
+                  List<SelectionPopupModel> multiSelectedItem}) {
+                selectedOptions = multiSelectedItem;
+                // Navigator.pop(context);
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return WillPopScope(
+                        onWillPop: () {
+                          return Future.value(false);
+                        },
+                        child: Dialog(
+                          insetPadding: EdgeInsets.symmetric(
+                              horizontal: getSize(20), vertical: getSize(5)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(getSize(25)),
+                          ),
+                          child: Download(
+                            allDiamondPreviewThings: selectedOptions,
+                            diamondList: list,
+                          ),
+                        ),
+                      );
+                    });
+              },
+            ),
 //          child: DownLoadAndShareDialogue(
 //            title: R.string().commonString.download,
 //          ),
+          ),
         );
       },
     );
@@ -684,7 +677,8 @@ class DiamondConfig {
 
   _onShare(BuildContext context) async {
     final RenderBox box = context.findRenderObject();
-    await Share.share("Dear Sir / Madam Greetings of the day from Finestar Team. Please have a look at below stock file.",
+    await Share.share(
+        "Dear Sir / Madam Greetings of the day from Finestar Team. Please have a look at below stock file.",
         subject: "DiamNow",
         sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
   }

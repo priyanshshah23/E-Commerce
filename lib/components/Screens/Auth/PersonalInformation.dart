@@ -610,6 +610,11 @@ class _PersonalInformationState extends State<PersonalInformation>
             context,
             isProgress: true)
         .then((resp) async {
+      if (resp.data.accountTerm == null) {
+        var oldAccTerm = app.resolve<PrefUtils>().getUserDetails().accountTerm;
+        resp.data.accountTerm = oldAccTerm;
+      }
+
       app.resolve<PrefUtils>().saveUser(resp.data);
       app.resolve<CustomDialogs>().confirmDialog(
             context,
