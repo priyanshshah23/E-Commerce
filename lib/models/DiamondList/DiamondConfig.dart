@@ -604,41 +604,20 @@ class DiamondConfig {
   ) {
     List<SelectionPopupModel> downloadOptionList = List<SelectionPopupModel>();
     List<SelectionPopupModel> selectedOptions = List<SelectionPopupModel>();
-    downloadOptionList.add(SelectionPopupModel(
-      "1",
-      "Excel",
-      fileType: DownloadAndShareDialogueConstant.excel
-    ));
-    downloadOptionList.add(SelectionPopupModel(
-      "2",
-      "Certificate",
-      fileType: DownloadAndShareDialogueConstant.certificate
-    ));
-    downloadOptionList.add(SelectionPopupModel(
-      "3",
-      "Real Image",
-      fileType: DownloadAndShareDialogueConstant.realImage1
-    ));
-    downloadOptionList.add(SelectionPopupModel(
-      "4",
-      "Plotting Image",
-      fileType: DownloadAndShareDialogueConstant.plottingImg
-    ));
-    downloadOptionList.add(SelectionPopupModel(
-      "5",
-      "Heart & Arrow",
-      fileType: DownloadAndShareDialogueConstant.heartAndArrowImg
-    ));
-    downloadOptionList.add(SelectionPopupModel(
-      "6",
-      "Asset Scope",
-      fileType: DownloadAndShareDialogueConstant.assetScopeImg
-    ));
-    downloadOptionList.add(SelectionPopupModel(
-      "7",
-      "Video",
-      fileType: DownloadAndShareDialogueConstant.video1
-    ));
+    downloadOptionList.add(SelectionPopupModel("1", "Excel",
+        fileType: DownloadAndShareDialogueConstant.excel));
+    downloadOptionList.add(SelectionPopupModel("2", "Certificate",
+        fileType: DownloadAndShareDialogueConstant.certificate));
+    downloadOptionList.add(SelectionPopupModel("3", "Real Image",
+        fileType: DownloadAndShareDialogueConstant.realImage1));
+    downloadOptionList.add(SelectionPopupModel("4", "Plotting Image",
+        fileType: DownloadAndShareDialogueConstant.plottingImg));
+    downloadOptionList.add(SelectionPopupModel("5", "Heart & Arrow",
+        fileType: DownloadAndShareDialogueConstant.heartAndArrowImg));
+    downloadOptionList.add(SelectionPopupModel("6", "Asset Scope",
+        fileType: DownloadAndShareDialogueConstant.assetScopeImg));
+    downloadOptionList.add(SelectionPopupModel("7", "Video",
+        fileType: DownloadAndShareDialogueConstant.video1));
 
     showDialog(
       context: context,
@@ -669,7 +648,10 @@ class DiamondConfig {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(getSize(25)),
                       ),
-                      child: Download(allDiamondPreviewThings: selectedOptions,diamondList: list,),
+                      child: Download(
+                        allDiamondPreviewThings: selectedOptions,
+                        diamondList: list,
+                      ),
                     );
                   });
             },
@@ -684,7 +666,8 @@ class DiamondConfig {
 
   _onShare(BuildContext context) async {
     final RenderBox box = context.findRenderObject();
-    await Share.share("Dear Sir / Madam Greetings of the day from Finestar Team. Please have a look at below stock file.",
+    await Share.share(
+        "Dear Sir / Madam Greetings of the day from Finestar Team. Please have a look at below stock file.",
         subject: "DiamNow",
         sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
   }

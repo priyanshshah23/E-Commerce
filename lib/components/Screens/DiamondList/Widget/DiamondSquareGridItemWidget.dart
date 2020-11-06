@@ -13,7 +13,7 @@ class DiamondSquareGridItem extends StatefulWidget {
   ActionClick actionClick;
   List<Widget> list;
 
-  DiamondSquareGridItem({this.item, this.actionClick,this.list});
+  DiamondSquareGridItem({this.item, this.actionClick, this.list});
   @override
   _DiamondSquareGridItemState createState() => _DiamondSquareGridItemState();
 }
@@ -42,15 +42,15 @@ class _DiamondSquareGridItemState extends State<DiamondSquareGridItem> {
                   : appTheme.whiteColor,
               boxShadow: widget.item.isSelected
                   ? [
-                BoxShadow(
-                    color: appTheme.colorPrimary.withOpacity(0.05),
-                    blurRadius: getSize(8),
-                    spreadRadius: getSize(2),
-                    offset: Offset(0, 8)),
-              ]
+                      BoxShadow(
+                          color: appTheme.colorPrimary.withOpacity(0.05),
+                          blurRadius: getSize(8),
+                          spreadRadius: getSize(2),
+                          offset: Offset(0, 8)),
+                    ]
                   : [BoxShadow(color: Colors.transparent)],
             ),
-            child:Row(
+            child: Row(
               children: [
                 Expanded(
                   child: Column(
@@ -61,103 +61,111 @@ class _DiamondSquareGridItemState extends State<DiamondSquareGridItem> {
                           widget.item.getDiamondImage(),
                           placeHolderImage: diamond,
                           width: MathUtilities.screenWidth(context),
-                          height: getSize(96),
+                          // height: getSize(100),
                         ),
                       ),
                       getFirstRow(),
                       getMiddleRow(),
-                      getLastRow()
+                      getThirdRow(),
+                      getFourthRow(),
                     ],
                   ),
                 ),
                 Container(
                   child: Center(
                       child: Container(
-                        decoration: BoxDecoration(
-                            color: widget.item.getStatusColor(),
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(5),
-                                bottomLeft: Radius.circular(5))),
-                        height: getSize(26),
-                        width: getSize(4),
-                        // color: Colors.red,
-                      )),
+                    decoration: BoxDecoration(
+                        color: widget.item.getStatusColor(),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(5),
+                            bottomLeft: Radius.circular(5))),
+                    height: getSize(26),
+                    width: getSize(4),
+                    // color: Colors.red,
+                  )),
                 ),
               ],
             ),
           ),
           widget.item.isSelected
               ? Container(
-            alignment: Alignment.center,
-            height: getSize(20),
-            width: getSize(20),
-            decoration: BoxDecoration(
-                color: appTheme.colorPrimary,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(getSize(5)),
-                  bottomRight: Radius.circular(getSize(5)),
-                )),
-            child: Icon(
-              Icons.check,
-              color: appTheme.whiteColor,
-              size: getSize(15),
-            ),
-          )
+                  alignment: Alignment.center,
+                  height: getSize(20),
+                  width: getSize(20),
+                  decoration: BoxDecoration(
+                      color: appTheme.colorPrimary,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(getSize(5)),
+                        bottomRight: Radius.circular(getSize(5)),
+                      )),
+                  child: Icon(
+                    Icons.check,
+                    color: appTheme.whiteColor,
+                    size: getSize(15),
+                  ),
+                )
               : SizedBox()
         ],
       ),
     );
   }
 
-  getFirstRow(){
+  getFirstRow() {
     return Padding(
-      padding: EdgeInsets.only(top: getSize(10)),
+      padding: EdgeInsets.only(
+        top: getSize(8),
+        bottom: getSize(4),
+      ),
       child: Row(
         children: [
           getText(widget.item?.vStnId ?? ""),
-           Expanded(child: Container()),
+          Expanded(child: Container()),
           getText(widget.item?.shpNm ?? ""),
           Expanded(child: Container()),
+          Text(PriceUtilities.getPercent(widget.item?.getFinalDiscount() ?? 0),
+              style: appTheme.blue12TextStyle),
+        ],
+      ),
+    );
+  }
+
+  getMiddleRow() {
+    return Padding(
+      padding: EdgeInsets.only(
+        top: getSize(4),
+        bottom: getSize(4),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
           Text(
             PriceUtilities.getDoubleValue(widget.item?.crt ?? 0),
-            style: appTheme.blue14TextStyle,
+            style: appTheme.blue16TextStyle,
           ),
           SizedBox(
             width: getSize(5),
           ),
           Text(
             R.string().commonString.carat,
-            style: appTheme.blue14TextStyle,
-          ),
-        ],
-      ),
-    );
-  }
-
-  getMiddleRow(){
-    return Padding(
-      padding: EdgeInsets.only(top: getSize(5)),
-      child: Row(
-        children: [
-          Text(
-            PriceUtilities.getPercent(widget.item?.getFinalDiscount()??0),
-            style: appTheme.blue10TextStyle,
+            style: appTheme.blue12TextStyle,
+            textAlign: TextAlign.center,
           ),
           Expanded(child: Container()),
           getText(widget.item?.colNm ?? ""),
           Expanded(child: Container()),
           getText(widget.item?.clrNm ?? ""),
           Expanded(child: Container()),
-          getAmountText(
-              widget.item?.getPricePerCarat() ?? ""),
         ],
       ),
     );
   }
 
-  getLastRow(){
+  getThirdRow() {
     return Padding(
-      padding: EdgeInsets.only(top: getSize(5)),
+      padding: EdgeInsets.only(
+        top: getSize(4),
+        bottom: getSize(4),
+      ),
       child: Row(
         children: [
           getText(widget.item?.cutNm ?? ""),
@@ -165,35 +173,42 @@ class _DiamondSquareGridItemState extends State<DiamondSquareGridItem> {
             height: getSize(4),
             width: getSize(4),
             decoration: BoxDecoration(
-                color: appTheme.dividerColor,
-                shape: BoxShape.circle),
+                color: appTheme.dividerColor, shape: BoxShape.circle),
           ),
           getText(widget.item?.polNm ?? ""),
           Container(
             height: getSize(4),
             width: getSize(4),
             decoration: BoxDecoration(
-                color: appTheme.dividerColor,
-                shape: BoxShape.circle),
+                color: appTheme.dividerColor, shape: BoxShape.circle),
           ),
           getText(widget.item?.symNm ?? ""),
           Expanded(child: Container()),
-          getText(widget.item?.lbNm ?? ""),
-          Expanded(child: Container()),
-          getAmountText(widget.item?.getAmount() ?? ""),
+          getAmountText(widget.item?.getPricePerCarat() ?? ""),
         ],
       ),
     );
   }
 
-
+  getFourthRow() {
+    return Padding(
+        padding: EdgeInsets.only(
+          top: getSize(4),
+          bottom: getSize(4),
+        ),
+        child: Row(
+          children: [
+            getText(widget.item?.lbNm ?? ""),
+            Expanded(child: Container()),
+            getAmountText(widget.item?.getAmount() ?? ""),
+          ],
+        ));
+  }
 
   getText(String text) {
     return Text(
       text,
-      style: appTheme.black12TextStyle.copyWith(
-        fontSize: getFontSize(10)
-      ),
+      style: appTheme.black12TextStyle,
     );
   }
 
@@ -207,7 +222,7 @@ class _DiamondSquareGridItemState extends State<DiamondSquareGridItem> {
   getAmountText(String text) {
     return Text(
       text,
-      style: appTheme.blue14TextStyle.copyWith(fontSize: getFontSize(12)),
+      style: appTheme.blue14TextStyle,
     );
   }
 }

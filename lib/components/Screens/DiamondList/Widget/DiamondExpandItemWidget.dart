@@ -50,7 +50,7 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
                 boxShadow: widget.item.isSelected
                     ? [
                         BoxShadow(
-                            color: appTheme.colorPrimary,
+                            color: appTheme.colorPrimary.withOpacity(0.05),
                             blurRadius: getSize(8),
                             spreadRadius: getSize(2),
                             offset: Offset(0, 8)),
@@ -146,7 +146,9 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
             flex: 2,
             child: Text(
               " " + R.string().commonString.carat,
-              style: appTheme.blue16TextStyle,
+              style: appTheme.blue16TextStyle.copyWith(
+                fontSize: getFontSize(14),
+              ),
             ),
           ),
           Expanded(

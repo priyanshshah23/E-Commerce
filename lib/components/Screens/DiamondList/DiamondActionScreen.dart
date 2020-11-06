@@ -264,8 +264,8 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                 child: Text(
                   R.string().commonString.cancel,
                   textAlign: TextAlign.center,
-                  style: appTheme.blue14TextStyle
-                      .copyWith(fontSize: getFontSize(16), fontWeight: FontWeight.w500),
+                  style: appTheme.blue14TextStyle.copyWith(
+                      fontSize: getFontSize(16), fontWeight: FontWeight.w500),
                 ),
               ),
             ),
@@ -276,21 +276,30 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                 switch (actionType) {
                   case DiamondTrackConstant.TRACK_TYPE_OFFER:
                   case DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER:
-                showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                return Dialog(
-                insetPadding: EdgeInsets.symmetric(
-                horizontal: getSize(20), vertical: getSize(20)),
-                shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(getSize(25)),
-                ),
-                child: PlaceOrderPopUp(
-                  diamondConfig: diamondConfig,
-                  diamondList: diamondList,
-                  actionType: actionType,
-                ));
-                });
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext cnt) {
+                          return Dialog(
+                              insetPadding: EdgeInsets.symmetric(
+                                  horizontal: getSize(20),
+                                  vertical: getSize(20)),
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(getSize(25)),
+                              ),
+                              child: PlaceOrderPopUp(
+                                diamondConfig: diamondConfig,
+                                diamondList: diamondList,
+                                actionType: actionType,
+                                callBack: (selectedPopUpDate) {
+                                  diamondConfig.actionAll(
+                                      context, diamondList, actionType,
+                                      remark: _commentController.text,
+                                      date: selectedPopUpDate,
+                                      companyName: _nameController.text);
+                                },
+                              ));
+                        });
                     break;
                   default:
                     diamondConfig.actionAll(context, diamondList, actionType);
