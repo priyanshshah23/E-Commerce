@@ -621,44 +621,55 @@ class DiamondConfig {
 
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (BuildContext context) {
-        return Dialog(
-          insetPadding: EdgeInsets.symmetric(
-              horizontal: getSize(20), vertical: getSize(5)),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(getSize(25)),
-          ),
-          child: SelectionDialogue(
-            isSearchEnable: false,
-            title: R.string().commonString.download,
-            isMultiSelectionEnable: true,
-            positiveButtonTitle: R.string().commonString.download,
-            selectionOptions: downloadOptionList,
-            applyFilterCallBack: (
-                {SelectionPopupModel selectedItem,
-                List<SelectionPopupModel> multiSelectedItem}) {
-              selectedOptions = multiSelectedItem;
-              // Navigator.pop(context);
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Dialog(
-                      insetPadding: EdgeInsets.symmetric(
-                          horizontal: getSize(20), vertical: getSize(5)),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(getSize(25)),
-                      ),
-                      child: Download(
-                        allDiamondPreviewThings: selectedOptions,
-                        diamondList: list,
-                      ),
-                    );
-                  });
-            },
-          ),
+        return WillPopScope(
+          onWillPop: () {
+            return Future.value(false);
+          },
+          child: Dialog(
+            insetPadding: EdgeInsets.symmetric(
+                horizontal: getSize(20), vertical: getSize(5)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(getSize(25)),
+            ),
+            child: SelectionDialogue(
+              isSearchEnable: false,
+              title: R.string().commonString.download,
+              isMultiSelectionEnable: true,
+              positiveButtonTitle: R.string().commonString.download,
+              selectionOptions: downloadOptionList,
+              applyFilterCallBack: (
+                  {SelectionPopupModel selectedItem,
+                  List<SelectionPopupModel> multiSelectedItem}) {
+                selectedOptions = multiSelectedItem;
+                // Navigator.pop(context);
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return WillPopScope(
+                        onWillPop: () {
+                          return Future.value(false);
+                        },
+                        child: Dialog(
+                          insetPadding: EdgeInsets.symmetric(
+                              horizontal: getSize(20), vertical: getSize(5)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(getSize(25)),
+                          ),
+                          child: Download(
+                            allDiamondPreviewThings: selectedOptions,
+                            diamondList: list,
+                          ),
+                        ),
+                      );
+                    });
+              },
+            ),
 //          child: DownLoadAndShareDialogue(
 //            title: R.string().commonString.download,
 //          ),
+          ),
         );
       },
     );
