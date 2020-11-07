@@ -166,16 +166,16 @@ class _DashboardState extends StatefulScreenWidgetState {
           manageToolbarClick(element);
         },
         child: (element.code == BottomCodeConstant.TBProfile)
-            ? Container(
-                width: getSize(44),
-                height: getSize(44),
-                child: Padding(
-                  padding: EdgeInsets.only(
-                      left: getSize(8.0), right: getSize(Spacing.rightPadding)),
+            ? Padding(
+                padding: EdgeInsets.only(
+                    left: getSize(8.0), right: getSize(Spacing.rightPadding)),
+                child: Container(
+                  width: getSize(30),
+                  height: getSize(30),
                   child: Center(
                     child: ClipRRect(
                       borderRadius:
-                          BorderRadius.all(Radius.circular(getSize(22))),
+                          BorderRadius.all(Radius.circular(getSize(30))),
                       child: getImageView(
                         app.resolve<PrefUtils>().getUserDetails().profileImage,
                         placeHolderImage: placeHolder,
