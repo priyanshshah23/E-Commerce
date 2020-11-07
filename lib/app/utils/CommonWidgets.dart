@@ -444,9 +444,12 @@ getFieldTitleText(String text) {
 }
 
 
-openURLWithApp(String uri, BuildContext context) async {
+openURLWithApp(String uri, BuildContext context, {bool isPop = false}) async {
   if (await canLaunch(uri)) {
     await launch(uri);
+      if(isPop) {
+        Navigator.pop(context);
+      }
   } else {
     app.resolve<CustomDialogs>().confirmDialog(
       context,
