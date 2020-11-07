@@ -979,20 +979,25 @@ class DiamondConfig {
       context,
       req,
       (resp) {
-        app.resolve<CustomDialogs>().errorDialog(context, title, resp.message,
-            btntitle: R.string().commonString.ok,
-            dismissPopup: false, voidCallBack: () {
-          Navigator.pop(context);
-          placeOrder();
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            barrierDismissible: true,
+            title: "",
+            desc: resp.message,
+            positiveBtnTitle: R.string().commonString.ok,
+            onClickCallback: (buttonType) {
+          if (buttonType == ButtonType.PositveButtonClick) {
+            placeOrder();
+          }
         });
       },
       (onError) {
         if (onError.message != null) {
-          app.resolve<CustomDialogs>().errorDialog(
+          app.resolve<CustomDialogs>().confirmDialog(
                 context,
-                "",
-                onError.message,
-                btntitle: R.string().commonString.ok,
+                barrierDismissible: true,
+                title: "",
+                desc: onError.message,
+                positiveBtnTitle: R.string().commonString.ok,
               );
         }
       },

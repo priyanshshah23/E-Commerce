@@ -1,5 +1,8 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/ApiConstants.dart';
@@ -13,6 +16,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
+import 'package:rxbus/rxbus.dart';
 
 class Download extends StatefulWidget {
   List<DiamondModel> diamondList;
@@ -35,8 +39,11 @@ class _DownloadState extends State<Download> {
       List<SelectionPopupModel>();
 
   int totalDownloadableFilesForAllDiamonds = 0;
-  int finalDownloadProgress = 0;
+  int totalDownloadedFiles = 0;
+  double finalDownloadProgress = 0;
   dynamic isPermissionStatusGranted;
+  bool cancleDownload = false;
+  CancelToken cancelToken;
 
   _DownloadState({this.diamondList, this.allDiamondPreviewThings});
 
@@ -47,9 +54,102 @@ class _DownloadState extends State<Download> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    RxBus.destroy(tag: "stopForLopOfDownloading");
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text("Downloading....${finalDownloadProgress}"),
+    return Padding(
+      padding: EdgeInsets.only(
+          top: getSize(20),
+          bottom: getSize(20),
+          right: getSize(20),
+          left: getSize(20)),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Wrap(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.center,
+                color: Colors.white,
+                child: Column(
+                  children: <Widget>[
+                    getTitleText(context, "Downloading...",
+                        color: ColorConstants.black, fontSize: getSize(20)),
+                    SizedBox(
+                      height: getSize(20),
+                    ),
+                    new LinearPercentIndicator(
+                      // width:
+                      //     MathUtilities.screenWidth(context) - getSize(150),
+                      lineHeight: 14.0,
+                      percent: this.finalDownloadProgress <= 100.0
+                          ? (this.finalDownloadProgress.toDouble() / 100)
+                          : 1 ?? 0,
+                      center: getBodyText(
+                          context,
+                          this.finalDownloadProgress.toDouble() != null
+                              ? (this.finalDownloadProgress)
+                                      .toDouble()
+                                      .toStringAsFixed(2) +
+                                  "%"
+                              : "0.0 %",
+                          color: Colors.white),
+                      linearStrokeCap: LinearStrokeCap.roundAll,
+                      backgroundColor: ColorConstants.introgrey,
+                      progressColor: appTheme.colorPrimary,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: getSize(15),
+          ),
+          Row(
+            children: [
+              Spacer(),
+              Text(
+                "${totalDownloadedFiles}/${totalDownloadableFilesForAllDiamonds}",
+                style: appTheme.black14TextStyle,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: getSize(20),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Spacer(),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: appTheme.colorPrimary,
+                      borderRadius: BorderRadius.circular(getSize(5)),
+                      boxShadow: getBoxShadow(context)),
+                  child: AppButton.flat(
+                    onTap: () {
+                      Navigator.pop(context);
+                      cancelToken.cancel();
+                      cancleDownload = true;
+                      RxBus.post(true, tag: "stopForLopOfDownloading");
+
+                      showToast("Downloading canceled");
+                    },
+                    borderRadius: getSize(5),
+                    text: R.string().commonString.cancel,
+                  ),
+                ),
+              )
+            ],
+          )
+        ],
+      ),
     );
   }
 
@@ -59,7 +159,7 @@ class _DownloadState extends State<Download> {
 
   doDownLoad() async {
     isPermissionStatusGranted = await _requestPermissions();
-
+    bool stopforLoopFlag = false;
     for (int i = 0; i < diamondList.length; i++) {
       DiamondModel model = diamondList[i];
 
@@ -135,13 +235,25 @@ class _DownloadState extends State<Download> {
 
       //download code
       getDownloadPercentage(allDiamondPreviewThings);
-      downloadFunction(allDiamondPreviewThings, (value) {
-        print("final download progrss" + value.toString());
-         setState(() {
-           finalDownloadProgress +=
-              (100 ~/ totalDownloadableFilesForAllDiamonds);
-         });
-         
+
+      await downloadFunction(allDiamondPreviewThings, diamondList[i], (value) {
+        print("download" + value.toString());
+        setState(() {
+          totalDownloadedFiles += 1;
+          finalDownloadProgress += (100 / totalDownloadableFilesForAllDiamonds);
+          print("final download progress " + finalDownloadProgress.toString());
+          if (finalDownloadProgress >= 100 &&
+              totalDownloadedFiles == totalDownloadableFilesForAllDiamonds) {
+            Navigator.pop(context);
+            showToast("All files has been downloaded.", context: context);
+          }
+        });
+      });
+
+      RxBus.register<bool>(tag: "stopForLopOfDownloading").listen((event) {
+        if (event) {
+          stopforLoopFlag = event;
+        }
       });
     }
   }
@@ -161,16 +273,23 @@ class _DownloadState extends State<Download> {
 
   Future<void> downloadFunction(
       List<SelectionPopupModel> allDiamondPreviewThings,
+      DiamondModel diamondModel,
       void callBack(int val)) async {
     for (int i = 0; i < allDiamondPreviewThings.length; i++) {
       SelectionPopupModel element = allDiamondPreviewThings[i];
       if (element.isSelected && isUrlContainsImgOrVideo(element.url)) {
         await downloadFile(
-            element.url, element.title +"."+ getExtensionOfUrl(element.url), 0,
-            (value) {
+            element.url,
+            element.title +
+                diamondModel.id +
+                "." +
+                getExtensionOfUrl(element.url),
+            0, (value) {
           callBack(value);
         });
       }
+       if(cancleDownload)
+        break;
     }
   }
 
@@ -178,6 +297,9 @@ class _DownloadState extends State<Download> {
 
   Future<void> downloadFile(
       uri, fileName, int progress, void callBack(int val)) async {
+
+      if(cancleDownload)  
+        return;
     final dir = await _getDownloadDirectory();
     if (isPermissionStatusGranted) {
       final savePath = path.join(dir.path, fileName);
@@ -193,16 +315,16 @@ class _DownloadState extends State<Download> {
           progress = ((rcv ~/ total) * 100);
         },
         deleteOnError: true,
+        cancelToken: cancelToken,
       ).then((_) {
-        print("download completed");
-        print("download completed" + progress.toString());
+        // print("download completed");
+        // print("download completed" + progress.toString());
         if (progress >= 100) {
-         
           callBack(progress);
         }
-        
       });
     } else {
+      showToast("you should have to allowed permission");
       // handle the scenario when user declines the permissions
     }
   }
