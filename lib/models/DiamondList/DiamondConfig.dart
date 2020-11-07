@@ -644,6 +644,7 @@ class DiamondConfig {
                   List<SelectionPopupModel> multiSelectedItem}) {
                 selectedOptions = multiSelectedItem;
                 // Navigator.pop(context);
+                
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {

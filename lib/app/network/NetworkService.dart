@@ -19,6 +19,7 @@ import 'package:diamnow/models/Share/ShareThroughEmail.dart';
 import 'package:diamnow/models/Slot/SlotModel.dart';
 import 'package:diamnow/models/StaticPage/StaticPageModel.dart';
 import 'package:diamnow/models/Version/VersionUpdateResp.dart';
+import 'package:diamnow/models/excel/ExcelApiResponse.dart';
 import 'package:retrofit/retrofit.dart';
 import '../app.export.dart';
 
@@ -101,6 +102,9 @@ abstract class NetworkService {
 
   @POST(ApiConstants.shareThroughEmail)
   Future<BaseApiResp> shareThroughEmail(@Body() ShareThroughEmailReq req);
+
+  @POST(ApiConstants.shareThroughEmail)
+  Future<ExcelApiResponse> getExcel(@Body() Map<String, dynamic> req);
 
   @POST(ApiConstants.diamondMatchPair)
   Future<DiamondListResp> diamondMatchPairList(

@@ -158,8 +158,8 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                 ),
               ),
               child: Padding(
-                padding: EdgeInsets.fromLTRB(
-                    getSize(16), getSize(16), getSize(16), getSize(16)),
+                padding: EdgeInsets.only(
+                    top:getSize(16), left:getSize(16), right:getSize(16),),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -247,21 +247,21 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                   : SizedBox(),
                             ],
                           ),
-                          widget.searchType == SavedSearchType.savedSearch
-                              ? SizedBox(
-                                  height: getSize(16),
-                                )
-                              : SizedBox(),
+                          // widget.searchType == SavedSearchType.savedSearch
+                          //     ? SizedBox(
+                          //         height: getSize(8),
+                          //       )
+                          //     : SizedBox(),
                           widget.searchType == SavedSearchType.savedSearch
                               ? Divider(
                                   color: appTheme.dividerColor,
                                 )
                               : SizedBox(),
-                          widget.searchType == SavedSearchType.savedSearch
-                              ? SizedBox(
-                                  height: getSize(6),
-                                )
-                              : SizedBox(),
+                          // widget.searchType == SavedSearchType.savedSearch
+                          //     ? SizedBox(
+                          //         height: getSize(6),
+                          //       )
+                          //     : SizedBox(),
                           if (arr.length <= 3 &&
                               widget.searchType == SavedSearchType.savedSearch)
                             listOfSelectedFilter(arr, model, arr.length),
@@ -281,15 +281,18 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                     // left: getSize(15),
                                     // right: getSize(15),
                                     top: getSize(11),
-                                    bottom: getSize(11),
+                                    // bottom: getSize(11),
                                   ),
                                   child: Container(
                                     padding: EdgeInsets.only(
                                         top: getSize(8), bottom: getSize(8)),
                                     decoration: BoxDecoration(
+                                      // color: Colors.red,
                                         border: Border(
-                                            top: BorderSide(
-                                                color: appTheme.dividerColor))),
+                                      top: BorderSide(
+                                          color: appTheme.dividerColor),
+                                      
+                                    )),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceAround,
@@ -384,6 +387,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
+              padding: EdgeInsets.all(2),
               width: getSize(30),
               height: getSize(30),
               alignment: Alignment.center,
@@ -415,6 +419,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
           Padding(
             padding: EdgeInsets.only(top: getSize(10)),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "${arr[i]["key"] ?? ""} :",
