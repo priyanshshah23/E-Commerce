@@ -477,7 +477,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
 
       if (!isNullEmptyOrFalse(displayDataClass.shd)) {
         Map<String, String> displayDataKeyValue = {};
-        displayDataKeyValue["key"] = "Shade";
+        displayDataKeyValue["key"] = "Color Shade";
         for (int i = 0; i < displayDataClass.shd.length; i++) {
           displayDataKeyValue["value"] = displayDataClass.shd.join(", ");
         }
@@ -557,7 +557,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
 
       if (!isNullEmptyOrFalse(displayDataClass.isCm)) {
         Map<String, String> displayDataKeyValue = {};
-        displayDataKeyValue["key"] = "isCm";
+        displayDataKeyValue["key"] = "Canadamark";
         for (int i = 0; i < displayDataClass.isCm.length; i++) {
           displayDataKeyValue["value"] = displayDataClass.isCm.join(", ");
         }
@@ -567,7 +567,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
 
       if (!isNullEmptyOrFalse(displayDataClass.isDor)) {
         Map<String, String> displayDataKeyValue = {};
-        displayDataKeyValue["key"] = "isDor";
+        displayDataKeyValue["key"] = "DOR";
         for (int i = 0; i < displayDataClass.isDor.length; i++) {
           displayDataKeyValue["value"] = displayDataClass.isDor.join(", ");
         }
@@ -577,7 +577,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
 
       if (!isNullEmptyOrFalse(displayDataClass.isFm)) {
         Map<String, String> displayDataKeyValue = {};
-        displayDataKeyValue["key"] = "isFm";
+        displayDataKeyValue["key"] = "FM";
         for (int i = 0; i < displayDataClass.isFm.length; i++) {
           displayDataKeyValue["value"] = displayDataClass.isFm.join(", ");
         }
@@ -734,7 +734,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
 
       if (!isNullEmptyOrFalse(displayDataClass.depPer)) {
         Map<String, String> displayDataKeyValue = {};
-        displayDataKeyValue["key"] = "depPer";
+        displayDataKeyValue["key"] = "Depth Percentage";
 
         String temp = "";
         if (!isNullEmptyOrFalse(displayDataClass.depPer.back) &&
@@ -829,7 +829,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
 
       if (!isNullEmptyOrFalse(displayDataClass.cAng)) {
         Map<String, String> displayDataKeyValue = {};
-        displayDataKeyValue["key"] = "cAng";
+        displayDataKeyValue["key"] = "Crown Angle";
 
         String temp = "";
         if (!isNullEmptyOrFalse(displayDataClass.cAng.back) &&
@@ -848,7 +848,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
 
       if (!isNullEmptyOrFalse(displayDataClass.cHgt)) {
         Map<String, String> displayDataKeyValue = {};
-        displayDataKeyValue["key"] = "cHgt";
+        displayDataKeyValue["key"] = "Crown Height";
 
         String temp = "";
         if (!isNullEmptyOrFalse(displayDataClass.cHgt.back) &&
@@ -924,7 +924,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
 
       if (!isNullEmptyOrFalse(displayDataClass.lwr)) {
         Map<String, String> displayDataKeyValue = {};
-        displayDataKeyValue["key"] = "lwr";
+        displayDataKeyValue["key"] = "Lower Half";
 
         String temp = "";
         if (!isNullEmptyOrFalse(displayDataClass.lwr.back) &&
@@ -943,7 +943,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
 
       if (!isNullEmptyOrFalse(displayDataClass.strLn)) {
         Map<String, String> displayDataKeyValue = {};
-        displayDataKeyValue["key"] = "strLn";
+        displayDataKeyValue["key"] = "Star Length";
 
         String temp = "";
         if (!isNullEmptyOrFalse(displayDataClass.strLn.back) &&
@@ -960,29 +960,10 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
         arrData.add(displayDataKeyValue);
       }
 
-      if (!isNullEmptyOrFalse(displayDataClass.cAng)) {
-        Map<String, String> displayDataKeyValue = {};
-        displayDataKeyValue["key"] = "cAng";
-
-        String temp = "";
-        if (!isNullEmptyOrFalse(displayDataClass.cAng.back) &&
-            !isNullEmptyOrFalse(displayDataClass.cAng.empty)) {
-          temp = displayDataClass.cAng.back.toString() +
-              " to " +
-              displayDataClass.cAng.empty.toString();
-        } else if (!isNullEmptyOrFalse(displayDataClass.cAng.back)) {
-          temp = displayDataClass.cAng.back.toString();
-        } else {
-          temp = displayDataClass.cAng.empty.toString();
-        }
-        displayDataKeyValue["value"] = temp;
-        arrData.add(displayDataKeyValue);
-      }
-
       if (!isNullEmptyOrFalse(displayDataClass.type2)) {
         if (!isNullEmptyOrFalse(displayDataClass.type2.empty)) {
           Map<String, String> displayDataKeyValue = {};
-          displayDataKeyValue["key"] = "type2";
+          displayDataKeyValue["key"] = "TYPE IIA";
 
           displayDataKeyValue["value"] = displayDataClass.type2.empty;
           arrData.add(displayDataKeyValue);

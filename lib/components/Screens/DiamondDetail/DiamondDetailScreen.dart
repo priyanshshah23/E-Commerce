@@ -118,7 +118,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           }
         });
         if (_scrollController1.position.pixels >= getSize(400.0))
-          _sc.jumpTo(index: currTab);
+          _sc.scrollTo(index: currTab, duration: Duration(milliseconds: 500));
 
         setState(() {});
       });
@@ -872,7 +872,8 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       if (i == index) break;
     }
 
-    _scrollController1.jumpTo(value.toDouble());
+    _scrollController1.animateTo(value.toDouble(),
+        duration: Duration(milliseconds: 500), curve: Curves.easeIn);
   }
 
   Widget getDiamondDetailUIComponent(
