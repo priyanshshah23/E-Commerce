@@ -5,21 +5,25 @@ import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/Share/ShareThroughEmail.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DownLoadAndShareDialogue extends StatefulWidget {
   String title = "";
+  List<DiamondModel> selectedDiamondList;
 
   DownLoadAndShareDialogue({
     this.title,
+    this.selectedDiamondList,
   });
 
   @override
   _DownLoadAndShareDialogueState createState() =>
       _DownLoadAndShareDialogueState(
         title,
+        selectedDiamondList,
       );
 }
 
@@ -40,9 +44,11 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
   bool isAllCertificateSelected = false;
   bool isAllExcelSelected = false;
   bool isAllRoughSelected = false;
+  List<DiamondModel> selectedDiamondList;
 
   _DownLoadAndShareDialogueState(
     this.title,
+      this.selectedDiamondList,
   );
 
   @override
