@@ -102,113 +102,108 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                   : getBackButton(context),
               centerTitle: false,
             ),
-            // resizeToAvoidBottomPadding: false,
-            //resizeToAvoidBottomInset: true,
-            body: ListView(
-              children: [
-                Form(
-                  key: _formKey,
-                  autovalidate: _autoValidate,
-                  child: Container(
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          top: getSize(20),
-                          left: getSize(20),
-                          right: getSize(20),
-                          bottom: getSize(10)),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.only(
-                                right: getSize(50),
-                                left: getSize(82),
-                                bottom: getSize(52),
-                                top: getSize(12)),
-                            child: Image.asset(
-                              forgetPassword,
-                              height: getSize(200),
-                              width: getSize(200),
-                            ),
+            resizeToAvoidBottomPadding: false,
+            resizeToAvoidBottomInset: true,
+            body: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                autovalidate: _autoValidate,
+                child: Container(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        top: getSize(20),
+                        left: getSize(20),
+                        right: getSize(20),
+                        bottom: getSize(10)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(
+                              right: getSize(50),
+                              left: getSize(82),
+                              bottom: getSize(52),
+                              top: getSize(12)),
+                          child: Image.asset(
+                            forgetPassword,
+                            height: getSize(200),
+                            width: getSize(200),
                           ),
-                          Text(
-                            isApiCall
-                                ? R.string().authStrings.enterOTP
-                                : R.string().authStrings.sendOTPToEmail,
-                            style: appTheme.black14TextStyle,
-                            textAlign: TextAlign.center,
-                          ),
-                          isApiCall ? getPinViewOTP() : getEmailTextField(),
+                        ),
+                        Text(
                           isApiCall
-                              ? Container(
-                                  margin: EdgeInsets.all(getSize(15)),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      Text(
-                                          R
-                                              .string()
-                                              .authStrings
-                                              .didNotReceiveOTP,
-                                          style: appTheme.grey16HintTextStyle),
-                                      GestureDetector(
-                                          onTap: () {
-                                            if (isTimerCompleted) {
-                                              callForgetPasswordApi(
-                                                  isResend: true);
-                                            }
-                                          },
-                                          child: Text(
-                                              isTimerCompleted
-                                                  ? " " +
-                                                      R
-                                                          .string()
-                                                          .authStrings
-                                                          .resendNow
-                                                  : " ${_printDuration(Duration(seconds: _start))}",
-                                              style: appTheme
-                                                  .darkBlue16TextStyle)),
-                                    ],
-                                  ),
-                                )
-                              : Container(
-                                  margin: EdgeInsets.only(
-                                      top: getSize(15), left: getSize(0)),
-                                  decoration: BoxDecoration(
-                                      boxShadow: getBoxShadow(context)),
-                                  child: AppButton.flat(
-                                    onTap: () {
-                                      // NavigationUtilities.pushRoute(TabBarDemo.route);
-                                      FocusScope.of(context).unfocus();
-                                      if (_formKey.currentState.validate()) {
-                                        _formKey.currentState.save();
-                                        callForgetPasswordApi();
+                              ? R.string().authStrings.enterOTP
+                              : R.string().authStrings.sendOTPToEmail,
+                          style: appTheme.black14TextStyle,
+                          textAlign: TextAlign.center,
+                        ),
+                        isApiCall ? getPinViewOTP() : getEmailTextField(),
+                        isApiCall
+                            ? Container(
+                                margin: EdgeInsets.all(getSize(15)),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Text(
+                                        R.string().authStrings.didNotReceiveOTP,
+                                        style: appTheme.grey16HintTextStyle),
+                                    GestureDetector(
+                                        onTap: () {
+                                          if (isTimerCompleted) {
+                                            callForgetPasswordApi(
+                                                isResend: true);
+                                          }
+                                        },
+                                        child: Text(
+                                            isTimerCompleted
+                                                ? " " +
+                                                    R
+                                                        .string()
+                                                        .authStrings
+                                                        .resendNow
+                                                : " ${_printDuration(Duration(seconds: _start))}",
+                                            style:
+                                                appTheme.darkBlue16TextStyle)),
+                                  ],
+                                ),
+                              )
+                            : Container(
+                                margin: EdgeInsets.only(
+                                    top: getSize(15), left: getSize(0)),
+                                decoration: BoxDecoration(
+                                    boxShadow: getBoxShadow(context)),
+                                child: AppButton.flat(
+                                  onTap: () {
+                                    // NavigationUtilities.pushRoute(TabBarDemo.route);
+                                    FocusScope.of(context).unfocus();
+                                    if (_formKey.currentState.validate()) {
+                                      _formKey.currentState.save();
+                                      callForgetPasswordApi();
 //                                callLoginApi(context);
-                                      } else {
-                                        setState(() {
-                                          _autoValidate = true;
+                                    } else {
+                                      setState(() {
+                                        _autoValidate = true;
 //                                  showOTPMsg = R
 //                                      .string()
 //                                      .errorString
 //                                      .enteredCodeNotMatching;
-                                        });
-                                      }
-                                      // NavigationUtilities.push(ThemeSetting());
-                                    },
-                                    //  backgroundColor: appTheme.buttonColor,
-                                    borderRadius: getSize(5),
-                                    fitWidth: true,
-                                    text: R.string().authStrings.sendOTP,
-                                    //isButtonEnabled: enableDisableSigninButton(),
-                                  ),
+                                      });
+                                    }
+                                    // NavigationUtilities.push(ThemeSetting());
+                                  },
+                                  //  backgroundColor: appTheme.buttonColor,
+                                  borderRadius: getSize(5),
+                                  fitWidth: true,
+                                  text: R.string().authStrings.sendOTP,
+                                  //isButtonEnabled: enableDisableSigninButton(),
                                 ),
-                        ],
-                      ),
+                              ),
+                      ],
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
             bottomNavigationBar: isApiCall
                 ? SizedBox()
