@@ -51,25 +51,25 @@ class PnShahTheme extends BaseTheme {
 }
 
 class BaseTheme {
-  Color get colorPrimary => fromHex("#6E8FE7");
-  Color get headerBgColor => fromHex("#6E8FE7");
-  Color get textColor => fromHex("#262626");
+  Color get colorPrimary => fromHex("#4EB45E");
+  Color get headerBgColor => fromHex("#4EB45E");
+  Color get textColor => fromHex("#232323");
   Color get bgColor => fromHex("#6E8FE7");
   Color get dividerColor => fromHex("#E3E3E3");
   Color get textBlackColor => Colors.black;
   Color get blackColor => Colors.black;
   Color get whiteColor => Colors.white;
-  Color get textGreyColor => fromHex("#C7C7C7");
-  Color get buttonColor => fromHex("#6E8FE7");
-  Color get darkBlue => fromHex("#003365");
+  Color get textGreyColor => fromHex("#999999");
+  Color get buttonColor => fromHex("#4EB45E");
+  Color get darkBlue => fromHex("#4EB45E");
   Color get errorColor => fromHex("#FF4D4D");
   Color get segmentSelectedColor => Colors.white;
-  Color get borderColor => fromHex("#e3e3e3");
+  Color get borderColor => fromHex("#DDDDDD");
   Color get selectedFilterColor => fromHex("#eaeffb");
   Color get unSelectedBgColor => fromHex("#f7f7f7");
   Color get greenColor => fromHex("#0EAC33");
   Color get lightBGColor => fromHex("#F8F8F8");
-  Color get textFieldBorderColor => fromHex("#F5F5F5");
+  Color get textFieldBorderColor => fromHex("#DDDDDD");
   Color get statusHold => fromHex("#DB1C1C");
   Color get statusOnMemo => fromHex("#307BEA");
   Color get statusAvailable => fromHex("#6BC950");

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 class FlutterFilePicker {
-  static const _themeColor = "#2D0DB2";
+  static const _themeColor = "#4EB45E";
   static const _backgroundColor = "#FFFFFF";
 
   static const MethodChannel _channel =
