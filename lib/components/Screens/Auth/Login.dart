@@ -10,6 +10,7 @@ import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Auth/ForgetPassword.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
+import 'package:diamnow/components/Screens/Auth/SignInWithMPINScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Signup.dart';
 import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
@@ -270,7 +271,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                       child: AppButton.flat(
                                         onTap: () {
                                           NavigationUtilities.pushRoute(
-                                              GuestSignInScreen.route);
+                                              SignInWithMPINScreen.route);
                                         },
                                         textColor: appTheme.colorPrimary,
                                         backgroundColor: appTheme.colorPrimary

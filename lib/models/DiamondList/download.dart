@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'package:diamnow/app/app.export.dart';
@@ -10,7 +11,7 @@ import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/string_utils.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
-import 'package:downloads_path_provider_28/downloads_path_provider_28.dart';
+// import 'package:downloads_path_provider_28/downloads_path_provider_28.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -127,7 +128,7 @@ class _DownloadState extends State<Download> {
                       borderRadius: BorderRadius.circular(getSize(5)),
                       boxShadow: getBoxShadow(context)),
                   child: AppButton.flat(
-                    onTap: () async{
+                    onTap: () async {
                       Navigator.pop(context);
 
                       mapOfCancelToken.forEach((key, value) {
@@ -234,22 +235,25 @@ class _DownloadState extends State<Download> {
       await downloadFunction(allDiamondPreviewThings, diamondList[i],
           (value, isFromError) {
         print("download" + value.toString());
-        if(mounted){
+        if (mounted) {
           setState(() {
-          if (!isFromError) {
-            totalDownloadedFiles += 1;
-          }
-          finalDownloadProgress += (100 / totalDownloadableFilesForAllDiamonds);
-          print("final download progress " + finalDownloadProgress.toString());
-          if (finalDownloadProgress >= 100) {
-            Navigator.pop(context);
-            totalDownloadedFiles == totalDownloadableFilesForAllDiamonds
-                ? showToast("All files has been downloaded.", context: context)
-                : showToast(
-                    "${totalDownloadedFiles} files is downloaded \n ${totalDownloadableFilesForAllDiamonds - totalDownloadedFiles} files is not downloaded because it's not exist in the server.",
-                    context: context);
-          }
-        });
+            if (!isFromError) {
+              totalDownloadedFiles += 1;
+            }
+            finalDownloadProgress +=
+                (100 / totalDownloadableFilesForAllDiamonds);
+            print(
+                "final download progress " + finalDownloadProgress.toString());
+            if (finalDownloadProgress >= 100) {
+              Navigator.pop(context);
+              totalDownloadedFiles == totalDownloadableFilesForAllDiamonds
+                  ? showToast("All files has been downloaded.",
+                      context: context)
+                  : showToast(
+                      "${totalDownloadedFiles} files is downloaded \n ${totalDownloadableFilesForAllDiamonds - totalDownloadedFiles} files is not downloaded because it's not exist in the server.",
+                      context: context);
+            }
+          });
         }
       });
     }
@@ -266,7 +270,7 @@ class _DownloadState extends State<Download> {
 
     totalDownloadableFilesForAllDiamonds =
         totalFiles.length * diamondList.length;
-    if(mounted){
+    if (mounted) {
       setState(() {});
     }
   }
@@ -297,24 +301,24 @@ class _DownloadState extends State<Download> {
                 getExtensionOfUrl(element.url),
             0, (value, isFromError) {
           callBack(value, isFromError);
-        },element.url +
-            element.title +
-            diamondModel.id +
-            "." +
-            getExtensionOfUrl(element.url));
+        },
+            element.url +
+                element.title +
+                diamondModel.id +
+                "." +
+                getExtensionOfUrl(element.url));
       }
- 
     }
   }
 
   // downloading logic is handled by this method
 
   Future<void> downloadFile(uri, fileName, int progress,
-      void callBack(int val, bool isFromError),String key) async {
-    
+      void callBack(int val, bool isFromError), String key) async {
     final dir = await _getDownloadDirectory();
+    final savePath = path.join(dir.path, fileName);
+
     if (isPermissionStatusGranted) {
-      final savePath = path.join(dir.path, fileName);
       Dio dio = Dio();
 
       dio.download(
@@ -328,17 +332,25 @@ class _DownloadState extends State<Download> {
         },
         deleteOnError: true,
         cancelToken: mapOfCancelToken[key],
-      ).then((_) {  
+      ).then((_) {
         // print("download completed");
         // print("download completed" + progress.toString());
         if (progress >= 100) {
           callBack(progress, false);
         }
+
+        if (Platform.isIOS) {
+          isImage(savePath)
+              ? GallerySaver.saveImage(savePath)
+              : GallerySaver.saveVideo(savePath);
+        }
+        
       }).catchError((error) {
         callBack(100, true);
 
-        if(mounted){
+        if (mounted) {
           setState(() {});
+          callBack(100, true);
         }
       });
     } else {
@@ -348,9 +360,9 @@ class _DownloadState extends State<Download> {
   }
 
   Future<Directory> _getDownloadDirectory() async {
-    if (Platform.isAndroid) {
-      return await DownloadsPathProvider.downloadsDirectory;
-    }
+    // if (Platform.isAndroid) {
+    //   return await DownloadsPathProvider.downloadsDirectory;
+    // }
 
     // in this example we are using only Android and iOS so I can assume
     // that you are not trying it for other platforms and the if statement

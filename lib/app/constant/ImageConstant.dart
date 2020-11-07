@@ -11,6 +11,9 @@ const String india = "assets/auth/india.png";
 const String back = "assets/auth/back.png";
 const String plusIcon = "assets/diamnow/plusIcon.png";
 const String minusIcon = "assets/diamnow/minusIcon.png";
+const String bussinessCard = "assets/auth/ic_file.png";
+const String photoCard = "assets/auth/ic_card.png";
+const String pdfIcon = "assets/auth/pdf.png";
 
 const String selectedCheckbox = "assets/auth/checkbox.png";
 const String unSelectedCheckbox = "assets/auth/unselectedcheckbox.png";
@@ -102,7 +105,9 @@ const String termsAndCondition = "assets/drawer/termsAndCondition.png";
 const String userTemp = "assets/drawer/user.png";
 const String bottomGradient = "assets/drawer/bottomGradient.png";
 const String edit = "assets/drawer/edit.png";
-
+const String enquiryDrawer = "assets/drawer/enquiry.png";
+const String addToCartDrawer = "assets/drawer/addToCart.png";
+const String commentDrawer = "assets/drawer/comment.png";
 //Home
 const String home_clock = "assets/Home/clock.png";
 const String home_delete = "assets/Home/delete.png";

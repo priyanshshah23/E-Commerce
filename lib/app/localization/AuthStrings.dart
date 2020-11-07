@@ -13,6 +13,7 @@ class AuthStrings {
   final String saveCompanyDetails;
   final String setNewPassword;
   final String promotionText;
+  final String signInWithMPIN;
 
   final String clickHere;
   final String moveToLogIn;
@@ -120,7 +121,6 @@ class AuthStrings {
   final String verifyMobileDesc;
   final String pinCode;
 
-
   //stoneDetail
   final String companyName;
   final String invoiceDate;
@@ -150,6 +150,21 @@ class AuthStrings {
   final String termsAndCondition;
   final String mustAgreeTermsAndCondition;
   final String forgotPasswordTitle;
+
+  // KYC
+  final String uploadKYC;
+  final String uploadKycDesc;
+  final String hintPhotoIdentityProof;
+  final String hintBussinerssProof;
+  final String btnFileUpload;
+  final String pleaseUploadPhotoProof;
+  final String pleaseUploadBussinessProof;
+  final String pleaseSelectFileFormat;
+  final String kycSubmitted;
+  final String kycSubmmittedDesc;
+  final String btnMoveToHome;
+  final String kYCRejected;
+  final String kycRejectedDesc;
 
   const AuthStrings({
     // Login
@@ -257,6 +272,7 @@ class AuthStrings {
     this.update = "UPDATE",
     this.resetPwd = "Reset Password",
     this.pwdReset = "Password reset",
+    this.signInWithMPIN = "Sign In with MPIN",
     this.pwdChanged = "Password Changed",
     this.successfullyPwdDesc =
         "You have successfully reset your password. Please use your new password when logging in.",
@@ -278,8 +294,10 @@ class AuthStrings {
     this.sendOTP = "Send OTP",
     this.resendNow = "Resend Now",
     this.didNotReceiveOTP = "If you didn't receive an OTP!",
-    this.sendOTPToEmail = "We will send an OTP to your entered email address or user name. Please enter the email address or user name.",
-    this.enterOTP = "The OTP has been sent to your registered Email address. Please enter the OTP.",
+    this.sendOTPToEmail =
+        "We will send an OTP to your entered email address or user name. Please enter the email address or user name.",
+    this.enterOTP =
+        "The OTP has been sent to your registered Email address. Please enter the OTP.",
     this.backToSignIn = "Back to Sign In",
     this.passwordResetSuccessfully = "Password reset successfully.",
     this.emailAndUname = "Email/UserName",
@@ -287,7 +305,26 @@ class AuthStrings {
     this.requiredField = "*",
     this.promotionText = "Promotional offers, newsletters and stock updates",
     this.termsAndCondition = "Terms and Condition",
-    this.mustAgreeTermsAndCondition = "You must agree to terms and condition to Sign In as Guest User",
+    this.mustAgreeTermsAndCondition =
+        "You must agree to terms and condition to Sign In as Guest User",
     this.forgotPasswordTitle = "Forgot Password",
+
+    //KYC
+    this.uploadKYC = "Upload KYC",
+    this.uploadKycDesc =
+        "Please upload your KYC documents to access full features.",
+    this.hintPhotoIdentityProof = "Photo Identity Proof*",
+    this.hintBussinerssProof = "Business Identity Proof*",
+    this.btnFileUpload = "File Upload",
+    this.pleaseUploadPhotoProof = "Please upload Photo Identity Proof.",
+    this.pleaseUploadBussinessProof = "Please upload Business Identity Proof.",
+    this.pleaseSelectFileFormat =
+        "Please upload file in any of following formats : .jpg, .jpeg, .png and .pdf",
+    this.kycSubmitted = "KYC Submitted",
+    this.kycSubmmittedDesc = "Your KYC has been submitted successfully.",
+    this.btnMoveToHome = "Move to Home",
+    this.kYCRejected = "KYC Rejected",
+    this.kycRejectedDesc =
+        "Your KYC is rejected. Please upload your KYC documents to access full features.",
   });
 }

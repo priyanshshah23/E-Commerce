@@ -8,8 +8,10 @@ import 'package:diamnow/components/Screens/Auth/Profile.dart';
 import 'package:diamnow/components/Screens/Auth/ProfileList.dart';
 import 'package:diamnow/components/Screens/Auth/ResetPassword.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
+import 'package:diamnow/components/Screens/Auth/SignInWithMPINScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Signup.dart';
 import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
+import 'package:diamnow/components/Screens/Auth/UploadKYC.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/diamondDeepDetailScreen.dart';
@@ -25,6 +27,7 @@ import 'package:diamnow/components/Screens/Notification/Notifications.dart';
 import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
+import 'package:diamnow/components/Screens/Search/Search.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
 import 'package:diamnow/components/Screens/Version/VersionUpdate.dart';
 import 'package:flutter/material.dart';
@@ -217,6 +220,15 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       break;
     case MyDemandScreen.route:
       screen = MyDemandScreen(arguments);
+      break;
+    case UploadKYCScreen.route:
+      screen = UploadKYCScreen();
+      break;
+    case SearchScreen.route:
+      screen = SearchScreen();
+      break;
+    case SignInWithMPINScreen.route:
+      screen = SignInWithMPINScreen();
       break;
   }
 

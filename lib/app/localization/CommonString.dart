@@ -31,6 +31,7 @@ class CommonString {
   final String cancelCap;
   final String uploadCap;
   final String yesCancelCap;
+  final String upload;
   final String ok;
   final String home;
   final String noDiamondFound;
@@ -221,7 +222,6 @@ class CommonString {
   final String business;
   final String shape;
 
-
   final String documents;
   final String selectType;
   final String enter2Stone;
@@ -325,6 +325,7 @@ class CommonString {
     this.cancelCap = "CANCEL",
     this.uploadCap = "UPLOAD",
     this.yesCancelCap = "YES, CANCEL",
+    this.upload = "Upload",
     this.ok = "Ok",
     this.home = "Home",
     this.goToMyWatchList = "Go to My Watchlist",
@@ -420,7 +421,6 @@ class CommonString {
         "Lorem ipsum dolor sit amet, consetetur sadipscing elitr,",
     this.ridebtnDone = "Done",
     this.offerPricePerCarat = "Offered Price (Cts)",
-
 
     // View Ride
     this.dropOffText = "Dropoff",
@@ -519,11 +519,10 @@ class CommonString {
     this.diamNow = "DiamNow",
     this.noDocument = "No Documents Found",
     this.searchBusinessType = "Search Business Type",
-
     this.hours = "Hours",
-    this.minutes= "Minutes",
-    this.seconds= "Seconds",
-    this.bidEndsIn= "Bid ends in:",
+    this.minutes = "Minutes",
+    this.seconds = "Seconds",
+    this.bidEndsIn = "Bid ends in:",
     this.shape = "Shape",
     this.download = "Download",
     this.share = "Share",
