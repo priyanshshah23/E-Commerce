@@ -159,3 +159,9 @@ const String facebook = "assets/Share/facebook.png";
 const String gmail = "assets/Share/gmail.png";
 const String hangout = "assets/Share/hangout.png";
 const String whatsapp = "assets/Share/whatsapp.png";
+
+const String myBidWhite = "assets/Common/myBidWhite.png";
+const String clearSelectionWhite = "assets/Common/clearWhite.png";
+const String shareWhite = "assets/Common/shareWhite.png";
+const String downloadWhite = "assets/Common/downloadWhite.png";
+const String offerWhite = "assets/Common/offerWhite.png";
