@@ -1,6 +1,7 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondOfferInfoWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
@@ -87,130 +88,170 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 bottom: getSize(widget.item.marginBottom),
                 top: getSize(widget.item.marginTop),
               ),
-              child: CustomPaint(
-                painter: getPaintingType(context, widget.item.borderType),
-                child: Slidable(
-                  controller: widget.controller,
-                  key: Key(widget.item.id),
-                  actionPane: SlidableDrawerActionPane(),
-                  secondaryActions: widget.list == null ? [] : widget.list,
-                  actionExtentRatio: 0.2,
-                  child: Container(
-                    margin: EdgeInsets.only(
-                      bottom: getSize(
-                        widget.item.isMatchPair &&
-                                (widget.item.borderType ==
-                                        BorderConstant.BORDER_LEFT_RIGHT ||
-                                    widget.item.borderType ==
-                                        BorderConstant.BORDER_TOP)
-                            ? getSize(1)
-                            : (widget.item.isAddToWatchList ||
-                                    widget.item.isAddToOffer)
-                                ? getSize(2)
-                                : getSize(5),
+              decoration: (widget.item.isSectionOfferDisplay)
+                  ? BoxDecoration(
+                      color: appTheme.whiteColor,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
                       ),
-                      top: getSize(widget.item.isMatchPair &&
-                              (widget.item.borderType ==
-                                      BorderConstant.BORDER_LEFT_RIGHT ||
-                                  widget.item.borderType ==
-                                      BorderConstant.BORDER_BOTTOM)
-                          ? getSize(1)
-                          : getSize(5)),
-                      left: getSize(widget.item.isMatchPair ? getSize(5) : 0),
-                      right: getSize(widget.item.isMatchPair ? getSize(5) : 0),
-                    ),
-                    width: MathUtilities.screenWidth(context),
-                    decoration: BoxDecoration(
-                        color: appTheme.whiteColor,
-                        boxShadow: widget.item.isSelected
-                            ? getBoxShadow(context)
-                            : [BoxShadow(color: Colors.transparent)],
-                        borderRadius: BorderRadius.circular(getSize(6)),
-                        border: Border.all(
-                            color: widget.item.isSelected
-                                ? appTheme.colorPrimary
-                                : appTheme.dividerColor)
-                        //boxShadow: getBoxShadow(context),
-                        ),
-                    child: Column(
-                      children: [
-                        IntrinsicHeight(
-                          child: Row(
-                            children: <Widget>[
-                              getCaratAndDiscountDetail(widget.actionClick),
-                              //   getIdColorDetail(),
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      left: getSize(10),
-                                      right: getSize(10),
-                                      top: getSize(8),
-                                      bottom: getSize(8)),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                      boxShadow: [
+                        BoxShadow(
+                            color: appTheme.colorPrimary.withOpacity(0.2),
+                            blurRadius: getSize(15),
+                            // spreadRadius: getSize(5),
+                            offset: Offset(0, 7)),
+                      ],
+                    )
+                  : null,
+              child: Column(
+                children: [
+                  Container(
+                    child: CustomPaint(
+                      painter: getPaintingType(context, widget.item.borderType),
+                      child: Slidable(
+                        controller: widget.controller,
+                        key: Key(widget.item.id),
+                        actionPane: SlidableDrawerActionPane(),
+                        secondaryActions:
+                            widget.list == null ? [] : widget.list,
+                        actionExtentRatio: 0.2,
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            bottom: getSize(
+                              widget.item.isMatchPair &&
+                                      (widget.item.borderType ==
+                                              BorderConstant
+                                                  .BORDER_LEFT_RIGHT ||
+                                          widget.item.borderType ==
+                                              BorderConstant.BORDER_TOP)
+                                  ? getSize(1)
+                                  : (widget.item.isAddToWatchList ||
+                                          widget.item.isAddToOffer)
+                                      ? getSize(2)
+                                      : getSize(5),
+                            ),
+                            top: getSize(widget.item.isMatchPair &&
+                                    (widget.item.borderType ==
+                                            BorderConstant.BORDER_LEFT_RIGHT ||
+                                        widget.item.borderType ==
+                                            BorderConstant.BORDER_BOTTOM)
+                                ? getSize(1)
+                                : getSize(5)),
+                            left: getSize(
+                                widget.item.isMatchPair ? getSize(5) : 0),
+                            right: getSize(
+                                widget.item.isMatchPair ? getSize(5) : 0),
+                          ),
+                          width: MathUtilities.screenWidth(context),
+                          decoration: BoxDecoration(
+                              color: appTheme.whiteColor,
+                              boxShadow: widget.item.isSelected
+                                  ? getBoxShadow(context)
+                                  : [BoxShadow(color: Colors.transparent)],
+                              borderRadius: BorderRadius.circular(getSize(6)),
+                              border: Border.all(
+                                  color: widget.item.isSelected
+                                      ? appTheme.colorPrimary
+                                      : appTheme.dividerColor)
+                              //boxShadow: getBoxShadow(context),
+                              ),
+                          child: Column(
+                            children: [
+                              IntrinsicHeight(
+                                child: Row(
+                                  children: <Widget>[
+                                    getCaratAndDiscountDetail(
+                                        widget.actionClick),
+                                    //   getIdColorDetail(),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            left: getSize(10),
+                                            right: getSize(10),
+                                            top: getSize(8),
+                                            bottom: getSize(8)),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            getIdShapeDetail(),
+                                            getDymentionAndCaratDetail(),
+                                            getMeasurementAndColorDetails(),
+                                            getTableDepthAndAmountDetail(),
+                                            getWatchlistData(),
+                                            getOfferData(),
+                                            getBidDetail(),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Center(
+                                          child: Container(
+                                        decoration: BoxDecoration(
+                                            color: widget.item.getStatusColor(),
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(5),
+                                                bottomLeft:
+                                                    Radius.circular(5))),
+                                        height: getSize(26),
+                                        width: getSize(4),
+                                        // color: Colors.red,
+                                      )),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              if (!isNullEmptyOrFalse(
+                                  widget.groupDiamondCalculation))
+                                Padding(
+                                  padding: EdgeInsets.only(top: getSize(8)),
+                                  child: Row(
                                     children: <Widget>[
-                                      getIdShapeDetail(),
-                                      getDymentionAndCaratDetail(),
-                                      getMeasurementAndColorDetails(),
-                                      getTableDepthAndAmountDetail(),
-                                      getWatchlistData(),
-                                      getOfferData(),
-                                      getBidDetail(),
+                                      getColumn(
+                                          widget.groupDiamondCalculation.pcs,
+                                          R.string().commonString.pcs,
+                                          1),
+                                      getColumn(
+                                          widget.groupDiamondCalculation
+                                              .totalCarat,
+                                          R.string().commonString.cts,
+                                          2),
+                                      getColumn(
+                                          widget.groupDiamondCalculation
+                                              .totalDisc,
+                                          R.string().commonString.disc,
+                                          2),
+                                      getColumn(
+                                          widget.groupDiamondCalculation
+                                              .totalPriceCrt,
+                                          R.string().commonString.avgPriceCrt +
+                                              R.string().commonString.doller,
+                                          3),
+                                      getColumn(
+                                          widget.groupDiamondCalculation
+                                              .totalAmount,
+                                          R.string().commonString.amount +
+                                              R.string().commonString.doller,
+                                          3)
                                     ],
                                   ),
                                 ),
-                              ),
-                              Container(
-                                child: Center(
-                                    child: Container(
-                                  decoration: BoxDecoration(
-                                      color: widget.item.getStatusColor(),
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(5),
-                                          bottomLeft: Radius.circular(5))),
-                                  height: getSize(26),
-                                  width: getSize(4),
-                                  // color: Colors.red,
-                                )),
-                              ),
                             ],
                           ),
                         ),
-                        if (!isNullEmptyOrFalse(widget.groupDiamondCalculation))
-                          Padding(
-                            padding: EdgeInsets.only(top: getSize(8)),
-                            child: Row(
-                              children: <Widget>[
-                                getColumn(widget.groupDiamondCalculation.pcs,
-                                    R.string().commonString.pcs, 1),
-                                getColumn(
-                                    widget.groupDiamondCalculation.totalCarat,
-                                    R.string().commonString.cts,
-                                    2),
-                                getColumn(
-                                    widget.groupDiamondCalculation.totalDisc,
-                                    R.string().commonString.disc,
-                                    2),
-                                getColumn(
-                                    widget
-                                        .groupDiamondCalculation.totalPriceCrt,
-                                    R.string().commonString.avgPriceCrt +
-                                        R.string().commonString.doller,
-                                    3),
-                                getColumn(
-                                    widget.groupDiamondCalculation.totalAmount,
-                                    R.string().commonString.amount +
-                                        R.string().commonString.doller,
-                                    3)
-                              ],
-                            ),
-                          ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                  if (widget.item.isSectionOfferDisplay)
+                    DiamondOfferInfoWidget(),
+                ],
               ),
             ),
+            if (widget.item.isSectionOfferDisplay)
+              SizedBox(
+                height: getSize(20),
+              ),
             getWatchListDetail(),
             getOfferValues(),
             // ),
