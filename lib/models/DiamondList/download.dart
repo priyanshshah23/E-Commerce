@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
@@ -247,9 +248,10 @@ class _DownloadState extends State<Download> {
             }
             finalDownloadProgress +=
                 (100 / totalDownloadableFilesForAllDiamonds);
+                // finalDownloadProgress=finalDownloadProgress();
             print(
                 "final download progress " + finalDownloadProgress.toString());
-            if (finalDownloadProgress >= 100) {
+            if (finalDownloadProgress >= 99) {
               Navigator.pop(context);
               totalDownloadedFiles == totalDownloadableFilesForAllDiamonds
                   ? showToast("All files has been downloaded.",
@@ -261,7 +263,8 @@ class _DownloadState extends State<Download> {
                 if (element.fileType ==
                         DownloadAndShareDialogueConstant.excel &&
                     element.isSelected) {
-                  callApiForExcel(context);
+                  SyncManager syncManager = SyncManager();
+                  syncManager.callApiForExcel(context,diamondList);
                 }
               });
             }
@@ -404,51 +407,29 @@ class _DownloadState extends State<Download> {
     return permission == PermissionStatus.granted;
   }
 
-  callApiForExcel(BuildContext context) {
-    List<String> stoneId = [];
-    diamondList.forEach((element) {
-      stoneId.add(element.id);
-    });
-    Map<String, dynamic> dict = {};
-    dict["id"] = stoneId;
-
-    NetworkCall<ExcelApiResponse>()
-        .makeCall(
-      () => app.resolve<ServiceModule>().networkService().getExcel(dict),
-      context,
-    )
-        .then((excelApiResponse) async {
-      // success(diamondListResp);
-      String url = baseURL + excelApiResponse.data.data;
-      getWebView(context, url);
-    }).catchError((onError) {
-      print(onError);
-    });
-  }
-
-  Future<WebView> getWebView(BuildContext context, String url) async {
-    // if (!model.isImage) print(model.url);
-    print(url);
-    return WebView(
-        initialUrl: url,
-        // onPageStarted: (url) {
-        //   // app.resolve<CustomDialogs>().showProgressDialog(context, "");
-        //   setState(() {
-        //     isLoading = true;
-        //   });
-        // },
-        // onPageFinished: (finish) {
-        //   // app.resolve<CustomDialogs>().hideProgressDialog();
-        //   setState(() {
-        //     isLoading = false;
-        //   });
-        // },
-        onWebResourceError: (error) {
-          print(error);
-          setState(() {
-            // isErroWhileLoading = true;
-          });
-        },
-        javascriptMode: JavascriptMode.unrestricted);
-  }
+  // Future<WebView> getWebView(BuildContext context, String url) async {
+  //   // if (!model.isImage) print(model.url);
+  //   print(url);
+  //   return WebView(
+  //       initialUrl: url,
+  //       // onPageStarted: (url) {
+  //       //   // app.resolve<CustomDialogs>().showProgressDialog(context, "");
+  //       //   setState(() {
+  //       //     isLoading = true;
+  //       //   });
+  //       // },
+  //       // onPageFinished: (finish) {
+  //       //   // app.resolve<CustomDialogs>().hideProgressDialog();
+  //       //   setState(() {
+  //       //     isLoading = false;
+  //       //   });
+  //       // },
+  //       onWebResourceError: (error) {
+  //         print(error);
+  //         setState(() {
+  //           // isErroWhileLoading = true;
+  //         });
+  //       },
+  //       javascriptMode: JavascriptMode.unrestricted);
+  // }
 }
