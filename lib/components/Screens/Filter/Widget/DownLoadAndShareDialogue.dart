@@ -145,10 +145,9 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                     Expanded(
                       child: InkWell(
                         onTap: () {
-                          Navigator.pop(context);
                           if (checkValidation()) {
                             openURLWithApp(
-                                "whatsapp://send?phone=&text=Hello!", context);
+                                "whatsapp://send?phone=&text=Hello!", context, isPop: true);
                           } else {
                             showToast("Please select any", context: context);
                           }
@@ -175,11 +174,11 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                       child: InkWell(
                         onTap: () {
                           //callEmailApi();
-                          _openMail();
                           if (checkValidation()) {
                             openURLWithApp(
                                 "mailto:?subject=DiamNow&body=DiamNow",
-                                context);
+                                context, isPop: true);
+                            Navigator.pop(context);
                           } else {
                             showToast("Please select any", context: context);
                           }
@@ -205,9 +204,8 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                     Expanded(
                       child: InkWell(
                         onTap: () {
-                          Navigator.pop(context);
                           if (checkValidation()) {
-                            openURLWithApp("skype:", context);
+                            openURLWithApp("skype:", context, isPop: true);
                           } else {
                             showToast("Please select any", context: context);
                           }
