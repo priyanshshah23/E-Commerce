@@ -7,6 +7,7 @@ import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Auth/Profile.dart';
 import 'package:diamnow/components/Screens/Auth/ProfileList.dart';
+import 'package:diamnow/components/Screens/Auth/UploadKYC.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
 import 'package:diamnow/components/Screens/DashBoard/Dashboard.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
@@ -73,8 +74,25 @@ class _HomeScreenState extends State<HomeScreen> {
           positiveBtnTitle: R.string().commonString.upload,
           negativeBtnTitle: R.string().commonString.btnSkip,
           onClickCallback: (click) {
-//
+        if (click == ButtonType.PositveButtonClick) {
+          NavigationUtilities.pushRoute(
+            UploadKYCScreen.route,
+          );
+        }
       });
+
+      // app.resolve<CustomDialogs>().confirmDialog(context,
+      //     title: R.string().authStrings.kYCRejected,
+      //     desc: R.string().authStrings.kycRejectedDesc,
+      //     positiveBtnTitle: R.string().commonString.upload,
+      //     negativeBtnTitle: R.string().commonString.btnSkip,
+      //     onClickCallback: (click) {
+      //   if (click == ButtonType.PositveButtonClick) {
+      //     NavigationUtilities.pushRoute(
+      //       UploadKYCScreen.route,
+      //     );
+      //   }
+      // });
 
       /*Timer(
         Duration(seconds: 2),
