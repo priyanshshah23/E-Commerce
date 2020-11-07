@@ -188,6 +188,9 @@ class CommonString {
   final String disc;
   final String avgPriceCrt;
   final String amount;
+  final String offered;
+  final String validTill;
+  final String remark;
 
   final String confirmStone;
   final String confirm;
@@ -477,6 +480,9 @@ class CommonString {
     this.amount = "Amount ",
     this.confirmStone = "Confirm Stone",
     this.confirm = "Confirm",
+    this.offered = "Offered",
+    this.validTill = "Valid till",
+    this.remark = "Remark",
 
     //Color range
     this.color = "Color",
