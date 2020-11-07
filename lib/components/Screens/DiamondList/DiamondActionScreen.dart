@@ -274,7 +274,6 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
             child: InkWell(
               onTap: () {
                 switch (actionType) {
-                  case DiamondTrackConstant.TRACK_TYPE_OFFER:
                   case DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER:
                     showDialog(
                         context: context,
