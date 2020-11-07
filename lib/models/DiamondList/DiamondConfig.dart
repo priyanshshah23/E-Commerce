@@ -689,23 +689,23 @@ class DiamondConfig {
   }
 
   actionShare(BuildContext context, List<DiamondModel> list) {
-    _onShare(context, list);
-//    showDialog(
-//      context: context,
-//      builder: (BuildContext context) {
-//        return Dialog(
-//          insetPadding: EdgeInsets.symmetric(
-//              horizontal: getSize(20), vertical: getSize(20)),
-//          shape: RoundedRectangleBorder(
-//            borderRadius: BorderRadius.circular(getSize(25)),
-//          ),
-//          child: DownLoadAndShareDialogue(
-//            title: R.string().commonString.share,
-//            selectedDiamondList: list,
-//          ),
-//        );
-//      },
-//    );
+//    _onShare(context, list);
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          insetPadding: EdgeInsets.symmetric(
+              horizontal: getSize(20), vertical: getSize(20)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(getSize(25)),
+          ),
+          child: DownLoadAndShareDialogue(
+            title: R.string().commonString.share,
+            diamondList: list,
+          ),
+        );
+      },
+    );
 //    openSharePopUp(context);
   }
 

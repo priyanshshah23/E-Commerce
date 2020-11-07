@@ -164,55 +164,31 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                     ),
-                    child: Stack(
-                      children: <Widget>[
-                        ClipPath(
-                          clipper: BgClipper(),
-                          child: Container(
-                            height: MediaQuery.of(context).size.height,
-                            width: MediaQuery.of(context).size.width,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                CodePanel(
-                                  codeLength: widget.passLength,
-                                  currentLength: _currentCodeLength,
-                                  borderColor: widget.borderColor,
-                                  foregroundColor: widget.foregroundColor,
-                                  deleteCode: _deleteCode,
-                                  fingerVerify: widget.fingerVerify,
-                                  status: _currentState,
-                                ),
-                              ],
+                    child: ClipPath(
+                      clipper: BgClipper(),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            CodePanel(
+                              codeLength: widget.passLength,
+                              currentLength: _currentCodeLength,
+                              borderColor: widget.borderColor,
+                              foregroundColor: widget.foregroundColor,
+                              deleteCode: _deleteCode,
+                              fingerVerify: widget.fingerVerify,
+                              status: _currentState,
                             ),
-                          ),
+                          ],
                         ),
-                        widget.showFingerPass
-                            ? Positioned(
-                                top: MediaQuery.of(context).size.height /
-                                    (Platform.isIOS ? 4 : 5),
-                                left: 20,
-                                bottom: 10,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    widget.fingerFunction();
-                                  },
-                                  child: Image.asset(
-                                    widget.fingerPrintImage,
-                                    height: 40,
-                                    width: 40,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              )
-                            : Container(),
-                      ],
+                      ),
                     ),
                   ),
                 ),
                 Expanded(
-                  flex: Platform.isIOS ? 5 : 6,
                   child: Container(
                     padding: EdgeInsets.only(left: 0, top: 0),
                     child:
