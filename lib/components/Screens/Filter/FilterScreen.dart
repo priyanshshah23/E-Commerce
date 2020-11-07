@@ -312,6 +312,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                             element.masters.forEach((element) {
                               element.isSelected = false;
                             });
+                            element.mainMasters.forEach((element) {
+                              element.isSelected = false;
+                            });
                             element.groupMaster.forEach((element) {
                               element.isSelected = false;
                             });
@@ -447,7 +450,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             borderRadius: BorderRadius.circular(getSize(25)),
           ),
           child: AddDemand(
-            title: R.string().commonString.addDemand,
+              title: R.string().commonString.addDemand,
               arrList: arrList,
               applyCallBack: ({String selectedDate, String diamondTitle}) {
                 callApiForAddDemand(selectedDate, diamondTitle);
