@@ -13,6 +13,7 @@ class AuthStrings {
   final String saveCompanyDetails;
   final String setNewPassword;
   final String promotionText;
+  final String signInWithMPIN;
 
   final String clickHere;
   final String moveToLogIn;
@@ -271,6 +272,7 @@ class AuthStrings {
     this.update = "UPDATE",
     this.resetPwd = "Reset Password",
     this.pwdReset = "Password reset",
+    this.signInWithMPIN = "Sign In with MPIN",
     this.pwdChanged = "Password Changed",
     this.successfullyPwdDesc =
         "You have successfully reset your password. Please use your new password when logging in.",

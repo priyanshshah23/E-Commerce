@@ -282,9 +282,9 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
     );
   }
 
-  
 
-  
+
+
 
   _openMail() async {
     String uri = 'mailto:?subject=DiamNow&body=DiamNow';
@@ -298,7 +298,7 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
             positiveBtnTitle: R.string().commonString.ok,
           );
     }
- 
+
   }
 //  callEmailApi() async {
 //    ShareThroughEmailReq req = ShareThroughEmailReq();

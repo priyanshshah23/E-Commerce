@@ -75,6 +75,7 @@ dependencies:
   flutter_money_formatter: any
   permission_handler: ^4.4.0+hotfix.2
   gallery_saver: ^2.0.1
+  #flutter_lock_screen: ^1.0.8
 
   # flutter_tags: ^0.1.9
 

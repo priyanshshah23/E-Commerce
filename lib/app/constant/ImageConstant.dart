@@ -105,7 +105,9 @@ const String termsAndCondition = "assets/drawer/termsAndCondition.png";
 const String userTemp = "assets/drawer/user.png";
 const String bottomGradient = "assets/drawer/bottomGradient.png";
 const String edit = "assets/drawer/edit.png";
-
+const String enquiryDrawer = "assets/drawer/enquiry.png";
+const String addToCartDrawer = "assets/drawer/addToCart.png";
+const String commentDrawer = "assets/drawer/comment.png";
 //Home
 const String home_clock = "assets/Home/clock.png";
 const String home_delete = "assets/Home/delete.png";

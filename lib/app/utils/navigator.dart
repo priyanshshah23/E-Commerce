@@ -8,6 +8,7 @@ import 'package:diamnow/components/Screens/Auth/Profile.dart';
 import 'package:diamnow/components/Screens/Auth/ProfileList.dart';
 import 'package:diamnow/components/Screens/Auth/ResetPassword.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
+import 'package:diamnow/components/Screens/Auth/SignInWithMPINScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Signup.dart';
 import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
 import 'package:diamnow/components/Screens/Auth/UploadKYC.dart';
@@ -225,6 +226,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       break;
     case SearchScreen.route:
       screen = SearchScreen();
+      break;
+    case SignInWithMPINScreen.route:
+      screen = SignInWithMPINScreen();
       break;
   }
 

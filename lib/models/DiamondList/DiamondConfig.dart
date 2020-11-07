@@ -675,31 +675,37 @@ class DiamondConfig {
     );
   }
 
-  _onShare(BuildContext context) async {
+  _onShare(BuildContext context,List<DiamondModel> list) async {
     final RenderBox box = context.findRenderObject();
+    List<String> link = List<String>();
+    for(int i=0; i< list.length; i++) {
+       link.add(ApiConstants.shareUrl + list[i].id);
+    }
     await Share.share(
-        "Dear Sir / Madam Greetings of the day from Finestar Team. Please have a look at below stock file.",
+            "DiamNow : Diamond Details\n\n"
+            "${link.toString().substring(1,link.toString().length - 1).replaceAll(",","\n\n")}",//------------------------------------------------------------------------------------------------------------------
         subject: "DiamNow",
         sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
   }
 
   actionShare(BuildContext context, List<DiamondModel> list) {
-//    _onShare(context);
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          insetPadding: EdgeInsets.symmetric(
-              horizontal: getSize(20), vertical: getSize(20)),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(getSize(25)),
-          ),
-          child: DownLoadAndShareDialogue(
-            title: R.string().commonString.share,
-          ),
-        );
-      },
-    );
+    _onShare(context, list);
+//    showDialog(
+//      context: context,
+//      builder: (BuildContext context) {
+//        return Dialog(
+//          insetPadding: EdgeInsets.symmetric(
+//              horizontal: getSize(20), vertical: getSize(20)),
+//          shape: RoundedRectangleBorder(
+//            borderRadius: BorderRadius.circular(getSize(25)),
+//          ),
+//          child: DownLoadAndShareDialogue(
+//            title: R.string().commonString.share,
+//            selectedDiamondList: list,
+//          ),
+//        );
+//      },
+//    );
 //    openSharePopUp(context);
   }
 
@@ -1148,6 +1154,12 @@ class DiamondConfig {
       }
     }
   }
+
+  getLinks(List<String> link) {
+    link.forEach((element) {
+      return element.split(",");
+    });
+  }
 }
 
 RoundedBorderPainter getPaintingType(BuildContext context, int type) {
@@ -1228,7 +1240,7 @@ openSharePopUp(BuildContext context) {
     Share.share(
         "876654878\n"
         "Invite code : 655765757"
-        "App link : $link",
+        "App link : $link",//------------------------------------------------------------------------------------------------------------------
         subject: R.string().screenTitle.share,
         sharePositionOrigin:
             Rect.fromCenter(center: Offset.zero, width: 100, height: 100));
