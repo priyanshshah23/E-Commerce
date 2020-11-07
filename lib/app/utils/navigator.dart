@@ -26,6 +26,7 @@ import 'package:diamnow/components/Screens/Notification/Notifications.dart';
 import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
+import 'package:diamnow/components/Screens/Search/Search.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
 import 'package:diamnow/components/Screens/Version/VersionUpdate.dart';
 import 'package:flutter/material.dart';
@@ -221,6 +222,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       break;
     case UploadKYCScreen.route:
       screen = UploadKYCScreen();
+      break;
+    case SearchScreen.route:
+      screen = SearchScreen();
       break;
   }
 
