@@ -54,15 +54,20 @@ class _DiamondOfferInfoWidgetState extends State<DiamondOfferInfoWidget> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       getAmountText('-50.05%'),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: getSize(16),
-                          right: getSize(10),
+                      Flexible(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            left: getSize(16),
+                            right: getSize(10),
+                          ),
+                          child: getAmountText(
+                              PriceUtilities.getPrice(13992.50) + "/Cts"),
                         ),
-                        child: getAmountText(
-                            PriceUtilities.getPrice(13992.50) + "/Cts"),
                       ),
-                      getAmountText(PriceUtilities.getPrice(20988.75) + "/Amt"),
+                      Flexible(
+                        child: getAmountText(
+                            PriceUtilities.getPrice(20988.75) + "/Amt"),
+                      ),
                     ],
                   ),
                 ),
