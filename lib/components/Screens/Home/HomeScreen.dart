@@ -64,22 +64,23 @@ class _HomeScreenState extends State<HomeScreen> {
           manageDrawerClick(context, event.index, event.isPop);
         }
       });
+
       RxBus.register<bool>(tag: eventBusLogout).listen((event) {
         //app.resolve<PrefUtils>().resetAndLogout(context);
       });
 
-      app.resolve<CustomDialogs>().confirmDialog(context,
-          title: R.string().authStrings.uploadKYC,
-          desc: R.string().authStrings.uploadKycDesc,
-          positiveBtnTitle: R.string().commonString.upload,
-          negativeBtnTitle: R.string().commonString.btnSkip,
-          onClickCallback: (click) {
-        if (click == ButtonType.PositveButtonClick) {
-          NavigationUtilities.pushRoute(
-            UploadKYCScreen.route,
-          );
-        }
-      });
+      // app.resolve<CustomDialogs>().confirmDialog(context,
+      //     title: R.string().authStrings.uploadKYC,
+      //     desc: R.string().authStrings.uploadKycDesc,
+      //     positiveBtnTitle: R.string().commonString.upload,
+      //     negativeBtnTitle: R.string().commonString.btnSkip,
+      //     onClickCallback: (click) {
+      //   if (click == ButtonType.PositveButtonClick) {
+      //     NavigationUtilities.pushRoute(
+      //       UploadKYCScreen.route,
+      //     );
+      //   }
+      // });
 
       // app.resolve<CustomDialogs>().confirmDialog(context,
       //     title: R.string().authStrings.kYCRejected,
