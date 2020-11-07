@@ -1,7 +1,12 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/models/Share/ShareThroughEmail.dart';
+import 'package:diamnow/models/excel/ExcelApiResponse.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -18,6 +23,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class Download extends StatefulWidget {
   List<DiamondModel> diamondList;
@@ -130,7 +136,6 @@ class _DownloadState extends State<Download> {
                       boxShadow: getBoxShadow(context)),
                   child: AppButton.flat(
                     onTap: () {
-                      
                       Navigator.pop(context);
 
                       mapOfCancelToken.forEach((key, value) {
@@ -243,9 +248,10 @@ class _DownloadState extends State<Download> {
             }
             finalDownloadProgress +=
                 (100 / totalDownloadableFilesForAllDiamonds);
+                // finalDownloadProgress=finalDownloadProgress();
             print(
                 "final download progress " + finalDownloadProgress.toString());
-            if (finalDownloadProgress >= 100) {
+            if (finalDownloadProgress >= 99) {
               Navigator.pop(context);
               totalDownloadedFiles == totalDownloadableFilesForAllDiamonds
                   ? showToast("All files has been downloaded.",
@@ -253,6 +259,14 @@ class _DownloadState extends State<Download> {
                   : showToast(
                       "${totalDownloadedFiles} files is downloaded \n ${totalDownloadableFilesForAllDiamonds - totalDownloadedFiles} files is not downloaded because it's not exist in the server.",
                       context: context);
+              allDiamondPreviewThings.forEach((element) {
+                if (element.fileType ==
+                        DownloadAndShareDialogueConstant.excel &&
+                    element.isSelected) {
+                  SyncManager syncManager = SyncManager();
+                  syncManager.callApiForExcel(context,diamondList);
+                }
+              });
             }
           });
         }
@@ -262,7 +276,9 @@ class _DownloadState extends State<Download> {
 
   getDownloadPercentage(List<SelectionPopupModel> allDiamondPreviewThings) {
     var totalFiles = allDiamondPreviewThings.where((element) {
-      if (element.isSelected && isUrlContainsImgOrVideo(element.url)) {
+      if (element.isSelected &&
+          element.fileType != DownloadAndShareDialogueConstant.excel &&
+          isUrlContainsImgOrVideo(element.url)) {
         return true;
       } else {
         return false;
@@ -284,7 +300,12 @@ class _DownloadState extends State<Download> {
 
     for (int i = 0; i < allDiamondPreviewThings.length; i++) {
       SelectionPopupModel element = allDiamondPreviewThings[i];
-      if (element.isSelected && isUrlContainsImgOrVideo(element.url)) {
+      // if(element.isSelected && element.fileType == DownloadAndShareDialogueConstant.excel){
+
+      // }
+      if (element.isSelected &&
+          element.fileType != DownloadAndShareDialogueConstant.excel &&
+          isUrlContainsImgOrVideo(element.url)) {
         CancelToken cancelTokens = CancelToken();
         mapOfCancelToken[element.url +
             element.title +
@@ -352,8 +373,8 @@ class _DownloadState extends State<Download> {
         }
       });
     } else {
+      // handled the scenario when user declines the permissions
       showToast("you should have to allowed permission");
-      // handle the scenario when user declines the permissions
     }
   }
 
@@ -385,4 +406,30 @@ class _DownloadState extends State<Download> {
 
     return permission == PermissionStatus.granted;
   }
+
+  // Future<WebView> getWebView(BuildContext context, String url) async {
+  //   // if (!model.isImage) print(model.url);
+  //   print(url);
+  //   return WebView(
+  //       initialUrl: url,
+  //       // onPageStarted: (url) {
+  //       //   // app.resolve<CustomDialogs>().showProgressDialog(context, "");
+  //       //   setState(() {
+  //       //     isLoading = true;
+  //       //   });
+  //       // },
+  //       // onPageFinished: (finish) {
+  //       //   // app.resolve<CustomDialogs>().hideProgressDialog();
+  //       //   setState(() {
+  //       //     isLoading = false;
+  //       //   });
+  //       // },
+  //       onWebResourceError: (error) {
+  //         print(error);
+  //         setState(() {
+  //           // isErroWhileLoading = true;
+  //         });
+  //       },
+  //       javascriptMode: JavascriptMode.unrestricted);
+  // }
 }

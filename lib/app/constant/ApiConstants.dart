@@ -81,6 +81,7 @@ class ApiConstants {
       commonUrl + "diamond-comment/delete";
   static const String diamondBidDelete = commonUrl + "diamond-bid/delete";
   static const String shareThroughEmail = apiUrl + "web/v1/diamond/excel";
+
 }
 
 class DiamondUrls {

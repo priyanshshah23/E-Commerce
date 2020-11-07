@@ -13,6 +13,7 @@ import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
+import 'package:diamnow/models/excel/ExcelApiResponse.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
@@ -233,6 +234,30 @@ class SyncManager {
         .then((resp) async {
       success(resp);
     }).catchError((onError) => {if (onError is ErrorResp) failure(onError)});
+  }
+
+  callApiForExcel(BuildContext context,List<DiamondModel> diamondList) {
+    List<String> stoneId = [];
+    diamondList.forEach((element) {
+      stoneId.add(element.id);
+    });
+    Map<String, dynamic> dict = {};
+    dict["id"] = stoneId;
+
+    NetworkCall<ExcelApiResponse>()
+        .makeCall(
+      () => app.resolve<ServiceModule>().networkService().getExcel(dict),
+      context,
+    )
+        .then((excelApiResponse) async {
+      // success(diamondListResp);
+      String url = baseURL + excelApiResponse.data.data;
+      //navigate to static page...
+      
+      // getWebView(context, url);
+    }).catchError((onError) {
+      print(onError);
+    });
   }
 
   List<num> getTotalCaratRapAmount(List<DiamondModel> diamondList) {

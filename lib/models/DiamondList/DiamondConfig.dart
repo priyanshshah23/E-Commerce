@@ -644,6 +644,9 @@ class DiamondConfig {
                   List<SelectionPopupModel> multiSelectedItem}) {
                 selectedOptions = multiSelectedItem;
                 // Navigator.pop(context);
+                //check condition for only excel,if so then redirect to static page
+                //else show showDialog method.          
+      
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
