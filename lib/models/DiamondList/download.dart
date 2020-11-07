@@ -128,8 +128,8 @@ class _DownloadState extends State<Download> {
                       borderRadius: BorderRadius.circular(getSize(5)),
                       boxShadow: getBoxShadow(context)),
                   child: AppButton.flat(
-                    onTap: () async {
-                      Navigator.pop(context);
+                    onTap: () {
+                      // Navigator.pop(context);
 
                       mapOfCancelToken.forEach((key, value) {
                         value.cancel();
