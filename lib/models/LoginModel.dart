@@ -969,3 +969,25 @@ class AccountTerm {
     return data;
   }
 }
+
+class Documents {
+  String type;
+  String fileImage;
+  String fileUrl;
+
+  Documents({this.type, this.fileImage, this.fileUrl});
+
+  Documents.fromJson(Map<String, dynamic> json) {
+    type = json['type'];
+    fileImage = json['file_image'];
+    fileUrl = json['file_url'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['type'] = this.type;
+    data['file_image'] = this.fileImage;
+    data['file_url'] = this.fileUrl;
+    return data;
+  }
+}

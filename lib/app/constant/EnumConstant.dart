@@ -57,3 +57,14 @@ class DownloadAndShareDialogueConstant {
   static const int roughVideo = 17;
   static const int img3D = 18;
 }
+
+//Documents Type
+enum DocumentType {
+  PhotoProof,
+  BussinessProof,
+}
+
+class DocumentsConstants {
+  static const String PhotoProof = "1";
+  static const String BussinessProof = "2";
+}

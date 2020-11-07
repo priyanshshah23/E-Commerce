@@ -83,6 +83,7 @@ class BaseTheme {
   Color get whatsAppColor => fromHex("#55CD6C");
   Color get gmailColor => fromHex("#DB4436");
   Color get skypeColor => fromHex("#03A9F4");
+  Color get bodyTextColor => fromHex("#999999");
 
   Color get shadowColorWithoutOpacity => fromHex("#7D9EF6").withOpacity(0.1);
   Color get shadowColor => shadowColorWithoutOpacity.withOpacity(0.1);
