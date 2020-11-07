@@ -16,7 +16,6 @@ import 'package:permission_handler/permission_handler.dart';
 
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
-import 'package:rxbus/rxbus.dart';
 
 class Download extends StatefulWidget {
   List<DiamondModel> diamondList;
@@ -43,7 +42,8 @@ class _DownloadState extends State<Download> {
   double finalDownloadProgress = 0;
   dynamic isPermissionStatusGranted;
   bool cancleDownload = false;
-  CancelToken cancelToken;
+  // CancelToken cancelToken;
+  Map<String, CancelToken> mapOfCancelToken = {};
 
   _DownloadState({this.diamondList, this.allDiamondPreviewThings});
 
@@ -51,12 +51,6 @@ class _DownloadState extends State<Download> {
   void initState() {
     super.initState();
     startDownload();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    RxBus.destroy(tag: "stopForLopOfDownloading");
   }
 
   @override
@@ -133,13 +127,14 @@ class _DownloadState extends State<Download> {
                       borderRadius: BorderRadius.circular(getSize(5)),
                       boxShadow: getBoxShadow(context)),
                   child: AppButton.flat(
-                    onTap: () {
+                    onTap: () async{
                       Navigator.pop(context);
-                      cancelToken.cancel();
-                      cancleDownload = true;
-                      RxBus.post(true, tag: "stopForLopOfDownloading");
 
-                      showToast("Downloading canceled");
+                      mapOfCancelToken.forEach((key, value) {
+                        value.cancel();
+                      });
+
+                      showToast("Downloading canceled", context: context);
                     },
                     borderRadius: getSize(5),
                     text: R.string().commonString.cancel,
@@ -236,23 +231,25 @@ class _DownloadState extends State<Download> {
       //download code
       getDownloadPercentage(allDiamondPreviewThings);
 
-      await downloadFunction(allDiamondPreviewThings, diamondList[i], (value) {
+      await downloadFunction(allDiamondPreviewThings, diamondList[i],
+          (value, isFromError) {
         print("download" + value.toString());
-        setState(() {
-          totalDownloadedFiles += 1;
+        if(mounted){
+          setState(() {
+          if (!isFromError) {
+            totalDownloadedFiles += 1;
+          }
           finalDownloadProgress += (100 / totalDownloadableFilesForAllDiamonds);
           print("final download progress " + finalDownloadProgress.toString());
-          if (finalDownloadProgress >= 100 &&
-              totalDownloadedFiles == totalDownloadableFilesForAllDiamonds) {
+          if (finalDownloadProgress >= 100) {
             Navigator.pop(context);
-            showToast("All files has been downloaded.", context: context);
+            totalDownloadedFiles == totalDownloadableFilesForAllDiamonds
+                ? showToast("All files has been downloaded.", context: context)
+                : showToast(
+                    "${totalDownloadedFiles} files is downloaded \n ${totalDownloadableFilesForAllDiamonds - totalDownloadedFiles} files is not downloaded because it's not exist in the server.",
+                    context: context);
           }
         });
-      });
-
-      RxBus.register<bool>(tag: "stopForLopOfDownloading").listen((event) {
-        if (event) {
-          stopforLoopFlag = event;
         }
       });
     }
@@ -269,37 +266,52 @@ class _DownloadState extends State<Download> {
 
     totalDownloadableFilesForAllDiamonds =
         totalFiles.length * diamondList.length;
+    if(mounted){
+      setState(() {});
+    }
   }
 
   Future<void> downloadFunction(
       List<SelectionPopupModel> allDiamondPreviewThings,
       DiamondModel diamondModel,
-      void callBack(int val)) async {
+      void callBack(int val, bool isFromError)) async {
+    //define map
+
     for (int i = 0; i < allDiamondPreviewThings.length; i++) {
       SelectionPopupModel element = allDiamondPreviewThings[i];
       if (element.isSelected && isUrlContainsImgOrVideo(element.url)) {
+        CancelToken cancelTokens = CancelToken();
+        mapOfCancelToken[element.url +
+            element.title +
+            diamondModel.id +
+            "." +
+            getExtensionOfUrl(element.url)] = cancelTokens;
+        // {
+        //   url:canceltokens
+        // }
         await downloadFile(
             element.url,
             element.title +
                 diamondModel.id +
                 "." +
                 getExtensionOfUrl(element.url),
-            0, (value) {
-          callBack(value);
-        });
+            0, (value, isFromError) {
+          callBack(value, isFromError);
+        },element.url +
+            element.title +
+            diamondModel.id +
+            "." +
+            getExtensionOfUrl(element.url));
       }
-       if(cancleDownload)
-        break;
+ 
     }
   }
 
   // downloading logic is handled by this method
 
-  Future<void> downloadFile(
-      uri, fileName, int progress, void callBack(int val)) async {
-
-      if(cancleDownload)  
-        return;
+  Future<void> downloadFile(uri, fileName, int progress,
+      void callBack(int val, bool isFromError),String key) async {
+    
     final dir = await _getDownloadDirectory();
     if (isPermissionStatusGranted) {
       final savePath = path.join(dir.path, fileName);
@@ -309,18 +321,24 @@ class _DownloadState extends State<Download> {
         uri,
         savePath,
         onReceiveProgress: (rcv, total) {
-          // print(
-          //     'received: ${rcv.toStringAsFixed(0)} out of total: ${total.toStringAsFixed(0)}');
+          print(
+              'received: ${rcv.toStringAsFixed(0)} out of total: ${total.toStringAsFixed(0)}');
 
           progress = ((rcv ~/ total) * 100);
         },
         deleteOnError: true,
-        cancelToken: cancelToken,
-      ).then((_) {
+        cancelToken: mapOfCancelToken[key],
+      ).then((_) {  
         // print("download completed");
         // print("download completed" + progress.toString());
         if (progress >= 100) {
-          callBack(progress);
+          callBack(progress, false);
+        }
+      }).catchError((error) {
+        callBack(100, true);
+
+        if(mounted){
+          setState(() {});
         }
       });
     } else {
@@ -339,7 +357,7 @@ class _DownloadState extends State<Download> {
     // for iOS is unnecessary
 
     // iOS directory visible to user
-    return await getApplicationDocumentsDirectory();
+    return await getExternalStorageDirectory();
   }
 
   Future<bool> _requestPermissions() async {
