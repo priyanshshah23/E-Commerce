@@ -129,7 +129,7 @@ class _DownloadState extends State<Download> {
                       boxShadow: getBoxShadow(context)),
                   child: AppButton.flat(
                     onTap: () {
-                      // Navigator.pop(context);
+                      Navigator.pop(context);
 
                       mapOfCancelToken.forEach((key, value) {
                         value.cancel();
@@ -337,14 +337,12 @@ class _DownloadState extends State<Download> {
         // print("download completed" + progress.toString());
         if (progress >= 100) {
           callBack(progress, false);
+          if (Platform.isIOS) {
+            isImage(savePath)
+                ? GallerySaver.saveImage(savePath)
+                : GallerySaver.saveVideo(savePath);
+          }
         }
-
-        if (Platform.isIOS) {
-          isImage(savePath)
-              ? GallerySaver.saveImage(savePath)
-              : GallerySaver.saveVideo(savePath);
-        }
-        
       }).catchError((error) {
         callBack(100, true);
 
@@ -369,6 +367,9 @@ class _DownloadState extends State<Download> {
     // for iOS is unnecessary
 
     // iOS directory visible to user
+    if (Platform.isIOS) {
+      return await getApplicationDocumentsDirectory();
+    }
     return await getExternalStorageDirectory();
   }
 
