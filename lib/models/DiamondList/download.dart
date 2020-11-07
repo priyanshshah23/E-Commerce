@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -129,6 +130,7 @@ class _DownloadState extends State<Download> {
                       boxShadow: getBoxShadow(context)),
                   child: AppButton.flat(
                     onTap: () {
+                      
                       Navigator.pop(context);
 
                       mapOfCancelToken.forEach((key, value) {
@@ -155,7 +157,6 @@ class _DownloadState extends State<Download> {
 
   doDownLoad() async {
     isPermissionStatusGranted = await _requestPermissions();
-    bool stopforLoopFlag = false;
     for (int i = 0; i < diamondList.length; i++) {
       DiamondModel model = diamondList[i];
 
@@ -348,7 +349,6 @@ class _DownloadState extends State<Download> {
 
         if (mounted) {
           setState(() {});
-          callBack(100, true);
         }
       });
     } else {
