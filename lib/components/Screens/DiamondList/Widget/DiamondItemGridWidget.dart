@@ -173,11 +173,11 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
                                 Row(
                                   children: <Widget>[
                                     Expanded(
-                                      flex: 2,
+                                      flex: 3,
                                       child: getText(widget.item?.clrNm ?? ""),
                                     ),
                                     Expanded(
-                                      flex: 8,
+                                      flex: 7,
                                       child: getAmountText(
                                         widget.item?.getAmount() ?? "",
                                         align: TextAlign.right,

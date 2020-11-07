@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'package:diamnow/app/app.export.dart';
@@ -10,7 +11,7 @@ import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/string_utils.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
-import 'package:downloads_path_provider_28/downloads_path_provider_28.dart';
+// import 'package:downloads_path_provider_28/downloads_path_provider_28.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -288,8 +289,7 @@ class _DownloadState extends State<Download> {
           callBack(value);
         });
       }
-       if(cancleDownload)
-        break;
+      if (cancleDownload) break;
     }
   }
 
@@ -297,12 +297,10 @@ class _DownloadState extends State<Download> {
 
   Future<void> downloadFile(
       uri, fileName, int progress, void callBack(int val)) async {
-
-      if(cancleDownload)  
-        return;
+    if (cancleDownload) return;
     final dir = await _getDownloadDirectory();
+    final savePath = path.join(dir.path, fileName);
     if (isPermissionStatusGranted) {
-      final savePath = path.join(dir.path, fileName);
       Dio dio = Dio();
 
       dio.download(
@@ -321,6 +319,11 @@ class _DownloadState extends State<Download> {
         // print("download completed" + progress.toString());
         if (progress >= 100) {
           callBack(progress);
+          if (Platform.isIOS) {
+            isImage(savePath)
+                ? GallerySaver.saveImage(savePath)
+                : GallerySaver.saveVideo(savePath);
+          }
         }
       });
     } else {
@@ -330,9 +333,9 @@ class _DownloadState extends State<Download> {
   }
 
   Future<Directory> _getDownloadDirectory() async {
-    if (Platform.isAndroid) {
-      return await DownloadsPathProvider.downloadsDirectory;
-    }
+    // if (Platform.isAndroid) {
+    //   return await DownloadsPathProvider.downloadsDirectory;
+    // }
 
     // in this example we are using only Android and iOS so I can assume
     // that you are not trying it for other platforms and the if statement
