@@ -21,8 +21,7 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        widget.actionClick(ManageCLick(
-            type: clickConstant.CLICK_TYPE_ROW));
+        widget.actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_ROW));
       },
       child: Stack(
         alignment: Alignment.topCenter,
@@ -66,7 +65,7 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
                               top: getSize(8),
                               left: getSize(5),
                               right: getSize(5),
-                              bottom: getSize(5),
+                              bottom: getSize(8),
                             ),
                             child: Center(
                               child: GestureDetector(
@@ -76,6 +75,7 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
                                           clickConstant.CLICK_TYPE_SELECTION));
                                 },
                                 child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
                                       widget.item?.crt.toString() ?? "",
@@ -111,7 +111,7 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
                                               "",
                                           style: appTheme.green10TextStyle
                                               .copyWith(
-                                                  fontSize: getFontSize(8)),
+                                                  fontSize: getFontSize(10)),
                                         ),
                                       ),
                                     )
@@ -137,22 +137,34 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
                                 ),
                                 Row(
                                   children: [
-                                    getText(widget.item?.vStnId ?? ""),
-                                    // Expanded(child: Container()),
-
-                                    getAmountText(
-                                        widget.item?.getPricePerCarat() ?? ""),
+                                    Expanded(
+                                      flex: 6,
+                                      child: getText(widget.item?.vStnId ?? ""),
+                                    ),
+                                    Expanded(
+                                      flex: 4,
+                                      child: getText(widget.item?.shpNm ?? ""),
+                                    ),
                                   ],
                                 ),
                                 SizedBox(
                                   height: getSize(6),
                                 ),
                                 Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    getText(widget.item?.shpNm ?? ""),
-                                    Spacer(),
-                                    getAmountText(
-                                        widget.item?.getAmount() ?? ""),
+                                    Expanded(
+                                      flex: 3,
+                                      child: getText(widget.item?.colNm ?? ""),
+                                    ),
+                                    Expanded(
+                                      flex: 7,
+                                      child: getAmountText(
+                                        widget.item?.getPricePerCarat() ?? "",
+                                        align: TextAlign.right,
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 SizedBox(
@@ -160,37 +172,46 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
                                 ),
                                 Row(
                                   children: <Widget>[
-                                    getText(widget.item?.colNm ?? ""),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                        left: getSize(5),
-                                        right: getSize(5),
-                                      ),
+                                    Expanded(
+                                      flex: 3,
                                       child: getText(widget.item?.clrNm ?? ""),
                                     ),
-                                    getText(widget.item?.cutNm ?? ""),
-                                    Container(
-                                      height: getSize(4),
-                                      width: getSize(4),
-                                      decoration: BoxDecoration(
-                                          color: appTheme.dividerColor,
-                                          shape: BoxShape.circle),
+                                    Expanded(
+                                      flex: 7,
+                                      child: getAmountText(
+                                        widget.item?.getAmount() ?? "",
+                                        align: TextAlign.right,
+                                      ),
                                     ),
-                                    getText(widget.item?.polNm ?? ""),
-                                    Container(
-                                      height: getSize(4),
-                                      width: getSize(4),
-                                      decoration: BoxDecoration(
-                                          color: appTheme.dividerColor,
-                                          shape: BoxShape.circle),
-                                    ),
-                                    getText(widget.item?.symNm ?? ""),
-                                    // SizedBox(
-                                    //   width: getSize(6),
-                                    // ),
-                                    Spacer(),
-                                    getText(widget.item?.lbNm ?? "")
                                   ],
+                                ),
+                                SizedBox(
+                                  height: getSize(8),
+                                ),
+                                Expanded(
+                                  child: Row(
+                                    children: [
+                                      getText(widget.item?.cutNm ?? ""),
+                                      Container(
+                                        height: getSize(4),
+                                        width: getSize(4),
+                                        decoration: BoxDecoration(
+                                            color: appTheme.dividerColor,
+                                            shape: BoxShape.circle),
+                                      ),
+                                      getText(widget.item?.polNm ?? ""),
+                                      Container(
+                                        height: getSize(4),
+                                        width: getSize(4),
+                                        decoration: BoxDecoration(
+                                            color: appTheme.dividerColor,
+                                            shape: BoxShape.circle),
+                                      ),
+                                      getText(widget.item?.symNm ?? ""),
+                                      Spacer(),
+                                      getText(widget.item?.lbNm ?? ""),
+                                    ],
+                                  ),
                                 ),
                                 SizedBox(
                                   height: getSize(8),
@@ -213,221 +234,6 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
         ],
       ),
     );
-    return GestureDetector(
-      onTap: () {
-        widget.actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_ROW));
-      },
-      child: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                color: appTheme.whiteColor,
-                borderRadius: BorderRadius.circular(getSize(5)),
-                border: Border.all(
-                    color: widget.item.isSelected
-                        ? appTheme.colorPrimary
-                        : appTheme.dividerColor)),
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: getSize(16),
-                  ),
-                  // left: getSize(26), right: getSize(26)
-                  child: Center(
-                    child: getImageView(
-                      widget.item.getDiamondImage(),
-                      placeHolderImage: diamond,
-                      width: MathUtilities.screenWidth(context),
-                      height: getSize(96),
-                    ),
-                    // child: Image.asset(
-                    //   diamond,
-                    //   height: getSize(96),
-                    // ),
-                  ),
-                ),
-                SizedBox(
-                  height: getSize(4),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: appTheme.whiteColor,
-                      borderRadius: BorderRadius.circular(getSize(5)),
-                      border: Border.all(color: appTheme.lightBGColor)
-                      //boxShadow: getBoxShadow(context),
-                      ),
-                  child: Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: widget.item.isSelected
-                              ? appTheme.colorPrimary
-                              : appTheme.lightBGColor,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(5),
-                              bottomLeft: Radius.circular(5)),
-                        ),
-                        width: getSize(48),
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            top: getSize(8),
-                            left: getSize(5),
-                            right: getSize(5),
-                            bottom: getSize(5),
-                          ),
-                          child: Center(
-                            child: GestureDetector(
-                              onTap: () {
-                                widget.actionClick(ManageCLick(
-                                    type: clickConstant.CLICK_TYPE_SELECTION));
-                              },
-                              child: Column(
-                                children: [
-                                  Text(
-                                    widget.item?.crt.toString() ?? "",
-                                    style: appTheme.blue14TextStyle.copyWith(
-                                      color: widget.item.isSelected
-                                          ? appTheme.whiteColor
-                                          : appTheme.colorPrimary,
-                                      fontSize: getFontSize(12),
-                                    ),
-                                  ),
-                                  Text(
-                                    R.string().commonString.carat,
-                                    style: appTheme.blue14TextStyle.copyWith(
-                                      color: widget.item.isSelected
-                                          ? appTheme.whiteColor
-                                          : appTheme.colorPrimary,
-                                      fontSize: getFontSize(10),
-                                    ),
-                                  ),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    margin: EdgeInsets.only(top: getSize(5)),
-                                    // width: getSize(55),
-                                    // height: getSize(19),
-                                    decoration: BoxDecoration(
-                                        color: appTheme.whiteColor,
-                                        borderRadius:
-                                            BorderRadius.circular(getSize(5))),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(getSize(2)),
-                                      child: Text(
-                                        widget.item?.back.toString() + " %" ??
-                                            "",
-                                        style: appTheme.green10TextStyle
-                                            .copyWith(fontSize: getFontSize(8)),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: getSize(2),
-                      ),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          // mainAxisSize: MainAxisSize.max,
-                          children: [
-                            SizedBox(
-                              height: getSize(4),
-                            ),
-                            Row(
-                              children: [
-                                getText(widget.item?.vStnId ?? ""),
-                                // Expanded(child: Container()),
-                                Spacer(),
-                                getAmountText(
-                                    widget.item?.getPricePerCarat() ?? ""),
-                              ],
-                            ),
-                            SizedBox(
-                              height: getSize(6),
-                            ),
-                            Row(
-                              children: [
-                                getText(widget.item?.shpNm ?? ""),
-                                Spacer(),
-                                getAmountText(widget.item?.getAmount() ?? ""),
-                              ],
-                            ),
-                            SizedBox(
-                              height: getSize(6),
-                            ),
-                            Row(
-                              children: <Widget>[
-                                getText(widget.item?.colNm ?? ""),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    left: getSize(5),
-                                    right: getSize(5),
-                                  ),
-                                  child: getText(widget.item?.clrNm ?? ""),
-                                ),
-                                getText(widget.item?.cutNm ?? ""),
-                                Container(
-                                  height: getSize(4),
-                                  width: getSize(4),
-                                  decoration: BoxDecoration(
-                                      color: appTheme.dividerColor,
-                                      shape: BoxShape.circle),
-                                ),
-                                getText(widget.item?.polNm ?? ""),
-                                Container(
-                                  height: getSize(4),
-                                  width: getSize(4),
-                                  decoration: BoxDecoration(
-                                      color: appTheme.dividerColor,
-                                      shape: BoxShape.circle),
-                                ),
-                                getText(widget.item?.symNm ?? ""),
-                                // SizedBox(
-                                //   width: getSize(6),
-                                // ),
-                                Spacer(),
-                                getText(widget.item?.lbNm ?? "")
-                              ],
-                            ),
-                            SizedBox(
-                              height: getSize(8),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: getSize(2),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                decoration: BoxDecoration(
-                    color: widget.item.getStatusColor(),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(5),
-                        topRight: Radius.circular(5))),
-                width: getSize(26),
-                height: getSize(4),
-                // color: Colors.red,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 
   getDiamondImageView() {
@@ -437,8 +243,8 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
       color: Colors.transparent,
       borderRadius: BorderRadius.circular(getSize(75)),
       child: Container(
-        width: getSize(150),
-        height: getSize(150),
+        width: getSize(140),
+        height: getSize(140),
         decoration: BoxDecoration(
           color: appTheme.whiteColor,
           shape: BoxShape.circle,
@@ -461,22 +267,22 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
     );
   }
 
-  getText(String text) {
+  getText(String text, {TextAlign align}) {
     return Text(
       text,
+      textAlign: align ?? TextAlign.left,
       style: appTheme.black12TextStyle.copyWith(
-        fontSize: getFontSize(10),
+        fontSize: getFontSize(12),
       ),
     );
   }
 
-  getAmountText(String text) {
-    return Expanded(
-      child: Text(
-        text,
-        overflow: TextOverflow.ellipsis,
-        style: appTheme.blue14TextStyle.copyWith(fontSize: getFontSize(10)),
-      ),
+  getAmountText(String text, {TextAlign align}) {
+    return Text(
+      text,
+      overflow: TextOverflow.ellipsis,
+      textAlign: align ?? TextAlign.left,
+      style: appTheme.blue14TextStyle.copyWith(fontSize: getFontSize(12)),
     );
   }
 }

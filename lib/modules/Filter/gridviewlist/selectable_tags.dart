@@ -11,7 +11,7 @@ typedef void OnPressed(Tag tags);
 
 class SelectableTags extends StatefulWidget {
   SelectableTags(
-      {@required this.tags,
+      { this.tags,
       this.columns = 4,
       this.height,
       this.borderRadius,
@@ -319,7 +319,7 @@ class _SelectableTagsState extends State<SelectableTags> {
 }
 
 class Tag {
-  Tag({this.id, @required this.title, this.icon, this.active = true}) {
+  Tag({this.id, this.title, this.icon, this.active = true}) {
     //When an icon is set, the size is 2. it seemed the most appropriate
     this.length = (icon != null) ? 2 : utf8.encode(title).length;
   }

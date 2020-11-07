@@ -24,6 +24,7 @@ import 'package:diamnow/components/widgets/shared/CommonDateTimePicker.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
+import 'package:diamnow/models/DiamondList/download.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -603,60 +604,72 @@ class DiamondConfig {
   ) {
     List<SelectionPopupModel> downloadOptionList = List<SelectionPopupModel>();
     List<SelectionPopupModel> selectedOptions = List<SelectionPopupModel>();
-    downloadOptionList.add(SelectionPopupModel(
-      "1",
-      "Excel",
-    ));
-    downloadOptionList.add(SelectionPopupModel(
-      "2",
-      "Certificate",
-    ));
-    downloadOptionList.add(SelectionPopupModel(
-      "3",
-      "Real Image",
-    ));
-    downloadOptionList.add(SelectionPopupModel(
-      "4",
-      "Plotting Image",
-    ));
-    downloadOptionList.add(SelectionPopupModel(
-      "5",
-      "Heart & Arrow",
-    ));
-    downloadOptionList.add(SelectionPopupModel(
-      "6",
-      "Asset Scope",
-    ));
-    downloadOptionList.add(SelectionPopupModel(
-      "7",
-      "Video",
-    ));
+    downloadOptionList.add(SelectionPopupModel("1", "Excel",
+        fileType: DownloadAndShareDialogueConstant.excel));
+    downloadOptionList.add(SelectionPopupModel("2", "Certificate",
+        fileType: DownloadAndShareDialogueConstant.certificate));
+    downloadOptionList.add(SelectionPopupModel("3", "Real Image",
+        fileType: DownloadAndShareDialogueConstant.realImage1));
+    downloadOptionList.add(SelectionPopupModel("4", "Plotting Image",
+        fileType: DownloadAndShareDialogueConstant.plottingImg));
+    downloadOptionList.add(SelectionPopupModel("5", "Heart & Arrow",
+        fileType: DownloadAndShareDialogueConstant.heartAndArrowImg));
+    downloadOptionList.add(SelectionPopupModel("6", "Asset Scope",
+        fileType: DownloadAndShareDialogueConstant.assetScopeImg));
+    downloadOptionList.add(SelectionPopupModel("7", "Video",
+        fileType: DownloadAndShareDialogueConstant.video1));
 
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (BuildContext context) {
-        return Dialog(
-          insetPadding: EdgeInsets.symmetric(
-              horizontal: getSize(20), vertical: getSize(5)),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(getSize(25)),
-          ),
-          child: SelectionDialogue(
-            isSearchEnable: false,
-            title: R.string().commonString.download,
-            isMultiSelectionEnable: true,
-            positiveButtonTitle: R.string().commonString.download,
-            selectionOptions: downloadOptionList,
-            applyFilterCallBack: (
-                {SelectionPopupModel selectedItem,
-                List<SelectionPopupModel> multiSelectedItem}) {
-              selectedOptions = multiSelectedItem;
-              print("length---${selectedOptions.length}");
-            },
-          ),
+        return WillPopScope(
+          onWillPop: () {
+            return Future.value(false);
+          },
+          child: Dialog(
+            insetPadding: EdgeInsets.symmetric(
+                horizontal: getSize(20), vertical: getSize(5)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(getSize(25)),
+            ),
+            child: SelectionDialogue(
+              isSearchEnable: false,
+              title: R.string().commonString.download,
+              isMultiSelectionEnable: true,
+              positiveButtonTitle: R.string().commonString.download,
+              selectionOptions: downloadOptionList,
+              applyFilterCallBack: (
+                  {SelectionPopupModel selectedItem,
+                  List<SelectionPopupModel> multiSelectedItem}) {
+                selectedOptions = multiSelectedItem;
+                // Navigator.pop(context);
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return WillPopScope(
+                        onWillPop: () {
+                          return Future.value(false);
+                        },
+                        child: Dialog(
+                          insetPadding: EdgeInsets.symmetric(
+                              horizontal: getSize(20), vertical: getSize(5)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(getSize(25)),
+                          ),
+                          child: Download(
+                            allDiamondPreviewThings: selectedOptions,
+                            diamondList: list,
+                          ),
+                        ),
+                      );
+                    });
+              },
+            ),
 //          child: DownLoadAndShareDialogue(
 //            title: R.string().commonString.download,
 //          ),
+          ),
         );
       },
     );
@@ -972,20 +985,25 @@ class DiamondConfig {
       context,
       req,
       (resp) {
-        app.resolve<CustomDialogs>().errorDialog(context, title, resp.message,
-            btntitle: R.string().commonString.ok,
-            dismissPopup: false, voidCallBack: () {
-          Navigator.pop(context);
-          placeOrder();
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            barrierDismissible: true,
+            title: "",
+            desc: resp.message,
+            positiveBtnTitle: R.string().commonString.ok,
+            onClickCallback: (buttonType) {
+          if (buttonType == ButtonType.PositveButtonClick) {
+            placeOrder();
+          }
         });
       },
       (onError) {
         if (onError.message != null) {
-          app.resolve<CustomDialogs>().errorDialog(
+          app.resolve<CustomDialogs>().confirmDialog(
                 context,
-                "",
-                onError.message,
-                btntitle: R.string().commonString.ok,
+                barrierDismissible: true,
+                title: "",
+                desc: onError.message,
+                positiveBtnTitle: R.string().commonString.ok,
               );
         }
       },

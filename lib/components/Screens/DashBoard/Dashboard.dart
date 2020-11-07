@@ -5,6 +5,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
@@ -165,16 +166,16 @@ class _DashboardState extends StatefulScreenWidgetState {
           manageToolbarClick(element);
         },
         child: (element.code == BottomCodeConstant.TBProfile)
-            ? Container(
-                width: getSize(44),
-                height: getSize(44),
-                child: Padding(
-                  padding: EdgeInsets.only(
-                      left: getSize(8.0), right: getSize(Spacing.rightPadding)),
+            ? Padding(
+                padding: EdgeInsets.only(
+                    left: getSize(8.0), right: getSize(Spacing.rightPadding)),
+                child: Container(
+                  width: getSize(30),
+                  height: getSize(30),
                   child: Center(
                     child: ClipRRect(
                       borderRadius:
-                          BorderRadius.all(Radius.circular(getSize(22))),
+                          BorderRadius.all(Radius.circular(getSize(30))),
                       child: getImageView(
                         app.resolve<PrefUtils>().getUserDetails().profileImage,
                         placeHolderImage: placeHolder,
@@ -1204,13 +1205,23 @@ class _DashboardState extends StatefulScreenWidgetState {
         secondaryActions: <Widget>[
           IconSlideAction(
             onTap: () {
-              SyncManager.instance.callApiForDeleteSavedSearch(
-                  context, model.id, success: (resp) {
-                this
-                    .dashboardModel
-                    .savedSearch
-                    .removeWhere((element) => element.id == model.id);
-                setState(() {});
+              app.resolve<CustomDialogs>().confirmDialog(context,
+                  barrierDismissible: true,
+                  title: "",
+                  desc: R.string().commonString.deleteItem,
+                  positiveBtnTitle: R.string().commonString.ok,
+                  negativeBtnTitle: R.string().commonString.cancel,
+                  onClickCallback: (buttonType) {
+                if (buttonType == ButtonType.PositveButtonClick) {
+                  SyncManager.instance.callApiForDeleteSavedSearch(
+                      context, model.id, success: (resp) {
+                    this
+                        .dashboardModel
+                        .savedSearch
+                        .removeWhere((element) => element.id == model.id);
+                    setState(() {});
+                  });
+                }
               });
             },
             iconWidget: Column(

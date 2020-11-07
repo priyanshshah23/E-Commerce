@@ -203,7 +203,7 @@ class DrawerSetting {
         .getModulePermission(ModulePermissionConstant.permission_cart)
         .view)
       drawerList.add(DrawerModel(
-          image: addToCart,
+          image: addToCartDrawer,
           title: R.string().screenTitle.myCart,
           imageColor: appTheme.colorPrimary,
           isSelected: false,
@@ -235,7 +235,7 @@ class DrawerSetting {
         .getModulePermission(ModulePermissionConstant.permission_enquiry)
         .view)
       drawerList.add(DrawerModel(
-        image: enquiry,
+        image: enquiryDrawer,
         title: R.string().screenTitle.myEnquiry,
         imageColor: appTheme.colorPrimary,
         isSelected: false,
@@ -290,7 +290,7 @@ class DrawerSetting {
         .getModulePermission(ModulePermissionConstant.permission_comment)
         .view)
       drawerList.add(DrawerModel(
-          image: comment,
+          image: commentDrawer,
           title: R.string().screenTitle.myComments,
           imageColor: appTheme.colorPrimary,
           isSelected: false,

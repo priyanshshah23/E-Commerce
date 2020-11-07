@@ -9,25 +9,27 @@ import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/Share/ShareThroughEmail.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:dio/dio.dart';
+
 
 class DownLoadAndShareDialogue extends StatefulWidget {
   String title = "";
-  List<DiamondModel> selectedDiamondList;
-
+  List<DiamondModel> diamondList;
   DownLoadAndShareDialogue({
     this.title,
-    this.selectedDiamondList,
+    this.diamondList,
   });
 
   @override
   _DownLoadAndShareDialogueState createState() =>
       _DownLoadAndShareDialogueState(
         title,
-        selectedDiamondList,
+        diamondList: this.diamondList,
       );
 }
 
 class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
+  List<DiamondModel> diamondList;
   String title = "";
   List<SelectionPopupModel> firstImageList = List<SelectionPopupModel>();
   List<SelectionPopupModel> secondImageList = List<SelectionPopupModel>();
@@ -44,17 +46,28 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
   bool isAllCertificateSelected = false;
   bool isAllExcelSelected = false;
   bool isAllRoughSelected = false;
-  List<DiamondModel> selectedDiamondList;
 
-  _DownLoadAndShareDialogueState(
-    this.title,
-      this.selectedDiamondList,
-  );
+  _DownLoadAndShareDialogueState(this.title, {this.diamondList});
 
   @override
   void initState() {
     setDataInList();
     super.initState();
+  }
+
+   checkValidation() {
+    var totalList =( firstImageList +
+        secondImageList +
+        firstVideoList +
+        secondVideoList +
+        firstCertificateList + secondCertificateList +
+        firstExcelList +
+    firstRoughList + secondRoughList).where((element) {
+      return element.isSelected;
+    }).toList();
+
+
+    return !isNullEmptyOrFalse(totalList);
   }
 
   @override
@@ -132,6 +145,7 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                     Expanded(
                       child: InkWell(
                         onTap: () {
+                          Navigator.pop(context);
                           if (checkValidation()) {
                             openURLWithApp(
                                 "whatsapp://send?phone=&text=Hello!", context);
@@ -161,6 +175,7 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                       child: InkWell(
                         onTap: () {
                           //callEmailApi();
+                          _openMail();
                           if (checkValidation()) {
                             openURLWithApp(
                                 "mailto:?subject=DiamNow&body=DiamNow",
@@ -190,6 +205,7 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                     Expanded(
                       child: InkWell(
                         onTap: () {
+                          Navigator.pop(context);
                           if (checkValidation()) {
                             openURLWithApp("skype:", context);
                           } else {
@@ -266,21 +282,24 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
     );
   }
 
-  checkValidation() {
-    var totalList =( firstImageList +
-        secondImageList +
-        firstVideoList +
-        secondVideoList +
-        firstCertificateList + secondCertificateList +
-        firstExcelList +
-    firstRoughList + secondRoughList).where((element) {
-      return element.isSelected;
-    }).toList();
 
 
-    return !isNullEmptyOrFalse(totalList);
+
+
+  _openMail() async {
+    String uri = 'mailto:?subject=DiamNow&body=DiamNow';
+    if (await canLaunch(uri)) {
+      await launch(uri);
+    } else {
+      app.resolve<CustomDialogs>().confirmDialog(
+            context,
+            title: R.string().commonString.error,
+            desc: "Could not launch $uri",
+            positiveBtnTitle: R.string().commonString.ok,
+          );
+    }
+
   }
-
 //  callEmailApi() async {
 //    ShareThroughEmailReq req = ShareThroughEmailReq();
 //
@@ -505,78 +524,42 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
   }
 
   void setDataInList() {
-    firstImageList.add(SelectionPopupModel(
-      "1",
-      "Real Image - 1",
-    ));
-    firstImageList.add(SelectionPopupModel(
-      "2",
-      "Plotting",
-    ));
-    firstImageList.add(SelectionPopupModel(
-      "3",
-      "Asset Scope",
-    ));
-    firstImageList.add(SelectionPopupModel(
-      "4",
-      "Face Up Image",
-    ));
-    firstImageList.add(SelectionPopupModel(
-      "5",
-      "Ideal Scope Image",
-    ));
-    secondImageList.add(SelectionPopupModel(
-      "6",
-      "Real Image - 2",
-    ));
-    secondImageList.add(SelectionPopupModel(
-      "7",
-      "Heart & Arrow",
-    ));
-    secondImageList.add(SelectionPopupModel(
-      "8",
-      "Arrow Image",
-    ));
-    secondImageList.add(SelectionPopupModel(
-      "9",
-      "Dark - Field Image",
-    ));
-    secondImageList.add(SelectionPopupModel(
-      "10",
-      "Flouresence Image",
-    ));
-    firstVideoList.add(SelectionPopupModel(
-      "1",
-      "Video 1",
-    ));
-    secondVideoList.add(SelectionPopupModel(
-      "2",
-      "Video 2",
-    ));
-    firstCertificateList.add(SelectionPopupModel(
-      "1",
-      "Certificate",
-    ));
-    secondCertificateList.add(SelectionPopupModel(
-      "2",
-      "Type IIA",
-    ));
-    firstExcelList.add(SelectionPopupModel(
-      "1",
-      "Excel",
-    ));
-    firstRoughList.add(SelectionPopupModel(
-      "1",
-      "Rough Scope",
-    ));
-    firstRoughList.add(SelectionPopupModel(
-      "2",
-      "Rough Video",
-    ));
-    secondRoughList.add(SelectionPopupModel(
-      "3",
-      "3D Image",
-    ));
+    firstImageList.add(SelectionPopupModel("1", "Real Image - 1",
+        fileType: DownloadAndShareDialogueConstant.realImage1));
+    firstImageList.add(SelectionPopupModel("2", "Plotting",
+        fileType: DownloadAndShareDialogueConstant.plottingImg));
+    firstImageList.add(SelectionPopupModel("3", "Asset Scope",
+        fileType: DownloadAndShareDialogueConstant.assetScopeImg));
+    firstImageList.add(SelectionPopupModel("4", "Face Up Image",
+        fileType: DownloadAndShareDialogueConstant.faceUpImg));
+    firstImageList.add(SelectionPopupModel("5", "Ideal Scope Image",
+        fileType: DownloadAndShareDialogueConstant.idealScopeImg));
+    secondImageList.add(SelectionPopupModel("6", "Real Image - 2",
+        fileType: DownloadAndShareDialogueConstant.realImage2));
+    secondImageList.add(SelectionPopupModel("7", "Heart & Arrow",
+        fileType: DownloadAndShareDialogueConstant.heartAndArrowImg));
+    secondImageList.add(SelectionPopupModel("8", "Arrow Image",
+        fileType: DownloadAndShareDialogueConstant.arrowImg));
+    secondImageList.add(SelectionPopupModel("9", "Dark - Field Image",
+        fileType: DownloadAndShareDialogueConstant.darkFieldImg));
+    secondImageList.add(SelectionPopupModel("10", "Flouresence Image",
+        fileType: DownloadAndShareDialogueConstant.flouresenceImg));
+    firstVideoList.add(SelectionPopupModel("1", "Video 1",
+        fileType: DownloadAndShareDialogueConstant.video1));
+    secondVideoList.add(SelectionPopupModel("2", "Video 2",
+        fileType: DownloadAndShareDialogueConstant.video2));
+    firstCertificateList.add(SelectionPopupModel("1", "Certificate",
+        fileType: DownloadAndShareDialogueConstant.certificate));
+    secondCertificateList.add(SelectionPopupModel("2", "Type IIA",
+        fileType: DownloadAndShareDialogueConstant.typeIIA));
+    firstExcelList.add(SelectionPopupModel("1", "Excel",
+        fileType: DownloadAndShareDialogueConstant.excel));
+    firstRoughList.add(SelectionPopupModel("1", "Rough Scope",
+        fileType: DownloadAndShareDialogueConstant.roughScope));
+    firstRoughList.add(SelectionPopupModel("2", "Rough Video",
+        fileType: DownloadAndShareDialogueConstant.roughVideo));
+    secondRoughList.add(SelectionPopupModel("3", "3D Image",
+        fileType: DownloadAndShareDialogueConstant.img3D));
   }
 
   getConditionValue(DownloadDataType type) {
@@ -604,6 +587,12 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
       isAllRoughSelected = value;
     } else if (type == DownloadDataType.Certificate) {
       isAllCertificateSelected = value;
+    }
+  }
+
+  isShareOrDownload(String title) {
+    if (title == "Share") {
+      return false;
     }
   }
 }
