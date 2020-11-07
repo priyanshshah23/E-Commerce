@@ -376,62 +376,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                           });
                     }),
                   );
-//    diamondList.state.listItems = isGrid
-//        ? GridView.count(
-//            shrinkWrap: true,
-//            crossAxisCount: 2,
-////            childAspectRatio: 0.8,
-//      childAspectRatio: 1,
-//
-//      mainAxisSpacing: 10,
-//            crossAxisSpacing: 8,
-//            padding: EdgeInsets.only(
-//              left: getSize(Spacing.leftPadding),
-//              bottom: getSize(Spacing.leftPadding),
-//              right: getSize(Spacing.rightPadding),
-//            ),
-//            children: List.generate(arraDiamond.length, (index) {
-//              var item = arraDiamond[index];
-//              return DiamondSquareGridItem(
-//                  item: item,
-//                  list: getRightAction((manageClick) {
-//                    manageRowClick(index, manageClick.type);
-//                  }),
-//                  actionClick: (manageClick) {
-//                    manageRowClick(index, manageClick.type);
-//                  });
-//              return DiamondGridItemWidget(
-//                  item: item,
-//                  list: getRightAction((manageClick) {
-//                    manageRowClick(index, manageClick.type);
-//                  }),
-//                  actionClick: (manageClick) {
-//                    manageRowClick(index, manageClick.type);
-//                  });
-//            }),
-//          )
-//        : ListView.builder(
-//            itemCount: arraDiamond.length,
-//            itemBuilder: (context, index) {
-////              return DiamondExpandItemWidget(
-////                  item: arraDiamond[index],
-////                  list: getRightAction((manageClick) {
-////                    manageRowClick(index, manageClick.type);
-////                  }),
-////                  actionClick: (manageClick) {
-////                    manageRowClick(index, manageClick.type);
-////                  });
-//              return DiamondItemWidget(
-//                  controller: controller,
-//                  item: arraDiamond[index],
-//                  list: getRightAction((manageClick) {
-//                    manageRowClick(index, manageClick.type);
-//                  }),
-//                  actionClick: (manageClick) {
-//                    manageRowClick(index, manageClick.type);
-//                  });
-//            },
-//          );
   }
 
   callBlockApi({bool isProgress = false}) {
@@ -590,6 +534,25 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           callApi(true);
         });
         break;
+      case BottomCodeConstant.TBDownloadView:
+        List<DiamondModel> selectedList =
+            arraDiamond.where((element) => element.isSelected).toList();
+        if (!isNullEmptyOrFalse(selectedList)) {
+          BottomTabModel tabModel = BottomTabModel();
+          tabModel.type = ActionMenuConstant.ACTION_TYPE_DOWNLOAD;
+          diamondConfig.manageDiamondAction(context, selectedList, tabModel,
+              () {
+            onRefreshList();
+          });
+        } else {
+          app.resolve<CustomDialogs>().confirmDialog(
+                context,
+                title: "",
+                desc: R.string().errorString.diamondSelectionError,
+                positiveBtnTitle: R.string().commonString.ok,
+              );
+        }
+        break;
     }
   }
 
@@ -679,7 +642,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               if (obj.type == ActionMenuConstant.ACTION_TYPE_MORE) {
                 List<DiamondModel> selectedList =
                     arraDiamond.where((element) => element.isSelected).toList();
-                if (selectedList != null && selectedList.length > 0) {
+                if (!isNullEmptyOrFalse(selectedList)) {
                   showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
                       (manageClick) {
                     if (manageClick.bottomTabModel.type ==
@@ -844,7 +807,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   manageBottomMenuClick(BottomTabModel bottomTabModel) {
     List<DiamondModel> selectedList =
         arraDiamond.where((element) => element.isSelected).toList();
-    if (selectedList != null && selectedList.length > 0) {
+    if (!isNullEmptyOrFalse(selectedList)) {
       if (bottomTabModel.type == ActionMenuConstant.ACTION_TYPE_DELETE) {
         callDeleteDiamond(selectedList);
       } else {
