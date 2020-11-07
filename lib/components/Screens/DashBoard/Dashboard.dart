@@ -333,6 +333,7 @@ class _DashboardState extends StatefulScreenWidgetState {
               textAlignVertical: TextAlignVertical(y: 1.0),
               textInputAction: TextInputAction.done,
               focusNode: _focusSearch,
+              readOnly: true,
               autofocus: false,
               controller: _searchController,
               obscureText: false,
@@ -373,9 +374,6 @@ class _DashboardState extends StatefulScreenWidgetState {
                     padding: EdgeInsets.all(getSize(10)),
                     child: Image.asset(search)),
               ),
-              // onFieldSubmitted: (String text) {
-              //   //
-              // },
               onChanged: (String text) {
                 //
               },
