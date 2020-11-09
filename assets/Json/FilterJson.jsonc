@@ -6,8 +6,8 @@
     "apiKey": "shp",
     "numberOfelementsToShow": 7,
     "masterCode": "SHAPE",
-    "verticalScroll": false,
-    "orientation": "h",
+    "verticalScroll": true,
+    "orientation": "v",
     "isShowAll": false,
     "isShowMore": true,
     "tab": "basic",
@@ -43,8 +43,8 @@
     "isActive": true,
     "showFromTo": true,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -70,8 +70,8 @@
     "apiKey": "col",
     "masterCode": "COLOR",
     "showRadio": true,
-    "showGroup": true,
-    "showWhiteFancy": false,
+    "showGroup": false,
+    "showWhiteFancy": true,
     "verticalScroll": false,
     "orientation": "v",
     "isShowAll": false,
@@ -158,7 +158,7 @@
     "tab": "basic",
     "isWhiteColor": false,
     "sequence": 7,
-    "isActive": true
+    "isActive": false
   },
   {
     "viewType": "seperator",
@@ -174,7 +174,7 @@
   },
   {
     "title": "Clarity",
-    "viewType": "groupwidget",
+    "viewType": "selection",
     "groupMasterCode": "CLARITYGROUP",
     "showGroup": true,
     "showRadio": true,
@@ -252,58 +252,6 @@
     "bottomPadding": 4
   },
   {
-    "title": "Fluorescence",
-    "viewType": "selection",
-    "allLableTitle": "All",
-    "apiKey": "flu",
-    "masterCode": "FLUORESCENCE",
-    "verticalScroll": false,
-    "orientation": "v",
-    "isShowAll": false,
-    "isShowMore": false,
-    "tab": "basic",
-    "sequence": 11,
-    "isActive": true
-  },
-  {
-    "viewType": "seperator",
-    "sequence": 12,
-    "isActive": false,
-    "height": 1,
-    "color": "#E3E3E3",
-    "tab": "basic",
-    "leftPadding": 0,
-    "rightPadding": 0,
-    "topPadding": 4,
-    "bottomPadding": 4
-  },
-  {
-    "title": "Lab",
-    "viewType": "selection",
-    "allLableTitle": "All",
-    "apiKey": "lb",
-    "masterCode": "LAB",
-    "verticalScroll": false,
-    "orientation": "v",
-    "isShowAll": false,
-    "isShowMore": false,
-    "tab": "basic",
-    "sequence": 13,
-    "isActive": true
-  },
-  {
-    "viewType": "seperator",
-    "sequence": 14,
-    "isActive": false,
-    "height": 1,
-    "color": "#E3E3E3",
-    "leftPadding": 0,
-    "tab": "basic",
-    "rightPadding": 0,
-    "topPadding": 4,
-    "bottomPadding": 4
-  },
-  {
     "title": "Arrivals",
     "viewType": "selection",
     "allLableTitle": "All",
@@ -317,8 +265,8 @@
     "sequence": 15,
     "isActive": false,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -337,33 +285,7 @@
     "bottomPadding": 4
   },
   {
-    "title": "Location",
-    "viewType": "selection",
-    "allLableTitle": "All",
-    "apiKey": "loc",
-    "masterCode": "LOCATION",
-    "verticalScroll": false,
-    "orientation": "v",
-    "isShowAll": false,
-    "isShowMore": false,
-    "tab": "basic",
-    "sequence": 17,
-    "isActive": true
-  },
-  {
-    "viewType": "seperator",
-    "sequence": 18,
-    "isActive": false,
-    "height": 1,
-    "color": "#E3E3E3",
-    "leftPadding": 0,
-    "tab": "basic",
-    "rightPadding": 0,
-    "topPadding": 4,
-    "bottomPadding": 4
-  },
-  {
-    "title": "",
+    "title": "Make",
     "viewType": "selection",
     "allLableTitle": "All",
     "isSingleSelection": true,
@@ -377,29 +299,6 @@
     "sequence": 19,
     "isActive": true,
     "masterSelection": [
-      {
-        "code": "2EX",
-        "masterToSelect": [
-          {
-            "code": "CUT",
-            "subMasters": [
-              "EX"
-            ]
-          },
-          {
-            "code": "POLISH",
-            "subMasters": [
-              "EX"
-            ]
-          },
-          {
-            "code": "SYMMETRY",
-            "subMasters": [
-              "XE"
-            ]
-          }
-        ]
-      },
       {
         "code": "3EX",
         "masterToSelect": [
@@ -445,6 +344,35 @@
             "subMasters": [
               "EX",
               "VG"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "3VG",
+        "masterToSelect": [
+          {
+            "code": "CUT",
+            "subMasters": [
+              "qwqw",
+              "VG",
+              "qwe"
+            ]
+          },
+          {
+            "code": "POLISH",
+            "subMasters": [
+              "EX",
+              "VG",
+              "G"
+            ]
+          },
+          {
+            "code": "SYMMETRY",
+            "subMasters": [
+              "EX",
+              "VG",
+              "G"
             ]
           }
         ]
@@ -524,18 +452,56 @@
     "bottomPadding": 4
   },
   {
-    "title": "H & A",
+    "title": "Fluorescence",
     "viewType": "selection",
     "allLableTitle": "All",
-    "apiKey": "hA",
-    "masterCode": "H_AND_A",
+    "apiKey": "flu",
+    "masterCode": "FLUORESCENCE",
     "verticalScroll": false,
-    "orientation": "h",
+    "orientation": "v",
     "isShowAll": false,
     "isShowMore": false,
     "tab": "basic",
-    "sequence": 24,
+    "sequence": 11,
     "isActive": true
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 12,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "basic",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Lab",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "lb",
+    "masterCode": "LAB",
+    "verticalScroll": false,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 13,
+    "isActive": true
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 14,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "basic",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   },
   {
     "title": "Brilliance",
@@ -549,7 +515,7 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 25,
-    "isActive": true
+    "isActive": false
   },
   {
     "title": "Stage",
@@ -563,7 +529,7 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 26,
-    "isActive": true
+    "isActive": false
   },
   {
     "viewType": "seperator",
@@ -615,8 +581,8 @@
     "maxValue": 100,
     "minValue": -10,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -646,8 +612,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -666,6 +632,32 @@
     "bottomPadding": 4
   },
   {
+    "title": "Location",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "loc",
+    "masterCode": "LOCATION",
+    "verticalScroll": false,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 17,
+    "isActive": true
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 18,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "basic",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
     "title": "DOR",
     "viewType": "selection",
     "allLableTitle": "All",
@@ -677,7 +669,7 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 70,
-    "isActive": true
+    "isActive": false
   },
   {
     "title": "FM",
@@ -691,7 +683,7 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 70,
-    "isActive": true
+    "isActive": false
   },
   {
     "viewType": "seperator",
@@ -717,7 +709,7 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 70,
-    "isActive": true
+    "isActive": false
   },
   {
     "title": "Table%",
@@ -731,8 +723,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -762,8 +754,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -793,8 +785,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -813,7 +805,7 @@
     "bottomPadding": 4
   },
   {
-    "title": "Length",
+    "title": "Length (MM)",
     "viewType": "fromto",
     "apiKey": "length",
     "sequence": 38,
@@ -824,8 +816,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -844,7 +836,7 @@
     "bottomPadding": 4
   },
   {
-    "title": "Width",
+    "title": "Width (MM)",
     "viewType": "fromto",
     "apiKey": "width",
     "sequence": 40,
@@ -855,8 +847,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -875,7 +867,7 @@
     "bottomPadding": 4
   },
   {
-    "title": "Depth",
+    "title": "Depth (MM)",
     "viewType": "fromto",
     "apiKey": "height",
     "sequence": 42,
@@ -886,8 +878,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -917,8 +909,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -948,8 +940,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -968,10 +960,10 @@
     "bottomPadding": 4
   },
   {
-    "title": "Girdle%",
+    "title": "Star Length",
     "viewType": "fromto",
-    "apiKey": "grdlPer",
-    "sequence": 48,
+    "apiKey": "strLen",
+    "sequence": 56,
     "isActive": true,
     "labelFrom": "From",
     "labelTo": "To",
@@ -979,8 +971,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -988,12 +980,12 @@
   },
   {
     "viewType": "seperator",
-    "sequence": 49,
+    "sequence": 57,
     "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
-    "tab": "advance",
     "leftPadding": 0,
+    "tab": "advance",
     "rightPadding": 0,
     "topPadding": 4,
     "bottomPadding": 4
@@ -1010,8 +1002,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1030,7 +1022,7 @@
     "bottomPadding": 4
   },
   {
-    "title": "Pavilion Height",
+    "title": "Pavilion Height%",
     "viewType": "fromto",
     "apiKey": "pHgt",
     "sequence": 52,
@@ -1041,8 +1033,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1072,8 +1064,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1092,19 +1084,19 @@
     "bottomPadding": 4
   },
   {
-    "title": "Star Length",
+    "title": "Girdle%",
     "viewType": "fromto",
-    "apiKey": "strLen",
-    "sequence": 56,
-    "isActive": true,
+    "apiKey": "grdlPer",
+    "sequence": 48,
+    "isActive": false,
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "advance",
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1112,12 +1104,12 @@
   },
   {
     "viewType": "seperator",
-    "sequence": 57,
+    "sequence": 49,
     "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
-    "leftPadding": 0,
     "tab": "advance",
+    "leftPadding": 0,
     "rightPadding": 0,
     "topPadding": 4,
     "bottomPadding": 4
@@ -1160,7 +1152,7 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 60,
-    "isActive": true
+    "isActive": false
   },
   {
     "viewType": "seperator",
@@ -1212,7 +1204,7 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 64,
-    "isActive": true
+    "isActive": false
   },
   {
     "viewType": "seperator",
@@ -1265,7 +1257,7 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 68,
-    "isActive": true
+    "isActive": false
   },
   {
     "title": "Side Natts",
@@ -1279,7 +1271,7 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 68,
-    "isActive": true
+    "isActive": false
   },
   {
     "viewType": "seperator",
@@ -1306,7 +1298,7 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 68,
-    "isActive": true
+    "isActive": false
   },
   {
     "title": "Side",
@@ -1320,7 +1312,7 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 68,
-    "isActive": true
+    "isActive": false
   },
   {
     "viewType": "seperator",
@@ -1346,7 +1338,7 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 68,
-    "isActive": true
+    "isActive": false
   },
   {
     "viewType": "seperator",
@@ -1372,7 +1364,7 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 68,
-    "isActive": true
+    "isActive": false
   },
   {
     "viewType": "seperator",
@@ -1398,7 +1390,7 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 68,
-    "isActive": true
+    "isActive": false
   },
   {
     "viewType": "seperator",
@@ -1424,7 +1416,7 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 68,
-    "isActive": true
+    "isActive": false
   },
   {
     "viewType": "seperator",
@@ -1450,6 +1442,32 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 70,
+    "isActive": true
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 71,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "advance",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "H & A",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "hA",
+    "masterCode": "H_AND_A",
+    "verticalScroll": false,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 24,
     "isActive": true
   },
   {

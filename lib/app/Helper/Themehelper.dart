@@ -65,7 +65,7 @@ class BaseTheme {
   Color get errorColor => fromHex("#FF4D4D");
   Color get segmentSelectedColor => Colors.white;
   Color get borderColor => fromHex("#DDDDDD");
-  Color get selectedFilterColor => fromHex("#eaeffb");
+  Color get selectedFilterColor => fromHex("#F2FCF4");
   Color get unSelectedBgColor => fromHex("#f7f7f7");
   Color get greenColor => fromHex("#0EAC33");
   Color get lightBGColor => fromHex("#F8F8F8");
@@ -78,14 +78,14 @@ class BaseTheme {
   Color get statusMyHold => fromHex("#F1951E");
   Color get textGray => fromHex("#7B7E84");
   Color get drawerTitleColor => fromHex("#EEF1FC");
-  Color get lightColorPrimary => fromHex("#EEF1FC");
+  Color get lightColorPrimary => fromHex("#F2FCF4");
   Color get redColor => fromHex("#FF4D4D");
   Color get whatsAppColor => fromHex("#55CD6C");
   Color get gmailColor => fromHex("#DB4436");
   Color get skypeColor => fromHex("#03A9F4");
   Color get bodyTextColor => fromHex("#999999");
 
-  Color get shadowColorWithoutOpacity => fromHex("#7D9EF6").withOpacity(0.1);
+  Color get shadowColorWithoutOpacity => fromHex("#4EB45E").withOpacity(0.1);
   Color get shadowColor => shadowColorWithoutOpacity.withOpacity(0.1);
   // Color get shadowColor => fromHex("#7D9EF61A");
 

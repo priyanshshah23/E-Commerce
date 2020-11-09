@@ -97,7 +97,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
             ? GridView.count(
                 shrinkWrap: true,
                 primary: false,
-                childAspectRatio: (itemWidth / itemHeight),
+                childAspectRatio: 0.8,
                 padding: EdgeInsets.all(getSize(2)),
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8,
@@ -286,10 +286,7 @@ class ShapeItemWidget extends StatelessWidget {
                 obj.sId != selectionModel.allLableTitle &&
                         (obj.sId != showMoreId)
                     ? Container(
-                        width: selectionModel.orientation ==
-                                DisplayTypes.horizontal
-                            ? getSize(90)
-                            : 0,
+                        width: getSize(90),
                         child: obj.getShapeImage(obj.isSelected))
                     : SizedBox(),
                 Padding(

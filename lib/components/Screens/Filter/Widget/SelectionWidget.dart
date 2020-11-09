@@ -531,7 +531,11 @@ class _TagWidgetState extends State<TagWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.only(
+                top: getSize(8),
+                right: getSize(8),
+                bottom: getSize(8),
+              ),
               child: Row(
                   // crossAxisAlignment:CrossAxisAlignment.start,
                   children: List.generate(_list1.length, (index) {
@@ -549,7 +553,11 @@ class _TagWidgetState extends State<TagWidget> {
               })),
             ),
             Padding(
-              padding: EdgeInsets.all(8),
+              padding: EdgeInsets.only(
+                top: getSize(8),
+                right: getSize(8),
+                bottom: getSize(8),
+              ),
               child: Row(
                   // crossAxisAlignment:CrossAxisAlignment.start,
                   children: List.generate(_list2.length, (index) {
