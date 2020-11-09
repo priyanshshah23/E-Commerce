@@ -112,6 +112,8 @@ flutter:
     - assets/PlaceHolder/
     - assets/Home/
     - assets/Share/
+    - assets/PNShah/
+    - assets/PNShah/ForgetMPIN/
     #- assets/chls/hochls.pem
     # - assets/chls.pem
 

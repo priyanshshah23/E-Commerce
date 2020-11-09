@@ -3,6 +3,7 @@ library flutter_lock_screen;
 import 'dart:async';
 import 'dart:io';
 import 'package:diamnow/app/Helper/Themehelper.dart';
+import 'package:diamnow/app/app.export.dart';
 import 'package:flutter/material.dart';
 
 typedef void DeleteCode();
@@ -151,79 +152,68 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
     });
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Stack(
-        children: <Widget>[
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                    ),
-                    child: ClipPath(
-                      clipper: BgClipper(),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            CodePanel(
-                              codeLength: widget.passLength,
-                              currentLength: _currentCodeLength,
-                              borderColor: widget.borderColor,
-                              foregroundColor: widget.foregroundColor,
-                              deleteCode: _deleteCode,
-                              fingerVerify: widget.fingerVerify,
-                              status: _currentState,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+      body: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  CodePanel(
+                    codeLength: widget.passLength,
+                    currentLength: _currentCodeLength,
+                    borderColor: widget.borderColor,
+                    foregroundColor: widget.foregroundColor,
+                    deleteCode: _deleteCode,
+                    fingerVerify: widget.fingerVerify,
+                    status: _currentState,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: getSize(40),
+            ),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.only(left: 0, top: 0),
+                child:
+                    NotificationListener<OverscrollIndicatorNotification>(
+                  onNotification: (overscroll) {
+                    overscroll.disallowGlow();
+                    return null;
+                  },
+                  child: GridView.count(
+                    crossAxisCount: 3,
+                    childAspectRatio: 1.8,
+                    mainAxisSpacing: 35,
+                    padding: EdgeInsets.all(8),
+                    children: <Widget>[
+                      buildContainerCircle(1),
+                      buildContainerCircle(2),
+                      buildContainerCircle(3),
+                      buildContainerCircle(4),
+                      buildContainerCircle(5),
+                      buildContainerCircle(6),
+                      buildContainerCircle(7),
+                      buildContainerCircle(8),
+                      buildContainerCircle(9),
+                      buildRemoveIcon(Icons.close),
+                      buildContainerCircle(0),
+                      buildContainerIcon(Icons.arrow_back),
+                    ],
                   ),
                 ),
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.only(left: 0, top: 0),
-                    child:
-                        NotificationListener<OverscrollIndicatorNotification>(
-                      onNotification: (overscroll) {
-                        overscroll.disallowGlow();
-                        return null;
-                      },
-                      child: GridView.count(
-                        crossAxisCount: 3,
-                        childAspectRatio: 1.6,
-                        mainAxisSpacing: 35,
-                        padding: EdgeInsets.all(8),
-                        children: <Widget>[
-                          buildContainerCircle(1),
-                          buildContainerCircle(2),
-                          buildContainerCircle(3),
-                          buildContainerCircle(4),
-                          buildContainerCircle(5),
-                          buildContainerCircle(6),
-                          buildContainerCircle(7),
-                          buildContainerCircle(8),
-                          buildContainerCircle(9),
-                          buildRemoveIcon(Icons.close),
-                          buildContainerCircle(0),
-                          buildContainerIcon(Icons.arrow_back),
-                        ],
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -235,16 +225,17 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
         _onCodeClick(number);
       },
       child: Container(
-        height: 50,
-        width: 50,
+        height: getSize(30),
+        width: getSize(30),
         decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: Colors.black12,
-                blurRadius: 10,
-                spreadRadius: 0,
+                color: appTheme.greenColor.withOpacity(0.1),
+                blurRadius: 20,
+                spreadRadius: 5,
+                  offset: Offset(0.0,6.0)
               )
             ]),
         child: Center(
@@ -275,9 +266,10 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: Colors.black12,
-                blurRadius: 10,
-                spreadRadius: 0,
+                  color: appTheme.greenColor.withOpacity(0.1),
+                  blurRadius: 20,
+                  spreadRadius: 5,
+                  offset: Offset(0.0,6.0)
               )
             ]),
         child: Center(
@@ -314,9 +306,10 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: Colors.black12,
-                blurRadius: 10,
-                spreadRadius: 0,
+                  color: appTheme.greenColor.withOpacity(0.1),
+                  blurRadius: 20,
+                  spreadRadius: 5,
+                  offset: Offset(0.0,6.0)
               )
             ]),
         child: Center(
@@ -337,8 +330,8 @@ class CodePanel extends StatelessWidget {
   final borderColor;
   final bool fingerVerify;
   final foregroundColor;
-  final H = 30.0;
-  final W = 30.0;
+  final H = 20.0;
+  final W = 20.0;
   final DeleteCode deleteCode;
   final int status;
   CodePanel(
@@ -364,14 +357,17 @@ class CodePanel extends StatelessWidget {
     if (fingerVerify == true) {
       do {
         circles.add(
-          SizedBox(
-            width: W,
-            height: H,
-            child: new Container(
-              decoration: new BoxDecoration(
-                shape: BoxShape.circle,
-                border: new Border.all(color: color, width: 1.0),
-                color: Colors.green.shade500,
+          Padding(
+            padding:EdgeInsets.symmetric(horizontal: getSize(4)),
+            child: SizedBox(
+              width: W,
+              height: H,
+              child: new Container(
+                decoration: new BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: new Border.all(color: color, width: 1.0),
+                  color: Colors.green.shade500,
+                ),
               ),
             ),
           ),
@@ -387,37 +383,43 @@ class CodePanel extends StatelessWidget {
       }
       for (int i = 1; i <= codeLength; i++) {
         if (i > currentLength) {
-          circles.add(SizedBox(
-              width: W,
-              height: H,
-              child: Container(
-                decoration: new BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: new Border.all(color: color, width: 2.0),
-                    color: appTheme.greenColor),
-              )));
+          circles.add(Padding(
+            padding:EdgeInsets.symmetric(horizontal: getSize(4)),
+            child: SizedBox(
+                width: W,
+                height: H,
+                child: Container(
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: color, width: 1.0),
+                      color: appTheme.textGreyColor),
+                ),),
+          ),);
         } else {
-          circles.add(new SizedBox(
-              width: W,
-              height: H,
-              child: new Container(
-                decoration: new BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: new Border.all(color: color, width: 1.0),
-                  color: color,
-                ),
-              )));
+          circles.add(Padding(
+            padding:EdgeInsets.symmetric(horizontal: getSize(4)),
+            child: SizedBox(
+                width: W,
+                height: H,
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(color: color, width: 1.0),
+                    color: appTheme.greenColor,
+                  ),
+                ),),
+          ));
         }
       }
     }
 
     return new SizedBox.fromSize(
-      size: new Size(MediaQuery.of(context).size.width, 30.0),
+    //  size: new Size(MediaQuery.of(context).size.width, 30.0),
       child: new Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox.fromSize(
-                size: new Size(40.0 * codeLength, H),
+               // size: new Size(40.0 * codeLength, H),
                 child: new Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: circles,
