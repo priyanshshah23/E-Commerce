@@ -37,7 +37,7 @@ class _DiamondOfferInfoWidgetState extends State<DiamondOfferInfoWidget> {
               ? widget.leftPadding
               : Spacing.rightPadding),
           top: getSize(widget.rightPadding != 0 ? widget.leftPadding : 7),
-          bottom: getSize(widget.rightPadding != 0 ? widget.leftPadding : 7),
+          bottom: getSize(widget.rightPadding != 0 ? widget.leftPadding : 11),
         ),
         child: Column(
           children: [
