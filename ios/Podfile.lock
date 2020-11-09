@@ -6,6 +6,8 @@ PODS:
   - connectivity (0.0.1):
     - Flutter
     - Reachability
+  - downloads_path_provider (0.0.1):
+    - Flutter
   - Flutter (1.0.0)
   - flutter_exif_rotation (0.0.1):
     - Flutter
@@ -53,6 +55,7 @@ DEPENDENCIES:
   - app_settings (from `.symlinks/plugins/app_settings/ios`)
   - compressimage (from `.symlinks/plugins/compressimage/ios`)
   - connectivity (from `.symlinks/plugins/connectivity/ios`)
+  - downloads_path_provider (from `.symlinks/plugins/downloads_path_provider/ios`)
   - Flutter (from `Flutter`)
   - flutter_exif_rotation (from `.symlinks/plugins/flutter_exif_rotation/ios`)
   - flutter_files_picker (from `.symlinks/plugins/flutter_files_picker/ios`)
@@ -85,6 +88,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/compressimage/ios"
   connectivity:
     :path: ".symlinks/plugins/connectivity/ios"
+  downloads_path_provider:
+    :path: ".symlinks/plugins/downloads_path_provider/ios"
   Flutter:
     :path: Flutter
   flutter_exif_rotation:
@@ -126,6 +131,7 @@ SPEC CHECKSUMS:
   app_settings: d103828c9f5d515c4df9ee754dabd443f7cedcf3
   compressimage: 4f597b00f6e66bdc43d0aec5f0b9e415f3b03bbd
   connectivity: c4130b2985d4ef6fd26f9702e886bd5260681467
+  downloads_path_provider: fe0d06888d4b8c055a59edbc2f51f03e63cb0e28
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_exif_rotation: 85a029bc8f10235c50736be688519f4037a87f13
   flutter_files_picker: 10942b5e4c22c90e3da2faf82dc8bf9f83660089
