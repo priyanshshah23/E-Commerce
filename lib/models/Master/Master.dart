@@ -79,29 +79,32 @@ class Master {
   List<String> groupingIds = [];
   String groupName;
   dynamic map;
+  List<String> likeKeyWords;
 
-  Master(
-      {this.isActive,
-      this.isDefault,
-      this.isDeleted,
-      this.marketingDisplay,
-      this.parentCode,
-      this.webDisplay,
-      this.sId,
-      this.name,
-      this.code,
-      this.group,
-      this.sizeCategory,
-      this.normalizeName,
-      this.isWebVisible = false,
-      this.sortingSequence,
-      this.description,
-      this.image,
-      this.parentId,
-      this.multiLanguageData,
-      this.fromCarat,
-      this.toCarat,
-      this.isSelected = false});
+  Master({
+    this.isActive,
+    this.isDefault,
+    this.isDeleted,
+    this.marketingDisplay,
+    this.parentCode,
+    this.webDisplay,
+    this.sId,
+    this.name,
+    this.code,
+    this.group,
+    this.sizeCategory,
+    this.normalizeName,
+    this.isWebVisible = false,
+    this.sortingSequence,
+    this.description,
+    this.image,
+    this.parentId,
+    this.multiLanguageData,
+    this.fromCarat,
+    this.toCarat,
+    this.isSelected = false,
+    this.likeKeyWords,
+  });
 
   Master.fromJson(Map<String, dynamic> json) {
     isActive = json['isActive'];
@@ -126,6 +129,11 @@ class Master {
     multiLanguageData = json['multiLanguageData'] != null
         ? new MultiLanguageData.fromJson(json['multiLanguageData'])
         : null;
+    if (!isNullEmptyOrFalse(json['likeKeyWords'])) {
+      if (json['likeKeyWords'] is List<String>) {
+        likeKeyWords.addAll(['likeKeyWords']);
+      }
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -149,6 +157,7 @@ class Master {
     data['description'] = this.description;
     data['image'] = this.image;
     data['parentId'] = this.parentId;
+    data['likeKeyWords'] = this.likeKeyWords;
 
     if (this.multiLanguageData != null) {
       data['multiLanguageData'] = this.multiLanguageData.toJson();

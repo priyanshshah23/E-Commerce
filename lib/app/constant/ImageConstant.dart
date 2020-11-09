@@ -1,4 +1,6 @@
 //Common
+import 'package:diamnow/app/app.export.dart';
+
 const String splashLogo = "assets/diamnow/splashLogo.png";
 const String placeHolder = "assets/PlaceHolder/user_placeholder.png";
 const String user = "assets/auth/user.png";
@@ -159,3 +161,13 @@ const String facebook = "assets/Share/facebook.png";
 const String gmail = "assets/Share/gmail.png";
 const String hangout = "assets/Share/hangout.png";
 const String whatsapp = "assets/Share/whatsapp.png";
+
+const String myBidWhite = "assets/Common/myBidWhite.png";
+const String clearSelectionWhite = "assets/Common/clearWhite.png";
+const String shareWhite = "assets/Common/shareWhite.png";
+const String downloadWhite = "assets/Common/downloadWhite.png";
+const String offerWhite = "assets/Common/offerWhite.png";
+
+
+//PnShah
+const String forgetMPIN = "assets/PNShah/ForgetMPIN/forgetMPIN.png";

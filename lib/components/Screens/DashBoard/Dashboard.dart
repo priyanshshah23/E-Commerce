@@ -18,6 +18,7 @@ import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dar
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Notification/Notifications.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
+import 'package:diamnow/components/Screens/Search/Search.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/Dashboard/DashboardModel.dart';
 import 'package:diamnow/models/Dashbord/DashBoardConfigModel.dart';
@@ -313,71 +314,80 @@ class _DashboardState extends StatefulScreenWidgetState {
         .view)) {
       return SizedBox();
     }
-    return Padding(
-      padding: EdgeInsets.only(
-        left: getSize(Spacing.leftPadding),
-        right: getSize(Spacing.rightPadding),
-      ),
-      child: Container(
-        height: getSize(40),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(getSize(5)),
-          border: Border.all(color: appTheme.colorPrimary, width: getSize(1)),
-        ),
-        child: TextField(
-          textAlignVertical: TextAlignVertical(y: 1.0),
-          textInputAction: TextInputAction.done,
-          focusNode: _focusSearch,
-          autofocus: false,
-          controller: _searchController,
-          obscureText: false,
-          style: appTheme.black16TextStyle,
-          keyboardType: TextInputType.text,
-          textCapitalization: TextCapitalization.none,
-          cursorColor: appTheme.colorPrimary,
-          inputFormatters: [
-            WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
-            BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
-          ],
-          decoration: InputDecoration(
-            fillColor: fromHex("#FFEFEF"),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
-              borderSide:
-                  BorderSide(color: appTheme.dividerColor, width: getSize(1)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
-              borderSide:
-                  BorderSide(color: appTheme.dividerColor, width: getSize(1)),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
-              borderSide:
-                  BorderSide(color: appTheme.dividerColor, width: getSize(1)),
-            ),
-
-            hintStyle: appTheme.grey16HintTextStyle,
-            hintText: "Search",
-            labelStyle: TextStyle(
-              color: appTheme.textColor,
-              fontSize: getFontSize(16),
-            ),
-            // suffix: widget.textOption.postfixWidOnFocus,
-            suffixIcon: Padding(
-                padding: EdgeInsets.all(getSize(10)),
-                child: Image.asset(search)),
+    return Hero(
+      tag: 'searchTextField',
+      child: Material(
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: getSize(Spacing.leftPadding),
+            right: getSize(Spacing.rightPadding),
           ),
-          // onFieldSubmitted: (String text) {
-          //   //
-          // },
-          onChanged: (String text) {
-            //
-          },
-          onEditingComplete: () {
-            //
-            _focusSearch.unfocus();
-          },
+          child: Container(
+            height: getSize(40),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(getSize(5)),
+              border:
+                  Border.all(color: appTheme.colorPrimary, width: getSize(1)),
+            ),
+            child: TextField(
+              textAlignVertical: TextAlignVertical(y: 1.0),
+              textInputAction: TextInputAction.done,
+              focusNode: _focusSearch,
+              readOnly: true,
+              autofocus: false,
+              controller: _searchController,
+              obscureText: false,
+              style: appTheme.black16TextStyle,
+              keyboardType: TextInputType.text,
+              textCapitalization: TextCapitalization.none,
+              cursorColor: appTheme.colorPrimary,
+              inputFormatters: [
+                WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+                BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+              ],
+              decoration: InputDecoration(
+                fillColor: fromHex("#FFEFEF"),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+                  borderSide: BorderSide(
+                      color: appTheme.dividerColor, width: getSize(1)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+                  borderSide: BorderSide(
+                      color: appTheme.dividerColor, width: getSize(1)),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+                  borderSide: BorderSide(
+                      color: appTheme.dividerColor, width: getSize(1)),
+                ),
+
+                hintStyle: appTheme.grey16HintTextStyle,
+                hintText: "Search",
+                labelStyle: TextStyle(
+                  color: appTheme.textColor,
+                  fontSize: getFontSize(16),
+                ),
+                // suffix: widget.textOption.postfixWidOnFocus,
+                suffixIcon: Padding(
+                    padding: EdgeInsets.all(getSize(10)),
+                    child: Image.asset(search)),
+              ),
+              onChanged: (String text) {
+                //
+              },
+              onEditingComplete: () {
+                //
+                _focusSearch.unfocus();
+              },
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  return SearchScreen();
+                }));
+              },
+            ),
+          ),
         ),
       ),
     );

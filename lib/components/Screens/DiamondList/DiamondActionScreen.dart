@@ -274,7 +274,6 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
             child: InkWell(
               onTap: () {
                 switch (actionType) {
-                  case DiamondTrackConstant.TRACK_TYPE_OFFER:
                   case DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER:
                     showDialog(
                         context: context,
@@ -550,7 +549,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
   manageBottomMenuClick(BottomTabModel bottomTabModel) {
     List<DiamondModel> selectedList =
         diamondList.where((element) => element.isSelected).toList();
-    if (selectedList != null && selectedList.length > 0) {
+    if (!isNullEmptyOrFalse(selectedList)) {
       if (bottomTabModel.type == ActionMenuConstant.ACTION_TYPE_CANCEL_STONE) {
         print(bottomTabModel.type);
       } else {

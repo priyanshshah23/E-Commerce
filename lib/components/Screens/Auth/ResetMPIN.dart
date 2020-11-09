@@ -19,14 +19,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class ForgetPasswordScreen extends StatefulScreenWidget {
-  static const route = "ForgetPasswordScreen";
+class ForgetMPIN extends StatefulScreenWidget {
+  static const route = "ForgetMPIN.dart";
 
   @override
-  _ForgetPasswordScreenState createState() => _ForgetPasswordScreenState();
+  _ForgetMPINState createState() => _ForgetMPINState();
 }
 
-class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
+class _ForgetMPINState extends StatefulScreenWidgetState {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   var _focusEmail = FocusNode();
@@ -51,7 +51,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
   @override
   void initState() {
     super.initState();
-    if (kDebugMode) {
+    if(kDebugMode) {
       _emailController.text = "mobileuser";
     }
     _pinEditingController.clear();
@@ -91,7 +91,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
           child: Scaffold(
             appBar: getAppBar(
               context,
-              R.string().authStrings.forgotPasswordTitle,
+             "Forgot MPIN",
               bgColor: appTheme.whiteColor,
               leadingButton: isApiCall
                   ? getBackButton(context, ontap: () {
@@ -125,7 +125,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                               bottom: getSize(52),
                               top: getSize(12)),
                           child: Image.asset(
-                            forgetPassword,
+                            forgetMPIN,
                             height: getSize(200),
                             width: getSize(200),
                           ),
@@ -145,26 +145,20 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
-                                    Text(
-                                        R.string().authStrings.didNotReceiveOTP,
+                                    Text(R.string().authStrings.didNotReceiveOTP,
                                         style: appTheme.grey16HintTextStyle),
                                     GestureDetector(
                                         onTap: () {
-                                          if (isTimerCompleted) {
-                                            callForgetPasswordApi(
-                                                isResend: true);
+                                          if(isTimerCompleted) {
+                                            callForgetPasswordApi(isResend: true);
                                           }
                                         },
                                         child: Text(
                                             isTimerCompleted
-                                                ? " " +
-                                                    R
-                                                        .string()
-                                                        .authStrings
-                                                        .resendNow
+                                                ? " " + R.string().authStrings.resendNow
                                                 : " ${_printDuration(Duration(seconds: _start))}",
                                             style:
-                                                appTheme.darkBlue16TextStyle)),
+                                                appTheme.darkBlue16TextStyle.copyWith(color: appTheme.greenColor))),
                                   ],
                                 ),
                               )
@@ -174,6 +168,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                                 decoration: BoxDecoration(
                                     boxShadow: getBoxShadow(context)),
                                 child: AppButton.flat(
+                                  backgroundColor: appTheme.greenColor,
                                   onTap: () {
                                     // NavigationUtilities.pushRoute(TabBarDemo.route);
                                     FocusScope.of(context).unfocus();
@@ -223,7 +218,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                               );
                             },
                             child: Text(" " + R.string().authStrings.signInCap,
-                                style: appTheme.darkBlue16TextStyle)),
+                                style: appTheme.darkBlue16TextStyle.copyWith(color: appTheme.greenColor))),
                       ],
                     ),
                   ),
@@ -275,8 +270,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
             return R.string().errorString.enterUsername;
           } /*else if (!validateEmail(text.trim())) {
             return R.string().errorString.enterValidEmail;
-          }*/
-          else {
+          }*/ else {
             return null;
           }
         },
@@ -374,7 +368,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                 showOTPMsg = R.string().errorString.pleaseEnterOTP;
               } else if (pin.trim().length == 4) {
                 FocusScope.of(context).unfocus();
-                callApiForVerifyOTP();
+               callApiForVerifyOTP();
               }
             } else {
               setState(() {
@@ -438,15 +432,12 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
 
     NetworkCall<BaseApiResp>()
         .makeCall(
-            () => app
-                .resolve<ServiceModule>()
-                .networkService()
-                .forgetPassword(req),
-            context,
-            isProgress: true)
+            () => app.resolve<ServiceModule>().networkService().forgetPassword(req),
+        context,
+        isProgress: true)
         .then((resp) async {
       FocusScope.of(context).unfocus();
-      if (isResend) {
+      if(isResend) {
         if (isTimerCompleted) {
           _start = 30;
           isTimerCompleted = false;
@@ -460,11 +451,11 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
       setState(() {});
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
-            context,
-            title: R.string().commonString.error,
-            desc: onError.message,
-            positiveBtnTitle: R.string().commonString.btnTryAgain,
-          );
+        context,
+        title: R.string().commonString.error,
+        desc: onError.message,
+        positiveBtnTitle: R.string().commonString.btnTryAgain,
+      );
     });
   }
 
@@ -476,8 +467,8 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
     NetworkCall<BaseApiResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().verifyOTP(req),
-            context,
-            isProgress: true)
+        context,
+        isProgress: true)
         .then((resp) async {
       FocusScope.of(context).unfocus();
       isOtpTrue = true;
@@ -492,11 +483,12 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
       isOtpCheck = false;
       setState(() {});
       app.resolve<CustomDialogs>().confirmDialog(
-            context,
-            title: R.string().commonString.error,
-            desc: onError.message,
-            positiveBtnTitle: R.string().commonString.btnTryAgain,
-          );
+        context,
+        title: R.string().commonString.error,
+        desc: onError.message,
+        positiveBtnTitle: R.string().commonString.btnTryAgain,
+      );
     });
   }
+
 }
