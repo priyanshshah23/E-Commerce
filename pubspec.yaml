@@ -77,7 +77,6 @@ dependencies:
   gallery_saver: ^2.0.1
   downloads_path_provider: ^0.1.0
   #flutter_lock_screen: ^1.0.8
-  downloads_path_provider: ^0.1.0
 
   # flutter_tags: ^0.1.9
 
