@@ -25,6 +25,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
   var _focusSearch = FocusNode();
   var arrSuggestion = List<String>();
 
+  String searchText = "";
   List<String> filterData = [];
 
   @override
@@ -60,7 +61,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
             child: Column(
               children: [
                 getSarchTextField(),
-                
+                openSuggestion(searchText),
               ],
             ),
           )),
@@ -95,7 +96,6 @@ class _SearchScreenState extends StatefulScreenWidgetState {
               textCapitalization: TextCapitalization.characters,
               cursorColor: appTheme.colorPrimary,
               inputFormatters: [
-                WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
                 BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
               ],
               decoration: InputDecoration(
@@ -131,6 +131,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
               //   //
               // },
               onChanged: (String text) {
+                this.searchText = text;
                 openSuggestion(text);
               },
               onEditingComplete: () {},
@@ -358,17 +359,49 @@ class _SearchScreenState extends StatefulScreenWidgetState {
   openSuggestion(String text) {
     var array = text.split(" ");
     filterData = getSearchDataSet(array.last);
-    return !isNullEmptyOrFalse(filterData)
-                    ? Expanded(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: filterData.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Text(filterData[index]);
-                          },
-                        ),
-                      )
-                    : Text("There is no data");
     setState(() {});
+    return !isNullEmptyOrFalse(filterData)
+        ? Expanded(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: filterData.length,
+              itemBuilder: (BuildContext context, int index) {
+                return InkWell(
+                  onTap: () {
+                    array.removeLast();
+                    _searchController.text =
+                        "${array.join(", ")} ${filterData[index]}";
+                  },
+                  child: getWidget(filterData[index]),
+                );
+              },
+            ),
+          )
+        : Center(
+            child: Text("There is no data"),
+          );
+  }
+
+  getWidget(String data) {
+    return Padding(
+      padding:
+          EdgeInsets.only(top: getSize(8), left: getSize(8), right: getSize(8)),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text(
+                data,
+                style: appTheme.black14TextStyle,
+              ),
+            ],
+          ),
+          Divider(
+            color: appTheme.dividerColor,
+            thickness: 2,
+          )
+        ],
+      ),
+    );
   }
 }
