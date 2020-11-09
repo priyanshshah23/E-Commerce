@@ -8,7 +8,6 @@ class ApiConstants {
       Platform.isIOS ? "PROXY localhost:8888" : "PROXY 192.168.0.114:8888";
 //    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 
-  ///Testsadfjkhadjsfhjksdhfjkdhsfjkhdksasasdas
   static const String imageBaseURL = baseURL;
   static const String shareUrl = "http://fndevelop.democ.in/diamond-details/";
 
