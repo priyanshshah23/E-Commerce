@@ -24,7 +24,8 @@ class SelectionWidget extends StatefulWidget {
 class _SelectionWidgetState extends State<SelectionWidget> {
   @override
   Widget build(BuildContext context) {
-    return widget.selectionModel.verticalScroll
+    return widget.selectionModel.verticalScroll &&
+            widget.selectionModel.viewType == ViewTypes.shapeWidget
         ? ShapeWidget(widget.selectionModel)
         : TagWidget(widget.selectionModel);
   }
@@ -100,9 +101,75 @@ class _TagWidgetState extends State<TagWidget> {
       return getArrivalsWidget();
     }
 
+    if (widget.model.verticalScroll) {
+      return getGridView(widget.model.gridViewItemCount);
+    }
+
     return widget.model.orientation == DisplayTypes.vertical
         ? getVerticalOrientation()
         : getHorizontalOrientation();
+  }
+
+  Widget getGridView(int getGridViewItemCount) {
+    double _crossAxisSpacing = 8, _mainAxisSpacing = 12, _aspectRatio = 2.5;
+    int _crossAxisCount = getGridViewItemCount;
+
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    var width = (screenWidth - ((_crossAxisCount - 1) * _crossAxisSpacing)) /
+        _crossAxisCount;
+    var height = 35;
+
+    // var size = MediaQuery.of(context).size;
+
+    // /*24 is for notification bar on Android*/
+    // final double itemHeight = size.height /2;
+    // final double itemWidth = (size.width - kToolbarHeight - 500) /2;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        isNullEmptyOrFalse(widget.model.title)
+            ? SizedBox()
+            : Text(
+                widget.model.title ?? "",
+                style: appTheme.blackMedium16TitleColorblack,
+                textAlign: TextAlign.left,
+              ),
+        isNullEmptyOrFalse(widget.model.title)
+            ? SizedBox()
+            : SizedBox(height: getSize(20)),
+        GridView.count(
+          shrinkWrap: true,
+          primary: false,
+          childAspectRatio: (width / height),
+          // padding: EdgeInsets.all(getSize(2)),
+          crossAxisSpacing: _crossAxisSpacing,
+          mainAxisSpacing: _mainAxisSpacing,
+          crossAxisCount: getGridViewItemCount,
+          children: List.generate(
+            widget.model.masters.length,
+            (index) {
+              return InkWell(
+                child: getSingleTagForGridview(index),
+                onTap: () {
+                  setState(() {
+                    if (widget.model.viewType == ViewTypes.caratRange) {
+                      RxBus.post(true, tag: eventForShareCaratRangeSelected);
+                    }
+                    widget.model.masters[index].isSelected =
+                        !widget.model.masters[index].isSelected;
+
+                    widget.model.onSelectionClick(index);
+                  });
+                },
+              );
+            },
+          ),
+        ),
+      ],
+    );
   }
 
   Widget getVerticalOrientation() {
@@ -203,6 +270,40 @@ class _TagWidgetState extends State<TagWidget> {
         ),
         SizedBox(height: getSize(8))
       ],
+    );
+  }
+
+  getSingleTagForGridview(int index) {
+    return Container(
+      decoration: BoxDecoration(
+        color: widget.model.masters[index].isSelected
+            ? appTheme.selectedFilterColor
+            : appTheme.unSelectedBgColor,
+        border: Border.all(
+          width: getSize(1.0),
+          color: widget.model.masters[index].isSelected
+              ? appTheme.colorPrimary
+              : appTheme.borderColor,
+        ),
+        borderRadius: BorderRadius.circular(
+          getSize(5),
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsets.only(
+            top: getSize(6.0),
+            bottom: getSize(6.0),
+            right: getSize(12.0),
+            left: getSize(12.0)),
+        child: Center(
+          child: Text(
+            widget.model.masters[index].webDisplay,
+            style: widget.model.masters[index].isSelected
+                ? appTheme.primaryColor14TextStyle
+                : appTheme.blackNormal14TitleColorblack,
+          ),
+        ),
+      ),
     );
   }
 
