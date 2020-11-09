@@ -370,13 +370,13 @@ class _SearchScreenState extends StatefulScreenWidgetState {
                 return InkWell(
                   onTap: () {
                     // array.removeLast();
-                    totalSearch+="${filterData[index]},";
-                    _searchController.text =
-                        totalSearch;
+                    totalSearch += "${filterData[index]} ";
+                    _searchController.text = totalSearch;
                     // _searchController.text =
                     //     "${filterData[index]}";
 
-                    _searchController.selection = TextSelection.fromPosition(TextPosition(offset: _searchController.text.length));
+                    _searchController.selection = TextSelection.fromPosition(
+                        TextPosition(offset: _searchController.text.length));
 
                     array.removeLast();
                   },
