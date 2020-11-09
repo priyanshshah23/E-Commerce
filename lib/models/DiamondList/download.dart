@@ -7,6 +7,8 @@ import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/models/Share/ShareThroughEmail.dart';
 import 'package:diamnow/models/excel/ExcelApiResponse.dart';
+import 'package:downloads_path_provider/downloads_path_provider.dart';
+import 'package:file_utils/file_utils.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -379,9 +381,9 @@ class _DownloadState extends State<Download> {
   }
 
   Future<Directory> _getDownloadDirectory() async {
-    // if (Platform.isAndroid) {
-    //   return await DownloadsPathProvider.downloadsDirectory;
-    // }
+    if (Platform.isAndroid) {
+      return await DownloadsPathProvider.downloadsDirectory;
+    }
 
     // in this example we are using only Android and iOS so I can assume
     // that you are not trying it for other platforms and the if statement
