@@ -1,5 +1,6 @@
 import 'package:diamnow/components/Screens/Auth/ChangePassword.dart';
 import 'package:diamnow/components/Screens/Auth/CompanyInformation.dart';
+import 'package:diamnow/components/Screens/Auth/ForgetMPIN.dart';
 import 'package:diamnow/components/Screens/Auth/ForgetPassword.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/components/Screens/Auth/PasswordResetSuccessfully.dart';
@@ -229,6 +230,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       break;
     case SignInWithMPINScreen.route:
       screen = SignInWithMPINScreen();
+      break;
+    case ForgetMPIN.route:
+      screen = ForgetMPIN();
       break;
   }
 

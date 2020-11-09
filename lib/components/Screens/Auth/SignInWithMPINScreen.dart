@@ -11,6 +11,7 @@ import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
+import 'package:diamnow/components/Screens/Auth/ForgetMPIN.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/components/Screens/Auth/Signup.dart';
 import 'package:diamnow/components/Screens/Version/VersionUpdate.dart';
@@ -132,9 +133,9 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                         ],
                       ),
                     ),
-                    SizedBox(height: getSize(74)),
+                    SizedBox(height: getSize(54)),
                     Text("Enter your 6 digit MPIN", style: appTheme.black16MediumTextStyle,),
-                    SizedBox(height: getSize(42)),
+                    SizedBox(height: getSize(32)),
 //                    Row(
 //                      mainAxisAlignment: MainAxisAlignment.center,
 //                      children: [
@@ -215,7 +216,6 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                           return false;
                         }
                       }
-
                       return true;
                     },
                     onSuccess: () {
@@ -235,15 +235,14 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
               margin: EdgeInsets.all(getSize(15)),
               child: InkWell(
                 onTap: () {
-                  NavigationUtilities.pushRoute(SignupScreen.route);
+                  NavigationUtilities.pushRoute(ForgetMPIN.route);
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text(R.string().authStrings.haveRegisterCode,
-                        style: appTheme.grey16HintTextStyle),
-                    Text(" " + R.string().authStrings.signUp, style: appTheme.darkBlue16TextStyle),
+                    Text("Forgot MPIN?",
+                        style: appTheme.black16MediumTextStyle.copyWith(color: appTheme.greenColor)),
                   ],
                 ),
               ),
