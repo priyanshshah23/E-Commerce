@@ -48,11 +48,11 @@ class DarkTheme extends BaseTheme {
 class PnShahTheme extends BaseTheme {
   @override
   Color get colorPrimary => fromHex("#4EB45E");
- @override
-Color get selectedFilterColor => fromHex("#F2FCF4");
+  @override
+  Color get selectedFilterColor => fromHex("#F2FCF4");
 
- @override
-Color get unSelectedBgColor => fromHex("#f7f7f7");
+  @override
+  Color get unSelectedBgColor => fromHex("#f7f7f7");
 }
 
 class BaseTheme {
