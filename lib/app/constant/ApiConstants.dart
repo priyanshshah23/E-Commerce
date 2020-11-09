@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import '../app.export.dart';
 
 class ApiConstants {
-   static const String PROXY_URL = "PROXY 192.168.2.124:8888";
-//  static const String PROXY_URL = "PROXY 192.168.0.114:8888";
+  //  static const String PROXY_URL = "PROXY 192.168.2.124:8888";
+  static String PROXY_URL =
+      Platform.isIOS ? "PROXY localhost:8888" : "PROXY 192.168.0.114:8888";
 //    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 
   static const String imageBaseURL = baseURL;
@@ -78,6 +81,7 @@ class ApiConstants {
       commonUrl + "diamond-comment/delete";
   static const String diamondBidDelete = commonUrl + "diamond-bid/delete";
   static const String shareThroughEmail = apiUrl + "web/v1/diamond/excel";
+
 }
 
 class DiamondUrls {

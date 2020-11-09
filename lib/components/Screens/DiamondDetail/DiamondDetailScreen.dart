@@ -1,6 +1,7 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/diamondDeepDetailScreen.dart';
@@ -164,17 +165,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     List<DiamondDetailImagePagerModel> arrOfImages =
         List<DiamondDetailImagePagerModel>();
 
-    // if (diamondModel.pltFile) {
-    //   arrOfImages.add(
-    //     DiamondDetailImagePagerModel(
-    //       title: "Plotting",
-    //       url: DiamondUrls.plotting + diamondModel.vStnId + ".jpg",
-    //       isSelected: false,
-    //       isImage: true,
-    //     ),
-    //   );
-    // }
-
     if (diamondModel.img) {
       arrOfImages.add(
         DiamondDetailImagePagerModel(
@@ -197,11 +187,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       );
     }
 
-    // print("ArrowImage     " +
-    //     DiamondUrls.arroImage +
-    //     diamondModel.vStnId +
-    //     ".jpg");
-
     if (diamondModel.assetFile) {
       arrOfImages.add(
         DiamondDetailImagePagerModel(
@@ -223,7 +208,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
             arr: arrOfImages),
       );
     }
-    // print("Image    " + DiamondUrls.image + diamondModel.vStnId + ".jpg");
 
     //list of videofile
     List<DiamondDetailImagePagerModel> arrOfVideos =
@@ -274,8 +258,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       );
     }
 
-    // print("Video    " + DiamondUrls.videomp4 + diamondModel.vStnId + ".mp4");
-
     //List of H&A
     List<DiamondDetailImagePagerModel> arrOfHA =
         List<DiamondDetailImagePagerModel>();
@@ -301,7 +283,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
             arr: arrOfHA),
       );
     }
-    // print("H&A    " + DiamondUrls.heartImage + diamondModel.vStnId + ".jpg");
 
     //List of certificate
     List<DiamondDetailImagePagerModel> arrOfCertificates =
@@ -328,19 +309,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
             arr: arrOfCertificates),
       );
     }
-
-    // print("Certificate    " +
-    //     DiamondUrls.certificate +
-    //     diamondModel.rptNo +
-    //     ".pdf");
-
-    // _controller = TabController(
-    //   vsync: this,
-    //   length: arrImages.length,
-    //   initialIndex: 0,
-    // );
-    // _controller.addListener(_handleTabSelection);
-
     setState(() {
       //
     });
@@ -408,18 +376,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       arrDiamondDetailUIModel.add(diamondDetailUIModel);
     }
   }
-
-  // _handleTabSelection() {
-  //   setState(() {
-  //     isLoading = true;
-  //     _currentIndex = _controller.index;
-  //     arrImages = arrImages.map((e) {
-  //       e.isSelected = false;
-  //       return e;
-  //     }).toList();
-  //     arrImages[_currentIndex].isSelected = true;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -506,6 +462,13 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       case BottomCodeConstant.TBClock:
         break;
       case BottomCodeConstant.TBDownloadView:
+        BottomTabModel tabModel = BottomTabModel();
+        tabModel.type = ActionMenuConstant.ACTION_TYPE_DOWNLOAD;
+        List<DiamondModel> selectedList = [diamondModel];
+
+        diamondConfig.manageDiamondAction(
+            context, selectedList, tabModel, () {});
+
         break;
     }
   }
@@ -523,153 +486,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     }
   }
 
-  // Widget getTabBlock(DiamondDetailImagePagerModel model) {
-  //   return (model.isImage == false)
-  //       ? Container(
-  //           height: getSize(300),
-  //           child: Stack(
-  //             children: [
-  //               FutureBuilder<Widget>(
-  //                   future: getPDFView(context, model),
-  //                   builder:
-  //                       (BuildContext context, AsyncSnapshot<Widget> snapshot) {
-  //                     if (snapshot.hasData) return snapshot.data;
-
-  //                     return Container(
-  //                       color: appTheme.whiteColor,
-  //                       child: Image.asset(splashLogo),
-  //                     );
-  //                   }),
-  //               // !isErroWhileLoading ?Icon(Icons.title) :SizedBox(),
-  //               if (isLoading)
-  //                 Center(
-  //                   child: SpinKitFadingCircle(
-  //                     color: appTheme.colorPrimary,
-  //                     size: getSize(30),
-  //                   ),
-  //                 ),
-  //             ],
-  //           ),
-  //         )
-  //       : Column(
-  //           children: [
-  //             Container(
-  //               height: getSize(286),
-  //               decoration: BoxDecoration(
-  //                   color: appTheme.whiteColor,
-  //                   // color: Colors.yellow,
-  //                   borderRadius: BorderRadius.circular(getSize(5)),
-  //                   border: Border.all(color: appTheme.lightBGColor)),
-  //               child: getImageView(
-  //                 (model.arr != null &&
-  //                         model.arr.length > 0 &&
-  //                         isStringEmpty(model.url) == false)
-  //                     ? model.arr[model.subIndex].url
-  //                     : model.url,
-  //                 height: getSize(260),
-  //                 width: MathUtilities.screenWidth(context),
-  //                 fit: BoxFit.scaleDown,
-  //               ),
-  //             ),
-  //             // SizedBox(
-  //             //   height: getSize(16),
-  //             // ),
-  //             // model.arr != null && model.arr.length > 0
-  //             // if (!isNullEmptyOrFalse(model.arr))
-  //             //   Container(
-  //             //     // margin: EdgeInsets.only(top:getSize(16)),
-  //             //     // color: Colors.red,
-  //             //     height: getSize(70),
-  //             //     child: Row(
-  //             //       children: [
-  //             //         // Image.asset(
-  //             //         //   filterUnionArrow,
-  //             //         //   width: getSize(14),
-  //             //         //   height: getSize(14),
-  //             //         // ),
-  //             //         Icon(Icons.chevron_left),
-  //             //         SizedBox(
-  //             //           width: getSize(8),
-  //             //         ),
-  //             //         Expanded(
-  //             //           child: ListView(
-  //             //             scrollDirection: Axis.horizontal,
-  //             //             children: [
-  //             //               for (var i = 0; i < model.arr.length; i++)
-  //             //                 Padding(
-  //             //                   padding: EdgeInsets.only(right: getSize(8)),
-  //             //                   child: InkWell(
-  //             //                     onTap: () {
-  //             //                       //
-  //             //                       model.arr = model.arr.map((e) {
-  //             //                         e.isSelected = false;
-  //             //                         return e;
-  //             //                       }).toList();
-  //             //                       model.arr[i].isSelected = true;
-  //             //                       model.subIndex = i;
-  //             //                       setState(() {
-  //             //                         //
-  //             //                       });
-  //             //                     },
-  //             //                     child: Column(
-  //             //                       children: <Widget>[
-  //             //                         Container(
-  //             //                           height: getSize(50),
-  //             //                           width: getSize(70),
-  //             //                           decoration: BoxDecoration(
-  //             //                               color: appTheme.whiteColor,
-  //             //                               // color: Colors.green,
-  //             //                               borderRadius: BorderRadius.circular(
-  //             //                                   getSize(5)),
-  //             //                               border: Border.all(
-  //             //                                   color: model.arr[i].isSelected
-  //             //                                       ? appTheme.colorPrimary
-  //             //                                       : appTheme.lightBGColor)),
-  //             //                           child: Padding(
-  //             //                             padding: EdgeInsets.only(
-  //             //                                 left: getSize(4),
-  //             //                                 right: getSize(4),
-  //             //                                 top: getSize(4),
-  //             //                                 bottom: getSize(4)),
-  //             //                             child: getImageView(
-  //             //                               model.arr[i].url,
-  //             //                               height: getSize(30),
-  //             //                               width: getSize(30),
-  //             //                             ),
-  //             //                           ),
-  //             //                         ),
-  //             //                         Padding(
-  //             //                           padding:
-  //             //                               EdgeInsets.only(top: getSize(3)),
-  //             //                           child: Text(
-  //             //                             model.arr[i].title,
-  //             //                             style: appTheme
-  //             //                                 .blackNormal14TitleColorblack,
-  //             //                           ),
-  //             //                         )
-  //             //                       ],
-  //             //                     ),
-  //             //                   ),
-  //             //                 )
-  //             //             ],
-  //             //           ),
-  //             //         ),
-  //             //         SizedBox(
-  //             //           width: getSize(8),
-  //             //         ),
-  //             //         // Image.asset(
-  //             //         //   filterRightArrow,
-  //             //         //   width: getSize(14),
-  //             //         //   height: getSize(14),
-  //             //         // ),
-  //             //         Icon(Icons.chevron_right),
-  //             //       ],
-  //             //     ),
-  //             //   ),
-  //           ],
-  //         );
-  // }
-
   Widget getDiamondDetailComponents() {
     return !isNullEmptyOrFalse((arrDiamondDetailUIModel))
         ? Stack(
@@ -683,10 +499,18 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                       fit: StackFit.loose,
                       overflow: Overflow.visible,
                       children: [
-                        Container(
-                          width: double.infinity,
-                          height: getSize(286),
-                          child: getImage(),
+                        InkWell(
+                          onTap: () {
+                            NavigationUtilities.push(DiamondDeepDetailScreen(
+                              arrImages: arrImages,
+                              diamondModel: diamondModel,
+                            ));
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            height: getSize(286),
+                            child: getImage(),
+                          ),
                         ),
                         Positioned(
                           bottom: -18,
@@ -987,47 +811,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         ),
       );
     }
-    // else if (diamondDetailUIModel.columns == 3) {
-    //   return Wrap(
-    //     spacing: 8,
-    //     runSpacing: 8,
-    //     children: List.generate(
-    //       diamondDetailUIModel.parameters.length,
-    //       (index) {
-    //         return Container(
-    //           decoration: BoxDecoration(
-    //             borderRadius: BorderRadius.circular(3.0),
-    //             border: Border.all(color: appTheme.borderColor),
-    //             color: appTheme.unSelectedBgColor,
-    //           ),
-    //           child: Padding(
-    //             padding: const EdgeInsets.all(12.0),
-    //             child: Column(
-    //               mainAxisSize: MainAxisSize.min,
-    //               crossAxisAlignment: CrossAxisAlignment.center,
-    //               mainAxisAlignment: MainAxisAlignment.center,
-    //               children: <Widget>[
-    //                 Text(
-    //                   diamondDetailUIModel.parameters[index].title,
-    //                   textAlign: TextAlign.center,
-    //                   style: appTheme.grey14HintTextStyle,
-    //                 ),
-    //                 SizedBox(
-    //                   height: getSize(2),
-    //                 ),
-    //                 Text(
-    //                   diamondDetailUIModel.parameters[index].value,
-    //                   textAlign: TextAlign.center,
-    //                   style: appTheme.blackNormal12TitleColorblack,
-    //                 )
-    //               ],
-    //             ),
-    //           ),
-    //         );
-    //       },
-    //     ),
-    //   );
-    // }
   }
 
   Widget getSection(String title) {

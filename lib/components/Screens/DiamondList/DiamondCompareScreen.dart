@@ -216,6 +216,20 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
   manageToolbarClick(BottomTabModel model) {
     switch (model.code) {
       case BottomCodeConstant.TBDownloadView:
+        List<DiamondModel> selectedList =
+            arrayDiamondlist.where((element) => element.isSelected).toList();
+        if (!isNullEmptyOrFalse(selectedList)) {
+          diamondConfig.manageDiamondAction(
+              context, selectedList, model, () {});
+        } else {
+          app.resolve<CustomDialogs>().confirmDialog(
+                context,
+                title: "",
+                desc: R.string().errorString.diamondSelectionError,
+                positiveBtnTitle: R.string().commonString.ok,
+              );
+        }
+
         break;
     }
   }
@@ -474,7 +488,6 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
         map[DiamondDetailUIAPIKeys.kToSStr]
             .add(compareDetailList[i].diamondModel.kToSStr.toString());
       }
-
     }
 
     for (int i = 0; i < map.length; i++) {
@@ -613,7 +626,7 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
         if (obj.type == ActionMenuConstant.ACTION_TYPE_MORE) {
           List<DiamondCompare> selectedList =
               compareDetailList.where((element) => element.isSelected).toList();
-          if (selectedList != null && selectedList.length > 0) {
+          if (!isNullEmptyOrFalse(selectedList)) {
             showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
                 (manageClick) {
               manageBottomMenuClick(manageClick.bottomTabModel);
@@ -637,7 +650,7 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
     List<DiamondCompare> selectedList =
         compareDetailList.where((element) => element.isSelected).toList();
 
-    if (selectedList != null && selectedList.length > 0) {
+    if (!isNullEmptyOrFalse(selectedList)) {
       List<DiamondModel> list = [];
       selectedList.forEach((element) {
         list.add(element.diamondModel);

@@ -644,6 +644,9 @@ class DiamondConfig {
                   List<SelectionPopupModel> multiSelectedItem}) {
                 selectedOptions = multiSelectedItem;
                 // Navigator.pop(context);
+                //check condition for only excel,if so then redirect to static page
+                //else show showDialog method.          
+      
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -675,15 +678,15 @@ class DiamondConfig {
     );
   }
 
-  _onShare(BuildContext context,List<DiamondModel> list) async {
+  _onShare(BuildContext context, List<DiamondModel> list) async {
     final RenderBox box = context.findRenderObject();
     List<String> link = List<String>();
-    for(int i=0; i< list.length; i++) {
-       link.add(ApiConstants.shareUrl + list[i].id);
+    for (int i = 0; i < list.length; i++) {
+      link.add(ApiConstants.shareUrl + list[i].id);
     }
     await Share.share(
-            "DiamNow : Diamond Details\n\n"
-            "${link.toString().substring(1,link.toString().length - 1).replaceAll(",","\n\n")}",//------------------------------------------------------------------------------------------------------------------
+        "DiamNow : Diamond Details\n\n"
+        "${link.toString().substring(1, link.toString().length - 1).replaceAll(",", "\n\n")}", //------------------------------------------------------------------------------------------------------------------
         subject: "DiamNow",
         sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
   }
@@ -1095,6 +1098,13 @@ class DiamondConfig {
                   formatter: DateUtilities.dd_mm_yyyy);
           arraDiamond[i].showCheckBox = true;
         }
+
+        if (arraDiamond.length == 1) {
+          arraDiamond[i].isSectionOfferDisplay = true;
+        } else if (i > 0 &&
+            (arraDiamond[i].memoNo != arraDiamond[i - 1].memoNo)) {
+          arraDiamond[i - 1].isSectionOfferDisplay = true;
+        }
       }
     } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_UPCOMING) {
       for (int i = 0; i < arraDiamond.length; i++) {
@@ -1240,7 +1250,7 @@ openSharePopUp(BuildContext context) {
     Share.share(
         "876654878\n"
         "Invite code : 655765757"
-        "App link : $link",//------------------------------------------------------------------------------------------------------------------
+        "App link : $link", //------------------------------------------------------------------------------------------------------------------
         subject: R.string().screenTitle.share,
         sharePositionOrigin:
             Rect.fromCenter(center: Offset.zero, width: 100, height: 100));

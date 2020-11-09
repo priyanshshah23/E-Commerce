@@ -1,7 +1,13 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/models/Share/ShareThroughEmail.dart';
+import 'package:diamnow/models/excel/ExcelApiResponse.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -17,7 +23,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
-import 'package:rxbus/rxbus.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class Download extends StatefulWidget {
   List<DiamondModel> diamondList;
@@ -44,7 +50,8 @@ class _DownloadState extends State<Download> {
   double finalDownloadProgress = 0;
   dynamic isPermissionStatusGranted;
   bool cancleDownload = false;
-  CancelToken cancelToken;
+  // CancelToken cancelToken;
+  Map<String, CancelToken> mapOfCancelToken = {};
 
   _DownloadState({this.diamondList, this.allDiamondPreviewThings});
 
@@ -52,12 +59,6 @@ class _DownloadState extends State<Download> {
   void initState() {
     super.initState();
     startDownload();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    RxBus.destroy(tag: "stopForLopOfDownloading");
   }
 
   @override
@@ -136,11 +137,12 @@ class _DownloadState extends State<Download> {
                   child: AppButton.flat(
                     onTap: () {
                       Navigator.pop(context);
-                      cancelToken.cancel();
-                      cancleDownload = true;
-                      RxBus.post(true, tag: "stopForLopOfDownloading");
 
-                      showToast("Downloading canceled");
+                      mapOfCancelToken.forEach((key, value) {
+                        value.cancel();
+                      });
+
+                      showToast("Downloading canceled", context: context);
                     },
                     borderRadius: getSize(5),
                     text: R.string().commonString.cancel,
@@ -160,7 +162,6 @@ class _DownloadState extends State<Download> {
 
   doDownLoad() async {
     isPermissionStatusGranted = await _requestPermissions();
-    bool stopforLoopFlag = false;
     for (int i = 0; i < diamondList.length; i++) {
       DiamondModel model = diamondList[i];
 
@@ -237,23 +238,37 @@ class _DownloadState extends State<Download> {
       //download code
       getDownloadPercentage(allDiamondPreviewThings);
 
-      await downloadFunction(allDiamondPreviewThings, diamondList[i], (value) {
+      await downloadFunction(allDiamondPreviewThings, diamondList[i],
+          (value, isFromError) {
         print("download" + value.toString());
-        setState(() {
-          totalDownloadedFiles += 1;
-          finalDownloadProgress += (100 / totalDownloadableFilesForAllDiamonds);
-          print("final download progress " + finalDownloadProgress.toString());
-          if (finalDownloadProgress >= 100 &&
-              totalDownloadedFiles == totalDownloadableFilesForAllDiamonds) {
-            Navigator.pop(context);
-            showToast("All files has been downloaded.", context: context);
-          }
-        });
-      });
-
-      RxBus.register<bool>(tag: "stopForLopOfDownloading").listen((event) {
-        if (event) {
-          stopforLoopFlag = event;
+        if (mounted) {
+          setState(() {
+            if (!isFromError) {
+              totalDownloadedFiles += 1;
+            }
+            finalDownloadProgress +=
+                (100 / totalDownloadableFilesForAllDiamonds);
+                // finalDownloadProgress=finalDownloadProgress();
+            print(
+                "final download progress " + finalDownloadProgress.toString());
+            if (finalDownloadProgress >= 99) {
+              Navigator.pop(context);
+              totalDownloadedFiles == totalDownloadableFilesForAllDiamonds
+                  ? showToast("All files has been downloaded.",
+                      context: context)
+                  : showToast(
+                      "${totalDownloadedFiles} files is downloaded \n ${totalDownloadableFilesForAllDiamonds - totalDownloadedFiles} files is not downloaded because it's not exist in the server.",
+                      context: context);
+              allDiamondPreviewThings.forEach((element) {
+                if (element.fileType ==
+                        DownloadAndShareDialogueConstant.excel &&
+                    element.isSelected) {
+                  SyncManager syncManager = SyncManager();
+                  syncManager.callApiForExcel(context,diamondList);
+                }
+              });
+            }
+          });
         }
       });
     }
@@ -261,7 +276,9 @@ class _DownloadState extends State<Download> {
 
   getDownloadPercentage(List<SelectionPopupModel> allDiamondPreviewThings) {
     var totalFiles = allDiamondPreviewThings.where((element) {
-      if (element.isSelected && isUrlContainsImgOrVideo(element.url)) {
+      if (element.isSelected &&
+          element.fileType != DownloadAndShareDialogueConstant.excel &&
+          isUrlContainsImgOrVideo(element.url)) {
         return true;
       } else {
         return false;
@@ -270,36 +287,59 @@ class _DownloadState extends State<Download> {
 
     totalDownloadableFilesForAllDiamonds =
         totalFiles.length * diamondList.length;
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   Future<void> downloadFunction(
       List<SelectionPopupModel> allDiamondPreviewThings,
       DiamondModel diamondModel,
-      void callBack(int val)) async {
+      void callBack(int val, bool isFromError)) async {
+    //define map
+
     for (int i = 0; i < allDiamondPreviewThings.length; i++) {
       SelectionPopupModel element = allDiamondPreviewThings[i];
-      if (element.isSelected && isUrlContainsImgOrVideo(element.url)) {
+      // if(element.isSelected && element.fileType == DownloadAndShareDialogueConstant.excel){
+
+      // }
+      if (element.isSelected &&
+          element.fileType != DownloadAndShareDialogueConstant.excel &&
+          isUrlContainsImgOrVideo(element.url)) {
+        CancelToken cancelTokens = CancelToken();
+        mapOfCancelToken[element.url +
+            element.title +
+            diamondModel.id +
+            "." +
+            getExtensionOfUrl(element.url)] = cancelTokens;
+        // {
+        //   url:canceltokens
+        // }
         await downloadFile(
             element.url,
             element.title +
                 diamondModel.id +
                 "." +
                 getExtensionOfUrl(element.url),
-            0, (value) {
-          callBack(value);
-        });
+            0, (value, isFromError) {
+          callBack(value, isFromError);
+        },
+            element.url +
+                element.title +
+                diamondModel.id +
+                "." +
+                getExtensionOfUrl(element.url));
       }
-      if (cancleDownload) break;
     }
   }
 
   // downloading logic is handled by this method
 
-  Future<void> downloadFile(
-      uri, fileName, int progress, void callBack(int val)) async {
-    if (cancleDownload) return;
+  Future<void> downloadFile(uri, fileName, int progress,
+      void callBack(int val, bool isFromError), String key) async {
     final dir = await _getDownloadDirectory();
     final savePath = path.join(dir.path, fileName);
+
     if (isPermissionStatusGranted) {
       Dio dio = Dio();
 
@@ -307,28 +347,34 @@ class _DownloadState extends State<Download> {
         uri,
         savePath,
         onReceiveProgress: (rcv, total) {
-          // print(
-          //     'received: ${rcv.toStringAsFixed(0)} out of total: ${total.toStringAsFixed(0)}');
+          print(
+              'received: ${rcv.toStringAsFixed(0)} out of total: ${total.toStringAsFixed(0)}');
 
           progress = ((rcv ~/ total) * 100);
         },
         deleteOnError: true,
-        cancelToken: cancelToken,
+        cancelToken: mapOfCancelToken[key],
       ).then((_) {
         // print("download completed");
         // print("download completed" + progress.toString());
         if (progress >= 100) {
-          callBack(progress);
+          callBack(progress, false);
           if (Platform.isIOS) {
             isImage(savePath)
                 ? GallerySaver.saveImage(savePath)
                 : GallerySaver.saveVideo(savePath);
           }
         }
+      }).catchError((error) {
+        callBack(100, true);
+
+        if (mounted) {
+          setState(() {});
+        }
       });
     } else {
+      // handled the scenario when user declines the permissions
       showToast("you should have to allowed permission");
-      // handle the scenario when user declines the permissions
     }
   }
 
@@ -342,7 +388,10 @@ class _DownloadState extends State<Download> {
     // for iOS is unnecessary
 
     // iOS directory visible to user
-    return await getApplicationDocumentsDirectory();
+    if (Platform.isIOS) {
+      return await getApplicationDocumentsDirectory();
+    }
+    return await getExternalStorageDirectory();
   }
 
   Future<bool> _requestPermissions() async {
@@ -357,4 +406,30 @@ class _DownloadState extends State<Download> {
 
     return permission == PermissionStatus.granted;
   }
+
+  // Future<WebView> getWebView(BuildContext context, String url) async {
+  //   // if (!model.isImage) print(model.url);
+  //   print(url);
+  //   return WebView(
+  //       initialUrl: url,
+  //       // onPageStarted: (url) {
+  //       //   // app.resolve<CustomDialogs>().showProgressDialog(context, "");
+  //       //   setState(() {
+  //       //     isLoading = true;
+  //       //   });
+  //       // },
+  //       // onPageFinished: (finish) {
+  //       //   // app.resolve<CustomDialogs>().hideProgressDialog();
+  //       //   setState(() {
+  //       //     isLoading = false;
+  //       //   });
+  //       // },
+  //       onWebResourceError: (error) {
+  //         print(error);
+  //         setState(() {
+  //           // isErroWhileLoading = true;
+  //         });
+  //       },
+  //       javascriptMode: JavascriptMode.unrestricted);
+  // }
 }

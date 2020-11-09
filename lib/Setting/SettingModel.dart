@@ -516,7 +516,7 @@ class BottomMenuSetting {
           moreMenuList.add(BottomTabModel(
               title: R.string().screenTitle.bidStone,
               isCenter: false,
-              image: myBid,
+              image: myBidWhite,
               type: ActionMenuConstant.ACTION_TYPE_BID));
 
         if (app
@@ -565,18 +565,18 @@ class BottomMenuSetting {
           moreMenuList.add(BottomTabModel(
               title: R.string().screenTitle.clearSelection,
               isCenter: false,
-              image: clearSelection,
+              image: clearSelectionWhite,
               type: ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION));
         }
         moreMenuList.add(BottomTabModel(
             title: R.string().screenTitle.share,
             isCenter: false,
-            image: share,
+            image: shareWhite,
             type: ActionMenuConstant.ACTION_TYPE_SHARE));
         moreMenuList.add(BottomTabModel(
             title: R.string().screenTitle.download,
             isCenter: false,
-            image: download,
+            image: downloadWhite,
             type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
         break;
 
@@ -599,7 +599,7 @@ class BottomMenuSetting {
         moreMenuList.add(BottomTabModel(
             title: R.string().screenTitle.share,
             isCenter: false,
-            image: share,
+            image: shareWhite,
             type: ActionMenuConstant.ACTION_TYPE_SHARE));
 
         break;
@@ -660,7 +660,7 @@ class BottomMenuSetting {
                 .getModulePermission(ModulePermissionConstant.permission_offer)
                 .insert)
               moreMenuList.add(BottomTabModel(
-                  image: offer,
+                  image: offerWhite,
                   title: R.string().screenTitle.offer,
                   isCenter: false,
                   type: ActionMenuConstant.ACTION_TYPE_OFFER));
@@ -672,7 +672,7 @@ class BottomMenuSetting {
               .getModulePermission(ModulePermissionConstant.permission_offer)
               .insert)
             moreMenuList.add(BottomTabModel(
-                image: offer,
+                image: offerWhite,
                 title: R.string().screenTitle.offer,
                 isCenter: false,
                 type: ActionMenuConstant.ACTION_TYPE_OFFER));
@@ -695,9 +695,9 @@ class BottomMenuSetting {
         ));
         break;
     }
-    moreMenuList.forEach((element) {
-      element.imageColor = appTheme.whiteColor;
-    });
+    // moreMenuList.forEach((element) {
+    //   element.imageColor = appTheme.whiteColor;
+    // });
 
     return moreMenuList;
   }

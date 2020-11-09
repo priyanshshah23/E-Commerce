@@ -21,6 +21,15 @@ class SearchScreen extends StatefulScreenWidget {
 class _SearchScreenState extends StatefulScreenWidgetState {
   final TextEditingController _searchController = TextEditingController();
   var _focusSearch = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 1), () {
+      FocusScope.of(context).requestFocus(_focusSearch);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
