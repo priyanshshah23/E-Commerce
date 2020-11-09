@@ -330,4 +330,26 @@ class _SearchScreenState extends StatefulScreenWidgetState {
     }
     return result;
   }
+
+  List<String> getSearchDataSet(String searchText) {
+    if (!isNullEmptyOrFalse(searchText)) {
+      arrSuggestion.where((element) {
+        var str = element.toLowerCase();
+        if (str.contains(searchText)) {
+          return true;
+        }
+
+        return false;
+      });
+    }
+
+    return [];
+  }
+
+  openSuggestion(String text) {
+    var array = text.split(" ");
+    var filterData = getSearchDataSet(array.last);
+
+    setState(() {});
+  }
 }

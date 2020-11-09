@@ -1099,15 +1099,15 @@ class DiamondConfig {
           arraDiamond[i].showCheckBox = true;
         }
 
-        if (arraDiamond.length == 1) {
-          arraDiamond[i].isSectionOfferDisplay = true;
-        } else if (i > 0 &&
-            (arraDiamond[i].memoNo != arraDiamond[i - 1].memoNo)) {
-          arraDiamond[i - 1].isSectionOfferDisplay = true;
-        } else if (i == arraDiamond.length - 1) {
-          arraDiamond[i].isSectionOfferDisplay = true;
-        }
-        arraDiamond[i].isGrouping = true;
+        // if (arraDiamond.length == 1) {
+        //   arraDiamond[i].isSectionOfferDisplay = true;
+        // } else if (i > 0 &&
+        //     (arraDiamond[i].memoNo != arraDiamond[i - 1].memoNo)) {
+        //   arraDiamond[i - 1].isSectionOfferDisplay = true;
+        // } else if (i == arraDiamond.length - 1) {
+        //   arraDiamond[i].isSectionOfferDisplay = true;
+        // }
+        // arraDiamond[i].isGrouping = true;
       }
     } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_UPCOMING) {
       for (int i = 0; i < arraDiamond.length; i++) {
