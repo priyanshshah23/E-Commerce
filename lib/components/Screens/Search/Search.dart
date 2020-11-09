@@ -32,7 +32,6 @@ class _SearchScreenState extends StatefulScreenWidgetState {
   String totalSearch = "";
 
   String searchText = "";
-  List<String> filterData = [];
 
   @override
   void initState() {
@@ -67,7 +66,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
             child: Column(
               children: [
                 getSarchTextField(),
-                openSuggestion(searchText),
+                openSuggestion(),
               ],
             ),
           )),
@@ -83,65 +82,60 @@ class _SearchScreenState extends StatefulScreenWidgetState {
             left: getSize(Spacing.leftPadding),
             right: getSize(Spacing.rightPadding),
           ),
-          child: Container(
-            height: getSize(40),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(getSize(5)),
-              border:
-                  Border.all(color: appTheme.colorPrimary, width: getSize(1)),
-            ),
-            child: TextField(
-              textAlignVertical: TextAlignVertical(y: 1.0),
-              textInputAction: TextInputAction.search,
-              focusNode: _focusSearch,
-              autofocus: false,
-              controller: _searchController,
-              obscureText: false,
-              style: appTheme.black16TextStyle,
-              keyboardType: TextInputType.text,
-              textCapitalization: TextCapitalization.characters,
-              cursorColor: appTheme.colorPrimary,
-              inputFormatters: [
-                BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
-              ],
-              decoration: InputDecoration(
-                fillColor: fromHex("#FFEFEF"),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
-                  borderSide: BorderSide(
-                      color: appTheme.dividerColor, width: getSize(1)),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
-                  borderSide: BorderSide(
-                      color: appTheme.dividerColor, width: getSize(1)),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
-                  borderSide: BorderSide(
-                      color: appTheme.dividerColor, width: getSize(1)),
-                ),
-
-                hintStyle: appTheme.grey16HintTextStyle,
-                hintText: "Search",
-                labelStyle: TextStyle(
-                  color: appTheme.textColor,
-                  fontSize: getFontSize(16),
-                ),
-                // suffix: widget.textOption.postfixWidOnFocus,
-                suffixIcon: Padding(
-                    padding: EdgeInsets.all(getSize(10)),
-                    child: Image.asset(search)),
+          child: TextFormField(
+            maxLines: 1,
+            textAlignVertical: TextAlignVertical(y: 1.0),
+            textInputAction: TextInputAction.search,
+            focusNode: _focusSearch,
+            autofocus: false,
+            controller: _searchController,
+            obscureText: false,
+            style: appTheme.black16TextStyle,
+            keyboardType: TextInputType.text,
+            textCapitalization: TextCapitalization.characters,
+            cursorColor: appTheme.colorPrimary,
+            inputFormatters: [
+              BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+            ],
+            decoration: InputDecoration(
+              fillColor: fromHex("#FFEFEF"),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+                borderSide:
+                    BorderSide(color: appTheme.dividerColor, width: getSize(1)),
               ),
-              onChanged: (String text) {
-                this.searchText = text;
-                openSuggestion(text);
-              },
-              onEditingComplete: () {
-                FocusScope.of(context).unfocus();
-                callCountApi();
-              },
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+                borderSide:
+                    BorderSide(color: appTheme.dividerColor, width: getSize(1)),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+                borderSide:
+                    BorderSide(color: appTheme.dividerColor, width: getSize(1)),
+              ),
+
+              hintStyle: appTheme.grey16HintTextStyle,
+              hintText: "Search",
+              labelStyle: TextStyle(
+                color: appTheme.textColor,
+                fontSize: getFontSize(16),
+              ),
+              // suffix: widget.textOption.postfixWidOnFocus,
+              suffixIcon: Padding(
+                  padding: EdgeInsets.all(getSize(10)),
+                  child: Image.asset(search,
+                      height: getSize(8), width: getSize(8))),
             ),
+            onChanged: (String text) {
+              this.searchText = text;
+              openSuggestion();
+              setState(() {});
+            },
+            onEditingComplete: () {
+              FocusScope.of(context).unfocus();
+              callCountApi();
+            },
           ),
         ),
       ),
@@ -347,11 +341,11 @@ class _SearchScreenState extends StatefulScreenWidgetState {
     return result;
   }
 
-  List<String> getSearchDataSet(String searchText) {
-    if (!isNullEmptyOrFalse(searchText)) {
+  List<String> getSearchDataSet(String searchData) {
+    if (!isNullEmptyOrFalse(searchData)) {
       return arrSuggestion.where((element) {
         var str = element.toLowerCase();
-        if (str.contains(searchText.toLowerCase())) {
+        if (str.contains(searchData.toLowerCase())) {
           return true;
         }
 
@@ -362,10 +356,10 @@ class _SearchScreenState extends StatefulScreenWidgetState {
     return [];
   }
 
-  openSuggestion(String text) {
-    var array = text.split(" ");
-    filterData = getSearchDataSet(array.last);
-    setState(() {});
+  openSuggestion() {
+    var array = searchText.split(" ");
+    var filterData = getSearchDataSet(array.last);
+
     return !isNullEmptyOrFalse(filterData)
         ? Expanded(
             child: Padding(
@@ -376,16 +370,17 @@ class _SearchScreenState extends StatefulScreenWidgetState {
                 itemBuilder: (BuildContext context, int index) {
                   return InkWell(
                     onTap: () {
-                      // array.removeLast();
-                      totalSearch += "${filterData[index]} ";
-                      _searchController.text = totalSearch;
-                      // _searchController.text =
-                      //     "${filterData[index]}";
+                      array.removeLast();
+
+                      searchText = "${array.join(" ")} ${filterData[index]} ";
+                      _searchController.text = searchText;
 
                       _searchController.selection = TextSelection.fromPosition(
                           TextPosition(offset: _searchController.text.length));
 
-                      array.removeLast();
+                      filterData = [];
+
+                      setState(() {});
                     },
                     child: getWidget(filterData[index]),
                   );
@@ -393,9 +388,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
               ),
             ),
           )
-        : Center(
-            child: Text("There is no data"),
-          );
+        : Container();
   }
 
   getWidget(String data) {
