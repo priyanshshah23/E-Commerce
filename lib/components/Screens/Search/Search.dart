@@ -25,12 +25,20 @@ class _SearchScreenState extends StatefulScreenWidgetState {
   var _focusSearch = FocusNode();
   var arrSuggestion = List<String>();
 
+  List<String> filterData = [];
+
   @override
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 1), () {
       FocusScope.of(context).requestFocus(_focusSearch);
     });
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => setState(() async {
+        prepareDataSource();
+      }),
+    );
   }
 
   @override
@@ -52,6 +60,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
             child: Column(
               children: [
                 getSarchTextField(),
+                
               ],
             ),
           )),
@@ -122,7 +131,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
               //   //
               // },
               onChanged: (String text) {
-                //
+                openSuggestion(text);
               },
               onEditingComplete: () {},
             ),
@@ -134,7 +143,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
 
   prepareDataSource() async {
     //Shape
-    var shapes = await Master.getSubMaster(MasterCode.shape);
+    List<Master> shapes = await Master.getSubMaster(MasterCode.shape);
     if (!isNullEmptyOrFalse(shapes)) {
       appendData(getNameWithLikeKeyword(shapes, false));
     }
@@ -333,14 +342,14 @@ class _SearchScreenState extends StatefulScreenWidgetState {
 
   List<String> getSearchDataSet(String searchText) {
     if (!isNullEmptyOrFalse(searchText)) {
-      arrSuggestion.where((element) {
+      return arrSuggestion.where((element) {
         var str = element.toLowerCase();
-        if (str.contains(searchText)) {
+        if (str.contains(searchText.toLowerCase())) {
           return true;
         }
 
         return false;
-      });
+      }).toList();
     }
 
     return [];
@@ -348,8 +357,18 @@ class _SearchScreenState extends StatefulScreenWidgetState {
 
   openSuggestion(String text) {
     var array = text.split(" ");
-    var filterData = getSearchDataSet(array.last);
-
+    filterData = getSearchDataSet(array.last);
+    return !isNullEmptyOrFalse(filterData)
+                    ? Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: filterData.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Text(filterData[index]);
+                          },
+                        ),
+                      )
+                    : Text("There is no data");
     setState(() {});
   }
 }

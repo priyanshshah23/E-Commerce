@@ -129,7 +129,11 @@ class Master {
     multiLanguageData = json['multiLanguageData'] != null
         ? new MultiLanguageData.fromJson(json['multiLanguageData'])
         : null;
-    likeKeyWords = json['likeKeyWords'].cast<String>();
+    if (!isNullEmptyOrFalse(json['likeKeyWords'])) {
+      if (json['likeKeyWords'] is List<String>) {
+        likeKeyWords.addAll(['likeKeyWords']);
+      }
+    }
   }
 
   Map<String, dynamic> toJson() {
