@@ -100,11 +100,13 @@ class SyncManager {
     Function(DiamondListResp) success,
     Function failure, {
     bool isProgress = true,
+    String searchText,
   }) async {
     Map<String, dynamic> dict = {};
     dict["isNotReturnTotal"] = true;
     dict["isReturnCountOnly"] = true;
     dict["filters"] = req;
+    dict["search"] = searchText;
 
     NetworkCall<DiamondListResp>()
         .makeCall(
@@ -236,7 +238,7 @@ class SyncManager {
     }).catchError((onError) => {if (onError is ErrorResp) failure(onError)});
   }
 
-  callApiForExcel(BuildContext context,List<DiamondModel> diamondList) {
+  callApiForExcel(BuildContext context, List<DiamondModel> diamondList) {
     List<String> stoneId = [];
     diamondList.forEach((element) {
       stoneId.add(element.id);
@@ -253,7 +255,7 @@ class SyncManager {
       // success(diamondListResp);
       String url = baseURL + excelApiResponse.data.data;
       //navigate to static page...
-      
+
       // getWebView(context, url);
     }).catchError((onError) {
       print(onError);

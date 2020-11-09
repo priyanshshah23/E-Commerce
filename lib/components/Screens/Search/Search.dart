@@ -1,3 +1,6 @@
+import 'dart:collection';
+
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/Helper/Themehelper.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/ImageConstant.dart';
@@ -6,7 +9,9 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/theme/app_theme.dart';
 import 'package:diamnow/app/utils/CommonWidgets.dart';
 import 'package:diamnow/app/utils/math_utils.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/Master/Master.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -87,7 +92,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
             ),
             child: TextField(
               textAlignVertical: TextAlignVertical(y: 1.0),
-              textInputAction: TextInputAction.done,
+              textInputAction: TextInputAction.search,
               focusNode: _focusSearch,
               autofocus: false,
               controller: _searchController,
@@ -128,14 +133,14 @@ class _SearchScreenState extends StatefulScreenWidgetState {
                     padding: EdgeInsets.all(getSize(10)),
                     child: Image.asset(search)),
               ),
-              // onFieldSubmitted: (String text) {
-              //   //
-              // },
               onChanged: (String text) {
                 this.searchText = text;
                 openSuggestion(text);
               },
-              onEditingComplete: () {},
+              onEditingComplete: () {
+                FocusScope.of(context).unfocus();
+                callCountApi();
+              },
             ),
           ),
         ),
@@ -363,26 +368,29 @@ class _SearchScreenState extends StatefulScreenWidgetState {
     setState(() {});
     return !isNullEmptyOrFalse(filterData)
         ? Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: filterData.length,
-              itemBuilder: (BuildContext context, int index) {
-                return InkWell(
-                  onTap: () {
-                    // array.removeLast();
-                    totalSearch += "${filterData[index]} ";
-                    _searchController.text = totalSearch;
-                    // _searchController.text =
-                    //     "${filterData[index]}";
+            child: Padding(
+              padding: EdgeInsets.all(getSize(16)),
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: filterData.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return InkWell(
+                    onTap: () {
+                      // array.removeLast();
+                      totalSearch += "${filterData[index]} ";
+                      _searchController.text = totalSearch;
+                      // _searchController.text =
+                      //     "${filterData[index]}";
 
-                    _searchController.selection = TextSelection.fromPosition(
-                        TextPosition(offset: _searchController.text.length));
+                      _searchController.selection = TextSelection.fromPosition(
+                          TextPosition(offset: _searchController.text.length));
 
-                    array.removeLast();
-                  },
-                  child: getWidget(filterData[index]),
-                );
-              },
+                      array.removeLast();
+                    },
+                    child: getWidget(filterData[index]),
+                  );
+                },
+              ),
             ),
           )
         : Center(
@@ -410,6 +418,26 @@ class _SearchScreenState extends StatefulScreenWidgetState {
           )
         ],
       ),
+    );
+  }
+
+  callCountApi() {
+    SyncManager.instance.callApiForDiamondList(
+      context,
+      {},
+      (diamondListResp) {
+        Map<String, dynamic> dict = new HashMap();
+
+        dict["filterId"] = diamondListResp.data.filter.id;
+
+        dict[ArgumentConstant.ModuleType] =
+            DiamondModuleConstant.MODULE_TYPE_SEARCH;
+        NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+      },
+      (onError) {
+        //print("Error");
+      },
+      searchText: _searchController.text,
     );
   }
 }
