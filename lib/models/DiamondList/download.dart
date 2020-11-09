@@ -8,7 +8,6 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/models/Share/ShareThroughEmail.dart';
 import 'package:diamnow/models/excel/ExcelApiResponse.dart';
 import 'package:downloads_path_provider/downloads_path_provider.dart';
-import 'package:file_utils/file_utils.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
