@@ -123,7 +123,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
               ),
               // suffix: widget.textOption.postfixWidOnFocus,
               suffixIcon: Padding(
-                  padding: EdgeInsets.all(getSize(10)),
+                  padding: EdgeInsets.all(getSize(15)),
                   child: Image.asset(search,
                       height: getSize(8), width: getSize(8))),
             ),
@@ -430,7 +430,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
       (onError) {
         //print("Error");
       },
-      searchText: _searchController.text,
+      // searchText: _searchController.text,
     );
   }
 }
