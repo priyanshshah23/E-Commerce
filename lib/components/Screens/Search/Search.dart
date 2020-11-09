@@ -24,6 +24,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
   final TextEditingController _searchController = TextEditingController();
   var _focusSearch = FocusNode();
   var arrSuggestion = List<String>();
+  String totalSearch = "";
 
   String searchText = "";
   List<String> filterData = [];
@@ -368,9 +369,16 @@ class _SearchScreenState extends StatefulScreenWidgetState {
               itemBuilder: (BuildContext context, int index) {
                 return InkWell(
                   onTap: () {
-                    array.removeLast();
+                    // array.removeLast();
+                    totalSearch+="${filterData[index]},";
                     _searchController.text =
-                        "${array.join(", ")} ${filterData[index]}";
+                        totalSearch;
+                    // _searchController.text =
+                    //     "${filterData[index]}";
+
+                    _searchController.selection = TextSelection.fromPosition(TextPosition(offset: _searchController.text.length));
+
+                    array.removeLast();
                   },
                   child: getWidget(filterData[index]),
                 );
