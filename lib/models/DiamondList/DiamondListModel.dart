@@ -439,6 +439,7 @@ class DiamondModel {
   TrackDiamonds trackItemBid;
   TrackDiamonds trackItemOffice;
   bool isSectionOfferDisplay = false;
+  bool isGrouping = false;
 
   getSelectedDetail(int type) {
     switch (type) {

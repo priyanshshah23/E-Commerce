@@ -86,23 +86,30 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             Container(
               margin: EdgeInsets.only(
                 bottom: getSize(widget.item.marginBottom),
-                top: getSize(widget.item.marginTop),
+                top: widget.item.isGrouping
+                    ? getSize(2)
+                    : getSize(widget.item.marginTop),
               ),
-              decoration: (widget.item.isSectionOfferDisplay)
-                  ? BoxDecoration(
-                      color: appTheme.whiteColor,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                            color: appTheme.colorPrimary.withOpacity(0.2),
-                            blurRadius: getSize(15),
-                            // spreadRadius: getSize(5),
-                            offset: Offset(0, 7)),
-                      ],
-                    )
-                  : null,
+              decoration:
+                  (widget.item.isSectionOfferDisplay || widget.item.isGrouping)
+                      ? BoxDecoration(
+                          color: widget.item.isSectionOfferDisplay
+                              ? appTheme.whiteColor
+                              : null,
+                          borderRadius: widget.item.isSectionOfferDisplay
+                              ? BorderRadius.all(
+                                  Radius.circular(5),
+                                )
+                              : null,
+                          boxShadow: [
+                            BoxShadow(
+                                color: appTheme.colorPrimary.withOpacity(0.2),
+                                blurRadius: getSize(15),
+                                // spreadRadius: getSize(5),
+                                offset: Offset(0, 7)),
+                          ],
+                        )
+                      : null,
               child: Column(
                 children: [
                   Container(
@@ -117,26 +124,27 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                         actionExtentRatio: 0.2,
                         child: Container(
                           margin: EdgeInsets.only(
-                            bottom: getSize(
-                              widget.item.isMatchPair &&
-                                      (widget.item.borderType ==
-                                              BorderConstant
-                                                  .BORDER_LEFT_RIGHT ||
-                                          widget.item.borderType ==
-                                              BorderConstant.BORDER_TOP)
-                                  ? getSize(1)
-                                  : (widget.item.isAddToWatchList ||
-                                          widget.item.isAddToOffer)
-                                      ? getSize(2)
-                                      : getSize(5),
-                            ),
-                            top: getSize(widget.item.isMatchPair &&
+                            bottom: (widget.item.isMatchPair &&
                                     (widget.item.borderType ==
                                             BorderConstant.BORDER_LEFT_RIGHT ||
                                         widget.item.borderType ==
-                                            BorderConstant.BORDER_BOTTOM)
+                                            BorderConstant.BORDER_TOP))
                                 ? getSize(1)
-                                : getSize(5)),
+                                : (widget.item.isAddToWatchList ||
+                                        widget.item.isAddToOffer)
+                                    ? getSize(2)
+                                    : widget.item.isGrouping
+                                        ? 0
+                                        : getSize(5),
+                            top: ((widget.item.isMatchPair &&
+                                    (widget.item.borderType ==
+                                            BorderConstant.BORDER_LEFT_RIGHT ||
+                                        widget.item.borderType ==
+                                            BorderConstant.BORDER_BOTTOM))
+                                ? getSize(1)
+                                : widget.item.isGrouping
+                                    ? 0
+                                    : getSize(5)),
                             left: getSize(
                                 widget.item.isMatchPair ? getSize(5) : 0),
                             right: getSize(
