@@ -162,7 +162,8 @@ class _TagWidgetState extends State<TagWidget> {
                       widget.model.isShowMoreSelected = true;
                     } else if (widget.model.isShowMoreSelected == true &&
                         widget.model.isShowMore &&
-                        index == widget.model.showMoreTagAfterTotalItemCount - 1) {
+                        index ==
+                            widget.model.showMoreTagAfterTotalItemCount - 1) {
                       print("Show more");
                       widget.model.isShowMoreSelected = false;
                     } else {
@@ -172,7 +173,8 @@ class _TagWidgetState extends State<TagWidget> {
                     widget.model.onSelectionClick(index);
                   });
                 },
-                child: index == widget.model.showMoreTagAfterTotalItemCount - 1 &&
+                child: index ==
+                            widget.model.showMoreTagAfterTotalItemCount - 1 &&
                         widget.model.isShowMoreSelected &&
                         widget.model.isShowMore
                     ? getSingleTagForGridview(widget.model.masters.length - 1)
@@ -333,7 +335,7 @@ class _TagWidgetState extends State<TagWidget> {
             left: getSize(12.0)),
         child: Center(
           child: Text(
-            widget.model.masters[index].webDisplay,
+            widget.model.masters[index].webDisplay ?? "-",
             style: widget.model.masters[index].isSelected
                 ? appTheme.primaryColor14TextStyle
                 : appTheme.blackNormal14TitleColorblack,

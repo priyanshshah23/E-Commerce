@@ -97,6 +97,10 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
                       allLableTitle: widget.colorModel.allLableTitle,
                       masterCode: MasterCode.intensity,
                       verticalScroll: widget.colorModel.verticalScroll,
+                      gridViewItemCount: 3,
+                      showMoreTagAfterTotalItemCount: 6,
+                      viewType: widget.colorModel.viewType,
+                      isShowMore: widget.colorModel.isShowMore,
                       apiKey: "inten");
 
                   widget.colorModel.overtoneSelection = SelectionModel(
@@ -106,7 +110,11 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
                       isShowAll: widget.colorModel.isShowAll,
                       orientation: widget.colorModel.orientation,
                       allLableTitle: widget.colorModel.allLableTitle,
+                      viewType: widget.colorModel.viewType,
+                      showMoreTagAfterTotalItemCount: 6,
                       verticalScroll: widget.colorModel.verticalScroll,
+                      isShowMore: widget.colorModel.isShowMore,
+                      gridViewItemCount: 3,
                       apiKey: "ovrtn");
                 });
               },
@@ -159,7 +167,7 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
         SelectionWidget(widget.colorModel),
         widget.colorModel.isGroupSelected
             ? getOverToneIntensityViews()
-            : SizedBox(),
+            : SizedBox(height: getSize(8)),
       ],
     );
   }
@@ -170,6 +178,7 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
       SelectionWidget(widget.colorModel.intensitySelection),
       SizedBox(height: getSize(16)),
       SelectionWidget(widget.colorModel.overtoneSelection),
+      SizedBox(height: getSize(8)),
     ]);
   }
 }
