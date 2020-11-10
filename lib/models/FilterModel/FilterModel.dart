@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/extensions/eventbus.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/models/DiamondDetail/DiamondDetailUIModel.dart';
@@ -106,6 +107,9 @@ class Config {
               if (selectionModel.isShowAll == true) {
                 appendAllTitle(selectionModel);
               }
+              // if(selectionModel.isShowMore == true){
+              //   appendShowMoreTitle(selectionModel);
+              // }
             } else if (viewType == ViewTypes.groupWidget) {
               ColorModel colorModel = ColorModel.fromJson(element);
               arrFilter.add(colorModel);
@@ -159,6 +163,10 @@ class Config {
 
               if (selectionModel.isShowAll == true) {
                 appendAllTitle(selectionModel);
+              }
+
+              if(selectionModel.isShowMore == true){
+                appendShowMoreTitle(selectionModel);
               }
             }
           }
@@ -225,6 +233,22 @@ class Config {
           : allMaster.isSelected = false;
     }
     model.masters.insert(0, allMaster);
+  } 
+
+  appendShowMoreTitle(SelectionModel model) {
+    Master allMaster = Master();
+    allMaster.sId = R.string().commonString.showMore;
+    allMaster.webDisplay = R.string().commonString.showMore;
+
+    List<Master> arrSelectedMaster =
+        model.masters.where((element) => element.isSelected).toList();
+    if (!isNullEmptyOrFalse(arrSelectedMaster)) {
+      arrSelectedMaster.length == model.masters.length
+          ? allMaster.isSelected = true
+          : allMaster.isSelected = false;
+    }
+    // model.masters.insert(model.masters.length, allMaster);
+    model.masters.add(allMaster);
   }
 }
 
@@ -292,6 +316,7 @@ class SelectionModel extends FormBaseModel {
   List<String> caratRangeChipsToShow = [];
   int numberOfelementsToShow;
   bool showFromTo;
+  int showMoreItem = 8;
   SelectionModel(
       {title,
       this.masters,
@@ -309,7 +334,7 @@ class SelectionModel extends FormBaseModel {
   SelectionModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     groupMasterCode = json["groupMasterCode"];
     verticalScroll = json["verticalScroll"] ?? false;
-    gridViewItemCount  = json["gridViewItemCount"] ?? 4;
+    gridViewItemCount  = json["gridViewItemCount"] ?? 3;
     orientation = json["orientation"];
     isShowAll = json['isShowAll'] ?? false;
     isShowMore = json['isShowMore'] ?? false;
@@ -411,6 +436,10 @@ class SelectionModel extends FormBaseModel {
         }
       }
     }
+  }
+
+  void showMoreShowLessFunctionality(){
+
   }
 }
 
