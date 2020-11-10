@@ -52,7 +52,7 @@ class _SplashState extends State<Splash> {
 //      NavigationUtilities.pushRoute(Notifications.route);
       callVersionUpdateApi();
 //      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-     //  NavigationUtilities.pushRoute(ForgetPasswordScreen.route);
+      //  NavigationUtilities.pushRoute(ForgetPasswordScreen.route);
 //      AppNavigation().movetoHome(isPopAndSwitch: true);
     } else {
       AppNavigation.shared.movetoLogin(isPopAndSwitch: true);
@@ -63,16 +63,16 @@ class _SplashState extends State<Splash> {
     NetworkCall<VersionUpdateResp>()
         .makeCall(
             () => app
-            .resolve<ServiceModule>()
-            .networkService()
-            .getVersionUpdate(),
-        context,
-        isProgress: true)
+                .resolve<ServiceModule>()
+                .networkService()
+                .getVersionUpdate(),
+            context,
+            isProgress: true)
         .then(
-          (resp) {
+      (resp) {
         if (resp.data != null) {
           PackageInfo.fromPlatform().then(
-                (PackageInfo packageInfo) {
+            (PackageInfo packageInfo) {
               String appName = packageInfo.appName;
               String packageName = packageInfo.packageName;
               String version = packageInfo.version;
@@ -101,13 +101,15 @@ class _SplashState extends State<Splash> {
                         NavigationUtilities.pushReplacementNamed(
                             VersionUpdate.route,
                             args: dict);
-                      }  else {
+                      } else {
                         AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                       }
                     }
                   } else {
                     AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                   }
+                } else {
+                  AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                 }
               } else {
                 print("Android");
@@ -123,11 +125,13 @@ class _SplashState extends State<Splash> {
                     if (hardUpdate == true) {
                       app.resolve<PrefUtils>().saveSkipUpdate(false);
                       NavigationUtilities.pushReplacementNamed(
-                          VersionUpdate.route, args: dict);
+                          VersionUpdate.route,
+                          args: dict);
                     } else {
                       if (app.resolve<PrefUtils>().getSkipUpdate() == false) {
                         NavigationUtilities.pushReplacementNamed(
-                            VersionUpdate.route, args: dict);
+                            VersionUpdate.route,
+                            args: dict);
                       } else {
                         AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                       }
@@ -135,6 +139,8 @@ class _SplashState extends State<Splash> {
                   } else {
                     AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                   }
+                } else {
+                  AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                 }
               }
             },
@@ -142,14 +148,14 @@ class _SplashState extends State<Splash> {
         }
       },
     ).catchError(
-          (onError) => {
+      (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
             title: R.string().errorString.versionError,
             desc: onError.message,
             positiveBtnTitle: R.string().commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
-              callVersionUpdateApi();
-            }),
+          callVersionUpdateApi();
+        }),
       },
     );
   }

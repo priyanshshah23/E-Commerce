@@ -127,6 +127,13 @@ class MasterCode {
   static const String newarrivals = "NEWARRIVAL";
   static const String dor = "DOR";
   static const String fm = "FM";
+  static const String natural = "NATURAL";
+  static const String mixTint = "MIX_TINT";
+  static const String companySize = "COMPANY_SIZE";
+  static const String openInclusion = "OPEN_INCLUSION";
+  static const String blackInclusion = "BLACK_INCLUSION";
+
+  // static const String mixTint = "MIX_TINT";
 }
 
 class DiamondStatus {

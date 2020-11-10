@@ -105,7 +105,12 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       config.getFilterJson().then((result) {
         setState(() {
-          arrList = result;
+          arrList = result.where((element) {
+            if (element is SelectionModel) {
+              return !isNullEmptyOrFalse(element.masters);
+            }
+            return false;
+          }).toList();
 
           if (!isNullEmptyOrFalse(this.dictSearchData)) {
             arrList = FilterDataSource()
