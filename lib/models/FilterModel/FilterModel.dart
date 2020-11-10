@@ -165,7 +165,7 @@ class Config {
                 appendAllTitle(selectionModel);
               }
 
-              if(selectionModel.isShowMore == true){
+              if (selectionModel.isShowMore == true) {
                 appendShowMoreTitle(selectionModel);
               }
             }
@@ -233,7 +233,7 @@ class Config {
           : allMaster.isSelected = false;
     }
     model.masters.insert(0, allMaster);
-  } 
+  }
 
   appendShowMoreTitle(SelectionModel model) {
     Master allMaster = Master();
@@ -334,7 +334,7 @@ class SelectionModel extends FormBaseModel {
   SelectionModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     groupMasterCode = json["groupMasterCode"];
     verticalScroll = json["verticalScroll"] ?? false;
-    gridViewItemCount  = json["gridViewItemCount"] ?? 3;
+    gridViewItemCount = json["gridViewItemCount"] ?? 3;
     orientation = json["orientation"];
     isShowAll = json['isShowAll'] ?? false;
     isShowMore = json['isShowMore'] ?? false;
@@ -408,38 +408,57 @@ class SelectionModel extends FormBaseModel {
           }
         }
       }
-    } else {
-      if (masters[index].code == MasterCode.eyecleanStatic) {
-        Master.getSubMaster(MasterCode.eyeClean).then((result) {
-          if (!isNullEmptyOrFalse(result)) {
-            for (var master in result) {
-              if (master.code.toLowerCase() == "y") {
-                Map<String, dynamic> map = {};
-
-                map["eCln"] = [master.sId];
-                if (master.isSelected) masters[index].map = map;
-
-                break;
-              }
+    }
+    if (isShowMore == true) {
+      if (isShowMoreSelected) {
+        if (index == showMoreItem - 1) {
+          if (masters[masters.length - 1].sId ==
+              R.string().commonString.showMore) {
+            if (masters[masters.length - 1].webDisplay ==
+                R.string().commonString.showMore) {
+              isShowMoreSelected = false;
+            } else {
+              isShowMoreSelected = true;
             }
           }
-        });
+        }
       } else {
-        Map<String, dynamic> m = Map<String, dynamic>();
-        m["masterCode"] = masterCode;
-        m["isSelected"] = masters[index].isSelected;
-        m["selectedMasterCode"] = masters[index].code;
-        m["masterSelection"] = masterSelection;
-        if (viewType == ViewTypes.groupWidget) {
-          m["isGroupSelected"] = (this as ColorModel).isGroupSelected;
-          RxBus.post(m, tag: eventMasterForSingleItemOfGroupSelection);
+        if (masters[index].sId == R.string().commonString.showMore) {
+          if (masters[index].webDisplay == R.string().commonString.showLess) {
+            isShowMoreSelected = true;
+          } else {
+            isShowMoreSelected = false;
+          }
         }
       }
     }
-  }
 
-  void showMoreShowLessFunctionality(){
+    if (masters[index].code == MasterCode.eyecleanStatic) {
+      Master.getSubMaster(MasterCode.eyeClean).then((result) {
+        if (!isNullEmptyOrFalse(result)) {
+          for (var master in result) {
+            if (master.code.toLowerCase() == "y") {
+              Map<String, dynamic> map = {};
 
+              map["eCln"] = [master.sId];
+              if (master.isSelected) masters[index].map = map;
+
+              break;
+            }
+          }
+        }
+      });
+    } else {
+      Map<String, dynamic> m = Map<String, dynamic>();
+      m["masterCode"] = masterCode;
+      m["isSelected"] = masters[index].isSelected;
+      m["selectedMasterCode"] = masters[index].code;
+      m["masterSelection"] = masterSelection;
+      if (viewType == ViewTypes.groupWidget) {
+        m["isGroupSelected"] = (this as ColorModel).isGroupSelected;
+        RxBus.post(m, tag: eventMasterForSingleItemOfGroupSelection);
+      }
+    }
   }
 }
 
