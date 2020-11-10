@@ -53,10 +53,19 @@ class _LoginScreenState extends StatefulScreenWidgetState {
   bool isButtonEnabled = true;
   bool _autoValidate = false;
   List<String> language = <String>[
-    "English", "French", "Chinese", "Japanese", "Italian", "Spanish", "Germany", "Hebrew", "Arabic",
+    "English",
+    "French",
+    "Chinese",
+    "Japanese",
+    "Italian",
+    "Spanish",
+    "Germany",
+    "Hebrew",
+    "Arabic",
   ];
 
   String selectedLanguage = R.string().commonString.language;
+  bool isCheckBoxSelected = false;
 
   @override
   void initState() {
@@ -91,10 +100,11 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                         Container(
                           child: Padding(
                             padding: EdgeInsets.only(
-                                top: getSize(20),
-                                left: getSize(20),
-                                right: getSize(20),
-                                bottom: getSize(10),),
+                              top: getSize(20),
+                              left: getSize(20),
+                              right: getSize(20),
+                              bottom: getSize(10),
+                            ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
@@ -130,7 +140,8 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                                 children: <Widget>[
                                                   Text(
                                                     item,
-                                                    style: appTheme.black14TextStyle,
+                                                    style: appTheme
+                                                        .black14TextStyle,
                                                   ),
                                                 ],
                                               ),
@@ -150,7 +161,8 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                             Container(
                                                 height: getSize(10),
                                                 width: getSize(10),
-                                                child: Image.asset(languageIcon)),
+                                                child:
+                                                    Image.asset(languageIcon)),
                                             SizedBox(
                                               width: getSize(10),
                                             ),
@@ -162,7 +174,8 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                                             .string()
                                                             .commonString
                                                             .language
-                                                    ? appTheme.grey14HintTextStyle
+                                                    ? appTheme
+                                                        .grey14HintTextStyle
                                                     : appTheme.black14TextStyle,
                                               ),
                                             ),
@@ -219,13 +232,28 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                           top: getSize(15), left: getSize(0)),
                                       child: getPasswordTextField(),
                                     ),
-                                    Container(
-                                      alignment: Alignment.centerRight,
-                                      child: Padding(
-                                        padding:
-                                            EdgeInsets.only(top: getSize(20)),
-                                        child: getForgotPassword(),
-                                      ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Checkbox(
+                                              value: isCheckBoxSelected,
+                                              onChanged: (value) {
+                                                isCheckBoxSelected = value;
+                                                setState(() {});
+                                              },
+                                            ),
+                                            SizedBox(width: getSize(4),),
+                                            Text("Remember Me",style: appTheme.blackMedium16TitleColorblack)
+                                          ],
+                                        ),
+                                        Container(
+                                          // alignment: Alignment.centerRight,
+                                          child: getForgotPassword(),
+                                        ),
+                                      ],
                                     ),
                                     Container(
                                       margin: EdgeInsets.only(
@@ -278,7 +306,10 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                             .withOpacity(0.1),
                                         borderRadius: getSize(5),
                                         fitWidth: true,
-                                        text: R.string().authStrings.signInAsGuest,
+                                        text: R
+                                            .string()
+                                            .authStrings
+                                            .signInAsGuest,
                                         //isButtonEnabled: enableDisableSigninButton(),
                                       ),
                                     ),
@@ -306,7 +337,8 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                       children: <Widget>[
                         Text(R.string().authStrings.haveRegisterCode,
                             style: appTheme.grey16HintTextStyle),
-                        Text(" " + R.string().authStrings.signUp, style: appTheme.darkBlue16TextStyle),
+                        Text(" " + R.string().authStrings.signUp,
+                            style: appTheme.darkBlue16TextStyle),
                       ],
                     ),
                   ),
@@ -380,7 +412,8 @@ class _LoginScreenState extends StatefulScreenWidgetState {
       textOption: TextFieldOption(
           prefixWid: getCommonIconWidget(
               imageName: password, imageType: IconSizeType.small),
-          hintText: R.string().authStrings.password + R.string().authStrings.requiredField,
+          hintText: R.string().authStrings.password +
+              R.string().authStrings.requiredField,
           maxLine: 1,
           formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
           keyboardType: TextInputType.text,
@@ -480,7 +513,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
       (resp) {
         if (resp.data != null) {
           PackageInfo.fromPlatform().then(
-                (PackageInfo packageInfo) {
+            (PackageInfo packageInfo) {
               String appName = packageInfo.appName;
               String packageName = packageInfo.packageName;
               String version = packageInfo.version;
@@ -558,11 +591,13 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                     if (hardUpdate == true) {
                       app.resolve<PrefUtils>().saveSkipUpdate(false);
                       NavigationUtilities.pushReplacementNamed(
-                          VersionUpdate.route, args: dict);
+                          VersionUpdate.route,
+                          args: dict);
                     } else {
                       if (app.resolve<PrefUtils>().getSkipUpdate() == false) {
                         NavigationUtilities.pushReplacementNamed(
-                            VersionUpdate.route, args: dict);
+                            VersionUpdate.route,
+                            args: dict);
                       } else {
                         SyncManager.instance.callMasterSync(
                             NavigationUtilities.key.currentContext, () async {
