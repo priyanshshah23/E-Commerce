@@ -226,7 +226,16 @@ class PrefUtils {
   }
 
   resetAndLogout(BuildContext context) {
+    bool rememberMe = app.resolve<PrefUtils>().getBool("rememberMe");
+    String userName = app.resolve<PrefUtils>().getString("userName");
+    String passWord = app.resolve<PrefUtils>().getString("passWord");
+
     app.resolve<PrefUtils>().clearPreferenceAndDB();
+
+    app.resolve<PrefUtils>().saveBoolean("rememberMe", rememberMe);
+    app.resolve<PrefUtils>().saveString("userName", userName);
+    app.resolve<PrefUtils>().saveString("passWord", passWord);
+
     Navigator.of(context).pushNamedAndRemoveUntil(
         LoginScreen.route, (Route<dynamic> route) => false);
   }
