@@ -74,7 +74,7 @@
     "showRadio": true,
     "showGroup": false,
     "showWhiteFancy": true,
-    "verticalScroll": false,
+    "verticalScroll": true,
     "orientation": "v",
     "isShowAll": true,
     "gridViewItemCount": 5,
