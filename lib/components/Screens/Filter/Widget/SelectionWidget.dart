@@ -162,7 +162,8 @@ class _TagWidgetState extends State<TagWidget> {
                       widget.model.isShowMoreSelected = true;
                     } else if (widget.model.isShowMoreSelected == true &&
                         widget.model.isShowMore &&
-                        index == widget.model.showMoreTagAfterTotalItemCount - 1) {
+                        index ==
+                            widget.model.showMoreTagAfterTotalItemCount - 1) {
                       print("Show more");
                       widget.model.isShowMoreSelected = false;
                     } else {
@@ -172,7 +173,8 @@ class _TagWidgetState extends State<TagWidget> {
                     widget.model.onSelectionClick(index);
                   });
                 },
-                child: index == widget.model.showMoreTagAfterTotalItemCount - 1 &&
+                child: index ==
+                            widget.model.showMoreTagAfterTotalItemCount - 1 &&
                         widget.model.isShowMoreSelected &&
                         widget.model.isShowMore
                     ? getSingleTagForGridview(widget.model.masters.length - 1)
@@ -333,7 +335,7 @@ class _TagWidgetState extends State<TagWidget> {
             left: getSize(12.0)),
         child: Center(
           child: Text(
-            widget.model.masters[index].webDisplay,
+            widget.model.masters[index].webDisplay ?? "-",
             style: widget.model.masters[index].isSelected
                 ? appTheme.primaryColor14TextStyle
                 : appTheme.blackNormal14TitleColorblack,
@@ -668,7 +670,11 @@ class _TagWidgetState extends State<TagWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.only(
+                top: getSize(8),
+                right: getSize(8),
+                bottom: getSize(8),
+              ),
               child: Row(
                   // crossAxisAlignment:CrossAxisAlignment.start,
                   children: List.generate(_list1.length, (index) {
@@ -686,7 +692,11 @@ class _TagWidgetState extends State<TagWidget> {
               })),
             ),
             Padding(
-              padding: EdgeInsets.all(8),
+              padding: EdgeInsets.only(
+                top: getSize(8),
+                right: getSize(8),
+                bottom: getSize(8),
+              ),
               child: Row(
                   // crossAxisAlignment:CrossAxisAlignment.start,
                   children: List.generate(_list2.length, (index) {

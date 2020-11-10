@@ -140,6 +140,7 @@ class _ColorWidgetState extends State<ColorWidget> {
         ),
         SizedBox(height: getSize(16)),
         SelectionWidget(widget.colorModel)
+        ,SizedBox(height: getSize(8)),
       ],
     );
   }
