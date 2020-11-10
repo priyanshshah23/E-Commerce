@@ -72,21 +72,20 @@ class _LoginScreenState extends StatefulScreenWidgetState {
     // TODO: implement initState
     super.initState();
     // if (kDebugMode) {
-      getUserNameAndPassword();
+    getUserNameAndPassword();
     // }
   }
 
   getUserNameAndPassword() {
-    if (app.resolve<PrefUtils>().getBool("rememberMe")==true) {
+    if (app.resolve<PrefUtils>().getBool("rememberMe") == true) {
       isCheckBoxSelected = app.resolve<PrefUtils>().getBool("rememberMe");
-        _userNameController.text =  app.resolve<PrefUtils>().getString("userName");
-        _passwordController.text =  app.resolve<PrefUtils>().getString("passWord");
-      }
+      _userNameController.text = app.resolve<PrefUtils>().getString("userName");
+      _passwordController.text = app.resolve<PrefUtils>().getString("passWord");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    
     return WillPopScope(
         onWillPop: onWillPop,
         child: GestureDetector(
@@ -241,7 +240,8 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                       child: getPasswordTextField(),
                                     ),
                                     Padding(
-                                      padding:  EdgeInsets.only(top:getSize(15)),
+                                      padding:
+                                          EdgeInsets.only(top: getSize(15)),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -251,13 +251,14 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                             children: [
                                               Container(
                                                 decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(getSize(3))
-                                                ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            getSize(3))),
                                                 width: getSize(21),
                                                 height: getSize(21),
                                                 child: Checkbox(
-        
-                                                  activeColor: appTheme.colorPrimary,
+                                                  activeColor:
+                                                      appTheme.colorPrimary,
                                                   value: isCheckBoxSelected,
                                                   onChanged: (value) {
                                                     isCheckBoxSelected = value;
@@ -265,12 +266,15 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                                   },
                                                 ),
                                               ),
-                                               SizedBox(
+                                              SizedBox(
                                                 width: getSize(6),
                                               ),
                                               Text("Remember Me",
                                                   style: appTheme
-                                                      .blackMedium16TitleColorblack.copyWith(fontWeight: FontWeight.bold))
+                                                      .blackMedium16TitleColorblack
+                                                      .copyWith(
+                                                          fontWeight:
+                                                              FontWeight.bold))
                                             ],
                                           ),
                                           Container(
@@ -307,35 +311,46 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                         //isButtonEnabled: enableDisableSigninButton(),
                                       ),
                                     ),
+                                    
                                     Padding(
-                                      padding:
-                                          EdgeInsets.only(top: getSize(10)),
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          R.string().commonString.lblOr,
-                                          style: appTheme.grey16HintTextStyle,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          top: getSize(10), left: getSize(0)),
-                                      child: AppButton.flat(
-                                        onTap: () {
-                                          NavigationUtilities.pushRoute(
-                                              SignInWithMPINScreen.route);
-                                        },
-                                        textColor: appTheme.colorPrimary,
-                                        backgroundColor: appTheme.colorPrimary
-                                            .withOpacity(0.1),
-                                        borderRadius: getSize(5),
-                                        fitWidth: true,
-                                        text: R
-                                            .string()
-                                            .authStrings
-                                            .signInAsGuest,
-                                        //isButtonEnabled: enableDisableSigninButton(),
+                                      padding: EdgeInsets.only(top:getSize(60)),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: Container(
+                                              alignment: Alignment.center,
+                                              margin: EdgeInsets.only(
+                                                top: getSize(10),
+                                                left: getSize(0),
+                                              ),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Image.asset(fingurePrint,width: getSize(15),height: getSize(15),),
+                                                  SizedBox(width: getSize(10),),
+                                                  Text("Touch ID",style: appTheme.primary16TextStyle,)
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                              alignment: Alignment.center,
+                                              margin: EdgeInsets.only(
+                                                top: getSize(10),
+                                                left: getSize(0),
+                                              ),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Image.asset(mpin,width: getSize(15),height: getSize(15),),
+                                                  SizedBox(width: getSize(10),),
+                                                  Text("MPIN",style: appTheme.primary16TextStyle,)
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],
@@ -356,15 +371,18 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                     onTap: () {
                       NavigationUtilities.pushRoute(SignupScreen.route);
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Text(R.string().authStrings.haveRegisterCode,
-                            style: appTheme.grey16HintTextStyle),
-                        Text(" " + R.string().authStrings.signUp,
-                            style: appTheme.darkBlue16TextStyle),
-                      ],
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom:getSize(30)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Text("Don't have an account?",
+                              style: appTheme.grey16HintTextStyle),
+                          Text(" " + R.string().authStrings.signUp,
+                              style: appTheme.darkBlue16TextStyle),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -519,7 +537,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
         await app
             .resolve<PrefUtils>()
             .saveString("passWord", _passwordController.text);
-        
+
         // print(app.resolve<PrefUtils>().getBool("rememberMe"));
         // print(app.resolve<PrefUtils>().getString("userName"));
         // print(app.resolve<PrefUtils>().getString("passWord"));

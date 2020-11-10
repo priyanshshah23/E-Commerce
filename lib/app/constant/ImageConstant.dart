@@ -171,3 +171,5 @@ const String offerWhite = "assets/Common/offerWhite.png";
 
 //PnShah
 const String forgetMPIN = "assets/PNShah/ForgetMPIN/forgetMPIN.png";
+const String fingurePrint = "assets/PNShah/ForgetMPIN/fingerprint.png";
+const String mpin = "assets/PNShah/ForgetMPIN/MPIN.png";

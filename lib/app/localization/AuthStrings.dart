@@ -187,7 +187,7 @@ class AuthStrings {
     this.verifyNow = 'Verify Now',
     this.password = "Password",
     this.backToHome = "Go to Home",
-    this.forgotPassword = "Forgot Your Password?",
+    this.forgotPassword = "Forgot Password?",
     this.signInCap = "Sign In",
     this.moveToLogIn = 'Move to Log In',
     this.dontHaveAnAccount = " to set up your account.",

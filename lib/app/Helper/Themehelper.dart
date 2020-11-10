@@ -156,6 +156,7 @@ class BaseTheme {
         fontWeight: FontWeight.normal,
         color: greenColor);
   }
+  
 
   TextStyle get redPrimaryNormal14TitleColor {
     return TextStyle(
