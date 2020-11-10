@@ -244,8 +244,12 @@ class Config {
     if (model.masterCode == MasterCode.color) {
       // model.masters.insert(0, allMaster);
       if (model is ColorModel) {
-        model.masters.insert(0, allMaster);
-        model.groupMaster.insert(0, allMaster);
+        if (model.showWhiteFancy) {
+          model.intensity.insert(0, allMaster);
+          model.overtone.insert(0, allMaster);
+        } else {
+          model.groupMaster.insert(0, allMaster);
+        }
       }
     } else {
       model.masters.insert(0, allMaster);
@@ -266,13 +270,20 @@ class Config {
           : allMaster.isSelected = false;
     }
 
-    if (model.masterCode == MasterCode.color) {
-      if (model is ColorModel) {
-        model.masters.add(allMaster);
-        model.groupMaster.add(allMaster);
+    if (model.verticalScroll) {
+      if (model.showMoreTagAfterTotalItemCount > 4) {
+        if (model.masterCode == MasterCode.color) {
+          if (model is ColorModel) {
+            model.masters.add(allMaster);
+            if (model.showWhiteFancy) {
+              model.intensity.add(allMaster);
+              model.overtone.add(allMaster);
+            }
+          }
+        } else {
+          model.masters.add(allMaster);
+        }
       }
-    } else {
-      model.masters.add(allMaster);
     }
   }
 }
@@ -341,7 +352,7 @@ class SelectionModel extends FormBaseModel {
   List<String> caratRangeChipsToShow = [];
   int numberOfelementsToShow;
   bool showFromTo;
-  int showMoreItem = 8;
+  int showMoreTagAfterTotalItemCount = 9;
   SelectionModel(
       {title,
       this.masters,
@@ -351,6 +362,7 @@ class SelectionModel extends FormBaseModel {
       this.verticalScroll,
       this.gridViewItemCount,
       this.masterCode,
+      this.showMoreTagAfterTotalItemCount,
       apiKey}) {
     super.title = title;
     super.apiKey = apiKey;
@@ -370,6 +382,8 @@ class SelectionModel extends FormBaseModel {
         : null;
     numberOfelementsToShow = json["numberOfelementsToShow"] ?? 11;
     isSingleSelection = json["isSingleSelection"] ?? false;
+    showMoreTagAfterTotalItemCount =
+        json["showMoreTagAfterTotalItemCount"] ?? 5;
     if (json['masterSelection'] != null) {
       masterSelection = new List<MasterSelection>();
       json['masterSelection'].forEach((v) {
@@ -465,7 +479,7 @@ class SelectionModel extends FormBaseModel {
     }
     if (isShowMore == true) {
       if (isShowMoreSelected) {
-        if (index == showMoreItem - 1) {
+        if (index == showMoreTagAfterTotalItemCount - 1) {
           if (masters[masters.length - 1].sId ==
               R.string().commonString.showMore) {
             if (masters[masters.length - 1].webDisplay ==

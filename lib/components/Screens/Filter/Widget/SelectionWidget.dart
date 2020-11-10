@@ -147,7 +147,6 @@ class _TagWidgetState extends State<TagWidget> {
           crossAxisCount: getGridViewItemCount,
           children: List.generate(
             getGridViewLength(widget.model),
-            // widget.model.isShowMore ? widget.model.showMoreItem : widget.model.masters.length,
             (index) {
               return InkWell(
                 onTap: () {
@@ -163,7 +162,7 @@ class _TagWidgetState extends State<TagWidget> {
                       widget.model.isShowMoreSelected = true;
                     } else if (widget.model.isShowMoreSelected == true &&
                         widget.model.isShowMore &&
-                        index == widget.model.showMoreItem - 1) {
+                        index == widget.model.showMoreTagAfterTotalItemCount - 1) {
                       print("Show more");
                       widget.model.isShowMoreSelected = false;
                     } else {
@@ -173,7 +172,7 @@ class _TagWidgetState extends State<TagWidget> {
                     widget.model.onSelectionClick(index);
                   });
                 },
-                child: index == widget.model.showMoreItem - 1 &&
+                child: index == widget.model.showMoreTagAfterTotalItemCount - 1 &&
                         widget.model.isShowMoreSelected &&
                         widget.model.isShowMore
                     ? getSingleTagForGridview(widget.model.masters.length - 1)
@@ -189,7 +188,7 @@ class _TagWidgetState extends State<TagWidget> {
   int getGridViewLength(SelectionModel selectionModel) {
     if (selectionModel.isShowMore) {
       if (selectionModel.isShowMoreSelected) {
-        return selectionModel.showMoreItem;
+        return selectionModel.showMoreTagAfterTotalItemCount;
       } else {
         return selectionModel.masters.length;
       }
