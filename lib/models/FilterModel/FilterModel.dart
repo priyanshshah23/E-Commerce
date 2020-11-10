@@ -280,6 +280,7 @@ class SelectionModel extends FormBaseModel {
   String orientation;
   String groupMasterCode;
   bool verticalScroll;
+  int gridViewItemCount;
   bool isShowAll;
   bool isShowAllSelected = false;
   bool isShowMore;
@@ -298,6 +299,7 @@ class SelectionModel extends FormBaseModel {
       this.allLableTitle,
       this.isShowAll,
       this.verticalScroll,
+      this.gridViewItemCount,
       this.masterCode,
       apiKey}) {
     super.title = title;
@@ -307,6 +309,7 @@ class SelectionModel extends FormBaseModel {
   SelectionModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     groupMasterCode = json["groupMasterCode"];
     verticalScroll = json["verticalScroll"] ?? false;
+    gridViewItemCount  = json["gridViewItemCount"] ?? 4;
     orientation = json["orientation"];
     isShowAll = json['isShowAll'] ?? false;
     isShowMore = json['isShowMore'] ?? false;

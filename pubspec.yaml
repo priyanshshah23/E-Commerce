@@ -77,6 +77,8 @@ dependencies:
   gallery_saver: ^2.0.1
   downloads_path_provider: ^0.1.0
   #flutter_lock_screen: ^1.0.8
+  # speech_recognition: ^0.3.0+1
+  # permission_handler: ^3.2.0
 
   # flutter_tags: ^0.1.9
 
