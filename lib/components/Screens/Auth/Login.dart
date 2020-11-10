@@ -233,7 +233,8 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                       child: getPasswordTextField(),
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
                                           mainAxisSize: MainAxisSize.min,
@@ -245,8 +246,12 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                                 setState(() {});
                                               },
                                             ),
-                                            SizedBox(width: getSize(4),),
-                                            Text("Remember Me",style: appTheme.blackMedium16TitleColorblack)
+                                            SizedBox(
+                                              width: getSize(4),
+                                            ),
+                                            Text("Remember Me",
+                                                style: appTheme
+                                                    .blackMedium16TitleColorblack)
                                           ],
                                         ),
                                         Container(
@@ -569,6 +574,15 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                         isProgress: true,
                         id: id).then((value) {});
                   }
+                } else {
+                  SyncManager.instance.callMasterSync(
+                      NavigationUtilities.key.currentContext, () async {
+                    //success
+                    AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+                  }, () {},
+                      isNetworkError: false,
+                      isProgress: true,
+                      id: id).then((value) {});
                 }
               } else {
                 print("Android");
@@ -619,6 +633,15 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                         isProgress: true,
                         id: id).then((value) {});
                   }
+                } else {
+                  SyncManager.instance.callMasterSync(
+                      NavigationUtilities.key.currentContext, () async {
+                    //success
+                    AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+                  }, () {},
+                      isNetworkError: false,
+                      isProgress: true,
+                      id: id).then((value) {});
                 }
               }
             },
