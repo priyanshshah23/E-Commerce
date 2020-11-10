@@ -154,47 +154,91 @@ class _TagWidgetState extends State<TagWidget> {
           crossAxisCount: getGridViewItemCount,
           children: List.generate(
             getGridViewLength(widget.model),
+            // widget.model.isShowMore ? widget.model.showMoreItem : widget.model.masters.length,
             (index) {
-                return InkWell(
-                  onTap: () {
-                    setState(() {
-                      RxBus.post(true, tag: eventForShareCaratRangeSelected);
+              return InkWell(
+                onTap: () {
+                  setState(() {
+                    RxBus.post(true, tag: eventForShareCaratRangeSelected);
+                    if (widget.model.masters[index].sId != R.string().commonString.showMore){
                       widget.model.masters[index].isSelected =
-                        !widget.model.masters[index].isSelected;
-
+                            !widget.model.masters[index].isSelected;
+                    }
+                   
                     widget.model.onSelectionClick(index);
-                    });
-                  },
-                  child: getSingleTagForGridview(index),
-                );
-              },
-            
+                    if (widget.model.isShowMoreSelected) {
+                      if (index == widget.model.showMoreItem - 1) {
+                        if (widget.model
+                                .masters[widget.model.masters.length - 1].sId ==
+                            R.string().commonString.showMore) {
+                          if (widget
+                                  .model
+                                  .masters[widget.model.masters.length - 1]
+                                  .webDisplay ==
+                              R.string().commonString.showMore) {
+                            widget.model.isShowMoreSelected = false;
+                          } else {
+                            widget.model.isShowMoreSelected = true;
+                          }
+                        } 
+                      }
+                    } else {
+                      if (widget.model.masters[index].sId ==
+                          R.string().commonString.showMore) {
+                        if (widget.model.masters[index].webDisplay ==
+                            R.string().commonString.showLess) {
+                          widget.model.isShowMoreSelected = true;
+                        } else {
+                          widget.model.isShowMoreSelected = false;
+                        }
+                      } 
+                    }
+                  });
+                },
+                child: index == widget.model.showMoreItem - 1 &&
+                        widget.model.isShowMoreSelected
+                    ? getSingleTagForGridview(widget.model.masters.length - 1)
+                    : getSingleTagForGridview(index),
+              );
+            },
           ),
         ),
       ],
     );
   }
 
-    int getGridViewLength(SelectionModel selectionModel) {
-    int length = 0;
-    if (selectionModel.isShowAll && selectionModel.isShowMore) {
-      if (selectionModel.isShowMoreSelected)
-        length = listOfMasterView.length;
-      else
-        length = selectionModel.masters.length;
-    } else if ((!selectionModel.isShowAll && selectionModel.isShowMore)) {
-      if (selectionModel.isShowMoreSelected)
-        length = listOfMasterView.length;
-      else
-        length = selectionModel.masters.length;
-    } else if ((selectionModel.isShowAll && !selectionModel.isShowMore)) {
-      length = selectionModel.masters.length;
-    } else if (!selectionModel.isShowAll && !selectionModel.isShowMore) {
-      length = selectionModel.masters.length;
+  int getGridViewLength(SelectionModel selectionModel) {
+    if (selectionModel.isShowMore) {
+      if (selectionModel.isShowMoreSelected) {
+        return selectionModel.showMoreItem;
+      } else {
+        return selectionModel.masters.length;
+      }
+    } else {
+      return selectionModel.masters.length;
     }
-
-    return length;
   }
+
+  // int getGridViewLength(SelectionModel selectionModel) {
+  //   int length = 0;
+  //   if (selectionModel.isShowAll && selectionModel.isShowMore) {
+  //     if (selectionModel.isShowMoreSelected)
+  //       length = listOfMasterView.length;
+  //     else
+  //       length = selectionModel.masters.length;
+  //   } else if ((!selectionModel.isShowAll && selectionModel.isShowMore)) {
+  //     if (selectionModel.isShowMoreSelected)
+  //       length = listOfMasterView.length;
+  //     else
+  //       length = selectionModel.masters.length;
+  //   } else if ((selectionModel.isShowAll && !selectionModel.isShowMore)) {
+  //     length = selectionModel.masters.length;
+  //   } else if (!selectionModel.isShowAll && !selectionModel.isShowMore) {
+  //     length = selectionModel.masters.length;
+  //   }
+
+  //   return length;
+  // }
 
   Widget getVerticalOrientation() {
     return Column(
@@ -299,6 +343,14 @@ class _TagWidgetState extends State<TagWidget> {
   }
 
   getSingleTagForGridview(int index) {
+    if (index == widget.model.masters.length - 1 &&
+        !widget.model.isShowMoreSelected) {
+      widget.model.masters[index].webDisplay = R.string().commonString.showLess;
+    }
+    if (widget.model.isShowMoreSelected ) {
+      widget.model.masters[widget.model.masters.length - 1].webDisplay =
+          R.string().commonString.showMore;
+    }
     return Container(
       decoration: BoxDecoration(
         color: widget.model.masters[index].isSelected
@@ -323,7 +375,7 @@ class _TagWidgetState extends State<TagWidget> {
         child: Center(
           child: Text(
             widget.model.masters[index].webDisplay,
-            style: widget.model.masters[index].isSelected
+            style: widget.model.masters[index].isSelected 
                 ? appTheme.primaryColor14TextStyle
                 : appTheme.blackNormal14TitleColorblack,
           ),
