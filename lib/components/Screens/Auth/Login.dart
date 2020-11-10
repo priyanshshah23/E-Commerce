@@ -285,7 +285,8 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(top:getSize(70)),
+                                      padding:
+                                          EdgeInsets.only(top: getSize(70)),
                                       child: Container(
                                         margin: EdgeInsets.only(
                                             top: getSize(15), left: getSize(0)),
@@ -309,14 +310,16 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                           //  backgroundColor: appTheme.buttonColor,
                                           borderRadius: getSize(5),
                                           fitWidth: true,
-                                          text: R.string().authStrings.signInCap,
+                                          text:
+                                              R.string().authStrings.signInCap,
                                           //isButtonEnabled: enableDisableSigninButton(),
                                         ),
                                       ),
                                     ),
-                                    
+
                                     Padding(
-                                      padding: EdgeInsets.only(top:getSize(60)),
+                                      padding:
+                                          EdgeInsets.only(top: getSize(60)),
                                       child: Row(
                                         children: [
                                           Expanded(
@@ -329,9 +332,19 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
-                                                  Image.asset(fingurePrint,width: getSize(15),height: getSize(15),),
-                                                  SizedBox(width: getSize(10),),
-                                                  Text("Touch ID",style: appTheme.primary16TextStyle,)
+                                                  Image.asset(
+                                                    fingurePrint,
+                                                    width: getSize(15),
+                                                    height: getSize(15),
+                                                  ),
+                                                  SizedBox(
+                                                    width: getSize(10),
+                                                  ),
+                                                  Text(
+                                                    "Touch ID",
+                                                    style: appTheme
+                                                        .primary16TextStyle,
+                                                  )
                                                 ],
                                               ),
                                             ),
@@ -346,9 +359,19 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
-                                                  Image.asset(mpin,width: getSize(15),height: getSize(15),),
-                                                  SizedBox(width: getSize(10),),
-                                                  Text("MPIN",style: appTheme.primary16TextStyle,)
+                                                  Image.asset(
+                                                    mpin,
+                                                    width: getSize(15),
+                                                    height: getSize(15),
+                                                  ),
+                                                  SizedBox(
+                                                    width: getSize(10),
+                                                  ),
+                                                  Text(
+                                                    "MPIN",
+                                                    style: appTheme
+                                                        .primary16TextStyle,
+                                                  )
                                                 ],
                                               ),
                                             ),
@@ -375,7 +398,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                       NavigationUtilities.pushRoute(SignupScreen.route);
                     },
                     child: Padding(
-                      padding: EdgeInsets.only(bottom:getSize(30)),
+                      padding: EdgeInsets.only(bottom: getSize(30)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
@@ -628,6 +651,15 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                         isProgress: true,
                         id: id).then((value) {});
                   }
+                } else {
+                  SyncManager.instance.callMasterSync(
+                      NavigationUtilities.key.currentContext, () async {
+                    //success
+                    AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+                  }, () {},
+                      isNetworkError: false,
+                      isProgress: true,
+                      id: id).then((value) {});
                 }
               } else {
                 print("Android");
@@ -678,6 +710,15 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                         isProgress: true,
                         id: id).then((value) {});
                   }
+                } else {
+                  SyncManager.instance.callMasterSync(
+                      NavigationUtilities.key.currentContext, () async {
+                    //success
+                    AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+                  }, () {},
+                      isNetworkError: false,
+                      isProgress: true,
+                      id: id).then((value) {});
                 }
               }
             },

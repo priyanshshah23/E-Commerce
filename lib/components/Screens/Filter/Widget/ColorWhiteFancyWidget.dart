@@ -39,6 +39,7 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
               onTap: () {
                 setState(() {
                   widget.colorModel.isGroupSelected = false;
+                  widget.colorModel.gridViewItemCount = 5;
                   widget.colorModel.masters = widget.colorModel.mainMasters;
                 });
               },
@@ -88,7 +89,7 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
                 setState(() {
                   widget.colorModel.isGroupSelected = true;
                   widget.colorModel.masters = widget.colorModel.groupMaster;
-
+                  widget.colorModel.gridViewItemCount = 3;
                   widget.colorModel.intensitySelection = SelectionModel(
                       title: R.string().commonString.intensity,
                       masters: widget.colorModel.intensity,

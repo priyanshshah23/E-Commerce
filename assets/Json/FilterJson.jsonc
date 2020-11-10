@@ -76,7 +76,7 @@
     "showWhiteFancy": true,
     "verticalScroll": true,
     "orientation": "v",
-    "isShowAll": true,
+    "isShowAll": false,
     "gridViewItemCount": 5,
     "showMoreTagAfterTotalItemCount": 5,
     "isShowMore": false,
