@@ -167,7 +167,7 @@
   {
     "viewType": "seperator",
     "sequence": 8,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
@@ -279,7 +279,7 @@
   {
     "viewType": "seperator",
     "sequence": 16,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
@@ -538,7 +538,7 @@
   {
     "viewType": "seperator",
     "sequence": 27,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -559,12 +559,12 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 70,
-    "isActive": true
+    "isActive": false
   },
   {
     "viewType": "seperator",
     "sequence": 27,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
@@ -692,7 +692,7 @@
   {
     "viewType": "seperator",
     "sequence": 69,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1109,7 +1109,7 @@
   {
     "viewType": "seperator",
     "sequence": 49,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -1293,7 +1293,7 @@
   {
     "viewType": "seperator",
     "sequence": 61,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1345,7 +1345,7 @@
   {
     "viewType": "seperator",
     "sequence": 65,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1412,7 +1412,7 @@
   {
     "viewType": "seperator",
     "sequence": 69,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1453,7 +1453,7 @@
   {
     "viewType": "seperator",
     "sequence": 69,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1479,7 +1479,7 @@
   {
     "viewType": "seperator",
     "sequence": 69,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1505,7 +1505,7 @@
   {
     "viewType": "seperator",
     "sequence": 69,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1531,7 +1531,7 @@
   {
     "viewType": "seperator",
     "sequence": 69,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1557,7 +1557,7 @@
   {
     "viewType": "seperator",
     "sequence": 69,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
