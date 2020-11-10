@@ -19,21 +19,6 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
   void initState() {
     super.initState();
     widget.colorModel.title = "";
-    if (widget.colorModel.isShowAll == true) {
-      if (widget.colorModel.groupMaster
-              .where(
-                  (element) => element.sId == widget.colorModel.allLableTitle)
-              .toList()
-              .length ==
-          0) {
-        Master allMaster = Master();
-        allMaster.sId = widget.colorModel.allLableTitle;
-        allMaster.webDisplay = widget.colorModel.allLableTitle;
-        allMaster.isSelected = false;
-
-        widget.colorModel.groupMaster.insert(0, allMaster);
-      }
-    }
   }
 
   @override

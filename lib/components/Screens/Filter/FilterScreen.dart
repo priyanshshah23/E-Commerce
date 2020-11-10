@@ -202,12 +202,16 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
       list2.forEach((element) {
         element.mainMasters.forEach((element) {
-          element.isSelected = event.values.first;
+          if (element.sId != R.string().commonString.showMore) {
+            element.isSelected = event.values.first;
+          }
         });
       });
       list2.forEach((element) {
         element.groupMaster.forEach((element) {
-          element.isSelected = event.values.first;
+          if (element.sId != R.string().commonString.showMore) {
+            element.isSelected = event.values.first;
+          }
         });
       });
     });
