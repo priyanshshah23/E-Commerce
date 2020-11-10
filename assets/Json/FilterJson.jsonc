@@ -35,7 +35,7 @@
     "masterCode": "Size",
     "verticalScroll": true,
     "orientation": "v",
-    "gridViewItemCount": 5,
+    "gridViewItemCount": 3,
     "showMoreTagAfterTotalItemCount": 9,
     "isShowAll": false,
     "isShowMore": true,
