@@ -284,31 +284,34 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                         ],
                                       ),
                                     ),
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          top: getSize(15), left: getSize(0)),
-                                      decoration: BoxDecoration(
-                                          boxShadow: getBoxShadow(context)),
-                                      child: AppButton.flat(
-                                        onTap: () {
-                                          // NavigationUtilities.pushRoute(TabBarDemo.route);
-                                          FocusScope.of(context).unfocus();
-                                          if (_formKey.currentState
-                                              .validate()) {
-                                            _formKey.currentState.save();
-                                            callLoginApi(context);
-                                          } else {
-                                            setState(() {
-                                              _autoValidate = true;
-                                            });
-                                          }
-                                          // NavigationUtilities.push(ThemeSetting());
-                                        },
-                                        //  backgroundColor: appTheme.buttonColor,
-                                        borderRadius: getSize(5),
-                                        fitWidth: true,
-                                        text: R.string().authStrings.signInCap,
-                                        //isButtonEnabled: enableDisableSigninButton(),
+                                    Padding(
+                                      padding: EdgeInsets.only(top:getSize(70)),
+                                      child: Container(
+                                        margin: EdgeInsets.only(
+                                            top: getSize(15), left: getSize(0)),
+                                        decoration: BoxDecoration(
+                                            boxShadow: getBoxShadow(context)),
+                                        child: AppButton.flat(
+                                          onTap: () {
+                                            // NavigationUtilities.pushRoute(TabBarDemo.route);
+                                            FocusScope.of(context).unfocus();
+                                            if (_formKey.currentState
+                                                .validate()) {
+                                              _formKey.currentState.save();
+                                              callLoginApi(context);
+                                            } else {
+                                              setState(() {
+                                                _autoValidate = true;
+                                              });
+                                            }
+                                            // NavigationUtilities.push(ThemeSetting());
+                                          },
+                                          //  backgroundColor: appTheme.buttonColor,
+                                          borderRadius: getSize(5),
+                                          fitWidth: true,
+                                          text: R.string().authStrings.signInCap,
+                                          //isButtonEnabled: enableDisableSigninButton(),
+                                        ),
                                       ),
                                     ),
                                     
@@ -625,15 +628,6 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                         isProgress: true,
                         id: id).then((value) {});
                   }
-                } else {
-                  SyncManager.instance.callMasterSync(
-                      NavigationUtilities.key.currentContext, () async {
-                    //success
-                    AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-                  }, () {},
-                      isNetworkError: false,
-                      isProgress: true,
-                      id: id).then((value) {});
                 }
               } else {
                 print("Android");
@@ -684,15 +678,6 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                         isProgress: true,
                         id: id).then((value) {});
                   }
-                } else {
-                  SyncManager.instance.callMasterSync(
-                      NavigationUtilities.key.currentContext, () async {
-                    //success
-                    AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-                  }, () {},
-                      isNetworkError: false,
-                      isProgress: true,
-                      id: id).then((value) {});
                 }
               }
             },
