@@ -108,6 +108,8 @@ class _SplashState extends State<Splash> {
                   } else {
                     AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                   }
+                } else {
+                  AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                 }
               } else {
                 print("Android");
@@ -137,6 +139,8 @@ class _SplashState extends State<Splash> {
                   } else {
                     AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                   }
+                } else {
+                  AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                 }
               }
             },

@@ -105,7 +105,12 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       config.getFilterJson().then((result) {
         setState(() {
-          arrList = result;
+          arrList = result.where((element) {
+            if (element is SelectionModel) {
+              return !isNullEmptyOrFalse(element.masters);
+            }
+            return false;
+          }).toList();
 
           if (!isNullEmptyOrFalse(this.dictSearchData)) {
             arrList = FilterDataSource()
@@ -197,12 +202,16 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
       list2.forEach((element) {
         element.mainMasters.forEach((element) {
-          element.isSelected = event.values.first;
+          if (element.sId != R.string().commonString.showMore) {
+            element.isSelected = event.values.first;
+          }
         });
       });
       list2.forEach((element) {
         element.groupMaster.forEach((element) {
-          element.isSelected = event.values.first;
+          if (element.sId != R.string().commonString.showMore) {
+            element.isSelected = event.values.first;
+          }
         });
       });
     });

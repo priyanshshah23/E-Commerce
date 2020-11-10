@@ -52,7 +52,6 @@ class _TagWidgetState extends State<TagWidget> {
 
   int elementsToShow;
   List<Master> listOfMasterView = [];
-  String showMoreId = "ShowMore";
 
   @override
   void initState() {
@@ -124,12 +123,6 @@ class _TagWidgetState extends State<TagWidget> {
         _crossAxisCount;
     var height = 35;
 
-    // var size = MediaQuery.of(context).size;
-
-    // /*24 is for notification bar on Android*/
-    // final double itemHeight = size.height /2;
-    // final double itemWidth = (size.width - kToolbarHeight - 500) /2;
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,45 +148,53 @@ class _TagWidgetState extends State<TagWidget> {
           children: List.generate(
             getGridViewLength(widget.model),
             (index) {
-                return InkWell(
-                  onTap: () {
-                    setState(() {
+              return InkWell(
+                onTap: () {
+                  setState(() {
+                    if (widget.model.viewType == ViewTypes.caratRange) {
                       RxBus.post(true, tag: eventForShareCaratRangeSelected);
-                      widget.model.masters[index].isSelected =
-                        !widget.model.masters[index].isSelected;
+                    }
 
+                    if (widget.model.isShowMoreSelected == false &&
+                        widget.model.isShowMore &&
+                        index == widget.model.masters.length - 1) {
+                      print("Show less");
+                      widget.model.isShowMoreSelected = true;
+                    } else if (widget.model.isShowMoreSelected == true &&
+                        widget.model.isShowMore &&
+                        index == widget.model.showMoreTagAfterTotalItemCount - 1) {
+                      print("Show more");
+                      widget.model.isShowMoreSelected = false;
+                    } else {
+                      widget.model.masters[index].isSelected =
+                          !widget.model.masters[index].isSelected;
+                    }
                     widget.model.onSelectionClick(index);
-                    });
-                  },
-                  child: getSingleTagForGridview(index),
-                );
-              },
-            
+                  });
+                },
+                child: index == widget.model.showMoreTagAfterTotalItemCount - 1 &&
+                        widget.model.isShowMoreSelected &&
+                        widget.model.isShowMore
+                    ? getSingleTagForGridview(widget.model.masters.length - 1)
+                    : getSingleTagForGridview(index),
+              );
+            },
           ),
         ),
       ],
     );
   }
 
-    int getGridViewLength(SelectionModel selectionModel) {
-    int length = 0;
-    if (selectionModel.isShowAll && selectionModel.isShowMore) {
-      if (selectionModel.isShowMoreSelected)
-        length = listOfMasterView.length;
-      else
-        length = selectionModel.masters.length;
-    } else if ((!selectionModel.isShowAll && selectionModel.isShowMore)) {
-      if (selectionModel.isShowMoreSelected)
-        length = listOfMasterView.length;
-      else
-        length = selectionModel.masters.length;
-    } else if ((selectionModel.isShowAll && !selectionModel.isShowMore)) {
-      length = selectionModel.masters.length;
-    } else if (!selectionModel.isShowAll && !selectionModel.isShowMore) {
-      length = selectionModel.masters.length;
+  int getGridViewLength(SelectionModel selectionModel) {
+    if (selectionModel.isShowMore) {
+      if (selectionModel.isShowMoreSelected) {
+        return selectionModel.showMoreTagAfterTotalItemCount;
+      } else {
+        return selectionModel.masters.length;
+      }
+    } else {
+      return selectionModel.masters.length;
     }
-
-    return length;
   }
 
   Widget getVerticalOrientation() {
@@ -234,7 +235,6 @@ class _TagWidgetState extends State<TagWidget> {
                 child: getSingleTag(index),
                 onTap: () {
                   setState(() {
-                    ThemeHelper.changeTheme("pnShah");
                     if (widget.model.viewType == ViewTypes.caratRange) {
                       RxBus.post(true, tag: eventForShareCaratRangeSelected);
                     }
@@ -299,6 +299,17 @@ class _TagWidgetState extends State<TagWidget> {
   }
 
   getSingleTagForGridview(int index) {
+    if (widget.model.isShowMore) {
+      if (index == widget.model.masters.length - 1 &&
+          !widget.model.isShowMoreSelected) {
+        widget.model.masters[index].webDisplay =
+            R.string().commonString.showLess;
+      }
+      if (widget.model.isShowMoreSelected) {
+        widget.model.masters[widget.model.masters.length - 1].webDisplay =
+            R.string().commonString.showMore;
+      }
+    }
     return Container(
       decoration: BoxDecoration(
         color: widget.model.masters[index].isSelected

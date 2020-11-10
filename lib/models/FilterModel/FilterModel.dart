@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/extensions/eventbus.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/models/DiamondDetail/DiamondDetailUIModel.dart';
@@ -106,6 +107,9 @@ class Config {
               if (selectionModel.isShowAll == true) {
                 appendAllTitle(selectionModel);
               }
+              if (selectionModel.isShowMore == true) {
+                appendShowMoreTitle(selectionModel);
+              }
             } else if (viewType == ViewTypes.groupWidget) {
               ColorModel colorModel = ColorModel.fromJson(element);
               arrFilter.add(colorModel);
@@ -118,6 +122,14 @@ class Config {
                 colorModel.mainMasters = arrMaster;
                 colorModel.groupMaster = arrGroupMaster;
                 colorModel.masters = arrMaster;
+
+                if (colorModel.isShowAll == true) {
+                  appendAllTitle(colorModel);
+                }
+
+                if (colorModel.isShowMore == true) {
+                  appendShowMoreTitle(colorModel);
+                }
               } else if (colorModel.showWhiteFancy) {
                 List<Master> arrMaster =
                     await Master.getSubMaster(colorModel.masterCode);
@@ -159,6 +171,10 @@ class Config {
 
               if (selectionModel.isShowAll == true) {
                 appendAllTitle(selectionModel);
+              }
+
+              if (selectionModel.isShowMore == true) {
+                appendShowMoreTitle(selectionModel);
               }
             }
           }
@@ -224,7 +240,51 @@ class Config {
           ? allMaster.isSelected = true
           : allMaster.isSelected = false;
     }
-    model.masters.insert(0, allMaster);
+
+    if (model.masterCode == MasterCode.color) {
+      // model.masters.insert(0, allMaster);
+      if (model is ColorModel) {
+        if (model.showWhiteFancy) {
+          model.intensity.insert(0, allMaster);
+          model.overtone.insert(0, allMaster);
+        } else {
+          model.groupMaster.insert(0, allMaster);
+        }
+      }
+    } else {
+      model.masters.insert(0, allMaster);
+    }
+    // model.masters.insert(0, allMaster);
+  }
+
+  appendShowMoreTitle(SelectionModel model) {
+    Master allMaster = Master();
+    allMaster.sId = R.string().commonString.showMore;
+    allMaster.webDisplay = R.string().commonString.showMore;
+
+    List<Master> arrSelectedMaster =
+        model.masters.where((element) => element.isSelected).toList();
+    if (!isNullEmptyOrFalse(arrSelectedMaster)) {
+      arrSelectedMaster.length == model.masters.length
+          ? allMaster.isSelected = true
+          : allMaster.isSelected = false;
+    }
+
+    if (model.verticalScroll) {
+      if (model.showMoreTagAfterTotalItemCount > 4) {
+        if (model.masterCode == MasterCode.color) {
+          if (model is ColorModel) {
+            model.masters.add(allMaster);
+            if (model.showWhiteFancy) {
+              model.intensity.add(allMaster);
+              model.overtone.add(allMaster);
+            }
+          }
+        } else {
+          model.masters.add(allMaster);
+        }
+      }
+    }
   }
 }
 
@@ -292,6 +352,7 @@ class SelectionModel extends FormBaseModel {
   List<String> caratRangeChipsToShow = [];
   int numberOfelementsToShow;
   bool showFromTo;
+  int showMoreTagAfterTotalItemCount = 9;
   SelectionModel(
       {title,
       this.masters,
@@ -301,6 +362,7 @@ class SelectionModel extends FormBaseModel {
       this.verticalScroll,
       this.gridViewItemCount,
       this.masterCode,
+      this.showMoreTagAfterTotalItemCount,
       apiKey}) {
     super.title = title;
     super.apiKey = apiKey;
@@ -309,7 +371,7 @@ class SelectionModel extends FormBaseModel {
   SelectionModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     groupMasterCode = json["groupMasterCode"];
     verticalScroll = json["verticalScroll"] ?? false;
-    gridViewItemCount  = json["gridViewItemCount"] ?? 4;
+    gridViewItemCount = json["gridViewItemCount"] ?? 3;
     orientation = json["orientation"];
     isShowAll = json['isShowAll'] ?? false;
     isShowMore = json['isShowMore'] ?? false;
@@ -320,6 +382,8 @@ class SelectionModel extends FormBaseModel {
         : null;
     numberOfelementsToShow = json["numberOfelementsToShow"] ?? 11;
     isSingleSelection = json["isSingleSelection"] ?? false;
+    showMoreTagAfterTotalItemCount =
+        json["showMoreTagAfterTotalItemCount"] ?? 5;
     if (json['masterSelection'] != null) {
       masterSelection = new List<MasterSelection>();
       json['masterSelection'].forEach((v) {
@@ -334,7 +398,9 @@ class SelectionModel extends FormBaseModel {
       if (masters[index].sId == allLableTitle) {
         if (masters[0].isSelected == true) {
           masters.forEach((element) {
-            element.isSelected = true;
+            if (element.sId != R.string().commonString.showMore) {
+              element.isSelected = true;
+            }
           });
 
           //Group Logic is Selected
@@ -367,7 +433,7 @@ class SelectionModel extends FormBaseModel {
                       element.sId != allLableTitle)
                   .toList()
                   .length ==
-              masters.length - 1) {
+              (isShowMore ? masters.length - 2 : masters.length - 1)) {
             masters[0].isSelected = true;
           } else {
             masters[0].isSelected = false;
@@ -408,6 +474,29 @@ class SelectionModel extends FormBaseModel {
         if (viewType == ViewTypes.groupWidget) {
           m["isGroupSelected"] = (this as ColorModel).isGroupSelected;
           RxBus.post(m, tag: eventMasterForSingleItemOfGroupSelection);
+        }
+      }
+    }
+    if (isShowMore == true) {
+      if (isShowMoreSelected) {
+        if (index == showMoreTagAfterTotalItemCount - 1) {
+          if (masters[masters.length - 1].sId ==
+              R.string().commonString.showMore) {
+            if (masters[masters.length - 1].webDisplay ==
+                R.string().commonString.showMore) {
+              isShowMoreSelected = false;
+            } else {
+              isShowMoreSelected = true;
+            }
+          }
+        }
+      } else {
+        if (masters[index].sId == R.string().commonString.showMore) {
+          if (masters[index].webDisplay == R.string().commonString.showLess) {
+            isShowMoreSelected = true;
+          } else {
+            isShowMoreSelected = false;
+          }
         }
       }
     }
