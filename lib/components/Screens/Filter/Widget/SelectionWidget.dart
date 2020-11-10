@@ -124,12 +124,6 @@ class _TagWidgetState extends State<TagWidget> {
         _crossAxisCount;
     var height = 35;
 
-    // var size = MediaQuery.of(context).size;
-
-    // /*24 is for notification bar on Android*/
-    // final double itemHeight = size.height /2;
-    // final double itemWidth = (size.width - kToolbarHeight - 500) /2;
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,39 +154,18 @@ class _TagWidgetState extends State<TagWidget> {
                 onTap: () {
                   setState(() {
                     RxBus.post(true, tag: eventForShareCaratRangeSelected);
-                    if (widget.model.masters[index].sId != R.string().commonString.showMore){
-                      widget.model.masters[index].isSelected =
-                            !widget.model.masters[index].isSelected;
-                    }
-                   
+
+                    // if (getGridViewLength(widget.model) !=
+                    //     widget.model.showMoreItem) {
+                    //   if (widget.model.masters[index].sId !=
+                    //       R.string().commonString.showMore) {
+                    //     widget.model.masters[index].isSelected =
+                    //         !widget.model.masters[index].isSelected;
+                    //   }
+                    // }
+                    widget.model.masters[index].isSelected =
+                        !widget.model.masters[index].isSelected;
                     widget.model.onSelectionClick(index);
-                    if (widget.model.isShowMoreSelected) {
-                      if (index == widget.model.showMoreItem - 1) {
-                        if (widget.model
-                                .masters[widget.model.masters.length - 1].sId ==
-                            R.string().commonString.showMore) {
-                          if (widget
-                                  .model
-                                  .masters[widget.model.masters.length - 1]
-                                  .webDisplay ==
-                              R.string().commonString.showMore) {
-                            widget.model.isShowMoreSelected = false;
-                          } else {
-                            widget.model.isShowMoreSelected = true;
-                          }
-                        } 
-                      }
-                    } else {
-                      if (widget.model.masters[index].sId ==
-                          R.string().commonString.showMore) {
-                        if (widget.model.masters[index].webDisplay ==
-                            R.string().commonString.showLess) {
-                          widget.model.isShowMoreSelected = true;
-                        } else {
-                          widget.model.isShowMoreSelected = false;
-                        }
-                      } 
-                    }
                   });
                 },
                 child: index == widget.model.showMoreItem - 1 &&
@@ -347,7 +320,7 @@ class _TagWidgetState extends State<TagWidget> {
         !widget.model.isShowMoreSelected) {
       widget.model.masters[index].webDisplay = R.string().commonString.showLess;
     }
-    if (widget.model.isShowMoreSelected ) {
+    if (widget.model.isShowMoreSelected) {
       widget.model.masters[widget.model.masters.length - 1].webDisplay =
           R.string().commonString.showMore;
     }
@@ -375,7 +348,7 @@ class _TagWidgetState extends State<TagWidget> {
         child: Center(
           child: Text(
             widget.model.masters[index].webDisplay,
-            style: widget.model.masters[index].isSelected 
+            style: widget.model.masters[index].isSelected
                 ? appTheme.primaryColor14TextStyle
                 : appTheme.blackNormal14TitleColorblack,
           ),
