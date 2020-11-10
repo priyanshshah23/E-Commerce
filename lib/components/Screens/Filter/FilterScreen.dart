@@ -106,10 +106,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       config.getFilterJson().then((result) {
         setState(() {
           arrList = result.where((element) {
-            if (element is SelectionModel) {
-              return !isNullEmptyOrFalse(element.masters);
+            if (element.viewType == ViewTypes.selection) {
+              if (element is SelectionModel)
+                return !isNullEmptyOrFalse(element.masters);
             }
-            return false;
+            return true;
           }).toList();
 
           if (!isNullEmptyOrFalse(this.dictSearchData)) {
