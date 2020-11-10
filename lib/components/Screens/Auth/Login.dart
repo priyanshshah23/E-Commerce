@@ -71,14 +71,22 @@ class _LoginScreenState extends StatefulScreenWidgetState {
   void initState() {
     // TODO: implement initState
     super.initState();
-    if (kDebugMode) {
-      _userNameController.text = "mobileUser";
-      _passwordController.text = "Test@12345";
-    }
+    // if (kDebugMode) {
+      getUserNameAndPassword();
+    // }
+  }
+
+  getUserNameAndPassword() {
+    if (app.resolve<PrefUtils>().getBool("rememberMe")==true) {
+      isCheckBoxSelected = app.resolve<PrefUtils>().getBool("rememberMe");
+        _userNameController.text =  app.resolve<PrefUtils>().getString("userName");
+        _passwordController.text =  app.resolve<PrefUtils>().getString("passWord");
+      }
   }
 
   @override
   Widget build(BuildContext context) {
+    
     return WillPopScope(
         onWillPop: onWillPop,
         child: GestureDetector(
@@ -232,33 +240,45 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                           top: getSize(15), left: getSize(0)),
                                       child: getPasswordTextField(),
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Checkbox(
-                                              value: isCheckBoxSelected,
-                                              onChanged: (value) {
-                                                isCheckBoxSelected = value;
-                                                setState(() {});
-                                              },
-                                            ),
-                                            SizedBox(
-                                              width: getSize(4),
-                                            ),
-                                            Text("Remember Me",
-                                                style: appTheme
-                                                    .blackMedium16TitleColorblack)
-                                          ],
-                                        ),
-                                        Container(
-                                          // alignment: Alignment.centerRight,
-                                          child: getForgotPassword(),
-                                        ),
-                                      ],
+                                    Padding(
+                                      padding:  EdgeInsets.only(top:getSize(15)),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(getSize(3))
+                                                ),
+                                                width: getSize(21),
+                                                height: getSize(21),
+                                                child: Checkbox(
+        
+                                                  activeColor: appTheme.colorPrimary,
+                                                  value: isCheckBoxSelected,
+                                                  onChanged: (value) {
+                                                    isCheckBoxSelected = value;
+                                                    setState(() {});
+                                                  },
+                                                ),
+                                              ),
+                                               SizedBox(
+                                                width: getSize(6),
+                                              ),
+                                              Text("Remember Me",
+                                                  style: appTheme
+                                                      .blackMedium16TitleColorblack.copyWith(fontWeight: FontWeight.bold))
+                                            ],
+                                          ),
+                                          Container(
+                                            // alignment: Alignment.centerRight,
+                                            child: getForgotPassword(),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     Container(
                                       margin: EdgeInsets.only(
@@ -490,6 +510,19 @@ class _LoginScreenState extends StatefulScreenWidgetState {
         await app.resolve<PrefUtils>().saveUserPermission(
               loginResp.data.userPermissions,
             );
+        await app
+            .resolve<PrefUtils>()
+            .saveBoolean("rememberMe", isCheckBoxSelected);
+        await app
+            .resolve<PrefUtils>()
+            .saveString("userName", _userNameController.text);
+        await app
+            .resolve<PrefUtils>()
+            .saveString("passWord", _passwordController.text);
+        
+        // print(app.resolve<PrefUtils>().getBool("rememberMe"));
+        // print(app.resolve<PrefUtils>().getString("userName"));
+        // print(app.resolve<PrefUtils>().getString("passWord"));
       }
 //      NavigationUtilities.pushRoute(Notifications.route);
       callVersionUpdateApi(id: loginResp.data.user.id);
