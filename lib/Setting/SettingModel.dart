@@ -52,43 +52,43 @@ class DrawerSetting {
         countBackgroundColor: fromHex("#2193B0"),
         count: 250,
       ));
-    if (app
-        .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_exclusive)
-        .view)
-      drawerList.add(DrawerModel(
-        image: exclusiveDiamonds,
-        title: R.string().screenTitle.exclusiveDiamonds,
-        isSelected: false,
-        type: DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND,
-        isShowCount: true,
-        countBackgroundColor: fromHex("#288F5A"),
-        count: 25,
-      ));
-    if (app
-        .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_auction)
-        .view)
-      drawerList.add(DrawerModel(
-        image: diamondOnAuction,
-        title: R.string().screenTitle.diamondOnAuction,
-        isSelected: false,
-        type: DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION,
-        isShowCount: true,
-        countBackgroundColor: fromHex("#9C2AC4"),
-        count: 50,
-      ));
-    if (app
-        .resolve<PrefUtils>()
-        .getModulePermission(
-            ModulePermissionConstant.permission_upcomingDiamonds)
-        .view)
-      drawerList.add(DrawerModel(
-        image: quickSearch,
-        title: R.string().screenTitle.upcoming,
-        isSelected: false,
-        type: DiamondModuleConstant.MODULE_TYPE_UPCOMING,
-      ));
+    // if (app
+    //     .resolve<PrefUtils>()
+    //     .getModulePermission(ModulePermissionConstant.permission_exclusive)
+    //     .view)
+    //   drawerList.add(DrawerModel(
+    //     image: exclusiveDiamonds,
+    //     title: R.string().screenTitle.exclusiveDiamonds,
+    //     isSelected: false,
+    //     type: DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND,
+    //     isShowCount: true,
+    //     countBackgroundColor: fromHex("#288F5A"),
+    //     count: 25,
+    //   ));
+    // if (app
+    //     .resolve<PrefUtils>()
+    //     .getModulePermission(ModulePermissionConstant.permission_auction)
+    //     .view)
+    //   drawerList.add(DrawerModel(
+    //     image: diamondOnAuction,
+    //     title: R.string().screenTitle.diamondOnAuction,
+    //     isSelected: false,
+    //     type: DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION,
+    //     isShowCount: true,
+    //     countBackgroundColor: fromHex("#9C2AC4"),
+    //     count: 50,
+    //   ));
+    // if (app
+    //     .resolve<PrefUtils>()
+    //     .getModulePermission(
+    //         ModulePermissionConstant.permission_upcomingDiamonds)
+    //     .view)
+    //   drawerList.add(DrawerModel(
+    //     image: quickSearch,
+    //     title: R.string().screenTitle.upcoming,
+    //     isSelected: false,
+    //     type: DiamondModuleConstant.MODULE_TYPE_UPCOMING,
+    //   ));
     if (app
         .resolve<PrefUtils>()
         .getModulePermission(
@@ -208,17 +208,17 @@ class DrawerSetting {
           imageColor: appTheme.colorPrimary,
           isSelected: false,
           type: DiamondModuleConstant.MODULE_TYPE_MY_CART));
-    if (app
-        .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_bid)
-        .view)
-      drawerList.add(DrawerModel(
-        image: bidImage,
-        title: R.string().screenTitle.myBid,
-        imageColor: appTheme.colorPrimary,
-        isSelected: false,
-        type: DiamondModuleConstant.MODULE_TYPE_MY_BID,
-      ));
+    // if (app
+    //     .resolve<PrefUtils>()
+    //     .getModulePermission(ModulePermissionConstant.permission_bid)
+    //     .view)
+    //   drawerList.add(DrawerModel(
+    //     image: bidImage,
+    //     title: R.string().screenTitle.myBid,
+    //     imageColor: appTheme.colorPrimary,
+    //     isSelected: false,
+    //     type: DiamondModuleConstant.MODULE_TYPE_MY_BID,
+    //   ));
 //    if (app
 //        .resolve<PrefUtils>()
 //        .getModulePermission(ModulePermissionConstant.permission_hold)
@@ -230,17 +230,17 @@ class DrawerSetting {
 //        isSelected: false,
 //        type: DiamondModuleConstant.MODULE_TYPE_MY_HOLD,
 //      ));
-    if (app
-        .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_enquiry)
-        .view)
-      drawerList.add(DrawerModel(
-        image: enquiryDrawer,
-        title: R.string().screenTitle.myEnquiry,
-        imageColor: appTheme.colorPrimary,
-        isSelected: false,
-        type: DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY,
-      ));
+    // if (app
+    //     .resolve<PrefUtils>()
+    //     .getModulePermission(ModulePermissionConstant.permission_enquiry)
+    //     .view)
+    //   drawerList.add(DrawerModel(
+    //     image: enquiryDrawer,
+    //     title: R.string().screenTitle.myEnquiry,
+    //     imageColor: appTheme.colorPrimary,
+    //     isSelected: false,
+    //     type: DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY,
+    //   ));
     if (app
         .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_appointment)
@@ -295,16 +295,16 @@ class DrawerSetting {
           imageColor: appTheme.colorPrimary,
           isSelected: false,
           type: DiamondModuleConstant.MODULE_TYPE_MY_COMMENT));
-    if (app
-        .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_reminder)
-        .view)
-      drawerList.add(DrawerModel(
-          image: reminder,
-          title: R.string().screenTitle.myReminder,
-          imageColor: appTheme.colorPrimary,
-          isSelected: false,
-          type: DiamondModuleConstant.MODULE_TYPE_MY_REMINDER));
+    // if (app
+    //     .resolve<PrefUtils>()
+    //     .getModulePermission(ModulePermissionConstant.permission_reminder)
+    //     .view)
+    //   drawerList.add(DrawerModel(
+    //       image: reminder,
+    //       title: R.string().screenTitle.myReminder,
+    //       imageColor: appTheme.colorPrimary,
+    //       isSelected: false,
+    //       type: DiamondModuleConstant.MODULE_TYPE_MY_REMINDER));
     if (app
         .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_myDemand)
@@ -317,17 +317,17 @@ class DrawerSetting {
         isShowDivider: true,
         type: DiamondModuleConstant.MODULE_TYPE_MY_DEMAND,
       ));
-    if (app
-        .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_address)
-        .view)
-      drawerList.add(DrawerModel(
-        image: manageAddress,
-        title: R.string().screenTitle.manageAddress,
-        isSelected: false,
-        imageColor: appTheme.colorPrimary,
-        type: DiamondModuleConstant.MODULE_TYPE_MANAGE_ADDRESS,
-      ));
+    // if (app
+    //     .resolve<PrefUtils>()
+    //     .getModulePermission(ModulePermissionConstant.permission_address)
+    //     .view)
+    //   drawerList.add(DrawerModel(
+    //     image: manageAddress,
+    //     title: R.string().screenTitle.manageAddress,
+    //     isSelected: false,
+    //     imageColor: appTheme.colorPrimary,
+    //     type: DiamondModuleConstant.MODULE_TYPE_MANAGE_ADDRESS,
+    //   ));
     drawerList.add(DrawerModel(
       image: changePassword,
       title: R.string().screenTitle.changePassword,

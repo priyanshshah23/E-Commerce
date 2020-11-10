@@ -311,7 +311,7 @@
         "id": "UPCOMING",
         "code": "UPCOMING",
         "webDisplay": "Upcoming",
-        "isActive": true,
+        "isActive": false,
         "isDeleted": false,
         "isWebVisible": true,
         "parentCode": "NEWARRIVALSGROUP",
@@ -325,7 +325,29 @@
         "isActive": true,
         "isDeleted": false,
         "isWebVisible": true,
+        "sortingSequence": 4,
+        "parentCode": "NEWARRIVALSGROUP",
+        "parentId": "369369369"
+    },
+    {
+        "id": "MILKY",
+        "code": "MILKYSTATIC",
+        "webDisplay": "MILKY",
+        "isActive": true,
+        "isDeleted": false,
+        "isWebVisible": true,
         "sortingSequence": 3,
+        "parentCode": "NEWARRIVALSGROUP",
+        "parentId": "369369369"
+    },
+    {
+        "id": "BROWN",
+        "code": "BROWNSTATIC",
+        "webDisplay": "Brown",
+        "isActive": true,
+        "isDeleted": false,
+        "isWebVisible": true,
+        "sortingSequence": 2,
         "parentCode": "NEWARRIVALSGROUP",
         "parentId": "369369369"
     },

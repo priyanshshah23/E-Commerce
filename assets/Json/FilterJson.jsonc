@@ -559,12 +559,62 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 70,
-    "isActive": false
+    "isActive": true,
+    "masterSelection": [
+      {
+        "code": "NEWARRIVAL",
+        "masterToSelect": [
+          {
+            "code": "NEWARRIVAL",
+            "subMasters": []
+          }
+        ]
+      },
+      {
+        "code": "BROWN",
+        "masterToSelect": [
+          {
+            "code": "SHADE",
+            "subMasters": [
+              "BR1",
+              "BR2",
+              "BR3"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "MILKYSTATIC",
+        "masterToSelect": [
+          {
+            "code": "MILKEY",
+            "subMasters": [
+              "ML1",
+              "ML2",
+              "ML3"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "EYECLEANSTATIC",
+        "masterToSelect": [
+          {
+            "code": "EYECLEAN",
+            "subMasters": [
+              "YES",
+              "E1",
+              "BORDERLINE"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "viewType": "seperator",
     "sequence": 27,
-    "isActive": false,
+    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
@@ -1119,32 +1169,6 @@
     "bottomPadding": 4
   },
   {
-    "title": "Culet",
-    "viewType": "selection",
-    "allLableTitle": "All",
-    "apiKey": "cult",
-    "masterCode": "CULET",
-    "verticalScroll": false,
-    "orientation": "v",
-    "isShowAll": false,
-    "isShowMore": false,
-    "tab": "advance",
-    "sequence": 58,
-    "isActive": true
-  },
-  {
-    "viewType": "seperator",
-    "sequence": 59,
-    "isActive": true,
-    "height": 1,
-    "color": "#E3E3E3",
-    "leftPadding": 0,
-    "tab": "advance",
-    "rightPadding": 0,
-    "topPadding": 4,
-    "bottomPadding": 4
-  },
-  {
     "title": "Black Inclusion",
     "viewType": "selection",
     "allLableTitle": "All",
@@ -1197,11 +1221,169 @@
     "bottomPadding": 4
   },
   {
+    "title": "Milky",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "mlk",
+    "masterCode": "MILKEY",
+    "verticalScroll": false,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "advance",
+    "sequence": 70,
+    "isActive": true
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 71,
+    "isActive": true,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "advance",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Brown",
+    "desc": "Desc",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "shd",
+    "masterCode": "SHADE",
+    "verticalScroll": false,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "advance",
+    "isWhiteColor": false,
+    "sequence": 7,
+    "isActive": true
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 8,
+    "isActive": true,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "basic",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
     "title": "Mix Tint",
     "viewType": "selection",
     "allLableTitle": "All",
     "apiKey": "mixTint",
     "masterCode": "MIX_TINT",
+    "verticalScroll": false,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "advance",
+    "sequence": 58,
+    "isActive": true
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 59,
+    "isActive": true,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "advance",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "H & A",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "hA",
+    "masterCode": "H_AND_A",
+    "verticalScroll": false,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "advance",
+    "sequence": 24,
+    "isActive": true
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 71,
+    "isActive": true,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "advance",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Eye Clean",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "eCln",
+    "masterCode": "EYECLEAN",
+    "verticalScroll": false,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "advance",
+    "sequence": 68,
+    "isActive": true
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 69,
+    "isActive": true,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "advance",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Girdle",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "grdl",
+    "masterCode": "GIRDLE",
+    "verticalScroll": false,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "advance",
+    "sequence": 62,
+    "isActive": true
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 63,
+    "isActive": true,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "advance",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Culet",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "cult",
+    "masterCode": "CULET",
     "verticalScroll": false,
     "orientation": "v",
     "isShowAll": false,
@@ -1249,34 +1431,6 @@
     "bottomPadding": 4
   },
   {
-    "title": "Brown",
-    "desc": "Desc",
-    "viewType": "selection",
-    "allLableTitle": "All",
-    "apiKey": "shd",
-    "masterCode": "SHADE",
-    "verticalScroll": false,
-    "orientation": "v",
-    "isShowAll": false,
-    "isShowMore": false,
-    "tab": "advance",
-    "isWhiteColor": false,
-    "sequence": 7,
-    "isActive": true
-  },
-  {
-    "viewType": "seperator",
-    "sequence": 8,
-    "isActive": true,
-    "height": 1,
-    "color": "#E3E3E3",
-    "tab": "basic",
-    "leftPadding": 0,
-    "rightPadding": 0,
-    "topPadding": 4,
-    "bottomPadding": 4
-  },
-  {
     "title": "Culet Condition",
     "viewType": "selection",
     "allLableTitle": "All",
@@ -1303,32 +1457,6 @@
     "bottomPadding": 4
   },
   {
-    "title": "Girdle",
-    "viewType": "selection",
-    "allLableTitle": "All",
-    "apiKey": "grdl",
-    "masterCode": "GIRDLE",
-    "verticalScroll": false,
-    "orientation": "v",
-    "isShowAll": false,
-    "isShowMore": false,
-    "tab": "advance",
-    "sequence": 62,
-    "isActive": true
-  },
-  {
-    "viewType": "seperator",
-    "sequence": 63,
-    "isActive": true,
-    "height": 1,
-    "color": "#E3E3E3",
-    "leftPadding": 0,
-    "tab": "advance",
-    "rightPadding": 0,
-    "topPadding": 4,
-    "bottomPadding": 4
-  },
-  {
     "title": "Girdle Condition",
     "viewType": "selection",
     "allLableTitle": "All",
@@ -1346,32 +1474,6 @@
     "viewType": "seperator",
     "sequence": 65,
     "isActive": false,
-    "height": 1,
-    "color": "#E3E3E3",
-    "leftPadding": 0,
-    "tab": "advance",
-    "rightPadding": 0,
-    "topPadding": 4,
-    "bottomPadding": 4
-  },
-  {
-    "title": "Eye Clean",
-    "viewType": "selection",
-    "allLableTitle": "All",
-    "apiKey": "eCln",
-    "masterCode": "EYECLEAN",
-    "verticalScroll": false,
-    "orientation": "v",
-    "isShowAll": false,
-    "isShowMore": false,
-    "tab": "advance",
-    "sequence": 68,
-    "isActive": true
-  },
-  {
-    "viewType": "seperator",
-    "sequence": 69,
-    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1558,58 +1660,6 @@
     "viewType": "seperator",
     "sequence": 69,
     "isActive": false,
-    "height": 1,
-    "color": "#E3E3E3",
-    "leftPadding": 0,
-    "tab": "advance",
-    "rightPadding": 0,
-    "topPadding": 4,
-    "bottomPadding": 4
-  },
-  {
-    "title": "Milky",
-    "viewType": "selection",
-    "allLableTitle": "All",
-    "apiKey": "mlk",
-    "masterCode": "MILKEY",
-    "verticalScroll": false,
-    "orientation": "v",
-    "isShowAll": false,
-    "isShowMore": false,
-    "tab": "advance",
-    "sequence": 70,
-    "isActive": true
-  },
-  {
-    "viewType": "seperator",
-    "sequence": 71,
-    "isActive": true,
-    "height": 1,
-    "color": "#E3E3E3",
-    "leftPadding": 0,
-    "tab": "advance",
-    "rightPadding": 0,
-    "topPadding": 4,
-    "bottomPadding": 4
-  },
-  {
-    "title": "H & A",
-    "viewType": "selection",
-    "allLableTitle": "All",
-    "apiKey": "hA",
-    "masterCode": "H_AND_A",
-    "verticalScroll": false,
-    "orientation": "v",
-    "isShowAll": false,
-    "isShowMore": false,
-    "tab": "basic",
-    "sequence": 24,
-    "isActive": true
-  },
-  {
-    "viewType": "seperator",
-    "sequence": 71,
-    "isActive": true,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,

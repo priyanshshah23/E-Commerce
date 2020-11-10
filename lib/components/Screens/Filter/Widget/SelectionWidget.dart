@@ -244,6 +244,7 @@ class _TagWidgetState extends State<TagWidget> {
                         !widget.model.masters[index].isSelected;
 
                     widget.model.onSelectionClick(index);
+                    getMultipleMasterSelections(index);
                   });
                 },
               );
@@ -335,7 +336,7 @@ class _TagWidgetState extends State<TagWidget> {
             left: getSize(12.0)),
         child: Center(
           child: Text(
-            widget.model.masters[index].webDisplay ?? "-",
+            widget.model.masters[index].webDisplay,
             style: widget.model.masters[index].isSelected
                 ? appTheme.primaryColor14TextStyle
                 : appTheme.blackNormal14TitleColorblack,
@@ -606,6 +607,14 @@ class _TagWidgetState extends State<TagWidget> {
   }
 
   getMultipleMasterSelections(int index) {
+    if (!isNullEmptyOrFalse(widget.model.masterSelection)) {
+      Map<MasterSelection, bool> m = Map<MasterSelection, bool>();
+      m[widget.model.masterSelection[index]] =
+          widget.model.masters[index].isSelected;
+
+      RxBus.post(m, tag: eventMasterSelection);
+    }
+
     //When Local data has added and multilple master has to select
     if (widget.model.isSingleSelection) {
       for (var item in widget.model.masters) {
@@ -615,21 +624,19 @@ class _TagWidgetState extends State<TagWidget> {
           }
         }
       }
-
-      if (!isNullEmptyOrFalse(widget.model.masterSelection)) {
-        Map<MasterSelection, bool> m = Map<MasterSelection, bool>();
-        m[widget.model.masterSelection[index]] =
-            widget.model.masters[index].isSelected;
-
-        RxBus.post(m, tag: eventMasterSelection);
-      }
     } else {
       if (widget.model.masterCode.toLowerCase() ==
               MasterCode.cut.toLowerCase() ||
           widget.model.masterCode.toLowerCase() ==
               MasterCode.polish.toLowerCase() ||
           widget.model.masterCode.toLowerCase() ==
-              MasterCode.symmetry.toLowerCase()) {
+              MasterCode.symmetry.toLowerCase() ||
+          widget.model.masterCode.toLowerCase() ==
+              MasterCode.eyeClean.toLowerCase() ||
+          widget.model.masterCode.toLowerCase() ==
+              MasterCode.milky.toLowerCase() ||
+          widget.model.masterCode.toLowerCase() ==
+              MasterCode.colorShade.toLowerCase()) {
         RxBus.post(false, tag: eventMasterForDeSelectMake);
       }
       widget.model.onSelectionClick(index);
@@ -684,8 +691,6 @@ class _TagWidgetState extends State<TagWidget> {
                     setState(() {
                       widget.model.masters[index * 2].isSelected =
                           !widget.model.masters[index * 2].isSelected;
-
-                      // getMultipleMasterSelections(index);
                     });
                   },
                 );
@@ -707,8 +712,6 @@ class _TagWidgetState extends State<TagWidget> {
                     setState(() {
                       widget.model.masters[index * 2 + 1].isSelected =
                           !widget.model.masters[index * 2 + 1].isSelected;
-
-                      // getMultipleMasterSelections(index);
                     });
                   },
                 );
