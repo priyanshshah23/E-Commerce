@@ -68,3 +68,10 @@ class DocumentsConstants {
   static const String PhotoProof = "1";
   static const String BussinessProof = "2";
 }
+
+class VersionUpdateApi {
+  static const String logIn = "1";
+  static const String splash = "2";
+  static const String signInAsGuest = "3";
+  static const String signInWithMpin = "4";
+}
