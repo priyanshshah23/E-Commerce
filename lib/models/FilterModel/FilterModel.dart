@@ -455,8 +455,10 @@ class SelectionModel extends FormBaseModel {
             m["selectedMasterCode"] = masters[index].code;
             m["masterSelection"] = masterSelection;
             if (viewType == ViewTypes.groupWidget) {
-              m["isGroupSelected"] = (this as ColorModel).isGroupSelected;
-              RxBus.post(m, tag: eventMasterForSingleItemOfGroupSelection);
+              if (this is ColorModel) {
+                m["isGroupSelected"] = (this as ColorModel).isGroupSelected;
+                RxBus.post(m, tag: eventMasterForSingleItemOfGroupSelection);
+              }
             }
           }
         }
@@ -484,8 +486,10 @@ class SelectionModel extends FormBaseModel {
         m["selectedMasterCode"] = masters[index].code;
         m["masterSelection"] = masterSelection;
         if (viewType == ViewTypes.groupWidget) {
-          m["isGroupSelected"] = (this as ColorModel).isGroupSelected;
-          RxBus.post(m, tag: eventMasterForSingleItemOfGroupSelection);
+          if (this is ColorModel) {
+            m["isGroupSelected"] = (this as ColorModel).isGroupSelected;
+            RxBus.post(m, tag: eventMasterForSingleItemOfGroupSelection);
+          }
         }
       }
     }
