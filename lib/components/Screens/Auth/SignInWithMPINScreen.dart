@@ -27,7 +27,6 @@ import 'package:flutter/services.dart';
 import 'package:package_info/package_info.dart';
 //import 'package:local_auth/local_auth.dart';
 
-
 class SignInWithMPINScreen extends StatefulScreenWidget {
   static const route = "SignInWithMPINScreen";
 
@@ -57,7 +56,6 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
 //      });
 //    }
 //  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -99,8 +97,8 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                               shape: BoxShape.circle,
                             ),
                             child: ClipRRect(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(getSize(25))),
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(getSize(25))),
                               child: getImageView(
                                 "",
                                 placeHolderImage: userTemp,
@@ -117,7 +115,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                      "Ho**y",
+                                  "Ho**y",
                                   style: appTheme.black16TextStyle.copyWith(
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -134,7 +132,10 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                       ),
                     ),
                     SizedBox(height: getSize(54)),
-                    Text("Enter your 6 digit MPIN", style: appTheme.black16MediumTextStyle,),
+                    Text(
+                      "Enter your 6 digit MPIN",
+                      style: appTheme.black16MediumTextStyle,
+                    ),
                     SizedBox(height: getSize(32)),
 //                    Row(
 //                      mainAxisAlignment: MainAxisAlignment.center,
@@ -194,39 +195,40 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
 //                        ),
 //                      ],
 //                    ),
-              Container(
-                height: 800,
-                child: FlutterCustomPinView(
-                    title: "This is Screet ",
-                    passLength: myPass.length,
-                    bgImage: "",
-                    showFingerPass: true,
-                   fingerPrintImage: "",
-                   //fingerFunction: biometrics,
-                    fingerVerify: isFingerprint,
-                    borderColor: appTheme.whiteColor,
-                    foregroundColor: appTheme.textGreyColor,
-                    showWrongPassDialog: true,
-                    wrongPassContent: "Wrong pass please try again.",
-                    wrongPassTitle: "Oops!",
-                    wrongPassCancelButtonText: "Cancel",
-                    passCodeVerify: (passcode) async {
-                      print(passcode);
-                      for (int i = 0; i < myPass.length; i++) {
-                        if (passcode[i] != myPass[i]) {
-                          return false;
-                        }
-                      }
-                      return true;
-                    },
-                    onSuccess: () {
-                      print("success");
+                    Container(
+                      height: 800,
+                      child: FlutterCustomPinView(
+                        title: "This is Screet ",
+                        passLength: myPass.length,
+                        bgImage: "",
+                        showFingerPass: true,
+                        fingerPrintImage: "",
+                        //fingerFunction: biometrics,
+                        fingerVerify: isFingerprint,
+                        borderColor: appTheme.whiteColor,
+                        foregroundColor: appTheme.textGreyColor,
+                        showWrongPassDialog: true,
+                        wrongPassContent: "Wrong pass please try again.",
+                        wrongPassTitle: "Oops!",
+                        wrongPassCancelButtonText: "Cancel",
+                        passCodeVerify: (passcode) async {
+                          print(passcode);
+                          for (int i = 0; i < myPass.length; i++) {
+                            if (passcode[i] != myPass[i]) {
+                              return false;
+                            }
+                          }
+                          return true;
+                        },
+                        onSuccess: () {
+                          print("success");
 //                    Navigator.of(context).pushReplacement(
 //                        new MaterialPageRoute(builder: (BuildContext context) {
 //                          return EmptyPage();
 //                        }));
-                    }),
-              ),
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -243,7 +245,8 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Text("Forgot MPIN?",
-                        style: appTheme.black16MediumTextStyle.copyWith(color: appTheme.greenColor)),
+                        style: appTheme.black16MediumTextStyle
+                            .copyWith(color: appTheme.greenColor)),
                   ],
                 ),
               ),
@@ -269,9 +272,12 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
 
     NetworkCall<LoginResp>()
         .makeCall(
-            () => app.resolve<ServiceModule>().networkService().signInAsGuest(req),
-        context,
-        isProgress: true)
+            () => app
+                .resolve<ServiceModule>()
+                .networkService()
+                .signInAsGuest(req),
+            context,
+            isProgress: true)
         .then((loginResp) async {
 //      if (loginResp.data != null) {
 //        app.resolve<PrefUtils>().saveUser(loginResp.data.user);
@@ -283,15 +289,17 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
 //        );
 //      }
       // callVersionUpdateApi(id: loginResp.data.user.id);
-      SyncManager().callVersionUpdateApi(context,VersionUpdateApi.signInWithMpin,id: loginResp.data.user.id);
+      SyncManager().callVersionUpdateApi(
+          context, VersionUpdateApi.signInWithMpin,
+          id: loginResp.data.user.id);
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
-          context,
-          title: R.string().commonString.error,
-          desc: onError.message,
-          positiveBtnTitle: R.string().commonString.ok,
-        );
+              context,
+              title: R.string().commonString.error,
+              desc: onError.message,
+              positiveBtnTitle: R.string().commonString.ok,
+            );
       }
     });
   }
@@ -399,7 +407,5 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
   //     },
   //   );
   // }
-
-
 
 }
