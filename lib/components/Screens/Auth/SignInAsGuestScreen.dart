@@ -121,10 +121,11 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
                       ),
                       Container(
                         margin: EdgeInsets.only(
-                            top: getSize(10),
-                            bottom: getSize(16),
+                          top: getSize(10),
+                          bottom: getSize(16),
                         ),
-                        decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
+                        decoration:
+                            BoxDecoration(boxShadow: getBoxShadow(context)),
                         child: AppButton.flat(
                           onTap: () {
                             if (termCondition == false) {
@@ -132,14 +133,14 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
                             }
                             FocusScope.of(context).unfocus();
                             if (_formKey.currentState.validate()) {
-                              if(_mobileController.text.isNotEmpty && termCondition){
+                              if (_mobileController.text.isNotEmpty &&
+                                  termCondition) {
                                 checkValidation();
                               }
                             } else {
                               setState(() {
                                 _autoValidate = true;
                               });
-
                             }
                           },
                           fitWidth: true,
@@ -148,8 +149,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
                         ),
                       ),
                       Padding(
-                        padding:
-                        EdgeInsets.only(top: getSize(10)),
+                        padding: EdgeInsets.only(top: getSize(10)),
                         child: Align(
                           alignment: Alignment.center,
                           child: Text(
@@ -159,16 +159,15 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(
-                            top: getSize(10), left: getSize(0)),
+                        margin:
+                            EdgeInsets.only(top: getSize(10), left: getSize(0)),
                         child: AppButton.flat(
                           onTap: () {
-                            NavigationUtilities.pushRoute(
-                                LoginScreen.route);
+                            NavigationUtilities.pushRoute(LoginScreen.route);
                           },
                           textColor: appTheme.colorPrimary,
-                          backgroundColor: appTheme.colorPrimary
-                              .withOpacity(0.1),
+                          backgroundColor:
+                              appTheme.colorPrimary.withOpacity(0.1),
                           borderRadius: getSize(5),
                           fitWidth: true,
                           text: R.string().authStrings.signInCap,
@@ -193,7 +192,8 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
                   children: <Widget>[
                     Text(R.string().authStrings.haveRegisterCode,
                         style: appTheme.grey16HintTextStyle),
-                    Text(" " + R.string().authStrings.signUp, style: appTheme.darkBlue16TextStyle),
+                    Text(" " + R.string().authStrings.signUp,
+                        style: appTheme.darkBlue16TextStyle),
                   ],
                 ),
               ),
@@ -378,7 +378,8 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
         //enable: enable,
         focusNode: _focusMobile,
         textOption: TextFieldOption(
-          hintText: R.string().authStrings.mobileNumber + R.string().authStrings.requiredField,
+          hintText: R.string().authStrings.mobileNumber +
+              R.string().authStrings.requiredField,
           prefixWid: Padding(
             padding: EdgeInsets.only(left: getSize(0)),
             child: Row(
@@ -452,7 +453,8 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
     if (await isValidMobile(
             _mobileController.text.trim(), selectedDialogCountry.isoCode) ==
         false) {
-      return showToast(R.string().errorString.enterValidPhone,context: context);
+      return showToast(R.string().errorString.enterValidPhone,
+          context: context);
     } else {
       callApi(context);
     }
@@ -462,7 +464,8 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
     return CommonTextfield(
       focusNode: _focusAddress,
       textOption: TextFieldOption(
-        hintText: R.string().authStrings.companyName + R.string().authStrings.requiredField,
+        hintText: R.string().authStrings.companyName +
+            R.string().authStrings.requiredField,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: company,
@@ -516,7 +519,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
               onTap: () {
                 setState(() {
                   termCondition = !termCondition;
-                  if(termCondition) {
+                  if (termCondition) {
                     showTermValidation = false;
                   } else {
                     showTermValidation = true;
@@ -533,7 +536,8 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
               width: getSize(10),
             ),
             Text(
-              R.string().authStrings.termsAndCondition + R.string().authStrings.requiredField,
+              R.string().authStrings.termsAndCondition +
+                  R.string().authStrings.requiredField,
               style: appTheme.black14TextStyle,
             )
           ],
@@ -588,136 +592,138 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
 
     NetworkCall<LoginResp>()
         .makeCall(
-            () => app.resolve<ServiceModule>().networkService().signInAsGuest(req),
-        context,
-        isProgress: true)
+            () => app
+                .resolve<ServiceModule>()
+                .networkService()
+                .signInAsGuest(req),
+            context,
+            isProgress: true)
         .then((loginResp) async {
       if (loginResp.data != null) {
         app.resolve<PrefUtils>().saveUser(loginResp.data.user);
         await app.resolve<PrefUtils>().saveUserToken(
-          loginResp.data.token.jwt,
-        );
+              loginResp.data.token.jwt,
+            );
         await app.resolve<PrefUtils>().saveUserPermission(
-          loginResp.data.userPermissions,
-        );
+              loginResp.data.userPermissions,
+            );
       }
-      callVersionUpdateApi(id: loginResp.data.user.id);
+      // callVersionUpdateApi(id: loginResp.data.user.id);
+      SyncManager().callVersionUpdateApi(context,VersionUpdateApi.signInAsGuest,id: loginResp.data.user.id);
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
-          context,
-          title: R.string().commonString.error,
-          desc: onError.message,
-          positiveBtnTitle: R.string().commonString.ok,
-        );
+              context,
+              title: R.string().commonString.error,
+              desc: onError.message,
+              positiveBtnTitle: R.string().commonString.ok,
+            );
       }
     });
   }
-  void callVersionUpdateApi({String id}) {
-    NetworkCall<VersionUpdateResp>()
-        .makeCall(
-            () => app
-            .resolve<ServiceModule>()
-            .networkService()
-            .getVersionUpdate(),
-        context,
-        isProgress: true)
-        .then(
-          (resp) {
-        if (resp.data != null) {
-          PackageInfo.fromPlatform().then(
-                (PackageInfo packageInfo) {
-              print(packageInfo.buildNumber);
-              String appName = packageInfo.appName;
-              String packageName = packageInfo.packageName;
-              String version = packageInfo.version;
-              String buildNumber = packageInfo.buildNumber;
 
-              if (Platform.isIOS) {
-                if (resp.data.ios != null) {
-                  num respVersion = resp.data.ios.number;
-                  if (num.parse(version) < respVersion) {
-                    bool hardUpdate = resp.data.ios.isHardUpdate;
-                    Map<String, dynamic> dict = new HashMap();
-                    dict["isHardUpdate"] = hardUpdate;
-                    dict["oncomplete"] = () {
-                      Navigator.pop(context);
-                    };
-                    print(hardUpdate);
-                    if (hardUpdate == true) {
-                      NavigationUtilities.pushReplacementNamed(
-                        VersionUpdate.route,
-                        args: dict,
-                      );
-                    }
-                  } else {
-                    SyncManager.instance.callMasterSync(
-                        NavigationUtilities.key.currentContext, () async {
-                      //success
-                      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-                    }, () {},
-                        isNetworkError: false,
-                        isProgress: true,
-                        id: id).then((value) {});
-                  }
-                } else {
-                  SyncManager.instance.callMasterSync(
-                      NavigationUtilities.key.currentContext, () async {
-                    //success
-                    AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-                  }, () {},
-                      isNetworkError: false,
-                      isProgress: true,
-                      id: id).then((value) {});
-                }
-              } else {
-                if (resp.data.android != null) {
-                  num respVersion = resp.data.android.number;
-                  if (num.parse(buildNumber) < respVersion) {
-                    bool hardUpdate = resp.data.android.isHardUpdate;
-                    if (hardUpdate == true) {
-                      NavigationUtilities.pushReplacementNamed(
-                        VersionUpdate.route,
-                      );
-                    }
-                  } else {
-                    SyncManager.instance.callMasterSync(
-                        NavigationUtilities.key.currentContext, () async {
-                      //success
-                      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-                    }, () {},
-                        isNetworkError: false,
-                        isProgress: true,
-                        id: id).then((value) {});
-                  }
-                } else {
-                  SyncManager.instance.callMasterSync(
-                      NavigationUtilities.key.currentContext, () async {
-                    //success
-                    AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-                  }, () {},
-                      isNetworkError: false,
-                      isProgress: true,
-                      id: id).then((value) {});
-                }
-              }
-            },
-          );
-        }
-      },
-    ).catchError(
-          (onError) => {
-        app.resolve<CustomDialogs>().confirmDialog(context,
-            title: R.string().errorString.versionError,
-            desc: onError.message,
-            positiveBtnTitle: R.string().commonString.btnTryAgain,
-            onClickCallback: (PositveButtonClick) {
-              callVersionUpdateApi(id: id);
-            }),
-      },
-    );
-  }
+  // void callVersionUpdateApi({String id}) {
+  //   NetworkCall<VersionUpdateResp>()
+  //       .makeCall(
+  //           () => app
+  //               .resolve<ServiceModule>()
+  //               .networkService()
+  //               .getVersionUpdate(),
+  //           context,
+  //           isProgress: true)
+  //       .then(
+  //     (resp) {
+  //       if (resp.data != null) {
+  //         PackageInfo.fromPlatform().then(
+  //           (PackageInfo packageInfo) {
+  //             print(packageInfo.buildNumber);
+  //             String appName = packageInfo.appName;
+  //             String packageName = packageInfo.packageName;
+  //             String version = packageInfo.version;
+  //             String buildNumber = packageInfo.buildNumber;
 
-
-
+  //             if (Platform.isIOS) {
+  //               if (resp.data.ios != null) {
+  //                 num respVersion = resp.data.ios.number;
+  //                 if (num.parse(version) < respVersion) {
+  //                   bool hardUpdate = resp.data.ios.isHardUpdate;
+  //                   Map<String, dynamic> dict = new HashMap();
+  //                   dict["isHardUpdate"] = hardUpdate;
+  //                   dict["oncomplete"] = () {
+  //                     Navigator.pop(context);
+  //                   };
+  //                   print(hardUpdate);
+  //                   if (hardUpdate == true) {
+  //                     NavigationUtilities.pushReplacementNamed(
+  //                       VersionUpdate.route,
+  //                       args: dict,
+  //                     );
+  //                   }
+  //                 } else {
+  //                   SyncManager.instance.callMasterSync(
+  //                       NavigationUtilities.key.currentContext, () async {
+  //                     //success
+  //                     AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+  //                   }, () {},
+  //                       isNetworkError: false,
+  //                       isProgress: true,
+  //                       id: id).then((value) {});
+  //                 }
+  //               } else {
+  //                 SyncManager.instance.callMasterSync(
+  //                     NavigationUtilities.key.currentContext, () async {
+  //                   //success
+  //                   AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+  //                 }, () {},
+  //                     isNetworkError: false,
+  //                     isProgress: true,
+  //                     id: id).then((value) {});
+  //               }
+  //             } else {
+  //               if (resp.data.android != null) {
+  //                 num respVersion = resp.data.android.number;
+  //                 if (num.parse(buildNumber) < respVersion) {
+  //                   bool hardUpdate = resp.data.android.isHardUpdate;
+  //                   if (hardUpdate == true) {
+  //                     NavigationUtilities.pushReplacementNamed(
+  //                       VersionUpdate.route,
+  //                     );
+  //                   }
+  //                 } else {
+  //                   SyncManager.instance.callMasterSync(
+  //                       NavigationUtilities.key.currentContext, () async {
+  //                     //success
+  //                     AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+  //                   }, () {},
+  //                       isNetworkError: false,
+  //                       isProgress: true,
+  //                       id: id).then((value) {});
+  //                 }
+  //               } else {
+  //                 SyncManager.instance.callMasterSync(
+  //                     NavigationUtilities.key.currentContext, () async {
+  //                   //success
+  //                   AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+  //                 }, () {},
+  //                     isNetworkError: false,
+  //                     isProgress: true,
+  //                     id: id).then((value) {});
+  //               }
+  //             }
+  //           },
+  //         );
+  //       }
+  //     },
+  //   ).catchError(
+  //     (onError) => {
+  //       app.resolve<CustomDialogs>().confirmDialog(context,
+  //           title: R.string().errorString.versionError,
+  //           desc: onError.message,
+  //           positiveBtnTitle: R.string().commonString.btnTryAgain,
+  //           onClickCallback: (PositveButtonClick) {
+  //         callVersionUpdateApi(id: id);
+  //       }),
+  //     },
+  //   );
+  // }
 }
