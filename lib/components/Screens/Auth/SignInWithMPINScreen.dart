@@ -224,8 +224,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                           print("success");
                           // SyncManager().callVersionUpdateApi(
                           //   context,
-                          //   VersionUpdateApi.logIn,
-                          //   // id: app.resolve<PrefUtils>().getUserDetails().id,
+                          //   VersionUpdateApi.signInWithMpin,
                           // );
                         },
                       ),
