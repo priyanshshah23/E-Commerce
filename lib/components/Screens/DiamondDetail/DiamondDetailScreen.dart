@@ -495,56 +495,59 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                 itemCount: arrDiamondDetailUIModel.length + 1,
                 itemBuilder: (context, index) {
                   if (index == 0)
-                    return Stack(
-                      fit: StackFit.loose,
-                      overflow: Overflow.visible,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            NavigationUtilities.push(DiamondDeepDetailScreen(
-                              arrImages: arrImages,
-                              diamondModel: diamondModel,
-                            ));
-                          },
-                          child: Container(
-                            width: double.infinity,
-                            height: getSize(286),
-                            child: getImage(),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: -18,
-                          right: 0,
-                          child: Row(
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    left: getSize(20),
-                                    right: getSize(20),
-                                    top: getSize(0),
-                                    bottom: getSize(0)),
+                    return !isNullEmptyOrFalse(arrImages)
+                        ? Stack(
+                            fit: StackFit.loose,
+                            overflow: Overflow.visible,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  NavigationUtilities.push(
+                                      DiamondDeepDetailScreen(
+                                    arrImages: arrImages,
+                                    diamondModel: diamondModel,
+                                  ));
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  height: getSize(286),
+                                  child: getImage(),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: -18,
+                                right: 0,
                                 child: Row(
-                                  mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
-                                    getRowItem("Image", gallary),
-                                    SizedBox(
-                                      width: getSize(10),
-                                    ),
-                                    getRowItem("Video", playButton),
-                                    SizedBox(
-                                      width: getSize(10),
-                                    ),
-                                    getRowItem("Certificate", medal),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          left: getSize(20),
+                                          right: getSize(20),
+                                          top: getSize(0),
+                                          bottom: getSize(0)),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          getRowItem("Image", gallary),
+                                          SizedBox(
+                                            width: getSize(10),
+                                          ),
+                                          getRowItem("Video", playButton),
+                                          SizedBox(
+                                            width: getSize(10),
+                                          ),
+                                          getRowItem("Certificate", medal),
+                                        ],
+                                      ),
+                                    )
                                   ],
                                 ),
                               )
                             ],
-                          ),
-                        )
-                      ],
-                    );
+                          )
+                        : SizedBox();
                   return Padding(
-                    padding: index == 1
+                    padding: !isNullEmptyOrFalse(arrImages)
                         ? EdgeInsets.only(
                             left: getSize(20),
                             right: getSize(20),
