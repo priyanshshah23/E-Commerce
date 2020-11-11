@@ -46,7 +46,8 @@ class SyncManager {
 
 //    req.serverLastSync = app.resolve<PrefUtils>().getMasterSyncDate();
 
-    req.user = id ?? app.resolve<PrefUtils>().getUserDetails().id;
+    req.user = id;
+
     NetworkCall<MasterResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().getMaster(req),

@@ -283,7 +283,7 @@ class ShapeItemWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                obj.sId != selectionModel.allLableTitle &&
+                obj.sId != selectionModel.allLableTitle ||
                         (obj.sId != showMoreId)
                     ? Container(
                         width: selectionModel.orientation ==
