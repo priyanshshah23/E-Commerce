@@ -12,6 +12,7 @@ import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
+import 'package:diamnow/models/Notification/NotificationModel.dart';
 import 'package:diamnow/models/Order/OrderListModel.dart';
 import 'package:diamnow/models/QuickSearch/QuickSearchModel.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
@@ -163,4 +164,7 @@ abstract class NetworkService {
 
   @GET(ApiConstants.getUpdation)
   Future<VersionUpdateResp> getVersionUpdate();
+
+  @GET(ApiConstants.notificationList)
+  Future<NotificationResp> getNotificationList();
 }
