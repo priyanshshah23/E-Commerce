@@ -97,7 +97,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
             ? GridView.count(
                 shrinkWrap: true,
                 primary: false,
-                childAspectRatio: (itemWidth / itemHeight),
+                childAspectRatio: 0.8,
                 padding: EdgeInsets.all(getSize(2)),
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8,
