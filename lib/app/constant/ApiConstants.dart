@@ -8,7 +8,6 @@ class ApiConstants {
       Platform.isIOS ? "PROXY localhost:8888" : "PROXY 192.168.0.116:8888";
 //    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 
-
   static const String imageBaseURL = baseURL;
   static const String shareUrl = "http://fndevelop.democ.in/diamond-details/";
 
@@ -82,7 +81,7 @@ class ApiConstants {
       commonUrl + "diamond-comment/delete";
   static const String diamondBidDelete = commonUrl + "diamond-bid/delete";
   static const String shareThroughEmail = apiUrl + "web/v1/diamond/excel";
-
+  static const String notificationList = apiUrl + "device/v1/notification/list";
 }
 
 class DiamondUrls {
