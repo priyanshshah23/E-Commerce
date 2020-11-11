@@ -131,7 +131,8 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
         ]),
         getCaratRangeChips(),
         SizedBox(height: getSize(16)),
-        SelectionWidget(widget.selectionModel)
+        SelectionWidget(widget.selectionModel),
+        SizedBox(height: getSize(8)),
       ],
     );
   }
@@ -152,7 +153,9 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
             color: appTheme.textColor,
             size: getSize(16),
           ),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(getSize(5)),side: BorderSide(color: appTheme.colorPrimary)),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(getSize(5)),
+              side: BorderSide(color: appTheme.colorPrimary)),
           onDeleted: () {
             setState(() {
               widget.selectionModel.caratRangeChipsToShow.removeWhere((entry) {

@@ -145,6 +145,14 @@ class Config {
                 colorModel.intensity = intensity;
                 colorModel.overtone = overtone;
                 colorModel.masters = arrMaster;
+
+                if (colorModel.isShowAll == true) {
+                  appendAllTitle(colorModel);
+                }
+
+                if (colorModel.isShowMore == true) {
+                  appendShowMoreTitle(colorModel);
+                }
               }
             } else if (viewType == ViewTypes.seperator) {
               SeperatorModel seperatorModel = SeperatorModel.fromJson(element);
@@ -247,9 +255,9 @@ class Config {
         if (model.showWhiteFancy) {
           model.intensity.insert(0, allMaster);
           model.overtone.insert(0, allMaster);
-        } else {
-          model.groupMaster.insert(0, allMaster);
         }
+        model.masters.insert(0, allMaster);
+        model.groupMaster.insert(0, allMaster);
       }
     } else {
       model.masters.insert(0, allMaster);
@@ -302,6 +310,7 @@ class FormBaseModel {
     this.desc,
     this.title,
     this.megaTitle,
+    this.viewType,
   });
   FormBaseModel.fromJson(Map<String, dynamic> json) {
     title = json['title'] ?? "";
@@ -363,9 +372,12 @@ class SelectionModel extends FormBaseModel {
       this.gridViewItemCount,
       this.masterCode,
       this.showMoreTagAfterTotalItemCount,
-      apiKey}) {
+      this.isShowMore,
+      apiKey,
+      viewType}) {
     super.title = title;
     super.apiKey = apiKey;
+    super.viewType = viewType;
   }
 
   SelectionModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
