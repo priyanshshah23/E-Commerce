@@ -9,7 +9,7 @@ class ApiConstants {
 //    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 
   static const String imageBaseURL = baseURL;
-  static const String shareUrl = "http://fndevelop.democ.in/diamond-details/";
+  static const String shareUrl = "http://pndevelop.democ.in/diamond-details/";
 
   static const String apiUrl = baseURL;
   static const String commonUrl = apiUrl + "device/v1/";
