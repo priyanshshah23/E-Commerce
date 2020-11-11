@@ -278,7 +278,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           border: Border.all(color: appTheme.textGreyColor),
         ),
         padding:
-            EdgeInsets.symmetric(vertical: getSize(15), horizontal: getSize(4)),
+            EdgeInsets.symmetric(vertical: getSize(15), horizontal: getSize(0)),
         child: Column(
           children: <Widget>[
             getDetailText(text),
