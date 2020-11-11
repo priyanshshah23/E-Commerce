@@ -240,6 +240,7 @@ class Config {
     Master allMaster = Master();
     allMaster.sId = model.allLableTitle;
     allMaster.webDisplay = model.allLableTitle;
+    allMaster.group = model.allLableTitle;
 
     List<Master> arrSelectedMaster =
         model.masters.where((element) => element.isSelected).toList();
@@ -269,6 +270,7 @@ class Config {
     Master allMaster = Master();
     allMaster.sId = R.string().commonString.showMore;
     allMaster.webDisplay = R.string().commonString.showMore;
+    allMaster.group = R.string().commonString.showMore;
 
     List<Master> arrSelectedMaster =
         model.masters.where((element) => element.isSelected).toList();

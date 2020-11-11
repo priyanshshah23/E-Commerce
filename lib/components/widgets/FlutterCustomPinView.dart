@@ -183,17 +183,16 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
             Expanded(
               child: Container(
                 padding: EdgeInsets.only(left: 0, top: 0),
-                child:
-                    NotificationListener<OverscrollIndicatorNotification>(
+                child: NotificationListener<OverscrollIndicatorNotification>(
                   onNotification: (overscroll) {
                     overscroll.disallowGlow();
                     return null;
                   },
                   child: GridView.count(
                     crossAxisCount: 3,
-                    childAspectRatio: 1.8,
+                    childAspectRatio: 2.3,
                     mainAxisSpacing: 35,
-                    padding: EdgeInsets.all(8),
+                    padding: EdgeInsets.all(4),
                     children: <Widget>[
                       buildContainerCircle(1),
                       buildContainerCircle(2),
@@ -225,24 +224,23 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
         _onCodeClick(number);
       },
       child: Container(
-        height: getSize(30),
-        width: getSize(30),
+        height: getSize(50),
+        width: getSize(50),
         decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: appTheme.greenColor.withOpacity(0.1),
-                blurRadius: 20,
-                spreadRadius: 5,
-                  offset: Offset(0.0,6.0)
-              )
+                  color: appTheme.greenColor.withOpacity(0.1),
+                  blurRadius: 20,
+                  spreadRadius: 5,
+                  offset: Offset(0.0, 6.0))
             ]),
         child: Center(
           child: Text(
             number.toString(),
             style: TextStyle(
-                fontSize: 28,
+                fontSize: 20,
                 fontWeight: FontWeight.normal,
                 color: widget.numColor),
           ),
@@ -269,8 +267,7 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
                   color: appTheme.greenColor.withOpacity(0.1),
                   blurRadius: 20,
                   spreadRadius: 5,
-                  offset: Offset(0.0,6.0)
-              )
+                  offset: Offset(0.0, 6.0))
             ]),
         child: Center(
           child: Icon(
@@ -309,8 +306,7 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
                   color: appTheme.greenColor.withOpacity(0.1),
                   blurRadius: 20,
                   spreadRadius: 5,
-                  offset: Offset(0.0,6.0)
-              )
+                  offset: Offset(0.0, 6.0))
             ]),
         child: Center(
           child: Icon(
@@ -358,7 +354,7 @@ class CodePanel extends StatelessWidget {
       do {
         circles.add(
           Padding(
-            padding:EdgeInsets.symmetric(horizontal: getSize(4)),
+            padding: EdgeInsets.symmetric(horizontal: getSize(4)),
             child: SizedBox(
               width: W,
               height: H,
@@ -383,9 +379,10 @@ class CodePanel extends StatelessWidget {
       }
       for (int i = 1; i <= codeLength; i++) {
         if (i > currentLength) {
-          circles.add(Padding(
-            padding:EdgeInsets.symmetric(horizontal: getSize(4)),
-            child: SizedBox(
+          circles.add(
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: getSize(4)),
+              child: SizedBox(
                 width: W,
                 height: H,
                 child: Container(
@@ -393,37 +390,40 @@ class CodePanel extends StatelessWidget {
                       shape: BoxShape.circle,
                       border: Border.all(color: color, width: 1.0),
                       color: appTheme.textGreyColor),
-                ),),
-          ),);
+                ),
+              ),
+            ),
+          );
         } else {
           circles.add(Padding(
-            padding:EdgeInsets.symmetric(horizontal: getSize(4)),
+            padding: EdgeInsets.symmetric(horizontal: getSize(4)),
             child: SizedBox(
-                width: W,
-                height: H,
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: color, width: 1.0),
-                    color: appTheme.greenColor,
-                  ),
-                ),),
+              width: W,
+              height: H,
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: color, width: 1.0),
+                  color: appTheme.greenColor,
+                ),
+              ),
+            ),
           ));
         }
       }
     }
 
     return new SizedBox.fromSize(
-    //  size: new Size(MediaQuery.of(context).size.width, 30.0),
+      //  size: new Size(MediaQuery.of(context).size.width, 30.0),
       child: new Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox.fromSize(
-               // size: new Size(40.0 * codeLength, H),
+                // size: new Size(40.0 * codeLength, H),
                 child: new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: circles,
-                )),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: circles,
+            )),
           ]),
     );
   }

@@ -175,9 +175,9 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
 
   getOverToneIntensityViews() {
     return Column(children: [
-      SizedBox(height: getSize(16)),
+      SizedBox(height: getSize(32)),
       SelectionWidget(widget.colorModel.intensitySelection),
-      SizedBox(height: getSize(16)),
+      SizedBox(height: getSize(32)),
       SelectionWidget(widget.colorModel.overtoneSelection),
       SizedBox(height: getSize(8)),
     ]);

@@ -9,17 +9,9 @@ import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Auth/ForgetPassword.dart';
-import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
-import 'package:diamnow/components/Screens/Auth/SignInWithMPINScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Signup.dart';
-import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
-import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
-import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
-import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
-import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
-import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
-import 'package:diamnow/components/Screens/Notification/Notifications.dart';
 import 'package:diamnow/components/Screens/Version/VersionUpdate.dart';
+
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
@@ -32,6 +24,7 @@ import 'package:package_info/package_info.dart';
 
 import '../../../app/utils/navigator.dart';
 import '../../../modules/ThemeSetting.dart';
+import 'SignInWithMPINScreen.dart';
 
 class LoginScreen extends StatefulScreenWidget {
   static const route = "login";
@@ -294,7 +287,6 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                             boxShadow: getBoxShadow(context)),
                                         child: AppButton.flat(
                                           onTap: () {
-                                            // NavigationUtilities.pushRoute(TabBarDemo.route);
                                             FocusScope.of(context).unfocus();
                                             if (_formKey.currentState
                                                 .validate()) {
@@ -305,14 +297,11 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                                 _autoValidate = true;
                                               });
                                             }
-                                            // NavigationUtilities.push(ThemeSetting());
                                           },
-                                          //  backgroundColor: appTheme.buttonColor,
                                           borderRadius: getSize(5),
                                           fitWidth: true,
                                           text:
                                               R.string().authStrings.signInCap,
-                                          //isButtonEnabled: enableDisableSigninButton(),
                                         ),
                                       ),
                                     ),
@@ -350,29 +339,36 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                             ),
                                           ),
                                           Expanded(
-                                            child: Container(
-                                              alignment: Alignment.center,
-                                              margin: EdgeInsets.only(
-                                                top: getSize(10),
-                                                left: getSize(0),
-                                              ),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Image.asset(
-                                                    mpin,
-                                                    width: getSize(15),
-                                                    height: getSize(15),
-                                                  ),
-                                                  SizedBox(
-                                                    width: getSize(10),
-                                                  ),
-                                                  Text(
-                                                    "MPIN",
-                                                    style: appTheme
-                                                        .primary16TextStyle,
-                                                  )
-                                                ],
+                                            child: InkWell(
+                                              onTap: () {
+                                                NavigationUtilities.pushRoute(
+                                                    SignInWithMPINScreen.route);
+                                              },
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                margin: EdgeInsets.only(
+                                                  top: getSize(10),
+                                                  left: getSize(0),
+                                                ),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Image.asset(
+                                                      mpin,
+                                                      width: getSize(15),
+                                                      height: getSize(15),
+                                                    ),
+                                                    SizedBox(
+                                                      width: getSize(10),
+                                                    ),
+                                                    Text(
+                                                      "MPIN",
+                                                      style: appTheme
+                                                          .primary16TextStyle,
+                                                    )
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -391,14 +387,12 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                   ),
                 ),
                 bottomNavigationBar: Container(
-//              alignment: Alignment.bottomCenter,
-                  margin: EdgeInsets.all(getSize(15)),
                   child: InkWell(
                     onTap: () {
                       NavigationUtilities.pushRoute(SignupScreen.route);
                     },
                     child: Padding(
-                      padding: EdgeInsets.only(bottom: getSize(30)),
+                      padding: EdgeInsets.only(bottom: getSize(16)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
@@ -427,9 +421,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
         //Image.asset(profileEmail,),
 
         hintText: R.string().authStrings.name,
-//        keyboardType: TextInputType.number,
         inputController: _userNameController,
-//        fillColor: _isUserNameValid ? null : fromHex("#FFEFEF"),
         errorBorder: _isUserNameValid
             ? null
             : OutlineInputBorder(
@@ -437,10 +429,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                 borderSide: BorderSide(width: 1, color: Colors.red),
               ),
 
-        formatter: [
-//          ValidatorInputFormatter(
-//              editingValidator: DecimalNumberEditingRegexValidator(10)),
-        ],
+        formatter: [],
       ),
       textCallback: (text) {
         if (_autoValidate) {
@@ -563,12 +552,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
         await app
             .resolve<PrefUtils>()
             .saveString("passWord", _passwordController.text);
-
-        // print(app.resolve<PrefUtils>().getBool("rememberMe"));
-        // print(app.resolve<PrefUtils>().getString("userName"));
-        // print(app.resolve<PrefUtils>().getString("passWord"));
       }
-//      NavigationUtilities.pushRoute(Notifications.route);
       callVersionUpdateApi(id: loginResp.data.user.id);
     }).catchError((onError) {
       if (onError is ErrorResp) {

@@ -134,10 +134,14 @@ class _DashboardState extends StatefulScreenWidgetState {
   setTopCountData() {
     for (var item in dashboardConfig.arrTopSection) {
       if (item.type == DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND) {
-        DashboardCount dash = this.dashboardModel.dashboardCount.singleWhere(
-            (element) => element.name.toLowerCase() == "finestar_exclusive");
-        if (!isNullEmptyOrFalse(dash)) {
-          item.value = "${dash.searchCount}";
+        if (!isNullEmptyOrFalse(this.dashboardModel.dashboardCount)) {
+          DashboardCount dash = this.dashboardModel.dashboardCount.singleWhere(
+              (element) => element.name.toLowerCase() == "finestar_exclusive");
+          if (!isNullEmptyOrFalse(dash)) {
+            item.value = "${dash.searchCount}";
+          } else {
+            item.value = "0";
+          }
         } else {
           item.value = "0";
         }
@@ -148,10 +152,14 @@ class _DashboardState extends StatefulScreenWidgetState {
         item.value =
             "${this.dashboardModel.tracks[DiamondTrackConstant.TRACK_TYPE_WATCH_LIST.toString()].pieces}";
       } else if (item.type == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
-        DashboardCount dash = this.dashboardModel.dashboardCount.singleWhere(
-            (element) => element.name.toLowerCase() == "new arrival");
-        if (!isNullEmptyOrFalse(dash)) {
-          item.value = "${dash.searchCount}";
+        if (!isNullEmptyOrFalse(this.dashboardModel.dashboardCount)) {
+          DashboardCount dash = this.dashboardModel.dashboardCount.singleWhere(
+              (element) => element.name.toLowerCase() == "new arrival");
+          if (!isNullEmptyOrFalse(dash)) {
+            item.value = "${dash.searchCount}";
+          } else {
+            item.value = "0";
+          }
         } else {
           item.value = "0";
         }

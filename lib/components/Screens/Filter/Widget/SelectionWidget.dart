@@ -336,7 +336,7 @@ class _TagWidgetState extends State<TagWidget> {
             left: getSize(12.0)),
         child: Center(
           child: Text(
-            widget.model.masters[index].webDisplay,
+            showWebDisplayAccordingToMaster(widget.model, index),
             style: widget.model.masters[index].isSelected
                 ? appTheme.primaryColor14TextStyle
                 : appTheme.blackNormal14TitleColorblack,
@@ -372,7 +372,7 @@ class _TagWidgetState extends State<TagWidget> {
               left: getSize(12.0)),
           child: Center(
             child: Text(
-              widget.model.masters[index].webDisplay,
+              showWebDisplayAccordingToMaster(widget.model, index),
               style: widget.model.masters[index].isSelected
                   ? appTheme.primaryColor14TextStyle
                   : appTheme.blackNormal14TitleColorblack,
@@ -584,7 +584,7 @@ class _TagWidgetState extends State<TagWidget> {
         fromDate = picked;
         _fromDateController.text = myFormat.format(picked);
       }
-      ;
+
       print("From Date====>" + fromDate.toString());
     });
   }
@@ -759,5 +759,25 @@ class _TagWidgetState extends State<TagWidget> {
         ),
       ),
     );
+  }
+
+  showWebDisplayAccordingToMaster(SelectionModel model, int index) {
+    if (model.masterCode == MasterCode.cut ||
+        model.masterCode == MasterCode.polish ||
+        model.masterCode == MasterCode.symmetry) {
+      if (model.masters[index].code.toLowerCase() == "ex") {
+        return "EX";
+      } else if (model.masters[index].code.toLowerCase() == "g") {
+        return "G";
+      } else if (model.masters[index].code.toLowerCase() == "vg") {
+        return "VG";
+      } else if (model.masters[index].code.toLowerCase() == "f") {
+        return "F";
+      }
+    } else if (model.viewType == ViewTypes.caratRange) {
+      return model.masters[index].group ?? "-";
+    }
+
+    return model.masters[index].webDisplay ?? "-";
   }
 }
