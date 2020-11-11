@@ -4,6 +4,9 @@ import 'dart:async';
 import 'dart:io';
 import 'package:diamnow/app/Helper/Themehelper.dart';
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:flutter/material.dart';
 
 typedef void DeleteCode();
@@ -86,32 +89,15 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
               });
             });
             if (widget.showWrongPassDialog) {
-              showDialog(
-                  barrierDismissible: false,
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Center(
-                      child: AlertDialog(
-                        title: Text(
-                          widget.wrongPassTitle,
-                          style: TextStyle(fontFamily: "Open Sans"),
-                        ),
-                        content: Text(
-                          widget.wrongPassContent,
-                          style: TextStyle(fontFamily: "Open Sans"),
-                        ),
-                        actions: <Widget>[
-                          FlatButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: Text(
-                              widget.wrongPassCancelButtonText,
-                              style: TextStyle(color: Colors.blue),
-                            ),
-                          )
-                        ],
-                      ),
-                    );
-                  });
+              app.resolve<CustomDialogs>().confirmDialog(
+                    context,
+                    barrierDismissible: true,
+                    title: "Oops!",
+                    desc: widget.wrongPassContent,
+                    positiveBtnTitle: R.string().commonString.ok,
+                    // negativeBtnTitle: R.string().commonString.cancel,
+                    onClickCallback: (buttonType) {},
+                  );
             }
           }
         });
@@ -219,7 +205,7 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
 
   Widget buildContainerCircle(int number) {
     return InkResponse(
-      highlightColor: Colors.red,
+      highlightColor: appTheme.greenColor,
       onTap: () {
         _onCodeClick(number);
       },

@@ -13,6 +13,7 @@ import 'package:diamnow/components/Screens/Auth/Signup.dart';
 import 'package:diamnow/components/Screens/Version/VersionUpdate.dart';
 
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
+import 'package:diamnow/models/Auth/SignInAsGuestModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:diamnow/models/Version/VersionUpdateResp.dart';
@@ -553,7 +554,9 @@ class _LoginScreenState extends StatefulScreenWidgetState {
             .resolve<PrefUtils>()
             .saveString("passWord", _passwordController.text);
       }
-      callVersionUpdateApi(id: loginResp.data.user.id);
+//      NavigationUtilities.pushRoute(Notifications.route);
+      // callVersionUpdateApi(id: loginResp.data.user.id); //for local
+      SyncManager().callVersionUpdateApi(context,VersionUpdateApi.logIn,id: loginResp.data.user.id);
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
@@ -566,161 +569,143 @@ class _LoginScreenState extends StatefulScreenWidgetState {
     });
   }
 
-  void callVersionUpdateApi({String id}) {
-    NetworkCall<VersionUpdateResp>()
-        .makeCall(
-            () => app
-                .resolve<ServiceModule>()
-                .networkService()
-                .getVersionUpdate(),
-            context,
-            isProgress: true)
-        .then(
-      (resp) {
-        if (resp.data != null) {
-          PackageInfo.fromPlatform().then(
-            (PackageInfo packageInfo) {
-              String appName = packageInfo.appName;
-              String packageName = packageInfo.packageName;
-              String version = packageInfo.version;
-              String buildNumber = packageInfo.buildNumber;
-              if (Platform.isIOS) {
-                print("iOS");
-                if (resp.data.ios != null) {
-                  num respVersion = resp.data.ios.number;
+  // void callVersionUpdateApi({String id}) {
+  //   NetworkCall<VersionUpdateResp>()
+  //       .makeCall(
+  //           () => app
+  //               .resolve<ServiceModule>()
+  //               .networkService()
+  //               .getVersionUpdate(),
+  //           context,
+  //           isProgress: true)
+  //       .then(
+  //     (resp) {
+  //       if (resp.data != null) {
+  //         PackageInfo.fromPlatform().then(
+  //           (PackageInfo packageInfo) {
+  //             String appName = packageInfo.appName;
+  //             String packageName = packageInfo.packageName;
+  //             String version = packageInfo.version;
+  //             String buildNumber = packageInfo.buildNumber;
+  //             if (Platform.isIOS) {
+  //               print("iOS");
+  //               if (resp.data.ios != null) {
+  //                 num respVersion = resp.data.ios.number;
 
-                  if (num.parse(version) < respVersion) {
-                    bool hardUpdate = resp.data.ios.isHardUpdate;
+  //                 if (num.parse(version) < respVersion) {
+  //                   bool hardUpdate = resp.data.ios.isHardUpdate;
 
-                    Map<String, dynamic> dict = new HashMap();
-                    dict["isHardUpdate"] = hardUpdate;
-                    dict["oncomplete"] = () {
-                      SyncManager.instance.callMasterSync(
-                          NavigationUtilities.key.currentContext, () async {
-                        //success
-                        AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-                      }, () {},
-                          isNetworkError: false,
-                          isProgress: true,
-                          id: id).then((value) {});
-                    };
-                    if (hardUpdate == true) {
-                      app.resolve<PrefUtils>().saveSkipUpdate(false);
-                      NavigationUtilities.pushReplacementNamed(
-                          VersionUpdate.route,
-                          args: dict);
-                    } else {
-                      if (app.resolve<PrefUtils>().getSkipUpdate() == false) {
-                        NavigationUtilities.pushReplacementNamed(
-                            VersionUpdate.route,
-                            args: dict);
-                      } else {
-                        SyncManager.instance.callMasterSync(
-                            NavigationUtilities.key.currentContext, () async {
-                          //success
-                          AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-                        }, () {},
-                            isNetworkError: false,
-                            isProgress: true,
-                            id: id).then((value) {});
-                      }
-                    }
-                  } else {
-                    SyncManager.instance.callMasterSync(
-                        NavigationUtilities.key.currentContext, () async {
-                      //success
-                      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-                    }, () {},
-                        isNetworkError: false,
-                        isProgress: true,
-                        id: id).then((value) {});
-                  }
-                } else {
-                  SyncManager.instance.callMasterSync(
-                      NavigationUtilities.key.currentContext, () async {
-                    //success
-                    AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-                  }, () {},
-                      isNetworkError: false,
-                      isProgress: true,
-                      id: id).then((value) {});
-                }
-              } else {
-                print("Android");
-                if (resp.data.android != null) {
-                  num respVersion = resp.data.android.number;
-                  if (num.parse(buildNumber) < respVersion) {
-                    bool hardUpdate = resp.data.android.isHardUpdate;
-                    Map<String, dynamic> dict = new HashMap();
-                    dict["isHardUpdate"] = hardUpdate;
-                    dict["oncomplete"] = () {
-                      SyncManager.instance.callMasterSync(
-                          NavigationUtilities.key.currentContext, () async {
-                        //success
-                        AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-                      }, () {},
-                          isNetworkError: false,
-                          isProgress: true,
-                          id: id).then((value) {});
-                    };
-                    if (hardUpdate == true) {
-                      app.resolve<PrefUtils>().saveSkipUpdate(false);
-                      NavigationUtilities.pushReplacementNamed(
-                          VersionUpdate.route,
-                          args: dict);
-                    } else {
-                      if (app.resolve<PrefUtils>().getSkipUpdate() == false) {
-                        NavigationUtilities.pushReplacementNamed(
-                            VersionUpdate.route,
-                            args: dict);
-                      } else {
-                        SyncManager.instance.callMasterSync(
-                            NavigationUtilities.key.currentContext, () async {
-                          //success
-                          AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-                        }, () {},
-                            isNetworkError: false,
-                            isProgress: true,
-                            id: id).then((value) {});
-                      }
-                    }
-                  } else {
-                    SyncManager.instance.callMasterSync(
-                        NavigationUtilities.key.currentContext, () async {
-                      //success
-                      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-                    }, () {},
-                        isNetworkError: false,
-                        isProgress: true,
-                        id: id).then((value) {});
-                  }
-                } else {
-                  SyncManager.instance.callMasterSync(
-                      NavigationUtilities.key.currentContext, () async {
-                    //success
-                    AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-                  }, () {},
-                      isNetworkError: false,
-                      isProgress: true,
-                      id: id).then((value) {});
-                }
-              }
-            },
-          );
-        }
-      },
-    ).catchError(
-      (onError) => {
-        app.resolve<CustomDialogs>().confirmDialog(context,
-            title: R.string().errorString.versionError,
-            desc: onError.message,
-            positiveBtnTitle: R.string().commonString.btnTryAgain,
-            onClickCallback: (PositveButtonClick) {
-          callVersionUpdateApi(id: id);
-        }),
-      },
-    );
-  }
+  //                   Map<String, dynamic> dict = new HashMap();
+  //                   dict["isHardUpdate"] = hardUpdate;
+  //                   dict["oncomplete"] = () {
+  //                     SyncManager.instance.callMasterSync(
+  //                         NavigationUtilities.key.currentContext, () async {
+  //                       //success
+  //                       AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+  //                     }, () {},
+  //                         isNetworkError: false,
+  //                         isProgress: true,
+  //                         id: id).then((value) {});
+  //                   };
+  //                   if (hardUpdate == true) {
+  //                     app.resolve<PrefUtils>().saveSkipUpdate(false);
+  //                     NavigationUtilities.pushReplacementNamed(
+  //                         VersionUpdate.route,
+  //                         args: dict);
+  //                   } else {
+  //                     if (app.resolve<PrefUtils>().getSkipUpdate() == false) {
+  //                       NavigationUtilities.pushReplacementNamed(
+  //                           VersionUpdate.route,
+  //                           args: dict);
+  //                     } else {
+  //                       SyncManager.instance.callMasterSync(
+  //                           NavigationUtilities.key.currentContext, () async {
+  //                         //success
+  //                         AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+  //                       }, () {},
+  //                           isNetworkError: false,
+  //                           isProgress: true,
+  //                           id: id).then((value) {});
+  //                     }
+  //                   }
+  //                 } else {
+  //                   SyncManager.instance.callMasterSync(
+  //                       NavigationUtilities.key.currentContext, () async {
+  //                     //success
+  //                     AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+  //                   }, () {},
+  //                       isNetworkError: false,
+  //                       isProgress: true,
+  //                       id: id).then((value) {});
+  //                 }
+  //               }
+  //             } else {
+  //               print("Android");
+  //               if (resp.data.android != null) {
+  //                 num respVersion = resp.data.android.number;
+  //                 if (num.parse(buildNumber) < respVersion) {
+  //                   bool hardUpdate = resp.data.android.isHardUpdate;
+  //                   Map<String, dynamic> dict = new HashMap();
+  //                   dict["isHardUpdate"] = hardUpdate;
+  //                   dict["oncomplete"] = () {
+  //                     SyncManager.instance.callMasterSync(
+  //                         NavigationUtilities.key.currentContext, () async {
+  //                       //success
+  //                       AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+  //                     }, () {},
+  //                         isNetworkError: false,
+  //                         isProgress: true,
+  //                         id: id).then((value) {});
+  //                   };
+  //                   if (hardUpdate == true) {
+  //                     app.resolve<PrefUtils>().saveSkipUpdate(false);
+  //                     NavigationUtilities.pushReplacementNamed(
+  //                         VersionUpdate.route,
+  //                         args: dict);
+  //                   } else {
+  //                     if (app.resolve<PrefUtils>().getSkipUpdate() == false) {
+  //                       NavigationUtilities.pushReplacementNamed(
+  //                           VersionUpdate.route,
+  //                           args: dict);
+  //                     } else {
+  //                       SyncManager.instance.callMasterSync(
+  //                           NavigationUtilities.key.currentContext, () async {
+  //                         //success
+  //                         AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+  //                       }, () {},
+  //                           isNetworkError: false,
+  //                           isProgress: true,
+  //                           id: id).then((value) {});
+  //                     }
+  //                   }
+  //                 } else {
+  //                   SyncManager.instance.callMasterSync(
+  //                       NavigationUtilities.key.currentContext, () async {
+  //                     //success
+  //                     AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+  //                   }, () {},
+  //                       isNetworkError: false,
+  //                       isProgress: true,
+  //                       id: id).then((value) {});
+  //                 }
+  //               }
+  //             }
+  //           },
+  //         );
+  //       }
+  //     },
+  //   ).catchError(
+  //     (onError) => {
+  //       app.resolve<CustomDialogs>().confirmDialog(context,
+  //           title: R.string().errorString.versionError,
+  //           desc: onError.message,
+  //           positiveBtnTitle: R.string().commonString.btnTryAgain,
+  //           onClickCallback: (PositveButtonClick) {
+  //         callVersionUpdateApi(id: id);
+  //       }),
+  //     },
+  //   );
+  // }
 
   Future<bool> onWillPop() {
     SystemChannels.platform.invokeMethod('SystemNavigator.pop');

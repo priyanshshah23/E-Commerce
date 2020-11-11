@@ -38,7 +38,7 @@ class DashboardModel {
   List<DashboardCount> dashboardCount;
 
   factory DashboardModel.fromJson(Map<String, dynamic> json) => DashboardModel(
-        seller: Seller.fromJson(json["seller"]),
+        seller: isNullEmptyOrFalse(json["seller"]) ? null : Seller.fromJson(json["seller"]),
         featuredStone: List<FeaturedStone>.from(
             json["featuredStone"].map((x) => FeaturedStone.fromJson(x))),
       recentSearch: List<SavedSearchModel>.from(
@@ -139,8 +139,8 @@ class Seller {
         id: json["id"],
         firstName: json["firstName"],
         lastName: json["lastName"],
-        email: json["email"],
-        whatsapp: json["whatsapp"],
+        email: json["email"] ?? "-",
+        whatsapp: json["whatsapp"] ?? "-",
       );
 
   Map<String, dynamic> toJson() => {

@@ -39,7 +39,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
 
   @override
   Widget build(BuildContext context) {
-    var myPass = [1, 2, 3, 4, 5, 6];
+    // var myPass = [1, 2, 3, 4, 5, 6];
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -117,36 +117,97 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                       style: appTheme.black16MediumTextStyle,
                     ),
                     SizedBox(height: getSize(32)),
+//                    Row(
+//                      mainAxisAlignment: MainAxisAlignment.center,
+//                      children: [
+//                        Container(
+//                          height: getSize(20),
+//                          width: getSize(20),
+//                          decoration: BoxDecoration(
+//                            color: appTheme.textGreyColor,
+//                            borderRadius: BorderRadius.circular(getSize(30)),
+//                          ),
+//                        ),
+//                        SizedBox(width: getSize(9)),
+//                        Container(
+//                          height: getSize(20),
+//                          width: getSize(20),
+//                          decoration: BoxDecoration(
+//                            color: appTheme.textGreyColor,
+//                            borderRadius: BorderRadius.circular(getSize(30)),
+//                          ),
+//                        ),
+//                        SizedBox(width: getSize(9)),
+//                        Container(
+//                          height: getSize(20),
+//                          width: getSize(20),
+//                          decoration: BoxDecoration(
+//                            color: appTheme.textGreyColor,
+//                            borderRadius: BorderRadius.circular(getSize(30)),
+//                          ),
+//                        ),
+//                        SizedBox(width: getSize(9)),
+//                        Container(
+//                          height: getSize(20),
+//                          width: getSize(20),
+//                          decoration: BoxDecoration(
+//                            color: appTheme.textGreyColor,
+//                            borderRadius: BorderRadius.circular(getSize(30)),
+//                          ),
+//                        ),
+//                        SizedBox(width: getSize(9)),
+//                        Container(
+//                          height: getSize(20),
+//                          width: getSize(20),
+//                          decoration: BoxDecoration(
+//                            color: appTheme.textGreyColor,
+//                            borderRadius: BorderRadius.circular(getSize(30)),
+//                          ),
+//                        ),
+//                        SizedBox(width: getSize(9)),
+//                        Container(
+//                          height: getSize(20),
+//                          width: getSize(20),
+//                          decoration: BoxDecoration(
+//                            color: appTheme.textGreyColor,
+//                            borderRadius: BorderRadius.circular(getSize(30)),
+//                          ),
+//                        ),
+//                      ],
+//                    ),
                     Container(
                       height: 800,
                       child: FlutterCustomPinView(
-                          title: "This is Screet ",
-                          passLength: myPass.length,
-                          bgImage: "",
-                          showFingerPass: true,
-                          fingerPrintImage: "",
-                          fingerVerify: isFingerprint,
-                          borderColor: appTheme.whiteColor,
-                          foregroundColor: appTheme.textGreyColor,
-                          showWrongPassDialog: true,
-                          wrongPassContent: "Wrong pass please try again.",
-                          wrongPassTitle: "Opps!",
-                          wrongPassCancelButtonText: "Cancel",
-                          passCodeVerify: (passcode) async {
-                            for (int i = 0; i < myPass.length; i++) {
-                              if (passcode[i] != myPass[i]) {
-                                return false;
-                              }
-                            }
-                            return true;
-                          },
-                          onSuccess: () {
-                            print("success");
-//                    Navigator.of(context).pushReplacement(
-//                        new MaterialPageRoute(builder: (BuildContext context) {
-//                          return EmptyPage();
-//                        }));
-                          }),
+                        title: "This is Screet ",
+                        passLength: 6,
+                        bgImage: "",
+                        showFingerPass: true,
+                        fingerPrintImage: "",
+                        //fingerFunction: biometrics,
+                        fingerVerify: isFingerprint,
+                        borderColor: appTheme.whiteColor,
+                        foregroundColor: appTheme.textGreyColor,
+                        showWrongPassDialog: true,
+                        wrongPassContent: "Wrong pass please try again.",
+                        wrongPassTitle: "Oops!",
+                        wrongPassCancelButtonText: "Cancel",
+                        passCodeVerify: (passcode) async {
+                          print(passcode);
+                          // for (int i = 0; i < myPass.length; i++) {
+                          //   if (passcode[i] != myPass[i]) {
+                          //     return false;
+                          //   }
+                          // }
+                          return true;
+                        },
+                        onSuccess: () {
+                          print("success");
+                          // SyncManager().callVersionUpdateApi(
+                          //   context,
+                          //   VersionUpdateApi.signInWithMpin,
+                          // );
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -207,7 +268,10 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
 //          loginResp.data.userPermissions,
 //        );
 //      }
-      callVersionUpdateApi(id: loginResp.data.user.id);
+      // callVersionUpdateApi(id: loginResp.data.user.id);
+      SyncManager().callVersionUpdateApi(
+          context, VersionUpdateApi.signInWithMpin,
+          id: loginResp.data.user.id);
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
@@ -219,109 +283,109 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
       }
     });
   }
+  // void callVersionUpdateApi({String id}) {
+  //   NetworkCall<VersionUpdateResp>()
+  //       .makeCall(
+  //           () => app
+  //           .resolve<ServiceModule>()
+  //           .networkService()
+  //           .getVersionUpdate(),
+  //       context,
+  //       isProgress: true)
+  //       .then(
+  //         (resp) {
+  //       if (resp.data != null) {
+  //         PackageInfo.fromPlatform().then(
+  //               (PackageInfo packageInfo) {
+  //             print(packageInfo.buildNumber);
+  //             String appName = packageInfo.appName;
+  //             String packageName = packageInfo.packageName;
+  //             String version = packageInfo.version;
+  //             String buildNumber = packageInfo.buildNumber;
 
-  void callVersionUpdateApi({String id}) {
-    NetworkCall<VersionUpdateResp>()
-        .makeCall(
-            () => app
-                .resolve<ServiceModule>()
-                .networkService()
-                .getVersionUpdate(),
-            context,
-            isProgress: true)
-        .then(
-      (resp) {
-        if (resp.data != null) {
-          PackageInfo.fromPlatform().then(
-            (PackageInfo packageInfo) {
-              print(packageInfo.buildNumber);
-              String appName = packageInfo.appName;
-              String packageName = packageInfo.packageName;
-              String version = packageInfo.version;
-              String buildNumber = packageInfo.buildNumber;
+  //             if (Platform.isIOS) {
+  //               if (resp.data.ios != null) {
+  //                 num respVersion = resp.data.ios.number;
+  //                 if (num.parse(version) < respVersion) {
+  //                   bool hardUpdate = resp.data.ios.isHardUpdate;
+  //                   Map<String, dynamic> dict = new HashMap();
+  //                   dict["isHardUpdate"] = hardUpdate;
+  //                   dict["oncomplete"] = () {
+  //                     Navigator.pop(context);
+  //                   };
+  //                   print(hardUpdate);
+  //                   if (hardUpdate == true) {
+  //                     NavigationUtilities.pushReplacementNamed(
+  //                       VersionUpdate.route,
+  //                       args: dict,
+  //                     );
+  //                   }
+  //                 } else {
+  //                   SyncManager.instance.callMasterSync(
+  //                       NavigationUtilities.key.currentContext, () async {
+  //                     //success
+  //                     AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+  //                   }, () {},
+  //                       isNetworkError: false,
+  //                       isProgress: true,
+  //                       id: id).then((value) {});
+  //                 }
+  //               } else {
+  //                 SyncManager.instance.callMasterSync(
+  //                     NavigationUtilities.key.currentContext, () async {
+  //                   //success
+  //                   AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+  //                 }, () {},
+  //                     isNetworkError: false,
+  //                     isProgress: true,
+  //                     id: id).then((value) {});
+  //               }
+  //             } else {
+  //               if (resp.data.android != null) {
+  //                 num respVersion = resp.data.android.number;
+  //                 if (num.parse(buildNumber) < respVersion) {
+  //                   bool hardUpdate = resp.data.android.isHardUpdate;
+  //                   if (hardUpdate == true) {
+  //                     NavigationUtilities.pushReplacementNamed(
+  //                       VersionUpdate.route,
+  //                     );
+  //                   }
+  //                 } else {
+  //                   SyncManager.instance.callMasterSync(
+  //                       NavigationUtilities.key.currentContext, () async {
+  //                     //success
+  //                     AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+  //                   }, () {},
+  //                       isNetworkError: false,
+  //                       isProgress: true,
+  //                       id: id).then((value) {});
+  //                 }
+  //               } else {
+  //                 SyncManager.instance.callMasterSync(
+  //                     NavigationUtilities.key.currentContext, () async {
+  //                   //success
+  //                   AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+  //                 }, () {},
+  //                     isNetworkError: false,
+  //                     isProgress: true,
+  //                     id: id).then((value) {});
+  //               }
+  //             }
+  //           },
+  //         );
+  //       }
+  //     },
+  //   ).catchError(
+  //         (onError) => {
+  //       app.resolve<CustomDialogs>().confirmDialog(context,
+  //           title: R.string().errorString.versionError,
+  //           desc: onError.message,
+  //           positiveBtnTitle: R.string().commonString.btnTryAgain,
+  //           onClickCallback: (PositveButtonClick) {
+  //             callVersionUpdateApi(id: id);
+  //           }),
+  //     },
+  //   );
+  // }
 
-              if (Platform.isIOS) {
-                if (resp.data.ios != null) {
-                  num respVersion = resp.data.ios.number;
-                  if (num.parse(version) < respVersion) {
-                    bool hardUpdate = resp.data.ios.isHardUpdate;
-                    Map<String, dynamic> dict = new HashMap();
-                    dict["isHardUpdate"] = hardUpdate;
-                    dict["oncomplete"] = () {
-                      Navigator.pop(context);
-                    };
-                    print(hardUpdate);
-                    if (hardUpdate == true) {
-                      NavigationUtilities.pushReplacementNamed(
-                        VersionUpdate.route,
-                        args: dict,
-                      );
-                    }
-                  } else {
-                    SyncManager.instance.callMasterSync(
-                        NavigationUtilities.key.currentContext, () async {
-                      //success
-                      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-                    }, () {},
-                        isNetworkError: false,
-                        isProgress: true,
-                        id: id).then((value) {});
-                  }
-                } else {
-                  SyncManager.instance.callMasterSync(
-                      NavigationUtilities.key.currentContext, () async {
-                    //success
-                    AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-                  }, () {},
-                      isNetworkError: false,
-                      isProgress: true,
-                      id: id).then((value) {});
-                }
-              } else {
-                if (resp.data.android != null) {
-                  num respVersion = resp.data.android.number;
-                  if (num.parse(buildNumber) < respVersion) {
-                    bool hardUpdate = resp.data.android.isHardUpdate;
-                    if (hardUpdate == true) {
-                      NavigationUtilities.pushReplacementNamed(
-                        VersionUpdate.route,
-                      );
-                    }
-                  } else {
-                    SyncManager.instance.callMasterSync(
-                        NavigationUtilities.key.currentContext, () async {
-                      //success
-                      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-                    }, () {},
-                        isNetworkError: false,
-                        isProgress: true,
-                        id: id).then((value) {});
-                  }
-                } else {
-                  SyncManager.instance.callMasterSync(
-                      NavigationUtilities.key.currentContext, () async {
-                    //success
-                    AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-                  }, () {},
-                      isNetworkError: false,
-                      isProgress: true,
-                      id: id).then((value) {});
-                }
-              }
-            },
-          );
-        }
-      },
-    ).catchError(
-      (onError) => {
-        app.resolve<CustomDialogs>().confirmDialog(context,
-            title: R.string().errorString.versionError,
-            desc: onError.message,
-            positiveBtnTitle: R.string().commonString.btnTryAgain,
-            onClickCallback: (PositveButtonClick) {
-          callVersionUpdateApi(id: id);
-        }),
-      },
-    );
-  }
 }

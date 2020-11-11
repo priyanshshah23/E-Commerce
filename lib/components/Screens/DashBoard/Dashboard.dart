@@ -113,13 +113,13 @@ class _DashboardState extends StatefulScreenWidgetState {
             context,
             isProgress: !isRefress && !isLoading)
         .then((resp) async {
-      print(resp);
       this.dashboardModel = resp.data;
+      if (!isNullEmptyOrFalse(this.dashboardModel.seller)){
       emailURL = this.dashboardModel.seller.email;
+      }
       setTopCountData();
       setState(() {});
     }).catchError((onError) {
-      print(onError);
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
               context,
@@ -183,16 +183,16 @@ class _DashboardState extends StatefulScreenWidgetState {
                   height: getSize(30),
                   child: Center(
                     child: ClipRRect(
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(getSize(30))),
-                      child: getImageView(
-                        app.resolve<PrefUtils>().getUserDetails().profileImage,
-                        placeHolderImage: placeHolder,
-                        height: getSize(30),
-                        width: getSize(30),
-                        fit: BoxFit.fitWidth,
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(getSize(30))),
+                        child: getImageView(
+                          app.resolve<PrefUtils>().getUserDetails().profileImage,
+                          placeHolderImage: placeHolder,
+                          height: getSize(30),
+                          width: getSize(30),
+                          fit: BoxFit.fill,
+                        ),
                       ),
-                    ),
                   ),
                 ),
               )
@@ -1767,7 +1767,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                               width: getSize(10),
                             ),
                             Text(
-                              this.dashboardModel.seller.email ?? "-",
+                              this.dashboardModel.seller?.email ?? "-",
                               style: appTheme.blackNormal14TitleColorblack,
                             ),
                           ],
