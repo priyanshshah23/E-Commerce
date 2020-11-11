@@ -59,7 +59,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
 
   @override
   Widget build(BuildContext context) {
-    var myPass = [1, 2, 3, 4, 5, 6];
+    // var myPass = [1, 2, 3, 4, 5, 6];
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -199,7 +199,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                       height: 800,
                       child: FlutterCustomPinView(
                         title: "This is Screet ",
-                        passLength: myPass.length,
+                        passLength: 6,
                         bgImage: "",
                         showFingerPass: true,
                         fingerPrintImage: "",
@@ -213,19 +213,20 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                         wrongPassCancelButtonText: "Cancel",
                         passCodeVerify: (passcode) async {
                           print(passcode);
-                          for (int i = 0; i < myPass.length; i++) {
-                            if (passcode[i] != myPass[i]) {
-                              return false;
-                            }
-                          }
+                          // for (int i = 0; i < myPass.length; i++) {
+                          //   if (passcode[i] != myPass[i]) {
+                          //     return false;
+                          //   }
+                          // }
                           return true;
                         },
                         onSuccess: () {
                           print("success");
-//                    Navigator.of(context).pushReplacement(
-//                        new MaterialPageRoute(builder: (BuildContext context) {
-//                          return EmptyPage();
-//                        }));
+                          // SyncManager().callVersionUpdateApi(
+                          //   context,
+                          //   VersionUpdateApi.logIn,
+                          //   // id: app.resolve<PrefUtils>().getUserDetails().id,
+                          // );
                         },
                       ),
                     ),
