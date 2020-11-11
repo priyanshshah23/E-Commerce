@@ -159,7 +159,10 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
               ),
               child: Padding(
                 padding: EdgeInsets.only(
-                    top:getSize(16), left:getSize(16), right:getSize(16),),
+                  top: getSize(16),
+                  left: getSize(16),
+                  right: getSize(16),
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -287,11 +290,10 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                     padding: EdgeInsets.only(
                                         top: getSize(8), bottom: getSize(8)),
                                     decoration: BoxDecoration(
-                                      // color: Colors.red,
+                                        // color: Colors.red,
                                         border: Border(
                                       top: BorderSide(
                                           color: appTheme.dividerColor),
-                                      
                                     )),
                                     child: Row(
                                       mainAxisAlignment:
@@ -364,7 +366,10 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                     ),
                                   ),
                                 )
-                              : SizedBox(),
+                              : Padding(
+                                padding: EdgeInsets.only(bottom:getSize(12.0)),
+                                child: SizedBox(),
+                              ),
                         ],
                       ),
                     ),
@@ -411,7 +416,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
     );
   }
 
-  Column listOfSelectedFilter(List<Map<String, dynamic>> arr,
+  listOfSelectedFilter(List<Map<String, dynamic>> arr,
       SavedSearchModel savedSearchModel, int length) {
     return Column(
       children: <Widget>[

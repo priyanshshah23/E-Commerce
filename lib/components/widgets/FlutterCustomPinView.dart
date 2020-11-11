@@ -4,6 +4,9 @@ import 'dart:async';
 import 'dart:io';
 import 'package:diamnow/app/Helper/Themehelper.dart';
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:flutter/material.dart';
 
 typedef void DeleteCode();
@@ -86,32 +89,15 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
               });
             });
             if (widget.showWrongPassDialog) {
-              showDialog(
-                  barrierDismissible: false,
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Center(
-                      child: AlertDialog(
-                        title: Text(
-                          widget.wrongPassTitle,
-                          style: TextStyle(fontFamily: "Open Sans"),
-                        ),
-                        content: Text(
-                          widget.wrongPassContent,
-                          style: TextStyle(fontFamily: "Open Sans"),
-                        ),
-                        actions: <Widget>[
-                          FlatButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: Text(
-                              widget.wrongPassCancelButtonText,
-                              style: TextStyle(color: Colors.blue),
-                            ),
-                          )
-                        ],
-                      ),
-                    );
-                  });
+              app.resolve<CustomDialogs>().confirmDialog(
+                    context,
+                    barrierDismissible: true,
+                    title: "Oops!",
+                    desc: widget.wrongPassContent,
+                    positiveBtnTitle: R.string().commonString.ok,
+                    // negativeBtnTitle: R.string().commonString.cancel,
+                    onClickCallback: (buttonType) {},
+                  );
             }
           }
         });
@@ -183,8 +169,7 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
             Expanded(
               child: Container(
                 padding: EdgeInsets.only(left: 0, top: 0),
-                child:
-                    NotificationListener<OverscrollIndicatorNotification>(
+                child: NotificationListener<OverscrollIndicatorNotification>(
                   onNotification: (overscroll) {
                     overscroll.disallowGlow();
                     return null;
@@ -220,7 +205,7 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
 
   Widget buildContainerCircle(int number) {
     return InkResponse(
-      highlightColor: Colors.red,
+      highlightColor: appTheme.greenColor,
       onTap: () {
         _onCodeClick(number);
       },
@@ -232,11 +217,10 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: appTheme.greenColor.withOpacity(0.1),
-                blurRadius: 20,
-                spreadRadius: 5,
-                  offset: Offset(0.0,6.0)
-              )
+                  color: appTheme.greenColor.withOpacity(0.1),
+                  blurRadius: 20,
+                  spreadRadius: 5,
+                  offset: Offset(0.0, 6.0))
             ]),
         child: Center(
           child: Text(
@@ -269,8 +253,7 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
                   color: appTheme.greenColor.withOpacity(0.1),
                   blurRadius: 20,
                   spreadRadius: 5,
-                  offset: Offset(0.0,6.0)
-              )
+                  offset: Offset(0.0, 6.0))
             ]),
         child: Center(
           child: Icon(
@@ -309,8 +292,7 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
                   color: appTheme.greenColor.withOpacity(0.1),
                   blurRadius: 20,
                   spreadRadius: 5,
-                  offset: Offset(0.0,6.0)
-              )
+                  offset: Offset(0.0, 6.0))
             ]),
         child: Center(
           child: Icon(
@@ -358,7 +340,7 @@ class CodePanel extends StatelessWidget {
       do {
         circles.add(
           Padding(
-            padding:EdgeInsets.symmetric(horizontal: getSize(4)),
+            padding: EdgeInsets.symmetric(horizontal: getSize(4)),
             child: SizedBox(
               width: W,
               height: H,
@@ -383,9 +365,10 @@ class CodePanel extends StatelessWidget {
       }
       for (int i = 1; i <= codeLength; i++) {
         if (i > currentLength) {
-          circles.add(Padding(
-            padding:EdgeInsets.symmetric(horizontal: getSize(4)),
-            child: SizedBox(
+          circles.add(
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: getSize(4)),
+              child: SizedBox(
                 width: W,
                 height: H,
                 child: Container(
@@ -393,37 +376,40 @@ class CodePanel extends StatelessWidget {
                       shape: BoxShape.circle,
                       border: Border.all(color: color, width: 1.0),
                       color: appTheme.textGreyColor),
-                ),),
-          ),);
+                ),
+              ),
+            ),
+          );
         } else {
           circles.add(Padding(
-            padding:EdgeInsets.symmetric(horizontal: getSize(4)),
+            padding: EdgeInsets.symmetric(horizontal: getSize(4)),
             child: SizedBox(
-                width: W,
-                height: H,
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: color, width: 1.0),
-                    color: appTheme.greenColor,
-                  ),
-                ),),
+              width: W,
+              height: H,
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: color, width: 1.0),
+                  color: appTheme.greenColor,
+                ),
+              ),
+            ),
           ));
         }
       }
     }
 
     return new SizedBox.fromSize(
-    //  size: new Size(MediaQuery.of(context).size.width, 30.0),
+      //  size: new Size(MediaQuery.of(context).size.width, 30.0),
       child: new Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox.fromSize(
-               // size: new Size(40.0 * codeLength, H),
+                // size: new Size(40.0 * codeLength, H),
                 child: new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: circles,
-                )),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: circles,
+            )),
           ]),
     );
   }

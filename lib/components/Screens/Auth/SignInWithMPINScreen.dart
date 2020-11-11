@@ -208,9 +208,10 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                     foregroundColor: appTheme.textGreyColor,
                     showWrongPassDialog: true,
                     wrongPassContent: "Wrong pass please try again.",
-                    wrongPassTitle: "Opps!",
+                    wrongPassTitle: "Oops!",
                     wrongPassCancelButtonText: "Cancel",
                     passCodeVerify: (passcode) async {
+                      print(passcode);
                       for (int i = 0; i < myPass.length; i++) {
                         if (passcode[i] != myPass[i]) {
                           return false;
