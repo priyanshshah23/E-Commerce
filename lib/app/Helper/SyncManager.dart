@@ -267,7 +267,6 @@ class SyncManager {
                   num respVersion = resp.data.ios.number;
 
                   if (num.parse(version) < respVersion) {
-
                     bool hardUpdate = resp.data.ios.isHardUpdate;
                     Map<String, dynamic> dict = new HashMap();
                     dict["isHardUpdate"] = hardUpdate;
@@ -294,14 +293,13 @@ class SyncManager {
                         Navigator.pop(context);
                     };
                     if (hardUpdate == true) {
-
-                      if(screenConstant == VersionUpdateApi.logIn || screenConstant == VersionUpdateApi.splash){
+                      if (screenConstant == VersionUpdateApi.logIn ||
+                          screenConstant == VersionUpdateApi.splash) {
                         app.resolve<PrefUtils>().saveSkipUpdate(false);
-                      NavigationUtilities.pushReplacementNamed(
-                          VersionUpdate.route,
-                          args: dict);
+                        NavigationUtilities.pushReplacementNamed(
+                            VersionUpdate.route,
+                            args: dict);
                       }
-                      
 
                       //for signinwithmpin / signinwithguest
                       if (screenConstant == VersionUpdateApi.signInAsGuest ||
@@ -318,27 +316,48 @@ class SyncManager {
                             args: dict);
                       } else {
                         //for login
-                        if(screenConstant == VersionUpdateApi.logIn){
+                        if (screenConstant == VersionUpdateApi.logIn) {
                           SyncManager.instance.callMasterSync(
-                            NavigationUtilities.key.currentContext, () async {
-                          //success
-                          AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-                        }, () {},
-                            isNetworkError: false,
-                            isProgress: true,
-                            id: id).then((value) {});
+                              NavigationUtilities.key.currentContext, () async {
+                            //success
+                            AppNavigation.shared
+                                .movetoHome(isPopAndSwitch: true);
+                          }, () {},
+                              isNetworkError: false,
+                              isProgress: true,
+                              id: id).then((value) {});
                         }
-                        
 
                         //for spalsh
-                        if(screenConstant == VersionUpdateApi.splash)
+                        if (screenConstant == VersionUpdateApi.splash)
                           AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                       }
                     }
                   } else {
                     //for login / signinasguest / signinwithmpin
-                    if(screenConstant == VersionUpdateApi.logIn || screenConstant == VersionUpdateApi.signInAsGuest || screenConstant == VersionUpdateApi.signInWithMpin){
+                    if (screenConstant == VersionUpdateApi.logIn ||
+                        screenConstant == VersionUpdateApi.signInAsGuest ||
+                        screenConstant == VersionUpdateApi.signInWithMpin) {
                       SyncManager.instance.callMasterSync(
+                          NavigationUtilities.key.currentContext, () async {
+                        //success
+                        AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+                      }, () {},
+                          isNetworkError: false,
+                          isProgress: true,
+                          id: id).then((value) {});
+                    }
+
+                    //for splash
+                    if (screenConstant == VersionUpdateApi.splash)
+                      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+                  }
+                } else {
+                  //for signinwithmpin / signwithguest
+                  if (screenConstant == VersionUpdateApi.logIn ||
+                      screenConstant == VersionUpdateApi.signInWithMpin ||
+                      screenConstant == VersionUpdateApi.signInAsGuest) {
+                    SyncManager.instance.callMasterSync(
                         NavigationUtilities.key.currentContext, () async {
                       //success
                       AppNavigation.shared.movetoHome(isPopAndSwitch: true);
@@ -346,29 +365,10 @@ class SyncManager {
                         isNetworkError: false,
                         isProgress: true,
                         id: id).then((value) {});
-                    }
-                    
-
-                    //for splash
-                    if(screenConstant == VersionUpdateApi.splash)
-                      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                   }
-                } else {
-                  //for signinwithmpin / signwithguest
-                  if(screenConstant == VersionUpdateApi.signInWithMpin || screenConstant == VersionUpdateApi.signInAsGuest){
-                    SyncManager.instance.callMasterSync(
-                      NavigationUtilities.key.currentContext, () async {
-                    //success
-                    AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-                  }, () {},
-                      isNetworkError: false,
-                      isProgress: true,
-                      id: id).then((value) {});
-                  }
-                  
 
                   //for splash
-                  if(screenConstant == VersionUpdateApi.splash)
+                  if (screenConstant == VersionUpdateApi.splash)
                     AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                 }
               } else {
@@ -381,43 +381,8 @@ class SyncManager {
                     dict["isHardUpdate"] = hardUpdate;
                     dict["oncomplete"] = () {
                       //only for login
-                      if(screenConstant == VersionUpdateApi.logIn){
+                      if (screenConstant == VersionUpdateApi.logIn) {
                         SyncManager.instance.callMasterSync(
-                          NavigationUtilities.key.currentContext, () async {
-                        //success
-                        AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-                      }, () {},
-                          isNetworkError: false,
-                          isProgress: true,
-                          id: id).then((value) {});
-                      }
-                      
-
-                      //for splash
-                      if(screenConstant == VersionUpdateApi.splash)
-                        AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-                    };
-                    if (hardUpdate == true) {
-                      if(screenConstant == VersionUpdateApi.signInAsGuest || screenConstant == VersionUpdateApi.signInWithMpin){
-                        NavigationUtilities.pushReplacementNamed(
-                        VersionUpdate.route,
-                      );
-                      } else {
-                        app.resolve<PrefUtils>().saveSkipUpdate(false);
-                      NavigationUtilities.pushReplacementNamed(
-                          VersionUpdate.route,
-                          args: dict);
-                      }
-                      
-                    } else {
-                      if (app.resolve<PrefUtils>().getSkipUpdate() == false) {
-                        NavigationUtilities.pushReplacementNamed(
-                            VersionUpdate.route,
-                            args: dict);
-                      } else {
-
-                        if(screenConstant == VersionUpdateApi.logIn){
-                          SyncManager.instance.callMasterSync(
                             NavigationUtilities.key.currentContext, () async {
                           //success
                           AppNavigation.shared.movetoHome(isPopAndSwitch: true);
@@ -425,28 +390,79 @@ class SyncManager {
                             isNetworkError: false,
                             isProgress: true,
                             id: id).then((value) {});
-                        }
-                        
-                        //for splash
-                        if(screenConstant == VersionUpdateApi.splash){
-                          AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+                      }
+
+                      //for splash
+                      if (screenConstant == VersionUpdateApi.splash)
+                        AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+                    };
+                    if (hardUpdate == true) {
+                      if (screenConstant == VersionUpdateApi.signInAsGuest ||
+                          screenConstant == VersionUpdateApi.signInWithMpin) {
+                        NavigationUtilities.pushReplacementNamed(
+                          VersionUpdate.route,
+                        );
+                      } else {
+                        app.resolve<PrefUtils>().saveSkipUpdate(false);
+                        NavigationUtilities.pushReplacementNamed(
+                            VersionUpdate.route,
+                            args: dict);
+                      }
+                    } else {
+                      if (app.resolve<PrefUtils>().getSkipUpdate() == false) {
+                        NavigationUtilities.pushReplacementNamed(
+                            VersionUpdate.route,
+                            args: dict);
+                      } else {
+                        if (screenConstant == VersionUpdateApi.logIn) {
+                          SyncManager.instance.callMasterSync(
+                              NavigationUtilities.key.currentContext, () async {
+                            //success
+                            AppNavigation.shared
+                                .movetoHome(isPopAndSwitch: true);
+                          }, () {},
+                              isNetworkError: false,
+                              isProgress: true,
+                              id: id).then((value) {});
                         }
 
-                        
-                        
+                        //for splash
+                        if (screenConstant == VersionUpdateApi.splash) {
+                          AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+                        }
                       }
                     }
 
                     // //signinasguest / signinwithmpin
                     // bool hardUpdate = resp.data.android.isHardUpdate;
                     // if (hardUpdate == true) {
-                      
+
                     // }
                   } else {
                     //for signinguest and login and signinwithmpin
 
-                    if(screenConstant == VersionUpdateApi.logIn || screenConstant == VersionUpdateApi.signInWithMpin || screenConstant == VersionUpdateApi.signInAsGuest ){
+                    if (screenConstant == VersionUpdateApi.logIn ||
+                        screenConstant == VersionUpdateApi.signInWithMpin ||
+                        screenConstant == VersionUpdateApi.signInAsGuest) {
                       SyncManager.instance.callMasterSync(
+                          NavigationUtilities.key.currentContext, () async {
+                        //success
+                        AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+                      }, () {},
+                          isNetworkError: false,
+                          isProgress: true,
+                          id: id).then((value) {});
+                    }
+
+                    //for splash
+                    if (screenConstant == VersionUpdateApi.splash)
+                      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+                  }
+                } else {
+                  //for signinwithmpin / signinwithguest
+                  if (screenConstant == VersionUpdateApi.signInWithMpin ||
+                      screenConstant == VersionUpdateApi.signInAsGuest) {
+                    SyncManager.instance.callMasterSync(
                         NavigationUtilities.key.currentContext, () async {
                       //success
                       AppNavigation.shared.movetoHome(isPopAndSwitch: true);
@@ -454,29 +470,10 @@ class SyncManager {
                         isNetworkError: false,
                         isProgress: true,
                         id: id).then((value) {});
-                    }
-                    
-
-                    //for splash
-                    if(screenConstant == VersionUpdateApi.splash)
-                      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                   }
-                } else {
-                  //for signinwithmpin / signinwithguest
-                  if(screenConstant == VersionUpdateApi.signInWithMpin || screenConstant == VersionUpdateApi.signInAsGuest){
-                    SyncManager.instance.callMasterSync(
-                      NavigationUtilities.key.currentContext, () async {
-                    //success
-                    AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-                  }, () {},
-                      isNetworkError: false,
-                      isProgress: true,
-                      id: id).then((value) {});
-                  }
-                  
 
                   //for splash
-                  if(screenConstant == VersionUpdateApi.splash)
+                  if (screenConstant == VersionUpdateApi.splash)
                     AppNavigation.shared.movetoHome(isPopAndSwitch: true);
                 }
               }
@@ -491,16 +488,12 @@ class SyncManager {
             desc: onError.message,
             positiveBtnTitle: R.string().commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
-
-          if(screenConstant == VersionUpdateApi.splash){
+          if (screenConstant == VersionUpdateApi.splash) {
             //for splash
-          callVersionUpdateApi(context,screenConstant);
-          } else{
-            callVersionUpdateApi(context,screenConstant,id: id);
+            callVersionUpdateApi(context, screenConstant);
+          } else {
+            callVersionUpdateApi(context, screenConstant, id: id);
           }
-          
-
-          
         }),
       },
     );

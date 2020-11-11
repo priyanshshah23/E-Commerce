@@ -1,4 +1,4 @@
-const String baseURL = "http://fndevelopapi.democ.in/";
+const String baseURL = "http://pndevelopapi.democ.in/";
 //const String baseURL = "192.168.0.212:8094/";
 const apiV1 = "api/v1/";
 
@@ -12,7 +12,6 @@ const FAIL = 2;
 var IMAGEFILESIZE = 10.0;
 
 const APPNAME = "Diamnow";
-const STRIPE_KEY = "pk_test_ZCG3mwYMaOFEFAdpcQtkNIZ300fxNZXXOj";
 
 const CODE_OK = "OK";
 const CODE_SUCCESS = "SUCCESS";
