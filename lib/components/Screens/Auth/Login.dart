@@ -21,6 +21,7 @@ import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
 import 'package:diamnow/components/Screens/Notification/Notifications.dart';
 import 'package:diamnow/components/Screens/Version/VersionUpdate.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
+import 'package:diamnow/models/Auth/SignInAsGuestModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:diamnow/models/Version/VersionUpdateResp.dart';
@@ -324,7 +325,8 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                       child: AppButton.flat(
                                         onTap: () {
                                           NavigationUtilities.pushRoute(
-                                              SignInWithMPINScreen.route);
+                                              GuestSignInScreen.route);
+
                                         },
                                         textColor: appTheme.colorPrimary,
                                         backgroundColor: appTheme.colorPrimary
