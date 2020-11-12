@@ -746,11 +746,14 @@ class _TagWidgetState extends State<TagWidget> {
               right: getSize(16.0),
               left: getSize(16.0)),
           child: Center(
-            child: Text(
-              list[indexForTagList].title,
-              style: widget.model.masters[index].isSelected
-                  ? appTheme.primaryColor14TextStyle
-                  : appTheme.blackNormal14TitleColorblack,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                list[indexForTagList].title,
+                style: widget.model.masters[index].isSelected
+                    ? appTheme.primaryColor14TextStyle
+                    : appTheme.blackNormal14TitleColorblack,
+              ),
             ),
           ),
         ),
