@@ -124,7 +124,7 @@ class HomeDrawer extends StatelessWidget {
             width: getSize(12),
           ),
           Text(
-            R.string().commonString.diamNow,
+            APPNAME,
             style: appTheme.blackNormal14TitleColorblack.copyWith(
               fontWeight: FontWeight.w500,
             ),
