@@ -114,8 +114,8 @@ class _DashboardState extends StatefulScreenWidgetState {
             isProgress: !isRefress && !isLoading)
         .then((resp) async {
       this.dashboardModel = resp.data;
-      if (!isNullEmptyOrFalse(this.dashboardModel.seller)){
-      emailURL = this.dashboardModel.seller.email;
+      if (!isNullEmptyOrFalse(this.dashboardModel.seller)) {
+        emailURL = this.dashboardModel.seller.email;
       }
       setTopCountData();
       setState(() {});
@@ -175,16 +175,16 @@ class _DashboardState extends StatefulScreenWidgetState {
                   height: getSize(30),
                   child: Center(
                     child: ClipRRect(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(getSize(30))),
-                        child: getImageView(
-                          app.resolve<PrefUtils>().getUserDetails().profileImage,
-                          placeHolderImage: placeHolder,
-                          height: getSize(30),
-                          width: getSize(30),
-                          fit: BoxFit.fill,
-                        ),
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(getSize(30))),
+                      child: getImageView(
+                        app.resolve<PrefUtils>().getUserDetails().profileImage,
+                        placeHolderImage: placeHolder,
+                        height: getSize(30),
+                        width: getSize(30),
+                        fit: BoxFit.fill,
                       ),
+                    ),
                   ),
                 ),
               )
@@ -1436,7 +1436,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                                       : "",
                                   width: getSize(40),
                                   height: getSize(40),
-                                  fit: BoxFit.fill,
+                                  fit: BoxFit.fitWidth,
                                 ),
                               ),
                             ),
