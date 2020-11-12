@@ -182,7 +182,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                         placeHolderImage: placeHolder,
                         height: getSize(30),
                         width: getSize(30),
-                        fit: BoxFit.fill,
+                        fit: BoxFit.fitWidth,
                       ),
                     ),
                   ),
