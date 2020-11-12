@@ -147,7 +147,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         break;
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
         dict["filters"] = {};
-        dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_BID;
+        dict["filters"]["viewType"] = 2;
         break;
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
         dict["filters"] = {};
@@ -734,37 +734,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             ),
           ),
         );
-
-//          AlertDialog(
-//          shape: RoundedRectangleBorder(
-//            borderRadius: BorderRadius.circular(getSize(5)),
-//          ),
-//          content: Container(                  height: 66,
-//
-//            color: appTheme.whiteColor,
-//            child: Column(
-//              mainAxisSize: MainAxisSize.min,
-//              children: <Widget>[
-//                Container(
-//                  height: 66,
-////                  constraints: BoxConstraints(
-////                      minHeight: 50,
-////                      maxHeight: MathUtilities.screenHeight(context) - 300),
-//                  child: ListView.builder(
-////                    shrinkWrap: true,
-//                    itemCount: diamondConfig.arrStatusMenu.length,
-//
-//                    itemBuilder: (BuildContext context, int index) {
-//                      return getStatusDialogueRow(
-//                          title: diamondConfig.arrStatusMenu[index].title,
-//                          color: appTheme.greenColor);
-//                    },
-//                  ),
-//                ),
-//              ],
-//            ),
-//          ),
-//        );
       },
     );
   }

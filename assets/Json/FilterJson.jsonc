@@ -651,7 +651,7 @@
   {
     "viewType": "seperator",
     "sequence": 29,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
@@ -793,7 +793,7 @@
   {
     "viewType": "seperator",
     "sequence": 33,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -824,7 +824,7 @@
   {
     "viewType": "seperator",
     "sequence": 35,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -855,7 +855,7 @@
   {
     "viewType": "seperator",
     "sequence": 37,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -886,7 +886,7 @@
   {
     "viewType": "seperator",
     "sequence": 39,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -917,7 +917,7 @@
   {
     "viewType": "seperator",
     "sequence": 41,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -948,7 +948,7 @@
   {
     "viewType": "seperator",
     "sequence": 43,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -979,7 +979,7 @@
   {
     "viewType": "seperator",
     "sequence": 45,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -1010,7 +1010,7 @@
   {
     "viewType": "seperator",
     "sequence": 47,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -1041,7 +1041,7 @@
   {
     "viewType": "seperator",
     "sequence": 57,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1072,7 +1072,7 @@
   {
     "viewType": "seperator",
     "sequence": 51,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -1103,7 +1103,7 @@
   {
     "viewType": "seperator",
     "sequence": 53,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",

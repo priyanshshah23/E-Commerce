@@ -52,6 +52,7 @@ class ScreenTitle {
   final String myBid;
   final String myHold;
   final String myOrder;
+  final String confirmStone;
   final String myOffice;
   final String myOffer;
   final String myPurchased;
@@ -119,6 +120,7 @@ class ScreenTitle {
   //Menu Items
   final String enquiry;
   final String placeOrder;
+  final String buyNow;
   final String cancelStone;
   final String compare;
   final String compareStones;
@@ -301,6 +303,7 @@ class ScreenTitle {
     this.myBid = "My Bid",
     this.myHold = "My Hold",
     this.myOrder = "My Ordered List",
+    this.confirmStone = "Confirm Stone",
     this.myOffice = "My Office View",
     this.myOffer = "My Offer",
     this.myPurchased = "My Purchased History",
@@ -353,6 +356,7 @@ class ScreenTitle {
     this.offer = "Offer",
     this.officeView = "Office View",
     this.placeOrder = "Place Order",
+    this.buyNow = "Buy Now",
     this.cancelStone = "Cancel Stone",
     this.share = "Share",
     this.searchResult = "Search Result",

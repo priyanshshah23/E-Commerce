@@ -59,6 +59,7 @@ class CommonString {
   final String downloadAppFrom;
   final String playStore;
   final String skipUpdate;
+  final String ihaveread;
 
   //Greetings
   final String goodMorning;
@@ -272,6 +273,7 @@ class CommonString {
   final String deleteItem;
 
   final String placeOrder;
+  final String shippingPolicy;
 
   final String enterComment;
 
@@ -370,6 +372,7 @@ class CommonString {
     this.loading = "Loading",
     this.error = "Error",
     this.jumpToTop = "Jump to top",
+    this.ihaveread = "I have read and accept ",
 
     // My Vehicle List
     this.selected = "Select",
@@ -535,5 +538,7 @@ class CommonString {
     this.placeOrder = "Place order",
     this.enterComment = "Please Enter Comment",
     this.deleteItem = "Are you sure you want to delete?",
+
+    this.shippingPolicy = "Shipping Policy",
   });
 }

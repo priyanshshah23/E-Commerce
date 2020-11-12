@@ -129,7 +129,7 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_MY_HOLD:
         return R.string().screenTitle.myHold;
       case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
-        return R.string().screenTitle.myOrder;
+        return R.string().screenTitle.confirmStone;
       case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
         return R.string().screenTitle.myOffice;
       case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
@@ -168,7 +168,7 @@ class DiamondConfig {
       case DiamondTrackConstant.TRACK_TYPE_BID:
         return R.string().screenTitle.bidStone;
       case DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER:
-        return R.string().screenTitle.placeOrder;
+        return R.string().screenTitle.confirmStone;
       case DiamondTrackConstant.TRACK_TYPE_FINAL_CALCULATION:
         return R.string().screenTitle.finalCalculation;
       default:

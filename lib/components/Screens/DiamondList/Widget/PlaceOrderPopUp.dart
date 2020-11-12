@@ -2,6 +2,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/OpenDatePickerWidget.dart';
@@ -11,6 +12,7 @@ import 'package:diamnow/models/Address/StateListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -47,6 +49,7 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
   DiamondConfig diamondConfig;
   int actionType;
   List<DiamondModel> diamondList;
+  bool isCheckBoxSelected = false;
 
   _PlaceOrderPopUpState(
       {this.diamondConfig, this.diamondList, this.actionType});
@@ -67,7 +70,7 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
             Padding(
               padding: EdgeInsets.only(top: getSize(30)),
               child: Text(
-                R.string().commonString.placeOrder,
+                R.string().screenTitle.confirmStone,
                 style: appTheme.blackSemiBold18TitleColorblack,
               ),
             ),
@@ -81,79 +84,91 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: getSize(20)),
-                    child: CommonTextfield(
-                      autoFocus: false,
-                      textOption: TextFieldOption(
-                        prefixWid: getCommonIconWidget(
-                            imageName: company, imageType: IconSizeType.small),
-                        hintText: R.string().authStrings.companyName,
-                        maxLine: 1,
-                        inputController: _nameController,
-                        formatter: [
-                          WhitelistingTextInputFormatter(
-                              new RegExp(alphaRegEx)),
-                          BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
-                        ],
-                        //isSecureTextField: false
-                      ),
-                      validation: (text) {
-                        if (text.isEmpty) {
-                          return R.string().authStrings.enterCompanyName;
-                        }
-                      },
-                      textCallback: (text) {},
-                      inputAction: TextInputAction.next,
-                      onNextPress: () {
-                        FocusScope.of(context).unfocus();
-                      },
-                    ),
-                  ),
+                  // getCompanyNameTextfield(),
+                  // Container(
+                  //   height: getSize(8),
+                  // ),
+                  // setInvoiceDropDown(context, _dateController, invoiceList,
+                  //     (value) {
+                  //   selectedPopUpDate = value;
+                  //   _dateController.text = value;
+                  // }),
                   Container(
                     height: getSize(8),
                   ),
-                  setInvoiceDropDown(context, _dateController, invoiceList,
-                      (value) {
-                    selectedPopUpDate = value;
-                    _dateController.text = value;
-                  }),
-                  Container(
-                    height: getSize(8),
-                  ),
-//                  getInvoiceDateTextField(),
-//                  Container(
-//                    height: getSize(8),
-//                  ),
                   getCommentTextField(),
                   Padding(
                     padding: EdgeInsets.only(
                       left: getSize(20),
                       right: getSize(20),
-                      bottom: getSize(5),
-                      top: getSize(8),
+                      bottom: getSize(16),
+                      top: getSize(16),
                     ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          R.string().screenTitle.note + " : ",
-                          style: appTheme.error14TextStyle,
-                        ),
-                        Expanded(
-                          child: Text(
-                            R.string().screenTitle.orderMsg,
-                            style: appTheme.error14TextStyle,
+                        InkWell(
+                          onTap: () {
+                            isCheckBoxSelected = !isCheckBoxSelected;
+                            setState(() {});
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(getSize(3))),
+                            width: getSize(21),
+                            height: getSize(21),
+                            child: Image.asset(
+                              isCheckBoxSelected
+                                  ? selectedCheckbox
+                                  : unSelectedCheckbox,
+                              height: getSize(20),
+                              width: getSize(20),
+                            ),
                           ),
                         ),
-                        // Expanded(
-                        //   child: Text(
-                        //     R.string().screenTitle.orderMsg,
-                        //     style: appTheme.error12TextStyle,
-                        //   ),
-                        // ),
+                        SizedBox(
+                          width: getSize(6),
+                        ),
+                        Text.rich(
+                          TextSpan(
+                            text: R.string().commonString.ihaveread,
+                            style: appTheme.blackNormal14TitleColorblack,
+                            children: <TextSpan>[
+                              TextSpan(
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    print("Terms and condition clicked");
+                                  },
+                                text: R.string().screenTitle.termsAndCondition,
+                                style: appTheme.black16MediumTextStyle.copyWith(
+                                  decoration: TextDecoration.underline,
+                                  fontSize: getFontSize(14),
+                                  color: appTheme.colorPrimary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      print("Shipping policy clicked");
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          left: getSize(16),
+                          right: getSize(16),
+                          top: getSize(8),
+                          bottom: getSize(8)),
+                      child: Text(
+                        R.string().commonString.shippingPolicy,
+                        style: appTheme.blackNormal14TitleColorblack.copyWith(
+                          decoration: TextDecoration.underline,
+                          color: appTheme.colorPrimary,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -194,8 +209,14 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
                   Expanded(
                     child: InkWell(
                       onTap: () {
-                        Navigator.pop(context);
                         if (_formKey.currentState.validate()) {
+                          if (isCheckBoxSelected == false) {
+                            showToast(
+                                R.string().errorString.acceptTermsAndCondition,
+                                context: context);
+                            return;
+                          }
+                          Navigator.pop(context);
                           widget.callBack(selectedPopUpDate);
                         } else {
                           setState(() {
@@ -225,6 +246,37 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  getCompanyNameTextfield() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: getSize(20)),
+      child: CommonTextfield(
+        autoFocus: false,
+        textOption: TextFieldOption(
+          prefixWid: getCommonIconWidget(
+              imageName: company, imageType: IconSizeType.small),
+          hintText: R.string().authStrings.companyName,
+          maxLine: 1,
+          inputController: _nameController,
+          formatter: [
+            WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+            BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+          ],
+          //isSecureTextField: false
+        ),
+        validation: (text) {
+          if (text.isEmpty) {
+            return R.string().authStrings.enterCompanyName;
+          }
+        },
+        textCallback: (text) {},
+        inputAction: TextInputAction.next,
+        onNextPress: () {
+          FocusScope.of(context).unfocus();
+        },
       ),
     );
   }
