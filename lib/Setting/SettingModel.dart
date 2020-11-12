@@ -48,7 +48,7 @@ class DrawerSetting {
         title: R.string().screenTitle.newArrival,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL,
-        isShowCount: true,
+        isShowCount: false,
         countBackgroundColor: fromHex("#2193B0"),
         count: 250,
       ));
@@ -99,7 +99,7 @@ class DrawerSetting {
         title: R.string().screenTitle.stoneOfTheDays,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY,
-        isShowCount: true,
+        isShowCount: false,
         countBackgroundColor: fromHex("#003365"),
         count: 15,
       ));

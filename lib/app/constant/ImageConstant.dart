@@ -113,10 +113,10 @@ const String commentDrawer = "assets/drawer/comment.png";
 //Home
 const String home_clock = "assets/Home/clock.png";
 const String home_delete = "assets/Home/delete.png";
-const String home_enquiry = "assets/Home/enquiry.png";
-const String home_enquiryBg = "assets/Home/enquiryBg.png";
-const String home_exclusive = "assets/Home/exclusive.png";
-const String home_exlusiveBg = "assets/Home/exlusiveBg.png";
+const String home_cart = "assets/Home/cart.png";
+const String home_cartBg = "assets/Home/cartBg.png";
+const String home_stoneoftheday = "assets/Home/stonesoftheDay.png";
+const String home_stoneofthedayBg = "assets/Home/stonesoftheDayBg.png";
 const String home_newArrival = "assets/Home/newArrival.png";
 const String home_newArrivalBg = "assets/Home/newArrivalBg.png";
 const String home_watchlist = "assets/Home/watchlist.png";
@@ -167,7 +167,6 @@ const String clearSelectionWhite = "assets/Common/clearWhite.png";
 const String shareWhite = "assets/Common/shareWhite.png";
 const String downloadWhite = "assets/Common/downloadWhite.png";
 const String offerWhite = "assets/Common/offerWhite.png";
-
 
 //PnShah
 const String forgetMPIN = "assets/PNShah/ForgetMPIN/forgetMPIN.png";

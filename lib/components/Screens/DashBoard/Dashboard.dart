@@ -114,8 +114,8 @@ class _DashboardState extends StatefulScreenWidgetState {
             isProgress: !isRefress && !isLoading)
         .then((resp) async {
       this.dashboardModel = resp.data;
-      if (!isNullEmptyOrFalse(this.dashboardModel.seller)){
-      emailURL = this.dashboardModel.seller.email;
+      if (!isNullEmptyOrFalse(this.dashboardModel.seller)) {
+        emailURL = this.dashboardModel.seller.email;
       }
       setTopCountData();
       setState(() {});
@@ -133,36 +133,12 @@ class _DashboardState extends StatefulScreenWidgetState {
 
   setTopCountData() {
     for (var item in dashboardConfig.arrTopSection) {
-      if (item.type == DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND) {
-        if (!isNullEmptyOrFalse(this.dashboardModel.dashboardCount)) {
-          DashboardCount dash = this.dashboardModel.dashboardCount.singleWhere(
-              (element) => element.name.toLowerCase() == "finestar_exclusive");
-          if (!isNullEmptyOrFalse(dash)) {
-            item.value = "${dash.searchCount}";
-          } else {
-            item.value = "0";
-          }
-        } else {
-          item.value = "0";
-        }
-      } else if (item.type == DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
+      if (item.type == DiamondModuleConstant.MODULE_TYPE_MY_CART) {
         item.value =
-            "${this.dashboardModel.tracks[DiamondTrackConstant.TRACK_TYPE_ENQUIRY.toString()].pieces}";
+            "${this.dashboardModel.tracks[DiamondTrackConstant.TRACK_TYPE_CART.toString()].pieces}";
       } else if (item.type == DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST) {
         item.value =
             "${this.dashboardModel.tracks[DiamondTrackConstant.TRACK_TYPE_WATCH_LIST.toString()].pieces}";
-      } else if (item.type == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
-        if (!isNullEmptyOrFalse(this.dashboardModel.dashboardCount)) {
-          DashboardCount dash = this.dashboardModel.dashboardCount.singleWhere(
-              (element) => element.name.toLowerCase() == "new arrival");
-          if (!isNullEmptyOrFalse(dash)) {
-            item.value = "${dash.searchCount}";
-          } else {
-            item.value = "0";
-          }
-        } else {
-          item.value = "0";
-        }
       }
     }
   }
@@ -183,16 +159,16 @@ class _DashboardState extends StatefulScreenWidgetState {
                   height: getSize(30),
                   child: Center(
                     child: ClipRRect(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(getSize(30))),
-                        child: getImageView(
-                          app.resolve<PrefUtils>().getUserDetails().profileImage,
-                          placeHolderImage: placeHolder,
-                          height: getSize(30),
-                          width: getSize(30),
-                          fit: BoxFit.fill,
-                        ),
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(getSize(30))),
+                      child: getImageView(
+                        app.resolve<PrefUtils>().getUserDetails().profileImage,
+                        placeHolderImage: placeHolder,
+                        height: getSize(30),
+                        width: getSize(30),
+                        fit: BoxFit.fitWidth,
                       ),
+                    ),
                   ),
                 ),
               )

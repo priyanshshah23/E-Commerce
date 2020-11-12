@@ -35,6 +35,21 @@ class DashboardConfig {
       ));
     if (app
         .resolve<PrefUtils>()
+        .getModulePermission(
+            ModulePermissionConstant.permission_stone_of_the_day)
+        .view)
+      arr.add(DashbordTopSection(
+        title: R.string().screenTitle.stoneOfDay,
+        value: "0",
+        image: home_stoneoftheday,
+        bgImage: home_stoneofthedayBg,
+        type: DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY,
+        sequence: 2,
+        bgColor: fromHex("#FFE7DC"),
+        textColor: fromHex("#E04300"),
+      ));
+    if (app
+        .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_watchlist)
         .view)
       arr.add(DashbordTopSection(
@@ -43,34 +58,20 @@ class DashboardConfig {
         image: home_watchlist,
         bgImage: home_watchlistBg,
         type: DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST,
-        sequence: 2,
-        bgColor: fromHex("#FFE7DC"),
-        textColor: fromHex("#E04300"),
-      ));
-    if (app
-        .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_exclusive)
-        .view)
-      arr.add(DashbordTopSection(
-        title: R.string().screenTitle.exclusive,
-        value: "0",
-        image: home_exclusive,
-        bgImage: home_exlusiveBg,
-        type: DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND,
         sequence: 3,
         bgColor: fromHex("#DAF5E7"),
         textColor: fromHex("#288F5A"),
       ));
     if (app
         .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_enquiry)
+        .getModulePermission(ModulePermissionConstant.permission_cart)
         .view)
       arr.add(DashbordTopSection(
-        title: R.string().screenTitle.enquiry,
+        title: R.string().screenTitle.myCart,
         value: "0",
-        image: home_enquiry,
-        bgImage: home_enquiryBg,
-        type: DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY,
+        image: home_cart,
+        bgImage: home_cartBg,
+        type: DiamondModuleConstant.MODULE_TYPE_MY_CART,
         sequence: 4,
         bgColor: fromHex("#FFF6D6"),
         textColor: fromHex("#B89000"),
