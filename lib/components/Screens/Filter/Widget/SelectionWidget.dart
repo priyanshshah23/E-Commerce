@@ -335,11 +335,14 @@ class _TagWidgetState extends State<TagWidget> {
             right: getSize(12.0),
             left: getSize(12.0)),
         child: Center(
-          child: Text(
-            showWebDisplayAccordingToMaster(widget.model, index),
-            style: widget.model.masters[index].isSelected
-                ? appTheme.primaryColor14TextStyle
-                : appTheme.blackNormal14TitleColorblack,
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              widget.model.masters[index].webDisplay ?? "-",
+              style: widget.model.masters[index].isSelected
+                  ? appTheme.primaryColor14TextStyle
+                  : appTheme.blackNormal14TitleColorblack,
+            ),
           ),
         ),
       ),
@@ -749,14 +752,11 @@ class _TagWidgetState extends State<TagWidget> {
               right: getSize(16.0),
               left: getSize(16.0)),
           child: Center(
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                list[indexForTagList].title,
-                style: widget.model.masters[index].isSelected
-                    ? appTheme.primaryColor14TextStyle
-                    : appTheme.blackNormal14TitleColorblack,
-              ),
+            child: Text(
+              list[indexForTagList].title,
+              style: widget.model.masters[index].isSelected
+                  ? appTheme.primaryColor14TextStyle
+                  : appTheme.blackNormal14TitleColorblack,
             ),
           ),
         ),
