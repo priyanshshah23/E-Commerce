@@ -21,7 +21,7 @@ Future<FileUploadResp> uploadFile(BuildContext context, String folderName,
   var dio = Dio();
   dio.options.baseUrl = baseURL + ApiConstants.documentUpload;
 
-  if (kDebugMode) {
+  /*if (kDebugMode) {
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (client) {
       // config the http client
@@ -33,7 +33,7 @@ Future<FileUploadResp> uploadFile(BuildContext context, String folderName,
       // you can also create a new HttpClient to dio
       // return new HttpClient();
     };
-  }
+  }*/
   Response response;
   var formData1 =
       await formdata(folderName, files: files, file: file, bytes: bytes);

@@ -29,7 +29,7 @@ class ServiceModule {
       dio.options.headers["playerId"] = playerId;
     }
 
-    if (kDebugMode) {
+    /*if (kDebugMode) {
       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (client) {
         // config the http client
@@ -41,7 +41,7 @@ class ServiceModule {
         // you can also create a new HttpClient to dio
 //            return new HttpClient();
       };
-    }
+    }*/
     return NetworkService(dio);
   }
 }
