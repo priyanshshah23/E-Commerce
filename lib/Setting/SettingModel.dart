@@ -735,12 +735,12 @@ class BottomMenuSetting {
         title: R.string().screenTitle.statusOffer);
     model.imageColor = appTheme.statusOffer;
     moreMenuList.add(model);
-    model = BottomTabModel(
-        image: diamond,
-        isCenter: false,
-        title: R.string().screenTitle.statusMyHold);
-    model.imageColor = appTheme.statusMyHold;
-    moreMenuList.add(model);
+    // model = BottomTabModel(
+    //     image: diamond,
+    //     isCenter: false,
+    //     title: R.string().screenTitle.statusMyHold);
+    // model.imageColor = appTheme.statusMyHold;
+    // moreMenuList.add(model);
 
     return moreMenuList;
   }

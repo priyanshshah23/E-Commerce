@@ -174,6 +174,9 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                   getOrderDetail(),
                 ],
               ),
+              SizedBox(
+                height: getSize(20),
+              ),
             ],
           ),
         ),

@@ -65,11 +65,7 @@ class _DownloadState extends State<Download> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-          top: getSize(20),
-          bottom: getSize(20),
-          right: getSize(20),
-          left: getSize(20)),
+      padding: EdgeInsets.all(getSize(20)),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -249,7 +245,7 @@ class _DownloadState extends State<Download> {
             }
             finalDownloadProgress +=
                 (100 / totalDownloadableFilesForAllDiamonds);
-                // finalDownloadProgress=finalDownloadProgress();
+            // finalDownloadProgress=finalDownloadProgress();
             print(
                 "final download progress " + finalDownloadProgress.toString());
             if (finalDownloadProgress >= 99) {
@@ -265,7 +261,7 @@ class _DownloadState extends State<Download> {
                         DownloadAndShareDialogueConstant.excel &&
                     element.isSelected) {
                   SyncManager syncManager = SyncManager();
-                  syncManager.callApiForExcel(context,diamondList);
+                  syncManager.callApiForExcel(context, diamondList);
                 }
               });
             }

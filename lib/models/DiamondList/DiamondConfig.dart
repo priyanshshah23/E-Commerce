@@ -656,7 +656,7 @@ class DiamondConfig {
                         },
                         child: Dialog(
                           insetPadding: EdgeInsets.symmetric(
-                              horizontal: getSize(20), vertical: getSize(5)),
+                              horizontal: getSize(20), vertical: getSize(20)),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(getSize(25)),
                           ),
