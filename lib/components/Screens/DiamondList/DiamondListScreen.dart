@@ -514,7 +514,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         break;
       case BottomCodeConstant.TBGrideView:
         viewTypeCount += 1;
-        if (viewTypeCount == 4) {
+        if (viewTypeCount == 2) {
           viewTypeCount = 0;
         }
         fillArrayList();
