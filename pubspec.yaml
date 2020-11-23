@@ -117,7 +117,7 @@ flutter:
     - assets/Share/
     - assets/PNShah/
     - assets/PNShah/ForgetMPIN/
-    #- assets/chls/hochls.pem
+    - assets/chls/hochls.pem
     # - assets/chls.pem
 
 

@@ -56,6 +56,11 @@ class _FilterByState extends State<FilterBy> {
                       vertical: getSize(12), horizontal: getSize(20)),
                   child: Row(
                     children: <Widget>[
+                      Text(optionList[index].title,
+                          style: appTheme.black14TextStyle),
+                      SizedBox(
+                        width: getSize(11),
+                      ),
                       Container(
                         height: getSize(14),
                         width: getSize(14),
@@ -63,12 +68,8 @@ class _FilterByState extends State<FilterBy> {
                           filterPopUpPath + optionList[index].icon,
                         ),
                       ),
-                      SizedBox(
-                        width: getSize(22),
-                      ),
                       Expanded(
-                        child: Text(optionList[index].title,
-                            style: appTheme.black14TextStyle),
+                        child: Container(),
                       ),
                       Container(
                         height: getSize(16),

@@ -60,7 +60,6 @@ class Config {
     if (isNullEmptyOrFalse(arrSorting)) {
       String jsonForm =
           await rootBundle.loadString('assets/Json/SortingPopup.json');
-
       List<dynamic> fieldList = jsonDecode(jsonForm);
       for (int i = 0; i < fieldList.length; i++) {
         dynamic element = fieldList[i];

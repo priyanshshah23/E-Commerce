@@ -37,6 +37,7 @@ const String matchPair = "assets/filter/matchPair.png";
 const String saveAndSearch = "assets/filter/saveAndSearch.png";
 const String savedSearch = "assets/filter/savedSearch.png";
 const String search = "assets/filter/search.png";
+const String upAndDownArrow = "assets/filter/upAndDownArrow.png";
 
 //DiamodList
 const String selectAll = "assets/diamnow/select_all.png";

@@ -85,10 +85,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           optionList.add(element);
         }
       });
-
       setState(() {});
     });
-
     diamondConfig = DiamondConfig(moduleType);
     diamondConfig.initItems();
     diamondList = BaseList(BaseListState(
