@@ -161,31 +161,35 @@ class _DiamondSquareGridItemState extends State<DiamondSquareGridItem> {
   }
 
   getThirdRow() {
-    return Padding(
-      padding: EdgeInsets.only(
-        top: getSize(4),
-        bottom: getSize(4),
-      ),
-      child: Row(
-        children: [
-          getText(widget.item?.cutNm ?? ""),
-          Container(
-            height: getSize(4),
-            width: getSize(4),
-            decoration: BoxDecoration(
-                color: appTheme.dividerColor, shape: BoxShape.circle),
+    return Center(
+      child: Center(
+        child: Padding(
+          padding: EdgeInsets.only(
+            top: getSize(4),
+            bottom: getSize(4),
           ),
-          getText(widget.item?.polNm ?? ""),
-          Container(
-            height: getSize(4),
-            width: getSize(4),
-            decoration: BoxDecoration(
-                color: appTheme.dividerColor, shape: BoxShape.circle),
+          child: Row(
+            children: [
+              getText(widget.item?.cutNm ?? ""),
+              Container(
+                height: getSize(4),
+                width: getSize(4),
+                decoration: BoxDecoration(
+                    color: appTheme.dividerColor, shape: BoxShape.circle),
+              ),
+              getText(widget.item?.polNm ?? ""),
+              Container(
+                height: getSize(4),
+                width: getSize(4),
+                decoration: BoxDecoration(
+                    color: appTheme.dividerColor, shape: BoxShape.circle),
+              ),
+              getText(widget.item?.symNm ?? ""),
+              Expanded(child: Container()),
+              getAmountText(widget.item?.getPricePerCarat() ?? ""),
+            ],
           ),
-          getText(widget.item?.symNm ?? ""),
-          Expanded(child: Container()),
-          getAmountText(widget.item?.getPricePerCarat() ?? ""),
-        ],
+        ),
       ),
     );
   }

@@ -1,7 +1,7 @@
 [
   {
     "title": "Default",
-    "isSelected": false,
+    "isSelected": true,
     "icon": "filterUnionArrow.png",
     "isActive": true,
     "apiKey": ""
@@ -11,41 +11,76 @@
     "isSelected": false,
     "icon": "filterRightArrow.png",
     "isActive": true,
-    "apiKey": "newDiamonds"
+    "apiKey": ""
   },
   {
-    "title": "Price",
+    "title": "Price Low to High",
     "isSelected": false,
-    "icon": "upAndDownArrow.png",
+    "icon": "filterUpArrow.png",
     "isActive": true,
-    "apiKey": "amt"
+    "apiKey": "amt ASC"
   },
   {
-    "title": "Discount",
+    "title": "Price High to Low",
     "isSelected": false,
-    "icon": "upAndDownArrow.png",
+    "icon": "filterDownArrow.png",
     "isActive": true,
-    "apiKey": "back"
+    "apiKey": "amt DESC"
   },
   {
-    "title": "Color",
+    "title": "Discount Low to High",
     "isSelected": false,
-    "icon": "upAndDownArrow.png",
+    "icon": "filterUpArrow.png",
     "isActive": true,
-    "apiKey": "col"
+    "apiKey": "back ASC"
   },
   {
-    "title": "Carat",
+    "title": "Discount High to Low",
     "isSelected": false,
-    "icon": "upAndDownArrow.png",
+    "icon": "filterDownArrow.png",
     "isActive": true,
-    "apiKey": "crt"
+    "apiKey": "back DESC"
   },
   {
-    "title": "Clarity",
+    "title": "Color Low to High",
     "isSelected": false,
-    "icon": "upAndDownArrow.png",
+    "icon": "filterUpArrow.png",
     "isActive": true,
-    "apiKey": "clr"
+    "apiKey": "colNm ASC"
+  },
+  {
+    "title": "Color High to Low",
+    "isSelected": false,
+    "icon": "filterDownArrow.png",
+    "isActive": true,
+    "apiKey": "colNm DESC"
+  },
+  {
+    "title": "Carat Low to High",
+    "isSelected": false,
+    "icon": "filterUpArrow.png",
+    "isActive": true,
+    "apiKey": "crt ASC"
+  },
+  {
+    "title": "Carat High to Low",
+    "isSelected": false,
+    "icon": "filterDownArrow.png",
+    "isActive": true,
+    "apiKey": "crt DESC"
+  },
+  {
+    "title": "Clarity Low to High",
+    "isSelected": false,
+    "icon": "filterUpArrow.png",
+    "isActive": true,
+    "apiKey": "clrNm ASC"
+  },
+  {
+    "title": "Clarity High to Low",
+    "isSelected": false,
+    "icon": "filterDownArrow.png",
+    "isActive": true,
+    "apiKey": "clrNm DESC"
   }
 ]
