@@ -745,47 +745,48 @@ class DiamondModel {
     if (isAddToBid) {
       return ctPr;
     }
-    if (isAddToOffer) {
-      if (selectedOfferPer != null) {
-        num quote = (-back + num.parse(selectedOfferPer));
-        num pricePerCarat = rap - ((quote * rap) / 100);
-        num lessAmt = ((pricePerCarat *
-                (-app
-                    .resolve<PrefUtils>()
-                    .getUserDetails()
-                    .accountTerm
-                    .extraPer)) /
-            100);
-        num finalrate = pricePerCarat - lessAmt;
-        return finalrate;
-      } else {
-        num quote = (-back + num.parse(selectedOfferPer));
-        num pricePerCarat = rap - ((quote * rap) / 100);
-        num lessAmt = ((pricePerCarat *
-                (-app
-                    .resolve<PrefUtils>()
-                    .getUserDetails()
-                    .accountTerm
-                    .extraPer)) /
-            100);
-        num finalrate = pricePerCarat - lessAmt;
-        return finalrate;
-      }
-    } else {
-      DateTime now = DateTime.now();
-      if (now.hour >= 15 || (now.hour <= 11 && now.month < 30)) {
-        var totalctpr = this.ctPr *
-            ((-app.resolve<PrefUtils>().getUserDetails().accountTerm.extraPer));
-        var extractpr = totalctpr / 100;
-        var dblExtractpr = extractpr * 0.5 / 100;
-        return this.ctPr - extractpr - dblExtractpr;
-      }
-      var totalctpr = this.ctPr *
-          (-app.resolve<PrefUtils>().getUserDetails().accountTerm.extraPer);
-      var extractpr = totalctpr / 100;
+    // if (isAddToOffer) {
+    //   if (selectedOfferPer != null) {
+    //     num quote = (-back + num.parse(selectedOfferPer));
+    //     num pricePerCarat = rap - ((quote * rap) / 100);
+    //     num lessAmt = ((pricePerCarat *
+    //             (-app
+    //                 .resolve<PrefUtils>()
+    //                 .getUserDetails()
+    //                 .accountTerm
+    //                 .extraPer)) /
+    //         100);
+    //     num finalrate = pricePerCarat - lessAmt;
+    //     return finalrate;
+    //   } else {
+    //     num quote = (-back + num.parse(selectedOfferPer));
+    //     num pricePerCarat = rap - ((quote * rap) / 100);
+    //     num lessAmt = ((pricePerCarat *
+    //             (-app
+    //                 .resolve<PrefUtils>()
+    //                 .getUserDetails()
+    //                 .accountTerm
+    //                 .extraPer)) /
+    //         100);
+    //     num finalrate = pricePerCarat - lessAmt;
+    //     return finalrate;
+    //   }
+    // } else {
+    // DateTime now = DateTime.now();
+    // if (now.hour >= 15 || (now.hour <= 11 && now.month < 30)) {
+    //   var totalctpr = this.ctPr *
+    //       ((-app.resolve<PrefUtils>().getUserDetails().accountTerm.extraPer));
+    //   var extractpr = totalctpr / 100;
+    //   var dblExtractpr = extractpr * 0.5 / 100;
+    //   return this.ctPr - extractpr - dblExtractpr;
+    // }
+    // var totalctpr = this.ctPr *
+    //     (-app.resolve<PrefUtils>().getUserDetails().accountTerm.extraPer);
+    // var extractpr = this.ctPr / 100;
 
-      return this.ctPr - extractpr;
-    }
+    return this.ctPr;
+    // - extractpr;
+    // }
   }
 
   num getBidFinalRate() {

@@ -87,7 +87,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            widget.item.displayTitle != null
+            isNullEmptyOrFalse(widget.item.displayTitle) == false
                 ? Padding(
                     padding:
                         EdgeInsets.only(top: getSize(4.0), bottom: getSize(4)),
@@ -813,8 +813,10 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           } else {
             _offeredPricePerCaratTextfieldContoller.text =
                 PriceUtilities.getDoubleValue(widget.item.rap -
-                    (widget.item.rap *
-                        num.parse(_offeredDiscountTextFieldController.text)));
+                    ((widget.item.rap *
+                            num.parse(_offeredDiscountTextFieldController.text)
+                                .abs()) /
+                        100));
             widget.item.offeredDiscount = PriceUtilities.getDoubleValue(
                 num.parse(_offeredDiscountTextFieldController.text));
             widget.item.offeredAmount =

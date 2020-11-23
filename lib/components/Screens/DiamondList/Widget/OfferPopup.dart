@@ -52,128 +52,133 @@ class _OfferPopupState extends State<OfferPopup> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(top: getSize(30)),
-            child: Text(
-              R.string().screenTitle.placeAnOffer,
-              style: appTheme.blackSemiBold18TitleColorblack,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Padding(
+                padding: EdgeInsets.only(top: getSize(30)),
+                child: Text(
+                  R.string().screenTitle.placeAnOffer,
+                  style: appTheme.blackSemiBold18TitleColorblack,
+                ),
+              ),
             ),
-          ),
-          SizedBox(
-            height: getSize(20),
-          ),
-          Padding(
-            padding: MediaQuery.of(context).viewInsets,
-            child: Form(
-              key: _formKey,
-              autovalidate: autovalid,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    height: getSize(8),
+            SizedBox(
+              height: getSize(20),
+            ),
+            Padding(
+              padding: MediaQuery.of(context).viewInsets,
+              child: Form(
+                key: _formKey,
+                autovalidate: autovalid,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      height: getSize(8),
+                    ),
+                    getDateTextField(),
+                    Container(
+                      height: getSize(8),
+                    ),
+                    getCommentTextField(),
+                    Container(
+                      height: getSize(8),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                print("Shipping policy clicked");
+              },
+              child: Padding(
+                padding: EdgeInsets.only(
+                    left: getSize(16),
+                    right: getSize(16),
+                    top: getSize(8),
+                    bottom: getSize(8)),
+                child: Text(
+                  R.string().commonString.shippingPolicy,
+                  style: appTheme.blackNormal14TitleColorblack.copyWith(
+                    decoration: TextDecoration.underline,
+                    color: appTheme.colorPrimary,
                   ),
-                  getDateTextField(),
-                  Container(
-                    height: getSize(8),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: getSize(Spacing.leftPadding),
+                  vertical: getSize(16)),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        // alignment: Alignment.bottomCenter,
+                        padding: EdgeInsets.symmetric(
+                          vertical: getSize(15),
+                        ),
+                        decoration: BoxDecoration(
+                          color: appTheme.colorPrimary.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(getSize(5)),
+                        ),
+                        child: Text(
+                          R.string().commonString.cancel,
+                          textAlign: TextAlign.center,
+                          style: appTheme.blue14TextStyle
+                              .copyWith(fontSize: getFontSize(16)),
+                        ),
+                      ),
+                    ),
                   ),
-                  getCommentTextField(),
-                  Container(
-                    height: getSize(8),
+                  SizedBox(
+                    width: getSize(20),
                   ),
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        if (_formKey.currentState.validate()) {
+                          Navigator.pop(context);
+                          widget.callBack(
+                              selectedDate, _commentController.text);
+                        } else {
+                          setState(() {
+                            autovalid = true;
+                          });
+                        }
+                      },
+                      child: Container(
+                        //alignment: Alignment.bottomCenter,
+                        padding: EdgeInsets.symmetric(
+                          vertical: getSize(15),
+                        ),
+                        decoration: BoxDecoration(
+                            color: appTheme.colorPrimary,
+                            borderRadius: BorderRadius.circular(getSize(5)),
+                            boxShadow: getBoxShadow(context)),
+                        child: Text(
+                          R.string().commonString.btnSubmit,
+                          textAlign: TextAlign.center,
+                          style: appTheme.white16TextStyle,
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
-          ),
-          InkWell(
-            onTap: () {
-              print("Shipping policy clicked");
-            },
-            child: Padding(
-              padding: EdgeInsets.only(
-                  left: getSize(16),
-                  right: getSize(16),
-                  top: getSize(8),
-                  bottom: getSize(8)),
-              child: Text(
-                R.string().commonString.shippingPolicy,
-                textAlign: TextAlign.left,
-                style: appTheme.blackNormal14TitleColorblack.copyWith(
-                  decoration: TextDecoration.underline,
-                  color: appTheme.colorPrimary,
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: getSize(Spacing.leftPadding),
-                vertical: getSize(16)),
-            child: Row(
-              children: [
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      // alignment: Alignment.bottomCenter,
-                      padding: EdgeInsets.symmetric(
-                        vertical: getSize(15),
-                      ),
-                      decoration: BoxDecoration(
-                        color: appTheme.colorPrimary.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(getSize(5)),
-                      ),
-                      child: Text(
-                        R.string().commonString.cancel,
-                        textAlign: TextAlign.center,
-                        style: appTheme.blue14TextStyle
-                            .copyWith(fontSize: getFontSize(16)),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: getSize(20),
-                ),
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      if (_formKey.currentState.validate()) {
-                        Navigator.pop(context);
-                        widget.callBack(selectedDate, _commentController.text);
-                      } else {
-                        setState(() {
-                          autovalid = true;
-                        });
-                      }
-                    },
-                    child: Container(
-                      //alignment: Alignment.bottomCenter,
-                      padding: EdgeInsets.symmetric(
-                        vertical: getSize(15),
-                      ),
-                      decoration: BoxDecoration(
-                          color: appTheme.colorPrimary,
-                          borderRadius: BorderRadius.circular(getSize(5)),
-                          boxShadow: getBoxShadow(context)),
-                      child: Text(
-                        R.string().commonString.btnSubmit,
-                        textAlign: TextAlign.center,
-                        style: appTheme.white16TextStyle,
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
