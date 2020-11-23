@@ -1,11 +1,13 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondOfferInfoWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:rxbus/rxbus.dart';
 
@@ -35,6 +37,13 @@ class DiamondItemWidget extends StatefulWidget {
 }
 
 class _DiamondItemWidgetState extends State<DiamondItemWidget> {
+  final TextEditingController _offeredDiscountTextFieldController =
+      TextEditingController();
+  final TextEditingController _offeredPricePerCaratTextfieldContoller =
+      TextEditingController();
+  var _focusOfferedDisc = FocusNode();
+  var _focusOfferedPricePerCarat = FocusNode();
+
   @override
   void initState() {
     super.initState();
@@ -44,6 +53,18 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
 //        Future.delayed(Duration(seconds: 1));
         setState(() {});
       });
+
+      _offeredDiscountTextFieldController.text =
+          PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
+      _offeredPricePerCaratTextfieldContoller.text =
+          PriceUtilities.getDoubleValue(widget.item.getFinalRate());
+      widget.item.offeredDiscount = PriceUtilities.getDoubleValue(
+          num.parse(_offeredDiscountTextFieldController.text));
+      widget.item.offeredAmount =
+          num.parse(_offeredPricePerCaratTextfieldContoller.text);
+      widget.item.offeredPricePerCarat = PriceUtilities.getDoubleValue(
+          num.parse(_offeredPricePerCaratTextfieldContoller.text) *
+              widget.item.crt);
     }
   }
 
@@ -130,10 +151,10 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                         widget.item.borderType ==
                                             BorderConstant.BORDER_TOP))
                                 ? getSize(1)
-                                : (widget.item.isAddToWatchList ||
-                                        widget.item.isAddToOffer)
+                                : (widget.item.isAddToWatchList)
                                     ? getSize(2)
-                                    : widget.item.isGrouping
+                                    : widget.item.isGrouping ||
+                                            widget.item.isAddToOffer
                                         ? 0
                                         : getSize(5),
                             top: ((widget.item.isMatchPair &&
@@ -655,94 +676,260 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   }
 
   getOfferValues() {
-    List<String> offerPer = widget.item.getOfferPer();
-    List<String> offerHour = widget.item.getOfferHour();
-    DropDownItem itemOffer = DropDownItem(widget.item, DropDownItem.QUOTE);
-    DropDownItem itemHour = DropDownItem(widget.item, DropDownItem.HOURS);
+    var offeredAmt = 0.0;
+    if (widget.item.isAddToOffer) {
+      offeredAmt =
+          num.parse(_offeredPricePerCaratTextfieldContoller.text ?? "0") *
+              widget.item.crt;
+    }
     return widget.item.isAddToOffer
         ? Padding(
             padding: EdgeInsets.only(bottom: getSize(8)),
-            child: Container(
-              height: getSize(40),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: getSize(40),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(getSize(5)),
-                        border: Border.all(color: appTheme.dividerColor),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Expanded(
-                            child: Container(
-                              color: appTheme.borderColor,
-                              child: Center(
-                                child: getText(
-                                    R.string().screenTitle.offer + " :",
-                                    appTheme.blackNormal12TitleColorblack),
+            child: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(getSize(5)),
+                    border: Border.all(color: appTheme.dividerColor),
+                  ),
+                  height: getSize(40),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        flex: 5,
+                        child: Container(
+                          height: getSize(40),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Expanded(
+                                child: Container(
+                                  color: appTheme.borderColor,
+                                  child: Center(
+                                    child: getText(
+                                        R.string().screenTitle.offeredDisc +
+                                            " :",
+                                        appTheme.blackNormal12TitleColorblack),
+                                  ),
+                                ),
                               ),
-                            ),
+                              Expanded(
+                                  child: Container(
+                                child: Center(
+                                  child: getOfferedDiscountTextField(),
+                                ),
+                              )),
+                            ],
                           ),
-                          Expanded(
-                              child: Container(
-                            child: Center(
-                              child: popupList(widget.item, offerPer, itemOffer,
-                                  (selectedValue) {
-                                widget.item.selectedOfferPer = selectedValue;
-                                RxBus.post(true, tag: eventBusDropDown);
-                              }),
-                            ),
-                          )),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 6,
+                        child: Container(
+                          height: getSize(40),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Expanded(
+                                child: Container(
+                                  color: appTheme.borderColor,
+                                  child: Center(
+                                    child: getText(
+                                        R.string().screenTitle.offeredPriceCt +
+                                            " :",
+                                        appTheme.blackNormal12TitleColorblack),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  child: Center(
+                                    child: getOfferedPricePerCaratTextField(),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                    color: appTheme.lightColorPrimary,
+                    height: getSize(40),
+                    child: Center(
+                        child: RichText(
+                      text: TextSpan(
+                        text: 'Offered Amt :    ',
+                        style: appTheme.primary16TextStyle.copyWith(
+                          fontSize: getFontSize(14),
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: PriceUtilities.getPrice(offeredAmt),
+                            style: appTheme.primary16TextStyle,
+                          ),
                         ],
                       ),
-                    ),
-                  ),
-                  SizedBox(width: getSize(16)),
-                  Expanded(
-                    child: Container(
-                      height: getSize(40),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(getSize(5)),
-                        border: Border.all(color: appTheme.dividerColor),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Expanded(
-                            child: Container(
-                              color: appTheme.borderColor,
-                              child: Center(
-                                child: getText(
-                                    R.string().screenTitle.hours + " :",
-                                    appTheme.blackNormal12TitleColorblack),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              child: Center(
-                                child:
-                                    popupList(widget.item, offerHour, itemHour,
-                                        (selectedValue) {
-                                  widget.item.selectedOfferHour = selectedValue;
-                                  RxBus.post(true, tag: eventBusDropDown);
-                                }),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                    )))
+              ],
             ),
           )
         : SizedBox();
+  }
+
+  getOfferedDiscountTextField() {
+    return Focus(
+      onFocusChange: (hasfocus) {
+        if (hasfocus == false) {
+          print("Focus off");
+          if (isNullEmptyOrFalse(_offeredDiscountTextFieldController.text)) {
+            _offeredDiscountTextFieldController.text =
+                PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
+            _offeredPricePerCaratTextfieldContoller.text =
+                PriceUtilities.getDoubleValue(widget.item.getFinalRate());
+          } else if (num.parse(_offeredDiscountTextFieldController.text) >
+              (widget.item.back - minOfferedDiscount)) {
+            _offeredDiscountTextFieldController.text =
+                PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
+            _offeredPricePerCaratTextfieldContoller.text =
+                PriceUtilities.getDoubleValue(widget.item.getFinalRate());
+            showToast(
+              "Cannot allow discount less than ${PriceUtilities.getDoubleValue(widget.item.back - minOfferedDiscount)}",
+              context: context,
+            );
+          } else if (maxOfferedDiscount >
+              num.parse(_offeredDiscountTextFieldController.text)) {
+            _offeredDiscountTextFieldController.text =
+                PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
+            _offeredPricePerCaratTextfieldContoller.text =
+                PriceUtilities.getDoubleValue(widget.item.getFinalRate());
+            showToast(
+              "Cannot allow discount greater than ${PriceUtilities.getDoubleValue(maxOfferedDiscount)}",
+              context: context,
+            );
+          } else {
+            _offeredPricePerCaratTextfieldContoller.text =
+                PriceUtilities.getDoubleValue(widget.item.rap -
+                    (widget.item.rap *
+                        num.parse(_offeredDiscountTextFieldController.text)));
+            widget.item.offeredDiscount = PriceUtilities.getDoubleValue(
+                num.parse(_offeredDiscountTextFieldController.text));
+            widget.item.offeredAmount =
+                num.parse(_offeredPricePerCaratTextfieldContoller.text);
+            widget.item.offeredPricePerCarat = PriceUtilities.getDoubleValue(
+                num.parse(_offeredPricePerCaratTextfieldContoller.text) *
+                    widget.item.crt);
+          }
+        }
+      },
+      child: TextField(
+        textAlign: TextAlign.center,
+        focusNode: _focusOfferedDisc,
+        controller: _offeredDiscountTextFieldController,
+        inputFormatters: [
+          // old regx = r'(^[+-]?\d*.?\d{0,2})$'
+          TextInputFormatter.withFunction((oldValue, newValue) =>
+              // RegExp(r'(^[+-]?[0-9]+\d*.?\d{0,2})$').hasMatch(newValue.text)
+              //     ? newValue
+              //     : oldValue)
+
+              // new regx = ^([+-]?[0-9]+[0-9]*.?[0-9]{0,2})?$
+              RegExp(r'^([+-]?[0-9]+[0-9]*.?[0-9]{0,2})?$')
+                      .hasMatch(newValue.text)
+                  ? newValue
+                  : oldValue)
+        ],
+        style: appTheme.blackNormal14TitleColorblack,
+        keyboardType: TextInputType.text,
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          hintText: "",
+          hintStyle: appTheme.grey14HintTextStyle,
+        ),
+      ),
+    );
+  }
+
+  getOfferedPricePerCaratTextField() {
+    return Focus(
+      onFocusChange: (hasfocus) {
+        if (hasfocus == false) {
+          print("Focus off");
+          var discount = ((widget.item.rap -
+                      num.parse(_offeredPricePerCaratTextfieldContoller.text)) /
+                  widget.item.rap) *
+              100;
+          print(discount);
+          if (isNullEmptyOrFalse(
+              _offeredPricePerCaratTextfieldContoller.text)) {
+            _offeredDiscountTextFieldController.text =
+                PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
+            _offeredPricePerCaratTextfieldContoller.text =
+                PriceUtilities.getDoubleValue(widget.item.getFinalRate());
+          } else if (-discount > (widget.item.back - minOfferedDiscount)) {
+            _offeredDiscountTextFieldController.text =
+                PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
+            _offeredPricePerCaratTextfieldContoller.text =
+                PriceUtilities.getDoubleValue(widget.item.getFinalRate());
+            showToast(
+              "Cannot allow discount less than ${PriceUtilities.getDoubleValue(widget.item.back - minOfferedDiscount)}",
+              context: context,
+            );
+          } else if (maxOfferedDiscount > -discount) {
+            _offeredDiscountTextFieldController.text =
+                PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
+            _offeredPricePerCaratTextfieldContoller.text =
+                PriceUtilities.getDoubleValue(widget.item.getFinalRate());
+            showToast(
+              "Cannot allow discount greater than ${PriceUtilities.getDoubleValue(maxOfferedDiscount)}",
+              context: context,
+            );
+          } else {
+            _offeredDiscountTextFieldController.text =
+                PriceUtilities.getDoubleValue(-discount);
+            widget.item.offeredDiscount =
+                _offeredDiscountTextFieldController.text;
+            widget.item.offeredAmount =
+                num.parse(_offeredPricePerCaratTextfieldContoller.text);
+            widget.item.offeredPricePerCarat = PriceUtilities.getDoubleValue(
+                num.parse(_offeredPricePerCaratTextfieldContoller.text) *
+                    widget.item.crt);
+          }
+        }
+      },
+      child: TextField(
+        textAlign: TextAlign.center,
+        focusNode: _focusOfferedPricePerCarat,
+        controller: _offeredPricePerCaratTextfieldContoller,
+        inputFormatters: [
+          // old regx = r'(^[+-]?\d*.?\d{0,2})$'
+          TextInputFormatter.withFunction((oldValue, newValue) =>
+              // RegExp(r'(^[+-]?[0-9]+\d*.?\d{0,2})$').hasMatch(newValue.text)
+              //     ? newValue
+              //     : oldValue)
+
+              // new regx = ^([+-]?[0-9]+[0-9]*.?[0-9]{0,2})?$
+              RegExp(r'^([+-]?[0-9]+[0-9]*.?[0-9]{0,2})?$')
+                      .hasMatch(newValue.text)
+                  ? newValue
+                  : oldValue)
+        ],
+        style: appTheme.blackNormal14TitleColorblack,
+        keyboardType: TextInputType.text,
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          hintText: "",
+          hintStyle: appTheme.grey14HintTextStyle,
+        ),
+      ),
+    );
   }
 
   getBidDetail() {

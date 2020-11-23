@@ -430,6 +430,11 @@ class DiamondModel {
   String displayDesc;
   bool showCheckBox = false;
   num bidAmount;
+  String offeredDiscount;
+  num offeredAmount;
+  String offeredValiddate;
+  String offeredPricePerCarat;
+
   TrackDiamonds trackItemCart;
   TrackDiamonds trackItemWatchList;
   TrackDiamonds trackItemEnquiry;

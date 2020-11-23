@@ -129,6 +129,8 @@ class ScreenTitle {
   final String finalCalculation;
   final String comment;
   final String offer;
+  final String offeredDisc;
+  final String offeredPriceCt;
   final String officeView;
   final String hold;
   final String download;
@@ -234,6 +236,8 @@ class ScreenTitle {
         "Offered stone will directly be confirmed if the price gets approved so we request you to be sure before offering. Any stone(s) put in Offer list is not kept on hold for you as it is available for other customer's as well.",
     this.note = "Note",
     this.hours = "Hours",
+    this.offeredDisc = "Offered Dis%",
+    this.offeredPriceCt = "Offered Pr/Ct",
     this.addOffer = "Add Offer",
     this.expDiscPer = "Expected Discount%",
     this.todayDiscPer = "Today's Disc%",

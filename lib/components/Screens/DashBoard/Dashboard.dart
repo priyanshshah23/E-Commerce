@@ -427,11 +427,13 @@ class _DashboardState extends StatefulScreenWidgetState {
   getTopSectionGridItem(DashbordTopSection model) {
     return InkWell(
       onTap: () {
-        Map<String, dynamic> dict = new HashMap();
-        dict[ArgumentConstant.ModuleType] = model.type;
-        dict[ArgumentConstant.IsFromDrawer] = false;
-        NavigationUtilities.pushRoute(DiamondListScreen.route,
-            type: RouteType.fade, args: dict);
+        if (int.parse(model.value) > 0) {
+          Map<String, dynamic> dict = new HashMap();
+          dict[ArgumentConstant.ModuleType] = model.type;
+          dict[ArgumentConstant.IsFromDrawer] = false;
+          NavigationUtilities.pushRoute(DiamondListScreen.route,
+              type: RouteType.fade, args: dict);
+        }
       },
       child: Container(
         decoration: BoxDecoration(

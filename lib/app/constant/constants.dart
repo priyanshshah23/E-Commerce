@@ -72,6 +72,10 @@ const numberRegXWithDecimalAllows = r'([0-9]*[0-9]+\.)[0-9]{0,2}';
 const IMAGE_FILE_SIZE = 10.0;
 const BUSINESS_TYPE = "BUSINESS_TYPE";
 
+//Offer min/max discount
+const num minOfferedDiscount = -5;
+const num maxOfferedDiscount = -70;
+
 class Spacing {
   static const num leftPadding = 16.0;
   static const num rightPadding = 16.0;

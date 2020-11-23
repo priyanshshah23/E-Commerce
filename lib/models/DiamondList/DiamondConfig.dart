@@ -546,8 +546,8 @@ class DiamondConfig {
         callApiFoCreateTrack(
             context, list, DiamondTrackConstant.TRACK_TYPE_OFFER,
             remark: remark,
-            companyName: companyName,
             isPop: true,
+            date: date,
             title: R.string().screenTitle.addedInOffer);
         break;
       case DiamondTrackConstant.TRACK_TYPE_BID:
@@ -730,8 +730,7 @@ class DiamondConfig {
     CreateDiamondTrackReq req = CreateDiamondTrackReq();
     switch (trackType) {
       case DiamondTrackConstant.TRACK_TYPE_OFFER:
-        req.remarks = remark;
-        req.company = companyName;
+        req.remarks = remark ?? "";
         req.trackType = trackType;
         break;
       case DiamondTrackConstant.TRACK_TYPE_CART:
@@ -744,7 +743,6 @@ class DiamondConfig {
         req.bidType = BidConstant.BID_TYPE_ADD;
         break;
     }
-    DateTime dateTimeNow = DateTime.now();
     req.diamonds = [];
     Diamonds diamonds;
     list.forEach((element) {
@@ -754,24 +752,19 @@ class DiamondConfig {
           trackAmount: element.amt,
           trackPricePerCarat: element.ctPr);
       switch (trackType) {
-        case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
-          diamonds.newDiscount = num.parse(element.selectedBackPer);
-          break;
+        // case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
+        //   diamonds.newDiscount = num.parse(element.selectedBackPer);
+        //   break;
         case DiamondTrackConstant.TRACK_TYPE_COMMENT:
         case DiamondTrackConstant.TRACK_TYPE_ENQUIRY:
           diamonds.remarks = remark;
           break;
         case DiamondTrackConstant.TRACK_TYPE_OFFER:
           diamonds.vStnId = element.vStnId;
-          diamonds.newDiscount = num.parse(element.selectedBackPer);
-          diamonds.newAmount = element.getFinalAmount();
-          diamonds.newPricePerCarat = element.getFinalRate();
-          int hour = int.parse(element.selectedOfferHour);
-          var date = DateTime.now();
-          var dt = DateTime(
-              date.year, date.month, date.day, date.hour + hour, date.minute);
-
-          diamonds.offerValidDate = dt.toUtc().toIso8601String();
+          diamonds.newDiscount = num.parse(element.offeredDiscount);
+          diamonds.newAmount = element.offeredAmount;
+          diamonds.newPricePerCarat = num.parse(element.offeredPricePerCarat);
+          diamonds.offerValidDate = date;
 
           break;
         case DiamondTrackConstant.TRACK_TYPE_BID:

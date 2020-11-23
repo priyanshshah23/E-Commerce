@@ -453,14 +453,16 @@ class BottomMenuSetting {
     }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
       if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
-        if (app
-            .resolve<PrefUtils>()
-            .getModulePermission(ModulePermissionConstant.permission_offer)
-            .insert)
-          moreMenuList.add(BottomTabModel(
-              image: offer,
-              title: R.string().screenTitle.offer,
-              type: ActionMenuConstant.ACTION_TYPE_OFFER));
+        if (moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
+          if (app
+              .resolve<PrefUtils>()
+              .getModulePermission(ModulePermissionConstant.permission_offer)
+              .insert)
+            moreMenuList.add(BottomTabModel(
+                image: offer,
+                title: R.string().screenTitle.offer,
+                type: ActionMenuConstant.ACTION_TYPE_OFFER));
+        }
       }
     }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
@@ -678,7 +680,7 @@ class BottomMenuSetting {
                 isCenter: false,
                 type: ActionMenuConstant.ACTION_TYPE_OFFER));
         }
-        if (!isCompare && !isDetail && isDiamondSearchModule(moduleType)) {
+        if (!isCompare && !isDetail) {
           if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
             moreMenuList.add(BottomTabModel(
                 title: R.string().commonString.status,

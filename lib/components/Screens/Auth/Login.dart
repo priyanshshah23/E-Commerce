@@ -559,10 +559,8 @@ class _LoginScreenState extends StatefulScreenWidgetState {
             .resolve<PrefUtils>()
             .saveString("passWord", _passwordController.text);
       }
-//      NavigationUtilities.pushRoute(Notifications.route);
-      // callVersionUpdateApi(id: loginResp.data.user.id); //for local
-      SyncManager().callVersionUpdateApi(context, VersionUpdateApi.logIn,
-          id: loginResp.data.user.id);
+
+      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
