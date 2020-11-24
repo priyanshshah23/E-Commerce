@@ -371,6 +371,8 @@ class DiamondModel {
   num tblPer;
   num newDiscount;
   num newAmount;
+  num newPricePerCarat;
+  String remarks;
   String pktType;
   String hANm;
   String vStnId;
@@ -410,6 +412,7 @@ class DiamondModel {
   String fcColDesc;
   num ratio;
   bool isSelected = false;
+  bool isGroupSelected = false;
   bool isMatchPair = false;
   int borderType;
   bool isAddToWatchList = false;
@@ -434,6 +437,7 @@ class DiamondModel {
   num offeredAmount;
   String offeredValiddate;
   String offeredPricePerCarat;
+  String createdAt;
 
   TrackDiamonds trackItemCart;
   TrackDiamonds trackItemWatchList;
@@ -518,6 +522,8 @@ class DiamondModel {
     memoNo = json["memoNo"];
     offerStatus = json["offerStatus"];
     offerValidDate = json["offerValidDate"];
+    remarks = json["remarks"];
+    createdAt = json["createdAt"];
     id = json['id'];
     stoneId = json['stoneId'];
     pltId = json['pltId'] ?? "";
@@ -539,6 +545,7 @@ class DiamondModel {
     cultNm = json['cultNm'];
     newDiscount = json["newDiscount"] ?? 0;
     newAmount = json["newAmount"];
+    newPricePerCarat = json["newPricePerCarat"] ?? 0;
     cutNm = json['cutNm'];
     depPer = json['depPer'];
     img = json['img'] ?? false;
@@ -619,6 +626,9 @@ class DiamondModel {
     data['id'] = this.id;
     data["newDiscount"] = this.newDiscount;
     data["newAmount"] = this.newAmount;
+    data["newPricePerCarat"] = this.newPricePerCarat;
+    data["remarks"] = this.remarks;
+    data["createdAt"] = this.createdAt;
     data["memoNo"] = this.memoNo;
     data['stoneId'] = this.stoneId;
     data['pltId'] = this.pltId;

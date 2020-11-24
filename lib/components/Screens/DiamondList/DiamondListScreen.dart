@@ -2,6 +2,7 @@ import 'package:diamnow/Setting/SettingModel.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/constant/constants.dart';
+import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
@@ -63,6 +64,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   bool isFromDrawer;
   String sortingKey;
   Map<String, dynamic> dictFilters;
+  bool selectAllGroupDiamonds;
 
   _DiamondListScreenState({this.filterId, this.moduleType, this.isFromDrawer});
 
@@ -112,6 +114,23 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     });
     setState(() {
       //
+    });
+
+    RxBus.register<Map<String, dynamic>>(tag: eventSelectAllGroupDiamonds)
+        .listen((event) async {
+      setState(() {
+        DiamondModel diamondModel = event["diamondModel"];
+
+        List<DiamondModel> filter = arraDiamond
+            .where((element) => element.memoNo == diamondModel.memoNo)
+            .toList();
+        if (isNullEmptyOrFalse(filter) == false) {
+          filter.forEach((element) {
+            element.isSelected = event["isSelected"];
+          });
+        }
+        manageDiamondSelection();
+      });
     });
   }
 
@@ -238,11 +257,15 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   diamondModel.trackItemEnquiry = trackDiamonds;
                   break;
                 case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+                  diamondModel.createdAt = element.createdAt;
                   diamondModel.trackItemOffer = trackDiamonds;
                   diamondModel.memoNo = element.memoNo;
                   diamondModel.offerValidDate = element.offerValidDate;
                   diamondModel.offerStatus = element.offerStatus;
                   diamondModel.newAmount = element.newAmount;
+                  diamondModel.newDiscount = element.newDiscount;
+                  diamondModel.newPricePerCarat = element.newPricePerCarat;
+                  diamondModel.remarks = element.remarks;
                   break;
                 case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
                   diamondModel.trackItemReminder = trackDiamonds;
@@ -310,6 +333,30 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   }),
                   actionClick: (manageClick) {
                     manageRowClick(index, manageClick.type);
+                    setState(() {
+                      if (moduleType ==
+                          DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+                        List<DiamondModel> filter = arraDiamond
+                            .where((element) =>
+                                element.memoNo == arraDiamond[index].memoNo)
+                            .toList();
+                        if (isNullEmptyOrFalse(filter) == false) {
+                          List<DiamondModel> filter2 = filter
+                              .where((element) => element.isSelected == true)
+                              .toList();
+
+                          if (filter.length == filter2.length) {
+                            filter2.forEach((element) {
+                              element.isGroupSelected = true;
+                            });
+                          } else {
+                            filter2.forEach((element) {
+                              element.isGroupSelected = false;
+                            });
+                          }
+                        }
+                      }
+                    });
                   });
             },
           )

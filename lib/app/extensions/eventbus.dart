@@ -11,5 +11,6 @@ final String eventMasterForSingleItemOfGroupSelection =
 final String eventMasterForGroupWidgetSelectAll =
     "eventMasterForGroupWidgetSelectAll";
 
-
-final String eventForShareCaratRangeSelected = "eventForShareCaratRangeSelected";
+final String eventSelectAllGroupDiamonds = "selectAllGroupDiamonds";
+final String eventForShareCaratRangeSelected =
+    "eventForShareCaratRangeSelected";

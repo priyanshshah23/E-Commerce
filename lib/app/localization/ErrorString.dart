@@ -68,9 +68,9 @@ class ErrorString {
   final String deleteStoneMsg;
 
   const ErrorString({
-    this.accessDenide='Access denied',
-    this.pleaseSelectOfferTillDate='Please select offer till date.',
-    this.deleteStoneMsg='Are you sure you want to delete stone(s)',
+    this.accessDenide = 'Access denied',
+    this.pleaseSelectOfferTillDate = 'Please select offer till date.',
+    this.deleteStoneMsg = 'Are you sure you want to delete stone(s) ?',
     this.acceptTermsAndCondition = "Please accept terms and condition",
     this.diamondCompareRemove = 'At least 2 Stones are required to compare.',
     this.diamondSelectionError = 'Please select at least one stone.',

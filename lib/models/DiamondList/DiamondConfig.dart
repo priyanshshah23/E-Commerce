@@ -291,7 +291,8 @@ class DiamondConfig {
               code: BottomCodeConstant.TBSelectAll,
               sequence: 0,
               isCenter: true));
-          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR) {
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR &&
+              moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
             list.add(BottomTabModel(
                 title: "",
                 image: gridView,
@@ -1085,22 +1086,22 @@ class DiamondConfig {
     if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
       for (int i = 0; i < arraDiamond.length; i++) {
         if (i == 0 || (arraDiamond[i].memoNo != arraDiamond[i - 1].memoNo)) {
-          // arraDiamond[i].displayTitle = "#${arraDiamond[i].memoNo}";
-          arraDiamond[i].displayTitle = DateUtilities()
-              .convertServerDateToFormatterString(arraDiamond[i].offerValidDate,
-                  formatter: DateUtilities.dd_mm_yyyy);
+          arraDiamond[i].displayTitle = "#${arraDiamond[i].memoNo}";
+          arraDiamond[i].displayDesc = DateUtilities()
+              .convertServerDateToFormatterString(arraDiamond[i].createdAt,
+                  formatter: DateUtilities.dd_mm_yyyy_hh_mm_ss);
           arraDiamond[i].showCheckBox = true;
         }
 
-        // if (arraDiamond.length == 1) {
-        //   arraDiamond[i].isSectionOfferDisplay = true;
-        // } else if (i > 0 &&
-        //     (arraDiamond[i].memoNo != arraDiamond[i - 1].memoNo)) {
-        //   arraDiamond[i - 1].isSectionOfferDisplay = true;
-        // } else if (i == arraDiamond.length - 1) {
-        //   arraDiamond[i].isSectionOfferDisplay = true;
-        // }
-        // arraDiamond[i].isGrouping = true;
+        if (arraDiamond.length == 1) {
+          arraDiamond[i].isSectionOfferDisplay = true;
+        } else if (i > 0 &&
+            (arraDiamond[i].memoNo != arraDiamond[i - 1].memoNo)) {
+          arraDiamond[i - 1].isSectionOfferDisplay = true;
+        } else if (i == arraDiamond.length - 1) {
+          arraDiamond[i].isSectionOfferDisplay = true;
+        }
+        arraDiamond[i].isGrouping = true;
       }
     } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_UPCOMING) {
       for (int i = 0; i < arraDiamond.length; i++) {

@@ -1,4 +1,5 @@
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
@@ -48,6 +49,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   void initState() {
     super.initState();
     widget.item.setBidAmount();
+
     if (widget.item.isAddToOffer ?? false || widget.item.isAddToBid ?? false) {
       RxBus.register<bool>(tag: eventBusDropDown).listen((event) {
 //        Future.delayed(Duration(seconds: 1));
@@ -90,11 +92,42 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             isNullEmptyOrFalse(widget.item.displayTitle) == false
                 ? Padding(
                     padding:
-                        EdgeInsets.only(top: getSize(4.0), bottom: getSize(4)),
-                    child: Text(
-                      widget.item.displayTitle,
-                      style: appTheme.primaryColor14TextStyle,
-                    ),
+                        EdgeInsets.only(top: getSize(8.0), bottom: getSize(16)),
+                    child: Row(children: [
+                      Text(
+                        widget.item.displayTitle,
+                        style: appTheme.black16MediumTextStyle.copyWith(
+                          fontSize: getFontSize(14),
+                        ),
+                      ),
+                      Spacer(),
+                      Text(
+                        "Date : " + widget.item.displayDesc,
+                        style: appTheme.black16MediumTextStyle.copyWith(
+                          fontSize: getFontSize(14),
+                        ),
+                      ),
+                      SizedBox(width: getSize(8.0)),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            widget.item.isGroupSelected =
+                                !widget.item.isGroupSelected;
+                            Map<String, dynamic> map = {};
+                            map["diamondModel"] = widget.item;
+                            map["isSelected"] = widget.item.isGroupSelected;
+                            RxBus.post(map, tag: eventSelectAllGroupDiamonds);
+                          });
+                        },
+                        child: Image.asset(
+                          widget.item.isGroupSelected
+                              ? selectedCheckbox
+                              : unSelectedCheckbox,
+                          width: getSize(16),
+                          height: getSize(16),
+                        ),
+                      )
+                    ]),
                   )
                 : Container(),
             /* Container(
@@ -208,7 +241,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                             getMeasurementAndColorDetails(),
                                             getTableDepthAndAmountDetail(),
                                             // getWatchlistData(),
-                                            // getOfferData(),
+                                            getOfferData(),
                                             // getBidDetail(),
                                           ],
                                         ),
@@ -273,7 +306,10 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                     ),
                   ),
                   if (widget.item.isSectionOfferDisplay)
-                    DiamondOfferInfoWidget(),
+                    DiamondOfferInfoWidget(
+                      widget.item,
+                      widget.moduleType,
+                    ),
                 ],
               ),
             ),
@@ -386,6 +422,21 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 style: appTheme.green10TextStyle,
               ),
             ),
+            widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER
+                ? Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(top: getSize(5)),
+                    width: getSize(55),
+                    height: getSize(20),
+                    decoration: BoxDecoration(
+                        color: appTheme.whiteColor,
+                        borderRadius: BorderRadius.circular(getSize(5))),
+                    child: Text(
+                      PriceUtilities.getPercent(widget.item.newDiscount),
+                      style: appTheme.green10TextStyle,
+                    ),
+                  )
+                : Container(),
           ],
         ),
       ),
@@ -617,10 +668,29 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   Expanded(
                     child: Center(
                       child: Text(
-                        R.string().commonString.offerPricePerCarat +
-                            " : " +
-                            PriceUtilities.getPrice(widget.item.newAmount),
-                        style: appTheme.black12TextStyleMedium,
+                        PriceUtilities.getPrice(widget.item.newAmount) + "/Ct",
+                        style: appTheme.black16MediumTextStyle.copyWith(
+                          fontSize: getFontSize(14),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      "|",
+                      style: appTheme.primary16TextStyle.copyWith(
+                        fontSize: getFontSize(14),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        PriceUtilities.getPrice(widget.item.newPricePerCarat) +
+                            "/Amt",
+                        style: appTheme.black16MediumTextStyle.copyWith(
+                          fontSize: getFontSize(14),
+                        ),
                       ),
                     ),
                   ),
