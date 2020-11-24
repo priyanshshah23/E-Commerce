@@ -418,6 +418,7 @@ class DiamondModel {
   bool isAddToWatchList = false;
   bool isFinalCalculation = false;
   bool isAddToOffer = false;
+  bool isAddAppointment = false;
   bool isAddToBid = false;
   String selectedBackPer;
   String selectedOfferPer = "0.5";

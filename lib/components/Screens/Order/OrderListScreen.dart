@@ -145,15 +145,16 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
           left: getSize(Spacing.leftPadding),
           right: getSize(Spacing.rightPadding)),
       itemBuilder: (context, index) {
-        groupDiamondCalculation.setAverageCalculation(arraDiamond[index].memoDetails);
+        groupDiamondCalculation
+            .setAverageCalculation(arraDiamond[index].memoDetails);
         return Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: getSize(8)),
+              padding: EdgeInsets.only(top: getSize(16)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  getPrimaryText(arraDiamond[index].memoNo ?? ""),
+                  getPrimaryText("#${arraDiamond[index].memoNo ?? ""}"),
                   getPrimaryText(
                     R.string().commonString.date +
                         " : " +
@@ -165,7 +166,7 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: getSize(4), bottom: getSize(4)),
+              padding: EdgeInsets.only(top: getSize(16), bottom: getSize(4)),
               child: Container(
                 width: MathUtilities.screenWidth(context),
                 decoration: BoxDecoration(
@@ -183,7 +184,10 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
                     return DiamondItemWidget(
                         leftPadding: 4.0,
                         rightPadding: 4.0,
-                        groupDiamondCalculation: diamondIndex == arraDiamond[index].memoDetails.length-1 ? groupDiamondCalculation : null,
+                        groupDiamondCalculation: diamondIndex ==
+                                arraDiamond[index].memoDetails.length - 1
+                            ? groupDiamondCalculation
+                            : null,
                         item: arraDiamond[index].memoDetails[diamondIndex],
                         actionClick: (manageClick) {
                           manageRowClick(index, manageClick.type);
@@ -279,7 +283,7 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
                 diamondCalculation: diamondCalculation,
               ),
               SizedBox(
-                height: getSize(20),
+                height: getSize(8),
               ),
               Expanded(
                 child: diamondList,

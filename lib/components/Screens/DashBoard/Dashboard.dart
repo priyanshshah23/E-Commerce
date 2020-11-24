@@ -1730,8 +1730,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                           if (!isNullEmptyOrFalse(
                               this.dashboardModel.seller.email)) {
                             openURLWithApp(
-                                "mailto:?subject=DiamNow&body=DiamNow",
-                                context);
+                                "mailto:?subject=PnShah&body=PnShah", context);
                           }
                         },
                         child: Row(
@@ -1757,9 +1756,9 @@ class _DashboardState extends StatefulScreenWidgetState {
                       InkWell(
                         onTap: () {
                           if (!isNullEmptyOrFalse(
-                              this.dashboardModel.seller.whatsapp)) {
+                              this.dashboardModel.seller.mobile)) {
                             openURLWithApp(
-                                "tel://${this.dashboardModel.seller.whatsapp}",
+                                "tel://${this.dashboardModel.seller.mobile}",
                                 context);
                           }
                         },
@@ -1774,7 +1773,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                               width: getSize(10),
                             ),
                             Text(
-                              this.dashboardModel.seller.whatsapp ?? "-",
+                              this.dashboardModel.seller.mobile ?? "-",
                               style: appTheme.blackNormal14TitleColorblack,
                             ),
                           ],

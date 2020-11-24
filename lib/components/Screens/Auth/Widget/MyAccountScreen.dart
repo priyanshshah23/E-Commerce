@@ -295,7 +295,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                               ),
                             SizedBox(width: getSize(8)),
                             Text(
-                              app.resolve<PrefUtils>().getUserDetails().phone ??
+                              app
+                                      .resolve<PrefUtils>()
+                                      .getUserDetails()
+                                      .mobile ??
                                   "-",
                               style: appTheme.black12TextStyle,
                             ),

@@ -915,8 +915,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   : oldValue)
         ],
         style: appTheme.blackNormal14TitleColorblack,
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.next,
+        keyboardType: TextInputType.number,
+        textInputAction: TextInputAction.done,
         decoration: InputDecoration(
           focusedBorder: InputBorder.none,
           enabledBorder: InputBorder.none,
@@ -992,8 +992,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   : oldValue)
         ],
         style: appTheme.blackNormal14TitleColorblack,
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.next,
+        keyboardType: TextInputType.number,
+        textInputAction: TextInputAction.done,
         decoration: InputDecoration(
           focusedBorder: InputBorder.none,
           enabledBorder: InputBorder.none,
@@ -1224,7 +1224,9 @@ getText(String text, TextStyle style) {
 getPrimaryText(String text) {
   return Text(
     text,
-    style: appTheme.primary16TextStyle,
+    style: appTheme.black16MediumTextStyle.copyWith(
+      fontSize: getFontSize(14),
+    ),
   );
 }
 

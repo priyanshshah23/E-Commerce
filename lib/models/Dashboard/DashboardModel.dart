@@ -38,11 +38,13 @@ class DashboardModel {
   List<DashboardCount> dashboardCount;
 
   factory DashboardModel.fromJson(Map<String, dynamic> json) => DashboardModel(
-        seller: isNullEmptyOrFalse(json["seller"]) ? null : Seller.fromJson(json["seller"]),
+        seller: isNullEmptyOrFalse(json["seller"])
+            ? null
+            : Seller.fromJson(json["seller"]),
         featuredStone: List<FeaturedStone>.from(
             json["featuredStone"].map((x) => FeaturedStone.fromJson(x))),
-      recentSearch: List<SavedSearchModel>.from(
-          json["recentSearch"].map((x) => SavedSearchModel.fromJson(x))),
+        recentSearch: List<SavedSearchModel>.from(
+            json["recentSearch"].map((x) => SavedSearchModel.fromJson(x))),
         savedSearch: List<SavedSearchModel>.from(
             json["savedSearch"].map((x) => SavedSearchModel.fromJson(x))),
         // // recentSearch: List<SavedSearchModel>.from(
@@ -127,6 +129,7 @@ class Seller {
     this.lastName,
     this.email,
     this.whatsapp,
+    this.mobile,
   });
 
   String id;
@@ -134,6 +137,7 @@ class Seller {
   String lastName;
   String email;
   String whatsapp;
+  String mobile;
 
   factory Seller.fromJson(Map<String, dynamic> json) => Seller(
         id: json["id"],
@@ -141,6 +145,7 @@ class Seller {
         lastName: json["lastName"],
         email: json["email"] ?? "-",
         whatsapp: json["whatsapp"] ?? "-",
+        mobile: json["mobile"] ?? "-",
       );
 
   Map<String, dynamic> toJson() => {
@@ -149,6 +154,7 @@ class Seller {
         "lastName": lastName,
         "email": email,
         "whatsapp": whatsapp,
+        "mobile": mobile,
       };
 }
 

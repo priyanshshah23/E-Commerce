@@ -129,7 +129,7 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_MY_HOLD:
         return R.string().screenTitle.myHold;
       case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
-        return R.string().screenTitle.confirmStone;
+        return R.string().screenTitle.myOrder;
       case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
         return R.string().screenTitle.myOffice;
       case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
@@ -171,6 +171,8 @@ class DiamondConfig {
         return R.string().screenTitle.confirmStone;
       case DiamondTrackConstant.TRACK_TYPE_FINAL_CALCULATION:
         return R.string().screenTitle.finalCalculation;
+      case DiamondTrackConstant.TRACK_TYPE_APPOINTMENT:
+        return R.string().screenTitle.bookOffice;
       default:
         return R.string().screenTitle.addToWatchList;
     }
@@ -594,7 +596,25 @@ class DiamondConfig {
   }
 
   actionAppointment(BuildContext context, List<DiamondModel> list) {
-    NavigationUtilities.pushRoute(OfferViewScreen.route);
+    List<DiamondModel> selectedList = [];
+    DiamondModel model;
+    list.forEach((element) {
+      model = DiamondModel.fromJson(element.toJson());
+      model.isAddAppointment = true;
+      selectedList.add(model);
+    });
+
+    openDiamondActionAcreen(
+        context, DiamondTrackConstant.TRACK_TYPE_APPOINTMENT, selectedList);
+    /* showOfferListDialog(context, selectedList, (manageClick) {
+      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
+        callApiFoCreateTrack(
+            context, list, DiamondTrackConstant.TRACK_TYPE_OFFER,
+            remark: manageClick.remark,
+            companyName: manageClick.companyName,
+            isPop: true);
+      }
+    });*/
   }
 
   actionHold(List<DiamondModel> list) {}

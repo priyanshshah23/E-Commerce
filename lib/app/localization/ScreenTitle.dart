@@ -127,6 +127,7 @@ class ScreenTitle {
   final String addToCart;
   final String addToWatchList;
   final String finalCalculation;
+  final String bookOffice;
   final String comment;
   final String offer;
   final String offeredDisc;
@@ -354,6 +355,7 @@ class ScreenTitle {
     this.addToCart = "Add to Cart",
     this.addToWatchList = "Add to Watchlist",
     this.finalCalculation = "Final Calculation",
+    this.bookOffice = "Book Office",
     this.clearSelection = "Clear Selection",
     this.comment = "Comments",
     this.hold = "Hold",
