@@ -510,6 +510,19 @@ class BottomMenuSetting {
     List<BottomTabModel> moreMenuList = [];
 
     switch (moduleType) {
+      case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
+      case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
+        moreMenuList.add(BottomTabModel(
+            title: R.string().screenTitle.share,
+            isCenter: false,
+            image: shareWhite,
+            type: ActionMenuConstant.ACTION_TYPE_SHARE));
+        moreMenuList.add(BottomTabModel(
+            title: R.string().screenTitle.download,
+            isCenter: false,
+            image: downloadWhite,
+            type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
+        break;
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
         if (app
             .resolve<PrefUtils>()

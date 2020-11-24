@@ -11,6 +11,7 @@ import 'package:diamnow/models/Address/CityListModel.dart';
 import 'package:diamnow/models/Address/CountryListModel.dart';
 import 'package:diamnow/models/Address/StateListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:flutter/gestures.dart';
@@ -21,7 +22,8 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class OfferPopup extends StatefulWidget {
   Function(String selectedDate, String comment) callBack;
-  OfferPopup({this.callBack});
+  int actionType = DiamondTrackConstant.TRACK_TYPE_OFFER;
+  OfferPopup({this.callBack, this.actionType});
   @override
   _OfferPopupState createState() => _OfferPopupState();
 }
@@ -61,7 +63,9 @@ class _OfferPopupState extends State<OfferPopup> {
               child: Padding(
                 padding: EdgeInsets.only(top: getSize(30)),
                 child: Text(
-                  R.string().screenTitle.placeAnOffer,
+                  widget.actionType == DiamondTrackConstant.TRACK_TYPE_OFFICE
+                      ? R.string().screenTitle.bookOffice
+                      : R.string().screenTitle.placeAnOffer,
                   style: appTheme.blackSemiBold18TitleColorblack,
                 ),
               ),
@@ -93,25 +97,27 @@ class _OfferPopupState extends State<OfferPopup> {
                 ),
               ),
             ),
-            InkWell(
-              onTap: () {
-                print("Shipping policy clicked");
-              },
-              child: Padding(
-                padding: EdgeInsets.only(
-                    left: getSize(16),
-                    right: getSize(16),
-                    top: getSize(8),
-                    bottom: getSize(8)),
-                child: Text(
-                  R.string().commonString.shippingPolicy,
-                  style: appTheme.blackNormal14TitleColorblack.copyWith(
-                    decoration: TextDecoration.underline,
-                    color: appTheme.colorPrimary,
+            widget.actionType == DiamondTrackConstant.TRACK_TYPE_OFFICE
+                ? Container()
+                : InkWell(
+                    onTap: () {
+                      print("Shipping policy clicked");
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          left: getSize(16),
+                          right: getSize(16),
+                          top: getSize(8),
+                          bottom: getSize(8)),
+                      child: Text(
+                        R.string().commonString.shippingPolicy,
+                        style: appTheme.blackNormal14TitleColorblack.copyWith(
+                          decoration: TextDecoration.underline,
+                          color: appTheme.colorPrimary,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
             Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: getSize(Spacing.leftPadding),
@@ -208,7 +214,10 @@ class _OfferPopupState extends State<OfferPopup> {
           textOption: TextFieldOption(
               prefixWid: getCommonIconWidget(
                   imageName: company, imageType: IconSizeType.small),
-              hintText: R.string().commonString.offerVelidTill,
+              hintText:
+                  widget.actionType == DiamondTrackConstant.TRACK_TYPE_OFFICE
+                      ? R.string().commonString.officeVisitDate
+                      : R.string().commonString.offerVelidTill,
               maxLine: 1,
               keyboardType: TextInputType.text,
               inputController: _dateController,
@@ -220,7 +229,9 @@ class _OfferPopupState extends State<OfferPopup> {
           },
           validation: (text) {
             if (text.isEmpty) {
-              return R.string().errorString.pleaseSelectOfferTillDate;
+              return widget.actionType == DiamondTrackConstant.TRACK_TYPE_OFFICE
+                  ? R.string().errorString.pleaseSelectOfficeVisitDate
+                  : R.string().errorString.pleaseSelectOfferTillDate;
             }
           },
           inputAction: TextInputAction.next,

@@ -11,7 +11,7 @@ const FAIL = 2;
 
 var IMAGEFILESIZE = 10.0;
 
-const APPNAME = "PN Shah";
+const APPNAME = "My Diamonds";
 
 const CODE_OK = "OK";
 const CODE_SUCCESS = "SUCCESS";

@@ -63,7 +63,8 @@ class _DiamondOfferInfoWidgetState extends State<DiamondOfferInfoWidget> {
   }
 
   getOfferedItems() {
-    if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+    if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER ||
+        widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
       return Container();
     }
     return Row(
@@ -108,16 +109,12 @@ class _DiamondOfferInfoWidgetState extends State<DiamondOfferInfoWidget> {
       child: Row(
         children: [
           Text(
-            R.string().commonString.validTill,
+            getDateTitle(),
             style: appTheme.grey12HintTextStyle,
           ),
           Spacer(),
           Text(
-            isNullEmptyOrFalse(widget.diamondModel.offerValidDate)
-                ? "-"
-                : DateUtilities().convertServerDateToFormatterString(
-                    widget.diamondModel.offerValidDate,
-                    formatter: DateUtilities.dd_mm_yyyy),
+            getDate(),
             style: appTheme.black14TextStyle,
           ),
         ],
@@ -140,9 +137,7 @@ class _DiamondOfferInfoWidgetState extends State<DiamondOfferInfoWidget> {
           Spacer(),
           Expanded(
             child: Text(
-              isNullEmptyOrFalse(widget.diamondModel.remarks)
-                  ? "-"
-                  : widget.diamondModel.remarks,
+              getRemarks(),
               style: appTheme.black12TextStyle,
               textAlign: TextAlign.right,
             ),
@@ -152,18 +147,48 @@ class _DiamondOfferInfoWidgetState extends State<DiamondOfferInfoWidget> {
     );
   }
 
-  String getDifferentBetweenTwoDays() {
-    if (isNullEmptyOrFalse(widget.diamondModel.offerValidDate)) {
-      return "-";
+  String getRemarks() {
+    if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
+      return isNullEmptyOrFalse(widget.diamondModel.remarks)
+          ? "-"
+          : widget.diamondModel.remarks;
+    } else if (widget.moduleType ==
+        DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+      return isNullEmptyOrFalse(widget.diamondModel.purpose)
+          ? "-"
+          : widget.diamondModel.purpose;
     }
 
-    DateTime dateTimeNow = DateTime.now();
-    String strOfferedDate = DateUtilities().convertServerDateToFormatterString(
-        widget.diamondModel.offerValidDate,
-        formatter: DateUtilities.dd_mm_yyyy);
-    DateTime offeredDate = DateUtilities()
-        .getDateFromString(strOfferedDate, formatter: DateUtilities.dd_mm_yyyy);
-    final differenceInDays = offeredDate.difference(dateTimeNow).inDays;
-    return "$differenceInDays" + " days";
+    return "-";
+  }
+
+  String getDateTitle() {
+    if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
+      return R.string().commonString.officeVisitDate;
+    } else if (widget.moduleType ==
+        DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+      return R.string().commonString.validTill;
+    }
+
+    return "-";
+  }
+
+  String getDate() {
+    if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
+      return isNullEmptyOrFalse(widget.diamondModel.date)
+          ? "-"
+          : DateUtilities().convertServerDateToFormatterString(
+              widget.diamondModel.date,
+              formatter: DateUtilities.dd_mm_yyyy);
+    } else if (widget.moduleType ==
+        DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+      return isNullEmptyOrFalse(widget.diamondModel.offerValidDate)
+          ? "-"
+          : DateUtilities().convertServerDateToFormatterString(
+              widget.diamondModel.offerValidDate,
+              formatter: DateUtilities.dd_mm_yyyy);
+    }
+
+    return "-";
   }
 }

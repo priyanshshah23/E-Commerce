@@ -294,7 +294,8 @@ class DiamondConfig {
               sequence: 0,
               isCenter: true));
           if (moduleType != DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR &&
-              moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+              moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER &&
+              moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
             list.add(BottomTabModel(
                 title: "",
                 image: gridView,
@@ -367,7 +368,7 @@ class DiamondConfig {
         actionDownload(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_SHARE:
-        actionShare(context, list);
+        actionDownload(context, list, isForShare: true);
         break;
       case ActionMenuConstant.ACTION_TYPE_COMPARE:
         if (list.length < 2) {
@@ -605,7 +606,7 @@ class DiamondConfig {
     });
 
     openDiamondActionAcreen(
-        context, DiamondTrackConstant.TRACK_TYPE_APPOINTMENT, selectedList);
+        context, DiamondTrackConstant.TRACK_TYPE_OFFICE, selectedList);
     /* showOfferListDialog(context, selectedList, (manageClick) {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
         callApiFoCreateTrack(
@@ -621,8 +622,9 @@ class DiamondConfig {
 
   actionDownload(
     BuildContext context,
-    List<DiamondModel> list,
-  ) {
+    List<DiamondModel> list, {
+    bool isForShare = false,
+  }) {
     List<SelectionPopupModel> downloadOptionList = List<SelectionPopupModel>();
     List<SelectionPopupModel> selectedOptions = List<SelectionPopupModel>();
     downloadOptionList.add(SelectionPopupModel("1", "Excel",
@@ -656,9 +658,13 @@ class DiamondConfig {
             ),
             child: SelectionDialogue(
               isSearchEnable: false,
-              title: R.string().commonString.download,
+              title: isForShare
+                  ? R.string().commonString.share
+                  : R.string().commonString.download,
               isMultiSelectionEnable: true,
-              positiveButtonTitle: R.string().commonString.download,
+              positiveButtonTitle: isForShare
+                  ? R.string().commonString.share
+                  : R.string().commonString.download,
               selectionOptions: downloadOptionList,
               applyFilterCallBack: (
                   {SelectionPopupModel selectedItem,
@@ -667,27 +673,30 @@ class DiamondConfig {
                 // Navigator.pop(context);
                 //check condition for only excel,if so then redirect to static page
                 //else show showDialog method.
-
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return WillPopScope(
-                        onWillPop: () {
-                          return Future.value(false);
-                        },
-                        child: Dialog(
-                          insetPadding: EdgeInsets.symmetric(
-                              horizontal: getSize(20), vertical: getSize(20)),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(getSize(25)),
+                if (isForShare) {
+                  _onShare(context, list);
+                } else {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return WillPopScope(
+                          onWillPop: () {
+                            return Future.value(false);
+                          },
+                          child: Dialog(
+                            insetPadding: EdgeInsets.symmetric(
+                                horizontal: getSize(20), vertical: getSize(20)),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(getSize(25)),
+                            ),
+                            child: Download(
+                              allDiamondPreviewThings: selectedOptions,
+                              diamondList: list,
+                            ),
                           ),
-                          child: Download(
-                            allDiamondPreviewThings: selectedOptions,
-                            diamondList: list,
-                          ),
-                        ),
-                      );
-                    });
+                        );
+                      });
+                }
               },
             ),
 //          child: DownLoadAndShareDialogue(
@@ -1112,6 +1121,26 @@ class DiamondConfig {
                   formatter: DateUtilities.dd_mm_yyyy_hh_mm_ss);
           arraDiamond[i].showCheckBox = true;
         }
+
+        if (arraDiamond.length == 1) {
+          arraDiamond[i].isSectionOfferDisplay = true;
+        } else if (i > 0 &&
+            (arraDiamond[i].memoNo != arraDiamond[i - 1].memoNo)) {
+          arraDiamond[i - 1].isSectionOfferDisplay = true;
+        } else if (i == arraDiamond.length - 1) {
+          arraDiamond[i].isSectionOfferDisplay = true;
+        }
+        arraDiamond[i].isGrouping = true;
+      }
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
+      for (int i = 0; i < arraDiamond.length; i++) {
+        // if (i == 0 || (arraDiamond[i].memoNo != arraDiamond[i - 1].memoNo)) {
+        //   arraDiamond[i].displayTitle = "#${arraDiamond[i].memoNo}";
+        //   arraDiamond[i].displayDesc = DateUtilities()
+        //       .convertServerDateToFormatterString(arraDiamond[i].createdAt,
+        //           formatter: DateUtilities.dd_mm_yyyy_hh_mm_ss);
+        //   arraDiamond[i].showCheckBox = true;
+        // }
 
         if (arraDiamond.length == 1) {
           arraDiamond[i].isSectionOfferDisplay = true;

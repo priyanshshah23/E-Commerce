@@ -73,6 +73,7 @@ class OrderItem {
   String billType;
   String sourceOfSale;
   List<DiamondModel> memoDetails;
+  bool isSelected = false;
 
   OrderItem(
       {this.createdAt,

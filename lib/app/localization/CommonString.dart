@@ -230,6 +230,7 @@ class CommonString {
   final String selectType;
   final String enter2Stone;
   final String offerVelidTill;
+  final String officeVisitDate;
 
   final String bidDesc;
   final String packetNo;
@@ -296,6 +297,7 @@ class CommonString {
     this.selectTime = "Select Time",
     this.selectDate = "Select Date",
     this.offerVelidTill = "Offer Valid Till",
+    this.officeVisitDate = "Office Visit Date",
     this.all = "All",
     this.status = "Status",
 

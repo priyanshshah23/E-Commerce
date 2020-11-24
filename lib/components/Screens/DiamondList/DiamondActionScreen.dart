@@ -4,6 +4,7 @@ import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/constant/constants.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
@@ -24,6 +25,7 @@ import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
+import 'package:diamnow/models/Slot/SlotModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -76,6 +78,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
   String selectedDate;
   bool isAllSelected = false;
   bool isCMChargesApplied = false;
+  List<SlotModel> arrSlots = [];
 
   List<String> invoiceList = [
     InvoiceTypesString.today,
@@ -101,6 +104,10 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
 
     manageDiamondCalculation();
     diamondConfig.initItems();
+
+    if (this.actionType == DiamondTrackConstant.TRACK_TYPE_OFFICE) {
+      callApiforTimeSlots();
+    }
   }
 
   manageDiamondCalculation() {
@@ -301,6 +308,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                           });
                       break;
                     case DiamondTrackConstant.TRACK_TYPE_OFFER:
+                    case DiamondTrackConstant.TRACK_TYPE_OFFICE:
                       showDialog(
                           context: context,
                           builder: (BuildContext cnt) {
@@ -313,12 +321,20 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                                       BorderRadius.circular(getSize(25)),
                                 ),
                                 child: OfferPopup(
+                                  actionType: actionType,
                                   callBack: (selectedPopUpDate, remark) {
-                                    diamondConfig.actionAll(
-                                        context, diamondList, actionType,
-                                        remark: remark,
-                                        date: selectedPopUpDate,
-                                        companyName: "");
+                                    if (actionType ==
+                                        DiamondTrackConstant
+                                            .TRACK_TYPE_OFFICE) {
+                                      callApiForRequestForOffice(
+                                          remark, selectedPopUpDate);
+                                    } else {
+                                      diamondConfig.actionAll(
+                                          context, diamondList, actionType,
+                                          remark: remark,
+                                          date: selectedPopUpDate,
+                                          companyName: "");
+                                    }
                                   },
                                 ));
                           });
@@ -473,5 +489,80 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
             positiveBtnTitle: R.string().commonString.ok,
           );
     }
+  }
+
+  callApiforTimeSlots() {
+    Map<String, dynamic> req = {};
+    req["sort"] = [
+      {"end": "ASC"}
+    ];
+    NetworkCall<SlotResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().getSlots(req),
+            context,
+            isProgress: true)
+        .then((resp) async {
+      arrSlots = resp.data.list;
+      setState(() {});
+    }).catchError((onError) {
+      if (onError is ErrorResp) {
+        // app.resolve<CustomDialogs>().confirmDialog(
+        //       context,
+        //       title: "",
+        //       desc: onError.message,
+        //       positiveBtnTitle: R.string().commonString.ok,
+        //     );
+      }
+    });
+  }
+
+  callApiForRequestForOffice(String comment, String pickedDate) {
+    Map<String, dynamic> req = {};
+    req["purpose"] = comment;
+    req["date"] = pickedDate;
+    req["type"] = 2;
+    req["meetingType"] = 2;
+    req["cabinSlot"] = [
+      {
+        "id": arrSlots[0].id ?? "",
+        "createdAt": arrSlots[0].createdAt ?? "",
+        "updatedAt": arrSlots[0].updatedAt ?? "",
+        "start": "1970-01-01T03:30:00.000Z",
+        "end": "1970-01-01T04:00:00.000Z",
+        "weekDay": 4,
+        "type": 2,
+        "slotDurationType": 4,
+        "isActive": true,
+        "appliedFrom": "2020-01-06T11:29:35Z",
+        "cabinId": arrSlots[0].cabinId ?? "",
+      }
+    ];
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+            () => app
+                .resolve<ServiceModule>()
+                .networkService()
+                .createOfficerequest(req),
+            context,
+            isProgress: true)
+        .then((resp) async {
+      app.resolve<CustomDialogs>().confirmDialog(context,
+          title: "",
+          desc: resp.message,
+          positiveBtnTitle: R.string().commonString.ok,
+          onClickCallback: (type) {
+        Navigator.pop(context);
+      });
+    }).catchError((onError) {
+      if (onError is ErrorResp) {
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              title: "",
+              desc: onError.message,
+              positiveBtnTitle: R.string().commonString.ok,
+            );
+      }
+    });
   }
 }

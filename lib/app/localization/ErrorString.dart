@@ -52,6 +52,7 @@ class ErrorString {
   final String pleaseEnterComment;
   final String pleaseEnterRemarks;
   final String pleaseSelectOfferTillDate;
+  final String pleaseSelectOfficeVisitDate;
   final String enterPinCode;
   final String enterValidPinCode;
   final String fromValueGreateThanTo;
@@ -70,6 +71,7 @@ class ErrorString {
   const ErrorString({
     this.accessDenide = 'Access denied',
     this.pleaseSelectOfferTillDate = 'Please select offer till date.',
+    this.pleaseSelectOfficeVisitDate = "Please select office visit date",
     this.deleteStoneMsg = 'Are you sure you want to delete stone(s) ?',
     this.acceptTermsAndCondition = "Please accept terms and condition",
     this.diamondCompareRemove = 'At least 2 Stones are required to compare.',

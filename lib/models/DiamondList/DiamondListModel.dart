@@ -373,6 +373,7 @@ class DiamondModel {
   num newAmount;
   num newPricePerCarat;
   String remarks;
+  String purpose;
   String pktType;
   String hANm;
   String vStnId;
@@ -393,6 +394,7 @@ class DiamondModel {
   String inDt;
   String memoNo;
   String offerValidDate;
+  String date;
   int offerStatus;
   String brlncyNm;
   bool isXray;
@@ -523,7 +525,9 @@ class DiamondModel {
     memoNo = json["memoNo"];
     offerStatus = json["offerStatus"];
     offerValidDate = json["offerValidDate"];
+    date = json["date"] ?? "";
     remarks = json["remarks"];
+    purpose = json["purpose"];
     createdAt = json["createdAt"];
     id = json['id'];
     stoneId = json['stoneId'];
@@ -629,6 +633,7 @@ class DiamondModel {
     data["newAmount"] = this.newAmount;
     data["newPricePerCarat"] = this.newPricePerCarat;
     data["remarks"] = this.remarks;
+    data["purpose"] = this.purpose;
     data["createdAt"] = this.createdAt;
     data["memoNo"] = this.memoNo;
     data['stoneId'] = this.stoneId;
@@ -969,6 +974,8 @@ class TrackItem {
   num newAmount;
   int offerStatus;
   String offerValidDate;
+  String date;
+  String purpose;
   bool isCounterOffer;
   String remarks;
   bool isActive;
@@ -995,6 +1002,7 @@ class TrackItem {
     this.updatedAt,
     this.id,
     this.enquiryNo,
+    this.purpose,
     this.trackType,
     this.name,
     this.trackTxnId,
@@ -1024,12 +1032,15 @@ class TrackItem {
     this.diamond,
     this.userAccount,
     this.createdBy,
+    this.date,
   });
 
   TrackItem.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     id = json['id'];
+    purpose = json["purpose"];
+    date = json["date"];
     enquiryNo = json['enquiryNo'];
     trackType = json['trackType'];
     name = json['name'];
@@ -1082,6 +1093,8 @@ class TrackItem {
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     data['id'] = this.id;
+    data["date"] = this.date;
+    data["purpose"] = this.purpose;
     data['enquiryNo'] = this.enquiryNo;
     data['trackType'] = this.trackType;
     data['name'] = this.name;

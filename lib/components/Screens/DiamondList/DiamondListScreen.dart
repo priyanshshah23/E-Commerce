@@ -236,6 +236,13 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           diamondListResp.data.list.forEach((element) {
             if (element.diamonds != null) {
               element.diamonds.forEach((diamonds) {
+                switch (moduleType) {
+                  case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
+                    diamonds.memoNo = element.id;
+                    diamonds.date = element.date;
+                    diamonds.purpose = element.purpose;
+                    break;
+                }
                 list.add(diamonds);
               });
             } else {
@@ -273,9 +280,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
                   diamondModel.trackItemComment = trackDiamonds;
                   break;
-                case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
-                  diamondModel.trackItemOffice = trackDiamonds;
-                  break;
+
                 case DiamondModuleConstant.MODULE_TYPE_MY_BID:
                   diamondModel.trackItemBid = trackDiamonds;
                   break;

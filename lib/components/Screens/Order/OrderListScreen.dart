@@ -184,13 +184,21 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
                     return DiamondItemWidget(
                         leftPadding: 4.0,
                         rightPadding: 4.0,
-                        groupDiamondCalculation: diamondIndex ==
-                                arraDiamond[index].memoDetails.length - 1
-                            ? groupDiamondCalculation
-                            : null,
+                        // groupDiamondCalculation: diamondIndex ==
+                        //         arraDiamond[index].memoDetails.length - 1
+                        //     ? groupDiamondCalculation
+                        //     : null,
                         item: arraDiamond[index].memoDetails[diamondIndex],
                         actionClick: (manageClick) {
-                          manageRowClick(index, manageClick.type);
+                          print("Click");
+                          arraDiamond[index]
+                                  .memoDetails[diamondIndex]
+                                  .isSelected =
+                              !arraDiamond[index]
+                                  .memoDetails[diamondIndex]
+                                  .isSelected;
+                          manageDiamondSelection();
+                          // manageRowClick(index, manageClick.type);
                         });
                   },
                 ),
@@ -200,6 +208,17 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
         );
       },
     );
+  }
+
+  Widget getBottomTab() {
+    return arraDiamond != null && arraDiamond.length > 0
+        ? BottomTabbarWidget(
+            arrBottomTab: diamondConfig.arrBottomTab,
+            onClickCallback: (obj) {
+              manageBottomMenuClick(obj);
+            },
+          )
+        : SizedBox();
   }
 
   List<Widget> getToolbarItem() {
@@ -261,6 +280,7 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
     });
     diamondCalculation.setAverageCalculation(list);
     diamondList.state.setApiCalling(false);
+    setState(() {});
   }
 
   @override
@@ -276,6 +296,7 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
               : getBackButton(context),
           centerTitle: false,
         ),
+        bottomNavigationBar: getBottomTab(),
         body: SafeArea(
           child: Column(
             children: <Widget>[
@@ -293,5 +314,26 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
         ));
   }
 
-  manageBottomMenuClick(BottomTabModel bottomTabModel) {}
+  manageBottomMenuClick(BottomTabModel bottomTabModel) {
+    List<DiamondModel> selectedList = [];
+    for (var item in arraDiamond) {
+      item.memoDetails.forEach((element) {
+        if (element.isSelected == true) {
+          selectedList.add(element);
+        }
+      });
+    }
+
+    if (!isNullEmptyOrFalse(selectedList)) {
+      diamondConfig.manageDiamondAction(
+          context, selectedList, bottomTabModel, () {});
+    } else {
+      app.resolve<CustomDialogs>().confirmDialog(
+            context,
+            title: "",
+            desc: R.string().errorString.diamondSelectionError,
+            positiveBtnTitle: R.string().commonString.ok,
+          );
+    }
+  }
 }
