@@ -85,60 +85,63 @@ class _SearchScreenState extends StatefulScreenWidgetState {
             left: getSize(Spacing.leftPadding),
             right: getSize(Spacing.rightPadding),
           ),
-          child: TextFormField(
-            maxLines: 1,
-            textAlignVertical: TextAlignVertical(y: 1.0),
-            textInputAction: TextInputAction.search,
-            focusNode: _focusSearch,
-            autofocus: false,
-            controller: _searchController,
-            obscureText: false,
-            style: appTheme.black16TextStyle,
-            keyboardType: TextInputType.text,
-            textCapitalization: TextCapitalization.characters,
-            cursorColor: appTheme.colorPrimary,
-            inputFormatters: [
-              BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
-            ],
-            decoration: InputDecoration(
-              fillColor: fromHex("#FFEFEF"),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
-                borderSide:
-                    BorderSide(color: appTheme.dividerColor, width: getSize(1)),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
-                borderSide:
-                    BorderSide(color: appTheme.dividerColor, width: getSize(1)),
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
-                borderSide:
-                    BorderSide(color: appTheme.dividerColor, width: getSize(1)),
-              ),
+          child: Container(
+            height: getSize(40),
+            child: TextFormField(
+              maxLines: 1,
+              textAlignVertical: TextAlignVertical(y: 1.0),
+              textInputAction: TextInputAction.search,
+              focusNode: _focusSearch,
+              autofocus: false,
+              controller: _searchController,
+              obscureText: false,
+              style: appTheme.black16TextStyle,
+              keyboardType: TextInputType.text,
+              textCapitalization: TextCapitalization.characters,
+              cursorColor: appTheme.colorPrimary,
+              inputFormatters: [
+                BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+              ],
+              decoration: InputDecoration(
+                fillColor: fromHex("#FFEFEF"),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+                  borderSide:
+                      BorderSide(color: appTheme.dividerColor, width: getSize(1)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+                  borderSide:
+                      BorderSide(color: appTheme.dividerColor, width: getSize(1)),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+                  borderSide:
+                      BorderSide(color: appTheme.dividerColor, width: getSize(1)),
+                ),
 
-              hintStyle: appTheme.grey16HintTextStyle,
-              hintText: "Search",
-              labelStyle: TextStyle(
-                color: appTheme.textColor,
-                fontSize: getFontSize(16),
+                hintStyle: appTheme.grey16HintTextStyle,
+                hintText: "Search",
+                labelStyle: TextStyle(
+                  color: appTheme.textColor,
+                  fontSize: getFontSize(16),
+                ),
+                // suffix: widget.textOption.postfixWidOnFocus,
+                suffixIcon: Padding(
+                    padding: EdgeInsets.all(getSize(17)),
+                    child: Image.asset(search,
+                        height: getSize(8), width: getSize(8))),
               ),
-              // suffix: widget.textOption.postfixWidOnFocus,
-              suffixIcon: Padding(
-                  padding: EdgeInsets.all(getSize(17)),
-                  child: Image.asset(search,
-                      height: getSize(8), width: getSize(8))),
+              onChanged: (String text) {
+                this.searchText = text;
+                openSuggestion();
+                setState(() {});
+              },
+              onEditingComplete: () {
+                FocusScope.of(context).unfocus();
+                callCountApi();
+              },
             ),
-            onChanged: (String text) {
-              this.searchText = text;
-              openSuggestion();
-              setState(() {});
-            },
-            onEditingComplete: () {
-              FocusScope.of(context).unfocus();
-              callCountApi();
-            },
           ),
         ),
       ),
