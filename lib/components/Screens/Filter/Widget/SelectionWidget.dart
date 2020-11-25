@@ -173,16 +173,87 @@ class _TagWidgetState extends State<TagWidget> {
                     widget.model.onSelectionClick(index);
                   });
                 },
-                child: index ==
+            
+                child: !widget.model.isShowMoreHorizontal ? index ==
                             widget.model.showMoreTagAfterTotalItemCount - 1 &&
                         widget.model.isShowMoreSelected &&
                         widget.model.isShowMore
+                        
                     ? getSingleTagForGridview(widget.model.masters.length - 1)
-                    : getSingleTagForGridview(index),
+                    : getSingleTagForGridview(index) : 
+
+                    getSingleTagForGridview(index)
+                    ,
               );
             },
           ),
         ),
+        if (widget.model.isShowMoreHorizontal &&
+            widget.model.isShowMoreSelected == true &&
+            widget.model.isShowMore)
+          InkWell(
+            onTap: () {
+              widget.model.isShowMoreSelected = false;
+              setState(() {});
+            },
+            child: Padding(
+              padding: EdgeInsets.only(top: getSize(16.0)),
+              child: Container(
+                height: getSize(26),
+                decoration: BoxDecoration(
+                  color: appTheme.selectedFilterColor,
+                  borderRadius: BorderRadius.circular(getSize(5)),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      R.string().commonString.seeMore,
+                      style: appTheme.black14TextStyle,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: getSize(6.0)),
+                      child: Image.asset(downArrow,
+                          width: getSize(9), height: getSize(5)),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        if (widget.model.isShowMoreHorizontal &&
+            widget.model.isShowMoreSelected == false &&
+            widget.model.isShowMore)
+          InkWell(
+            onTap: () {
+              widget.model.isShowMoreSelected = true;
+              setState(() {});
+            },
+            child: Padding(
+              padding: EdgeInsets.only(top: getSize(16.0)),
+              child: Container(
+                height: getSize(26),
+                decoration: BoxDecoration(
+                  color: appTheme.selectedFilterColor,
+                  borderRadius: BorderRadius.circular(getSize(5)),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      R.string().commonString.seeLess,
+                      style: appTheme.black14TextStyle,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: getSize(6.0)),
+                      child: Image.asset(upArrow,
+                          width: getSize(9), height: getSize(5)),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          )
       ],
     );
   }
@@ -192,7 +263,10 @@ class _TagWidgetState extends State<TagWidget> {
       if (selectionModel.isShowMoreSelected) {
         return selectionModel.showMoreTagAfterTotalItemCount;
       } else {
-        return selectionModel.masters.length;
+        if(!selectionModel.isShowMoreHorizontal)
+          return selectionModel.masters.length;
+        else
+          return selectionModel.masters.length-1;
       }
     } else {
       return selectionModel.masters.length;

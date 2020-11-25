@@ -275,7 +275,15 @@ class CommonString {
 
   final String enterComment;
 
+  //filterScreen
+  final String seeMore;
+  final String seeLess;
+
   const CommonString({
+    //filterScreen
+    this.seeMore = "See More",
+    this.seeLess = "See Less",
+    
     //SavedSearch
     this.modify = "Modify",
     this.delete = "Delete",

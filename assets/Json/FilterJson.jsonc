@@ -10,6 +10,7 @@
     "orientation": "h",
     "isShowAll": false,
     "isShowMore": true,
+    "isShowMoreHorizontal":true,
     "tab": "basic",
     "sequence": 1,
     "isActive": true
@@ -37,8 +38,9 @@
     "orientation": "v",
     "gridViewItemCount": 3,
     "showMoreTagAfterTotalItemCount": 9,
-    "isShowAll": false,
+    "isShowAll": true,
     "isShowMore": true,
+    "isShowMoreHorizontal":false,
     "tab": "basic",
     "isWhiteColor": false,
     "sequence": 3,

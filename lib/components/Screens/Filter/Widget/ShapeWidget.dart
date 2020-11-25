@@ -94,128 +94,207 @@ class _ShapeWidgetState extends State<ShapeWidget> {
           height: getSize(20),
         ),
         widget.selectionModel.verticalScroll
-            ? GridView.count(
-                shrinkWrap: true,
-                primary: false,
-                childAspectRatio: 0.8,
-                padding: EdgeInsets.all(getSize(2)),
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 8,
-                crossAxisCount: 4,
-                children: List.generate(
-                  getGridViewLength(widget.selectionModel),
-                  (index) {
-                    Master obj;
-                    int totalIndex = getGridViewLength(widget.selectionModel);
-                    if (totalIndex <= elementsToShow + 1)
-                      obj = listOfMasterView[index];
-                    else
-                      obj = widget.selectionModel.masters[index];
+            ? Column(
+                children: [
+                  GridView.count(
+                    shrinkWrap: true,
+                    primary: false,
+                    childAspectRatio: 0.8,
+                    padding: EdgeInsets.all(getSize(2)),
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
+                    crossAxisCount: 4,
+                    children: List.generate(
+                      getGridViewLength(widget.selectionModel),
+                      (index) {
+                        Master obj;
+                        int totalIndex =
+                            getGridViewLength(widget.selectionModel);
+                        if (totalIndex <= elementsToShow + 1)
+                          obj = listOfMasterView[index];
+                        else
+                          obj = widget.selectionModel.masters[index];
 
-                    if (index == 0 && widget.selectionModel.isShowAll == true) {
-                      return InkWell(
-                        onTap: () {
-                          widget.selectionModel.isShowAllSelected =
-                              !widget.selectionModel.isShowAllSelected;
-                          if (widget.selectionModel.isShowAllSelected == true) {
-                            widget.selectionModel.masters.forEach((element) {
-                              if (element.sId != showMoreId)
-                                element.isSelected = true;
-                            });
-                          } else {
-                            widget.selectionModel.masters.forEach((element) {
-                              if (element.sId != showMoreId)
-                                element.isSelected = false;
-                            });
-                          }
-
-                          setState(() {});
-                        },
-                        child: ShapeItemWidget(
-                          txt: R.string().commonString.all,
-                          obj: obj,
-                          selectionModel: widget.selectionModel,
-                          showMoreId: this.showMoreId,
-                        ),
-                      );
-                    } else if (widget.selectionModel.isShowMoreSelected ==
-                            false &&
-                        widget.selectionModel.isShowMore &&
-                        index == totalIndex - 1) {
-                      obj.webDisplay = R.string().commonString.showLess;
-                      return InkWell(
-                        onTap: () {
-                          widget.selectionModel.isShowMoreSelected = true;
-                          setState(() {});
-                        },
-                        child: ShapeItemWidget(
-                          txt: R.string().commonString.showLess,
-                          obj: obj,
-                          selectionModel: widget.selectionModel,
-                          showMoreId: this.showMoreId,
-                        ),
-                      );
-                    } else if (widget.selectionModel.isShowMoreSelected ==
-                            true &&
-                        widget.selectionModel.isShowMore &&
-                        index == totalIndex - 1) {
-                      obj.webDisplay = R.string().commonString.showMore;
-                      return InkWell(
-                        onTap: () {
-                          widget.selectionModel.isShowMoreSelected = false;
-                          setState(() {});
-                        },
-                        child: ShapeItemWidget(
-                          txt: R.string().commonString.showMore,
-                          obj: obj,
-                          selectionModel: widget.selectionModel,
-                          showMoreId: this.showMoreId,
-                        ),
-                      );
-                    } else {
-                      return InkWell(
-                        onTap: () {
-                          setState(() {
-                            RxBus.post(true,
-                                tag: eventForShareCaratRangeSelected);
-                            if (widget.selectionModel.isShowAllSelected) {
-                              widget.selectionModel.isShowAllSelected = false;
-                            }
-                            widget.selectionModel.masters.forEach((element) {
-                              if (element.sId ==
-                                      widget.selectionModel.allLableTitle &&
-                                  element.isSelected &&
-                                  obj.isSelected) {
-                                element.isSelected = false;
+                        if (index == 0 &&
+                            widget.selectionModel.isShowAll == true) {
+                          return InkWell(
+                            onTap: () {
+                              widget.selectionModel.isShowAllSelected =
+                                  !widget.selectionModel.isShowAllSelected;
+                              if (widget.selectionModel.isShowAllSelected ==
+                                  true) {
+                                widget.selectionModel.masters
+                                    .forEach((element) {
+                                  if (element.sId != showMoreId)
+                                    element.isSelected = true;
+                                });
+                              } else {
+                                widget.selectionModel.masters
+                                    .forEach((element) {
+                                  if (element.sId != showMoreId)
+                                    element.isSelected = false;
+                                });
                               }
-                            });
-                            obj.isSelected ^= true;
-                            if (obj.isSelected) {
-                              for (int i = 1;
-                                  i < widget.selectionModel.masters.length - 1;
-                                  i++) {
-                                if (widget
-                                    .selectionModel.masters[i].isSelected) {
-                                  widget.selectionModel.isShowAllSelected =
-                                      true;
-                                } else {
+
+                              setState(() {});
+                            },
+                            child: ShapeItemWidget(
+                              txt: R.string().commonString.all,
+                              obj: obj,
+                              selectionModel: widget.selectionModel,
+                              showMoreId: this.showMoreId,
+                            ),
+                          );
+                        } else if (widget.selectionModel.isShowMoreSelected ==
+                                false &&
+                            widget.selectionModel.isShowMore &&
+                            index == totalIndex - 1 &&
+                            !widget.selectionModel.isShowMoreHorizontal) {
+                          obj.webDisplay = R.string().commonString.showLess;
+                          return InkWell(
+                            onTap: () {
+                              widget.selectionModel.isShowMoreSelected = true;
+                              setState(() {});
+                            },
+                            child: ShapeItemWidget(
+                              txt: R.string().commonString.showLess,
+                              obj: obj,
+                              selectionModel: widget.selectionModel,
+                              showMoreId: this.showMoreId,
+                            ),
+                          );
+                        } else if (widget.selectionModel.isShowMoreSelected ==
+                                true &&
+                            widget.selectionModel.isShowMore &&
+                            index == totalIndex - 1 &&
+                            !widget.selectionModel.isShowMoreHorizontal) {
+                          obj.webDisplay = R.string().commonString.showMore;
+                          return InkWell(
+                            onTap: () {
+                              widget.selectionModel.isShowMoreSelected = false;
+                              setState(() {});
+                            },
+                            child: ShapeItemWidget(
+                              txt: R.string().commonString.showMore,
+                              obj: obj,
+                              selectionModel: widget.selectionModel,
+                              showMoreId: this.showMoreId,
+                            ),
+                          );
+                        } else {
+                          return InkWell(
+                            onTap: () {
+                              setState(() {
+                                RxBus.post(true,
+                                    tag: eventForShareCaratRangeSelected);
+                                if (widget.selectionModel.isShowAllSelected) {
                                   widget.selectionModel.isShowAllSelected =
                                       false;
-                                  break;
                                 }
-                              }
-                            }
-                          });
-                        },
-                        child: ShapeItemWidget(
-                          obj: obj,
-                          selectionModel: widget.selectionModel,
-                          showMoreId: this.showMoreId,
+                                widget.selectionModel.masters
+                                    .forEach((element) {
+                                  if (element.sId ==
+                                          widget.selectionModel.allLableTitle &&
+                                      element.isSelected &&
+                                      obj.isSelected) {
+                                    element.isSelected = false;
+                                  }
+                                });
+                                obj.isSelected ^= true;
+                                if (obj.isSelected) {
+                                  for (int i = 1;
+                                      i <
+                                          widget.selectionModel.masters.length -
+                                              1;
+                                      i++) {
+                                    if (widget
+                                        .selectionModel.masters[i].isSelected) {
+                                      widget.selectionModel.isShowAllSelected =
+                                          true;
+                                    } else {
+                                      widget.selectionModel.isShowAllSelected =
+                                          false;
+                                      break;
+                                    }
+                                  }
+                                }
+                              });
+                            },
+                            child: ShapeItemWidget(
+                              obj: obj,
+                              selectionModel: widget.selectionModel,
+                              showMoreId: this.showMoreId,
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                  if (widget.selectionModel.isShowMoreHorizontal &&
+                      widget.selectionModel.isShowMoreSelected == true &&
+                      widget.selectionModel.isShowMore)
+                    InkWell(
+                      onTap: () {
+                        widget.selectionModel.isShowMoreSelected = false;
+                        setState(() {});
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(top:getSize(16.0)),
+                        child: Container(
+                          height: getSize(26),
+                          decoration: BoxDecoration(
+                            color: appTheme.selectedFilterColor,
+                            borderRadius: BorderRadius.circular(getSize(5)),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                R.string().commonString.seeMore,
+                                style: appTheme.black14TextStyle,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left:getSize(6.0)),
+                                child: Image.asset(downArrow,width: getSize(9),height: getSize(5)),
+                              ),
+                            ],
+                          ),
                         ),
-                      );
-                    }
-                  },
-                ),
+                      ),
+                    ),
+                  if (widget.selectionModel.isShowMoreHorizontal &&
+                      widget.selectionModel.isShowMoreSelected == false &&
+                      widget.selectionModel.isShowMore)
+                    InkWell(
+                      onTap: () {
+                        widget.selectionModel.isShowMoreSelected = true;
+                        setState(() {});
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(top:getSize(16.0)),
+                        child: Container(
+                          height: getSize(26),
+                          decoration: BoxDecoration(
+                            color: appTheme.selectedFilterColor,
+                            borderRadius: BorderRadius.circular(getSize(5)),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                R.string().commonString.seeLess,
+                                style: appTheme.black14TextStyle,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left:getSize(6.0)),
+                                child: Image.asset(upArrow,width: getSize(9),height: getSize(5)),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                ],
               )
             : SelectionWidget(widget.selectionModel),
       ],
