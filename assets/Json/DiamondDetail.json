@@ -67,6 +67,13 @@
                 "isActive": true
             },
             {
+                "title": "Rap(%)",
+                "apiKey": "rap",
+                "sequence": 11,
+                "isActive": true,
+                "isPercentage": false
+            },
+            {
                 "title": "Dis%",
                 "apiKey": "back",
                 "sequence": 11,
@@ -102,6 +109,30 @@
                 "apiKey": "",
                 "sequence": 16,
                 "isActive": true
+            },
+            {
+                "title": "Location",
+                "apiKey": "locNm",
+                "sequence": 17,
+                "isActive": true
+            },
+            {
+                "title": "Clarity",
+                "apiKey": "clrNm",
+                "sequence": 18,
+                "isActive": true
+            },
+            {
+                "title": "Brown",
+                "apiKey": "shd",
+                "sequence": 19,
+                "isActive": true
+            },
+            {
+                "title": "Mix Tinge",
+                "apiKey": "mixTintNm",
+                "sequence": 20,
+                "isActive": true
             }
         ]
     },
@@ -112,6 +143,12 @@
         "columns": 1,
         "orientation": "h",
         "parameters": [
+            {
+                "title": "Dimensions (MM)",
+                "apiKey": "",
+                "sequence": 1,
+                "isActive": true
+            },
             {
                 "title": "Length",
                 "apiKey": "length",
@@ -192,6 +229,36 @@
                 "apiKey": "cultCondNm",
                 "sequence": 13,
                 "isActive": true
+            },
+            {
+                "title": "Pavilion Depth (%)",
+                "apiKey": "pHgt",
+                "sequence": 14,
+                "isActive": true
+            },
+            {
+                "title": "Star Length",
+                "apiKey": "strLn",
+                "sequence": 15,
+                "isActive": true
+            },
+            {
+                "title": "Lower Half",
+                "apiKey": "lwrHal",
+                "sequence": 16,
+                "isActive": true
+            },
+            {
+                "title": "Girdle Faceted",
+                "apiKey": "grdlPer",
+                "sequence": 17,
+                "isActive": true
+            },
+            {
+                "title": "Culet",
+                "apiKey": "cultNm",
+                "sequence": 18,
+                "isActive": true
             }
         ]
     },
@@ -203,48 +270,66 @@
         "orientation": "v",
         "parameters": [
             {
-                "title": "Heart & Arrow",
+                "title": "H & A",
                 "apiKey": "hANm",
                 "sequence": 1,
                 "isActive": true
             },
             {
                 "title": "Other Inclusion",
-                "apiKey": "",
+                "apiKey": "wInclNm",
                 "sequence": 2,
                 "isActive": true
             },
             {
                 "title": "Natural",
-                "apiKey": "",
+                "apiKey": "natural",
                 "sequence": 3,
                 "isActive": true
             },
             {
                 "title": "Extra Facet",
-                "apiKey": "",
+                "apiKey": "eFact",
                 "sequence": 4,
+                "isActive": true
+            },
+            {
+                "title": "Black Inclusion",
+                "apiKey": "blkIncNm",
+                "sequence": 5,
+                "isActive": true
+            },
+            {
+                "title": "Open Inclusion",
+                "apiKey": "opIncNm",
+                "sequence": 6,
                 "isActive": true
             }
         ]
     },
     {
-        "title": "Other",
+        "title": "Other Information",
         "sequence": 4,
         "isExpand": true,
         "columns": 1,
         "orientation": "v",
         "parameters": [
             {
-                "title": "Comment",
+                "title": "Lab Comment",
                 "apiKey": "comments",
                 "sequence": 1,
                 "isActive": true
             },
             {
-                "title": "Keywords",
+                "title": "Key to Symbol",
                 "apiKey": "kToSStr",
                 "sequence": 2,
+                "isActive": true
+            },
+            {
+                "title": "Laser Ins",
+                "apiKey": "lsrInc",
+                "sequence": 3,
                 "isActive": true
             }
         ]

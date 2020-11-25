@@ -362,8 +362,11 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
               if (element.isPercentage) {
                 diamonDetailComponent.value = "${diamonDetailComponent.value}%";
               }
-              diamondDetailUIModel.parameters.add(diamonDetailComponent);
+              
+            } else {
+              diamonDetailComponent.value = "-";
             }
+            diamondDetailUIModel.parameters.add(diamonDetailComponent);
           }
         }
       }
@@ -718,11 +721,20 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                     right: getSize(12)),
                 child: Row(
                   children: [
-                    Text(diamondDetailUIModel.parameters[j].title,
-                        style: appTheme.grey14HintTextStyle),
-                    Spacer(),
-                    Text(diamondDetailUIModel.parameters[j].value,
-                        style: appTheme.blackNormal14TitleColorblack),
+                    Expanded(
+                      flex: 3,
+                      child: Text(diamondDetailUIModel.parameters[j].title,
+                          style: appTheme.grey14HintTextStyle),
+                    ),
+                    // Spacer(),
+                    Expanded(
+                      flex: 7,
+                      child: Text(diamondDetailUIModel.parameters[j].value,
+                      textAlign: TextAlign.right,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                          style: appTheme.blackNormal14TitleColorblack),
+                    ),
                   ],
                 ),
               ),
