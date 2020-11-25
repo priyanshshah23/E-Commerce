@@ -396,15 +396,17 @@ class DiamondConfig {
   }
 
   actionAddToCart(BuildContext context, List<DiamondModel> list) {
-    List<DiamondModel> selectedList = [];
-    DiamondModel model;
-    list.forEach((element) {
-      model = DiamondModel.fromJson(element.toJson());
-      selectedList.add(model);
-    });
+    callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,
+        isPop: false, title: R.string().screenTitle.addedInCart);
+    // List<DiamondModel> selectedList = [];
+    // DiamondModel model;
+    // list.forEach((element) {
+    //   model = DiamondModel.fromJson(element.toJson());
+    //   selectedList.add(model);
+    // });
 
-    openDiamondActionAcreen(
-        context, DiamondTrackConstant.TRACK_TYPE_CART, selectedList);
+    // openDiamondActionAcreen(
+    //     context, DiamondTrackConstant.TRACK_TYPE_CART, selectedList);
   }
 
   actionForFinalCalculation(BuildContext context, List<DiamondModel> list) {
@@ -444,15 +446,20 @@ class DiamondConfig {
   }
 
   actionAddToWishList(BuildContext context, List<DiamondModel> list) {
-    List<DiamondModel> selectedList = [];
-    DiamondModel model;
-    list.forEach((element) {
-      model = DiamondModel.fromJson(element.toJson());
-      model.isAddToWatchList = true;
-      selectedList.add(model);
-    });
-    openDiamondActionAcreen(
-        context, DiamondTrackConstant.TRACK_TYPE_WATCH_LIST, selectedList);
+    // List<DiamondModel> selectedList = [];
+    // DiamondModel model;
+    // list.forEach((element) {
+    //   model = DiamondModel.fromJson(element.toJson());
+    //   model.isAddToWatchList = true;
+    //   selectedList.add(model);
+    // });
+    // openDiamondActionAcreen(
+    //     context, DiamondTrackConstant.TRACK_TYPE_WATCH_LIST, selectedList);
+    // if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
+    callApiFoCreateTrack(
+        context, list, DiamondTrackConstant.TRACK_TYPE_WATCH_LIST,
+        isPop: false, title: "Added in Watchlist");
+    // }
     /*showWatchListDialog(context, selectedList, (manageClick) {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
         callApiFoCreateTrack(

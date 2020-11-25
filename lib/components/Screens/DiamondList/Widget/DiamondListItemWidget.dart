@@ -21,6 +21,7 @@ class DiamondItemWidget extends StatefulWidget {
   List<Widget> list;
   DiamondCalculation groupDiamondCalculation;
   int moduleType;
+  List<Widget> leftSwipeList;
 
   DiamondItemWidget({
     this.item,
@@ -30,6 +31,7 @@ class DiamondItemWidget extends StatefulWidget {
     this.controller,
     this.list,
     this.moduleType,
+    this.leftSwipeList,
     this.groupDiamondCalculation,
   });
 
@@ -183,6 +185,9 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                         controller: widget.controller,
                         key: Key(widget.item.id),
                         actionPane: SlidableDrawerActionPane(),
+                        actions: widget.leftSwipeList == null
+                            ? []
+                            : widget.leftSwipeList,
                         secondaryActions:
                             widget.list == null ? [] : widget.list,
                         actionExtentRatio: 0.2,
@@ -881,7 +886,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               "Cannot allow discount less than ${PriceUtilities.getDoubleValue(widget.item.back - minOfferedDiscount)}",
               context: context,
             );
-          } else if (maxOfferedDiscount > discount) {            _offeredDiscountTextFieldController.text =
+          } else if (maxOfferedDiscount > discount) {
+            _offeredDiscountTextFieldController.text =
                 PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
             _offeredPricePerCaratTextfieldContoller.text =
                 PriceUtilities.getDoubleValue(widget.item.getFinalRate());

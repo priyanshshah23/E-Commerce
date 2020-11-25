@@ -339,6 +339,23 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   controller: controller,
                   moduleType: moduleType,
                   item: arraDiamond[index],
+                  leftSwipeList: getLeftAction((manageClick) async {
+                    //Detail
+                    var dict = Map<String, dynamic>();
+                    dict[ArgumentConstant.DiamondDetail] = arraDiamond[index];
+                    dict[ArgumentConstant.ModuleType] = moduleType;
+
+                    //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
+                    bool isBack =
+                        await Navigator.of(context).push(MaterialPageRoute(
+                      settings: RouteSettings(name: DiamondDetailScreen.route),
+                      builder: (context) =>
+                          DiamondDetailScreen(arguments: dict),
+                    ));
+                    if (isBack != null && isBack) {
+                      onRefreshList();
+                    }
+                  }),
                   list: getRightAction((manageClick) {
                     manageRowClick(index, manageClick.type);
                   }),
@@ -379,6 +396,25 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 itemBuilder: (context, index) {
                   return DiamondExpandItemWidget(
                       item: arraDiamond[index],
+                      leftSwipeList: getLeftAction((manageClick) async {
+                        //Detail
+                        var dict = Map<String, dynamic>();
+                        dict[ArgumentConstant.DiamondDetail] =
+                            arraDiamond[index];
+                        dict[ArgumentConstant.ModuleType] = moduleType;
+
+                        //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
+                        bool isBack =
+                            await Navigator.of(context).push(MaterialPageRoute(
+                          settings:
+                              RouteSettings(name: DiamondDetailScreen.route),
+                          builder: (context) =>
+                              DiamondDetailScreen(arguments: dict),
+                        ));
+                        if (isBack != null && isBack) {
+                          onRefreshList();
+                        }
+                      }),
                       list: getRightAction((manageClick) {
                         manageRowClick(index, manageClick.type);
                       }),
@@ -455,6 +491,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       list.add(
         IntrinsicHeight(
           child: IconSlideAction(
+            color: Colors.transparent,
             onTap: () {
               actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_DELETE));
             },
@@ -480,6 +517,13 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                     ),
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.only(top: getSize(8)),
+                  child: Text(R.string().commonString.delete,
+                      style: appTheme.primaryNormal12TitleColor.copyWith(
+                        color: fromHex("#FF4D4D"),
+                      )),
+                )
               ],
             ),
           ),
@@ -488,6 +532,56 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     }
 
     return list;
+  }
+
+  getLeftAction(ActionClick actionClick) {
+    List<Widget> rightSwipeList = [];
+
+    if (isDisplayDetail(moduleType)) {
+      rightSwipeList.add(
+        IntrinsicHeight(
+          child: IconSlideAction(
+            color: Colors.transparent,
+            onTap: () {
+              actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_DELETE));
+            },
+            iconWidget: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: appTheme.lightColorPrimary,
+                    border: Border.all(color: appTheme.colorPrimary),
+                    shape: BoxShape.circle,
+                  ),
+                  height: getSize(40),
+                  width: getSize(40),
+                  child: Padding(
+                    padding: EdgeInsets.all(getSize(10)),
+                    child: Image.asset(
+                      viewDetail,
+                      // height: getSize(20),
+                      // width: getSize(20),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: getSize(8)),
+                  child: Text(
+                    R.string().commonString.details,
+                    style: appTheme.primaryNormal12TitleColor,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
+    return rightSwipeList;
   }
 
   List<Widget> getToolbarItem() {

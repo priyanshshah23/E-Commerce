@@ -102,6 +102,8 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
                       showMoreTagAfterTotalItemCount: 6,
                       viewType: widget.colorModel.viewType,
                       isShowMore: widget.colorModel.isShowMore,
+                      isShowMoreHorizontal:
+                          widget.colorModel.isShowMoreHorizontal,
                       apiKey: "inten");
 
                   widget.colorModel.overtoneSelection = SelectionModel(
@@ -115,6 +117,8 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
                       showMoreTagAfterTotalItemCount: 6,
                       verticalScroll: widget.colorModel.verticalScroll,
                       isShowMore: widget.colorModel.isShowMore,
+                      isShowMoreHorizontal:
+                          widget.colorModel.isShowMoreHorizontal,
                       gridViewItemCount: 3,
                       apiKey: "ovrtn");
                 });

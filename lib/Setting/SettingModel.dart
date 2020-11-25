@@ -396,6 +396,17 @@ isDisplayDelete(int moduleType) {
   return isDisplay;
 }
 
+isDisplayDetail(int moduleType) {
+  bool isDisplay = true;
+  switch (moduleType) {
+    case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
+    case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
+      isDisplay = false;
+      break;
+  }
+  return isDisplay;
+}
+
 class BottomMenuSetting {
   int moduleType;
 
@@ -658,7 +669,8 @@ class BottomMenuSetting {
             moduleType == DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST ||
             moduleType == DiamondModuleConstant.MODULE_TYPE_MY_CART ||
             moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER ||
-            moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
+            moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH ||
+            moduleType == DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY) {
           if (app
               .resolve<PrefUtils>()
               .getModulePermission(ModulePermissionConstant.permission_order)

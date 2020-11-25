@@ -16,6 +16,7 @@ const String minusIcon = "assets/diamnow/minusIcon.png";
 const String bussinessCard = "assets/auth/ic_file.png";
 const String photoCard = "assets/auth/ic_card.png";
 const String pdfIcon = "assets/auth/pdf.png";
+const String viewDetail = "assets/diamnow/viewDetail.png";
 
 const String selectedCheckbox = "assets/auth/checkbox.png";
 const String unSelectedCheckbox = "assets/auth/unselectedcheckbox.png";

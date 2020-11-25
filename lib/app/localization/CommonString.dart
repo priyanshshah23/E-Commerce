@@ -271,6 +271,7 @@ class CommonString {
   //SavedSearch
   final String modify;
   final String delete;
+  final String details;
   final String deleteItem;
 
   final String placeOrder;
@@ -286,10 +287,12 @@ class CommonString {
     //filterScreen
     this.seeMore = "See More",
     this.seeLess = "See Less",
-    
+
     //SavedSearch
     this.modify = "Modify",
     this.delete = "Delete",
+    this.details = "Details",
+
     //Add demand
     this.addDemand = "Add demand",
     this.demandTitle = "Demand Title",
@@ -548,7 +551,6 @@ class CommonString {
     this.placeOrder = "Place order",
     this.enterComment = "Please Enter Comment",
     this.deleteItem = "Are you sure you want to delete?",
-
     this.shippingPolicy = "Shipping Policy",
   });
 }

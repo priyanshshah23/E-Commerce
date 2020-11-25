@@ -412,7 +412,7 @@ class _TagWidgetState extends State<TagWidget> {
           child: FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
-              widget.model.masters[index].webDisplay ?? "-",
+              showWebDisplayAccordingToMaster(widget.model, index),
               style: widget.model.masters[index].isSelected
                   ? appTheme.primaryColor14TextStyle
                   : appTheme.blackNormal14TitleColorblack,
