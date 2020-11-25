@@ -19,7 +19,10 @@ import 'package:flutter/services.dart';
 
 class SearchScreen extends StatefulScreenWidget {
   static const route = "SearchScreen";
-  SearchScreen({Key key}) : super(key: key);
+  bool isFromSearch;
+  SearchScreen({
+    this.isFromSearch = false,
+  });
 
   @override
   _SearchScreenState createState() => _SearchScreenState();
@@ -65,7 +68,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
           body: SafeArea(
             child: Column(
               children: [
-                getSarchTextField(),
+                getSearchTextField(),
                 openSuggestion(),
               ],
             ),
@@ -73,7 +76,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
     );
   }
 
-  getSarchTextField() {
+  getSearchTextField() {
     return Hero(
       tag: 'searchTextField',
       child: Material(
