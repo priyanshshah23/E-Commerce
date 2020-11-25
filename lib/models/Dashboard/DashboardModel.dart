@@ -71,6 +71,27 @@ class DashboardModel {
 
 class FeaturedStone {
   FeaturedStone({
+    this.list,
+    this.count,
+  });
+
+  List<ListElement> list;
+  int count;
+
+  factory FeaturedStone.fromJson(Map<String, dynamic> json) => FeaturedStone(
+        list: List<ListElement>.from(
+            json["list"].map((x) => ListElement.fromJson(x))),
+        count: json["count"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "list": List<dynamic>.from(list.map((x) => x.toJson())),
+        "count": count,
+      };
+}
+
+class ListElement {
+  ListElement({
     this.createdAt,
     this.updatedAt,
     this.id,
@@ -81,6 +102,8 @@ class FeaturedStone {
     this.type,
     this.addedBy,
     this.updatedBy,
+    this.companyId,
+    this.deptId,
   });
 
   DateTime createdAt;
@@ -93,8 +116,10 @@ class FeaturedStone {
   String type;
   dynamic addedBy;
   dynamic updatedBy;
+  dynamic companyId;
+  dynamic deptId;
 
-  factory FeaturedStone.fromJson(Map<String, dynamic> json) => FeaturedStone(
+  factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         id: json["id"],
@@ -106,6 +131,8 @@ class FeaturedStone {
         type: json["type"],
         addedBy: json["addedBy"],
         updatedBy: json["updatedBy"],
+        companyId: json["companyId"],
+        deptId: json["deptId"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -119,6 +146,8 @@ class FeaturedStone {
         "type": type,
         "addedBy": addedBy,
         "updatedBy": updatedBy,
+        "companyId": companyId,
+        "deptId": deptId,
       };
 }
 

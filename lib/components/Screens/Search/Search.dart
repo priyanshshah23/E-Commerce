@@ -20,9 +20,15 @@ import 'package:flutter/services.dart';
 class SearchScreen extends StatefulScreenWidget {
   static const route = "SearchScreen";
   bool isFromSearch;
-  SearchScreen({
-    this.isFromSearch = false,
-  });
+
+  SearchScreen(
+    Map<String, dynamic> arguments, {
+    Key key,
+  }) : super(key: key) {
+    if (arguments != null) {
+      this.isFromSearch = arguments["isFromSearch"] ?? false;
+    }
+  }
 
   @override
   _SearchScreenState createState() => _SearchScreenState();

@@ -226,7 +226,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       screen = UploadKYCScreen();
       break;
     case SearchScreen.route:
-      screen = SearchScreen();
+      screen = SearchScreen(arguments);
       break;
     case SignInWithMPINScreen.route:
       screen = SignInWithMPINScreen();

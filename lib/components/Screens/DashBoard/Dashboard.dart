@@ -106,6 +106,7 @@ class _DashboardState extends StatefulScreenWidgetState {
     dict["seller"] = true;
     dict["account"] = true;
     dict["featuredStone"] = true;
+    dict["newArrival"] = true;
 
     NetworkCall<DashboardResp>()
         .makeCall(
@@ -366,9 +367,9 @@ class _DashboardState extends StatefulScreenWidgetState {
                 _focusSearch.unfocus();
               },
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  return SearchScreen();
-                }));
+                Map<String, dynamic> dict = new HashMap();
+                dict["isFromSearch"] = false;
+                NavigationUtilities.pushRoute(SearchScreen.route, args: dict);
               },
             ),
           ),
@@ -504,14 +505,14 @@ class _DashboardState extends StatefulScreenWidgetState {
         .view) {
       if (!isNullEmptyOrFalse(this.dashboardModel)) {
         if (!isNullEmptyOrFalse(this.dashboardModel.featuredStone)) {
-          List<FeaturedStone> filter = this
-              .dashboardModel
-              .featuredStone
-              .where((element) => element.type == DashboardConstants.best)
-              .toList();
-          if (!isNullEmptyOrFalse(filter)) {
-            arrStones = filter.first.featuredPair;
-          }
+          // List<FeaturedStone> filter = this
+          //     .dashboardModel
+          //     .featuredStone
+          //     .where((element) => element.type == DashboardConstants.best)
+          //     .toList();
+          // if (!isNullEmptyOrFalse(filter)) {
+          //   arrStones = filter.first.featuredPair;
+          // }
         }
       }
     }
@@ -584,16 +585,16 @@ class _DashboardState extends StatefulScreenWidgetState {
         .view) {
       if (!isNullEmptyOrFalse(this.dashboardModel)) {
         if (!isNullEmptyOrFalse(this.dashboardModel.featuredStone)) {
-          List<FeaturedStone> filter = this
-              .dashboardModel
-              .featuredStone
-              .where(
-                  (element) => element.type == DashboardConstants.stoneOfTheDay)
-              .toList();
+          // List<FeaturedStone> filter = this
+          //     .dashboardModel
+          //     .featuredStone
+          //     .where(
+          //         (element) => element.type == DashboardConstants.stoneOfTheDay)
+          //     .toList();
 
-          if (!isNullEmptyOrFalse(filter)) {
-            arrStones = filter.first.featuredPair;
-          }
+          // if (!isNullEmptyOrFalse(filter)) {
+          //   arrStones = filter.first.featuredPair;
+          // }
         }
       }
     }

@@ -1,6 +1,12 @@
 [
   {
     "title": "Shape",
+    "viewType": "searchText",
+    "tab": "basic",
+    "isActive": true
+  },
+  {
+    "title": "Shape",
     "viewType": "shape",
     "allLableTitle": "All Shapes",
     "apiKey": "shp",

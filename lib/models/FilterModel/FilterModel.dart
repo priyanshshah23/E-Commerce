@@ -83,7 +83,9 @@ class Config {
         if (element is Map<String, dynamic>) {
           String viewType = element["viewType"];
           if (element["isActive"] ?? true) {
-            if (viewType == ViewTypes.fromTo) {
+            if (viewType == "searchText") {
+              arrFilter.add(FormBaseModel.fromJson(element));
+            } else if (viewType == ViewTypes.fromTo) {
               arrFilter.add(FromToModel.fromJson(element));
             } else if (viewType == ViewTypes.shapeWidget) {
               SelectionModel selectionModel = SelectionModel.fromJson(element);
