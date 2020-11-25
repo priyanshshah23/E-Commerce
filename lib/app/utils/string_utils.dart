@@ -23,6 +23,8 @@ bool isVideoFile(String url) {
 }
 
 bool isUrlContainsImgOrVideo(String url) {
+  if(url==null)
+    return false;
   List<String> type = url.split(".");
   if (type.last == "jpg" ||
       type.last == "pdf" ||

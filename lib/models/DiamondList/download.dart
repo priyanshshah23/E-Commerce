@@ -24,6 +24,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
+import 'package:rxbus/rxbus.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class Download extends StatefulWidget {
@@ -53,6 +54,7 @@ class _DownloadState extends State<Download> {
   bool cancleDownload = false;
   // CancelToken cancelToken;
   Map<String, CancelToken> mapOfCancelToken = {};
+  bool breakForLoop = false;
 
   _DownloadState({this.diamondList, this.allDiamondPreviewThings});
 
@@ -235,6 +237,8 @@ class _DownloadState extends State<Download> {
       //download code
       getDownloadPercentage(allDiamondPreviewThings);
 
+      if(breakForLoop)
+       break;
       await downloadFunction(allDiamondPreviewThings, diamondList[i],
           (value, isFromError) {
         print("download" + value.toString());
@@ -285,7 +289,17 @@ class _DownloadState extends State<Download> {
     totalDownloadableFilesForAllDiamonds =
         totalFiles.length * diamondList.length;
     if (mounted) {
-      setState(() {});
+      if(totalDownloadableFilesForAllDiamonds==0){
+        breakForLoop = true;
+        Navigator.of(context).pop();
+        // RxBus.post(true,tag:"breakforloop")
+        // RxBus.register<bool>(tag: "breakforloop").listen((event) { 
+
+        // });
+        showToast("Files are not available on server,Please try again later",context: context);
+      
+      } else
+          setState(() {});
     }
   }
 
@@ -301,7 +315,7 @@ class _DownloadState extends State<Download> {
 
       // }
       if (element.isSelected &&
-          element.fileType != DownloadAndShareDialogueConstant.excel &&
+          element.fileType != DownloadAndShareDialogueConstant.excel && !isNullEmptyOrFalse(element.url) &&
           isUrlContainsImgOrVideo(element.url)) {
         CancelToken cancelTokens = CancelToken();
         mapOfCancelToken[element.url +
