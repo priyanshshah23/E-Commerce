@@ -46,7 +46,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
       }
     }
 
-    if (widget.selectionModel.isShowMore) {
+    if (widget.selectionModel.isShowMore && widget.selectionModel.isShowMoreHorizontal == false) {
       if (widget.selectionModel.orientation == DisplayTypes.vertical) {
         if (widget.selectionModel.masters
                 .where((element) => element.sId == showMoreId)

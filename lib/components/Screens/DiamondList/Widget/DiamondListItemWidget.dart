@@ -932,7 +932,9 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   ? newValue
                   : oldValue)
         ],
-        style: appTheme.blackNormal14TitleColorblack,
+        style: appTheme.blackNormal14TitleColorblack.copyWith(
+          color: appTheme.colorPrimary,
+        ),
         keyboardType: TextInputType.number,
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(
@@ -1009,7 +1011,9 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   ? newValue
                   : oldValue)
         ],
-        style: appTheme.blackNormal14TitleColorblack,
+        style: appTheme.blackNormal14TitleColorblack.copyWith(
+          color: appTheme.colorPrimary,
+        ),
         keyboardType: TextInputType.number,
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(

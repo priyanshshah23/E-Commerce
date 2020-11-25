@@ -40,7 +40,7 @@
     "showMoreTagAfterTotalItemCount": 9,
     "isShowAll": false,
     "isShowMore": false,
-    "isShowMoreHorizontal": false,
+    "isShowMoreHorizontal": true,
     "tab": "basic",
     "isWhiteColor": false,
     "sequence": 3,
