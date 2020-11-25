@@ -631,6 +631,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         callDeleteDiamond(selectedList);
         break;
       case clickConstant.CLICK_TYPE_SELECTION:
+      case clickConstant.CLICK_TYPE_ROW:
         setState(() {
           arraDiamond[index].isSelected = !arraDiamond[index].isSelected;
           manageDiamondSelection();
@@ -641,20 +642,20 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           });
         });
         break;
-      case clickConstant.CLICK_TYPE_ROW:
-        var dict = Map<String, dynamic>();
-        dict[ArgumentConstant.DiamondDetail] = arraDiamond[index];
-        dict[ArgumentConstant.ModuleType] = moduleType;
+      // case clickConstant.CLICK_TYPE_ROW:
+      //   var dict = Map<String, dynamic>();
+      //   dict[ArgumentConstant.DiamondDetail] = arraDiamond[index];
+      //   dict[ArgumentConstant.ModuleType] = moduleType;
 
-        //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
-        bool isBack = await Navigator.of(context).push(MaterialPageRoute(
-          settings: RouteSettings(name: DiamondDetailScreen.route),
-          builder: (context) => DiamondDetailScreen(arguments: dict),
-        ));
-        if (isBack != null && isBack) {
-          onRefreshList();
-        }
-        break;
+      //   //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
+      //   bool isBack = await Navigator.of(context).push(MaterialPageRoute(
+      //     settings: RouteSettings(name: DiamondDetailScreen.route),
+      //     builder: (context) => DiamondDetailScreen(arguments: dict),
+      //   ));
+      //   if (isBack != null && isBack) {
+      //     onRefreshList();
+      //   }
+      //   break;
     }
   }
 

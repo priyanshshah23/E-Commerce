@@ -173,17 +173,16 @@ class _TagWidgetState extends State<TagWidget> {
                     widget.model.onSelectionClick(index);
                   });
                 },
-            
-                child: !widget.model.isShowMoreHorizontal ? index ==
-                            widget.model.showMoreTagAfterTotalItemCount - 1 &&
-                        widget.model.isShowMoreSelected &&
-                        widget.model.isShowMore
-                        
-                    ? getSingleTagForGridview(widget.model.masters.length - 1)
-                    : getSingleTagForGridview(index) : 
-
-                    getSingleTagForGridview(index)
-                    ,
+                child: !widget.model.isShowMoreHorizontal
+                    ? index ==
+                                widget.model.showMoreTagAfterTotalItemCount -
+                                    1 &&
+                            widget.model.isShowMoreSelected &&
+                            widget.model.isShowMore
+                        ? getSingleTagForGridview(
+                            widget.model.masters.length - 1)
+                        : getSingleTagForGridview(index)
+                    : getSingleTagForGridview(index),
               );
             },
           ),
@@ -263,10 +262,10 @@ class _TagWidgetState extends State<TagWidget> {
       if (selectionModel.isShowMoreSelected) {
         return selectionModel.showMoreTagAfterTotalItemCount;
       } else {
-        if(!selectionModel.isShowMoreHorizontal)
+        if (!selectionModel.isShowMoreHorizontal)
           return selectionModel.masters.length;
         else
-          return selectionModel.masters.length-1;
+          return selectionModel.masters.length - 1;
       }
     } else {
       return selectionModel.masters.length;
@@ -486,6 +485,7 @@ class _TagWidgetState extends State<TagWidget> {
                           !widget.model.masters[index].isSelected;
 
                       widget.model.onSelectionClick(index);
+                      getMultipleMasterSelections(index);
                     });
                   },
                 );
