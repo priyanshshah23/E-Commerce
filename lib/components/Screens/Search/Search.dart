@@ -106,18 +106,18 @@ class _SearchScreenState extends StatefulScreenWidgetState {
                 fillColor: fromHex("#FFEFEF"),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
-                  borderSide:
-                      BorderSide(color: appTheme.dividerColor, width: getSize(1)),
+                  borderSide: BorderSide(
+                      color: appTheme.dividerColor, width: getSize(1)),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
-                  borderSide:
-                      BorderSide(color: appTheme.dividerColor, width: getSize(1)),
+                  borderSide: BorderSide(
+                      color: appTheme.dividerColor, width: getSize(1)),
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
-                  borderSide:
-                      BorderSide(color: appTheme.dividerColor, width: getSize(1)),
+                  borderSide: BorderSide(
+                      color: appTheme.dividerColor, width: getSize(1)),
                 ),
 
                 hintStyle: appTheme.grey16HintTextStyle,
@@ -128,9 +128,9 @@ class _SearchScreenState extends StatefulScreenWidgetState {
                 ),
                 // suffix: widget.textOption.postfixWidOnFocus,
                 suffixIcon: Padding(
-                    padding: EdgeInsets.all(getSize(17)),
+                    padding: EdgeInsets.all(getSize(12)),
                     child: Image.asset(search,
-                        height: getSize(8), width: getSize(8))),
+                        height: getSize(16), width: getSize(16))),
               ),
               onChanged: (String text) {
                 this.searchText = text;
