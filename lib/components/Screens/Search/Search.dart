@@ -128,7 +128,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
                 ),
                 // suffix: widget.textOption.postfixWidOnFocus,
                 suffixIcon: Padding(
-                    padding: EdgeInsets.all(getSize(17)),
+                    padding: EdgeInsets.all(getSize(12)),
                     child: Image.asset(search,
                         height: getSize(8), width: getSize(8))),
               ),
