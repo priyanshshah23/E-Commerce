@@ -165,7 +165,7 @@ class _AddDemandState extends State<AddDemand> {
         minDate: DateTime.now(),
         selectionColor: appTheme.colorPrimary,
         todayHighlightColor: appTheme.colorPrimary,
-        initialSelectedDate: DateTime.now(),
+        // initialSelectedDate: DateTime.now(),
         view: DateRangePickerView.month,
         selectionMode: DateRangePickerSelectionMode.single,
         onSelectionChanged: selectionChanged,
