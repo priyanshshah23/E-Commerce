@@ -134,6 +134,12 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     });
   }
 
+  @override
+  void dispose() {
+    RxBus.destroy(tag: eventSelectAllGroupDiamonds);
+    super.dispose();
+  }
+
   callApi(bool isRefress, {bool isLoading = false}) {
     if (isRefress) {
       arraDiamond.clear();
@@ -340,7 +346,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                     manageRowClick(index, manageClick.type);
                     setState(() {
                       if (moduleType ==
-                          DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+                              DiamondModuleConstant.MODULE_TYPE_MY_OFFER ||
+                          moduleType ==
+                              DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
                         List<DiamondModel> filter = arraDiamond
                             .where((element) =>
                                 element.memoNo == arraDiamond[index].memoNo)
@@ -351,11 +359,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                               .toList();
 
                           if (filter.length == filter2.length) {
-                            filter2.forEach((element) {
+                            filter.forEach((element) {
                               element.isGroupSelected = true;
                             });
                           } else {
-                            filter2.forEach((element) {
+                            filter.forEach((element) {
                               element.isGroupSelected = false;
                             });
                           }

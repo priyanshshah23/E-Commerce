@@ -715,7 +715,7 @@ class DiamondConfig {
       link.add(ApiConstants.shareUrl + list[i].id);
     }
     await Share.share(
-        "DiamNow : Diamond Details\n\n"
+        "$APPNAME : Diamond Details\n\n"
         "${link.toString().substring(1, link.toString().length - 1).replaceAll(",", "\n\n")}", //------------------------------------------------------------------------------------------------------------------
         subject: "DiamNow",
         sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
@@ -1134,13 +1134,13 @@ class DiamondConfig {
       }
     } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
       for (int i = 0; i < arraDiamond.length; i++) {
-        // if (i == 0 || (arraDiamond[i].memoNo != arraDiamond[i - 1].memoNo)) {
-        //   arraDiamond[i].displayTitle = "#${arraDiamond[i].memoNo}";
-        //   arraDiamond[i].displayDesc = DateUtilities()
-        //       .convertServerDateToFormatterString(arraDiamond[i].createdAt,
-        //           formatter: DateUtilities.dd_mm_yyyy_hh_mm_ss);
-        //   arraDiamond[i].showCheckBox = true;
-        // }
+        if (i == 0 || (arraDiamond[i].memoNo != arraDiamond[i - 1].memoNo)) {
+          arraDiamond[i].displayTitle = "#${arraDiamond[i].memoNo}";
+          arraDiamond[i].displayDesc = DateUtilities()
+              .convertServerDateToFormatterString(arraDiamond[i].createdAt,
+                  formatter: DateUtilities.dd_mm_yyyy_hh_mm_ss);
+          arraDiamond[i].showCheckBox = true;
+        }
 
         if (arraDiamond.length == 1) {
           arraDiamond[i].isSectionOfferDisplay = true;

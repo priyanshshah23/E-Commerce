@@ -10,7 +10,7 @@
     "title": "New Diamonds",
     "isSelected": false,
     "icon": "filterRightArrow.png",
-    "isActive": true,
+    "isActive": false,
     "apiKey": ""
   },
   {

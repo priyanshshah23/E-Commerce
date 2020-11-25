@@ -93,41 +93,51 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 ? Padding(
                     padding:
                         EdgeInsets.only(top: getSize(8.0), bottom: getSize(16)),
-                    child: Row(children: [
-                      Text(
-                        widget.item.displayTitle,
-                        style: appTheme.black16MediumTextStyle.copyWith(
-                          fontSize: getFontSize(14),
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          widget.item.isGroupSelected =
+                              !widget.item.isGroupSelected;
+                          Map<String, dynamic> map = {};
+                          map["diamondModel"] = widget.item;
+                          map["isSelected"] = widget.item.isGroupSelected;
+                          RxBus.post(map, tag: eventSelectAllGroupDiamonds);
+                        });
+                      },
+                      child: Row(children: [
+                        widget.moduleType !=
+                                DiamondModuleConstant.MODULE_TYPE_MY_OFFICE
+                            ? Text(
+                                widget.item.displayTitle,
+                                style: appTheme.black16MediumTextStyle.copyWith(
+                                  fontSize: getFontSize(14),
+                                ),
+                              )
+                            : SizedBox(),
+                        Spacer(),
+                        Text(
+                          "Date : " + widget.item.displayDesc,
+                          style: appTheme.black16MediumTextStyle.copyWith(
+                            fontSize: getFontSize(14),
+                          ),
                         ),
-                      ),
-                      Spacer(),
-                      Text(
-                        "Date : " + widget.item.displayDesc,
-                        style: appTheme.black16MediumTextStyle.copyWith(
-                          fontSize: getFontSize(14),
-                        ),
-                      ),
-                      SizedBox(width: getSize(8.0)),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            widget.item.isGroupSelected =
-                                !widget.item.isGroupSelected;
-                            Map<String, dynamic> map = {};
-                            map["diamondModel"] = widget.item;
-                            map["isSelected"] = widget.item.isGroupSelected;
-                            RxBus.post(map, tag: eventSelectAllGroupDiamonds);
-                          });
-                        },
-                        child: Image.asset(
+                        SizedBox(width: getSize(8.0)),
+                        // Text(
+                        //   "Select All",
+                        //   style: appTheme.black16MediumTextStyle.copyWith(
+                        //     fontSize: getFontSize(14),
+                        //   ),
+                        // ),
+                        // SizedBox(width: getSize(8.0)),
+                        Image.asset(
                           widget.item.isGroupSelected
                               ? selectedCheckbox
                               : unSelectedCheckbox,
                           width: getSize(16),
                           height: getSize(16),
-                        ),
-                      )
-                    ]),
+                        )
+                      ]),
+                    ),
                   )
                 : Container(),
             /* Container(
@@ -425,7 +435,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER
                 ? Container(
                     alignment: Alignment.center,
-                    margin: EdgeInsets.only(top: getSize(5)),
+                    margin: EdgeInsets.only(top: getSize(30)),
                     width: getSize(55),
                     height: getSize(20),
                     decoration: BoxDecoration(

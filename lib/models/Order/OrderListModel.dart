@@ -74,6 +74,7 @@ class OrderItem {
   String sourceOfSale;
   List<DiamondModel> memoDetails;
   bool isSelected = false;
+  bool isGroupSelected = false;
 
   OrderItem(
       {this.createdAt,
