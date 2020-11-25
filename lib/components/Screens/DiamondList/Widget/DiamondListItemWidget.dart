@@ -865,13 +865,14 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       onFocusChange: (hasfocus) {
         if (hasfocus == false) {
           print("Focus off");
+          var discount =
+              -(num.parse(_offeredDiscountTextFieldController.text).abs());
           if (isNullEmptyOrFalse(_offeredDiscountTextFieldController.text)) {
             _offeredDiscountTextFieldController.text =
                 PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
             _offeredPricePerCaratTextfieldContoller.text =
                 PriceUtilities.getDoubleValue(widget.item.getFinalRate());
-          } else if (num.parse(_offeredDiscountTextFieldController.text) >
-              (widget.item.back - minOfferedDiscount)) {
+          } else if (discount > (widget.item.back - minOfferedDiscount)) {
             _offeredDiscountTextFieldController.text =
                 PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
             _offeredPricePerCaratTextfieldContoller.text =
@@ -880,9 +881,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               "Cannot allow discount less than ${PriceUtilities.getDoubleValue(widget.item.back - minOfferedDiscount)}",
               context: context,
             );
-          } else if (maxOfferedDiscount >
-              num.parse(_offeredDiscountTextFieldController.text)) {
-            _offeredDiscountTextFieldController.text =
+          } else if (maxOfferedDiscount > discount) {            _offeredDiscountTextFieldController.text =
                 PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
             _offeredPricePerCaratTextfieldContoller.text =
                 PriceUtilities.getDoubleValue(widget.item.getFinalRate());
@@ -891,6 +890,9 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               context: context,
             );
           } else {
+            _offeredDiscountTextFieldController.text =
+                PriceUtilities.getDoubleValue(discount);
+
             _offeredPricePerCaratTextfieldContoller.text =
                 PriceUtilities.getDoubleValue(widget.item.rap -
                     ((widget.item.rap *
