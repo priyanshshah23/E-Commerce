@@ -355,6 +355,7 @@ class SelectionModel extends FormBaseModel {
   bool isShowAllSelected = false;
   bool isShowMore;
   bool isShowMoreSelected = true;
+  bool isShowMoreHorizontal = false;
   String allLableTitle;
   FromToStyle fromToStyle;
   bool isSingleSelection;
@@ -374,6 +375,7 @@ class SelectionModel extends FormBaseModel {
       this.masterCode,
       this.showMoreTagAfterTotalItemCount,
       this.isShowMore,
+      this.isShowMoreHorizontal,
       apiKey,
       viewType}) {
     super.title = title;
@@ -388,6 +390,7 @@ class SelectionModel extends FormBaseModel {
     orientation = json["orientation"];
     isShowAll = json['isShowAll'] ?? false;
     isShowMore = json['isShowMore'] ?? false;
+    isShowMoreHorizontal = json['isShowMoreHorizontal'] ?? false;
     masterCode = json["masterCode"];
     allLableTitle = json["allLableTitle"];
     fromToStyle = json['fromToStyle'] != null

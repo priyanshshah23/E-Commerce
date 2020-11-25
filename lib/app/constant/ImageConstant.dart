@@ -26,6 +26,8 @@ const String passwordResetSuccessfully =
 const String diamond_placeholder = "assets/Common/diamond_placeholder.png";
 const String confirmStone = "assets/Common/confirmStone.png";
 const String cancelStone = "assets/Common/cancelStone.png";
+const String downArrow = "assets/Common/downArrow.png";
+const String upArrow = "assets/Common/upArrow.png";
 
 // DiamNow
 const String notification = "assets/diamnow/notification.png";
