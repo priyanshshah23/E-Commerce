@@ -1,6 +1,7 @@
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/utils/date_utils.dart';
 
-class NotificationResp extends BaseApiResp{
+class NotificationResp extends BaseApiResp {
   Data data;
 
   NotificationResp.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
@@ -62,33 +63,27 @@ class NotificationModel {
   int level;
   String parentId;
   bool isVisited;
-  Null addedBy;
-  Null updatedBy;
   String user;
-  Null activityBy;
-  Null companyId;
-  Null deptId;
+  String megaTitle;
+  String strDate;
 
-  NotificationModel(
-      {this.createdAt,
-      this.updatedAt,
-      this.id,
-      this.type,
-      this.module,
-      this.activityType,
-      this.title,
-      this.message,
-      this.isActive,
-      this.isRead,
-      this.level,
-      this.parentId,
-      this.isVisited,
-      this.addedBy,
-      this.updatedBy,
-      this.user,
-      this.activityBy,
-      this.companyId,
-      this.deptId});
+  NotificationModel({
+    this.createdAt,
+    this.updatedAt,
+    this.id,
+    this.type,
+    this.module,
+    this.activityType,
+    this.title,
+    this.message,
+    this.isActive,
+    this.isRead,
+    this.level,
+    this.parentId,
+    this.isVisited,
+    this.user,
+    this.strDate,
+  });
 
   NotificationModel.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
@@ -104,12 +99,9 @@ class NotificationModel {
     level = json['level'];
     parentId = json['parentId'];
     isVisited = json['isVisited'];
-    addedBy = json['addedBy'];
-    updatedBy = json['updatedBy'];
     user = json['user'];
-    activityBy = json['activityBy'];
-    companyId = json['companyId'];
-    deptId = json['deptId'];
+    strDate = DateUtilities().convertServerDateToFormatterString(createdAt,
+        formatter: DateUtilities.dd_mm_yyyy_);
   }
 
   Map<String, dynamic> toJson() {
@@ -127,12 +119,7 @@ class NotificationModel {
     data['level'] = this.level;
     data['parentId'] = this.parentId;
     data['isVisited'] = this.isVisited;
-    data['addedBy'] = this.addedBy;
-    data['updatedBy'] = this.updatedBy;
     data['user'] = this.user;
-    data['activityBy'] = this.activityBy;
-    data['companyId'] = this.companyId;
-    data['deptId'] = this.deptId;
     return data;
   }
 }
