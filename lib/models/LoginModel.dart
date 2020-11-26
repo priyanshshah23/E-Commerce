@@ -535,6 +535,7 @@ class Account {
   String verifyBy;
   String verifyDate;
   String businessType;
+  String natureOfOrg;
   String designation;
   String howKnow;
   String referenceFrom;
@@ -606,6 +607,7 @@ class Account {
     verifyBy = json['verifyBy'];
     verifyDate = json['verifyDate'];
     businessType = json['businessType'];
+    natureOfOrg = json["natureOfOrg"];
     designation = json['designation'];
     howKnow = json['howKnow'];
     referenceFrom = json['referenceFrom'];
@@ -697,6 +699,7 @@ class Account {
     data['verifyBy'] = this.verifyBy;
     data['verifyDate'] = this.verifyDate;
     data['businessType'] = this.businessType;
+    data['natureOfOrg'] = this.natureOfOrg;
     data['designation'] = this.designation;
     data['howKnow'] = this.howKnow;
     data['referenceFrom'] = this.referenceFrom;

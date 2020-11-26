@@ -149,7 +149,9 @@ class _SelectionDialogueState extends State<SelectionDialogue> {
                                   !items[index].isSelected;
                               setState(() {});
                             } else {
+                              
                               Navigator.of(context).pop();
+                              
                               applyFilterCallBack(selectedItem: items[index]);
                             }
                           },
