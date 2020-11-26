@@ -3,11 +3,13 @@ import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/Notification/NotificationModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../app/utils/navigator.dart';
 import '../../../modules/ThemeSetting.dart';
@@ -74,6 +76,31 @@ class _NotificationsState extends StatefulScreenWidgetState {
       notificationList.state.totalCount = resp.data.count;
       page = page + 1;
       arrList.addAll(resp.data.list);
+
+      final now = DateTime.now();
+      final today = DateTime(now.year, now.month, now.day);
+      final yesterday = DateTime(now.year, now.month, now.day - 1);
+      for (int i = 0; i < arrList.length; i++) {
+        if (i == 0 || (arrList[i].strDate != arrList[i - 1].strDate)) {
+          var date = DateUtilities().getDateFromString(arrList[i].strDate,
+              formatter: DateUtilities.dd_mm_yyyy_);
+
+          final aDate = DateTime(date.year, date.month, date.day);
+          if (aDate == today) {
+            arrList[i].megaTitle = "Today";
+          } else if (aDate == yesterday) {
+            arrList[i].megaTitle = "Yesterday";
+          } else {
+            var past = arrList
+                .where((element) => element.megaTitle == "Past")
+                .toList();
+            if (isNullEmptyOrFalse(past)) {
+              arrList[i].megaTitle = "Past";
+              break;
+            }
+          }
+        }
+      }
       fillArrayList();
       notificationList.state.setApiCalling(false);
     }).catchError((onError) {
@@ -95,31 +122,6 @@ class _NotificationsState extends StatefulScreenWidgetState {
         return getNotificationItem(arrList[index], isShowShadow: true);
       },
     );
-
-    /*ListView(
-      shrinkWrap: true,
-      children: [
-        Container(
-            margin: EdgeInsets.only(
-              left: getSize(20),
-              right: getSize(20),
-              top: getSize(20),
-              bottom: getSize(20),
-            ),
-            child: Text(
-              "Today",
-              style: appTheme.primary16TextStyle,
-            )),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: arrList.length,
-          itemBuilder: (context, index) {
-            return getNotificationItem(arrList[index], isShowShadow: true);
-          },
-        ),
-      ],
-    );*/
   }
 
   @override
@@ -145,7 +147,25 @@ class _NotificationsState extends StatefulScreenWidgetState {
   getNotificationItem(NotificationModel model, {bool isShowShadow = false}) {
     return Column(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        !isNullEmptyOrFalse(model.megaTitle)
+            ? Container(
+                margin: EdgeInsets.only(
+                  left: getSize(20),
+                  right: getSize(20),
+                  top: getSize(20),
+                  bottom: getSize(20),
+                ),
+                child: Text(
+                  model.megaTitle ?? "",
+                  style: appTheme.blackNormal18TitleColorblack.copyWith(
+                    color: appTheme.colorPrimary,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              )
+            : Container(),
         Container(
           margin: EdgeInsets.only(
             left: getSize(16),
@@ -211,66 +231,15 @@ class _NotificationsState extends StatefulScreenWidgetState {
                           SizedBox(
                             height: getSize(5),
                           ),
-                          /*Row(
-                            children: [
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "Pieces : ",
-                                      style: appTheme.black12TextStyle,
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        "20",
-                                        style:
-                                            appTheme.black12TextStyleBold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "Carat : ",
-                                      style: appTheme.black12TextStyle,
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        "15.10",
-                                        style:
-                                            appTheme.black12TextStyleBold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "Value : ",
-                                      style: appTheme.black12TextStyle,
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        PriceUtilities.getPrice(100),
-                                        style:
-                                            appTheme.black12TextStyleBold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),*/
-                          SizedBox(
-                            height: getSize(5),
-                          ),
                           Text(
-                            "10 Mins ago",
+                            TimeAgo.timeAgoSinceDate(DateUtilities()
+                                .getDateFromString(
+                                    DateUtilities()
+                                        .convertServerDateToFormatterString(
+                                            model.createdAt ?? "",
+                                            formatter:
+                                                DateUtilities.dd_mm_yyyy_hh_mm),
+                                    formatter: DateUtilities.dd_mm_yyyy_hh_mm)),
                             style: appTheme.grey12HintTextStyle,
                             maxLines: 2,
                             textAlign: TextAlign.start,
@@ -381,5 +350,35 @@ class _NotificationsState extends StatefulScreenWidgetState {
         ),
       ),
     );
+  }
+}
+
+class TimeAgo {
+  static String timeAgoSinceDate(DateTime date, {bool numericDates = true}) {
+    final date2 = DateTime.now();
+    final difference = date2.difference(date);
+
+    if (difference.inDays > 8) {
+      return DateUtilities().getFormattedDateString(date,
+          formatter: DateUtilities.dd_mm_yyyy_hh_mm);
+    } else if ((difference.inDays / 7).floor() >= 1) {
+      return (numericDates) ? '1 week ago' : 'Last week';
+    } else if (difference.inDays >= 2) {
+      return '${difference.inDays} days ago';
+    } else if (difference.inDays >= 1) {
+      return (numericDates) ? '1 day ago' : 'Yesterday';
+    } else if (difference.inHours >= 2) {
+      return '${difference.inHours} hours ago';
+    } else if (difference.inHours >= 1) {
+      return (numericDates) ? '1 hour ago' : 'An hour ago';
+    } else if (difference.inMinutes >= 2) {
+      return '${difference.inMinutes} minutes ago';
+    } else if (difference.inMinutes >= 1) {
+      return (numericDates) ? '1 minute ago' : 'A minute ago';
+    } else if (difference.inSeconds >= 3) {
+      return '${difference.inSeconds} seconds ago';
+    } else {
+      return 'Just now';
+    }
   }
 }
