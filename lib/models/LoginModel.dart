@@ -607,7 +607,7 @@ class Account {
     verifyBy = json['verifyBy'];
     verifyDate = json['verifyDate'];
     businessType = json['businessType'];
-    natureOfOrg = json["natureOfOrg"];
+    // natureOfOrg = json["natureOfOrg"];
     designation = json['designation'];
     howKnow = json['howKnow'];
     referenceFrom = json['referenceFrom'];

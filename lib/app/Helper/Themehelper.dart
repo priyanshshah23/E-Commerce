@@ -61,6 +61,7 @@ class BaseTheme {
   Color get textColor => fromHex("#232323");
   Color get bgColor => fromHex("#6E8FE7");
   Color get dividerColor => fromHex("#E3E3E3");
+  Color get placeholderColor => fromHex("#999999");
   Color get textBlackColor => Colors.black;
   Color get blackColor => Colors.black;
   Color get whiteColor => Colors.white;
@@ -156,7 +157,6 @@ class BaseTheme {
         fontWeight: FontWeight.normal,
         color: greenColor);
   }
-  
 
   TextStyle get redPrimaryNormal14TitleColor {
     return TextStyle(

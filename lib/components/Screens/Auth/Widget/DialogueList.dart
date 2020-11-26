@@ -115,8 +115,10 @@ class _SelectionDialogueState extends State<SelectionDialogue> {
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: getSize(20)),
                                 hintText: hintText,
-                                hintStyle:
-                                    appTheme.blackNormal18TitleColorblack,
+                                hintStyle: appTheme.blackNormal18TitleColorblack
+                                    .copyWith(
+                                  color: appTheme.placeholderColor,
+                                ),
                                 suffixIcon: getCommonIconWidget(
                                     imageName: search,
                                     imageType: IconSizeType.medium),
@@ -149,9 +151,8 @@ class _SelectionDialogueState extends State<SelectionDialogue> {
                                   !items[index].isSelected;
                               setState(() {});
                             } else {
-                              
                               Navigator.of(context).pop();
-                              
+
                               applyFilterCallBack(selectedItem: items[index]);
                             }
                           },
