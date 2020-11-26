@@ -31,13 +31,13 @@ class LoginScreen extends StatefulScreenWidget {
   static const route = "login";
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  LoginScreenState createState() => LoginScreenState();
 }
 
-class _LoginScreenState extends StatefulScreenWidgetState {
+class LoginScreenState extends StatefulScreenWidgetState {
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   var _focusUserName = FocusNode();
@@ -73,7 +73,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
   getUserNameAndPassword() {
     if (app.resolve<PrefUtils>().getBool("rememberMe") == true) {
       isCheckBoxSelected = app.resolve<PrefUtils>().getBool("rememberMe");
-      _userNameController.text = app.resolve<PrefUtils>().getString("userName");
+      userNameController.text = app.resolve<PrefUtils>().getString("userName");
       _passwordController.text = app.resolve<PrefUtils>().getString("passWord");
     }
   }
@@ -427,7 +427,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
         //Image.asset(profileEmail,),
 
         hintText: R.string().authStrings.name,
-        inputController: _userNameController,
+        inputController: userNameController,
         errorBorder: _isUserNameValid
             ? null
             : OutlineInputBorder(
@@ -531,7 +531,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
 
   Future callLoginApi(BuildContext context) async {
     LoginReq req = LoginReq();
-    req.username = _userNameController.text;
+    req.username = userNameController.text;
     req.password = _passwordController.text;
 
     NetworkCall<LoginResp>()
@@ -554,7 +554,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
             .saveBoolean("rememberMe", isCheckBoxSelected);
         await app
             .resolve<PrefUtils>()
-            .saveString("userName", _userNameController.text);
+            .saveString("userName", userNameController.text);
         await app
             .resolve<PrefUtils>()
             .saveString("passWord", _passwordController.text);
