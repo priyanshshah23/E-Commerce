@@ -699,7 +699,7 @@ class Account {
     data['verifyBy'] = this.verifyBy;
     data['verifyDate'] = this.verifyDate;
     data['businessType'] = this.businessType;
-    data['natureOfOrg'] = this.natureOfOrg;
+    // data['natureOfOrg'] = this.natureOfOrg;
     data['designation'] = this.designation;
     data['howKnow'] = this.howKnow;
     data['referenceFrom'] = this.referenceFrom;
