@@ -87,8 +87,8 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                         children: <Widget>[
                           // circle avatar
                           Container(
-                            height: getSize(50),
-                            width: getSize(50),
+                            height: getSize(54),
+                            width: getSize(54),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                             ),
