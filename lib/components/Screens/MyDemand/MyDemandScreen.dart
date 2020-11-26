@@ -156,7 +156,10 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
               ),
               child: Padding(
                 padding: EdgeInsets.only(
-                    left:getSize(16), top:getSize(16), right:getSize(16),),
+                  left: getSize(16),
+                  top: getSize(16),
+                  right: getSize(16),
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -231,8 +234,8 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                                               ),
                                             ),
                                             model.isExpand
-                                                ? Image.asset(showLess)
-                                                : Image.asset(showMore),
+                                                ? Image.asset(showLess,height: getSize(10),width: getSize(14),)
+                                                : Image.asset(showMore,height: getSize(10),width: getSize(14),),
                                           ],
                                         ),
                                       ),
@@ -243,7 +246,9 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                           SizedBox(
                             height: getSize(16),
                           ),
-                          Divider(color: appTheme.dividerColor,),
+                          Divider(
+                            color: appTheme.dividerColor,
+                          ),
                           SizedBox(
                             height: getSize(6),
                           ),
@@ -261,12 +266,15 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                               bottom: getSize(11),
                             ),
                             child: Container(
-                              padding: EdgeInsets.only(top:getSize(8),bottom:getSize(8)),
+                              padding: EdgeInsets.only(
+                                  top: getSize(8), bottom: getSize(8)),
                               decoration: BoxDecoration(
-                                border: Border(top:BorderSide(color: appTheme.dividerColor))
-                              ),
+                                  border: Border(
+                                      top: BorderSide(
+                                          color: appTheme.dividerColor))),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   getPreviewItem(
                                       R.string().commonString.modify,
@@ -283,7 +291,8 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                                   getPreviewItem(
                                       R.string().commonString.delete,
                                       delete_icon_medium,
-                                      appTheme.redPrimaryNormal14TitleColor, () {
+                                      appTheme.redPrimaryNormal14TitleColor,
+                                      () {
                                     app.resolve<CustomDialogs>().confirmDialog(
                                       context,
                                       barrierDismissible: true,
@@ -352,9 +361,8 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
               height: getSize(30),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(getSize(15)),
-                border: Border.all(color: appTheme.borderColor)
-              ),
+                  borderRadius: BorderRadius.circular(getSize(15)),
+                  border: Border.all(color: appTheme.borderColor)),
               child: Image.asset(
                 img,
               ),
@@ -956,8 +964,22 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
     if (!isNullEmptyOrFalse(displayDataClass.kToSArr)) {
       Map<String, String> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "Key to Symbol";
+      String temp = "";
+      if (!isNullEmptyOrFalse(displayDataClass.kToSArr.kToSArrIn)) {
+        temp = displayDataClass.kToSArr.kToSArrIn.join(", ");
+      } else if(!isNullEmptyOrFalse(displayDataClass.kToSArr.kToSArrnIn)){
+        temp = displayDataClass.kToSArr.kToSArrnIn.join(", ");
+      }
 
-      String temp = displayDataClass.kToSArr.kToSArrIn.join(", ");
+      displayDataKeyValue["value"] = temp;
+      arrData.add(displayDataKeyValue);
+    }
+
+    if (!isNullEmptyOrFalse(displayDataClass.loc)) {
+      Map<String, String> displayDataKeyValue = {};
+      displayDataKeyValue["key"] = "Location";
+
+      String temp = displayDataClass.loc.join(", ");
       displayDataKeyValue["value"] = temp;
       arrData.add(displayDataKeyValue);
     }
