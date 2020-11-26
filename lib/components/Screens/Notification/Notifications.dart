@@ -62,7 +62,10 @@ class _NotificationsState extends StatefulScreenWidgetState {
 
     NetworkCall<NotificationResp>()
         .makeCall(
-      () => app.resolve<ServiceModule>().networkService().getNotificationList(),
+      () => app
+          .resolve<ServiceModule>()
+          .networkService()
+          .getNotificationList(dict),
       context,
       isProgress: !isRefress && !isLoading,
     )
@@ -85,7 +88,15 @@ class _NotificationsState extends StatefulScreenWidgetState {
 
   fillArrayList() {
     notificationList.state.listCount = arrList.length;
-    notificationList.state.listItems = ListView(
+    notificationList.state.listItems = ListView.builder(
+      shrinkWrap: true,
+      itemCount: arrList.length,
+      itemBuilder: (context, index) {
+        return getNotificationItem(arrList[index], isShowShadow: true);
+      },
+    );
+
+    /*ListView(
       shrinkWrap: true,
       children: [
         Container(
@@ -108,7 +119,7 @@ class _NotificationsState extends StatefulScreenWidgetState {
           },
         ),
       ],
-    );
+    );*/
   }
 
   @override
@@ -119,19 +130,14 @@ class _NotificationsState extends StatefulScreenWidgetState {
       },
       child: AppBackground(
         child: Scaffold(
-          appBar: getAppBar(
-            context,
-            R.string().commonString.notifications,
-            bgColor: appTheme.whiteColor,
-            leadingButton: getBackButton(context),
-            centerTitle: false,
-          ),
-          body: Column(
-            children: [
-              Expanded(child: notificationList),
-            ],
-          ),
-        ),
+            appBar: getAppBar(
+              context,
+              R.string().commonString.notifications,
+              bgColor: appTheme.whiteColor,
+              leadingButton: getBackButton(context),
+              centerTitle: false,
+            ),
+            body: notificationList),
       ),
     );
   }
@@ -142,143 +148,136 @@ class _NotificationsState extends StatefulScreenWidgetState {
       children: [
         Container(
           margin: EdgeInsets.only(
-            left: getSize(20),
-            right: getSize(20),
+            left: getSize(16),
+            right: getSize(16),
           ),
           child: Row(
             children: [
               Expanded(
-                child: Stack(
-                  alignment: Alignment.centerLeft,
-                  children: [
-                    Container(
-                        margin: EdgeInsets.only(
-                          //  left: getSize(30),
-                          bottom: getSize(20),
-                        ),
-                        padding: EdgeInsets.only(
-                          // left: getSize(35),
-                          left: getSize(10),
-                          right: getSize(10),
-                          top: getSize(10),
-                          bottom: getSize(10),
-                        ),
-                        decoration: BoxDecoration(
-                          color: appTheme.whiteColor,
-                          boxShadow: isShowShadow
-                              ? [
-                                  BoxShadow(
-                                      color: appTheme.textBlackColor
-                                          .withOpacity(0.1),
-                                      blurRadius: getSize(10),
-                                      spreadRadius: getSize(2),
-                                      offset: Offset(0, 8)),
-                                ]
-                              : null,
-                          border: isShowShadow
-                              ? null
-                              : Border.all(color: appTheme.dividerColor),
-                          borderRadius: BorderRadius.circular(getSize(5)),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            left: getSize(10),
-                            right: getSize(10),
+                child: Container(
+                    margin: EdgeInsets.only(
+                      top: getSize(8),
+                      bottom: getSize(8),
+                    ),
+                    padding: EdgeInsets.only(
+                      // left: getSize(35),
+                      left: getSize(10),
+                      right: getSize(10),
+                      top: getSize(10),
+                      bottom: getSize(10),
+                    ),
+                    decoration: BoxDecoration(
+                      color: appTheme.whiteColor,
+                      boxShadow: isShowShadow
+                          ? [
+                              BoxShadow(
+                                  color: appTheme.lightColorPrimary,
+                                  blurRadius: getSize(10),
+                                  spreadRadius: getSize(2),
+                                  offset: Offset(1, 8)),
+                            ]
+                          : null,
+                      border: isShowShadow
+                          ? null
+                          : Border.all(color: appTheme.dividerColor),
+                      borderRadius: BorderRadius.circular(getSize(5)),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: getSize(10),
+                        right: getSize(10),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            model.title ?? "-",
+                            style: appTheme.black14TextStyle.copyWith(
+                              fontWeight: FontWeight.w500,
+                            ),
+                            maxLines: 2,
+                            textAlign: TextAlign.start,
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          SizedBox(
+                            height: getSize(5),
+                          ),
+                          Text(
+                            model.message ?? "-",
+                            style: appTheme.black12TextStyle,
+                            softWrap: true,
+                            maxLines: 2,
+                            textAlign: TextAlign.start,
+                          ),
+                          SizedBox(
+                            height: getSize(5),
+                          ),
+                          /*Row(
                             children: [
-                              Text(
-                                model.title ?? "-",
-                                style: appTheme.black14TextStyle.copyWith(
-                                  fontWeight: FontWeight.w500,
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Pieces : ",
+                                      style: appTheme.black12TextStyle,
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        "20",
+                                        style:
+                                            appTheme.black12TextStyleBold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                maxLines: 2,
-                                textAlign: TextAlign.start,
                               ),
-                              SizedBox(
-                                height: getSize(5),
-                              ),
-                              Text(
-                                model.message ?? "-",
-                                style: appTheme.black12TextStyle,
-                                softWrap: true,
-                                maxLines: 2,
-                                textAlign: TextAlign.start,
-                              ),
-                              SizedBox(
-                                height: getSize(5),
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "Pieces : ",
-                                          style: appTheme.black12TextStyle,
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            "20",
-                                            style:
-                                                appTheme.black12TextStyleBold,
-                                          ),
-                                        ),
-                                      ],
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Carat : ",
+                                      style: appTheme.black12TextStyle,
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "Carat : ",
-                                          style: appTheme.black12TextStyle,
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            "15.10",
-                                            style:
-                                                appTheme.black12TextStyleBold,
-                                          ),
-                                        ),
-                                      ],
+                                    Expanded(
+                                      child: Text(
+                                        "15.10",
+                                        style:
+                                            appTheme.black12TextStyleBold,
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "Value : ",
-                                          style: appTheme.black12TextStyle,
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            PriceUtilities.getPrice(100),
-                                            style:
-                                                appTheme.black12TextStyleBold,
-                                          ),
-                                        ),
-                                      ],
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Value : ",
+                                      style: appTheme.black12TextStyle,
                                     ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: getSize(5),
-                              ),
-                              Text(
-                                "10 Mins ago",
-                                style: appTheme.grey12HintTextStyle,
-                                maxLines: 2,
-                                textAlign: TextAlign.start,
+                                    Expanded(
+                                      child: Text(
+                                        PriceUtilities.getPrice(100),
+                                        style:
+                                            appTheme.black12TextStyleBold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
+                          ),*/
+                          SizedBox(
+                            height: getSize(5),
                           ),
-                        )),
-//                    getImageView(),
-                  ],
-                ),
+                          Text(
+                            "10 Mins ago",
+                            style: appTheme.grey12HintTextStyle,
+                            maxLines: 2,
+                            textAlign: TextAlign.start,
+                          ),
+                        ],
+                      ),
+                    )),
               ),
             ],
           ),
