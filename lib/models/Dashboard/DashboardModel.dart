@@ -6,8 +6,9 @@ class DashboardResp extends BaseApiResp {
   DashboardModel data;
 
   DashboardResp.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
-    data =
-        json['data'] != null ? new DashboardModel.fromJson(json['data']) : null;
+    data = isNullEmptyOrFalse(json['data']) == false
+        ? new DashboardModel.fromJson(json['data'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {

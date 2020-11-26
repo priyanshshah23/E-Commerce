@@ -30,9 +30,10 @@ class NetworkCall<T extends BaseApiResp> {
           if (resp.code == CODE_OK || resp.code == CODE_SUCCESS)
             return resp;
           else if (resp.code == CODE_UNAUTHORIZED) {
+            print(app.resolve<PrefUtils>().isUserLogin());
             if (app.resolve<PrefUtils>().isUserLogin()) {
-              showToast(resp.message);
-              RxBus.post(true, tag: eventBusLogout);
+              showToast(resp.message, context: context);
+              app.resolve<PrefUtils>().resetAndLogout(context);
             } else {
               return Future.error(ErrorResp(resp.message, resp.code, false));
             }
