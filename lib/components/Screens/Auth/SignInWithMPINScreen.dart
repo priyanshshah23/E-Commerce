@@ -36,6 +36,22 @@ class SignInWithMPINScreen extends StatefulScreenWidget {
 
 class _SignInWithMPINScreen extends StatefulScreenWidgetState {
   bool isFingerprint = false;
+  String _userName;
+  // String _lastLogin;
+  LoginScreenState loginScreenObject = LoginScreenState();
+
+  @override
+  void initState() {
+    super.initState();
+    _userName = app.resolve<PrefUtils>().getString("userName");
+    // _lastLogin = app.resolve<PrefUtils>().getUserDetails()
+  }
+
+  @override
+  void dispose() { 
+    loginScreenObject.userNameController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,17 +110,18 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "Ho**y",
+                                !isNullEmptyOrFalse(_userName) ? Text(
+                                  _userName,
                                   style: appTheme.black16TextStyle.copyWith(
                                     fontWeight: FontWeight.w500,
                                   ),
-                                ),
-                                SizedBox(height: getSize(6)),
-                                Text(
-                                  "Last login: 28 October 2020 | 11:37pm",
-                                  style: appTheme.black12TextStyle,
-                                ),
+                                ) :
+                                loginScreenObject.getMobileTextField(),
+                                // SizedBox(height: getSize(6)),
+                                // Text(
+                                //   "Last login: 28 October 2020 | 11:37pm",
+                                //   style: appTheme.black12TextStyle,
+                                // ),
                               ],
                             ),
                           ),
@@ -202,6 +219,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                         },
                         onSuccess: () {
                           print("success");
+                          print(loginScreenObject.userNameController.text);
                           // SyncManager().callVersionUpdateApi(
                           //   context,
                           //   VersionUpdateApi.signInWithMpin,
