@@ -614,6 +614,7 @@ class _PersonalInformationState extends State<PersonalInformation>
         var oldAccTerm = app.resolve<PrefUtils>().getUserDetails().accountTerm;
         resp.data.accountTerm = oldAccTerm;
       }
+      String oldEmail = app.resolve<PrefUtils>().getUserDetails().email;
 
       app.resolve<PrefUtils>().saveUser(resp.data);
       app.resolve<CustomDialogs>().confirmDialog(
@@ -622,6 +623,11 @@ class _PersonalInformationState extends State<PersonalInformation>
             desc: resp.message,
             positiveBtnTitle: R.string().commonString.ok,
           );
+      
+      if(oldEmail!=_emailController.text){
+        callLogout(context);
+      }
+
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,

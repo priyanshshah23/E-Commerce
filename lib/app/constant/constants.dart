@@ -71,6 +71,7 @@ const spaceRegEx = r'\s';
 const numberRegXWithDecimalAllows = r'([0-9]*[0-9]+\.)[0-9]{0,2}';
 const IMAGE_FILE_SIZE = 10.0;
 const BUSINESS_TYPE = "BUSINESS_TYPE";
+const NATURE_OF_ORG = "NATURE_OF_ORG";
 
 //Offer min/max discount
 const num minOfferedDiscount = -5;

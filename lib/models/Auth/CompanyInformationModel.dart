@@ -11,6 +11,7 @@ class CompanyInformationReq {
 //  String dateOfJoin;
 //  String companyType;
   String businessType;
+  String natureOfOrg;
   String country;
   String state;
   String city;
@@ -24,6 +25,7 @@ class CompanyInformationReq {
 //        this.dateOfJoin,
 //        this.companyType,
         this.businessType,
+        this.natureOfOrg,
         this.country,
         this.state,
         this.city,
@@ -37,6 +39,7 @@ class CompanyInformationReq {
 //    dateOfJoin = json["dateOfJoin"];
 //    companyType = json['companyType'];
     businessType = json['businessType'];
+    natureOfOrg = json['natureOfOrg'];
     country = json['country'];
     state = json['state'];
     city = json['city'];
@@ -52,6 +55,7 @@ class CompanyInformationReq {
 //    data['dateOfJoin'] = this.dateOfJoin;
 //    data['companyType'] = this.companyType;
     data['businessType'] = this.businessType;
+    data['natureOfOrg'] = this.natureOfOrg;
     data['country'] = this.country;
     data['state'] = this.state;
     data['city'] = this.city;

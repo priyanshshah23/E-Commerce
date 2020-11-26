@@ -13,6 +13,7 @@ import 'package:diamnow/models/Address/CityListModel.dart';
 import 'package:diamnow/models/Address/CountryListModel.dart';
 import 'package:diamnow/models/Address/StateListModel.dart';
 import 'package:diamnow/models/Auth/CompanyInformationModel.dart';
+import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +51,8 @@ class _CompanyInformationState extends State<CompanyInformation>
   final TextEditingController _stateController = TextEditingController();
   final TextEditingController _cityController = TextEditingController();
   final TextEditingController _businessTypeController = TextEditingController();
+  final TextEditingController _natureOfOrgController = TextEditingController();
+
   Country selectedDialogCountryForMobile =
   CountryPickerUtils.getCountryByIsoCode("US");
   Country selectedDialogCountryForWhatsapp =
@@ -70,6 +73,7 @@ class _CompanyInformationState extends State<CompanyInformation>
   var _focusMobile = FocusNode();
   var _focuscompanyCode = FocusNode();
   var _focusWhatsAppMobile = FocusNode();
+  var _focusNatureOfOrg = FocusNode();
 
   bool isPasswordSame = true;
 
@@ -80,6 +84,7 @@ class _CompanyInformationState extends State<CompanyInformation>
 //  List<StateList> stateList = List<StateList>();
 //  StateList selectedStateItem = StateList();
   List<SelectionPopupModel> businessTypeList = List<SelectionPopupModel>();
+  List<SelectionPopupModel> natureOfOrgList = List<SelectionPopupModel>();
   List<SelectionPopupModel> cityList = List<SelectionPopupModel>();
   List<SelectionPopupModel> countryList = List<SelectionPopupModel>();
   List<SelectionPopupModel> stateList = List<SelectionPopupModel>();
@@ -88,12 +93,14 @@ class _CompanyInformationState extends State<CompanyInformation>
   var selectedCountryItem = -1;
   var selectedStateItem = -1;
   var selectedBusinessItem = -1;
+  var selectedNatureOfOrg = -1;
 
   @override
   void initState() {
     super.initState();
     _callApiForCountryList();
     getBusinessType();
+    getNatureOfOrg();
   }
 
   getBusinessType() async {
@@ -101,6 +108,16 @@ class _CompanyInformationState extends State<CompanyInformation>
         .getSubMasterFromCode(BUSINESS_TYPE);
     for (var master in arrMaster) {
       businessTypeList.add(SelectionPopupModel(master.sId, master.getName(),
+          isSelected: master.isDefault));
+    }
+    setState(() {});
+  }
+
+  getNatureOfOrg() async {
+    var arrMaster = await AppDatabase.instance.masterDao
+        .getSubMasterFromCode(NATURE_OF_ORG);
+    for (var master in arrMaster) {
+      natureOfOrgList.add(SelectionPopupModel(master.sId, master.getName(),
           isSelected: master.isDefault));
     }
     setState(() {});
@@ -188,6 +205,10 @@ class _CompanyInformationState extends State<CompanyInformation>
 //                    _businessTypeController.text = value;
 //                  }),
                   getBusinessTypeDropDown(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  getNatureOfOrgDropDown(),
                   SizedBox(
                     height: getSize(20),
                   ),
@@ -664,6 +685,54 @@ class _CompanyInformationState extends State<CompanyInformation>
     );
   }
 
+  getNatureOfOrgDropDown() {
+    return InkWell(
+      onTap: () {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Dialog(
+                  insetPadding: EdgeInsets.symmetric(
+                      horizontal: getSize(20), vertical: getSize(20)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(getSize(25)),
+                  ),
+                  child: SelectionDialogue(
+                      title: "Select Nature Of Organization",
+                      hintText: "Select Nature Of Organization",
+                      selectionOptions: natureOfOrgList,
+                      applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
+                        natureOfOrgList.forEach((value) => value.isSelected = false);
+                        natureOfOrgList.firstWhere((value) => value == selectedItem).isSelected = true;
+                        selectedNatureOfOrg = natureOfOrgList.indexOf(selectedItem);
+                        _natureOfOrgController.text = selectedItem.title;
+                      }));
+            });
+      },
+      child: CommonTextfield(
+          focusNode: _focusNatureOfOrg,
+          enable: false,
+          textOption: TextFieldOption(
+              prefixWid: getCommonIconWidget(
+                  imageName: city, imageType: IconSizeType.small),
+              hintText: "Select Nature Of Organization",
+              maxLine: 1,
+              keyboardType: TextInputType.text,
+              type: TextFieldType.DropDown,
+              inputController: _natureOfOrgController,
+              isSecureTextField: false),
+          textCallback: (text) {
+//                  setState(() {
+//                    checkValidation();
+//                  });
+          },
+          inputAction: TextInputAction.next,
+          onNextPress: () {
+            FocusScope.of(context).unfocus();
+          }),
+    );
+  }
+
   Widget popupList(
       List<SelectionPopupModel> backPerList, Function(String) selectedValue,
       {bool isPer = false}) =>
@@ -916,17 +985,38 @@ class _CompanyInformationState extends State<CompanyInformation>
   }
 
   callCompanyInformationApi() async {
+    
     CompanyInformationReq req = CompanyInformationReq();
     req.companyName = _CompanyNameController.text;
-    req.country = countryList[selectedCountryItem].id;
-    req.state = stateList[selectedStateItem].id;
-    req.city = cityList[selectedCityItem].id;
+    countryList.forEach((element) {
+      if (element.title == _countryController.text.trim()) {
+        req.country = element.id;
+      }
+    });
+    stateList.forEach((element) {
+      if (element.title == _stateController.text.trim()) {
+        req.state = element.id;
+      }
+    });
+    cityList.forEach((element) {
+      if (element.title == _cityController.text.trim()) {
+        req.city = element.id;
+      }
+    });
+    // req.country = countryList[selectedCountryItem].id;//_countryController.text; //countryList[selectedCountryItem].id;
+    // req.state = stateList[selectedStateItem].id;//_stateController.text; //stateList[selectedStateItem].id;
+    // req.city =  cityList[selectedCityItem].id;//_cityController.text; //cityList[selectedCityItem].id;
     req.address =
         _addressLineOneController.text + " " + _addressLineTwoController.text;
     req.vendorCode = _companyCodeController.text;
     businessTypeList.forEach((element) {
       if (element.title == _businessTypeController.text.trim()) {
         req.businessType = element.id;
+      }
+    });
+    natureOfOrgList.forEach((element) {
+      if (element.title == _natureOfOrgController.text.trim()) {
+        req.natureOfOrg = element.id;
       }
     });
     req.zipCode = _pinCodeController.text;
@@ -979,6 +1069,13 @@ class _CompanyInformationState extends State<CompanyInformation>
           if (element.id == resp.data.businessType) {
             _businessTypeController.text = element.title;
             selectedBusinessItem = businessTypeList.indexOf(element);
+            element.isSelected = true;
+          }
+        });
+        natureOfOrgList.forEach((element) {
+          if (element.id == resp.data.natureOfOrg) {
+            _natureOfOrgController.text = element.title;
+            selectedBusinessItem = natureOfOrgList.indexOf(element);
             element.isSelected = true;
           }
         });
