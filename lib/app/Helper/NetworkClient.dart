@@ -1,6 +1,7 @@
 import 'dart:ffi';
 import 'dart:io';
 
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:dio/adapter.dart';
@@ -43,7 +44,8 @@ class NetworkClient {
     return authHeaders;
   }
 
-  Future<Response> callApi(String baseUrl, String command, String method,
+  Future<Response> callApi(
+      BuildContext context, String baseUrl, String command, String method,
       {Map<String, dynamic> params,
       Map<String, dynamic> headers,
       Function(dynamic response, String message) successCallback,
@@ -82,26 +84,26 @@ class NetworkClient {
     switch (method) {
       case MethodType.Post:
         Response response = await dio.post(baseUrl + command, data: params);
-        parseResponse(response,
+        parseResponse(context, response,
             successCallback: successCallback, failureCallback: failureCallback);
         break;
 
       case MethodType.Get:
         Response response =
             await dio.get(baseUrl + command, queryParameters: params);
-        parseResponse(response,
+        parseResponse(context, response,
             successCallback: successCallback, failureCallback: failureCallback);
         break;
 
       case MethodType.Put:
         Response response = await dio.put(baseUrl + command, data: params);
-        parseResponse(response,
+        parseResponse(context, response,
             successCallback: successCallback, failureCallback: failureCallback);
         break;
 
       case MethodType.Delete:
         Response response = await dio.delete(baseUrl + command, data: params);
-        parseResponse(response,
+        parseResponse(context, response,
             successCallback: successCallback, failureCallback: failureCallback);
         break;
 
@@ -109,7 +111,7 @@ class NetworkClient {
     }
   }
 
-  parseResponse(Response response,
+  parseResponse(BuildContext context, Response response,
       {Function(dynamic response, String message) successCallback,
       Function(String statusCode, String message) failureCallback}) {
     String statusCode = response.data['code'];
@@ -122,6 +124,16 @@ class NetworkClient {
         return;
       } else if (response.data["data"] is List<Map<String, dynamic>>) {
         successCallback(response.data["data"], message);
+        return;
+      } else {
+        failureCallback(statusCode, message);
+        return;
+      }
+    } else if (statusCode == CODE_UNAUTHORIZED) {
+      print(app.resolve<PrefUtils>().isUserLogin());
+      if (app.resolve<PrefUtils>().isUserLogin()) {
+        showToast(message, context: context);
+        app.resolve<PrefUtils>().resetAndLogout(context);
         return;
       } else {
         failureCallback(statusCode, message);

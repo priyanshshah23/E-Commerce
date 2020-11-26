@@ -84,12 +84,14 @@ class _SearchScreenState extends StatefulScreenWidgetState {
             centerTitle: false,
           ),
           body: SafeArea(
-            child: ListView(
-              children: [
-                getSearchTextField(),
-                isFromSearch ? showListView() : openSuggestion(),
-              ],
-            ),
+            child: isFromSearch
+                ? showListView()
+                : ListView(
+                    children: [
+                      getSearchTextField(),
+                      openSuggestion(),
+                    ],
+                  ),
           )),
     );
   }
@@ -448,15 +450,22 @@ class _SearchScreenState extends StatefulScreenWidgetState {
   }
 
   showListView() {
-    return Padding(
-      padding: EdgeInsets.all(getSize(16)),
-      child: ListView(
-        shrinkWrap: true,
-        children: [
-          getChips(),
-          getList(),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        getSearchTextField(),
+        Padding(
+          padding: EdgeInsets.only(
+            top: getSize(16),
+            left: getSize(16),
+            right: getSize(16),
+          ),
+          child: getChips(),
+        ),
+        Expanded(
+          child: getList(),
+        )
+      ],
     );
   }
 
@@ -496,57 +505,74 @@ class _SearchScreenState extends StatefulScreenWidgetState {
   }
 
   getList() {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: arrList.length,
-      itemBuilder: (context, index) {
-        return Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                getSize(0),
-                getSize(16),
-                getSize(16),
-                getSize(20),
-              ),
-              child: InkWell(
-                onTap: () {
-                  if (arrSelected.contains(arrList[index])) {
-                    arrSelected.removeWhere((entry) {
-                      return entry == arrSelected[index];
-                    });
-                  } else {
-                    arrSelected.add(arrList[index]);
-                    _searchController.text = "";
-                  }
+    if (isNullEmptyOrFalse(arrList)) {
+      return Container(
+        height: MediaQuery.of(context).size.height / 1.5,
+        child: Center(
+          child: Text(
+              _searchController.text.length > 0
+                  ? "No Data Found"
+                  : "Type at least 3 characters to \nsearch stones",
+              textAlign: TextAlign.center,
+              style: appTheme.black18TextStyle),
+        ),
+      );
+    }
 
-                  setState(() {});
-                },
-                child: Row(
-                  children: [
-                    Text(
-                      arrList[index],
-                      style: appTheme.blackMedium16TitleColorblack,
-                    ),
-                    Spacer(),
-                    Image.asset(
-                      arrSelected.contains(arrList[index])
-                          ? tickSelected
-                          : tickUnSelected,
-                      width: getSize(16),
-                      height: getSize(16),
-                      color: !arrSelected.contains(arrList[index])
-                          ? appTheme.textGreyColor
-                          : appTheme.colorPrimary,
-                    )
-                  ],
+    return Padding(
+      padding: EdgeInsets.all(getSize(16)),
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: arrList.length,
+        itemBuilder: (context, index) {
+          return Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(
+                  getSize(0),
+                  getSize(16),
+                  getSize(16),
+                  getSize(20),
+                ),
+                child: InkWell(
+                  onTap: () {
+                    if (arrSelected.contains(arrList[index])) {
+                      arrSelected.removeWhere((entry) {
+                        return entry == arrList[index];
+                      });
+                    } else {
+                      arrSelected.add(arrList[index]);
+                      _searchController.text = "";
+                    }
+
+                    setState(() {});
+                  },
+                  child: Row(
+                    children: [
+                      Text(
+                        arrList[index],
+                        style: appTheme.blackMedium16TitleColorblack,
+                      ),
+                      Spacer(),
+                      Image.asset(
+                        arrSelected.contains(arrList[index])
+                            ? tickSelected
+                            : tickUnSelected,
+                        width: getSize(16),
+                        height: getSize(16),
+                        color: !arrSelected.contains(arrList[index])
+                            ? appTheme.textGreyColor
+                            : appTheme.colorPrimary,
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Divider(height: getSize(1), color: appTheme.borderColor),
-          ],
-        );
-      },
+              Divider(height: getSize(1), color: appTheme.borderColor),
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -591,7 +617,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
     ];
 
     NetworkClient.getInstance.callApi(
-        baseURL, "web/v1/diamond/reportno/paginate", MethodType.Post,
+        context, baseURL, "web/v1/diamond/reportno/paginate", MethodType.Post,
         headers: NetworkClient.getInstance.getAuthHeaders(),
         params: req, successCallback: (response, message) {
       arrList = [];
