@@ -415,18 +415,18 @@ class BottomMenuSetting {
   List<BottomTabModel> getMoreMenuItems(
       {bool isDetail = false, bool isCompare = false}) {
     List<BottomTabModel> moreMenuList = [];
-    // if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ORDER) {
-    //   if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
-    //     if (app
-    //         .resolve<PrefUtils>()
-    //         .getModulePermission(ModulePermissionConstant.permission_order)
-    //         .insert)
-    //       moreMenuList.add(BottomTabModel(
-    //           image: placeOrder,
-    //           title: R.string().screenTitle.placeOrder,
-    //           type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER));
-    //   }
-    // }
+    if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ORDER) {
+      if (moduleType == DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY) {
+        if (app
+            .resolve<PrefUtils>()
+            .getModulePermission(ModulePermissionConstant.permission_order)
+            .insert)
+          moreMenuList.add(BottomTabModel(
+              image: placeOrder,
+              title: R.string().screenTitle.buyNow,
+              type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER));
+      }
+    }
     if (!isDetail && !isCompare) {
       if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
         if (app
@@ -669,8 +669,7 @@ class BottomMenuSetting {
             moduleType == DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST ||
             moduleType == DiamondModuleConstant.MODULE_TYPE_MY_CART ||
             moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER ||
-            moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH ||
-            moduleType == DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY) {
+            moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
           if (app
               .resolve<PrefUtils>()
               .getModulePermission(ModulePermissionConstant.permission_order)
@@ -780,7 +779,6 @@ bool isDiamondSearchModule(int moduleType) {
     case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
     case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
     case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
-    case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
     case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
       return true;
     default:

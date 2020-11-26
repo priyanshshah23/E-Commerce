@@ -259,11 +259,11 @@ class _OfferPopupState extends State<OfferPopup> {
           ],
           //isSecureTextField: false
         ),
-        validation: (text) {
-          if (text.isEmpty) {
-            return R.string().commonString.enterComment;
-          }
-        },
+        // validation: (text) {
+        //   if (text.isEmpty) {
+        //     return R.string().commonString.enterComment;
+        //   }
+        // },
         textCallback: (text) {},
         inputAction: TextInputAction.done,
         onNextPress: () {
