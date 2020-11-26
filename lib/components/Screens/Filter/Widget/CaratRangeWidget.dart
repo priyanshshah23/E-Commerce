@@ -140,13 +140,15 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
   getCaratRangeChips() {
     return Wrap(
       spacing: getSize(6),
-      runSpacing: getSize(6),
+      runSpacing: getSize(0),
       children: List<Widget>.generate(
           widget.selectionModel.caratRangeChipsToShow.length, (int index) {
         return Chip(
           // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(getSize(10))),
           label: Text(
-              widget.selectionModel.caratRangeChipsToShow[index].toString()),
+            widget.selectionModel.caratRangeChipsToShow[index].toString(),
+            style: appTheme.blackMedium14TitleColorblack,
+          ),
           backgroundColor: appTheme.unSelectedBgColor,
           deleteIcon: Icon(
             Icons.clear,

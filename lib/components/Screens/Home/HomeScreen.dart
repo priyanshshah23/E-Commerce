@@ -65,9 +65,9 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       });
 
-      RxBus.register<bool>(tag: eventBusLogout).listen((event) {
-        //app.resolve<PrefUtils>().resetAndLogout(context);
-      });
+      // RxBus.register<bool>(tag: eventBusLogout).listen((event) {
+      //   app.resolve<PrefUtils>().resetAndLogout(context);
+      // });
 
       // app.resolve<CustomDialogs>().confirmDialog(context,
       //     title: R.string().authStrings.uploadKYC,

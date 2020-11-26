@@ -111,7 +111,10 @@ class SyncManager {
     dict["isNotReturnTotal"] = true;
     dict["isReturnCountOnly"] = true;
     dict["filters"] = req;
-    dict["search"] = searchText;
+
+    if (!isNullEmptyOrFalse(searchText)) {
+      dict["search"] = searchText;
+    }
 
     NetworkCall<DiamondListResp>()
         .makeCall(

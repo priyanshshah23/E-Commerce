@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:collection';
 
+import 'package:diamnow/app/Helper/NetworkClient.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/Helper/Themehelper.dart';
 import 'package:diamnow/app/app.export.dart';
@@ -31,7 +33,7 @@ class SearchScreen extends StatefulScreenWidget {
   }
 
   @override
-  _SearchScreenState createState() => _SearchScreenState();
+  _SearchScreenState createState() => _SearchScreenState(this.isFromSearch);
 }
 
 class _SearchScreenState extends StatefulScreenWidgetState {
@@ -39,9 +41,13 @@ class _SearchScreenState extends StatefulScreenWidgetState {
   var _focusSearch = FocusNode();
   var arrSuggestion = List<String>();
   String totalSearch = "";
-
   String searchText = "";
+  bool isFromSearch;
+  List<String> arrList = [];
+  List<String> arrSelected = [];
+  Timer timer;
 
+  _SearchScreenState(this.isFromSearch);
   @override
   void initState() {
     super.initState();
@@ -54,6 +60,12 @@ class _SearchScreenState extends StatefulScreenWidgetState {
         prepareDataSource();
       }),
     );
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
   }
 
   @override
@@ -72,10 +84,10 @@ class _SearchScreenState extends StatefulScreenWidgetState {
             centerTitle: false,
           ),
           body: SafeArea(
-            child: Column(
+            child: ListView(
               children: [
                 getSearchTextField(),
-                openSuggestion(),
+                isFromSearch ? showListView() : openSuggestion(),
               ],
             ),
           )),
@@ -139,9 +151,18 @@ class _SearchScreenState extends StatefulScreenWidgetState {
                         height: getSize(16), width: getSize(16))),
               ),
               onChanged: (String text) {
-                this.searchText = text;
-                openSuggestion();
-                setState(() {});
+                if (!isFromSearch) {
+                  this.searchText = text;
+                  openSuggestion();
+                  setState(() {});
+                } else {
+                  if (text.length > 2) {
+                    if (timer != null) timer.cancel();
+                    timer = Timer(Duration(seconds: 2), () {
+                      callApiForSearchStoneId(text);
+                    });
+                  }
+                }
               },
               onEditingComplete: () {
                 FocusScope.of(context).unfocus();
@@ -426,10 +447,122 @@ class _SearchScreenState extends StatefulScreenWidgetState {
     );
   }
 
+  showListView() {
+    return Padding(
+      padding: EdgeInsets.all(getSize(16)),
+      child: ListView(
+        shrinkWrap: true,
+        children: [
+          getChips(),
+          getList(),
+        ],
+      ),
+    );
+  }
+
+  getChips() {
+    if (isNullEmptyOrFalse(arrSelected)) {
+      return Container();
+    }
+    return Wrap(
+      spacing: getSize(6),
+      runSpacing: getSize(0),
+      children: List<Widget>.generate(arrSelected.length, (int index) {
+        return Chip(
+          // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(getSize(10))),
+          label: Text(
+            arrSelected[index],
+            style: appTheme.blackMedium14TitleColorblack,
+          ),
+          backgroundColor: appTheme.unSelectedBgColor,
+          deleteIcon: Icon(
+            Icons.clear,
+            color: appTheme.textColor,
+            size: getSize(16),
+          ),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(getSize(5)),
+              side: BorderSide(color: appTheme.colorPrimary)),
+          onDeleted: () {
+            setState(() {
+              arrSelected.removeWhere((entry) {
+                return entry == arrSelected[index];
+              });
+            });
+          },
+        );
+      }),
+    );
+  }
+
+  getList() {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: arrList.length,
+      itemBuilder: (context, index) {
+        return Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                getSize(0),
+                getSize(16),
+                getSize(16),
+                getSize(20),
+              ),
+              child: InkWell(
+                onTap: () {
+                  if (arrSelected.contains(arrList[index])) {
+                    arrSelected.removeWhere((entry) {
+                      return entry == arrSelected[index];
+                    });
+                  } else {
+                    arrSelected.add(arrList[index]);
+                    _searchController.text = "";
+                  }
+
+                  setState(() {});
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      arrList[index],
+                      style: appTheme.blackMedium16TitleColorblack,
+                    ),
+                    Spacer(),
+                    Image.asset(
+                      arrSelected.contains(arrList[index])
+                          ? tickSelected
+                          : tickUnSelected,
+                      width: getSize(16),
+                      height: getSize(16),
+                      color: !arrSelected.contains(arrList[index])
+                          ? appTheme.textGreyColor
+                          : appTheme.colorPrimary,
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Divider(height: getSize(1), color: appTheme.borderColor),
+          ],
+        );
+      },
+    );
+  }
+
   callCountApi() {
+    Map<String, dynamic> req = {};
+    req = {
+      "or": [
+        {"stoneId": arrSelected},
+        {"rptNo": arrSelected},
+        {"vStnId": arrSelected}
+      ]
+    };
+
     SyncManager.instance.callApiForDiamondList(
       context,
-      {},
+      isFromSearch ? req : {},
       (diamondListResp) {
         Map<String, dynamic> dict = new HashMap();
 
@@ -442,7 +575,34 @@ class _SearchScreenState extends StatefulScreenWidgetState {
       (onError) {
         //print("Error");
       },
-      // searchText: _searchController.text,
+      searchText: isFromSearch ? null : _searchController.text.trim(),
     );
+  }
+
+  callApiForSearchStoneId(String searchText) {
+    Map<String, dynamic> req = {};
+
+    req["startWith"] = {
+      "keyword": searchText,
+      "keys": ["rptNo", "vStnId", "stoneId"]
+    };
+    req["sort"] = [
+      {"createdAt": "DESC"}
+    ];
+
+    NetworkClient.getInstance.callApi(
+        baseURL, "web/v1/diamond/reportno/paginate", MethodType.Post,
+        headers: NetworkClient.getInstance.getAuthHeaders(),
+        params: req, successCallback: (response, message) {
+      arrList = [];
+      if (response is List<dynamic>) {
+        for (var item in response) {
+          arrList.add(item);
+        }
+      }
+      setState(() {});
+    }, failureCallback: (status, message) {
+      print(message);
+    });
   }
 }

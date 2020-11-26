@@ -244,8 +244,7 @@ class PrefUtils {
       app.resolve<PrefUtils>().saveString("passWord", passWord);
     }
 
-    Navigator.of(context).pushNamedAndRemoveUntil(
-        LoginScreen.route, (Route<dynamic> route) => false);
+    Navigator.of(context).pushNamed(LoginScreen.route);
   }
 
   Future<void> clearPreferenceAndDB() async {
