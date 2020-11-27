@@ -307,6 +307,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                             () {
                                           Map<String, dynamic> dict = {};
                                           dict["searchData"] = model.searchData;
+                                          dict["isForUpdateSavedSearch"] = true;
                                           dict[ArgumentConstant.IsFromDrawer] =
                                               false;
                                           NavigationUtilities.pushRoute(
