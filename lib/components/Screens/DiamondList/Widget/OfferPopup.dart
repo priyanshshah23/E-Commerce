@@ -119,9 +119,11 @@ class _OfferPopupState extends State<OfferPopup> {
                     ),
                   ),
             Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: getSize(Spacing.leftPadding),
-                  vertical: getSize(16)),
+              padding: EdgeInsets.only(
+                  left: getSize(Spacing.leftPadding),
+                  right: getSize(Spacing.leftPadding),
+                  top: getSize(16),
+                  bottom: getSize(30)),
               child: Row(
                 children: [
                   Expanded(
@@ -197,7 +199,10 @@ class _OfferPopupState extends State<OfferPopup> {
             .convertServerDateToFormatterString(selectedDate,
                 formatter: DateUtilities.dd_mm_yyyy_);
       });
-    }, isTime: false, title: R.string().commonString.selectDate, actionType : DiamondTrackConstant.TRACK_TYPE_OFFICE);
+    },
+        isTime: false,
+        title: R.string().commonString.selectDate,
+        actionType: DiamondTrackConstant.TRACK_TYPE_OFFICE);
   }
 
   getDateTextField() {

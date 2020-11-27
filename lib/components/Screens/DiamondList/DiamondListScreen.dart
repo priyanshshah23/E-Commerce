@@ -343,20 +343,49 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   moduleType: moduleType,
                   item: arraDiamond[index],
                   leftSwipeList: getLeftAction((manageClick) async {
-                    //Detail
-                    var dict = Map<String, dynamic>();
-                    dict[ArgumentConstant.DiamondDetail] = arraDiamond[index];
-                    dict[ArgumentConstant.ModuleType] = moduleType;
+                    if (manageClick.type ==
+                        clickConstant.CLICK_TYPE_OFFER_EDIT) {
+                      //Update offer
+                      List<DiamondModel> selectedList = [];
+                      DiamondModel model;
 
-                    //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
-                    bool isBack =
-                        await Navigator.of(context).push(MaterialPageRoute(
-                      settings: RouteSettings(name: DiamondDetailScreen.route),
-                      builder: (context) =>
-                          DiamondDetailScreen(arguments: dict),
-                    ));
-                    if (isBack != null && isBack) {
-                      onRefreshList();
+                      model =
+                          DiamondModel.fromJson(arraDiamond[index].toJson());
+                      model.isAddToOffer = true;
+                      model.isUpdateOffer = true;
+                      model.trackItemOffer = arraDiamond[index].trackItemOffer;
+                      selectedList.add(model);
+
+                      var dict = Map<String, dynamic>();
+                      dict[ArgumentConstant.DiamondList] = selectedList;
+                      dict[ArgumentConstant.ModuleType] = moduleType;
+                      dict[ArgumentConstant.ActionType] =
+                          DiamondTrackConstant.TRACK_TYPE_OFFER;
+                      dict["isOfferUpdate"] = true;
+
+                      bool isBack = await NavigationUtilities.pushRoute(
+                          DiamondActionScreen.route,
+                          args: dict);
+                      if (isBack != null && isBack) {
+                        onRefreshList();
+                      }
+                    } else {
+                      //Detail
+                      var dict = Map<String, dynamic>();
+                      dict[ArgumentConstant.DiamondDetail] = arraDiamond[index];
+                      dict[ArgumentConstant.ModuleType] = moduleType;
+
+                      //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
+                      bool isBack =
+                          await Navigator.of(context).push(MaterialPageRoute(
+                        settings:
+                            RouteSettings(name: DiamondDetailScreen.route),
+                        builder: (context) =>
+                            DiamondDetailScreen(arguments: dict),
+                      ));
+                      if (isBack != null && isBack) {
+                        onRefreshList();
+                      }
                     }
                   }),
                   list: getRightAction((manageClick) {
@@ -584,6 +613,47 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       );
     }
 
+    if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+      rightSwipeList.add(
+        IntrinsicHeight(
+          child: IconSlideAction(
+            color: Colors.transparent,
+            onTap: () {
+              actionClick(
+                  ManageCLick(type: clickConstant.CLICK_TYPE_OFFER_EDIT));
+            },
+            iconWidget: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: appTheme.lightColorPrimary,
+                    border: Border.all(color: appTheme.colorPrimary),
+                    shape: BoxShape.circle,
+                  ),
+                  height: getSize(40),
+                  width: getSize(40),
+                  child: Padding(
+                    padding: EdgeInsets.all(getSize(10)),
+                    child: Icon(Icons.edit),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: getSize(8)),
+                  child: Text(
+                    R.string().commonString.details,
+                    style: appTheme.primaryNormal12TitleColor,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
     return rightSwipeList;
   }
 
@@ -761,19 +831,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         actionItems: getToolbarItem(),
       ),
       bottomNavigationBar: getBottomTab(),
-      floatingActionButton: this.moduleType ==
-                  DiamondModuleConstant.MODULE_TYPE_MY_OFFER &&
-              !isNullEmptyOrFalse(arraDiamond)
-          ? arraDiamond.where((element) => element.isSelected).toList().length >
-                  0
-              ? FloatingActionButton(
-                  onPressed: () async {
-                    moveToUpdateOffer();
-                  },
-                  child: Icon(Icons.edit, color: appTheme.whiteColor),
-                )
-              : null
-          : null,
       body: SafeArea(
         child: Column(
           children: <Widget>[
@@ -967,30 +1024,5 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             positiveBtnTitle: R.string().commonString.ok,
           );
     }
-  }
-
-  moveToUpdateOffer() {
-    //Update offer
-    List<DiamondModel> selectedList = [];
-    DiamondModel model;
-    arraDiamond
-        .where((element) => element.isSelected)
-        .toList()
-        .forEach((element) {
-      model = DiamondModel.fromJson(element.toJson());
-      model.isAddToOffer = true;
-      model.isUpdateOffer = true;
-      selectedList.add(model);
-    });
-
-    var dict = Map<String, dynamic>();
-    dict[ArgumentConstant.DiamondList] = selectedList;
-    dict[ArgumentConstant.ModuleType] = moduleType;
-    dict[ArgumentConstant.ActionType] = DiamondTrackConstant.TRACK_TYPE_OFFER;
-
-    Navigator.of(context).push(MaterialPageRoute(
-      settings: RouteSettings(name: DiamondActionScreen.route),
-      builder: (context) => DiamondActionScreen(dict),
-    ));
   }
 }

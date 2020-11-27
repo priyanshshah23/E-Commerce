@@ -1,4 +1,5 @@
 import 'package:diamnow/Setting/SettingModel.dart';
+import 'package:diamnow/app/Helper/NetworkClient.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/constant/constants.dart';
@@ -40,7 +41,8 @@ class DiamondActionScreen extends StatefulScreenWidget {
   int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
   int actionType = DiamondTrackConstant.TRACK_TYPE_WATCH_LIST;
   List<DiamondModel> diamondList;
-  
+  bool isOfferUpdate;
+
   DiamondActionScreen(
     Map<String, dynamic> arguments, {
     Key key,
@@ -55,15 +57,18 @@ class DiamondActionScreen extends StatefulScreenWidget {
       if (arguments[ArgumentConstant.DiamondList] != null) {
         diamondList = arguments[ArgumentConstant.DiamondList];
       }
+      if (arguments["isOfferUpdate"] != null) {
+        isOfferUpdate = arguments["isOfferUpdate"] ?? false;
+      }
     }
   }
 
   @override
   _DiamondActionScreenState createState() => _DiamondActionScreenState(
-        moduleType: moduleType,
-        actionType: actionType,
-        diamondList: diamondList,
-      );
+      moduleType: moduleType,
+      actionType: actionType,
+      diamondList: diamondList,
+      isOfferUpdate: isOfferUpdate);
 }
 
 class _DiamondActionScreenState extends StatefulScreenWidgetState {
@@ -79,6 +84,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
   bool isAllSelected = false;
   bool isCMChargesApplied = false;
   List<SlotModel> arrSlots = [];
+  bool isOfferUpdate;
 
   List<String> invoiceList = [
     InvoiceTypesString.today,
@@ -86,8 +92,12 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
     InvoiceTypesString.later
   ];
 
-  _DiamondActionScreenState(
-      {this.moduleType, this.actionType, this.diamondList});
+  _DiamondActionScreenState({
+    this.moduleType,
+    this.actionType,
+    this.diamondList,
+    this.isOfferUpdate = false,
+  });
 
   DiamondConfig diamondConfig;
   DiamondCalculation diamondCalculation = DiamondCalculation();
@@ -161,6 +171,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                     itemBuilder: (BuildContext context, int index) {
                       return DiamondItemWidget(
                           item: diamondList[index],
+                          isUpdateOffer: diamondList[index].isUpdateOffer,
                           actionClick: (manageClick) {
                             setState(() {
                               if (this.actionType ==
@@ -332,11 +343,18 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                                       callApiForRequestForOffice(
                                           remark, selectedPopUpDate);
                                     } else {
-                                      diamondConfig.actionAll(
-                                          context, diamondList, actionType,
-                                          remark: remark,
-                                          date: selectedPopUpDate,
-                                          companyName: "");
+                                      if (this.isOfferUpdate) {
+                                        callApiForUpdateOffer(
+                                            this.diamondList.first,
+                                            remark,
+                                            selectedPopUpDate);
+                                      } else {
+                                        diamondConfig.actionAll(
+                                            context, diamondList, actionType,
+                                            remark: remark,
+                                            date: selectedPopUpDate,
+                                            companyName: "");
+                                      }
                                     }
                                   },
                                 ));
@@ -566,6 +584,48 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
               positiveBtnTitle: R.string().commonString.ok,
             );
       }
+    });
+  }
+
+  callApiForUpdateOffer(DiamondModel model, String remark, String offerDate) {
+    Map<String, dynamic> req = {};
+
+    req["trackType"] = DiamondTrackConstant.TRACK_TYPE_OFFER;
+    req["remarks"] = remark;
+    req["id"] = model.trackItemOffer.trackId;
+    req["diamond"] = model.id;
+    req["trackPricePerCarat"] = model.ctPr;
+    req["trackAmount"] = model.amt;
+    req["trackDiscount"] = model.back;
+    req["vStnId"] = model.vStnId;
+    req["newAmount"] = model.offeredAmount;
+    req["newPricePerCarat"] = model.offeredPricePerCarat;
+    req["newDiscount"] = model.offeredDiscount;
+    req["offerValidDate"] = offerDate;
+
+    app.resolve<CustomDialogs>().showProgressDialog(context, "");
+
+    NetworkClient.getInstance.callApi(
+        context, baseURL, ApiConstants.updateOffer, MethodType.Post,
+        headers: NetworkClient.getInstance.getAuthHeaders(),
+        params: req, successCallback: (response, message) {
+      app.resolve<CustomDialogs>().hideProgressDialog();
+      app.resolve<CustomDialogs>().confirmDialog(context,
+          title: "",
+          desc: message,
+          positiveBtnTitle: R.string().commonString.ok,
+          onClickCallback: (type) {
+        Navigator.pop(context, true);
+      });
+    }, failureCallback: (status, message) {
+      app.resolve<CustomDialogs>().hideProgressDialog();
+      app.resolve<CustomDialogs>().confirmDialog(context,
+          title: "",
+          desc: message,
+          positiveBtnTitle: R.string().commonString.ok,
+          onClickCallback: (type) {
+        Navigator.pop(context);
+      });
     });
   }
 }

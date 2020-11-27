@@ -642,7 +642,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
     ];
 
     NetworkClient.getInstance.callApi(
-        context, baseURL, "web/v1/diamond/reportno/paginate", MethodType.Post,
+        context, baseURL, ApiConstants.searchReportNo, MethodType.Post,
         headers: NetworkClient.getInstance.getAuthHeaders(),
         params: req, successCallback: (response, message) {
       arrList = [];

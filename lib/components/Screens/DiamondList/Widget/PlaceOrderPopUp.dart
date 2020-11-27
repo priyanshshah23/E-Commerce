@@ -175,9 +175,11 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: getSize(Spacing.leftPadding),
-                  vertical: getSize(16)),
+              padding: EdgeInsets.only(
+                  left: getSize(Spacing.leftPadding),
+                  right: getSize(Spacing.leftPadding),
+                  top: getSize(16),
+                  bottom: getSize(30)),
               child: Row(
                 children: [
                   Expanded(
