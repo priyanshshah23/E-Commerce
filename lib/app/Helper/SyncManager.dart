@@ -531,18 +531,27 @@ class SyncManager {
       final dir = await downloadStateObj.getDownloadDirectory();
       String fileName = "FinalExcel.xlsx";
       final savePath = path.join(dir.path, fileName);
-      print(savePath);
+      print("file:/" + savePath);
       Dio().download(url, savePath).then((value) {
         print("DOWNLOADED");
+        
         WebView(
-        initialUrl: savePath,
-        javascriptMode: JavascriptMode.unrestricted,
-        onWebViewCreated: (WebViewController webViewController) {
-          _controller.complete(webViewController);
-        },
-      );
+          // initialUrl: "file:///android_asset/flutter_assets"+savePath,
+          javascriptMode: JavascriptMode.unrestricted,
+          onWebViewCreated: (WebViewController webViewController) {
+            webViewController.loadUrl(savePath);
+            print("web view created");
+            // _controller.complete(webViewController);
+          },
+          onPageStarted: (started){
+            print("started ==> "+started.toString());
+          },
+          
+          onWebResourceError: (e){
+            print("Error===>"+e.toString());
+          },
+        );
       });
-      
 
       // getWebView(context, url);
     }).catchError((onError) {

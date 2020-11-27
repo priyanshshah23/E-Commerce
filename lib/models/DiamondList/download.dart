@@ -56,6 +56,7 @@ class DownloadState extends State<Download> {
   Map<String, CancelToken> mapOfCancelToken = {};
   bool breakForLoop = false;
 
+
   DownloadState({this.diamondList, this.allDiamondPreviewThings});
 
   @override
