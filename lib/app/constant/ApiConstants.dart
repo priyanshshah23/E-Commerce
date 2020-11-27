@@ -82,6 +82,9 @@ class ApiConstants {
   static const String diamondBidDelete = commonUrl + "diamond-bid/delete";
   static const String shareThroughEmail = apiUrl + "web/v1/diamond/excel";
   static const String notificationList = apiUrl + "device/v1/notification/list";
+
+  //Excel
+  static const String baseURLForExcel = "http://pndevelopapi.democ.in/data";
 }
 
 class DiamondUrls {
