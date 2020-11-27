@@ -418,7 +418,7 @@ class _PersonalInformationState extends State<PersonalInformation>
         keyboardType: TextInputType.emailAddress,
         inputController: _emailController,
         formatter: [
-          BlacklistingTextInputFormatter(new RegExp(spaceRegEx)),
+          // BlacklistingTextInputFormatter(new RegExp(spaceRegEx)),
           BlacklistingTextInputFormatter(new RegExp(RegexForEmoji))
         ],
         //isSecureTextField: false
@@ -458,7 +458,7 @@ class _PersonalInformationState extends State<PersonalInformation>
         ),
         inputController: _firstNameController,
         formatter: [
-          WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+          //WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
           BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
         ],
         //isSecureTextField: false
@@ -497,7 +497,7 @@ class _PersonalInformationState extends State<PersonalInformation>
         ),
         inputController: _lastNameController,
         formatter: [
-          WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+          //WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
           BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
         ],
         //isSecureTextField: false
