@@ -1,4 +1,3 @@
-
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,8 @@ class SaveAndSearchBottomSheet extends StatefulWidget {
   SaveAndSearchBottomSheet({this.callBack});
 
   @override
-  _SaveAndSearchBottomSheetState createState() => _SaveAndSearchBottomSheetState();
+  _SaveAndSearchBottomSheetState createState() =>
+      _SaveAndSearchBottomSheetState();
 }
 
 class _SaveAndSearchBottomSheetState extends State<SaveAndSearchBottomSheet> {
@@ -57,7 +57,7 @@ class _SaveAndSearchBottomSheetState extends State<SaveAndSearchBottomSheet> {
                     ),
                     textCallback: (text) {},
                     validation: (text) {
-                      if(text.isEmpty) {
+                      if (text.isEmpty) {
                         return "Please enter search title";
                       }
                     },
@@ -94,9 +94,8 @@ class _SaveAndSearchBottomSheetState extends State<SaveAndSearchBottomSheet> {
                     textColor: appTheme.colorPrimary,
                     padding: EdgeInsets.all(getSize(0)),
                     onPressed: () {
-                      if (_formKey.currentState
-                          .validate()) {
-                        widget.callBack(_titleController.text);
+                      if (_formKey.currentState.validate()) {
+                        widget.callBack(_titleController.text.trim());
                       } else {
                         setState(() {
                           _autoValidate = true;

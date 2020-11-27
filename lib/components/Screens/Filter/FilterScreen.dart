@@ -58,6 +58,7 @@ class FilterScreen extends StatefulScreenWidget {
 
   int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
   bool isFromDrawer = false;
+  bool isForUpdateSavedSearch = false;
   DisplayDataClass dictSearchData;
 
   FilterScreen(Map<String, dynamic> arguments) {
@@ -70,6 +71,9 @@ class FilterScreen extends StatefulScreenWidget {
       }
       if (arguments["searchData"] != null) {
         dictSearchData = arguments["searchData"];
+      }
+      if (arguments["isForUpdateSavedSearch"] != null){
+        isForUpdateSavedSearch = arguments["isForUpdateSavedSearch"];
       }
     }
   }
