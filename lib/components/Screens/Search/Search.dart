@@ -55,16 +55,16 @@ class _SearchScreenState extends StatefulScreenWidgetState {
       FocusScope.of(context).requestFocus(_focusSearch);
     });
 
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => setState(() async {
-        prepareDataSource();
-      }),
-    );
+    if (isFromSearch == false) {
+      prepareDataSource();
+    }
   }
 
   @override
   void dispose() {
-    timer.cancel();
+    if (isFromSearch == true) {
+      timer.cancel();
+    }
     super.dispose();
   }
 
@@ -82,6 +82,19 @@ class _SearchScreenState extends StatefulScreenWidgetState {
             bgColor: appTheme.whiteColor,
             leadingButton: getBackButton(context),
             centerTitle: false,
+          ),
+          bottomNavigationBar: Container(
+            margin: EdgeInsets.all(getSize(16)),
+            decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
+            child: AppButton.flat(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+                callCountApi();
+              },
+              borderRadius: getSize(5),
+              fitWidth: true,
+              text: R.string().commonString.search,
+            ),
           ),
           body: SafeArea(
             child: isFromSearch
@@ -141,7 +154,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
                 ),
 
                 hintStyle: appTheme.grey16HintTextStyle,
-                hintText: "Search",
+                hintText: R.string().authStrings.searchHint,
                 labelStyle: TextStyle(
                   color: appTheme.textColor,
                   fontSize: getFontSize(16),
@@ -395,32 +408,44 @@ class _SearchScreenState extends StatefulScreenWidgetState {
     var array = searchText.split(" ");
     var filterData = getSearchDataSet(array.last);
 
+    if (isNullEmptyOrFalse(filterData)) {
+      return Container(
+        height: MediaQuery.of(context).size.height / 1.5,
+        child: Center(
+          child: Text(
+              _searchController.text.length > 0
+                  ? "No Data Found"
+                  : "Type to search",
+              textAlign: TextAlign.center,
+              style: appTheme.black18TextStyle),
+        ),
+      );
+    }
+
     return !isNullEmptyOrFalse(filterData)
-        ? Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(getSize(16)),
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: filterData.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return InkWell(
-                    onTap: () {
-                      array.removeLast();
+        ? Padding(
+            padding: EdgeInsets.all(getSize(16)),
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: filterData.length,
+              itemBuilder: (BuildContext context, int index) {
+                return InkWell(
+                  onTap: () {
+                    array.removeLast();
 
-                      searchText = "${array.join(" ")} ${filterData[index]} ";
-                      _searchController.text = searchText;
+                    searchText = "${array.join(" ")} ${filterData[index]} ";
+                    _searchController.text = searchText;
 
-                      _searchController.selection = TextSelection.fromPosition(
-                          TextPosition(offset: _searchController.text.length));
+                    _searchController.selection = TextSelection.fromPosition(
+                        TextPosition(offset: _searchController.text.length));
 
-                      filterData = [];
+                    filterData = [];
 
-                      setState(() {});
-                    },
-                    child: getWidget(filterData[index]),
-                  );
-                },
-              ),
+                    setState(() {});
+                  },
+                  child: getWidget(filterData[index]),
+                );
+              },
             ),
           )
         : Container();

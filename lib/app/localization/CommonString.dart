@@ -228,6 +228,7 @@ class CommonString {
 
   final String documents;
   final String selectType;
+  final String noSavedSearch;
   final String enter2Stone;
   final String offerVelidTill;
   final String officeVisitDate;
@@ -282,6 +283,23 @@ class CommonString {
   //filterScreen
   final String seeMore;
   final String seeLess;
+
+  //Notification
+  final String weekAgo;
+  final String lastWeek;
+  final String dayAgo;
+  final String onedayAgo;
+  final String yesterday;
+  final String hourAgo;
+  final String onehourAgo;
+  final String anhourAgo;
+  final String mintuesAgo;
+  final String onemintuesAgo;
+  final String amintueAgo;
+  final String secondsAgo;
+  final String justNow;
+  final String today;
+  final String past;
 
   const CommonString({
     //filterScreen
@@ -518,8 +536,9 @@ class CommonString {
     this.documents = "Documents",
     this.noSlotFound = "No slots found",
     this.noDiamondFound =
-        "No Diamond Found, Please select different search parameter.",
+        "No Diamond Found, Please select different search parameter. \n\n Or \n\n Add demand for your search criteria",
     this.selectType = "Select Virtual Type",
+    this.noSavedSearch = "No Saved Search Exists",
     this.searchCity = "Search city",
     this.searchCountry = "Search Country",
     this.searchState = "Search state",
@@ -552,5 +571,22 @@ class CommonString {
     this.enterComment = "Please Enter Comment",
     this.deleteItem = "Are you sure you want to delete?",
     this.shippingPolicy = "Shipping Policy",
+
+    //Notification
+    this.weekAgo = "1 week ago",
+    this.lastWeek = "Last Week",
+    this.dayAgo = "days ago",
+    this.onedayAgo = "1 day ago",
+    this.yesterday = "Yesterday",
+    this.hourAgo = "hours ago",
+    this.onehourAgo = "1 hour ago",
+    this.anhourAgo = "An hour ago",
+    this.mintuesAgo = "minutes ago",
+    this.onemintuesAgo = "1 minute ago",
+    this.amintueAgo = "A minute ago",
+    this.secondsAgo = "seconds ago",
+    this.justNow = "Just Now",
+    this.today = "Today",
+    this.past = "past",
   });
 }

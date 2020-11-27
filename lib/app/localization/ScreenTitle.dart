@@ -310,7 +310,7 @@ class ScreenTitle {
     this.myOrder = "My Ordered List",
     this.confirmStone = "Confirm Stone",
     this.myOffice = "My Office View",
-    this.myOffer = "My Offer",
+    this.myOffer = "My Offer List",
     this.myPurchased = "My Purchased History",
     this.mySavedSearch = "My Saved Search",
     this.savedSearch = "Saved Search",

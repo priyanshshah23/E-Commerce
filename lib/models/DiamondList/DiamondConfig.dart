@@ -171,7 +171,7 @@ class DiamondConfig {
         return R.string().screenTitle.confirmStone;
       case DiamondTrackConstant.TRACK_TYPE_FINAL_CALCULATION:
         return R.string().screenTitle.finalCalculation;
-      case DiamondTrackConstant.TRACK_TYPE_APPOINTMENT:
+      case DiamondTrackConstant.TRACK_TYPE_OFFICE:
         return R.string().screenTitle.bookOffice;
       default:
         return R.string().screenTitle.addToWatchList;
