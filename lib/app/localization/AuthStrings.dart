@@ -180,7 +180,7 @@ class AuthStrings {
     this.addressLineThree = "Address 3",
     this.oldPassword = "Old Password",
     this.skype = "Skype",
-    this.whatsApp = "Whatsapp*",
+    this.whatsApp = "Whatsapp",
     this.pinCode = "PinCode*",
     this.verifyMobileDesc =
         "Please verify mobile number to update the profile.",

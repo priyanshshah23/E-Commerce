@@ -277,7 +277,7 @@ class CommonString {
 
   final String placeOrder;
   final String shippingPolicy;
-
+  final String offerSundayRestriction;
   final String enterComment;
 
   //filterScreen
@@ -571,6 +571,8 @@ class CommonString {
     this.enterComment = "Please Enter Comment",
     this.deleteItem = "Are you sure you want to delete?",
     this.shippingPolicy = "Shipping Policy",
+    this.offerSundayRestriction =
+        "Sunday is not allowed. Office working days are Monday to Saturday",
 
     //Notification
     this.weekAgo = "1 week ago",
