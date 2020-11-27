@@ -253,10 +253,10 @@ class _OfferPopupState extends State<OfferPopup> {
           maxLine: 4,
           inputController: _commentController,
           hintText: R.string().screenTitle.comment,
-          formatter: [
-            WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
-            BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
-          ],
+          // formatter: [
+          //   WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+          //   BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+          // ],
           //isSecureTextField: false
         ),
         // validation: (text) {

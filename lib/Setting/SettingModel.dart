@@ -111,10 +111,18 @@ class DrawerSetting {
         image: mySavedSearch,
         title: R.string().screenTitle.mySavedSearch,
         isSelected: false,
-        isShowDivider: true,
+        isShowDivider: false,
         isShowUpperDivider: true,
         type: DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH,
       ));
+    drawerList.add(DrawerModel(
+      image: mySavedSearch,
+      title: R.string().screenTitle.myAccount,
+      isSelected: false,
+      isShowDivider: true,
+      isShowUpperDivider: false,
+      type: DiamondModuleConstant.MODULE_TYPE_PROFILE,
+    ));
     /*if (app
         .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_mySavedSearch)
@@ -254,17 +262,6 @@ class DrawerSetting {
       ));
     if (app
         .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_order)
-        .view)
-      drawerList.add(DrawerModel(
-        image: myOrder,
-        title: R.string().screenTitle.myOrder,
-        imageColor: appTheme.colorPrimary,
-        isSelected: false,
-        type: DiamondModuleConstant.MODULE_TYPE_MY_ORDER,
-      ));
-    if (app
-        .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_offer)
         .view)
       drawerList.add(DrawerModel(
@@ -274,6 +271,18 @@ class DrawerSetting {
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_OFFER,
       ));
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_order)
+        .view)
+      drawerList.add(DrawerModel(
+        image: myOrder,
+        title: R.string().screenTitle.myOrder,
+        imageColor: appTheme.colorPrimary,
+        isSelected: false,
+        type: DiamondModuleConstant.MODULE_TYPE_MY_ORDER,
+      ));
+
     if (app
         .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_purchase)
@@ -464,7 +473,8 @@ class BottomMenuSetting {
     }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
       if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
-        if (moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
+        if (moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH &&
+            !isCompare) {
           if (app
               .resolve<PrefUtils>()
               .getModulePermission(ModulePermissionConstant.permission_offer)
@@ -694,6 +704,19 @@ class BottomMenuSetting {
           }
         }
         if (isDiamondSearchModule(moduleType) && isDetail) {
+          if (app
+              .resolve<PrefUtils>()
+              .getModulePermission(ModulePermissionConstant.permission_offer)
+              .insert)
+            moreMenuList.add(BottomTabModel(
+                image: offerWhite,
+                title: R.string().screenTitle.offer,
+                isCenter: false,
+                type: ActionMenuConstant.ACTION_TYPE_OFFER));
+        }
+
+        //For Compare special
+        if (isCompare) {
           if (app
               .resolve<PrefUtils>()
               .getModulePermission(ModulePermissionConstant.permission_offer)

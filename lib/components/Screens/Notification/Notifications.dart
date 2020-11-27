@@ -87,15 +87,16 @@ class _NotificationsState extends StatefulScreenWidgetState {
 
           final aDate = DateTime(date.year, date.month, date.day);
           if (aDate == today) {
-            arrList[i].megaTitle = "Today";
+            arrList[i].megaTitle = R.string().commonString.today;
           } else if (aDate == yesterday) {
-            arrList[i].megaTitle = "Yesterday";
+            arrList[i].megaTitle = R.string().commonString.yesterday;
           } else {
             var past = arrList
-                .where((element) => element.megaTitle == "Past")
+                .where((element) =>
+                    element.megaTitle == R.string().commonString.past)
                 .toList();
             if (isNullEmptyOrFalse(past)) {
-              arrList[i].megaTitle = "Past";
+              arrList[i].megaTitle = R.string().commonString.past;
               break;
             }
           }
@@ -362,23 +363,31 @@ class TimeAgo {
       return DateUtilities().getFormattedDateString(date,
           formatter: DateUtilities.dd_mm_yyyy_hh_mm);
     } else if ((difference.inDays / 7).floor() >= 1) {
-      return (numericDates) ? '1 week ago' : 'Last week';
+      return (numericDates)
+          ? R.string().commonString.weekAgo
+          : R.string().commonString.lastWeek;
     } else if (difference.inDays >= 2) {
-      return '${difference.inDays} days ago';
+      return '${difference.inDays} ${R.string().commonString.dayAgo}';
     } else if (difference.inDays >= 1) {
-      return (numericDates) ? '1 day ago' : 'Yesterday';
+      return (numericDates)
+          ? R.string().commonString.onedayAgo
+          : R.string().commonString.yesterday;
     } else if (difference.inHours >= 2) {
-      return '${difference.inHours} hours ago';
+      return '${difference.inHours} ${R.string().commonString.weekAgo}';
     } else if (difference.inHours >= 1) {
-      return (numericDates) ? '1 hour ago' : 'An hour ago';
+      return (numericDates)
+          ? R.string().commonString.onehourAgo
+          : R.string().commonString.anhourAgo;
     } else if (difference.inMinutes >= 2) {
-      return '${difference.inMinutes} minutes ago';
+      return '${difference.inMinutes} ${R.string().commonString.weekAgo}';
     } else if (difference.inMinutes >= 1) {
-      return (numericDates) ? '1 minute ago' : 'A minute ago';
+      return (numericDates)
+          ? R.string().commonString.onemintuesAgo
+          : R.string().commonString.amintueAgo;
     } else if (difference.inSeconds >= 3) {
-      return '${difference.inSeconds} seconds ago';
+      return '${difference.inSeconds} ${R.string().commonString.secondsAgo}';
     } else {
-      return 'Just now';
+      return R.string().commonString.justNow;
     }
   }
 }

@@ -169,78 +169,94 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.only(bottom: getSize(5.0)),
-                                    child: Text(model.name ?? "-",
-                                        style: appTheme
-                                            .blackNormal16TitleColorblack),
-                                  ),
-                                  // Expiry date code
-                                  Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        "Expiry Date :",
-                                        style: appTheme.grey14HintTextStyle,
-                                      ),
-                                      SizedBox(width: getSize(5)),
-                                      Text(
-                                        model.expiryDate ?? "-",
-                                        style: appTheme
-                                            .blackNormal14TitleColorblack,
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                              Spacer(),
-                              arr.length > 3
-                                  ? GestureDetector(
-                                      onTap: () {
-                                        model.isExpand ^= true;
-                                        myDemandBaseList.state
-                                            .setApiCalling(false);
-                                        fillArrayList();
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            border: Border(
-                                                bottom: BorderSide(
-                                          color: appTheme.colorPrimary,
-                                          width: 1.0,
-                                        ))),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                  right: getSize(3)),
-                                              child: Text(
-                                                R
-                                                    .string()
-                                                    .commonString
-                                                    .viewDetails,
-                                                textAlign: TextAlign.center,
-                                                style: appTheme
-                                                    .primaryColor14TextStyle,
+                              Padding(
+                                padding: EdgeInsets.only(bottom: getSize(6.0)),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Text(model.name ?? "-",
+                                          style: appTheme
+                                              .blackNormal16TitleColorblack),
+                                    ),
+                                    arr.length > 3
+                                        ? SizedBox(width: getSize(8))
+                                        : SizedBox(),
+                                    arr.length > 3
+                                        ? GestureDetector(
+                                            onTap: () {
+                                              model.isExpand ^= true;
+                                              myDemandBaseList.state
+                                                  .setApiCalling(false);
+                                              fillArrayList();
+                                            },
+                                            child: Container(
+                                              width: getSize(102),
+                                              decoration: BoxDecoration(
+                                                  border: Border(
+                                                      bottom: BorderSide(
+                                                color: appTheme.colorPrimary,
+                                                width: 1.0,
+                                              ))),
+                                              child: Row(
+                                                children: [
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        right: getSize(3)),
+                                                    child: Text(
+                                                      R
+                                                          .string()
+                                                          .commonString
+                                                          .viewDetails,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: appTheme
+                                                          .primaryColor14TextStyle,
+                                                    ),
+                                                  ),
+                                                  model.isExpand
+                                                      ? Image.asset(
+                                                          showLess,
+                                                          height: getSize(10),
+                                                          width: getSize(14),
+                                                        )
+                                                      : Image.asset(
+                                                          showMore,
+                                                          height: getSize(10),
+                                                          width: getSize(14),
+                                                        ),
+                                                ],
                                               ),
                                             ),
-                                            model.isExpand
-                                                ? Image.asset(showLess,height: getSize(10),width: getSize(14),)
-                                                : Image.asset(showMore,height: getSize(10),width: getSize(14),),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  : SizedBox(),
+                                          )
+                                        : SizedBox(),
+                                  ],
+                                ),
+                              ),
+                              // Expiry date code
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    "Expiry Date :",
+                                    style: appTheme.grey14HintTextStyle,
+                                  ),
+                                  SizedBox(width: getSize(5)),
+                                  Text(
+                                    DateUtilities()
+                                        .convertServerDateToFormatterString(
+                                            model.expiryDate ?? "-",
+                                            formatter: DateUtilities
+                                                .dd_mm_yyyy_hh_mm_a),
+                                    style:
+                                        appTheme.blackNormal14TitleColorblack,
+                                  )
+                                ],
+                              )
                             ],
                           ),
                           SizedBox(
@@ -276,18 +292,22 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
-                                  getPreviewItem(
-                                      R.string().commonString.modify,
-                                      edit_icon,
-                                      appTheme.greenPrimaryNormal14TitleColor,
-                                      () {
-                                    Map<String, dynamic> dict = {};
-                                    dict["searchData"] = model.searchData;
-                                    dict[ArgumentConstant.IsFromDrawer] = false;
-                                    NavigationUtilities.pushRoute(
-                                        FilterScreen.route,
-                                        args: dict);
-                                  }),
+                                  if (widget.moduleType !=
+                                      DiamondModuleConstant
+                                          .MODULE_TYPE_MY_DEMAND)
+                                    getPreviewItem(
+                                        R.string().commonString.modify,
+                                        edit_icon,
+                                        appTheme.greenPrimaryNormal14TitleColor,
+                                        () {
+                                      Map<String, dynamic> dict = {};
+                                      dict["searchData"] = model.searchData;
+                                      dict[ArgumentConstant.IsFromDrawer] =
+                                          false;
+                                      NavigationUtilities.pushRoute(
+                                          FilterScreen.route,
+                                          args: dict);
+                                    }),
                                   getPreviewItem(
                                       R.string().commonString.delete,
                                       delete_icon_medium,
@@ -357,6 +377,7 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
+              margin: EdgeInsets.all(getSize(4)),
               width: getSize(30),
               height: getSize(30),
               alignment: Alignment.center,
@@ -967,7 +988,7 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
       String temp = "";
       if (!isNullEmptyOrFalse(displayDataClass.kToSArr.kToSArrIn)) {
         temp = displayDataClass.kToSArr.kToSArrIn.join(", ");
-      } else if(!isNullEmptyOrFalse(displayDataClass.kToSArr.kToSArrnIn)){
+      } else if (!isNullEmptyOrFalse(displayDataClass.kToSArr.kToSArrnIn)) {
         temp = displayDataClass.kToSArr.kToSArrnIn.join(", ");
       }
 

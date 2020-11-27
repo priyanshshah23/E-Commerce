@@ -82,7 +82,7 @@ class _StaticPageScreenState extends State<StaticPageScreen> {
               padding:
                   EdgeInsets.only(left: getSize(20), right: getSize(20)),
               child:  WebView(
-              initialUrl: "http://fndevelop.democ.in/",
+              initialUrl: "http://pn`develop.democ.in/",
               javascriptMode: JavascriptMode.unrestricted,
               onWebViewCreated: (WebViewController webViewController) {
                 _controller.complete(webViewController);
