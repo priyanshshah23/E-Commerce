@@ -84,6 +84,9 @@ class ApiConstants {
   static const String notificationList = apiUrl + "device/v1/notification/list";
   static const String searchReportNo = "web/v1/diamond/reportno/paginate";
   static const String updateOffer = "device/v1/diamond-track/update";
+
+  //Excel
+  static const String baseURLForExcel = "http://pndevelopapi.democ.in/data";
 }
 
 class DiamondUrls {

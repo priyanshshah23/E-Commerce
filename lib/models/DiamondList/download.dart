@@ -36,12 +36,12 @@ class Download extends StatefulWidget {
   Download({this.diamondList, this.allDiamondPreviewThings});
 
   @override
-  _DownloadState createState() => _DownloadState(
+  DownloadState createState() => DownloadState(
       diamondList: this.diamondList,
       allDiamondPreviewThings: this.allDiamondPreviewThings);
 }
 
-class _DownloadState extends State<Download> {
+class DownloadState extends State<Download> {
   List<DiamondModel> diamondList;
 
   List<SelectionPopupModel> allDiamondPreviewThings =
@@ -56,7 +56,8 @@ class _DownloadState extends State<Download> {
   Map<String, CancelToken> mapOfCancelToken = {};
   bool breakForLoop = false;
 
-  _DownloadState({this.diamondList, this.allDiamondPreviewThings});
+
+  DownloadState({this.diamondList, this.allDiamondPreviewThings});
 
   @override
   void initState() {
@@ -223,7 +224,7 @@ class _DownloadState extends State<Download> {
         else if (element.fileType ==
             DownloadAndShareDialogueConstant.certificate) {
           element.url = DiamondUrls.certificate + model.rptNo + ".pdf";
-        }
+        } 
         // else if (element.fileType ==
         //         DownloadAndShareDialogueConstant.typeIIA &&
         //     model.certFile) {
@@ -356,7 +357,7 @@ class _DownloadState extends State<Download> {
 
   Future<void> downloadFile(uri, fileName, int progress,
       void callBack(int val, bool isFromError), String key) async {
-    final dir = await _getDownloadDirectory();
+    final dir = await getDownloadDirectory();
     final savePath = path.join(dir.path, fileName);
 
     if (isPermissionStatusGranted) {
@@ -397,7 +398,7 @@ class _DownloadState extends State<Download> {
     }
   }
 
-  Future<Directory> _getDownloadDirectory() async {
+  Future<Directory> getDownloadDirectory() async {
     if (Platform.isAndroid) {
       return await DownloadsPathProvider.downloadsDirectory;
     }

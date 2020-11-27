@@ -53,7 +53,6 @@ class _SavedSearchScreenState extends State<SavedSearchScreen> {
       segmentedControlValue = 1;
       controller = PageController(initialPage: 1);
     }
-
   }
 
   @override

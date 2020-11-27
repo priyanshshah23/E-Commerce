@@ -1,7 +1,8 @@
+import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:path/path.dart' as path;
 import 'package:diamnow/app/AppConfiguration/AppNavigation.dart';
 import 'package:diamnow/app/Helper/AppDatabase.dart';
 import 'package:diamnow/app/app.export.dart';
@@ -13,6 +14,7 @@ import 'package:diamnow/components/Screens/Version/VersionUpdate.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
+import 'package:diamnow/models/DiamondList/download.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
 import 'package:diamnow/models/Version/VersionUpdateResp.dart';
@@ -20,6 +22,7 @@ import 'package:diamnow/models/excel/ExcelApiResponse.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:package_info/package_info.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class SyncManager {
   static final SyncManager _instance = SyncManager._internal();
@@ -504,6 +507,9 @@ class SyncManager {
   }
 
   callApiForExcel(BuildContext context, List<DiamondModel> diamondList) {
+    final Completer<WebViewController> _controller =
+        Completer<WebViewController>();
+
     List<String> stoneId = [];
     diamondList.forEach((element) {
       stoneId.add(element.id);
@@ -518,8 +524,34 @@ class SyncManager {
     )
         .then((excelApiResponse) async {
       // success(diamondListResp);
-      String url = baseURL + excelApiResponse.data.data;
+      String url = ApiConstants.baseURLForExcel + excelApiResponse.data.data;
+      print(url);
       //navigate to static page...
+      DownloadState downloadStateObj = DownloadState();
+      final dir = await downloadStateObj.getDownloadDirectory();
+      String fileName = "FinalExcel.xlsx";
+      final savePath = path.join(dir.path, fileName);
+      print("file:/" + savePath);
+      Dio().download(url, savePath).then((value) {
+        print("DOWNLOADED");
+        
+        WebView(
+          // initialUrl: "file:///android_asset/flutter_assets"+savePath,
+          javascriptMode: JavascriptMode.unrestricted,
+          onWebViewCreated: (WebViewController webViewController) {
+            webViewController.loadUrl(savePath);
+            print("web view created");
+            // _controller.complete(webViewController);
+          },
+          onPageStarted: (started){
+            print("started ==> "+started.toString());
+          },
+          
+          onWebResourceError: (e){
+            print("Error===>"+e.toString());
+          },
+        );
+      });
 
       // getWebView(context, url);
     }).catchError((onError) {
