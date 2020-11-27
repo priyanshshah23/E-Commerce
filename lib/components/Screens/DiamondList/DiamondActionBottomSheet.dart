@@ -1061,9 +1061,8 @@ Widget setInvoiceDropDown(
     );
 
 Future openBottomSheetForSavedSearch(
-    BuildContext context, Map<String, dynamic> req, String filterId,
-    {isSearch = false}) {
-
+    BuildContext context, Map<String, dynamic> req,
+    {isSearch = false, SavedSearchModel savedSearchModel}) {
   return showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -1076,18 +1075,17 @@ Future openBottomSheetForSavedSearch(
     ),
     builder: (context) {
       return SaveAndSearchBottomSheet(
-        callBack: (text) {
+        savedSearchModel: savedSearchModel,
+        callBack: (text, isNewSearch) {
           Map<String, dynamic> dict = {};
-          dict["filters"] = req;
+          dict["filter"] = req;
           dict["name"] = text;
-          dict["id"] = filterId;
+          dict["id"] = isNewSearch ? "" : savedSearchModel?.id ?? "";
           dict["searchType"] = DiamondSearchType.SAVE;
           NetworkCall<SavedSearchResp>()
               .makeCall(
-                () => app
-                .resolve<ServiceModule>()
-                .networkService()
-                .saveSearch(dict),
+            () =>
+                app.resolve<ServiceModule>().networkService().saveSearch(dict),
             context,
             isProgress: true,
           )
@@ -1096,21 +1094,20 @@ Future openBottomSheetForSavedSearch(
             if (isSearch) {
               Map<String, dynamic> dict = new HashMap();
               dict["filterId"] = diamondListResp.data.savedSearchModel.id;
-              dict["filters"] =
-                  req;
-              dict[ArgumentConstant.ModuleType] = DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
-              NavigationUtilities.pushRoute(
-                  DiamondListScreen.route,
+              dict["filters"] = req;
+              dict[ArgumentConstant.ModuleType] =
+                  DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
+              NavigationUtilities.pushRoute(DiamondListScreen.route,
                   args: dict);
             }
             // Navigator.pop(context);
           }).catchError((onError) {
             app.resolve<CustomDialogs>().confirmDialog(
-              context,
-              title: R.string().commonString.error,
-              desc: onError.message,
-              positiveBtnTitle: R.string().commonString.ok,
-            );
+                  context,
+                  title: R.string().commonString.error,
+                  desc: onError.message,
+                  positiveBtnTitle: R.string().commonString.ok,
+                );
           });
         },
       );

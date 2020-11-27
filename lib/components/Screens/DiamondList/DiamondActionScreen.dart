@@ -40,7 +40,7 @@ class DiamondActionScreen extends StatefulScreenWidget {
   int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
   int actionType = DiamondTrackConstant.TRACK_TYPE_WATCH_LIST;
   List<DiamondModel> diamondList;
-
+  
   DiamondActionScreen(
     Map<String, dynamic> arguments, {
     Key key,

@@ -8,6 +8,7 @@ import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondActionScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondExpandItemWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
@@ -760,6 +761,19 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         actionItems: getToolbarItem(),
       ),
       bottomNavigationBar: getBottomTab(),
+      floatingActionButton: this.moduleType ==
+                  DiamondModuleConstant.MODULE_TYPE_MY_OFFER &&
+              !isNullEmptyOrFalse(arraDiamond)
+          ? arraDiamond.where((element) => element.isSelected).toList().length >
+                  0
+              ? FloatingActionButton(
+                  onPressed: () async {
+                    moveToUpdateOffer();
+                  },
+                  child: Icon(Icons.edit, color: appTheme.whiteColor),
+                )
+              : null
+          : null,
       body: SafeArea(
         child: Column(
           children: <Widget>[
@@ -953,5 +967,30 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             positiveBtnTitle: R.string().commonString.ok,
           );
     }
+  }
+
+  moveToUpdateOffer() {
+    //Update offer
+    List<DiamondModel> selectedList = [];
+    DiamondModel model;
+    arraDiamond
+        .where((element) => element.isSelected)
+        .toList()
+        .forEach((element) {
+      model = DiamondModel.fromJson(element.toJson());
+      model.isAddToOffer = true;
+      model.isUpdateOffer = true;
+      selectedList.add(model);
+    });
+
+    var dict = Map<String, dynamic>();
+    dict[ArgumentConstant.DiamondList] = selectedList;
+    dict[ArgumentConstant.ModuleType] = moduleType;
+    dict[ArgumentConstant.ActionType] = DiamondTrackConstant.TRACK_TYPE_OFFER;
+
+    Navigator.of(context).push(MaterialPageRoute(
+      settings: RouteSettings(name: DiamondActionScreen.route),
+      builder: (context) => DiamondActionScreen(dict),
+    ));
   }
 }
