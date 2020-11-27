@@ -463,7 +463,9 @@ class _PersonalInformationState extends State<PersonalInformation>
         ],
         //isSecureTextField: false
       ),
-      textCallback: (text) {},
+      textCallback: (text) {
+        // _firstNameController.text = _firstNameController.text.trim();
+      },
       validation: (text) {
         if (text.trim().isEmpty) {
           return R.string().errorString.enterFirstName;
@@ -589,9 +591,9 @@ class _PersonalInformationState extends State<PersonalInformation>
   callPersonalInformationApi({String imagePath}) async {
     PersonalInformationReq req = PersonalInformationReq();
     req.id = app.resolve<PrefUtils>().getUserDetails().id;
-    req.address = _addressLineOneController.text;
-    req.firstName = _firstNameController.text;
-    req.lastName = _lastNameController.text;
+    req.address = _addressLineOneController.text.trim();
+    req.firstName = _firstNameController.text.trim();
+    req.lastName = _lastNameController.text.trim();
     req.mobile = _mobileController.text;
     req.countryCode = selectedDialogCountryForMobile.phoneCode;
     req.whatsapp = _whatsAppMobileController.text;

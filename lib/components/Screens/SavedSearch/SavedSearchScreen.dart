@@ -49,8 +49,11 @@ class _SavedSearchScreenState extends State<SavedSearchScreen> {
   @override
   void initState() {
     super.initState();
-    if (moduleType == DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH)
+    if (moduleType == DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH){
       segmentedControlValue = 1;
+      controller = PageController(initialPage: 1);
+    }
+
   }
 
   @override

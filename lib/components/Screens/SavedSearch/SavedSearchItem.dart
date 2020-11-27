@@ -989,7 +989,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
         if (!isNullEmptyOrFalse(displayDataClass.kToSArr.kToSArrIn)) {
           String temp = displayDataClass.kToSArr.kToSArrIn.join(", ");
           displayDataKeyValue["value"] = temp;
-        } else {
+        } else if(!isNullEmptyOrFalse(displayDataClass.kToSArr.kToSArrnIn)) {
           String temp = displayDataClass.kToSArr.kToSArrnIn.join(", ");
           displayDataKeyValue["value"] = temp;
         }

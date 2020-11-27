@@ -299,10 +299,13 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                                   actionType: actionType,
                                   callBack: (selectedPopUpDate) {
                                     diamondConfig.actionAll(
-                                        context, diamondList, actionType,
-                                        remark: _commentController.text,
-                                        date: selectedPopUpDate,
-                                        companyName: _nameController.text);
+                                      context,
+                                      diamondList,
+                                      actionType,
+                                      remark: _commentController.text.trim(),
+                                      date: selectedPopUpDate,
+                                      companyName: _nameController.text.trim(),
+                                    );
                                   },
                                 ));
                           });
