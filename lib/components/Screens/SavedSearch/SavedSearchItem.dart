@@ -241,8 +241,14 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                               ),
                                             ),
                                             model.isExpand
-                                                ? Image.asset(showLess)
-                                                : Image.asset(showMore),
+                                                ? Image.asset(
+                                                    showLess,
+                                                    width: getSize(12),
+                                                  )
+                                                : Image.asset(
+                                                    showMore,
+                                                    width: getSize(12),
+                                                  ),
                                           ],
                                         ),
                                       ),
@@ -307,7 +313,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                             () {
                                           Map<String, dynamic> dict = {};
                                           dict["searchData"] = model.searchData;
-                                          dict["isForUpdateSavedSearch"] = true;
+                                          dict["savedSearchModel"] = model;
                                           dict[ArgumentConstant.IsFromDrawer] =
                                               false;
                                           NavigationUtilities.pushRoute(
@@ -990,7 +996,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
         if (!isNullEmptyOrFalse(displayDataClass.kToSArr.kToSArrIn)) {
           String temp = displayDataClass.kToSArr.kToSArrIn.join(", ");
           displayDataKeyValue["value"] = temp;
-        } else if(!isNullEmptyOrFalse(displayDataClass.kToSArr.kToSArrnIn)) {
+        } else if (!isNullEmptyOrFalse(displayDataClass.kToSArr.kToSArrnIn)) {
           String temp = displayDataClass.kToSArr.kToSArrnIn.join(", ");
           displayDataKeyValue["value"] = temp;
         }

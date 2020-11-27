@@ -58,7 +58,7 @@ class FilterScreen extends StatefulScreenWidget {
 
   int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
   bool isFromDrawer = false;
-  bool isForUpdateSavedSearch = false;
+  SavedSearchModel savedSearchModel;
   DisplayDataClass dictSearchData;
 
   FilterScreen(Map<String, dynamic> arguments) {
@@ -72,24 +72,29 @@ class FilterScreen extends StatefulScreenWidget {
       if (arguments["searchData"] != null) {
         dictSearchData = arguments["searchData"];
       }
-      if (arguments["isForUpdateSavedSearch"] != null){
-        isForUpdateSavedSearch = arguments["isForUpdateSavedSearch"];
+      if (arguments["savedSearchModel"] != null) {
+        savedSearchModel = arguments["savedSearchModel"];
       }
     }
   }
 
   @override
-  _FilterScreenState createState() =>
-      _FilterScreenState(moduleType, isFromDrawer,
-          dictSearchData: dictSearchData);
+  _FilterScreenState createState() => _FilterScreenState(
+        moduleType,
+        isFromDrawer,
+        dictSearchData: dictSearchData,
+        savedSearchModel: savedSearchModel,
+      );
 }
 
 class _FilterScreenState extends StatefulScreenWidgetState {
   int moduleType;
   bool isFromDrawer;
   DisplayDataClass dictSearchData;
+  SavedSearchModel savedSearchModel;
 
-  _FilterScreenState(this.moduleType, this.isFromDrawer, {this.dictSearchData});
+  _FilterScreenState(this.moduleType, this.isFromDrawer,
+      {this.dictSearchData, this.savedSearchModel});
 
   int segmentedControlValue = 0;
   PageController controller = PageController();
@@ -130,7 +135,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         });
       });
     });
-    arrBottomTab = BottomTabBar.getFilterScreenBottomTabs();
+    arrBottomTab = BottomTabBar.getFilterScreenBottomTabs(
+        isForEditSavedSearch: !isNullEmptyOrFalse(this.savedSearchModel));
     setState(() {
       //
     });
@@ -637,10 +643,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       (diamondListResp) {
         if (isSavedSearch) {
           openBottomSheetForSavedSearch(
-              context,
-              FilterRequest().createRequest(arrList),
-              diamondListResp.data.filter.id,
-              isSearch: isSearch);
+              context, FilterRequest().createRequest(arrList),
+              isSearch: isSearch, savedSearchModel: this.savedSearchModel);
         } else {
           if (isSearch) {
             if (diamondListResp.data.count == 0) {

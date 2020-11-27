@@ -5,7 +5,7 @@ import '../app.export.dart';
 class ApiConstants {
   //  static const String PROXY_URL = "PROXY 192.168.2.124:8888";
   static String PROXY_URL =
-      Platform.isIOS ? "PROXY localhost:8888" : "PROXY 192.168.0.116:8888";
+      Platform.isIOS ? "PROXY 192.168.0.114:8888" : "PROXY 192.168.0.116:8888";
 //    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 
   static const String imageBaseURL = baseURL;
@@ -88,18 +88,20 @@ class ApiConstants {
 }
 
 class DiamondUrls {
-  static const String commonUrl =
-      "http://cdn.pndiamonds.com/";
+  static const String commonUrl = "http://cdn.pndiamonds.com/";
   static const String image = commonUrl + "stonevideos/StoneImage_04-01-2020/";
   static const String video = commonUrl + "stonevideos/StoneImage_04-01-2020/";
-  static const String heartImage = commonUrl + "stonevideos/StoneImage_04-01-2020/";
+  static const String heartImage =
+      commonUrl + "stonevideos/StoneImage_04-01-2020/";
   static const String plotting = commonUrl + "PlottingImages/";
   static const String certificate = commonUrl + "certificates/";
-  static const String arroImage = commonUrl + "stonevideos/StoneImage_04-01-2020/";
+  static const String arroImage =
+      commonUrl + "stonevideos/StoneImage_04-01-2020/";
   static const String videomp4 = commonUrl + "Mov/";
   static const String roughVideo = commonUrl + "MFG/RoughVideo/";
   static const String polVideo = commonUrl + "viewer3/mp4_videos/";
-  static const String assetImage = commonUrl + "stonevideos/StoneImage_04-01-2020/";
+  static const String assetImage =
+      commonUrl + "stonevideos/StoneImage_04-01-2020/";
   static const String flouresenceImg = commonUrl + "FlsImages/";
   static const String idealScopeImg = commonUrl + "IDEAL_White_BG/";
   static const String darkFieldImg = commonUrl + "Dark_Field_White_BG/";

@@ -176,6 +176,7 @@ class ScreenTitle {
   final String stoneOfDay;
   final String savedSearch;
   final String savedAndSearch;
+  final String updateAndSearch;
   final String matchPair;
   final String recentSearch;
   final String viewAll;
@@ -208,6 +209,7 @@ class ScreenTitle {
     this.addDemand = "Add Demand",
     this.matchPair = "Match Pair",
     this.savedAndSearch = "Save & Search",
+    this.updateAndSearch = "Update & Search",
     this.upcoming = "Upcoming",
     this.bidPricePerCt = "Bid Price / Ct",
     this.bidDisc = "Bid Disc",

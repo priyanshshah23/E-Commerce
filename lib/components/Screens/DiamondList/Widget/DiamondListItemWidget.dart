@@ -22,6 +22,7 @@ class DiamondItemWidget extends StatefulWidget {
   DiamondCalculation groupDiamondCalculation;
   int moduleType;
   List<Widget> leftSwipeList;
+  bool isUpdateOffer;
 
   DiamondItemWidget({
     this.item,
@@ -33,6 +34,7 @@ class DiamondItemWidget extends StatefulWidget {
     this.moduleType,
     this.leftSwipeList,
     this.groupDiamondCalculation,
+    this.isUpdateOffer,
   });
 
   @override

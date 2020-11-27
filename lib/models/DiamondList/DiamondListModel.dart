@@ -420,6 +420,7 @@ class DiamondModel {
   bool isAddToWatchList = false;
   bool isFinalCalculation = false;
   bool isAddToOffer = false;
+  bool isUpdateOffer = false;
   bool isAddAppointment = false;
   bool isAddToBid = false;
   String selectedBackPer;

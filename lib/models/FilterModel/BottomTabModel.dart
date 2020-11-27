@@ -125,7 +125,8 @@ class BottomTabModel extends TabConfiguration {
 class BottomTabBar {
   //
 
-  static List<BottomTabModel> getFilterScreenBottomTabs() {
+  static List<BottomTabModel> getFilterScreenBottomTabs(
+      {bool isForEditSavedSearch = false}) {
     List<BottomTabModel> arrBootomTab = List<BottomTabModel>();
     arrBootomTab.add(BottomTabModel(
         title: R.string().screenTitle.savedSearch,
@@ -146,7 +147,9 @@ class BottomTabBar {
         sequence: 2,
         isCenter: true));
     arrBootomTab.add(BottomTabModel(
-        title: R.string().screenTitle.savedAndSearch,
+        title: isForEditSavedSearch
+            ? R.string().screenTitle.updateAndSearch
+            : R.string().screenTitle.savedAndSearch,
         image: saveAndSearch,
         code: BottomCodeConstant.filterSaveAndSearch,
         sequence: 3,
