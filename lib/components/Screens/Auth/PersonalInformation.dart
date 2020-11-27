@@ -385,13 +385,13 @@ class _PersonalInformationState extends State<PersonalInformation>
       textCallback: (text) async {
 //            await checkValidation();
       },
-      validation: (text) {
-        if (text.isEmpty) {
-          return R.string().errorString.enterPhone;
-        } else {
-          return null;
-        }
-      },
+      // validation: (text) {
+      //   if (text.isEmpty) {
+      //     return R.string().errorString.enterPhone;
+      //   } else {
+      //     return null;
+      //   }
+      // },
       inputAction: TextInputAction.next,
       onNextPress: () {
         _focusWhatsAppMobile.unfocus();
@@ -623,11 +623,10 @@ class _PersonalInformationState extends State<PersonalInformation>
             desc: resp.message,
             positiveBtnTitle: R.string().commonString.ok,
           );
-      
-      if(oldEmail!=_emailController.text){
+
+      if (oldEmail != _emailController.text) {
         callLogout(context);
       }
-
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,

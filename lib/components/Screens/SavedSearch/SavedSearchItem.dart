@@ -367,9 +367,10 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                   ),
                                 )
                               : Padding(
-                                padding: EdgeInsets.only(bottom:getSize(12.0)),
-                                child: SizedBox(),
-                              ),
+                                  padding:
+                                      EdgeInsets.only(bottom: getSize(12.0)),
+                                  child: SizedBox(),
+                                ),
                         ],
                       ),
                     ),
@@ -427,7 +428,9 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${arr[i]["key"] ?? ""} :",
+                  isNullEmptyOrFalse(arr[i]["value"])
+                      ? "${arr[i]["key"] ?? ""} "
+                      : "${arr[i]["key"] ?? ""} :",
                   textAlign: TextAlign.left,
                   style: appTheme.grey16HintTextStyle,
                 ),

@@ -149,6 +149,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     Map<String, dynamic> dict = {};
     dict["page"] = page;
     dict["limit"] = DEFAULT_LIMIT;
+    if (sortingKey != null) {
+      dict["sort"] = sortingKey;
+    }
+
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
@@ -160,9 +164,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
         dict["filters"] = {};
         dict["filters"]["diamondSearchId"] = this.filterId;
-        if (sortingKey != null) {
-          dict["sort"] = sortingKey;
-        }
+
         break;
       case DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR:
         dict["filters"] = {};

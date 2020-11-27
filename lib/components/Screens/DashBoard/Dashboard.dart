@@ -1721,7 +1721,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                         this.dashboardModel.seller.firstName +
                             " " +
                             this.dashboardModel.seller.lastName,
-                        style: appTheme.black16TextStyle.copyWith(
+                        style: appTheme.black18TextStyle.copyWith(
                           color: appTheme.colorPrimary,
                           fontWeight: FontWeight.w500,
                         ),
@@ -1749,7 +1749,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                             ),
                             Text(
                               this.dashboardModel.seller?.email ?? "-",
-                              style: appTheme.blackNormal14TitleColorblack,
+                              style: appTheme.black16TextStyle,
                             ),
                           ],
                         ),
@@ -1778,7 +1778,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                             ),
                             Text(
                               this.dashboardModel.seller.mobile ?? "-",
-                              style: appTheme.blackNormal14TitleColorblack,
+                              style: appTheme.black16TextStyle,
                             ),
                           ],
                         ),

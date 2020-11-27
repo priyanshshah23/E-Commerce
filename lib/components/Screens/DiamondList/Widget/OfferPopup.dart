@@ -197,7 +197,7 @@ class _OfferPopupState extends State<OfferPopup> {
             .convertServerDateToFormatterString(selectedDate,
                 formatter: DateUtilities.dd_mm_yyyy_);
       });
-    }, isTime: false, title: R.string().commonString.selectDate);
+    }, isTime: false, title: R.string().commonString.selectDate, actionType : DiamondTrackConstant.TRACK_TYPE_OFFICE);
   }
 
   getDateTextField() {

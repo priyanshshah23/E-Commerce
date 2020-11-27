@@ -19,7 +19,7 @@ Future<FileUploadResp> uploadFile(BuildContext context, String folderName,
     List<int> bytes,
     bool pdfUpload = false}) async {
   var dio = Dio();
-  dio.options.baseUrl = baseURL + ApiConstants.documentUpload;
+  dio.options.baseUrl = ApiConstants.documentUpload;
 
   /*if (kDebugMode) {
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =

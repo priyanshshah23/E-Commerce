@@ -15,7 +15,6 @@ class SavedSearchScreen extends StatefulScreenWidget {
   int moduleType = DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
   bool isFromDrawer = false;
 
-
   SavedSearchScreen(
     Map<String, dynamic> arguments, {
     Key key,
@@ -50,7 +49,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen> {
   @override
   void initState() {
     super.initState();
-    if(moduleType == DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH)
+    if (moduleType == DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH)
       segmentedControlValue = 1;
   }
 
@@ -83,25 +82,28 @@ class _SavedSearchScreenState extends State<SavedSearchScreen> {
   }
 
   Widget _segmentedControl() {
-    return Container(
-      width: MathUtilities.screenWidth(context),
-      child: CupertinoSegmentedControl<int>(
-        selectedColor: appTheme.colorPrimary,
-        unselectedColor: Colors.white,
-        pressedColor: Colors.transparent,
-        borderColor: appTheme.colorPrimary,
-        children: {
-          0: getTextWidget("Saved Search", 0),
-          1: getTextWidget("Recent Search", 1)
-        },
-        onValueChanged: (int val) {
-          setState(() {
-            segmentedControlValue = val;
-            controller.animateToPage(segmentedControlValue,
-                duration: Duration(milliseconds: 500), curve: Curves.easeIn);
-          });
-        },
-        groupValue: segmentedControlValue,
+    return Padding(
+      padding: EdgeInsets.only(top: getSize(16)),
+      child: Container(
+        width: MathUtilities.screenWidth(context),
+        child: CupertinoSegmentedControl<int>(
+          selectedColor: appTheme.colorPrimary,
+          unselectedColor: Colors.white,
+          pressedColor: Colors.transparent,
+          borderColor: appTheme.colorPrimary,
+          children: {
+            0: getTextWidget("Saved Search", 0),
+            1: getTextWidget("Recent Search", 1)
+          },
+          onValueChanged: (int val) {
+            setState(() {
+              segmentedControlValue = val;
+              controller.animateToPage(segmentedControlValue,
+                  duration: Duration(milliseconds: 500), curve: Curves.easeIn);
+            });
+          },
+          groupValue: segmentedControlValue,
+        ),
       ),
     );
   }
