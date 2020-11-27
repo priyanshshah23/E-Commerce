@@ -712,8 +712,11 @@ class _DashboardState extends StatefulScreenWidgetState {
                               BorderRadius.all(Radius.circular(getSize(61))),
                           child: getImageView(
                             "",
-                            finalUrl: model.img
-                                ? DiamondUrls.image + model.vStnId + ".jpg"
+                            finalUrl: true //model.img
+                                ? DiamondUrls.image +
+                                    model.vStnId +
+                                    "/" +
+                                    "still.jpg"
                                 : "",
                             width: getSize(122),
                             height: getSize(122),
@@ -901,9 +904,10 @@ class _DashboardState extends StatefulScreenWidgetState {
                               BorderRadius.all(Radius.circular(getSize(61))),
                           child: getImageView(
                             "",
-                            finalUrl: model.img
-                                ? DiamondUrls.image + model.vStnId + ".jpg"
-                                : "",
+                            finalUrl: DiamondUrls.image +
+                                model.vStnId +
+                                "/" +
+                                "still.jpg",
                             width: getSize(122),
                             height: getSize(122),
                             fit: BoxFit.cover,
@@ -1416,11 +1420,10 @@ class _DashboardState extends StatefulScreenWidgetState {
                                     Radius.circular(getSize(20))),
                                 child: getImageView(
                                   "",
-                                  finalUrl: model.img
-                                      ? DiamondUrls.image +
-                                          model.vStnId +
-                                          ".jpg"
-                                      : "",
+                                  finalUrl: DiamondUrls.image +
+                                      model.vStnId +
+                                      "/" +
+                                      "still.jpg",
                                   width: getSize(40),
                                   height: getSize(40),
                                   fit: BoxFit.fitWidth,

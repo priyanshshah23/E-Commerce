@@ -8,7 +8,7 @@
         "parameters": [
             {
                 "title": "Stone ID",
-                "apiKey": "stoneId",
+                "apiKey": "vStnId",
                 "sequence": 1,
                 "isActive": true
             },

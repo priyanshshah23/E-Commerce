@@ -135,9 +135,10 @@ class _StoneOfDayWidgetState extends State<StoneOfDayWidget> {
                         borderRadius: BorderRadius.circular(getSize(2)),
                         child: getImageView(
                           "",
-                          finalUrl: model.img
-                              ? DiamondUrls.image + model.vStnId + ".jpg"
-                              : "",
+                          finalUrl: DiamondUrls.image +
+                              model.vStnId +
+                              "/" +
+                              "still.jpg",
                           width: getSize(104),
                           height: getSize(83),
                           fit: BoxFit.cover,

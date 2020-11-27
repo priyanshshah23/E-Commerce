@@ -165,80 +165,87 @@ class _DownloadState extends State<Download> {
       DiamondModel model = diamondList[i];
 
       allDiamondPreviewThings.forEach((element) {
-        if (element.fileType == DownloadAndShareDialogueConstant.realImage1 &&
-            model.img) {
-          element.url = DiamondUrls.image + model.vStnId + ".jpg";
+        if (element.fileType == DownloadAndShareDialogueConstant.realImage1) {
+          element.url = DiamondUrls.image + model.vStnId + "/" + "still.jpg";
         } else if (element.fileType ==
-                DownloadAndShareDialogueConstant.arrowImg &&
-            model.arrowFile) {
-          element.url = DiamondUrls.arroImage + model.vStnId + ".jpg";
+            DownloadAndShareDialogueConstant.arrowImg) {
+          element.url =
+              DiamondUrls.arroImage + model.vStnId + "/" + "Arrow_Black_BG.jpg";
         } else if (element.fileType ==
-                DownloadAndShareDialogueConstant.assetScopeImg &&
-            model.assetFile) {
-          element.url = DiamondUrls.assetImage + model.vStnId + ".jpg";
-        } else if (element.fileType ==
-                DownloadAndShareDialogueConstant.plottingImg &&
-            model.pltFile) {
-          element.url = DiamondUrls.plotting + model.rptNo + ".jpg";
-        } else if (element.fileType ==
-                DownloadAndShareDialogueConstant.heartAndArrowImg &&
-            model.hAFile) {
-          element.url = DiamondUrls.heartImage + model.vStnId + ".jpg";
-        } else if (element.fileType ==
-                DownloadAndShareDialogueConstant.flouresenceImg &&
-            model.img) {
-          element.url = DiamondUrls.flouresenceImg + model.vStnId + ".jpg";
-        } else if (element.fileType ==
-                DownloadAndShareDialogueConstant.idealScopeImg &&
-            model.img) {
-          element.url = DiamondUrls.idealScopeImg + model.vStnId + ".jpg";
-        } else if (element.fileType ==
-                DownloadAndShareDialogueConstant.darkFieldImg &&
-            model.img) {
-          element.url = DiamondUrls.darkFieldImg + model.vStnId + ".jpg";
-        } else if (element.fileType ==
-                DownloadAndShareDialogueConstant.faceUpImg &&
-            model.img) {
-          element.url = DiamondUrls.faceUpImg + model.vStnId + ".jpg";
-        } else if (element.fileType ==
-                DownloadAndShareDialogueConstant.realImage2 &&
-            model.img) {
-          element.url = DiamondUrls.realImg2 + model.vStnId + ".jpg";
-        } else if (element.fileType ==
-                DownloadAndShareDialogueConstant.video1 &&
-            model.videoFile) {
-          element.url = DiamondUrls.videomp4 + model.vStnId + ".mp4";
-        } else if (element.fileType ==
-                DownloadAndShareDialogueConstant.video2 &&
-            model.polVdo) {
-          element.url = DiamondUrls.polVideo + model.vStnId + ".mp4";
-        } else if (element.fileType ==
-                DownloadAndShareDialogueConstant.certificate &&
-            model.certFile) {
-          element.url = DiamondUrls.certificate + model.rptNo + ".pdf";
-        } else if (element.fileType ==
-                DownloadAndShareDialogueConstant.typeIIA &&
-            model.certFile) {
-          element.url = DiamondUrls.type2A + model.rptNo + ".pdf";
-        } else if (element.fileType ==
-                DownloadAndShareDialogueConstant.roughScope &&
-            model.img) {
-          element.url = DiamondUrls.roughScopeImg + model.vStnId + ".jpg";
-        } else if (element.fileType == DownloadAndShareDialogueConstant.img3D &&
-            model.img) {
-          element.url = DiamondUrls.image3D + model.vStnId + ".png";
-        } else if (element.fileType ==
-                DownloadAndShareDialogueConstant.roughVideo &&
-            model.roughVdo) {
-          element.url = DiamondUrls.roughVideo + model.vStnId + ".html";
+            DownloadAndShareDialogueConstant.assetScopeImg) {
+          element.url = DiamondUrls.image +
+              model.vStnId +
+              "/" +
+              "Office_Light_Black_BG.jpg";
         }
+        // else if (element.fileType ==
+        //         DownloadAndShareDialogueConstant.plottingImg &&
+        //     model.pltFile) {
+        //   element.url = DiamondUrls.plotting + model.rptNo + ".jpg";
+        // }
+        else if (element.fileType ==
+            DownloadAndShareDialogueConstant.heartAndArrowImg) {
+          element.url = DiamondUrls.heartImage +
+              model.vStnId +
+              "/" +
+              "Heart_Black_BG.jpg";
+        }
+        // else if (element.fileType ==
+        //         DownloadAndShareDialogueConstant.flouresenceImg &&
+        //     model.img) {
+        //   element.url = DiamondUrls.flouresenceImg + model.vStnId + ".jpg";
+        // } else if (element.fileType ==
+        //         DownloadAndShareDialogueConstant.idealScopeImg &&
+        //     model.img) {
+        //   element.url = DiamondUrls.idealScopeImg + model.vStnId + ".jpg";
+        // } else if (element.fileType ==
+        //         DownloadAndShareDialogueConstant.darkFieldImg &&
+        //     model.img) {
+        //   element.url = DiamondUrls.darkFieldImg + model.vStnId + ".jpg";
+        // } else if (element.fileType ==
+        //         DownloadAndShareDialogueConstant.faceUpImg &&
+        //     model.img) {
+        //   element.url = DiamondUrls.faceUpImg + model.vStnId + ".jpg";
+        // } else if (element.fileType ==
+        //         DownloadAndShareDialogueConstant.realImage2 &&
+        //     model.img) {
+        //   element.url = DiamondUrls.realImg2 + model.vStnId + ".jpg";
+        // }
+        else if (element.fileType == DownloadAndShareDialogueConstant.video1) {
+          element.url =
+              DiamondUrls.video + model.vStnId + "/" + model.vStnId + ".html";
+        }
+        //  else if (element.fileType ==
+        //         DownloadAndShareDialogueConstant.video2 &&
+        //     model.polVdo) {
+        //   element.url = DiamondUrls.polVideo + model.vStnId + ".mp4";
+        // }
+        else if (element.fileType ==
+            DownloadAndShareDialogueConstant.certificate) {
+          element.url = DiamondUrls.certificate + model.rptNo + ".pdf";
+        }
+        // else if (element.fileType ==
+        //         DownloadAndShareDialogueConstant.typeIIA &&
+        //     model.certFile) {
+        //   element.url = DiamondUrls.type2A + model.rptNo + ".pdf";
+        // } else if (element.fileType ==
+        //         DownloadAndShareDialogueConstant.roughScope &&
+        //     model.img) {
+        //   element.url = DiamondUrls.roughScopeImg + model.vStnId + ".jpg";
+        // } else if (element.fileType == DownloadAndShareDialogueConstant.img3D &&
+        //     model.img) {
+        //   element.url = DiamondUrls.image3D + model.vStnId + ".png";
+        // } else if (element.fileType ==
+        //         DownloadAndShareDialogueConstant.roughVideo &&
+        //     model.roughVdo) {
+        //   element.url = DiamondUrls.roughVideo + model.vStnId + ".html";
+        // }
       });
 
       //download code
       getDownloadPercentage(allDiamondPreviewThings);
 
-      if(breakForLoop)
-       break;
+      if (breakForLoop) break;
       await downloadFunction(allDiamondPreviewThings, diamondList[i],
           (value, isFromError) {
         print("download" + value.toString());
@@ -289,17 +296,17 @@ class _DownloadState extends State<Download> {
     totalDownloadableFilesForAllDiamonds =
         totalFiles.length * diamondList.length;
     if (mounted) {
-      if(totalDownloadableFilesForAllDiamonds==0){
+      if (totalDownloadableFilesForAllDiamonds == 0) {
         breakForLoop = true;
         Navigator.of(context).pop();
         // RxBus.post(true,tag:"breakforloop")
-        // RxBus.register<bool>(tag: "breakforloop").listen((event) { 
+        // RxBus.register<bool>(tag: "breakforloop").listen((event) {
 
         // });
-        showToast("Files are not available on server,Please try again later",context: context);
-      
+        showToast("Files are not available on server,Please try again later",
+            context: context);
       } else
-          setState(() {});
+        setState(() {});
     }
   }
 
@@ -315,7 +322,8 @@ class _DownloadState extends State<Download> {
 
       // }
       if (element.isSelected &&
-          element.fileType != DownloadAndShareDialogueConstant.excel && !isNullEmptyOrFalse(element.url) &&
+          element.fileType != DownloadAndShareDialogueConstant.excel &&
+          !isNullEmptyOrFalse(element.url) &&
           isUrlContainsImgOrVideo(element.url)) {
         CancelToken cancelTokens = CancelToken();
         mapOfCancelToken[element.url +

@@ -698,7 +698,10 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
                               width: getSize(1), color: appTheme.dividerColor),
                         )),
               child: getImageView(
-                  DiamondUrls.image + compareModel.diamondModel.vStnId + ".jpg",
+                  DiamondUrls.image +
+                      compareModel.diamondModel.vStnId +
+                      "/" +
+                      "still.jpg",
                   height: getSize(120),
                   width: getSize(60),
                   fit: BoxFit.scaleDown),
