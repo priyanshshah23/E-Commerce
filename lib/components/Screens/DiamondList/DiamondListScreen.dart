@@ -923,7 +923,12 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     arraDiamond.forEach((element) {
       element.isSelected = false;
     });
+    diamondConfig.toolbarList.forEach((element) {
+      if (element.code == BottomCodeConstant.TBSelectAll)
+        element.isSelected = false;
+    });
     manageDiamondSelection();
+    setState(() {});
   }
 
   manageBottomMenuClick(BottomTabModel bottomTabModel) {

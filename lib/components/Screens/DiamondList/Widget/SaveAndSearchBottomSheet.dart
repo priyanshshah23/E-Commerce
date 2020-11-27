@@ -50,7 +50,7 @@ class _SaveAndSearchBottomSheetState extends State<SaveAndSearchBottomSheet> {
                       inputController: _titleController,
                       hintText: R.string().screenTitle.enterSearchTitle,
                       formatter: [
-                        WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+                        //WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
                         BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
                       ],
                       //isSecureTextField: false

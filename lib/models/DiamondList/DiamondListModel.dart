@@ -751,7 +751,7 @@ class DiamondModel {
 
   String getDiamondImage() {
     if (isStringEmpty(vStnId) == false) {
-      return diamondImageURL + vStnId + ".jpg";
+      return DiamondUrls.image + vStnId + "/" + "still.jpg";
     }
     //img
     return "";
