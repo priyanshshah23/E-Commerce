@@ -20,7 +20,7 @@ class ApiConstants {
   static const String stateList = commonUrl + "state/paginate";
   static const String cityList = commonUrl + "city/paginate";
 
-  static const String documentUpload = commonUrl + "upload";
+  static const String documentUpload = commonUrl + "upload-file";
 
   static const String masterSync = commonUrl + "masterSync";
 

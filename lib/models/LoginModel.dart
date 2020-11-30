@@ -607,7 +607,13 @@ class Account {
     verifyBy = json['verifyBy'];
     verifyDate = json['verifyDate'];
     businessType = json['businessType'];
-    // natureOfOrg = json["natureOfOrg"];
+    if (json["natureOfOrg"] is List<dynamic>) {
+      if (!isNullEmptyOrFalse(json["natureOfOrg"])) {
+        natureOfOrg = json["natureOfOrg"].first;
+      }
+    } else if (json["natureOfOrg"] is String) {
+      natureOfOrg = this.natureOfOrg;
+    }
     designation = json['designation'];
     howKnow = json['howKnow'];
     referenceFrom = json['referenceFrom'];
@@ -699,7 +705,7 @@ class Account {
     data['verifyBy'] = this.verifyBy;
     data['verifyDate'] = this.verifyDate;
     data['businessType'] = this.businessType;
-    // data['natureOfOrg'] = this.natureOfOrg;
+    data['natureOfOrg'] = this.natureOfOrg;
     data['designation'] = this.designation;
     data['howKnow'] = this.howKnow;
     data['referenceFrom'] = this.referenceFrom;

@@ -218,7 +218,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                       child: getImageView(
                         app.resolve<PrefUtils>().getUserDetails().profileImage,
                         placeHolderImage: placeHolder,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                         height: getSize(50),
                         width: getSize(50),
                       ),
