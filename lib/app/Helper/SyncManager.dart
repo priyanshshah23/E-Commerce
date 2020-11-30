@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
+import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
 import 'package:path/path.dart' as path;
 import 'package:diamnow/app/AppConfiguration/AppNavigation.dart';
 import 'package:diamnow/app/Helper/AppDatabase.dart';
@@ -534,23 +535,12 @@ class SyncManager {
       print("file:/" + savePath);
       Dio().download(url, savePath).then((value) {
         print("DOWNLOADED");
-        
-        WebView(
-          // initialUrl: "file:///android_asset/flutter_assets"+savePath,
-          javascriptMode: JavascriptMode.unrestricted,
-          onWebViewCreated: (WebViewController webViewController) {
-            webViewController.loadUrl(savePath);
-            print("web view created");
-            // _controller.complete(webViewController);
-          },
-          onPageStarted: (started){
-            print("started ==> "+started.toString());
-          },
-          
-          onWebResourceError: (e){
-            print("Error===>"+e.toString());
-          },
-        );
+        Map<String, dynamic> dict = {};
+        dict["strUrl"] = url;
+        dict[ArgumentConstant.IsFromDrawer] = false;
+        dict["isForExcel"] = true;
+        dict["screenTitle"] = excelApiResponse.data.excelName;
+        NavigationUtilities.pushRoute(StaticPageScreen.route, args: dict);
       });
 
       // getWebView(context, url);

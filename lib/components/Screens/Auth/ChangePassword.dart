@@ -213,10 +213,6 @@ class _ChangePasswordState extends State<ChangePassword> {
             isProgress: true)
         .then((resp) async {
       FocusScope.of(context).unfocus();
-      _oldPasswordController.clear();
-      _newPasswordController.clear();
-      _confirmPasswordController.clear();
-      _autoValidate = false;
 
       app.resolve<CustomDialogs>().confirmDialog(context,
           title: "",

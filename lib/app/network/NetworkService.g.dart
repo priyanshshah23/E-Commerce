@@ -9,7 +9,7 @@ part of 'NetworkService.dart';
 class _NetworkService implements NetworkService {
   _NetworkService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    this.baseUrl ??= 'http://192.168.0.186:8094/';
+    this.baseUrl ??= 'http://pndevelopapi.democ.in/';
   }
 
   final Dio _dio;
@@ -24,7 +24,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/masterSync',
+        'http://pndevelopapi.democ.in/device/v1/masterSync',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -44,7 +44,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/auth/login',
+        'http://pndevelopapi.democ.in/device/v1/auth/login',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -64,7 +64,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/guest/auth/login',
+        'http://pndevelopapi.democ.in/device/v1/guest/auth/login',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -84,7 +84,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/city/paginate',
+        'http://pndevelopapi.democ.in/device/v1/city/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -102,7 +102,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/country/paginate',
+        'http://pndevelopapi.democ.in/device/v1/country/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -122,7 +122,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/state/paginate',
+        'http://pndevelopapi.democ.in/device/v1/state/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -142,7 +142,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/diamond/paginate',
+        'http://pndevelopapi.democ.in/device/v1/diamond/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -162,7 +162,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/diamond-track/create',
+        'http://pndevelopapi.democ.in/device/v1/diamond-track/create',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -182,7 +182,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/diamond-bid/create',
+        'http://pndevelopapi.democ.in/device/v1/diamond-bid/create',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -202,7 +202,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/diamond-comment/upsert',
+        'http://pndevelopapi.democ.in/device/v1/diamond-comment/upsert',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -222,7 +222,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/user/send-otp',
+        'http://pndevelopapi.democ.in/device/v1/user/send-otp',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -242,7 +242,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/user/verify-otp',
+        'http://pndevelopapi.democ.in/device/v1/user/verify-otp',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -262,7 +262,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/user/reset-password',
+        'http://pndevelopapi.democ.in/device/v1/user/reset-password',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -282,7 +282,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/web/v1/auth/reset-password-by-user',
+        'http://pndevelopapi.democ.in/web/v1/auth/reset-password-by-user',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -302,7 +302,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/user/update',
+        'http://pndevelopapi.democ.in/device/v1/user/update',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -320,7 +320,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/user/view',
+        'http://pndevelopapi.democ.in/device/v1/user/view',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -338,7 +338,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/user/profile',
+        'http://pndevelopapi.democ.in/device/v1/user/profile',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -358,7 +358,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/user/profile/update',
+        'http://pndevelopapi.democ.in/device/v1/user/profile/update',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -378,7 +378,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/diamond-confirm/request',
+        'http://pndevelopapi.democ.in/device/v1/diamond-confirm/request',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -398,7 +398,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/diamond-track/delete',
+        'http://pndevelopapi.democ.in/device/v1/diamond-track/delete',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -418,7 +418,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/diamond-comment/delete',
+        'http://pndevelopapi.democ.in/device/v1/diamond-comment/delete',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -438,7 +438,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/diamond-bid/delete',
+        'http://pndevelopapi.democ.in/device/v1/diamond-bid/delete',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -458,7 +458,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/diamond/paginate',
+        'http://pndevelopapi.democ.in/device/v1/diamond/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -478,7 +478,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/web/v1/diamond/excel',
+        'http://pndevelopapi.democ.in/web/v1/diamond/excel',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -498,7 +498,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/web/v1/diamond/excel',
+        'http://pndevelopapi.democ.in/web/v1/diamond/excel',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -518,7 +518,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/match-pair/diamond/filter',
+        'http://pndevelopapi.democ.in/device/v1/match-pair/diamond/filter',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -538,7 +538,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/featuredStone/paginate',
+        'http://pndevelopapi.democ.in/device/v1/featuredStone/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -558,7 +558,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/diamond/search/list',
+        'http://pndevelopapi.democ.in/device/v1/diamond/search/list',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -578,7 +578,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/diamond-bid/paginate',
+        'http://pndevelopapi.democ.in/device/v1/diamond-bid/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -598,7 +598,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/cabin-schedule/list',
+        'http://pndevelopapi.democ.in/device/v1/cabin-schedule/list',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -618,7 +618,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/memo/paginate',
+        'http://pndevelopapi.democ.in/device/v1/memo/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -638,7 +638,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/diamond-block/paginate',
+        'http://pndevelopapi.democ.in/device/v1/diamond-block/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -658,7 +658,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/diamond-track/paginate',
+        'http://pndevelopapi.democ.in/device/v1/diamond-track/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -678,7 +678,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/diamond-comment/by-user',
+        'http://pndevelopapi.democ.in/device/v1/diamond-comment/by-user',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -717,7 +717,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/diamond/quick-search',
+        'http://pndevelopapi.democ.in/device/v1/diamond/quick-search',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -737,7 +737,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/web/v1/diamond/search/upsert',
+        'http://pndevelopapi.democ.in/web/v1/diamond/search/upsert',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -757,7 +757,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/cabin-slot/paginate',
+        'http://pndevelopapi.democ.in/device/v1/cabin-slot/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -777,7 +777,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/cabin-schedule/create',
+        'http://pndevelopapi.democ.in/device/v1/cabin-schedule/create',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -797,7 +797,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/user/dashboard',
+        'http://pndevelopapi.democ.in/device/v1/user/dashboard',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -817,7 +817,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/diamond/search/delete',
+        'http://pndevelopapi.democ.in/device/v1/diamond/search/delete',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -835,7 +835,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/auth/logout',
+        'http://pndevelopapi.democ.in/device/v1/auth/logout',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -853,7 +853,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/version',
+        'http://pndevelopapi.democ.in/device/v1/version',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -873,7 +873,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://192.168.0.186:8094/device/v1/notification/list',
+        'http://pndevelopapi.democ.in/device/v1/notification/list',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',

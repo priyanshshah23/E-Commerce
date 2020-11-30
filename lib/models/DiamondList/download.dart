@@ -257,7 +257,7 @@ class DownloadState extends State<Download> {
             }
             finalDownloadProgress +=
                 (100 / totalDownloadableFilesForAllDiamonds);
-            // finalDownloadProgress=finalDownloadProgress();
+            
             print(
                 "final download progress " + finalDownloadProgress.toString());
             if (finalDownloadProgress >= 99) {

@@ -68,7 +68,7 @@ dependencies:
   flutter_tags: ^0.4.9
   flutter_slidable: ^0.5.7
   linked_scroll_controller: ^0.1.2
-  share: 0.6.4+3
+  share: ^0.6.5+4
   syncfusion_flutter_datepicker: ^18.3.44-beta
   flutter_time_picker_spinner: 1.0.6+1
   scrollable_positioned_list: ^0.1.8
