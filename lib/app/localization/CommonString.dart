@@ -273,6 +273,7 @@ class CommonString {
   final String modify;
   final String delete;
   final String details;
+  final String edit;
   final String deleteItem;
 
   final String placeOrder;
@@ -310,6 +311,7 @@ class CommonString {
     this.modify = "Modify",
     this.delete = "Delete",
     this.details = "Details",
+    this.edit = "Edit",
 
     //Add demand
     this.addDemand = "Add demand",

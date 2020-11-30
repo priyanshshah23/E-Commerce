@@ -116,7 +116,7 @@ class DrawerSetting {
         type: DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH,
       ));
     drawerList.add(DrawerModel(
-      image: mySavedSearch,
+      image: userTheme,
       title: R.string().screenTitle.myAccount,
       isSelected: false,
       isShowDivider: true,

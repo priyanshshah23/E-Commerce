@@ -1719,14 +1719,22 @@ class _DashboardState extends StatefulScreenWidgetState {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        this.dashboardModel.seller.firstName +
-                            " " +
-                            this.dashboardModel.seller.lastName,
-                        style: appTheme.black18TextStyle.copyWith(
-                          color: appTheme.colorPrimary,
-                          fontWeight: FontWeight.w500,
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            this.dashboardModel.seller.firstName +
+                                " " +
+                                this.dashboardModel.seller.lastName,
+                            style: appTheme.black18TextStyle.copyWith(
+                              color: appTheme.colorPrimary,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          // Spacer(),
+                          // InkWell(onTap : (){
+
+                          // }, child : Image.asset(CrossAxisAlignment.start))
+                        ],
                       ),
                       SizedBox(
                         height: getSize(10),

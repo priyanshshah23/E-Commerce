@@ -103,6 +103,7 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
       child: IntrinsicWidth(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             getText(recentSearch.getCreatedDate(),
                 style: appTheme.black14TextStyle),
@@ -200,10 +201,11 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
     );
   }
 
-  getText(String text, {TextStyle style}) {
+  getText(String text, {TextStyle style, TextAlign align}) {
     return Text(
       text,
       softWrap: true,
+      textAlign: align ?? TextAlign.left,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: style ?? appTheme.black14TextStyle,

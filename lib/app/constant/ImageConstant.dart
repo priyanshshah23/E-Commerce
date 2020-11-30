@@ -4,6 +4,7 @@ import 'package:diamnow/app/app.export.dart';
 const String splashLogo = "assets/diamnow/splashLogo.png";
 const String placeHolder = "assets/PlaceHolder/user_placeholder.png";
 const String user = "assets/auth/user.png";
+const String userTheme = "assets/Common/userTheme.png";
 const String password = "assets/auth/padlock.png";
 const String diamond = "assets/diamnow/diamonImage.png";
 const String phone = "assets/auth/phone.png";
@@ -17,6 +18,7 @@ const String bussinessCard = "assets/auth/ic_file.png";
 const String photoCard = "assets/auth/ic_card.png";
 const String pdfIcon = "assets/auth/pdf.png";
 const String viewDetail = "assets/diamnow/viewDetail.png";
+const String editPen = "assets/diamnow/pen.png";
 
 const String selectedCheckbox = "assets/auth/checkbox.png";
 const String unSelectedCheckbox = "assets/auth/unselectedcheckbox.png";
@@ -29,6 +31,7 @@ const String confirmStone = "assets/Common/confirmStone.png";
 const String cancelStone = "assets/Common/cancelStone.png";
 const String downArrow = "assets/Common/downArrow.png";
 const String upArrow = "assets/Common/upArrow.png";
+const String noDataFound = "assets/Common/NoDataFound.png";
 
 // DiamNow
 const String notification = "assets/diamnow/notification.png";

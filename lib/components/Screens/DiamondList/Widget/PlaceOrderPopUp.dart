@@ -99,8 +99,8 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
                   getCommentTextField(),
                   Padding(
                     padding: EdgeInsets.only(
-                      left: getSize(20),
-                      right: getSize(20),
+                      left: getSize(16),
+                      right: getSize(16),
                       bottom: getSize(16),
                       top: getSize(16),
                     ),

@@ -165,9 +165,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               decoration:
                   (widget.item.isSectionOfferDisplay || widget.item.isGrouping)
                       ? BoxDecoration(
-                          color: widget.item.isSectionOfferDisplay
-                              ? appTheme.whiteColor
-                              : null,
+                          color: appTheme.whiteColor,
                           borderRadius: widget.item.isSectionOfferDisplay
                               ? BorderRadius.all(
                                   Radius.circular(5),

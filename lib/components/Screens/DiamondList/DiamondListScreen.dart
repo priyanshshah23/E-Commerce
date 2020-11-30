@@ -93,7 +93,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     diamondConfig = DiamondConfig(moduleType);
     diamondConfig.initItems();
     diamondList = BaseList(BaseListState(
-//      imagePath: noRideHistoryFound,
+      // imagePath: noDataFound,
       noDataMsg: APPNAME,
       noDataDesc: R.string().noDataStrings.noDataFound,
       refreshBtn: R.string().commonString.refresh,
@@ -567,10 +567,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   }
 
   getLeftAction(ActionClick actionClick) {
-    List<Widget> rightSwipeList = [];
+    List<Widget> leftSwipeList = [];
 
     if (isDisplayDetail(moduleType)) {
-      rightSwipeList.add(
+      leftSwipeList.add(
         IntrinsicHeight(
           child: IconSlideAction(
             color: Colors.transparent,
@@ -614,7 +614,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     }
 
     if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
-      rightSwipeList.add(
+      leftSwipeList.add(
         IntrinsicHeight(
           child: IconSlideAction(
             color: Colors.transparent,
@@ -637,13 +637,17 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   width: getSize(40),
                   child: Padding(
                     padding: EdgeInsets.all(getSize(10)),
-                    child: Icon(Icons.edit),
+                    child: Image.asset(
+                      editPen,
+                      height: getSize(16),
+                      width: getSize(16),
+                    ),
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: getSize(8)),
                   child: Text(
-                    R.string().commonString.details,
+                    R.string().commonString.edit,
                     style: appTheme.primaryNormal12TitleColor,
                   ),
                 )
@@ -654,7 +658,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       );
     }
 
-    return rightSwipeList;
+    return leftSwipeList;
   }
 
   List<Widget> getToolbarItem() {
@@ -942,7 +946,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                           ),
                           Padding(
                             padding: EdgeInsets.only(left: getSize(4)),
-                            child: Image.asset(info,height:getSize(16),width: getSize(16),),
+                            child: Image.asset(
+                              info,
+                              height: getSize(16),
+                              width: getSize(16),
+                            ),
                           ),
                         ],
                       ),
