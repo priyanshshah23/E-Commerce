@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:compressimage/compressimage.dart';
+import 'package:diamnow/app/Helper/Themehelper.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -12,6 +13,7 @@ import 'package:diamnow/app/constant/ColorConstant.dart';
 import 'package:diamnow/app/constant/constants.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/math_utils.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 Future<FileUploadResp> uploadFile(BuildContext context, String folderName,
     {List<File> files,
@@ -21,19 +23,17 @@ Future<FileUploadResp> uploadFile(BuildContext context, String folderName,
   var dio = Dio();
   dio.options.baseUrl = ApiConstants.documentUpload;
 
-  /*if (kDebugMode) {
+  if (kDebugMode) {
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (client) {
       // config the http client
       client.findProxy = (uri) {
-        return Platform.isAndroid
-            ? "PROXY 10.0.2.2:8888"
-            : ApiConstants.PROXY_URL;
+        return ApiConstants.PROXY_URL;
       };
       // you can also create a new HttpClient to dio
       // return new HttpClient();
     };
-  }*/
+  }
   Response response;
   var formData1 =
       await formdata(folderName, files: files, file: file, bytes: bytes);
@@ -218,21 +218,22 @@ class _UploadProgressState extends State<UploadProgress> {
                           bottom: getSize(16),
                           right: getSize(8),
                           left: getSize(8)),
-                      child: SizedBox(),
-//                    child: new LinearPercentIndicator(
-//                      width: MathUtilities.screenWidth(context) - getSize(150),
-//                      lineHeight: 14.0,
-//                      percent: this.percentge ?? 0,
-//                      center: getBodyText(
-//                          context,
-//                          this.percentge != null
-//                              ? (this.percentge * 100).toStringAsFixed(2) + "%"
-//                              : "0.0 %",
-//                          Colors.white),
-//                      linearStrokeCap: LinearStrokeCap.roundAll,
-//                      backgroundColor: ColorConstants.introgrey,
-//                      progressColor: appTheme.colorPrimary,
-//                    ),
+                      child: new LinearPercentIndicator(
+                        width:
+                            MathUtilities.screenWidth(context) - getSize(150),
+                        lineHeight: 14.0,
+                        percent: this.percentge ?? 0,
+                        center: getBodyText(
+                            context,
+                            this.percentge != null
+                                ? (this.percentge * 100).toStringAsFixed(2) +
+                                    "%"
+                                : "0.0 %",
+                            Colors.white),
+                        linearStrokeCap: LinearStrokeCap.roundAll,
+                        backgroundColor: ColorConstants.introgrey,
+                        progressColor: appTheme.colorPrimary,
+                      ),
                     )
                   ],
                 ),

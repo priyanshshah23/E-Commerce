@@ -158,6 +158,8 @@ class _DashboardState extends StatefulScreenWidgetState {
                 child: Container(
                   width: getSize(30),
                   height: getSize(30),
+                  margin:
+                      EdgeInsets.only(top: getSize(16), bottom: getSize(16)),
                   child: Center(
                     child: ClipRRect(
                       borderRadius:
@@ -167,7 +169,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                         placeHolderImage: placeHolder,
                         height: getSize(30),
                         width: getSize(30),
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),

@@ -119,8 +119,9 @@ class _PersonalInformationState extends State<PersonalInformation>
                     if (await checkValidation()) {
                       if (isProfileImageUpload) {
                         await uploadDocument();
+                      } else {
+                        callPersonalInformationApi();
                       }
-                      callPersonalInformationApi();
                     }
                   }
                 } else {
