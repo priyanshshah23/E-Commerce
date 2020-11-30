@@ -161,13 +161,13 @@ class _DashboardState extends StatefulScreenWidgetState {
                   child: Center(
                     child: ClipRRect(
                       borderRadius:
-                          BorderRadius.all(Radius.circular(getSize(30))),
+                          BorderRadius.all(Radius.circular(getSize(15))),
                       child: getImageView(
                         app.resolve<PrefUtils>().getUserDetails().profileImage,
                         placeHolderImage: placeHolder,
                         height: getSize(30),
                         width: getSize(30),
-                        fit: BoxFit.fitWidth,
+                        fit: BoxFit.fill,
                       ),
                     ),
                   ),
