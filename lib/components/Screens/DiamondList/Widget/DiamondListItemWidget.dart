@@ -34,7 +34,7 @@ class DiamondItemWidget extends StatefulWidget {
     this.moduleType,
     this.leftSwipeList,
     this.groupDiamondCalculation,
-    this.isUpdateOffer,
+    this.isUpdateOffer = false,
   });
 
   @override
@@ -60,10 +60,14 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         setState(() {});
       });
 
-      _offeredDiscountTextFieldController.text =
-          PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
+      _offeredDiscountTextFieldController.text = PriceUtilities.getDoubleValue(
+          widget.isUpdateOffer
+              ? widget.item.newDiscount
+              : widget.item.getFinalDiscount());
       _offeredPricePerCaratTextfieldContoller.text =
-          PriceUtilities.getDoubleValue(widget.item.getFinalRate());
+          PriceUtilities.getDoubleValue(widget.isUpdateOffer
+              ? widget.item.newAmount
+              : widget.item.getFinalRate());
       widget.item.offeredDiscount = PriceUtilities.getDoubleValue(
           num.parse(_offeredDiscountTextFieldController.text));
       widget.item.offeredAmount =
