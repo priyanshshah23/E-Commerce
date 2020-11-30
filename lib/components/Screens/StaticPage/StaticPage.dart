@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
@@ -44,6 +45,7 @@ class _StaticPageScreenState extends State<StaticPageScreen> {
   @override
   void initState() {
     super.initState();
+    // if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
   }
 
   void callApi() {
@@ -108,7 +110,10 @@ class _StaticPageScreenState extends State<StaticPageScreen> {
             child: Padding(
               padding: EdgeInsets.only(left: getSize(20), right: getSize(20)),
               child: WebView(
-                initialUrl: widget.strUrl ?? "http://pn`develop.democ.in/",
+                initialUrl:
+                    // "http://pndevelop.democ.in/",
+                    "/storage/emulated/0/Download/test.pdf",
+                // widget.strUrl ?? "http://pn`develop.democ.in/",
                 javascriptMode: JavascriptMode.unrestricted,
                 onWebViewCreated: (WebViewController webViewController) {
                   _controller.complete(webViewController);
@@ -119,6 +124,9 @@ class _StaticPageScreenState extends State<StaticPageScreen> {
                 onPageFinished: (String url) {
                   print('Page finished loading: $url');
                   app.resolve<CustomDialogs>().hideProgressDialog();
+                },
+                onWebResourceError: (error) {
+                  print(error.toString());
                 },
                 gestureNavigationEnabled: true,
               ),

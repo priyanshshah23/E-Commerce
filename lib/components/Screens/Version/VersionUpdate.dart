@@ -89,8 +89,8 @@ class _VersionUpdateState extends State<VersionUpdate> {
                       .primaryTextTheme
                       .bodyText1
                       .copyWith(
-                    fontSize: getSize(28),
-                  )),
+                        fontSize: getSize(28),
+                      )),
             ),
             Padding(
               padding: EdgeInsets.all(getSize(16)),
@@ -102,9 +102,9 @@ class _VersionUpdateState extends State<VersionUpdate> {
                     .primaryTextTheme
                     .subtitle1
                     .copyWith(
-                  color: AppTheme.of(context).theme.disabledColor,
-                  fontSize: getSize(20),
-                ),
+                      color: AppTheme.of(context).theme.disabledColor,
+                      fontSize: getSize(20),
+                    ),
               ),
             ),
             Padding(
@@ -112,8 +112,7 @@ class _VersionUpdateState extends State<VersionUpdate> {
               child: AppButton.flat(
                 onTap: () {
                   StoreRedirect.redirect(
-                      androidAppId: "com.threeeco.driver",
-                      iOSAppId: "1516454400");
+                      androidAppId: "com.phshah.app", iOSAppId: "1516454400");
                 },
                 borderRadius: 14,
                 fitWidth: true,
@@ -122,17 +121,17 @@ class _VersionUpdateState extends State<VersionUpdate> {
             ),
             widget.isHardUpdate
                 ? Padding(
-              padding: EdgeInsets.only(top: getSize(16)),
-              child: AppButton.flat(
-                onTap: () {
-                  app.resolve<PrefUtils>().saveSkipUpdate(true);
-                  widget.oncomplete();
-                },
-                borderRadius: 14,
-                fitWidth: true,
-                text: R.string().commonString.btnSkip,
-              ),
-            )
+                    padding: EdgeInsets.only(top: getSize(16)),
+                    child: AppButton.flat(
+                      onTap: () {
+                        app.resolve<PrefUtils>().saveSkipUpdate(true);
+                        widget.oncomplete();
+                      },
+                      borderRadius: 14,
+                      fitWidth: true,
+                      text: R.string().commonString.btnSkip,
+                    ),
+                  )
                 : SizedBox(),
           ],
         ),

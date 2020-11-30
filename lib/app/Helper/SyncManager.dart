@@ -533,15 +533,25 @@ class SyncManager {
       String fileName = "FinalExcel.xlsx";
       final savePath = path.join(dir.path, fileName);
       print("file:/" + savePath);
-      Dio().download(url, savePath).then((value) {
-        print("DOWNLOADED");
+
+      if (Platform.isIOS) {
         Map<String, dynamic> dict = {};
         dict["strUrl"] = url;
         dict[ArgumentConstant.IsFromDrawer] = false;
         dict["isForExcel"] = true;
         dict["screenTitle"] = excelApiResponse.data.excelName;
         NavigationUtilities.pushRoute(StaticPageScreen.route, args: dict);
-      });
+      } else {
+        Dio().download(url, savePath).then((value) {
+          print("DOWNLOADED");
+          Map<String, dynamic> dict = {};
+          dict["strUrl"] = Platform.isIOS ? url : savePath;
+          dict[ArgumentConstant.IsFromDrawer] = false;
+          dict["isForExcel"] = true;
+          dict["screenTitle"] = excelApiResponse.data.excelName;
+          NavigationUtilities.pushRoute(StaticPageScreen.route, args: dict);
+        });
+      }
 
       // getWebView(context, url);
     }).catchError((onError) {

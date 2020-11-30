@@ -62,7 +62,7 @@ dependencies:
   custom_localization:
     path: ./custom_localization
   encrypt: ^4.0.0
-  webview_flutter: ^1.0.5
+  webview_flutter: ^1.0.7
   material_segmented_control: ^2.1.0+1
   url_launcher: ^5.7.2
   flutter_tags: ^0.4.9
@@ -76,6 +76,7 @@ dependencies:
   permission_handler: ^4.4.0+hotfix.2
   gallery_saver: ^2.0.1
   downloads_path_provider: ^0.1.0
+  # open_file: ^3.0.3
   #flutter_lock_screen: ^1.0.8
   # speech_recognition: ^0.3.0+1
   # permission_handler: ^3.2.0
@@ -96,7 +97,8 @@ dev_dependencies:
 # dependency_overrides:
 #   analyzer: '0.39.11'
 
-
+module:
+    androidX: true 
 
 
 flutter:
