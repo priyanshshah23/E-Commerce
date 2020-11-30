@@ -25,6 +25,7 @@ class DashboardModel {
   DashboardModel({
     this.savedSearch,
     this.recentSearch,
+    this.newArrival,
     this.featuredStone,
     this.seller,
     this.tracks,
@@ -32,6 +33,7 @@ class DashboardModel {
   });
 
   Seller seller;
+  NewArrival newArrival;
   List<FeaturedStone> featuredStone;
   List<SavedSearchModel> savedSearch;
   List<SavedSearchModel> recentSearch;
@@ -48,6 +50,7 @@ class DashboardModel {
             json["recentSearch"].map((x) => SavedSearchModel.fromJson(x))),
         savedSearch: List<SavedSearchModel>.from(
             json["savedSearch"].map((x) => SavedSearchModel.fromJson(x))),
+        newArrival: NewArrival.fromJson(json["newArrival"]),
         // // recentSearch: List<SavedSearchModel>.from(
         // //     json["recentSearch"].map((x) => SavedSearchModel.fromJson(x))),
         tracks: Map.from(json["tracks"])
@@ -61,6 +64,7 @@ class DashboardModel {
         "savedSearch": List<dynamic>.from(savedSearch.map((x) => x.toJson())),
         "featuredStone":
             List<dynamic>.from(featuredStone.map((x) => x.toJson())),
+        "newArrival": newArrival.toJson(),
         "tracks": Map.from(tracks)
             .map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
         "dashboardCount":
@@ -70,18 +74,18 @@ class DashboardModel {
       };
 }
 
-class FeaturedStone {
-  FeaturedStone({
+class NewArrival {
+  NewArrival({
     this.list,
     this.count,
   });
 
-  List<ListElement> list;
+  List<DiamondModel> list;
   int count;
 
-  factory FeaturedStone.fromJson(Map<String, dynamic> json) => FeaturedStone(
-        list: List<ListElement>.from(
-            json["list"].map((x) => ListElement.fromJson(x))),
+  factory NewArrival.fromJson(Map<String, dynamic> json) => NewArrival(
+        list: List<DiamondModel>.from(
+            json["list"].map((x) => DiamondModel.fromJson(x))),
         count: json["count"],
       );
 
@@ -91,64 +95,24 @@ class FeaturedStone {
       };
 }
 
-class ListElement {
-  ListElement({
-    this.createdAt,
-    this.updatedAt,
-    this.id,
-    this.stoneId,
-    this.featuredPair,
-    this.image,
-    this.isActive,
-    this.type,
-    this.addedBy,
-    this.updatedBy,
-    this.companyId,
-    this.deptId,
+class FeaturedStone {
+  FeaturedStone({
+    this.list,
+    this.count,
   });
 
-  DateTime createdAt;
-  DateTime updatedAt;
-  String id;
-  DiamondModel stoneId;
-  List<DiamondModel> featuredPair;
-  String image;
-  bool isActive;
-  String type;
-  dynamic addedBy;
-  dynamic updatedBy;
-  dynamic companyId;
-  dynamic deptId;
+  List<DiamondModel> list;
+  int count;
 
-  factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
-        id: json["id"],
-        stoneId: DiamondModel.fromJson(json["stoneId"]),
-        featuredPair: List<DiamondModel>.from(
-            json["featuredPair"].map((x) => DiamondModel.fromJson(x))),
-        image: json["image"],
-        isActive: json["isActive"],
-        type: json["type"],
-        addedBy: json["addedBy"],
-        updatedBy: json["updatedBy"],
-        companyId: json["companyId"],
-        deptId: json["deptId"],
+  factory FeaturedStone.fromJson(Map<String, dynamic> json) => FeaturedStone(
+        list: List<DiamondModel>.from(
+            json["list"].map((x) => DiamondModel.fromJson(x))),
+        count: json["count"],
       );
 
   Map<String, dynamic> toJson() => {
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
-        "id": id,
-        "stoneId": stoneId.toJson(),
-        "featuredPair": List<dynamic>.from(featuredPair.map((x) => x.toJson())),
-        "image": image,
-        "isActive": isActive,
-        "type": type,
-        "addedBy": addedBy,
-        "updatedBy": updatedBy,
-        "companyId": companyId,
-        "deptId": deptId,
+        "list": List<dynamic>.from(list.map((x) => x.toJson())),
+        "count": count,
       };
 }
 
