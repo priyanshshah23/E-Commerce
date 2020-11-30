@@ -33,6 +33,7 @@ const String upArrow = "assets/Common/upArrow.png";
 // DiamNow
 const String notification = "assets/diamnow/notification.png";
 const String share = "assets/diamnow/share.png";
+const String diamondIcon = "assets/diamnow/diamondIcon.png";
 
 //filter
 const String addDemand = "assets/filter/addDemand.png";
@@ -50,6 +51,7 @@ const String download = "assets/diamnow/download.png";
 const String showSelected = "assets/diamnow/showSelected.png";
 const String compare = "assets/diamnow/compare.png";
 const String status = "assets/diamnow/status.png";
+const String info = "assets/Common/info.png";
 
 const String filterDownArrow = "assets/filter/filterDownArrow.png";
 const String filterRightArrow = "assets/filter/filterRightArrow.png";

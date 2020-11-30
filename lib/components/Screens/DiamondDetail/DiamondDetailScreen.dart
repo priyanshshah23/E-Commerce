@@ -149,9 +149,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       }
       mapOfInitialPixels[j] = value;
     }
-    // mapOfInitialPixels.forEach((key, value) {
-    //   print("${key} => ${value}");
-    // });
   }
 
   @override
@@ -461,6 +458,12 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   manageToolbarClick(BottomTabModel model) {
     switch (model.code) {
       case BottomCodeConstant.TBShare:
+        BottomTabModel tabModel = BottomTabModel();
+        tabModel.type = ActionMenuConstant.ACTION_TYPE_SHARE;
+        List<DiamondModel> selectedList = [diamondModel];
+
+        diamondConfig.manageDiamondAction(
+            context, selectedList, tabModel, () {});
         break;
       case BottomCodeConstant.TBClock:
         break;

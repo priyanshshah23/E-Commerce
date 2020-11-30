@@ -919,7 +919,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               children: <Widget>[
                 Container(
                   decoration: BoxDecoration(
-                      color: appTheme.textFieldBorderColor,
+                      color: appTheme.whiteColor,
                       borderRadius: BorderRadius.all(
                         Radius.circular(getSize(15)),
                       )),
@@ -933,9 +933,18 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                       SizedBox(
                         height: getSize(20),
                       ),
-                      Text(
-                        "Status",
-                        style: appTheme.blackNormal18TitleColorblack,
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "Status",
+                            style: appTheme.blackNormal18TitleColorblack,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: getSize(4)),
+                            child: Image.asset(info,height:getSize(16),width: getSize(16),),
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: getSize(10),

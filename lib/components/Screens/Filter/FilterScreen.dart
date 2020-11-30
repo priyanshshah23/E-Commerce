@@ -30,6 +30,7 @@ import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SeperatorWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
 import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
+import 'package:diamnow/components/Screens/Notification/Notifications.dart';
 import 'package:diamnow/components/Screens/Search/Search.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/Address/CityListModel.dart';
@@ -359,14 +360,19 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        right: getSize(Spacing.rightPadding),
-                        left: getSize(8.0)),
-                    child: Image.asset(
-                      notification,
-                      height: getSize(20),
-                      width: getSize(20),
+                  InkWell(
+                    onTap: () {
+                      NavigationUtilities.pushRoute(Notifications.route);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          right: getSize(Spacing.rightPadding),
+                          left: getSize(8.0)),
+                      child: Image.asset(
+                        notification,
+                        height: getSize(20),
+                        width: getSize(20),
+                      ),
                     ),
                   ),
                 ]),
@@ -781,7 +787,14 @@ class _FilterItemState extends State<FilterItem> {
     if (model.viewType == "searchText") {
       return getSearchTextField();
     } else if (model.viewType == ViewTypes.seperator) {
-      return SeperatorWidget(model);
+      return Padding(
+        padding: EdgeInsets.only(
+            left: getSize(0),
+            right: getSize(0),
+            top: getSize(12),
+            bottom: getSize(8)),
+        child: SeperatorWidget(model),
+      );
     } else if (model.viewType == ViewTypes.selection) {
       return Padding(
         padding: EdgeInsets.only(

@@ -74,7 +74,7 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
             currTab = key;
           }
         });
-        _sc.jumpTo(index: currTab);
+         _sc.scrollTo(index: currTab, duration: Duration(milliseconds: 500));
 
         setState(() {});
       });
@@ -136,6 +136,7 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
               bottom: getSize(0)),
           height: getSize(52),
           child: ScrollablePositionedList.builder(
+          
             itemScrollController: _sc,
             scrollDirection: Axis.horizontal,
             itemCount: arrImages.length,

@@ -273,12 +273,12 @@ class DiamondConfig {
               code: BottomCodeConstant.TBShare,
               sequence: 0,
               isCenter: true));
-          list.add(BottomTabModel(
-              title: "",
-              image: clock,
-              code: BottomCodeConstant.TBClock,
-              sequence: 0,
-              isCenter: true));
+          // list.add(BottomTabModel(
+          //     title: "",
+          //     image: clock,
+          //     code: BottomCodeConstant.TBClock,
+          //     sequence: 0,
+          //     isCenter: true));
           list.add(BottomTabModel(
               title: "",
               image: download,
