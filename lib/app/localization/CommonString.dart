@@ -591,6 +591,6 @@ class CommonString {
     this.secondsAgo = "seconds ago",
     this.justNow = "Just Now",
     this.today = "Today",
-    this.past = "past",
+    this.past = "Past",
   });
 }

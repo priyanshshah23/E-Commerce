@@ -140,6 +140,12 @@ class _DashboardState extends StatefulScreenWidgetState {
       } else if (item.type == DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST) {
         item.value =
             "${this.dashboardModel.tracks[DiamondTrackConstant.TRACK_TYPE_WATCH_LIST.toString()].pieces}";
+      } else if (item.type == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+        if (!isNullEmptyOrFalse(this.dashboardModel)) {
+          if (!isNullEmptyOrFalse(this.dashboardModel.newArrival)) {
+            item.value = this.dashboardModel.newArrival.count.toString();
+          }
+        }
       }
     }
   }
@@ -500,27 +506,22 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   getFeaturedSection() {
-    List<DiamondModel> arrStones = [];
     if (app
         .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_featured)
+        .getModulePermission(ModulePermissionConstant.permission_newGoods)
         .view) {
       if (!isNullEmptyOrFalse(this.dashboardModel)) {
-        if (!isNullEmptyOrFalse(this.dashboardModel.featuredStone)) {
-          // List<FeaturedStone> filter = this
-          //     .dashboardModel
-          //     .featuredStone
-          //     .where((element) => element.type == DashboardConstants.best)
-          //     .toList();
-          // if (!isNullEmptyOrFalse(filter)) {
-          //   arrStones = filter.first.featuredPair;
-          // }
+        if (!isNullEmptyOrFalse(this.dashboardModel.newArrival)) {
+          return FeaturedStoneWidget(
+            diamondList: this.dashboardModel.newArrival.list,
+          );
+        } else {
+          return SizedBox();
         }
+      } else {
+        return SizedBox();
       }
     }
-    return FeaturedStoneWidget(
-      diamondList: arrStones,
-    );
 //    return isNullEmptyOrFalse(arrStones)
 //        ? SizedBox()
 //        : Padding(

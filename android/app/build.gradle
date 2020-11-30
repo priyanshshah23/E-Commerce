@@ -61,7 +61,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.threeeco.driver"
+        applicationId "com.phshah.app"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 6

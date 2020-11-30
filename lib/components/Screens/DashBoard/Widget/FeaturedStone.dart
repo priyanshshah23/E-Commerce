@@ -1,8 +1,11 @@
+import 'dart:collection';
+
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:flutter/material.dart';
@@ -22,62 +25,64 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
     return isNullEmptyOrFalse(widget.diamondList)
         ? SizedBox()
         : Padding(
-      padding: EdgeInsets.only(
-        top: getSize(20),
-        left: getSize(Spacing.leftPadding),
-        right: getSize(Spacing.rightPadding),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              getTitleText(R.string().screenTitle.featuredStones),
-              Spacer(),
-              InkWell(
-                onTap: () {
-                  //
-                },
-                child: getViewAll(),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: getSize(20),
-          ),
-          Container(
-            height: getSize(170),
-//              child: ListView.builder(
-//                itemCount: 5,
-//                scrollDirection: Axis.horizontal,
-//                itemBuilder: (BuildContext context, int index) {
-//                  return getRecentItem();
-//                },
-//              )
-            child: GridView.count(
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              crossAxisCount: 2,
-//              childAspectRatio: 0.36,
-              // without Price
-              childAspectRatio: 0.268,
-              // with Price
-              mainAxisSpacing: 15,
-              children: List.generate(
-                widget.diamondList.length,
-                (index) {
-                  return InkWell(
-                      onTap: () {
-                      moveToDetail(widget.diamondList[index]);
-                      },
-                      child: getRecentItem(widget.diamondList[index]));
-                },
-              ),
+            padding: EdgeInsets.only(
+              top: getSize(20),
             ),
-          )
-        ],
-      ),
-    );
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: getSize(Spacing.leftPadding),
+                    right: getSize(Spacing.rightPadding),
+                  ),
+                  child: Row(
+                    children: [
+                      getTitleText(R.string().screenTitle.newArrival),
+                      Spacer(),
+                      InkWell(
+                        onTap: () {
+                          Map<String, dynamic> dict = new HashMap();
+                          dict[ArgumentConstant.ModuleType] =
+                              DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL;
+                          dict[ArgumentConstant.IsFromDrawer] = false;
+                          NavigationUtilities.pushRoute(DiamondListScreen.route,
+                              args: dict);
+                        },
+                        child: getViewAll(),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: getSize(20),
+                ),
+                Container(
+                  height: getSize(170),
+                  child: GridView.count(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    crossAxisCount: 2,
+//              childAspectRatio: 0.36,
+                    // without Price
+                    childAspectRatio: 0.23,
+                    // with Price
+                    mainAxisSpacing: 15,
+                    children: List.generate(
+                      widget.diamondList.length,
+                      (index) {
+                        return InkWell(
+                            onTap: () {
+                              moveToDetail(widget.diamondList[index]);
+                            },
+                            child: getRecentItem(widget.diamondList[index]));
+                      },
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
   }
 
   moveToDetail(DiamondModel model) {
@@ -87,17 +92,18 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
     NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
   }
 
-
   getRecentItem(DiamondModel model) {
     return Padding(
       padding: EdgeInsets.only(
         bottom: getSize(20),
+        left: getSize(Spacing.leftPadding),
       ),
       child: Container(
         padding: EdgeInsets.only(
           left: getSize(10),
           top: getSize(10),
-          bottom: getSize(10),),
+          bottom: getSize(10),
+        ),
         decoration: BoxDecoration(
           color: appTheme.whiteColor,
           boxShadow: [
@@ -125,8 +131,7 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(getSize(2)),
                     child: getImageView(
-                      "",
-                      finalUrl: "",
+                      model.getDiamondImage(),
                       width: getSize(49),
                       height: getSize(39),
                       fit: BoxFit.cover,
@@ -134,7 +139,7 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
                   ),
                 ),
                 Container(
-                  width: getSize(252),
+                  width: getSize(280),
                   child: Padding(
                     padding: EdgeInsets.only(
                       left: getSize(10),
@@ -172,7 +177,8 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
                               flex: 3,
                               child: Container(
                                 width: MathUtilities.screenWidth(context) / 4.5,
-                                child: getText("${model.crt} Carat",
+                                child: getText(
+                                    "${PriceUtilities.getDoubleValue(model.crt)} Ct",
                                     style: appTheme.primaryColor14TextStyle),
                               ),
                             ),
@@ -183,7 +189,8 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
                               flex: 2,
                               child: Container(
                                 width: MathUtilities.screenWidth(context) / 9,
-                                child:  getText(PriceUtilities.getPercent(model.back),
+                                child: getText(
+                                    PriceUtilities.getPercent(model.back),
                                     style: appTheme.blue12TextStyle),
                               ),
                             ),
@@ -199,7 +206,8 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
                               flex: 2,
                               child: Container(
                                 width: MathUtilities.screenWidth(context) / 8.5,
-                                child: getText(model.colNm, style: appTheme.black12TextStyle),
+                                child: getText(model.colNm,
+                                    style: appTheme.black12TextStyle),
                               ),
                             ),
                             SizedBox(
@@ -209,7 +217,8 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
                               flex: 2,
                               child: Container(
                                 width: MathUtilities.screenWidth(context) / 10,
-                                child:getText(model.clrNm, style: appTheme.black12TextStyle),
+                                child: getText(model.clrNm,
+                                    style: appTheme.black12TextStyle),
                               ),
                             ),
                             SizedBox(
@@ -229,7 +238,8 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
                                 padding: EdgeInsets.only(right: getSize(3)),
                                 alignment: Alignment.centerRight,
                                 width: MathUtilities.screenWidth(context) / 9,
-                                child:  getText(model.lbNm, style: appTheme.black12TextStyle),
+                                child: getText(model.lbNm,
+                                    style: appTheme.black12TextStyle),
                               ),
                             ),
                           ],
