@@ -612,7 +612,7 @@ class Account {
         natureOfOrg = json["natureOfOrg"].first;
       }
     } else if (json["natureOfOrg"] is String) {
-      natureOfOrg = this.natureOfOrg;
+      natureOfOrg = json["natureOfOrg"];
     }
     designation = json['designation'];
     howKnow = json['howKnow'];

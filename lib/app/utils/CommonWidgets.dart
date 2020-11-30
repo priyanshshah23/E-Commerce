@@ -241,6 +241,7 @@ Widget getAppBar(BuildContext context, String title,
     backgroundColor: bgColor,
     actions: actionItems == null ? null : actionItems,
     bottom: widget,
+    titleSpacing: 0.0,
   );
 }
 

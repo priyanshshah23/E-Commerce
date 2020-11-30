@@ -174,26 +174,57 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
           manageToolbarClick(element);
         },
         child: Padding(
-            padding: EdgeInsets.only(right: getSize(8.0)),
+            padding: EdgeInsets.only(right: getSize(20.0)),
             child: Container(
               child: Row(
                 children: <Widget>[
-                  Transform.scale(
-                    scale: 1,
-                    child: Checkbox(
-                      value: this.isCheckBoxChecked,
-                      activeColor: appTheme.colorPrimary,
-                      onChanged: (bool value) {
-                        this.isCheckBoxChecked = value;
-                        whenCheckBoxIsChecked();
-                      },
-                    ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          isCheckBoxChecked = !isCheckBoxChecked;
+                          whenCheckBoxIsChecked();
+                          setState(() {});
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(getSize(3))),
+                          width: getSize(21),
+                          height: getSize(21),
+                          child: Image.asset(
+                            isCheckBoxChecked
+                                ? selectedCheckbox
+                                : unSelectedCheckbox,
+                            height: getSize(20),
+                            width: getSize(20),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: getSize(5),
+                      ),
+                      Text("Show only difference",
+                          style: appTheme.blackNormal14TitleColorblack,)
+                    ],
                   ),
-                  // SizedBox(width: getSize(5),),
-                  Text(
-                    "Show only difference",
-                    style: appTheme.blackNormal12TitleColorblack,
-                  ),
+
+                  // Transform.scale(
+                  //   scale: 1,
+                  //   child: Checkbox(
+                  //     value: this.isCheckBoxChecked,
+                  //     activeColor: appTheme.colorPrimary,
+                  //     onChanged: (bool value) {
+                  //       this.isCheckBoxChecked = value;
+                  //       whenCheckBoxIsChecked();
+                  //     },
+                  //   ),
+                  // ),
+                  // // SizedBox(width: getSize(5),),
+                  // Text(
+                  //   "Show only difference",
+                  //   style: appTheme.blackNormal12TitleColorblack,
+                  // ),
                 ],
               ),
             )),
