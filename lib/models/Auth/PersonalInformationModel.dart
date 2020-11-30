@@ -36,11 +36,17 @@ class PersonalInformationReq {
 //  String skype;
 //  String wechat;
 
-  PersonalInformationReq({
-    this.id,
-    this.firstName,
-    this.lastName,
-    this.email,
+  String country;
+  String state;
+  String city;
+  String zipcode;
+  String skype;
+
+  PersonalInformationReq(
+      {this.id,
+      this.firstName,
+      this.lastName,
+      this.email,
 //        this.username,
 //        this.country,
 //        this.state,
@@ -49,25 +55,29 @@ class PersonalInformationReq {
 //        this.fax,
 //        this.seller,
 //        this.vendorNo,
-    this.mobile,
-    this.countryCode,
+      this.mobile,
+      this.countryCode,
 //        this.account,
 //        this.name,
-    this.address,
+      this.address,
 //        this.isActive,
 //        this.androidPlayerId,
 //        this.iosPlayerId,
-    this.profileImage,
+      this.profileImage,
 //        this.dob,
 //        this.gender,
 //        this.phone,
 //        this.photoId,
 //        this.reference,
-    this.whatsapp,
-    this.whatsappCounCode,
-//        this.skype,
+      this.whatsapp,
+      this.whatsappCounCode,
+      this.city,
+      this.country,
+      this.state,
+      this.zipcode,
+//        this.skype,skype
 //        this.wechat,
-  });
+      });
 
   PersonalInformationReq.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -76,9 +86,9 @@ class PersonalInformationReq {
     email = json['email'];
     countryCode = json['countryCode'];
 //    username = json['username'];
-//    country = json['country'];
-//    state = json['state'];
-//    city = json['city'];
+    country = json['country'];
+    state = json['state'];
+    city = json['city'];
 //    pinCode = json['pinCode'];
 //    fax = json['fax'];
 //    seller = json['seller'];
@@ -98,36 +108,37 @@ class PersonalInformationReq {
 //    reference = json['reference'];
     whatsapp = json['whatsapp'];
     whatsappCounCode = json['whatsappCounCode'];
-//    skype = json['skype'];
+    skype = json['skype']??"";
+    zipcode = json['zipcode']??"";
 //    wechat = json['wechat'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if(this.id != null) {
+    if (this.id != null) {
       data['id'] = this.id;
     }
-    if(this.firstName != null) {
+    if (this.firstName != null) {
       data['firstName'] = this.firstName;
     }
-    if(this.lastName != null) {
+    if (this.lastName != null) {
       data["lastName"] = this.lastName;
     }
-    if(this.email != null) {
+    if (this.email != null) {
       data["email"] = this.email;
     }
 //    data['username'] = this.username;
-//    data['country'] = this.country;
-//    data['state'] = this.state;
-//    data['city'] = this.city;
+    data['country'] = this.country;
+    data['state'] = this.state;
+    data['city'] = this.city;
 //    data['pinCode'] = this.pinCode;
 //    data['fax'] = this.fax;
 //    data['seller'] = this.seller;
 //    data['vendorNo'] = this.vendorNo;
-    if(this.mobile != null) {
+    if (this.mobile != null) {
       data['mobile'] = this.mobile;
     }
-    if(this.address != null) {
+    if (this.address != null) {
       data['address'] = this.address;
     }
 //    data['account'] = this.account;
@@ -135,10 +146,10 @@ class PersonalInformationReq {
 //    data['isActive'] = this.isActive;
 //    data['androidPlayerId'] = this.androidPlayerId;
 //    data['iosPlayerId'] = this.iosPlayerId;
-    if(this.profileImage != null) {
+    if (this.profileImage != null) {
       data['profileImage'] = this.profileImage;
     }
-    if(this.whatsapp != null) {
+    if (this.whatsapp != null) {
       data['whatsapp'] = this.whatsapp;
     }
 //    data['dob'] = this.dob;
@@ -146,12 +157,16 @@ class PersonalInformationReq {
 //    data['phone'] = this.phone;
 //    data['photoId'] = this.photoId;
 //    data['reference'] = this.reference;
-    if(this.whatsappCounCode != null) {
+    if (this.whatsappCounCode != null) {
       data['whatsappCounCode'] = this.whatsappCounCode;
     }
-    if(this.countryCode != null) {
+    if (this.countryCode != null) {
       data['countryCode'] = this.countryCode;
     }
+    if(!isNullEmptyOrFalse(this.skype))
+      data['skype'] = this.skype;
+    if(!isNullEmptyOrFalse(this.zipcode))
+      data['zipcode'] = this.zipcode;
 //    data['skype'] = this.skype;
 //    data['wechat'] = this.wechat;
     return data;
@@ -165,9 +180,7 @@ class PersonalInformationViewResp extends BaseApiResp {
 
   PersonalInformationViewResp.fromJson(Map<String, dynamic> json)
       : super.fromJson(json) {
-    data = json['data'] != null
-        ? new User.fromJson(json['data'])
-        : null;
+    data = json['data'] != null ? new User.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {

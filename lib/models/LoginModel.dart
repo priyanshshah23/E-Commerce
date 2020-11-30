@@ -112,6 +112,8 @@ class User {
   bool isActive;
   int isVerified;
 
+ 
+
 //  Null androidPlayerId;
 //  Null iosPlayerId;
   int status;
@@ -151,6 +153,7 @@ class User {
   String whatsappCounCode;
   String plainPassword;
   String skype;
+  String zipcode;
   String wechat;
   Token token;
   int version;
@@ -166,6 +169,11 @@ class User {
   Account account;
   AccountTerm accountTerm;
   String seller;
+
+  String country;
+  String city;
+  String state;
+
 
 //  Null createdBy;
 
@@ -237,6 +245,7 @@ class User {
     whatsappCounCode = json['whatsappCounCode'];
     plainPassword = json['plainPassword'];
     skype = json['skype'];
+    zipcode = json['zipcode'];
     wechat = json['wechat'];
     token = json['token'] != null ? new Token.fromJson(json['token']) : null;
     version = json['version'];
@@ -256,6 +265,25 @@ class User {
         ? new AccountTerm.fromJson(json['accountTerm'])
         : null;
     seller = json['seller'];
+
+    if(json['city'] is Map<String,dynamic>){
+      city = json['city']['name'];
+    }
+    if(json['country'] is Map<String,dynamic>){
+      country = json['country']['name'];
+    }
+    if(json['state'] is Map<String,dynamic>){
+      state = json['state']['name'];
+    }
+
+
+    // city  = json['city'];
+    // state = json['state'];
+    // country = json['country'];
+    // city = json["city"] != null ? json['city'] is String ? json['city'] : new CityList.fromJson(json['city']) : null;
+    // state = json["state"] != null ? json['state'] is String ? json['state'] : new CityList.fromJson(json['state']) : null;
+    // country = json["country"] != null ? json['country'] is String ? json['country'] : new CityList.fromJson(json['country']) : null;
+
   }
 
   Map<String, dynamic> toJson() {
@@ -325,6 +353,7 @@ class User {
     data['whatsappCounCode'] = this.whatsappCounCode;
     data['plainPassword'] = this.plainPassword;
     data['skype'] = this.skype;
+    data['zipcode'] = this.zipcode;
     data['wechat'] = this.wechat;
     if (this.token != null) {
       data['token'] = this.token.toJson();
@@ -356,6 +385,7 @@ class User {
     return fn + " " + ln;
   }
 }
+
 
 class FingerPrints {
   String fingerPrint;

@@ -23,10 +23,10 @@ class CompanyInformation extends StatefulWidget {
   static const route = "CompanyInformation";
 
   @override
-  _CompanyInformationState createState() => _CompanyInformationState();
+  CompanyInformationState createState() => CompanyInformationState();
 }
 
-class _CompanyInformationState extends State<CompanyInformation>
+class CompanyInformationState extends State<CompanyInformation>
     with AutomaticKeepAliveClientMixin<CompanyInformation> {
   final _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
@@ -46,7 +46,7 @@ class _CompanyInformationState extends State<CompanyInformation>
   final TextEditingController _whatsAppMobileController =
   TextEditingController();
   final TextEditingController companyController = TextEditingController();
-  final TextEditingController _pinCodeController = TextEditingController();
+  final TextEditingController pinCodeController = TextEditingController();
   final TextEditingController _countryController = TextEditingController();
   final TextEditingController _stateController = TextEditingController();
   final TextEditingController _cityController = TextEditingController();
@@ -299,7 +299,7 @@ class _CompanyInformationState extends State<CompanyInformation>
               BlacklistingTextInputFormatter(new RegExp(RegexForTextField))
             ],
             keyboardType: TextInputType.number,
-            inputController: _pinCodeController,
+            inputController: pinCodeController,
             isSecureTextField: false),
         textCallback: (text) {
 //          setState(() {
@@ -1019,7 +1019,7 @@ class _CompanyInformationState extends State<CompanyInformation>
         req.natureOfOrg = element.id;
       }
     });
-    req.zipCode = _pinCodeController.text;
+    req.zipCode = pinCodeController.text;
     req.sId = app.resolve<PrefUtils>().getUserDetails().id;
 
     NetworkCall<CompanyInformationViewResp>()
@@ -1079,7 +1079,7 @@ class _CompanyInformationState extends State<CompanyInformation>
             element.isSelected = true;
           }
         });
-        _pinCodeController.text = resp.data.zipCode;
+        pinCodeController.text = resp.data.zipCode;
         _countryController.text = resp.data.country.name;
         _cityController.text = resp.data.city.name;
         _stateController.text = resp.data.state.name;
