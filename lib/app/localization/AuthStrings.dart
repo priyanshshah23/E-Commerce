@@ -166,7 +166,14 @@ class AuthStrings {
   final String kYCRejected;
   final String kycRejectedDesc;
 
+  //company information
+  final String editCompanyInformation;
+  final String selectNatureOfOrganization;
+
   const AuthStrings({
+    //company information
+    this.editCompanyInformation = "Edit Company Information",
+    this.selectNatureOfOrganization = "Select Nature Of Organization",
     // Login
     this.setNewPassword = "Set your new password and sign in again.",
     this.enterCompanyName = "Please enter Company Name.",

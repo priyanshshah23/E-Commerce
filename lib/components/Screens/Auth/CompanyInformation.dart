@@ -193,7 +193,7 @@ class CompanyInformationState extends State<CompanyInformation>
               fitWidth: true,
               text: !readOnly
                   ? R.string().authStrings.saveCompanyDetails
-                  : "Edit Company Information",
+                  : R.string().authStrings.editCompanyInformation,
               //isButtonEnabled: enableDisableSigninButton(),
             ),
           ),
@@ -762,8 +762,8 @@ class CompanyInformationState extends State<CompanyInformation>
                       borderRadius: BorderRadius.circular(getSize(25)),
                     ),
                     child: SelectionDialogue(
-                        title: "Select Nature Of Organization",
-                        hintText: "Select Nature Of Organization",
+                        title: R.string().authStrings.selectNatureOfOrganization,
+                        hintText: R.string().authStrings.selectNatureOfOrganization,
                         selectionOptions: natureOfOrgList,
                         applyFilterCallBack: (
                             {SelectionPopupModel selectedItem,
@@ -787,7 +787,7 @@ class CompanyInformationState extends State<CompanyInformation>
           textOption: TextFieldOption(
               prefixWid: getCommonIconWidget(
                   imageName: city, imageType: IconSizeType.small),
-              hintText: "Select Nature Of Organization",
+              hintText: R.string().authStrings.selectNatureOfOrganization,
               maxLine: 1,
               keyboardType: TextInputType.text,
               type: TextFieldType.DropDown,

@@ -164,7 +164,7 @@ class _PersonalInformationState extends State<PersonalInformation>
               fitWidth: true,
               text: readOnly
                   ? R.string().authStrings.editProfileTitle
-                  : "Update Profile",
+                  : R.string().authStrings.updateProfile,
               //isButtonEnabled: enableDisableSigninButton(),
             ),
           ),
@@ -961,7 +961,7 @@ class _PersonalInformationState extends State<PersonalInformation>
       focusNode: _focusSkype,
       readOnly: this.readOnly ? true : false,
       textOption: TextFieldOption(
-        hintText: "Skype",
+        hintText: R.string().authStrings.skype,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: user,
@@ -984,7 +984,7 @@ class _PersonalInformationState extends State<PersonalInformation>
       },
       validation: (text) {
         if (text.trim().isEmpty) {
-          return "Skype";
+          return R.string().authStrings.skype;
         } else {
           return null;
         }
