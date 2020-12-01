@@ -18,6 +18,7 @@ import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
+import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -69,18 +70,23 @@ class _HomeScreenState extends State<HomeScreen> {
         //app.resolve<PrefUtils>().resetAndLogout(context);
       });
 
-      // app.resolve<CustomDialogs>().confirmDialog(context,
-      //     title: R.string().authStrings.uploadKYC,
-      //     desc: R.string().authStrings.uploadKycDesc,
-      //     positiveBtnTitle: R.string().commonString.upload,
-      //     negativeBtnTitle: R.string().commonString.btnSkip,
-      //     onClickCallback: (click) {
-      //   if (click == ButtonType.PositveButtonClick) {
-      //     NavigationUtilities.pushRoute(
-      //       UploadKYCScreen.route,
-      //     );
-      //   }
-      // });
+      User user = app.resolve<PrefUtils>().getUserDetails();
+      if (user.account.isKycUploaded == false) {
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            dismissPopup: false,
+            title: R.string().authStrings.uploadKYC,
+            desc: R.string().authStrings.uploadKycDesc,
+            positiveBtnTitle: R.string().commonString.upload,
+            negativeBtnTitle: user.kycRequired
+                ? null
+                : R.string().commonString.btnSkip, onClickCallback: (click) {
+          if (click == ButtonType.PositveButtonClick) {
+            NavigationUtilities.pushRoute(
+              UploadKYCScreen.route,
+            );
+          }
+        });
+      }
 
       // app.resolve<CustomDialogs>().confirmDialog(context,
       //     title: R.string().authStrings.kYCRejected,
@@ -194,6 +200,17 @@ class _HomeScreenState extends State<HomeScreen> {
 //    selectedType = DiamondModuleConstant.MODULE_TYPE_ABOUT_US;
     Map<String, dynamic> dict = new HashMap();
     dict["type"] = StaticPageConstant.ABOUT_US;
+    dict["strUrl"] = ApiConstants.aboutUs;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = StaticPageScreen(dict);
+  }
+
+  openContactUS(int moduleType) {
+    selectedType = moduleType;
+//    selectedType = DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION;
+    Map<String, dynamic> dict = new HashMap();
+    dict["type"] = StaticPageConstant.CONTACT_US;
+    dict["strUrl"] = ApiConstants.contactUs;
     dict[ArgumentConstant.IsFromDrawer] = true;
     currentWidget = StaticPageScreen(dict);
   }
@@ -203,6 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
 //    selectedType = DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION;
     Map<String, dynamic> dict = new HashMap();
     dict["type"] = StaticPageConstant.TERMS_CONDITION;
+    dict["strUrl"] = ApiConstants.termsCondition;
     dict[ArgumentConstant.IsFromDrawer] = true;
     currentWidget = StaticPageScreen(dict);
   }
@@ -212,6 +230,7 @@ class _HomeScreenState extends State<HomeScreen> {
 //    selectedType = DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY;
     Map<String, dynamic> dict = new HashMap();
     dict["type"] = StaticPageConstant.PRIVACY_POLICY;
+    dict["strUrl"] = ApiConstants.privacyPolicy;
     dict[ArgumentConstant.IsFromDrawer] = true;
     currentWidget = StaticPageScreen(dict);
   }
@@ -294,6 +313,9 @@ class _HomeScreenState extends State<HomeScreen> {
           break;
         case DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION:
           openTermsAndCondition(type);
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_CONTACT_US:
+          openContactUS(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_LOGOUT:
           logoutFromApp(context);

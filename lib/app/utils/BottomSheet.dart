@@ -144,7 +144,7 @@ class SelectionPopupModel {
   }
 
   SelectionPopupModel(String id, String title,
-      {bool isSelected = false, int type, int fileType,String url}) {
+      {bool isSelected = false, int type, int fileType, String url}) {
     this.id = id;
     this.title = title;
     this.isSelected = isSelected;

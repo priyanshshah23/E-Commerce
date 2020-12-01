@@ -131,6 +131,8 @@ class MasterCode {
   static const String companySize = "COMPANY_SIZE";
   static const String openInclusion = "OPEN_INCLUSION";
   static const String blackInclusion = "BLACK_INCLUSION";
+  static const String docTypePersonal = "DOC_TYPE_PERSONAL";
+  static const String docTypeBusiness = "DOC_TYPE_BUSINESS";
 
   // static const String mixTint = "MIX_TINT";
 }
@@ -148,6 +150,7 @@ class StaticPageConstant {
   static const String ABOUT_US = "ABOUT_US";
   static const String PRIVACY_POLICY = "PRIVACY_POLICY";
   static const String TERMS_CONDITION = "TERMS_CONDITION";
+  static const String CONTACT_US = "CONTACT_US";
 }
 
 class DiamondSearchType {

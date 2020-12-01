@@ -55,5 +55,8 @@
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
+	<key>NSFaceIDUsageDescription</key>
+<string>This app uses your face Id to unlock application.</string>
+
 </dict>
 </plist>

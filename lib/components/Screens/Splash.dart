@@ -5,24 +5,11 @@ import 'dart:io';
 import 'package:diamnow/app/AppConfiguration/AppNavigation.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
-import 'package:diamnow/app/localization/app_locales.dart';
-import 'package:diamnow/app/network/NetworkCall.dart';
-import 'package:diamnow/app/network/ServiceModule.dart';
-import 'package:diamnow/app/utils/CustomDialog.dart';
-import 'package:diamnow/components/Screens/Auth/CompanyInformation.dart';
-import 'package:diamnow/components/Screens/Auth/Login.dart';
-import 'package:diamnow/components/Screens/Auth/Profile.dart';
-import 'package:diamnow/components/Screens/Auth/ResetPassword.dart';
-import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
-import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
-import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
-import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
-import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
-import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
-import 'package:diamnow/components/Screens/Notification/Notifications.dart';
-import 'package:diamnow/models/Version/VersionUpdateResp.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:local_auth/auth_strings.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:package_info/package_info.dart';
 
 import 'Auth/ForgetPassword.dart';
@@ -36,6 +23,8 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
+  final LocalAuthentication auth = LocalAuthentication();
+
   @override
   void initState() {
     super.initState();
@@ -51,7 +40,7 @@ class _SplashState extends State<Splash> {
 //        NavigationUtilities.pushRoute(CompanyInformation.route);
 //      NavigationUtilities.pushRoute(Notifications.route);
       // callVersionUpdateApi();
-      SyncManager().callVersionUpdateApi(context,VersionUpdateApi.splash);
+      SyncManager().callVersionUpdateApi(context, VersionUpdateApi.splash);
 //      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
       //  NavigationUtilities.pushRoute(ForgetPasswordScreen.route);
 //      AppNavigation().movetoHome(isPopAndSwitch: true);
@@ -60,8 +49,28 @@ class _SplashState extends State<Splash> {
     }
   }
 
+  askForBioMetrics() async {
+    try {
+      bool isAuthenticated = await auth.authenticateWithBiometrics(
+        localizedReason: 'authenticate to unlock app',
+        useErrorDialogs: false,
+        stickyAuth: false,
+      );
+      print(isAuthenticated);
+      if (isAuthenticated) {
+        app.resolve<PrefUtils>().setBiometrcisUsage(true);
+        callSyncApi();
+      } else {
+        askForBioMetrics();
+      }
+    } on PlatformException catch (e) {
+      print(e.message);
+      callSyncApi();
+    }
+  }
+
   //dont delete
-  
+
   // void callVersionUpdateApi() {
   //   NetworkCall<VersionUpdateResp>()
   //       .makeCall(
@@ -185,6 +194,14 @@ class _SplashState extends State<Splash> {
   bool isFailed = false;
 
   Future callMasterSync() async {
+    if (app.resolve<PrefUtils>().getBiometrcis()) {
+      askForBioMetrics();
+    } else {
+      callSyncApi();
+    }
+  }
+
+  callSyncApi() {
     SyncManager.instance.callMasterSync(context, () {
       callHandler();
     }, () {

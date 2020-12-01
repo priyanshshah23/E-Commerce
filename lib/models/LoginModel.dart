@@ -157,7 +157,7 @@ class User {
   bool isTermsCondAgree;
   String termsCondAgreeAt;
   String address;
-
+  bool kycRequired;
 //  Null loginOtp;
   String group;
 
@@ -256,6 +256,7 @@ class User {
         ? new AccountTerm.fromJson(json['accountTerm'])
         : null;
     seller = json['seller'];
+    kycRequired = json["kycRequired"] ?? false;
   }
 
   Map<String, dynamic> toJson() {
@@ -341,6 +342,7 @@ class User {
       data['accountTerm'] = this.accountTerm.toJson();
     }
     data['seller'] = this.seller;
+    data["kycRequired"] = this.kycRequired;
     return data;
   }
 
@@ -555,6 +557,7 @@ class Account {
   StateList state;
   CityList city;
   List<Kyc> kyc;
+  bool isKycUploaded;
 
   Account.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
@@ -640,6 +643,7 @@ class Account {
     if (json["city"] is Map<String, dynamic>) {
       city = json['city'] != null ? new CityList.fromJson(json['city']) : null;
     }
+    isKycUploaded = json["isKycUploaded"] ?? false;
   }
 
   Map<String, dynamic> toJson() {
@@ -716,6 +720,7 @@ class Account {
     data['country'] = this.country;
     data['state'] = this.state;
     data['city'] = this.city;
+    data["isKycUploaded"] = this.isKycUploaded;
     return data;
   }
 }

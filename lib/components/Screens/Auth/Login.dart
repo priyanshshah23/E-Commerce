@@ -7,6 +7,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Auth/ForgetPassword.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
@@ -29,6 +30,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:local_auth/auth_strings.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:package_info/package_info.dart';
 
 import '../../../app/utils/navigator.dart';
@@ -67,27 +70,27 @@ class _LoginScreenState extends StatefulScreenWidgetState {
 
   String selectedLanguage = R.string().commonString.language;
   bool isCheckBoxSelected = false;
+  final LocalAuthentication auth = LocalAuthentication();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     // if (kDebugMode) {
-      getUserNameAndPassword();
+    getUserNameAndPassword();
     // }
   }
 
   getUserNameAndPassword() {
-    if (app.resolve<PrefUtils>().getBool("rememberMe")==true) {
+    if (app.resolve<PrefUtils>().getBool("rememberMe") == true) {
       isCheckBoxSelected = app.resolve<PrefUtils>().getBool("rememberMe");
-        _userNameController.text =  app.resolve<PrefUtils>().getString("userName");
-        _passwordController.text =  app.resolve<PrefUtils>().getString("passWord");
-      }
+      _userNameController.text = app.resolve<PrefUtils>().getString("userName");
+      _passwordController.text = app.resolve<PrefUtils>().getString("passWord");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    
     return WillPopScope(
         onWillPop: onWillPop,
         child: GestureDetector(
@@ -242,7 +245,8 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                       child: getPasswordTextField(),
                                     ),
                                     Padding(
-                                      padding:  EdgeInsets.only(top:getSize(15)),
+                                      padding:
+                                          EdgeInsets.only(top: getSize(15)),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -252,13 +256,14 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                             children: [
                                               Container(
                                                 decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(getSize(3))
-                                                ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            getSize(3))),
                                                 width: getSize(21),
                                                 height: getSize(21),
                                                 child: Checkbox(
-        
-                                                  activeColor: appTheme.colorPrimary,
+                                                  activeColor:
+                                                      appTheme.colorPrimary,
                                                   value: isCheckBoxSelected,
                                                   onChanged: (value) {
                                                     isCheckBoxSelected = value;
@@ -266,12 +271,15 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                                   },
                                                 ),
                                               ),
-                                               SizedBox(
+                                              SizedBox(
                                                 width: getSize(6),
                                               ),
                                               Text("Remember Me",
                                                   style: appTheme
-                                                      .blackMedium16TitleColorblack.copyWith(fontWeight: FontWeight.bold))
+                                                      .blackMedium16TitleColorblack
+                                                      .copyWith(
+                                                          fontWeight:
+                                                              FontWeight.bold))
                                             ],
                                           ),
                                           Container(
@@ -326,7 +334,6 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                         onTap: () {
                                           NavigationUtilities.pushRoute(
                                               GuestSignInScreen.route);
-
                                         },
                                         textColor: appTheme.colorPrimary,
                                         backgroundColor: appTheme.colorPrimary
@@ -502,33 +509,25 @@ class _LoginScreenState extends StatefulScreenWidgetState {
             () => app.resolve<ServiceModule>().networkService().login(req),
             context,
             isProgress: true)
-        .then((loginResp) async {
-      // save Logged In user
-      if (loginResp.data != null) {
-        app.resolve<PrefUtils>().saveUser(loginResp.data.user);
-        await app.resolve<PrefUtils>().saveUserToken(
-              loginResp.data.token.jwt,
-            );
-        await app.resolve<PrefUtils>().saveUserPermission(
-              loginResp.data.userPermissions,
-            );
-        await app
-            .resolve<PrefUtils>()
-            .saveBoolean("rememberMe", isCheckBoxSelected);
-        await app
-            .resolve<PrefUtils>()
-            .saveString("userName", _userNameController.text);
-        await app
-            .resolve<PrefUtils>()
-            .saveString("passWord", _passwordController.text);
-        
-        // print(app.resolve<PrefUtils>().getBool("rememberMe"));
-        // print(app.resolve<PrefUtils>().getString("userName"));
-        // print(app.resolve<PrefUtils>().getString("passWord"));
-      }
-//      NavigationUtilities.pushRoute(Notifications.route);
-      // callVersionUpdateApi(id: loginResp.data.user.id); //for local
-      SyncManager().callVersionUpdateApi(context,VersionUpdateApi.logIn,id: loginResp.data.user.id);
+        .then((loginResp) {
+      auth.canCheckBiometrics.then((value) {
+        if (value) {
+          app.resolve<CustomDialogs>().confirmDialog(context,
+              title: "",
+              desc: "Enable touchId to unlock $APPNAME?",
+              positiveBtnTitle: R.string().commonString.ok,
+              negativeBtnTitle: R.string().commonString.cancel,
+              onClickCallback: (buttonType) async {
+            if (buttonType == ButtonType.PositveButtonClick) {
+              askForBioMetrics(loginResp)();
+            } else {
+              saveUserResponse(loginResp);
+            }
+          });
+        } else {
+          saveUserResponse(loginResp);
+        }
+      });
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
@@ -541,6 +540,55 @@ class _LoginScreenState extends StatefulScreenWidgetState {
     });
   }
 
+  askForBioMetrics(LoginResp loginResp) async {
+    try {
+      bool isAuthenticated = await auth.authenticateWithBiometrics(
+        localizedReason: 'authenticate to access',
+        useErrorDialogs: false,
+        stickyAuth: false,
+      );
+      print(isAuthenticated);
+      if (isAuthenticated) {
+        app.resolve<PrefUtils>().setBiometrcisUsage(true);
+        saveUserResponse(loginResp);
+      } else {
+        saveUserResponse(loginResp);
+      }
+    } on PlatformException catch (e) {
+      print(e.message);
+      saveUserResponse(loginResp);
+    }
+  }
+
+  saveUserResponse(LoginResp loginResp) async {
+    // save Logged In user
+    if (loginResp.data != null) {
+      app.resolve<PrefUtils>().saveUser(loginResp.data.user);
+      await app.resolve<PrefUtils>().saveUserToken(
+            loginResp.data.token.jwt,
+          );
+      await app.resolve<PrefUtils>().saveUserPermission(
+            loginResp.data.userPermissions,
+          );
+      await app
+          .resolve<PrefUtils>()
+          .saveBoolean("rememberMe", isCheckBoxSelected);
+      await app
+          .resolve<PrefUtils>()
+          .saveString("userName", _userNameController.text);
+      await app
+          .resolve<PrefUtils>()
+          .saveString("passWord", _passwordController.text);
+
+      // print(app.resolve<PrefUtils>().getBool("rememberMe"));
+      // print(app.resolve<PrefUtils>().getString("userName"));
+      // print(app.resolve<PrefUtils>().getString("passWord"));
+    }
+//      NavigationUtilities.pushRoute(Notifications.route);
+    // callVersionUpdateApi(id: loginResp.data.user.id); //for local
+    SyncManager().callVersionUpdateApi(context, VersionUpdateApi.logIn,
+        id: loginResp.data.user.id);
+  }
   // void callVersionUpdateApi({String id}) {
   //   NetworkCall<VersionUpdateResp>()
   //       .makeCall(

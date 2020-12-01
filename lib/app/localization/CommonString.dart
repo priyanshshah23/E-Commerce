@@ -279,11 +279,16 @@ class CommonString {
   final String seeMore;
   final String seeLess;
 
+  final String selectPhotoProof;
+  final String pleaseSelectPhotoProof;
+  final String selectBusinessProof;
+  final String pleaseSelectBusinessProof;
+
   const CommonString({
     //filterScreen
     this.seeMore = "See More",
     this.seeLess = "See Less",
-    
+
     //SavedSearch
     this.modify = "Modify",
     this.delete = "Delete",
@@ -543,5 +548,11 @@ class CommonString {
     this.placeOrder = "Place order",
     this.enterComment = "Please Enter Comment",
     this.deleteItem = "Are you sure you want to delete?",
+
+    //Proof
+    this.selectPhotoProof = "Select photo proof document",
+    this.pleaseSelectPhotoProof = "Please select document ",
+    this.selectBusinessProof = "Select business proof document",
+    this.pleaseSelectBusinessProof = "Please select document",
   });
 }

@@ -871,7 +871,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://pndevelopapi.democ.in/device/v1/notification/list',
+        'http://fndevelopapi.democ.in/device/v1/notification/list',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -880,6 +880,27 @@ class _NetworkService implements NetworkService {
             baseUrl: baseUrl),
         data: _data);
     final value = NotificationResp.fromJson(_result.data);
+    return Future.value(value);
+  }
+
+  @override
+  uploadKyc(id, req) async {
+    ArgumentError.checkNotNull(id, 'id');
+    ArgumentError.checkNotNull(req, 'req');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(req ?? <String, dynamic>{});
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'http://fndevelopapi.democ.in/web/v1/account/',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = BaseApiResp.fromJson(_result.data);
     return Future.value(value);
   }
 }
