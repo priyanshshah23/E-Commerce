@@ -964,7 +964,7 @@ class _PersonalInformationState extends State<PersonalInformation>
         hintText: R.string().authStrings.skype,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
-            imageName: user,
+            imageName: skypeIcon,
             imageType: IconSizeType.small,
             color: Colors.black),
         fillColor: fromHex("#FFEFEF"),

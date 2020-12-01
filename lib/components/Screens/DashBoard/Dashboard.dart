@@ -1731,6 +1731,15 @@ class _DashboardState extends StatefulScreenWidgetState {
                               fontWeight: FontWeight.w500,
                             ),
                           ),
+                          Spacer(),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Image.asset(whatsappIcon,height: getSize(20),width: getSize(20),),
+                              SizedBox(width:getSize(18)),
+                              Image.asset(skypeIcon,height: getSize(20),width: getSize(20),),
+                            ],
+                          )
                           // Spacer(),
                           // InkWell(onTap : (){
 

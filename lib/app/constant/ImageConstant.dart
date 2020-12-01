@@ -37,6 +37,8 @@ const String noDataFound = "assets/Common/NoDataFound.png";
 const String notification = "assets/diamnow/notification.png";
 const String share = "assets/diamnow/share.png";
 const String diamondIcon = "assets/diamnow/diamondIcon.png";
+const String whatsappIcon = "assets/diamnow/whatsapp.png";
+const String skypeIcon = "assets/diamnow/skype.png";
 
 //filter
 const String addDemand = "assets/filter/addDemand.png";
