@@ -112,8 +112,8 @@ class _StaticPageScreenState extends State<StaticPageScreen> {
               child: WebView(
                 initialUrl:
                     // "http://pndevelop.democ.in/",
-                    "/storage/emulated/0/Download/test.pdf",
-                // widget.strUrl ?? "http://pn`develop.democ.in/",
+                    // "/storage/emulated/0/Download/test.pdf",
+                widget.strUrl ?? "http://pn`develop.democ.in/",
                 javascriptMode: JavascriptMode.unrestricted,
                 onWebViewCreated: (WebViewController webViewController) {
                   _controller.complete(webViewController);

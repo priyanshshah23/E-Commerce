@@ -245,7 +245,7 @@ class User {
     whatsappCounCode = json['whatsappCounCode'];
     plainPassword = json['plainPassword'];
     skype = json['skype'];
-    zipcode = json['zipcode'];
+    zipcode = json['pinCode'];
     wechat = json['wechat'];
     token = json['token'] != null ? new Token.fromJson(json['token']) : null;
     version = json['version'];
@@ -353,7 +353,7 @@ class User {
     data['whatsappCounCode'] = this.whatsappCounCode;
     data['plainPassword'] = this.plainPassword;
     data['skype'] = this.skype;
-    data['zipcode'] = this.zipcode;
+    data['pinCode'] = this.zipcode;
     data['wechat'] = this.wechat;
     if (this.token != null) {
       data['token'] = this.token.toJson();

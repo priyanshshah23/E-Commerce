@@ -39,7 +39,7 @@ class PersonalInformationReq {
   String country;
   String state;
   String city;
-  String zipcode;
+  String pincode;
   String skype;
 
   PersonalInformationReq(
@@ -74,7 +74,7 @@ class PersonalInformationReq {
       this.city,
       this.country,
       this.state,
-      this.zipcode,
+      this.pincode,
 //        this.skype,skype
 //        this.wechat,
       });
@@ -109,7 +109,7 @@ class PersonalInformationReq {
     whatsapp = json['whatsapp'];
     whatsappCounCode = json['whatsappCounCode'];
     skype = json['skype']??"";
-    zipcode = json['zipcode']??"";
+    pincode = json['pinCode']??"";
 //    wechat = json['wechat'];
   }
 
@@ -165,8 +165,8 @@ class PersonalInformationReq {
     }
     if(!isNullEmptyOrFalse(this.skype))
       data['skype'] = this.skype;
-    if(!isNullEmptyOrFalse(this.zipcode))
-      data['zipcode'] = this.zipcode;
+    if(!isNullEmptyOrFalse(this.pincode))
+      data['pinCode'] = this.pincode;
 //    data['skype'] = this.skype;
 //    data['wechat'] = this.wechat;
     return data;

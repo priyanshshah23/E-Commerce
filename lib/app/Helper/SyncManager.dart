@@ -507,7 +507,8 @@ class SyncManager {
     );
   }
 
-  callApiForExcel(BuildContext context, List<DiamondModel> diamondList) {
+  callApiForExcel(BuildContext context, List<DiamondModel> diamondList,
+      {bool isForShare = false, void callback(String)}) {
     final Completer<WebViewController> _controller =
         Completer<WebViewController>();
 
@@ -526,35 +527,40 @@ class SyncManager {
         .then((excelApiResponse) async {
       // success(diamondListResp);
       String url = ApiConstants.baseURLForExcel + excelApiResponse.data.data;
-      print(url);
-      //navigate to static page...
-      DownloadState downloadStateObj = DownloadState();
-      final dir = await downloadStateObj.getDownloadDirectory();
-      String fileName = "FinalExcel.xlsx";
-      final savePath = path.join(dir.path, fileName);
-      print("file:/" + savePath);
+      print("Excel file URL : " + url);
+      url = "https://docs.google.com/viewer?embedded=true&url=" + url;
+      print("Final ExcelFile Viewer Url : " + url);
 
-      if (Platform.isIOS) {
-        Map<String, dynamic> dict = {};
-        dict["strUrl"] = url;
-        dict[ArgumentConstant.IsFromDrawer] = false;
-        dict["isForExcel"] = true;
-        dict["screenTitle"] = excelApiResponse.data.excelName;
-        NavigationUtilities.pushRoute(StaticPageScreen.route, args: dict);
+      //navigate to static page...
+      // DownloadState downloadStateObj = DownloadState();
+      // final dir = await downloadStateObj.getDownloadDirectory();
+      // String fileName = "FinalExcel.xlsx";
+      // final savePath = path.join(dir.path, fileName);
+      // print("file:/" + savePath);
+      if (isForShare) {
+        callback(url);
       } else {
-        Dio().download(url, savePath).then((value) {
-          print("DOWNLOADED");
+        if (Platform.isIOS) {
           Map<String, dynamic> dict = {};
-          dict["strUrl"] = Platform.isIOS ? url : savePath;
+          dict["strUrl"] = url;
           dict[ArgumentConstant.IsFromDrawer] = false;
           dict["isForExcel"] = true;
           dict["screenTitle"] = excelApiResponse.data.excelName;
           NavigationUtilities.pushRoute(StaticPageScreen.route, args: dict);
-        });
+        } else {
+          Map<String, dynamic> dict = {};
+          dict["strUrl"] = url;
+          dict[ArgumentConstant.IsFromDrawer] = false;
+          dict["isForExcel"] = true;
+          dict["screenTitle"] = excelApiResponse.data.excelName;
+          NavigationUtilities.pushRoute(StaticPageScreen.route, args: dict);
+        }
       }
 
       // getWebView(context, url);
     }).catchError((onError) {
+      showToast("There is problem on server, please try again later.",
+          context: context);
       print(onError);
     });
   }

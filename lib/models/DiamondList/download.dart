@@ -56,7 +56,6 @@ class DownloadState extends State<Download> {
   Map<String, CancelToken> mapOfCancelToken = {};
   bool breakForLoop = false;
 
-
   DownloadState({this.diamondList, this.allDiamondPreviewThings});
 
   @override
@@ -224,7 +223,7 @@ class DownloadState extends State<Download> {
         else if (element.fileType ==
             DownloadAndShareDialogueConstant.certificate) {
           element.url = DiamondUrls.certificate + model.rptNo + ".pdf";
-        } 
+        }
         // else if (element.fileType ==
         //         DownloadAndShareDialogueConstant.typeIIA &&
         //     model.certFile) {
@@ -257,7 +256,7 @@ class DownloadState extends State<Download> {
             }
             finalDownloadProgress +=
                 (100 / totalDownloadableFilesForAllDiamonds);
-            
+
             print(
                 "final download progress " + finalDownloadProgress.toString());
             if (finalDownloadProgress >= 99) {
@@ -299,6 +298,17 @@ class DownloadState extends State<Download> {
     if (mounted) {
       if (totalDownloadableFilesForAllDiamonds == 0) {
         breakForLoop = true;
+        //check whether excel is selected or not...
+        for (int i = 0; i < allDiamondPreviewThings.length; i++) {
+          if (allDiamondPreviewThings[i].isSelected &&
+              allDiamondPreviewThings[i].fileType ==
+                  DownloadAndShareDialogueConstant.excel) {
+            Navigator.of(context).pop();
+            SyncManager syncManager = SyncManager();
+            syncManager.callApiForExcel(context, diamondList);
+            return;
+          }
+        }
         Navigator.of(context).pop();
         // RxBus.post(true,tag:"breakforloop")
         // RxBus.register<bool>(tag: "breakforloop").listen((event) {

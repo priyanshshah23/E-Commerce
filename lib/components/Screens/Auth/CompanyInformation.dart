@@ -35,16 +35,16 @@ class CompanyInformationState extends State<CompanyInformation>
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _middleNameController = TextEditingController();
   final TextEditingController _addressLineOneController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController _addressLineTwoController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController _addressLineThreeController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
   final TextEditingController _companyCodeController = TextEditingController();
   final TextEditingController _whatsAppMobileController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController companyController = TextEditingController();
   final TextEditingController pinCodeController = TextEditingController();
   final TextEditingController _countryController = TextEditingController();
@@ -54,9 +54,9 @@ class CompanyInformationState extends State<CompanyInformation>
   final TextEditingController _natureOfOrgController = TextEditingController();
 
   Country selectedDialogCountryForMobile =
-  CountryPickerUtils.getCountryByIsoCode("US");
+      CountryPickerUtils.getCountryByIsoCode("US");
   Country selectedDialogCountryForWhatsapp =
-  CountryPickerUtils.getCountryByIsoCode("US");
+      CountryPickerUtils.getCountryByIsoCode("US");
 
   var _focusCompanyName = FocusNode();
   var _focusLastName = FocusNode();
@@ -94,6 +94,9 @@ class CompanyInformationState extends State<CompanyInformation>
   var selectedStateItem = -1;
   var selectedBusinessItem = -1;
   var selectedNatureOfOrg = -1;
+
+  //Boolean for readonly while edit profile.
+  bool readOnly = true;
 
   @override
   void initState() {
@@ -150,39 +153,47 @@ class CompanyInformationState extends State<CompanyInformation>
 //          decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
             child: AppButton.flat(
               onTap: () {
-                FocusScope.of(context).unfocus();
-                if (_formKey.currentState.validate()) {
-                  _formKey.currentState.save();
-                  if (countrySelect()) {
-                    if (stateSelect()) {
-                      if (citySelect()) {
-                        callCompanyInformationApi();
+                readOnly = !readOnly;
+
+                if (readOnly) {
+                  FocusScope.of(context).unfocus();
+                  if (_formKey.currentState.validate()) {
+                    _formKey.currentState.save();
+                    if (countrySelect()) {
+                      if (stateSelect()) {
+                        if (citySelect()) {
+                          callCompanyInformationApi();
+                        } else {
+                          showToast(R.string().commonString.cityFirst,
+                              context: context);
+                        }
                       } else {
-                        showToast(R.string().commonString.cityFirst,
+                        showToast(R.string().commonString.stateFirst,
                             context: context);
                       }
                     } else {
-                      showToast(R.string().commonString.stateFirst,
+                      showToast(R.string().commonString.countryFirst,
                           context: context);
                     }
-                  } else {
-                    showToast(R.string().commonString.countryFirst,
-                        context: context);
-                  }
 
-                  //isProfileImageUpload ? uploadDocument() : callApi();
-                } else {
-                  setState(() {
-                    _autoValidate = true;
-                  });
+                    //isProfileImageUpload ? uploadDocument() : callApi();
+                  } else {
+                    setState(() {
+                      _autoValidate = true;
+                    });
+                  }
                 }
+
+                setState(() {});
                 // NavigationUtilities.push(ThemeSetting());
               },
               backgroundColor: appTheme.colorPrimary.withOpacity(0.1),
               textColor: appTheme.colorPrimary,
               borderRadius: getSize(5),
               fitWidth: true,
-              text: R.string().authStrings.saveCompanyDetails,
+              text: !readOnly
+                  ? R.string().authStrings.saveCompanyDetails
+                  : "Edit Company Information",
               //isButtonEnabled: enableDisableSigninButton(),
             ),
           ),
@@ -250,6 +261,7 @@ class CompanyInformationState extends State<CompanyInformation>
     return CommonTextfield(
       //enable: enable,
       focusNode: _focuscompanyCode,
+      readOnly: this.readOnly ? true : false,
       textOption: TextFieldOption(
         hintText: R.string().authStrings.companyCode,
         maxLine: 1,
@@ -285,11 +297,18 @@ class CompanyInformationState extends State<CompanyInformation>
     );
   }
 
-  getPinCodeTextField() {
+  getPinCodeTextField({String zipCodeTitle = "", bool rd}) {
     return CommonTextfield(
         focusNode: _focusPinCode,
+        readOnly: rd == null
+            ? this.readOnly
+                ? true
+                : false
+            : rd,
         textOption: TextFieldOption(
-            hintText: R.string().commonString.lblPinCode + "*",
+            hintText: isNullEmptyOrFalse(zipCodeTitle)
+                ? R.string().commonString.lblPinCode + "*"
+                : zipCodeTitle,
             maxLine: 1,
             prefixWid: getCommonIconWidget(
                 imageName: pincode,
@@ -326,6 +345,7 @@ class CompanyInformationState extends State<CompanyInformation>
     return CommonTextfield(
       autoFocus: false,
       focusNode: _focusCompanyName,
+      readOnly: this.readOnly ? true : false,
       textOption: TextFieldOption(
         hintText: R.string().authStrings.companyName +
             R.string().authStrings.requiredField,
@@ -365,6 +385,7 @@ class CompanyInformationState extends State<CompanyInformation>
   getAddressLineOneTextField() {
     return CommonTextfield(
       focusNode: _focusAddressLineOne,
+      readOnly: this.readOnly ? true : false,
       textOption: TextFieldOption(
         hintText: R.string().authStrings.addressLineOne,
         maxLine: 1,
@@ -442,47 +463,59 @@ class CompanyInformationState extends State<CompanyInformation>
   getCountryDropDown() {
     return InkWell(
       onTap: () {
-        if (countryList == null || countryList.length == 0) {
-          _callApiForCountryList(isShowDialogue: true);
-        } else {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return Dialog(
-                insetPadding: EdgeInsets.symmetric(
-                    horizontal: getSize(20), vertical: getSize(20)),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(getSize(25)),
-                ),
-                child: SelectionDialogue(
-                  title: R.string().commonString.selectCountry,
-                  hintText: R.string().commonString.searchCountry,
-                  selectionOptions: countryList,
-                  applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
-                    if (_countryController.text.toLowerCase() != selectedItem.title.toLowerCase()) {
-                      _stateController.text = "";
-                      _cityController.text = "";
-                      this.cityList.clear();
-                      this.stateList.clear();
-                      cityList.forEach((element) {element.isSelected = false;});
-                      stateList.forEach((element) {element.isSelected = false;});
-                      selectedCityItem = -1;
-                      selectedStateItem = -1;
-                    }
-                    countryList.forEach((value) => value.isSelected = false);
-                    countryList.firstWhere((value) => value == selectedItem).isSelected = true;
-                    selectedCountryItem = countryList.indexOf(selectedItem);
-                    _countryController.text = selectedItem.title;
-                    _callApiForStateList(countryId: selectedItem.id);
-                  },
-                ),
-              );
-            },
-          );
+        if (!readOnly) {
+          if (countryList == null || countryList.length == 0) {
+            _callApiForCountryList(isShowDialogue: true);
+          } else {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Dialog(
+                  insetPadding: EdgeInsets.symmetric(
+                      horizontal: getSize(20), vertical: getSize(20)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(getSize(25)),
+                  ),
+                  child: SelectionDialogue(
+                    title: R.string().commonString.selectCountry,
+                    hintText: R.string().commonString.searchCountry,
+                    selectionOptions: countryList,
+                    applyFilterCallBack: (
+                        {SelectionPopupModel selectedItem,
+                        List<SelectionPopupModel> multiSelectedItem}) {
+                      if (_countryController.text.toLowerCase() !=
+                          selectedItem.title.toLowerCase()) {
+                        _stateController.text = "";
+                        _cityController.text = "";
+                        this.cityList.clear();
+                        this.stateList.clear();
+                        cityList.forEach((element) {
+                          element.isSelected = false;
+                        });
+                        stateList.forEach((element) {
+                          element.isSelected = false;
+                        });
+                        selectedCityItem = -1;
+                        selectedStateItem = -1;
+                      }
+                      countryList.forEach((value) => value.isSelected = false);
+                      countryList
+                          .firstWhere((value) => value == selectedItem)
+                          .isSelected = true;
+                      selectedCountryItem = countryList.indexOf(selectedItem);
+                      _countryController.text = selectedItem.title;
+                      _callApiForStateList(countryId: selectedItem.id);
+                    },
+                  ),
+                );
+              },
+            );
+          }
         }
       },
       child: CommonTextfield(
           focusNode: _focusCountry,
+          readOnly: this.readOnly ? true : false,
           enable: false,
           textOption: TextFieldOption(
               hintText: R.string().commonString.lblCountry,
@@ -508,48 +541,59 @@ class CompanyInformationState extends State<CompanyInformation>
   getStateDropDown() {
     return InkWell(
       onTap: () {
-        if (countrySelect()) {
-          if (stateList == null || stateList.length == 0) {
-            _callApiForStateList(
-                countryId: countryList[selectedCountryItem].id, isShowDialogue: true);
+        if (!readOnly) {
+          if (countrySelect()) {
+            if (stateList == null || stateList.length == 0) {
+              _callApiForStateList(
+                  countryId: countryList[selectedCountryItem].id,
+                  isShowDialogue: true);
+            } else {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Dialog(
+                        insetPadding: EdgeInsets.symmetric(
+                            horizontal: getSize(20), vertical: getSize(20)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(getSize(25)),
+                        ),
+                        child: SelectionDialogue(
+                          title: R.string().commonString.selectState,
+                          hintText: R.string().commonString.searchState,
+                          selectionOptions: stateList,
+                          applyFilterCallBack: (
+                              {SelectionPopupModel selectedItem,
+                              List<SelectionPopupModel> multiSelectedItem}) {
+                            if (_stateController.text != selectedItem.title) {
+                              _cityController.text = "";
+                              this.cityList.clear();
+                              selectedCityItem = -1;
+                              cityList.forEach((element) {
+                                element.isSelected = false;
+                              });
+                            }
+                            stateList
+                                .forEach((value) => value.isSelected = false);
+                            stateList
+                                .firstWhere((value) => value == selectedItem)
+                                .isSelected = true;
+                            selectedStateItem = stateList.indexOf(selectedItem);
+                            _stateController.text = selectedItem.title;
+                            _callApiForCityList(
+                                countryId: countryList[selectedCountryItem].id,
+                                stateId: selectedItem.id);
+                          },
+                        ));
+                  });
+            }
           } else {
-            showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return Dialog(
-                      insetPadding: EdgeInsets.symmetric(
-                          horizontal: getSize(20), vertical: getSize(20)),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(getSize(25)),
-                      ),
-                      child: SelectionDialogue(
-                        title: R.string().commonString.selectState,
-                        hintText: R.string().commonString.searchState,
-                        selectionOptions: stateList,
-                        applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
-                          if (_stateController.text != selectedItem.title) {
-                            _cityController.text = "";
-                            this.cityList.clear();
-                            selectedCityItem = -1;
-                            cityList.forEach((element) {element.isSelected = false;});
-                          }
-                          stateList.forEach((value) => value.isSelected = false);
-                          stateList.firstWhere((value) => value == selectedItem).isSelected = true;
-                          selectedStateItem = stateList.indexOf(selectedItem);
-                          _stateController.text = selectedItem.title;
-                          _callApiForCityList(
-                              countryId: countryList[selectedCountryItem].id,
-                              stateId: selectedItem.id);
-                        },
-                      ));
-                });
+            showToast(R.string().commonString.countryFirst, context: context);
           }
-        } else {
-          showToast(R.string().commonString.countryFirst, context: context);
         }
       },
       child: CommonTextfield(
           focusNode: _focusState,
+          readOnly: this.readOnly ? true : false,
           enable: false,
           textOption: TextFieldOption(
               hintText: R.string().commonString.lblState,
@@ -575,46 +619,56 @@ class CompanyInformationState extends State<CompanyInformation>
   getCityDropDown() {
     return InkWell(
       onTap: () {
-        FocusScope.of(context).unfocus();
-        if (countrySelect()) {
-          if (stateSelect()) {
-            if (cityList == null || cityList.length == 0) {
-              _callApiForCityList(
-                  countryId: countryList[selectedCountryItem].id,
-                  stateId: selectedStateItem == -1 ? userAccount.state.id : stateList[selectedStateItem].id,
-                  isShowDialogue: true);
+        if (!readOnly) {
+          FocusScope.of(context).unfocus();
+          if (countrySelect()) {
+            if (stateSelect()) {
+              if (cityList == null || cityList.length == 0) {
+                _callApiForCityList(
+                    countryId: countryList[selectedCountryItem].id,
+                    stateId: selectedStateItem == -1
+                        ? userAccount.state.id
+                        : stateList[selectedStateItem].id,
+                    isShowDialogue: true);
+              } else {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Dialog(
+                          insetPadding: EdgeInsets.symmetric(
+                              horizontal: getSize(20), vertical: getSize(20)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(getSize(25)),
+                          ),
+                          child: SelectionDialogue(
+                            title: R.string().commonString.selectCity,
+                            hintText: R.string().commonString.searchCity,
+                            selectionOptions: cityList,
+                            applyFilterCallBack: (
+                                {SelectionPopupModel selectedItem,
+                                List<SelectionPopupModel> multiSelectedItem}) {
+                              cityList
+                                  .forEach((value) => value.isSelected = false);
+                              cityList
+                                  .firstWhere((value) => value == selectedItem)
+                                  .isSelected = true;
+                              selectedCityItem = cityList.indexOf(selectedItem);
+                              _cityController.text = selectedItem.title;
+                            },
+                          ));
+                    });
+              }
             } else {
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Dialog(
-                        insetPadding: EdgeInsets.symmetric(
-                            horizontal: getSize(20), vertical: getSize(20)),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(getSize(25)),
-                        ),
-                        child: SelectionDialogue(
-                          title: R.string().commonString.selectCity,
-                          hintText: R.string().commonString.searchCity,
-                          selectionOptions: cityList,
-                          applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
-                            cityList.forEach((value) => value.isSelected = false);
-                            cityList.firstWhere((value) => value == selectedItem).isSelected = true;
-                            selectedCityItem = cityList.indexOf(selectedItem);
-                            _cityController.text = selectedItem.title;
-                          },
-                        ));
-                  });
+              showToast(R.string().commonString.stateFirst, context: context);
             }
           } else {
-            showToast(R.string().commonString.stateFirst, context: context);
+            showToast(R.string().commonString.countryFirst, context: context);
           }
-        } else {
-          showToast(R.string().commonString.countryFirst, context: context);
         }
       },
       child: CommonTextfield(
           focusNode: _focusCity,
+          readOnly: this.readOnly ? true : false,
           enable: false,
           textOption: TextFieldOption(
               prefixWid: getCommonIconWidget(
@@ -640,29 +694,38 @@ class CompanyInformationState extends State<CompanyInformation>
   getBusinessTypeDropDown() {
     return InkWell(
       onTap: () {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return Dialog(
-                  insetPadding: EdgeInsets.symmetric(
-                      horizontal: getSize(20), vertical: getSize(20)),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(getSize(25)),
-                  ),
-                  child: SelectionDialogue(
-                      title: R.string().commonString.selectBusinessType,
-                      hintText: R.string().commonString.searchBusinessType,
-                      selectionOptions: businessTypeList,
-                      applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
-                        businessTypeList.forEach((value) => value.isSelected = false);
-                        businessTypeList.firstWhere((value) => value == selectedItem).isSelected = true;
-                        selectedBusinessItem = businessTypeList.indexOf(selectedItem);
-                        _businessTypeController.text = selectedItem.title;
-                      }));
-            });
+        if (!readOnly) {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Dialog(
+                    insetPadding: EdgeInsets.symmetric(
+                        horizontal: getSize(20), vertical: getSize(20)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(getSize(25)),
+                    ),
+                    child: SelectionDialogue(
+                        title: R.string().commonString.selectBusinessType,
+                        hintText: R.string().commonString.searchBusinessType,
+                        selectionOptions: businessTypeList,
+                        applyFilterCallBack: (
+                            {SelectionPopupModel selectedItem,
+                            List<SelectionPopupModel> multiSelectedItem}) {
+                          businessTypeList
+                              .forEach((value) => value.isSelected = false);
+                          businessTypeList
+                              .firstWhere((value) => value == selectedItem)
+                              .isSelected = true;
+                          selectedBusinessItem =
+                              businessTypeList.indexOf(selectedItem);
+                          _businessTypeController.text = selectedItem.title;
+                        }));
+              });
+        }
       },
       child: CommonTextfield(
           focusNode: _focusBusinessType,
+          readOnly: this.readOnly ? true : false,
           enable: false,
           textOption: TextFieldOption(
               prefixWid: getCommonIconWidget(
@@ -688,29 +751,38 @@ class CompanyInformationState extends State<CompanyInformation>
   getNatureOfOrgDropDown() {
     return InkWell(
       onTap: () {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return Dialog(
-                  insetPadding: EdgeInsets.symmetric(
-                      horizontal: getSize(20), vertical: getSize(20)),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(getSize(25)),
-                  ),
-                  child: SelectionDialogue(
-                      title: "Select Nature Of Organization",
-                      hintText: "Select Nature Of Organization",
-                      selectionOptions: natureOfOrgList,
-                      applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
-                        natureOfOrgList.forEach((value) => value.isSelected = false);
-                        natureOfOrgList.firstWhere((value) => value == selectedItem).isSelected = true;
-                        selectedNatureOfOrg = natureOfOrgList.indexOf(selectedItem);
-                        _natureOfOrgController.text = selectedItem.title;
-                      }));
-            });
+        if (!readOnly) {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Dialog(
+                    insetPadding: EdgeInsets.symmetric(
+                        horizontal: getSize(20), vertical: getSize(20)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(getSize(25)),
+                    ),
+                    child: SelectionDialogue(
+                        title: "Select Nature Of Organization",
+                        hintText: "Select Nature Of Organization",
+                        selectionOptions: natureOfOrgList,
+                        applyFilterCallBack: (
+                            {SelectionPopupModel selectedItem,
+                            List<SelectionPopupModel> multiSelectedItem}) {
+                          natureOfOrgList
+                              .forEach((value) => value.isSelected = false);
+                          natureOfOrgList
+                              .firstWhere((value) => value == selectedItem)
+                              .isSelected = true;
+                          selectedNatureOfOrg =
+                              natureOfOrgList.indexOf(selectedItem);
+                          _natureOfOrgController.text = selectedItem.title;
+                        }));
+              });
+        }
       },
       child: CommonTextfield(
           focusNode: _focusNatureOfOrg,
+          readOnly: this.readOnly ? true : false,
           enable: false,
           textOption: TextFieldOption(
               prefixWid: getCommonIconWidget(
@@ -734,8 +806,8 @@ class CompanyInformationState extends State<CompanyInformation>
   }
 
   Widget popupList(
-      List<SelectionPopupModel> backPerList, Function(String) selectedValue,
-      {bool isPer = false}) =>
+          List<SelectionPopupModel> backPerList, Function(String) selectedValue,
+          {bool isPer = false}) =>
       PopupMenuButton<String>(
         shape: TooltipShapeBorder(arrowArc: 0.5),
         onSelected: (newValue) {
@@ -755,8 +827,8 @@ class CompanyInformationState extends State<CompanyInformation>
       );
 
   getPopupItems(
-      String per,
-      ) {
+    String per,
+  ) {
     return PopupMenuItem(
       value: per,
       height: getSize(20),
@@ -809,8 +881,8 @@ class CompanyInformationState extends State<CompanyInformation>
     NetworkCall<CityListResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().cityList(req),
-        context,
-        isProgress: true)
+            context,
+            isProgress: true)
         .then((resp) {
       cityList.clear();
       for (var item in resp.data) {
@@ -818,9 +890,11 @@ class CompanyInformationState extends State<CompanyInformation>
           cityList.add(SelectionPopupModel(item.id, item.name,
               isSelected: (userAccount.city.id == item.id) ? true : false));
         } else {
-          cityList.add(SelectionPopupModel(item.id, item.name, isSelected: false));
+          cityList
+              .add(SelectionPopupModel(item.id, item.name, isSelected: false));
         }
-      };
+      }
+      ;
       if (isShowDialogue) {
         showDialog(
             context: context,
@@ -835,9 +909,13 @@ class CompanyInformationState extends State<CompanyInformation>
                     title: R.string().commonString.selectCity,
                     hintText: R.string().commonString.searchCity,
                     selectionOptions: cityList,
-                    applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
+                    applyFilterCallBack: (
+                        {SelectionPopupModel selectedItem,
+                        List<SelectionPopupModel> multiSelectedItem}) {
                       cityList.forEach((value) => value.isSelected = false);
-                      cityList.firstWhere((value) => value == selectedItem).isSelected = true;
+                      cityList
+                          .firstWhere((value) => value == selectedItem)
+                          .isSelected = true;
                       selectedCityItem = cityList.indexOf(selectedItem);
                       _cityController.text = selectedItem.title;
                     },
@@ -845,14 +923,14 @@ class CompanyInformationState extends State<CompanyInformation>
             });
       }
     }).catchError(
-          (onError) => {
+      (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
             title: R.string().commonString.error,
             desc: onError.message,
             positiveBtnTitle: R.string().commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
-              _callApiForCityList(stateId: stateId, countryId: countryId);
-            })
+          _callApiForCityList(stateId: stateId, countryId: countryId);
+        })
       },
     );
   }
@@ -861,8 +939,8 @@ class CompanyInformationState extends State<CompanyInformation>
     NetworkCall<CountryListResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().countryList(),
-        context,
-        isProgress: true)
+            context,
+            isProgress: true)
         .then((resp) {
       countryList.clear();
       for (var item in resp.data) {
@@ -870,9 +948,11 @@ class CompanyInformationState extends State<CompanyInformation>
           countryList.add(SelectionPopupModel(item.id, item.name,
               isSelected: (userAccount.country.id == item.id) ? true : false));
         } else {
-          countryList.add(SelectionPopupModel(item.id, item.name, isSelected: false));
+          countryList
+              .add(SelectionPopupModel(item.id, item.name, isSelected: false));
         }
-      };
+      }
+      ;
       getCompanyInformation();
       if (isShowDialogue) {
         showDialog(
@@ -888,7 +968,9 @@ class CompanyInformationState extends State<CompanyInformation>
                     title: R.string().commonString.selectCountry,
                     hintText: R.string().commonString.searchCountry,
                     selectionOptions: countryList,
-                    applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
+                    applyFilterCallBack: (
+                        {SelectionPopupModel selectedItem,
+                        List<SelectionPopupModel> multiSelectedItem}) {
                       if (_countryController.text != selectedItem.title) {
                         _stateController.text = "";
                         _cityController.text = "";
@@ -896,7 +978,9 @@ class CompanyInformationState extends State<CompanyInformation>
                         this.stateList.clear();
                       }
                       countryList.forEach((value) => value.isSelected = false);
-                      countryList.firstWhere((value) => value == selectedItem).isSelected = true;
+                      countryList
+                          .firstWhere((value) => value == selectedItem)
+                          .isSelected = true;
                       selectedCountryItem = countryList.indexOf(selectedItem);
                       _countryController.text = selectedItem.title;
                       _callApiForStateList(countryId: selectedItem.id);
@@ -905,7 +989,7 @@ class CompanyInformationState extends State<CompanyInformation>
             });
       }
     }).catchError(
-          (onError) => {
+      (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(
           context,
           title: R.string().commonString.error,
@@ -929,8 +1013,8 @@ class CompanyInformationState extends State<CompanyInformation>
     NetworkCall<StateListResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().stateList(req),
-        context,
-        isProgress: true)
+            context,
+            isProgress: true)
         .then((resp) {
       stateList.clear();
       for (var item in resp.data) {
@@ -938,9 +1022,11 @@ class CompanyInformationState extends State<CompanyInformation>
           stateList.add(SelectionPopupModel(item.id, item.name,
               isSelected: (userAccount.state.id == item.id) ? true : false));
         } else {
-          stateList.add(SelectionPopupModel(item.id, item.name, isSelected: false));
+          stateList
+              .add(SelectionPopupModel(item.id, item.name, isSelected: false));
         }
-      };
+      }
+      ;
       if (isShowDialogue) {
         showDialog(
             context: context,
@@ -955,13 +1041,17 @@ class CompanyInformationState extends State<CompanyInformation>
                     title: R.string().commonString.selectState,
                     hintText: R.string().commonString.searchState,
                     selectionOptions: stateList,
-                    applyFilterCallBack: ({SelectionPopupModel selectedItem,List<SelectionPopupModel> multiSelectedItem}) {
+                    applyFilterCallBack: (
+                        {SelectionPopupModel selectedItem,
+                        List<SelectionPopupModel> multiSelectedItem}) {
                       if (_stateController.text != selectedItem.title) {
                         _cityController.text = "";
                         this.cityList.clear();
                       }
                       stateList.forEach((value) => value.isSelected = false);
-                      stateList.firstWhere((value) => value == selectedItem).isSelected = true;
+                      stateList
+                          .firstWhere((value) => value == selectedItem)
+                          .isSelected = true;
                       selectedStateItem = stateList.indexOf(selectedItem);
                       _stateController.text = selectedItem.title;
                       _callApiForCityList(
@@ -972,20 +1062,19 @@ class CompanyInformationState extends State<CompanyInformation>
             });
       }
     }).catchError(
-          (onError) => {
+      (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
             title: R.string().commonString.error,
             desc: onError.message,
             positiveBtnTitle: R.string().commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
-              _callApiForStateList(countryId: countryId);
-            })
+          _callApiForStateList(countryId: countryId);
+        })
       },
     );
   }
 
   callCompanyInformationApi() async {
-    
     CompanyInformationReq req = CompanyInformationReq();
     req.companyName = _CompanyNameController.text;
     countryList.forEach((element) {
@@ -1025,28 +1114,28 @@ class CompanyInformationState extends State<CompanyInformation>
     NetworkCall<CompanyInformationViewResp>()
         .makeCall(
             () => app
-            .resolve<ServiceModule>()
-            .networkService()
-            .companyInformation(req),
-        context,
-        isProgress: true)
+                .resolve<ServiceModule>()
+                .networkService()
+                .companyInformation(req),
+            context,
+            isProgress: true)
         .then((resp) async {
       User user = app.resolve<PrefUtils>().getUserDetails();
       user.account = resp.data;
       app.resolve<PrefUtils>().saveUser(user);
       app.resolve<CustomDialogs>().confirmDialog(
-        context,
-        title: R.string().commonString.successfully,
-        desc: resp.message,
-        positiveBtnTitle: R.string().commonString.ok,
-      );
+            context,
+            title: R.string().commonString.successfully,
+            desc: resp.message,
+            positiveBtnTitle: R.string().commonString.ok,
+          );
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
-        context,
-        title: R.string().commonString.error,
-        desc: onError.message,
-        positiveBtnTitle: R.string().commonString.btnTryAgain,
-      );
+            context,
+            title: R.string().commonString.error,
+            desc: onError.message,
+            positiveBtnTitle: R.string().commonString.btnTryAgain,
+          );
     });
   }
 
@@ -1054,11 +1143,11 @@ class CompanyInformationState extends State<CompanyInformation>
     NetworkCall<CompanyInformationViewResp>()
         .makeCall(
             () => app
-            .resolve<ServiceModule>()
-            .networkService()
-            .companyInformationView(),
-        context,
-        isProgress: true)
+                .resolve<ServiceModule>()
+                .networkService()
+                .companyInformationView(),
+            context,
+            isProgress: true)
         .then((resp) async {
       if (resp.data != null) {
         userAccount = resp.data;
@@ -1084,20 +1173,20 @@ class CompanyInformationState extends State<CompanyInformation>
         _cityController.text = resp.data.city.name;
         _stateController.text = resp.data.state.name;
         countryList.forEach((element) {
-          if(element.id == resp.data.country.id) {
-            selectedCountryItem =  countryList.indexOf(element);
+          if (element.id == resp.data.country.id) {
+            selectedCountryItem = countryList.indexOf(element);
             element.isSelected = true;
           }
         });
         cityList.forEach((element) {
-          if(element.id == resp.data.city.id) {
-            selectedCityItem =  cityList.indexOf(element);
+          if (element.id == resp.data.city.id) {
+            selectedCityItem = cityList.indexOf(element);
             element.isSelected = true;
           }
         });
         stateList.forEach((element) {
-          if(element.id == resp.data.state.id) {
-            selectedStateItem =  stateList.indexOf(element);
+          if (element.id == resp.data.state.id) {
+            selectedStateItem = stateList.indexOf(element);
             element.isSelected = true;
           }
         });
@@ -1105,11 +1194,11 @@ class CompanyInformationState extends State<CompanyInformation>
       }
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
-        context,
-        title: R.string().commonString.error,
-        desc: onError.message,
-        positiveBtnTitle: R.string().commonString.btnTryAgain,
-      );
+            context,
+            title: R.string().commonString.error,
+            desc: onError.message,
+            positiveBtnTitle: R.string().commonString.btnTryAgain,
+          );
     });
   }
 
