@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:io';
 
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
@@ -1736,8 +1737,9 @@ class _DashboardState extends StatefulScreenWidgetState {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               InkWell(
-                                  onTap: () {
-                                    
+                                  onTap: () async {
+                                    await whatsAppOpen(
+                                        this.dashboardModel.seller.mobile);
                                   },
                                   child: Image.asset(
                                     whatsappIcon,
@@ -1745,10 +1747,16 @@ class _DashboardState extends StatefulScreenWidgetState {
                                     width: getSize(20),
                                   )),
                               SizedBox(width: getSize(18)),
-                              Image.asset(
-                                skypeIcon,
-                                height: getSize(20),
-                                width: getSize(20),
+                              InkWell(
+                                onTap: () {
+                                  openSkype(
+                                      this.dashboardModel.seller.firstName);
+                                },
+                                child: Image.asset(
+                                  skypeIcon,
+                                  height: getSize(20),
+                                  width: getSize(20),
+                                ),
                               ),
                             ],
                           )
@@ -1824,6 +1832,35 @@ class _DashboardState extends StatefulScreenWidgetState {
         ],
       ),
     );
+  }
+
+  void whatsAppOpen(String phoneNo, {String message = ""}) async {
+    phoneNo = "91" + phoneNo;
+    String url() {
+      if (Platform.isIOS) {
+        return "whatsapp://wa.me/$phoneNo/?text=${message}";
+      } else {
+        return "whatsapp://send?phone=$phoneNo&text=${message}";
+      }
+    }
+
+    if (await canLaunch(url())) {
+      await launch(url());
+    } else {
+      throw showToast("whatspp is not installed in this device",
+          context: context);
+    }
+  }
+
+  void openSkype(String username) async {
+    if (await canLaunch('skype:${username}')) {
+      final bool nativeAppLaunchSucceeded = await launch(
+        'skype:${username}',
+      );
+      if (!nativeAppLaunchSucceeded) {
+        // Do something else
+      }
+    }
   }
 
   getTitleText(String title) {

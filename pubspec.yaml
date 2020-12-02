@@ -76,6 +76,7 @@ dependencies:
   permission_handler: ^4.4.0+hotfix.2
   gallery_saver: ^2.0.1
   downloads_path_provider: ^0.1.0
+  # flutter_launch: ^0.2.0
   # open_file: ^3.0.3
   #flutter_lock_screen: ^1.0.8
   # speech_recognition: ^0.3.0+1

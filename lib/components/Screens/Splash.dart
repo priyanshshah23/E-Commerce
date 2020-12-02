@@ -70,12 +70,13 @@ class _SplashState extends State<Splash> {
       width: MathUtilities.screenWidth(context),
       child: Center(
           child: Container(
-              width: getSize(125),
-              height: getSize(125),
+            alignment: Alignment.center,
+              width: getSize(160),
+                height: getSize(160),
               child: Image.asset(
                 splashLogo,
-                width: getSize(125),
-                height: getSize(125),
+                width: getSize(160),
+                height: getSize(160),
               ))),
     );
   }
