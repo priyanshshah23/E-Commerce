@@ -873,7 +873,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://fndevelopapi.democ.in/device/v1/notification/list',
+        'http://pndevelopapi.democ.in/device/v1/notification/list',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
