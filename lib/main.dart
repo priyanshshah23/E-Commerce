@@ -24,14 +24,6 @@ TextDirection deviceTextDirection = TextDirection.ltr;
 
 main() {
   WidgetsFlutterBinding.ensureInitialized();
-  if (kDebugMode) {
-    rootBundle.load('assets/chls/hocharles.pem').then((value) {
-      if (value != null) {
-        SecurityContext.defaultContext
-            .setTrustedCertificatesBytes(value.buffer.asUint8List());
-      }
-    }).catchError((object) => {print(object)});
-  }
   app = KiwiContainer();
   HttpOverrides.global = new MyHttpOverrides();
   setup();
@@ -60,7 +52,7 @@ class _BaseState extends State<Base> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => setState(() async {
+      (_) => setState(() {
         themeData = AppTheme.of(context).theme;
       }),
     );
