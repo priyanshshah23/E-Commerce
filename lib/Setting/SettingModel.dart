@@ -757,18 +757,6 @@ class BottomMenuSetting {
     BottomTabModel model = BottomTabModel(
         image: diamond,
         isCenter: false,
-        title: R.string().screenTitle.statusHold);
-    model.imageColor = appTheme.statusHold;
-    moreMenuList.add(model);
-    model = BottomTabModel(
-        image: diamond,
-        isCenter: false,
-        title: R.string().screenTitle.statusOnMemo);
-    model.imageColor = appTheme.statusOnMemo;
-    moreMenuList.add(model);
-    model = BottomTabModel(
-        image: diamond,
-        isCenter: false,
         title: R.string().screenTitle.statusAvailable);
     model.imageColor = appTheme.statusAvailable;
     moreMenuList.add(model);
@@ -781,15 +769,22 @@ class BottomMenuSetting {
     model = BottomTabModel(
         image: diamond,
         isCenter: false,
+        title: R.string().screenTitle.statusHold);
+    model.imageColor = appTheme.statusHold;
+    moreMenuList.add(model);
+    model = BottomTabModel(
+        image: diamond,
+        isCenter: false,
+        title: R.string().screenTitle.statusOnMemo);
+    model.imageColor = appTheme.statusOnMemo;
+    moreMenuList.add(model);
+
+    model = BottomTabModel(
+        image: diamond,
+        isCenter: false,
         title: R.string().screenTitle.statusOffer);
     model.imageColor = appTheme.statusOffer;
     moreMenuList.add(model);
-    // model = BottomTabModel(
-    //     image: diamond,
-    //     isCenter: false,
-    //     title: R.string().screenTitle.statusMyHold);
-    // model.imageColor = appTheme.statusMyHold;
-    // moreMenuList.add(model);
 
     return moreMenuList;
   }

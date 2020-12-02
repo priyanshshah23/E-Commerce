@@ -79,8 +79,8 @@ class BaseTheme {
   Color get statusHold => fromHex("#DB1C1C");
   Color get statusOnMemo => fromHex("#307BEA");
   Color get statusAvailable => fromHex("#6BC950");
-  Color get statusNew => fromHex("#B256E6");
-  Color get statusOffer => fromHex("#FF4DB8");
+  Color get statusNew => fromHex("#D2B48C");
+  Color get statusOffer => fromHex("#FFC0CB");
   Color get statusMyHold => fromHex("#F1951E");
   Color get textGray => fromHex("#7B7E84");
   Color get drawerTitleColor => fromHex("#EEF1FC");
