@@ -167,8 +167,4 @@ abstract class NetworkService {
 
   @GET(ApiConstants.notificationList)
   Future<NotificationResp> getNotificationList();
-
-  @POST(ApiConstants.uploadKyc)
-  Future<BaseApiResp> uploadKyc(
-      @Path("id") String id, @Body() Map<String, dynamic> req);
 }

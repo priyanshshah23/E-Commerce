@@ -206,7 +206,12 @@ class _SplashState extends State<Splash> {
       callHandler();
     }, () {
       callHandler();
-    }, isNetworkError: false, isProgress: false);
+    },
+        isNetworkError: false,
+        isProgress: false,
+        id: app.resolve<PrefUtils>().isUserLogin()
+            ? app.resolve<PrefUtils>().getUserDetails().id
+            : "");
   }
 
   void callHandler() {

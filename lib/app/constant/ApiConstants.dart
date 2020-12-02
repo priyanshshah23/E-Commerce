@@ -82,7 +82,7 @@ class ApiConstants {
   static const String diamondBidDelete = commonUrl + "diamond-bid/delete";
   static const String shareThroughEmail = apiUrl + "web/v1/diamond/excel";
   static const String notificationList = apiUrl + "device/v1/notification/list";
-  static const String uploadKyc = apiUrl + "web/v1/account/";
+  static const String uploadKyc = "device/v1/account/";
 
   static const String termsCondition = webPageUrl + "terms-condition";
   static const String privacyPolicy = webPageUrl + "privacy-policy";

@@ -54,10 +54,38 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    //SocketManager.instance.connect();
-
-    openDashboard(DiamondModuleConstant.MODULE_TYPE_HOME);
+    User user = app.resolve<PrefUtils>().getUserDetails();
+    if (user.account.isKycUploaded == false) {
+      if (user.kycRequired) {
+        openKYCUpload(DiamondModuleConstant.MODULE_TYPE_UPLOAD_KYC);
+      } else {
+        openDashboard(DiamondModuleConstant.MODULE_TYPE_HOME);
+      }
+    }
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (user.account.isKycUploaded == false) {
+        if (!user.kycRequired) {
+          Timer(
+            Duration(seconds: 2),
+            () => (app.resolve<CustomDialogs>().confirmDialog(context,
+                dismissPopup: false,
+                title: R.string().authStrings.uploadKYC,
+                desc: R.string().authStrings.uploadKycDesc,
+                positiveBtnTitle: R.string().commonString.upload,
+                negativeBtnTitle:
+                    user.kycRequired ? null : R.string().commonString.btnSkip,
+                onClickCallback: (click) {
+              if (click == ButtonType.PositveButtonClick) {
+                NavigationUtilities.pushRoute(
+                  UploadKYCScreen.route,
+                );
+              }
+            })),
+          );
+        }
+      } else {
+        openDashboard(DiamondModuleConstant.MODULE_TYPE_HOME);
+      }
       RxBus.register<DrawerEvent>(tag: eventBusTag).listen((event) {
         if (event.index == DiamondModuleConstant.MODULE_TYPE_OPEN_DRAWER) {
           _scaffoldKey?.currentState?.openDrawer();
@@ -65,46 +93,6 @@ class _HomeScreenState extends State<HomeScreen> {
           manageDrawerClick(context, event.index, event.isPop);
         }
       });
-
-      RxBus.register<bool>(tag: eventBusLogout).listen((event) {
-        //app.resolve<PrefUtils>().resetAndLogout(context);
-      });
-
-      User user = app.resolve<PrefUtils>().getUserDetails();
-      if (user.account.isKycUploaded == false) {
-        app.resolve<CustomDialogs>().confirmDialog(context,
-            dismissPopup: false,
-            title: R.string().authStrings.uploadKYC,
-            desc: R.string().authStrings.uploadKycDesc,
-            positiveBtnTitle: R.string().commonString.upload,
-            negativeBtnTitle: user.kycRequired
-                ? null
-                : R.string().commonString.btnSkip, onClickCallback: (click) {
-          if (click == ButtonType.PositveButtonClick) {
-            NavigationUtilities.pushRoute(
-              UploadKYCScreen.route,
-            );
-          }
-        });
-      }
-
-      // app.resolve<CustomDialogs>().confirmDialog(context,
-      //     title: R.string().authStrings.kYCRejected,
-      //     desc: R.string().authStrings.kycRejectedDesc,
-      //     positiveBtnTitle: R.string().commonString.upload,
-      //     negativeBtnTitle: R.string().commonString.btnSkip,
-      //     onClickCallback: (click) {
-      //   if (click == ButtonType.PositveButtonClick) {
-      //     NavigationUtilities.pushRoute(
-      //       UploadKYCScreen.route,
-      //     );
-      //   }
-      // });
-
-      /*Timer(
-        Duration(seconds: 2),
-        () => (checkVersionUpdate(context)),
-      );*/
     });
   }
 
@@ -142,6 +130,17 @@ class _HomeScreenState extends State<HomeScreen> {
     dict[ArgumentConstant.ModuleType] = moduleType;
     dict[ArgumentConstant.IsFromDrawer] = true;
     currentWidget = Dashboard(
+      dict,
+      key: Key(moduleType.toString()),
+    );
+  }
+
+  openKYCUpload(int moduleType) {
+    selectedType = moduleType;
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.ModuleType] = moduleType;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = UploadKYCScreen(
       dict,
       key: Key(moduleType.toString()),
     );

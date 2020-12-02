@@ -82,16 +82,17 @@ class _DashboardState extends StatefulScreenWidgetState {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      diamondConfig = DiamondConfig(moduleType);
+      diamondConfig.initItems();
 
-    diamondConfig = DiamondConfig(moduleType);
-    diamondConfig.initItems();
+      dashboardConfig = DashboardConfig();
+      dashboardConfig.initItems();
 
-    dashboardConfig = DashboardConfig();
-    dashboardConfig.initItems();
-
-    callApiForDashboard(false);
-    setState(() {
-      //
+      callApiForDashboard(false);
+      setState(() {
+        //
+      });
     });
   }
 

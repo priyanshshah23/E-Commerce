@@ -550,9 +550,9 @@ class CommonString {
     this.deleteItem = "Are you sure you want to delete?",
 
     //Proof
-    this.selectPhotoProof = "Select photo proof document",
+    this.selectPhotoProof = "Select document",
     this.pleaseSelectPhotoProof = "Please select document ",
-    this.selectBusinessProof = "Select business proof document",
+    this.selectBusinessProof = "Select document",
     this.pleaseSelectBusinessProof = "Please select document",
   });
 }

@@ -35,6 +35,7 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_OPEN_DRAWER = 1000;
   static const MODULE_TYPE_HOME = 100;
   static const MODULE_TYPE_FINAL_CALCULATION = 101;
+  static const MODULE_TYPE_UPLOAD_KYC = 102;
 }
 
 class ModulePermissionConstant {

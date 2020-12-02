@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:diamnow/app/AppConfiguration/AppNavigation.dart';
+import 'package:diamnow/app/Helper/NetworkClient.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
@@ -11,6 +12,7 @@ import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/DialogueList.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
@@ -19,11 +21,32 @@ import 'package:flutter/material.dart';
 class UploadKYCScreen extends StatefulScreenWidget {
   static const route = "uploadkyc";
 
+  int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
+  bool isFromDrawer = false;
+
   @override
-  _UploadKYCScreenState createState() => _UploadKYCScreenState();
+  _UploadKYCScreenState createState() => _UploadKYCScreenState(
+        moduleType,
+        isFromDrawer,
+      );
+
+  UploadKYCScreen(
+    Map<String, dynamic> arguments, {
+    Key key,
+  }) {
+    if (arguments != null) {
+      if (arguments[ArgumentConstant.ModuleType] != null) {
+        moduleType = arguments[ArgumentConstant.ModuleType];
+      }
+      if (arguments[ArgumentConstant.IsFromDrawer] != null) {
+        isFromDrawer = arguments[ArgumentConstant.IsFromDrawer];
+      }
+    }
+  }
 }
 
 class _UploadKYCScreenState extends StatefulScreenWidgetState {
+  int moduleType;
   File imgPhotoProof, imgBussinessProff;
   bool isFromDrawer = false;
   String photoErr, bussinessErr;
@@ -43,6 +66,8 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
 
   List<SelectionPopupModel> arrPhotos = [];
   List<SelectionPopupModel> arrBusiness = [];
+
+  _UploadKYCScreenState(this.moduleType, this.isFromDrawer);
   @override
   void initState() {
     super.initState();
@@ -73,15 +98,24 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getAppBar(
-        context,
-        R.string().authStrings.uploadKYC,
-        bgColor: appTheme.whiteColor,
-        leadingButton: isFromDrawer
-            ? getDrawerButton(context, true)
-            : getBackButton(context),
-        centerTitle: false,
-      ),
+      appBar: getAppBar(context, R.string().authStrings.uploadKYC,
+          bgColor: appTheme.whiteColor,
+          leadingButton: isFromDrawer ? SizedBox() : getBackButton(context),
+          centerTitle: false,
+          actionItems: [
+            isFromDrawer
+                ? InkWell(
+                    onTap: () {
+                      logoutFromApp(context);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(right: getSize(16.0)),
+                      child: Container(
+                          child: Image.asset(logout,
+                              width: getSize(24), height: getSize(24))),
+                    ))
+                : SizedBox()
+          ]),
       bottomNavigationBar: getBottomStickyButton(),
       body: Form(
         key: _formKey,
@@ -548,16 +582,17 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
     ];
     dict["isKycUploaded"] = true;
 
-    NetworkCall<BaseApiResp>()
-        .makeCall(
-      () => app
-          .resolve<ServiceModule>()
-          .networkService()
-          .uploadKyc(app.resolve<PrefUtils>().getUserDetails().id, dict),
-      context,
-      isProgress: true,
-    )
-        .then((resp) async {
+    User userData = app.resolve<PrefUtils>().getUserDetails();
+    app.resolve<CustomDialogs>().showProgressDialog(context, "");
+
+    NetworkClient.getInstance.callApi(context, baseURL,
+        ApiConstants.uploadKyc + userData.account.id ?? "", MethodType.Put,
+        headers: NetworkClient.getInstance.getAuthHeaders(),
+        params: dict, successCallback: (response, message) {
+      app.resolve<CustomDialogs>().hideProgressDialog();
+      userData.account = Account.fromJson(response);
+
+      app.resolve<PrefUtils>().saveUser(userData);
       app.resolve<CustomDialogs>().confirmDialog(context,
           title: R.string().authStrings.kycSubmitted,
           desc: R.string().authStrings.kycSubmmittedDesc,
@@ -567,14 +602,14 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
           AppNavigation.shared.movetoHome(isPopAndSwitch: true);
         }
       });
-    }).catchError((onError) {
-      if (onError is ErrorResp) {
-        app.resolve<CustomDialogs>().confirmDialog(context,
-            title: R.string().commonString.error,
-            desc: onError.message,
-            positiveBtnTitle: R.string().commonString.ok,
-            onClickCallback: (click) {});
-      }
+    }, failureCallback: (status, message) {
+      app.resolve<CustomDialogs>().hideProgressDialog();
+      print(message);
+      app.resolve<CustomDialogs>().confirmDialog(context,
+          title: R.string().commonString.error,
+          desc: message,
+          positiveBtnTitle: R.string().commonString.ok,
+          onClickCallback: (click) {});
     });
   }
 }

@@ -232,7 +232,9 @@ Widget getAppBar(BuildContext context, String title,
         ? Text(
             title,
             overflow: TextOverflow.fade,
-            style: appTheme.blackMedium20TitleColorblack,
+            style: appTheme.blackMedium20TitleColorblack.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
             textAlign: textalign ?? TextAlign.center,
           )
         : Container(),
@@ -443,19 +445,18 @@ getFieldTitleText(String text) {
   );
 }
 
-
 openURLWithApp(String uri, BuildContext context, {bool isPop = false}) async {
   if (await canLaunch(uri)) {
     await launch(uri);
-      if(isPop) {
-        Navigator.pop(context);
-      }
+    if (isPop) {
+      Navigator.pop(context);
+    }
   } else {
     app.resolve<CustomDialogs>().confirmDialog(
-      context,
-      title: R.string().commonString.error,
-      desc: "Could not launch",
-      positiveBtnTitle: R.string().commonString.ok,
-    );
+          context,
+          title: R.string().commonString.error,
+          desc: "Could not launch",
+          positiveBtnTitle: R.string().commonString.ok,
+        );
   }
 }

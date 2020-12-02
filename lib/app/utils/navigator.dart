@@ -223,7 +223,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       screen = MyDemandScreen(arguments);
       break;
     case UploadKYCScreen.route:
-      screen = UploadKYCScreen();
+      screen = UploadKYCScreen(arguments);
       break;
     case SearchScreen.route:
       screen = SearchScreen();
