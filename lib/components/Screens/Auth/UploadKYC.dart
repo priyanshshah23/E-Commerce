@@ -100,7 +100,7 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
     return Scaffold(
       appBar: getAppBar(context, R.string().authStrings.uploadKYC,
           bgColor: appTheme.whiteColor,
-          leadingButton: isFromDrawer ? SizedBox() : getBackButton(context),
+          leadingButton: isFromDrawer ? null : getBackButton(context),
           centerTitle: false,
           actionItems: [
             isFromDrawer
