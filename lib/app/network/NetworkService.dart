@@ -167,4 +167,7 @@ abstract class NetworkService {
 
   @POST(ApiConstants.notificationList)
   Future<NotificationResp> getNotificationList(@Body() Map<String, dynamic> req);
+
+  @POST(ApiConstants.markAsReadNotification)
+  Future<NotificationResp> markAsReadNotification(@Body() Map<String, dynamic> req);
 }

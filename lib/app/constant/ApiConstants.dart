@@ -82,6 +82,7 @@ class ApiConstants {
   static const String diamondBidDelete = commonUrl + "diamond-bid/delete";
   static const String shareThroughEmail = apiUrl + "web/v1/diamond/excel";
   static const String notificationList = apiUrl + "device/v1/notification/list";
+  static const String markAsReadNotification = commonUrl + "notification/markAsRead";
   static const String searchReportNo = "web/v1/diamond/reportno/paginate";
   static const String updateOffer = "device/v1/diamond-track/update";
 

@@ -66,6 +66,7 @@ class NotificationModel {
   String user;
   String megaTitle;
   String strDate;
+  bool flagForPastNotificationTime = true;
 
   NotificationModel({
     this.createdAt,

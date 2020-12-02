@@ -22,12 +22,14 @@ class Notifications extends StatefulScreenWidget {
 }
 
 class _NotificationsState extends StatefulScreenWidgetState {
+  bool flagForHandlingNullPastMegaTitle;
   BaseList notificationList;
   int page = DEFAULT_PAGE;
 
   var arrList = List<NotificationModel>();
   @override
   void initState() {
+    flagForHandlingNullPastMegaTitle = false;
     super.initState();
     notificationList = BaseList(BaseListState(
 //      imagePath: noRideHistoryFound,
@@ -81,11 +83,11 @@ class _NotificationsState extends StatefulScreenWidgetState {
       final today = DateTime(now.year, now.month, now.day);
       final yesterday = DateTime(now.year, now.month, now.day - 1);
       for (int i = 0; i < arrList.length; i++) {
-        if (i == 0 || (arrList[i].strDate != arrList[i - 1].strDate)) {
-          var date = DateUtilities().getDateFromString(arrList[i].strDate,
-              formatter: DateUtilities.dd_mm_yyyy_);
+        var date = DateUtilities().getDateFromString(arrList[i].strDate,
+            formatter: DateUtilities.dd_mm_yyyy_);
 
-          final aDate = DateTime(date.year, date.month, date.day);
+        final aDate = DateTime(date.year, date.month, date.day);
+        if (i == 0 || (arrList[i].strDate != arrList[i - 1].strDate)) {
           if (aDate == today) {
             arrList[i].megaTitle = R.string().commonString.today;
           } else if (aDate == yesterday) {
@@ -100,6 +102,13 @@ class _NotificationsState extends StatefulScreenWidgetState {
               break;
             }
           }
+        }
+        if (aDate == today) {
+          arrList[i].flagForPastNotificationTime = false;
+        } else if (aDate == yesterday) {
+          arrList[i].flagForPastNotificationTime = false;
+        } else {
+          arrList[i].flagForPastNotificationTime = true;
         }
       }
       fillArrayList();
@@ -120,7 +129,8 @@ class _NotificationsState extends StatefulScreenWidgetState {
       shrinkWrap: true,
       itemCount: arrList.length,
       itemBuilder: (context, index) {
-        return getNotificationItem(arrList[index], isShowShadow: true);
+        return getNotificationItem(arrList[index],
+            isShowShadow: arrList[index].isRead);
       },
     );
   }
@@ -167,92 +177,133 @@ class _NotificationsState extends StatefulScreenWidgetState {
                 ),
               )
             : Container(),
-        Container(
-          margin: EdgeInsets.only(
-            left: getSize(16),
-            right: getSize(16),
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Container(
-                    margin: EdgeInsets.only(
-                      top: getSize(8),
-                      bottom: getSize(8),
-                    ),
-                    padding: EdgeInsets.only(
-                      // left: getSize(35),
-                      left: getSize(10),
-                      right: getSize(10),
-                      top: getSize(10),
-                      bottom: getSize(10),
-                    ),
-                    decoration: BoxDecoration(
-                      color: appTheme.whiteColor,
-                      boxShadow: isShowShadow
-                          ? [
-                              BoxShadow(
-                                  color: appTheme.lightColorPrimary,
-                                  blurRadius: getSize(10),
-                                  spreadRadius: getSize(2),
-                                  offset: Offset(1, 8)),
-                            ]
-                          : null,
-                      border: isShowShadow
-                          ? null
-                          : Border.all(color: appTheme.dividerColor),
-                      borderRadius: BorderRadius.circular(getSize(5)),
-                    ),
-                    child: Padding(
+        InkWell(
+          onTap: () {
+            callApiForMakeNotificationMarkAsRead(model.id);
+          },
+          child: Container(
+            margin: EdgeInsets.only(
+              left: getSize(16),
+              right: getSize(16),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                      margin: EdgeInsets.only(
+                        top: getSize(8),
+                        bottom: getSize(8),
+                      ),
                       padding: EdgeInsets.only(
+                        // left: getSize(35),
                         left: getSize(10),
                         right: getSize(10),
+                        top: getSize(10),
+                        bottom: getSize(10),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            model.title ?? "-",
-                            style: appTheme.black14TextStyle.copyWith(
-                              fontWeight: FontWeight.w500,
+                      decoration: BoxDecoration(
+                        color: appTheme.whiteColor,
+                        boxShadow: isShowShadow
+                            ? [
+                                BoxShadow(
+                                    color: appTheme.lightColorPrimary,
+                                    blurRadius: getSize(10),
+                                    spreadRadius: getSize(2),
+                                    offset: Offset(1, 8)),
+                              ]
+                            : null,
+                        border: isShowShadow
+                            ? null
+                            : Border.all(color: appTheme.dividerColor),
+                        borderRadius: BorderRadius.circular(getSize(5)),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: getSize(10),
+                          right: getSize(10),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              model.title ?? "-",
+                              style: appTheme.black14TextStyle.copyWith(
+                                fontWeight: FontWeight.w500,
+                              ),
+                              maxLines: 2,
+                              textAlign: TextAlign.start,
                             ),
-                            maxLines: 2,
-                            textAlign: TextAlign.start,
-                          ),
-                          SizedBox(
-                            height: getSize(5),
-                          ),
-                          Text(
-                            model.message ?? "-",
-                            style: appTheme.black12TextStyle,
-                            softWrap: true,
-                            maxLines: 2,
-                            textAlign: TextAlign.start,
-                          ),
-                          SizedBox(
-                            height: getSize(5),
-                          ),
-                          Text(
-                            TimeAgo.timeAgoSinceDate(DateUtilities()
-                                .getDateFromString(
-                                    DateUtilities()
-                                        .convertServerDateToFormatterString(
-                                            model.createdAt ?? "",
-                                            formatter:
-                                                DateUtilities.dd_mm_yyyy_hh_mm),
-                                    formatter: DateUtilities.dd_mm_yyyy_hh_mm)),
-                            style: appTheme.grey12HintTextStyle,
-                            maxLines: 2,
-                            textAlign: TextAlign.start,
-                          ),
-                        ],
-                      ),
-                    )),
-              ),
-            ],
+                            SizedBox(
+                              height: getSize(5),
+                            ),
+                            Text(
+                              model.message ?? "-",
+                              style: appTheme.black12TextStyle,
+                              softWrap: true,
+                              maxLines: 2,
+                              textAlign: TextAlign.start,
+                            ),
+                            SizedBox(
+                              height: getSize(5),
+                            ),
+                            getNotificationTime(model),
+                          ],
+                        ),
+                      )),
+                ),
+              ],
+            ),
           ),
         ),
       ],
+    );
+  }
+
+  getNotificationTime(NotificationModel model) {
+    if (!model.flagForPastNotificationTime) {
+      return Text(
+        TimeAgo.timeAgoSinceDate(DateUtilities().getDateFromString(
+            DateUtilities().convertServerDateToFormatterString(
+                model.createdAt ?? "",
+                formatter: DateUtilities.dd_mm_yyyy_hh_mm),
+            formatter: DateUtilities.dd_mm_yyyy_hh_mm)),
+        style: appTheme.grey12HintTextStyle,
+        maxLines: 2,
+        textAlign: TextAlign.start,
+      );
+    } else  {
+      return Text(
+        DateUtilities().convertDateToFormatterString(
+            DateUtilities().convertServerDateToFormatterString(
+                model.createdAt ?? "",
+                formatter: DateUtilities.dd_mm_yyyy_hh_mm_ss_a),
+            formatter: DateUtilities.dd_mm_yyyy_hh_mm_ss_a),
+        style: appTheme.grey12HintTextStyle,
+        maxLines: 2,
+        textAlign: TextAlign.start,
+      );
+    }
+  }
+
+  callApiForMakeNotificationMarkAsRead(String notificationId) {
+    Map<String, dynamic> req = {};
+    req["id"] = notificationId;
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+      () => app
+          .resolve<ServiceModule>()
+          .networkService()
+          .markAsReadNotification(req),
+      context,
+      isProgress: true,
+    )
+        .then((resp) async {
+      print("notification Readed");
+    }).catchError(
+      (onError) => {
+        if (onError is ErrorResp) print(onError),
+      },
     );
   }
 
@@ -364,7 +415,7 @@ class TimeAgo {
           formatter: DateUtilities.dd_mm_yyyy_hh_mm);
     } else if ((difference.inDays / 7).floor() >= 1) {
       return (numericDates)
-          ? R.string().commonString.weekAgo
+          ? '${(difference.inDays / 7).floor()} ${R.string().commonString.weekAgo}'
           : R.string().commonString.lastWeek;
     } else if (difference.inDays >= 2) {
       return '${difference.inDays} ${R.string().commonString.dayAgo}';
@@ -373,13 +424,13 @@ class TimeAgo {
           ? R.string().commonString.onedayAgo
           : R.string().commonString.yesterday;
     } else if (difference.inHours >= 2) {
-      return '${difference.inHours} ${R.string().commonString.weekAgo}';
+      return '${difference.inHours} ${R.string().commonString.hourAgo}';
     } else if (difference.inHours >= 1) {
       return (numericDates)
           ? R.string().commonString.onehourAgo
           : R.string().commonString.anhourAgo;
     } else if (difference.inMinutes >= 2) {
-      return '${difference.inMinutes} ${R.string().commonString.weekAgo}';
+      return '${difference.inMinutes} ${R.string().commonString.mintuesAgo}';
     } else if (difference.inMinutes >= 1) {
       return (numericDates)
           ? R.string().commonString.onemintuesAgo
