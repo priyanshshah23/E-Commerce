@@ -61,7 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
       } else {
         openDashboard(DiamondModuleConstant.MODULE_TYPE_HOME);
       }
+    } else {
+      openDashboard(DiamondModuleConstant.MODULE_TYPE_HOME);
     }
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (user.account.isKycUploaded == false) {
         if (!user.kycRequired) {
