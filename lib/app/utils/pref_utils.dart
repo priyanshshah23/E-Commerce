@@ -34,6 +34,8 @@ class PrefUtils {
 
   String get keyIsShowThemeSelection => "keyIsShowThemeSelection";
 
+  String get keyToSetBiometricenabled => "keyToSetBiometricenabled";
+
   String get FILE_DEVIDE_INFO => "deviceDetail";
 
   String get keyMasterSyncDate => "keyMasterSyncDate";
@@ -128,12 +130,20 @@ class PrefUtils {
     _preferences.setBool(keyIsShowThemeSelection, showThemeSelection);
   }
 
+  void setBiometrcisUsage(bool value) {
+    _preferences.setBool(keyToSetBiometricenabled, value);
+  }
+
   void saveSkipUpdate(bool val) {
     _preferences.setBool(skipUpdate, val);
   }
 
   bool getSkipUpdate() {
     return getBool(skipUpdate);
+  }
+
+  bool getBiometrcis() {
+    return getBool(keyToSetBiometricenabled);
   }
 
   String getMasterSyncDate() {

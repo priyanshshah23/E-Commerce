@@ -301,6 +301,10 @@ class CommonString {
   final String justNow;
   final String today;
   final String past;
+  final String selectPhotoProof;
+  final String pleaseSelectPhotoProof;
+  final String selectBusinessProof;
+  final String pleaseSelectBusinessProof;
 
   const CommonString({
     //filterScreen
@@ -592,5 +596,11 @@ class CommonString {
     this.justNow = "Just Now",
     this.today = "Today",
     this.past = "Past",
+
+    //Proof
+    this.selectPhotoProof = "Select document",
+    this.pleaseSelectPhotoProof = "Please select document ",
+    this.selectBusinessProof = "Select document",
+    this.pleaseSelectBusinessProof = "Please select document",
   });
 }

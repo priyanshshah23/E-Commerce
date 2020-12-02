@@ -7,6 +7,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Auth/ForgetPassword.dart';
 import 'package:diamnow/components/Screens/Auth/Signup.dart';
@@ -21,6 +22,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:local_auth/auth_strings.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:package_info/package_info.dart';
 
 import '../../../app/utils/navigator.dart';
@@ -60,6 +63,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
 
   String selectedLanguage = R.string().commonString.language;
   bool isCheckBoxSelected = false;
+  final LocalAuthentication auth = LocalAuthentication();
 
   @override
   void initState() {
@@ -381,6 +385,26 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                         ],
                                       ),
                                     ),
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          top: getSize(10), left: getSize(0)),
+                                      child: AppButton.flat(
+                                        onTap: () {
+                                          // NavigationUtilities.pushRoute(
+                                          //     GuestSignInScreen.route);
+                                        },
+                                        textColor: appTheme.colorPrimary,
+                                        backgroundColor: appTheme.colorPrimary
+                                            .withOpacity(0.1),
+                                        borderRadius: getSize(5),
+                                        fitWidth: true,
+                                        text: R
+                                            .string()
+                                            .authStrings
+                                            .signInAsGuest,
+                                        //isButtonEnabled: enableDisableSigninButton(),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ],
@@ -539,35 +563,25 @@ class LoginScreenState extends StatefulScreenWidgetState {
             () => app.resolve<ServiceModule>().networkService().login(req),
             context,
             isProgress: true)
-        .then((loginResp) async {
-      // save Logged In user
-      if (loginResp.data != null) {
-        app.resolve<PrefUtils>().saveUser(loginResp.data.user);
-        await app.resolve<PrefUtils>().saveUserToken(
-              loginResp.data.token.jwt,
-            );
-        await app.resolve<PrefUtils>().saveUserPermission(
-              loginResp.data.userPermissions,
-            );
-        await app
-            .resolve<PrefUtils>()
-            .saveBoolean("rememberMe", isCheckBoxSelected);
-        await app
-            .resolve<PrefUtils>()
-            .saveString("userName", userNameController.text);
-        await app
-            .resolve<PrefUtils>()
-            .saveString("passWord", _passwordController.text);
-      }
-
-      SyncManager.instance
-          .callMasterSync(NavigationUtilities.key.currentContext, () async {
-        //success
-        AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-      }, () {},
-              isNetworkError: false,
-              isProgress: true,
-              id: loginResp.data.user.id).then((value) {});
+        .then((loginResp) {
+      auth.canCheckBiometrics.then((value) {
+        if (value) {
+          app.resolve<CustomDialogs>().confirmDialog(context,
+              title: "",
+              desc: "Enable touchId to unlock $APPNAME?",
+              positiveBtnTitle: R.string().commonString.ok,
+              negativeBtnTitle: R.string().commonString.cancel,
+              onClickCallback: (buttonType) async {
+            if (buttonType == ButtonType.PositveButtonClick) {
+              askForBioMetrics(loginResp)();
+            } else {
+              saveUserResponse(loginResp);
+            }
+          });
+        } else {
+          saveUserResponse(loginResp);
+        }
+      });
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
@@ -579,6 +593,193 @@ class LoginScreenState extends StatefulScreenWidgetState {
       }
     });
   }
+
+  askForBioMetrics(LoginResp loginResp) async {
+    try {
+      bool isAuthenticated = await auth.authenticateWithBiometrics(
+        localizedReason: 'authenticate to access',
+        useErrorDialogs: false,
+        stickyAuth: false,
+      );
+      print(isAuthenticated);
+      if (isAuthenticated) {
+        app.resolve<PrefUtils>().setBiometrcisUsage(true);
+        saveUserResponse(loginResp);
+      } else {
+        saveUserResponse(loginResp);
+      }
+    } on PlatformException catch (e) {
+      print(e.message);
+      saveUserResponse(loginResp);
+    }
+  }
+
+  saveUserResponse(LoginResp loginResp) async {
+    // save Logged In user
+    if (loginResp.data != null) {
+      app.resolve<PrefUtils>().saveUser(loginResp.data.user);
+      await app.resolve<PrefUtils>().saveUserToken(
+            loginResp.data.token.jwt,
+          );
+      await app.resolve<PrefUtils>().saveUserPermission(
+            loginResp.data.userPermissions,
+          );
+      await app
+          .resolve<PrefUtils>()
+          .saveBoolean("rememberMe", isCheckBoxSelected);
+      await app
+          .resolve<PrefUtils>()
+          .saveString("userName", userNameController.text);
+      await app
+          .resolve<PrefUtils>()
+          .saveString("passWord", _passwordController.text);
+
+      // print(app.resolve<PrefUtils>().getBool("rememberMe"));
+      // print(app.resolve<PrefUtils>().getString("userName"));
+      // print(app.resolve<PrefUtils>().getString("passWord"));
+    }
+//      NavigationUtilities.pushRoute(Notifications.route);
+    // callVersionUpdateApi(id: loginResp.data.user.id); //for local
+    SyncManager().callVersionUpdateApi(context, VersionUpdateApi.logIn,
+        id: loginResp.data.user.id);
+  }
+  // void callVersionUpdateApi({String id}) {
+  //   NetworkCall<VersionUpdateResp>()
+  //       .makeCall(
+  //           () => app
+  //               .resolve<ServiceModule>()
+  //               .networkService()
+  //               .getVersionUpdate(),
+  //           context,
+  //           isProgress: true)
+  //       .then(
+  //     (resp) {
+  //       if (resp.data != null) {
+  //         PackageInfo.fromPlatform().then(
+  //           (PackageInfo packageInfo) {
+  //             String appName = packageInfo.appName;
+  //             String packageName = packageInfo.packageName;
+  //             String version = packageInfo.version;
+  //             String buildNumber = packageInfo.buildNumber;
+  //             if (Platform.isIOS) {
+  //               print("iOS");
+  //               if (resp.data.ios != null) {
+  //                 num respVersion = resp.data.ios.number;
+
+  //                 if (num.parse(version) < respVersion) {
+  //                   bool hardUpdate = resp.data.ios.isHardUpdate;
+
+  //                   Map<String, dynamic> dict = new HashMap();
+  //                   dict["isHardUpdate"] = hardUpdate;
+  //                   dict["oncomplete"] = () {
+  //                     SyncManager.instance.callMasterSync(
+  //                         NavigationUtilities.key.currentContext, () async {
+  //                       //success
+  //                       AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+  //                     }, () {},
+  //                         isNetworkError: false,
+  //                         isProgress: true,
+  //                         id: id).then((value) {});
+  //                   };
+  //                   if (hardUpdate == true) {
+  //                     app.resolve<PrefUtils>().saveSkipUpdate(false);
+  //                     NavigationUtilities.pushReplacementNamed(
+  //                         VersionUpdate.route,
+  //                         args: dict);
+  //                   } else {
+  //                     if (app.resolve<PrefUtils>().getSkipUpdate() == false) {
+  //                       NavigationUtilities.pushReplacementNamed(
+  //                           VersionUpdate.route,
+  //                           args: dict);
+  //                     } else {
+  //                       SyncManager.instance.callMasterSync(
+  //                           NavigationUtilities.key.currentContext, () async {
+  //                         //success
+  //                         AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+  //                       }, () {},
+  //                           isNetworkError: false,
+  //                           isProgress: true,
+  //                           id: id).then((value) {});
+  //                     }
+  //                   }
+  //                 } else {
+  //                   SyncManager.instance.callMasterSync(
+  //                       NavigationUtilities.key.currentContext, () async {
+  //                     //success
+  //                     AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+  //                   }, () {},
+  //                       isNetworkError: false,
+  //                       isProgress: true,
+  //                       id: id).then((value) {});
+  //                 }
+  //               }
+  //             } else {
+  //               print("Android");
+  //               if (resp.data.android != null) {
+  //                 num respVersion = resp.data.android.number;
+  //                 if (num.parse(buildNumber) < respVersion) {
+  //                   bool hardUpdate = resp.data.android.isHardUpdate;
+  //                   Map<String, dynamic> dict = new HashMap();
+  //                   dict["isHardUpdate"] = hardUpdate;
+  //                   dict["oncomplete"] = () {
+  //                     SyncManager.instance.callMasterSync(
+  //                         NavigationUtilities.key.currentContext, () async {
+  //                       //success
+  //                       AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+  //                     }, () {},
+  //                         isNetworkError: false,
+  //                         isProgress: true,
+  //                         id: id).then((value) {});
+  //                   };
+  //                   if (hardUpdate == true) {
+  //                     app.resolve<PrefUtils>().saveSkipUpdate(false);
+  //                     NavigationUtilities.pushReplacementNamed(
+  //                         VersionUpdate.route,
+  //                         args: dict);
+  //                   } else {
+  //                     if (app.resolve<PrefUtils>().getSkipUpdate() == false) {
+  //                       NavigationUtilities.pushReplacementNamed(
+  //                           VersionUpdate.route,
+  //                           args: dict);
+  //                     } else {
+  //                       SyncManager.instance.callMasterSync(
+  //                           NavigationUtilities.key.currentContext, () async {
+  //                         //success
+  //                         AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+  //                       }, () {},
+  //                           isNetworkError: false,
+  //                           isProgress: true,
+  //                           id: id).then((value) {});
+  //                     }
+  //                   }
+  //                 } else {
+  //                   SyncManager.instance.callMasterSync(
+  //                       NavigationUtilities.key.currentContext, () async {
+  //                     //success
+  //                     AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+  //                   }, () {},
+  //                       isNetworkError: false,
+  //                       isProgress: true,
+  //                       id: id).then((value) {});
+  //                 }
+  //               }
+  //             }
+  //           },
+  //         );
+  //       }
+  //     },
+  //   ).catchError(
+  //     (onError) => {
+  //       app.resolve<CustomDialogs>().confirmDialog(context,
+  //           title: R.string().errorString.versionError,
+  //           desc: onError.message,
+  //           positiveBtnTitle: R.string().commonString.btnTryAgain,
+  //           onClickCallback: (PositveButtonClick) {
+  //         callVersionUpdateApi(id: id);
+  //       }),
+  //     },
+  //   );
+  // }
 
   Future<bool> onWillPop() {
     SystemChannels.platform.invokeMethod('SystemNavigator.pop');

@@ -60,10 +60,10 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>skype</string>
+		<string>whatsapp</string>
 	</array>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-	<string>whatsapp</string>
-	</array>
+	<key>NSFaceIDUsageDescription</key>
+<string>This app uses your face Id to unlock application.</string>
+
 </dict>
 </plist>

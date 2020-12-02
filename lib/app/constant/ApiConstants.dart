@@ -4,12 +4,12 @@ import '../app.export.dart';
 
 class ApiConstants {
   //  static const String PROXY_URL = "PROXY 192.168.2.124:8888";
-  static String PROXY_URL =
-      Platform.isIOS ? "PROXY 192.168.0.114:8888" : "PROXY 192.168.0.116:8888";
+  static String PROXY_URL = "PROXY 192.168.0.114:8888";
 //    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 
   static const String imageBaseURL = baseURL;
-  static const String shareUrl = "http://pndevelop.democ.in/diamond-details/";
+  static const String webPageUrl = "http://pndevelopapi.democ.in/";
+  static const String shareUrl = "http://fndevelop.democ.in/diamond-details/";
 
   static const String apiUrl = baseURL;
   static const String commonUrl = apiUrl + "device/v1/";
@@ -88,6 +88,13 @@ class ApiConstants {
 
   //Excel
   static const String baseURLForExcel = "http://pndevelopapi.democ.in/data";
+  static const String uploadKyc = "device/v1/account/";
+
+  static const String termsCondition = webPageUrl + "terms-condition";
+  static const String privacyPolicy = webPageUrl + "privacy-policy";
+  static const String contactUs = webPageUrl + "contact-us";
+  static const String shippingPolicy = webPageUrl + "shipping-policy";
+  static const String aboutUs = webPageUrl + "about-us";
 }
 
 class DiamondUrls {

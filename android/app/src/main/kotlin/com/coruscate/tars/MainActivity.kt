@@ -21,10 +21,11 @@ import com.google.android.gms.common.api.GoogleApiClient
 //import com.google.android.gms.location.LocationSettingsRequest
 //import com.google.android.gms.location.LocationSettingsStatusCodes
 import io.flutter.app.FlutterActivity
+import io.flutter.app.FlutterFragmentActivity
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugins.GeneratedPluginRegistrant
 
-class MainActivity : FlutterActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+class MainActivity : FlutterFragmentActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private val REQUEST_CHECK_SETTINGS_GPS = 100
     private val GPS_CHANNEL = "GPS_CHANNEL"

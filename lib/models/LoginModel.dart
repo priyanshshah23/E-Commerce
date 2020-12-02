@@ -112,8 +112,6 @@ class User {
   bool isActive;
   int isVerified;
 
- 
-
 //  Null androidPlayerId;
 //  Null iosPlayerId;
   int status;
@@ -160,7 +158,7 @@ class User {
   bool isTermsCondAgree;
   String termsCondAgreeAt;
   String address;
-
+  bool kycRequired;
 //  Null loginOtp;
   String group;
 
@@ -173,7 +171,6 @@ class User {
   String country;
   String city;
   String state;
-
 
 //  Null createdBy;
 
@@ -266,16 +263,16 @@ class User {
         : null;
     seller = json['seller'];
 
-    if(json['city'] is Map<String,dynamic>){
+    if (json['city'] is Map<String, dynamic>) {
       city = json['city']['name'];
     }
-    if(json['country'] is Map<String,dynamic>){
+    if (json['country'] is Map<String, dynamic>) {
       country = json['country']['name'];
     }
-    if(json['state'] is Map<String,dynamic>){
+    if (json['state'] is Map<String, dynamic>) {
       state = json['state']['name'];
     }
-
+    kycRequired = json["kycRequired"] ?? false;
 
     // city  = json['city'];
     // state = json['state'];
@@ -283,7 +280,6 @@ class User {
     // city = json["city"] != null ? json['city'] is String ? json['city'] : new CityList.fromJson(json['city']) : null;
     // state = json["state"] != null ? json['state'] is String ? json['state'] : new CityList.fromJson(json['state']) : null;
     // country = json["country"] != null ? json['country'] is String ? json['country'] : new CityList.fromJson(json['country']) : null;
-
   }
 
   Map<String, dynamic> toJson() {
@@ -370,6 +366,7 @@ class User {
       data['accountTerm'] = this.accountTerm.toJson();
     }
     data['seller'] = this.seller;
+    data["kycRequired"] = this.kycRequired;
     return data;
   }
 
@@ -385,7 +382,6 @@ class User {
     return fn + " " + ln;
   }
 }
-
 
 class FingerPrints {
   String fingerPrint;
@@ -586,6 +582,7 @@ class Account {
   StateList state;
   CityList city;
   List<Kyc> kyc;
+  bool isKycUploaded;
 
   Account.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
@@ -678,6 +675,7 @@ class Account {
     if (json["city"] is Map<String, dynamic>) {
       city = json['city'] != null ? new CityList.fromJson(json['city']) : null;
     }
+    isKycUploaded = json["isKycUploaded"] ?? false;
   }
 
   Map<String, dynamic> toJson() {
@@ -755,6 +753,7 @@ class Account {
     data['country'] = this.country;
     data['state'] = this.state;
     data['city'] = this.city;
+    data["isKycUploaded"] = this.isKycUploaded;
     return data;
   }
 }
