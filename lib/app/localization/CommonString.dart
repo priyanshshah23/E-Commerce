@@ -542,7 +542,7 @@ class CommonString {
     this.documents = "Documents",
     this.noSlotFound = "No slots found",
     this.noDiamondFound =
-        "No Diamond Found, Please select different search parameter. \n\n Or \n\n Add demand for your search criteria",
+        "No Diamonds matching your search. Please add you demand.",
     this.selectType = "Select Virtual Type",
     this.noSavedSearch = "No Saved Search Exists",
     this.searchCity = "Search city",

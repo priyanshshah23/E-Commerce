@@ -385,7 +385,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                         ],
                                       ),
                                     ),
-                                    Container(
+                                    /*Container(
                                       margin: EdgeInsets.only(
                                           top: getSize(10), left: getSize(0)),
                                       child: AppButton.flat(
@@ -404,7 +404,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                             .signInAsGuest,
                                         //isButtonEnabled: enableDisableSigninButton(),
                                       ),
-                                    ),
+                                    ),*/
                                   ],
                                 ),
                               ],
