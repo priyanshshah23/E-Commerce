@@ -1235,8 +1235,12 @@ class _PersonalInformationState extends State<PersonalInformation>
       selectedDialogCountryForMobile =
           CountryPickerUtils.getCountryByPhoneCode(resp.data.countryCode);
       _whatsAppMobileController.text = resp.data.whatsapp;
-      selectedDialogCountryForWhatsapp =
-          CountryPickerUtils.getCountryByPhoneCode(resp.data.whatsappCounCode);
+      if (!isNullEmptyOrFalse(resp.data.whatsappCounCode)) {
+        selectedDialogCountryForWhatsapp =
+            CountryPickerUtils.getCountryByPhoneCode(
+                resp.data.whatsappCounCode);
+      }
+
       _emailController.text = resp.data.email;
       image = resp.data.profileImage;
       _countryController.text = resp.data.country;
