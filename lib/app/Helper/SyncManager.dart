@@ -528,7 +528,9 @@ class SyncManager {
       // success(diamondListResp);
       String url = ApiConstants.baseURLForExcel + excelApiResponse.data.data;
       print("Excel file URL : " + url);
-      url = "https://docs.google.com/viewer?embedded=true&url=" + url;
+      if (!Platform.isIOS) {
+        url = "https://docs.google.com/viewer?embedded=true&url=" + url;
+      }
       print("Final ExcelFile Viewer Url : " + url);
 
       //navigate to static page...
