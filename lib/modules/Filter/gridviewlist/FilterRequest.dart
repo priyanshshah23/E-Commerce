@@ -230,21 +230,24 @@ class FilterDataSource {
 
               List<dynamic> arrSelected =
                   arr.map((e) => e[item.apiKey]).toList();
+              List<dynamic> arrDup = arr.map((e) => e[item.apiKey]).toList();
 
-              for (var model in arrSelected) {
-                List<Master> arrMaster = item.masters.where((element) {
-                  return element.group.split("-")[0].toString() ==
-                          model[">="].toString() &&
-                      element.group.split("-")[1].toString() ==
-                          model["<="].toString();
-                }).toList();
-                if (!isNullEmptyOrFalse(arrMaster)) {
-                  arrMaster.first.isSelected = true;
-                } else {
-                  item.caratRangeChipsToShow
-                      .add("${model[">="]}-${model["<="]}");
+              for (var master in item.masters) {
+                for (var tCarat in master.grouped) {
+                  for (var model in arrSelected) {
+                    if (tCarat.fromCarat == num.parse(model[">="].toString()) &&
+                        tCarat.toCarat == num.parse(model["<="].toString())) {
+                      tCarat.isSelected = true;
+                      master.isSelected = true;
+                      arrDup.remove(model);
+                    }
+                  }
                 }
               }
+              arrDup.forEach((element) {
+                item.caratRangeChipsToShow
+                    .add("${element[">="]}-${element["<="]}");
+              });
             }
           } else {
             if (item.masterCode == MasterCode.canadamarkparent) {
