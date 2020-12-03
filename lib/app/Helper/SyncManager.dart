@@ -469,7 +469,7 @@ class SyncManager {
                 } else {
                   //for signinwithmpin / signinwithguest
                   if (screenConstant == VersionUpdateApi.signInWithMpin ||
-                      screenConstant == VersionUpdateApi.signInAsGuest) {
+                      screenConstant == VersionUpdateApi.signInAsGuest || screenConstant == VersionUpdateApi.logIn) {
                     SyncManager.instance.callMasterSync(
                         NavigationUtilities.key.currentContext, () async {
                       //success

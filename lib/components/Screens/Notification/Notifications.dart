@@ -5,6 +5,7 @@ import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
+import 'package:diamnow/components/Screens/Notification/NotificationManager.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/Notification/NotificationModel.dart';
 import 'package:flutter/cupertino.dart';
@@ -179,7 +180,11 @@ class _NotificationsState extends StatefulScreenWidgetState {
             : Container(),
         InkWell(
           onTap: () {
-            callApiForMakeNotificationMarkAsRead(model.id);
+            if (model.isRead == false) {
+              callApiForMakeNotificationMarkAsRead(model.id);
+            } else {
+              app.resolve<NotificationManger>().notificationRedirection(model);
+            }
           },
           child: Container(
             margin: EdgeInsets.only(
@@ -289,7 +294,7 @@ class _NotificationsState extends StatefulScreenWidgetState {
     Map<String, dynamic> req = {};
     req["id"] = notificationId;
 
-    NetworkCall<BaseApiResp>()
+    NetworkCall<NotificationResp>()
         .makeCall(
       () => app
           .resolve<ServiceModule>()
@@ -301,8 +306,7 @@ class _NotificationsState extends StatefulScreenWidgetState {
         .then((resp) async {
       print("notification Readed");
       //Redirection from notification.
-      // if(resp.)
-
+      app.resolve<NotificationManger>().notificationRedirection(resp.data.list.first);
     }).catchError(
       (onError) => {
         if (onError is ErrorResp) print(onError),
