@@ -54,6 +54,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       isSwitched = app.resolve<PrefUtils>().getBiometrcis() ?? false;
       availableBiometrics = await auth.getAvailableBiometrics();
+      setState(() {});
     });
   }
 
