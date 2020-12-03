@@ -289,7 +289,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       arrOfCertificates.add(
         DiamondDetailImagePagerModel(
           title: "Certificate",
-          url: DiamondUrls.certificate + diamondModel.rptNo + ".pdf",
+          url: ApiConstants.googleDocUrl +  DiamondUrls.certificate + diamondModel.rptNo + ".pdf",
           isSelected: true,
           isImage: false,
         ),
@@ -300,7 +300,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       arrImages.add(
         DiamondDetailImagePagerModel(
             title: "Certificate",
-            url: DiamondUrls.certificate + diamondModel.rptNo + ".pdf",
+            url: ApiConstants.googleDocUrl + DiamondUrls.certificate + diamondModel.rptNo + ".pdf",
             isSelected: false,
             isImage: false,
             arr: arrOfCertificates),
