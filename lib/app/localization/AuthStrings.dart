@@ -166,7 +166,14 @@ class AuthStrings {
   final String kYCRejected;
   final String kycRejectedDesc;
 
+  //company information
+  final String editCompanyInformation;
+  final String selectNatureOfOrganization;
+
   const AuthStrings({
+    //company information
+    this.editCompanyInformation = "Edit Company Information",
+    this.selectNatureOfOrganization = "Select Nature Of Organization",
     // Login
     this.setNewPassword = "Set your new password and sign in again.",
     this.enterCompanyName = "Please enter Company Name.",
@@ -180,14 +187,14 @@ class AuthStrings {
     this.addressLineThree = "Address 3",
     this.oldPassword = "Old Password",
     this.skype = "Skype",
-    this.whatsApp = "Whatsapp*",
+    this.whatsApp = "Whatsapp",
     this.pinCode = "PinCode*",
     this.verifyMobileDesc =
         "Please verify mobile number to update the profile.",
     this.verifyNow = 'Verify Now',
     this.password = "Password",
     this.backToHome = "Go to Home",
-    this.forgotPassword = "Forgot Your Password?",
+    this.forgotPassword = "Forgot Password?",
     this.signInCap = "Sign In",
     this.moveToLogIn = 'Move to Log In',
     this.dontHaveAnAccount = " to set up your account.",

@@ -125,6 +125,7 @@ class clickConstant {
   static const CLICK_TYPE_SELECTION = 2;
   static const CLICK_TYPE_CONFIRM = 3;
   static const CLICK_TYPE_DELETE = 4;
+  static const CLICK_TYPE_OFFER_EDIT = 5;
 }
 
 class DiamondBlockType {

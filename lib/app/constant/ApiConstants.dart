@@ -82,6 +82,13 @@ class ApiConstants {
   static const String diamondBidDelete = commonUrl + "diamond-bid/delete";
   static const String shareThroughEmail = apiUrl + "web/v1/diamond/excel";
   static const String notificationList = apiUrl + "device/v1/notification/list";
+  static const String markAsReadNotification =
+      commonUrl + "notification/markAsRead";
+  static const String searchReportNo = "web/v1/diamond/reportno/paginate";
+  static const String updateOffer = "device/v1/diamond-track/update";
+
+  //Excel
+  static const String baseURLForExcel = "http://pndevelopapi.democ.in/data";
   static const String uploadKyc = "device/v1/account/";
 
   static const String termsCondition = webPageUrl + "terms-condition";
@@ -92,18 +99,20 @@ class ApiConstants {
 }
 
 class DiamondUrls {
-  static const String commonUrl =
-      "https://s3.ap-south-1.amazonaws.com/finestargroup/";
-  static const String image = commonUrl + "RealImages/";
-  static const String video = commonUrl + "viewer3/html/";
-  static const String heartImage = commonUrl + "HeartImages/";
+  static const String commonUrl = "http://cdn.pndiamonds.com/";
+  static const String image = commonUrl + "stonevideos/StoneImage_04-01-2020/";
+  static const String video = commonUrl + "stonevideos/StoneImage_04-01-2020/";
+  static const String heartImage =
+      commonUrl + "stonevideos/StoneImage_04-01-2020/";
   static const String plotting = commonUrl + "PlottingImages/";
-  static const String certificate = commonUrl + "CertiImages/";
-  static const String arroImage = commonUrl + "ArrowImages/";
+  static const String certificate = commonUrl + "certificates/";
+  static const String arroImage =
+      commonUrl + "stonevideos/StoneImage_04-01-2020/";
   static const String videomp4 = commonUrl + "Mov/";
   static const String roughVideo = commonUrl + "MFG/RoughVideo/";
   static const String polVideo = commonUrl + "viewer3/mp4_videos/";
-  static const String assetImage = commonUrl + "AssetScopeImages/";
+  static const String assetImage =
+      commonUrl + "stonevideos/StoneImage_04-01-2020/";
   static const String flouresenceImg = commonUrl + "FlsImages/";
   static const String idealScopeImg = commonUrl + "IDEAL_White_BG/";
   static const String darkFieldImg = commonUrl + "Dark_Field_White_BG/";

@@ -28,39 +28,6 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
     if (widget.keyToSymbol.verticalScroll) {
       widget.keyToSymbol.title = "";
 
-      if (widget.keyToSymbol.isShowAll == true) {
-        if (widget.keyToSymbol.masters
-                .where((element) => element.sId == R.string().commonString.all)
-                .toList()
-                .length ==
-            0) {
-          Master allMaster = Master();
-          allMaster.sId = R.string().commonString.all;
-          allMaster.webDisplay = R.string().commonString.all;
-          allMaster.isSelected = false;
-
-          widget.keyToSymbol.masters.insert(0, allMaster);
-        }
-      }
-
-      //code for showMore & showLess functionality.
-      // if (widget.keyToSymbol.isShowMore) {
-      //   if (widget.keyToSymbol.masters
-      //           .where((element) => element.sId == "ShowMore")
-      //           .toList()
-      //           .length ==
-      //       0) {
-      //     Master allMaster = Master();
-      //     allMaster.sId = "ShowMore";
-      //     allMaster.webDisplay =
-      //         widget.keyToSymbol.isShowMoreSelected ? "Show More" : "Show Less";
-      //     allMaster.isSelected = false;
-
-      //     widget.keyToSymbol.masters
-      //         .insert(widget.keyToSymbol.masters.length, allMaster);
-      //   }
-      // }
-
       if (_tags.isEmpty) {
         widget.keyToSymbol.masters.forEach((element) {
           _tags.add(Tag(
@@ -116,7 +83,6 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -132,7 +98,8 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
             ),
             Row(
               mainAxisSize: MainAxisSize.min,
-              children: List.generate(widget.keyToSymbol.listOfRadio.length, (index) {
+              children:
+                  List.generate(widget.keyToSymbol.listOfRadio.length, (index) {
                 var item = widget.keyToSymbol.listOfRadio[index];
                 return getRadioButton(index, item, (int value) {
                   //
@@ -150,21 +117,13 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
           ],
         ),
 
-        widget.keyToSymbol.verticalScroll
+        SelectionWidget(widget.keyToSymbol)
+        // Show Tags
+        /*widget.keyToSymbol.verticalScroll
             ? SelectableTags(
                 tags: _tags,
                 columns: 3, // default 4
-                // symmetry: true,
-                // borderSide: BorderSide(color: appTheme.),
                 textActiveColor: appTheme.colorPrimary,
-                // borderSide: _tags.map((element) {
-                //   if(element.active){
-                //     return BorderSide(color: appTheme.colorPrimary);
-
-                //   }
-                // }),
-
-                // : appTheme.blackNormal14TitleColorblack,
                 color: appTheme.unSelectedBgColor,
                 activeColor: appTheme.selectedFilterColor, // default false
                 onPressed: (tag) {
@@ -228,7 +187,7 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
                   setState(() {});
                 },
               )
-            : SelectionWidget(widget.keyToSymbol),
+            : SelectionWidget(widget.keyToSymbol),*/
 
         // Column(
         //   crossAxisAlignment: CrossAxisAlignment.start,

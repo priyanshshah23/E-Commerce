@@ -149,9 +149,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       }
       mapOfInitialPixels[j] = value;
     }
-    // mapOfInitialPixels.forEach((key, value) {
-    //   print("${key} => ${value}");
-    // });
   }
 
   @override
@@ -165,130 +162,130 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     List<DiamondDetailImagePagerModel> arrOfImages =
         List<DiamondDetailImagePagerModel>();
 
-    if (diamondModel.img) {
+    //if (diamondModel.img) {
       arrOfImages.add(
         DiamondDetailImagePagerModel(
           title: "Image",
-          url: DiamondUrls.image + diamondModel.vStnId + ".jpg",
+          url: DiamondUrls.image + diamondModel.vStnId + "/" + "still.jpg",
           isSelected: true,
           isImage: true,
         ),
       );
-    }
+   // }
 
-    if (diamondModel.arrowFile) {
+   // if (diamondModel.arrowFile) {
       arrOfImages.add(
         DiamondDetailImagePagerModel(
           title: "ArrowImage",
-          url: DiamondUrls.arroImage + diamondModel.vStnId + ".jpg",
+          url: DiamondUrls.arroImage + diamondModel.vStnId + "/"  + "Arrow_Black_BG.jpg",
           isSelected: false,
           isImage: true,
         ),
       );
-    }
+    //}
 
-    if (diamondModel.assetFile) {
+    //if (diamondModel.assetFile) {
       arrOfImages.add(
         DiamondDetailImagePagerModel(
           title: "AssetImage",
-          url: DiamondUrls.assetImage + diamondModel.vStnId + ".jpg",
+          url: DiamondUrls.image + diamondModel.vStnId + "/" + "Office_Light_Black_BG.jpg",
           isSelected: false,
           isImage: true,
         ),
       );
-    }
+    //}
 
-    if (diamondModel.img) {
+    //if (diamondModel.img) {
       arrImages.add(
         DiamondDetailImagePagerModel(
             title: "Image",
-            url: DiamondUrls.image + diamondModel.vStnId + ".jpg",
+            url: DiamondUrls.image + diamondModel.vStnId + "/" + "still.jpg",
             isSelected: true,
             isImage: true,
             arr: arrOfImages),
       );
-    }
+    //}
 
     //list of videofile
     List<DiamondDetailImagePagerModel> arrOfVideos =
         List<DiamondDetailImagePagerModel>();
 
-    if (diamondModel.videoFile) {
+    //if (diamondModel.videoFile) {
       arrOfVideos.add(
         DiamondDetailImagePagerModel(
           title: "Video",
-          url: DiamondUrls.videomp4 + diamondModel.vStnId + ".mp4",
+          url: DiamondUrls.video + diamondModel.vStnId + "/" + diamondModel.vStnId + ".html",
           isSelected: true,
           isVideo: true,
         ),
       );
-    }
+    //}
 
-    if (diamondModel.roughVdo) {
-      arrOfVideos.add(
-        DiamondDetailImagePagerModel(
-          title: "RoughVideo",
-          url: DiamondUrls.roughVideo + diamondModel.vStnId + ".html",
-          isSelected: false,
-          isVideo: true,
-        ),
-      );
-    }
+    // if (diamondModel.roughVdo) {
+    //   arrOfVideos.add(
+    //     DiamondDetailImagePagerModel(
+    //       title: "RoughVideo",
+    //       url: DiamondUrls.roughVideo + diamondModel.vStnId + ".html",
+    //       isSelected: false,
+    //       isVideo: true,
+    //     ),
+    //   );
+    // }
 
-    if (diamondModel.polVdo) {
-      arrOfVideos.add(
-        DiamondDetailImagePagerModel(
-          title: "PolishVideo",
-          url: DiamondUrls.polVideo + diamondModel.vStnId + ".mp4",
-          isSelected: false,
-          isVideo: true,
-        ),
-      );
-    }
+    // if (diamondModel.polVdo) {
+    //   arrOfVideos.add(
+    //     DiamondDetailImagePagerModel(
+    //       title: "PolishVideo",
+    //       url: DiamondUrls.polVideo + diamondModel.vStnId + ".mp4",
+    //       isSelected: false,
+    //       isVideo: true,
+    //     ),
+    //   );
+    // }
 
-    if (diamondModel.videoFile) {
+    //if (diamondModel.videoFile) {
       arrImages.add(
         DiamondDetailImagePagerModel(
           title: "Video",
-          url: DiamondUrls.videomp4 + diamondModel.vStnId + ".mp4",
+          url: DiamondUrls.video + diamondModel.vStnId + "/" + diamondModel.vStnId + ".html",
           isSelected: true,
           isVideo: true,
           arr: arrOfVideos,
         ),
       );
-    }
+    //}
 
     //List of H&A
     List<DiamondDetailImagePagerModel> arrOfHA =
         List<DiamondDetailImagePagerModel>();
 
-    if (diamondModel.certFile) {
+    //if (diamondModel.certFile) {
       arrOfHA.add(
         DiamondDetailImagePagerModel(
           title: "H&A",
-          url: DiamondUrls.heartImage + diamondModel.vStnId + ".jpg",
+          url: DiamondUrls.heartImage + diamondModel.vStnId + "/"  + "Heart_Black_BG.jpg",
           isSelected: true,
           isImage: true,
         ),
       );
-    }
+    //}
 
-    if (diamondModel.hAFile) {
+    //if (diamondModel.hAFile) {
       arrImages.add(
         DiamondDetailImagePagerModel(
             title: "H&A",
-            url: DiamondUrls.heartImage + diamondModel.vStnId + ".jpg",
+            url: DiamondUrls.heartImage + diamondModel.vStnId + "/"  + "Heart_Black_BG.jpg",
             isSelected: false,
             isImage: true,
             arr: arrOfHA),
       );
-    }
+    //}
 
     //List of certificate
     List<DiamondDetailImagePagerModel> arrOfCertificates =
         List<DiamondDetailImagePagerModel>();
 
-    if (diamondModel.certFile) {
+    //if (diamondModel.certFile) {
       arrOfCertificates.add(
         DiamondDetailImagePagerModel(
           title: "Certificate",
@@ -297,9 +294,9 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           isImage: false,
         ),
       );
-    }
-
-    if (diamondModel.certFile) {
+    //}
+      print(DiamondUrls.certificate + diamondModel.rptNo + ".pdf");
+    //if (diamondModel.certFile) {
       arrImages.add(
         DiamondDetailImagePagerModel(
             title: "Certificate",
@@ -308,7 +305,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
             isImage: false,
             arr: arrOfCertificates),
       );
-    }
+    //}
     setState(() {
       //
     });
@@ -362,8 +359,11 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
               if (element.isPercentage) {
                 diamonDetailComponent.value = "${diamonDetailComponent.value}%";
               }
-              diamondDetailUIModel.parameters.add(diamonDetailComponent);
+              
+            } else {
+              diamonDetailComponent.value = "-";
             }
+            diamondDetailUIModel.parameters.add(diamonDetailComponent);
           }
         }
       }
@@ -412,7 +412,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           padding: EdgeInsets.all(getSize(10)),
           child: Row(
             children: <Widget>[
-              Image.asset(img),
+              Image.asset(img,height: getSize(30),width: getSize(30)),
               SizedBox(
                 width: getSize(10),
               ),
@@ -458,6 +458,12 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   manageToolbarClick(BottomTabModel model) {
     switch (model.code) {
       case BottomCodeConstant.TBShare:
+        BottomTabModel tabModel = BottomTabModel();
+        tabModel.type = ActionMenuConstant.ACTION_TYPE_SHARE;
+        List<DiamondModel> selectedList = [diamondModel];
+
+        diamondConfig.manageDiamondAction(
+            context, selectedList, tabModel, () {});
         break;
       case BottomCodeConstant.TBClock:
         break;
@@ -718,11 +724,20 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                     right: getSize(12)),
                 child: Row(
                   children: [
-                    Text(diamondDetailUIModel.parameters[j].title,
-                        style: appTheme.grey14HintTextStyle),
-                    Spacer(),
-                    Text(diamondDetailUIModel.parameters[j].value,
-                        style: appTheme.blackNormal14TitleColorblack),
+                    Expanded(
+                      flex: 3,
+                      child: Text(diamondDetailUIModel.parameters[j].title,
+                          style: appTheme.grey14HintTextStyle),
+                    ),
+                    // Spacer(),
+                    Expanded(
+                      flex: 7,
+                      child: Text(diamondDetailUIModel.parameters[j].value,
+                      textAlign: TextAlign.right,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                          style: appTheme.blackNormal14TitleColorblack),
+                    ),
                   ],
                 ),
               ),

@@ -5,24 +5,22 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class ColorConstants {
-  static Color colorPrimary = fromHex("#2D0DB2");
+  static Color colorPrimary = fromHex("#4EB45E");
   static Color lightPrimary = fromHex("#ADEFEF");
   static Color textGray = fromHex("#7B7E84");
-  static Color borderColor = fromHex("#F2F2F2");
-  static Color placeholderColor = fromHex("#7B7E84");
+  static Color borderColor = fromHex("#DDDDDD");
+  static Color placeholderColor = fromHex("#999999");
   static Color bgColor = fromHex("#F2F5F7");
   static Color introgrey = fromHex("#999999");
   static Color black = fromHex("#000000");
   static Color white = fromHex("#FFFFFF");
   static Color countryBgShadow = fromHex("#00000029");
-  static Color otpSuccessFillColor = fromHex("#FCFFFD");
-  static Color otpSuccessBorderColor = fromHex("#019B15");
+  static Color otpSuccessFillColor = fromHex("#0EAC33");
+  static Color otpSuccessBorderColor = fromHex("#0EAC33");
   static Color lightgrey = fromHex("#F6F6F6");
   static Color errorText = fromHex('#D60505');
   static Color compareChangesRowBgColor = fromHex("#F8F8F8");
   static Color backgroundColorForCancleButton = fromHex("#EEF1FC");
-
-
 
   static MaterialColor accentCustomColor =
       MaterialColor(0xFF2B0DB2, accentColor);

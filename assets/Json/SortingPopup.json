@@ -1,19 +1,17 @@
 [
   {
     "title": "Default",
-    "isSelected": false,
+    "isSelected": true,
     "icon": "filterUnionArrow.png",
     "isActive": true,
     "apiKey": ""
-
   },
   {
     "title": "New Diamonds",
     "isSelected": false,
     "icon": "filterRightArrow.png",
-    "isActive": true,
-    "apiKey": "newDiamonds"
-
+    "isActive": false,
+    "apiKey": ""
   },
   {
     "title": "Price Low to High",
@@ -48,14 +46,14 @@
     "isSelected": false,
     "icon": "filterUpArrow.png",
     "isActive": true,
-    "apiKey": "col ASC"
+    "apiKey": "colNm ASC"
   },
   {
     "title": "Color High to Low",
     "isSelected": false,
     "icon": "filterDownArrow.png",
     "isActive": true,
-    "apiKey": "col DESC"
+    "apiKey": "colNm DESC"
   },
   {
     "title": "Carat Low to High",
@@ -76,13 +74,13 @@
     "isSelected": false,
     "icon": "filterUpArrow.png",
     "isActive": true,
-    "apiKey": "clr ASC"
+    "apiKey": "clrNm ASC"
   },
   {
     "title": "Clarity High to Low",
     "isSelected": false,
     "icon": "filterDownArrow.png",
     "isActive": true,
-    "apiKey": "clr DESC"
+    "apiKey": "clrNm DESC"
   }
 ]

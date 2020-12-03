@@ -1,8 +1,8 @@
-
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/models/Auth/ChangePasswordModel.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,8 @@ class _ChangePasswordState extends State<ChangePassword> {
   bool _autoValidate = false;
   final TextEditingController _oldPasswordController = TextEditingController();
   final TextEditingController _newPasswordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   var _focusOldPassword = FocusNode();
   var _focusNewPassword = FocusNode();
@@ -44,7 +45,8 @@ class _ChangePasswordState extends State<ChangePassword> {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: getSize(20), vertical: getSize(30)),
+            padding: EdgeInsets.symmetric(
+                horizontal: getSize(20), vertical: getSize(30)),
             child: Form(
               key: _formKey,
               autovalidate: _autoValidate,
@@ -53,9 +55,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.only(
-                        right: getSize(30),
-                        left: getSize(82),
-                        bottom: getSize(52),),
+                      right: getSize(30),
+                      left: getSize(82),
+                      bottom: getSize(52),
+                    ),
                     child: Image.asset(
                       resetPassword,
                       height: getSize(150),
@@ -75,17 +78,15 @@ class _ChangePasswordState extends State<ChangePassword> {
                     height: getSize(30),
                   ),
                   Container(
-                    margin: EdgeInsets.only(
-                        top: getSize(15), left: getSize(0)),
-                    decoration: BoxDecoration(
-                        boxShadow: getBoxShadow(context)),
+                    margin: EdgeInsets.only(top: getSize(15), left: getSize(0)),
+                    decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
                     child: AppButton.flat(
                       onTap: () {
                         // NavigationUtilities.pushRoute(TabBarDemo.route);
                         FocusScope.of(context).unfocus();
                         if (_formKey.currentState.validate()) {
-                            _formKey.currentState.save();
-                            callChangePasswordApi();
+                          _formKey.currentState.save();
+                          callChangePasswordApi();
 //                      callLoginApi(context);
                         } else {
                           setState(() {
@@ -154,7 +155,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       validation: (text) {
         if (text.isEmpty) {
           return R.string().errorString.enterPassword;
-        } else if(!validateStructure(text)) {
+        } else if (!validateStructure(text)) {
           return R.string().errorString.wrongPassword;
         } else {
           return null;
@@ -184,7 +185,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       validation: (text) {
         if (text.isEmpty) {
           return R.string().errorString.enterPassword;
-        } else if(text != _newPasswordController.text.trim()) {
+        } else if (text != _newPasswordController.text.trim()) {
           return R.string().errorString.enterSamePassword;
         } else {
           return null;
@@ -204,26 +205,34 @@ class _ChangePasswordState extends State<ChangePassword> {
 
     NetworkCall<BaseApiResp>()
         .makeCall(
-            () => app.resolve<ServiceModule>().networkService().changePassword(req),
-        context,
-        isProgress: true)
+            () => app
+                .resolve<ServiceModule>()
+                .networkService()
+                .changePassword(req),
+            context,
+            isProgress: true)
         .then((resp) async {
       FocusScope.of(context).unfocus();
-      _oldPasswordController.clear();
-      _newPasswordController.clear();
-      _confirmPasswordController.clear();
-      _autoValidate = false;
-      showToast(resp.message,context: context);
-      Navigator.pop(context);
-      setState(() {});
+
+      app.resolve<CustomDialogs>().confirmDialog(context,
+          title: "",
+          desc: resp.message,
+          positiveBtnTitle: R.string().commonString.ok,
+          onClickCallback: (buttonType) {
+        if (buttonType == ButtonType.PositveButtonClick) {
+          app.resolve<PrefUtils>().resetAndLogout(context);
+        }
+      });
+      // showToast(resp.message,context: context);
+      // Navigator.pop(context);
+      // setState(() {});
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
-        context,
-        title: R.string().commonString.error,
-        desc: onError.message,
-        positiveBtnTitle: R.string().commonString.btnTryAgain,
-      );
+            context,
+            title: R.string().commonString.error,
+            desc: onError.message,
+            positiveBtnTitle: R.string().commonString.btnTryAgain,
+          );
     });
   }
-
 }

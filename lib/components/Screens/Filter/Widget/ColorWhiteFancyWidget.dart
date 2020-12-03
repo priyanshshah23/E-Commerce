@@ -39,6 +39,7 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
               onTap: () {
                 setState(() {
                   widget.colorModel.isGroupSelected = false;
+                  widget.colorModel.gridViewItemCount = 5;
                   widget.colorModel.masters = widget.colorModel.mainMasters;
                 });
               },
@@ -88,7 +89,7 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
                 setState(() {
                   widget.colorModel.isGroupSelected = true;
                   widget.colorModel.masters = widget.colorModel.groupMaster;
-
+                  widget.colorModel.gridViewItemCount = 3;
                   widget.colorModel.intensitySelection = SelectionModel(
                       title: R.string().commonString.intensity,
                       masters: widget.colorModel.intensity,
@@ -101,6 +102,8 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
                       showMoreTagAfterTotalItemCount: 6,
                       viewType: widget.colorModel.viewType,
                       isShowMore: widget.colorModel.isShowMore,
+                      isShowMoreHorizontal:
+                          widget.colorModel.isShowMoreHorizontal,
                       apiKey: "inten");
 
                   widget.colorModel.overtoneSelection = SelectionModel(
@@ -114,6 +117,8 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
                       showMoreTagAfterTotalItemCount: 6,
                       verticalScroll: widget.colorModel.verticalScroll,
                       isShowMore: widget.colorModel.isShowMore,
+                      isShowMoreHorizontal:
+                          widget.colorModel.isShowMoreHorizontal,
                       gridViewItemCount: 3,
                       apiKey: "ovrtn");
                 });
@@ -174,9 +179,9 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
 
   getOverToneIntensityViews() {
     return Column(children: [
-      SizedBox(height: getSize(16)),
+      SizedBox(height: getSize(32)),
       SelectionWidget(widget.colorModel.intensitySelection),
-      SizedBox(height: getSize(16)),
+      SizedBox(height: getSize(32)),
       SelectionWidget(widget.colorModel.overtoneSelection),
       SizedBox(height: getSize(8)),
     ]);

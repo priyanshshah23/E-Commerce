@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:dio/dio.dart';
 
-
 class DownLoadAndShareDialogue extends StatefulWidget {
   String title = "";
   List<DiamondModel> diamondList;
@@ -55,17 +54,19 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
     super.initState();
   }
 
-   checkValidation() {
-    var totalList =( firstImageList +
-        secondImageList +
-        firstVideoList +
-        secondVideoList +
-        firstCertificateList + secondCertificateList +
-        firstExcelList +
-    firstRoughList + secondRoughList).where((element) {
+  checkValidation() {
+    var totalList = (firstImageList +
+            secondImageList +
+            firstVideoList +
+            secondVideoList +
+            firstCertificateList +
+            secondCertificateList +
+            firstExcelList +
+            firstRoughList +
+            secondRoughList)
+        .where((element) {
       return element.isSelected;
     }).toList();
-
 
     return !isNullEmptyOrFalse(totalList);
   }
@@ -74,7 +75,7 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
   Widget build(BuildContext context) {
     return Padding(
       padding:
-          EdgeInsets.symmetric(horizontal: getSize(20), vertical: getSize(30)),
+          EdgeInsets.symmetric(horizontal: getSize(16), vertical: getSize(16)),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -147,7 +148,8 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                         onTap: () {
                           if (checkValidation()) {
                             openURLWithApp(
-                                "whatsapp://send?phone=&text=Hello!", context, isPop: true);
+                                "whatsapp://send?phone=&text=Hello!", context,
+                                isPop: true);
                           } else {
                             showToast("Please select any", context: context);
                           }
@@ -176,8 +178,8 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                           //callEmailApi();
                           if (checkValidation()) {
                             openURLWithApp(
-                                "mailto:?subject=DiamNow&body=DiamNow",
-                                context, isPop: true);
+                                "mailto:?subject=DiamNow&body=DiamNow", context,
+                                isPop: true);
                             Navigator.pop(context);
                           } else {
                             showToast("Please select any", context: context);
@@ -280,10 +282,6 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
     );
   }
 
-
-
-
-
   _openMail() async {
     String uri = 'mailto:?subject=DiamNow&body=DiamNow';
     if (await canLaunch(uri)) {
@@ -296,7 +294,6 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
             positiveBtnTitle: R.string().commonString.ok,
           );
     }
-
   }
 //  callEmailApi() async {
 //    ShareThroughEmailReq req = ShareThroughEmailReq();

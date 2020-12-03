@@ -1,42 +1,51 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/StaticPage/StaticPageModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:html/parser.dart' show parse;
+import 'package:share/share.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class StaticPageScreen extends StatefulScreenWidget {
   static const route = "StaticPageScreen";
+  String strUrl;
   String screenType;
+  String screenTitle;
+  bool showExcel;
+  bool isFromDrawer;
 
   StaticPageScreen(Map<String, dynamic> arguments) {
     this.screenType = arguments["type"];
-
+    this.strUrl = arguments["strUrl"];
+    this.showExcel = arguments["isForExcel"] ?? false;
+    this.screenTitle = arguments["screenTitle"];
+    this.isFromDrawer = arguments[ArgumentConstant.IsFromDrawer] ?? false;
   }
 
   @override
-  _StaticPageScreenState createState() =>
-      _StaticPageScreenState();
+  _StaticPageScreenState createState() => _StaticPageScreenState();
 }
 
 class _StaticPageScreenState extends State<StaticPageScreen> {
   StaticPageRespData data;
 //  WebViewController _controller;
   final Completer<WebViewController> _controller =
-  Completer<WebViewController>();
+      Completer<WebViewController>();
 
   @override
   void initState() {
     super.initState();
-
+    // if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
   }
 
   void callApi() {
@@ -68,8 +77,28 @@ class _StaticPageScreenState extends State<StaticPageScreen> {
     return Scaffold(
         appBar: getAppBar(
           context,
-          getScreenTitle(),
-          leadingButton: getDrawerButton(context,true),
+          widget.screenTitle ?? getScreenTitle(),
+          leadingButton: widget.isFromDrawer
+              ? getDrawerButton(context, true)
+              : getBackButton(context),
+          actionItems: widget.showExcel
+              ? [
+                  InkWell(
+                    onTap: () {
+                      // Share.shareFiles([widget.strUrl],
+                      //     text: widget.screenTitle ?? "");
+                    },
+                    child: Container(
+                      margin: EdgeInsets.all(getSize(16)),
+                      child: Image.asset(
+                        share,
+                        width: getSize(24),
+                        height: getSize(24),
+                      ),
+                    ),
+                  )
+                ]
+              : null,
         ),
         body: Container(
           height: MathUtilities.screenHeight(context),
@@ -79,33 +108,28 @@ class _StaticPageScreenState extends State<StaticPageScreen> {
           ),
           child: SafeArea(
             child: Padding(
-              padding:
-                  EdgeInsets.only(left: getSize(20), right: getSize(20)),
-              child:  WebView(
-              initialUrl: "http://fndevelop.democ.in/",
-              javascriptMode: JavascriptMode.unrestricted,
-              onWebViewCreated: (WebViewController webViewController) {
-                _controller.complete(webViewController);
-              },
-              onPageStarted: (String url) {
-                app.resolve<CustomDialogs>().showProgressDialog(context, "");
-              },
-              onPageFinished: (String url) {
-                print('Page finished loading: $url');
-                app.resolve<CustomDialogs>().hideProgressDialog();
-              },
-              gestureNavigationEnabled: true,
-            ),
-//              child: !isNullEmptyOrFalse(data)
-//                  ? WebView(
-//                      initialUrl: 'http://fndevelop.democ.in/',
-//                      onWebViewCreated:
-//                          (WebViewController webViewController) {
-//                        _controller = webViewController;
-//                        _loadHtmlFromAssets(data?.desc ?? "");
-//                      },
-//                    )
-//                  : SizedBox(),
+              padding: EdgeInsets.only(left: getSize(20), right: getSize(20)),
+              child: WebView(
+                initialUrl:
+                    // "http://pndevelop.democ.in/",
+                    // "/storage/emulated/0/Download/test.pdf",
+                widget.strUrl ?? "http://pn`develop.democ.in/",
+                javascriptMode: JavascriptMode.unrestricted,
+                onWebViewCreated: (WebViewController webViewController) {
+                  _controller.complete(webViewController);
+                },
+                onPageStarted: (String url) {
+                  app.resolve<CustomDialogs>().showProgressDialog(context, "");
+                },
+                onPageFinished: (String url) {
+                  print('Page finished loading: $url');
+                  app.resolve<CustomDialogs>().hideProgressDialog();
+                },
+                onWebResourceError: (error) {
+                  print(error.toString());
+                },
+                gestureNavigationEnabled: true,
+              ),
             ),
           ),
         ));

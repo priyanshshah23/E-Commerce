@@ -122,13 +122,13 @@ class BaseListState extends State<BaseList> {
                 Expanded(
                   child: Container(),
                 ),
-//              if (imagePath != null)
-//                Image.asset(
-//                  imagePath,
-//                  fit: BoxFit.fill,
-//                  width: getSize(200),
-//                  height: getSize(200),
-//                ),
+              if (imagePath != null)
+                Image.asset(
+                  imagePath,
+                  // fit: BoxFit.fill,
+                  width: getSize(200),
+                  height: getSize(200),
+                ),
               if (imagePath != null)
                 SizedBox(
                   height: getSize(16),

@@ -2,6 +2,7 @@
 
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,8 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 Future openDateTimeDialog(BuildContext context, ActionClick actionClick,
     {bool isDate = true,
     bool isTime = true,
-    String title = "Select Date & Time"}) {
+    String title = "Select Date & Time",
+    int actionType}) {
   return showDialog(
       context: context,
       builder: (context) {
@@ -29,6 +31,7 @@ Future openDateTimeDialog(BuildContext context, ActionClick actionClick,
             isDate: isDate,
             isTime: isTime,
             title: title,
+            actionType: actionType,
           ),
         );
       });
@@ -39,8 +42,10 @@ class DateTimeDialog extends StatefulWidget {
   String title;
   bool isDate;
   bool isTime;
+  int actionType;
 
-  DateTimeDialog(this.actionClick, {this.title, this.isDate, this.isTime});
+  DateTimeDialog(this.actionClick,
+      {this.title, this.isDate, this.isTime, this.actionType});
 
   @override
   _DateTimeDialogState createState() => _DateTimeDialogState();
@@ -188,6 +193,17 @@ class _DateTimeDialogState extends State<DateTimeDialog>
                 Expanded(
                   child: InkWell(
                     onTap: () {
+                      if (widget.actionType ==
+                          DiamondTrackConstant.TRACK_TYPE_OFFICE) {
+                        String weekDay =
+                            DateFormat('EEEE').format(selectedDate);
+                        if (weekDay.toLowerCase() == "sunday") {
+                          showToast(
+                              R.string().commonString.offerSundayRestriction,
+                              context: context);
+                          return;
+                        }
+                      }
                       Navigator.pop(context);
                       widget.actionClick(ManageCLick(
                           date: selectedDate.toUtc().toIso8601String()));
@@ -229,6 +245,11 @@ class _DateTimeDialogState extends State<DateTimeDialog>
 
   Widget getDateRangePicker() {
     return Container(
+      margin: EdgeInsets.only(
+        left: getSize(16),
+        right: getSize(16),
+        top: getSize(16),
+      ),
       child: SfDateRangePicker(
         initialDisplayDate: DateTime.now(),
         minDate: DateTime.now(),

@@ -46,7 +46,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
       }
     }
 
-    if (widget.selectionModel.isShowMore) {
+    if (widget.selectionModel.isShowMore && widget.selectionModel.isShowMoreHorizontal == false) {
       if (widget.selectionModel.orientation == DisplayTypes.vertical) {
         if (widget.selectionModel.masters
                 .where((element) => element.sId == showMoreId)
@@ -75,12 +75,6 @@ class _ShapeWidgetState extends State<ShapeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-
-    /*24 is for notification bar on Android*/
-    final double itemHeight = (size.height - kToolbarHeight - 220) / 2;
-    final double itemWidth = size.width / 2;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -99,7 +93,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                   GridView.count(
                     shrinkWrap: true,
                     primary: false,
-                    childAspectRatio: 0.8,
+                    childAspectRatio: 1,
                     padding: EdgeInsets.all(getSize(2)),
                     crossAxisSpacing: 8,
                     mainAxisSpacing: 8,
@@ -239,7 +233,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                         setState(() {});
                       },
                       child: Padding(
-                        padding: EdgeInsets.only(top:getSize(16.0)),
+                        padding: EdgeInsets.only(top: getSize(16.0)),
                         child: Container(
                           height: getSize(26),
                           decoration: BoxDecoration(
@@ -254,8 +248,9 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                                 style: appTheme.black14TextStyle,
                               ),
                               Padding(
-                                padding: EdgeInsets.only(left:getSize(6.0)),
-                                child: Image.asset(downArrow,width: getSize(9),height: getSize(5)),
+                                padding: EdgeInsets.only(left: getSize(6.0)),
+                                child: Image.asset(downArrow,
+                                    width: getSize(9), height: getSize(5)),
                               ),
                             ],
                           ),
@@ -271,7 +266,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                         setState(() {});
                       },
                       child: Padding(
-                        padding: EdgeInsets.only(top:getSize(16.0)),
+                        padding: EdgeInsets.only(top: getSize(16.0)),
                         child: Container(
                           height: getSize(26),
                           decoration: BoxDecoration(
@@ -286,8 +281,9 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                                 style: appTheme.black14TextStyle,
                               ),
                               Padding(
-                                padding: EdgeInsets.only(left:getSize(6.0)),
-                                child: Image.asset(upArrow,width: getSize(9),height: getSize(5)),
+                                padding: EdgeInsets.only(left: getSize(6.0)),
+                                child: Image.asset(upArrow,
+                                    width: getSize(9), height: getSize(5)),
                               ),
                             ],
                           ),
@@ -365,10 +361,7 @@ class ShapeItemWidget extends StatelessWidget {
                 obj.sId != selectionModel.allLableTitle ||
                         (obj.sId != showMoreId)
                     ? Container(
-                        width: selectionModel.orientation ==
-                                DisplayTypes.horizontal
-                            ? getSize(90)
-                            : 0,
+                        width: getSize(90),
                         child: obj.getShapeImage(obj.isSelected))
                     : SizedBox(),
                 Padding(

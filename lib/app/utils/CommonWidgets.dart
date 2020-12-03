@@ -243,6 +243,7 @@ Widget getAppBar(BuildContext context, String title,
     backgroundColor: bgColor,
     actions: actionItems == null ? null : actionItems,
     bottom: widget,
+    titleSpacing: 0.0,
   );
 }
 
@@ -434,9 +435,9 @@ getBottomButton(BuildContext context, VoidCallback onTap, String title,
 getFieldTitleText(String text) {
   return Padding(
     padding: EdgeInsets.only(
-        left: getSize(20),
-        right: getSize(20),
-        bottom: getSize(5),
+        left: getSize(16),
+        right: getSize(16),
+        bottom: getSize(6),
         top: getSize(10)),
     child: Text(
       text,

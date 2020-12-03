@@ -1,3 +1,4 @@
+import 'package:diamnow/components/Screens/Notification/NotificationManager.dart';
 import 'package:kiwi/kiwi.dart';
 
 import 'package:diamnow/app/network/NetworkCall.dart';
@@ -15,6 +16,7 @@ abstract class AppModule {
   @Register.singleton(ThemeSettingsModel)
   @Register.singleton(ServiceModule)
   @Register.singleton(CustomDialogs)
+  @Register.singleton(NotificationManger)
   void configure();
 }
 

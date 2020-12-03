@@ -24,7 +24,6 @@ TextDirection deviceTextDirection = TextDirection.ltr;
 
 main() {
   WidgetsFlutterBinding.ensureInitialized();
-
   app = KiwiContainer();
   HttpOverrides.global = new MyHttpOverrides();
   setup();
@@ -81,7 +80,8 @@ class _BaseState extends State<Base> {
         DiamondDetailScreen.route: (BuildContext context) =>
             DiamondDetailScreen(
                 arguments: ModalRoute.of(context).settings.arguments),
-        SearchScreen.route: (BuildContext context) => SearchScreen(),
+        SearchScreen.route: (BuildContext context) =>
+            SearchScreen(ModalRoute.of(context).settings.arguments),
       },
       builder: _builder,
     );

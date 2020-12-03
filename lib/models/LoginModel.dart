@@ -151,6 +151,7 @@ class User {
   String whatsappCounCode;
   String plainPassword;
   String skype;
+  String zipcode;
   String wechat;
   Token token;
   int version;
@@ -166,6 +167,10 @@ class User {
   Account account;
   AccountTerm accountTerm;
   String seller;
+
+  String country;
+  String city;
+  String state;
 
 //  Null createdBy;
 
@@ -237,6 +242,7 @@ class User {
     whatsappCounCode = json['whatsappCounCode'];
     plainPassword = json['plainPassword'];
     skype = json['skype'];
+    zipcode = json['pinCode'];
     wechat = json['wechat'];
     token = json['token'] != null ? new Token.fromJson(json['token']) : null;
     version = json['version'];
@@ -256,7 +262,24 @@ class User {
         ? new AccountTerm.fromJson(json['accountTerm'])
         : null;
     seller = json['seller'];
+
+    if (json['city'] is Map<String, dynamic>) {
+      city = json['city']['name'];
+    }
+    if (json['country'] is Map<String, dynamic>) {
+      country = json['country']['name'];
+    }
+    if (json['state'] is Map<String, dynamic>) {
+      state = json['state']['name'];
+    }
     kycRequired = json["kycRequired"] ?? false;
+
+    // city  = json['city'];
+    // state = json['state'];
+    // country = json['country'];
+    // city = json["city"] != null ? json['city'] is String ? json['city'] : new CityList.fromJson(json['city']) : null;
+    // state = json["state"] != null ? json['state'] is String ? json['state'] : new CityList.fromJson(json['state']) : null;
+    // country = json["country"] != null ? json['country'] is String ? json['country'] : new CityList.fromJson(json['country']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -326,6 +349,7 @@ class User {
     data['whatsappCounCode'] = this.whatsappCounCode;
     data['plainPassword'] = this.plainPassword;
     data['skype'] = this.skype;
+    data['pinCode'] = this.zipcode;
     data['wechat'] = this.wechat;
     if (this.token != null) {
       data['token'] = this.token.toJson();
@@ -537,6 +561,7 @@ class Account {
   String verifyBy;
   String verifyDate;
   String businessType;
+  String natureOfOrg;
   String designation;
   String howKnow;
   String referenceFrom;
@@ -609,6 +634,13 @@ class Account {
     verifyBy = json['verifyBy'];
     verifyDate = json['verifyDate'];
     businessType = json['businessType'];
+    if (json["natureOfOrg"] is List<dynamic>) {
+      if (!isNullEmptyOrFalse(json["natureOfOrg"])) {
+        natureOfOrg = json["natureOfOrg"].first;
+      }
+    } else if (json["natureOfOrg"] is String) {
+      natureOfOrg = json["natureOfOrg"];
+    }
     designation = json['designation'];
     howKnow = json['howKnow'];
     referenceFrom = json['referenceFrom'];
@@ -701,6 +733,7 @@ class Account {
     data['verifyBy'] = this.verifyBy;
     data['verifyDate'] = this.verifyDate;
     data['businessType'] = this.businessType;
+    data['natureOfOrg'] = this.natureOfOrg;
     data['designation'] = this.designation;
     data['howKnow'] = this.howKnow;
     data['referenceFrom'] = this.referenceFrom;

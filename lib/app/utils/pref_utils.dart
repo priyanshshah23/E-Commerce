@@ -6,6 +6,7 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
@@ -204,14 +205,19 @@ class PrefUtils {
         }
       });
     }
-    //if (data == null) {
-    if (true) {
-      data = UserPermissionsData(module: module);
-      data.view = true;
-      data.insert = true;
-      data.update = true;
-      data.delete = true;
-      data.downloadExcel = true;
+
+    if (module == "order") {
+      print(module);
+    }
+    if (data == null) {
+      if (true) {
+        data = UserPermissionsData(module: module);
+        data.view = false;
+        data.insert = false;
+        data.update = false;
+        data.delete = false;
+        data.downloadExcel = false;
+      }
     }
     return data;
   }
@@ -242,12 +248,13 @@ class PrefUtils {
 
     app.resolve<PrefUtils>().clearPreferenceAndDB();
 
-    app.resolve<PrefUtils>().saveBoolean("rememberMe", rememberMe);
-    app.resolve<PrefUtils>().saveString("userName", userName);
-    app.resolve<PrefUtils>().saveString("passWord", passWord);
+    if (rememberMe) {
+      app.resolve<PrefUtils>().saveBoolean("rememberMe", rememberMe);
+      app.resolve<PrefUtils>().saveString("userName", userName);
+      app.resolve<PrefUtils>().saveString("passWord", passWord);
+    }
 
-    Navigator.of(context).pushNamedAndRemoveUntil(
-        LoginScreen.route, (Route<dynamic> route) => false);
+    Navigator.of(context).pushNamed(LoginScreen.route);
   }
 
   Future<void> clearPreferenceAndDB() async {

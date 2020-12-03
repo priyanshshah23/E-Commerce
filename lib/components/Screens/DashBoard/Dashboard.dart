@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:io';
 
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
@@ -82,17 +83,15 @@ class _DashboardState extends StatefulScreenWidgetState {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      diamondConfig = DiamondConfig(moduleType);
-      diamondConfig.initItems();
+    diamondConfig = DiamondConfig(moduleType);
+    diamondConfig.initItems();
 
-      dashboardConfig = DashboardConfig();
-      dashboardConfig.initItems();
+    dashboardConfig = DashboardConfig();
+    dashboardConfig.initItems();
 
-      callApiForDashboard(false);
-      setState(() {
-        //
-      });
+    callApiForDashboard(false);
+    setState(() {
+      //
     });
   }
 
@@ -107,6 +106,7 @@ class _DashboardState extends StatefulScreenWidgetState {
     dict["seller"] = true;
     dict["account"] = true;
     dict["featuredStone"] = true;
+    dict["newArrival"] = true;
 
     NetworkCall<DashboardResp>()
         .makeCall(
@@ -134,27 +134,17 @@ class _DashboardState extends StatefulScreenWidgetState {
 
   setTopCountData() {
     for (var item in dashboardConfig.arrTopSection) {
-      if (item.type == DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND) {
-        DashboardCount dash = this.dashboardModel.dashboardCount.singleWhere(
-            (element) => element.name.toLowerCase() == "finestar_exclusive");
-        if (!isNullEmptyOrFalse(dash)) {
-          item.value = "${dash.searchCount}";
-        } else {
-          item.value = "0";
-        }
-      } else if (item.type == DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
+      if (item.type == DiamondModuleConstant.MODULE_TYPE_MY_CART) {
         item.value =
-            "${this.dashboardModel.tracks[DiamondTrackConstant.TRACK_TYPE_ENQUIRY.toString()].pieces}";
+            "${this.dashboardModel.tracks[DiamondTrackConstant.TRACK_TYPE_CART.toString()].pieces}";
       } else if (item.type == DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST) {
         item.value =
             "${this.dashboardModel.tracks[DiamondTrackConstant.TRACK_TYPE_WATCH_LIST.toString()].pieces}";
       } else if (item.type == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
-        DashboardCount dash = this.dashboardModel.dashboardCount.singleWhere(
-            (element) => element.name.toLowerCase() == "new arrival");
-        if (!isNullEmptyOrFalse(dash)) {
-          item.value = "${dash.searchCount}";
-        } else {
-          item.value = "0";
+        if (!isNullEmptyOrFalse(this.dashboardModel)) {
+          if (!isNullEmptyOrFalse(this.dashboardModel.newArrival)) {
+            item.value = this.dashboardModel.newArrival.count.toString();
+          }
         }
       }
     }
@@ -174,16 +164,18 @@ class _DashboardState extends StatefulScreenWidgetState {
                 child: Container(
                   width: getSize(30),
                   height: getSize(30),
+                  margin:
+                      EdgeInsets.only(top: getSize(16), bottom: getSize(16)),
                   child: Center(
                     child: ClipRRect(
                       borderRadius:
-                          BorderRadius.all(Radius.circular(getSize(30))),
+                          BorderRadius.all(Radius.circular(getSize(15))),
                       child: getImageView(
                         app.resolve<PrefUtils>().getUserDetails().profileImage,
                         placeHolderImage: placeHolder,
                         height: getSize(30),
                         width: getSize(30),
-                        fit: BoxFit.fitWidth,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
@@ -383,9 +375,9 @@ class _DashboardState extends StatefulScreenWidgetState {
                 _focusSearch.unfocus();
               },
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  return SearchScreen();
-                }));
+                Map<String, dynamic> dict = new HashMap();
+                dict["isFromSearch"] = false;
+                NavigationUtilities.pushRoute(SearchScreen.route, args: dict);
               },
             ),
           ),
@@ -444,11 +436,13 @@ class _DashboardState extends StatefulScreenWidgetState {
   getTopSectionGridItem(DashbordTopSection model) {
     return InkWell(
       onTap: () {
-        Map<String, dynamic> dict = new HashMap();
-        dict[ArgumentConstant.ModuleType] = model.type;
-        dict[ArgumentConstant.IsFromDrawer] = false;
-        NavigationUtilities.pushRoute(DiamondListScreen.route,
-            type: RouteType.fade, args: dict);
+        if (int.parse(model.value) > 0) {
+          Map<String, dynamic> dict = new HashMap();
+          dict[ArgumentConstant.ModuleType] = model.type;
+          dict[ArgumentConstant.IsFromDrawer] = false;
+          NavigationUtilities.pushRoute(DiamondListScreen.route,
+              type: RouteType.fade, args: dict);
+        }
       },
       child: Container(
         decoration: BoxDecoration(
@@ -512,27 +506,22 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   getFeaturedSection() {
-    List<DiamondModel> arrStones = [];
     if (app
         .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_featured)
+        .getModulePermission(ModulePermissionConstant.permission_newGoods)
         .view) {
       if (!isNullEmptyOrFalse(this.dashboardModel)) {
-        if (!isNullEmptyOrFalse(this.dashboardModel.featuredStone)) {
-          List<FeaturedStone> filter = this
-              .dashboardModel
-              .featuredStone
-              .where((element) => element.type == DashboardConstants.best)
-              .toList();
-          if (!isNullEmptyOrFalse(filter)) {
-            arrStones = filter.first.featuredPair;
-          }
+        if (!isNullEmptyOrFalse(this.dashboardModel.newArrival)) {
+          return FeaturedStoneWidget(
+            diamondList: this.dashboardModel.newArrival.list,
+          );
+        } else {
+          return SizedBox();
         }
+      } else {
+        return SizedBox();
       }
     }
-    return FeaturedStoneWidget(
-      diamondList: arrStones,
-    );
 //    return isNullEmptyOrFalse(arrStones)
 //        ? SizedBox()
 //        : Padding(
@@ -599,16 +588,16 @@ class _DashboardState extends StatefulScreenWidgetState {
         .view) {
       if (!isNullEmptyOrFalse(this.dashboardModel)) {
         if (!isNullEmptyOrFalse(this.dashboardModel.featuredStone)) {
-          List<FeaturedStone> filter = this
-              .dashboardModel
-              .featuredStone
-              .where(
-                  (element) => element.type == DashboardConstants.stoneOfTheDay)
-              .toList();
+          // List<FeaturedStone> filter = this
+          //     .dashboardModel
+          //     .featuredStone
+          //     .where(
+          //         (element) => element.type == DashboardConstants.stoneOfTheDay)
+          //     .toList();
 
-          if (!isNullEmptyOrFalse(filter)) {
-            arrStones = filter.first.featuredPair;
-          }
+          // if (!isNullEmptyOrFalse(filter)) {
+          //   arrStones = filter.first.featuredPair;
+          // }
         }
       }
     }
@@ -726,8 +715,11 @@ class _DashboardState extends StatefulScreenWidgetState {
                               BorderRadius.all(Radius.circular(getSize(61))),
                           child: getImageView(
                             "",
-                            finalUrl: model.img
-                                ? DiamondUrls.image + model.vStnId + ".jpg"
+                            finalUrl: true //model.img
+                                ? DiamondUrls.image +
+                                    model.vStnId +
+                                    "/" +
+                                    "still.jpg"
                                 : "",
                             width: getSize(122),
                             height: getSize(122),
@@ -915,9 +907,10 @@ class _DashboardState extends StatefulScreenWidgetState {
                               BorderRadius.all(Radius.circular(getSize(61))),
                           child: getImageView(
                             "",
-                            finalUrl: model.img
-                                ? DiamondUrls.image + model.vStnId + ".jpg"
-                                : "",
+                            finalUrl: DiamondUrls.image +
+                                model.vStnId +
+                                "/" +
+                                "still.jpg",
                             width: getSize(122),
                             height: getSize(122),
                             fit: BoxFit.cover,
@@ -1430,11 +1423,10 @@ class _DashboardState extends StatefulScreenWidgetState {
                                     Radius.circular(getSize(20))),
                                 child: getImageView(
                                   "",
-                                  finalUrl: model.img
-                                      ? DiamondUrls.image +
-                                          model.vStnId +
-                                          ".jpg"
-                                      : "",
+                                  finalUrl: DiamondUrls.image +
+                                      model.vStnId +
+                                      "/" +
+                                      "still.jpg",
                                   width: getSize(40),
                                   height: getSize(40),
                                   fit: BoxFit.fitWidth,
@@ -1728,14 +1720,50 @@ class _DashboardState extends StatefulScreenWidgetState {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        this.dashboardModel.seller.firstName +
-                            " " +
-                            this.dashboardModel.seller.lastName,
-                        style: appTheme.black16TextStyle.copyWith(
-                          color: appTheme.colorPrimary,
-                          fontWeight: FontWeight.w500,
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            this.dashboardModel.seller.firstName +
+                                " " +
+                                this.dashboardModel.seller.lastName,
+                            style: appTheme.black18TextStyle.copyWith(
+                              color: appTheme.colorPrimary,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Spacer(),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              InkWell(
+                                  onTap: () async {
+                                    await whatsAppOpen(
+                                        this.dashboardModel.seller.mobile);
+                                  },
+                                  child: Image.asset(
+                                    whatsappIcon,
+                                    height: getSize(20),
+                                    width: getSize(20),
+                                  )),
+                              SizedBox(width: getSize(18)),
+                              InkWell(
+                                onTap: () {
+                                  openSkype(
+                                      this.dashboardModel.seller.firstName);
+                                },
+                                child: Image.asset(
+                                  skypeIcon,
+                                  height: getSize(20),
+                                  width: getSize(20),
+                                ),
+                              ),
+                            ],
+                          )
+                          // Spacer(),
+                          // InkWell(onTap : (){
+
+                          // }, child : Image.asset(CrossAxisAlignment.start))
+                        ],
                       ),
                       SizedBox(
                         height: getSize(10),
@@ -1745,8 +1773,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                           if (!isNullEmptyOrFalse(
                               this.dashboardModel.seller.email)) {
                             openURLWithApp(
-                                "mailto:?subject=DiamNow&body=DiamNow",
-                                context);
+                                "mailto:?subject=PnShah&body=PnShah", context);
                           }
                         },
                         child: Row(
@@ -1761,7 +1788,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                             ),
                             Text(
                               this.dashboardModel.seller?.email ?? "-",
-                              style: appTheme.blackNormal14TitleColorblack,
+                              style: appTheme.black16TextStyle,
                             ),
                           ],
                         ),
@@ -1772,9 +1799,9 @@ class _DashboardState extends StatefulScreenWidgetState {
                       InkWell(
                         onTap: () {
                           if (!isNullEmptyOrFalse(
-                              this.dashboardModel.seller.whatsapp)) {
+                              this.dashboardModel.seller.mobile)) {
                             openURLWithApp(
-                                "tel://${this.dashboardModel.seller.whatsapp}",
+                                "tel://${this.dashboardModel.seller.mobile}",
                                 context);
                           }
                         },
@@ -1789,8 +1816,8 @@ class _DashboardState extends StatefulScreenWidgetState {
                               width: getSize(10),
                             ),
                             Text(
-                              this.dashboardModel.seller.whatsapp ?? "-",
-                              style: appTheme.blackNormal14TitleColorblack,
+                              this.dashboardModel.seller.mobile ?? "-",
+                              style: appTheme.black16TextStyle,
                             ),
                           ],
                         ),
@@ -1804,6 +1831,35 @@ class _DashboardState extends StatefulScreenWidgetState {
         ],
       ),
     );
+  }
+
+  void whatsAppOpen(String phoneNo, {String message = ""}) async {
+    phoneNo = "91" + phoneNo;
+    String url() {
+      if (Platform.isIOS) {
+        return "whatsapp://wa.me/$phoneNo/?text=${message}";
+      } else {
+        return "whatsapp://send?phone=$phoneNo&text=${message}";
+      }
+    }
+
+    if (await canLaunch(url())) {
+      await launch(url());
+    } else {
+      throw showToast("whatspp is not installed in this device",
+          context: context);
+    }
+  }
+
+  void openSkype(String username) async {
+    if (await canLaunch('skype:${username}')) {
+      final bool nativeAppLaunchSucceeded = await launch(
+        'skype:${username}',
+      );
+      if (!nativeAppLaunchSucceeded) {
+        // Do something else
+      }
+    }
   }
 
   getTitleText(String title) {

@@ -173,17 +173,16 @@ class _TagWidgetState extends State<TagWidget> {
                     widget.model.onSelectionClick(index);
                   });
                 },
-            
-                child: !widget.model.isShowMoreHorizontal ? index ==
-                            widget.model.showMoreTagAfterTotalItemCount - 1 &&
-                        widget.model.isShowMoreSelected &&
-                        widget.model.isShowMore
-                        
-                    ? getSingleTagForGridview(widget.model.masters.length - 1)
-                    : getSingleTagForGridview(index) : 
-
-                    getSingleTagForGridview(index)
-                    ,
+                child: !widget.model.isShowMoreHorizontal
+                    ? index ==
+                                widget.model.showMoreTagAfterTotalItemCount -
+                                    1 &&
+                            widget.model.isShowMoreSelected &&
+                            widget.model.isShowMore
+                        ? getSingleTagForGridview(
+                            widget.model.masters.length - 1)
+                        : getSingleTagForGridview(index)
+                    : getSingleTagForGridview(index),
               );
             },
           ),
@@ -263,10 +262,10 @@ class _TagWidgetState extends State<TagWidget> {
       if (selectionModel.isShowMoreSelected) {
         return selectionModel.showMoreTagAfterTotalItemCount;
       } else {
-        if(!selectionModel.isShowMoreHorizontal)
+        if (!selectionModel.isShowMoreHorizontal)
           return selectionModel.masters.length;
         else
-          return selectionModel.masters.length-1;
+          return selectionModel.masters.length - 1;
       }
     } else {
       return selectionModel.masters.length;
@@ -318,6 +317,7 @@ class _TagWidgetState extends State<TagWidget> {
                         !widget.model.masters[index].isSelected;
 
                     widget.model.onSelectionClick(index);
+                    getMultipleMasterSelections(index);
                   });
                 },
               );
@@ -411,7 +411,7 @@ class _TagWidgetState extends State<TagWidget> {
           child: FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
-              widget.model.masters[index].webDisplay ?? "-",
+              showWebDisplayAccordingToMaster(widget.model, index),
               style: widget.model.masters[index].isSelected
                   ? appTheme.primaryColor14TextStyle
                   : appTheme.blackNormal14TitleColorblack,
@@ -448,7 +448,7 @@ class _TagWidgetState extends State<TagWidget> {
               left: getSize(12.0)),
           child: Center(
             child: Text(
-              widget.model.masters[index].webDisplay,
+              showWebDisplayAccordingToMaster(widget.model, index),
               style: widget.model.masters[index].isSelected
                   ? appTheme.primaryColor14TextStyle
                   : appTheme.blackNormal14TitleColorblack,
@@ -485,6 +485,7 @@ class _TagWidgetState extends State<TagWidget> {
                           !widget.model.masters[index].isSelected;
 
                       widget.model.onSelectionClick(index);
+                      getMultipleMasterSelections(index);
                     });
                   },
                 );
@@ -660,7 +661,7 @@ class _TagWidgetState extends State<TagWidget> {
         fromDate = picked;
         _fromDateController.text = myFormat.format(picked);
       }
-      ;
+
       print("From Date====>" + fromDate.toString());
     });
   }
@@ -683,6 +684,14 @@ class _TagWidgetState extends State<TagWidget> {
   }
 
   getMultipleMasterSelections(int index) {
+    if (!isNullEmptyOrFalse(widget.model.masterSelection)) {
+      Map<MasterSelection, bool> m = Map<MasterSelection, bool>();
+      m[widget.model.masterSelection[index]] =
+          widget.model.masters[index].isSelected;
+
+      RxBus.post(m, tag: eventMasterSelection);
+    }
+
     //When Local data has added and multilple master has to select
     if (widget.model.isSingleSelection) {
       for (var item in widget.model.masters) {
@@ -692,21 +701,19 @@ class _TagWidgetState extends State<TagWidget> {
           }
         }
       }
-
-      if (!isNullEmptyOrFalse(widget.model.masterSelection)) {
-        Map<MasterSelection, bool> m = Map<MasterSelection, bool>();
-        m[widget.model.masterSelection[index]] =
-            widget.model.masters[index].isSelected;
-
-        RxBus.post(m, tag: eventMasterSelection);
-      }
     } else {
       if (widget.model.masterCode.toLowerCase() ==
               MasterCode.cut.toLowerCase() ||
           widget.model.masterCode.toLowerCase() ==
               MasterCode.polish.toLowerCase() ||
           widget.model.masterCode.toLowerCase() ==
-              MasterCode.symmetry.toLowerCase()) {
+              MasterCode.symmetry.toLowerCase() ||
+          widget.model.masterCode.toLowerCase() ==
+              MasterCode.eyeClean.toLowerCase() ||
+          widget.model.masterCode.toLowerCase() ==
+              MasterCode.milky.toLowerCase() ||
+          widget.model.masterCode.toLowerCase() ==
+              MasterCode.colorShade.toLowerCase()) {
         RxBus.post(false, tag: eventMasterForDeSelectMake);
       }
       widget.model.onSelectionClick(index);
@@ -761,8 +768,6 @@ class _TagWidgetState extends State<TagWidget> {
                     setState(() {
                       widget.model.masters[index * 2].isSelected =
                           !widget.model.masters[index * 2].isSelected;
-
-                      // getMultipleMasterSelections(index);
                     });
                   },
                 );
@@ -784,8 +789,6 @@ class _TagWidgetState extends State<TagWidget> {
                     setState(() {
                       widget.model.masters[index * 2 + 1].isSelected =
                           !widget.model.masters[index * 2 + 1].isSelected;
-
-                      // getMultipleMasterSelections(index);
                     });
                   },
                 );
@@ -833,5 +836,25 @@ class _TagWidgetState extends State<TagWidget> {
         ),
       ),
     );
+  }
+
+  showWebDisplayAccordingToMaster(SelectionModel model, int index) {
+    if (model.masterCode == MasterCode.cut ||
+        model.masterCode == MasterCode.polish ||
+        model.masterCode == MasterCode.symmetry) {
+      if (model.masters[index].code.toLowerCase() == "ex") {
+        return "EX";
+      } else if (model.masters[index].code.toLowerCase() == "g") {
+        return "G";
+      } else if (model.masters[index].code.toLowerCase() == "vg") {
+        return "VG";
+      } else if (model.masters[index].code.toLowerCase() == "f") {
+        return "F";
+      }
+    } else if (model.viewType == ViewTypes.caratRange) {
+      return model.masters[index].group ?? "-";
+    }
+
+    return model.masters[index].webDisplay ?? "-";
   }
 }

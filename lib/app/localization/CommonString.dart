@@ -61,6 +61,7 @@ class CommonString {
   final String downloadAppFrom;
   final String playStore;
   final String skipUpdate;
+  final String ihaveread;
 
   //Greetings
   final String goodMorning;
@@ -229,8 +230,10 @@ class CommonString {
 
   final String documents;
   final String selectType;
+  final String noSavedSearch;
   final String enter2Stone;
   final String offerVelidTill;
+  final String officeVisitDate;
 
   final String bidDesc;
   final String packetNo;
@@ -271,16 +274,35 @@ class CommonString {
   //SavedSearch
   final String modify;
   final String delete;
+  final String details;
+  final String edit;
   final String deleteItem;
 
   final String placeOrder;
-
+  final String shippingPolicy;
+  final String offerSundayRestriction;
   final String enterComment;
 
   //filterScreen
   final String seeMore;
   final String seeLess;
 
+  //Notification
+  final String weekAgo;
+  final String lastWeek;
+  final String dayAgo;
+  final String onedayAgo;
+  final String yesterday;
+  final String hourAgo;
+  final String onehourAgo;
+  final String anhourAgo;
+  final String mintuesAgo;
+  final String onemintuesAgo;
+  final String amintueAgo;
+  final String secondsAgo;
+  final String justNow;
+  final String today;
+  final String past;
   final String selectPhotoProof;
   final String pleaseSelectPhotoProof;
   final String selectBusinessProof;
@@ -301,6 +323,9 @@ class CommonString {
     //SavedSearch
     this.modify = "Modify",
     this.delete = "Delete",
+    this.details = "Details",
+    this.edit = "Edit",
+
     //Add demand
     this.addDemand = "Add demand",
     this.demandTitle = "Demand Title",
@@ -316,6 +341,7 @@ class CommonString {
     this.selectTime = "Select Time",
     this.selectDate = "Select Date",
     this.offerVelidTill = "Offer Valid Till",
+    this.officeVisitDate = "Office Visit Date",
     this.all = "All",
     this.status = "Status",
 
@@ -392,6 +418,7 @@ class CommonString {
     this.loading = "Loading",
     this.error = "Error",
     this.jumpToTop = "Jump to top",
+    this.ihaveread = "I have read and accept ",
 
     // My Vehicle List
     this.selected = "Select",
@@ -524,8 +551,9 @@ class CommonString {
     this.documents = "Documents",
     this.noSlotFound = "No slots found",
     this.noDiamondFound =
-        "No Diamond Found, Please select different search parameter.",
+        "No Diamonds matching your search. Please add you demand.",
     this.selectType = "Select Virtual Type",
+    this.noSavedSearch = "No Saved Search Exists",
     this.searchCity = "Search city",
     this.searchCountry = "Search Country",
     this.searchState = "Search state",
@@ -557,6 +585,26 @@ class CommonString {
     this.placeOrder = "Place order",
     this.enterComment = "Please Enter Comment",
     this.deleteItem = "Are you sure you want to delete?",
+    this.shippingPolicy = "Shipping Policy",
+    this.offerSundayRestriction =
+        "Sunday is not allowed. Office working days are Monday to Saturday",
+
+    //Notification
+    this.weekAgo = "1 week ago",
+    this.lastWeek = "Last Week",
+    this.dayAgo = "days ago",
+    this.onedayAgo = "1 day ago",
+    this.yesterday = "Yesterday",
+    this.hourAgo = "hours ago",
+    this.onehourAgo = "1 hour ago",
+    this.anhourAgo = "An hour ago",
+    this.mintuesAgo = "minutes ago",
+    this.onemintuesAgo = "1 minute ago",
+    this.amintueAgo = "A minute ago",
+    this.secondsAgo = "seconds ago",
+    this.justNow = "Just Now",
+    this.today = "Today",
+    this.past = "Past",
 
     //Proof
     this.selectPhotoProof = "Select document",

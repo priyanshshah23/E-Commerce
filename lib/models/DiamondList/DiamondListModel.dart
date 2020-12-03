@@ -371,6 +371,9 @@ class DiamondModel {
   num tblPer;
   num newDiscount;
   num newAmount;
+  num newPricePerCarat;
+  String remarks;
+  String purpose;
   String pktType;
   String hANm;
   String vStnId;
@@ -391,6 +394,7 @@ class DiamondModel {
   String inDt;
   String memoNo;
   String offerValidDate;
+  String date;
   int offerStatus;
   String brlncyNm;
   bool isXray;
@@ -410,11 +414,14 @@ class DiamondModel {
   String fcColDesc;
   num ratio;
   bool isSelected = false;
+  bool isGroupSelected = false;
   bool isMatchPair = false;
   int borderType;
   bool isAddToWatchList = false;
   bool isFinalCalculation = false;
   bool isAddToOffer = false;
+  bool isUpdateOffer = false;
+  bool isAddAppointment = false;
   bool isAddToBid = false;
   String selectedBackPer;
   String selectedOfferPer = "0.5";
@@ -430,6 +437,12 @@ class DiamondModel {
   String displayDesc;
   bool showCheckBox = false;
   num bidAmount;
+  String offeredDiscount;
+  num offeredAmount;
+  String offeredValiddate;
+  String offeredPricePerCarat;
+  String createdAt;
+
   TrackDiamonds trackItemCart;
   TrackDiamonds trackItemWatchList;
   TrackDiamonds trackItemEnquiry;
@@ -513,6 +526,10 @@ class DiamondModel {
     memoNo = json["memoNo"];
     offerStatus = json["offerStatus"];
     offerValidDate = json["offerValidDate"];
+    date = json["date"] ?? "";
+    remarks = json["remarks"];
+    purpose = json["purpose"];
+    createdAt = json["createdAt"];
     id = json['id'];
     stoneId = json['stoneId'];
     pltId = json['pltId'] ?? "";
@@ -534,6 +551,7 @@ class DiamondModel {
     cultNm = json['cultNm'];
     newDiscount = json["newDiscount"] ?? 0;
     newAmount = json["newAmount"];
+    newPricePerCarat = json["newPricePerCarat"] ?? 0;
     cutNm = json['cutNm'];
     depPer = json['depPer'];
     img = json['img'] ?? false;
@@ -614,6 +632,10 @@ class DiamondModel {
     data['id'] = this.id;
     data["newDiscount"] = this.newDiscount;
     data["newAmount"] = this.newAmount;
+    data["newPricePerCarat"] = this.newPricePerCarat;
+    data["remarks"] = this.remarks;
+    data["purpose"] = this.purpose;
+    data["createdAt"] = this.createdAt;
     data["memoNo"] = this.memoNo;
     data['stoneId'] = this.stoneId;
     data['pltId'] = this.pltId;
@@ -730,7 +752,7 @@ class DiamondModel {
 
   String getDiamondImage() {
     if (isStringEmpty(vStnId) == false) {
-      return diamondImageURL + vStnId + ".jpg";
+      return DiamondUrls.image + vStnId + "/" + "still.jpg";
     }
     //img
     return "";
@@ -740,47 +762,48 @@ class DiamondModel {
     if (isAddToBid) {
       return ctPr;
     }
-    if (isAddToOffer) {
-      if (selectedOfferPer != null) {
-        num quote = (-back + num.parse(selectedOfferPer));
-        num pricePerCarat = rap - ((quote * rap) / 100);
-        num lessAmt = ((pricePerCarat *
-                (-app
-                    .resolve<PrefUtils>()
-                    .getUserDetails()
-                    .accountTerm
-                    .extraPer)) /
-            100);
-        num finalrate = pricePerCarat - lessAmt;
-        return finalrate;
-      } else {
-        num quote = (-back + num.parse(selectedOfferPer));
-        num pricePerCarat = rap - ((quote * rap) / 100);
-        num lessAmt = ((pricePerCarat *
-                (-app
-                    .resolve<PrefUtils>()
-                    .getUserDetails()
-                    .accountTerm
-                    .extraPer)) /
-            100);
-        num finalrate = pricePerCarat - lessAmt;
-        return finalrate;
-      }
-    } else {
-      DateTime now = DateTime.now();
-      if (now.hour >= 15 || (now.hour <= 11 && now.month < 30)) {
-        var totalctpr = this.ctPr *
-            ((-app.resolve<PrefUtils>().getUserDetails().accountTerm.extraPer));
-        var extractpr = totalctpr / 100;
-        var dblExtractpr = extractpr * 0.5 / 100;
-        return this.ctPr - extractpr - dblExtractpr;
-      }
-      var totalctpr = this.ctPr *
-          (-app.resolve<PrefUtils>().getUserDetails().accountTerm.extraPer);
-      var extractpr = totalctpr / 100;
+    // if (isAddToOffer) {
+    //   if (selectedOfferPer != null) {
+    //     num quote = (-back + num.parse(selectedOfferPer));
+    //     num pricePerCarat = rap - ((quote * rap) / 100);
+    //     num lessAmt = ((pricePerCarat *
+    //             (-app
+    //                 .resolve<PrefUtils>()
+    //                 .getUserDetails()
+    //                 .accountTerm
+    //                 .extraPer)) /
+    //         100);
+    //     num finalrate = pricePerCarat - lessAmt;
+    //     return finalrate;
+    //   } else {
+    //     num quote = (-back + num.parse(selectedOfferPer));
+    //     num pricePerCarat = rap - ((quote * rap) / 100);
+    //     num lessAmt = ((pricePerCarat *
+    //             (-app
+    //                 .resolve<PrefUtils>()
+    //                 .getUserDetails()
+    //                 .accountTerm
+    //                 .extraPer)) /
+    //         100);
+    //     num finalrate = pricePerCarat - lessAmt;
+    //     return finalrate;
+    //   }
+    // } else {
+    // DateTime now = DateTime.now();
+    // if (now.hour >= 15 || (now.hour <= 11 && now.month < 30)) {
+    //   var totalctpr = this.ctPr *
+    //       ((-app.resolve<PrefUtils>().getUserDetails().accountTerm.extraPer));
+    //   var extractpr = totalctpr / 100;
+    //   var dblExtractpr = extractpr * 0.5 / 100;
+    //   return this.ctPr - extractpr - dblExtractpr;
+    // }
+    // var totalctpr = this.ctPr *
+    //     (-app.resolve<PrefUtils>().getUserDetails().accountTerm.extraPer);
+    // var extractpr = this.ctPr / 100;
 
-      return this.ctPr - extractpr;
-    }
+    return this.ctPr;
+    // - extractpr;
+    // }
   }
 
   num getBidFinalRate() {
@@ -952,6 +975,8 @@ class TrackItem {
   num newAmount;
   int offerStatus;
   String offerValidDate;
+  String date;
+  String purpose;
   bool isCounterOffer;
   String remarks;
   bool isActive;
@@ -978,6 +1003,7 @@ class TrackItem {
     this.updatedAt,
     this.id,
     this.enquiryNo,
+    this.purpose,
     this.trackType,
     this.name,
     this.trackTxnId,
@@ -1007,12 +1033,15 @@ class TrackItem {
     this.diamond,
     this.userAccount,
     this.createdBy,
+    this.date,
   });
 
   TrackItem.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     id = json['id'];
+    purpose = json["purpose"];
+    date = json["date"];
     enquiryNo = json['enquiryNo'];
     trackType = json['trackType'];
     name = json['name'];
@@ -1065,6 +1094,8 @@ class TrackItem {
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     data['id'] = this.id;
+    data["date"] = this.date;
+    data["purpose"] = this.purpose;
     data['enquiryNo'] = this.enquiryNo;
     data['trackType'] = this.trackType;
     data['name'] = this.name;

@@ -30,6 +30,8 @@ import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SeperatorWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
 import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
+import 'package:diamnow/components/Screens/Notification/Notifications.dart';
+import 'package:diamnow/components/Screens/Search/Search.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/Address/CityListModel.dart';
 import 'package:diamnow/models/Address/CountryListModel.dart';
@@ -57,6 +59,7 @@ class FilterScreen extends StatefulScreenWidget {
 
   int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
   bool isFromDrawer = false;
+  SavedSearchModel savedSearchModel;
   DisplayDataClass dictSearchData;
 
   FilterScreen(Map<String, dynamic> arguments) {
@@ -70,21 +73,29 @@ class FilterScreen extends StatefulScreenWidget {
       if (arguments["searchData"] != null) {
         dictSearchData = arguments["searchData"];
       }
+      if (arguments["savedSearchModel"] != null) {
+        savedSearchModel = arguments["savedSearchModel"];
+      }
     }
   }
 
   @override
-  _FilterScreenState createState() =>
-      _FilterScreenState(moduleType, isFromDrawer,
-          dictSearchData: dictSearchData);
+  _FilterScreenState createState() => _FilterScreenState(
+        moduleType,
+        isFromDrawer,
+        dictSearchData: dictSearchData,
+        savedSearchModel: savedSearchModel,
+      );
 }
 
 class _FilterScreenState extends StatefulScreenWidgetState {
   int moduleType;
   bool isFromDrawer;
   DisplayDataClass dictSearchData;
+  SavedSearchModel savedSearchModel;
 
-  _FilterScreenState(this.moduleType, this.isFromDrawer, {this.dictSearchData});
+  _FilterScreenState(this.moduleType, this.isFromDrawer,
+      {this.dictSearchData, this.savedSearchModel});
 
   int segmentedControlValue = 0;
   PageController controller = PageController();
@@ -125,7 +136,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         });
       });
     });
-    arrBottomTab = BottomTabBar.getFilterScreenBottomTabs();
+    arrBottomTab = BottomTabBar.getFilterScreenBottomTabs(
+        isForEditSavedSearch: !isNullEmptyOrFalse(this.savedSearchModel));
     setState(() {
       //
     });
@@ -348,14 +360,19 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        right: getSize(Spacing.rightPadding),
-                        left: getSize(8.0)),
-                    child: Image.asset(
-                      notification,
-                      height: getSize(20),
-                      width: getSize(20),
+                  InkWell(
+                    onTap: () {
+                      NavigationUtilities.pushRoute(Notifications.route);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          right: getSize(Spacing.rightPadding),
+                          left: getSize(8.0)),
+                      child: Image.asset(
+                        notification,
+                        height: getSize(20),
+                        width: getSize(20),
+                      ),
                     ),
                   ),
                 ]),
@@ -546,6 +563,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             );
           },
         );
+      }).catchError((onError) {
+        showToast(R.string().commonString.noSavedSearch, context: context);
       });
     }
   }
@@ -630,16 +649,33 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       (diamondListResp) {
         if (isSavedSearch) {
           openBottomSheetForSavedSearch(
-              context,
-              FilterRequest().createRequest(arrList),
-              diamondListResp.data.filter.id,
-              isSearch: isSearch);
+              context, FilterRequest().createRequest(arrList),
+              isSearch: isSearch, savedSearchModel: this.savedSearchModel);
         } else {
           if (isSearch) {
             if (diamondListResp.data.count == 0) {
               app.resolve<CustomDialogs>().confirmDialog(context,
                   desc: R.string().commonString.noDiamondFound,
-                  positiveBtnTitle: R.string().commonString.ok);
+                  positiveBtnTitle: R.string().commonString.ok,
+                  negativeBtnTitle: R.string().screenTitle.addDemand,
+                  onClickCallback: (buttonType) {
+                if (buttonType == ButtonType.NagativeButtonClick) {
+                  if (app
+                      .resolve<PrefUtils>()
+                      .getModulePermission(
+                          ModulePermissionConstant.permission_myDemand)
+                      .insert) {
+                    if (!isNullEmptyOrFalse(
+                        FilterRequest().createRequest(arrList)))
+                      getAddDemand();
+                    else {
+                      showToast(R.string().commonString.selectAtleastOneFilter,
+                          context: context);
+                    }
+                    // place code
+                  }
+                }
+              });
             } else {
               Map<String, dynamic> dict = new HashMap();
               dict["filterId"] = diamondListResp.data.filter.id;
@@ -733,6 +769,9 @@ class FilterItem extends StatefulWidget {
 }
 
 class _FilterItemState extends State<FilterItem> {
+  final TextEditingController _searchController = TextEditingController();
+  var _focusSearch = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -745,8 +784,17 @@ class _FilterItemState extends State<FilterItem> {
   }
 
   getWidgets(FormBaseModel model) {
-    if (model.viewType == ViewTypes.seperator) {
-      return SeperatorWidget(model);
+    if (model.viewType == "searchText") {
+      return getSearchTextField();
+    } else if (model.viewType == ViewTypes.seperator) {
+      return Padding(
+        padding: EdgeInsets.only(
+            left: getSize(0),
+            right: getSize(0),
+            top: getSize(12),
+            bottom: getSize(8)),
+        child: SeperatorWidget(model),
+      );
     } else if (model.viewType == ViewTypes.selection) {
       return Padding(
         padding: EdgeInsets.only(
@@ -813,5 +861,92 @@ class _FilterItemState extends State<FilterItem> {
         child: ShapeWidget(model),
       );
     }
+  }
+
+  getSearchTextField() {
+    if (!(app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_searchDiamond)
+        .view)) {
+      return SizedBox();
+    }
+    return Hero(
+      tag: 'searchTextField',
+      child: Material(
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: getSize(Spacing.leftPadding),
+            right: getSize(Spacing.rightPadding),
+            top: getSize(16),
+          ),
+          child: Container(
+            height: getSize(40),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(getSize(5)),
+              border:
+                  Border.all(color: appTheme.colorPrimary, width: getSize(1)),
+            ),
+            child: TextField(
+              textAlignVertical: TextAlignVertical(y: 1.0),
+              textInputAction: TextInputAction.done,
+              focusNode: _focusSearch,
+              readOnly: true,
+              autofocus: false,
+              controller: _searchController,
+              obscureText: false,
+              style: appTheme.black16TextStyle,
+              keyboardType: TextInputType.text,
+              textCapitalization: TextCapitalization.none,
+              cursorColor: appTheme.colorPrimary,
+              inputFormatters: [
+                WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+                BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+              ],
+              decoration: InputDecoration(
+                fillColor: fromHex("#FFEFEF"),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+                  borderSide: BorderSide(
+                      color: appTheme.dividerColor, width: getSize(1)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+                  borderSide: BorderSide(
+                      color: appTheme.dividerColor, width: getSize(1)),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+                  borderSide: BorderSide(
+                      color: appTheme.dividerColor, width: getSize(1)),
+                ),
+
+                hintStyle: appTheme.grey16HintTextStyle,
+                hintText: "Search",
+                labelStyle: TextStyle(
+                  color: appTheme.textColor,
+                  fontSize: getFontSize(16),
+                ),
+                // suffix: widget.textOption.postfixWidOnFocus,
+                suffixIcon: Padding(
+                    padding: EdgeInsets.all(getSize(10)),
+                    child: Image.asset(search)),
+              ),
+              onChanged: (String text) {
+                //
+              },
+              onEditingComplete: () {
+                //
+                _focusSearch.unfocus();
+              },
+              onTap: () {
+                Map<String, dynamic> dict = new HashMap();
+                dict["isFromSearch"] = true;
+                NavigationUtilities.pushRoute(SearchScreen.route, args: dict);
+              },
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

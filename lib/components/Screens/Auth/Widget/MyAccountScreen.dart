@@ -16,6 +16,7 @@ import 'package:diamnow/components/Screens/MyDemand/MyDemandScreen.dart';
 import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
+import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
@@ -246,6 +247,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   }
 
   Widget _buildAvatarRow(BuildContext context) {
+    User userAccount = app.resolve<PrefUtils>().getUserDetails();
     return InkWell(
       onTap: () {
         Map<String, dynamic> dict = new HashMap();
@@ -283,9 +285,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                       borderRadius:
                           BorderRadius.all(Radius.circular(getSize(25))),
                       child: getImageView(
-                        app.resolve<PrefUtils>().getUserDetails().profileImage,
+                        userAccount.profileImage,
                         placeHolderImage: placeHolder,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                         height: getSize(50),
                         width: getSize(50),
                       ),
@@ -299,11 +301,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         Row(
                           children: [
                             Text(
-                              app
-                                      .resolve<PrefUtils>()
-                                      .getUserDetails()
-                                      .getFullName() ??
-                                  "-",
+                              userAccount.getFullName() ?? "-",
                               style: appTheme.black16TextStyle.copyWith(
                                 fontWeight: FontWeight.w500,
                               ),
@@ -311,11 +309,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                           ],
                         ),
                         SizedBox(height: getSize(6)),
-                        if (isStringEmpty(app
-                                .resolve<PrefUtils>()
-                                .getUserDetails()
-                                .email) ==
-                            false)
+                        if (isStringEmpty(userAccount.email) == false)
                           Row(
                             children: [
                               Image.asset(
@@ -325,11 +319,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                               ),
                               SizedBox(width: getSize(8)),
                               Text(
-                                app
-                                        .resolve<PrefUtils>()
-                                        .getUserDetails()
-                                        .email ??
-                                    "-",
+                                userAccount.email ?? "-",
                                 style: appTheme.black12TextStyle,
                               ),
                             ],
@@ -350,10 +340,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                 false)
                               Image.asset(
                                 CountryPickerUtils.getFlagImageAssetPath(
-                                    CountryPickerUtils.getCountryByPhoneCode(app
-                                            .resolve<PrefUtils>()
-                                            .getUserDetails()
-                                            .countryCode)
+                                    CountryPickerUtils.getCountryByPhoneCode(
+                                            userAccount.countryCode)
                                         .isoCode),
                                 height: getSize(12),
                                 width: getSize(16),
@@ -362,8 +350,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                               ),
                             SizedBox(width: getSize(8)),
                             Text(
-                              app.resolve<PrefUtils>().getUserDetails().phone ??
-                                  "-",
+                              userAccount.mobile ?? "-",
                               style: appTheme.black12TextStyle,
                             ),
                           ],

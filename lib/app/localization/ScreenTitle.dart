@@ -52,6 +52,7 @@ class ScreenTitle {
   final String myBid;
   final String myHold;
   final String myOrder;
+  final String confirmStone;
   final String myOffice;
   final String myOffer;
   final String myPurchased;
@@ -119,14 +120,18 @@ class ScreenTitle {
   //Menu Items
   final String enquiry;
   final String placeOrder;
+  final String buyNow;
   final String cancelStone;
   final String compare;
   final String compareStones;
   final String addToCart;
   final String addToWatchList;
   final String finalCalculation;
+  final String bookOffice;
   final String comment;
   final String offer;
+  final String offeredDisc;
+  final String offeredPriceCt;
   final String officeView;
   final String hold;
   final String download;
@@ -171,6 +176,7 @@ class ScreenTitle {
   final String stoneOfDay;
   final String savedSearch;
   final String savedAndSearch;
+  final String updateAndSearch;
   final String matchPair;
   final String recentSearch;
   final String viewAll;
@@ -203,6 +209,7 @@ class ScreenTitle {
     this.addDemand = "Add Demand",
     this.matchPair = "Match Pair",
     this.savedAndSearch = "Save & Search",
+    this.updateAndSearch = "Update & Search",
     this.upcoming = "Upcoming",
     this.bidPricePerCt = "Bid Price / Ct",
     this.bidDisc = "Bid Disc",
@@ -212,11 +219,11 @@ class ScreenTitle {
     this.myComment = "My Notes",
     this.compare = "Compare",
     this.compareStones = "Compare Stones",
-    this.statusHold = "Hold",
+    this.statusHold = "On Hold",
     this.statusOnMemo = "On Memo",
     this.statusAvailable = "Available",
-    this.statusNew = "New",
-    this.statusOffer = "Offer",
+    this.statusNew = "New Arrival",
+    this.statusOffer = "Stone Of The Day/Promotion",
     this.statusMyHold = "My Hold",
     this.signup = "Sign up",
     this.addToOffice = "Add To Office",
@@ -232,6 +239,8 @@ class ScreenTitle {
         "Offered stone will directly be confirmed if the price gets approved so we request you to be sure before offering. Any stone(s) put in Offer list is not kept on hold for you as it is available for other customer's as well.",
     this.note = "Note",
     this.hours = "Hours",
+    this.offeredDisc = "Offered Dis%",
+    this.offeredPriceCt = "Offered Pr/Ct",
     this.addOffer = "Add Offer",
     this.expDiscPer = "Expected Discount%",
     this.todayDiscPer = "Today's Disc%",
@@ -300,10 +309,11 @@ class ScreenTitle {
     this.myWatchlist = "My Watchlist",
     this.myBid = "My Bid",
     this.myHold = "My Hold",
-    this.myOrder = "My Order",
-    this.myOffice = "My Office",
-    this.myOffer = "My Offer",
-    this.myPurchased = "My Purchased",
+    this.myOrder = "My Ordered List",
+    this.confirmStone = "Confirm Stone",
+    this.myOffice = "My Office View",
+    this.myOffer = "My Offer List",
+    this.myPurchased = "My Purchased History",
     this.mySavedSearch = "My Saved Search",
     this.savedSearch = "Saved Search",
     this.myDemand = "My Demand",
@@ -347,12 +357,14 @@ class ScreenTitle {
     this.addToCart = "Add to Cart",
     this.addToWatchList = "Add to Watchlist",
     this.finalCalculation = "Final Calculation",
+    this.bookOffice = "Book Office",
     this.clearSelection = "Clear Selection",
     this.comment = "Comments",
     this.hold = "Hold",
     this.offer = "Offer",
     this.officeView = "Office View",
     this.placeOrder = "Place Order",
+    this.buyNow = "Buy Now",
     this.cancelStone = "Cancel Stone",
     this.share = "Share",
     this.searchResult = "Search Result",

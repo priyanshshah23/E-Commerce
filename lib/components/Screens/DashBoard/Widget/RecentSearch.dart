@@ -27,7 +27,6 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
         : Padding(
             padding: EdgeInsets.only(
               top: getSize(20),
-              left: getSize(Spacing.leftPadding),
               right: getSize(Spacing.rightPadding),
             ),
             child: Column(
@@ -35,7 +34,12 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
               children: [
                 Row(
                   children: [
-                    getTitleText(R.string().screenTitle.recentSearch),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: getSize(Spacing.leftPadding),
+                      ),
+                      child: getTitleText(R.string().screenTitle.recentSearch),
+                    ),
                     Spacer(),
                     InkWell(
                       onTap: () {
@@ -59,7 +63,7 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
                     crossAxisCount: 1,
-                    childAspectRatio: 0.7,
+                    childAspectRatio: 0.65,
                     children: List.generate(
                       widget.recentSearch.length,
                       (index) {
@@ -88,7 +92,7 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
   getRecentItem(SavedSearchModel recentSearch) {
     return Container(
       margin:
-          EdgeInsets.symmetric(vertical: getSize(10), horizontal: getSize(10)),
+          EdgeInsets.symmetric(vertical: getSize(10), horizontal: getSize(16)),
       padding:
           EdgeInsets.symmetric(vertical: getSize(10), horizontal: getSize(14)),
       decoration: BoxDecoration(
@@ -99,6 +103,7 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
       child: IntrinsicWidth(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             getText(recentSearch.getCreatedDate(),
                 style: appTheme.black14TextStyle),
@@ -196,10 +201,11 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
     );
   }
 
-  getText(String text, {TextStyle style}) {
+  getText(String text, {TextStyle style, TextAlign align}) {
     return Text(
       text,
       softWrap: true,
+      textAlign: align ?? TextAlign.left,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: style ?? appTheme.black14TextStyle,

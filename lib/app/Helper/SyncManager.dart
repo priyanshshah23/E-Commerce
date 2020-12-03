@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
+import 'package:path/path.dart' as path;
 import 'package:diamnow/app/AppConfiguration/AppNavigation.dart';
 import 'package:diamnow/app/Helper/AppDatabase.dart';
 import 'package:diamnow/app/app.export.dart';
@@ -13,6 +15,7 @@ import 'package:diamnow/components/Screens/Version/VersionUpdate.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
+import 'package:diamnow/models/DiamondList/download.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
 import 'package:diamnow/models/Version/VersionUpdateResp.dart';
@@ -20,6 +23,7 @@ import 'package:diamnow/models/excel/ExcelApiResponse.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:package_info/package_info.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class SyncManager {
   static final SyncManager _instance = SyncManager._internal();
@@ -111,7 +115,10 @@ class SyncManager {
     dict["isNotReturnTotal"] = true;
     dict["isReturnCountOnly"] = true;
     dict["filters"] = req;
-    dict["search"] = searchText;
+
+    if (!isNullEmptyOrFalse(searchText)) {
+      dict["search"] = searchText;
+    }
 
     NetworkCall<DiamondListResp>()
         .makeCall(
@@ -462,7 +469,7 @@ class SyncManager {
                 } else {
                   //for signinwithmpin / signinwithguest
                   if (screenConstant == VersionUpdateApi.signInWithMpin ||
-                      screenConstant == VersionUpdateApi.signInAsGuest) {
+                      screenConstant == VersionUpdateApi.signInAsGuest || screenConstant == VersionUpdateApi.logIn) {
                     SyncManager.instance.callMasterSync(
                         NavigationUtilities.key.currentContext, () async {
                       //success
@@ -500,7 +507,11 @@ class SyncManager {
     );
   }
 
-  callApiForExcel(BuildContext context, List<DiamondModel> diamondList) {
+  callApiForExcel(BuildContext context, List<DiamondModel> diamondList,
+      {bool isForShare = false, void callback(String)}) {
+    final Completer<WebViewController> _controller =
+        Completer<WebViewController>();
+
     List<String> stoneId = [];
     diamondList.forEach((element) {
       stoneId.add(element.id);
@@ -515,11 +526,43 @@ class SyncManager {
     )
         .then((excelApiResponse) async {
       // success(diamondListResp);
-      String url = baseURL + excelApiResponse.data.data;
+      String url = ApiConstants.baseURLForExcel + excelApiResponse.data.data;
+      print("Excel file URL : " + url);
+      if (!Platform.isIOS) {
+        url = "https://docs.google.com/viewer?embedded=true&url=" + url;
+      }
+      print("Final ExcelFile Viewer Url : " + url);
+
       //navigate to static page...
+      // DownloadState downloadStateObj = DownloadState();
+      // final dir = await downloadStateObj.getDownloadDirectory();
+      // String fileName = "FinalExcel.xlsx";
+      // final savePath = path.join(dir.path, fileName);
+      // print("file:/" + savePath);
+      if (isForShare) {
+        callback(url);
+      } else {
+        if (Platform.isIOS) {
+          Map<String, dynamic> dict = {};
+          dict["strUrl"] = url;
+          dict[ArgumentConstant.IsFromDrawer] = false;
+          dict["isForExcel"] = true;
+          dict["screenTitle"] = excelApiResponse.data.excelName;
+          NavigationUtilities.pushRoute(StaticPageScreen.route, args: dict);
+        } else {
+          Map<String, dynamic> dict = {};
+          dict["strUrl"] = url;
+          dict[ArgumentConstant.IsFromDrawer] = false;
+          dict["isForExcel"] = true;
+          dict["screenTitle"] = excelApiResponse.data.excelName;
+          NavigationUtilities.pushRoute(StaticPageScreen.route, args: dict);
+        }
+      }
 
       // getWebView(context, url);
     }).catchError((onError) {
+      showToast("There is problem on server, please try again later.",
+          context: context);
       print(onError);
     });
   }

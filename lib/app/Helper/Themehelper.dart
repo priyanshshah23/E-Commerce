@@ -56,41 +56,42 @@ class PnShahTheme extends BaseTheme {
 }
 
 class BaseTheme {
-  Color get colorPrimary => fromHex("#6E8FE7");
-  Color get headerBgColor => fromHex("#6E8FE7");
-  Color get textColor => fromHex("#262626");
+  Color get colorPrimary => fromHex("#4EB45E");
+  Color get headerBgColor => fromHex("#4EB45E");
+  Color get textColor => fromHex("#232323");
   Color get bgColor => fromHex("#6E8FE7");
   Color get dividerColor => fromHex("#E3E3E3");
+  Color get placeholderColor => fromHex("#999999");
   Color get textBlackColor => Colors.black;
   Color get blackColor => Colors.black;
   Color get whiteColor => Colors.white;
-  Color get textGreyColor => fromHex("#C7C7C7");
-  Color get buttonColor => fromHex("#6E8FE7");
-  Color get darkBlue => fromHex("#003365");
+  Color get textGreyColor => fromHex("#999999");
+  Color get buttonColor => fromHex("#4EB45E");
+  Color get darkBlue => fromHex("#4EB45E");
   Color get errorColor => fromHex("#FF4D4D");
   Color get segmentSelectedColor => Colors.white;
-  Color get borderColor => fromHex("#e3e3e3");
-  Color get selectedFilterColor => fromHex("#eaeffb");
+  Color get borderColor => fromHex("#DDDDDD");
+  Color get selectedFilterColor => fromHex("#F2FCF4");
   Color get unSelectedBgColor => fromHex("#f7f7f7");
   Color get greenColor => fromHex("#0EAC33");
   Color get lightBGColor => fromHex("#F8F8F8");
-  Color get textFieldBorderColor => fromHex("#F5F5F5");
+  Color get textFieldBorderColor => fromHex("#DDDDDD");
   Color get statusHold => fromHex("#DB1C1C");
   Color get statusOnMemo => fromHex("#307BEA");
   Color get statusAvailable => fromHex("#6BC950");
-  Color get statusNew => fromHex("#B256E6");
-  Color get statusOffer => fromHex("#FF4DB8");
+  Color get statusNew => fromHex("#D2B48C");
+  Color get statusOffer => fromHex("#FFC0CB");
   Color get statusMyHold => fromHex("#F1951E");
   Color get textGray => fromHex("#7B7E84");
   Color get drawerTitleColor => fromHex("#EEF1FC");
-  Color get lightColorPrimary => fromHex("#EEF1FC");
+  Color get lightColorPrimary => fromHex("#F2FCF4");
   Color get redColor => fromHex("#FF4D4D");
   Color get whatsAppColor => fromHex("#55CD6C");
   Color get gmailColor => fromHex("#DB4436");
   Color get skypeColor => fromHex("#03A9F4");
   Color get bodyTextColor => fromHex("#999999");
 
-  Color get shadowColorWithoutOpacity => fromHex("#7D9EF6").withOpacity(0.1);
+  Color get shadowColorWithoutOpacity => fromHex("#4EB45E").withOpacity(0.1);
   Color get shadowColor => shadowColorWithoutOpacity.withOpacity(0.1);
   // Color get shadowColor => fromHex("#7D9EF61A");
 

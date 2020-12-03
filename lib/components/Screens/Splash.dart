@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:lottie/lottie.dart';
 import 'package:package_info/package_info.dart';
 
 import 'Auth/ForgetPassword.dart';
@@ -46,7 +47,8 @@ class _SplashState extends State<Splash> {
 //        NavigationUtilities.pushRoute(CompanyInformation.route);
 //      NavigationUtilities.pushRoute(Notifications.route);
       // callVersionUpdateApi();
-      SyncManager().callVersionUpdateApi(context, VersionUpdateApi.splash);
+      SyncManager().callVersionUpdateApi(context, VersionUpdateApi.splash,
+          id: app.resolve<PrefUtils>().getUserDetails().id ?? "");
 //      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
       //  NavigationUtilities.pushRoute(ForgetPasswordScreen.route);
 //      AppNavigation().movetoHome(isPopAndSwitch: true);
@@ -189,18 +191,22 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     //callUpdateVehicleApi(context);
     return Container(
-      color: appTheme.colorPrimary,
+      color: appTheme.whiteColor,
       height: MathUtilities.screenHeight(context),
       width: MathUtilities.screenWidth(context),
       child: Center(
-          child: Container(
-              width: getSize(125),
-              height: getSize(125),
-              child: Image.asset(
-                splashLogo,
-                width: getSize(125),
-                height: getSize(125),
-              ))),
+        child: Container(
+          alignment: Alignment.center,
+          width: getSize(160),
+          height: getSize(160),
+          child: Lottie.asset(
+            'assets/pn.json',
+            width: 200,
+            height: 200,
+            fit: BoxFit.fill,
+          ),
+        ),
+      ),
     );
   }
 
@@ -223,7 +229,7 @@ class _SplashState extends State<Splash> {
         isNetworkError: false,
         isProgress: false,
         id: app.resolve<PrefUtils>().isUserLogin()
-            ? app.resolve<PrefUtils>().getUserDetails().id
+            ? app.resolve<PrefUtils>().getUserDetails()?.id ?? ""
             : "");
   }
 

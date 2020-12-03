@@ -140,13 +140,15 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
   getCaratRangeChips() {
     return Wrap(
       spacing: getSize(6),
-      runSpacing: getSize(6),
+      runSpacing: getSize(0),
       children: List<Widget>.generate(
           widget.selectionModel.caratRangeChipsToShow.length, (int index) {
         return Chip(
           // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(getSize(10))),
           label: Text(
-              widget.selectionModel.caratRangeChipsToShow[index].toString()),
+            widget.selectionModel.caratRangeChipsToShow[index].toString(),
+            style: appTheme.blackMedium14TitleColorblack,
+          ),
           backgroundColor: appTheme.unSelectedBgColor,
           deleteIcon: Icon(
             Icons.clear,
@@ -217,7 +219,7 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
                 RegExp(r'(^[+-]?\d*.?\d{0,2})$').hasMatch(newValue.text)
                     ? newValue
                     : oldValue),
-            LengthLimitingTextInputFormatter(3),
+            LengthLimitingTextInputFormatter(4),
           ],
           keyboardType: TextInputType.numberWithOptions(decimal: true),
           textInputAction: TextInputAction.next,
@@ -287,7 +289,7 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
                 RegExp(r'(^[+-]?\d*.?\d{0,2})$').hasMatch(newValue.text)
                     ? newValue
                     : oldValue),
-            LengthLimitingTextInputFormatter(3),
+            LengthLimitingTextInputFormatter(4),
           ],
           onSubmitted: (value) {},
           style: appTheme.blackNormal14TitleColorblack,

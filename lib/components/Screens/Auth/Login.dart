@@ -10,17 +10,9 @@ import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Auth/ForgetPassword.dart';
-import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
-import 'package:diamnow/components/Screens/Auth/SignInWithMPINScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Signup.dart';
-import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
-import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
-import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
-import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
-import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
-import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
-import 'package:diamnow/components/Screens/Notification/Notifications.dart';
 import 'package:diamnow/components/Screens/Version/VersionUpdate.dart';
+
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/Auth/SignInAsGuestModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
@@ -36,18 +28,19 @@ import 'package:package_info/package_info.dart';
 
 import '../../../app/utils/navigator.dart';
 import '../../../modules/ThemeSetting.dart';
+import 'SignInWithMPINScreen.dart';
 
 class LoginScreen extends StatefulScreenWidget {
   static const route = "login";
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  LoginScreenState createState() => LoginScreenState();
 }
 
-class _LoginScreenState extends StatefulScreenWidgetState {
+class LoginScreenState extends StatefulScreenWidgetState {
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   var _focusUserName = FocusNode();
@@ -84,7 +77,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
   getUserNameAndPassword() async {
     if (app.resolve<PrefUtils>().getBool("rememberMe") == true) {
       isCheckBoxSelected = app.resolve<PrefUtils>().getBool("rememberMe");
-      _userNameController.text = app.resolve<PrefUtils>().getString("userName");
+      userNameController.text = app.resolve<PrefUtils>().getString("userName");
       _passwordController.text = app.resolve<PrefUtils>().getString("passWord");
     }
 
@@ -256,21 +249,26 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                           Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            getSize(3))),
-                                                width: getSize(21),
-                                                height: getSize(21),
-                                                child: Checkbox(
-                                                  activeColor:
-                                                      appTheme.colorPrimary,
-                                                  value: isCheckBoxSelected,
-                                                  onChanged: (value) {
-                                                    isCheckBoxSelected = value;
-                                                    setState(() {});
-                                                  },
+                                              InkWell(
+                                                onTap: () {
+                                                  isCheckBoxSelected =
+                                                      !isCheckBoxSelected;
+                                                  setState(() {});
+                                                },
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              getSize(3))),
+                                                  width: getSize(21),
+                                                  height: getSize(21),
+                                                  child: Image.asset(
+                                                    isCheckBoxSelected
+                                                        ? selectedCheckbox
+                                                        : unSelectedCheckbox,
+                                                    height: getSize(20),
+                                                    width: getSize(20),
+                                                  ),
                                                 ),
                                               ),
                                               SizedBox(
@@ -291,51 +289,111 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                         ],
                                       ),
                                     ),
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          top: getSize(15), left: getSize(0)),
-                                      decoration: BoxDecoration(
-                                          boxShadow: getBoxShadow(context)),
-                                      child: AppButton.flat(
-                                        onTap: () {
-                                          // NavigationUtilities.pushRoute(TabBarDemo.route);
-                                          FocusScope.of(context).unfocus();
-                                          if (_formKey.currentState
-                                              .validate()) {
-                                            _formKey.currentState.save();
-                                            callLoginApi(context);
-                                          } else {
-                                            setState(() {
-                                              _autoValidate = true;
-                                            });
-                                          }
-                                          // NavigationUtilities.push(ThemeSetting());
-                                        },
-                                        //  backgroundColor: appTheme.buttonColor,
-                                        borderRadius: getSize(5),
-                                        fitWidth: true,
-                                        text: R.string().authStrings.signInCap,
-                                        //isButtonEnabled: enableDisableSigninButton(),
-                                      ),
-                                    ),
                                     Padding(
                                       padding:
-                                          EdgeInsets.only(top: getSize(10)),
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          R.string().commonString.lblOr,
-                                          style: appTheme.grey16HintTextStyle,
+                                          EdgeInsets.only(top: getSize(70)),
+                                      child: Container(
+                                        margin: EdgeInsets.only(
+                                            top: getSize(15), left: getSize(0)),
+                                        decoration: BoxDecoration(
+                                            boxShadow: getBoxShadow(context)),
+                                        child: AppButton.flat(
+                                          onTap: () {
+                                            FocusScope.of(context).unfocus();
+                                            if (_formKey.currentState
+                                                .validate()) {
+                                              _formKey.currentState.save();
+                                              callLoginApi(context);
+                                            } else {
+                                              setState(() {
+                                                _autoValidate = true;
+                                              });
+                                            }
+                                          },
+                                          borderRadius: getSize(5),
+                                          fitWidth: true,
+                                          text:
+                                              R.string().authStrings.signInCap,
                                         ),
                                       ),
                                     ),
-                                    Container(
+
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.only(top: getSize(60)),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: Container(
+                                              alignment: Alignment.center,
+                                              margin: EdgeInsets.only(
+                                                top: getSize(10),
+                                                left: getSize(0),
+                                              ),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Image.asset(
+                                                    fingurePrint,
+                                                    width: getSize(15),
+                                                    height: getSize(15),
+                                                  ),
+                                                  SizedBox(
+                                                    width: getSize(10),
+                                                  ),
+                                                  Text(
+                                                    "Touch ID",
+                                                    style: appTheme
+                                                        .primary16TextStyle,
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: InkWell(
+                                              onTap: () {
+                                                NavigationUtilities.pushRoute(
+                                                    SignInWithMPINScreen.route);
+                                              },
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                margin: EdgeInsets.only(
+                                                  top: getSize(10),
+                                                  left: getSize(0),
+                                                ),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Image.asset(
+                                                      mpin,
+                                                      width: getSize(15),
+                                                      height: getSize(15),
+                                                    ),
+                                                    SizedBox(
+                                                      width: getSize(10),
+                                                    ),
+                                                    Text(
+                                                      "MPIN",
+                                                      style: appTheme
+                                                          .primary16TextStyle,
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    /*Container(
                                       margin: EdgeInsets.only(
                                           top: getSize(10), left: getSize(0)),
                                       child: AppButton.flat(
                                         onTap: () {
-                                          NavigationUtilities.pushRoute(
-                                              GuestSignInScreen.route);
+                                          // NavigationUtilities.pushRoute(
+                                          //     GuestSignInScreen.route);
                                         },
                                         textColor: appTheme.colorPrimary,
                                         backgroundColor: appTheme.colorPrimary
@@ -348,7 +406,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                                             .signInAsGuest,
                                         //isButtonEnabled: enableDisableSigninButton(),
                                       ),
-                                    ),
+                                    ),*/
                                   ],
                                 ),
                               ],
@@ -361,21 +419,22 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                   ),
                 ),
                 bottomNavigationBar: Container(
-//              alignment: Alignment.bottomCenter,
-                  margin: EdgeInsets.all(getSize(15)),
                   child: InkWell(
                     onTap: () {
                       NavigationUtilities.pushRoute(SignupScreen.route);
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Text(R.string().authStrings.haveRegisterCode,
-                            style: appTheme.grey16HintTextStyle),
-                        Text(" " + R.string().authStrings.signUp,
-                            style: appTheme.darkBlue16TextStyle),
-                      ],
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: getSize(16)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Text("Don't have an account?",
+                              style: appTheme.grey16HintTextStyle),
+                          Text(" " + R.string().authStrings.signUp,
+                              style: appTheme.darkBlue16TextStyle),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -394,9 +453,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
         //Image.asset(profileEmail,),
 
         hintText: R.string().authStrings.name,
-//        keyboardType: TextInputType.number,
-        inputController: _userNameController,
-//        fillColor: _isUserNameValid ? null : fromHex("#FFEFEF"),
+        inputController: userNameController,
         errorBorder: _isUserNameValid
             ? null
             : OutlineInputBorder(
@@ -404,10 +461,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
                 borderSide: BorderSide(width: 1, color: Colors.red),
               ),
 
-        formatter: [
-//          ValidatorInputFormatter(
-//              editingValidator: DecimalNumberEditingRegexValidator(10)),
-        ],
+        formatter: [],
       ),
       textCallback: (text) {
         if (_autoValidate) {
@@ -503,7 +557,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
 
   Future callLoginApi(BuildContext context) async {
     LoginReq req = LoginReq();
-    req.username = _userNameController.text;
+    req.username = userNameController.text;
     req.password = _passwordController.text;
 
     NetworkCall<LoginResp>()
@@ -584,7 +638,7 @@ class _LoginScreenState extends StatefulScreenWidgetState {
           .saveBoolean("rememberMe", isCheckBoxSelected);
       await app
           .resolve<PrefUtils>()
-          .saveString("userName", _userNameController.text);
+          .saveString("userName", userNameController.text);
       await app
           .resolve<PrefUtils>()
           .saveString("passWord", _passwordController.text);

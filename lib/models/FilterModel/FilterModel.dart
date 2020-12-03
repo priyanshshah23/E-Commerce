@@ -60,7 +60,6 @@ class Config {
     if (isNullEmptyOrFalse(arrSorting)) {
       String jsonForm =
           await rootBundle.loadString('assets/Json/SortingPopup.json');
-
       List<dynamic> fieldList = jsonDecode(jsonForm);
       for (int i = 0; i < fieldList.length; i++) {
         dynamic element = fieldList[i];
@@ -84,7 +83,9 @@ class Config {
         if (element is Map<String, dynamic>) {
           String viewType = element["viewType"];
           if (element["isActive"] ?? true) {
-            if (viewType == ViewTypes.fromTo) {
+            if (viewType == "searchText") {
+              arrFilter.add(FormBaseModel.fromJson(element));
+            } else if (viewType == ViewTypes.fromTo) {
               arrFilter.add(FromToModel.fromJson(element));
             } else if (viewType == ViewTypes.shapeWidget) {
               SelectionModel selectionModel = SelectionModel.fromJson(element);
@@ -240,6 +241,7 @@ class Config {
     Master allMaster = Master();
     allMaster.sId = model.allLableTitle;
     allMaster.webDisplay = model.allLableTitle;
+    allMaster.group = model.allLableTitle;
 
     List<Master> arrSelectedMaster =
         model.masters.where((element) => element.isSelected).toList();
@@ -269,6 +271,7 @@ class Config {
     Master allMaster = Master();
     allMaster.sId = R.string().commonString.showMore;
     allMaster.webDisplay = R.string().commonString.showMore;
+    allMaster.group = R.string().commonString.showMore;
 
     List<Master> arrSelectedMaster =
         model.masters.where((element) => element.isSelected).toList();

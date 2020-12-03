@@ -6,13 +6,24 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWid
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class DiamondExpandItemWidget extends StatefulWidget {
   DiamondModel item;
   ActionClick actionClick;
   List<Widget> list;
+  List<Widget> leftSwipeList;
+  SlidableController controller;
+  int moduleType;
 
-  DiamondExpandItemWidget({this.item, this.actionClick, this.list});
+  DiamondExpandItemWidget({
+    this.item,
+    this.actionClick,
+    this.controller,
+    this.list,
+    this.moduleType,
+    this.leftSwipeList,
+  });
 
   @override
   _DiamondExpandItemWidgetState createState() =>
@@ -32,84 +43,92 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
             left: Spacing.leftPadding,
             right: Spacing.rightPadding,
             bottom: getSize(10)),
-        child: Stack(
-          children: [
-            Container(
-              padding: EdgeInsets.only(
-                  top: getSize(10), bottom: getSize(10), left: getSize(10)),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(getSize(5)),
-                border: Border.all(
+        child: Slidable(
+          controller: widget.controller,
+          key: Key(widget.item.id),
+          actionPane: SlidableDrawerActionPane(),
+          actions: widget.leftSwipeList == null ? [] : widget.leftSwipeList,
+          secondaryActions: widget.list == null ? [] : widget.list,
+          actionExtentRatio: 0.2,
+          child: Stack(
+            children: [
+              Container(
+                padding: EdgeInsets.only(
+                    top: getSize(10), bottom: getSize(10), left: getSize(10)),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(getSize(5)),
+                  border: Border.all(
+                    color: widget.item.isSelected
+                        ? appTheme.colorPrimary
+                        : appTheme.dividerColor,
+                  ),
                   color: widget.item.isSelected
-                      ? appTheme.colorPrimary
-                      : appTheme.dividerColor,
+                      ? appTheme.lightColorPrimary
+                      : appTheme.whiteColor,
+                  boxShadow: widget.item.isSelected
+                      ? [
+                          BoxShadow(
+                              color: appTheme.colorPrimary.withOpacity(0.05),
+                              blurRadius: getSize(8),
+                              spreadRadius: getSize(2),
+                              offset: Offset(0, 8)),
+                        ]
+                      : [BoxShadow(color: Colors.transparent)],
                 ),
-                color: widget.item.isSelected
-                    ? appTheme.lightColorPrimary
-                    : appTheme.whiteColor,
-                boxShadow: widget.item.isSelected
-                    ? [
-                        BoxShadow(
-                            color: appTheme.colorPrimary.withOpacity(0.05),
-                            blurRadius: getSize(8),
-                            spreadRadius: getSize(2),
-                            offset: Offset(0, 8)),
-                      ]
-                    : [BoxShadow(color: Colors.transparent)],
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        getImageView(
-                          widget.item.getDiamondImage(),
-                          placeHolderImage: diamond,
-                          width: MathUtilities.screenWidth(context),
-                          height: getSize(96),
-                        ),
-                        getFirstRow(),
-                        getSecondRow(),
-                        getThirdRow(),
-                        getFourthRow(),
-                      ],
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          getImageView(
+                            widget.item.getDiamondImage(),
+                            placeHolderImage: diamond,
+                            width: MathUtilities.screenWidth(context),
+                            height: getSize(96),
+                          ),
+                          getFirstRow(),
+                          getSecondRow(),
+                          getThirdRow(),
+                          getFourthRow(),
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    child: Center(
-                        child: Container(
+                    Container(
+                      child: Center(
+                          child: Container(
+                        decoration: BoxDecoration(
+                            color: widget.item.getStatusColor(),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(5),
+                                bottomLeft: Radius.circular(5))),
+                        height: getSize(26),
+                        width: getSize(4),
+                        // color: Colors.red,
+                      )),
+                    ),
+                  ],
+                ),
+              ),
+              widget.item.isSelected
+                  ? Container(
+                      alignment: Alignment.center,
+                      height: getSize(20),
+                      width: getSize(20),
                       decoration: BoxDecoration(
-                          color: widget.item.getStatusColor(),
+                          color: appTheme.colorPrimary,
                           borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(5),
-                              bottomLeft: Radius.circular(5))),
-                      height: getSize(26),
-                      width: getSize(4),
-                      // color: Colors.red,
-                    )),
-                  ),
-                ],
-              ),
-            ),
-            widget.item.isSelected
-                ? Container(
-                    alignment: Alignment.center,
-                    height: getSize(20),
-                    width: getSize(20),
-                    decoration: BoxDecoration(
-                        color: appTheme.colorPrimary,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(getSize(5)),
-                          bottomRight: Radius.circular(getSize(5)),
-                        )),
-                    child: Icon(
-                      Icons.check,
-                      color: appTheme.whiteColor,
-                      size: getSize(15),
-                    ),
-                  )
-                : SizedBox()
-          ],
+                            topLeft: Radius.circular(getSize(5)),
+                            bottomRight: Radius.circular(getSize(5)),
+                          )),
+                      child: Icon(
+                        Icons.check,
+                        color: appTheme.whiteColor,
+                        size: getSize(15),
+                      ),
+                    )
+                  : SizedBox()
+            ],
+          ),
         ),
       ),
     );
@@ -125,10 +144,12 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
 //        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Expanded(
-            flex: 3,
-            child: getText(widget.item?.vStnId ?? "",
-                appTheme.blackNormal14TitleColorblack),
-          ),
+              flex: 3,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: getText(widget.item?.vStnId ?? "",
+                    appTheme.blackNormal14TitleColorblack),
+              )),
           Expanded(
             flex: 2,
             child: getText(widget.item?.shpNm ?? "",

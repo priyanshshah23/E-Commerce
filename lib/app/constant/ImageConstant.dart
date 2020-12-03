@@ -4,6 +4,7 @@ import 'package:diamnow/app/app.export.dart';
 const String splashLogo = "assets/diamnow/splashLogo.png";
 const String placeHolder = "assets/PlaceHolder/user_placeholder.png";
 const String user = "assets/auth/user.png";
+const String userTheme = "assets/Common/userTheme.png";
 const String password = "assets/auth/padlock.png";
 const String diamond = "assets/diamnow/diamonImage.png";
 const String phone = "assets/auth/phone.png";
@@ -16,6 +17,8 @@ const String minusIcon = "assets/diamnow/minusIcon.png";
 const String bussinessCard = "assets/auth/ic_file.png";
 const String photoCard = "assets/auth/ic_card.png";
 const String pdfIcon = "assets/auth/pdf.png";
+const String viewDetail = "assets/diamnow/viewDetail.png";
+const String editPen = "assets/diamnow/pen.png";
 
 const String selectedCheckbox = "assets/auth/checkbox.png";
 const String unSelectedCheckbox = "assets/auth/unselectedcheckbox.png";
@@ -28,10 +31,14 @@ const String confirmStone = "assets/Common/confirmStone.png";
 const String cancelStone = "assets/Common/cancelStone.png";
 const String downArrow = "assets/Common/downArrow.png";
 const String upArrow = "assets/Common/upArrow.png";
+const String noDataFound = "assets/Common/NoDataFound.png";
 
 // DiamNow
 const String notification = "assets/diamnow/notification.png";
 const String share = "assets/diamnow/share.png";
+const String diamondIcon = "assets/diamnow/diamondIcon.png";
+const String whatsappIcon = "assets/diamnow/whatsapp.png";
+const String skypeIcon = "assets/diamnow/skype.png";
 
 //filter
 const String addDemand = "assets/filter/addDemand.png";
@@ -39,6 +46,7 @@ const String matchPair = "assets/filter/matchPair.png";
 const String saveAndSearch = "assets/filter/saveAndSearch.png";
 const String savedSearch = "assets/filter/savedSearch.png";
 const String search = "assets/filter/search.png";
+const String upAndDownArrow = "assets/filter/upAndDownArrow.png";
 
 //DiamodList
 const String selectAll = "assets/diamnow/select_all.png";
@@ -48,6 +56,7 @@ const String download = "assets/diamnow/download.png";
 const String showSelected = "assets/diamnow/showSelected.png";
 const String compare = "assets/diamnow/compare.png";
 const String status = "assets/diamnow/status.png";
+const String info = "assets/Common/info.png";
 
 const String filterDownArrow = "assets/filter/filterDownArrow.png";
 const String filterRightArrow = "assets/filter/filterRightArrow.png";
@@ -115,10 +124,10 @@ const String commentDrawer = "assets/drawer/comment.png";
 //Home
 const String home_clock = "assets/Home/clock.png";
 const String home_delete = "assets/Home/delete.png";
-const String home_enquiry = "assets/Home/enquiry.png";
-const String home_enquiryBg = "assets/Home/enquiryBg.png";
-const String home_exclusive = "assets/Home/exclusive.png";
-const String home_exlusiveBg = "assets/Home/exlusiveBg.png";
+const String home_cart = "assets/Home/cart.png";
+const String home_cartBg = "assets/Home/cartBg.png";
+const String home_stoneoftheday = "assets/Home/stonesoftheDay.png";
+const String home_stoneofthedayBg = "assets/Home/stonesoftheDayBg.png";
 const String home_newArrival = "assets/Home/newArrival.png";
 const String home_newArrivalBg = "assets/Home/newArrivalBg.png";
 const String home_watchlist = "assets/Home/watchlist.png";
@@ -170,6 +179,9 @@ const String shareWhite = "assets/Common/shareWhite.png";
 const String downloadWhite = "assets/Common/downloadWhite.png";
 const String offerWhite = "assets/Common/offerWhite.png";
 
-
 //PnShah
 const String forgetMPIN = "assets/PNShah/ForgetMPIN/forgetMPIN.png";
+const String fingurePrint = "assets/PNShah/ForgetMPIN/fingerprint.png";
+const String mpin = "assets/PNShah/ForgetMPIN/MPIN.png";
+const String tickSelected = "assets/Common/tickSelected.png";
+const String tickUnSelected = "assets/Common/tickunSelected.png";

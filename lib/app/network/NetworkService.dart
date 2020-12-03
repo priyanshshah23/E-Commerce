@@ -165,6 +165,9 @@ abstract class NetworkService {
   @GET(ApiConstants.getUpdation)
   Future<VersionUpdateResp> getVersionUpdate();
 
-  @GET(ApiConstants.notificationList)
-  Future<NotificationResp> getNotificationList();
+  @POST(ApiConstants.notificationList)
+  Future<NotificationResp> getNotificationList(@Body() Map<String, dynamic> req);
+
+  @POST(ApiConstants.markAsReadNotification)
+  Future<NotificationResp> markAsReadNotification(@Body() Map<String, dynamic> req);
 }

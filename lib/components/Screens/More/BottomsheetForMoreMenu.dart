@@ -37,13 +37,8 @@ Future showBottomSheetForMenu(BuildContext context,
                 itemCount: moreList.length,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
+                  return InkWell(
                     onTap: () {
-                      /*moreList.forEach((element) {
-                        element.isSelected = false;
-                      });
-                      moreList[index].isSelected = true;
-                      setSetter(() {});*/
                       Navigator.pop(context);
                       actionClick(ManageCLick(bottomTabModel: moreList[index]));
                     },
@@ -53,8 +48,8 @@ Future showBottomSheetForMenu(BuildContext context,
                       child: Row(
                         children: <Widget>[
                           Container(
-                            height: getSize(14),
-                            width: getSize(14),
+                            height: getSize(20),
+                            width: getSize(20),
                             child: Image.asset(
                               moreList[index].image,
                               color: moreList[index].imageColor != null
@@ -67,7 +62,7 @@ Future showBottomSheetForMenu(BuildContext context,
                           ),
                           Expanded(
                             child: Text(moreList[index].title,
-                                style: appTheme.black14TextStyle),
+                                style: appTheme.black16TextStyle),
                           ),
                           isDisplaySelection
                               ? Container(

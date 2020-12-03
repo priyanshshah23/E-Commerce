@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:collection';
 
+import 'package:diamnow/app/Helper/NetworkClient.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/Helper/Themehelper.dart';
 import 'package:diamnow/app/app.export.dart';
@@ -19,10 +21,19 @@ import 'package:flutter/services.dart';
 
 class SearchScreen extends StatefulScreenWidget {
   static const route = "SearchScreen";
-  SearchScreen({Key key}) : super(key: key);
+  bool isFromSearch;
+
+  SearchScreen(
+    Map<String, dynamic> arguments, {
+    Key key,
+  }) : super(key: key) {
+    if (arguments != null) {
+      this.isFromSearch = arguments["isFromSearch"] ?? false;
+    }
+  }
 
   @override
-  _SearchScreenState createState() => _SearchScreenState();
+  _SearchScreenState createState() => _SearchScreenState(this.isFromSearch);
 }
 
 class _SearchScreenState extends StatefulScreenWidgetState {
@@ -30,9 +41,13 @@ class _SearchScreenState extends StatefulScreenWidgetState {
   var _focusSearch = FocusNode();
   var arrSuggestion = List<String>();
   String totalSearch = "";
-
   String searchText = "";
+  bool isFromSearch;
+  List<String> arrList = [];
+  List<String> arrSelected = [];
+  Timer timer;
 
+  _SearchScreenState(this.isFromSearch);
   @override
   void initState() {
     super.initState();
@@ -40,11 +55,17 @@ class _SearchScreenState extends StatefulScreenWidgetState {
       FocusScope.of(context).requestFocus(_focusSearch);
     });
 
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => setState(() async {
-        prepareDataSource();
-      }),
-    );
+    if (isFromSearch == false) {
+      prepareDataSource();
+    }
+  }
+
+  @override
+  void dispose() {
+    if (isFromSearch == true) {
+      timer.cancel();
+    }
+    super.dispose();
   }
 
   @override
@@ -62,18 +83,33 @@ class _SearchScreenState extends StatefulScreenWidgetState {
             leadingButton: getBackButton(context),
             centerTitle: false,
           ),
-          body: SafeArea(
-            child: Column(
-              children: [
-                getSarchTextField(),
-                openSuggestion(),
-              ],
+          bottomNavigationBar: Container(
+            margin: EdgeInsets.all(getSize(16)),
+            decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
+            child: AppButton.flat(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+                callCountApi();
+              },
+              borderRadius: getSize(5),
+              fitWidth: true,
+              text: R.string().commonString.search,
             ),
+          ),
+          body: SafeArea(
+            child: isFromSearch
+                ? showListView()
+                : ListView(
+                    children: [
+                      getSearchTextField(),
+                      openSuggestion(),
+                    ],
+                  ),
           )),
     );
   }
 
-  getSarchTextField() {
+  getSearchTextField() {
     return Hero(
       tag: 'searchTextField',
       child: Material(
@@ -82,60 +118,72 @@ class _SearchScreenState extends StatefulScreenWidgetState {
             left: getSize(Spacing.leftPadding),
             right: getSize(Spacing.rightPadding),
           ),
-          child: TextFormField(
-            maxLines: 1,
-            textAlignVertical: TextAlignVertical(y: 1.0),
-            textInputAction: TextInputAction.search,
-            focusNode: _focusSearch,
-            autofocus: false,
-            controller: _searchController,
-            obscureText: false,
-            style: appTheme.black16TextStyle,
-            keyboardType: TextInputType.text,
-            textCapitalization: TextCapitalization.characters,
-            cursorColor: appTheme.colorPrimary,
-            inputFormatters: [
-              BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
-            ],
-            decoration: InputDecoration(
-              fillColor: fromHex("#FFEFEF"),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
-                borderSide:
-                    BorderSide(color: appTheme.dividerColor, width: getSize(1)),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
-                borderSide:
-                    BorderSide(color: appTheme.dividerColor, width: getSize(1)),
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
-                borderSide:
-                    BorderSide(color: appTheme.dividerColor, width: getSize(1)),
-              ),
+          child: Container(
+            height: getSize(40),
+            child: TextFormField(
+              maxLines: 1,
+              textAlignVertical: TextAlignVertical(y: 1.0),
+              textInputAction: TextInputAction.search,
+              focusNode: _focusSearch,
+              autofocus: false,
+              controller: _searchController,
+              obscureText: false,
+              style: appTheme.black16TextStyle,
+              keyboardType: TextInputType.text,
+              textCapitalization: TextCapitalization.characters,
+              cursorColor: appTheme.colorPrimary,
+              inputFormatters: [
+                BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+              ],
+              decoration: InputDecoration(
+                fillColor: fromHex("#FFEFEF"),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+                  borderSide: BorderSide(
+                      color: appTheme.dividerColor, width: getSize(1)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+                  borderSide: BorderSide(
+                      color: appTheme.dividerColor, width: getSize(1)),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+                  borderSide: BorderSide(
+                      color: appTheme.dividerColor, width: getSize(1)),
+                ),
 
-              hintStyle: appTheme.grey16HintTextStyle,
-              hintText: "Search",
-              labelStyle: TextStyle(
-                color: appTheme.textColor,
-                fontSize: getFontSize(16),
+                hintStyle: appTheme.grey16HintTextStyle,
+                hintText: R.string().authStrings.searchHint,
+                labelStyle: TextStyle(
+                  color: appTheme.textColor,
+                  fontSize: getFontSize(16),
+                ),
+                // suffix: widget.textOption.postfixWidOnFocus,
+                suffixIcon: Padding(
+                    padding: EdgeInsets.all(getSize(12)),
+                    child: Image.asset(search,
+                        height: getSize(16), width: getSize(16))),
               ),
-              // suffix: widget.textOption.postfixWidOnFocus,
-              suffixIcon: Padding(
-                  padding: EdgeInsets.all(getSize(17)),
-                  child: Image.asset(search,
-                      height: getSize(8), width: getSize(8))),
+              onChanged: (String text) {
+                if (!isFromSearch) {
+                  this.searchText = text;
+                  openSuggestion();
+                  setState(() {});
+                } else {
+                  if (text.length > 2) {
+                    if (timer != null) timer.cancel();
+                    timer = Timer(Duration(seconds: 2), () {
+                      callApiForSearchStoneId(text);
+                    });
+                  }
+                }
+              },
+              onEditingComplete: () {
+                FocusScope.of(context).unfocus();
+                callCountApi();
+              },
             ),
-            onChanged: (String text) {
-              this.searchText = text;
-              openSuggestion();
-              setState(() {});
-            },
-            onEditingComplete: () {
-              FocusScope.of(context).unfocus();
-              callCountApi();
-            },
           ),
         ),
       ),
@@ -360,32 +408,44 @@ class _SearchScreenState extends StatefulScreenWidgetState {
     var array = searchText.split(" ");
     var filterData = getSearchDataSet(array.last);
 
+    if (isNullEmptyOrFalse(filterData)) {
+      return Container(
+        height: MediaQuery.of(context).size.height / 1.5,
+        child: Center(
+          child: Text(
+              _searchController.text.length > 0
+                  ? "No Data Found"
+                  : "Type to search",
+              textAlign: TextAlign.center,
+              style: appTheme.black18TextStyle),
+        ),
+      );
+    }
+
     return !isNullEmptyOrFalse(filterData)
-        ? Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(getSize(16)),
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: filterData.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return InkWell(
-                    onTap: () {
-                      array.removeLast();
+        ? Padding(
+            padding: EdgeInsets.all(getSize(16)),
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: filterData.length,
+              itemBuilder: (BuildContext context, int index) {
+                return InkWell(
+                  onTap: () {
+                    array.removeLast();
 
-                      searchText = "${array.join(" ")} ${filterData[index]} ";
-                      _searchController.text = searchText;
+                    searchText = "${array.join(" ")} ${filterData[index]} ";
+                    _searchController.text = searchText;
 
-                      _searchController.selection = TextSelection.fromPosition(
-                          TextPosition(offset: _searchController.text.length));
+                    _searchController.selection = TextSelection.fromPosition(
+                        TextPosition(offset: _searchController.text.length));
 
-                      filterData = [];
+                    filterData = [];
 
-                      setState(() {});
-                    },
-                    child: getWidget(filterData[index]),
-                  );
-                },
-              ),
+                    setState(() {});
+                  },
+                  child: getWidget(filterData[index]),
+                );
+              },
             ),
           )
         : Container();
@@ -414,10 +474,146 @@ class _SearchScreenState extends StatefulScreenWidgetState {
     );
   }
 
+  showListView() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        getSearchTextField(),
+        Padding(
+          padding: EdgeInsets.only(
+            top: getSize(16),
+            left: getSize(16),
+            right: getSize(16),
+          ),
+          child: getChips(),
+        ),
+        Expanded(
+          child: getList(),
+        )
+      ],
+    );
+  }
+
+  getChips() {
+    if (isNullEmptyOrFalse(arrSelected)) {
+      return Container();
+    }
+    return Wrap(
+      spacing: getSize(6),
+      runSpacing: getSize(0),
+      children: List<Widget>.generate(arrSelected.length, (int index) {
+        return Chip(
+          // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(getSize(10))),
+          label: Text(
+            arrSelected[index],
+            style: appTheme.blackMedium14TitleColorblack,
+          ),
+          backgroundColor: appTheme.unSelectedBgColor,
+          deleteIcon: Icon(
+            Icons.clear,
+            color: appTheme.textColor,
+            size: getSize(16),
+          ),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(getSize(5)),
+              side: BorderSide(color: appTheme.colorPrimary)),
+          onDeleted: () {
+            setState(() {
+              arrSelected.removeWhere((entry) {
+                return entry == arrSelected[index];
+              });
+            });
+          },
+        );
+      }),
+    );
+  }
+
+  getList() {
+    if (isNullEmptyOrFalse(arrList)) {
+      return Container(
+        height: MediaQuery.of(context).size.height / 1.5,
+        child: Center(
+          child: Text(
+              _searchController.text.length > 0
+                  ? "No Data Found"
+                  : "Type at least 3 characters to \nsearch stones",
+              textAlign: TextAlign.center,
+              style: appTheme.black18TextStyle),
+        ),
+      );
+    }
+
+    return Padding(
+      padding: EdgeInsets.all(getSize(16)),
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: arrList.length,
+        itemBuilder: (context, index) {
+          return Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(
+                  getSize(0),
+                  getSize(16),
+                  getSize(16),
+                  getSize(20),
+                ),
+                child: InkWell(
+                  onTap: () {
+                    if (arrSelected.contains(arrList[index])) {
+                      arrSelected.removeWhere((entry) {
+                        return entry == arrList[index];
+                      });
+                    } else {
+                      arrSelected.add(arrList[index]);
+                      _searchController.text = "";
+                    }
+
+                    setState(() {});
+                  },
+                  child: Row(
+                    children: [
+                      Text(
+                        arrList[index],
+                        style: appTheme.blackMedium16TitleColorblack,
+                      ),
+                      Spacer(),
+                      Image.asset(
+                        arrSelected.contains(arrList[index])
+                            ? tickSelected
+                            : tickUnSelected,
+                        width: getSize(16),
+                        height: getSize(16),
+                        color: !arrSelected.contains(arrList[index])
+                            ? appTheme.textGreyColor
+                            : appTheme.colorPrimary,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Divider(height: getSize(1), color: appTheme.borderColor),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
   callCountApi() {
+    Map<String, dynamic> req = {};
+    req = {
+      "or": [
+        {"stoneId": arrSelected},
+        {"rptNo": arrSelected},
+        {"vStnId": arrSelected}
+      ]
+    };
+
     SyncManager.instance.callApiForDiamondList(
       context,
-      {},
+      isFromSearch ? req : {},
       (diamondListResp) {
         Map<String, dynamic> dict = new HashMap();
 
@@ -430,7 +626,34 @@ class _SearchScreenState extends StatefulScreenWidgetState {
       (onError) {
         //print("Error");
       },
-      // searchText: _searchController.text,
+      searchText: isFromSearch ? null : _searchController.text.trim(),
     );
+  }
+
+  callApiForSearchStoneId(String searchText) {
+    Map<String, dynamic> req = {};
+
+    req["startWith"] = {
+      "keyword": searchText,
+      "keys": ["rptNo", "vStnId", "stoneId"]
+    };
+    req["sort"] = [
+      {"createdAt": "DESC"}
+    ];
+
+    NetworkClient.getInstance.callApi(
+        context, baseURL, ApiConstants.searchReportNo, MethodType.Post,
+        headers: NetworkClient.getInstance.getAuthHeaders(),
+        params: req, successCallback: (response, message) {
+      arrList = [];
+      if (response is List<dynamic>) {
+        for (var item in response) {
+          arrList.add(item);
+        }
+      }
+      setState(() {});
+    }, failureCallback: (status, message) {
+      print(message);
+    });
   }
 }

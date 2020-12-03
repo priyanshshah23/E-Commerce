@@ -2,11 +2,13 @@ import 'package:diamnow/Setting/SettingModel.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/constant/constants.dart';
+import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondActionScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondExpandItemWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWidget.dart';
@@ -63,6 +65,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   bool isFromDrawer;
   String sortingKey;
   Map<String, dynamic> dictFilters;
+  bool selectAllGroupDiamonds;
 
   _DiamondListScreenState({this.filterId, this.moduleType, this.isFromDrawer});
 
@@ -85,14 +88,12 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           optionList.add(element);
         }
       });
-
       setState(() {});
     });
-
     diamondConfig = DiamondConfig(moduleType);
     diamondConfig.initItems();
     diamondList = BaseList(BaseListState(
-//      imagePath: noRideHistoryFound,
+      // imagePath: noDataFound,
       noDataMsg: APPNAME,
       noDataDesc: R.string().noDataStrings.noDataFound,
       refreshBtn: R.string().commonString.refresh,
@@ -115,6 +116,29 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     setState(() {
       //
     });
+
+    RxBus.register<Map<String, dynamic>>(tag: eventSelectAllGroupDiamonds)
+        .listen((event) async {
+      setState(() {
+        DiamondModel diamondModel = event["diamondModel"];
+
+        List<DiamondModel> filter = arraDiamond
+            .where((element) => element.memoNo == diamondModel.memoNo)
+            .toList();
+        if (isNullEmptyOrFalse(filter) == false) {
+          filter.forEach((element) {
+            element.isSelected = event["isSelected"];
+          });
+        }
+        manageDiamondSelection();
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    RxBus.destroy(tag: eventSelectAllGroupDiamonds);
+    super.dispose();
   }
 
   callApi(bool isRefress, {bool isLoading = false}) {
@@ -126,6 +150,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     Map<String, dynamic> dict = {};
     dict["page"] = page;
     dict["limit"] = DEFAULT_LIMIT;
+    if (sortingKey != null) {
+      dict["sort"] = sortingKey;
+    }
+
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
@@ -137,9 +165,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
         dict["filters"] = {};
         dict["filters"]["diamondSearchId"] = this.filterId;
-        if (sortingKey != null) {
-          dict["sort"] = sortingKey;
-        }
+
         break;
       case DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR:
         dict["filters"] = {};
@@ -147,7 +173,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         break;
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
         dict["filters"] = {};
-        dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_BID;
+        dict["filters"]["viewType"] = 2;
         break;
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
         dict["filters"] = {};
@@ -219,6 +245,13 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           diamondListResp.data.list.forEach((element) {
             if (element.diamonds != null) {
               element.diamonds.forEach((diamonds) {
+                switch (moduleType) {
+                  case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
+                    diamonds.memoNo = element.id;
+                    diamonds.date = element.date;
+                    diamonds.purpose = element.purpose;
+                    break;
+                }
                 list.add(diamonds);
               });
             } else {
@@ -240,11 +273,15 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   diamondModel.trackItemEnquiry = trackDiamonds;
                   break;
                 case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+                  diamondModel.createdAt = element.createdAt;
                   diamondModel.trackItemOffer = trackDiamonds;
                   diamondModel.memoNo = element.memoNo;
                   diamondModel.offerValidDate = element.offerValidDate;
                   diamondModel.offerStatus = element.offerStatus;
                   diamondModel.newAmount = element.newAmount;
+                  diamondModel.newDiscount = element.newDiscount;
+                  diamondModel.newPricePerCarat = element.newPricePerCarat;
+                  diamondModel.remarks = element.remarks;
                   break;
                 case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
                   diamondModel.trackItemReminder = trackDiamonds;
@@ -252,9 +289,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
                   diamondModel.trackItemComment = trackDiamonds;
                   break;
-                case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
-                  diamondModel.trackItemOffice = trackDiamonds;
-                  break;
+
                 case DiamondModuleConstant.MODULE_TYPE_MY_BID:
                   diamondModel.trackItemBid = trackDiamonds;
                   break;
@@ -307,11 +342,83 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   controller: controller,
                   moduleType: moduleType,
                   item: arraDiamond[index],
+                  leftSwipeList: getLeftAction((manageClick) async {
+                    if (manageClick.type ==
+                        clickConstant.CLICK_TYPE_OFFER_EDIT) {
+                      //Update offer
+                      List<DiamondModel> selectedList = [];
+                      DiamondModel model;
+
+                      model =
+                          DiamondModel.fromJson(arraDiamond[index].toJson());
+                      model.isAddToOffer = true;
+                      model.isUpdateOffer = true;
+                      model.trackItemOffer = arraDiamond[index].trackItemOffer;
+                      selectedList.add(model);
+
+                      var dict = Map<String, dynamic>();
+                      dict[ArgumentConstant.DiamondList] = selectedList;
+                      dict[ArgumentConstant.ModuleType] = moduleType;
+                      dict[ArgumentConstant.ActionType] =
+                          DiamondTrackConstant.TRACK_TYPE_OFFER;
+                      dict["isOfferUpdate"] = true;
+
+                      bool isBack = await NavigationUtilities.pushRoute(
+                          DiamondActionScreen.route,
+                          args: dict);
+                      if (isBack != null && isBack) {
+                        onRefreshList();
+                      }
+                    } else {
+                      //Detail
+                      var dict = Map<String, dynamic>();
+                      dict[ArgumentConstant.DiamondDetail] = arraDiamond[index];
+                      dict[ArgumentConstant.ModuleType] = moduleType;
+
+                      //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
+                      bool isBack =
+                          await Navigator.of(context).push(MaterialPageRoute(
+                        settings:
+                            RouteSettings(name: DiamondDetailScreen.route),
+                        builder: (context) =>
+                            DiamondDetailScreen(arguments: dict),
+                      ));
+                      if (isBack != null && isBack) {
+                        onRefreshList();
+                      }
+                    }
+                  }),
                   list: getRightAction((manageClick) {
                     manageRowClick(index, manageClick.type);
                   }),
                   actionClick: (manageClick) {
                     manageRowClick(index, manageClick.type);
+                    setState(() {
+                      if (moduleType ==
+                              DiamondModuleConstant.MODULE_TYPE_MY_OFFER ||
+                          moduleType ==
+                              DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
+                        List<DiamondModel> filter = arraDiamond
+                            .where((element) =>
+                                element.memoNo == arraDiamond[index].memoNo)
+                            .toList();
+                        if (isNullEmptyOrFalse(filter) == false) {
+                          List<DiamondModel> filter2 = filter
+                              .where((element) => element.isSelected == true)
+                              .toList();
+
+                          if (filter.length == filter2.length) {
+                            filter.forEach((element) {
+                              element.isGroupSelected = true;
+                            });
+                          } else {
+                            filter.forEach((element) {
+                              element.isGroupSelected = false;
+                            });
+                          }
+                        }
+                      }
+                    });
                   });
             },
           )
@@ -321,6 +428,25 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 itemBuilder: (context, index) {
                   return DiamondExpandItemWidget(
                       item: arraDiamond[index],
+                      leftSwipeList: getLeftAction((manageClick) async {
+                        //Detail
+                        var dict = Map<String, dynamic>();
+                        dict[ArgumentConstant.DiamondDetail] =
+                            arraDiamond[index];
+                        dict[ArgumentConstant.ModuleType] = moduleType;
+
+                        //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
+                        bool isBack =
+                            await Navigator.of(context).push(MaterialPageRoute(
+                          settings:
+                              RouteSettings(name: DiamondDetailScreen.route),
+                          builder: (context) =>
+                              DiamondDetailScreen(arguments: dict),
+                        ));
+                        if (isBack != null && isBack) {
+                          onRefreshList();
+                        }
+                      }),
                       list: getRightAction((manageClick) {
                         manageRowClick(index, manageClick.type);
                       }),
@@ -397,6 +523,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       list.add(
         IntrinsicHeight(
           child: IconSlideAction(
+            color: Colors.transparent,
             onTap: () {
               actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_DELETE));
             },
@@ -422,6 +549,13 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                     ),
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.only(top: getSize(8)),
+                  child: Text(R.string().commonString.delete,
+                      style: appTheme.primaryNormal12TitleColor.copyWith(
+                        color: fromHex("#FF4D4D"),
+                      )),
+                )
               ],
             ),
           ),
@@ -430,6 +564,101 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     }
 
     return list;
+  }
+
+  getLeftAction(ActionClick actionClick) {
+    List<Widget> leftSwipeList = [];
+
+    if (isDisplayDetail(moduleType)) {
+      leftSwipeList.add(
+        IntrinsicHeight(
+          child: IconSlideAction(
+            color: Colors.transparent,
+            onTap: () {
+              actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_DELETE));
+            },
+            iconWidget: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: appTheme.lightColorPrimary,
+                    border: Border.all(color: appTheme.colorPrimary),
+                    shape: BoxShape.circle,
+                  ),
+                  height: getSize(40),
+                  width: getSize(40),
+                  child: Padding(
+                    padding: EdgeInsets.all(getSize(10)),
+                    child: Image.asset(
+                      viewDetail,
+                      // height: getSize(20),
+                      // width: getSize(20),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: getSize(8)),
+                  child: Text(
+                    R.string().commonString.details,
+                    style: appTheme.primaryNormal12TitleColor,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
+    if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+      leftSwipeList.add(
+        IntrinsicHeight(
+          child: IconSlideAction(
+            color: Colors.transparent,
+            onTap: () {
+              actionClick(
+                  ManageCLick(type: clickConstant.CLICK_TYPE_OFFER_EDIT));
+            },
+            iconWidget: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: appTheme.lightColorPrimary,
+                    border: Border.all(color: appTheme.colorPrimary),
+                    shape: BoxShape.circle,
+                  ),
+                  height: getSize(40),
+                  width: getSize(40),
+                  child: Padding(
+                    padding: EdgeInsets.all(getSize(10)),
+                    child: Image.asset(
+                      editPen,
+                      height: getSize(16),
+                      width: getSize(16),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: getSize(8)),
+                  child: Text(
+                    R.string().commonString.edit,
+                    style: appTheme.primaryNormal12TitleColor,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
+    return leftSwipeList;
   }
 
   List<Widget> getToolbarItem() {
@@ -479,6 +708,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         callDeleteDiamond(selectedList);
         break;
       case clickConstant.CLICK_TYPE_SELECTION:
+      case clickConstant.CLICK_TYPE_ROW:
         setState(() {
           arraDiamond[index].isSelected = !arraDiamond[index].isSelected;
           manageDiamondSelection();
@@ -489,20 +719,20 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           });
         });
         break;
-      case clickConstant.CLICK_TYPE_ROW:
-        var dict = Map<String, dynamic>();
-        dict[ArgumentConstant.DiamondDetail] = arraDiamond[index];
-        dict[ArgumentConstant.ModuleType] = moduleType;
+      // case clickConstant.CLICK_TYPE_ROW:
+      //   var dict = Map<String, dynamic>();
+      //   dict[ArgumentConstant.DiamondDetail] = arraDiamond[index];
+      //   dict[ArgumentConstant.ModuleType] = moduleType;
 
-        //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
-        bool isBack = await Navigator.of(context).push(MaterialPageRoute(
-          settings: RouteSettings(name: DiamondDetailScreen.route),
-          builder: (context) => DiamondDetailScreen(arguments: dict),
-        ));
-        if (isBack != null && isBack) {
-          onRefreshList();
-        }
-        break;
+      //   //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
+      //   bool isBack = await Navigator.of(context).push(MaterialPageRoute(
+      //     settings: RouteSettings(name: DiamondDetailScreen.route),
+      //     builder: (context) => DiamondDetailScreen(arguments: dict),
+      //   ));
+      //   if (isBack != null && isBack) {
+      //     onRefreshList();
+      //   }
+      //   break;
     }
   }
 
@@ -514,7 +744,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         break;
       case BottomCodeConstant.TBGrideView:
         viewTypeCount += 1;
-        if (viewTypeCount == 4) {
+        if (viewTypeCount == 2) {
           viewTypeCount = 0;
         }
         fillArrayList();
@@ -693,7 +923,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               children: <Widget>[
                 Container(
                   decoration: BoxDecoration(
-                      color: appTheme.textFieldBorderColor,
+                      color: appTheme.whiteColor,
                       borderRadius: BorderRadius.all(
                         Radius.circular(getSize(15)),
                       )),
@@ -707,9 +937,22 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                       SizedBox(
                         height: getSize(20),
                       ),
-                      Text(
-                        "Status",
-                        style: appTheme.blackNormal18TitleColorblack,
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "Status",
+                            style: appTheme.blackNormal18TitleColorblack,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: getSize(4)),
+                            child: Image.asset(
+                              info,
+                              height: getSize(16),
+                              width: getSize(16),
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: getSize(10),
@@ -734,37 +977,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             ),
           ),
         );
-
-//          AlertDialog(
-//          shape: RoundedRectangleBorder(
-//            borderRadius: BorderRadius.circular(getSize(5)),
-//          ),
-//          content: Container(                  height: 66,
-//
-//            color: appTheme.whiteColor,
-//            child: Column(
-//              mainAxisSize: MainAxisSize.min,
-//              children: <Widget>[
-//                Container(
-//                  height: 66,
-////                  constraints: BoxConstraints(
-////                      minHeight: 50,
-////                      maxHeight: MathUtilities.screenHeight(context) - 300),
-//                  child: ListView.builder(
-////                    shrinkWrap: true,
-//                    itemCount: diamondConfig.arrStatusMenu.length,
-//
-//                    itemBuilder: (BuildContext context, int index) {
-//                      return getStatusDialogueRow(
-//                          title: diamondConfig.arrStatusMenu[index].title,
-//                          color: appTheme.greenColor);
-//                    },
-//                  ),
-//                ),
-//              ],
-//            ),
-//          ),
-//        );
       },
     );
   }
@@ -801,7 +1013,12 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     arraDiamond.forEach((element) {
       element.isSelected = false;
     });
+    diamondConfig.toolbarList.forEach((element) {
+      if (element.code == BottomCodeConstant.TBSelectAll)
+        element.isSelected = false;
+    });
     manageDiamondSelection();
+    setState(() {});
   }
 
   manageBottomMenuClick(BottomTabModel bottomTabModel) {

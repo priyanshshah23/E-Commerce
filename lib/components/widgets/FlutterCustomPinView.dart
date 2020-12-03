@@ -176,9 +176,9 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
                   },
                   child: GridView.count(
                     crossAxisCount: 3,
-                    childAspectRatio: 1.8,
+                    childAspectRatio: 2.3,
                     mainAxisSpacing: 35,
-                    padding: EdgeInsets.all(8),
+                    padding: EdgeInsets.all(4),
                     children: <Widget>[
                       buildContainerCircle(1),
                       buildContainerCircle(2),
@@ -210,8 +210,8 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
         _onCodeClick(number);
       },
       child: Container(
-        height: getSize(30),
-        width: getSize(30),
+        height: getSize(50),
+        width: getSize(50),
         decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.circle,
@@ -226,7 +226,7 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
           child: Text(
             number.toString(),
             style: TextStyle(
-                fontSize: 28,
+                fontSize: 20,
                 fontWeight: FontWeight.normal,
                 color: widget.numColor),
           ),

@@ -165,7 +165,7 @@ class _AddDemandState extends State<AddDemand> {
         minDate: DateTime.now(),
         selectionColor: appTheme.colorPrimary,
         todayHighlightColor: appTheme.colorPrimary,
-        initialSelectedDate: DateTime.now(),
+        // initialSelectedDate: DateTime.now(),
         view: DateRangePickerView.month,
         selectionMode: DateRangePickerSelectionMode.single,
         onSelectionChanged: selectionChanged,
@@ -178,7 +178,7 @@ class _AddDemandState extends State<AddDemand> {
       focusNode: _focusDiamondTitleTextField,
       textOption: TextFieldOption(
         prefixWid: getCommonIconWidget(
-            imageName: saved_icon, imageType: IconSizeType.small),
+            imageName: diamondIcon, imageType: IconSizeType.small),
         hintText: R.string().commonString.demandTitle,
         maxLine: 1,
         formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],

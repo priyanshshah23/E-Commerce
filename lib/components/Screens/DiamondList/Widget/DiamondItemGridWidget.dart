@@ -9,8 +9,9 @@ class DiamondGridItemWidget extends StatefulWidget {
   DiamondModel item;
   ActionClick actionClick;
   List<Widget> list;
+  List<Widget> leftSwipeList;
 
-  DiamondGridItemWidget({this.item, this.actionClick, this.list});
+  DiamondGridItemWidget({this.item, this.actionClick, this.list, this.leftSwipeList});
 
   @override
   _DiamondGridItemWidgetState createState() => _DiamondGridItemWidgetState();

@@ -241,8 +241,14 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                               ),
                                             ),
                                             model.isExpand
-                                                ? Image.asset(showLess)
-                                                : Image.asset(showMore),
+                                                ? Image.asset(
+                                                    showLess,
+                                                    width: getSize(12),
+                                                  )
+                                                : Image.asset(
+                                                    showMore,
+                                                    width: getSize(12),
+                                                  ),
                                           ],
                                         ),
                                       ),
@@ -307,6 +313,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                             () {
                                           Map<String, dynamic> dict = {};
                                           dict["searchData"] = model.searchData;
+                                          dict["savedSearchModel"] = model;
                                           dict[ArgumentConstant.IsFromDrawer] =
                                               false;
                                           NavigationUtilities.pushRoute(
@@ -367,9 +374,10 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                   ),
                                 )
                               : Padding(
-                                padding: EdgeInsets.only(bottom:getSize(12.0)),
-                                child: SizedBox(),
-                              ),
+                                  padding:
+                                      EdgeInsets.only(bottom: getSize(12.0)),
+                                  child: SizedBox(),
+                                ),
                         ],
                       ),
                     ),
@@ -427,7 +435,9 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${arr[i]["key"] ?? ""} :",
+                  isNullEmptyOrFalse(arr[i]["value"])
+                      ? "${arr[i]["key"] ?? ""} "
+                      : "${arr[i]["key"] ?? ""} :",
                   textAlign: TextAlign.left,
                   style: appTheme.grey16HintTextStyle,
                 ),
@@ -986,7 +996,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
         if (!isNullEmptyOrFalse(displayDataClass.kToSArr.kToSArrIn)) {
           String temp = displayDataClass.kToSArr.kToSArrIn.join(", ");
           displayDataKeyValue["value"] = temp;
-        } else {
+        } else if (!isNullEmptyOrFalse(displayDataClass.kToSArr.kToSArrnIn)) {
           String temp = displayDataClass.kToSArr.kToSArrnIn.join(", ");
           displayDataKeyValue["value"] = temp;
         }
