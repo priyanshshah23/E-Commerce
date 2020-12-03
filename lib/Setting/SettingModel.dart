@@ -329,11 +329,18 @@ class DrawerSetting {
         type: DiamondModuleConstant.MODULE_TYPE_MANAGE_ADDRESS,
       ));
     drawerList.add(DrawerModel(
-      image: changePassword,
-      title: R.string().screenTitle.changePassword,
+      image: manageAddress,
+      title: R.string().commonString.touchId,
       isSelected: false,
       imageColor: appTheme.colorPrimary,
-      type: DiamondModuleConstant.MODULE_TYPE_CHANGE_PASSWORD,
+      type: DiamondModuleConstant.MODULE_TYPE_TOUCH_ID,
+    ));
+    drawerList.add(DrawerModel(
+      image: changePassword,
+      title: R.string().commonString.mPin,
+      isSelected: false,
+      imageColor: appTheme.colorPrimary,
+      type: DiamondModuleConstant.MODULE_TYPE_MPIN,
     ));
 
     drawerList.add(DrawerModel(

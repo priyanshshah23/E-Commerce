@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:diamnow/app/AppConfiguration/AppNavigation.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,14 +25,19 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
   final LocalAuthentication auth = LocalAuthentication();
+  List<BiometricType> availableBiometrics;
 
   @override
-  void initState() {
+  Future<void> initState() {
     super.initState();
-    Timer(
-      Duration(seconds: 1),
-      () => (callMasterSync() /*callHandler()*/),
-    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      availableBiometrics = await auth.getAvailableBiometrics();
+      Timer(
+        Duration(seconds: 1),
+        () => (callMasterSync() /*callHandler()*/),
+      );
+    });
   }
 
   Future openNextScreen() async {
@@ -50,21 +56,28 @@ class _SplashState extends State<Splash> {
   }
 
   askForBioMetrics() async {
-    try {
-      bool isAuthenticated = await auth.authenticateWithBiometrics(
-        localizedReason: 'authenticate to unlock app',
-        useErrorDialogs: false,
-        stickyAuth: false,
-      );
-      print(isAuthenticated);
-      if (isAuthenticated) {
-        app.resolve<PrefUtils>().setBiometrcisUsage(true);
+    if (!isNullEmptyOrFalse(availableBiometrics)) {
+      try {
+        bool isAuthenticated = await auth.authenticateWithBiometrics(
+          localizedReason:
+              Platform.isIOS && availableBiometrics.contains(BiometricType.face)
+                  ? R.string().commonString.enableFaceId
+                  : R.string().commonString.enableTouchId,
+          useErrorDialogs: false,
+          stickyAuth: false,
+        );
+        print(isAuthenticated);
+        if (isAuthenticated) {
+          app.resolve<PrefUtils>().setBiometrcisUsage(true);
+          callSyncApi();
+        } else {
+          askForBioMetrics();
+        }
+      } on PlatformException catch (e) {
+        print(e.message);
         callSyncApi();
-      } else {
-        askForBioMetrics();
       }
-    } on PlatformException catch (e) {
-      print(e.message);
+    } else {
       callSyncApi();
     }
   }

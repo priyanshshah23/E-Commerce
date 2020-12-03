@@ -36,6 +36,8 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_HOME = 100;
   static const MODULE_TYPE_FINAL_CALCULATION = 101;
   static const MODULE_TYPE_UPLOAD_KYC = 102;
+  static const MODULE_TYPE_TOUCH_ID = 103;
+  static const MODULE_TYPE_MPIN = 104;
 }
 
 class ModulePermissionConstant {

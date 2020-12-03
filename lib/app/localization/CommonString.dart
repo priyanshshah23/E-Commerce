@@ -1,3 +1,5 @@
+import 'package:diamnow/app/constant/constants.dart';
+
 class CommonString {
   final String all;
 
@@ -284,6 +286,13 @@ class CommonString {
   final String selectBusinessProof;
   final String pleaseSelectBusinessProof;
 
+  //TouchID or FaceId
+  final String touchId;
+  final String faceId;
+  final String enableTouchId;
+  final String enableFaceId;
+  final String mPin;
+  
   const CommonString({
     //filterScreen
     this.seeMore = "See More",
@@ -554,5 +563,12 @@ class CommonString {
     this.pleaseSelectPhotoProof = "Please select document ",
     this.selectBusinessProof = "Select document",
     this.pleaseSelectBusinessProof = "Please select document",
+
+    //Toucid or faceid
+    this.touchId = "Touch Id",
+    this.faceId = "Face Id",
+    this.enableTouchId = "Enable Touch Id to unlock $APPNAME?",
+    this.enableFaceId = "Enable Face Id to unlock $APPNAME?",
+    this.mPin = "MPin",
   });
 }
