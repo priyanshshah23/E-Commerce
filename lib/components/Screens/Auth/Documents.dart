@@ -268,7 +268,11 @@ class _DocumentsState extends State<Documents>
                       child: Container(
                         alignment: Alignment.center,
                         child: Text("Rejected",
-                            style: appTheme.redPrimaryNormal14TitleColor),
+                            style:
+                                appTheme.redPrimaryNormal14TitleColor.copyWith(
+                              fontWeight: FontWeight.w600,
+                              fontSize: getFontSize(16),
+                            )),
                       ),
                     ),
                   ],
