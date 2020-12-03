@@ -197,3 +197,53 @@ class SavedSearchType {
   static const int savedSearch = 2;
   static const int recentSearch = 1;
 }
+
+class NotificationConstant {
+  static const MODULE_TYPE_SEARCH = 1;
+  static const MODULE_TYPE_DIAMOND_COMPARE = 2;
+  static const MODULE_TYPE_WATCHLIST = 3;
+  static const MODULE_TYPE_ADD_ENQUIRY = 4;
+  static const MODULE_TYPE_REMINDER = 5;
+  static const MODULE_TYPE_LUCKY = 6;
+  static const MODULE_TYPE_STONE_OF_DAY = 7;
+  static const MODULE_TYPE_EXCLUSIVE_STONE = 8;
+  static const MODULE_TYPE_FANCY_DIAMOND = 9;
+  static const MODULE_TYPE_NEW_GOODS = 10;
+  static const MODULE_TYPE_MATCH_PAIR = 11;
+  static const MODULE_TYPE_OFFLINE_STOCK = 12;
+  static const MODULE_TYPE_PRICE_CALC = 13;
+  static const MODULE_TYPE_CONCIERGE = 14;
+  static const MODULE_TYPE_QR_CODE = 15;
+  static const MODULE_TYPE_MORE = 16;
+  static const MODULE_TYPE_RATE_US = 17;
+  static const MODULE_TYPE_CONTACT_US = 18;
+  static const MODULE_TYPE_DIAMOND_DETAIL = 19;
+  static const MODULE_TYPE_QUICK_SEARCH = 20;
+  static const MODULE_TYPE_PROFILE = 21;
+  static const MODULE_TYPE_COMMENT = 22;
+  static const MODULE_TYPE_ENQUIRY = 23;
+  static const MODULE_TYPE_CART = 24;
+  static const MODULE_TYPE_RECENT_SEARCH = 25;
+  static const MODULE_TYPE_SAVED_SEARCH = 26;
+  static const MODULE_TYPE_OFFLINE_STOCK_SEARCH = 27;
+  static const MODULE_TYPE_OFFLINE_STOCK_LIST = 28;
+  static const MODULE_TYPE_OFFLINE_STOCK_HISTORY = 29;
+  static const MODULE_TYPE_HOSPITALITY = 30;
+  static const MODULE_TYPE_TRANSPORT_ROSTER = 31;
+  static const MODULE_TYPE_APPOINTMENTS = 32;
+  static const MODULE_TYPE_PERSONS = 33;
+  static const MODULE_TYPE_ABOUT_FINESTAR = 34;
+  static const MODULE_TYPE_NEWS = 35;
+  static const MODULE_TYPE_TERMS_CONDITION = 36;
+  static const MODULE_TYPE_ORDER_PLACE = 37;
+  static const MODULE_TYPE_HOLD = 38;
+  static const MODULE_TYPE_MEMO = 39;
+  static const MODULE_TYPE_BID = 40;
+  static const MODULE_TYPE_SHIPMENT = 92;
+  static const MODULE_TYPE_BEST = 93;
+  static const MODULE_TYPE_DEMAND_EXPIRY = 94;
+  static const MODULE_TYPE_DEMAND = 95;
+  static const MODULE_TYPE_OFFER = 97;
+  static const MODULE_TYPE_REQUEST = 98;
+  static const MODULE_TYPE_OTHER = 99;
+}

@@ -271,7 +271,7 @@ class _NotificationsState extends StatefulScreenWidgetState {
         maxLines: 2,
         textAlign: TextAlign.start,
       );
-    } else  {
+    } else {
       return Text(
         DateUtilities().convertDateToFormatterString(
             DateUtilities().convertServerDateToFormatterString(
@@ -300,6 +300,9 @@ class _NotificationsState extends StatefulScreenWidgetState {
     )
         .then((resp) async {
       print("notification Readed");
+      //Redirection from notification.
+      // if(resp.)
+
     }).catchError(
       (onError) => {
         if (onError is ErrorResp) print(onError),

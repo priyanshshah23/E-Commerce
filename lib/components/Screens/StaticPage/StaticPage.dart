@@ -85,8 +85,8 @@ class _StaticPageScreenState extends State<StaticPageScreen> {
               ? [
                   InkWell(
                     onTap: () {
-                      Share.shareFiles([widget.strUrl],
-                          text: widget.screenTitle ?? "");
+                      // Share.shareFiles([widget.strUrl],
+                      //     text: widget.screenTitle ?? "");
                     },
                     child: Container(
                       margin: EdgeInsets.all(getSize(16)),
