@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:io';
 
 import 'package:country_pickers/country_pickers.dart';
 import 'package:diamnow/Setting/SettingModel.dart';
@@ -17,6 +18,8 @@ import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:rxbus/rxbus.dart';
 
 class MyAccountScreen extends StatefulWidget {
@@ -42,11 +45,18 @@ class MyAccountScreen extends StatefulWidget {
 class _MyAccountScreenState extends State<MyAccountScreen> {
   List<DrawerModel> accountItems = DrawerSetting().getAccountListItems();
   bool isFromDrawer;
+  bool isSwitched = false;
+  List<BiometricType> availableBiometrics;
+  final LocalAuthentication auth = LocalAuthentication();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {});
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      isSwitched = app.resolve<PrefUtils>().getBiometrcis() ?? false;
+      availableBiometrics = await auth.getAvailableBiometrics();
+      setState(() {});
+    });
   }
 
   _MyAccountScreenState({this.isFromDrawer = false});
@@ -134,7 +144,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           Padding(
             padding: EdgeInsets.only(
               left: getSize(20),
-              right: getSize(20),
             ),
             child: Row(
               // mainAxisSize: MainAxisSize.max,
@@ -159,11 +168,36 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                   ),
                 ),
                 Spacer(),
-                Container(
-                    child: Icon(
-                  Icons.arrow_forward_ios,
-                  size: getSize(14),
-                )),
+                model.type == DiamondModuleConstant.MODULE_TYPE_TOUCH_ID
+                    ? InkWell(
+                        onTap: () {},
+                        child: Switch(
+                          value: isSwitched,
+                          onChanged: (value) {
+                            setState(() {
+                              isSwitched = !isSwitched;
+
+                              if (isSwitched == true) {
+                                askForBioMetrics();
+                              }
+                            });
+                          },
+                          activeTrackColor: appTheme.borderColor,
+                          activeColor: appTheme.colorPrimary,
+                        ),
+                      )
+                    : Padding(
+                        padding: EdgeInsets.only(
+                          left: getSize(20),
+                          right: getSize(20),
+                        ),
+                        child: Container(
+                          child: Icon(
+                            Icons.arrow_forward_ios,
+                            size: getSize(14),
+                          ),
+                        ),
+                      ),
               ],
             ),
           ),
@@ -177,6 +211,39 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         ],
       ),
     );
+  }
+
+  askForBioMetrics() async {
+    if (!isNullEmptyOrFalse(availableBiometrics)) {
+      try {
+        bool isAuthenticated = await auth.authenticateWithBiometrics(
+          localizedReason:
+              Platform.isIOS && availableBiometrics.contains(BiometricType.face)
+                  ? R.string().commonString.enableFaceId
+                  : R.string().commonString.enableTouchId,
+          useErrorDialogs: false,
+          stickyAuth: false,
+        );
+        if (isAuthenticated) {
+          app.resolve<PrefUtils>().setBiometrcisUsage(true);
+          setState(() {
+            isSwitched = true;
+          });
+        } else {
+          setState(() {
+            isSwitched = false;
+          });
+        }
+      } on PlatformException catch (_) {
+        setState(() {
+          isSwitched = false;
+        });
+      }
+    } else {
+      setState(() {
+        isSwitched = false;
+      });
+    }
   }
 
   Widget _buildAvatarRow(BuildContext context) {
