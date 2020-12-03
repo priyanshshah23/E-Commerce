@@ -4,7 +4,7 @@ import '../app.export.dart';
 
 class ApiConstants {
   //  static const String PROXY_URL = "PROXY 192.168.2.124:8888";
-  static String PROXY_URL = "PROXY 192.168.0.116:8888";
+  static String PROXY_URL = "PROXY 192.168.0.114:8888";
 //    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 
   static const String imageBaseURL = baseURL;
@@ -82,7 +82,8 @@ class ApiConstants {
   static const String diamondBidDelete = commonUrl + "diamond-bid/delete";
   static const String shareThroughEmail = apiUrl + "web/v1/diamond/excel";
   static const String notificationList = apiUrl + "device/v1/notification/list";
-  static const String markAsReadNotification = commonUrl + "notification/markAsRead";
+  static const String markAsReadNotification =
+      commonUrl + "notification/markAsRead";
   static const String searchReportNo = "web/v1/diamond/reportno/paginate";
   static const String updateOffer = "device/v1/diamond-track/update";
 

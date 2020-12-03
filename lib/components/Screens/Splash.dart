@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:lottie/lottie.dart';
 import 'package:package_info/package_info.dart';
 
 import 'Auth/ForgetPassword.dart';
@@ -194,15 +195,18 @@ class _SplashState extends State<Splash> {
       height: MathUtilities.screenHeight(context),
       width: MathUtilities.screenWidth(context),
       child: Center(
-          child: Container(
-              alignment: Alignment.center,
-              width: getSize(160),
-              height: getSize(160),
-              child: Image.asset(
-                splashLogo,
-                width: getSize(160),
-                height: getSize(160),
-              ))),
+        child: Container(
+          alignment: Alignment.center,
+          width: getSize(160),
+          height: getSize(160),
+          child: Lottie.asset(
+            'assets/pn.json',
+            width: 200,
+            height: 200,
+            fit: BoxFit.fill,
+          ),
+        ),
+      ),
     );
   }
 

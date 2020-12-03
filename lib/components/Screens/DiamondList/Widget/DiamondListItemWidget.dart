@@ -247,8 +247,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                     Expanded(
                                       child: Padding(
                                         padding: EdgeInsets.only(
-                                            left: getSize(10),
-                                            right: getSize(10),
+                                            left: getSize(8),
+                                            right: getSize(8),
                                             top: getSize(8),
                                             bottom: getSize(8)),
                                         child: Column(
@@ -466,15 +466,29 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
     return Padding(
       padding: EdgeInsets.only(bottom: getSize(4)),
       child: Row(
-//        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          getText(
-              widget.item?.vStnId ?? "", appTheme.blackNormal14TitleColorblack),
-          Expanded(child: Container()),
-          getText(
-              widget.item?.shpNm ?? "", appTheme.blackMedium14TitleColorblack),
-          Expanded(child: Container()),
-          getAmountText(widget.item?.getPricePerCarat() ?? ""),
+          Expanded(
+            flex: 4,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerLeft,
+              child: getText(
+                widget.item?.vStnId ?? "",
+                appTheme.blackNormal14TitleColorblack,
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: getText(widget.item?.shpNm ?? "",
+                appTheme.blackMedium14TitleColorblack),
+          ),
+          Expanded(
+            flex: 4,
+            child: getAmountText(widget.item?.getPricePerCarat() ?? "",
+                align: TextAlign.right),
+          ),
         ],
       ),
     );
@@ -490,19 +504,19 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             padding: EdgeInsets.only(
               right: getSize(10),
             ),
-            child: getText(widget.item?.colNm ?? "",
+            child: getText(widget.item?.colNm ?? "-",
                 appTheme.blackMedium14TitleColorblack),
           ),
           Padding(
             padding: EdgeInsets.only(
               right: getSize(10),
             ),
-            child: getText(widget.item?.clrNm ?? "",
+            child: getText(widget.item?.clrNm ?? "-",
                 appTheme.blackMedium14TitleColorblack),
           ),
           Row(
             children: <Widget>[
-              getText(widget.item?.cutNm ?? "",
+              getText(widget.item?.cutNm ?? "-",
                   appTheme.blackMedium14TitleColorblack),
               Container(
                 height: getSize(4),
@@ -510,7 +524,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 decoration: BoxDecoration(
                     color: appTheme.dividerColor, shape: BoxShape.circle),
               ),
-              getText(widget.item?.polNm ?? "",
+              getText(widget.item?.polNm ?? "-",
                   appTheme.blackMedium14TitleColorblack),
               Container(
                 height: getSize(4),
@@ -518,11 +532,11 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 decoration: BoxDecoration(
                     color: appTheme.dividerColor, shape: BoxShape.circle),
               ),
-              getText(widget.item?.symNm ?? "",
+              getText(widget.item?.symNm ?? "-",
                   appTheme.blackMedium14TitleColorblack),
             ],
           ),
-          getAmountText(widget.item?.getAmount() ?? ""),
+          getAmountText(widget.item?.getAmount() ?? "-"),
         ],
       ),
     );
@@ -1181,9 +1195,10 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         offset: Offset(25, 110),
       );
 
-  getAmountText(String text) {
+  getAmountText(String text, {TextAlign align}) {
     return Text(
       text,
+      textAlign: align ?? TextAlign.left,
       style: appTheme.blue14TextStyle.copyWith(fontSize: getFontSize(14)),
     );
   }
@@ -1240,9 +1255,10 @@ class _DropDownItemState extends State<DropDownItem> {
   }
 }
 
-getText(String text, TextStyle style) {
+getText(String text, TextStyle style, {TextAlign align}) {
   return Text(
     text,
+    textAlign: align ?? TextAlign.left,
     style: style,
   );
 }
