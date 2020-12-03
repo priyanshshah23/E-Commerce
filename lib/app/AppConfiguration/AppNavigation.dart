@@ -5,6 +5,7 @@ import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
 import 'package:flutter/services.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
+import 'package:rxbus/rxbus.dart';
 
 import '../app.export.dart';
 
@@ -26,6 +27,7 @@ class AppNavigation {
 
 // Move To Home Scree
   void movetoHome({bool isPopAndSwitch = false}) {
+    RxBus.destroy(tag: eventBusTag);
     if (isPopAndSwitch) {
       NavigationUtilities.pushReplacementNamed(HomeScreen.route,
           type: RouteType.fade);
