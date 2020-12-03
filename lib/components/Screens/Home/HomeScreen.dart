@@ -66,10 +66,32 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      //Kyc rejected
+      if (user.account.isApproved == KYCStatus.rejected &&
+          user.account.isKycUploaded == true) {
+        Timer(
+          Duration(seconds: 1),
+          () => (app.resolve<CustomDialogs>().confirmDialog(context,
+              dismissPopup: false,
+              title: R.string().authStrings.kYCRejected,
+              desc: R.string().authStrings.kycRejectedDesc,
+              positiveBtnTitle: R.string().commonString.upload,
+              negativeBtnTitle: R.string().commonString.btnSkip,
+              onClickCallback: (click) {
+            if (click == ButtonType.PositveButtonClick) {
+              NavigationUtilities.pushRoute(
+                UploadKYCScreen.route,
+              );
+            }
+          })),
+        );
+      }
+
+      //Documents not uploaded
       if (user.account.isKycUploaded == false) {
         if (!user.kycRequired) {
           Timer(
-            Duration(seconds: 2),
+            Duration(seconds: 1),
             () => (app.resolve<CustomDialogs>().confirmDialog(context,
                 dismissPopup: false,
                 title: R.string().authStrings.uploadKYC,

@@ -33,7 +33,8 @@ class Documents extends StatefulWidget {
   _DocumentsState createState() => _DocumentsState();
 }
 
-class _DocumentsState extends State<Documents> with AutomaticKeepAliveClientMixin<Documents>{
+class _DocumentsState extends State<Documents>
+    with AutomaticKeepAliveClientMixin<Documents> {
   List<Kyc> kycList = List<Kyc>();
   BaseList kycBaseList;
 
@@ -62,12 +63,11 @@ class _DocumentsState extends State<Documents> with AutomaticKeepAliveClientMixi
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getDocuments(false);
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
-    if(kycList.length <= 0) {
+    if (kycList.length <= 0) {
       getDocuments(false);
     }
     return GestureDetector(
@@ -138,12 +138,12 @@ class _DocumentsState extends State<Documents> with AutomaticKeepAliveClientMixi
     ).then((result) {
       if (result.code == CODE_OK) {
         String imgPath =
-        result.detail.files != null && result.detail.files.length > 0
-            ? result.detail.files.first.absolutePath
-            : "";
+            result.detail.files != null && result.detail.files.length > 0
+                ? result.detail.files.first.absolutePath
+                : "";
         if (isNullEmptyOrFalse(imgPath) == false) {
           imagePath(imgPath);
-        //  callDocumentsApi(imagePath: imgPath);
+          //  callDocumentsApi(imagePath: imgPath);
         }
       }
       return;
@@ -202,56 +202,86 @@ class _DocumentsState extends State<Documents> with AutomaticKeepAliveClientMixi
 
   getDocuments(bool isRefress, {bool isLoading = false}) async {
     if (isRefress) {
-       kycList.clear();
+      kycList.clear();
     }
 
     NetworkCall<PersonalInformationViewResp>()
         .makeCall(
-            () => app.resolve<ServiceModule>().networkService().personalInformationView(),
-        context,
-        isProgress: true)
+            () => app
+                .resolve<ServiceModule>()
+                .networkService()
+                .personalInformationView(),
+            context,
+            isProgress: true)
         .then((resp) async {
-          if(resp.data != null && resp.data.account != null && resp.data.account.kyc != null) {
-            kycList.clear();
-            kycList.addAll(resp.data.account.kyc);
-            kycBaseList.state.listCount = resp.data.account.kyc.length;
-            kycBaseList.state.totalCount = resp.data.account.kyc.length;
-            fillArrayList();
-            kycBaseList.state.setApiCalling(false);
-            setState(() {});
-          }
+      if (resp.data != null &&
+          resp.data.account != null &&
+          resp.data.account.kyc != null) {
+        kycList.clear();
+        kycList.addAll(resp.data.account.kyc);
+        kycBaseList.state.listCount = resp.data.account.kyc.length;
+        kycBaseList.state.totalCount = resp.data.account.kyc.length;
+        fillArrayList();
+        kycBaseList.state.setApiCalling(false);
+        setState(() {});
+      }
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
-        context,
-        title: R.string().commonString.error,
-        desc: onError.message,
-        positiveBtnTitle: R.string().commonString.btnTryAgain,
-      );
+            context,
+            title: R.string().commonString.error,
+            desc: onError.message,
+            positiveBtnTitle: R.string().commonString.btnTryAgain,
+          );
     });
   }
 
   fillArrayList() {
+    User userDetail = app.resolve<PrefUtils>().getUserDetails();
     kycBaseList.state.listItems = ListView.builder(
       itemCount: kycList.length,
       itemBuilder: (BuildContext context, int index) {
         return Container(
           margin: EdgeInsets.only(bottom: getSize(20)),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(getSize(10),),
+            borderRadius: BorderRadius.circular(
+              getSize(10),
+            ),
             border: Border.all(color: appTheme.textGreyColor),
           ),
-          padding: EdgeInsets.symmetric(horizontal: getSize(20), vertical: getSize(20)),
-          child: getImageView(
-             kycList[index].path ?? "",
-            placeHolderImage: documentPlaceHolder,
-            fit: BoxFit.cover,
-            isFitApply: false
-          ),
+          padding: EdgeInsets.symmetric(
+              horizontal: getSize(16), vertical: getSize(16)),
+          child: userDetail.account.isApproved == KYCStatus.rejected
+              ? Stack(
+                  // fit: StackFit.expand,
+                  alignment: Alignment.center,
+                  children: [
+                    Center(
+                      child: Container(
+                        child: getImageView(
+                          kycList[index].path ?? "",
+                          placeHolderImage: documentPlaceHolder,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Container(
+                        alignment: Alignment.center,
+                        child: Text("Rejected",
+                            style: appTheme.redPrimaryNormal14TitleColor),
+                      ),
+                    ),
+                  ],
+                )
+              : getImageView(kycList[index].path ?? "",
+                  placeHolderImage: documentPlaceHolder,
+                  fit: BoxFit.cover,
+                  isFitApply: false),
         );
-      },);
+      },
+    );
   }
 
   @override
   bool get wantKeepAlive => true;
-
 }

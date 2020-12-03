@@ -566,6 +566,7 @@ class Account {
   String howKnow;
   String referenceFrom;
   bool isDeleted;
+  int isApproved;
   bool isActive;
   int status;
   String updateIp;
@@ -618,6 +619,7 @@ class Account {
     street = json['street'];
     area = json['area'];
     zipCode = json['zipCode'];
+    isApproved = json["isApproved"];
     defaultNarration = json['defaultNarration'];
     orderEmail = json['orderEmail'];
     newStoneEmail = json['newStoneEmail'];
@@ -694,6 +696,7 @@ class Account {
     data['profileImage'] = this.profileImage;
     data['code'] = this.code;
     data['displayName'] = this.displayName;
+    data["isApproved"] = this.isApproved;
     data['companyName'] = this.companyName;
     data['companyNormalizeName'] = this.companyNormalizeName;
     data['companyType'] = this.companyType;
@@ -760,16 +763,19 @@ class Account {
 
 class Kyc {
   String path;
+  String docType;
 
-  Kyc({this.path});
+  Kyc({this.path, this.docType});
 
   Kyc.fromJson(Map<String, dynamic> json) {
     path = json['path'];
+    docType = json["docType"];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['path'] = this.path;
+    data["docType"] = this.docType;
     return data;
   }
 }

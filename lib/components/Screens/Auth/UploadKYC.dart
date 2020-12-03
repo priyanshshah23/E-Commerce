@@ -77,6 +77,8 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
   }
 
   getMasters() async {
+    User userDetail = app.resolve<PrefUtils>().getUserDetails();
+
     Master.getSubMaster(MasterCode.docTypePersonal).then((arrMaster) {
       arrMaster.forEach((element) {
         arrPhotos.add(SelectionPopupModel(
@@ -84,6 +86,19 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
           element.name,
         ));
       });
+      if (!isNullEmptyOrFalse(userDetail.account)) {
+        if (!isNullEmptyOrFalse(userDetail.account.kyc)) {
+          userDetail.account.kyc.forEach((element) {
+            if (arrPhotos.map((e) => e.id).toList().contains(element.docType)) {
+              var photo =
+                  arrPhotos.firstWhere((model) => model.id == element.docType);
+              photo.isSelected = true;
+              photo.url = element.path;
+              _photoProofTextField.text = photo.title;
+            }
+          });
+        }
+      }
     });
     Master.getSubMaster(MasterCode.docTypeBusiness).then((arrMaster) {
       arrMaster.forEach((element) {
@@ -92,6 +107,23 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
           element.name,
         ));
       });
+
+      if (!isNullEmptyOrFalse(userDetail.account)) {
+        if (!isNullEmptyOrFalse(userDetail.account.kyc)) {
+          userDetail.account.kyc.forEach((element) {
+            if (arrBusiness
+                .map((e) => e.id)
+                .toList()
+                .contains(element.docType)) {
+              var photo = arrBusiness
+                  .firstWhere((model) => model.id == element.docType);
+              photo.isSelected = true;
+              photo.url = element.path;
+              _businessProofTextField.text = photo.title;
+            }
+          });
+        }
+      }
     });
   }
 
@@ -124,7 +156,7 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
           children: <Widget>[
             SizedBox(height: getSize(16)),
             Padding(
-              padding: EdgeInsets.only(left: getSize(16), right: getSize(16)),
+              padding: EdgeInsets.only(left: getSize(20), right: getSize(20)),
               child: Text(R.string().authStrings.hintPhotoIdentityProof,
                   style: appTheme.black18TextStyle),
             ),
