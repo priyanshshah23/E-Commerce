@@ -789,7 +789,7 @@ class _PersonalInformationState extends State<PersonalInformation>
                   color: Colors.black),
               CountryPickerWidget(
                 selectedDialogCountry: selectedDialogCountryForMobile,
-                isEnabled: true,
+                isEnabled: !this.readOnly,
                 onSelectCountry: (Country country) async {
                   selectedDialogCountryForMobile = country;
                   // await checkValidation();
@@ -876,7 +876,7 @@ class _PersonalInformationState extends State<PersonalInformation>
                   color: Colors.black),
               CountryPickerWidget(
                 selectedDialogCountry: selectedDialogCountryForWhatsapp,
-                isEnabled: true,
+                isEnabled: !this.readOnly,
                 onSelectCountry: (Country country) async {
                   selectedDialogCountryForWhatsapp = country;
                   setState(() {});

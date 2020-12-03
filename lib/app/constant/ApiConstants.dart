@@ -10,6 +10,7 @@ class ApiConstants {
   static const String imageBaseURL = baseURL;
   static const String webPageUrl = "http://pndevelopapi.democ.in/";
   static const String shareUrl = "http://fndevelop.democ.in/diamond-details/";
+  static const String googleDocUrl = "https://docs.google.com/viewer?embedded=true&url=";
 
   static const String apiUrl = baseURL;
   static const String commonUrl = apiUrl + "device/v1/";
