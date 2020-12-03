@@ -64,7 +64,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
   String selectedLanguage = R.string().commonString.language;
   bool isCheckBoxSelected = false;
   final LocalAuthentication auth = LocalAuthentication();
-
+  List<BiometricType> availableBiometrics;
   @override
   void initState() {
     // TODO: implement initState
@@ -74,12 +74,14 @@ class LoginScreenState extends StatefulScreenWidgetState {
     // }
   }
 
-  getUserNameAndPassword() {
+  getUserNameAndPassword() async {
     if (app.resolve<PrefUtils>().getBool("rememberMe") == true) {
       isCheckBoxSelected = app.resolve<PrefUtils>().getBool("rememberMe");
       userNameController.text = app.resolve<PrefUtils>().getString("userName");
       _passwordController.text = app.resolve<PrefUtils>().getString("passWord");
     }
+
+    availableBiometrics = await auth.getAvailableBiometrics();
   }
 
   @override
@@ -564,24 +566,31 @@ class LoginScreenState extends StatefulScreenWidgetState {
             context,
             isProgress: true)
         .then((loginResp) {
-      auth.canCheckBiometrics.then((value) {
-        if (value) {
-          app.resolve<CustomDialogs>().confirmDialog(context,
-              title: "",
-              desc: "Enable touchId to unlock $APPNAME?",
-              positiveBtnTitle: R.string().commonString.ok,
-              negativeBtnTitle: R.string().commonString.cancel,
-              onClickCallback: (buttonType) async {
-            if (buttonType == ButtonType.PositveButtonClick) {
-              askForBioMetrics(loginResp)();
-            } else {
-              saveUserResponse(loginResp);
-            }
-          });
-        } else {
-          saveUserResponse(loginResp);
-        }
-      });
+      if (!isNullEmptyOrFalse(availableBiometrics)) {
+        auth.canCheckBiometrics.then((value) {
+          if (value) {
+            app.resolve<CustomDialogs>().confirmDialog(context,
+                title: "",
+                desc: Platform.isIOS &&
+                        availableBiometrics.contains(BiometricType.face)
+                    ? R.string().commonString.enableFaceId
+                    : R.string().commonString.enableTouchId,
+                positiveBtnTitle: R.string().commonString.ok,
+                negativeBtnTitle: R.string().commonString.cancel,
+                onClickCallback: (buttonType) async {
+              if (buttonType == ButtonType.PositveButtonClick) {
+                askForBioMetrics(loginResp)();
+              } else {
+                saveUserResponse(loginResp);
+              }
+            });
+          } else {
+            saveUserResponse(loginResp);
+          }
+        });
+      } else {
+        saveUserResponse(loginResp);
+      }
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
