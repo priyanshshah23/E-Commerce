@@ -10,6 +10,7 @@ import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/DialogueList.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
@@ -448,7 +449,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     dict["filter"] = FilterRequest().createRequest(arrList);
     dict["name"] = diamondTitle;
     dict["searchType"] = DiamondSearchType.DEMAND;
-    dict["expiryDate"] = selectedDate;
+    dict["expiryDate"] = isNullEmptyOrFalse(selectedDate) ? DateTime.now().toString() : selectedDate;
 
     NetworkCall<BaseApiResp>()
         .makeCall(

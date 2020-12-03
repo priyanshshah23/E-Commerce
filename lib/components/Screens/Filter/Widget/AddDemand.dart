@@ -152,6 +152,7 @@ class _AddDemandState extends State<AddDemand> {
 
   void selectionChanged(DateRangePickerSelectionChangedArgs args) {
     _selectedDate = DateFormat('dd MMMM, yyyy').format(args.value);
+    
     SchedulerBinding.instance.addPostFrameCallback((duration) {
       setState(() {});
     });
@@ -166,6 +167,7 @@ class _AddDemandState extends State<AddDemand> {
         selectionColor: appTheme.colorPrimary,
         todayHighlightColor: appTheme.colorPrimary,
         // initialSelectedDate: DateTime.now(),
+        
         view: DateRangePickerView.month,
         selectionMode: DateRangePickerSelectionMode.single,
         onSelectionChanged: selectionChanged,
