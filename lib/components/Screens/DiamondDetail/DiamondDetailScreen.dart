@@ -166,40 +166,40 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       arrOfImages.add(
         DiamondDetailImagePagerModel(
           title: "Image",
-          url: DiamondUrls.image + diamondModel.vStnId + "/" + "still.jpg",
+          url: DiamondUrls.image + diamondModel.mfgStnId + "/" + "still.jpg",
           isSelected: true,
           isImage: true,
         ),
       );
    // }
-
+    print(DiamondUrls.image + diamondModel.mfgStnId + "/" + "still.jpg");
    // if (diamondModel.arrowFile) {
       arrOfImages.add(
         DiamondDetailImagePagerModel(
           title: "ArrowImage",
-          url: DiamondUrls.arroImage + diamondModel.vStnId + "/"  + "Arrow_Black_BG.jpg",
+          url: DiamondUrls.arroImage + diamondModel.mfgStnId + "/"  + "Arrow_Black_BG.jpg",
           isSelected: false,
           isImage: true,
         ),
       );
     //}
-
+    print(DiamondUrls.arroImage + diamondModel.mfgStnId + "/"  + "Arrow_Black_BG.jpg");
     //if (diamondModel.assetFile) {
       arrOfImages.add(
         DiamondDetailImagePagerModel(
           title: "AssetImage",
-          url: DiamondUrls.image + diamondModel.vStnId + "/" + "Office_Light_Black_BG.jpg",
+          url: DiamondUrls.image + diamondModel.mfgStnId + "/" + "Office_Light_Black_BG.jpg",
           isSelected: false,
           isImage: true,
         ),
       );
     //}
-
+    print(DiamondUrls.image + diamondModel.mfgStnId + "/" + "Office_Light_Black_BG.jpg");
     //if (diamondModel.img) {
       arrImages.add(
         DiamondDetailImagePagerModel(
             title: "Image",
-            url: DiamondUrls.image + diamondModel.vStnId + "/" + "still.jpg",
+            url: DiamondUrls.image + diamondModel.mfgStnId + "/" + "still.jpg",
             isSelected: true,
             isImage: true,
             arr: arrOfImages),
@@ -214,13 +214,13 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       arrOfVideos.add(
         DiamondDetailImagePagerModel(
           title: "Video",
-          url: DiamondUrls.video + diamondModel.vStnId + "/" + diamondModel.vStnId + ".html",
+          url: DiamondUrls.video + diamondModel.mfgStnId + "/" + diamondModel.mfgStnId + ".html",
           isSelected: true,
           isVideo: true,
         ),
       );
     //}
-
+    print(DiamondUrls.video + diamondModel.mfgStnId + "/" + diamondModel.mfgStnId + ".html");
     // if (diamondModel.roughVdo) {
     //   arrOfVideos.add(
     //     DiamondDetailImagePagerModel(
@@ -247,7 +247,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       arrImages.add(
         DiamondDetailImagePagerModel(
           title: "Video",
-          url: DiamondUrls.video + diamondModel.vStnId + "/" + diamondModel.vStnId + ".html",
+          url: DiamondUrls.video + diamondModel.mfgStnId + "/" + diamondModel.mfgStnId + ".html",
           isSelected: true,
           isVideo: true,
           arr: arrOfVideos,
@@ -263,18 +263,18 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       arrOfHA.add(
         DiamondDetailImagePagerModel(
           title: "H&A",
-          url: DiamondUrls.heartImage + diamondModel.vStnId + "/"  + "Heart_Black_BG.jpg",
+          url: DiamondUrls.heartImage + diamondModel.mfgStnId + "/"  + "Heart_Black_BG.jpg",
           isSelected: true,
           isImage: true,
         ),
       );
     //}
-
+    print(DiamondUrls.heartImage + diamondModel.mfgStnId + "/"  + "Heart_Black_BG.jpg");
     //if (diamondModel.hAFile) {
       arrImages.add(
         DiamondDetailImagePagerModel(
             title: "H&A",
-            url: DiamondUrls.heartImage + diamondModel.vStnId + "/"  + "Heart_Black_BG.jpg",
+            url: DiamondUrls.heartImage + diamondModel.mfgStnId + "/"  + "Heart_Black_BG.jpg",
             isSelected: false,
             isImage: true,
             arr: arrOfHA),
@@ -289,13 +289,13 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       arrOfCertificates.add(
         DiamondDetailImagePagerModel(
           title: "Certificate",
-          url: DiamondUrls.certificate + diamondModel.rptNo + ".pdf",
+          url: ApiConstants.googleDocUrl + DiamondUrls.certificate + diamondModel.rptNo + ".pdf",
           isSelected: true,
           isImage: false,
         ),
       );
     //}
-      print(DiamondUrls.certificate + diamondModel.rptNo + ".pdf");
+      print(ApiConstants.googleDocUrl +DiamondUrls.certificate + diamondModel.rptNo + ".pdf");
     //if (diamondModel.certFile) {
       arrImages.add(
         DiamondDetailImagePagerModel(

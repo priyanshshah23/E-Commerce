@@ -730,7 +730,7 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
                         )),
               child: getImageView(
                   DiamondUrls.image +
-                      compareModel.diamondModel.vStnId +
+                      compareModel.diamondModel.mfgStnId +
                       "/" +
                       "still.jpg",
                   height: getSize(120),

@@ -377,6 +377,7 @@ class DiamondModel {
   String pktType;
   String hANm;
   String vStnId;
+  String mfgStnId;
   String locNm;
   num lwrHal;
   String org;
@@ -585,6 +586,7 @@ class DiamondModel {
     pktType = json['pktType'];
     hANm = json['hANm'];
     vStnId = json['vStnId'];
+    mfgStnId = json['mfgStnId'] ?? "";
     locNm = json['locNm'];
     lwrHal = json['lwrHal'];
     org = json['org'];
@@ -689,6 +691,7 @@ class DiamondModel {
     data['pktType'] = this.pktType;
     data['hANm'] = this.hANm;
     data['vStnId'] = this.vStnId;
+    data['mfgStnId'] = this.mfgStnId;
     data['locNm'] = this.locNm;
     data['lwrHal'] = this.lwrHal;
     data['org'] = this.org;
@@ -751,8 +754,8 @@ class DiamondModel {
   }
 
   String getDiamondImage() {
-    if (isStringEmpty(vStnId) == false) {
-      return DiamondUrls.image + vStnId + "/" + "still.jpg";
+    if (isStringEmpty(mfgStnId) == false) {
+      return DiamondUrls.image + mfgStnId + "/" + "still.jpg";
     }
     //img
     return "";

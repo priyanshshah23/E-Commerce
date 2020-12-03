@@ -166,15 +166,15 @@ class DownloadState extends State<Download> {
 
       allDiamondPreviewThings.forEach((element) {
         if (element.fileType == DownloadAndShareDialogueConstant.realImage1) {
-          element.url = DiamondUrls.image + model.vStnId + "/" + "still.jpg";
+          element.url = DiamondUrls.image + model.mfgStnId + "/" + "still.jpg";
         } else if (element.fileType ==
             DownloadAndShareDialogueConstant.arrowImg) {
           element.url =
-              DiamondUrls.arroImage + model.vStnId + "/" + "Arrow_Black_BG.jpg";
+              DiamondUrls.arroImage + model.mfgStnId + "/" + "Arrow_Black_BG.jpg";
         } else if (element.fileType ==
             DownloadAndShareDialogueConstant.assetScopeImg) {
           element.url = DiamondUrls.image +
-              model.vStnId +
+              model.mfgStnId +
               "/" +
               "Office_Light_Black_BG.jpg";
         }
@@ -186,7 +186,7 @@ class DownloadState extends State<Download> {
         else if (element.fileType ==
             DownloadAndShareDialogueConstant.heartAndArrowImg) {
           element.url = DiamondUrls.heartImage +
-              model.vStnId +
+              model.mfgStnId +
               "/" +
               "Heart_Black_BG.jpg";
         }
@@ -213,7 +213,7 @@ class DownloadState extends State<Download> {
         // }
         else if (element.fileType == DownloadAndShareDialogueConstant.video1) {
           element.url =
-              DiamondUrls.video + model.vStnId + "/" + model.vStnId + ".html";
+              DiamondUrls.video + model.mfgStnId + "/" + model.mfgStnId + ".mp4";
         }
         //  else if (element.fileType ==
         //         DownloadAndShareDialogueConstant.video2 &&

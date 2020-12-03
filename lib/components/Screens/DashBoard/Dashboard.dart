@@ -717,7 +717,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                             "",
                             finalUrl: true //model.img
                                 ? DiamondUrls.image +
-                                    model.vStnId +
+                                    model.mfgStnId +
                                     "/" +
                                     "still.jpg"
                                 : "",
@@ -908,7 +908,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                           child: getImageView(
                             "",
                             finalUrl: DiamondUrls.image +
-                                model.vStnId +
+                                model.mfgStnId +
                                 "/" +
                                 "still.jpg",
                             width: getSize(122),
@@ -1424,7 +1424,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                                 child: getImageView(
                                   "",
                                   finalUrl: DiamondUrls.image +
-                                      model.vStnId +
+                                      model.mfgStnId +
                                       "/" +
                                       "still.jpg",
                                   width: getSize(40),
