@@ -89,7 +89,7 @@ class SyncManager {
       // // save master sync date
       // app.resolve<PrefUtils>().saveMasterSyncDate(masterResp.data.lastSyncDate);
 
-      if (!app.resolve<PrefUtils>().getSyncPlayerId()) {
+      if (isNullEmptyOrFalse(app.resolve<PrefUtils>().getPlayerId())) {
         print("networkid.....${app.resolve<PrefUtils>().getPlayerId()}");
         getcallApiGetNotificationID(context);
       }
