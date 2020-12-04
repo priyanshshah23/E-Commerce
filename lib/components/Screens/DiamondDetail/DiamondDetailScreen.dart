@@ -163,47 +163,53 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         List<DiamondDetailImagePagerModel>();
 
     //if (diamondModel.img) {
-      arrOfImages.add(
-        DiamondDetailImagePagerModel(
+    arrOfImages.add(
+      DiamondDetailImagePagerModel(
+        title: "Image",
+        url: DiamondUrls.image + diamondModel.vStnId + "/" + "still.jpg",
+        isSelected: true,
+        isImage: true,
+      ),
+    );
+    // }
+
+    // if (diamondModel.arrowFile) {
+    arrOfImages.add(
+      DiamondDetailImagePagerModel(
+        title: "ArrowImage",
+        url: DiamondUrls.arroImage +
+            diamondModel.vStnId +
+            "/" +
+            "Arrow_Black_BG.jpg",
+        isSelected: false,
+        isImage: true,
+      ),
+    );
+    //}
+
+    //if (diamondModel.assetFile) {
+    arrOfImages.add(
+      DiamondDetailImagePagerModel(
+        title: "AssetImage",
+        url: DiamondUrls.image +
+            diamondModel.vStnId +
+            "/" +
+            "Office_Light_Black_BG.jpg",
+        isSelected: false,
+        isImage: true,
+      ),
+    );
+    //}
+
+    //if (diamondModel.img) {
+    arrImages.add(
+      DiamondDetailImagePagerModel(
           title: "Image",
           url: DiamondUrls.image + diamondModel.vStnId + "/" + "still.jpg",
           isSelected: true,
           isImage: true,
-        ),
-      );
-   // }
-
-   // if (diamondModel.arrowFile) {
-      arrOfImages.add(
-        DiamondDetailImagePagerModel(
-          title: "ArrowImage",
-          url: DiamondUrls.arroImage + diamondModel.vStnId + "/"  + "Arrow_Black_BG.jpg",
-          isSelected: false,
-          isImage: true,
-        ),
-      );
-    //}
-
-    //if (diamondModel.assetFile) {
-      arrOfImages.add(
-        DiamondDetailImagePagerModel(
-          title: "AssetImage",
-          url: DiamondUrls.image + diamondModel.vStnId + "/" + "Office_Light_Black_BG.jpg",
-          isSelected: false,
-          isImage: true,
-        ),
-      );
-    //}
-
-    //if (diamondModel.img) {
-      arrImages.add(
-        DiamondDetailImagePagerModel(
-            title: "Image",
-            url: DiamondUrls.image + diamondModel.vStnId + "/" + "still.jpg",
-            isSelected: true,
-            isImage: true,
-            arr: arrOfImages),
-      );
+          arr: arrOfImages),
+    );
     //}
 
     //list of videofile
@@ -211,14 +217,18 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         List<DiamondDetailImagePagerModel>();
 
     //if (diamondModel.videoFile) {
-      arrOfVideos.add(
-        DiamondDetailImagePagerModel(
-          title: "Video",
-          url: DiamondUrls.video + diamondModel.vStnId + "/" + diamondModel.vStnId + ".html",
-          isSelected: true,
-          isVideo: true,
-        ),
-      );
+    arrOfVideos.add(
+      DiamondDetailImagePagerModel(
+        title: "Video",
+        url: DiamondUrls.video +
+            diamondModel.vStnId +
+            "/" +
+            diamondModel.vStnId +
+            ".html",
+        isSelected: true,
+        isVideo: true,
+      ),
+    );
     //}
 
     // if (diamondModel.roughVdo) {
@@ -244,15 +254,19 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     // }
 
     //if (diamondModel.videoFile) {
-      arrImages.add(
-        DiamondDetailImagePagerModel(
-          title: "Video",
-          url: DiamondUrls.video + diamondModel.vStnId + "/" + diamondModel.vStnId + ".html",
-          isSelected: true,
-          isVideo: true,
-          arr: arrOfVideos,
-        ),
-      );
+    arrImages.add(
+      DiamondDetailImagePagerModel(
+        title: "Video",
+        url: DiamondUrls.video +
+            diamondModel.vStnId +
+            "/" +
+            diamondModel.vStnId +
+            ".html",
+        isSelected: true,
+        isVideo: true,
+        arr: arrOfVideos,
+      ),
+    );
     //}
 
     //List of H&A
@@ -260,25 +274,32 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         List<DiamondDetailImagePagerModel>();
 
     //if (diamondModel.certFile) {
-      arrOfHA.add(
-        DiamondDetailImagePagerModel(
-          title: "H&A",
-          url: DiamondUrls.heartImage + diamondModel.vStnId + "/"  + "Heart_Black_BG.jpg",
-          isSelected: true,
-          isImage: true,
-        ),
-      );
+    arrOfHA.add(
+      DiamondDetailImagePagerModel(
+        title: "H&A",
+        url: DiamondUrls.heartImage +
+            diamondModel.vStnId +
+            "/" +
+            "Heart_Black_BG.jpg",
+        isSelected: true,
+        isImage: true,
+      ),
+    );
     //}
 
     //if (diamondModel.hAFile) {
-      arrImages.add(
-        DiamondDetailImagePagerModel(
-            title: "H&A",
-            url: DiamondUrls.heartImage + diamondModel.vStnId + "/"  + "Heart_Black_BG.jpg",
-            isSelected: false,
-            isImage: true,
-            arr: arrOfHA),
-      );
+    arrImages.add(
+      DiamondDetailImagePagerModel(
+        title: "H&A",
+        url: DiamondUrls.heartImage +
+            diamondModel.vStnId +
+            "/" +
+            "Heart_Black_BG.jpg",
+        isSelected: false,
+        isImage: true,
+        arr: arrOfHA,
+      ),
+    );
     //}
 
     //List of certificate
@@ -286,25 +307,34 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         List<DiamondDetailImagePagerModel>();
 
     //if (diamondModel.certFile) {
-      arrOfCertificates.add(
-        DiamondDetailImagePagerModel(
-          title: "Certificate",
-          url: ApiConstants.googleDocUrl +  DiamondUrls.certificate + diamondModel.rptNo + ".pdf",
-          isSelected: true,
-          isImage: false,
-        ),
-      );
+    arrOfCertificates.add(
+      DiamondDetailImagePagerModel(
+        title: "Certificate",
+        url: ApiConstants.googleDocUrl +
+            DiamondUrls.certificate +
+            diamondModel.rptNo +
+            ".pdf",
+        isSelected: true,
+        isImage: false,
+      ),
+    );
     //}
-      print(DiamondUrls.certificate + diamondModel.rptNo + ".pdf");
+    print(ApiConstants.googleDocUrl +
+        DiamondUrls.certificate +
+        diamondModel.rptNo +
+        ".pdf");
     //if (diamondModel.certFile) {
-      arrImages.add(
-        DiamondDetailImagePagerModel(
-            title: "Certificate",
-            url: ApiConstants.googleDocUrl + DiamondUrls.certificate + diamondModel.rptNo + ".pdf",
-            isSelected: false,
-            isImage: false,
-            arr: arrOfCertificates),
-      );
+    arrImages.add(
+      DiamondDetailImagePagerModel(
+          title: "Certificate",
+          url: ApiConstants.googleDocUrl +
+              DiamondUrls.certificate +
+              diamondModel.rptNo +
+              ".pdf",
+          isSelected: false,
+          isImage: false,
+          arr: arrOfCertificates),
+    );
     //}
     setState(() {
       //
@@ -359,7 +389,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
               if (element.isPercentage) {
                 diamonDetailComponent.value = "${diamonDetailComponent.value}%";
               }
-              
             } else {
               diamonDetailComponent.value = "-";
             }
@@ -412,7 +441,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           padding: EdgeInsets.all(getSize(10)),
           child: Row(
             children: <Widget>[
-              Image.asset(img,height: getSize(30),width: getSize(30)),
+              Image.asset(img, height: getSize(30), width: getSize(30)),
               SizedBox(
                 width: getSize(10),
               ),
@@ -733,9 +762,9 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                     Expanded(
                       flex: 7,
                       child: Text(diamondDetailUIModel.parameters[j].value,
-                      textAlign: TextAlign.right,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.right,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: appTheme.blackNormal14TitleColorblack),
                     ),
                   ],

@@ -14,12 +14,6 @@ class NotificationRedirection {
   NotificationRedirection(this.notificationDetail);
 
   manageNotification() {
-    // if (app.resolve<PrefUtils>().ishomeVisible() == false) {
-    //   app.resolve<PrefUtils>().saveNotification(notificationDetail);
-    // } else {
-    //   app.resolve<PrefUtils>().clearNotification();
-    //   redirectToScreen();
-    // }
     redirectToScreen();
   }
 

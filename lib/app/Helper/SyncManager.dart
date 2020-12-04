@@ -111,17 +111,17 @@ class SyncManager {
   getcallApiGetNotificationID(
     BuildContext context,
   ) {
-    Map<String,dynamic> req = {};
-    req["playerId"] = app.resolve<PrefUtils>().getPlayerId();
+    // Map<String,dynamic> req = {};
+    // req["playerId"] = app.resolve<PrefUtils>().getPlayerId();
     
-    req["deviceType"] = Platform.isAndroid ? DEVICE_TYPE_ANDROID : DEVICE_TYPE_IOS;
+    // req["deviceType"] = Platform.isAndroid ? DEVICE_TYPE_ANDROID : DEVICE_TYPE_IOS;
   
     NetworkCall<BaseApiResp>()
         .makeCall(
             () => app
                 .resolve<ServiceModule>()
-                .networkService()
-                .notificationId(req),
+                .networkService(playerId: app.resolve<PrefUtils>().getPlayerId())
+                .notificationId(),
             context,
             isProgress: false)
         .then((resp) {
