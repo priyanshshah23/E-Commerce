@@ -23,6 +23,7 @@ class StaticPageScreen extends StatefulScreenWidget {
   String screenTitle;
   bool showExcel;
   bool isFromDrawer;
+  String filePath;
 
   StaticPageScreen(Map<String, dynamic> arguments) {
     this.screenType = arguments["type"];
@@ -30,6 +31,7 @@ class StaticPageScreen extends StatefulScreenWidget {
     this.showExcel = arguments["isForExcel"] ?? false;
     this.screenTitle = arguments["screenTitle"];
     this.isFromDrawer = arguments[ArgumentConstant.IsFromDrawer] ?? false;
+    this.filePath = arguments['filePath'];
   }
 
   @override
@@ -84,9 +86,9 @@ class _StaticPageScreenState extends State<StaticPageScreen> {
           actionItems: widget.showExcel
               ? [
                   InkWell(
-                    onTap: () {
-                      // Share.shareFiles([widget.strUrl],
-                      //     text: widget.screenTitle ?? "");
+                    onTap: () async {
+                      await Share.shareFiles([widget.filePath],
+                          text: widget.screenTitle ?? "");
                     },
                     child: Container(
                       margin: EdgeInsets.all(getSize(16)),

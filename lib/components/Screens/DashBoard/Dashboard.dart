@@ -1748,6 +1748,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                               SizedBox(width: getSize(18)),
                               InkWell(
                                 onTap: () {
+                                  //change firstname to skypeId, when available on server.
                                   openSkype(
                                       this.dashboardModel.seller.firstName);
                                 },
@@ -1853,12 +1854,9 @@ class _DashboardState extends StatefulScreenWidgetState {
 
   void openSkype(String username) async {
     if (await canLaunch('skype:${username}')) {
-      final bool nativeAppLaunchSucceeded = await launch(
-        'skype:${username}',
-      );
-      if (!nativeAppLaunchSucceeded) {
-        // Do something else
-      }
+      await launch('skype:${username}');
+    } else {
+      showToast("skype is not installed in this device", context: context);
     }
   }
 

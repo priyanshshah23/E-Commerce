@@ -89,10 +89,10 @@ class SyncManager {
       // // save master sync date
       // app.resolve<PrefUtils>().saveMasterSyncDate(masterResp.data.lastSyncDate);
 
-      if (isNullEmptyOrFalse(app.resolve<PrefUtils>().getPlayerId())) {
-        print("networkid.....${app.resolve<PrefUtils>().getPlayerId()}");
-        getcallApiGetNotificationID(context);
-      }
+      // if (isNullEmptyOrFalse(app.resolve<PrefUtils>().getPlayerId())) {
+      print("networkid.....${app.resolve<PrefUtils>().getPlayerId()}");
+      getcallApiGetNotificationID(context);
+      // }
 
       // success block
       success();
@@ -113,20 +113,20 @@ class SyncManager {
   ) {
     // Map<String,dynamic> req = {};
     // req["playerId"] = app.resolve<PrefUtils>().getPlayerId();
-    
+
     // req["deviceType"] = Platform.isAndroid ? DEVICE_TYPE_ANDROID : DEVICE_TYPE_IOS;
-  
+
     NetworkCall<BaseApiResp>()
         .makeCall(
             () => app
                 .resolve<ServiceModule>()
-                .networkService(playerId: app.resolve<PrefUtils>().getPlayerId())
+                .networkService(
+                    playerId: app.resolve<PrefUtils>().getPlayerId())
                 .notificationId(),
             context,
             isProgress: false)
-        .then((resp) {
-      
-    }).catchError((onError) {
+        .then((resp) {})
+        .catchError((onError) {
       // if (page == DEFAULT_PAGE) {
       print("error....");
 
@@ -561,6 +561,7 @@ class SyncManager {
         .then((excelApiResponse) async {
       // success(diamondListResp);
       String url = ApiConstants.baseURLForExcel + excelApiResponse.data.data;
+      String excelFileUrl = url;
       print("Excel file URL : " + url);
       if (!Platform.isIOS) {
         url = "https://docs.google.com/viewer?embedded=true&url=" + url;
@@ -568,14 +569,17 @@ class SyncManager {
       print("Final ExcelFile Viewer Url : " + url);
 
       //navigate to static page...
-      // DownloadState downloadStateObj = DownloadState();
-      // final dir = await downloadStateObj.getDownloadDirectory();
-      // String fileName = "FinalExcel.xlsx";
-      // final savePath = path.join(dir.path, fileName);
-      // print("file:/" + savePath);
+      DownloadState downloadStateObj = DownloadState();
+      final dir = await downloadStateObj.getDownloadDirectory();
+      String fileName = "FinalExcel.xlsx";
+      final savePath = path.join(dir.path, fileName);
+      print("file:/" + savePath);
+
       if (isForShare) {
         callback(url);
       } else {
+        downloadExcel(excelFileUrl, savePath);
+
         if (Platform.isIOS) {
           Map<String, dynamic> dict = {};
           dict["strUrl"] = url;
@@ -586,6 +590,7 @@ class SyncManager {
         } else {
           Map<String, dynamic> dict = {};
           dict["strUrl"] = url;
+          dict['filePath'] = savePath;
           dict[ArgumentConstant.IsFromDrawer] = false;
           dict["isForExcel"] = true;
           dict["screenTitle"] = excelApiResponse.data.excelName;
@@ -598,6 +603,20 @@ class SyncManager {
       showToast("There is problem on server, please try again later.",
           context: context);
       print(onError);
+    });
+  }
+
+  downloadExcel(String excelFileUrl, String savePath) {
+    Dio dio = Dio();
+
+    dio
+        .download(
+      excelFileUrl,
+      savePath,
+      deleteOnError: true,
+    )
+        .then((value) {
+      print("excel downlaoded");
     });
   }
 
