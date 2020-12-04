@@ -583,6 +583,7 @@ class SyncManager {
         if (Platform.isIOS) {
           Map<String, dynamic> dict = {};
           dict["strUrl"] = url;
+          dict['filePath'] = savePath;
           dict[ArgumentConstant.IsFromDrawer] = false;
           dict["isForExcel"] = true;
           dict["screenTitle"] = excelApiResponse.data.excelName;
