@@ -332,6 +332,6 @@ class AuthStrings {
     this.btnMoveToHome = "Move to Home",
     this.kYCRejected = "KYC Rejected",
     this.kycRejectedDesc =
-        "Your KYC is rejected. Please upload your KYC documents to access full features.",
+        "Your KYC has been rejected. Please upload your KYC documents again to access all features.",
   });
 }

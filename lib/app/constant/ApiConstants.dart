@@ -4,13 +4,14 @@ import '../app.export.dart';
 
 class ApiConstants {
   //  static const String PROXY_URL = "PROXY 192.168.2.124:8888";
-  static String PROXY_URL = "PROXY 192.168.0.116:8888";
+  static String PROXY_URL = "PROXY 192.168.0.114:8888";
 //    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 
   static const String imageBaseURL = baseURL;
   static const String webPageUrl = "http://pndevelopapi.democ.in/";
   static const String shareUrl = "http://fndevelop.democ.in/diamond-details/";
-  static const String googleDocUrl = "https://docs.google.com/viewer?embedded=true&url=";
+  static const String googleDocUrl =
+      "https://docs.google.com/viewer?embedded=true&url=";
 
   static const String apiUrl = baseURL;
   static const String commonUrl = apiUrl + "device/v1/";

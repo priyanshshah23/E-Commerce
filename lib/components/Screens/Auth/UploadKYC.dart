@@ -10,6 +10,7 @@ import 'package:diamnow/app/network/Uploadmanager.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/DialogueList.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
@@ -61,6 +62,8 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
   bool _isPhotoSelected = false;
   bool _isBusinessProofSelected = true;
   bool _autoValidate = false;
+  String photoUrl;
+  String businessProofUrl;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -77,6 +80,8 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
   }
 
   getMasters() async {
+    User userDetail = app.resolve<PrefUtils>().getUserDetails();
+
     Master.getSubMaster(MasterCode.docTypePersonal).then((arrMaster) {
       arrMaster.forEach((element) {
         arrPhotos.add(SelectionPopupModel(
@@ -84,6 +89,21 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
           element.name,
         ));
       });
+      if (!isNullEmptyOrFalse(userDetail.account)) {
+        if (!isNullEmptyOrFalse(userDetail.account.kyc)) {
+          userDetail.account.kyc.forEach((element) {
+            if (arrPhotos.map((e) => e.id).toList().contains(element.docType)) {
+              var photo =
+                  arrPhotos.firstWhere((model) => model.id == element.docType);
+              photo.isSelected = true;
+              photo.url = element.path;
+              photoUrl = element.path;
+              _photoProofTextField.text = photo.title;
+            }
+          });
+        }
+        setState(() {});
+      }
     });
     Master.getSubMaster(MasterCode.docTypeBusiness).then((arrMaster) {
       arrMaster.forEach((element) {
@@ -92,6 +112,25 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
           element.name,
         ));
       });
+
+      if (!isNullEmptyOrFalse(userDetail.account)) {
+        if (!isNullEmptyOrFalse(userDetail.account.kyc)) {
+          userDetail.account.kyc.forEach((element) {
+            if (arrBusiness
+                .map((e) => e.id)
+                .toList()
+                .contains(element.docType)) {
+              var businessProof = arrBusiness
+                  .firstWhere((model) => model.id == element.docType);
+              businessProof.isSelected = true;
+              businessProof.url = element.path;
+              businessProofUrl = element.path;
+              _businessProofTextField.text = businessProof.title;
+            }
+          });
+        }
+        setState(() {});
+      }
     });
   }
 
@@ -124,7 +163,7 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
           children: <Widget>[
             SizedBox(height: getSize(16)),
             Padding(
-              padding: EdgeInsets.only(left: getSize(16), right: getSize(16)),
+              padding: EdgeInsets.only(left: getSize(20), right: getSize(20)),
               child: Text(R.string().authStrings.hintPhotoIdentityProof,
                   style: appTheme.black18TextStyle),
             ),
@@ -257,12 +296,18 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
                               fit: BoxFit.contain,
                             ))
                           : Center(
-                              child: Image.asset(
-                              imageIcon,
-                              width: getSize(40),
-                              height: getSize(40),
-                              fit: BoxFit.contain,
-                            )),
+                              child: type == DocumentType.PhotoProof &&
+                                      photoUrl != null
+                                  ? getRejectedDocs(photoUrl)
+                                  : type == DocumentType.BussinessProof &&
+                                          businessProofUrl != null
+                                      ? getRejectedDocs(photoUrl)
+                                      : Image.asset(
+                                          imageIcon,
+                                          width: getSize(40),
+                                          height: getSize(40),
+                                          fit: BoxFit.contain,
+                                        )),
                 ),
                 Expanded(
                   child: Container(
@@ -272,18 +317,6 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Text(
-                        //   title,
-                        //   style: AppTheme.of(context)
-                        //       .theme
-                        //       .textTheme
-                        //       .display2
-                        //       .copyWith(
-                        //         color: appTheme.bodyTextColor,
-                        //         fontSize: getSize(14),
-                        //         fontWeight: FontWeight.w400,
-                        //       ),
-                        // ),
                         Container(
                           height: getSize(32),
                           margin: EdgeInsets.only(
@@ -326,6 +359,34 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
           ],
         ),
       ),
+    );
+  }
+
+  getRejectedDocs(String path) {
+    return Stack(
+      // fit: StackFit.expand,
+      alignment: Alignment.center,
+      children: [
+        Center(
+          child: Container(
+            child: getImageView(
+              path,
+              placeHolderImage: documentPlaceHolder,
+              fit: BoxFit.fill,
+            ),
+          ),
+        ),
+        Center(
+          child: Container(
+            alignment: Alignment.center,
+            child: Text("Rejected",
+                style: appTheme.redPrimaryNormal14TitleColor.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: getFontSize(16),
+                )),
+          ),
+        ),
+      ],
     );
   }
 

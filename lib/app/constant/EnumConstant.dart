@@ -75,3 +75,10 @@ class VersionUpdateApi {
   static const String signInAsGuest = "3";
   static const String signInWithMpin = "4";
 }
+
+class KYCStatus{
+  static const int pending = 1;
+  static const int approved = 2;
+  static const int rejected = 3;
+
+}
