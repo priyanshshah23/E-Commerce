@@ -5,6 +5,7 @@ import 'package:diamnow/app/Helper/EncryptionHelper.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/NotificationRedirection.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/LoginModel.dart';
@@ -50,10 +51,39 @@ class PrefUtils {
 
   String get skipUpdate => 'skipUpdate';
 
+  String get keyUserNotification => "keyUserNotification";
+
+  String get keySyncPlayerId => "keySyncPlayerId";
+
   bool isHomeVisible;
 
   Future<void> init() async {
     _preferences ??= await SharedPreferences.getInstance();
+  }
+
+  void saveNotification(NotificationDetail user) async {
+    _preferences.setString(keyUserNotification, json.encode(user));
+  }
+
+  clearNotification() {
+    _preferences.setString(keyUserNotification, null);
+  }
+
+  setPlayerID(String value, String key) async {
+    init();
+    _preferences.setString(key, value);
+  }
+
+  String getPlayerId() {
+    return getString(keyPlayerID);
+  }
+
+  void saveSyncPlayerId(bool val) {
+    _preferences.setBool(keySyncPlayerId, val);
+  }
+
+  bool getSyncPlayerId() {
+    return getBool(keySyncPlayerId);
   }
 
   /// Gets the int value for the [key] if it exists.
@@ -242,6 +272,7 @@ class PrefUtils {
   }
 
   resetAndLogout(BuildContext context) {
+    String playerId = app.resolve<PrefUtils>().getPlayerId();
     bool rememberMe = app.resolve<PrefUtils>().getBool("rememberMe");
     String userName = app.resolve<PrefUtils>().getString("userName");
     String passWord = app.resolve<PrefUtils>().getString("passWord");
@@ -253,7 +284,7 @@ class PrefUtils {
       app.resolve<PrefUtils>().saveString("userName", userName);
       app.resolve<PrefUtils>().saveString("passWord", passWord);
     }
-
+    app.resolve<PrefUtils>().setPlayerID(playerId, app.resolve<PrefUtils>().keyPlayerID);
     Navigator.of(context).pushNamed(LoginScreen.route);
   }
 

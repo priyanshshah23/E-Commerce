@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:diamnow/app/theme/settings_models_provider.dart';
+import 'package:diamnow/app/utils/NotificationHandler.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
@@ -50,12 +51,17 @@ class _BaseState extends State<Base> {
   @override
   void initState() {
     super.initState();
-
+    initPlatformState();
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => setState(() {
         themeData = AppTheme.of(context).theme;
       }),
     );
+  }
+
+  Future<void> initPlatformState() async {
+
+    await notificationInit();
   }
 
   @override

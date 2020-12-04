@@ -723,97 +723,51 @@ class DiamondConfig {
 
     for (int i = 0; i < list.length; i++) {
       DiamondModel model = list[i];
+      String diamondDetailUrl = baseURL + "diamond-detail" + model.id;
+      links.add(diamondDetailUrl);
 
-      selectedOptions.forEach((element) {
-        if (element.fileType == DownloadAndShareDialogueConstant.realImage1 &&
-            element.isSelected) {
-          element.url = DiamondUrls.image + model.vStnId + "/" + "still.jpg";
-        } else if (element.fileType ==
-                DownloadAndShareDialogueConstant.arrowImg &&
-            element.isSelected) {
-          element.url =
-              DiamondUrls.arroImage + model.vStnId + "/" + "Arrow_Black_BG.jpg";
-        } else if (element.fileType ==
-                DownloadAndShareDialogueConstant.assetScopeImg &&
-            element.isSelected) {
-          element.url = DiamondUrls.image +
-              model.vStnId +
-              "/" +
-              "Office_Light_Black_BG.jpg";
-        }
-        // else if (element.fileType ==
-        //         DownloadAndShareDialogueConstant.plottingImg &&
-        //     model.pltFile) {
-        //   element.url = DiamondUrls.plotting + model.rptNo + ".jpg";
-        // }
-        else if (element.fileType ==
-                DownloadAndShareDialogueConstant.heartAndArrowImg &&
-            element.isSelected) {
-          element.url = DiamondUrls.heartImage +
-              model.vStnId +
-              "/" +
-              "Heart_Black_BG.jpg";
-        }
-        // else if (element.fileType ==
-        //         DownloadAndShareDialogueConstant.flouresenceImg &&
-        //     model.img) {
-        //   element.url = DiamondUrls.flouresenceImg + model.vStnId + ".jpg";
-        // } else if (element.fileType ==
-        //         DownloadAndShareDialogueConstant.idealScopeImg &&
-        //     model.img) {
-        //   element.url = DiamondUrls.idealScopeImg + model.vStnId + ".jpg";
-        // } else if (element.fileType ==
-        //         DownloadAndShareDialogueConstant.darkFieldImg &&
-        //     model.img) {
-        //   element.url = DiamondUrls.darkFieldImg + model.vStnId + ".jpg";
-        // } else if (element.fileType ==
-        //         DownloadAndShareDialogueConstant.faceUpImg &&
-        //     model.img) {
-        //   element.url = DiamondUrls.faceUpImg + model.vStnId + ".jpg";
-        // } else if (element.fileType ==
-        //         DownloadAndShareDialogueConstant.realImage2 &&
-        //     model.img) {
-        //   element.url = DiamondUrls.realImg2 + model.vStnId + ".jpg";
-        // }
-        else if (element.fileType == DownloadAndShareDialogueConstant.video1 &&
-            element.isSelected) {
-          element.url =
-              DiamondUrls.video + model.vStnId + "/" + model.vStnId + ".html";
-        }
-        //  else if (element.fileType ==
-        //         DownloadAndShareDialogueConstant.video2 &&
-        //     model.polVdo) {
-        //   element.url = DiamondUrls.polVideo + model.vStnId + ".mp4";
-        // }
-        else if (element.fileType ==
-                DownloadAndShareDialogueConstant.certificate &&
-            element.isSelected) {
-          element.url = DiamondUrls.certificate + model.rptNo + ".pdf";
-        }
-        // else if (element.fileType ==
-        //         DownloadAndShareDialogueConstant.typeIIA &&
-        //     model.certFile) {
-        //   element.url = DiamondUrls.type2A + model.rptNo + ".pdf";
-        // } else if (element.fileType ==
-        //         DownloadAndShareDialogueConstant.roughScope &&
-        //     model.img) {
-        //   element.url = DiamondUrls.roughScopeImg + model.vStnId + ".jpg";
-        // } else if (element.fileType == DownloadAndShareDialogueConstant.img3D &&
-        //     model.img) {
-        //   element.url = DiamondUrls.image3D + model.vStnId + ".png";
-        // } else if (element.fileType ==
-        //         DownloadAndShareDialogueConstant.roughVideo &&
-        //     model.roughVdo) {
-        //   element.url = DiamondUrls.roughVideo + model.vStnId + ".html";
-        // }
-      });
 
-      selectedOptions.forEach((element) {
-        if (element.isSelected &&
-            element.fileType != DownloadAndShareDialogueConstant.excel) {
-          links.add(element.url);
-        }
-      });
+      // selectedOptions.forEach((element) {
+      //   if (element.fileType == DownloadAndShareDialogueConstant.realImage1 &&
+      //       element.isSelected) {
+      //     element.url = DiamondUrls.image + model.vStnId + "/" + "still.jpg";
+      //   } else if (element.fileType ==
+      //           DownloadAndShareDialogueConstant.arrowImg &&
+      //       element.isSelected) {
+      //     element.url =
+      //         DiamondUrls.arroImage + model.vStnId + "/" + "Arrow_Black_BG.jpg";
+      //   } else if (element.fileType ==
+      //           DownloadAndShareDialogueConstant.assetScopeImg &&
+      //       element.isSelected) {
+      //     element.url = DiamondUrls.image +
+      //         model.vStnId +
+      //         "/" +
+      //         "Office_Light_Black_BG.jpg";
+      //   } else if (element.fileType ==
+      //           DownloadAndShareDialogueConstant.heartAndArrowImg &&
+      //       element.isSelected) {
+      //     element.url = DiamondUrls.heartImage +
+      //         model.vStnId +
+      //         "/" +
+      //         "Heart_Black_BG.jpg";
+      //   } else if (element.fileType ==
+      //           DownloadAndShareDialogueConstant.video1 &&
+      //       element.isSelected) {
+      //     element.url =
+      //         DiamondUrls.video + model.vStnId + "/" + model.vStnId + ".html";
+      //   } else if (element.fileType ==
+      //           DownloadAndShareDialogueConstant.certificate &&
+      //       element.isSelected) {
+      //     element.url = DiamondUrls.certificate + model.rptNo + ".pdf";
+      //   }
+      // });
+
+      // selectedOptions.forEach((element) {
+      //   if (element.isSelected &&
+      //       element.fileType != DownloadAndShareDialogueConstant.excel) {
+      //     links.add(element.url);
+      //   }
+      // });
     }
 
     var filter = selectedOptions
@@ -827,14 +781,8 @@ class DiamondConfig {
       SyncManager syncManager = SyncManager();
       syncManager.callApiForExcel(context, list, isForShare: isForShare,
           callback: (url) async {
+        links.add("\nExcelFile :- ");
         links.add(url);
-
-        // await Share.share(
-        //   "$APPNAME : Diamond Details\n\n"
-        //   "${links.toString().substring(1, links.toString().length - 1).replaceAll(",", "\n\n")}", //------------------------------------------------------------------------------------------------------------------
-        //   subject: "DiamNow",
-        //   sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
-        // );
         shareURls(links);
       });
     }
@@ -848,7 +796,7 @@ class DiamondConfig {
       urls.add(links[i]);
     }
 
-    String strUrlToShare = "Pn Shah\nDiamond Details\n\n" + urls.join(",\n");
+    String strUrlToShare = "Pn Shah\nDiamond Details\n\n" + urls.join("\n");
 
     if (!isNullEmptyOrFalse(strUrlToShare)) {
       await Share.share(

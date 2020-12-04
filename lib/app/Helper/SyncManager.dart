@@ -89,6 +89,11 @@ class SyncManager {
       // // save master sync date
       // app.resolve<PrefUtils>().saveMasterSyncDate(masterResp.data.lastSyncDate);
 
+      if (!app.resolve<PrefUtils>().getSyncPlayerId()) {
+        print("networkid.....${app.resolve<PrefUtils>().getPlayerId()}");
+        getcallApiGetNotificationID(context);
+      }
+
       // success block
       success();
       // callHandler()
@@ -101,6 +106,34 @@ class SyncManager {
                   //     : onError.toString()),
                 },
             });
+  }
+
+  getcallApiGetNotificationID(
+    BuildContext context,
+  ) {
+    Map<String,dynamic> req = {};
+    req["playerId"] = app.resolve<PrefUtils>().getPlayerId();
+    
+    req["deviceType"] = Platform.isAndroid ? DEVICE_TYPE_ANDROID : DEVICE_TYPE_IOS;
+  
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+            () => app
+                .resolve<ServiceModule>()
+                .networkService()
+                .notificationId(req),
+            context,
+            isProgress: false)
+        .then((resp) {
+      
+    }).catchError((onError) {
+      // if (page == DEFAULT_PAGE) {
+      print("error....");
+
+      //aboutBaseList.clear();
+
+      //}
+    });
   }
 
   Future callApiForDiamondList(
@@ -469,7 +502,8 @@ class SyncManager {
                 } else {
                   //for signinwithmpin / signinwithguest
                   if (screenConstant == VersionUpdateApi.signInWithMpin ||
-                      screenConstant == VersionUpdateApi.signInAsGuest || screenConstant == VersionUpdateApi.logIn) {
+                      screenConstant == VersionUpdateApi.signInAsGuest ||
+                      screenConstant == VersionUpdateApi.logIn) {
                     SyncManager.instance.callMasterSync(
                         NavigationUtilities.key.currentContext, () async {
                       //success

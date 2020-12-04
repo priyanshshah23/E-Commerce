@@ -86,6 +86,8 @@ class ApiConstants {
   static const String notificationList = apiUrl + "device/v1/notification/list";
   static const String markAsReadNotification =
       commonUrl + "notification/markAsRead";
+
+  static const String sendNotificationId = commonUrl + "user/player";
   static const String searchReportNo = "web/v1/diamond/reportno/paginate";
   static const String updateOffer = "device/v1/diamond-track/update";
 
