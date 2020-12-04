@@ -170,4 +170,8 @@ abstract class NetworkService {
 
   @POST(ApiConstants.markAsReadNotification)
   Future<NotificationResp> markAsReadNotification(@Body() Map<String, dynamic> req);
+
+  @POST(ApiConstants.sendNotificationId)
+  Future<BaseApiResp> notificationId(@Body() Map<String, dynamic> req);
+  
 }
