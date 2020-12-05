@@ -722,7 +722,7 @@ class DiamondConfig {
     List<String> links = List<String>();
 
     for (int i = 0; i < list.length; i++) {
-      DiamondModel model = list[i];
+    DiamondModel model = list[i];
       String diamondDetailUrl = ApiConstants.shareUrl + model.id;
       links.add(diamondDetailUrl);
 
@@ -796,7 +796,7 @@ class DiamondConfig {
       urls.add(links[i]);
     }
 
-    String strUrlToShare = "Pn Shah\nDiamond Details\n\n" + urls.join("\n");
+    String strUrlToShare = "\nDiamond Details\n\n" + urls.join("\n\n");
 
     if (!isNullEmptyOrFalse(strUrlToShare)) {
       await Share.share(

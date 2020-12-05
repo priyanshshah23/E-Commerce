@@ -118,8 +118,11 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
             currTab = key;
           }
         });
-        if (_scrollController1.position.pixels >= getSize(400.0))
-          _sc.scrollTo(index: currTab, duration: Duration(milliseconds: 500));
+        if (_scrollController1.position.pixels >= getSize(400.0)) {
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            _sc.scrollTo(index: currTab, duration: Duration(milliseconds: 500));
+          });
+        }
 
         setState(() {});
       });
