@@ -1,4 +1,4 @@
-package com.phshah.app
+package com.mydiamonds.app
 
 
 import android.Manifest

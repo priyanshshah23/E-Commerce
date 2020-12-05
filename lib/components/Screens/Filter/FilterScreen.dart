@@ -449,7 +449,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     dict["filter"] = FilterRequest().createRequest(arrList);
     dict["name"] = diamondTitle;
     dict["searchType"] = DiamondSearchType.DEMAND;
-    dict["expiryDate"] = isNullEmptyOrFalse(selectedDate) ? DateTime.now().toString() : selectedDate;
+    dict["expiryDate"] = selectedDate;
 
     NetworkCall<BaseApiResp>()
         .makeCall(

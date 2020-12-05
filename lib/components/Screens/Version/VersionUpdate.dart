@@ -112,7 +112,7 @@ class _VersionUpdateState extends State<VersionUpdate> {
               child: AppButton.flat(
                 onTap: () {
                   StoreRedirect.redirect(
-                      androidAppId: "com.phshah.app", iOSAppId: "1516454400");
+                      androidAppId: "com.mydiamonds.app", iOSAppId: "1516454400");
                 },
                 borderRadius: 14,
                 fitWidth: true,

@@ -513,7 +513,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
 
   getImage() {
     for (var model in arrImages) {
-      if (model.title == "Image") {
+      if (model.title == "Image" && model.isImage) {
         return getImageView(
           model.url,
           height: getSize(286),

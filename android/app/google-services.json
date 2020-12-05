@@ -1,41 +1,76 @@
 {
   "project_info": {
-    "project_number": "936531526615",
-    "firebase_url": "https://eco-280912.firebaseio.com",
-    "project_id": "eco-280912",
-    "storage_bucket": "eco-280912.appspot.com"
+    "project_number": "1009456816397",
+    "project_id": "pn-shah",
+    "storage_bucket": "pn-shah.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:936531526615:android:1f081537aaf1caf7e40192",
+        "mobilesdk_app_id": "1:1009456816397:android:287cee2cacf75a0cdfd044",
         "android_client_info": {
-          "package_name": "com.phshah.app"
+          "package_name": "com.mydiamonds.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "936531526615-1u63adtmq9gl39eb9515enooni3vhuql.apps.googleusercontent.com",
+          "client_id": "1009456816397-no6qjnt2nki60ur9qhi3ou613c6a73jn.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAUiDZs6NdYaxqAgjUPTu2EVbRCzu-vFaM"
+          "current_key": "AIzaSyDZry-WGfkTwbl7mDn9ZR0rHzOr04RWDEI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "936531526615-1u63adtmq9gl39eb9515enooni3vhuql.apps.googleusercontent.com",
+              "client_id": "1009456816397-no6qjnt2nki60ur9qhi3ou613c6a73jn.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "936531526615-5i79dpt22khkttgffq73lpnpj9nt7qq4.apps.googleusercontent.com",
+              "client_id": "1009456816397-o60omifrrgaplo4s2d0facqel0sc1u5k.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.threeeco.app"
+                "bundle_id": "com.mydiamonds.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1009456816397:android:82d01dc9ff86ff41dfd044",
+        "android_client_info": {
+          "package_name": "com.mydiamonds.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1009456816397-no6qjnt2nki60ur9qhi3ou613c6a73jn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZry-WGfkTwbl7mDn9ZR0rHzOr04RWDEI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1009456816397-no6qjnt2nki60ur9qhi3ou613c6a73jn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1009456816397-o60omifrrgaplo4s2d0facqel0sc1u5k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mydiamonds.app"
               }
             }
           ]
