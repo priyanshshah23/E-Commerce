@@ -481,8 +481,11 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           ),
           Expanded(
             flex: 2,
-            child: getText(widget.item?.shpNm ?? "",
-                appTheme.blackMedium14TitleColorblack),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: getText(widget.item?.shpNm ?? "",
+                  appTheme.blackMedium14TitleColorblack),
+            ),
           ),
           Expanded(
             flex: 4,
