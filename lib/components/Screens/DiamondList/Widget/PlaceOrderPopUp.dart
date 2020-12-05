@@ -6,10 +6,12 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/OpenDatePickerWidget.dart';
+import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
 import 'package:diamnow/models/Address/CityListModel.dart';
 import 'package:diamnow/models/Address/CountryListModel.dart';
 import 'package:diamnow/models/Address/StateListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:flutter/gestures.dart';
@@ -138,6 +140,16 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     print("Terms and condition clicked");
+                                    Navigator.pop(context);
+                                    Map<String, dynamic> dict = {};
+                                    dict["type"] =
+                                        StaticPageConstant.TERMS_CONDITION;
+                                    dict["strUrl"] =
+                                        ApiConstants.termsCondition;
+                                    dict[ArgumentConstant.IsFromDrawer] = false;
+                                    NavigationUtilities.pushRoute(
+                                        StaticPageScreen.route,
+                                        args: dict);
                                   },
                                 text: R.string().screenTitle.termsAndCondition,
                                 style: appTheme.black16MediumTextStyle.copyWith(

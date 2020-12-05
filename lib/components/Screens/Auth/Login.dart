@@ -231,16 +231,16 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              InkWell(
-                                                onTap: () {
-                                                  isCheckBoxSelected =
-                                                      !isCheckBoxSelected;
-                                                  setState(() {});
-                                                },
-                                                child: Container(
+                                          InkWell(
+                                            onTap: () {
+                                              isCheckBoxSelected =
+                                                  !isCheckBoxSelected;
+                                              setState(() {});
+                                            },
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Container(
                                                   decoration: BoxDecoration(
                                                       borderRadius:
                                                           BorderRadius.circular(
@@ -255,17 +255,18 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                                     width: getSize(20),
                                                   ),
                                                 ),
-                                              ),
-                                              SizedBox(
-                                                width: getSize(6),
-                                              ),
-                                              Text("Remember Me",
-                                                  style: appTheme
-                                                      .blackMedium16TitleColorblack
-                                                      .copyWith(
-                                                          fontWeight:
-                                                              FontWeight.bold))
-                                            ],
+                                                SizedBox(
+                                                  width: getSize(6),
+                                                ),
+                                                Text("Remember Me",
+                                                    style: appTheme
+                                                        .blackMedium16TitleColorblack
+                                                        .copyWith(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold))
+                                              ],
+                                            ),
                                           ),
                                           Container(
                                             // alignment: Alignment.centerRight,
