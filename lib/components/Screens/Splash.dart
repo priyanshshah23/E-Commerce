@@ -197,12 +197,10 @@ class _SplashState extends State<Splash> {
       child: Center(
         child: Container(
           alignment: Alignment.center,
-          width: getSize(160),
-          height: getSize(160),
+          width: getSize(260),
+          height: getSize(260),
           child: Lottie.asset(
             'assets/pn.json',
-            width: 200,
-            height: 200,
             fit: BoxFit.fill,
           ),
         ),
