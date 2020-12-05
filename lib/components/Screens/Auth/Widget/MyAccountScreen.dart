@@ -5,6 +5,7 @@ import 'package:country_pickers/country_pickers.dart';
 import 'package:diamnow/Setting/SettingModel.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/Screens/Auth/ChangePassword.dart';
 import 'package:diamnow/components/Screens/Auth/ProfileList.dart';
@@ -55,7 +56,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       isSwitched = app.resolve<PrefUtils>().getBiometrcis() ?? false;
       availableBiometrics = await auth.getAvailableBiometrics();
-    setState(() {});
+      setState(() {});
     });
   }
 
@@ -240,6 +241,12 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         });
       }
     } else {
+      List<BiometricType> availableBiometrics;
+      if (isNullEmptyOrFalse(availableBiometrics)) {
+        showToast(
+            "FaceId/TouchId is not enabled in your phone, Please enable to use this feature",
+            context: context);
+      }
       setState(() {
         isSwitched = false;
       });
