@@ -314,7 +314,10 @@ class CommonString {
   final String enableTouchId;
   final String enableFaceId;
   final String mPin;
-  
+
+  //Hold and memo status
+  final String holdMemoStatusDiamondorder;
+
   const CommonString({
     //filterScreen
     this.seeMore = "See More",
@@ -618,5 +621,8 @@ class CommonString {
     this.enableTouchId = "Enable Touch Id to unlock $APPNAME?",
     this.enableFaceId = "Enable Face Id to unlock $APPNAME?",
     this.mPin = "MPin",
+
+    //Hold and memo status
+    this.holdMemoStatusDiamondorder = "You can not buy stone which is already in memo or hold status.",
   });
 }

@@ -494,9 +494,20 @@ class DiamondConfig {
       selectedList.add(model);
     });
 
-    openDiamondActionAcreen(
-        context, DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER, selectedList,
-        placeOrder: placeOrder);
+    var filter = list
+        .where((element) =>
+            element.wSts == DiamondStatus.DIAMOND_STATUS_HOLD ||
+            element.wSts == DiamondStatus.DIAMOND_STATUS_ON_MINE)
+        .toList();
+    if (isNullEmptyOrFalse(filter)) {
+      openDiamondActionAcreen(
+          context, DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER, selectedList,
+          placeOrder: placeOrder);
+    } else {
+      showToast(R.string().commonString.holdMemoStatusDiamondorder,
+          context: context);
+    }
+
     /*showPlaceOrderDialog(context, (manageClick) {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
         callApiFoPlaceOrder(context, list, placeOrder,
@@ -722,10 +733,9 @@ class DiamondConfig {
     List<String> links = List<String>();
 
     for (int i = 0; i < list.length; i++) {
-    DiamondModel model = list[i];
+      DiamondModel model = list[i];
       String diamondDetailUrl = ApiConstants.shareUrl + model.id;
       links.add(diamondDetailUrl);
-
 
       // selectedOptions.forEach((element) {
       //   if (element.fileType == DownloadAndShareDialogueConstant.realImage1 &&
