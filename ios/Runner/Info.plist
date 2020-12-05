@@ -20,6 +20,11 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>skype</string>
+		<string>whatsapp</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -29,6 +34,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Allow access camera to take selfie. We will not share it without your permission.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>This app uses your face Id to unlock application.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Enable location to start log timer and allow 3eco to access your location.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -57,13 +64,5 @@
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>skype</string>
-		<string>whatsapp</string>
-	</array>
-	<key>NSFaceIDUsageDescription</key>
-<string>This app uses your face Id to unlock application.</string>
-
 </dict>
 </plist>
