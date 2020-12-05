@@ -202,30 +202,15 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                   children: <Widget>[
                                     Padding(
                                       padding: EdgeInsets.symmetric(
-                                          vertical: getSize(25)),
-                                      child: Stack(
-                                        children: <Widget>[
-                                          Container(
-                                            height: getSize(90),
-                                            width: getSize(90),
-                                            padding: EdgeInsets.only(),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: appTheme.colorPrimary
-                                                      .withOpacity(0.1)),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(
-                                                left: getSize(20)),
-                                            child: Image.asset(
-                                              diamond,
-                                              height: getSize(130),
-                                              width: getSize(140),
-                                            ),
-                                          )
-                                        ],
+                                          vertical: getSize(30)),
+                                      child: Image.asset(
+                                        splashLogo,
+                                        height: Platform.isAndroid
+                                            ? getSize(160)
+                                            : getSize(130),
+                                        width: Platform.isAndroid
+                                            ? getSize(160)
+                                            : getSize(140),
                                       ),
                                     ),
 //                                Padding(
