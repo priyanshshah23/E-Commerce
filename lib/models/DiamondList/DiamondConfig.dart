@@ -723,7 +723,7 @@ class DiamondConfig {
 
     for (int i = 0; i < list.length; i++) {
       DiamondModel model = list[i];
-      String diamondDetailUrl = baseURL + "diamond-detail" + model.id;
+      String diamondDetailUrl = ApiConstants.shareUrl + model.id;
       links.add(diamondDetailUrl);
 
 
