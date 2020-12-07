@@ -311,12 +311,18 @@ class DiamondConfig {
                 sequence: 2,
                 isCenter: true));
           }
-          list.add(BottomTabModel(
-              title: "",
-              image: download,
-              code: BottomCodeConstant.TBDownloadView,
-              sequence: 3,
-              isCenter: true));
+          if (app
+                  .resolve<PrefUtils>()
+                  .getModulePermission(getPermissionFromModuleType(moduleType))
+                  .downloadExcel ==
+              true) {
+            list.add(BottomTabModel(
+                title: "",
+                image: download,
+                code: BottomCodeConstant.TBDownloadView,
+                sequence: 3,
+                isCenter: true));
+          }
         }
         break;
     }
@@ -1758,4 +1764,33 @@ class StoneModel {
     this.image = "",
     this.isSelected = false,
   });
+}
+
+String getPermissionFromModuleType(int moduleType) {
+  switch (moduleType) {
+    case DiamondModuleConstant.MODULE_TYPE_SEARCH:
+      return ModulePermissionConstant.permission_searchDiamond;
+    case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
+      return ModulePermissionConstant.permission_newGoods;
+    case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
+      return ModulePermissionConstant.permission_upcomingDiamonds;
+    case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
+      return ModulePermissionConstant.permission_stone_of_the_day;
+    case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
+      return ModulePermissionConstant.permission_watchlist;
+    case DiamondModuleConstant.MODULE_TYPE_MY_CART:
+      return ModulePermissionConstant.permission_cart;
+    case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
+      return ModulePermissionConstant.permission_enquiry;
+    case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
+      return ModulePermissionConstant.permission_comment;
+    case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
+      return ModulePermissionConstant.permission_reminder;
+    case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
+      return ModulePermissionConstant.permission_order;
+    case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
+      return ModulePermissionConstant.permission_purchase;
+    default:
+      return ModulePermissionConstant.permission_searchDiamond;
+  }
 }
