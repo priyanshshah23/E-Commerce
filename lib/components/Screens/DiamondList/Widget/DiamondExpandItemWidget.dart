@@ -147,13 +147,18 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
               flex: 3,
               child: FittedBox(
                 fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
                 child: getText(widget.item?.vStnId ?? "",
                     appTheme.blackNormal14TitleColorblack),
               )),
           Expanded(
             flex: 2,
-            child: getText(widget.item?.shpNm ?? "",
-                appTheme.blackMedium14TitleColorblack),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerRight,
+              child: getText(widget.item?.shpNm ?? "",
+                  appTheme.blackMedium14TitleColorblack),
+            ),
           ),
           Expanded(
             flex: 2,
