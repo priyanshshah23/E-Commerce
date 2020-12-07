@@ -634,7 +634,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
     Map<String, dynamic> req = {};
 
     req["startWith"] = {
-      "keyword": searchText,
+      "keyword": searchText.toUpperCase(),
       "keys": ["rptNo", "vStnId", "stoneId"]
     };
     req["sort"] = [
