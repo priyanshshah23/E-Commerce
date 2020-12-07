@@ -141,7 +141,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         }
       }
     }).catchError((onError) {
-      print("=====> ${onError}");
+      // print("=====> ${onError}");
 
       mainModel.arr.remove(model);
       if (mainModel.arr.length == 0) {
@@ -230,7 +230,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     );
     // }
 
-    print(DiamondUrls.image + diamondModel.vStnId + "/" + "still.jpg");
+    // print(DiamondUrls.image + diamondModel.vStnId + "/" + "still.jpg");
     // if (diamondModel.arrowFile) {
     arrOfImages.add(
       DiamondDetailImagePagerModel(
@@ -377,10 +377,10 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       ),
     );
     // }
-    print(ApiConstants.googleDocUrl +
-        DiamondUrls.certificate +
-        diamondModel.rptNo +
-        ".pdf");
+    // print(ApiConstants.googleDocUrl +
+    //     DiamondUrls.certificate +
+    //     diamondModel.rptNo +
+    //     ".pdf");
     // if (diamondModel.certFile) {
     arrImages.add(
       DiamondDetailImagePagerModel(
@@ -994,7 +994,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           });
         },
         onWebResourceError: (error) {
-          print(error);
+          // print(error);
           setState(() {
             isErroWhileLoading = true;
           });

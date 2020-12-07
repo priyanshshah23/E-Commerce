@@ -74,25 +74,25 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
 
   // removeNotContainedImages() {
   //   arrImages.forEach((element) {
-  //     if(element.arr.length==0){    
+  //     if(element.arr.length==0){
   //       arrImages.remove(element);
   //     }
   //   });
   // }
 
-  checkWeatherUrlContainsThingsOrNot() {
-    checkUrlUsingDio(DiamondDetailImagePagerModel model) async {
-      await dio.get(model.url).catchError((onError) {
-        print("=====> ${onError}");
-        arrImages.remove(model);
-      });
-    }
+  // checkWeatherUrlContainsThingsOrNot() {
+  //   checkUrlUsingDio(DiamondDetailImagePagerModel model) async {
+  //     await dio.get(model.url).catchError((onError) {
+  //       print("=====> ${onError}");
+  //       arrImages.remove(model);
+  //     });
+  //   }
 
-    arrImages.forEach((element) {
-      checkUrlUsingDio(element);
-    });
-    setState(() {});
-  }
+  //   arrImages.forEach((element) {
+  //     checkUrlUsingDio(element);
+  //   });
+  //   setState(() {});
+  // }
 
   //EventListener which listen scroll position, everytime when you scroll.
   getScrollControllerEventListener() {
