@@ -42,7 +42,7 @@ class _NetworkService implements NetworkService {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(req?.toJson() ?? <String, dynamic>{});
+    _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
         'http://pndevelopapi.democ.in/device/v1/auth/login',
         queryParameters: queryParameters,
@@ -53,6 +53,26 @@ class _NetworkService implements NetworkService {
             baseUrl: baseUrl),
         data: _data);
     final value = LoginResp.fromJson(_result.data);
+    return Future.value(value);
+  }
+
+  @override
+  createMpin(req) async {
+    ArgumentError.checkNotNull(req, 'req');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(req?.toJson() ?? <String, dynamic>{});
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'http://pndevelopapi.democ.in/device/v1/user/create-mpin',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = BaseApiResp.fromJson(_result.data);
     return Future.value(value);
   }
 

@@ -34,7 +34,10 @@ abstract class NetworkService {
   Future<MasterResp> getMaster(@Body() MasterReq req);
 
   @POST(ApiConstants.login)
-  Future<LoginResp> login(@Body() LoginReq req);
+  Future<LoginResp> login(@Body() Map<String,dynamic > req);
+
+  @POST(ApiConstants.createMpin)
+  Future<BaseApiResp> createMpin(@Body() CreateMpinReq req);
 
   @POST(ApiConstants.signInAsGuest)
   Future<LoginResp> signInAsGuest(@Body() SignInAsGuestReq req);
