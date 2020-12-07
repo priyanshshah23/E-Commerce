@@ -102,15 +102,13 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     super.initState();
 
     setupData();
-
+    diamondConfig = DiamondConfig(moduleType);
+    diamondConfig.initItems(isDetail: true);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       checkWeatherUrlContainsThingsOrNot();
       getScrollControllerEventListener();
 
       isErroWhileLoading = false;
-
-      diamondConfig = DiamondConfig(moduleType);
-      diamondConfig.initItems(isDetail: true);
     });
     // checkWeatherUrlContainsThingsOrNot();
   }
@@ -129,14 +127,14 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       DiamondDetailImagePagerModel model) async {
     await dio.get(model.url).then((value) {
       if (imageFlag == false) {
-        if (mainModel.title == "Image") {
+        if (mainModel.title.toLowerCase() == "image") {
           setState(() {
             imageFlag = true;
           });
         }
       }
       if (videoFlag == false) {
-        if (mainModel.title == "Video") {
+        if (mainModel.title.toLowerCase() == "video") {
           setState(() {
             videoFlag = true;
           });
@@ -515,10 +513,17 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                                   imageFlag ? model.arr.length.toString() : "0",
                                   style: appTheme.primaryColor14TextStyle,
                                 )
-                              : Text(
-                                  model.arr.length.toString(),
-                                  style: appTheme.primaryColor14TextStyle,
-                                )
+                              : model.title == "Video"
+                                  ? Text(
+                                      videoFlag
+                                          ? model.arr.length.toString()
+                                          : "0",
+                                      style: appTheme.primaryColor14TextStyle,
+                                    )
+                                  : Text(
+                                      model.arr.length.toString(),
+                                      style: appTheme.primaryColor14TextStyle,
+                                    )
                           : SizedBox(),
                   ],
                 ),
@@ -672,9 +677,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                                                       "Video", playButton))
                                               : SizedBox(),
                                           // getRowItem("Video", playButton),
-                                          SizedBox(
-                                            width: getSize(10),
-                                          ),
+
                                           getRowItem("Certificate", medal),
                                         ],
                                       ),
