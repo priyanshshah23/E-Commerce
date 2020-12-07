@@ -2,6 +2,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/ImageConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/Home/DrawerModel.dart';
+import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
@@ -518,10 +519,16 @@ class BottomMenuSetting {
             type: ActionMenuConstant.ACTION_TYPE_DELETE));
       }
     }
-    moreMenuList.add(BottomTabModel(
-        image: download,
-        title: R.string().screenTitle.download,
-        type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(getPermissionFromModuleType(moduleType))
+        .downloadExcel) {
+      moreMenuList.add(BottomTabModel(
+          image: download,
+          title: R.string().screenTitle.download,
+          type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
+    }
+
     moreMenuList.add(BottomTabModel(
         image: clearSelection,
         title: R.string().screenTitle.clearSelection,

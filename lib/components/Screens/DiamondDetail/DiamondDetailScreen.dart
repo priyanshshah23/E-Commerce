@@ -90,6 +90,9 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   ScrollController _scrollController1;
   double offSetForTab = 0.0;
   Map<int, double> mapOfInitialPixels = {};
+  Dio dio = Dio();
+  bool imageFlag = false;
+  bool videoFlag = false;
 
   @override
   bool get wantKeepAlive => true;
@@ -98,14 +101,55 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   void initState() {
     super.initState();
 
-    getScrollControllerEventListener();
-
-    isErroWhileLoading = false;
-
     setupData();
-
     diamondConfig = DiamondConfig(moduleType);
     diamondConfig.initItems(isDetail: true);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkWeatherUrlContainsThingsOrNot();
+      getScrollControllerEventListener();
+
+      isErroWhileLoading = false;
+    });
+    // checkWeatherUrlContainsThingsOrNot();
+  }
+
+  checkWeatherUrlContainsThingsOrNot() {
+    arrImages.forEach((element) {
+      element.arr.forEach((element1) {
+        checkUrlUsingDio(element, element1);
+      });
+
+      // checkUrlUsingDio(element);
+    });
+  }
+
+  checkUrlUsingDio(DiamondDetailImagePagerModel mainModel,
+      DiamondDetailImagePagerModel model) async {
+    await dio.get(model.url).then((value) {
+      if (imageFlag == false) {
+        if (mainModel.title.toLowerCase() == "image") {
+          setState(() {
+            imageFlag = true;
+          });
+        }
+      }
+      if (videoFlag == false) {
+        if (mainModel.title.toLowerCase() == "video") {
+          setState(() {
+            videoFlag = true;
+          });
+        }
+      }
+    }).catchError((onError) {
+      // print("=====> ${onError}");
+
+      mainModel.arr.remove(model);
+      if (mainModel.arr.length == 0) {
+        arrImages.remove(mainModel);
+      }
+
+      // arrImages.remove(model);
+    });
   }
 
   //EventListener which listen scroll position, everytime when you scroll.
@@ -165,7 +209,17 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     List<DiamondDetailImagePagerModel> arrOfImages =
         List<DiamondDetailImagePagerModel>();
 
-    //if (diamondModel.img) {
+    // Dio()
+    //     .get(
+    //       DiamondUrls.image + diamondModel.vStnId + "/" + "still.jpg",
+    //     )
+    //     .then(
+    //       (value) => print(value.toString()),
+    //     ).catchError((error){
+    //       print(error);
+    //     });
+
+    // if (diamondModel.img) {
     arrOfImages.add(
       DiamondDetailImagePagerModel(
         title: "Image",
@@ -176,6 +230,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     );
     // }
 
+    // print(DiamondUrls.image + diamondModel.vStnId + "/" + "still.jpg");
     // if (diamondModel.arrowFile) {
     arrOfImages.add(
       DiamondDetailImagePagerModel(
@@ -188,9 +243,9 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         isImage: true,
       ),
     );
-    //}
+    // }
 
-    //if (diamondModel.assetFile) {
+    // if (diamondModel.assetFile) {
     arrOfImages.add(
       DiamondDetailImagePagerModel(
         title: "AssetImage",
@@ -202,9 +257,9 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         isImage: true,
       ),
     );
-    //}
+    // }
 
-    //if (diamondModel.img) {
+    // if (diamondModel.img) {
     arrImages.add(
       DiamondDetailImagePagerModel(
           title: "Image",
@@ -213,13 +268,13 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           isImage: true,
           arr: arrOfImages),
     );
-    //}
+    // }
 
     //list of videofile
     List<DiamondDetailImagePagerModel> arrOfVideos =
         List<DiamondDetailImagePagerModel>();
 
-    //if (diamondModel.videoFile) {
+    // if (diamondModel.videoFile) {
     arrOfVideos.add(
       DiamondDetailImagePagerModel(
         title: "Video",
@@ -232,7 +287,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         isVideo: true,
       ),
     );
-    //}
+    // }
 
     // if (diamondModel.roughVdo) {
     //   arrOfVideos.add(
@@ -256,7 +311,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     //   );
     // }
 
-    //if (diamondModel.videoFile) {
+    // if (diamondModel.videoFile) {
     arrImages.add(
       DiamondDetailImagePagerModel(
         title: "Video",
@@ -270,13 +325,13 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         arr: arrOfVideos,
       ),
     );
-    //}
+    // }
 
     //List of H&A
     List<DiamondDetailImagePagerModel> arrOfHA =
         List<DiamondDetailImagePagerModel>();
 
-    //if (diamondModel.certFile) {
+    // if (diamondModel.hAFile) {
     arrOfHA.add(
       DiamondDetailImagePagerModel(
         title: "H&A",
@@ -288,9 +343,9 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         isImage: true,
       ),
     );
-    //}
+    // }
 
-    //if (diamondModel.hAFile) {
+    // if (diamondModel.hAFile) {
     arrImages.add(
       DiamondDetailImagePagerModel(
         title: "H&A",
@@ -303,13 +358,13 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         arr: arrOfHA,
       ),
     );
-    //}
+    // }
 
     //List of certificate
     List<DiamondDetailImagePagerModel> arrOfCertificates =
         List<DiamondDetailImagePagerModel>();
 
-    //if (diamondModel.certFile) {
+    // if (diamondModel.certFile) {
     arrOfCertificates.add(
       DiamondDetailImagePagerModel(
         title: "Certificate",
@@ -321,12 +376,12 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         isImage: false,
       ),
     );
-    //}
-    print(ApiConstants.googleDocUrl +
-        DiamondUrls.certificate +
-        diamondModel.rptNo +
-        ".pdf");
-    //if (diamondModel.certFile) {
+    // }
+    // print(ApiConstants.googleDocUrl +
+    //     DiamondUrls.certificate +
+    //     diamondModel.rptNo +
+    //     ".pdf");
+    // if (diamondModel.certFile) {
     arrImages.add(
       DiamondDetailImagePagerModel(
           title: "Certificate",
@@ -338,7 +393,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           isImage: false,
           arr: arrOfCertificates),
     );
-    //}
+    // }
     setState(() {
       //
     });
@@ -428,38 +483,54 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   }
 
   getRowItem(String type, String img) {
-    return InkWell(
-      onTap: () {
-        NavigationUtilities.push(DiamondDeepDetailScreen(
-          arrImages: arrImages,
-          diamondModel: diamondModel,
-        ));
-      },
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(getSize(5)),
-            border: Border.all(color: appTheme.borderColor),
-            color: appTheme.unSelectedBgColor),
-        child: Padding(
-          padding: EdgeInsets.all(getSize(10)),
-          child: Row(
-            children: <Widget>[
-              Image.asset(img, height: getSize(30), width: getSize(30)),
-              SizedBox(
-                width: getSize(10),
+    var list = arrImages.where((element) => element.title == type).toList();
+
+    return !isNullEmptyOrFalse(list)
+        ? InkWell(
+            onTap: () {
+              NavigationUtilities.push(DiamondDeepDetailScreen(
+                arrImages: arrImages,
+                diamondModel: diamondModel,
+              ));
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(getSize(5)),
+                  border: Border.all(color: appTheme.borderColor),
+                  color: appTheme.unSelectedBgColor),
+              child: Padding(
+                padding: EdgeInsets.all(getSize(10)),
+                child: Row(
+                  children: <Widget>[
+                    Image.asset(img, height: getSize(30), width: getSize(30)),
+                    SizedBox(
+                      width: getSize(10),
+                    ),
+                    for (var model in arrImages)
+                      model.title == type
+                          ? model.title == "Image"
+                              ? Text(
+                                  imageFlag ? model.arr.length.toString() : "0",
+                                  style: appTheme.primaryColor14TextStyle,
+                                )
+                              : model.title == "Video"
+                                  ? Text(
+                                      videoFlag
+                                          ? model.arr.length.toString()
+                                          : "0",
+                                      style: appTheme.primaryColor14TextStyle,
+                                    )
+                                  : Text(
+                                      model.arr.length.toString(),
+                                      style: appTheme.primaryColor14TextStyle,
+                                    )
+                          : SizedBox(),
+                  ],
+                ),
               ),
-              for (var model in arrImages)
-                model.title == type
-                    ? Text(
-                        model.arr.length.toString(),
-                        style: appTheme.primaryColor14TextStyle,
-                      )
-                    : SizedBox(),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          )
+        : SizedBox();
   }
 
   List<Widget> getToolbarItem() {
@@ -513,12 +584,37 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
 
   getImage() {
     for (var model in arrImages) {
-      if (model.title == "Image" && model.isImage) {
+      if (model.title == "Image" && imageFlag) {
         return getImageView(
           model.url,
           height: getSize(286),
           width: MathUtilities.screenWidth(context),
           fit: BoxFit.fitWidth,
+        );
+      } else if (model.title == "Certificate" ||
+          (model.title == "Video" && videoFlag)) {
+        return Stack(
+          children: [
+            FutureBuilder<Widget>(
+                future: getPDFView(context, model),
+                builder:
+                    (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+                  if (snapshot.hasData) return snapshot.data;
+
+                  return Container(
+                    color: appTheme.whiteColor,
+                    child: Image.asset(splashLogo),
+                  );
+                }),
+            // !isErroWhileLoading ?Icon(Icons.title) :SizedBox(),
+            if (isLoading)
+              Center(
+                child: SpinKitFadingCircle(
+                  color: appTheme.colorPrimary,
+                  size: getSize(30),
+                ),
+              ),
+          ],
         );
       }
     }
@@ -566,14 +662,22 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
-                                          getRowItem("Image", gallary),
-                                          SizedBox(
-                                            width: getSize(10),
-                                          ),
-                                          getRowItem("Video", playButton),
-                                          SizedBox(
-                                            width: getSize(10),
-                                          ),
+                                          imageFlag
+                                              ? Padding(
+                                                  padding: EdgeInsets.only(
+                                                      right: getSize(10)),
+                                                  child: getRowItem(
+                                                      "Image", gallary))
+                                              : SizedBox(),
+                                          videoFlag
+                                              ? Padding(
+                                                  padding: EdgeInsets.only(
+                                                      right: getSize(10)),
+                                                  child: getRowItem(
+                                                      "Video", playButton))
+                                              : SizedBox(),
+                                          // getRowItem("Video", playButton),
+
                                           getRowItem("Certificate", medal),
                                         ],
                                       ),
@@ -875,33 +979,27 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     BuildContext context,
     DiamondDetailImagePagerModel model,
   ) async {
-    String pdfUrl = (model.url == null || model.url.length == 0)
-        ? ""
-        : ((model.url.startsWith("images") || model.url.startsWith("/"))
-            ? (ApiConstants.imageBaseURL + model.url)
-            : model.url);
-
     return WebView(
-      initialUrl: (model.isVideo) ? pdfUrl : googleDocViewURL + pdfUrl,
-      onPageStarted: (url) {
-        // app.resolve<CustomDialogs>().showProgressDialog(context, "");
-        setState(() {
-          isLoading = true;
-        });
-      },
-      onPageFinished: (finish) {
-        // app.resolve<CustomDialogs>().hideProgressDialog();
-        setState(() {
-          isLoading = false;
-        });
-      },
-      onWebResourceError: (error) {
-        setState(() {
-          isErroWhileLoading = true;
-        });
-      },
-      javascriptMode: JavascriptMode.unrestricted,
-    );
+        initialUrl: model.url,
+        onPageStarted: (url) {
+          // app.resolve<CustomDialogs>().showProgressDialog(context, "");
+          setState(() {
+            isLoading = true;
+          });
+        },
+        onPageFinished: (finish) {
+          // app.resolve<CustomDialogs>().hideProgressDialog();
+          setState(() {
+            isLoading = false;
+          });
+        },
+        onWebResourceError: (error) {
+          // print(error);
+          setState(() {
+            isErroWhileLoading = true;
+          });
+        },
+        javascriptMode: JavascriptMode.unrestricted);
   }
 
   Widget getBottomTab() {
