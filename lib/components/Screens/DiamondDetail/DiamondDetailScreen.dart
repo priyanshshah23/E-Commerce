@@ -104,16 +104,15 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     setupData();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-    checkWeatherUrlContainsThingsOrNot();
+      checkWeatherUrlContainsThingsOrNot();
+      getScrollControllerEventListener();
+
+      isErroWhileLoading = false;
+
+      diamondConfig = DiamondConfig(moduleType);
+      diamondConfig.initItems(isDetail: true);
     });
     // checkWeatherUrlContainsThingsOrNot();
-
-    getScrollControllerEventListener();
-
-    isErroWhileLoading = false;
-
-    diamondConfig = DiamondConfig(moduleType);
-    diamondConfig.initItems(isDetail: true);
   }
 
   checkWeatherUrlContainsThingsOrNot() {
@@ -587,7 +586,8 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           width: MathUtilities.screenWidth(context),
           fit: BoxFit.fitWidth,
         );
-      } else if (model.title == "Certificate" || (model.title == "Video" && videoFlag)) {
+      } else if (model.title == "Certificate" ||
+          (model.title == "Video" && videoFlag)) {
         return Stack(
           children: [
             FutureBuilder<Widget>(
