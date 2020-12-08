@@ -9,6 +9,9 @@ const DEFAULT_LIMIT = 100;
 const SUCCESS = 1;
 const FAIL = 2;
 
+const dollar = "\u20B9";
+const rupee = "\u0024";
+
 var IMAGEFILESIZE = 10.0;
 
 const APPNAME = "My Diamonds";

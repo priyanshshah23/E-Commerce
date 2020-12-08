@@ -39,9 +39,9 @@ class _ProfileListState extends State<ProfileList> {
 
   setPages() {
     pages = {
-      0: getSegment(R.string().commonString.personal, 0),
-      1: getSegment(R.string().commonString.business, 1),
-      2: getSegment(R.string().commonString.documents, 2),
+      0: getSegment(R.string.commonString.personal, 0),
+      1: getSegment(R.string.commonString.business, 1),
+      2: getSegment(R.string.commonString.documents, 2),
     };
   }
 
@@ -69,7 +69,7 @@ class _ProfileListState extends State<ProfileList> {
     return Scaffold(
       appBar: getAppBar(
         context,
-        R.string().commonString.profile,
+        R.string.commonString.profile,
         bgColor: appTheme.whiteColor,
         leadingButton: isFromDrawer
             ? getDrawerButton(context, true)

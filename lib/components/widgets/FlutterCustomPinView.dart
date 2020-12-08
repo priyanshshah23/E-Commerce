@@ -94,8 +94,8 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
                     barrierDismissible: true,
                     title: "Oops!",
                     desc: widget.wrongPassContent,
-                    positiveBtnTitle: R.string().commonString.ok,
-                    // negativeBtnTitle: R.string().commonString.cancel,
+                    positiveBtnTitle: R.string.commonString.ok,
+                    // negativeBtnTitle: R.string.commonString.cancel,
                     onClickCallback: (buttonType) {},
                   );
             }

@@ -169,6 +169,39 @@ class SyncManager {
     });
   }
 
+  Future callApiForMatchPair(
+    BuildContext context,
+    Map<String, dynamic> req,
+    Function(DiamondListResp) success,
+    Function failure, {
+    bool isProgress = true,
+    String searchText,
+  }) async {
+    Map<String, dynamic> dict = {};
+    dict["isNotReturnTotal"] = true;
+    dict["isReturnCountOnly"] = true;
+    dict["filters"] = req;
+
+    if (!isNullEmptyOrFalse(searchText)) {
+      dict["search"] = searchText;
+    }
+
+    NetworkCall<DiamondListResp>()
+        .makeCall(
+      () => app
+          .resolve<ServiceModule>()
+          .networkService()
+          .diamondMatchPairList(dict),
+      context,
+      isProgress: isProgress,
+    )
+        .then((diamondListResp) async {
+      success(diamondListResp);
+    }).catchError((onError) {
+      print(onError);
+    });
+  }
+
   Future callApiForCreateDiamondTrack(
     BuildContext context,
     int trackType,
@@ -526,9 +559,9 @@ class SyncManager {
     ).catchError(
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            title: R.string().errorString.versionError,
+            title: R.string.errorString.versionError,
             desc: onError.message,
-            positiveBtnTitle: R.string().commonString.btnTryAgain,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
           if (screenConstant == VersionUpdateApi.splash) {
             //for splash
@@ -708,9 +741,9 @@ class SyncManager {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
               context,
-              title: R.string().commonString.error,
+              title: R.string.commonString.error,
               desc: onError.message,
-              positiveBtnTitle: R.string().commonString.ok,
+              positiveBtnTitle: R.string.commonString.ok,
             );
       }
     });

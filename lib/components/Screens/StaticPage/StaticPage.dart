@@ -152,11 +152,11 @@ class _StaticPageScreenState extends State<StaticPageScreen> {
 
   String getScreenTitle() {
     if (widget.screenType == StaticPageConstant.TERMS_CONDITION) {
-      return R.string().screenTitle.termsAndCondition;
+      return R.string.screenTitle.termsAndCondition;
     } else if (widget.screenType == StaticPageConstant.PRIVACY_POLICY) {
-      return R.string().screenTitle.privacyPolicy;
+      return R.string.screenTitle.privacyPolicy;
     } else if (widget.screenType == StaticPageConstant.ABOUT_US) {
-      return R.string().screenTitle.aboutUS;
+      return R.string.screenTitle.aboutUS;
     }
     /*else if (screenType == StaticPageConstant.CANCELLAION_POLICY) {
       return "Order Cancel Policy";

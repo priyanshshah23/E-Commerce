@@ -78,7 +78,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
           backgroundColor: appTheme.whiteColor,
           appBar: getAppBar(
             context,
-            R.string().screenTitle.search,
+            R.string.screenTitle.search,
             bgColor: appTheme.whiteColor,
             leadingButton: getBackButton(context),
             centerTitle: false,
@@ -93,7 +93,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
               },
               borderRadius: getSize(5),
               fitWidth: true,
-              text: R.string().commonString.search,
+              text: R.string.commonString.search,
             ),
           ),
           body: SafeArea(
@@ -154,7 +154,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
                 ),
 
                 hintStyle: appTheme.grey16HintTextStyle,
-                hintText: R.string().authStrings.searchHint,
+                hintText: R.string.authStrings.searchHint,
                 labelStyle: TextStyle(
                   color: appTheme.textColor,
                   fontSize: getFontSize(16),

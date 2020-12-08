@@ -66,7 +66,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
               context,
               title: "",
               desc: onError.message,
-              positiveBtnTitle: R.string().commonString.ok,
+              positiveBtnTitle: R.string.commonString.ok,
             );
       }
     });
@@ -102,7 +102,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
       app.resolve<CustomDialogs>().confirmDialog(context,
           title: "",
           desc: resp.message,
-          positiveBtnTitle: R.string().commonString.ok,
+          positiveBtnTitle: R.string.commonString.ok,
           onClickCallback: (type) {
         Navigator.pop(context);
       });
@@ -112,7 +112,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
               context,
               title: "",
               desc: onError.message,
-              positiveBtnTitle: R.string().commonString.ok,
+              positiveBtnTitle: R.string.commonString.ok,
             );
       }
     });
@@ -123,7 +123,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
     return Scaffold(
       appBar: getAppBar(
         context,
-        R.string().screenTitle.officeView,
+        R.string.screenTitle.officeView,
         leadingButton: getBackButton(context),
         centerTitle: false,
       ),
@@ -172,7 +172,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                     vertical: getSize(15),
                   ),
                   child: Text(
-                    R.string().commonString.cancel,
+                    R.string.commonString.cancel,
                     textAlign: TextAlign.center,
                     style: appTheme.blue14TextStyle.copyWith(
                         fontSize: getFontSize(16), fontWeight: FontWeight.w500),
@@ -189,32 +189,32 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                     app.resolve<CustomDialogs>().confirmDialog(
                           context,
                           title: "",
-                          desc: R.string().errorString.selectAppointmentDate,
-                          positiveBtnTitle: R.string().commonString.ok,
+                          desc: R.string.errorString.selectAppointmentDate,
+                          positiveBtnTitle: R.string.commonString.ok,
                         );
                     return;
                   } else if (selectedSlot < 0) {
                     app.resolve<CustomDialogs>().confirmDialog(
                           context,
                           title: "",
-                          desc: R.string().errorString.selectTimeSlot,
-                          positiveBtnTitle: R.string().commonString.ok,
+                          desc: R.string.errorString.selectTimeSlot,
+                          positiveBtnTitle: R.string.commonString.ok,
                         );
                     return;
                   } else if (isNullEmptyOrFalse(_virtualTypeController.text)) {
                     app.resolve<CustomDialogs>().confirmDialog(
                           context,
                           title: "",
-                          desc: R.string().errorString.selectVirtualType,
-                          positiveBtnTitle: R.string().commonString.ok,
+                          desc: R.string.errorString.selectVirtualType,
+                          positiveBtnTitle: R.string.commonString.ok,
                         );
                     return;
                   } else if (isNullEmptyOrFalse(_commentTypeController.text)) {
                     app.resolve<CustomDialogs>().confirmDialog(
                           context,
                           title: "",
-                          desc: R.string().errorString.enterComments,
-                          positiveBtnTitle: R.string().commonString.ok,
+                          desc: R.string.errorString.enterComments,
+                          positiveBtnTitle: R.string.commonString.ok,
                         );
                     return;
                   }
@@ -227,7 +227,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                     vertical: getSize(15),
                   ),
                   child: Text(
-                    R.string().screenTitle.reqOfficeView,
+                    R.string.screenTitle.reqOfficeView,
                     textAlign: TextAlign.center,
                     style: appTheme.white16TextStyle,
                   ),
@@ -255,7 +255,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                R.string().screenTitle.availableSlot,
+                R.string.screenTitle.availableSlot,
                 style: appTheme.black16TextStyle
                     .copyWith(fontWeight: FontWeight.w500),
               ),
@@ -317,7 +317,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    pd != null ? pd : R.string().screenTitle.selectCustomDate,
+                    pd != null ? pd : R.string.screenTitle.selectCustomDate,
                     style: appTheme.black16TextStyle,
                   ),
                   Image.asset(
@@ -416,7 +416,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            R.string().screenTitle.timeSlots,
+            R.string.screenTitle.timeSlots,
             style:
                 appTheme.black16TextStyle.copyWith(fontWeight: FontWeight.w500),
           ),
@@ -424,7 +424,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
             height: getSize(15),
           ),
           isNullEmptyOrFalse(arrSlots)
-              ? Text(R.string().commonString.noSlotFound,
+              ? Text(R.string.commonString.noSlotFound,
                   style: appTheme.black14TextStyle)
               : GridView.builder(
                   physics: NeverScrollableScrollPhysics(),
@@ -498,7 +498,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
             textOption: TextFieldOption(
                 prefixWid: getCommonIconWidget(
                     imageName: company, imageType: IconSizeType.small),
-                hintText: R.string().commonString.selectType,
+                hintText: R.string.commonString.selectType,
                 maxLine: 1,
                 keyboardType: TextInputType.text,
                 type: TextFieldType.DropDown,

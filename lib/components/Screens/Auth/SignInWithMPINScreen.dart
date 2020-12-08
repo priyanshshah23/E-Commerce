@@ -158,7 +158,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
           child: Scaffold(
             resizeToAvoidBottomPadding: false,
             resizeToAvoidBottomInset: true,
-            appBar: getAppBar(context, R.string().authStrings.signInWithMPIN,
+            appBar: getAppBar(context, R.string.authStrings.signInWithMPIN,
                 bgColor: appTheme.whiteColor,
                 leadingButton: getBackButton(context),
                 centerTitle: false,
@@ -391,7 +391,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
 //    if (await isValidMobile(
 //        _mobileController.text.trim(), selectedDialogCountry.isoCode) ==
 //        false) {
-//      return showToast(R.string().errorString.enterValidPhone,context: context);
+//      return showToast(R.string.errorString.enterValidPhone,context: context);
 //    } else {
 //      callApi(context);
 //    }
@@ -423,9 +423,9 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
               context,
-              title: R.string().commonString.error,
+              title: R.string.commonString.error,
               desc: onError.message,
-              positiveBtnTitle: R.string().commonString.ok,
+              positiveBtnTitle: R.string.commonString.ok,
             );
       }
     });
@@ -462,9 +462,9 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
               context,
-              title: R.string().commonString.error,
+              title: R.string.commonString.error,
               desc: onError.message,
-              positiveBtnTitle: R.string().commonString.ok,
+              positiveBtnTitle: R.string.commonString.ok,
             );
       }
     });
@@ -504,9 +504,9 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
               context,
-              title: R.string().commonString.error,
+              title: R.string.commonString.error,
               desc: onError.message,
-              positiveBtnTitle: R.string().commonString.ok,
+              positiveBtnTitle: R.string.commonString.ok,
             );
       }
     });
@@ -537,9 +537,9 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
               context,
-              title: R.string().commonString.error,
+              title: R.string.commonString.error,
               desc: onError.message,
-              positiveBtnTitle: R.string().commonString.ok,
+              positiveBtnTitle: R.string.commonString.ok,
             );
       }
     });

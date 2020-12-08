@@ -207,7 +207,7 @@ class _TagWidgetState extends State<TagWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      R.string().commonString.seeMore,
+                      R.string.commonString.seeMore,
                       style: appTheme.black14TextStyle,
                     ),
                     Padding(
@@ -240,7 +240,7 @@ class _TagWidgetState extends State<TagWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      R.string().commonString.seeLess,
+                      R.string.commonString.seeLess,
                       style: appTheme.black14TextStyle,
                     ),
                     Padding(
@@ -324,7 +324,7 @@ class _TagWidgetState extends State<TagWidget> {
             },
           ),
         ),
-        SizedBox(height: getSize(12))
+        // SizedBox(height: getSize(12))
       ],
     );
   }
@@ -339,7 +339,7 @@ class _TagWidgetState extends State<TagWidget> {
               width: getSize(80),
               child: Text(
                 widget.model.title ?? "",
-                style: appTheme.blackNormal14TitleColorblack,
+                style: appTheme.blackMedium16TitleColorblack.copyWith(fontSize: getFontSize(14),),
                 textAlign: TextAlign.left,
               ),
             ),
@@ -369,7 +369,7 @@ class _TagWidgetState extends State<TagWidget> {
             ),
           ],
         ),
-        SizedBox(height: getSize(8))
+        // SizedBox(height: getSize(8))
       ],
     );
   }
@@ -379,11 +379,11 @@ class _TagWidgetState extends State<TagWidget> {
       if (index == widget.model.masters.length - 1 &&
           !widget.model.isShowMoreSelected) {
         widget.model.masters[index].webDisplay =
-            R.string().commonString.showLess;
+            R.string.commonString.showLess;
       }
       if (widget.model.isShowMoreSelected) {
         widget.model.masters[widget.model.masters.length - 1].webDisplay =
-            R.string().commonString.showMore;
+            R.string.commonString.showMore;
       }
     }
     return Container(
@@ -588,7 +588,7 @@ class _TagWidgetState extends State<TagWidget> {
                   color: widget.model.fromToStyle.underlineColor,
                 ))
               : InputBorder.none,
-          hintText: R.string().commonString.fromLbl,
+          hintText: R.string.commonString.fromLbl,
           hintStyle: appTheme.grey14HintTextStyle,
         ),
       ),
@@ -620,8 +620,8 @@ class _TagWidgetState extends State<TagWidget> {
             app.resolve<CustomDialogs>().confirmDialog(
                   context,
                   title: "Warning",
-                  desc: R.string().errorString.selectFromDate,
-                  positiveBtnTitle: R.string().commonString.ok,
+                  desc: R.string.errorString.selectFromDate,
+                  positiveBtnTitle: R.string.commonString.ok,
                 );
           }
         },

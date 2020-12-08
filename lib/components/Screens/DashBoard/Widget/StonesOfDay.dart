@@ -38,7 +38,7 @@ class _StoneOfDayWidgetState extends State<StoneOfDayWidget> {
                       padding: EdgeInsets.only(
                         left: getSize(Spacing.leftPadding),
                       ),
-                      child: getTitleText(R.string().screenTitle.stoneOfDay),
+                      child: getTitleText(R.string.screenTitle.stoneOfDay),
                     ),
                     Spacer(),
                     InkWell(
@@ -185,7 +185,7 @@ class _StoneOfDayWidgetState extends State<StoneOfDayWidget> {
                                   width:
                                       MathUtilities.screenWidth(context) / 4.5,
                                   child: getText(
-                                      "${model.crt} ${R.string().commonString.carat}",
+                                      "${model.crt} ${R.string.commonString.carat}",
                                       style: appTheme.primaryColor14TextStyle),
                                 ),
                               ),
@@ -295,7 +295,7 @@ class _StoneOfDayWidgetState extends State<StoneOfDayWidget> {
 
   getViewAll() {
     return Text(
-      R.string().screenTitle.viewAll,
+      R.string.screenTitle.viewAll,
       style: appTheme.black14TextStyle.copyWith(
         fontWeight: FontWeight.w500,
         color: appTheme.colorPrimary,

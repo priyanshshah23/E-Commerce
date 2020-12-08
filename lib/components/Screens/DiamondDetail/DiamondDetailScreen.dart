@@ -471,7 +471,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(
         context,
-        R.string().screenTitle.diamondDetail,
+        R.string.screenTitle.diamondDetail,
         bgColor: appTheme.whiteColor,
         leadingButton: getBackButton(context),
         centerTitle: false,
@@ -1011,7 +1011,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
               (manageClick) {
             manageBottomMenuClick(manageClick.bottomTabModel);
-          }, R.string().commonString.more, isDisplaySelection: false);
+          }, R.string.commonString.more, isDisplaySelection: false);
         } else {
           manageBottomMenuClick(obj);
         }

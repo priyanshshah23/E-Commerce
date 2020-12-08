@@ -93,7 +93,7 @@ class _ScrollToStartState extends State<ScrollToStart> {
               child: Padding(
                 padding: EdgeInsets.all(16),
                 child: AppButton.raised(
-                  text: R.string().commonString.jumpToTop,
+                  text: R.string.commonString.jumpToTop,
                   icon: Icons.arrow_upward,
                   backgroundColor: appTheme.backgroundColor,
                   dense: true,

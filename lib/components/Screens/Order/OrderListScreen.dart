@@ -71,8 +71,8 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
     diamondList = BaseList(BaseListState(
 //      imagePath: noRideHistoryFound,
       noDataMsg: APPNAME,
-      noDataDesc: R.string().noDataStrings.noDataFound,
-      refreshBtn: R.string().commonString.refresh,
+      noDataDesc: R.string.noDataStrings.noDataFound,
+      refreshBtn: R.string.commonString.refresh,
       enablePullDown: true,
       enablePullUp: true,
       onPullToRefress: () {
@@ -156,7 +156,7 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
                 children: <Widget>[
                   getPrimaryText("#${arraDiamond[index].memoNo ?? ""}"),
                   getPrimaryText(
-                    R.string().commonString.date +
+                    R.string.commonString.date +
                         " : " +
                         DateUtilities().convertServerDateToFormatterString(
                             arraDiamond[index].createdAt,
@@ -331,8 +331,8 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
             title: "",
-            desc: R.string().errorString.diamondSelectionError,
-            positiveBtnTitle: R.string().commonString.ok,
+            desc: R.string.errorString.diamondSelectionError,
+            positiveBtnTitle: R.string.commonString.ok,
           );
     }
   }

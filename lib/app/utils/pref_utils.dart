@@ -56,6 +56,8 @@ class PrefUtils {
 
   String get keySyncPlayerId => "keySyncPlayerId";
 
+  String get keyLanguage => "keyLanguage";
+
   bool isHomeVisible;
 
   Future<void> init() async {
@@ -193,6 +195,15 @@ class PrefUtils {
     }
   }
 
+  setLocalization(String value) async {
+    init();
+    _preferences.setString(keyLanguage, value);
+  }
+
+  String getLocalization() {
+    return getString(keyLanguage);
+  }
+
   void saveMasterSyncDate(String masterSyncDate) {
     _preferences.setString(keyMasterSyncDate, masterSyncDate);
   }
@@ -306,10 +317,10 @@ class PrefUtils {
 
 logoutFromApp(BuildContext context) {
   app.resolve<CustomDialogs>().confirmDialog(context,
-      title: R.string().commonString.lbllogout,
-      desc: R.string().authStrings.logoutConfirmationMsg,
-      positiveBtnTitle: R.string().commonString.yes,
-      negativeBtnTitle: R.string().commonString.no,
+      title: R.string.commonString.lbllogout,
+      desc: R.string.authStrings.logoutConfirmationMsg,
+      positiveBtnTitle: R.string.commonString.yes,
+      negativeBtnTitle: R.string.commonString.no,
       onClickCallback: (buttonType) {
     if (buttonType == ButtonType.PositveButtonClick) {
       callLogout(context);

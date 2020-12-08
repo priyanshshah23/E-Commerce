@@ -100,8 +100,8 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
                               context,
                               title: "",
                               desc:
-                                  R.string().errorString.fromValueGreateThanTo,
-                              positiveBtnTitle: R.string().commonString.ok,
+                                  R.string.errorString.fromValueGreateThanTo,
+                              positiveBtnTitle: R.string.commonString.ok,
                             );
                         _minValueController.text = "";
                         setState(() {});
@@ -193,8 +193,8 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
                 app.resolve<CustomDialogs>().confirmDialog(
                       context,
                       title: "",
-                      desc: R.string().errorString.fromValueGreateThanTo,
-                      positiveBtnTitle: R.string().commonString.ok,
+                      desc: R.string.errorString.fromValueGreateThanTo,
+                      positiveBtnTitle: R.string.commonString.ok,
                     );
                 _minValueController.text = "";
                 setState(() {});
@@ -236,7 +236,7 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
                     color: widget.selectionModel.fromToStyle.underlineColor,
                   ))
                 : InputBorder.none,
-            hintText: R.string().commonString.fromLbl,
+            hintText: R.string.commonString.fromLbl,
             hintStyle: appTheme.grey14HintTextStyle,
           ),
         ),
@@ -265,8 +265,8 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
                 app.resolve<CustomDialogs>().confirmDialog(
                       context,
                       title: "",
-                      desc: R.string().errorString.toValueGreaterThanFrom,
-                      positiveBtnTitle: R.string().commonString.ok,
+                      desc: R.string.errorString.toValueGreaterThanFrom,
+                      positiveBtnTitle: R.string.commonString.ok,
                     );
                 _maxValueController.text = "";
                 setState(() {});
@@ -308,7 +308,7 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
                     color: widget.selectionModel.fromToStyle.underlineColor,
                   ))
                 : InputBorder.none,
-            hintText: R.string().commonString.toLbl,
+            hintText: R.string.commonString.toLbl,
             hintStyle: appTheme.grey14HintTextStyle,
           ),
         ),

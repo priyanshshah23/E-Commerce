@@ -9,6 +9,7 @@ import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/app/localization/LocalizationHelper.dart';
 import 'package:diamnow/components/Screens/Auth/ForgetPassword.dart';
 import 'package:diamnow/components/Screens/Auth/Signup.dart';
 import 'package:diamnow/components/Screens/Version/VersionUpdate.dart';
@@ -49,19 +50,19 @@ class LoginScreenState extends StatefulScreenWidgetState {
   bool _isPasswordValid = false;
   bool isButtonEnabled = true;
   bool _autoValidate = false;
-  List<String> language = <String>[
-    "English",
-    "French",
-    "Chinese",
-    "Japanese",
-    "Italian",
-    "Spanish",
-    "Germany",
-    "Hebrew",
-    "Arabic",
-  ];
+  Map<String, String> language = <String, String>{
+    "English": English.languageCode,
+    "French": French.languageCode,
+    "Chinese": Chinese.languageCode,
+    "Japanese": Japan.languageCode,
+    "Italian": Italian.languageCode,
+    "Spanish": Spanish.languageCode,
+    "Germany": Germany.languageCode,
+    // "Hebrew",
+    // "Arabic",
+  };
 
-  String selectedLanguage = R.string().commonString.language;
+  String selectedLanguage = R.string.commonString.language;
   bool isCheckBoxSelected = false;
   final LocalAuthentication auth = LocalAuthentication();
   List<BiometricType> availableBiometrics;
@@ -118,85 +119,102 @@ class LoginScreenState extends StatefulScreenWidgetState {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      R.string().authStrings.welcome,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: appTheme.textBlackColor,
-                                        fontSize: getFontSize(24),
-                                      ),
-                                    ),
-                                    Expanded(child: SizedBox()),
-                                    PopupMenuButton<String>(
-                                      onSelected: (newValue) {
-                                        // add this property
-                                        selectedLanguage = newValue;
-                                        setState(() {});
-                                      },
-                                      itemBuilder: (context) => [
-                                        for (var item in language)
-                                          PopupMenuItem(
-                                            value: item,
-                                            height: getSize(20),
-                                            child: Container(
-                                              width: getSize(85),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: <Widget>[
-                                                  Text(
-                                                    item,
-                                                    style: appTheme
-                                                        .black14TextStyle,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          )
-                                      ],
-                                      child: Container(
-                                        width: getSize(170),
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: getSize(10),
-                                            vertical: getSize(5)),
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: appTheme.textGreyColor)),
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                                height: getSize(10),
-                                                width: getSize(10),
-                                                child:
-                                                    Image.asset(languageIcon)),
-                                            SizedBox(
-                                              width: getSize(10),
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                selectedLanguage,
-                                                style: selectedLanguage ==
-                                                        R
-                                                            .string()
-                                                            .commonString
-                                                            .language
-                                                    ? appTheme
-                                                        .grey14HintTextStyle
-                                                    : appTheme.black14TextStyle,
-                                              ),
-                                            ),
-                                            Container(
-                                                height: getSize(10),
-                                                width: getSize(10),
-                                                child: Image.asset(dropDown)),
-                                          ],
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.only(right: getSize(16)),
+                                      child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text(
+                                          R.string.authStrings.welcome,
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: appTheme.textBlackColor,
+                                            fontSize: getFontSize(24),
+                                          ),
                                         ),
                                       ),
-                                      offset: Offset(25, 110),
-                                    )
+                                    ),
+                                    Container(
+                                      width: getSize(120),
+                                      child: PopupMenuButton<String>(
+                                        onSelected: (newValue) {
+                                          // add this property
+                                          selectedLanguage = newValue;
+                                          LocalizationHelper.changeLocale(
+                                              language[newValue]);
+                                          app
+                                              .resolve<PrefUtils>()
+                                              .setLocalization(
+                                                  language[newValue]);
+                                          setState(() {});
+                                        },
+                                        itemBuilder: (context) => [
+                                          for (var item in language.keys)
+                                            PopupMenuItem(
+                                              value: item,
+                                              height: getSize(20),
+                                              child: Container(
+                                                width: getSize(85),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: <Widget>[
+                                                    Text(
+                                                      item,
+                                                      style: appTheme
+                                                          .black14TextStyle,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            )
+                                        ],
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: getSize(10),
+                                              vertical: getSize(5)),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color:
+                                                      appTheme.textGreyColor)),
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                  height: getSize(10),
+                                                  width: getSize(10),
+                                                  child: Image.asset(
+                                                      languageIcon)),
+                                              SizedBox(
+                                                width: getSize(10),
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  selectedLanguage,
+                                                  style: selectedLanguage ==
+                                                          R.string.commonString
+                                                              .language
+                                                      ? appTheme
+                                                          .grey14HintTextStyle
+                                                      : appTheme
+                                                          .black14TextStyle,
+                                                ),
+                                              ),
+                                              Container(
+                                                height: getSize(10),
+                                                width: getSize(10),
+                                                child: Image.asset(dropDown),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        offset: Offset(25, 110),
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 Column(
@@ -306,15 +324,14 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                           },
                                           borderRadius: getSize(5),
                                           fitWidth: true,
-                                          text:
-                                              R.string().authStrings.signInCap,
+                                          text: R.string.authStrings.signInCap,
                                         ),
                                       ),
                                     ),
 
                                     Padding(
                                       padding:
-                                          EdgeInsets.only(top: getSize(60)),
+                                          EdgeInsets.only(top: getSize(50)),
                                       child: Row(
                                         children: [
                                           Expanded(
@@ -431,7 +448,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
                         children: <Widget>[
                           Text("Don't have an account?",
                               style: appTheme.grey16HintTextStyle),
-                          Text(" " + R.string().authStrings.signUp,
+                          Text(" " + R.string.authStrings.signUp,
                               style: appTheme.darkBlue16TextStyle),
                         ],
                       ),
@@ -452,7 +469,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
             getCommonIconWidget(imageName: user, imageType: IconSizeType.small),
         //Image.asset(profileEmail,),
 
-        hintText: R.string().authStrings.name,
+        hintText: R.string.authStrings.name,
         inputController: userNameController,
         errorBorder: _isUserNameValid
             ? null
@@ -484,7 +501,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
         if (text.isEmpty) {
           _isUserNameValid = false;
 
-          return R.string().errorString.enterUsername;
+          return R.string.errorString.enterUsername;
         } else {
           return null;
         }
@@ -502,8 +519,8 @@ class LoginScreenState extends StatefulScreenWidgetState {
       textOption: TextFieldOption(
           prefixWid: getCommonIconWidget(
               imageName: password, imageType: IconSizeType.small),
-          hintText: R.string().authStrings.password +
-              R.string().authStrings.requiredField,
+          hintText: R.string.authStrings.password +
+              R.string.authStrings.requiredField,
           maxLine: 1,
           formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
           keyboardType: TextInputType.text,
@@ -525,10 +542,10 @@ class LoginScreenState extends StatefulScreenWidgetState {
       validation: (text) {
         if (text.isEmpty) {
           _isPasswordValid = false;
-          return R.string().errorString.enterPassword;
+          return R.string.errorString.enterPassword;
         }
         /* else if(!validateStructure(text)) {
-          return R.string().errorString.wrongPassword;
+          return R.string.errorString.wrongPassword;
         } */
         else {
           return null;
@@ -544,7 +561,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
   getForgotPassword() {
     return InkWell(
       child: Text(
-        R.string().authStrings.forgotPassword,
+        R.string.authStrings.forgotPassword,
         textAlign: TextAlign.left,
         style: appTheme.darkBlue16TextStyle,
       ),
@@ -579,7 +596,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
                     ? "FaceId"
                     : "TouchId",
                 positiveBtnTitle2: "Mpin",
-                negativeBtnTitle: R.string().commonString.cancel,
+                negativeBtnTitle: R.string.commonString.cancel,
                 totalButton: 3,
                  onClickCallback: (buttonType) async {
               if (buttonType == ButtonType.PositveButtonClick) {
@@ -610,9 +627,9 @@ class LoginScreenState extends StatefulScreenWidgetState {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
               context,
-              title: R.string().commonString.error,
+              title: R.string.commonString.error,
               desc: onError.message,
-              positiveBtnTitle: R.string().commonString.ok,
+              positiveBtnTitle: R.string.commonString.ok,
             );
       }
     });
@@ -664,7 +681,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
     }
 //      NavigationUtilities.pushRoute(Notifications.route);
     // callVersionUpdateApi(id: loginResp.data.user.id); //for local
-    // isMpinAdded==false
+    // isMpinAdded==false mpin swith added
     if (loginResp.data.user.isMpinAdded == false) {
       NavigationUtilities.pushRoute(SignInWithMPINScreen.route);
     } else {
@@ -673,6 +690,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
           id: loginResp.data.user.id);
     }
   }
+
   // void callVersionUpdateApi({String id}) {
   //   NetworkCall<VersionUpdateResp>()
   //       .makeCall(
@@ -801,9 +819,9 @@ class LoginScreenState extends StatefulScreenWidgetState {
   //   ).catchError(
   //     (onError) => {
   //       app.resolve<CustomDialogs>().confirmDialog(context,
-  //           title: R.string().errorString.versionError,
+  //           title: R.string.errorString.versionError,
   //           desc: onError.message,
-  //           positiveBtnTitle: R.string().commonString.btnTryAgain,
+  //           positiveBtnTitle: R.string.commonString.btnTryAgain,
   //           onClickCallback: (PositveButtonClick) {
   //         callVersionUpdateApi(id: id);
   //       }),

@@ -146,7 +146,7 @@ class _DiamondSquareGridItemState extends State<DiamondSquareGridItem> {
             width: getSize(5),
           ),
           Text(
-            R.string().commonString.carat,
+            R.string.commonString.carat,
             style: appTheme.blue12TextStyle,
             textAlign: TextAlign.center,
           ),

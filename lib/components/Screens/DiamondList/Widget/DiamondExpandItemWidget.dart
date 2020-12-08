@@ -171,7 +171,7 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
           Expanded(
             flex: 2,
             child: Text(
-              " " + R.string().commonString.carat,
+              " " + R.string.commonString.carat,
               style: appTheme.blue16TextStyle.copyWith(
                 fontSize: getFontSize(14),
               ),
@@ -197,35 +197,39 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
         children: [
           Expanded(
             flex: 2,
-            child: getText(widget.item?.colNm ?? "",
+            child: getText(widget.item?.colNm ?? "-",
                 appTheme.blackMedium14TitleColorblack),
           ),
           Expanded(
             flex: 2,
-            child: getText(widget.item?.clrNm ?? "",
+            child: getText(widget.item?.clrNm ?? "-",
                 appTheme.blackMedium14TitleColorblack),
           ),
           Expanded(
             flex: 2,
             child: Row(
               children: <Widget>[
-                getText(widget.item?.cutNm ?? "",
+                getText(widget.item?.cutNm ?? "-",
                     appTheme.blackMedium14TitleColorblack),
+                SizedBox(width: getSize(2.0)),
                 Container(
                   height: getSize(4),
                   width: getSize(4),
                   decoration: BoxDecoration(
                       color: appTheme.dividerColor, shape: BoxShape.circle),
                 ),
-                getText(widget.item?.polNm ?? "",
+                SizedBox(width: getSize(2.0)),
+                getText(widget.item?.polNm ?? "-",
                     appTheme.blackMedium14TitleColorblack),
+                SizedBox(width: getSize(2.0)),
                 Container(
                   height: getSize(4),
                   width: getSize(4),
                   decoration: BoxDecoration(
                       color: appTheme.dividerColor, shape: BoxShape.circle),
                 ),
-                getText(widget.item?.symNm ?? "",
+                SizedBox(width: getSize(2.0)),
+                getText(widget.item?.symNm ?? "-",
                     appTheme.blackMedium14TitleColorblack),
               ],
             ),

@@ -54,7 +54,7 @@ class _PasswordResetSuccessfullyState extends State<PasswordResetSuccessfully> {
               //  backgroundColor: appTheme.buttonColor,
               borderRadius: getSize(5),
               fitWidth: true,
-              text: R.string().authStrings.backToSignIn,
+              text: R.string.authStrings.backToSignIn,
               //isButtonEnabled: enableDisableSigninButton(),
             ),
           ),
@@ -77,7 +77,7 @@ class _PasswordResetSuccessfullyState extends State<PasswordResetSuccessfully> {
               ),
               Text(
                 !isForMpin ? 
-                R.string().authStrings.passwordResetSuccessfully :
+                R.string.authStrings.passwordResetSuccessfully :
                 "Mpin reset successfully.",
                 style: appTheme.blackMedium20TitleColorblack,
                 textAlign: TextAlign.center,

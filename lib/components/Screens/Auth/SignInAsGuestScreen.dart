@@ -70,7 +70,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
             resizeToAvoidBottomInset: true,
             appBar: getAppBar(
               context,
-              R.string().authStrings.signInAsGuest,
+              R.string.authStrings.signInAsGuest,
               bgColor: appTheme.whiteColor,
               leadingButton: getBackButton(context),
               centerTitle: false,
@@ -145,7 +145,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
                           },
                           fitWidth: true,
                           borderRadius: getSize(5),
-                          text: R.string().authStrings.signInAsGuest,
+                          text: R.string.authStrings.signInAsGuest,
                         ),
                       ),
                       Padding(
@@ -153,7 +153,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
                         child: Align(
                           alignment: Alignment.center,
                           child: Text(
-                            R.string().commonString.lblOr,
+                            R.string.commonString.lblOr,
                             style: appTheme.grey16HintTextStyle,
                           ),
                         ),
@@ -170,7 +170,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
                               appTheme.colorPrimary.withOpacity(0.1),
                           borderRadius: getSize(5),
                           fitWidth: true,
-                          text: R.string().authStrings.signInCap,
+                          text: R.string.authStrings.signInCap,
                           //isButtonEnabled: enableDisableSigninButton(),
                         ),
                       ),
@@ -190,9 +190,9 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text(R.string().authStrings.haveRegisterCode,
+                    Text(R.string.authStrings.haveRegisterCode,
                         style: appTheme.grey16HintTextStyle),
-                    Text(" " + R.string().authStrings.signUp,
+                    Text(" " + R.string.authStrings.signUp,
                         style: appTheme.darkBlue16TextStyle),
                   ],
                 ),
@@ -209,7 +209,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
       autoFocus: false,
       focusNode: _focusFirstName,
       textOption: TextFieldOption(
-        hintText: R.string().authStrings.firstName,
+        hintText: R.string.authStrings.firstName,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: user,
@@ -246,7 +246,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
         if (text.trim().isEmpty) {
           isFirstnamevalid = false;
 
-          return R.string().errorString.enterFirstName;
+          return R.string.errorString.enterFirstName;
         } else {
           return null;
         }
@@ -263,7 +263,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
     return CommonTextfield(
       focusNode: _focusLastName,
       textOption: TextFieldOption(
-        hintText: R.string().authStrings.lastName,
+        hintText: R.string.authStrings.lastName,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: user,
@@ -300,7 +300,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
         if (text.trim().isEmpty) {
           isLastnamevalid = false;
 
-          return R.string().errorString.enterLastName;
+          return R.string.errorString.enterLastName;
         } else {
           return null;
         }
@@ -317,7 +317,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
     return CommonTextfield(
       focusNode: _focusEmail,
       textOption: TextFieldOption(
-        hintText: R.string().authStrings.emailAddress,
+        hintText: R.string.authStrings.emailAddress,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: email,
@@ -357,9 +357,9 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
       },
       validation: (text) {
         if (text.trim().isEmpty) {
-          return R.string().errorString.enterEmail;
+          return R.string.errorString.enterEmail;
         } else if (!validateEmail(text.trim())) {
-          return R.string().errorString.enterValidEmail;
+          return R.string.errorString.enterValidEmail;
         } else {
           return null;
         }
@@ -378,8 +378,8 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
         //enable: enable,
         focusNode: _focusMobile,
         textOption: TextFieldOption(
-          hintText: R.string().authStrings.mobileNumber +
-              R.string().authStrings.requiredField,
+          hintText: R.string.authStrings.mobileNumber +
+              R.string.authStrings.requiredField,
           prefixWid: Padding(
             padding: EdgeInsets.only(left: getSize(0)),
             child: Row(
@@ -428,14 +428,14 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
         validation: (text) {
           if (text.isEmpty) {
             isMobilevalid = false;
-            return R.string().errorString.enterPhone;
+            return R.string.errorString.enterPhone;
           }
 //          else if (await isValidMobile(_mobileController.text.trim(),
 //                  selectedDialogCountry.isoCode) ==
 //              false) {
 //            isMobilevalid = false;
 //
-//            return R.string().errorString.enterValidPhone;
+//            return R.string.errorString.enterValidPhone;
 //          }
           else {
             return null;
@@ -453,7 +453,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
     if (await isValidMobile(
             _mobileController.text.trim(), selectedDialogCountry.isoCode) ==
         false) {
-      return showToast(R.string().errorString.enterValidPhone,
+      return showToast(R.string.errorString.enterValidPhone,
           context: context);
     } else {
       callApi(context);
@@ -464,8 +464,8 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
     return CommonTextfield(
       focusNode: _focusAddress,
       textOption: TextFieldOption(
-        hintText: R.string().authStrings.companyName +
-            R.string().authStrings.requiredField,
+        hintText: R.string.authStrings.companyName +
+            R.string.authStrings.requiredField,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: company,
@@ -498,7 +498,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
       validation: (text) {
         if (text.trim().isEmpty) {
           isCompanyValid = false;
-          return R.string().authStrings.enterCompanyName;
+          return R.string.authStrings.enterCompanyName;
         } else {
           return null;
         }
@@ -536,8 +536,8 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
               width: getSize(10),
             ),
             Text(
-              R.string().authStrings.termsAndCondition +
-                  R.string().authStrings.requiredField,
+              R.string.authStrings.termsAndCondition +
+                  R.string.authStrings.requiredField,
               style: appTheme.black14TextStyle,
             )
           ],
@@ -547,7 +547,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
           child: Padding(
             padding: EdgeInsets.only(top: getSize(10)),
             child: Text(
-              R.string().authStrings.mustAgreeTermsAndCondition,
+              R.string.authStrings.mustAgreeTermsAndCondition,
               style: appTheme.error16TextStyle,
             ),
           ),
@@ -575,7 +575,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
           width: getSize(10),
         ),
         Text(
-          R.string().authStrings.promotionText,
+          R.string.authStrings.promotionText,
           style: appTheme.black14TextStyle,
         )
       ],
@@ -614,9 +614,9 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
               context,
-              title: R.string().commonString.error,
+              title: R.string.commonString.error,
               desc: onError.message,
-              positiveBtnTitle: R.string().commonString.ok,
+              positiveBtnTitle: R.string.commonString.ok,
             );
       }
     });
@@ -717,9 +717,9 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
   //   ).catchError(
   //     (onError) => {
   //       app.resolve<CustomDialogs>().confirmDialog(context,
-  //           title: R.string().errorString.versionError,
+  //           title: R.string.errorString.versionError,
   //           desc: onError.message,
-  //           positiveBtnTitle: R.string().commonString.btnTryAgain,
+  //           positiveBtnTitle: R.string.commonString.btnTryAgain,
   //           onClickCallback: (PositveButtonClick) {
   //         callVersionUpdateApi(id: id);
   //       }),

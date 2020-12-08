@@ -48,7 +48,8 @@ class _ThemeSettingState extends StatefulScreenWidgetState {
       child: Align(
         alignment: Alignment.bottomCenter,
         child: Text(
-          R.string().themeStrings.welcome,
+          R.string.authStrings.welcome,
+          // R.string.ThemeStrings.welcome,
           style: TextStyle(color: appTheme.textColor),
         ),
       ),
@@ -82,7 +83,8 @@ class _ThemeSettingState extends StatefulScreenWidgetState {
         children: <Widget>[
           const SizedBox(height: 8),
           SecondaryDisplayText(
-            R.string().themeStrings.selectYourTheme,
+            "select Your Theme",
+            // R.string.themeStrings.selectYourTheme,
             textAlign: TextAlign.center,
             delay: Duration(milliseconds: 3000),
           ),
@@ -91,7 +93,7 @@ class _ThemeSettingState extends StatefulScreenWidgetState {
           BounceInAnimation(
             delay: const Duration(milliseconds: 4000),
             child: AppButton.flat(
-              text: R.string().commonString.btnContinue,
+              text: R.string.commonString.btnContinue,
               borderRadius: getSize(14),
               onTap: () {
                 ThemeHelper.changeTheme("light");

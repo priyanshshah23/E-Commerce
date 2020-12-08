@@ -95,8 +95,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     diamondList = BaseList(BaseListState(
       // imagePath: noDataFound,
       noDataMsg: APPNAME,
-      noDataDesc: R.string().noDataStrings.noDataFound,
-      refreshBtn: R.string().commonString.refresh,
+      noDataDesc: R.string.noDataStrings.noDataFound,
+      refreshBtn: R.string.commonString.refresh,
       enablePullDown: true,
       enablePullUp: true,
       onPullToRefress: () {
@@ -551,7 +551,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: getSize(8)),
-                  child: Text(R.string().commonString.delete,
+                  child: Text(R.string.commonString.delete,
                       style: appTheme.primaryNormal12TitleColor.copyWith(
                         color: fromHex("#FF4D4D"),
                       )),
@@ -602,7 +602,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 Padding(
                   padding: EdgeInsets.only(top: getSize(8)),
                   child: Text(
-                    R.string().commonString.details,
+                    R.string.commonString.details,
                     style: appTheme.primaryNormal12TitleColor,
                   ),
                 )
@@ -647,7 +647,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 Padding(
                   padding: EdgeInsets.only(top: getSize(8)),
                   child: Text(
-                    R.string().commonString.edit,
+                    R.string.commonString.edit,
                     style: appTheme.primaryNormal12TitleColor,
                   ),
                 )
@@ -778,8 +778,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           app.resolve<CustomDialogs>().confirmDialog(
                 context,
                 title: "",
-                desc: R.string().errorString.diamondSelectionError,
-                positiveBtnTitle: R.string().commonString.ok,
+                desc: R.string.errorString.diamondSelectionError,
+                positiveBtnTitle: R.string.commonString.ok,
               );
         }
         break;
@@ -881,19 +881,19 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                     } else {
                       manageBottomMenuClick(manageClick.bottomTabModel);
                     }
-                  }, R.string().commonString.more, isDisplaySelection: false);
+                  }, R.string.commonString.more, isDisplaySelection: false);
                 } else {
                   app.resolve<CustomDialogs>().confirmDialog(
                         context,
                         title: "",
-                        desc: R.string().errorString.diamondSelectionError,
-                        positiveBtnTitle: R.string().commonString.ok,
+                        desc: R.string.errorString.diamondSelectionError,
+                        positiveBtnTitle: R.string.commonString.ok,
                       );
                 }
               } else if (obj.type == ActionMenuConstant.ACTION_TYPE_STATUS) {
                 showStatusDialogue();
 //          showBottomSheetForMenu(context, diamondConfig.arrStatusMenu,
-//              (manageClick) {}, R.string().commonString.status,
+//              (manageClick) {}, R.string.commonString.status,
 //              isDisplaySelection: false);
               } else if (obj.type ==
                   ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
@@ -1037,8 +1037,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
             title: "",
-            desc: R.string().errorString.diamondSelectionError,
-            positiveBtnTitle: R.string().commonString.ok,
+            desc: R.string.errorString.diamondSelectionError,
+            positiveBtnTitle: R.string.commonString.ok,
           );
     }
   }

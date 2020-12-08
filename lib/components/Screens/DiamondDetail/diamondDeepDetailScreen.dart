@@ -391,7 +391,7 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
           showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
               (manageClick) {
             manageBottomMenuClick(manageClick.bottomTabModel);
-          }, R.string().commonString.more, isDisplaySelection: false);
+          }, R.string.commonString.more, isDisplaySelection: false);
         } else {
           manageBottomMenuClick(obj);
         }

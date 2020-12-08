@@ -39,7 +39,7 @@ class _SaveAndSearchBottomSheetState extends State<SaveAndSearchBottomSheet> {
           Padding(
             padding: EdgeInsets.only(top: getSize(20)),
             child: Text(
-              R.string().screenTitle.savedAndSearch,
+              R.string.screenTitle.savedAndSearch,
               style: appTheme.black16TextStyle,
             ),
           ),
@@ -52,7 +52,7 @@ class _SaveAndSearchBottomSheetState extends State<SaveAndSearchBottomSheet> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                getFieldTitleText(R.string().screenTitle.searchTitle),
+                getFieldTitleText(R.string.screenTitle.searchTitle),
                 SizedBox(height: getSize(8)),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: getSize(16)),
@@ -60,7 +60,7 @@ class _SaveAndSearchBottomSheetState extends State<SaveAndSearchBottomSheet> {
                     autoFocus: false,
                     textOption: TextFieldOption(
                       inputController: _titleController,
-                      hintText: R.string().screenTitle.enterSearchTitle,
+                      hintText: R.string.screenTitle.enterSearchTitle,
                       formatter: [
                         //WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
                         BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
@@ -135,7 +135,7 @@ class _SaveAndSearchBottomSheetState extends State<SaveAndSearchBottomSheet> {
                         borderRadius: BorderRadius.circular(getSize(5)),
                       ),
                       child: Text(
-                        R.string().commonString.cancel,
+                        R.string.commonString.cancel,
                         textAlign: TextAlign.center,
                         style: appTheme.blue14TextStyle
                             .copyWith(fontSize: getFontSize(16)),
@@ -168,7 +168,7 @@ class _SaveAndSearchBottomSheetState extends State<SaveAndSearchBottomSheet> {
                           borderRadius: BorderRadius.circular(getSize(5)),
                           boxShadow: getBoxShadow(context)),
                       child: Text(
-                        R.string().commonString.btnSubmit,
+                        R.string.commonString.btnSubmit,
                         textAlign: TextAlign.center,
                         style: appTheme.white16TextStyle,
                       ),

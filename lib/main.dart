@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:diamnow/app/localization/LocalizationHelper.dart';
 import 'package:diamnow/app/theme/settings_models_provider.dart';
 import 'package:diamnow/app/utils/NotificationHandler.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
@@ -33,7 +34,11 @@ main() {
       child: StreamBuilder<String>(
           stream: ThemeHelper.appthemeString,
           builder: (context, snapshot) {
-            return Base();
+            return StreamBuilder(
+                stream: LocalizationHelper.appLanguage,
+                builder: (context, snapshot2) {
+                  return Base();
+                });
           }),
     ),
   ));
@@ -46,21 +51,13 @@ class Base extends StatefulWidget {
 }
 
 class _BaseState extends State<Base> {
-  ThemeData themeData;
-
   @override
   void initState() {
     super.initState();
     initPlatformState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => setState(() {
-        themeData = AppTheme.of(context).theme;
-      }),
-    );
   }
 
   Future<void> initPlatformState() async {
-
     await notificationInit();
   }
 
@@ -70,7 +67,14 @@ class _BaseState extends State<Base> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: APPNAME,
-      theme: themeData,
+      theme: ThemeData(
+        // Define the default brightness and colors.
+        brightness: Brightness.light,
+        primaryColor: appTheme.colorPrimary,
+
+        // Define the default font family.
+        fontFamily: 'Avenir',
+      ),
       navigatorKey: NavigationUtilities.key,
       onGenerateRoute: onGenerateRoute,
       navigatorObservers: [routeObserver],

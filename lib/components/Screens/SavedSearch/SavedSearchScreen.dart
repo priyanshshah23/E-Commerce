@@ -60,7 +60,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen> {
     return Scaffold(
       appBar: getAppBar(
         context,
-        R.string().screenTitle.savedSearch,
+        R.string.screenTitle.savedSearch,
         bgColor: appTheme.whiteColor,
         leadingButton: isFromDrawer
             ? getDrawerButton(context, true)

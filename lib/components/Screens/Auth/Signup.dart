@@ -33,7 +33,7 @@ class _SignupScreenState extends State<SignupScreen> {
     return Scaffold(
       appBar: getAppBar(
         context,
-        R.string().screenTitle.signup,
+        R.string.screenTitle.signup,
         bgColor: appTheme.whiteColor,
         leadingButton: getBackButton(context),
         centerTitle: false,
@@ -80,7 +80,7 @@ class _SignupScreenState extends State<SignupScreen> {
           app.resolve<CustomDialogs>().confirmDialog(context,
               title: "",
               desc: message.message,
-              positiveBtnTitle: R.string().commonString.ok,
+              positiveBtnTitle: R.string.commonString.ok,
               onClickCallback: (type) {
             Navigator.pop(context);
           });
