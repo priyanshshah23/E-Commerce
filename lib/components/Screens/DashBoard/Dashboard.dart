@@ -124,9 +124,9 @@ class _DashboardState extends StatefulScreenWidgetState {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
               context,
-              title: R.string().commonString.error,
+              title: R.string.commonString.error,
               desc: onError.message,
-              positiveBtnTitle: R.string().commonString.btnTryAgain,
+              positiveBtnTitle: R.string.commonString.btnTryAgain,
             );
       }
     });
@@ -535,7 +535,7 @@ class _DashboardState extends StatefulScreenWidgetState {
 //              children: [
 //                Row(
 //                  children: [
-//                    getTitleText(R.string().screenTitle.featuredStones),
+//                    getTitleText(R.string.screenTitle.featuredStones),
 //                    Spacer(),
 //                    InkWell(
 //                      onTap: () {
@@ -619,7 +619,7 @@ class _DashboardState extends StatefulScreenWidgetState {
 //              children: [
 //                Row(
 //                  children: [
-//                    getTitleText(R.string().screenTitle.stoneOfDay),
+//                    getTitleText(R.string.screenTitle.stoneOfDay),
 //                    Spacer(),
 //                    InkWell(
 //                      onTap: () {
@@ -1087,7 +1087,7 @@ class _DashboardState extends StatefulScreenWidgetState {
             ),
             child: Row(
               children: [
-                getTitleText(R.string().screenTitle.savedSearch),
+                getTitleText(R.string.screenTitle.savedSearch),
                 Spacer(),
                 InkWell(
                   onTap: () {
@@ -1212,9 +1212,9 @@ class _DashboardState extends StatefulScreenWidgetState {
               app.resolve<CustomDialogs>().confirmDialog(context,
                   barrierDismissible: true,
                   title: "",
-                  desc: R.string().commonString.deleteItem,
-                  positiveBtnTitle: R.string().commonString.ok,
-                  negativeBtnTitle: R.string().commonString.cancel,
+                  desc: R.string.commonString.deleteItem,
+                  positiveBtnTitle: R.string.commonString.ok,
+                  negativeBtnTitle: R.string.commonString.cancel,
                   onClickCallback: (buttonType) {
                 if (buttonType == ButtonType.PositveButtonClick) {
                   SyncManager.instance.callApiForDeleteSavedSearch(
@@ -1289,7 +1289,7 @@ class _DashboardState extends StatefulScreenWidgetState {
         // mainAxisAlignment: mainaxisal,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          getTitleText(R.string().screenTitle.recentSearch),
+          getTitleText(R.string.screenTitle.recentSearch),
           SizedBox(
             height: getSize(20),
           ),
@@ -1692,7 +1692,7 @@ class _DashboardState extends StatefulScreenWidgetState {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          getTitleText(R.string().screenTitle.salesPersonDetail),
+          getTitleText(R.string.screenTitle.salesPersonDetail),
           SizedBox(
             height: getSize(20),
           ),
@@ -1871,7 +1871,7 @@ class _DashboardState extends StatefulScreenWidgetState {
 
   getViewAll() {
     return Text(
-      R.string().screenTitle.viewAll,
+      R.string.screenTitle.viewAll,
       style: appTheme.black14TextStyle.copyWith(
         fontWeight: FontWeight.w500,
         color: appTheme.colorPrimary,

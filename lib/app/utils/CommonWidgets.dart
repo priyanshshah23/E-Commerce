@@ -410,7 +410,7 @@ getBottomButton(BuildContext context, VoidCallback onTap, String title,
           child: Container(
             width: MathUtilities.screenWidth(context) / 2 - 50,
             child: getBodyText(
-                context, firstButtonTitle ?? R.string().commonString.cancel),
+                context, firstButtonTitle ?? R.string.commonString.cancel),
           ),
         ),
         Expanded(
@@ -455,9 +455,9 @@ openURLWithApp(String uri, BuildContext context, {bool isPop = false}) async {
   } else {
     app.resolve<CustomDialogs>().confirmDialog(
           context,
-          title: R.string().commonString.error,
+          title: R.string.commonString.error,
           desc: "Could not launch",
-          positiveBtnTitle: R.string().commonString.ok,
+          positiveBtnTitle: R.string.commonString.ok,
         );
   }
 }

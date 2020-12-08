@@ -332,7 +332,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
     _recognizer = TapGestureRecognizer()
       ..onTap = () => app
           .resolve<FlushbarService>()
-          .info(R.string().commonString.notYetAvailable);
+          .info(R.string.commonString.notYetAvailable);
 
     super.initState();
   }
@@ -356,7 +356,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
     );
 
     return CustomDialog(
-      title: R.string().commonString.updateAvailable,
+      title: R.string.commonString.updateAvailable,
       body: Column(
         children: <Widget>[
 //          const FlareIcon.shiningStar(size: 64),
@@ -370,13 +370,13 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
             TextSpan(
               children: <TextSpan>[
                 TextSpan(
-                  text: R.string().commonString.downloadAppFrom,
+                  text: R.string.commonString.downloadAppFrom,
                 ),
                 TextSpan(
                   text: " ",
                 ),
                 TextSpan(
-                  text: R.string().commonString.playStore,
+                  text: R.string.commonString.playStore,
                   style: linkStyle,
                   recognizer: _recognizer,
                 ),
@@ -389,7 +389,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
       actions: [
         DialogAction<bool>(
           result: false,
-          text: R.string().commonString.skipUpdate,
+          text: R.string.commonString.skipUpdate,
         ),
       ],
     );
@@ -418,7 +418,7 @@ class _AppExitDialogState extends State<AppExitDialog> {
     _recognizer = TapGestureRecognizer()
       ..onTap = () => app
           .resolve<FlushbarService>()
-          .info(R.string().commonString.notYetAvailable);
+          .info(R.string.commonString.notYetAvailable);
 
     super.initState();
   }
@@ -442,7 +442,7 @@ class _AppExitDialogState extends State<AppExitDialog> {
     );
 
     return CustomDialog(
-      title: R.string().commonString.updateAvailable,
+      title: R.string.commonString.updateAvailable,
       body: Column(
         children: <Widget>[
 //          const FlareIcon.shiningStar(size: 64),
@@ -456,13 +456,13 @@ class _AppExitDialogState extends State<AppExitDialog> {
             TextSpan(
               children: <TextSpan>[
                 TextSpan(
-                  text: R.string().commonString.downloadAppFrom,
+                  text: R.string.commonString.downloadAppFrom,
                 ),
                 TextSpan(
                   text: " ",
                 ),
                 TextSpan(
-                  text: R.string().commonString.playStore,
+                  text: R.string.commonString.playStore,
                   style: linkStyle,
                   recognizer: _recognizer,
                 ),
@@ -475,7 +475,7 @@ class _AppExitDialogState extends State<AppExitDialog> {
       actions: [
         DialogAction<bool>(
           result: false,
-          text: R.string().commonString.skipUpdate,
+          text: R.string.commonString.skipUpdate,
         ),
       ],
     );

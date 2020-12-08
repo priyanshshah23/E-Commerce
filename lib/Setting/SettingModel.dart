@@ -16,7 +16,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: home,
-        title: R.string().screenTitle.home,
+        title: R.string.screenTitle.home,
         isSelected: true,
         type: DiamondModuleConstant.MODULE_TYPE_HOME,
       ));
@@ -26,7 +26,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: drawerSearch,
-        title: R.string().screenTitle.search,
+        title: R.string.screenTitle.search,
         isSelected: true,
         type: DiamondModuleConstant.MODULE_TYPE_SEARCH,
       ));
@@ -36,7 +36,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: quickSearch,
-        title: R.string().screenTitle.quickSearch,
+        title: R.string.screenTitle.quickSearch,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH,
       ));
@@ -46,7 +46,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: newArrival,
-        title: R.string().screenTitle.newArrival,
+        title: R.string.screenTitle.newArrival,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL,
         isShowCount: false,
@@ -59,7 +59,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: exclusiveDiamonds,
-        title: R.string().screenTitle.exclusiveDiamonds,
+        title: R.string.screenTitle.exclusiveDiamonds,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND,
         isShowCount: true,
@@ -72,7 +72,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: diamondOnAuction,
-        title: R.string().screenTitle.diamondOnAuction,
+        title: R.string.screenTitle.diamondOnAuction,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION,
         isShowCount: true,
@@ -86,7 +86,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: quickSearch,
-        title: R.string().screenTitle.upcoming,
+        title: R.string.screenTitle.upcoming,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_UPCOMING,
       ));
@@ -97,7 +97,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: stoneOfTheDay,
-        title: R.string().screenTitle.stoneOfTheDays,
+        title: R.string.screenTitle.stoneOfTheDays,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY,
         isShowCount: false,
@@ -110,7 +110,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: mySavedSearch,
-        title: R.string().screenTitle.mySavedSearch,
+        title: R.string.screenTitle.mySavedSearch,
         isSelected: false,
         isShowDivider: false,
         isShowUpperDivider: true,
@@ -118,7 +118,7 @@ class DrawerSetting {
       ));
     drawerList.add(DrawerModel(
       image: userTheme,
-      title: R.string().screenTitle.myAccount,
+      title: R.string.screenTitle.myAccount,
       isSelected: false,
       isShowDivider: true,
       isShowUpperDivider: false,
@@ -130,50 +130,50 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: recentSearch,
-        title: R.string().screenTitle.recentSearch,
+        title: R.string.screenTitle.recentSearch,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH,
         isShowDivider: true,
       ));*/
     drawerList.add(DrawerModel(
       image: termsAndCondition,
-      title: R.string().screenTitle.termsAndCondition,
+      title: R.string.screenTitle.termsAndCondition,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION,
     ));
     drawerList.add(DrawerModel(
       image: privacyPolicy,
-      title: R.string().screenTitle.privacyPolicy,
+      title: R.string.screenTitle.privacyPolicy,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY,
     ));
     drawerList.add(DrawerModel(
       image: aboutUs,
-      title: R.string().screenTitle.aboutUs,
+      title: R.string.screenTitle.aboutUS,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_ABOUT_US,
     ));
     drawerList.add(DrawerModel(
       image: contactUs,
-      title: R.string().screenTitle.contactUs,
+      title: R.string.screenTitle.contactUs,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_CONTACT_US,
     ));
     /*drawerList.add(DrawerModel(
       image: changePassword,
-      title: R.string().screenTitle.changePassword,
+      title: R.string.screenTitle.changePassword,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_CHANGE_PASSWORD,
     ));
     drawerList.add(DrawerModel(
       image: user,
-      title: R.string().screenTitle.myProfile,
+      title: R.string.screenTitle.myProfile,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_PROFILE,
     ));*/
     drawerList.add(DrawerModel(
       image: logout,
-      title: R.string().screenTitle.logout,
+      title: R.string.screenTitle.logout,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_LOGOUT,
     ));
@@ -187,7 +187,7 @@ class DrawerSetting {
       ),
       */ /*DrawerModel(
         image: drawer_logout,
-        title: R.string().screenTitle.logout,
+        title: R.string.screenTitle.logout,
         isSelected: false,
         type: DrawerConstant.LOGOUT,
       ),*/ /*
@@ -202,7 +202,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: myWatchlist,
-        title: R.string().screenTitle.myWatchlist,
+        title: R.string.screenTitle.myWatchlist,
         imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST,
@@ -213,7 +213,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
           image: addToCartDrawer,
-          title: R.string().screenTitle.myCart,
+          title: R.string.screenTitle.myCart,
           imageColor: appTheme.colorPrimary,
           isSelected: false,
           type: DiamondModuleConstant.MODULE_TYPE_MY_CART));
@@ -223,7 +223,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: bidImage,
-        title: R.string().screenTitle.myBid,
+        title: R.string.screenTitle.myBid,
         imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_BID,
@@ -234,7 +234,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: myHold,
-        title: R.string().screenTitle.myHold,
+        title: R.string.screenTitle.myHold,
         imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_HOLD,
@@ -245,7 +245,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: enquiryDrawer,
-        title: R.string().screenTitle.myEnquiry,
+        title: R.string.screenTitle.myEnquiry,
         imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY,
@@ -256,7 +256,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: myOffice,
-        title: R.string().screenTitle.myOffice,
+        title: R.string.screenTitle.myOffice,
         imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_OFFICE,
@@ -267,7 +267,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: myOffer,
-        title: R.string().screenTitle.myOffer,
+        title: R.string.screenTitle.myOffer,
         imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_OFFER,
@@ -278,7 +278,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: myOrder,
-        title: R.string().screenTitle.myOrder,
+        title: R.string.screenTitle.myOrder,
         imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_ORDER,
@@ -290,7 +290,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: myPurchased,
-        title: R.string().screenTitle.myPurchased,
+        title: R.string.screenTitle.myPurchased,
         isSelected: false,
         imageColor: appTheme.colorPrimary,
         type: DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE,
@@ -301,7 +301,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
           image: commentDrawer,
-          title: R.string().screenTitle.myComments,
+          title: R.string.screenTitle.myComments,
           imageColor: appTheme.colorPrimary,
           isSelected: false,
           type: DiamondModuleConstant.MODULE_TYPE_MY_COMMENT));
@@ -311,7 +311,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
           image: reminder,
-          title: R.string().screenTitle.myReminder,
+          title: R.string.screenTitle.myReminder,
           imageColor: appTheme.colorPrimary,
           isSelected: false,
           type: DiamondModuleConstant.MODULE_TYPE_MY_REMINDER));
@@ -321,7 +321,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: myDemandImage,
-        title: R.string().screenTitle.myDemand,
+        title: R.string.screenTitle.myDemand,
         imageColor: appTheme.colorPrimary,
         isSelected: false,
         isShowDivider: true,
@@ -333,21 +333,21 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: manageAddress,
-        title: R.string().screenTitle.manageAddress,
+        title: R.string.screenTitle.manageAddress,
         isSelected: false,
         imageColor: appTheme.colorPrimary,
         type: DiamondModuleConstant.MODULE_TYPE_MANAGE_ADDRESS,
       ));
     drawerList.add(DrawerModel(
       image: manageAddress,
-      title: R.string().commonString.touchId,
+      title: R.string.commonString.touchId,
       isSelected: false,
       imageColor: appTheme.colorPrimary,
       type: DiamondModuleConstant.MODULE_TYPE_TOUCH_ID,
     ));
     drawerList.add(DrawerModel(
       image: changePassword,
-      title: R.string().commonString.mPin,
+      title: R.string.commonString.mPin,
       isSelected: false,
       imageColor: appTheme.colorPrimary,
       type: DiamondModuleConstant.MODULE_TYPE_MPIN,
@@ -355,7 +355,7 @@ class DrawerSetting {
 
     drawerList.add(DrawerModel(
       image: logout,
-      title: R.string().screenTitle.logout,
+      title: R.string.screenTitle.logout,
       isSelected: false,
       imageColor: appTheme.colorPrimary,
       type: DiamondModuleConstant.MODULE_TYPE_LOGOUT,
@@ -440,7 +440,7 @@ class BottomMenuSetting {
             .insert)
           moreMenuList.add(BottomTabModel(
               image: placeOrder,
-              title: R.string().screenTitle.buyNow,
+              title: R.string.screenTitle.buyNow,
               type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER));
       }
     }
@@ -452,7 +452,7 @@ class BottomMenuSetting {
             .view)
           moreMenuList.add(BottomTabModel(
               image: compare,
-              title: R.string().screenTitle.compare,
+              title: R.string.screenTitle.compare,
               type: ActionMenuConstant.ACTION_TYPE_COMPARE));
       }
     }
@@ -463,7 +463,7 @@ class BottomMenuSetting {
           .insert)
         moreMenuList.add(BottomTabModel(
             image: comment,
-            title: R.string().screenTitle.comment,
+            title: R.string.screenTitle.comment,
             type: ActionMenuConstant.ACTION_TYPE_COMMENT));
     }
 
@@ -475,7 +475,7 @@ class BottomMenuSetting {
             .insert)
           moreMenuList.add(BottomTabModel(
               image: reminder,
-              title: R.string().screenTitle.reminder,
+              title: R.string.screenTitle.reminder,
               type: ActionMenuConstant.ACTION_TYPE_REMINDER));
       }
     }
@@ -489,7 +489,7 @@ class BottomMenuSetting {
               .insert)
             moreMenuList.add(BottomTabModel(
                 image: offer,
-                title: R.string().screenTitle.offer,
+                title: R.string.screenTitle.offer,
                 type: ActionMenuConstant.ACTION_TYPE_OFFER));
         }
       }
@@ -503,19 +503,19 @@ class BottomMenuSetting {
             .insert)
           moreMenuList.add(BottomTabModel(
               image: company,
-              title: R.string().screenTitle.officeView,
+              title: R.string.screenTitle.officeView,
               type: ActionMenuConstant.ACTION_TYPE_APPOINTMENT));
       }
     }
     /* moreMenuList.add(BottomTabModel(
         image: hold,
-        title: R.string().screenTitle.hold,
+        title: R.string.screenTitle.hold,
         type: ActionMenuConstant.ACTION_TYPE_HOLD));*/
     if (!isCompare) {
       if (isDisplayDelete(moduleType)) {
         moreMenuList.add(BottomTabModel(
             image: home_delete,
-            title: R.string().screenTitle.delete,
+            title: R.string.screenTitle.delete,
             type: ActionMenuConstant.ACTION_TYPE_DELETE));
       }
     }
@@ -525,17 +525,17 @@ class BottomMenuSetting {
         .downloadExcel) {
       moreMenuList.add(BottomTabModel(
           image: download,
-          title: R.string().screenTitle.download,
+          title: R.string.screenTitle.download,
           type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
     }
 
     moreMenuList.add(BottomTabModel(
         image: clearSelection,
-        title: R.string().screenTitle.clearSelection,
+        title: R.string.screenTitle.clearSelection,
         type: ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION));
     moreMenuList.add(BottomTabModel(
         image: share,
-        title: R.string().screenTitle.share,
+        title: R.string.screenTitle.share,
         type: ActionMenuConstant.ACTION_TYPE_SHARE));
     return moreMenuList;
   }
@@ -548,12 +548,12 @@ class BottomMenuSetting {
       case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
       case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
         moreMenuList.add(BottomTabModel(
-            title: R.string().screenTitle.share,
+            title: R.string.screenTitle.share,
             isCenter: false,
             image: shareWhite,
             type: ActionMenuConstant.ACTION_TYPE_SHARE));
         moreMenuList.add(BottomTabModel(
-            title: R.string().screenTitle.download,
+            title: R.string.screenTitle.download,
             isCenter: false,
             image: downloadWhite,
             type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
@@ -564,7 +564,7 @@ class BottomMenuSetting {
             .getModulePermission(ModulePermissionConstant.permission_bid)
             .insert)
           moreMenuList.add(BottomTabModel(
-              title: R.string().screenTitle.bidStone,
+              title: R.string.screenTitle.bidStone,
               isCenter: false,
               image: myBidWhite,
               type: ActionMenuConstant.ACTION_TYPE_BID));
@@ -576,12 +576,12 @@ class BottomMenuSetting {
           moreMenuList.add(BottomTabModel(
               image: addToWatchlist,
               isCenter: false,
-              title: R.string().screenTitle.addToWatchList,
+              title: R.string.screenTitle.addToWatchList,
               type: ActionMenuConstant.ACTION_TYPE_WISHLIST));
         moreMenuList.add(BottomTabModel(
             image: finalCalculation,
             isCenter: false,
-            title: R.string().screenTitle.finalCalculation,
+            title: R.string.screenTitle.finalCalculation,
             type: ActionMenuConstant.ACTION_TYPE_FINAL_CALCULATION));
         if (!isDetail && !isCompare) {
           if (app
@@ -589,13 +589,13 @@ class BottomMenuSetting {
               .getModulePermission(ModulePermissionConstant.permission_compare)
               .view)
             moreMenuList.add(BottomTabModel(
-                title: R.string().screenTitle.compare,
+                title: R.string.screenTitle.compare,
                 isCenter: false,
                 image: compare,
                 type: ActionMenuConstant.ACTION_TYPE_COMPARE));
         }
         moreMenuList.add(BottomTabModel(
-          title: R.string().commonString.more,
+          title: R.string.commonString.more,
           isCenter: false,
           image: plusIcon,
           type: ActionMenuConstant.ACTION_TYPE_MORE,
@@ -608,23 +608,23 @@ class BottomMenuSetting {
               .getModulePermission(ModulePermissionConstant.permission_compare)
               .view)
             moreMenuList.add(BottomTabModel(
-                title: R.string().screenTitle.compare,
+                title: R.string.screenTitle.compare,
                 isCenter: false,
                 image: compare,
                 type: ActionMenuConstant.ACTION_TYPE_COMPARE));
           moreMenuList.add(BottomTabModel(
-              title: R.string().screenTitle.clearSelection,
+              title: R.string.screenTitle.clearSelection,
               isCenter: false,
               image: clearSelectionWhite,
               type: ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION));
         }
         moreMenuList.add(BottomTabModel(
-            title: R.string().screenTitle.share,
+            title: R.string.screenTitle.share,
             isCenter: false,
             image: shareWhite,
             type: ActionMenuConstant.ACTION_TYPE_SHARE));
         moreMenuList.add(BottomTabModel(
-            title: R.string().screenTitle.download,
+            title: R.string.screenTitle.download,
             isCenter: false,
             image: downloadWhite,
             type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
@@ -637,17 +637,17 @@ class BottomMenuSetting {
             .insert) {
           moreMenuList.add(BottomTabModel(
               image: placeOrder,
-              title: R.string().screenTitle.placeOrder,
+              title: R.string.screenTitle.placeOrder,
               isCenter: false,
               type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER));
         }
         moreMenuList.add(BottomTabModel(
             image: cancelStone,
-            title: R.string().screenTitle.cancelStone,
+            title: R.string.screenTitle.cancelStone,
             isCenter: false,
             type: ActionMenuConstant.ACTION_TYPE_CANCEL_STONE));
         moreMenuList.add(BottomTabModel(
-            title: R.string().screenTitle.share,
+            title: R.string.screenTitle.share,
             isCenter: false,
             image: shareWhite,
             type: ActionMenuConstant.ACTION_TYPE_SHARE));
@@ -663,7 +663,7 @@ class BottomMenuSetting {
             moreMenuList.add(BottomTabModel(
                 image: addToWatchlist,
                 isCenter: false,
-                title: R.string().screenTitle.addToWatchList,
+                title: R.string.screenTitle.addToWatchList,
                 type: ActionMenuConstant.ACTION_TYPE_WISHLIST));
         }
         if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
@@ -674,7 +674,7 @@ class BottomMenuSetting {
             moreMenuList.add(BottomTabModel(
                 image: enquiry,
                 isCenter: false,
-                title: R.string().screenTitle.enquiry,
+                title: R.string.screenTitle.enquiry,
                 type: ActionMenuConstant.ACTION_TYPE_ENQUIRY));
         }
         if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_CART) {
@@ -684,7 +684,7 @@ class BottomMenuSetting {
               .insert)
             moreMenuList.add(BottomTabModel(
                 image: addToCart,
-                title: R.string().screenTitle.addToCart,
+                title: R.string.screenTitle.addToCart,
                 isCenter: false,
                 type: ActionMenuConstant.ACTION_TYPE_ADD_TO_CART));
         }
@@ -700,7 +700,7 @@ class BottomMenuSetting {
               .insert)
             moreMenuList.add(BottomTabModel(
                 image: placeOrder,
-                title: R.string().screenTitle.buyNow,
+                title: R.string.screenTitle.buyNow,
                 isCenter: false,
                 type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER));
         }
@@ -712,7 +712,7 @@ class BottomMenuSetting {
                 .insert)
               moreMenuList.add(BottomTabModel(
                   image: offerWhite,
-                  title: R.string().screenTitle.offer,
+                  title: R.string.screenTitle.offer,
                   isCenter: false,
                   type: ActionMenuConstant.ACTION_TYPE_OFFER));
           }
@@ -724,7 +724,7 @@ class BottomMenuSetting {
               .insert)
             moreMenuList.add(BottomTabModel(
                 image: offerWhite,
-                title: R.string().screenTitle.offer,
+                title: R.string.screenTitle.offer,
                 isCenter: false,
                 type: ActionMenuConstant.ACTION_TYPE_OFFER));
         }
@@ -737,14 +737,14 @@ class BottomMenuSetting {
               .insert)
             moreMenuList.add(BottomTabModel(
                 image: offerWhite,
-                title: R.string().screenTitle.offer,
+                title: R.string.screenTitle.offer,
                 isCenter: false,
                 type: ActionMenuConstant.ACTION_TYPE_OFFER));
         }
         if (!isCompare && !isDetail) {
           if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
             moreMenuList.add(BottomTabModel(
-                title: R.string().commonString.status,
+                title: R.string.commonString.status,
                 isCenter: false,
                 image: status,
                 type: ActionMenuConstant.ACTION_TYPE_STATUS));
@@ -752,7 +752,7 @@ class BottomMenuSetting {
         }
 
         moreMenuList.add(BottomTabModel(
-          title: R.string().commonString.more,
+          title: R.string.commonString.more,
           isCenter: false,
           image: plusIcon,
           type: ActionMenuConstant.ACTION_TYPE_MORE,
@@ -771,32 +771,32 @@ class BottomMenuSetting {
     BottomTabModel model = BottomTabModel(
         image: diamond,
         isCenter: false,
-        title: R.string().screenTitle.statusAvailable);
+        title: R.string.screenTitle.statusAvailable);
     model.imageColor = appTheme.statusAvailable;
     moreMenuList.add(model);
     model = BottomTabModel(
         image: diamond,
         isCenter: false,
-        title: R.string().screenTitle.statusNew);
+        title: R.string.screenTitle.statusNew);
     model.imageColor = appTheme.statusNew;
     moreMenuList.add(model);
     model = BottomTabModel(
         image: diamond,
         isCenter: false,
-        title: R.string().screenTitle.statusHold);
+        title: R.string.screenTitle.statusHold);
     model.imageColor = appTheme.statusHold;
     moreMenuList.add(model);
     model = BottomTabModel(
         image: diamond,
         isCenter: false,
-        title: R.string().screenTitle.statusOnMemo);
+        title: R.string.screenTitle.statusOnMemo);
     model.imageColor = appTheme.statusOnMemo;
     moreMenuList.add(model);
 
     model = BottomTabModel(
         image: diamond,
         isCenter: false,
-        title: R.string().screenTitle.statusOffer);
+        title: R.string.screenTitle.statusOffer);
     model.imageColor = appTheme.statusOffer;
     moreMenuList.add(model);
 

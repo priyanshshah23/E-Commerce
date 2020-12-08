@@ -31,8 +31,8 @@ class _ColorWidgetState extends State<ColorWidget> {
           children: [
             Text(
               widget.colorModel.masterCode == MasterCode.color
-                  ? R.string().commonString.color
-                  : R.string().commonString.clarity,
+                  ? R.string.commonString.color
+                  : R.string.commonString.clarity,
               style: appTheme.blackMedium16TitleColorblack,
               textAlign: TextAlign.left,
             ),
@@ -62,8 +62,8 @@ class _ColorWidgetState extends State<ColorWidget> {
                           : SizedBox(),
                       Text(
                         widget.colorModel.masterCode == MasterCode.color
-                            ? R.string().commonString.color
-                            : R.string().commonString.clarity,
+                            ? R.string.commonString.color
+                            : R.string.commonString.clarity,
                         style: appTheme.blackNormal14TitleColorblack,
                         textAlign: TextAlign.left,
                       ),
@@ -112,8 +112,8 @@ class _ColorWidgetState extends State<ColorWidget> {
                           : SizedBox(),
                       Text(
                         widget.colorModel.masterCode == MasterCode.color
-                            ? R.string().commonString.colorGroup
-                            : R.string().commonString.clarityGroup,
+                            ? R.string.commonString.colorGroup
+                            : R.string.commonString.clarityGroup,
                         style: appTheme.blackNormal14TitleColorblack,
                         textAlign: TextAlign.left,
                       ),

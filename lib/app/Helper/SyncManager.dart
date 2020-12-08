@@ -526,9 +526,9 @@ class SyncManager {
     ).catchError(
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            title: R.string().errorString.versionError,
+            title: R.string.errorString.versionError,
             desc: onError.message,
-            positiveBtnTitle: R.string().commonString.btnTryAgain,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
           if (screenConstant == VersionUpdateApi.splash) {
             //for splash
@@ -708,9 +708,9 @@ class SyncManager {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
               context,
-              title: R.string().commonString.error,
+              title: R.string.commonString.error,
               desc: onError.message,
-              positiveBtnTitle: R.string().commonString.ok,
+              positiveBtnTitle: R.string.commonString.ok,
             );
       }
     });

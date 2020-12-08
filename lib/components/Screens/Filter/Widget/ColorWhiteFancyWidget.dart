@@ -30,7 +30,7 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
         Row(
           children: [
             Text(
-              R.string().commonString.color,
+              R.string.commonString.color,
               style: appTheme.blackNormal18TitleColorblack,
               textAlign: TextAlign.left,
             ),
@@ -60,7 +60,7 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
                           ? SizedBox(width: getSize(8))
                           : SizedBox(),
                       Text(
-                        R.string().commonString.colorWhite,
+                        R.string.commonString.colorWhite,
                         style: appTheme.blackNormal14TitleColorblack,
                         textAlign: TextAlign.left,
                       ),
@@ -91,7 +91,7 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
                   widget.colorModel.masters = widget.colorModel.groupMaster;
                   widget.colorModel.gridViewItemCount = 3;
                   widget.colorModel.intensitySelection = SelectionModel(
-                      title: R.string().commonString.intensity,
+                      title: R.string.commonString.intensity,
                       masters: widget.colorModel.intensity,
                       isShowAll: widget.colorModel.isShowAll,
                       orientation: widget.colorModel.orientation,
@@ -108,7 +108,7 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
 
                   widget.colorModel.overtoneSelection = SelectionModel(
                       masterCode: MasterCode.overTone,
-                      title: R.string().commonString.overtone,
+                      title: R.string.commonString.overtone,
                       masters: widget.colorModel.overtone,
                       isShowAll: widget.colorModel.isShowAll,
                       orientation: widget.colorModel.orientation,
@@ -140,7 +140,7 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
                           ? SizedBox(width: getSize(8))
                           : SizedBox(),
                       Text(
-                        R.string().commonString.colorFancy,
+                        R.string.commonString.colorFancy,
                         style: appTheme.blackNormal14TitleColorblack,
                         textAlign: TextAlign.left,
                       ),

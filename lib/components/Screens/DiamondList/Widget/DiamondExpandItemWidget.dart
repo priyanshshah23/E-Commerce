@@ -171,7 +171,7 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
           Expanded(
             flex: 2,
             child: Text(
-              " " + R.string().commonString.carat,
+              " " + R.string.commonString.carat,
               style: appTheme.blue16TextStyle.copyWith(
                 fontSize: getFontSize(14),
               ),

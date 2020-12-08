@@ -216,14 +216,14 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
       list2.forEach((element) {
         element.mainMasters.forEach((element) {
-          if (element.sId != R.string().commonString.showMore) {
+          if (element.sId != R.string.commonString.showMore) {
             element.isSelected = event.values.first;
           }
         });
       });
       list2.forEach((element) {
         element.groupMaster.forEach((element) {
-          if (element.sId != R.string().commonString.showMore) {
+          if (element.sId != R.string.commonString.showMore) {
             element.isSelected = event.values.first;
           }
         });
@@ -305,7 +305,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       },
       child: AppBackground(
         child: Scaffold(
-            appBar: getAppBar(context, R.string().screenTitle.searchDiamond,
+            appBar: getAppBar(context, R.string.screenTitle.searchDiamond,
                 bgColor: appTheme.whiteColor,
                 leadingButton: isFromDrawer
                     ? getDrawerButton(context, true)
@@ -458,7 +458,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       isProgress: true,
     )
         .then((diamondListResp) async {
-      showToast(R.string().commonString.demandAddedSuccessfully,
+      showToast(R.string.commonString.demandAddedSuccessfully,
           context: context);
     }).catchError((onError) {
       print(onError.toString());
@@ -478,7 +478,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             borderRadius: BorderRadius.circular(getSize(25)),
           ),
           child: AddDemand(
-              title: R.string().commonString.addDemand,
+              title: R.string.commonString.addDemand,
               arrList: arrList,
               applyCallBack: ({String selectedDate, String diamondTitle}) {
                 callApiForAddDemand(selectedDate, diamondTitle);
@@ -500,8 +500,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               borderRadius: BorderRadius.circular(getSize(25)),
             ),
             child: SelectionDialogue(
-              title: R.string().commonString.savedSearch,
-              hintText: R.string().commonString.searchSavedSearch,
+              title: R.string.commonString.savedSearch,
+              hintText: R.string.commonString.searchSavedSearch,
               selectionOptions: saveSearchList,
               applyFilterCallBack: (
                   {SelectionPopupModel selectedItem,
@@ -545,8 +545,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 borderRadius: BorderRadius.circular(getSize(25)),
               ),
               child: SelectionDialogue(
-                hintText: R.string().commonString.searchSavedSearch,
-                title: R.string().commonString.savedSearch,
+                hintText: R.string.commonString.searchSavedSearch,
+                title: R.string.commonString.savedSearch,
                 selectionOptions: saveSearchList,
                 applyFilterCallBack: (
                     {SelectionPopupModel selectedItem,
@@ -565,7 +565,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           },
         );
       }).catchError((onError) {
-        showToast(R.string().commonString.noSavedSearch, context: context);
+        showToast(R.string.commonString.noSavedSearch, context: context);
       });
     }
   }
@@ -593,7 +593,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList)))
               getAddDemand();
             else {
-              showToast(R.string().commonString.selectAtleastOneFilter,
+              showToast(R.string.commonString.selectAtleastOneFilter,
                   context: context);
             }
             // place code
@@ -622,7 +622,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
                   isSavedSearch: true, isSearch: true);
             else
-              showToast(R.string().commonString.selectAtleastOneFilter,
+              showToast(R.string.commonString.selectAtleastOneFilter,
                   context: context);
           } else {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
@@ -656,9 +656,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           if (isSearch) {
             if (diamondListResp.data.count == 0) {
               app.resolve<CustomDialogs>().confirmDialog(context,
-                  desc: R.string().commonString.noDiamondFound,
-                  positiveBtnTitle: R.string().commonString.ok,
-                  negativeBtnTitle: R.string().screenTitle.addDemand,
+                  desc: R.string.commonString.noDiamondFound,
+                  positiveBtnTitle: R.string.commonString.ok,
+                  negativeBtnTitle: R.string.screenTitle.addDemand,
                   onClickCallback: (buttonType) {
                 if (buttonType == ButtonType.NagativeButtonClick) {
                   if (app
@@ -670,7 +670,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                         FilterRequest().createRequest(arrList)))
                       getAddDemand();
                     else {
-                      showToast(R.string().commonString.selectAtleastOneFilter,
+                      showToast(R.string.commonString.selectAtleastOneFilter,
                           context: context);
                     }
                     // place code

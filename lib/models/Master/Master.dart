@@ -223,11 +223,11 @@ class Master {
 
     for (Master item in masters) {
       if (item.isSelected) {
-        if (item.sId != R.string().commonString.all && item.sId != "ShowMore") {
+        if (item.sId != R.string.commonString.all && item.sId != "ShowMore") {
           ids.add(item.sId);
         }
         for (Master groped in item.grouped) {
-          if (groped.sId != R.string().commonString.all &&
+          if (groped.sId != R.string.commonString.all &&
               groped.sId != "ShowMore") {
             if (!ids.contains(groped.sId)) {
               ids.add(groped.sId);

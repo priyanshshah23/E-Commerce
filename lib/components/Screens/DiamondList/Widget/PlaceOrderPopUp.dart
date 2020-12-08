@@ -72,7 +72,7 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
             Padding(
               padding: EdgeInsets.only(top: getSize(30)),
               child: Text(
-                R.string().screenTitle.confirmStone,
+                R.string.screenTitle.confirmStone,
                 style: appTheme.blackSemiBold18TitleColorblack,
               ),
             ),
@@ -133,7 +133,7 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
                         ),
                         Text.rich(
                           TextSpan(
-                            text: R.string().commonString.ihaveread,
+                            text: R.string.commonString.ihaveread,
                             style: appTheme.blackNormal14TitleColorblack,
                             children: <TextSpan>[
                               TextSpan(
@@ -151,7 +151,7 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
                                         StaticPageScreen.route,
                                         args: dict);
                                   },
-                                text: R.string().screenTitle.termsAndCondition,
+                                text: R.string.screenTitle.termsAndCondition,
                                 style: appTheme.black16MediumTextStyle.copyWith(
                                   decoration: TextDecoration.underline,
                                   fontSize: getFontSize(14),
@@ -175,7 +175,7 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
                           top: getSize(8),
                           bottom: getSize(8)),
                       child: Text(
-                        R.string().commonString.shippingPolicy,
+                        R.string.commonString.shippingPolicy,
                         style: appTheme.blackNormal14TitleColorblack.copyWith(
                           decoration: TextDecoration.underline,
                           color: appTheme.colorPrimary,
@@ -209,7 +209,7 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
                           borderRadius: BorderRadius.circular(getSize(5)),
                         ),
                         child: Text(
-                          R.string().commonString.cancel,
+                          R.string.commonString.cancel,
                           textAlign: TextAlign.center,
                           style: appTheme.blue14TextStyle
                               .copyWith(fontSize: getFontSize(16)),
@@ -226,7 +226,7 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
                         if (_formKey.currentState.validate()) {
                           if (isCheckBoxSelected == false) {
                             showToast(
-                                R.string().errorString.acceptTermsAndCondition,
+                                R.string.errorString.acceptTermsAndCondition,
                                 context: context);
                             return;
                           }
@@ -248,7 +248,7 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
                             borderRadius: BorderRadius.circular(getSize(5)),
                             boxShadow: getBoxShadow(context)),
                         child: Text(
-                          R.string().commonString.btnSubmit,
+                          R.string.commonString.btnSubmit,
                           textAlign: TextAlign.center,
                           style: appTheme.white16TextStyle,
                         ),
@@ -272,7 +272,7 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
         textOption: TextFieldOption(
           prefixWid: getCommonIconWidget(
               imageName: company, imageType: IconSizeType.small),
-          hintText: R.string().authStrings.companyName,
+          hintText: R.string.authStrings.companyName,
           maxLine: 1,
           inputController: _nameController,
           formatter: [
@@ -283,7 +283,7 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
         ),
         validation: (text) {
           if (text.isEmpty) {
-            return R.string().authStrings.enterCompanyName;
+            return R.string.authStrings.enterCompanyName;
           }
         },
         textCallback: (text) {},
@@ -306,7 +306,7 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
         textOption: TextFieldOption(
           maxLine: 4,
           inputController: _commentController,
-          hintText: R.string().screenTitle.comment,
+          hintText: R.string.screenTitle.comment,
           // formatter: [
           //   WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
           //   BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
@@ -315,7 +315,7 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
         ),
         // validation: (text) {
         //   if (text.isEmpty) {
-        //     return R.string().commonString.enterComment;
+        //     return R.string.commonString.enterComment;
         //   }
         // },
         textCallback: (text) {},
@@ -360,7 +360,7 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
         child: CommonTextfield(
             enable: false,
             textOption: TextFieldOption(
-                hintText: R.string().errorString.selectInvoiceDate,
+                hintText: R.string.errorString.selectInvoiceDate,
                 maxLine: 1,
                 prefixWid: getCommonIconWidget(
                     imageName: calender, imageType: IconSizeType.small),
@@ -374,7 +374,7 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
             },
             validation: (text) {
               if (text.isEmpty) {
-                return R.string().errorString.selectInvoiceDate;
+                return R.string.errorString.selectInvoiceDate;
               }
             },
             inputAction: TextInputAction.next,

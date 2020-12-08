@@ -45,8 +45,8 @@ class _DocumentsState extends State<Documents>
     kycBaseList = BaseList(BaseListState(
 //      imagePath: noRideHistoryFound,
       noDataMsg: APPNAME,
-      noDataDesc: R.string().commonString.noDocument,
-      refreshBtn: R.string().commonString.refresh,
+      noDataDesc: R.string.commonString.noDocument,
+      refreshBtn: R.string.commonString.refresh,
       enablePullDown: true,
       enablePullUp: true,
       onPullToRefress: () {
@@ -116,7 +116,7 @@ class _DocumentsState extends State<Documents>
 //              textColor: appTheme.colorPrimary,
 //              borderRadius: getSize(5),
 //              fitWidth: true,
-//              text: R.string().authStrings.editProfileTitle,
+//              text: R.string.authStrings.editProfileTitle,
 //              //isButtonEnabled: enableDisableSigninButton(),
 //            ),
 //          ),
@@ -186,16 +186,16 @@ class _DocumentsState extends State<Documents>
 //      app.resolve<PrefUtils>().saveUser(resp.data);
 //      app.resolve<CustomDialogs>().confirmDialog(
 //        context,
-//        title: R.string().commonString.successfully,
+//        title: R.string.commonString.successfully,
 //        desc: resp.message,
-//        positiveBtnTitle: R.string().commonString.ok,
+//        positiveBtnTitle: R.string.commonString.ok,
 //      );
 //    }).catchError((onError) {
 //      app.resolve<CustomDialogs>().confirmDialog(
 //        context,
-//        title: R.string().commonString.error,
+//        title: R.string.commonString.error,
 //        desc: onError.message,
-//        positiveBtnTitle: R.string().commonString.btnTryAgain,
+//        positiveBtnTitle: R.string.commonString.btnTryAgain,
 //      );
 //    });
 //  }
@@ -228,9 +228,9 @@ class _DocumentsState extends State<Documents>
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-            title: R.string().commonString.error,
+            title: R.string.commonString.error,
             desc: onError.message,
-            positiveBtnTitle: R.string().commonString.btnTryAgain,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
           );
     });
   }

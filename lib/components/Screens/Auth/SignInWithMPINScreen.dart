@@ -67,7 +67,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
             resizeToAvoidBottomInset: true,
             appBar: getAppBar(
               context,
-              R.string().authStrings.signInWithMPIN,
+              R.string.authStrings.signInWithMPIN,
               bgColor: appTheme.whiteColor,
               leadingButton: getBackButton(context),
               centerTitle: false,
@@ -259,7 +259,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
 //    if (await isValidMobile(
 //        _mobileController.text.trim(), selectedDialogCountry.isoCode) ==
 //        false) {
-//      return showToast(R.string().errorString.enterValidPhone,context: context);
+//      return showToast(R.string.errorString.enterValidPhone,context: context);
 //    } else {
 //      callApi(context);
 //    }
@@ -294,9 +294,9 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
               context,
-              title: R.string().commonString.error,
+              title: R.string.commonString.error,
               desc: onError.message,
-              positiveBtnTitle: R.string().commonString.ok,
+              positiveBtnTitle: R.string.commonString.ok,
             );
       }
     });
@@ -396,9 +396,9 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
   //   ).catchError(
   //         (onError) => {
   //       app.resolve<CustomDialogs>().confirmDialog(context,
-  //           title: R.string().errorString.versionError,
+  //           title: R.string.errorString.versionError,
   //           desc: onError.message,
-  //           positiveBtnTitle: R.string().commonString.btnTryAgain,
+  //           positiveBtnTitle: R.string.commonString.btnTryAgain,
   //           onClickCallback: (PositveButtonClick) {
   //             callVersionUpdateApi(id: id);
   //           }),

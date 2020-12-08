@@ -137,7 +137,7 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getAppBar(context, R.string().authStrings.uploadKYC,
+      appBar: getAppBar(context, R.string.authStrings.uploadKYC,
           bgColor: appTheme.whiteColor,
           leadingButton: isFromDrawer ? null : getBackButton(context),
           centerTitle: false,
@@ -164,24 +164,24 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
             SizedBox(height: getSize(16)),
             Padding(
               padding: EdgeInsets.only(left: getSize(20), right: getSize(20)),
-              child: Text(R.string().authStrings.hintPhotoIdentityProof,
+              child: Text(R.string.authStrings.hintPhotoIdentityProof,
                   style: appTheme.black18TextStyle),
             ),
             SizedBox(height: getSize(16)),
             getPhotoProofTextField(),
-            getUploadDocSection(R.string().authStrings.hintPhotoIdentityProof,
+            getUploadDocSection(R.string.authStrings.hintPhotoIdentityProof,
                 DocumentType.PhotoProof, photoCard, imgPhotoProof, photoErr),
             Divider(height: getSize(1), color: appTheme.borderColor),
             SizedBox(height: getSize(16)),
             Padding(
               padding: EdgeInsets.only(left: getSize(16), right: getSize(16)),
-              child: Text(R.string().authStrings.hintBussinerssProof,
+              child: Text(R.string.authStrings.hintBussinerssProof,
                   style: appTheme.black18TextStyle),
             ),
             SizedBox(height: getSize(16)),
             getBusinessProofTextField(),
             getUploadDocSection(
-              R.string().authStrings.hintBussinerssProof,
+              R.string.authStrings.hintBussinerssProof,
               DocumentType.BussinessProof,
               bussinessCard,
               imgBussinessProff,
@@ -215,14 +215,14 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
             if (imgPhotoProof == null) {
               isValid = false;
               setState(() {
-                photoErr = R.string().authStrings.pleaseUploadPhotoProof;
+                photoErr = R.string.authStrings.pleaseUploadPhotoProof;
               });
             }
             if (imgBussinessProff == null) {
               isValid = false;
               setState(() {
                 bussinessErr =
-                    R.string().authStrings.pleaseUploadBussinessProof;
+                    R.string.authStrings.pleaseUploadBussinessProof;
               });
             }
             if (isValid == true) {
@@ -233,7 +233,7 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
           textColor: appTheme.colorPrimary,
           borderRadius: getSize(5),
           fitWidth: true,
-          text: R.string().commonString.save,
+          text: R.string.commonString.save,
           //isButtonEnabled: enableDisableSigninButton(),
         ),
       ),
@@ -330,7 +330,7 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
                               boxShadow: getBoxShadow(context)),
                           child: Center(
                             child: Text(
-                              R.string().authStrings.btnFileUpload,
+                              R.string.authStrings.btnFileUpload,
                               textAlign: TextAlign.center,
                               style: appTheme.white16TextStyle,
                             ),
@@ -403,7 +403,7 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
                       borderRadius: BorderRadius.all(Radius.circular(11)),
                       borderSide: BorderSide(width: 1, color: Colors.red),
                     ),
-              hintText: R.string().commonString.selectPhotoProof,
+              hintText: R.string.commonString.selectPhotoProof,
               maxLine: 1,
               prefixWid: getCommonIconWidget(
                   imageName: country, imageType: IconSizeType.small),
@@ -424,7 +424,7 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
                     borderRadius: BorderRadius.circular(getSize(25)),
                   ),
                   child: SelectionDialogue(
-                    title: R.string().commonString.selectPhotoProof,
+                    title: R.string.commonString.selectPhotoProof,
                     isSearchEnable: false,
                     selectionOptions: arrPhotos,
                     applyFilterCallBack: (
@@ -445,10 +445,10 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
           validation: (text) {
             if (text.isEmpty) {
               _isPhotoSelected = false;
-              return R.string().commonString.pleaseSelectPhotoProof;
+              return R.string.commonString.pleaseSelectPhotoProof;
             }
             /* else if(!validateStructure(text)) {
-          return R.string().errorString.wrongPassword;
+          return R.string.errorString.wrongPassword;
         } */
             else {
               return null;
@@ -473,7 +473,7 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
                     borderRadius: BorderRadius.all(Radius.circular(11)),
                     borderSide: BorderSide(width: 1, color: Colors.red),
                   ),
-            hintText: R.string().commonString.selectBusinessProof,
+            hintText: R.string.commonString.selectBusinessProof,
             maxLine: 1,
             prefixWid: getCommonIconWidget(
                 imageName: country, imageType: IconSizeType.small),
@@ -497,7 +497,7 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
                   borderRadius: BorderRadius.circular(getSize(25)),
                 ),
                 child: SelectionDialogue(
-                  title: R.string().commonString.selectBusinessProof,
+                  title: R.string.commonString.selectBusinessProof,
                   selectionOptions: arrBusiness,
                   isSearchEnable: false,
                   applyFilterCallBack: (
@@ -517,10 +517,10 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
         validation: (text) {
           if (text.isEmpty) {
             _isBusinessProofSelected = false;
-            return R.string().commonString.pleaseSelectBusinessProof;
+            return R.string.commonString.pleaseSelectBusinessProof;
           }
           /* else if(!validateStructure(text)) {
-          return R.string().errorString.wrongPassword;
+          return R.string.errorString.wrongPassword;
         } */
           else {
             return null;
@@ -597,12 +597,12 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
           if (type == DocumentType.PhotoProof) {
             imgPhotoProof = null;
             photoErr = !isSupportedFile(image)
-                ? R.string().authStrings.pleaseSelectFileFormat
+                ? R.string.authStrings.pleaseSelectFileFormat
                 : null;
           } else if (type == DocumentType.BussinessProof) {
             imgBussinessProff = null;
             bussinessErr = !isSupportedFile(image)
-                ? R.string().authStrings.pleaseSelectFileFormat
+                ? R.string.authStrings.pleaseSelectFileFormat
                 : null;
           }
         });
@@ -655,9 +655,9 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
 
       app.resolve<PrefUtils>().saveUser(userData);
       app.resolve<CustomDialogs>().confirmDialog(context,
-          title: R.string().authStrings.kycSubmitted,
-          desc: R.string().authStrings.kycSubmmittedDesc,
-          positiveBtnTitle: R.string().authStrings.btnMoveToHome,
+          title: R.string.authStrings.kycSubmitted,
+          desc: R.string.authStrings.kycSubmmittedDesc,
+          positiveBtnTitle: R.string.authStrings.btnMoveToHome,
           onClickCallback: (click) {
         if (click == ButtonType.PositveButtonClick) {
           AppNavigation.shared.movetoHome(isPopAndSwitch: true);
@@ -667,9 +667,9 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
       app.resolve<CustomDialogs>().hideProgressDialog();
       print(message);
       app.resolve<CustomDialogs>().confirmDialog(context,
-          title: R.string().commonString.error,
+          title: R.string.commonString.error,
           desc: message,
-          positiveBtnTitle: R.string().commonString.ok,
+          positiveBtnTitle: R.string.commonString.ok,
           onClickCallback: (click) {});
     });
   }

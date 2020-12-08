@@ -38,7 +38,7 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
                   ),
                   child: Row(
                     children: [
-                      getTitleText(R.string().screenTitle.newArrival),
+                      getTitleText(R.string.screenTitle.newArrival),
                       Spacer(),
                       InkWell(
                         onTap: () {
@@ -282,7 +282,7 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
 
   getViewAll() {
     return Text(
-      R.string().screenTitle.viewAll,
+      R.string.screenTitle.viewAll,
       style: appTheme.black14TextStyle.copyWith(
         fontWeight: FontWeight.w500,
         color: appTheme.colorPrimary,

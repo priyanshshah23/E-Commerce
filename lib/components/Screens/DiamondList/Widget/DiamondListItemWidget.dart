@@ -291,29 +291,29 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                     children: <Widget>[
                                       getColumn(
                                           widget.groupDiamondCalculation.pcs,
-                                          R.string().commonString.pcs,
+                                          R.string.commonString.pcs,
                                           1),
                                       getColumn(
                                           widget.groupDiamondCalculation
                                               .totalCarat,
-                                          R.string().commonString.cts,
+                                          R.string.commonString.cts,
                                           2),
                                       getColumn(
                                           widget.groupDiamondCalculation
                                               .totalDisc,
-                                          R.string().commonString.disc,
+                                          R.string.commonString.disc,
                                           2),
                                       getColumn(
                                           widget.groupDiamondCalculation
                                               .totalPriceCrt,
-                                          R.string().commonString.avgPriceCrt +
-                                              R.string().commonString.doller,
+                                          R.string.commonString.avgPriceCrt +
+                                              R.string.commonString.doller,
                                           3),
                                       getColumn(
                                           widget.groupDiamondCalculation
                                               .totalAmount,
-                                          R.string().commonString.amount +
-                                              R.string().commonString.doller,
+                                          R.string.commonString.amount +
+                                              R.string.commonString.doller,
                                           3)
                                     ],
                                   ),
@@ -418,7 +418,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                       : appTheme.colorPrimary),
             ),
             Text(
-              R.string().commonString.carat,
+              R.string.commonString.carat,
               style: appTheme.blue14TextStyle.copyWith(
                   color: widget.item.isSelected
                       ? appTheme.whiteColor
@@ -625,7 +625,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   Expanded(
                     child: Center(
                       child: Text(
-                        R.string().screenTitle.expDiscPer +
+                        R.string.screenTitle.expDiscPer +
                             " : " +
                             "${widget.item.newDiscount}%",
                         style: appTheme.black12TextStyleMedium,
@@ -659,7 +659,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                       color: appTheme.borderColor,
                       child: Center(
                         child: Text(
-                          R.string().screenTitle.expDiscPer + " :",
+                          R.string.screenTitle.expDiscPer + " :",
                           style: appTheme.black12TextStyle,
                         ),
                       ),
@@ -746,11 +746,11 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    getText(R.string().screenTitle.finalOffer + " :",
+                    getText(R.string.screenTitle.finalOffer + " :",
                         appTheme.blackNormal12TitleColorblack),
                     getText(widget.item.getFinalOffer().toString(),
                         appTheme.blackNormal12TitleColorblack),
-                    getText(R.string().screenTitle.finalDisc + " :",
+                    getText(R.string.screenTitle.finalDisc + " :",
                         appTheme.blackNormal12TitleColorblack),
                     getText(
                         PriceUtilities.getPercent(
@@ -764,11 +764,11 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    getText(R.string().screenTitle.finalRate + " :",
+                    getText(R.string.screenTitle.finalRate + " :",
                         appTheme.blackNormal12TitleColorblack),
                     getText(PriceUtilities.getPrice(widget.item.getFinalRate()),
                         appTheme.blackNormal12TitleColorblack),
-                    getText(R.string().screenTitle.finalValue + " :",
+                    getText(R.string.screenTitle.finalValue + " :",
                         appTheme.blackNormal12TitleColorblack),
                     getText(
                         PriceUtilities.getPrice(widget.item.getFinalAmount()),
@@ -814,7 +814,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                   color: appTheme.borderColor,
                                   child: Center(
                                     child: getText(
-                                        R.string().screenTitle.offeredDisc +
+                                        R.string.screenTitle.offeredDisc +
                                             " :",
                                         appTheme.blackNormal12TitleColorblack),
                                   ),
@@ -842,7 +842,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                   color: appTheme.borderColor,
                                   child: Center(
                                     child: getText(
-                                        R.string().screenTitle.offeredPriceCt +
+                                        R.string.screenTitle.offeredPriceCt +
                                             " :",
                                         appTheme.blackNormal12TitleColorblack),
                                   ),
@@ -1056,13 +1056,13 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    getText(R.string().screenTitle.bidDisc + "(%) :",
+                    getText(R.string.screenTitle.bidDisc + "(%) :",
                         appTheme.blackNormal12TitleColorblack),
                     getText(
                         PriceUtilities.getPercent(
                             widget.item.getFinalDiscount()),
                         appTheme.blackNormal12TitleColorblack),
-                    getText(R.string().screenTitle.bidValue + " :",
+                    getText(R.string.screenTitle.bidValue + " :",
                         appTheme.blackNormal12TitleColorblack),
                     getText(
                         PriceUtilities.getPrice(widget.item.getFinalAmount()),
@@ -1075,12 +1075,12 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    getText(R.string().screenTitle.finalRate + " :",
+                    getText(R.string.screenTitle.finalRate + " :",
                         appTheme.blackNormal12TitleColorblack),
                     getText(
                         PriceUtilities.getPrice(widget.item.getBidFinalRate()),
                         appTheme.blackNormal12TitleColorblack),
-                    getText(R.string().screenTitle.finalValue + " :",
+                    getText(R.string.screenTitle.finalValue + " :",
                         appTheme.blackNormal12TitleColorblack),
                     getText(
                         PriceUtilities.getPrice(
@@ -1094,7 +1094,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    getText(R.string().screenTitle.bidPricePerCt + " :",
+                    getText(R.string.screenTitle.bidPricePerCt + " :",
                         appTheme.blackNormal12TitleColorblack),
                     Row(
                       children: [

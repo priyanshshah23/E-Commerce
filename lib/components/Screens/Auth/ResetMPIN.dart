@@ -132,8 +132,8 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
                         ),
                         Text(
                           isApiCall
-                              ? R.string().authStrings.enterOTP
-                              : R.string().authStrings.sendOTPToEmail,
+                              ? R.string.authStrings.enterOTP
+                              : R.string.authStrings.sendOTPToEmail,
                           style: appTheme.black14TextStyle,
                           textAlign: TextAlign.center,
                         ),
@@ -145,7 +145,7 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
-                                    Text(R.string().authStrings.didNotReceiveOTP,
+                                    Text(R.string.authStrings.didNotReceiveOTP,
                                         style: appTheme.grey16HintTextStyle),
                                     GestureDetector(
                                         onTap: () {
@@ -155,7 +155,7 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
                                         },
                                         child: Text(
                                             isTimerCompleted
-                                                ? " " + R.string().authStrings.resendNow
+                                                ? " " + R.string.authStrings.resendNow
                                                 : " ${_printDuration(Duration(seconds: _start))}",
                                             style:
                                                 appTheme.darkBlue16TextStyle.copyWith(color: appTheme.greenColor))),
@@ -190,7 +190,7 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
                                   //  backgroundColor: appTheme.buttonColor,
                                   borderRadius: getSize(5),
                                   fitWidth: true,
-                                  text: R.string().authStrings.sendOTP,
+                                  text: R.string.authStrings.sendOTP,
                                   //isButtonEnabled: enableDisableSigninButton(),
                                 ),
                               ),
@@ -208,7 +208,7 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        Text(R.string().authStrings.rememberPassword,
+                        Text(R.string.authStrings.rememberPassword,
                             style: appTheme.grey16HintTextStyle),
                         GestureDetector(
                             onTap: () {
@@ -217,7 +217,7 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
                                 (Route<dynamic> route) => false,
                               );
                             },
-                            child: Text(" " + R.string().authStrings.signInCap,
+                            child: Text(" " + R.string.authStrings.signInCap,
                                 style: appTheme.darkBlue16TextStyle.copyWith(color: appTheme.greenColor))),
                       ],
                     ),
@@ -245,7 +245,7 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
       child: CommonTextfield(
         focusNode: _focusEmail,
         textOption: TextFieldOption(
-          hintText: R.string().authStrings.emailAndUname,
+          hintText: R.string.authStrings.emailAndUname,
           maxLine: 1,
           prefixWid: getCommonIconWidget(
               imageName: email,
@@ -267,9 +267,9 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
         textCallback: (text) {},
         validation: (text) {
           if (text.trim().isEmpty) {
-            return R.string().errorString.enterUsername;
+            return R.string.errorString.enterUsername;
           } /*else if (!validateEmail(text.trim())) {
-            return R.string().errorString.enterValidEmail;
+            return R.string.errorString.enterValidEmail;
           }*/ else {
             return null;
           }
@@ -365,7 +365,7 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
               if (pin.trim().length != 4) {
                 isOtpTrue = false;
                 isOtpCheck = false;
-                showOTPMsg = R.string().errorString.pleaseEnterOTP;
+                showOTPMsg = R.string.errorString.pleaseEnterOTP;
               } else if (pin.trim().length == 4) {
                 FocusScope.of(context).unfocus();
                callApiForVerifyOTP();
@@ -452,9 +452,9 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
         context,
-        title: R.string().commonString.error,
+        title: R.string.commonString.error,
         desc: onError.message,
-        positiveBtnTitle: R.string().commonString.btnTryAgain,
+        positiveBtnTitle: R.string.commonString.btnTryAgain,
       );
     });
   }
@@ -484,9 +484,9 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
       setState(() {});
       app.resolve<CustomDialogs>().confirmDialog(
         context,
-        title: R.string().commonString.error,
+        title: R.string.commonString.error,
         desc: onError.message,
-        positiveBtnTitle: R.string().commonString.btnTryAgain,
+        positiveBtnTitle: R.string.commonString.btnTryAgain,
       );
     });
   }

@@ -220,8 +220,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         bool isAuthenticated = await auth.authenticateWithBiometrics(
           localizedReason:
               Platform.isIOS && availableBiometrics.contains(BiometricType.face)
-                  ? R.string().commonString.enableFaceId
-                  : R.string().commonString.enableTouchId,
+                  ? R.string.commonString.enableFaceId
+                  : R.string.commonString.enableTouchId,
           useErrorDialogs: false,
           stickyAuth: false,
         );
@@ -416,7 +416,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     return Scaffold(
       appBar: getAppBar(
         context,
-        R.string().screenTitle.myAccount,
+        R.string.screenTitle.myAccount,
         bgColor: appTheme.whiteColor,
         leadingButton: isFromDrawer
             ? getDrawerButton(context, true)

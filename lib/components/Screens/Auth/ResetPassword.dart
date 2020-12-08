@@ -60,7 +60,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
           child: Scaffold(
             appBar: getAppBar(
               context,
-              R.string().authStrings.resetPwd,
+              R.string.authStrings.resetPwd,
               bgColor: appTheme.whiteColor,
               leadingButton: getBackButton(context),
               centerTitle: false,
@@ -96,7 +96,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
                           padding: EdgeInsets.only(
                               top: getSize(30), bottom: getSize(40)),
                           child: Text(
-                            R.string().authStrings.setNewPassword,
+                            R.string.authStrings.setNewPassword,
                             style: appTheme.black14TextStyle,
                             textAlign: TextAlign.center,
                           ),
@@ -129,7 +129,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
                             },
                             borderRadius: getSize(5),
                             fitWidth: true,
-                            text: R.string().commonString.save,
+                            text: R.string.commonString.save,
                             //isButtonEnabled: enableDisableSigninButton(),
                           ),
                         ),
@@ -151,7 +151,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
       textOption: TextFieldOption(
           prefixWid: getCommonIconWidget(
               imageName: password, imageType: IconSizeType.small),
-          hintText: R.string().authStrings.password + R.string().authStrings.requiredField,
+          hintText: R.string.authStrings.password + R.string.authStrings.requiredField,
           maxLine: 1,
           formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
           keyboardType: TextInputType.text,
@@ -160,9 +160,9 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
       textCallback: (text) {},
       validation: (text) {
         if (text.isEmpty) {
-          return R.string().errorString.enterPassword;
+          return R.string.errorString.enterPassword;
         } else if(!validateStructure(text)) {
-          return R.string().errorString.wrongPassword;
+          return R.string.errorString.wrongPassword;
         } else {
           return null;
         }
@@ -181,7 +181,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
       textOption: TextFieldOption(
           prefixWid: getCommonIconWidget(
               imageName: password, imageType: IconSizeType.small),
-          hintText: R.string().authStrings.confirmPassword + R.string().authStrings.requiredField,
+          hintText: R.string.authStrings.confirmPassword + R.string.authStrings.requiredField,
           maxLine: 1,
           formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
           keyboardType: TextInputType.text,
@@ -190,9 +190,9 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
       textCallback: (text) {},
       validation: (text) {
         if (text.isEmpty) {
-          return R.string().errorString.enterPassword;
+          return R.string.errorString.enterPassword;
         } else if(text != _newPasswordController.text.trim()) {
-          return R.string().errorString.enterSamePassword;
+          return R.string.errorString.enterSamePassword;
         } else {
           return null;
         }
@@ -220,9 +220,9 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
         context,
-        title: R.string().commonString.error,
+        title: R.string.commonString.error,
         desc: onError.message,
-        positiveBtnTitle: R.string().commonString.btnTryAgain,
+        positiveBtnTitle: R.string.commonString.btnTryAgain,
       );
     });
   }

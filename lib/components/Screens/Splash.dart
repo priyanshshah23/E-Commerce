@@ -63,8 +63,8 @@ class _SplashState extends State<Splash> {
         bool isAuthenticated = await auth.authenticateWithBiometrics(
           localizedReason:
               Platform.isIOS && availableBiometrics.contains(BiometricType.face)
-                  ? R.string().commonString.enableFaceId
-                  : R.string().commonString.enableTouchId,
+                  ? R.string.commonString.enableFaceId
+                  : R.string.commonString.enableTouchId,
           useErrorDialogs: false,
           stickyAuth: false,
         );
@@ -177,9 +177,9 @@ class _SplashState extends State<Splash> {
   //   ).catchError(
   //     (onError) => {
   //       app.resolve<CustomDialogs>().confirmDialog(context,
-  //           title: R.string().errorString.versionError,
+  //           title: R.string.errorString.versionError,
   //           desc: onError.message,
-  //           positiveBtnTitle: R.string().commonString.btnTryAgain,
+  //           positiveBtnTitle: R.string.commonString.btnTryAgain,
   //           onClickCallback: (PositveButtonClick) {
   //         callVersionUpdateApi();
   //       }),

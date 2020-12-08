@@ -196,7 +196,7 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
     return Scaffold(
         appBar: getAppBar(
           context,
-          R.string().screenTitle.quickSearch,
+          R.string.screenTitle.quickSearch,
           bgColor: appTheme.whiteColor,
           leadingButton: getDrawerButton(context, true),
           centerTitle: false,
@@ -392,7 +392,7 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
       Container(
         color: appTheme.lightBGColor,
         child: Text(
-          R.string().commonString.colorGroup,
+          R.string.commonString.colorGroup,
           textAlign: TextAlign.center,
           style: appTheme.primaryColor14TextStyle,
         ),

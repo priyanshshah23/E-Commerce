@@ -64,8 +64,8 @@ class _OfferPopupState extends State<OfferPopup> {
                 padding: EdgeInsets.only(top: getSize(30)),
                 child: Text(
                   widget.actionType == DiamondTrackConstant.TRACK_TYPE_OFFICE
-                      ? R.string().screenTitle.bookOffice
-                      : R.string().screenTitle.placeAnOffer,
+                      ? R.string.screenTitle.bookOffice
+                      : R.string.screenTitle.placeAnOffer,
                   style: appTheme.blackSemiBold18TitleColorblack,
                 ),
               ),
@@ -110,7 +110,7 @@ class _OfferPopupState extends State<OfferPopup> {
                           top: getSize(8),
                           bottom: getSize(8)),
                       child: Text(
-                        R.string().commonString.shippingPolicy,
+                        R.string.commonString.shippingPolicy,
                         style: appTheme.blackNormal14TitleColorblack.copyWith(
                           decoration: TextDecoration.underline,
                           color: appTheme.colorPrimary,
@@ -141,7 +141,7 @@ class _OfferPopupState extends State<OfferPopup> {
                           borderRadius: BorderRadius.circular(getSize(5)),
                         ),
                         child: Text(
-                          R.string().commonString.cancel,
+                          R.string.commonString.cancel,
                           textAlign: TextAlign.center,
                           style: appTheme.blue14TextStyle
                               .copyWith(fontSize: getFontSize(16)),
@@ -175,7 +175,7 @@ class _OfferPopupState extends State<OfferPopup> {
                             borderRadius: BorderRadius.circular(getSize(5)),
                             boxShadow: getBoxShadow(context)),
                         child: Text(
-                          R.string().commonString.btnSubmit,
+                          R.string.commonString.btnSubmit,
                           textAlign: TextAlign.center,
                           style: appTheme.white16TextStyle,
                         ),
@@ -201,7 +201,7 @@ class _OfferPopupState extends State<OfferPopup> {
       });
     },
         isTime: false,
-        title: R.string().commonString.selectDate,
+        title: R.string.commonString.selectDate,
         actionType: DiamondTrackConstant.TRACK_TYPE_OFFICE);
   }
 
@@ -221,8 +221,8 @@ class _OfferPopupState extends State<OfferPopup> {
                   imageName: company, imageType: IconSizeType.small),
               hintText:
                   widget.actionType == DiamondTrackConstant.TRACK_TYPE_OFFICE
-                      ? R.string().commonString.officeVisitDate
-                      : R.string().commonString.offerVelidTill,
+                      ? R.string.commonString.officeVisitDate
+                      : R.string.commonString.offerVelidTill,
               maxLine: 1,
               keyboardType: TextInputType.text,
               inputController: _dateController,
@@ -235,8 +235,8 @@ class _OfferPopupState extends State<OfferPopup> {
           validation: (text) {
             if (text.isEmpty) {
               return widget.actionType == DiamondTrackConstant.TRACK_TYPE_OFFICE
-                  ? R.string().errorString.pleaseSelectOfficeVisitDate
-                  : R.string().errorString.pleaseSelectOfferTillDate;
+                  ? R.string.errorString.pleaseSelectOfficeVisitDate
+                  : R.string.errorString.pleaseSelectOfferTillDate;
             }
           },
           inputAction: TextInputAction.next,
@@ -257,7 +257,7 @@ class _OfferPopupState extends State<OfferPopup> {
         textOption: TextFieldOption(
           maxLine: 4,
           inputController: _commentController,
-          hintText: R.string().screenTitle.comment,
+          hintText: R.string.screenTitle.comment,
           // formatter: [
           //   WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
           //   BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
@@ -266,7 +266,7 @@ class _OfferPopupState extends State<OfferPopup> {
         ),
         // validation: (text) {
         //   if (text.isEmpty) {
-        //     return R.string().commonString.enterComment;
+        //     return R.string.commonString.enterComment;
         //   }
         // },
         textCallback: (text) {},

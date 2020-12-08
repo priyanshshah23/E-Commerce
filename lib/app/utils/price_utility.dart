@@ -7,14 +7,14 @@ final int_oCcy = new NumberFormat("##,##,##,##0", "en_US");
 
 class PriceUtilities {
   static String getPrice(num price) {
-    return "${R.string().commonString.doller}" +
+    return "${R.string.commonString.doller}" +
         oCcy.format((price ?? 0).toDouble());
   }
 
   static String getPriceWithInitialZero(num price) {
     return initialZeroFormat.format((price ?? 0).toDouble()) +
         " " +
-        "${R.string().commonString.doller}";
+        "${R.string.commonString.doller}";
   }
 
   static String getPercent(num price) {
@@ -32,7 +32,7 @@ class PriceUtilities {
   static String getIntPrice(num price) {
     return int_oCcy.format((price ?? 0).toInt()) +
         " " +
-        "${R.string().commonString.doller}";
+        "${R.string.commonString.doller}";
   }
 
   static String getDoubleValue(num price) {

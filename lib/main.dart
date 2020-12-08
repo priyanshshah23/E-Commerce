@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:diamnow/app/localization/LocalizationHelper.dart';
 import 'package:diamnow/app/theme/settings_models_provider.dart';
 import 'package:diamnow/app/utils/NotificationHandler.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
@@ -33,7 +34,11 @@ main() {
       child: StreamBuilder<String>(
           stream: ThemeHelper.appthemeString,
           builder: (context, snapshot) {
-            return Base();
+            return StreamBuilder(
+                stream: LocalizationHelper.appLanguage,
+                builder: (context, snapshot2) {
+                  return Base();
+                });
           }),
     ),
   ));
@@ -60,7 +65,6 @@ class _BaseState extends State<Base> {
   }
 
   Future<void> initPlatformState() async {
-
     await notificationInit();
   }
 

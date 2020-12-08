@@ -99,7 +99,7 @@ class CustomDialogs {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(
-                    R.string().authStrings.logout,
+                    R.string.authStrings.logout,
                     textAlign: TextAlign.center,
                     style: AppTheme.of(context).theme.textTheme.body1.copyWith(
                         fontWeight: FontWeight.w600,
@@ -109,7 +109,7 @@ class CustomDialogs {
                     height: getSize(20),
                   ),
                   Text(
-                    R.string().authStrings.logoutConfirmationMsg,
+                    R.string.authStrings.logoutConfirmationMsg,
                     textAlign: TextAlign.center,
                     style: AppTheme.of(context)
                         .theme
@@ -125,7 +125,7 @@ class CustomDialogs {
                       Expanded(
                         child: InkWell(
                           child: Text(
-                            R.string().commonString.no,
+                            R.string.commonString.no,
                             textAlign: TextAlign.center,
                             style: AppTheme.of(context)
                                 .theme
@@ -144,7 +144,7 @@ class CustomDialogs {
                           },
                           borderRadius: 14,
                           fitWidth: true,
-                          text: R.string().commonString.yes,
+                          text: R.string.commonString.yes,
                           //isButtonEnabled: enableDisableSigninButton(),
                         ),
                       ),
@@ -177,8 +177,8 @@ class CustomDialogs {
     app.resolve<CustomDialogs>().errorDialog(
           context,
           "",
-          R.string().errorString.accessDenide,
-          btntitle: R.string().commonString.ok,
+          R.string.errorString.accessDenide,
+          btntitle: R.string.commonString.ok,
         );
   }
 

@@ -269,9 +269,9 @@ class Config {
 
   appendShowMoreTitle(SelectionModel model) {
     Master allMaster = Master();
-    allMaster.sId = R.string().commonString.showMore;
-    allMaster.webDisplay = R.string().commonString.showMore;
-    allMaster.group = R.string().commonString.showMore;
+    allMaster.sId = R.string.commonString.showMore;
+    allMaster.webDisplay = R.string.commonString.showMore;
+    allMaster.group = R.string.commonString.showMore;
 
     List<Master> arrSelectedMaster =
         model.masters.where((element) => element.isSelected).toList();
@@ -416,7 +416,7 @@ class SelectionModel extends FormBaseModel {
       if (masters[index].sId == allLableTitle) {
         if (masters[0].isSelected == true) {
           masters.forEach((element) {
-            if (element.sId != R.string().commonString.showMore) {
+            if (element.sId != R.string.commonString.showMore) {
               element.isSelected = true;
             }
           });
@@ -503,9 +503,9 @@ class SelectionModel extends FormBaseModel {
       if (isShowMoreSelected) {
         if (index == showMoreTagAfterTotalItemCount - 1) {
           if (masters[masters.length - 1].sId ==
-              R.string().commonString.showMore) {
+              R.string.commonString.showMore) {
             if (masters[masters.length - 1].webDisplay ==
-                R.string().commonString.showMore) {
+                R.string.commonString.showMore) {
               isShowMoreSelected = false;
             } else {
               isShowMoreSelected = true;
@@ -513,8 +513,8 @@ class SelectionModel extends FormBaseModel {
           }
         }
       } else {
-        if (masters[index].sId == R.string().commonString.showMore) {
-          if (masters[index].webDisplay == R.string().commonString.showLess) {
+        if (masters[index].sId == R.string.commonString.showMore) {
+          if (masters[index].webDisplay == R.string.commonString.showLess) {
             isShowMoreSelected = true;
           } else {
             isShowMoreSelected = false;

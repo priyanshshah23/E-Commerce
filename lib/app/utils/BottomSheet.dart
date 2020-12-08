@@ -111,7 +111,7 @@ void modalBottomSheetMenu(
                   width: MathUtilities.screenWidth(context),
                   child: Padding(
                     padding: EdgeInsets.all(20),
-                    child: getTitleText(context, R.string().commonString.cancel,
+                    child: getTitleText(context, R.string.commonString.cancel,
                         color:
                             AppTheme.of(context).theme.textTheme.title.color),
                   ),

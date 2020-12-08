@@ -127,7 +127,7 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
                 color: appTheme.unSelectedBgColor,
                 activeColor: appTheme.selectedFilterColor, // default false
                 onPressed: (tag) {
-                  if (tag.title != R.string().commonString.all) {
+                  if (tag.title != R.string.commonString.all) {
                     widget.keyToSymbol.masters.forEach((element) {
                       if (element.webDisplay == tag.title) {
                         element.isSelected ^= true;
@@ -135,7 +135,7 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
                           widget.keyToSymbol.isShowAllSelected = false;
                         } else {
                           for (var element in widget.keyToSymbol.masters) {
-                            if (element.sId != R.string().commonString.all) {
+                            if (element.sId != R.string.commonString.all) {
                               if (element.isSelected) {
                                 widget.keyToSymbol.isShowAllSelected = true;
                               } else {
@@ -156,16 +156,16 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
                       });
                     } else {
                       _tags.forEach((element) {
-                        if (element.title == R.string().commonString.all)
+                        if (element.title == R.string.commonString.all)
                           element.active = false;
                       });
                       widget.keyToSymbol.masters.forEach((element) {
-                        if (element.sId == R.string().commonString.all)
+                        if (element.sId == R.string.commonString.all)
                           element.isSelected = false;
                       });
                     }
                   }
-                  if (tag.title == R.string().commonString.all) {
+                  if (tag.title == R.string.commonString.all) {
                     widget.keyToSymbol.isShowAllSelected ^= true;
 
                     if (widget.keyToSymbol.isShowAllSelected) {
@@ -280,7 +280,7 @@ class _KeyToSymbolWidgetState extends State<KeyToSymbolWidget> {
         //                         }
         //                         widget.keyToSymbol.masters.forEach((element) {
         //                           if (element.sId ==
-        //                                   R.string().commonString.all &&
+        //                                   R.string.commonString.all &&
         //                               element.isSelected &&
         //                               obj.isSelected) {
         //                             element.isSelected = false;

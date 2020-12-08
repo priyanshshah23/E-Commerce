@@ -62,8 +62,8 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
     myDemandBaseList = BaseList(BaseListState(
 //      imagePath: noRideHistoryFound,
       noDataMsg: APPNAME,
-      noDataDesc: R.string().noDataStrings.noDataFound,
-      refreshBtn: R.string().commonString.refresh,
+      noDataDesc: R.string.noDataStrings.noDataFound,
+      refreshBtn: R.string.commonString.refresh,
       enablePullDown: true,
       enablePullUp: true,
       onPullToRefress: () {
@@ -208,9 +208,7 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                                                     padding: EdgeInsets.only(
                                                         right: getSize(3)),
                                                     child: Text(
-                                                      R
-                                                          .string()
-                                                          .commonString
+                                                      R.string.commonString
                                                           .viewDetails,
                                                       textAlign:
                                                           TextAlign.center,
@@ -296,7 +294,7 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                                       DiamondModuleConstant
                                           .MODULE_TYPE_MY_DEMAND)
                                     getPreviewItem(
-                                        R.string().commonString.modify,
+                                        R.string.commonString.modify,
                                         edit_icon,
                                         appTheme.greenPrimaryNormal14TitleColor,
                                         () {
@@ -309,7 +307,7 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                                           args: dict);
                                     }),
                                   getPreviewItem(
-                                      R.string().commonString.delete,
+                                      R.string.commonString.delete,
                                       delete_icon_medium,
                                       appTheme.redPrimaryNormal14TitleColor,
                                       () {
@@ -320,9 +318,9 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                                       desc:
                                           "You really want to delete ${model.name}.",
                                       positiveBtnTitle:
-                                          R.string().commonString.ok,
+                                          R.string.commonString.ok,
                                       negativeBtnTitle:
-                                          R.string().commonString.cancel,
+                                          R.string.commonString.cancel,
                                       onClickCallback: (buttonType) {
                                         if (buttonType ==
                                             ButtonType.PositveButtonClick) {
@@ -337,7 +335,7 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                                     );
                                   }),
                                   getPreviewItem(
-                                    R.string().commonString.search,
+                                    R.string.commonString.search,
                                     saved_medium,
                                     appTheme.primaryColor14TextStyle,
                                     () {
@@ -1020,7 +1018,7 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
     return Scaffold(
       appBar: getAppBar(
         context,
-        R.string().commonString.myDemand,
+        R.string.commonString.myDemand,
         centerTitle: false,
         bgColor: appTheme.whiteColor,
         leadingButton: isFromDrawer

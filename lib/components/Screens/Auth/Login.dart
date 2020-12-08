@@ -9,6 +9,7 @@ import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/app/localization/LocalizationHelper.dart';
 import 'package:diamnow/components/Screens/Auth/ForgetPassword.dart';
 import 'package:diamnow/components/Screens/Auth/Signup.dart';
 import 'package:diamnow/components/Screens/Version/VersionUpdate.dart';
@@ -61,7 +62,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
     "Arabic",
   ];
 
-  String selectedLanguage = R.string().commonString.language;
+  String selectedLanguage = R.string.commonString.language;
   bool isCheckBoxSelected = false;
   final LocalAuthentication auth = LocalAuthentication();
   List<BiometricType> availableBiometrics;
@@ -118,7 +119,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                 Row(
                                   children: [
                                     Text(
-                                      R.string().authStrings.welcome,
+                                      R.string.authStrings.welcome,
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
@@ -131,6 +132,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                       onSelected: (newValue) {
                                         // add this property
                                         selectedLanguage = newValue;
+                                        // changeLocale(newValue);
                                         setState(() {});
                                       },
                                       itemBuilder: (context) => [
@@ -177,10 +179,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                               child: Text(
                                                 selectedLanguage,
                                                 style: selectedLanguage ==
-                                                        R
-                                                            .string()
-                                                            .commonString
-                                                            .language
+                                                        R.string.commonString.language
                                                     ? appTheme
                                                         .grey14HintTextStyle
                                                     : appTheme.black14TextStyle,
@@ -233,8 +232,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                         children: [
                                           InkWell(
                                             onTap: () {
-                                              isCheckBoxSelected =
-                                                  !isCheckBoxSelected;
+                                              isCheckBoxSelected = !isCheckBoxSelected;
                                               setState(() {});
                                             },
                                             child: Row(
@@ -299,7 +297,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                           borderRadius: getSize(5),
                                           fitWidth: true,
                                           text:
-                                              R.string().authStrings.signInCap,
+                                              R.string.authStrings.signInCap,
                                         ),
                                       ),
                                     ),
@@ -417,7 +415,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
                         children: <Widget>[
                           Text("Don't have an account?",
                               style: appTheme.grey16HintTextStyle),
-                          Text(" " + R.string().authStrings.signUp,
+                          Text(" " + R.string.authStrings.signUp,
                               style: appTheme.darkBlue16TextStyle),
                         ],
                       ),
@@ -438,7 +436,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
             getCommonIconWidget(imageName: user, imageType: IconSizeType.small),
         //Image.asset(profileEmail,),
 
-        hintText: R.string().authStrings.name,
+        hintText: R.string.authStrings.name,
         inputController: userNameController,
         errorBorder: _isUserNameValid
             ? null
@@ -470,7 +468,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
         if (text.isEmpty) {
           _isUserNameValid = false;
 
-          return R.string().errorString.enterUsername;
+          return R.string.errorString.enterUsername;
         } else {
           return null;
         }
@@ -488,8 +486,8 @@ class LoginScreenState extends StatefulScreenWidgetState {
       textOption: TextFieldOption(
           prefixWid: getCommonIconWidget(
               imageName: password, imageType: IconSizeType.small),
-          hintText: R.string().authStrings.password +
-              R.string().authStrings.requiredField,
+          hintText: R.string.authStrings.password +
+              R.string.authStrings.requiredField,
           maxLine: 1,
           formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
           keyboardType: TextInputType.text,
@@ -511,10 +509,10 @@ class LoginScreenState extends StatefulScreenWidgetState {
       validation: (text) {
         if (text.isEmpty) {
           _isPasswordValid = false;
-          return R.string().errorString.enterPassword;
+          return R.string.errorString.enterPassword;
         }
         /* else if(!validateStructure(text)) {
-          return R.string().errorString.wrongPassword;
+          return R.string.errorString.wrongPassword;
         } */
         else {
           return null;
@@ -530,7 +528,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
   getForgotPassword() {
     return InkWell(
       child: Text(
-        R.string().authStrings.forgotPassword,
+        R.string.authStrings.forgotPassword,
         textAlign: TextAlign.left,
         style: appTheme.darkBlue16TextStyle,
       ),
@@ -559,10 +557,10 @@ class LoginScreenState extends StatefulScreenWidgetState {
                 title: "",
                 desc: Platform.isIOS &&
                         availableBiometrics.contains(BiometricType.face)
-                    ? R.string().commonString.enableFaceId
-                    : R.string().commonString.enableTouchId,
-                positiveBtnTitle: R.string().commonString.ok,
-                negativeBtnTitle: R.string().commonString.cancel,
+                    ? R.string.commonString.enableFaceId
+                    : R.string.commonString.enableTouchId,
+                positiveBtnTitle: R.string.commonString.ok,
+                negativeBtnTitle: R.string.commonString.cancel,
                 onClickCallback: (buttonType) async {
               if (buttonType == ButtonType.PositveButtonClick) {
                 askForBioMetrics(loginResp)();
@@ -581,9 +579,9 @@ class LoginScreenState extends StatefulScreenWidgetState {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
               context,
-              title: R.string().commonString.error,
+              title: R.string.commonString.error,
               desc: onError.message,
-              positiveBtnTitle: R.string().commonString.ok,
+              positiveBtnTitle: R.string.commonString.ok,
             );
       }
     });
@@ -766,9 +764,9 @@ class LoginScreenState extends StatefulScreenWidgetState {
   //   ).catchError(
   //     (onError) => {
   //       app.resolve<CustomDialogs>().confirmDialog(context,
-  //           title: R.string().errorString.versionError,
+  //           title: R.string.errorString.versionError,
   //           desc: onError.message,
-  //           positiveBtnTitle: R.string().commonString.btnTryAgain,
+  //           positiveBtnTitle: R.string.commonString.btnTryAgain,
   //           onClickCallback: (PositveButtonClick) {
   //         callVersionUpdateApi(id: id);
   //       }),

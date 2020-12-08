@@ -297,10 +297,10 @@ class PrefUtils {
 
 logoutFromApp(BuildContext context) {
   app.resolve<CustomDialogs>().confirmDialog(context,
-      title: R.string().commonString.lbllogout,
-      desc: R.string().authStrings.logoutConfirmationMsg,
-      positiveBtnTitle: R.string().commonString.yes,
-      negativeBtnTitle: R.string().commonString.no,
+      title: R.string.commonString.lbllogout,
+      desc: R.string.authStrings.logoutConfirmationMsg,
+      positiveBtnTitle: R.string.commonString.yes,
+      negativeBtnTitle: R.string.commonString.no,
       onClickCallback: (buttonType) {
     if (buttonType == ButtonType.PositveButtonClick) {
       callLogout(context);

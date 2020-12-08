@@ -24,7 +24,7 @@ class DashboardConfig {
         .getModulePermission(ModulePermissionConstant.permission_newGoods)
         .view)
       arr.add(DashbordTopSection(
-        title: R.string().screenTitle.newArrival,
+        title: R.string.screenTitle.newArrival,
         value: "0",
         image: home_newArrival,
         bgImage: home_newArrivalBg,
@@ -39,7 +39,7 @@ class DashboardConfig {
             ModulePermissionConstant.permission_stone_of_the_day)
         .view)
       arr.add(DashbordTopSection(
-        title: R.string().screenTitle.stoneOfDay,
+        title: R.string.screenTitle.stoneOfDay,
         value: "0",
         image: home_stoneoftheday,
         bgImage: home_stoneofthedayBg,
@@ -53,7 +53,7 @@ class DashboardConfig {
         .getModulePermission(ModulePermissionConstant.permission_watchlist)
         .view)
       arr.add(DashbordTopSection(
-        title: R.string().screenTitle.watchlist,
+        title: R.string.screenTitle.watchlist,
         value: "0",
         image: home_watchlist,
         bgImage: home_watchlistBg,
@@ -67,7 +67,7 @@ class DashboardConfig {
         .getModulePermission(ModulePermissionConstant.permission_cart)
         .view)
       arr.add(DashbordTopSection(
-        title: R.string().screenTitle.myCart,
+        title: R.string.screenTitle.myCart,
         value: "0",
         image: home_cart,
         bgImage: home_cartBg,

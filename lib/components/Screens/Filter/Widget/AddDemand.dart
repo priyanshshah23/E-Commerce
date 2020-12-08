@@ -97,7 +97,7 @@ class _AddDemandState extends State<AddDemand> {
                           Navigator.pop(context);
                         },
                         borderRadius: getSize(5),
-                        text: R.string().commonString.cancel,
+                        text: R.string.commonString.cancel,
                         textColor: appTheme.colorPrimary,
                         backgroundColor: appTheme.lightColorPrimary,
                       ),
@@ -140,7 +140,7 @@ class _AddDemandState extends State<AddDemand> {
                           }
                         },
                         borderRadius: getSize(5),
-                        text: R.string().commonString.btnSubmit,
+                        text: R.string.commonString.btnSubmit,
                       ),
                     ),
                   )
@@ -177,7 +177,7 @@ class _AddDemandState extends State<AddDemand> {
   //     });
   //   },
   //       isTime: false,
-  //       title: R.string().commonString.selectDate,
+  //       title: R.string.commonString.selectDate,
   //       );
   // }
 
@@ -204,7 +204,7 @@ class _AddDemandState extends State<AddDemand> {
       textOption: TextFieldOption(
         prefixWid: getCommonIconWidget(
             imageName: diamondIcon, imageType: IconSizeType.small),
-        hintText: R.string().commonString.demandTitle,
+        hintText: R.string.commonString.demandTitle,
         maxLine: 1,
         formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
         keyboardType: TextInputType.text,
@@ -213,7 +213,7 @@ class _AddDemandState extends State<AddDemand> {
       textCallback: (text) {},
       validation: (text) {
         if (text.isEmpty) {
-          return R.string().commonString.pleaseEnterDemandTitle;
+          return R.string.commonString.pleaseEnterDemandTitle;
         } else {
           return null;
         }

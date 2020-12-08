@@ -96,10 +96,10 @@ class _CountryPickerWidgetState extends State<CountryPickerWidget> {
               titlePadding: EdgeInsets.all(6.0),
               searchCursorColor: AppTheme.of(context).theme.accentColor,
               searchInputDecoration: InputDecoration(
-                hintText: R.string().authStrings.searchHint,
+                hintText: R.string.authStrings.searchHint,
               ),
               isSearchable: true,
-              title: Text(R.string().authStrings.selectYourCountry,
+              title: Text(R.string.authStrings.selectYourCountry,
                   style: AppTheme.of(context).theme.textTheme.subhead),
               onValuePicked: (Country country) {
                 setState(() {
