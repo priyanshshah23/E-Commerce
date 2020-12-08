@@ -21,7 +21,7 @@ class _BottomTabbarWidgetState extends State<BottomTabbarWidget> {
     if (widget.arrBottomTab != null && widget.arrBottomTab.length > 0) {
       return SafeArea(
         child: Container(
-          height: getSize(56),
+          height: getSize(60),
           color: appTheme.colorPrimary,
           child: Row(
             children: [
@@ -70,15 +70,18 @@ class _BottomTabbarWidgetState extends State<BottomTabbarWidget> {
                                   height: getSize(20)),
                           if (widget.arrBottomTab[i].isCenter == false)
                             SizedBox(
-                              height: getSize(5),
+                              height: getSize(8),
                             ),
                           if (widget.arrBottomTab[i].isCenter == false)
-                            Text(
-                              widget.arrBottomTab[i].title,
-                              style: appTheme.getTabbarTextStyle(
-                                  textColor:
-                                      widget.arrBottomTab[i].getTextColor()),
-                              textAlign: TextAlign.center,
+                            FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                widget.arrBottomTab[i].title,
+                                style: appTheme.getTabbarTextStyle(
+                                    textColor:
+                                        widget.arrBottomTab[i].getTextColor()),
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                         ],
                       ),

@@ -208,7 +208,7 @@ class _NotificationsState extends StatefulScreenWidgetState {
                       ),
                       decoration: BoxDecoration(
                         color: appTheme.whiteColor,
-                        boxShadow: isShowShadow
+                        boxShadow: !model.isRead
                             ? [
                                 BoxShadow(
                                     color: appTheme.lightColorPrimary,
@@ -217,9 +217,7 @@ class _NotificationsState extends StatefulScreenWidgetState {
                                     offset: Offset(1, 8)),
                               ]
                             : null,
-                        border: isShowShadow
-                            ? null
-                            : Border.all(color: appTheme.dividerColor),
+                        border: Border.all(color: appTheme.dividerColor),
                         borderRadius: BorderRadius.circular(getSize(5)),
                       ),
                       child: Padding(
@@ -306,7 +304,9 @@ class _NotificationsState extends StatefulScreenWidgetState {
         .then((resp) async {
       print("notification Readed");
       //Redirection from notification.
-      app.resolve<NotificationManger>().notificationRedirection(resp.data.list.first);
+      app
+          .resolve<NotificationManger>()
+          .notificationRedirection(resp.data.list.first);
     }).catchError(
       (onError) => {
         if (onError is ErrorResp) print(onError),

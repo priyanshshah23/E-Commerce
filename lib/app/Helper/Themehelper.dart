@@ -437,7 +437,7 @@ class BaseTheme {
 
   TextStyle getTabbarTextStyle({Color textColor}) {
     return TextStyle(
-        fontSize: getFontSize(10),
+        fontSize: getFontSize(12),
         color: textColor ?? whiteColor,
         fontWeight: FontWeight.normal);
   }

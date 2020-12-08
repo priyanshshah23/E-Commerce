@@ -369,7 +369,7 @@ class _TagWidgetState extends State<TagWidget> {
             ),
           ],
         ),
-        SizedBox(height: getSize(8))
+        // SizedBox(height: getSize(8))
       ],
     );
   }
