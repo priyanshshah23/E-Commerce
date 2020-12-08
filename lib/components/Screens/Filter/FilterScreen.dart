@@ -303,109 +303,107 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: AppBackground(
-        child: Scaffold(
-            appBar: getAppBar(context, R.string().screenTitle.searchDiamond,
-                bgColor: appTheme.whiteColor,
-                leadingButton: isFromDrawer
-                    ? getDrawerButton(context, true)
-                    : getBackButton(context),
-                centerTitle: false,
-                actionItems: [
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        arrList.forEach((element) {
-                          if (element is SelectionModel) {
-                            element.masters.forEach((element) {
-                              element.isSelected = false;
-                            });
-                            element.caratRangeChipsToShow = [];
-                          }
-                          if (element is KeyToSymbolModel) {
-                            element.masters.forEach((element) {
-                              element.isSelected = false;
-                            });
-                          }
-                          if (element is FromToModel) {
-                            element.valueFrom = "";
-                            element.valueTo = "";
-                          }
-                          if (element is ColorModel) {
-                            element.masters.forEach((element) {
-                              element.isSelected = false;
-                            });
-                            element.mainMasters.forEach((element) {
-                              element.isSelected = false;
-                            });
-                            element.groupMaster.forEach((element) {
-                              element.isSelected = false;
-                            });
-                            element.intensity.forEach((element) {
-                              element.isSelected = false;
-                            });
-                            element.overtone.forEach((element) {
-                              element.isSelected = false;
-                            });
-                          }
-                        });
+      child: Scaffold(
+          backgroundColor: appTheme.whiteColor,
+          appBar: getAppBar(context, R.string().screenTitle.searchDiamond,
+              bgColor: appTheme.whiteColor,
+              leadingButton: isFromDrawer
+                  ? getDrawerButton(context, true)
+                  : getBackButton(context),
+              centerTitle: false,
+              actionItems: [
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      arrList.forEach((element) {
+                        if (element is SelectionModel) {
+                          element.masters.forEach((element) {
+                            element.isSelected = false;
+                          });
+                          element.caratRangeChipsToShow = [];
+                        }
+                        if (element is KeyToSymbolModel) {
+                          element.masters.forEach((element) {
+                            element.isSelected = false;
+                          });
+                        }
+                        if (element is FromToModel) {
+                          element.valueFrom = "";
+                          element.valueTo = "";
+                        }
+                        if (element is ColorModel) {
+                          element.masters.forEach((element) {
+                            element.isSelected = false;
+                          });
+                          element.mainMasters.forEach((element) {
+                            element.isSelected = false;
+                          });
+                          element.groupMaster.forEach((element) {
+                            element.isSelected = false;
+                          });
+                          element.intensity.forEach((element) {
+                            element.isSelected = false;
+                          });
+                          element.overtone.forEach((element) {
+                            element.isSelected = false;
+                          });
+                        }
                       });
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          right: getSize(8.0), left: getSize(8.0)),
-                      child: Image.asset(
-                        reset,
-                        height: getSize(20),
-                        width: getSize(20),
-                      ),
+                    });
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        right: getSize(8.0), left: getSize(8.0)),
+                    child: Image.asset(
+                      reset,
+                      height: getSize(20),
+                      width: getSize(20),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      NavigationUtilities.pushRoute(Notifications.route);
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          right: getSize(Spacing.rightPadding),
-                          left: getSize(8.0)),
-                      child: Image.asset(
-                        notification,
-                        height: getSize(20),
-                        width: getSize(20),
-                      ),
+                ),
+                InkWell(
+                  onTap: () {
+                    NavigationUtilities.pushRoute(Notifications.route);
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        right: getSize(Spacing.rightPadding),
+                        left: getSize(8.0)),
+                    child: Image.asset(
+                      notification,
+                      height: getSize(20),
+                      width: getSize(20),
                     ),
                   ),
-                ]),
-            body: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: getSize(8)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      for (int i = 0; i < arrTab.length; i++)
-                        setTitleOfSegment(arrTab[i].title, i)
-                    ],
-                  ),
                 ),
-                // isNullEmptyOrFalse(arrTab)
-                //     ? SizedBox()
-                //     : SizedBox(height: getSize(16)),
-                // isNullEmptyOrFalse(arrTab) ? SizedBox() : _segmentedControl(),
-                Expanded(
-                  child: Container(
-                    color: Colors.transparent,
-                    child: isNullEmptyOrFalse(arrList)
-                        ? SizedBox()
-                        : getPageView(),
-                  ),
+              ]),
+          body: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: getSize(8)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    for (int i = 0; i < arrTab.length; i++)
+                      setTitleOfSegment(arrTab[i].title, i)
+                  ],
                 ),
-              ],
-            ),
-            bottomNavigationBar: getBottomTab()),
-      ),
+              ),
+              // isNullEmptyOrFalse(arrTab)
+              //     ? SizedBox()
+              //     : SizedBox(height: getSize(16)),
+              // isNullEmptyOrFalse(arrTab) ? SizedBox() : _segmentedControl(),
+              Expanded(
+                child: Container(
+                  color: Colors.transparent,
+                  child:
+                      isNullEmptyOrFalse(arrList) ? SizedBox() : getPageView(),
+                ),
+              ),
+            ],
+          ),
+          bottomNavigationBar: getBottomTab()),
     );
   }
 
@@ -788,20 +786,13 @@ class _FilterItemState extends State<FilterItem> {
     if (model.viewType == "searchText") {
       return getSearchTextField();
     } else if (model.viewType == ViewTypes.seperator) {
-      return Padding(
-        padding: EdgeInsets.only(
-            left: getSize(0),
-            right: getSize(0),
-            top: getSize(12),
-            bottom: getSize(8)),
-        child: SeperatorWidget(model),
-      );
+      return SeperatorWidget(model);
     } else if (model.viewType == ViewTypes.selection) {
       return Padding(
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(12.0),
+            top: getSize(8),
             bottom: getSize(8)),
         child: SelectionWidget(model),
       );
@@ -810,7 +801,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(12.0),
+            top: getSize(8),
             bottom: getSize(8)),
         child: FromToWidget(model),
       );
@@ -819,7 +810,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(12.0),
+            top: getSize(8),
             bottom: getSize(8)),
         child: CertNoWidget(model),
       );
@@ -828,7 +819,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(12),
+            top: getSize(8),
             bottom: getSize(8)),
         child: KeyToSymbolWidget(model),
       );
@@ -837,7 +828,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(12),
+            top: getSize(8),
             bottom: getSize(8)),
         child: (model as ColorModel).showGroup
             ? ColorWidget(model)
@@ -848,7 +839,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(12),
+            top: getSize(8),
             bottom: getSize(8)),
         child: CaratRangeWidget(model),
       );
@@ -857,7 +848,7 @@ class _FilterItemState extends State<FilterItem> {
         padding: EdgeInsets.only(
             left: getSize(16),
             right: getSize(16),
-            top: getSize(12.0),
+            top: getSize(8),
             bottom: getSize(8)),
         child: ShapeWidget(model),
       );
@@ -874,6 +865,7 @@ class _FilterItemState extends State<FilterItem> {
     return Hero(
       tag: 'searchTextField',
       child: Material(
+        color: appTheme.whiteColor,
         child: Padding(
           padding: EdgeInsets.only(
             left: getSize(Spacing.leftPadding),

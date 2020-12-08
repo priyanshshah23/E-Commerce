@@ -31,7 +31,7 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
           children: [
             Text(
               R.string().commonString.color,
-              style: appTheme.blackNormal18TitleColorblack,
+              style: appTheme.blackMedium16TitleColorblack,
               textAlign: TextAlign.left,
             ),
             Spacer(),

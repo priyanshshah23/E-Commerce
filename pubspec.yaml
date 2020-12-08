@@ -128,13 +128,14 @@ flutter:
     - family: Avenir
       fonts:
         - asset: assets/fonts/Avenir-Black.ttf
-          weight: 700
+          weight: 800
         - asset: assets/fonts/Avenir-Medium.ttf
+          weight: 600
+        - asset: assets/fonts/Avenir-Roman.ttf
           weight: 500
         - asset: assets/fonts/Avenir-Book.ttf
           weight: 400
         - asset: assets/fonts/Avenir-Light.ttf
           weight: 300
-        - asset: assets/fonts/Avenir-Roman.ttf
-          weight: 200
+        
        

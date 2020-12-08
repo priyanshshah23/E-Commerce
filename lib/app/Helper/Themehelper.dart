@@ -182,7 +182,7 @@ class BaseTheme {
   TextStyle get blackMedium16TitleColorblack {
     return TextStyle(
         fontSize: getFontSize(16),
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w500,
         color: textColor);
   }
 
@@ -210,14 +210,14 @@ class BaseTheme {
   TextStyle get blackSemiBold18TitleColorblack {
     return TextStyle(
         fontSize: getFontSize(18),
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
         color: textColor);
   }
 
   TextStyle get blackMedium20TitleColorblack {
     return TextStyle(
         fontSize: getFontSize(20),
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
         color: textColor);
   }
 
@@ -276,7 +276,7 @@ class BaseTheme {
     return TextStyle(
         fontSize: getFontSize(12),
         color: textColor,
-        fontWeight: FontWeight.w700);
+        fontWeight: FontWeight.w800);
   }
 
   TextStyle get grey12TextStyle {
@@ -318,7 +318,7 @@ class BaseTheme {
     return TextStyle(
         fontSize: getFontSize(12),
         color: textColor,
-        fontWeight: FontWeight.bold);
+        fontWeight: FontWeight.w800);
   }
 
   TextStyle get white16TextStyle {
@@ -361,7 +361,7 @@ class BaseTheme {
     return TextStyle(
       fontSize: getFontSize(18),
       color: textGreyColor,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w600,
     );
   }
 
