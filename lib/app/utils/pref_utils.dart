@@ -36,6 +36,7 @@ class PrefUtils {
   String get keyIsShowThemeSelection => "keyIsShowThemeSelection";
 
   String get keyToSetBiometricenabled => "keyToSetBiometricenabled";
+  String get keyToSetMpinenabled => "keyToSetMpinenabled";
 
   String get FILE_DEVIDE_INFO => "deviceDetail";
 
@@ -164,6 +165,10 @@ class PrefUtils {
     _preferences.setBool(keyToSetBiometricenabled, value);
   }
 
+   void setMpinisUsage(bool value) {
+    _preferences.setBool(keyToSetMpinenabled, value);
+  }
+
   void saveSkipUpdate(bool val) {
     _preferences.setBool(skipUpdate, val);
   }
@@ -174,6 +179,10 @@ class PrefUtils {
 
   bool getBiometrcis() {
     return getBool(keyToSetBiometricenabled);
+  }
+
+  bool getMpin() {
+    return getBool(keyToSetMpinenabled);
   }
 
   String getMasterSyncDate() {

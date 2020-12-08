@@ -39,6 +39,12 @@ abstract class NetworkService {
   @POST(ApiConstants.createMpin)
   Future<BaseApiResp> createMpin(@Body() CreateMpinReq req);
 
+  @POST(ApiConstants.resetMpin)
+  Future<BaseApiResp> resetMpin(@Body() Map<String,dynamic > req);
+
+  @POST(ApiConstants.resetMpinByOtp)
+  Future<BaseApiResp> resetMpinByOtp(@Body() Map<String,dynamic > req);
+
   @POST(ApiConstants.signInAsGuest)
   Future<LoginResp> signInAsGuest(@Body() SignInAsGuestReq req);
 
@@ -66,8 +72,18 @@ abstract class NetworkService {
   @POST(ApiConstants.sendOTP)
   Future<BaseApiResp> forgetPassword(@Body() ForgotPasswordReq req);
 
+  @POST(ApiConstants.forgotMpin)
+  Future<BaseApiResp> forgetMpin(@Body() Map<String, dynamic> req);
+
   @POST(ApiConstants.verifyOTP)
   Future<BaseApiResp> verifyOTP(@Body() VerifyOTPReq req);
+
+  @POST(ApiConstants.verifyOTPForMpin)
+  Future<BaseApiResp> verifyOTPForMpin(@Body() Map<String, dynamic> req);
+
+  @POST(ApiConstants.verifyMpin)
+  Future<BaseApiResp> verifyMpin(@Body() Map<String, dynamic> req);
+
 
   @POST(ApiConstants.resetPassword)
   Future<BaseApiResp> resetPassword(@Body() ResetPasswordReq req);

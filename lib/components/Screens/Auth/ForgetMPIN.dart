@@ -8,6 +8,7 @@ import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/components/Screens/Auth/ResetPassword.dart';
+import 'package:diamnow/components/Screens/Auth/SignInWithMPINScreen.dart';
 
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/components/widgets/pinView_textFields/decoration/pin_decoration.dart';
@@ -150,7 +151,7 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
                                     GestureDetector(
                                         onTap: () {
                                           if(isTimerCompleted) {
-                                            callForgetPasswordApi(isResend: true);
+                                            callForgetMpinApi(isResend: true);
                                           }
                                         },
                                         child: Text(
@@ -174,7 +175,7 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
                                     FocusScope.of(context).unfocus();
                                     if (_formKey.currentState.validate()) {
                                       _formKey.currentState.save();
-                                      callForgetPasswordApi();
+                                      callForgetMpinApi(isResend: true);
 //                                callLoginApi(context);
                                     } else {
                                       setState(() {
@@ -426,13 +427,13 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
         );
   }
 
-  callForgetPasswordApi({bool isResend = false}) async {
-    ForgotPasswordReq req = ForgotPasswordReq();
-    req.value = _emailController.text;
+  callForgetMpinApi({bool isResend = false}) async {
+   Map<String,dynamic> req = {};
+   req["username"] = _emailController.value.text;
 
     NetworkCall<BaseApiResp>()
         .makeCall(
-            () => app.resolve<ServiceModule>().networkService().forgetPassword(req),
+            () => app.resolve<ServiceModule>().networkService().forgetMpin(req),
         context,
         isProgress: true)
         .then((resp) async {
@@ -460,13 +461,13 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
   }
 
   callApiForVerifyOTP() async {
-    VerifyOTPReq req = VerifyOTPReq();
-    req.email = _emailController.text;
-    req.otpNumber = _pinEditingController.text.trim();
+    Map<String,dynamic> req = {};
+    req["mPinOtp"] = _pinEditingController.text.trim();
+    req["username"] = _emailController.text;
 
     NetworkCall<BaseApiResp>()
         .makeCall(
-            () => app.resolve<ServiceModule>().networkService().verifyOTP(req),
+            () => app.resolve<ServiceModule>().networkService().verifyOTPForMpin(req),
         context,
         isProgress: true)
         .then((resp) async {
@@ -474,10 +475,11 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
       isOtpTrue = true;
       isOtpCheck = false;
       showOTPMsg = null;
-      Map<String, dynamic> dict = new HashMap();
-      dict["value"] = _emailController.text;
-      dict["otpNumber"] = _pinEditingController.text.trim();
-      NavigationUtilities.pushRoute(ResetPassword.route, args: dict);
+      Map<String, dynamic> arguments = {};
+      arguments["resetMpin"] = true;
+      arguments["userName"] = _emailController.text;
+      arguments["mPinOtp"] = _pinEditingController.text.trim();
+      NavigationUtilities.pushRoute(SignInWithMPINScreen.route,args: arguments);
     }).catchError((onError) {
       isOtpTrue = false;
       isOtpCheck = false;

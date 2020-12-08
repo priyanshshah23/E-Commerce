@@ -9,6 +9,7 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/Screens/Auth/ChangePassword.dart';
 import 'package:diamnow/components/Screens/Auth/ProfileList.dart';
+import 'package:diamnow/components/Screens/Auth/SignInWithMPINScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Home/DrawerModel.dart';
 import 'package:diamnow/components/Screens/Home/HomeDrawer.dart';
@@ -46,7 +47,7 @@ class MyAccountScreen extends StatefulWidget {
 class _MyAccountScreenState extends State<MyAccountScreen> {
   List<DrawerModel> accountItems = DrawerSetting().getAccountListItems();
   bool isFromDrawer;
-  bool isSwitched = false;
+  bool isSwitchedTouchId = false, isSwitchedMpin = false;
   List<BiometricType> availableBiometrics;
   final LocalAuthentication auth = LocalAuthentication();
 
@@ -54,7 +55,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      isSwitched = app.resolve<PrefUtils>().getBiometrcis() ?? false;
+      isSwitchedTouchId = app.resolve<PrefUtils>().getBiometrcis() ?? false;
+      isSwitchedMpin = app.resolve<PrefUtils>().getMpin() ?? false;
       availableBiometrics = await auth.getAvailableBiometrics();
       setState(() {});
     });
@@ -173,12 +175,13 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                     ? InkWell(
                         onTap: () {},
                         child: Switch(
-                          value: isSwitched,
+                          value: isSwitchedTouchId,
                           onChanged: (value) {
                             setState(() {
-                              isSwitched = !isSwitched;
+                              // if (isSwitchedMpin) isSwitchedMpin = false;
+                              isSwitchedTouchId = !isSwitchedTouchId;
 
-                              if (isSwitched == true) {
+                              if (isSwitchedTouchId == true) {
                                 askForBioMetrics();
                               }
                             });
@@ -187,18 +190,40 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                           activeColor: appTheme.colorPrimary,
                         ),
                       )
-                    : Padding(
-                        padding: EdgeInsets.only(
-                          left: getSize(20),
-                          right: getSize(20),
-                        ),
-                        child: Container(
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            size: getSize(14),
+                    : model.type == DiamondModuleConstant.MODULE_TYPE_MPIN
+                        ? InkWell(
+                            onTap: () {},
+                            child: Switch(
+                              value: isSwitchedMpin,
+                              onChanged: (value) {
+                                setState(() {
+                                  // if (isSwitchedTouchId)
+                                  //   isSwitchedTouchId = false;
+                                  isSwitchedMpin = !isSwitchedMpin;
+
+                                  if (isSwitchedMpin == true) {
+                                    askForMpin();
+                                  } else {
+                                    app.resolve<PrefUtils>().setMpinisUsage(false);
+                                  }
+                                });
+                              },
+                              activeTrackColor: appTheme.borderColor,
+                              activeColor: appTheme.colorPrimary,
+                            ),
+                          )
+                        : Padding(
+                            padding: EdgeInsets.only(
+                              left: getSize(20),
+                              right: getSize(20),
+                            ),
+                            child: Container(
+                              child: Icon(
+                                Icons.arrow_forward_ios,
+                                size: getSize(14),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
               ],
             ),
           ),
@@ -227,17 +252,19 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         );
         if (isAuthenticated) {
           app.resolve<PrefUtils>().setBiometrcisUsage(true);
+          app.resolve<PrefUtils>().setMpinisUsage(false);
           setState(() {
-            isSwitched = true;
+            isSwitchedTouchId = true;
+            isSwitchedMpin = false;
           });
         } else {
           setState(() {
-            isSwitched = false;
+            isSwitchedTouchId = false;
           });
         }
       } on PlatformException catch (_) {
         setState(() {
-          isSwitched = false;
+          isSwitchedTouchId = false;
         });
       }
     } else {
@@ -248,9 +275,66 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
             context: context);
       }
       setState(() {
-        isSwitched = false;
+        isSwitchedTouchId = false;
       });
     }
+  }
+
+  askForMpin() async {
+    Map<String, dynamic> args = {};
+    args["askForVerifyMpin"] = true;
+    args["enm"] = Mpin.myAccount;
+    args["verifyPinCallback"] = () {
+      print("Verified");
+      isSwitchedMpin = true;
+      isSwitchedTouchId = false;
+      app.resolve<PrefUtils>().setMpinisUsage(true);
+      app.resolve<PrefUtils>().setBiometrcisUsage(false);
+      setState(() {});
+    };
+
+    NavigationUtilities.pushRoute(SignInWithMPINScreen.route, args: args);
+isSwitchedMpin = false;
+setState(() {
+  
+});
+    //
+    // if (!isNullEmptyOrFalse(availableBiometrics)) {
+    //   try {
+    //     bool isAuthenticated = await auth.authenticateWithBiometrics(
+    //       localizedReason:
+    //           Platform.isIOS && availableBiometrics.contains(BiometricType.face)
+    //               ? R.string().commonString.enableFaceId
+    //               : R.string().commonString.enableTouchId,
+    //       useErrorDialogs: false,
+    //       stickyAuth: false,
+    //     );
+    //     if (isAuthenticated) {
+    //       app.resolve<PrefUtils>().setBiometrcisUsage(true);
+    //       setState(() {
+    //         isSwitchedTouchId = true;
+    //       });
+    //     } else {
+    //       setState(() {
+    //         isSwitchedTouchId = false;
+    //       });
+    //     }
+    //   } on PlatformException catch (_) {
+    //     setState(() {
+    //       isSwitchedTouchId = false;
+    //     });
+    //   }
+    // } else {
+    //   List<BiometricType> availableBiometrics;
+    //   if (isNullEmptyOrFalse(availableBiometrics)) {
+    //     showToast(
+    //         "FaceId/TouchId is not enabled in your phone, Please enable to use this feature",
+    //         context: context);
+    //   }
+    //   setState(() {
+    //     isSwitchedTouchId = false;
+    //   });
+    // }
   }
 
   Widget _buildAvatarRow(BuildContext context) {

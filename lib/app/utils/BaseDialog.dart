@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
 
-enum ButtonType { PositveButtonClick, NagativeButtonClick }
+enum ButtonType { PositveButtonClick, PositveButtonClick2, NagativeButtonClick }
 
 typedef OnClickCallback(ButtonType type);
 

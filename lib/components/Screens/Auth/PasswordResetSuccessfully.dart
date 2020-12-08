@@ -7,12 +7,22 @@ import 'package:flutter/services.dart';
 
 class PasswordResetSuccessfully extends StatefulWidget {
   static const route = "PasswordResetSuccessfully";
+  bool isForMpin = false;
 
+  PasswordResetSuccessfully({Map<String, dynamic> arguments}){
+    if(!isNullEmptyOrFalse(arguments)){
+      isForMpin = arguments["isForMpin"];
+    }
+  }
   @override
-  _PasswordResetSuccessfullyState createState() => _PasswordResetSuccessfullyState();
+  _PasswordResetSuccessfullyState createState() => _PasswordResetSuccessfullyState(this.isForMpin);
 }
 
 class _PasswordResetSuccessfullyState extends State<PasswordResetSuccessfully> {
+
+  bool isForMpin;
+
+  _PasswordResetSuccessfullyState(this.isForMpin);
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +76,9 @@ class _PasswordResetSuccessfullyState extends State<PasswordResetSuccessfully> {
                 ),
               ),
               Text(
-                R.string().authStrings.passwordResetSuccessfully,
+                !isForMpin ? 
+                R.string().authStrings.passwordResetSuccessfully :
+                "Mpin reset successfully.",
                 style: appTheme.blackMedium20TitleColorblack,
                 textAlign: TextAlign.center,
               ),

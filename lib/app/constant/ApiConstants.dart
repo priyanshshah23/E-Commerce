@@ -57,7 +57,10 @@ class ApiConstants {
       apiUrl + "web/v1/auth/reset-password-by-user"; //done
   static const String personalInformation = commonUrl + "user/update"; //done
   static const String sendOTP = commonUrl + "user/send-otp"; //done
+  static const String forgotMpin = commonUrl + "forgot-mpin?";
   static const String verifyOTP = commonUrl + "user/verify-otp"; //done
+  static const String verifyOTPForMpin = commonUrl + "verify-mpin-otp"; //done
+  static const String verifyMpin = commonUrl + "verify-mpin"; //done
   static const String companyInformation =
       commonUrl + "user/profile/update"; //done
   static const String quickSearch = commonUrl + "diamond/quick-search";
@@ -103,6 +106,8 @@ class ApiConstants {
 
   //mpin
   static const String createMpin = commonUrl + "user/create-mpin";
+  static const String resetMpin = commonUrl + "reset-mpin";
+  static const String resetMpinByOtp = commonUrl + "reset-mpin-by-otp";
 }
 
 class DiamondUrls {

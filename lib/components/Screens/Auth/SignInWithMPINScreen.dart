@@ -13,6 +13,7 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/Screens/Auth/ForgetMPIN.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
+import 'package:diamnow/components/Screens/Auth/PasswordResetSuccessfully.dart';
 import 'package:diamnow/components/Screens/Auth/Signup.dart';
 import 'package:diamnow/components/Screens/Version/VersionUpdate.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
@@ -31,14 +32,62 @@ class SignInWithMPINScreen extends StatefulScreenWidget {
   static const route = "SignInWithMPINScreen";
   bool isForReEnter = false;
   List<int> enteredPin = [];
+  Function verifyPinCallback;
+  // from mpin button on login screen.
   bool fromMpinButton = false;
 
+  //reset mpin from otp
+  bool resetMpin = false;
+  String userName = "";
+  String mPinOtp = "";
+
+  //verifyMpin before enable mpin from myaccount.
+  bool askForVerifyMpin = false;
+  //enum for which screen you came from
+  int enm;
+
   SignInWithMPINScreen(
-      {this.isForReEnter, this.enteredPin, this.fromMpinButton});
+      {this.isForReEnter,
+      this.enteredPin,
+      this.fromMpinButton,
+      this.resetMpin,
+      this.askForVerifyMpin,
+      this.enm,
+      Map<String, dynamic> arguments}) {
+    if (!isNullEmptyOrFalse(arguments)) {
+      if (!isNullEmptyOrFalse(arguments["resetMpin"])) {
+        resetMpin = arguments["resetMpin"];
+      }
+      if (!isNullEmptyOrFalse(arguments["userName"])) {
+        userName = arguments["userName"];
+      }
+      if (!isNullEmptyOrFalse(arguments["mPinOtp"])) {
+        mPinOtp = arguments["mPinOtp"];
+      }
+
+      if (!isNullEmptyOrFalse(arguments["askForVerifyMpin"])) {
+        askForVerifyMpin = arguments["askForVerifyMpin"];
+      }
+      if (!isNullEmptyOrFalse(arguments["enm"])) {
+        enm = arguments["enm"];
+      }
+      if (!isNullEmptyOrFalse(arguments["verifyPinCallback"])) {
+        verifyPinCallback = arguments["verifyPinCallback"];
+      }
+    }
+  }
 
   @override
   _SignInWithMPINScreen createState() => _SignInWithMPINScreen(
-      this.isForReEnter, this.enteredPin, this.fromMpinButton);
+      this.isForReEnter,
+      this.enteredPin,
+      this.fromMpinButton,
+      this.resetMpin,
+      this.userName,
+      this.mPinOtp,
+      this.askForVerifyMpin,
+      this.enm,
+      this.verifyPinCallback);
 }
 
 class _SignInWithMPINScreen extends StatefulScreenWidgetState {
@@ -47,9 +96,24 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
   bool isForReEnter;
   List<int> enteredPin;
   bool fromMpinButton;
+  bool resetMpin;
+  String userName;
+  String mPinOtp = "";
+  bool askForVerifyMpin;
+  int enm;
+  Function verifyPinCallback;
+
   // String _lastLogin;
   _SignInWithMPINScreen(
-      this.isForReEnter, this.enteredPin, this.fromMpinButton);
+      this.isForReEnter,
+      this.enteredPin,
+      this.fromMpinButton,
+      this.resetMpin,
+      this.userName,
+      this.mPinOtp,
+      this.askForVerifyMpin,
+      this.enm,
+      this.verifyPinCallback);
 
   LoginScreenState loginScreenObject = LoginScreenState();
 
@@ -65,7 +129,13 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
     if (isNullEmptyOrFalse(fromMpinButton)) {
       fromMpinButton = false;
     }
-    _userName = app.resolve<PrefUtils>().getString("userName");
+    if (isNullEmptyOrFalse(resetMpin)) {
+      resetMpin = false;
+    }
+    if (isNullEmptyOrFalse(askForVerifyMpin)) {
+      askForVerifyMpin = false;
+    }
+    _userName = app.resolve<PrefUtils>().getString("userName") ?? "";
     if (!isNullEmptyOrFalse(_userName))
       loginScreenObject.userNameController.text = _userName;
     // _lastLogin = app.resolve<PrefUtils>().getUserDetails()
@@ -88,13 +158,24 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
           child: Scaffold(
             resizeToAvoidBottomPadding: false,
             resizeToAvoidBottomInset: true,
-            appBar: getAppBar(
-              context,
-              R.string().authStrings.signInWithMPIN,
-              bgColor: appTheme.whiteColor,
-              leadingButton: getBackButton(context),
-              centerTitle: false,
-            ),
+            appBar: getAppBar(context, R.string().authStrings.signInWithMPIN,
+                bgColor: appTheme.whiteColor,
+                leadingButton: getBackButton(context),
+                centerTitle: false,
+                actionItems: [
+                  if (fromMpinButton == false)
+                    InkWell(
+                      onTap: () {
+                        logoutFromApp(context);
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(right: getSize(16.0)),
+                        child: Container(
+                            child: Image.asset(logout,
+                                width: getSize(24), height: getSize(24))),
+                      ),
+                    )
+                ]),
             body: Container(
               padding: EdgeInsets.only(
                 left: getSize(20),
@@ -219,9 +300,9 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
 //                      ],
 //                    ),
                     GestureDetector(
-                     onTap: (){
-                         FocusScope.of(context).unfocus();
-                     },
+                      onTap: () {
+                        FocusScope.of(context).unfocus();
+                      },
                       child: Container(
                         height: 800,
                         child: FlutterCustomPinView(
@@ -255,11 +336,12 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                             }
                           },
                           onSuccess: () {
-                            
                             if (!isForReEnter) {
                               if (fromMpinButton) {
                                 // Focus.of(context).unfocus();
                                 callApiForLoginUsingMpin(context);
+                              } else if (askForVerifyMpin) {
+                                callApiForVerifyMpin(context);
                               } else {
                                 NavigationUtilities.push(SignInWithMPINScreen(
                                   enteredPin: this.enteredPin,
@@ -267,7 +349,11 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                                 ));
                               }
                             } else {
-                              callCreateMpApi(context);
+                              if (resetMpin) {
+                                callApiForResetMpin(context);
+                              } else {
+                                callCreateMpApi(context);
+                              }
                             }
                           },
                         ),
@@ -333,6 +419,87 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
       print("Api calling doneeeeeeeeeee");
       callLogout(context);
       // NavigationUtilities.pushRoute(LoginScreen.route);
+    }).catchError((onError) {
+      if (onError is ErrorResp) {
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              title: R.string().commonString.error,
+              desc: onError.message,
+              positiveBtnTitle: R.string().commonString.ok,
+            );
+      }
+    });
+  }
+
+  Future callApiForResetMpin(BuildContext context) async {
+    Map<String, dynamic> req = {};
+    String enteredMpinInString = "";
+
+    enteredPin.forEach((element) {
+      enteredMpinInString += (element.toString());
+    });
+
+    req["username"] = userName;
+    req["mPinOtp"] = int.parse(mPinOtp);
+    req["mPin"] = int.parse(enteredMpinInString);
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+            () => app
+                .resolve<ServiceModule>()
+                .networkService()
+                .resetMpinByOtp(req),
+            context,
+            isProgress: true)
+        .then((loginResp) {
+      print("Api calling doneeeeeeeeeee");
+      // callLogout(context);
+      Map<String, dynamic> arguments = {};
+      arguments["isForMpin"] = true;
+      NavigationUtilities.pushRoute(PasswordResetSuccessfully.route,
+          args: arguments);
+    }).catchError((onError) {
+      if (onError is ErrorResp) {
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              title: R.string().commonString.error,
+              desc: onError.message,
+              positiveBtnTitle: R.string().commonString.ok,
+            );
+      }
+    });
+  }
+
+  Future callApiForVerifyMpin(BuildContext context) async {
+    Map<String, dynamic> req = {};
+    String enteredMpinInString = "";
+
+    enteredPin.forEach((element) {
+      enteredMpinInString += (element.toString());
+    });
+
+    req["username"] = loginScreenObject.userNameController.text;
+    // req["mPin"] = int.parse(enteredMpinInString);
+    req["mPin"] = enteredMpinInString;
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().verifyMpin(req),
+            context,
+            isProgress: true)
+        .then((loginResp) {
+      print("Api calling doneeeeeeeeeee");
+      // callLogout(context);
+      //here check from splash or from switch...
+      if (enm == Mpin.myAccount) {
+        Navigator.of(context).pop();
+        this.verifyPinCallback();
+      } else if (enm == Mpin.splash) {
+        SyncManager().callVersionUpdateApi(context, VersionUpdateApi.splash,
+            id: app.resolve<PrefUtils>().getUserDetails().id ?? "");
+      } else if(enm == Mpin.login){
+        loginScreenObject.saveUserResponse(LoginScreenState.globalloginResp);
+      }
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(

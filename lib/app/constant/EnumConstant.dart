@@ -1,4 +1,4 @@
-class ViewTypes {
+  class ViewTypes {
   static const String fromTo = "fromto";
   static const String selection = "selection";
   static const String dropDown = "dropDown";
@@ -81,4 +81,10 @@ class KYCStatus{
   static const int approved = 2;
   static const int rejected = 3;
 
+}
+
+class Mpin {
+  static const int splash  = 1;
+  static const int myAccount = 2;
+  static const int login = 3;
 }

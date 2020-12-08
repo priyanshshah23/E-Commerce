@@ -182,19 +182,25 @@ class CustomDialogs {
         );
   }
 
-  void confirmDialog(BuildContext context,
-      {String title,
-      String desc,
-      String positiveBtnTitle,
-      String negativeBtnTitle,
-      OnClickCallback onClickCallback,
-      bool dismissPopup: true,
-      bool barrierDismissible: false,
-      RichText richText}) {
+  void confirmDialog(
+    BuildContext context, {
+    String title,
+    String desc,
+    String positiveBtnTitle,
+    String positiveBtnTitle2,
+    String negativeBtnTitle,
+    OnClickCallback onClickCallback,
+    bool dismissPopup: true,
+    bool barrierDismissible: false,
+    RichText richText,
+    int totalButton,
+  }) {
     OpenConfirmationPopUp(context,
         title: title,
         desc: desc,
         positiveBtnTitle: positiveBtnTitle,
+        positiveBtnTitle2: positiveBtnTitle2,
+        totalButton: totalButton,
         negativeBtnTitle: negativeBtnTitle,
         onClickCallback: onClickCallback,
         dismissPopup: dismissPopup,
@@ -396,11 +402,13 @@ Future OpenConfirmationPopUp(BuildContext context,
     {String title,
     String desc,
     String positiveBtnTitle,
+    String positiveBtnTitle2,
     String negativeBtnTitle,
     OnClickCallback onClickCallback,
     bool dismissPopup: true,
     bool barrierDismissible: false,
-    RichText richText}) {
+    RichText richText,
+    int totalButton}) {
   Future<bool> _onBackPressed() {
     if (dismissPopup) {
       Navigator.pop(context);
@@ -526,6 +534,39 @@ Future OpenConfirmationPopUp(BuildContext context,
                                     positiveBtnTitle,
                                     textAlign: TextAlign.center,
                                     style: appTheme.white16TextStyle,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          if(!isNullEmptyOrFalse(totalButton) && totalButton == 3)
+                          Expanded(
+                            child: Padding(
+                              padding:  EdgeInsets.only(left:getSize(20)),
+                              child: InkWell(
+                                onTap: () {
+                                  if (dismissPopup) {
+                                    Navigator.pop(context);
+                                  }
+                                  if (onClickCallback != null) {
+                                    onClickCallback(
+                                        ButtonType.PositveButtonClick2);
+                                  }
+                                },
+                                child: Container(
+                                  height: getSize(50),
+                                  decoration: BoxDecoration(
+                                      color: appTheme.colorPrimary,
+                                      borderRadius:
+                                          BorderRadius.circular(getSize(5)),
+                                      boxShadow: getBoxShadow(context)),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(getSize(16)),
+                                    child: Text(
+                                      positiveBtnTitle2,
+                                      textAlign: TextAlign.center,
+                                      style: appTheme.white16TextStyle,
+                                    ),
                                   ),
                                 ),
                               ),

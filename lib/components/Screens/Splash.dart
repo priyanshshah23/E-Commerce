@@ -6,6 +6,7 @@ import 'package:diamnow/app/AppConfiguration/AppNavigation.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/components/Screens/Auth/SignInWithMPINScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -213,6 +214,12 @@ class _SplashState extends State<Splash> {
   Future callMasterSync() async {
     if (app.resolve<PrefUtils>().getBiometrcis()) {
       askForBioMetrics();
+    } else if (app.resolve<PrefUtils>().getMpin()) {
+      Map<String, dynamic> args = {};
+      args["askForVerifyMpin"] = true;
+      args["enm"] = Mpin.splash;
+
+      NavigationUtilities.pushRoute(SignInWithMPINScreen.route, args: args);
     } else {
       callSyncApi();
     }
