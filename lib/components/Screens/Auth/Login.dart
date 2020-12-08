@@ -330,7 +330,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
 
                                     Padding(
                                       padding:
-                                          EdgeInsets.only(top: getSize(60)),
+                                          EdgeInsets.only(top: getSize(50)),
                                       child: Row(
                                         children: [
                                           Expanded(
