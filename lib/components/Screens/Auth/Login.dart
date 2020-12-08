@@ -590,14 +590,15 @@ class LoginScreenState extends StatefulScreenWidgetState {
             app.resolve<CustomDialogs>().confirmDialog(context,
                 title: "",
                 desc:
-                    "Please, choose Which you wanna set while unlocking app...",
-                positiveBtnTitle: Platform.isIOS &&
+                Platform.isIOS &&
                         availableBiometrics.contains(BiometricType.face)
-                    ? "FaceId"
-                    : "TouchId",
-                positiveBtnTitle2: "Mpin",
+                    ? "Do you want to Enable FaceId?"
+                    : "Do you want to Enable TouchId?",
+                    // "Please, choose Which you wanna set while unlocking app...",
+                positiveBtnTitle: R.string.commonString.ok,
+                // positiveBtnTitle2: "Mpin",
                 negativeBtnTitle: R.string.commonString.cancel,
-                totalButton: 3,
+                // totalButton: 3,
                  onClickCallback: (buttonType) async {
               if (buttonType == ButtonType.PositveButtonClick) {
                 askForBioMetrics(loginResp)();

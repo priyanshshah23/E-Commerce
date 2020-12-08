@@ -158,9 +158,9 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
           child: Scaffold(
             resizeToAvoidBottomPadding: false,
             resizeToAvoidBottomInset: true,
-            appBar: getAppBar(context, R.string.authStrings.signInWithMPIN,
+            appBar: getAppBar(context, enm == Mpin.splash || enm == Mpin.myAccount ? "Verify Mpin" : R.string.authStrings.signInWithMPIN,
                 bgColor: appTheme.whiteColor,
-                leadingButton: getBackButton(context),
+                leadingButton: enm == Mpin.splash ? SizedBox() :getBackButton(context),
                 centerTitle: false,
                 actionItems: [
                   if (fromMpinButton == false)
@@ -214,21 +214,15 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                loginScreenObject.getMobileTextField(),
-                                // !isNullEmptyOrFalse(_userName)
-                                //     ? Text(
-                                //         _userName,
-                                //         style:
-                                //             appTheme.black16TextStyle.copyWith(
-                                //           fontWeight: FontWeight.w500,
-                                //         ),
-                                //       )
-                                //     : loginScreenObject.getMobileTextField(),
-                                // SizedBox(height: getSize(6)),
-                                // Text(
-                                //   "Last login: 28 October 2020 | 11:37pm",
-                                //   style: appTheme.black12TextStyle,
-                                // ),
+                                !isNullEmptyOrFalse(_userName)
+                                    ? Text(
+                                        _userName,
+                                        style:
+                                            appTheme.black16TextStyle.copyWith(
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      )
+                                    : loginScreenObject.getMobileTextField(),
                               ],
                             ),
                           ),
@@ -497,7 +491,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
       } else if (enm == Mpin.splash) {
         SyncManager().callVersionUpdateApi(context, VersionUpdateApi.splash,
             id: app.resolve<PrefUtils>().getUserDetails().id ?? "");
-      } else if(enm == Mpin.login){
+      } else if (enm == Mpin.login) {
         loginScreenObject.saveUserResponse(LoginScreenState.globalloginResp);
       }
     }).catchError((onError) {
