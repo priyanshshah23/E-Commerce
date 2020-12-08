@@ -204,7 +204,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                   if (isSwitchedMpin == true) {
                                     askForMpin();
                                   } else {
-                                    app.resolve<PrefUtils>().setMpinisUsage(false);
+                                    app
+                                        .resolve<PrefUtils>()
+                                        .setMpinisUsage(false);
                                   }
                                 });
                               },
@@ -294,10 +296,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     };
 
     NavigationUtilities.pushRoute(SignInWithMPINScreen.route, args: args);
-isSwitchedMpin = false;
-setState(() {
-  
-});
+    isSwitchedMpin = false;
+    setState(() {});
     //
     // if (!isNullEmptyOrFalse(availableBiometrics)) {
     //   try {
