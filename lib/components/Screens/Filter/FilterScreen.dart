@@ -305,7 +305,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       },
       child: Scaffold(
           backgroundColor: appTheme.whiteColor,
-          appBar: getAppBar(context, R.string().screenTitle.searchDiamond,
+          appBar: getAppBar(context, R.string.screenTitle.searchDiamond,
               bgColor: appTheme.whiteColor,
               leadingButton: isFromDrawer
                   ? getDrawerButton(context, true)
@@ -631,7 +631,17 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               .getModulePermission(
                   ModulePermissionConstant.permission_matchPair)
               .view) {
-            callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR);
+            SyncManager.instance.callApiForMatchPair(
+                context, FilterRequest().createRequest(arrList),
+                (diamondListResp) {
+              Map<String, dynamic> dict = new HashMap();
+              dict["filterId"] = diamondListResp.data.filter.id;
+              dict["filters"] = FilterRequest().createRequest(arrList);
+              dict[ArgumentConstant.ModuleType] =
+                  DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR;
+              NavigationUtilities.pushRoute(DiamondListScreen.route,
+                  args: dict);
+            }, (onError) {});
           } else {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
           }

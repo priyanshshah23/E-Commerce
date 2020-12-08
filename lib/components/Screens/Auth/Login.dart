@@ -118,10 +118,15 @@ class LoginScreenState extends StatefulScreenWidgetState {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                     Expanded(
-                                       flex : 6,
-                                       child: Text(
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.only(right: getSize(16)),
+                                      child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text(
                                           R.string.authStrings.welcome,
                                           textAlign: TextAlign.left,
                                           style: TextStyle(
@@ -130,83 +135,85 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                             fontSize: getFontSize(24),
                                           ),
                                         ),
-                                     ),
-                                    // Expanded(child: SizedBox()),
-                                       Expanded(
-                                         flex: 4,
-                                           child:
-                                    PopupMenuButton<String>(
-                                      onSelected: (newValue) {
-                                        // add this property
-                                        selectedLanguage = newValue;
-                                        LocalizationHelper.changeLocale(
-                                            language[newValue]);
-                                        app
-                                            .resolve<PrefUtils>()
-                                            .setLocalization(
-                                                language[newValue]);
-                                        setState(() {});
-                                      },
-                                      itemBuilder: (context) => [
-                                        for (var item in language.keys)
-                                          PopupMenuItem(
-                                            value: item,
-                                            height: getSize(20),
-                                            child: Container(
-                                              width: getSize(85),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: <Widget>[
-                                                  Text(
-                                                    item,
-                                                    style: appTheme
-                                                        .black14TextStyle,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          )
-                                      ],
-                                      child: Container(
-                                        width: getSize(170),
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: getSize(10),
-                                            vertical: getSize(5)),
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: appTheme.textGreyColor)),
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                                height: getSize(10),
-                                                width: getSize(10),
-                                                child:
-                                                    Image.asset(languageIcon)),
-                                            SizedBox(
-                                              width: getSize(10),
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                selectedLanguage,
-                                                style: selectedLanguage ==
-                                                        R.string.commonString
-                                                            .language
-                                                    ? appTheme
-                                                        .grey14HintTextStyle
-                                                    : appTheme.black14TextStyle,
-                                              ),
-                                            ),
-                                            Container(
-                                                height: getSize(10),
-                                                width: getSize(10),
-                                                child: Image.asset(dropDown)),
-                                          ],
-                                        ),
                                       ),
-                                      offset: Offset(25, 110),
-                                    ) )
+                                    ),
+                                    Container(
+                                      width: getSize(120),
+                                      child: PopupMenuButton<String>(
+                                        onSelected: (newValue) {
+                                          // add this property
+                                          selectedLanguage = newValue;
+                                          LocalizationHelper.changeLocale(
+                                              language[newValue]);
+                                          app
+                                              .resolve<PrefUtils>()
+                                              .setLocalization(
+                                                  language[newValue]);
+                                          setState(() {});
+                                        },
+                                        itemBuilder: (context) => [
+                                          for (var item in language.keys)
+                                            PopupMenuItem(
+                                              value: item,
+                                              height: getSize(20),
+                                              child: Container(
+                                                width: getSize(85),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: <Widget>[
+                                                    Text(
+                                                      item,
+                                                      style: appTheme
+                                                          .black14TextStyle,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            )
+                                        ],
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: getSize(10),
+                                              vertical: getSize(5)),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color:
+                                                      appTheme.textGreyColor)),
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                  height: getSize(10),
+                                                  width: getSize(10),
+                                                  child: Image.asset(
+                                                      languageIcon)),
+                                              SizedBox(
+                                                width: getSize(10),
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  selectedLanguage,
+                                                  style: selectedLanguage ==
+                                                          R.string.commonString
+                                                              .language
+                                                      ? appTheme
+                                                          .grey14HintTextStyle
+                                                      : appTheme
+                                                          .black14TextStyle,
+                                                ),
+                                              ),
+                                              Container(
+                                                height: getSize(10),
+                                                width: getSize(10),
+                                                child: Image.asset(dropDown),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        offset: Offset(25, 110),
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 Column(

@@ -30,7 +30,7 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
         Row(
           children: [
             Text(
-              R.string().commonString.color,
+              R.string.commonString.color,
               style: appTheme.blackMedium16TitleColorblack,
               textAlign: TextAlign.left,
             ),

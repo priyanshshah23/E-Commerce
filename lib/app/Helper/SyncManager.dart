@@ -169,6 +169,39 @@ class SyncManager {
     });
   }
 
+  Future callApiForMatchPair(
+    BuildContext context,
+    Map<String, dynamic> req,
+    Function(DiamondListResp) success,
+    Function failure, {
+    bool isProgress = true,
+    String searchText,
+  }) async {
+    Map<String, dynamic> dict = {};
+    dict["isNotReturnTotal"] = true;
+    dict["isReturnCountOnly"] = true;
+    dict["filters"] = req;
+
+    if (!isNullEmptyOrFalse(searchText)) {
+      dict["search"] = searchText;
+    }
+
+    NetworkCall<DiamondListResp>()
+        .makeCall(
+      () => app
+          .resolve<ServiceModule>()
+          .networkService()
+          .diamondMatchPairList(dict),
+      context,
+      isProgress: isProgress,
+    )
+        .then((diamondListResp) async {
+      success(diamondListResp);
+    }).catchError((onError) {
+      print(onError);
+    });
+  }
+
   Future callApiForCreateDiamondTrack(
     BuildContext context,
     int trackType,
