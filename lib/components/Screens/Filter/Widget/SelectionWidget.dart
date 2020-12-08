@@ -324,7 +324,7 @@ class _TagWidgetState extends State<TagWidget> {
             },
           ),
         ),
-        SizedBox(height: getSize(12))
+        // SizedBox(height: getSize(12))
       ],
     );
   }
@@ -339,7 +339,7 @@ class _TagWidgetState extends State<TagWidget> {
               width: getSize(80),
               child: Text(
                 widget.model.title ?? "",
-                style: appTheme.blackNormal14TitleColorblack,
+                style: appTheme.blackMedium16TitleColorblack.copyWith(fontSize: getFontSize(14),),
                 textAlign: TextAlign.left,
               ),
             ),
@@ -369,7 +369,7 @@ class _TagWidgetState extends State<TagWidget> {
             ),
           ],
         ),
-        SizedBox(height: getSize(8))
+        // SizedBox(height: getSize(8))
       ],
     );
   }

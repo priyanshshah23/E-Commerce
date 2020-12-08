@@ -51,17 +51,10 @@ class Base extends StatefulWidget {
 }
 
 class _BaseState extends State<Base> {
-  ThemeData themeData;
-
   @override
   void initState() {
     super.initState();
     initPlatformState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => setState(() {
-        themeData = AppTheme.of(context).theme;
-      }),
-    );
   }
 
   Future<void> initPlatformState() async {
@@ -74,7 +67,14 @@ class _BaseState extends State<Base> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: APPNAME,
-      theme: themeData,
+      theme: ThemeData(
+        // Define the default brightness and colors.
+        brightness: Brightness.light,
+        primaryColor: appTheme.colorPrimary,
+
+        // Define the default font family.
+        fontFamily: 'Avenir',
+      ),
       navigatorKey: NavigationUtilities.key,
       onGenerateRoute: onGenerateRoute,
       navigatorObservers: [routeObserver],

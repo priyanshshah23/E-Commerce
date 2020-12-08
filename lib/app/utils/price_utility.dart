@@ -35,6 +35,6 @@ class PriceUtilities {
   }
 
   static String getDoubleValue(num price) {
-    return initialZeroFormat.format((price ?? 0).toDouble());
+    return (price ?? 0).toDouble().toStringAsFixed(2);
   }
 }

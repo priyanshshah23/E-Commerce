@@ -1724,7 +1724,7 @@
     "verticalScroll": true,
     "orientation": "v",
     "isShowAll": false,
-    "isShowMore": true,
+    "isShowMore": false,
     "tab": "advance",
     "sequence": 72,
     "gridViewItemCount": 3,

@@ -194,6 +194,7 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: appTheme.whiteColor,
         appBar: getAppBar(
           context,
           R.string.screenTitle.quickSearch,
