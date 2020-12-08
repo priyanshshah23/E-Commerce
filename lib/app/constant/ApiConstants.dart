@@ -100,6 +100,9 @@ class ApiConstants {
   static const String contactUs = webPageUrl + "contact-us";
   static const String shippingPolicy = webPageUrl + "shipping-policy";
   static const String aboutUs = webPageUrl + "about-us";
+
+  //mpin
+  static const String createMpin = commonUrl + "user/create-mpin";
 }
 
 class DiamondUrls {

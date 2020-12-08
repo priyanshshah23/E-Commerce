@@ -5,6 +5,36 @@ import 'package:diamnow/models/Address/CountryListModel.dart';
 import 'package:diamnow/models/Address/StateListModel.dart';
 import 'package:flutter/widgets.dart';
 
+class CreateMpinReq {
+  int mPin;
+  bool isMpinAdded;
+  String username;
+
+  CreateMpinReq({this.mPin, this.isMpinAdded, this.username});
+
+  CreateMpinReq.fromJson(Map<String, dynamic> json) {
+    mPin = json['mPin'];
+    isMpinAdded = json['isMpinAdded'];
+    username = json['username'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (!isNullEmptyOrFalse(this.mPin)) {
+      data['mPin'] = this.mPin;
+    }
+
+    if (!isNullEmptyOrFalse(this.isMpinAdded)) {
+      data['isMpinAdded'] = this.isMpinAdded;
+    }
+
+    if (!isNullEmptyOrFalse(this.username)) {
+      data['username'] = this.username;
+    }
+    return data;
+  }
+}
+
 class LoginReq {
   String username;
   String password;
@@ -172,6 +202,9 @@ class User {
   String city;
   String state;
 
+  //mpin
+  bool isMpinAdded;
+
 //  Null createdBy;
 
   User.fromJson(Map<String, dynamic> json) {
@@ -274,6 +307,9 @@ class User {
     }
     kycRequired = json["kycRequired"] ?? false;
 
+    isMpinAdded =
+        !isNullEmptyOrFalse(json["isMpinAdded"]) ? json["isMpinAdded"] : false;
+
     // city  = json['city'];
     // state = json['state'];
     // country = json['country'];
@@ -367,6 +403,9 @@ class User {
     }
     data['seller'] = this.seller;
     data["kycRequired"] = this.kycRequired;
+
+    //mpin
+    data['isMpinAdded'] = this.isMpinAdded;
     return data;
   }
 

@@ -29,33 +29,56 @@ import 'package:package_info/package_info.dart';
 
 class SignInWithMPINScreen extends StatefulScreenWidget {
   static const route = "SignInWithMPINScreen";
+  bool isForReEnter = false;
+  List<int> enteredPin = [];
+  bool fromMpinButton = false;
+
+  SignInWithMPINScreen(
+      {this.isForReEnter, this.enteredPin, this.fromMpinButton});
 
   @override
-  _SignInWithMPINScreen createState() => _SignInWithMPINScreen();
+  _SignInWithMPINScreen createState() => _SignInWithMPINScreen(
+      this.isForReEnter, this.enteredPin, this.fromMpinButton);
 }
 
 class _SignInWithMPINScreen extends StatefulScreenWidgetState {
   bool isFingerprint = false;
   String _userName;
+  bool isForReEnter;
+  List<int> enteredPin;
+  bool fromMpinButton;
   // String _lastLogin;
+  _SignInWithMPINScreen(
+      this.isForReEnter, this.enteredPin, this.fromMpinButton);
+
   LoginScreenState loginScreenObject = LoginScreenState();
 
   @override
   void initState() {
     super.initState();
+    if (isNullEmptyOrFalse(isForReEnter)) {
+      isForReEnter = false;
+    }
+    if (isNullEmptyOrFalse(enteredPin)) {
+      enteredPin = [];
+    }
+    if (isNullEmptyOrFalse(fromMpinButton)) {
+      fromMpinButton = false;
+    }
     _userName = app.resolve<PrefUtils>().getString("userName");
+    if (!isNullEmptyOrFalse(_userName))
+      loginScreenObject.userNameController.text = _userName;
     // _lastLogin = app.resolve<PrefUtils>().getUserDetails()
   }
 
   @override
-  void dispose() { 
+  void dispose() {
     loginScreenObject.userNameController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // var myPass = [1, 2, 3, 4, 5, 6];
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -110,13 +133,16 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                !isNullEmptyOrFalse(_userName) ? Text(
-                                  _userName,
-                                  style: appTheme.black16TextStyle.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ) :
                                 loginScreenObject.getMobileTextField(),
+                                // !isNullEmptyOrFalse(_userName)
+                                //     ? Text(
+                                //         _userName,
+                                //         style:
+                                //             appTheme.black16TextStyle.copyWith(
+                                //           fontWeight: FontWeight.w500,
+                                //         ),
+                                //       )
+                                //     : loginScreenObject.getMobileTextField(),
                                 // SizedBox(height: getSize(6)),
                                 // Text(
                                 //   "Last login: 28 October 2020 | 11:37pm",
@@ -192,39 +218,59 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
 //                        ),
 //                      ],
 //                    ),
-                    Container(
-                      height: 800,
-                      child: FlutterCustomPinView(
-                        title: "This is Screet ",
-                        passLength: 6,
-                        bgImage: "",
-                        showFingerPass: true,
-                        fingerPrintImage: "",
-                        //fingerFunction: biometrics,
-                        fingerVerify: isFingerprint,
-                        borderColor: appTheme.whiteColor,
-                        foregroundColor: appTheme.textGreyColor,
-                        showWrongPassDialog: true,
-                        wrongPassContent: "Wrong pass please try again.",
-                        wrongPassTitle: "Oops!",
-                        wrongPassCancelButtonText: "Cancel",
-                        passCodeVerify: (passcode) async {
-                          print(passcode);
-                          // for (int i = 0; i < myPass.length; i++) {
-                          //   if (passcode[i] != myPass[i]) {
-                          //     return false;
-                          //   }
-                          // }
-                          return true;
-                        },
-                        onSuccess: () {
-                          print("success");
-                          print(loginScreenObject.userNameController.text);
-                          // SyncManager().callVersionUpdateApi(
-                          //   context,
-                          //   VersionUpdateApi.signInWithMpin,
-                          // );
-                        },
+                    GestureDetector(
+                     onTap: (){
+                         FocusScope.of(context).unfocus();
+                     },
+                      child: Container(
+                        height: 800,
+                        child: FlutterCustomPinView(
+                          title: "This is Screet ",
+                          passLength: 6,
+                          bgImage: "",
+                          showFingerPass: true,
+                          fingerPrintImage: "",
+                          //fingerFunction: biometrics,
+                          fingerVerify: isFingerprint,
+                          borderColor: appTheme.whiteColor,
+                          foregroundColor: appTheme.textGreyColor,
+                          showWrongPassDialog: true,
+                          wrongPassContent:
+                              "Both Mpin should be same,\n Please Enter once again...",
+                          wrongPassTitle: "Oops!",
+                          wrongPassCancelButtonText: "Cancel",
+                          passCodeVerify: (passcode) async {
+                            print(passcode);
+
+                            if (isForReEnter) {
+                              for (int i = 0; i < enteredPin.length; i++) {
+                                if (passcode[i] != enteredPin[i]) {
+                                  return false;
+                                }
+                              }
+                              return true;
+                            } else {
+                              enteredPin = passcode;
+                              return true;
+                            }
+                          },
+                          onSuccess: () {
+
+                            if (!isForReEnter) {
+                              if (fromMpinButton) {
+                                // Focus.of(context).unfocus();
+                                callApiForLoginUsingMpin(context);
+                              } else {
+                                NavigationUtilities.push(SignInWithMPINScreen(
+                                  enteredPin: this.enteredPin,
+                                  isForReEnter: true,
+                                ));
+                              }
+                            } else {
+                              callCreateMpApi(context);
+                            }
+                          },
+                        ),
                       ),
                     ),
                   ],
@@ -265,31 +311,61 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
 //    }
   }
 
-  callApi(BuildContext context) async {
-    SignInAsGuestReq req = SignInAsGuestReq();
+  Future callCreateMpApi(BuildContext context) async {
+    CreateMpinReq req = CreateMpinReq();
+    String enteredMpinInString = "";
+
+    enteredPin.forEach((element) {
+      enteredMpinInString += (element.toString());
+    });
+
+    int finalEnteredMpinInInt = int.parse(enteredMpinInString);
+
+    req.mPin = finalEnteredMpinInInt;
+    req.isMpinAdded = true;
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().createMpin(req),
+            context,
+            isProgress: true)
+        .then((loginResp) {
+      print("Api calling doneeeeeeeeeee");
+      callLogout(context);
+      // NavigationUtilities.pushRoute(LoginScreen.route);
+    }).catchError((onError) {
+      if (onError is ErrorResp) {
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              title: R.string().commonString.error,
+              desc: onError.message,
+              positiveBtnTitle: R.string().commonString.ok,
+            );
+      }
+    });
+  }
+
+  callApiForLoginUsingMpin(BuildContext context) {
+    Map<String, dynamic> req = {};
+
+    String enteredMpinInString = "";
+
+    enteredPin.forEach((element) {
+      enteredMpinInString += (element.toString());
+    });
+
+    int finalEnteredMpinInInt = int.parse(enteredMpinInString);
+    req["password"] = finalEnteredMpinInInt.toString();
+    req["username"] = loginScreenObject.userNameController.text;
+    req["mPinLogin"] = true;
 
     NetworkCall<LoginResp>()
         .makeCall(
-            () => app
-                .resolve<ServiceModule>()
-                .networkService()
-                .signInAsGuest(req),
+            () => app.resolve<ServiceModule>().networkService().login(req),
             context,
             isProgress: true)
-        .then((loginResp) async {
-//      if (loginResp.data != null) {
-//        app.resolve<PrefUtils>().saveUser(loginResp.data.user);
-//        await app.resolve<PrefUtils>().saveUserToken(
-//          loginResp.data.token.jwt,
-//        );
-//        await app.resolve<PrefUtils>().saveUserPermission(
-//          loginResp.data.userPermissions,
-//        );
-//      }
-      // callVersionUpdateApi(id: loginResp.data.user.id);
-      SyncManager().callVersionUpdateApi(
-          context, VersionUpdateApi.signInWithMpin,
-          id: loginResp.data.user.id);
+        .then((loginResp) {
+      saveUserResponse(loginResp);
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
@@ -301,109 +377,24 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
       }
     });
   }
-  // void callVersionUpdateApi({String id}) {
-  //   NetworkCall<VersionUpdateResp>()
-  //       .makeCall(
-  //           () => app
-  //           .resolve<ServiceModule>()
-  //           .networkService()
-  //           .getVersionUpdate(),
-  //       context,
-  //       isProgress: true)
-  //       .then(
-  //         (resp) {
-  //       if (resp.data != null) {
-  //         PackageInfo.fromPlatform().then(
-  //               (PackageInfo packageInfo) {
-  //             print(packageInfo.buildNumber);
-  //             String appName = packageInfo.appName;
-  //             String packageName = packageInfo.packageName;
-  //             String version = packageInfo.version;
-  //             String buildNumber = packageInfo.buildNumber;
 
-  //             if (Platform.isIOS) {
-  //               if (resp.data.ios != null) {
-  //                 num respVersion = resp.data.ios.number;
-  //                 if (num.parse(version) < respVersion) {
-  //                   bool hardUpdate = resp.data.ios.isHardUpdate;
-  //                   Map<String, dynamic> dict = new HashMap();
-  //                   dict["isHardUpdate"] = hardUpdate;
-  //                   dict["oncomplete"] = () {
-  //                     Navigator.pop(context);
-  //                   };
-  //                   print(hardUpdate);
-  //                   if (hardUpdate == true) {
-  //                     NavigationUtilities.pushReplacementNamed(
-  //                       VersionUpdate.route,
-  //                       args: dict,
-  //                     );
-  //                   }
-  //                 } else {
-  //                   SyncManager.instance.callMasterSync(
-  //                       NavigationUtilities.key.currentContext, () async {
-  //                     //success
-  //                     AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-  //                   }, () {},
-  //                       isNetworkError: false,
-  //                       isProgress: true,
-  //                       id: id).then((value) {});
-  //                 }
-  //               } else {
-  //                 SyncManager.instance.callMasterSync(
-  //                     NavigationUtilities.key.currentContext, () async {
-  //                   //success
-  //                   AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-  //                 }, () {},
-  //                     isNetworkError: false,
-  //                     isProgress: true,
-  //                     id: id).then((value) {});
-  //               }
-  //             } else {
-  //               if (resp.data.android != null) {
-  //                 num respVersion = resp.data.android.number;
-  //                 if (num.parse(buildNumber) < respVersion) {
-  //                   bool hardUpdate = resp.data.android.isHardUpdate;
-  //                   if (hardUpdate == true) {
-  //                     NavigationUtilities.pushReplacementNamed(
-  //                       VersionUpdate.route,
-  //                     );
-  //                   }
-  //                 } else {
-  //                   SyncManager.instance.callMasterSync(
-  //                       NavigationUtilities.key.currentContext, () async {
-  //                     //success
-  //                     AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-  //                   }, () {},
-  //                       isNetworkError: false,
-  //                       isProgress: true,
-  //                       id: id).then((value) {});
-  //                 }
-  //               } else {
-  //                 SyncManager.instance.callMasterSync(
-  //                     NavigationUtilities.key.currentContext, () async {
-  //                   //success
-  //                   AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-  //                 }, () {},
-  //                     isNetworkError: false,
-  //                     isProgress: true,
-  //                     id: id).then((value) {});
-  //               }
-  //             }
-  //           },
-  //         );
-  //       }
-  //     },
-  //   ).catchError(
-  //         (onError) => {
-  //       app.resolve<CustomDialogs>().confirmDialog(context,
-  //           title: R.string.errorString.versionError,
-  //           desc: onError.message,
-  //           positiveBtnTitle: R.string.commonString.btnTryAgain,
-  //           onClickCallback: (PositveButtonClick) {
-  //             callVersionUpdateApi(id: id);
-  //           }),
-  //     },
-  //   );
-  // }
-
+  saveUserResponse(LoginResp loginResp) async {
+    // save Logged In user
+    if (loginResp.data != null) {
+      app.resolve<PrefUtils>().saveUser(loginResp.data.user);
+      await app.resolve<PrefUtils>().saveUserToken(
+            loginResp.data.token.jwt,
+          );
+      await app.resolve<PrefUtils>().saveUserPermission(
+            loginResp.data.userPermissions,
+          );
+      if (loginResp.data.user.isMpinAdded == false) {
+        NavigationUtilities.pushRoute(SignInWithMPINScreen.route);
+      } else {
+        //varify mpin
+        SyncManager().callVersionUpdateApi(context, VersionUpdateApi.logIn,
+            id: loginResp.data.user.id);
+      }
+    }
+  }
 }

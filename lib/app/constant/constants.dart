@@ -9,6 +9,9 @@ const DEFAULT_LIMIT = 100;
 const SUCCESS = 1;
 const FAIL = 2;
 
+const dollar = "\u20B9";
+const rupee = "\u0024";
+
 var IMAGEFILESIZE = 10.0;
 
 const APPNAME = "My Diamonds";
@@ -34,7 +37,7 @@ const successStatusCode = 200;
 const addedSuccesStatusCode = 201;
 const notFoundStatusCode = 404;
 
-const signupURl = "http://192.168.0.187:3003/device/signup";
+const signupURl = "http://pndevelop.democ.in/signup";
 const termConditionUrl = "https://loremipsum.io/";
 const privacyPolicyUrl = "https://loremipsum.io/";
 const aboutUsUrl = "https://loremipsum.io/";

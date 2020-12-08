@@ -41,7 +41,7 @@ class LoginScreen extends StatefulScreenWidget {
 class LoginScreenState extends StatefulScreenWidgetState {
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController userNameController = TextEditingController();
+  TextEditingController userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   var _focusUserName = FocusNode();
@@ -287,7 +287,13 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                             if (_formKey.currentState
                                                 .validate()) {
                                               _formKey.currentState.save();
-                                              callLoginApi(context);
+
+                                              Map<String, dynamic> req = {};
+                                              req["username"] =
+                                                  userNameController.text;
+                                              req["password"] =
+                                                  _passwordController.text;
+                                              callLoginApi(context, req);
                                             } else {
                                               setState(() {
                                                 _autoValidate = true;
@@ -337,8 +343,12 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                           Expanded(
                                             child: InkWell(
                                               onTap: () {
-                                                NavigationUtilities.pushRoute(
-                                                    SignInWithMPINScreen.route);
+                                                // NavigationUtilities.pushRoute(
+                                                //     SignInWithMPINScreen.route,);
+                                                NavigationUtilities.push(
+                                                    SignInWithMPINScreen(
+                                                  fromMpinButton: true,
+                                                ));
                                               },
                                               child: Container(
                                                 alignment: Alignment.center,
@@ -346,24 +356,26 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                                   top: getSize(10),
                                                   left: getSize(0),
                                                 ),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    Image.asset(
-                                                      mpin,
-                                                      width: getSize(15),
-                                                      height: getSize(15),
-                                                    ),
-                                                    SizedBox(
-                                                      width: getSize(10),
-                                                    ),
-                                                    Text(
-                                                      "MPIN",
-                                                      style: appTheme
-                                                          .primary16TextStyle,
-                                                    )
-                                                  ],
+                                                child: InkWell(
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      Image.asset(
+                                                        mpin,
+                                                        width: getSize(15),
+                                                        height: getSize(15),
+                                                      ),
+                                                      SizedBox(
+                                                        width: getSize(10),
+                                                      ),
+                                                      Text(
+                                                        "MPIN",
+                                                        style: appTheme
+                                                            .primary16TextStyle,
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -539,10 +551,10 @@ class LoginScreenState extends StatefulScreenWidgetState {
     );
   }
 
-  Future callLoginApi(BuildContext context) async {
-    LoginReq req = LoginReq();
-    req.username = userNameController.text;
-    req.password = _passwordController.text;
+  Future callLoginApi(BuildContext context, Map<String, dynamic> req) async {
+    // LoginReq req = LoginReq();
+    // req.username = userNameController.text;
+    // req.password = _passwordController.text;
 
     NetworkCall<LoginResp>()
         .makeCall(
@@ -557,6 +569,10 @@ class LoginScreenState extends StatefulScreenWidgetState {
                 title: "",
                 desc: Platform.isIOS &&
                         availableBiometrics.contains(BiometricType.face)
+                    ? R.string().commonString.enableFaceId
+                    : R.string().commonString.enableTouchId,
+                positiveBtnTitle: R.string().commonString.yes,
+                negativeBtnTitle: R.string().commonString.no,
                     ? R.string.commonString.enableFaceId
                     : R.string.commonString.enableTouchId,
                 positiveBtnTitle: R.string.commonString.ok,
@@ -633,8 +649,14 @@ class LoginScreenState extends StatefulScreenWidgetState {
     }
 //      NavigationUtilities.pushRoute(Notifications.route);
     // callVersionUpdateApi(id: loginResp.data.user.id); //for local
-    SyncManager().callVersionUpdateApi(context, VersionUpdateApi.logIn,
-        id: loginResp.data.user.id);
+    // isMpinAdded==false
+    if (loginResp.data.user.isMpinAdded == false) {
+      NavigationUtilities.pushRoute(SignInWithMPINScreen.route);
+    } else {
+      //varify mpin
+      SyncManager().callVersionUpdateApi(context, VersionUpdateApi.logIn,
+          id: loginResp.data.user.id);
+    }
   }
   // void callVersionUpdateApi({String id}) {
   //   NetworkCall<VersionUpdateResp>()
