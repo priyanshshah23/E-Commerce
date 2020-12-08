@@ -50,22 +50,23 @@ class LoginScreenState extends StatefulScreenWidgetState {
   bool _isPasswordValid = false;
   bool isButtonEnabled = true;
   bool _autoValidate = false;
-  List<String> language = <String>[
-    "English",
-    "French",
-    "Chinese",
-    "Japanese",
-    "Italian",
-    "Spanish",
-    "Germany",
-    "Hebrew",
-    "Arabic",
-  ];
+  Map<String, String> language = <String, String>{
+    "English": English.languageCode,
+    "French": French.languageCode,
+    "Chinese": Chinese.languageCode,
+    "Japanese": Japan.languageCode,
+    "Italian": Italian.languageCode,
+    "Spanish": Spanish.languageCode,
+    "Germany": Germany.languageCode,
+    // "Hebrew",
+    // "Arabic",
+  };
 
   String selectedLanguage = R.string.commonString.language;
   bool isCheckBoxSelected = false;
   final LocalAuthentication auth = LocalAuthentication();
   List<BiometricType> availableBiometrics;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -118,25 +119,36 @@ class LoginScreenState extends StatefulScreenWidgetState {
                               children: <Widget>[
                                 Row(
                                   children: [
-                                    Text(
-                                      R.string.authStrings.welcome,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: appTheme.textBlackColor,
-                                        fontSize: getFontSize(24),
-                                      ),
-                                    ),
-                                    Expanded(child: SizedBox()),
+                                     Expanded(
+                                       flex : 6,
+                                       child: Text(
+                                          R.string.authStrings.welcome,
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: appTheme.textBlackColor,
+                                            fontSize: getFontSize(24),
+                                          ),
+                                        ),
+                                     ),
+                                    // Expanded(child: SizedBox()),
+                                       Expanded(
+                                         flex: 4,
+                                           child:
                                     PopupMenuButton<String>(
                                       onSelected: (newValue) {
                                         // add this property
                                         selectedLanguage = newValue;
-                                        // changeLocale(newValue);
+                                        LocalizationHelper.changeLocale(
+                                            language[newValue]);
+                                        app
+                                            .resolve<PrefUtils>()
+                                            .setLocalization(
+                                                language[newValue]);
                                         setState(() {});
                                       },
                                       itemBuilder: (context) => [
-                                        for (var item in language)
+                                        for (var item in language.keys)
                                           PopupMenuItem(
                                             value: item,
                                             height: getSize(20),
@@ -179,7 +191,8 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                               child: Text(
                                                 selectedLanguage,
                                                 style: selectedLanguage ==
-                                                        R.string.commonString.language
+                                                        R.string.commonString
+                                                            .language
                                                     ? appTheme
                                                         .grey14HintTextStyle
                                                     : appTheme.black14TextStyle,
@@ -193,7 +206,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                         ),
                                       ),
                                       offset: Offset(25, 110),
-                                    )
+                                    ) )
                                   ],
                                 ),
                                 Column(
@@ -232,7 +245,8 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                         children: [
                                           InkWell(
                                             onTap: () {
-                                              isCheckBoxSelected = !isCheckBoxSelected;
+                                              isCheckBoxSelected =
+                                                  !isCheckBoxSelected;
                                               setState(() {});
                                             },
                                             child: Row(
@@ -302,8 +316,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                           },
                                           borderRadius: getSize(5),
                                           fitWidth: true,
-                                          text:
-                                              R.string.authStrings.signInCap,
+                                          text: R.string.authStrings.signInCap,
                                         ),
                                       ),
                                     ),
@@ -569,10 +582,6 @@ class LoginScreenState extends StatefulScreenWidgetState {
                 title: "",
                 desc: Platform.isIOS &&
                         availableBiometrics.contains(BiometricType.face)
-                    ? R.string().commonString.enableFaceId
-                    : R.string().commonString.enableTouchId,
-                positiveBtnTitle: R.string().commonString.yes,
-                negativeBtnTitle: R.string().commonString.no,
                     ? R.string.commonString.enableFaceId
                     : R.string.commonString.enableTouchId,
                 positiveBtnTitle: R.string.commonString.ok,
@@ -658,6 +667,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
           id: loginResp.data.user.id);
     }
   }
+
   // void callVersionUpdateApi({String id}) {
   //   NetworkCall<VersionUpdateResp>()
   //       .makeCall(

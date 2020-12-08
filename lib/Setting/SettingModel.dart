@@ -630,7 +630,7 @@ class BottomMenuSetting {
       moreMenuList.add(BottomTabModel(
           image: enquiry,
           isCenter: false,
-          title: R.string().screenTitle.enquiry,
+          title: R.string.screenTitle.enquiry,
           type: ActionMenuConstant.ACTION_TYPE_ENQUIRY));
     }
   }
@@ -642,7 +642,7 @@ class BottomMenuSetting {
         .insert) {
       moreMenuList.add(BottomTabModel(
           image: addToCart,
-          title: R.string().screenTitle.addToCart,
+          title: R.string.screenTitle.addToCart,
           isCenter: false,
           type: ActionMenuConstant.ACTION_TYPE_ADD_TO_CART));
     }
@@ -652,7 +652,7 @@ class BottomMenuSetting {
     moreMenuList.add(BottomTabModel(
         image: finalCalculation,
         isCenter: false,
-        title: R.string().screenTitle.finalCalculation,
+        title: R.string.screenTitle.finalCalculation,
         type: ActionMenuConstant.ACTION_TYPE_FINAL_CALCULATION));
   }
 
@@ -665,7 +665,7 @@ class BottomMenuSetting {
       moreMenuList.add(BottomTabModel(
           image: image,
           isCenter: isCenter,
-          title: R.string().screenTitle.addToWatchList,
+          title: R.string.screenTitle.addToWatchList,
           type: ActionMenuConstant.ACTION_TYPE_WISHLIST));
     }
   }
@@ -676,7 +676,7 @@ class BottomMenuSetting {
         .getModulePermission(ModulePermissionConstant.permission_bid)
         .insert) {
       moreMenuList.add(BottomTabModel(
-          title: R.string().screenTitle.bidStone,
+          title: R.string.screenTitle.bidStone,
           isCenter: false,
           image: myBidWhite,
           type: ActionMenuConstant.ACTION_TYPE_BID));
@@ -692,7 +692,7 @@ class BottomMenuSetting {
       moreMenuList.add(BottomTabModel(
           image: image,
           isCenter: isCenter,
-          title: R.string().screenTitle.buyNow,
+          title: R.string.screenTitle.buyNow,
           type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER));
     }
   }
@@ -706,7 +706,7 @@ class BottomMenuSetting {
       moreMenuList.add(BottomTabModel(
           image: image,
           isCenter: isCenter,
-          title: R.string().screenTitle.compare,
+          title: R.string.screenTitle.compare,
           type: ActionMenuConstant.ACTION_TYPE_COMPARE));
     }
   }
@@ -718,7 +718,7 @@ class BottomMenuSetting {
         .insert) {
       moreMenuList.add(BottomTabModel(
           image: comment,
-          title: R.string().screenTitle.comment,
+          title: R.string.screenTitle.comment,
           type: ActionMenuConstant.ACTION_TYPE_COMMENT));
     }
   }
@@ -730,7 +730,7 @@ class BottomMenuSetting {
         .insert) {
       moreMenuList.add(BottomTabModel(
           image: reminder,
-          title: R.string().screenTitle.reminder,
+          title: R.string.screenTitle.reminder,
           type: ActionMenuConstant.ACTION_TYPE_REMINDER));
     }
   }
@@ -744,7 +744,7 @@ class BottomMenuSetting {
       moreMenuList.add(BottomTabModel(
           image: image,
           isCenter: isCenter,
-          title: R.string().screenTitle.offer,
+          title: R.string.screenTitle.offer,
           type: ActionMenuConstant.ACTION_TYPE_OFFER));
     }
   }
@@ -756,7 +756,7 @@ class BottomMenuSetting {
         .insert) {
       moreMenuList.add(BottomTabModel(
           image: company,
-          title: R.string().screenTitle.officeView,
+          title: R.string.screenTitle.officeView,
           type: ActionMenuConstant.ACTION_TYPE_APPOINTMENT));
     }
   }
@@ -764,7 +764,7 @@ class BottomMenuSetting {
   addDeleteInBottomMenu(List<BottomTabModel> moreMenuList) {
     moreMenuList.add(BottomTabModel(
         image: home_delete,
-        title: R.string().screenTitle.delete,
+        title: R.string.screenTitle.delete,
         type: ActionMenuConstant.ACTION_TYPE_DELETE));
   }
 
@@ -777,7 +777,7 @@ class BottomMenuSetting {
       moreMenuList.add(BottomTabModel(
           image: image,
           isCenter: isCenter,
-          title: R.string().screenTitle.download,
+          title: R.string.screenTitle.download,
           type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
     }
   }
@@ -787,7 +787,7 @@ class BottomMenuSetting {
     moreMenuList.add(BottomTabModel(
         image: image,
         isCenter: isCenter,
-        title: R.string().screenTitle.clearSelection,
+        title: R.string.screenTitle.clearSelection,
         type: ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION));
   }
 
@@ -795,7 +795,7 @@ class BottomMenuSetting {
       {bool isCenter: true}) {
     moreMenuList.add(BottomTabModel(
         image: image,
-        title: R.string().screenTitle.share,
+        title: R.string.screenTitle.share,
         isCenter: isCenter,
         type: ActionMenuConstant.ACTION_TYPE_SHARE));
   }

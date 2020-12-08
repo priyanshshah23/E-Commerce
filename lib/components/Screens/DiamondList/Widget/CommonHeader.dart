@@ -134,7 +134,7 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
               getColumn(
                   widget.diamondCalculation.totalAmount,
                   R.string.commonString.amount +
-                      R.string.commonString.doller)
+                      dollar)
             ],
           ),
         ),

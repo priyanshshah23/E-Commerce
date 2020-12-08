@@ -6,6 +6,7 @@ import 'package:diamnow/app/AppConfiguration/AppNavigation.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/localization/LocalizationHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -87,6 +88,8 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     //callUpdateVehicleApi(context);
+    LocalizationHelper.changeLocale(
+        app.resolve<PrefUtils>().getLocalization().isNotEmpty ? app.resolve<PrefUtils>().getLocalization() : English.languageCode);
     return Container(
       color: appTheme.whiteColor,
       height: MathUtilities.screenHeight(context),

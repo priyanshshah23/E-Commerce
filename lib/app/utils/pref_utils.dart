@@ -55,6 +55,8 @@ class PrefUtils {
 
   String get keySyncPlayerId => "keySyncPlayerId";
 
+  String get keyLanguage => "keyLanguage";
+
   bool isHomeVisible;
 
   Future<void> init() async {
@@ -182,6 +184,15 @@ class PrefUtils {
     } else {
       return "1970-01-01T00:00:00+00:00";
     }
+  }
+
+  setLocalization(String value) async {
+    init();
+    _preferences.setString(keyLanguage, value);
+  }
+
+  String getLocalization() {
+    return getString(keyLanguage);
   }
 
   void saveMasterSyncDate(String masterSyncDate) {

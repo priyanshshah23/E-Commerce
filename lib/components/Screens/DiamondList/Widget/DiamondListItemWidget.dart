@@ -306,14 +306,12 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                       getColumn(
                                           widget.groupDiamondCalculation
                                               .totalPriceCrt,
-                                          R.string.commonString.avgPriceCrt +
-                                              R.string.commonString.doller,
+                                          R.string.commonString.avgPriceCrt + dollar,
                                           3),
                                       getColumn(
                                           widget.groupDiamondCalculation
                                               .totalAmount,
-                                          R.string.commonString.amount +
-                                              R.string.commonString.doller,
+                                          R.string.commonString.amount + dollar,
                                           3)
                                     ],
                                   ),

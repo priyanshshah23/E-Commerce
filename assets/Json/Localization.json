@@ -377,7 +377,8 @@
       "faceId": "Face Id",
       "enableTouchId": "Enable Touch Id to unlock My Diamonds?",
       "enableFaceId": "Enable Face Id to unlock My Diamonds?",
-      "mPin": "MPin"
+      "mPin": "MPin",
+      "holdMemoStatusDiamondorder": "holdMemoStatusDiamondorder"
     },
     "error_string": {
       "accessDenide": "Access denied",
@@ -998,7 +999,8 @@
       "faceId": "面部识别",
       "enableTouchId": "允许使用Touch ID解锁我的钻石？",
       "enableFaceId": "启用面部识别解锁我的钻石？",
-      "mPin": "M-PIN"
+      "mPin": "M-PIN",
+      "holdMemoStatusDiamondorder": "holdMemoStatusDiamondorder"
     },
     "error_string": {
       "accessDenide": "拒绝访问",
@@ -1619,7 +1621,8 @@
       "faceId": "Id visage",
       "enableTouchId": "Activer tactile Id pour déverrouiller Mes diamants?",
       "enableFaceId": "Activer Id Face à déverrouiller Mes diamants?",
-      "mPin": "Ampin"
+      "mPin": "Ampin",
+      "holdMemoStatusDiamondorder": "holdMemoStatusDiamondorder"
     },
     "error_string": {
       "accessDenide": "Accès refusé",
@@ -2240,7 +2243,8 @@
       "faceId": "フェイス同上",
       "enableTouchId": "私のダイヤモンドのロックを解除するにはタッチIDを有効にしますか？",
       "enableFaceId": "私のダイヤモンドのロックを解除する顔IDを有効にしますか？",
-      "mPin": "MPin"
+      "mPin": "MPin",
+      "holdMemoStatusDiamondorder": "holdMemoStatusDiamondorder"
     },
     "error_string": {
       "accessDenide": "アクセスが拒否されました",
@@ -2605,7 +2609,7 @@
       "hintBussinerssProof": "Affari identità * Proof",
       "btnFileUpload": "Upload di file",
       "pleaseUploadPhotoProof": "Si prega di caricare foto prova di identità.",
-      "pleaseUploadBussinessProof": "Si prega caricare Affari prova di identità.",
+      "pleaseUploadBussinessProof": "Si prega di caricare Affari prova di identità.",
       "pleaseSelectFileFormat": "Si prega di caricare file in uno dei seguenti formati: .jpg",
       "kycSubmitted": "KYC Inserito",
       "kycSubmmittedDesc": "Il tuo KYC è stato inviato con successo.",
@@ -2861,7 +2865,8 @@
       "faceId": "face ID",
       "enableTouchId": "Abilita tocco Id per sbloccare i miei diamanti?",
       "enableFaceId": "Abilita Face ID per sbloccare i miei diamanti?",
-      "mPin": "MPin"
+      "mPin": "MPin",
+      "holdMemoStatusDiamondorder": "holdMemoStatusDiamondorder"
     },
     "error_string": {
       "accessDenide": "Accesso negato",
@@ -3482,7 +3487,8 @@
       "faceId": "Id cara",
       "enableTouchId": "Activar contacto Id para desbloquear mis diamantes?",
       "enableFaceId": "Habilitar Face ID para desbloquear mis diamantes?",
-      "mPin": "MPIN"
+      "mPin": "MPIN",
+      "holdMemoStatusDiamondorder": "holdMemoStatusDiamondorder"
     },
     "error_string": {
       "accessDenide": "Acceso denegado",
@@ -4103,7 +4109,8 @@
       "faceId": "Gesicht Id",
       "enableTouchId": "Aktivieren Touch-Id My Diamanten zu entsperren?",
       "enableFaceId": "Aktivieren Gesicht Id My Diamanten zu entsperren?",
-      "mPin": "MPIN"
+      "mPin": "MPIN",
+      "holdMemoStatusDiamondorder": "holdMemoStatusDiamondorder"
     },
     "error_string": {
       "accessDenide": "Zugriff verweigert",
