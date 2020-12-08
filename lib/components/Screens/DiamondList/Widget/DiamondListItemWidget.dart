@@ -245,24 +245,27 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                         widget.actionClick),
                                     //   getIdColorDetail(),
                                     Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            left: getSize(8),
-                                            right: getSize(8),
-                                            top: getSize(8),
-                                            bottom: getSize(8)),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            getIdShapeDetail(),
-                                            getDymentionAndCaratDetail(),
-                                            getMeasurementAndColorDetails(),
-                                            getTableDepthAndAmountDetail(),
-                                            // getWatchlistData(),
-                                            getOfferData(),
-                                            // getBidDetail(),
-                                          ],
+                                      child: Container(
+                                        height: getSize(120),
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              left: getSize(8),
+                                              right: getSize(8),
+                                              top: getSize(8),
+                                              bottom: getSize(8)),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              getIdShapeDetail(),
+                                              getDymentionAndCaratDetail(),
+                                              getMeasurementAndColorDetails(),
+                                              getTableDepthAndAmountDetail(),
+                                              // getWatchlistData(),
+                                              getOfferData(),
+                                              // getBidDetail(),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -519,20 +522,24 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             children: <Widget>[
               getText(widget.item?.cutNm ?? "-",
                   appTheme.blackMedium14TitleColorblack),
+              SizedBox(width: getSize(2.0)),
               Container(
                 height: getSize(4),
                 width: getSize(4),
                 decoration: BoxDecoration(
                     color: appTheme.dividerColor, shape: BoxShape.circle),
               ),
+              SizedBox(width: getSize(2.0)),
               getText(widget.item?.polNm ?? "-",
                   appTheme.blackMedium14TitleColorblack),
+              SizedBox(width: getSize(2.0)),
               Container(
                 height: getSize(4),
                 width: getSize(4),
                 decoration: BoxDecoration(
                     color: appTheme.dividerColor, shape: BoxShape.circle),
               ),
+              SizedBox(width: getSize(2.0)),
               getText(widget.item?.symNm ?? "-",
                   appTheme.blackMedium14TitleColorblack),
             ],
@@ -556,12 +563,12 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           ),
           Expanded(
             flex: 3,
-            child: getTextWithLabel(widget.item?.shdNm ?? "", "S : "),
+            child: getTextWithLabel(widget.item?.shdNm ?? "-", "S : "),
           ),
           // getText(widget.item?.msrmnt ?? ""),
           Expanded(
             flex: 5,
-            child: getTextWithLabel(widget.item?.msrmnt ?? "", "M : ",
+            child: getTextWithLabel(widget.item?.msrmnt ?? "-", "M : ",
                 align: TextAlign.right),
           ),
         ],
@@ -577,7 +584,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         children: <Widget>[
           Expanded(
             flex: 2,
-            child: getText(widget.item?.fluNm ?? "",
+            child: getText(widget.item?.fluNm ?? "-",
                 appTheme.blackMedium12TitleColorblack),
           ),
           Expanded(
