@@ -40,7 +40,7 @@ class LoginScreen extends StatefulScreenWidget {
 class LoginScreenState extends StatefulScreenWidgetState {
   final _formKey = GlobalKey<FormState>();
 
-   TextEditingController userNameController = TextEditingController();
+  TextEditingController userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   var _focusUserName = FocusNode();
@@ -290,10 +290,12 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                                 .validate()) {
                                               _formKey.currentState.save();
 
-                                              Map<String,dynamic> req = {};
-                                              req["username"] = userNameController.text;
-                                              req["password"] = _passwordController.text;
-                                              callLoginApi(context,req);
+                                              Map<String, dynamic> req = {};
+                                              req["username"] =
+                                                  userNameController.text;
+                                              req["password"] =
+                                                  _passwordController.text;
+                                              callLoginApi(context, req);
                                             } else {
                                               setState(() {
                                                 _autoValidate = true;
@@ -345,7 +347,10 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                               onTap: () {
                                                 // NavigationUtilities.pushRoute(
                                                 //     SignInWithMPINScreen.route,);
-                                                NavigationUtilities.push(SignInWithMPINScreen(fromMpinButton: true,));
+                                                NavigationUtilities.push(
+                                                    SignInWithMPINScreen(
+                                                  fromMpinButton: true,
+                                                ));
                                               },
                                               child: Container(
                                                 alignment: Alignment.center,
@@ -548,12 +553,10 @@ class LoginScreenState extends StatefulScreenWidgetState {
     );
   }
 
-  Future callLoginApi(BuildContext context, Map<String,dynamic> req) async {
+  Future callLoginApi(BuildContext context, Map<String, dynamic> req) async {
     // LoginReq req = LoginReq();
     // req.username = userNameController.text;
     // req.password = _passwordController.text;
-
-    
 
     NetworkCall<LoginResp>()
         .makeCall(
@@ -561,7 +564,6 @@ class LoginScreenState extends StatefulScreenWidgetState {
             context,
             isProgress: true)
         .then((loginResp) {
-      
       if (!isNullEmptyOrFalse(availableBiometrics)) {
         auth.canCheckBiometrics.then((value) {
           if (value) {
@@ -571,8 +573,8 @@ class LoginScreenState extends StatefulScreenWidgetState {
                         availableBiometrics.contains(BiometricType.face)
                     ? R.string().commonString.enableFaceId
                     : R.string().commonString.enableTouchId,
-                positiveBtnTitle: R.string().commonString.ok,
-                negativeBtnTitle: R.string().commonString.cancel,
+                positiveBtnTitle: R.string().commonString.yes,
+                negativeBtnTitle: R.string().commonString.no,
                 onClickCallback: (buttonType) async {
               if (buttonType == ButtonType.PositveButtonClick) {
                 askForBioMetrics(loginResp)();
@@ -585,7 +587,6 @@ class LoginScreenState extends StatefulScreenWidgetState {
           }
         });
       } else {
-
         saveUserResponse(loginResp);
       }
     }).catchError((onError) {
@@ -647,14 +648,13 @@ class LoginScreenState extends StatefulScreenWidgetState {
 //      NavigationUtilities.pushRoute(Notifications.route);
     // callVersionUpdateApi(id: loginResp.data.user.id); //for local
     // isMpinAdded==false
-    if(loginResp.data.user.isMpinAdded == false){
+    if (loginResp.data.user.isMpinAdded == false) {
       NavigationUtilities.pushRoute(SignInWithMPINScreen.route);
     } else {
       //varify mpin
       SyncManager().callVersionUpdateApi(context, VersionUpdateApi.logIn,
-        id: loginResp.data.user.id);
+          id: loginResp.data.user.id);
     }
-    
   }
   // void callVersionUpdateApi({String id}) {
   //   NetworkCall<VersionUpdateResp>()
