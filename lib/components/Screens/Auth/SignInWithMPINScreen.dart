@@ -158,9 +158,14 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
           child: Scaffold(
             resizeToAvoidBottomPadding: false,
             resizeToAvoidBottomInset: true,
-            appBar: getAppBar(context, enm == Mpin.splash || enm == Mpin.myAccount ? "Verify Mpin" : R.string.authStrings.signInWithMPIN,
+            appBar: getAppBar(
+                context,
+                enm == Mpin.splash || enm == Mpin.myAccount
+                    ? "Verify Mpin"
+                    : R.string.authStrings.signInWithMPIN,
                 bgColor: appTheme.whiteColor,
-                leadingButton: enm == Mpin.splash ? SizedBox() :getBackButton(context),
+                leadingButton:
+                    enm == Mpin.splash ? SizedBox() : getBackButton(context),
                 centerTitle: false,
                 actionItems: [
                   if (fromMpinButton == false)
@@ -492,7 +497,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
         SyncManager().callVersionUpdateApi(context, VersionUpdateApi.splash,
             id: app.resolve<PrefUtils>().getUserDetails().id ?? "");
       } else if (enm == Mpin.login) {
-        loginScreenObject.saveUserResponse(LoginScreenState.globalloginResp);
+        this.verifyPinCallback();
       }
     }).catchError((onError) {
       if (onError is ErrorResp) {

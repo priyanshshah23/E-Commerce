@@ -67,7 +67,6 @@ class LoginScreenState extends StatefulScreenWidgetState {
   final LocalAuthentication auth = LocalAuthentication();
   List<BiometricType> availableBiometrics;
 
-  static LoginResp globalloginResp;
   @override
   void initState() {
     // TODO: implement initState
@@ -583,36 +582,22 @@ class LoginScreenState extends StatefulScreenWidgetState {
             context,
             isProgress: true)
         .then((loginResp) {
-          globalloginResp = loginResp;
-      if (!isNullEmptyOrFalse(availableBiometrics)) {
-        auth.canCheckBiometrics.then((value) {
-          if (value) {
-            app.resolve<CustomDialogs>().confirmDialog(context,
-                title: "",
-                desc:
-                Platform.isIOS &&
-                        availableBiometrics.contains(BiometricType.face)
-                    ? "Do you want to Enable FaceId?"
-                    : "Do you want to Enable TouchId?",
-                    // "Please, choose Which you wanna set while unlocking app...",
-                positiveBtnTitle: R.string.commonString.ok,
-                // positiveBtnTitle2: "Mpin",
-                negativeBtnTitle: R.string.commonString.cancel,
-                // totalButton: 3,
-                 onClickCallback: (buttonType) async {
-              if (buttonType == ButtonType.PositveButtonClick) {
+      app.resolve<CustomDialogs>().confirmDialog(context,
+          title: "",
+          desc:
+              // Platform.isIOS && availableBiometrics.contains(BiometricType.face)
+              //     ? "Do you want to Enable FaceId?"
+              //     : "Do you want to Enable TouchId?",
+              "Please, choose Which you wanna set while unlocking app...",
+          positiveBtnTitle: R.string.commonString.ok,
+          positiveBtnTitle2: "Mpin",
+          negativeBtnTitle: R.string.commonString.cancel,
+          totalButton: 3, onClickCallback: (buttonType) async {
+        if (buttonType == ButtonType.PositveButtonClick) {
+          if (!isNullEmptyOrFalse(availableBiometrics)) {
+            auth.canCheckBiometrics.then((value) {
+              if (value) {
                 askForBioMetrics(loginResp)();
-              } else if (buttonType == ButtonType.PositveButtonClick2) {
-                if (loginResp.data.user.isMpinAdded) {
-                  Map<String, dynamic> args = {};
-                  args["askForVerifyMpin"] = true;
-                  args["enm"] = Mpin.login;
-
-                  NavigationUtilities.pushRoute(SignInWithMPINScreen.route,
-                      args: args);
-                } else {
-                  NavigationUtilities.pushRoute(SignInWithMPINScreen.route);
-                }
               } else {
                 saveUserResponse(loginResp);
               }
@@ -620,10 +605,23 @@ class LoginScreenState extends StatefulScreenWidgetState {
           } else {
             saveUserResponse(loginResp);
           }
-        });
-      } else {
-        saveUserResponse(loginResp);
-      }
+        } else if (buttonType == ButtonType.PositveButtonClick2) {
+          if (loginResp.data.user.isMpinAdded) {
+            Map<String, dynamic> args = {};
+            args["askForVerifyMpin"] = true;
+            args["enm"] = Mpin.login;
+            args["verifyPinCallback"] = () {
+              saveUserResponse(loginResp);
+            };
+            NavigationUtilities.pushRoute(SignInWithMPINScreen.route,
+                args: args);
+          } else {
+            NavigationUtilities.pushRoute(SignInWithMPINScreen.route);
+          }
+        } else {
+          saveUserResponse(loginResp);
+        }
+      });
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
