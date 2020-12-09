@@ -1518,8 +1518,7 @@ openSharePopUp(BuildContext context) {
 openAddReminder(BuildContext context, ActionClick actionClick) {
   DateUtilities dateUtilities = DateUtilities();
   List<StoneModel> reminderList = [
-    StoneModel(
-        ReminderType.ReminderTypeToday, R.string.commonString.laterToday,
+    StoneModel(ReminderType.ReminderTypeToday, R.string.commonString.laterToday,
         subtitle: "6:00 pm", image: sunrise),
     StoneModel(
         ReminderType.ReminderTypeTomorrow, R.string.commonString.toMorrow,
