@@ -52,7 +52,7 @@ class OrderListScreen extends StatefulScreenWidget {
 class _OrderListScreenState extends StatefulScreenWidgetState {
   int moduleType;
   bool isFromDrawer;
-
+  bool hasData = false;
   _OrderListScreenState({this.moduleType, this.isFromDrawer});
 
   DiamondConfig diamondConfig;
@@ -69,7 +69,7 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
     diamondConfig = DiamondConfig(moduleType);
     diamondConfig.initItems();
     diamondList = BaseList(BaseListState(
-//      imagePath: noRideHistoryFound,
+      imagePath: noDataFound,
       noDataMsg: APPNAME,
       noDataDesc: R.string.noDataStrings.noDataFound,
       refreshBtn: R.string.commonString.refresh,
@@ -121,6 +121,9 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
       isProgress: !isRefress && !isLoading,
     )
         .then((diamondListResp) async {
+      if (page == DEFAULT_PAGE) {
+        hasData = diamondListResp.data.list.length > 0;
+      }
       arraDiamond.addAll(diamondListResp.data.list);
       diamondList.state.listCount = arraDiamond.length;
       diamondList.state.totalCount = diamondListResp.data.count;
@@ -211,7 +214,7 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
   }
 
   Widget getBottomTab() {
-    return arraDiamond != null && arraDiamond.length > 0
+    return hasData
         ? BottomTabbarWidget(
             arrBottomTab: diamondConfig.arrBottomTab,
             onClickCallback: (obj) {
@@ -300,9 +303,11 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
         body: SafeArea(
           child: Column(
             children: <Widget>[
-              DiamondListHeader(
-                diamondCalculation: diamondCalculation,
-              ),
+              hasData
+                  ? DiamondListHeader(
+                      diamondCalculation: diamondCalculation,
+                    )
+                  : SizedBox(),
               SizedBox(
                 height: getSize(8),
               ),

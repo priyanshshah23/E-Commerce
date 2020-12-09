@@ -77,6 +77,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   DiamondCalculation diamondFinalCalculation = DiamondCalculation();
   List<FilterOptions> optionList = List<FilterOptions>();
   bool isGrid = false;
+  bool hasData = false;
   int viewTypeCount = 0;
 
   @override
@@ -93,7 +94,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     diamondConfig = DiamondConfig(moduleType);
     diamondConfig.initItems();
     diamondList = BaseList(BaseListState(
-      // imagePath: noDataFound,
+      imagePath: noDataFound,
       noDataMsg: APPNAME,
       noDataDesc: R.string.noDataStrings.noDataFound,
       refreshBtn: R.string.commonString.refresh,
@@ -229,6 +230,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       isProgress: !isRefress && !isLoading,
     )
         .then((diamondListResp) async {
+      if (page == DEFAULT_PAGE) {
+        hasData = diamondListResp.data.diamonds.length > 0 ||
+            diamondListResp.data.list.length > 0;
+      }
       switch (moduleType) {
         case DiamondModuleConstant.MODULE_TYPE_MY_CART:
         case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
@@ -666,7 +671,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     for (int i = 0; i < diamondConfig.toolbarList.length; i++) {
       var element = diamondConfig.toolbarList[i];
       list.add(GestureDetector(
-        onTap: arraDiamond != null && arraDiamond.length > 0
+        onTap: !isNullEmptyOrFalse(arraDiamond)
             ? () {
                 manageToolbarClick(element);
               }
@@ -838,10 +843,12 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            DiamondListHeader(
-              diamondCalculation: diamondCalculation,
-              moduleType: moduleType,
-            ),
+            hasData
+                ? DiamondListHeader(
+                    diamondCalculation: diamondCalculation,
+                    moduleType: moduleType,
+                  )
+                : SizedBox(),
             SizedBox(
               height: getSize(16),
             ),
@@ -864,7 +871,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   }
 
   Widget getBottomTab() {
-    return arraDiamond != null && arraDiamond.length > 0
+    return hasData
         ? BottomTabbarWidget(
             arrBottomTab: diamondConfig.arrBottomTab,
             onClickCallback: (obj) {
