@@ -194,7 +194,6 @@ class AuthStrings {
 }
 
 class CommonString {
-  String holdMemoStatusDiamondorder = "holdMemoStatusDiamondorder";
   String seeMore = "See More";
   String seeLess = "See Less";
   String modify = "Modify";
@@ -446,7 +445,12 @@ class CommonString {
   String faceId = "Face Id";
   String enableTouchId = "Enable Touch Id to unlock My Diamonds?";
   String enableFaceId = "Enable Face Id to unlock My Diamonds?";
+  String unlockWithTouchId = "Unlock My Diamonds using Touch Id";
+  String unlockWithFaceId = "Unlock My Diamonds using Face Id.";
   String mPin = "MPin";
+  String holdMemoStatusDiamondorder =
+      "You can not confirmed stones which are already in hold or memo status";
+  String searchStoneIdCertificateNo = "Search Stone Id/Certificate No";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -640,7 +644,7 @@ class ScreenTitle {
   String newArrival = "New Arrival";
   String exclusiveDiamonds = "Exclusive Diamonds";
   String diamondOnAuction = "Diamond On Auction";
-  String stoneOfTheDays = "Stones of the Day";
+  String stoneOfTheDays = "Best Buy";
   String myWatchlist = "My Watchlist";
   String myBid = "My Bid";
   String myHold = "My Hold";
@@ -1481,7 +1485,15 @@ class ChineseCommonString extends CommonString {
   @override
   get enableFaceId => "启用面部识别解锁我的钻石？";
   @override
+  get unlockWithTouchId => "采用触摸式标识解锁我的钻石";
+  @override
+  get unlockWithFaceId => "解锁使用面部识别我的钻石。";
+  @override
   get mPin => "M-PIN";
+  @override
+  get holdMemoStatusDiamondorder => "你不能确诊的石块，已经在保持或备忘录状态";
+  @override
+  get searchStoneIdCertificateNo => "搜索石ID /证书号";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -1829,7 +1841,7 @@ class ChineseScreenTitle extends ScreenTitle {
   @override
   get diamondOnAuction => "钻石拍卖";
   @override
-  get stoneOfTheDays => "每日石头";
+  get stoneOfTheDays => "百思买";
   @override
   get myWatchlist => "我的关注";
   @override
@@ -2763,7 +2775,16 @@ class FrenchCommonString extends CommonString {
   @override
   get enableFaceId => "Activer Id Face à déverrouiller Mes diamants?";
   @override
+  get unlockWithTouchId => "Débloquer Mes diamants à l'aide tactile Id";
+  @override
+  get unlockWithFaceId => "Déverrouillez Mes diamants en utilisant Id Face.";
+  @override
   get mPin => "Ampin";
+  @override
+  get holdMemoStatusDiamondorder =>
+      "Vous ne pouvez pas confirmer les pierres qui sont déjà en attente ou de l'état mémo";
+  @override
+  get searchStoneIdCertificateNo => "Recherche Pierre Id / certificat Non";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -3140,7 +3161,7 @@ class FrenchScreenTitle extends ScreenTitle {
   @override
   get diamondOnAuction => "Diamond sur Auction";
   @override
-  get stoneOfTheDays => "Pierres du jour";
+  get stoneOfTheDays => "Meilleur achat";
   @override
   get myWatchlist => "Watchlist Mes";
   @override
@@ -4053,7 +4074,15 @@ class JapanCommonString extends CommonString {
   @override
   get enableFaceId => "私のダイヤモンドのロックを解除する顔IDを有効にしますか？";
   @override
+  get unlockWithTouchId => "タッチIDを使用して私のダイヤモンドのロックを解除";
+  @override
+  get unlockWithFaceId => "フェイスIDを使用して私のダイヤモンドのロックを解除します。";
+  @override
   get mPin => "MPin";
+  @override
+  get holdMemoStatusDiamondorder => "あなたは保留に既にある石やメモの状態を確認することはできません";
+  @override
+  get searchStoneIdCertificateNo => "ストーンID /証明書番号を検索";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -4404,7 +4433,7 @@ class JapanScreenTitle extends ScreenTitle {
   @override
   get diamondOnAuction => "ダイヤモンドでオークション";
   @override
-  get stoneOfTheDays => "デイのストーンズ";
+  get stoneOfTheDays => "ベストバイ";
   @override
   get myWatchlist => "マイウォッチリスト";
   @override
@@ -4813,7 +4842,7 @@ class ItalianAuthStrings extends AuthStrings {
   get pleaseUploadPhotoProof => "Si prega di caricare foto prova di identità.";
   @override
   get pleaseUploadBussinessProof =>
-      "Si prega caricare Affari prova di identità.";
+      "Si prega di caricare Affari prova di identità.";
   @override
   get pleaseSelectFileFormat =>
       "Si prega di caricare file in uno dei seguenti formati: .jpg";
@@ -5333,7 +5362,16 @@ class ItalianCommonString extends CommonString {
   @override
   get enableFaceId => "Abilita Face ID per sbloccare i miei diamanti?";
   @override
+  get unlockWithTouchId => "Sbloccare i miei diamanti utilizzando tocco Id";
+  @override
+  get unlockWithFaceId => "Sbloccare i miei diamanti utilizzando Face ID.";
+  @override
   get mPin => "MPin";
+  @override
+  get holdMemoStatusDiamondorder =>
+      "Non si può confermato le pietre che sono già in possesso o un memo di stato";
+  @override
+  get searchStoneIdCertificateNo => "Cerca di pietra Id / Certificato No";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -5702,7 +5740,7 @@ class ItalianScreenTitle extends ScreenTitle {
   @override
   get diamondOnAuction => "Diamante all'asta";
   @override
-  get stoneOfTheDays => "Pietre del Giorno";
+  get stoneOfTheDays => "Miglior acquisto";
   @override
   get myWatchlist => "mio Lista memo";
   @override
@@ -6633,7 +6671,15 @@ class SpanishCommonString extends CommonString {
   @override
   get enableFaceId => "Habilitar Face ID para desbloquear mis diamantes?";
   @override
+  get unlockWithTouchId => "Desbloquear mis diamantes utilizando Touch ID";
+  @override
+  get unlockWithFaceId => "Desbloquear mis diamantes utilizando Face ID.";
+  @override
   get mPin => "MPIN";
+  @override
+  get holdMemoStatusDiamondorder => "你 不能 确诊 的 石块, 已经 在 保持 或 备忘录 状态";
+  @override
+  get searchStoneIdCertificateNo => "搜索 石 ID / 证书 号";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -7004,7 +7050,7 @@ class SpanishScreenTitle extends ScreenTitle {
   @override
   get diamondOnAuction => "Diamante en subasta";
   @override
-  get stoneOfTheDays => "Piedras del Día";
+  get stoneOfTheDays => "La mejor compra";
   @override
   get myWatchlist => "lista";
   @override
@@ -7451,7 +7497,7 @@ class GermanyCommonString extends CommonString {
   @override
   get pleaseEnterDemandTitle => "Bitte geben Sie die Nachfrage Titel";
   @override
-  get demandAddedSuccessfully => "Die Nachfrage Erfolgreich";
+  get demandAddedSuccessfully => "Nachfrage Erfolgreich";
   @override
   get selectAtleastOneFilter => "Bitte";
   @override
@@ -7931,7 +7977,16 @@ class GermanyCommonString extends CommonString {
   @override
   get enableFaceId => "Aktivieren Gesicht Id My Diamanten zu entsperren?";
   @override
+  get unlockWithTouchId => "Diamanten Unlock My mit Touch-Id";
+  @override
+  get unlockWithFaceId => "Schalt Meine Diamanten mit dem Gesicht Id.";
+  @override
   get mPin => "MPIN";
+  @override
+  get holdMemoStatusDiamondorder =>
+      "Sie können nicht mit Steinen bestätigt, die bereits im Halte- oder Memo-Status sind";
+  @override
+  get searchStoneIdCertificateNo => "Suchen Stein Id / Zertifikat Nr";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -8279,7 +8334,7 @@ class GermanyScreenTitle extends ScreenTitle {
   get photo => "Foto";
   @override
   get otpDesc =>
-      "Der Recovery-Code wurde an Ihre Handy-Nummer gesendet. Bitte geben Sie den Code ein.";
+      "Der Wiederherstellungs-Code wurde auf Ihre Handy-Nummer gesendet. Bitte geben Sie den Code ein.";
   @override
   get otpVerifyDesc =>
       "Der Bestätigungscode wurde an Ihre Handy-Nummer gesendet. Bitte geben Sie den Code ein.";
@@ -8298,7 +8353,7 @@ class GermanyScreenTitle extends ScreenTitle {
   @override
   get diamondOnAuction => "Diamant ersteigern";
   @override
-  get stoneOfTheDays => "Steine ​​des Tages";
+  get stoneOfTheDays => "best Buy";
   @override
   get myWatchlist => "Meine Beobachtungsliste";
   @override
