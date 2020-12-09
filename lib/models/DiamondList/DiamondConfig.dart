@@ -73,17 +73,21 @@ class DiamondCalculation {
 
     totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt ?? 0);
     if (isAccountTerm) {
-      totalDisc = PriceUtilities.getPercent(arrFinalValues[2] ?? 0);
-      totalAmount = PriceUtilities.getPrice(arrFinalValues[1] ?? 0);
-      totalPriceCrt = PriceUtilities.getPrice(arrFinalValues[0] ?? 0);
+      totalDisc = PriceUtilities.getPercent(
+          arrFinalValues[2].isNaN ? 0 : arrFinalValues[2] ?? 0);
+      totalAmount = PriceUtilities.getPrice(
+          arrFinalValues[1].isNaN ? 0 : arrFinalValues[1] ?? 0);
+      totalPriceCrt = PriceUtilities.getPrice(
+          arrFinalValues[0].isNaN ? 0 : arrFinalValues[0] ?? 0);
     } else {
       avgDisc = (1 - (avgPriceCrt / avgRapCrt)) * (-100);
-      totalDisc = PriceUtilities.getPercent(avgDisc ?? 0);
+      totalDisc = PriceUtilities.getPercent(avgDisc.isNaN ? 0 : avgDisc ?? 0);
       avgAmount = arrValues[1];
-      totalAmount = PriceUtilities.getPrice(avgAmount ?? 0);
+      totalAmount =
+          PriceUtilities.getPrice(avgAmount.isNaN ? 0 : avgAmount ?? 0);
     }
 
-    totalCarat = PriceUtilities.getDoubleValue(carat ?? 0);
+    totalCarat = PriceUtilities.getDoubleValue(carat.isNaN ? 0 : carat ?? 0);
     pcs = filterList.length.toString();
   }
 }
@@ -1518,8 +1522,7 @@ openSharePopUp(BuildContext context) {
 openAddReminder(BuildContext context, ActionClick actionClick) {
   DateUtilities dateUtilities = DateUtilities();
   List<StoneModel> reminderList = [
-    StoneModel(
-        ReminderType.ReminderTypeToday, R.string.commonString.laterToday,
+    StoneModel(ReminderType.ReminderTypeToday, R.string.commonString.laterToday,
         subtitle: "6:00 pm", image: sunrise),
     StoneModel(
         ReminderType.ReminderTypeTomorrow, R.string.commonString.toMorrow,

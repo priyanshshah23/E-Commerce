@@ -309,7 +309,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                       getColumn(
                                           widget.groupDiamondCalculation
                                               .totalPriceCrt,
-                                          R.string.commonString.avgPriceCrt + dollar,
+                                          R.string.commonString.avgPriceCrt +
+                                              dollar,
                                           3),
                                       getColumn(
                                           widget.groupDiamondCalculation
@@ -429,7 +430,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             Container(
               alignment: Alignment.center,
               margin: EdgeInsets.only(top: getSize(5)),
-              width: getSize(55),
+              width: getSize(60),
               height: getSize(20),
               decoration: BoxDecoration(
                   color: appTheme.whiteColor,
@@ -819,8 +820,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                   color: appTheme.borderColor,
                                   child: Center(
                                     child: getText(
-                                        R.string.screenTitle.offeredDisc +
-                                            " :",
+                                        R.string.screenTitle.offeredDisc + " :",
                                         appTheme.blackNormal12TitleColorblack),
                                   ),
                                 ),

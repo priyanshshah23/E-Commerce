@@ -182,66 +182,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                 ),
                 Text(
                   model.title,
-                  style: appTheme.blackNormal14TitleColorblack.copyWith(
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: appTheme.blackNormal16TitleColorblack,
                 ),
                 Spacer(),
-                model.type == DiamondModuleConstant.MODULE_TYPE_TOUCH_ID
-                    ? InkWell(
-                        onTap: () {},
-                        child: Switch(
-                          value: isSwitchedTouchId,
-                          onChanged: (value) {
-                            setState(() {
-                              // if (isSwitchedMpin) isSwitchedMpin = false;
-                              isSwitchedTouchId = !isSwitchedTouchId;
-
-                              if (isSwitchedTouchId == true) {
-                                askForBioMetrics();
-                              }
-                            });
-                          },
-                          activeTrackColor: appTheme.borderColor,
-                          activeColor: appTheme.colorPrimary,
-                        ),
-                      )
-                    : model.type == DiamondModuleConstant.MODULE_TYPE_MPIN
-                        ? InkWell(
-                            onTap: () {},
-                            child: Switch(
-                              value: isSwitchedMpin,
-                              onChanged: (value) {
-                                setState(() {
-                                  // if (isSwitchedTouchId)
-                                  //   isSwitchedTouchId = false;
-                                  isSwitchedMpin = !isSwitchedMpin;
-
-                                  if (isSwitchedMpin == true) {
-                                    askForMpin();
-                                  } else {
-                                    app
-                                        .resolve<PrefUtils>()
-                                        .setMpinisUsage(false);
-                                  }
-                                });
-                              },
-                              activeTrackColor: appTheme.borderColor,
-                              activeColor: appTheme.colorPrimary,
-                            ),
-                          )
-                        : Padding(
-                            padding: EdgeInsets.only(
-                              left: getSize(20),
-                              right: getSize(20),
-                            ),
-                            child: Container(
-                              child: Icon(
-                                Icons.arrow_forward_ios,
-                                size: getSize(14),
-                              ),
-                            ),
-                          ),
+                returnWidgetAsPerModule(model),
               ],
             ),
           ),
@@ -253,6 +197,75 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
               color: appTheme.dividerColor.withOpacity(0.5),
             )
         ],
+      ),
+    );
+  }
+
+  Widget returnWidgetAsPerModule(DrawerModel model) {
+    if (model.type == DiamondModuleConstant.MODULE_TYPE_LOGOUT) {
+      return SizedBox();
+    }
+    if (model.type == DiamondModuleConstant.MODULE_TYPE_TOUCH_ID) {
+      return InkWell(
+        onTap: () {},
+        child: SizedBox(
+          height: getSize(30),
+          child: Switch(
+            value: isSwitchedTouchId,
+            onChanged: (value) {
+              setState(() {
+                // if (isSwitchedMpin) isSwitchedMpin = false;
+                isSwitchedTouchId = !isSwitchedTouchId;
+
+                if (isSwitchedTouchId == true) {
+                  askForBioMetrics();
+                }
+              });
+            },
+            activeTrackColor: appTheme.borderColor,
+            activeColor: appTheme.colorPrimary,
+          ),
+        ),
+      );
+    }
+
+    if (model.type == DiamondModuleConstant.MODULE_TYPE_MPIN) {
+      return InkWell(
+        onTap: () {},
+        child: SizedBox(
+          height: getSize(30),
+          child: Switch(
+            value: isSwitchedMpin,
+            onChanged: (value) {
+              setState(() {
+                // if (isSwitchedTouchId)
+                //   isSwitchedTouchId = false;
+                isSwitchedMpin = !isSwitchedMpin;
+
+                if (isSwitchedMpin == true) {
+                  askForMpin();
+                } else {
+                  app.resolve<PrefUtils>().setMpinisUsage(false);
+                }
+              });
+            },
+            activeTrackColor: appTheme.borderColor,
+            activeColor: appTheme.colorPrimary,
+          ),
+        ),
+      );
+    }
+
+    return Padding(
+      padding: EdgeInsets.only(
+        left: getSize(20),
+        right: getSize(20),
+      ),
+      child: Container(
+        child: Icon(
+          Icons.arrow_forward_ios,
+          size: getSize(14),
+        ),
       ),
     );
   }
@@ -409,8 +422,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                           children: [
                             Text(
                               userAccount.getFullName() ?? "-",
-                              style: appTheme.black16TextStyle.copyWith(
-                                fontWeight: FontWeight.w500,
+                              style: appTheme.blackMedium16TitleColorblack
+                                  .copyWith(
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ],
@@ -427,7 +441,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                               SizedBox(width: getSize(8)),
                               Text(
                                 userAccount.email ?? "-",
-                                style: appTheme.black12TextStyle,
+                                style: appTheme.black14TextStyle,
                               ),
                             ],
                           ),
@@ -458,7 +472,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                             SizedBox(width: getSize(8)),
                             Text(
                               userAccount.mobile ?? "-",
-                              style: appTheme.black12TextStyle,
+                              style: appTheme.black14TextStyle,
                             ),
                           ],
                         ),

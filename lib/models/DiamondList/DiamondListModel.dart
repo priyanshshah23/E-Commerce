@@ -838,11 +838,8 @@ class DiamondModel {
   }
 
   num getFinalDiscount() {
-    if (back < 0) {
-      return (1 - (getFinalRate() / rap)) * (-100);
-    }
-
-    return 0;
+    num val = (1 - (getFinalRate() / rap)) * (-100);
+    return !val.isNaN ? val : 0;
   }
 
   num getFinalAmount() {

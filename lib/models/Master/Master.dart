@@ -247,13 +247,13 @@ class Master {
   static List<Map<String, dynamic>> getSelectedCarat(List<Master> masters) {
     List<Map<String, dynamic>> requestCarats = List<Map<String, dynamic>>();
 
-    for (var item in masters) {
-      for (var carat in item.grouped) {
-        if (carat.isSelected == true) {
+    for (var master in masters) {
+      for (var tCarat in master.grouped) {
+        if (master.isSelected == true) {
           Map<String, dynamic> mainDic = Map<String, dynamic>();
           Map<String, dynamic> caratDic = Map<String, dynamic>();
-          caratDic[">="] = "${carat.fromCarat}";
-          caratDic["<="] = "${carat.toCarat}";
+          caratDic[">="] = "${tCarat.fromCarat}";
+          caratDic["<="] = "${tCarat.toCarat}";
           mainDic["crt"] = caratDic;
           requestCarats.add(mainDic);
         }

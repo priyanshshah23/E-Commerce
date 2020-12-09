@@ -318,6 +318,7 @@ class _DashboardState extends StatefulScreenWidgetState {
           child: Container(
             height: getSize(40),
             decoration: BoxDecoration(
+              color: appTheme.whiteColor,
               borderRadius: BorderRadius.circular(getSize(5)),
               border:
                   Border.all(color: appTheme.colorPrimary, width: getSize(1)),
@@ -356,8 +357,10 @@ class _DashboardState extends StatefulScreenWidgetState {
                       color: appTheme.dividerColor, width: getSize(1)),
                 ),
 
-                hintStyle: appTheme.grey16HintTextStyle,
-                hintText: "Search",
+                hintStyle: appTheme.grey16HintTextStyle.copyWith(
+                  color: appTheme.placeholderColor,
+                ),
+                hintText: "Round 1.0-1.19 D H VS",
                 labelStyle: TextStyle(
                   color: appTheme.textColor,
                   fontSize: getFontSize(16),
@@ -1150,8 +1153,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                   color: appTheme.whiteColor,
                   borderRadius: BorderRadius.circular(getSize(5)),
                   border: Border.all(
-                    color: appTheme.lightBGColor,
-                  ),
+                      width: getSize(1), color: appTheme.borderColor),
                   // boxShadow: getBoxShadow(context),
                 ),
                 child: Padding(
@@ -1710,8 +1712,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                   color: appTheme.whiteColor,
                   borderRadius: BorderRadius.circular(getSize(5)),
                   border: Border.all(
-                    color: appTheme.lightBGColor,
-                  ),
+                      width: getSize(1), color: appTheme.borderColor),
                 ),
                 child: Padding(
                   padding: EdgeInsets.all(

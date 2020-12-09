@@ -142,17 +142,16 @@ class _NotificationsState extends StatefulScreenWidgetState {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: AppBackground(
-        child: Scaffold(
-            appBar: getAppBar(
-              context,
-              R.string.commonString.notifications,
-              bgColor: appTheme.whiteColor,
-              leadingButton: getBackButton(context),
-              centerTitle: false,
-            ),
-            body: notificationList),
-      ),
+      child: Scaffold(
+          backgroundColor: appTheme.whiteColor,
+          appBar: getAppBar(
+            context,
+            R.string.commonString.notifications,
+            bgColor: appTheme.whiteColor,
+            leadingButton: getBackButton(context),
+            centerTitle: false,
+          ),
+          body: notificationList),
     );
   }
 
