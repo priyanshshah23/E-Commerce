@@ -763,11 +763,12 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
           builder: (_) => FilterBy(
             optionList: optionList,
+            callBack: (value) {
+              sortingKey = value;
+              callApi(true);
+            },
           ),
-        ).then((value) {
-          sortingKey = value;
-          callApi(true);
-        });
+        );
         break;
       case BottomCodeConstant.TBDownloadView:
         List<DiamondModel> selectedList =

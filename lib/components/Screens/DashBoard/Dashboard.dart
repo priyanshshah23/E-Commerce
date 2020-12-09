@@ -1153,8 +1153,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                   color: appTheme.whiteColor,
                   borderRadius: BorderRadius.circular(getSize(5)),
                   border: Border.all(
-                    color: appTheme.lightBGColor,
-                  ),
+                      width: getSize(1), color: appTheme.borderColor),
                   // boxShadow: getBoxShadow(context),
                 ),
                 child: Padding(
@@ -1713,8 +1712,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                   color: appTheme.whiteColor,
                   borderRadius: BorderRadius.circular(getSize(5)),
                   border: Border.all(
-                    color: appTheme.lightBGColor,
-                  ),
+                      width: getSize(1), color: appTheme.borderColor),
                 ),
                 child: Padding(
                   padding: EdgeInsets.all(
