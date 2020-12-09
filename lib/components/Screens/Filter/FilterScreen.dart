@@ -885,6 +885,7 @@ class _FilterItemState extends State<FilterItem> {
           child: Container(
             height: getSize(40),
             decoration: BoxDecoration(
+              color: appTheme.whiteColor,
               borderRadius: BorderRadius.circular(getSize(5)),
               border:
                   Border.all(color: appTheme.colorPrimary, width: getSize(1)),
@@ -924,7 +925,7 @@ class _FilterItemState extends State<FilterItem> {
                 ),
 
                 hintStyle: appTheme.grey16HintTextStyle,
-                hintText: "Search",
+                hintText: R.string.commonString.searchStoneIdCertificateNo,
                 labelStyle: TextStyle(
                   color: appTheme.textColor,
                   fontSize: getFontSize(16),

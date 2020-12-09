@@ -121,6 +121,7 @@ class _PersonalInformationState extends State<PersonalInformation>
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
+        backgroundColor: appTheme.whiteColor,
         resizeToAvoidBottomPadding: true,
         resizeToAvoidBottomInset: false,
         bottomNavigationBar: Padding(
@@ -1142,8 +1143,7 @@ class _PersonalInformationState extends State<PersonalInformation>
     } else if (await isValidMobile(_whatsAppMobileController.text.trim(),
             selectedDialogCountryForWhatsapp.isoCode) ==
         false) {
-      showToast(R.string.errorString.enterValidWhatsappPhone,
-          context: context);
+      showToast(R.string.errorString.enterValidWhatsappPhone, context: context);
       return false;
     }
     return true;

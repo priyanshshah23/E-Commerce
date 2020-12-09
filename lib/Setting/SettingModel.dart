@@ -453,8 +453,7 @@ class BottomMenuSetting {
     }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
       if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
-        if (moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH &&
-            !isCompare) {
+        if (isDiamondSearchModule(moduleType) && !isCompare) {
           addOfferInBottomMenu(moreMenuList, offer);
         }
       }
@@ -544,9 +543,11 @@ class BottomMenuSetting {
             moduleType == DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST ||
             moduleType == DiamondModuleConstant.MODULE_TYPE_MY_CART ||
             moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER ||
-            moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
+            moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH ||
+            moduleType == DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH) {
           addPlaceOrderInBottomMenu(moreMenuList, placeOrder, isCenter: false);
         }
+
         if (!isDiamondSearchModule(moduleType)) {
           if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
             addOfferInBottomMenu(moreMenuList, offerWhite, isCenter: false);
@@ -594,9 +595,7 @@ class BottomMenuSetting {
     model.imageColor = appTheme.statusAvailable;
     moreMenuList.add(model);
     model = BottomTabModel(
-        image: diamond,
-        isCenter: false,
-        title: R.string.screenTitle.statusNew);
+        image: diamond, isCenter: false, title: R.string.screenTitle.statusNew);
     model.imageColor = appTheme.statusNew;
     moreMenuList.add(model);
     model = BottomTabModel(

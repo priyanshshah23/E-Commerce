@@ -21,10 +21,11 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(
         context,
         "",
-  leadingButton: getDrawerButton(context, true),
+        leadingButton: getDrawerButton(context, true),
         centerTitle: false,
       ),
       body: Padding(
