@@ -68,8 +68,7 @@ class OrderItem {
   String companyName;
   String updateIp;
   String createIp;
-  String user;
-  String seller;
+
   String billType;
   String sourceOfSale;
   List<DiamondModel> memoDetails;
@@ -97,8 +96,7 @@ class OrderItem {
       this.companyName,
       this.updateIp,
       this.createIp,
-      this.user,
-      this.seller,
+
       this.billType,
       this.sourceOfSale,
       this.memoDetails});
@@ -124,8 +122,7 @@ class OrderItem {
     companyName = json['companyName'];
     updateIp = json['updateIp'];
     createIp = json['createIp'];
-    user = json['user'];
-    seller = json['seller'];
+
     billType = json['billType'];
     sourceOfSale = json['sourceOfSale'];
     if (json['memoDetails'] != null) {
@@ -158,8 +155,6 @@ class OrderItem {
     data['companyName'] = this.companyName;
     data['updateIp'] = this.updateIp;
     data['createIp'] = this.createIp;
-    data['user'] = this.user;
-    data['seller'] = this.seller;
     data['billType'] = this.billType;
     data['sourceOfSale'] = this.sourceOfSale;
     if (this.memoDetails != null) {

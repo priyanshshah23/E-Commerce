@@ -343,7 +343,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                                       callApiForRequestForOffice(
                                           remark, selectedPopUpDate);
                                     } else {
-                                      if (this.isOfferUpdate) {
+                                      if (this.isOfferUpdate ?? false) {
                                         callApiForUpdateOffer(
                                             this.diamondList.first,
                                             remark,
@@ -571,8 +571,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
       app.resolve<CustomDialogs>().confirmDialog(context,
           title: "",
           desc: resp.message,
-          positiveBtnTitle: R.string.commonString.ok,
-          onClickCallback: (type) {
+          positiveBtnTitle: R.string.commonString.ok, onClickCallback: (type) {
         Navigator.pop(context);
       });
     }).catchError((onError) {
@@ -613,8 +612,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
       app.resolve<CustomDialogs>().confirmDialog(context,
           title: "",
           desc: message,
-          positiveBtnTitle: R.string.commonString.ok,
-          onClickCallback: (type) {
+          positiveBtnTitle: R.string.commonString.ok, onClickCallback: (type) {
         Navigator.pop(context, true);
       });
     }, failureCallback: (status, message) {
@@ -622,8 +620,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
       app.resolve<CustomDialogs>().confirmDialog(context,
           title: "",
           desc: message,
-          positiveBtnTitle: R.string.commonString.ok,
-          onClickCallback: (type) {
+          positiveBtnTitle: R.string.commonString.ok, onClickCallback: (type) {
         Navigator.pop(context);
       });
     });

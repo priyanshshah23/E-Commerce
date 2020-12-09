@@ -196,17 +196,17 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
       child: Row(
         children: [
           Expanded(
-            flex: 2,
+            flex: 1,
             child: getText(widget.item?.colNm ?? "-",
                 appTheme.blackMedium14TitleColorblack),
           ),
           Expanded(
-            flex: 2,
+            flex: 3,
             child: getText(widget.item?.clrNm ?? "-",
                 appTheme.blackMedium14TitleColorblack),
           ),
           Expanded(
-            flex: 2,
+            flex: 3,
             child: Row(
               children: <Widget>[
                 getText(widget.item?.cutNm ?? "-",
