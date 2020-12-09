@@ -945,23 +945,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                       SizedBox(
                         height: getSize(20),
                       ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            "Status",
-                            style: appTheme.blackNormal18TitleColorblack,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: getSize(4)),
-                            child: Image.asset(
-                              info,
-                              height: getSize(16),
-                              width: getSize(16),
-                            ),
-                          ),
-                        ],
-                      ),
+                      Text("Status",
+                          style: appTheme.blackSemiBold18TitleColorblack),
                       SizedBox(
                         height: getSize(10),
                       ),
@@ -976,7 +961,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                         },
                       ),
                       SizedBox(
-                        height: getSize(10),
+                        height: getSize(30),
                       ),
                     ],
                   ),
@@ -1009,7 +994,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           ),
           Text(
             title,
-            style: appTheme.black12TextStyle
+            style: appTheme.black14TextStyle
                 .copyWith(color: appTheme.textBlackColor),
           ),
         ],
