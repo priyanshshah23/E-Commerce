@@ -93,7 +93,9 @@ class _SearchScreenState extends StatefulScreenWidgetState {
               },
               borderRadius: getSize(5),
               fitWidth: true,
-              text: R.string.commonString.search,
+              text: isFromSearch
+                  ? R.string.commonString.searchStoneIdCertificateNo
+                  : "Round 1.0-1.19 D H VS",
             ),
           ),
           body: SafeArea(

@@ -447,6 +447,7 @@ class CommonString {
   String enableTouchId = "Enable Touch Id to unlock My Diamonds?";
   String enableFaceId = "Enable Face Id to unlock My Diamonds?";
   String mPin = "MPin";
+  String searchStoneIdCertificateNo = "Search Stone Id/Certificate No";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }

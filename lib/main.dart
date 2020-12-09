@@ -71,7 +71,8 @@ class _BaseState extends State<Base> {
         // Define the default brightness and colors.
         brightness: Brightness.light,
         primaryColor: appTheme.colorPrimary,
-
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
         // Define the default font family.
         fontFamily: 'Avenir',
       ),
@@ -80,7 +81,6 @@ class _BaseState extends State<Base> {
       navigatorObservers: [routeObserver],
       home: Splash(),
       routes: <String, WidgetBuilder>{
-        '/ThemeSetting': (BuildContext context) => ThemeSetting(),
         DiamondCompareScreen.route: (BuildContext context) =>
             DiamondCompareScreen(ModalRoute.of(context).settings.arguments),
         DiamondListScreen.route: (BuildContext context) =>
