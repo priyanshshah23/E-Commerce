@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (user.account.isApproved == KYCStatus.rejected &&
           user.account.isKycUploaded == true) {
         Timer(
-          Duration(seconds: 1),
+          Duration(seconds: 2),
           () => (app.resolve<CustomDialogs>().confirmDialog(context,
               dismissPopup: false,
               title: R.string.authStrings.kYCRejected,
@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (user.account.isKycUploaded == false) {
         if (!user.kycRequired) {
           Timer(
-            Duration(seconds: 1),
+            Duration(seconds: 2),
             () => (app.resolve<CustomDialogs>().confirmDialog(context,
                 dismissPopup: false,
                 title: R.string.authStrings.uploadKYC,

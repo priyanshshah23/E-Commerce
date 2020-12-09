@@ -479,7 +479,10 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
             isProgress: true)
         .then((loginResp) {
       print("Api calling doneeeeeeeeeee");
-      callLogout(context);
+      Map<String, dynamic> arguments = {};
+      arguments["isForMpin"] = true;
+      NavigationUtilities.pushRoute(PasswordResetSuccessfully.route,
+          args: arguments);
       // NavigationUtilities.pushRoute(LoginScreen.route);
     }).catchError((onError) {
       if (onError is ErrorResp) {
