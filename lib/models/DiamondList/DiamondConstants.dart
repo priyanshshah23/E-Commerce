@@ -38,6 +38,7 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_UPLOAD_KYC = 102;
   static const MODULE_TYPE_TOUCH_ID = 103;
   static const MODULE_TYPE_MPIN = 104;
+  static const MODULE_TYPE_CHANGEMPIN = 105;
 }
 
 class ModulePermissionConstant {

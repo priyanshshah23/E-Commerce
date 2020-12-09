@@ -476,7 +476,8 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
       isOtpCheck = false;
       showOTPMsg = null;
       Map<String, dynamic> arguments = {};
-      arguments["resetMpin"] = true;
+      // arguments["resetMpin"] = true;
+      arguments["enm"] = Mpin.forgotMpin;
       arguments["userName"] = _emailController.text;
       arguments["mPinOtp"] = _pinEditingController.text.trim();
       NavigationUtilities.pushRoute(SignInWithMPINScreen.route,args: arguments);

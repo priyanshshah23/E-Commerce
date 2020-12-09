@@ -18,7 +18,7 @@ class FlutterCustomPinView extends StatefulWidget {
   final bool fingerVerify;
   final String title;
   final int passLength;
-  final bool showWrongPassDialog;
+  bool showWrongPassDialog;
   final bool showFingerPass;
   final String wrongPassTitle;
   final String wrongPassContent;
@@ -88,17 +88,6 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
                 _inputCodes.clear();
               });
             });
-            if (widget.showWrongPassDialog) {
-              app.resolve<CustomDialogs>().confirmDialog(
-                    context,
-                    barrierDismissible: true,
-                    title: "Oops!",
-                    desc: widget.wrongPassContent,
-                    positiveBtnTitle: R.string.commonString.ok,
-                    // negativeBtnTitle: R.string.commonString.cancel,
-                    onClickCallback: (buttonType) {},
-                  );
-            }
           }
         });
       }
@@ -133,6 +122,20 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.showWrongPassDialog) {
+      widget.showWrongPassDialog = false;
+      // app.resolve<CustomDialogs>().confirmDialog(
+      //       context,
+      //       barrierDismissible: true,
+      //       title: "Oops!",
+      //       desc: widget.wrongPassContent,
+      //       positiveBtnTitle: R.string.commonString.ok,
+      //       // negativeBtnTitle: R.string.commonString.cancel,
+      //       onClickCallback: (buttonType) {},
+      //     );
+      _deleteAllCode();
+    }
+    
     Future.delayed(Duration(milliseconds: 200), () {
       _fingerPrint();
     });
@@ -141,7 +144,7 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: appTheme.whiteColor,
         body: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

@@ -49,7 +49,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
   var _focusPassword = FocusNode();
   bool _isPasswordValid = false;
   bool isButtonEnabled = true;
-  bool _autoValidate = false;
+  bool autoValidate = false;
   Map<String, String> language = <String, String>{
     "English": English.languageCode,
     "French": French.languageCode,
@@ -66,6 +66,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
   bool isCheckBoxSelected = false;
   final LocalAuthentication auth = LocalAuthentication();
   List<BiometricType> availableBiometrics;
+  bool canCheckBiometrics = false;
 
   @override
   void initState() {
@@ -73,6 +74,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
     super.initState();
     // if (kDebugMode) {
     getUserNameAndPassword();
+    
     // }
   }
 
@@ -84,6 +86,8 @@ class LoginScreenState extends StatefulScreenWidgetState {
     }
 
     availableBiometrics = await auth.getAvailableBiometrics();
+     canCheckBiometrics =
+    await auth.canCheckBiometrics;
   }
 
   @override
@@ -102,7 +106,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
                 body: SingleChildScrollView(
                   child: Form(
                     key: _formKey,
-                    autovalidate: _autoValidate,
+                    autovalidate: autoValidate,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
@@ -317,7 +321,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                               callLoginApi(context, req);
                                             } else {
                                               setState(() {
-                                                _autoValidate = true;
+                                                autoValidate = true;
                                               });
                                             }
                                           },
@@ -480,7 +484,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
         formatter: [],
       ),
       textCallback: (text) {
-        if (_autoValidate) {
+        if (autoValidate) {
           if (text.isEmpty) {
             setState(() {
               _isUserNameValid = false;
@@ -526,7 +530,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
           inputController: _passwordController,
           isSecureTextField: true),
       textCallback: (text) {
-        if (_autoValidate) {
+        if (autoValidate) {
           if (text.isEmpty) {
             setState(() {
               _isPasswordValid = false;
@@ -582,46 +586,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
             context,
             isProgress: true)
         .then((loginResp) {
-      app.resolve<CustomDialogs>().confirmDialog(context,
-          title: "",
-          desc:
-              // Platform.isIOS && availableBiometrics.contains(BiometricType.face)
-              //     ? "Do you want to Enable FaceId?"
-              //     : "Do you want to Enable TouchId?",
-              "Please, choose Which you wanna set while unlocking app...",
-          positiveBtnTitle: R.string.commonString.ok,
-          positiveBtnTitle2: "Mpin",
-          negativeBtnTitle: R.string.commonString.cancel,
-          totalButton: 3, onClickCallback: (buttonType) async {
-        if (buttonType == ButtonType.PositveButtonClick) {
-          if (!isNullEmptyOrFalse(availableBiometrics)) {
-            auth.canCheckBiometrics.then((value) {
-              if (value) {
-                askForBioMetrics(loginResp)();
-              } else {
-                saveUserResponse(loginResp);
-              }
-            });
-          } else {
-            saveUserResponse(loginResp);
-          }
-        } else if (buttonType == ButtonType.PositveButtonClick2) {
-          if (loginResp.data.user.isMpinAdded) {
-            Map<String, dynamic> args = {};
-            args["askForVerifyMpin"] = true;
-            args["enm"] = Mpin.login;
-            args["verifyPinCallback"] = () {
-              saveUserResponse(loginResp);
-            };
-            NavigationUtilities.pushRoute(SignInWithMPINScreen.route,
-                args: args);
-          } else {
-            NavigationUtilities.pushRoute(SignInWithMPINScreen.route);
-          }
-        } else {
-          saveUserResponse(loginResp);
-        }
-      });
+      navigateToPopUpBox(context, loginResp);
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
@@ -630,6 +595,57 @@ class LoginScreenState extends StatefulScreenWidgetState {
               desc: onError.message,
               positiveBtnTitle: R.string.commonString.ok,
             );
+      }
+    });
+  }
+
+  navigateToPopUpBox(BuildContext context, LoginResp loginResp) {
+    app.resolve<CustomDialogs>().confirmDialog(context,
+        title: "",
+        desc:
+            // Platform.isIOS && availableBiometrics.contains(BiometricType.face)
+            //     ? "Do you want to Enable FaceId?"
+            //     : "Do you want to Enable TouchId?",
+            "Please, choose Which you wanna set while unlocking app...",
+        positiveBtnTitle:
+            Platform.isIOS && availableBiometrics.contains(BiometricType.face)
+                ? "FaceId"
+                : "TouchId",
+        positiveBtnTitle2: "Mpin",
+        negativeBtnTitle: R.string.commonString.cancel,
+        totalButton: 3, onClickCallback: (buttonType) async {
+      if (buttonType == ButtonType.PositveButtonClick) {
+        if (canCheckBiometrics) {
+          auth.canCheckBiometrics.then((value) {
+            if (value) {
+              askForBioMetrics(loginResp)();
+            } else {
+              saveUserResponse(loginResp);
+            }
+          });
+        } else {
+          showToast("TouchId is not enabled in this device.",context: context);
+          navigateToPopUpBox(context, loginResp);
+          // saveUserResponse(loginResp);
+        }
+      } else if (buttonType == ButtonType.PositveButtonClick2) {
+        if (loginResp.data.user.isMpinAdded) {
+          Map<String, dynamic> args = {};
+          args["askForVerifyMpin"] = true;
+          args["enm"] = Mpin.login;
+          args["userName"] = loginResp.data.user.username;
+          args["verifyPinCallback"] = () {
+            saveUserResponse(loginResp);
+            app.resolve<PrefUtils>().setMpinisUsage(true);
+          };
+          NavigationUtilities.pushRoute(SignInWithMPINScreen.route, args: args);
+        } else {
+          //  Map<String, dynamic> args = {};
+          
+          NavigationUtilities.pushRoute(SignInWithMPINScreen.route);
+        }
+      } else {
+        saveUserResponse(loginResp);
       }
     });
   }
@@ -682,7 +698,9 @@ class LoginScreenState extends StatefulScreenWidgetState {
     // callVersionUpdateApi(id: loginResp.data.user.id); //for local
     // isMpinAdded==false mpin swith added
     if (loginResp.data.user.isMpinAdded == false) {
-      NavigationUtilities.pushRoute(SignInWithMPINScreen.route);
+      Map<String,dynamic> arguments = {};
+      arguments["enm"] = Mpin.createMpin;
+      NavigationUtilities.pushRoute(SignInWithMPINScreen.route,args: arguments);
     } else {
       //varify mpin
       SyncManager().callVersionUpdateApi(context, VersionUpdateApi.logIn,

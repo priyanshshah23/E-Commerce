@@ -101,11 +101,27 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         case DiamondModuleConstant.MODULE_TYPE_PROFILE:
           openProfile();
           break;
+        case DiamondModuleConstant.MODULE_TYPE_CHANGEMPIN:
+          changeMPin();
+          break;
       }
       if (type != DiamondModuleConstant.MODULE_TYPE_LOGOUT) {
         setState(() {});
       }
     }
+  }
+
+  changeMPin() {
+    Map<String, dynamic> arguments = {};
+    arguments["enm"] = Mpin.changeMpin;
+    arguments["askForVerifyMpin"] = true;
+    arguments["verifyPinCallback"] = () {
+      Map<String, dynamic> arguments = {};
+      arguments["enm"] = Mpin.changeMpin;
+      NavigationUtilities.pushRoute(SignInWithMPINScreen.route,
+          args: arguments);
+    };
+    NavigationUtilities.pushRoute(SignInWithMPINScreen.route, args: arguments);
   }
 
   openDiamondOrderList(int moduleType) {

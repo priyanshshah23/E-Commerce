@@ -205,7 +205,7 @@ class CommonString {
   String demandTitle = "Demand Title";
   String pleaseEnterDemandTitle = "Please enter Demand Title";
   String demandAddedSuccessfully = "Demand Added Successfully";
-  String selectAtleastOneFilter = "Please";
+  String selectAtleastOneFilter = "Please, select atleast one filter";
   String savedSearch = "Saved Search";
   String searchSavedSearch = "Search Saved Search";
   String viewDetails = "View Details";
