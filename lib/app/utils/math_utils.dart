@@ -4,13 +4,17 @@ import 'package:flutter/material.dart';
 
 import '../app.export.dart';
 
-dynamic getSize(double px) {
+bool isPad() {
   var query =
       MediaQuery.of(NavigationUtilities.key.currentState.overlay.context);
   var size = query.size;
   var diagonal = sqrt((size.width * size.width) + (size.height * size.height));
 
-  return (diagonal > 1100.0)
+  return (diagonal > 1100.0);
+}
+
+dynamic getSize(double px) {
+  return isPad()
       ? px *
           ((MathUtilities.screenWidth(
                   NavigationUtilities.key.currentState.overlay.context)) /
@@ -22,11 +26,7 @@ dynamic getSize(double px) {
 }
 
 dynamic getFontSize(double px) {
-  var query =
-      MediaQuery.of(NavigationUtilities.key.currentState.overlay.context);
-  var size = query.size;
-  var diagonal = sqrt((size.width * size.width) + (size.height * size.height));
-  return (diagonal > 1100.0)
+  return isPad()
       ? px *
           ((MathUtilities.screenWidth(
                   NavigationUtilities.key.currentState.overlay.context)) /

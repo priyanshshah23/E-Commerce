@@ -1,3 +1,5 @@
+import 'package:diamnow/app/utils/math_utils.dart';
+
 const String baseURL = "http://pndevelopapi.democ.in/";
 //const String baseURL = "192.168.0.212:8094/";
 const apiV1 = "api/v1/";
@@ -81,8 +83,8 @@ const num minOfferedDiscount = -5;
 const num maxOfferedDiscount = -70;
 
 class Spacing {
-  static const num leftPadding = 16.0;
-  static const num rightPadding = 16.0;
+  static num leftPadding = 16.0;
+  static num rightPadding = 16.0;
 }
 
 //Master Code
