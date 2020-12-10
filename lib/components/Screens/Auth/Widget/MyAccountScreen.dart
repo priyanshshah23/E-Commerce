@@ -5,6 +5,7 @@ import 'package:country_pickers/country_pickers.dart';
 import 'package:diamnow/Setting/SettingModel.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/Screens/Auth/ChangePassword.dart';
@@ -221,14 +222,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           child: Switch(
             value: isSwitchedTouchId,
             onChanged: (value) {
-              setState(() {
-                // if (isSwitchedMpin) isSwitchedMpin = false;
-                isSwitchedTouchId = !isSwitchedTouchId;
-
-                if (isSwitchedTouchId == true) {
-                  askForBioMetrics();
-                }
-              });
+              changeMPinTouchIdToggle(false);
             },
             activeTrackColor: appTheme.borderColor,
             activeColor: appTheme.colorPrimary,
@@ -245,17 +239,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           child: Switch(
             value: isSwitchedMpin,
             onChanged: (value) {
-              setState(() {
-                // if (isSwitchedTouchId)
-                //   isSwitchedTouchId = false;
-                isSwitchedMpin = !isSwitchedMpin;
-
-                if (isSwitchedMpin == true) {
-                  askForMpin();
-                } else {
-                  app.resolve<PrefUtils>().setMpinisUsage(false);
-                }
-              });
+              changeMPinTouchIdToggle(true);
             },
             activeTrackColor: appTheme.borderColor,
             activeColor: appTheme.colorPrimary,
@@ -335,43 +319,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     NavigationUtilities.pushRoute(SignInWithMPINScreen.route, args: args);
     isSwitchedMpin = false;
     setState(() {});
-    //
-    // if (!isNullEmptyOrFalse(availableBiometrics)) {
-    //   try {
-    //     bool isAuthenticated = await auth.authenticateWithBiometrics(
-    //       localizedReason:
-    //           Platform.isIOS && availableBiometrics.contains(BiometricType.face)
-    //               ? R.string().commonString.enableFaceId
-    //               : R.string().commonString.enableTouchId,
-    //       useErrorDialogs: false,
-    //       stickyAuth: false,
-    //     );
-    //     if (isAuthenticated) {
-    //       app.resolve<PrefUtils>().setBiometrcisUsage(true);
-    //       setState(() {
-    //         isSwitchedTouchId = true;
-    //       });
-    //     } else {
-    //       setState(() {
-    //         isSwitchedTouchId = false;
-    //       });
-    //     }
-    //   } on PlatformException catch (_) {
-    //     setState(() {
-    //       isSwitchedTouchId = false;
-    //     });
-    //   }
-    // } else {
-    //   List<BiometricType> availableBiometrics;
-    //   if (isNullEmptyOrFalse(availableBiometrics)) {
-    //     showToast(
-    //         "FaceId/TouchId is not enabled in your phone, Please enable to use this feature",
-    //         context: context);
-    //   }
-    //   setState(() {
-    //     isSwitchedTouchId = false;
-    //   });
-    // }
   }
 
   Widget _buildAvatarRow(BuildContext context) {
@@ -597,5 +544,41 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     dict[ArgumentConstant.ModuleType] = type;
     dict[ArgumentConstant.IsFromDrawer] = false;
     NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+  }
+
+  changeMPinTouchIdToggle(bool isForMPin) {
+    app.resolve<CustomDialogs>().confirmDialog(context,
+        title: APPNAME,
+        desc: isForMPin
+            ? "Enable MPin to unlock app? It will disable Touch Id. Are you sure you want to continue?"
+            : "Enable Touch Id to unlock app? It will disable MPin. Are you sure you want to continue?",
+        positiveBtnTitle: R.string.commonString.yes,
+        negativeBtnTitle: R.string.commonString.no,
+        onClickCallback: (buttonType) async {
+      if (buttonType == ButtonType.PositveButtonClick) {
+        if (isForMPin) {
+          setState(() {
+            // if (isSwitchedTouchId)
+            //   isSwitchedTouchId = false;
+            isSwitchedMpin = !isSwitchedMpin;
+
+            if (isSwitchedMpin == true) {
+              askForMpin();
+            } else {
+              app.resolve<PrefUtils>().setMpinisUsage(false);
+            }
+          });
+        } else {
+          setState(() {
+            // if (isSwitchedMpin) isSwitchedMpin = false;
+            isSwitchedTouchId = !isSwitchedTouchId;
+
+            if (isSwitchedTouchId == true) {
+              askForBioMetrics();
+            }
+          });
+        }
+      } else {}
+    });
   }
 }
