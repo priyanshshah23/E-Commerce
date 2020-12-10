@@ -187,21 +187,19 @@ class CustomDialogs {
     String title,
     String desc,
     String positiveBtnTitle,
-    String positiveBtnTitle2,
     String negativeBtnTitle,
+    String positiveBtnTitle2,
     OnClickCallback onClickCallback,
     bool dismissPopup: true,
     bool barrierDismissible: false,
     RichText richText,
-    int totalButton,
   }) {
     OpenConfirmationPopUp(context,
         title: title,
         desc: desc,
         positiveBtnTitle: positiveBtnTitle,
-        positiveBtnTitle2: positiveBtnTitle2,
-        totalButton: totalButton,
         negativeBtnTitle: negativeBtnTitle,
+        positiveBtnTitle2: positiveBtnTitle2,
         onClickCallback: onClickCallback,
         dismissPopup: dismissPopup,
         barrierDismissible: barrierDismissible,
@@ -398,17 +396,18 @@ bool isFilePDF(String url) {
   return false;
 }
 
-Future OpenConfirmationPopUp(BuildContext context,
-    {String title,
-    String desc,
-    String positiveBtnTitle,
-    String positiveBtnTitle2,
-    String negativeBtnTitle,
-    OnClickCallback onClickCallback,
-    bool dismissPopup: true,
-    bool barrierDismissible: false,
-    RichText richText,
-    int totalButton}) {
+Future OpenConfirmationPopUp(
+  BuildContext context, {
+  String title,
+  String desc,
+  String positiveBtnTitle,
+  String positiveBtnTitle2,
+  String negativeBtnTitle,
+  OnClickCallback onClickCallback,
+  bool dismissPopup: true,
+  bool barrierDismissible: false,
+  RichText richText,
+}) {
   Future<bool> _onBackPressed() {
     if (dismissPopup) {
       Navigator.pop(context);
@@ -426,8 +425,9 @@ Future OpenConfirmationPopUp(BuildContext context,
             //SystemChrome.setEnabledSystemUIOverlays([]);
 
             return Dialog(
-              insetPadding: EdgeInsets.symmetric(
-                  horizontal: getSize(20), vertical: getSize(20)),
+              insetPadding: EdgeInsets.only(
+                  left: getSize(Spacing.leftPadding),
+                  right: getSize(Spacing.rightPadding)),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(getSize(15)))),
               child: Container(
@@ -461,120 +461,197 @@ Future OpenConfirmationPopUp(BuildContext context,
                             ),
                           ),
                     // SizedBox(height: getSize(20),),
-                    Container(
-                      margin: EdgeInsets.only(
-                        top: getSize(24),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          negativeBtnTitle != null
-                              ? Expanded(
+                    !isNullEmptyOrFalse(positiveBtnTitle2)
+                        ? Padding(
+                            padding: EdgeInsets.only(top: getSize(20.0)),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: <Widget>[
+                                InkWell(
+                                  onTap: () {
+                                    if (dismissPopup) {
+                                      Navigator.pop(context);
+                                    }
+                                    if (onClickCallback != null) {
+                                      onClickCallback(
+                                          ButtonType.PositveButtonClick);
+                                    }
+                                  },
+                                  child: Container(
+                                    height: getSize(50),
+                                    decoration: BoxDecoration(
+                                        color: appTheme.colorPrimary,
+                                        borderRadius:
+                                            BorderRadius.circular(getSize(5)),
+                                        boxShadow: getBoxShadow(context)),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(getSize(16)),
+                                      child: Text(
+                                        positiveBtnTitle,
+                                        textAlign: TextAlign.center,
+                                        style: appTheme.white16TextStyle,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: getSize(20)),
+                                InkWell(
+                                  onTap: () {
+                                    if (dismissPopup) {
+                                      Navigator.pop(context);
+                                    }
+                                    if (onClickCallback != null) {
+                                      onClickCallback(
+                                          ButtonType.PositveButtonClick2);
+                                    }
+                                  },
+                                  child: Container(
+                                    height: getSize(50),
+                                    decoration: BoxDecoration(
+                                        color: appTheme.colorPrimary,
+                                        borderRadius:
+                                            BorderRadius.circular(getSize(5)),
+                                        boxShadow: getBoxShadow(context)),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(getSize(16)),
+                                      child: Text(
+                                        positiveBtnTitle2,
+                                        textAlign: TextAlign.center,
+                                        style: appTheme.white16TextStyle,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                negativeBtnTitle != null
+                                    ? SizedBox(
+                                        height: getSize(20),
+                                      )
+                                    : SizedBox(),
+                                negativeBtnTitle != null
+                                    ? InkWell(
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                          if (onClickCallback != null) {
+                                            onClickCallback(
+                                                ButtonType.NagativeButtonClick);
+                                          }
+                                        },
+                                        child: Container(
+                                          height: getSize(50),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                                getSize(5)),
+                                            color: appTheme.lightColorPrimary,
+                                          ),
+                                          child: Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                                getSize(8),
+                                                getSize(16),
+                                                getSize(8),
+                                                getSize(16)),
+                                            child: Text(
+                                              negativeBtnTitle,
+                                              textAlign: TextAlign.center,
+                                              style: appTheme
+                                                  .commonAlertDialogueDescStyle
+                                                  .copyWith(
+                                                      color:
+                                                          appTheme.colorPrimary,
+                                                      fontSize:
+                                                          getFontSize(15)),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    : SizedBox(),
+                              ],
+                            ),
+                          )
+                        : Container(
+                            margin: EdgeInsets.only(
+                              top: getSize(24),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                negativeBtnTitle != null
+                                    ? Expanded(
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                            if (onClickCallback != null) {
+                                              onClickCallback(ButtonType
+                                                  .NagativeButtonClick);
+                                            }
+                                          },
+                                          child: Container(
+                                            height: getSize(50),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      getSize(5)),
+                                              color: appTheme.lightColorPrimary,
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  getSize(8),
+                                                  getSize(16),
+                                                  getSize(8),
+                                                  getSize(16)),
+                                              child: Text(
+                                                negativeBtnTitle,
+                                                textAlign: TextAlign.center,
+                                                style: appTheme
+                                                    .commonAlertDialogueDescStyle
+                                                    .copyWith(
+                                                        color: appTheme
+                                                            .colorPrimary,
+                                                        fontSize:
+                                                            getFontSize(15)),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    : SizedBox(),
+                                negativeBtnTitle != null
+                                    ? SizedBox(
+                                        width: getSize(20),
+                                      )
+                                    : SizedBox(),
+                                Expanded(
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.pop(context);
+                                      if (dismissPopup) {
+                                        Navigator.pop(context);
+                                      }
                                       if (onClickCallback != null) {
                                         onClickCallback(
-                                            ButtonType.NagativeButtonClick);
+                                            ButtonType.PositveButtonClick);
                                       }
                                     },
                                     child: Container(
                                       height: getSize(50),
                                       decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(getSize(5)),
-                                        color: appTheme.lightColorPrimary,
-                                      ),
+                                          color: appTheme.colorPrimary,
+                                          borderRadius:
+                                              BorderRadius.circular(getSize(5)),
+                                          boxShadow: getBoxShadow(context)),
                                       child: Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            getSize(8),
-                                            getSize(16),
-                                            getSize(8),
-                                            getSize(16)),
+                                        padding: EdgeInsets.all(getSize(16)),
                                         child: Text(
-                                          negativeBtnTitle,
+                                          positiveBtnTitle,
                                           textAlign: TextAlign.center,
-                                          style: appTheme
-                                              .commonAlertDialogueDescStyle
-                                              .copyWith(
-                                                  color: appTheme.colorPrimary,
-                                                  fontSize: getFontSize(15)),
+                                          style: appTheme.white16TextStyle,
                                         ),
                                       ),
                                     ),
                                   ),
-                                )
-                              : SizedBox(),
-                          negativeBtnTitle != null
-                              ? SizedBox(
-                                  width: getSize(20),
-                                )
-                              : SizedBox(),
-                          Expanded(
-                            child: InkWell(
-                              onTap: () {
-                                if (dismissPopup) {
-                                  Navigator.pop(context);
-                                }
-                                if (onClickCallback != null) {
-                                  onClickCallback(
-                                      ButtonType.PositveButtonClick);
-                                }
-                              },
-                              child: Container(
-                                height: getSize(50),
-                                decoration: BoxDecoration(
-                                    color: appTheme.colorPrimary,
-                                    borderRadius:
-                                        BorderRadius.circular(getSize(5)),
-                                    boxShadow: getBoxShadow(context)),
-                                child: Padding(
-                                  padding: EdgeInsets.all(getSize(16)),
-                                  child: Text(
-                                    positiveBtnTitle,
-                                    textAlign: TextAlign.center,
-                                    style: appTheme.white16TextStyle,
-                                  ),
                                 ),
-                              ),
+                              ],
                             ),
                           ),
-                          if(!isNullEmptyOrFalse(totalButton) && totalButton == 3)
-                          Expanded(
-                            child: Padding(
-                              padding:  EdgeInsets.only(left:getSize(20)),
-                              child: InkWell(
-                                onTap: () {
-                                  if (dismissPopup) {
-                                    Navigator.pop(context);
-                                  }
-                                  if (onClickCallback != null) {
-                                    onClickCallback(
-                                        ButtonType.PositveButtonClick2);
-                                  }
-                                },
-                                child: Container(
-                                  height: getSize(50),
-                                  decoration: BoxDecoration(
-                                      color: appTheme.colorPrimary,
-                                      borderRadius:
-                                          BorderRadius.circular(getSize(5)),
-                                      boxShadow: getBoxShadow(context)),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(getSize(16)),
-                                    child: Text(
-                                      positiveBtnTitle2,
-                                      textAlign: TextAlign.center,
-                                      style: appTheme.white16TextStyle,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                   ],
                 ),
               ),

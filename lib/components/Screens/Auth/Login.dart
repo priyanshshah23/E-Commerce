@@ -74,7 +74,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
     super.initState();
     // if (kDebugMode) {
     getUserNameAndPassword();
-    
+
     // }
   }
 
@@ -86,8 +86,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
     }
 
     availableBiometrics = await auth.getAvailableBiometrics();
-     canCheckBiometrics =
-    await auth.canCheckBiometrics;
+    canCheckBiometrics = await auth.canCheckBiometrics;
   }
 
   @override
@@ -601,35 +600,22 @@ class LoginScreenState extends StatefulScreenWidgetState {
 
   navigateToPopUpBox(BuildContext context, LoginResp loginResp) {
     app.resolve<CustomDialogs>().confirmDialog(context,
-        title: "",
+        title: APPNAME,
         desc:
-            // Platform.isIOS && availableBiometrics.contains(BiometricType.face)
-            //     ? "Do you want to Enable FaceId?"
-            //     : "Do you want to Enable TouchId?",
-            "Please, choose Which you wanna set while unlocking app...",
-        positiveBtnTitle:
-            Platform.isIOS && availableBiometrics.contains(BiometricType.face)
-                ? "FaceId"
-                : "TouchId",
-        positiveBtnTitle2: "Mpin",
-        negativeBtnTitle: R.string.commonString.cancel,
-        totalButton: 3, onClickCallback: (buttonType) async {
+            "Do you want to enable Touch Id/MPin to unlock $APPNAME? Please choose an option to unlock app",
+        positiveBtnTitle2:
+            !isNullEmptyOrFalse(availableBiometrics) ? "Use Touch Id" : null,
+        positiveBtnTitle: "Use MPin",
+        negativeBtnTitle: R.string.commonString.btnSkip,
+        onClickCallback: (buttonType) async {
       if (buttonType == ButtonType.PositveButtonClick) {
-        if (canCheckBiometrics) {
-          auth.canCheckBiometrics.then((value) {
-            if (value) {
-              askForBioMetrics(loginResp)();
-            } else {
-              saveUserResponse(loginResp);
-            }
-          });
+        if (loginResp.data.user.isMpinAdded == false) {
+          Map<String, dynamic> arguments = {};
+          arguments["enm"] = Mpin.createMpin;
+          arguments["userName"] = loginResp.data.user.username;
+          NavigationUtilities.pushRoute(SignInWithMPINScreen.route,
+              args: arguments);
         } else {
-          showToast("TouchId is not enabled in this device.",context: context);
-          navigateToPopUpBox(context, loginResp);
-          // saveUserResponse(loginResp);
-        }
-      } else if (buttonType == ButtonType.PositveButtonClick2) {
-        if (loginResp.data.user.isMpinAdded) {
           Map<String, dynamic> args = {};
           args["askForVerifyMpin"] = true;
           args["enm"] = Mpin.login;
@@ -639,11 +625,9 @@ class LoginScreenState extends StatefulScreenWidgetState {
             app.resolve<PrefUtils>().setMpinisUsage(true);
           };
           NavigationUtilities.pushRoute(SignInWithMPINScreen.route, args: args);
-        } else {
-          //  Map<String, dynamic> args = {};
-          
-          NavigationUtilities.pushRoute(SignInWithMPINScreen.route);
         }
+      } else if (buttonType == ButtonType.PositveButtonClick2) {
+        askForBioMetrics(loginResp)();
       } else {
         saveUserResponse(loginResp);
       }
@@ -697,15 +681,8 @@ class LoginScreenState extends StatefulScreenWidgetState {
 //      NavigationUtilities.pushRoute(Notifications.route);
     // callVersionUpdateApi(id: loginResp.data.user.id); //for local
     // isMpinAdded==false mpin swith added
-    if (loginResp.data.user.isMpinAdded == false) {
-      Map<String,dynamic> arguments = {};
-      arguments["enm"] = Mpin.createMpin;
-      NavigationUtilities.pushRoute(SignInWithMPINScreen.route,args: arguments);
-    } else {
-      //varify mpin
-      SyncManager().callVersionUpdateApi(context, VersionUpdateApi.logIn,
-          id: loginResp.data.user.id);
-    }
+    SyncManager().callVersionUpdateApi(context, VersionUpdateApi.logIn,
+        id: loginResp.data.user.id);
   }
 
   // void callVersionUpdateApi({String id}) {

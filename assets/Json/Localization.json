@@ -377,8 +377,11 @@
       "faceId": "Face Id",
       "enableTouchId": "Enable Touch Id to unlock My Diamonds?",
       "enableFaceId": "Enable Face Id to unlock My Diamonds?",
+      "unlockWithTouchId": "Unlock My Diamonds using Touch Id",
+      "unlockWithFaceId": "Unlock My Diamonds using Face Id.",
       "mPin": "MPin",
-      "holdMemoStatusDiamondorder": "holdMemoStatusDiamondorder"
+      "holdMemoStatusDiamondorder": "You can not confirmed stones which are already in hold or memo status",
+      "searchStoneIdCertificateNo": "Search Stone Id/Certificate No"
     },
     "error_string": {
       "accessDenide": "Access denied",
@@ -550,7 +553,7 @@
       "newArrival": "New Arrival",
       "exclusiveDiamonds": "Exclusive Diamonds",
       "diamondOnAuction": "Diamond On Auction",
-      "stoneOfTheDays": "Stones of the Day",
+      "stoneOfTheDays": "Best Buy",
       "myWatchlist": "My Watchlist",
       "myBid": "My Bid",
       "myHold": "My Hold",
@@ -999,8 +1002,11 @@
       "faceId": "面部识别",
       "enableTouchId": "允许使用Touch ID解锁我的钻石？",
       "enableFaceId": "启用面部识别解锁我的钻石？",
+      "unlockWithTouchId": "采用触摸式标识解锁我的钻石",
+      "unlockWithFaceId": "解锁使用面部识别我的钻石。",
       "mPin": "M-PIN",
-      "holdMemoStatusDiamondorder": "holdMemoStatusDiamondorder"
+      "holdMemoStatusDiamondorder": "你不能确诊的石块，已经在保持或备忘录状态",
+      "searchStoneIdCertificateNo": "搜索石ID /证书号"
     },
     "error_string": {
       "accessDenide": "拒绝访问",
@@ -1172,7 +1178,7 @@
       "newArrival": "新品到货",
       "exclusiveDiamonds": "独家钻石级",
       "diamondOnAuction": "钻石拍卖",
-      "stoneOfTheDays": "每日石头",
+      "stoneOfTheDays": "百思买",
       "myWatchlist": "我的关注",
       "myBid": "我的出价",
       "myHold": "我保持",
@@ -1621,8 +1627,11 @@
       "faceId": "Id visage",
       "enableTouchId": "Activer tactile Id pour déverrouiller Mes diamants?",
       "enableFaceId": "Activer Id Face à déverrouiller Mes diamants?",
+      "unlockWithTouchId": "Débloquer Mes diamants à l'aide tactile Id",
+      "unlockWithFaceId": "Déverrouillez Mes diamants en utilisant Id Face.",
       "mPin": "Ampin",
-      "holdMemoStatusDiamondorder": "holdMemoStatusDiamondorder"
+      "holdMemoStatusDiamondorder": "Vous ne pouvez pas confirmer les pierres qui sont déjà en attente ou de l'état mémo",
+      "searchStoneIdCertificateNo": "Recherche Pierre Id / certificat Non"
     },
     "error_string": {
       "accessDenide": "Accès refusé",
@@ -1794,7 +1803,7 @@
       "newArrival": "Nouvelle arrivee",
       "exclusiveDiamonds": "Diamants exclusifs",
       "diamondOnAuction": "Diamond sur Auction",
-      "stoneOfTheDays": "Pierres du jour",
+      "stoneOfTheDays": "Meilleur achat",
       "myWatchlist": "Watchlist Mes",
       "myBid": "mon offre",
       "myHold": "mon attente",
@@ -2243,8 +2252,11 @@
       "faceId": "フェイス同上",
       "enableTouchId": "私のダイヤモンドのロックを解除するにはタッチIDを有効にしますか？",
       "enableFaceId": "私のダイヤモンドのロックを解除する顔IDを有効にしますか？",
+      "unlockWithTouchId": "タッチIDを使用して私のダイヤモンドのロックを解除",
+      "unlockWithFaceId": "フェイスIDを使用して私のダイヤモンドのロックを解除します。",
       "mPin": "MPin",
-      "holdMemoStatusDiamondorder": "holdMemoStatusDiamondorder"
+      "holdMemoStatusDiamondorder": "あなたは保留に既にある石やメモの状態を確認することはできません",
+      "searchStoneIdCertificateNo": "ストーンID /証明書番号を検索"
     },
     "error_string": {
       "accessDenide": "アクセスが拒否されました",
@@ -2416,7 +2428,7 @@
       "newArrival": "新参者",
       "exclusiveDiamonds": "独占ダイヤモンド",
       "diamondOnAuction": "ダイヤモンドでオークション",
-      "stoneOfTheDays": "デイのストーンズ",
+      "stoneOfTheDays": "ベストバイ",
       "myWatchlist": "マイウォッチリスト",
       "myBid": "私の入札",
       "myHold": "マイホールド",
@@ -2865,8 +2877,11 @@
       "faceId": "face ID",
       "enableTouchId": "Abilita tocco Id per sbloccare i miei diamanti?",
       "enableFaceId": "Abilita Face ID per sbloccare i miei diamanti?",
+      "unlockWithTouchId": "Sbloccare i miei diamanti utilizzando tocco Id",
+      "unlockWithFaceId": "Sbloccare i miei diamanti utilizzando Face ID.",
       "mPin": "MPin",
-      "holdMemoStatusDiamondorder": "holdMemoStatusDiamondorder"
+      "holdMemoStatusDiamondorder": "Non si può confermato le pietre che sono già in possesso o un memo di stato",
+      "searchStoneIdCertificateNo": "Cerca di pietra Id / Certificato No"
     },
     "error_string": {
       "accessDenide": "Accesso negato",
@@ -3038,7 +3053,7 @@
       "newArrival": "Nuovo arrivo",
       "exclusiveDiamonds": "Diamanti Exclusive",
       "diamondOnAuction": "Diamante all'asta",
-      "stoneOfTheDays": "Pietre del Giorno",
+      "stoneOfTheDays": "Miglior acquisto",
       "myWatchlist": "mio Lista memo",
       "myBid": "la mia offerta",
       "myHold": "La mia attesa",
@@ -3487,8 +3502,11 @@
       "faceId": "Id cara",
       "enableTouchId": "Activar contacto Id para desbloquear mis diamantes?",
       "enableFaceId": "Habilitar Face ID para desbloquear mis diamantes?",
+      "unlockWithTouchId": "Desbloquear mis diamantes utilizando Touch ID",
+      "unlockWithFaceId": "Desbloquear mis diamantes utilizando Face ID.",
       "mPin": "MPIN",
-      "holdMemoStatusDiamondorder": "holdMemoStatusDiamondorder"
+      "holdMemoStatusDiamondorder": "你 不能 确诊 的 石块, 已经 在 保持 或 备忘录 状态",
+      "searchStoneIdCertificateNo": "搜索 石 ID / 证书 号"
     },
     "error_string": {
       "accessDenide": "Acceso denegado",
@@ -3660,7 +3678,7 @@
       "newArrival": "Nueva llegada",
       "exclusiveDiamonds": "Diamantes exclusivos",
       "diamondOnAuction": "Diamante en subasta",
-      "stoneOfTheDays": "Piedras del Día",
+      "stoneOfTheDays": "La mejor compra",
       "myWatchlist": "lista",
       "myBid": "mi subasta",
       "myHold": "mi Hold",
@@ -3871,7 +3889,7 @@
       "addDemand": "Add Nachfrage",
       "demandTitle": "Die Nachfrage Titel",
       "pleaseEnterDemandTitle": "Bitte geben Sie die Nachfrage Titel",
-      "demandAddedSuccessfully": "Die Nachfrage Erfolgreich",
+      "demandAddedSuccessfully": "Nachfrage Erfolgreich",
       "selectAtleastOneFilter": "Bitte",
       "savedSearch": "Gespeicherte Suche",
       "searchSavedSearch": "Suche Gespeicherte Suche",
@@ -4109,8 +4127,11 @@
       "faceId": "Gesicht Id",
       "enableTouchId": "Aktivieren Touch-Id My Diamanten zu entsperren?",
       "enableFaceId": "Aktivieren Gesicht Id My Diamanten zu entsperren?",
+      "unlockWithTouchId": "Diamanten Unlock My mit Touch-Id",
+      "unlockWithFaceId": "Schalt Meine Diamanten mit dem Gesicht Id.",
       "mPin": "MPIN",
-      "holdMemoStatusDiamondorder": "holdMemoStatusDiamondorder"
+      "holdMemoStatusDiamondorder": "Sie können nicht mit Steinen bestätigt, die bereits im Halte- oder Memo-Status sind",
+      "searchStoneIdCertificateNo": "Suchen Stein Id / Zertifikat Nr"
     },
     "error_string": {
       "accessDenide": "Zugriff verweigert",
@@ -4273,7 +4294,7 @@
       "reset": "Reset",
       "yourPassword": "Ihr Passwort",
       "photo": "Foto",
-      "otpDesc": "Der Recovery-Code wurde an Ihre Handy-Nummer gesendet. Bitte geben Sie den Code ein.",
+      "otpDesc": "Der Wiederherstellungs-Code wurde auf Ihre Handy-Nummer gesendet. Bitte geben Sie den Code ein.",
       "otpVerifyDesc": "Der Bestätigungscode wurde an Ihre Handy-Nummer gesendet. Bitte geben Sie den Code ein.",
       "diamondDetail": "Diamant-Detail",
       "home": "Zuhause",
@@ -4282,7 +4303,7 @@
       "newArrival": "Neuankömmling",
       "exclusiveDiamonds": "exklusive Diamanten",
       "diamondOnAuction": "Diamant ersteigern",
-      "stoneOfTheDays": "Steine ​​des Tages",
+      "stoneOfTheDays": "best Buy",
       "myWatchlist": "Meine Beobachtungsliste",
       "myBid": "Mein Gebot",
       "myHold": "Mein Halten",

@@ -221,8 +221,7 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
             if (imgBussinessProff == null) {
               isValid = false;
               setState(() {
-                bussinessErr =
-                    R.string.authStrings.pleaseUploadBussinessProof;
+                bussinessErr = R.string.authStrings.pleaseUploadBussinessProof;
               });
             }
             if (isValid == true) {

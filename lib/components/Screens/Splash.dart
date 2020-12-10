@@ -65,8 +65,8 @@ class _SplashState extends State<Splash> {
         bool isAuthenticated = await auth.authenticateWithBiometrics(
           localizedReason:
               Platform.isIOS && availableBiometrics.contains(BiometricType.face)
-                  ? R.string.commonString.enableFaceId
-                  : R.string.commonString.enableTouchId,
+                  ? R.string.commonString.unlockWithFaceId
+                  : R.string.commonString.unlockWithTouchId,
           useErrorDialogs: false,
           stickyAuth: false,
         );

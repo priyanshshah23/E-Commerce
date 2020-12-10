@@ -56,7 +56,7 @@ class SyncManager {
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().getMaster(req),
             context,
-            isProgress: isProgress,
+            isProgress: true,
             isNetworkError: isNetworkError)
         .then((masterResp) async {
       // save Logged In user
