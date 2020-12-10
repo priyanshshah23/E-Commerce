@@ -800,8 +800,8 @@ class _FilterItemState extends State<FilterItem> {
     } else if (model.viewType == ViewTypes.selection) {
       return Padding(
         padding: EdgeInsets.only(
-            left: getSize(16),
-            right: getSize(16),
+            left: getSize(Spacing.leftPadding),
+            right: getSize(Spacing.rightPadding),
             top: getSize(8),
             bottom: getSize(8)),
         child: SelectionWidget(model),
@@ -809,8 +809,8 @@ class _FilterItemState extends State<FilterItem> {
     } else if (model.viewType == ViewTypes.fromTo) {
       return Padding(
         padding: EdgeInsets.only(
-            left: getSize(16),
-            right: getSize(16),
+            left: getSize(Spacing.leftPadding),
+            right: getSize(Spacing.rightPadding),
             top: getSize(8),
             bottom: getSize(8)),
         child: FromToWidget(model),
@@ -818,8 +818,8 @@ class _FilterItemState extends State<FilterItem> {
     } else if (model.viewType == ViewTypes.certNo) {
       return Padding(
         padding: EdgeInsets.only(
-            left: getSize(16),
-            right: getSize(16),
+            left: getSize(Spacing.leftPadding),
+            right: getSize(Spacing.rightPadding),
             top: getSize(8),
             bottom: getSize(8)),
         child: CertNoWidget(model),
@@ -827,8 +827,8 @@ class _FilterItemState extends State<FilterItem> {
     } else if (model.viewType == ViewTypes.keytosymbol) {
       return Padding(
         padding: EdgeInsets.only(
-            left: getSize(16),
-            right: getSize(16),
+            left: getSize(Spacing.leftPadding),
+            right: getSize(Spacing.rightPadding),
             top: getSize(8),
             bottom: getSize(8)),
         child: KeyToSymbolWidget(model),
@@ -836,8 +836,8 @@ class _FilterItemState extends State<FilterItem> {
     } else if (model.viewType == ViewTypes.groupWidget) {
       return Padding(
         padding: EdgeInsets.only(
-            left: getSize(16),
-            right: getSize(16),
+            left: getSize(Spacing.leftPadding),
+            right: getSize(Spacing.rightPadding),
             top: getSize(8),
             bottom: getSize(8)),
         child: (model as ColorModel).showGroup
@@ -847,8 +847,8 @@ class _FilterItemState extends State<FilterItem> {
     } else if (model.viewType == ViewTypes.caratRange) {
       return Padding(
         padding: EdgeInsets.only(
-            left: getSize(16),
-            right: getSize(16),
+            left: getSize(Spacing.leftPadding),
+            right: getSize(Spacing.rightPadding),
             top: getSize(8),
             bottom: getSize(8)),
         child: CaratRangeWidget(model),
@@ -856,8 +856,8 @@ class _FilterItemState extends State<FilterItem> {
     } else if (model.viewType == ViewTypes.shapeWidget) {
       return Padding(
         padding: EdgeInsets.only(
-            left: getSize(16),
-            right: getSize(16),
+            left: getSize(Spacing.leftPadding),
+            right: getSize(Spacing.rightPadding),
             top: getSize(8),
             bottom: getSize(8)),
         child: ShapeWidget(model),

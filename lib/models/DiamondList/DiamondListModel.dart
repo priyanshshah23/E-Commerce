@@ -742,6 +742,12 @@ class DiamondModel {
       case DiamondStatus.DIAMOND_STATUS_SHOW:
         color = appTheme.darkBlue;
         break;
+      case DiamondStatus.DIAMOND_STATUS_HOLD:
+        color = appTheme.redColor;
+        break;
+      case DiamondStatus.DIAMOND_STONE_OF_THE_DAY:
+        color = appTheme.statusOffer;
+        break;
     }
     return color;
   }
@@ -839,7 +845,7 @@ class DiamondModel {
 
   num getFinalDiscount() {
     num val = (1 - (getFinalRate() / rap)) * (-100);
-    return !val.isNaN ? val : 0;
+    return val.isNaN || val.isInfinite ? 0 : val;
   }
 
   num getFinalAmount() {

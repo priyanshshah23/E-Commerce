@@ -39,7 +39,7 @@ class DashboardConfig {
             ModulePermissionConstant.permission_stone_of_the_day)
         .view)
       arr.add(DashbordTopSection(
-        title: R.string.screenTitle.stoneOfDay,
+        title: R.string.screenTitle.stoneOfTheDays,
         value: "0",
         image: home_stoneoftheday,
         bgImage: home_stoneofthedayBg,

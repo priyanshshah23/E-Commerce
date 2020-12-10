@@ -36,13 +36,12 @@ class StaticPageScreen extends StatefulScreenWidget {
 
   @override
   _StaticPageScreenState createState() => _StaticPageScreenState(
-        strUrl: this.strUrl,
-        screenType: this.screenType,
-        screenTitle: this.screenTitle,
-        showExcel: this.showExcel,
-        isFromDrawer: this.isFromDrawer,
-        filePath: this.filePath
-      );
+      strUrl: this.strUrl,
+      screenType: this.screenType,
+      screenTitle: this.screenTitle,
+      showExcel: this.showExcel,
+      isFromDrawer: this.isFromDrawer,
+      filePath: this.filePath);
 }
 
 class _StaticPageScreenState extends StatefulScreenWidgetState {
@@ -104,6 +103,7 @@ class _StaticPageScreenState extends StatefulScreenWidgetState {
         appBar: getAppBar(
           context,
           screenTitle ?? getScreenTitle(),
+          bgColor: appTheme.whiteColor,
           leadingButton: isFromDrawer
               ? getDrawerButton(context, true)
               : getBackButton(context),

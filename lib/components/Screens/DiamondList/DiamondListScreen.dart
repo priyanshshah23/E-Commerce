@@ -174,7 +174,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         break;
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
         dict["filters"] = {};
-        dict["filters"]["viewType"] = 2;
+        dict["viewType"] = 2;
         break;
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
         dict["filters"] = {};
@@ -220,7 +220,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict["isAppendDiamond"] = 1;
         break;
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
-        dict["type"] = "stone_of_day";
+       dict["filters"] = {};
+        dict["filters"]["wSts"] = "D";
+      
         break;
     }
     NetworkCall<DiamondListResp>()

@@ -246,7 +246,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                     //   getIdColorDetail(),
                                     Expanded(
                                       child: Container(
-                                        height: getSize(120),
+                                        // height: getSize(120),
                                         child: Padding(
                                           padding: EdgeInsets.only(
                                               left: getSize(8),

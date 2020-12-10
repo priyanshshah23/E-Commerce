@@ -74,20 +74,28 @@ class DiamondCalculation {
     totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt ?? 0);
     if (isAccountTerm) {
       totalDisc = PriceUtilities.getPercent(
-          arrFinalValues[2].isNaN ? 0 : arrFinalValues[2] ?? 0);
+          arrFinalValues[2].isNaN || arrFinalValues[2].isInfinite
+              ? 0
+              : arrFinalValues[2] ?? 0);
       totalAmount = PriceUtilities.getPrice(
-          arrFinalValues[1].isNaN ? 0 : arrFinalValues[1] ?? 0);
+          arrFinalValues[1].isNaN || arrFinalValues[1].isInfinite
+              ? 0
+              : arrFinalValues[1] ?? 0);
       totalPriceCrt = PriceUtilities.getPrice(
-          arrFinalValues[0].isNaN ? 0 : arrFinalValues[0] ?? 0);
+          arrFinalValues[0].isNaN || arrFinalValues[0].isInfinite
+              ? 0
+              : arrFinalValues[0] ?? 0);
     } else {
       avgDisc = (1 - (avgPriceCrt / avgRapCrt)) * (-100);
-      totalDisc = PriceUtilities.getPercent(avgDisc.isNaN ? 0 : avgDisc ?? 0);
+      totalDisc = PriceUtilities.getPercent(
+          avgDisc.isNaN || avgDisc.isInfinite ? 0 : avgDisc ?? 0);
       avgAmount = arrValues[1];
-      totalAmount =
-          PriceUtilities.getPrice(avgAmount.isNaN ? 0 : avgAmount ?? 0);
+      totalAmount = PriceUtilities.getPrice(
+          avgAmount.isNaN || avgAmount.isInfinite ? 0 : avgAmount ?? 0);
     }
 
-    totalCarat = PriceUtilities.getDoubleValue(carat.isNaN ? 0 : carat ?? 0);
+    totalCarat = PriceUtilities.getDoubleValue(
+        carat.isNaN || carat.isInfinite ? 0 : carat ?? 0);
     pcs = filterList.length.toString();
   }
 }
@@ -194,6 +202,7 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
       case DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
+      case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
         return app
             .resolve<ServiceModule>()
             .networkService()
@@ -229,11 +238,11 @@ class DiamondConfig {
             .networkService()
             .diamondOfficeList(dict);
 
-      case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
-        return app
-            .resolve<ServiceModule>()
-            .networkService()
-            .stoneOfTheDay(dict);
+      // case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
+      //   return app
+      //       .resolve<ServiceModule>()
+      //       .networkService()
+      //       .stoneOfTheDay(dict);
     }
   }
 

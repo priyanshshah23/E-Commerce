@@ -155,6 +155,7 @@ class DiamondStatus {
   static const String DIAMOND_STATUS_BID = "B";
   static const String DIAMOND_STATUS_UPCOMING = "U";
   static const String DIAMOND_STATUS_HOLD = "H";
+  static const String DIAMOND_STONE_OF_THE_DAY = "D";
 }
 
 class StaticPageConstant {

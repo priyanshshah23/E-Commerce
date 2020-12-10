@@ -171,7 +171,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         children: [
           Padding(
             padding: EdgeInsets.only(
-              left: getSize(20),
+              left: getSize(Spacing.leftPadding),
             ),
             child: Row(
               // mainAxisSize: MainAxisSize.max,
