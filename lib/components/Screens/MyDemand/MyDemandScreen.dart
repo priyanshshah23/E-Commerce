@@ -240,7 +240,7 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
-                                    "Expiry Date :",
+                                    R.string.commonString.expirydate,
                                     style: appTheme.grey14HintTextStyle,
                                   ),
                                   SizedBox(width: getSize(5)),
@@ -316,7 +316,7 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                                       barrierDismissible: true,
                                       title: "",
                                       desc:
-                                          "You really want to delete ${model.name}.",
+                                          "${R.string.commonString.youreallywanttodelete} model.name}.",
                                       positiveBtnTitle:
                                           R.string.commonString.ok,
                                       negativeBtnTitle:

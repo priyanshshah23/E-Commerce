@@ -319,7 +319,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       List<BiometricType> availableBiometrics;
       if (isNullEmptyOrFalse(availableBiometrics)) {
         showToast(
-            "FaceId/TouchId is not enabled in your phone, Please enable to use this feature",
+            R.string.commonString.faceidandtouchnotenable,
             context: context);
       }
       setState(() {
@@ -575,8 +575,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     app.resolve<CustomDialogs>().confirmDialog(context,
         title: APPNAME,
         desc: isForMPin
-            ? "Enable MPin to unlock app? It will disable Touch Id. Are you sure you want to continue?"
-            : "Enable Touch Id to unlock app? It will disable MPin. Are you sure you want to continue?",
+            ? R.string.commonString.enablempintounlockmydiamonds
+            : R.string.commonString.enabletouchidtounlockmydiamonds,
         positiveBtnTitle: R.string.commonString.yes,
         negativeBtnTitle: R.string.commonString.no,
         onClickCallback: (buttonType) async {

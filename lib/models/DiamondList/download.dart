@@ -78,7 +78,7 @@ class DownloadState extends State<Download> {
                 color: Colors.white,
                 child: Column(
                   children: <Widget>[
-                    getTitleText(context, "Downloading...",
+                    getTitleText(context, R.string.commonString.downloading,
                         color: ColorConstants.black, fontSize: getSize(20)),
                     SizedBox(
                       height: getSize(20),
@@ -141,7 +141,7 @@ class DownloadState extends State<Download> {
                         value.cancel();
                       });
 
-                      showToast("Downloading canceled", context: context);
+                      showToast(R.string.commonString.downloadingCanceled, context: context);
                     },
                     borderRadius: getSize(5),
                     text: R.string.commonString.cancel,
@@ -262,10 +262,10 @@ class DownloadState extends State<Download> {
             if (finalDownloadProgress >= 99) {
               Navigator.pop(context);
               totalDownloadedFiles == totalDownloadableFilesForAllDiamonds
-                  ? showToast("All files has been downloaded.",
+                  ? showToast(R.string.commonString.allfileshavebeendownloaded,
                       context: context)
                   : showToast(
-                      "${totalDownloadedFiles} files is downloaded \n ${totalDownloadableFilesForAllDiamonds - totalDownloadedFiles} files is not downloaded because it's not exist in the server.",
+                      "${totalDownloadedFiles} ${R.string.commonString.filesisdownloaded} \n ${totalDownloadableFilesForAllDiamonds - totalDownloadedFiles} ${R.string.commonString.filesisnotdownloadedbcz}",
                       context: context);
               allDiamondPreviewThings.forEach((element) {
                 if (element.fileType ==
@@ -314,7 +314,7 @@ class DownloadState extends State<Download> {
         // RxBus.register<bool>(tag: "breakforloop").listen((event) {
 
         // });
-        showToast("Files are not available on server,Please try again later",
+        showToast(R.string.commonString.filesarenotavailableonserver,
             context: context);
       } else
         setState(() {});

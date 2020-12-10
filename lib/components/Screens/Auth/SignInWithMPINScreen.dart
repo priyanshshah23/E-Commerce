@@ -167,14 +167,14 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                               enm == Mpin.myAccount ||
                               askForVerifyMpin) &&
                           !isForReEnter
-                      ? "Verify Mpin"
+                      ? R.string.commonString.verifympin
                       : (enm == Mpin.changeMpin ||
                                   enm == Mpin.forgotMpin ||
                                   enm == Mpin.createMpin) &&
                               !isForReEnter
-                          ? "Create New Mpin"
+                          ? R.string.commonString.createMPin
                           : isForReEnter
-                              ? "Reenter Mpin"
+                              ? R.string.commonString.reentermpin
                               : R.string.authStrings.signInWithMPIN,
                   bgColor: appTheme.whiteColor,
                   leadingButton:
@@ -259,7 +259,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                       ),
                       SizedBox(height: getSize(54)),
                       Text(
-                        "Enter your 6 digit MPIN",
+                        R.string.commonString.enteryoursixdigitcode,
                         style: appTheme.black16MediumTextStyle,
                       ),
                       SizedBox(height: getSize(32)),
@@ -414,7 +414,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            Text("Forgot MPIN?",
+                            Text(R.string.commonString.forgotmpin,
                                 style: appTheme.black16MediumTextStyle
                                     .copyWith(color: appTheme.greenColor)),
                           ],
