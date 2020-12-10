@@ -252,8 +252,8 @@ class Master {
         if (master.isSelected == true) {
           Map<String, dynamic> mainDic = Map<String, dynamic>();
           Map<String, dynamic> caratDic = Map<String, dynamic>();
-          caratDic[">="] = "${tCarat.fromCarat}";
-          caratDic["<="] = "${tCarat.toCarat}";
+          caratDic[">="] = "${tCarat.webDisplay.split("-")[0]}";
+          caratDic["<="] = "${tCarat.webDisplay.split("-")[1]}";
           mainDic["crt"] = caratDic;
           requestCarats.add(mainDic);
         }

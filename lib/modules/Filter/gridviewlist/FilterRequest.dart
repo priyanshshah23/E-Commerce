@@ -235,8 +235,10 @@ class FilterDataSource {
               for (var master in item.masters) {
                 for (var tCarat in master.grouped) {
                   for (var model in arrSelected) {
-                    if (tCarat.fromCarat == num.parse(model[">="].toString()) &&
-                        tCarat.toCarat == num.parse(model["<="].toString())) {
+                    if (num.parse(tCarat.webDisplay.split("-")[0]) ==
+                            num.parse(model[">="].toString()) &&
+                        num.parse(tCarat.webDisplay.split("-")[1]) ==
+                            num.parse(model["<="].toString())) {
                       tCarat.isSelected = true;
                       master.isSelected = true;
                       arrDup.remove(model);
