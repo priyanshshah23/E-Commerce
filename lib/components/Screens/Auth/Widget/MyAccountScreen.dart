@@ -112,16 +112,24 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   }
 
   changeMPin() {
-    Map<String, dynamic> arguments = {};
-    arguments["enm"] = Mpin.changeMpin;
-    arguments["askForVerifyMpin"] = true;
-    arguments["verifyPinCallback"] = () {
+    if (app.resolve<PrefUtils>().getUserDetails().isMpinAdded == false) {
       Map<String, dynamic> arguments = {};
-      arguments["enm"] = Mpin.changeMpin;
+      arguments["enm"] = Mpin.createMpin;
       NavigationUtilities.pushRoute(SignInWithMPINScreen.route,
           args: arguments);
-    };
-    NavigationUtilities.pushRoute(SignInWithMPINScreen.route, args: arguments);
+    } else {
+      Map<String, dynamic> arguments = {};
+      arguments["enm"] = Mpin.changeMpin;
+      arguments["askForVerifyMpin"] = true;
+      arguments["verifyPinCallback"] = () {
+        Map<String, dynamic> arguments = {};
+        arguments["enm"] = Mpin.changeMpin;
+        NavigationUtilities.pushRoute(SignInWithMPINScreen.route,
+            args: arguments);
+      };
+      NavigationUtilities.pushRoute(SignInWithMPINScreen.route,
+          args: arguments);
+    }
   }
 
   openDiamondOrderList(int moduleType) {

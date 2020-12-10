@@ -345,16 +345,27 @@ class DrawerSetting {
       imageColor: appTheme.colorPrimary,
       type: DiamondModuleConstant.MODULE_TYPE_TOUCH_ID,
     ));
+    if (app.resolve<PrefUtils>().getUserDetails().isMpinAdded) {
+      drawerList.add(DrawerModel(
+        image: changePassword,
+        title: R.string.commonString.mPin,
+        isSelected: false,
+        imageColor: appTheme.colorPrimary,
+        type: DiamondModuleConstant.MODULE_TYPE_MPIN,
+      ));
+    }
+    drawerList.add(DrawerModel(
+        image: changePassword,
+        title: R.string.screenTitle.changePassword,
+        isSelected: false,
+        imageColor: appTheme.colorPrimary,
+        type: DiamondModuleConstant.MODULE_TYPE_CHANGE_PASSWORD));
+
     drawerList.add(DrawerModel(
       image: changePassword,
-      title: R.string.commonString.mPin,
-      isSelected: false,
-      imageColor: appTheme.colorPrimary,
-      type: DiamondModuleConstant.MODULE_TYPE_MPIN,
-    ));
-    drawerList.add(DrawerModel(
-      image: changePassword,
-      title: "Change Mpin",
+      title: app.resolve<PrefUtils>().getUserDetails().isMpinAdded == false
+          ? "Create MPin"
+          : "Change MPin",
       isSelected: false,
       imageColor: appTheme.colorPrimary,
       type: DiamondModuleConstant.MODULE_TYPE_CHANGEMPIN,

@@ -22,14 +22,14 @@ class PasswordResetSuccessfully extends StatefulWidget {
   }
   @override
   _PasswordResetSuccessfullyState createState() =>
-      _PasswordResetSuccessfullyState(this.isForMpin,this.createMpin);
+      _PasswordResetSuccessfullyState(this.isForMpin, this.createMpin);
 }
 
 class _PasswordResetSuccessfullyState extends State<PasswordResetSuccessfully> {
   bool isForMpin;
   bool createMpin = false;
 
-  _PasswordResetSuccessfullyState(this.isForMpin,this.createMpin);
+  _PasswordResetSuccessfullyState(this.isForMpin, this.createMpin);
 
   @override
   void initState() {
@@ -62,10 +62,7 @@ class _PasswordResetSuccessfullyState extends State<PasswordResetSuccessfully> {
             decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
             child: AppButton.flat(
               onTap: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  LoginScreen.route,
-                  (Route<dynamic> route) => false,
-                );
+                callLogout(context);
               },
               //  backgroundColor: appTheme.buttonColor,
               borderRadius: getSize(5),
@@ -75,34 +72,35 @@ class _PasswordResetSuccessfullyState extends State<PasswordResetSuccessfully> {
             ),
           ),
         ),
-        body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: getSize(20)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(
-                    right: getSize(132),
-                    left: getSize(132),
-                    bottom: getSize(19),
-                  ),
-                  child: Image.asset(
-                    passwordResetSuccessfully,
-                    height: getSize(150),
-                    width: getSize(150),
-                  ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(
+                  right: getSize(132),
+                  left: getSize(132),
+                  bottom: getSize(19),
                 ),
-                Text(
-                  !isForMpin
-                      ? R.string.authStrings.passwordResetSuccessfully
-                      : !createMpin ? "Mpin created successfully."
-                      :
-                      "Mpin reset successfully.",
-                  style: appTheme.blackMedium20TitleColorblack,
-                  textAlign: TextAlign.center,
+                child: Image.asset(
+                  passwordResetSuccessfully,
+                  height: getSize(150),
+                  width: getSize(150),
                 ),
-              ],
-            )),
+              ),
+              Text(
+                !isForMpin
+                    ? R.string.authStrings.passwordResetSuccessfully
+                    : !createMpin
+                        ? "Mpin created successfully."
+                        : "Mpin reset successfully.",
+                style: appTheme.blackMedium20TitleColorblack,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -74,7 +74,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
     super.initState();
     // if (kDebugMode) {
     getUserNameAndPassword();
-    
+
     // }
   }
 
@@ -86,8 +86,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
     }
 
     availableBiometrics = await auth.getAvailableBiometrics();
-     canCheckBiometrics =
-    await auth.canCheckBiometrics;
+    canCheckBiometrics = await auth.canCheckBiometrics;
   }
 
   @override
@@ -601,6 +600,39 @@ class LoginScreenState extends StatefulScreenWidgetState {
 
   navigateToPopUpBox(BuildContext context, LoginResp loginResp) {
     app.resolve<CustomDialogs>().confirmDialog(context,
+        title: APPNAME,
+        desc:
+            "Do you want to enable Touch Id/MPin to unlock $APPNAME? Please choose an option to unlock app",
+        positiveBtnTitle2:
+            !isNullEmptyOrFalse(availableBiometrics) ? "Use Touch Id" : null,
+        positiveBtnTitle: "Use MPin",
+        negativeBtnTitle: R.string.commonString.btnSkip,
+        onClickCallback: (buttonType) async {
+      if (buttonType == ButtonType.PositveButtonClick) {
+        if (loginResp.data.user.isMpinAdded == false) {
+          Map<String, dynamic> arguments = {};
+          arguments["enm"] = Mpin.createMpin;
+          arguments["userName"] = loginResp.data.user.username;
+          NavigationUtilities.pushRoute(SignInWithMPINScreen.route,
+              args: arguments);
+        } else {
+          Map<String, dynamic> args = {};
+          args["askForVerifyMpin"] = true;
+          args["enm"] = Mpin.login;
+          args["userName"] = loginResp.data.user.username;
+          args["verifyPinCallback"] = () {
+            saveUserResponse(loginResp);
+            app.resolve<PrefUtils>().setMpinisUsage(true);
+          };
+          NavigationUtilities.pushRoute(SignInWithMPINScreen.route, args: args);
+        }
+      } else if (buttonType == ButtonType.PositveButtonClick2) {
+        askForBioMetrics(loginResp)();
+      } else {
+        saveUserResponse(loginResp);
+      }
+    });
+    /*app.resolve<CustomDialogs>().confirmDialog(context,
         title: "",
         desc:
             // Platform.isIOS && availableBiometrics.contains(BiometricType.face)
@@ -647,7 +679,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
       } else {
         saveUserResponse(loginResp);
       }
-    });
+    });*/
   }
 
   askForBioMetrics(LoginResp loginResp) async {
@@ -697,15 +729,8 @@ class LoginScreenState extends StatefulScreenWidgetState {
 //      NavigationUtilities.pushRoute(Notifications.route);
     // callVersionUpdateApi(id: loginResp.data.user.id); //for local
     // isMpinAdded==false mpin swith added
-    if (loginResp.data.user.isMpinAdded == false) {
-      Map<String,dynamic> arguments = {};
-      arguments["enm"] = Mpin.createMpin;
-      NavigationUtilities.pushRoute(SignInWithMPINScreen.route,args: arguments);
-    } else {
-      //varify mpin
-      SyncManager().callVersionUpdateApi(context, VersionUpdateApi.logIn,
-          id: loginResp.data.user.id);
-    }
+    SyncManager().callVersionUpdateApi(context, VersionUpdateApi.logIn,
+        id: loginResp.data.user.id);
   }
 
   // void callVersionUpdateApi({String id}) {
