@@ -87,4 +87,8 @@ class Mpin {
   static const int splash  = 1;
   static const int myAccount = 2;
   static const int login = 3;
+  static const int changeMpin = 4;
+  static const int resetMpin = 5;
+  static const int forgotMpin = 6;
+  static const int createMpin = 7;
 }

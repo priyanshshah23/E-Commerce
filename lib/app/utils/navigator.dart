@@ -200,7 +200,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       screen = ResetPassword(arguments);
       break;
     case PasswordResetSuccessfully.route:
-      screen = PasswordResetSuccessfully();
+      screen = PasswordResetSuccessfully(arguments: arguments,);
       break;
     case ProfileList.route:
       screen = ProfileList(arguments);

@@ -352,6 +352,13 @@ class DrawerSetting {
       imageColor: appTheme.colorPrimary,
       type: DiamondModuleConstant.MODULE_TYPE_MPIN,
     ));
+    drawerList.add(DrawerModel(
+      image: changePassword,
+      title: "Change Mpin",
+      isSelected: false,
+      imageColor: appTheme.colorPrimary,
+      type: DiamondModuleConstant.MODULE_TYPE_CHANGEMPIN,
+    ));
 
     drawerList.add(DrawerModel(
       image: logout,

@@ -687,12 +687,12 @@ class SyncManager {
       if (item.rap > 0) {
         carat += item.crt;
         calcAmount += item.amt;
-        rapAvg += item.rap * item.crt;
+        rapAvg += (item.rap ?? 0) * item.crt;
         priceCrt += item.ctPr * item.crt;
       } else {
         carat += item.crt;
         calcAmount += item.amt;
-        rapAvg += item.rap * item.crt;
+        rapAvg += (item.rap ?? 0) * item.crt;
         priceCrt += item.ctPr * item.crt;
       }
     }
@@ -709,7 +709,7 @@ class SyncManager {
     for (var item in diamondList) {
       totalFinalValue += item.getFinalAmount();
       totalCarat += item.crt;
-      totalRapPrice += (item.rap * item.crt);
+      totalRapPrice += ((item.rap ?? 0) * item.crt);
     }
 
     num avgFinalValue = totalFinalValue / totalCarat;

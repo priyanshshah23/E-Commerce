@@ -9,6 +9,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/Screens/Auth/ForgetMPIN.dart';
@@ -37,7 +38,7 @@ class SignInWithMPINScreen extends StatefulScreenWidget {
   bool fromMpinButton = false;
 
   //reset mpin from otp
-  bool resetMpin = false;
+
   String userName = "";
   String mPinOtp = "";
 
@@ -45,19 +46,18 @@ class SignInWithMPINScreen extends StatefulScreenWidget {
   bool askForVerifyMpin = false;
   //enum for which screen you came from
   int enm;
+  
+  //when click on mpin from popupbox
+
 
   SignInWithMPINScreen(
       {this.isForReEnter,
       this.enteredPin,
       this.fromMpinButton,
-      this.resetMpin,
       this.askForVerifyMpin,
       this.enm,
       Map<String, dynamic> arguments}) {
     if (!isNullEmptyOrFalse(arguments)) {
-      if (!isNullEmptyOrFalse(arguments["resetMpin"])) {
-        resetMpin = arguments["resetMpin"];
-      }
       if (!isNullEmptyOrFalse(arguments["userName"])) {
         userName = arguments["userName"];
       }
@@ -82,7 +82,6 @@ class SignInWithMPINScreen extends StatefulScreenWidget {
       this.isForReEnter,
       this.enteredPin,
       this.fromMpinButton,
-      this.resetMpin,
       this.userName,
       this.mPinOtp,
       this.askForVerifyMpin,
@@ -96,26 +95,32 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
   bool isForReEnter;
   List<int> enteredPin;
   bool fromMpinButton;
-  bool resetMpin;
+
   String userName;
   String mPinOtp = "";
   bool askForVerifyMpin;
   int enm;
   Function verifyPinCallback;
 
+  final TextEditingController _userNameController = TextEditingController();
+  var _focusUserNameTextField = FocusNode();
+  final _formKey = GlobalKey<FormState>();
+  bool _autoValidate = false;
+
+  bool deleteAllCode = false;
+
   // String _lastLogin;
   _SignInWithMPINScreen(
       this.isForReEnter,
       this.enteredPin,
       this.fromMpinButton,
-      this.resetMpin,
       this.userName,
       this.mPinOtp,
       this.askForVerifyMpin,
       this.enm,
       this.verifyPinCallback);
 
-  LoginScreenState loginScreenObject = LoginScreenState();
+  // LoginScreenState loginScreenObject = LoginScreenState();
 
   @override
   void initState() {
@@ -129,21 +134,17 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
     if (isNullEmptyOrFalse(fromMpinButton)) {
       fromMpinButton = false;
     }
-    if (isNullEmptyOrFalse(resetMpin)) {
-      resetMpin = false;
-    }
+
     if (isNullEmptyOrFalse(askForVerifyMpin)) {
       askForVerifyMpin = false;
     }
-    _userName = app.resolve<PrefUtils>().getString("userName") ?? "";
-    if (!isNullEmptyOrFalse(_userName))
-      loginScreenObject.userNameController.text = _userName;
+    _userName = isNullEmptyOrFalse(userName) ? app.resolve<PrefUtils>().getString("userName") : userName;
+    if (!isNullEmptyOrFalse(_userName)) _userNameController.text = _userName;
     // _lastLogin = app.resolve<PrefUtils>().getUserDetails()
   }
 
   @override
   void dispose() {
-    loginScreenObject.userNameController.dispose();
     super.dispose();
   }
 
@@ -155,20 +156,25 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
       },
       child: AppBackground(
         child: SafeArea(
+          
           child: Scaffold(
+            backgroundColor: appTheme.whiteColor,
             resizeToAvoidBottomPadding: false,
             resizeToAvoidBottomInset: true,
             appBar: getAppBar(
                 context,
-                enm == Mpin.splash || enm == Mpin.myAccount
+                (enm == Mpin.splash || enm == Mpin.myAccount || askForVerifyMpin) && !isForReEnter 
                     ? "Verify Mpin"
-                    : R.string.authStrings.signInWithMPIN,
+                    : (enm == Mpin.changeMpin || enm == Mpin.forgotMpin || enm ==Mpin.createMpin) && !isForReEnter  ? "Create New Mpin" :
+                    isForReEnter ?
+                    "Reenter Mpin":
+                    R.string.authStrings.signInWithMPIN,
                 bgColor: appTheme.whiteColor,
                 leadingButton:
                     enm == Mpin.splash ? SizedBox() : getBackButton(context),
                 centerTitle: false,
                 actionItems: [
-                  if (fromMpinButton == false)
+                  if (enm !=  Mpin.createMpin && fromMpinButton == false && enm != Mpin.login && enm != Mpin.forgotMpin && enm != Mpin.myAccount && enm != Mpin.changeMpin)
                     InkWell(
                       onTap: () {
                         logoutFromApp(context);
@@ -219,7 +225,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                !isNullEmptyOrFalse(_userName)
+                                !isNullEmptyOrFalse(_userName) && !fromMpinButton
                                     ? Text(
                                         _userName,
                                         style:
@@ -227,7 +233,11 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                                           fontWeight: FontWeight.w500,
                                         ),
                                       )
-                                    : loginScreenObject.getMobileTextField(),
+                                    : Form(
+                                        key: _formKey,
+                                        autovalidate: _autoValidate,
+                                        child: getUserNameTextField(),
+                                      ),
                               ],
                             ),
                           ),
@@ -314,11 +324,8 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                           fingerVerify: isFingerprint,
                           borderColor: appTheme.whiteColor,
                           foregroundColor: appTheme.textGreyColor,
-                          showWrongPassDialog: true,
-                          wrongPassContent:
-                              "Both Mpin should be same,\n Please Enter once again...",
-                          wrongPassTitle: "Oops!",
-                          wrongPassCancelButtonText: "Cancel",
+                          showWrongPassDialog: deleteAllCode,
+
                           passCodeVerify: (passcode) async {
                             print(passcode);
 
@@ -335,24 +342,37 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                             }
                           },
                           onSuccess: () {
-                            if (!isForReEnter) {
-                              if (fromMpinButton) {
-                                // Focus.of(context).unfocus();
-                                callApiForLoginUsingMpin(context);
-                              } else if (askForVerifyMpin) {
-                                callApiForVerifyMpin(context);
+                            if (!isNullEmptyOrFalse(_userNameController.text)) {
+                              if (!isForReEnter) {
+                                if (fromMpinButton) {
+                                  // Focus.of(context).unfocus();
+                                  callApiForLoginUsingMpin(context);
+                                } else if (askForVerifyMpin) {
+                                  callApiForVerifyMpin(context);
+                                } else {
+                                  Map<String,dynamic> arguments = {};
+                                  arguments["enm"] = enm;
+                                  arguments["userName"] = userName;
+                                  arguments["mPinOtp"] = mPinOtp;
+                                  NavigationUtilities.push(SignInWithMPINScreen(
+                                    enteredPin: this.enteredPin,
+                                    isForReEnter: true,
+                                    arguments: arguments,
+                                  ));
+                                }
                               } else {
-                                NavigationUtilities.push(SignInWithMPINScreen(
-                                  enteredPin: this.enteredPin,
-                                  isForReEnter: true,
-                                ));
+                                if (enm == Mpin.forgotMpin) {
+                                  callApiForResetMpinByOTP(context);
+                                } else if (enm == Mpin.changeMpin) {
+                                  callApiForChangeMpin(context);
+                                } else {
+                                  callCreateMpApi(context);
+                                }
                               }
                             } else {
-                              if (resetMpin) {
-                                callApiForResetMpin(context);
-                              } else {
-                                callCreateMpApi(context);
-                              }
+                              setState(() {
+                                _autoValidate = true;
+                              });
                             }
                           },
                         ),
@@ -362,7 +382,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                 ),
               ),
             ),
-            bottomNavigationBar: Container(
+            bottomNavigationBar:enm != Mpin.createMpin && enm != Mpin.login && enm != Mpin.forgotMpin && enm != Mpin.myAccount && enm != Mpin.changeMpin? Container(
 //              alignment: Alignment.bottomCenter,
               margin: EdgeInsets.all(getSize(15)),
               child: InkWell(
@@ -379,7 +399,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                   ],
                 ),
               ),
-            ),
+            ) : SizedBox()
           ),
         ),
       ),
@@ -416,7 +436,12 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
             isProgress: true)
         .then((loginResp) {
       print("Api calling doneeeeeeeeeee");
-      callLogout(context);
+      Map<String, dynamic> arguments = {};
+      arguments["isForMpin"] = true;
+      arguments["createMpin"] = true;
+      NavigationUtilities.pushRoute(PasswordResetSuccessfully.route,
+          args: arguments);
+      // callLogout(context);
       // NavigationUtilities.pushRoute(LoginScreen.route);
     }).catchError((onError) {
       if (onError is ErrorResp) {
@@ -425,12 +450,17 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
               title: R.string.commonString.error,
               desc: onError.message,
               positiveBtnTitle: R.string.commonString.ok,
+              onClickCallback: (ButtonType buttonType){
+                setState(() {
+                  deleteAllCode = true;
+                });
+              }
             );
       }
     });
   }
 
-  Future callApiForResetMpin(BuildContext context) async {
+  Future callApiForChangeMpin(BuildContext context) async {
     Map<String, dynamic> req = {};
     String enteredMpinInString = "";
 
@@ -438,9 +468,50 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
       enteredMpinInString += (element.toString());
     });
 
-    req["username"] = userName;
-    req["mPinOtp"] = int.parse(mPinOtp);
-    req["mPin"] = int.parse(enteredMpinInString);
+    req["username"] = _userNameController.text;
+    // req["mPin"] = int.parse(enteredMpinInString);
+    req["mPin"] = enteredMpinInString;
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().resetMpin(req),
+            context,
+            isProgress: true)
+        .then((loginResp) {
+      print("Api calling doneeeeeeeeeee");
+      Map<String, dynamic> arguments = {};
+      arguments["isForMpin"] = true;
+      NavigationUtilities.pushRoute(PasswordResetSuccessfully.route,
+          args: arguments);
+      // NavigationUtilities.pushRoute(LoginScreen.route);
+    }).catchError((onError) {
+      if (onError is ErrorResp) {
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              title: R.string.commonString.error,
+              desc: onError.message,
+              positiveBtnTitle: R.string.commonString.ok,
+              onClickCallback: (ButtonType buttonType){
+                setState(() {
+                  deleteAllCode = true;
+                });
+              }
+            );
+      }
+    });
+  }
+
+  Future callApiForResetMpinByOTP(BuildContext context) async {
+    Map<String, dynamic> req = {};
+    String enteredMpinInString = "";
+
+    enteredPin.forEach((element) {
+      enteredMpinInString += (element.toString());
+    });
+
+    req["username"] = _userName;
+    req["mPinOtp"] = mPinOtp;
+    req["mPin"] = (enteredMpinInString);
 
     NetworkCall<BaseApiResp>()
         .makeCall(
@@ -464,6 +535,11 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
               title: R.string.commonString.error,
               desc: onError.message,
               positiveBtnTitle: R.string.commonString.ok,
+              onClickCallback: (ButtonType buttonType){
+                setState(() {
+                  deleteAllCode = true;
+                });
+              }
             );
       }
     });
@@ -477,7 +553,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
       enteredMpinInString += (element.toString());
     });
 
-    req["username"] = loginScreenObject.userNameController.text;
+    req["username"] = _userNameController.text;
     // req["mPin"] = int.parse(enteredMpinInString);
     req["mPin"] = enteredMpinInString;
 
@@ -498,6 +574,8 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
             id: app.resolve<PrefUtils>().getUserDetails().id ?? "");
       } else if (enm == Mpin.login) {
         this.verifyPinCallback();
+      } else if (enm == Mpin.changeMpin) {
+        this.verifyPinCallback();
       }
     }).catchError((onError) {
       if (onError is ErrorResp) {
@@ -506,6 +584,11 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
               title: R.string.commonString.error,
               desc: onError.message,
               positiveBtnTitle: R.string.commonString.ok,
+              onClickCallback: (ButtonType buttonType){
+                setState(() {
+                  deleteAllCode = true;
+                });
+              }
             );
       }
     });
@@ -522,7 +605,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
 
     int finalEnteredMpinInInt = int.parse(enteredMpinInString);
     req["password"] = finalEnteredMpinInInt.toString();
-    req["username"] = loginScreenObject.userNameController.text;
+    req["username"] = _userNameController.text;
     req["mPinLogin"] = true;
 
     NetworkCall<LoginResp>()
@@ -531,6 +614,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
             context,
             isProgress: true)
         .then((loginResp) {
+          app.resolve<PrefUtils>().setMpinisUsage(true);
       saveUserResponse(loginResp);
     }).catchError((onError) {
       if (onError is ErrorResp) {
@@ -539,6 +623,11 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
               title: R.string.commonString.error,
               desc: onError.message,
               positiveBtnTitle: R.string.commonString.ok,
+              onClickCallback: (ButtonType buttonType){
+                setState(() {
+                  deleteAllCode = true;
+                });
+              }
             );
       }
     });
@@ -562,5 +651,32 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
             id: loginResp.data.user.id);
       }
     }
+  }
+
+  getUserNameTextField() {
+    return CommonTextfield(
+      focusNode: _focusUserNameTextField,
+      textOption: TextFieldOption(
+        prefixWid: getCommonIconWidget(imageName: user, imageType: IconSizeType.small),
+        hintText: R.string.authStrings.name,
+        maxLine: 1,
+        formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
+        keyboardType: TextInputType.text,
+        inputController: _userNameController,
+      ),
+      textCallback: (text) {},
+      validation: (text) {
+        if (text.isEmpty) {
+          return R.string.errorString.enterUsername;
+        } else {
+          return null;
+        }
+      },
+      inputAction: TextInputAction.next,
+      onNextPress: () {
+        _focusUserNameTextField.unfocus();
+        FocusScope.of(context).requestFocus(_focusUserNameTextField);
+      },
+    );
   }
 }

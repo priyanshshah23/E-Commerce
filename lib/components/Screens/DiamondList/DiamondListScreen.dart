@@ -524,6 +524,49 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   getRightAction(ActionClick actionClick) {
     List<Widget> list = [];
+    if (isDiamondSearchModule(moduleType)) {
+      list.add(
+        IntrinsicHeight(
+          child: IconSlideAction(
+            color: Colors.transparent,
+            onTap: () {
+              actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_DETAIL));
+            },
+            iconWidget: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: appTheme.lightColorPrimary,
+                    border: Border.all(color: appTheme.colorPrimary),
+                    shape: BoxShape.circle,
+                  ),
+                  height: getSize(40),
+                  width: getSize(40),
+                  child: Padding(
+                    padding: EdgeInsets.all(getSize(10)),
+                    child: Image.asset(
+                      viewDetail,
+                      // height: getSize(20),
+                      // width: getSize(20),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: getSize(8)),
+                  child: Text(
+                    R.string.commonString.details,
+                    style: appTheme.primaryNormal12TitleColor,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      );
+    }
     if (isDisplayDelete(moduleType)) {
       list.add(
         IntrinsicHeight(
@@ -575,47 +618,49 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     List<Widget> leftSwipeList = [];
 
     if (isDisplayDetail(moduleType)) {
-      leftSwipeList.add(
-        IntrinsicHeight(
-          child: IconSlideAction(
-            color: Colors.transparent,
-            onTap: () {
-              actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_DELETE));
-            },
-            iconWidget: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: appTheme.lightColorPrimary,
-                    border: Border.all(color: appTheme.colorPrimary),
-                    shape: BoxShape.circle,
-                  ),
-                  height: getSize(40),
-                  width: getSize(40),
-                  child: Padding(
-                    padding: EdgeInsets.all(getSize(10)),
-                    child: Image.asset(
-                      viewDetail,
-                      // height: getSize(20),
-                      // width: getSize(20),
+      if (!isDiamondSearchModule(moduleType)) {
+        leftSwipeList.add(
+          IntrinsicHeight(
+            child: IconSlideAction(
+              color: Colors.transparent,
+              onTap: () {
+                actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_DELETE));
+              },
+              iconWidget: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: appTheme.lightColorPrimary,
+                      border: Border.all(color: appTheme.colorPrimary),
+                      shape: BoxShape.circle,
+                    ),
+                    height: getSize(40),
+                    width: getSize(40),
+                    child: Padding(
+                      padding: EdgeInsets.all(getSize(10)),
+                      child: Image.asset(
+                        viewDetail,
+                        // height: getSize(20),
+                        // width: getSize(20),
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: getSize(8)),
-                  child: Text(
-                    R.string.commonString.details,
-                    style: appTheme.primaryNormal12TitleColor,
-                  ),
-                )
-              ],
+                  Padding(
+                    padding: EdgeInsets.only(top: getSize(8)),
+                    child: Text(
+                      R.string.commonString.details,
+                      style: appTheme.primaryNormal12TitleColor,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-      );
+        );
+      }
     }
 
     if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
@@ -723,6 +768,20 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             }
           });
         });
+        break;
+      case clickConstant.CLICK_TYPE_DETAIL:
+        var dict = Map<String, dynamic>();
+        dict[ArgumentConstant.DiamondDetail] = arraDiamond[index];
+        dict[ArgumentConstant.ModuleType] = moduleType;
+
+        //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
+        bool isBack = await Navigator.of(context).push(MaterialPageRoute(
+          settings: RouteSettings(name: DiamondDetailScreen.route),
+          builder: (context) => DiamondDetailScreen(arguments: dict),
+        ));
+        if (isBack != null && isBack) {
+          onRefreshList();
+        }
         break;
       // case clickConstant.CLICK_TYPE_ROW:
       //   var dict = Map<String, dynamic>();
@@ -945,23 +1004,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                       SizedBox(
                         height: getSize(20),
                       ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            "Status",
-                            style: appTheme.blackNormal18TitleColorblack,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: getSize(4)),
-                            child: Image.asset(
-                              info,
-                              height: getSize(16),
-                              width: getSize(16),
-                            ),
-                          ),
-                        ],
-                      ),
+                      Text("Status",
+                          style: appTheme.blackSemiBold18TitleColorblack),
                       SizedBox(
                         height: getSize(10),
                       ),
@@ -976,7 +1020,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                         },
                       ),
                       SizedBox(
-                        height: getSize(10),
+                        height: getSize(30),
                       ),
                     ],
                   ),
@@ -1009,7 +1053,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           ),
           Text(
             title,
-            style: appTheme.black12TextStyle
+            style: appTheme.black14TextStyle
                 .copyWith(color: appTheme.textBlackColor),
           ),
         ],
