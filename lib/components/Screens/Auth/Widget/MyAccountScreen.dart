@@ -222,7 +222,18 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           child: Switch(
             value: isSwitchedTouchId,
             onChanged: (value) {
-              changeMPinTouchIdToggle(false);
+              if (isSwitchedMpin == true) {
+                changeMPinTouchIdToggle(false);
+              } else {
+                setState(() {
+                  // if (isSwitchedMpin) isSwitchedMpin = false;
+                  isSwitchedTouchId = !isSwitchedTouchId;
+
+                  if (isSwitchedTouchId == true) {
+                    askForBioMetrics();
+                  }
+                });
+              }
             },
             activeTrackColor: appTheme.borderColor,
             activeColor: appTheme.colorPrimary,
@@ -239,7 +250,21 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           child: Switch(
             value: isSwitchedMpin,
             onChanged: (value) {
-              changeMPinTouchIdToggle(true);
+              if (isSwitchedTouchId == true) {
+                changeMPinTouchIdToggle(true);
+              } else {
+                setState(() {
+                  // if (isSwitchedTouchId)
+                  //   isSwitchedTouchId = false;
+                  isSwitchedMpin = !isSwitchedMpin;
+
+                  if (isSwitchedMpin == true) {
+                    askForMpin();
+                  } else {
+                    app.resolve<PrefUtils>().setMpinisUsage(false);
+                  }
+                });
+              }
             },
             activeTrackColor: appTheme.borderColor,
             activeColor: appTheme.colorPrimary,
