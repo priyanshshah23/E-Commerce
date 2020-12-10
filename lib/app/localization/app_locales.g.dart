@@ -204,7 +204,7 @@ class CommonString {
   String demandTitle = "Demand Title";
   String pleaseEnterDemandTitle = "Please enter Demand Title";
   String demandAddedSuccessfully = "Demand Added Successfully";
-  String selectAtleastOneFilter = "Please, select atleast one filter";
+  String selectAtleastOneFilter = "Please";
   String savedSearch = "Saved Search";
   String searchSavedSearch = "Search Saved Search";
   String viewDetails = "View Details";
@@ -451,6 +451,31 @@ class CommonString {
   String holdMemoStatusDiamondorder =
       "You can not confirmed stones which are already in hold or memo status";
   String searchStoneIdCertificateNo = "Search Stone Id/Certificate No";
+  String createMPin = "Create New MPin";
+  String reentermpin = "Reenter MPin";
+  String forgotmpin = "Forgot MPIN?";
+  String verifympin = "Verify Mpin";
+  String enteryoursixdigitcode = "Enter your 6 digit MPIN";
+  String changempin = "Change MPin";
+  String faceidandtouchnotenable =
+      "FaceId/TouchId is not enabled in your phone, Please enable to use this feature";
+  String enablempintounlockmydiamonds =
+      "Enable MPin to unlock app? It will disable Touch Id. Are you sure you want to continue?";
+  String enabletouchidtounlockmydiamonds =
+      "Enable Touch Id to unlock app? It will disable MPin. Are you sure you want to continue?";
+  String rememberme = "Remember Me";
+  String usertouchid = "Use Touch Id";
+  String usempin = "Use MPin";
+  String filesarenotavailableonserver =
+      "Files are not available on server,Please try again later";
+  String allfileshavebeendownloaded = "All files have been downloaded.";
+  String filesisdownloaded = "files is downloaded";
+  String filesisnotdownloadedbcz =
+      "files is not downloaded because it's not exist in the server.";
+  String downloadingCanceled = "Downloading canceled";
+  String downloading = "Downloading...";
+  String expirydate = "Expiry Date :";
+  String youreallywanttodelete = "You really want to delete";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -1494,6 +1519,46 @@ class ChineseCommonString extends CommonString {
   get holdMemoStatusDiamondorder => "你不能确诊的石块，已经在保持或备忘录状态";
   @override
   get searchStoneIdCertificateNo => "搜索石ID /证书号";
+  @override
+  get createMPin => "创建新的M-PIN";
+  @override
+  get reentermpin => "重新输入M-PIN";
+  @override
+  get forgotmpin => "忘记了M-PIN？";
+  @override
+  get verifympin => "验证M-PIN";
+  @override
+  get enteryoursixdigitcode => "输入您的6位M-PIN";
+  @override
+  get changempin => "更改M-PIN";
+  @override
+  get faceidandtouchnotenable => "FaceId / TouchId在您的手机未启用，请启用使用此功能";
+  @override
+  get enablempintounlockmydiamonds => "启用M-PIN解锁应用程序？这将禁用触摸标识。你确定你要继续吗？";
+  @override
+  get enabletouchidtounlockmydiamonds => "允许使用Touch ID解锁应用？这将禁用M-PIN。你确定你要继续吗？";
+  @override
+  get rememberme => "记得我";
+  @override
+  get usertouchid => "使用触摸标识";
+  @override
+  get usempin => "使用M-PIN";
+  @override
+  get filesarenotavailableonserver => "文件不可用的服务器，请稍后重试";
+  @override
+  get allfileshavebeendownloaded => "所有文件都被下载。";
+  @override
+  get filesisdownloaded => "文件下载";
+  @override
+  get filesisnotdownloadedbcz => "文件没有下载，因为它不是在服务器存在。";
+  @override
+  get downloadingCanceled => "取消下载";
+  @override
+  get downloading => "下载...";
+  @override
+  get expirydate => "到期日 ：";
+  @override
+  get youreallywanttodelete => "你真的要删除";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -2785,6 +2850,51 @@ class FrenchCommonString extends CommonString {
       "Vous ne pouvez pas confirmer les pierres qui sont déjà en attente ou de l'état mémo";
   @override
   get searchStoneIdCertificateNo => "Recherche Pierre Id / certificat Non";
+  @override
+  get createMPin => "Créer un nouveau Ampin";
+  @override
+  get reentermpin => "reenter Ampin";
+  @override
+  get forgotmpin => "Mot MPIN?";
+  @override
+  get verifympin => "vérifier Ampin";
+  @override
+  get enteryoursixdigitcode => "Entrez votre 6 chiffres MPIN";
+  @override
+  get changempin => "changement Ampin";
+  @override
+  get faceidandtouchnotenable =>
+      "FaceID / TouchId n'est pas activé dans votre téléphone, activez S'il vous plaît utiliser cette fonctionnalité";
+  @override
+  get enablempintounlockmydiamonds =>
+      "Activer Ampin pour application déverrouiller? Il désactivera tactile Id. Es-tu sur de vouloir continuer?";
+  @override
+  get enabletouchidtounlockmydiamonds =>
+      "Activer tactile Id pour l'application déverrouiller? Il désactive Ampin. Es-tu sur de vouloir continuer?";
+  @override
+  get rememberme => "Souviens-toi de moi";
+  @override
+  get usertouchid => "Utilisation tactile Id";
+  @override
+  get usempin => "Utilisez Ampin";
+  @override
+  get filesarenotavailableonserver =>
+      "Les fichiers ne sont pas disponibles sur le serveur, S'il vous plaît réessayer plus tard";
+  @override
+  get allfileshavebeendownloaded => "Tous les fichiers ont été téléchargés.";
+  @override
+  get filesisdownloaded => "fichiers est téléchargé";
+  @override
+  get filesisnotdownloadedbcz =>
+      "les fichiers ne sont pas téléchargés parce qu'il est existe pas dans le serveur.";
+  @override
+  get downloadingCanceled => "le téléchargement annulé";
+  @override
+  get downloading => "Téléchargement...";
+  @override
+  get expirydate => "Date d'expiration :";
+  @override
+  get youreallywanttodelete => "Vous voulez vraiment supprimer";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -4083,6 +4193,49 @@ class JapanCommonString extends CommonString {
   get holdMemoStatusDiamondorder => "あなたは保留に既にある石やメモの状態を確認することはできません";
   @override
   get searchStoneIdCertificateNo => "ストーンID /証明書番号を検索";
+  @override
+  get createMPin => "新しいMPinを作成します。";
+  @override
+  get reentermpin => "再入力MPin";
+  @override
+  get forgotmpin => "MPINを忘れましたか？";
+  @override
+  get verifympin => "Mpinを確認";
+  @override
+  get enteryoursixdigitcode => "あなたの6桁を入力しMPIN";
+  @override
+  get changempin => "変更MPin";
+  @override
+  get faceidandtouchnotenable =>
+      "FaceId / TouchIdお使いの携帯電話で有効になっていません、この機能を使用するために有効にしてください";
+  @override
+  get enablempintounlockmydiamonds =>
+      "ロック解除アプリにMPinを有効にしますか？これは、タッチイドを無効にします。あなたが継続してもよろしいですか？";
+  @override
+  get enabletouchidtounlockmydiamonds =>
+      "ロック解除アプリにタッチIDを有効にしますか？それはMPinを無効にします。あなたが継続してもよろしいですか？";
+  @override
+  get rememberme => "私を覚えてますか";
+  @override
+  get usertouchid => "使用タッチ同上";
+  @override
+  get usempin => "使用MPin";
+  @override
+  get filesarenotavailableonserver => "ファイルがサーバー上で利用できない、後でもう一度お試しください";
+  @override
+  get allfileshavebeendownloaded => "すべてのファイルがダウンロードされています。";
+  @override
+  get filesisdownloaded => "ファイルがダウンロードされます";
+  @override
+  get filesisnotdownloadedbcz => "それは、サーバーに存在していないため、ファイルがダウンロードされません。";
+  @override
+  get downloadingCanceled => "キャンセルダウンロード";
+  @override
+  get downloading => "ダウンロード中...";
+  @override
+  get expirydate => "有効期限 ：";
+  @override
+  get youreallywanttodelete => "あなたは本当に削除したいです";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -5372,6 +5525,51 @@ class ItalianCommonString extends CommonString {
       "Non si può confermato le pietre che sono già in possesso o un memo di stato";
   @override
   get searchStoneIdCertificateNo => "Cerca di pietra Id / Certificato No";
+  @override
+  get createMPin => "Crea nuovo MPin";
+  @override
+  get reentermpin => "Reinserire MPin";
+  @override
+  get forgotmpin => "Hai dimenticato MPIN?";
+  @override
+  get verifympin => "Verifica Mpin";
+  @override
+  get enteryoursixdigitcode => "Inserisci il tuo MPIN 6 cifre";
+  @override
+  get changempin => "Cambio MPin";
+  @override
+  get faceidandtouchnotenable =>
+      "FaceID / TouchId non è abilitata nel telefono, Si prega di abilitare per utilizzare questa funzione";
+  @override
+  get enablempintounlockmydiamonds =>
+      "Abilita MPin per app sbloccare? Sarà disabilitare tocco Id. Sei sicuro di voler continuare?";
+  @override
+  get enabletouchidtounlockmydiamonds =>
+      "Abilita tocco Id al app sbloccare? Sarà disabilitare MPin. Sei sicuro di voler continuare?";
+  @override
+  get rememberme => "Ricordati di me";
+  @override
+  get usertouchid => "Uso Toccare Id";
+  @override
+  get usempin => "Usa MPin";
+  @override
+  get filesarenotavailableonserver =>
+      "I file non sono disponibili sul server di, riprova più tardi";
+  @override
+  get allfileshavebeendownloaded => "Tutti i file sono stati scaricati.";
+  @override
+  get filesisdownloaded => "file viene scaricato";
+  @override
+  get filesisnotdownloadedbcz =>
+      "file non viene scaricato perché non è presente nel server.";
+  @override
+  get downloadingCanceled => "Downloading annullata";
+  @override
+  get downloading => "Download in corso ...";
+  @override
+  get expirydate => "Data di scadenza :";
+  @override
+  get youreallywanttodelete => "Si vuole veramente cancellare";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -6680,6 +6878,48 @@ class SpanishCommonString extends CommonString {
   get holdMemoStatusDiamondorder => "你 不能 确诊 的 石块, 已经 在 保持 或 备忘录 状态";
   @override
   get searchStoneIdCertificateNo => "搜索 石 ID / 证书 号";
+  @override
+  get createMPin => "创建 新 的 M-PIN";
+  @override
+  get reentermpin => "重新 输入 M-PIN";
+  @override
+  get forgotmpin => "忘记 了 M-PIN?";
+  @override
+  get verifympin => "验证 M-PIN";
+  @override
+  get enteryoursixdigitcode => "输入 您 的 6 位 M-PIN";
+  @override
+  get changempin => "更改 M-PIN";
+  @override
+  get faceidandtouchnotenable => "FaceID / TouchId 在 您 的 手机 未 启用, 请 启用 使用 此 功能";
+  @override
+  get enablempintounlockmydiamonds =>
+      "启用 M-PIN 解锁 应用 程序? 这 将 禁用 触摸 标识. 你 确定 你 要 继续 ​​吗?";
+  @override
+  get enabletouchidtounlockmydiamonds =>
+      "允许 使用 tocco ID 解锁 应用? 这 将 禁用 M-PIN. 你 确定 你 要 继续 ​​吗?";
+  @override
+  get rememberme => "记得 我";
+  @override
+  get usertouchid => "使用 触摸 标识";
+  @override
+  get usempin => "使用 M-PIN";
+  @override
+  get filesarenotavailableonserver => "文件 不可 用 的 服务器, 请 稍后 重 试";
+  @override
+  get allfileshavebeendownloaded => "所有 文件 都 被 下载.";
+  @override
+  get filesisdownloaded => "文件 下载";
+  @override
+  get filesisnotdownloadedbcz => "文件 没有 下载, 因为 它 不是 在 服务器 存在.";
+  @override
+  get downloadingCanceled => "取消 下载";
+  @override
+  get downloading => "下载 ...";
+  @override
+  get expirydate => "到期 日:";
+  @override
+  get youreallywanttodelete => "你 真的 要 删除";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -7987,6 +8227,51 @@ class GermanyCommonString extends CommonString {
       "Sie können nicht mit Steinen bestätigt, die bereits im Halte- oder Memo-Status sind";
   @override
   get searchStoneIdCertificateNo => "Suchen Stein Id / Zertifikat Nr";
+  @override
+  get createMPin => "Create New MPIN";
+  @override
+  get reentermpin => "reenter MPIN";
+  @override
+  get forgotmpin => "Vergessen MPIN?";
+  @override
+  get verifympin => "Stellen Sie sicher, MPIN";
+  @override
+  get enteryoursixdigitcode => "Geben Sie Ihre 6-stellige MPIN";
+  @override
+  get changempin => "ändern MPIN";
+  @override
+  get faceidandtouchnotenable =>
+      "FaceID / TouchId ist in Ihrem Telefon nicht aktiviert, aktivieren Sie bitte diese Funktion zu nutzen";
+  @override
+  get enablempintounlockmydiamonds =>
+      "Aktivieren MPIN zu entsperren app? Es wird Touch-Id deaktivieren. Bist du dir sicher, dass du weitermachen willst?";
+  @override
+  get enabletouchidtounlockmydiamonds =>
+      "Aktivieren Touch-Id zu entsperren app? Es wird MPIN deaktivieren. Bist du dir sicher, dass du weitermachen willst?";
+  @override
+  get rememberme => "Behalte mich in Erinnerung";
+  @override
+  get usertouchid => "Verwenden Sie Touch-Id";
+  @override
+  get usempin => "Verwenden MPIN";
+  @override
+  get filesarenotavailableonserver =>
+      "Die Dateien sind nicht verfügbar auf dem Server, Bitte versuchen Sie es später noch einmal";
+  @override
+  get allfileshavebeendownloaded => "Alle Dateien heruntergeladen wurden.";
+  @override
+  get filesisdownloaded => "Dateien heruntergeladen";
+  @override
+  get filesisnotdownloadedbcz =>
+      "Dateien nicht heruntergeladen, weil es nicht auf dem Server vorhanden ist.";
+  @override
+  get downloadingCanceled => "Vorgang abgebrochen";
+  @override
+  get downloading => "Wird heruntergeladen...";
+  @override
+  get expirydate => "Verfallsdatum :";
+  @override
+  get youreallywanttodelete => "Sie wollen wirklich löschen";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
