@@ -8,99 +8,124 @@
         "parameters": [
             {
                 "title": "Stone ID",
-                "apiKey": "stoneId",
+                "apiKey": "vStnId",
                 "sequence": 1,
-                "isActive": true
-            },
-            {
-                "title": "Shape",
-                "apiKey": "shpNm",
-                "sequence": 2,
-                "isActive": true
-            },
-            {
-                "title": "Carat Range",
-                "apiKey": "crt",
-                "sequence": 3,
-                "isActive": true
-            },
-            {
-                "title": "Color Shade",
-                "apiKey": "shdNm",
-                "sequence": 4,
-                "isActive": true
-            },
-            {
-                "title": "Cut",
-                "apiKey": "cutNm",
-                "sequence": 5,
-                "isActive": true
-            },
-            {
-                "title": "Polish",
-                "apiKey": "polNm",
-                "sequence": 6,
-                "isActive": true
-            },
-            {
-                "title": "Symmentry",
-                "apiKey": "symNm",
-                "sequence": 7,
-                "isActive": true
-            },
-            {
-                "title": "Fluorescence",
-                "apiKey": "fluNm",
-                "sequence": 8,
                 "isActive": true
             },
             {
                 "title": "Lab",
                 "apiKey": "lbNm",
+                "sequence": 2,
+                "isActive": true
+            },
+            {
+                "title": "CERT. NO.",
+                "apiKey": "rptNo",
+                "sequence": 3,
+                "isActive": true
+            },
+            {
+                "title": "LOCATION",
+                "apiKey": "city",
+                "sequence": 4,
+                "isActive": true
+            },
+            {
+                "title": "Shape",
+                "apiKey": "shpNm",
+                "sequence": 5,
+                "isActive": true
+            },
+            {
+                "title": "Carat",
+                "apiKey": "crt",
+                "sequence": 6,
+                "isActive": true
+            },
+            {
+                "title": "Color",
+                "apiKey": "colNm",
+                "sequence": 7,
+                "isActive": true
+            },
+            {
+                "title": "CLARITY",
+                "apiKey": "clrNm",
+                "sequence": 8,
+                "isActive": true
+            },
+            {
+                "title": "Cut",
+                "apiKey": "cutNm",
                 "sequence": 9,
                 "isActive": true
             },
             {
-                "title": "Certificate Number",
-                "apiKey": "rptNo",
+                "title": "Polish",
+                "apiKey": "polNm",
                 "sequence": 10,
                 "isActive": true
             },
             {
-                "title": "Dis%",
-                "apiKey": "back",
+                "title": "Symmentry",
+                "apiKey": "symNm",
                 "sequence": 11,
+                "isActive": true
+            },
+            {
+                "title": "Fluorescence",
+                "apiKey": "fluNm",
+                "sequence": 12,
+                "isActive": true
+            },
+            {
+                "title": "RAP (%)",
+                "apiKey": "rap",
+                "sequence": 13,
+                "isActive": true,
+                "isPercentage": true
+            },
+            {
+                "title": "Discount (%)",
+                "apiKey": "back",
+                "sequence": 14,
                 "isActive": true,
                 "isPercentage": true
             },
             {
                 "title": "Price/Ct",
                 "apiKey": "ctPr",
-                "sequence": 12,
+                "sequence": 15,
                 "isActive": true
             },
             {
                 "title": "Amount",
                 "apiKey": "amt",
-                "sequence": 13,
-                "isActive": true
-            },
-            {
-                "title": "Milky",
-                "apiKey": "mlkNm",
-                "sequence": 14,
+                "sequence": 16,
                 "isActive": true
             },
             {
                 "title": "Eye Clean",
                 "apiKey": "eClnNm",
-                "sequence": 15,
+                "sequence": 17,
                 "isActive": true
             },
             {
-                "title": "Arrivals",
-                "apiKey": "",
-                "sequence": 16,
+                "title": "BROWN",
+                "apiKey": "shd",
+                "sequence": 18,
+                "isActive": true
+            },
+            {
+                "title": "Milky",
+                "apiKey": "mlkNm",
+                "sequence": 19,
+                "isActive": true
+            },
+            {
+                "title": "MIX TINGE",
+                "apiKey": "mixTint",
+                "sequence": 20,
                 "isActive": true
             }
         ]
@@ -113,84 +138,90 @@
         "orientation": "h",
         "parameters": [
             {
-                "title": "Length",
-                "apiKey": "length",
+                "title": "DIMENSIONS (MM)",
+                "apiKey": "msrmnt",
                 "sequence": 1,
                 "isActive": true
             },
             {
-                "title": "Width",
-                "apiKey": "width",
+                "title": "GIRDLE (%)",
+                "apiKey": "girdleStr",
                 "sequence": 2,
                 "isActive": true
             },
             {
-                "title": "Depth",
-                "apiKey": "height",
-                "sequence": 3,
-                "isActive": true
-            },
-            {
-                "title": "Ratio",
-                "apiKey": "ratio",
-                "sequence": 4,
-                "isActive": true
-            },
-            {
-                "title": "Depth%",
-                "apiKey": "depPer",
-                "sequence": 5,
-                "isActive": true,
-                "isPercentage": true
-            },
-            {
-                "title": "Table%",
+                "title": "Table %",
                 "apiKey": "tblPer",
-                "sequence": 6,
-                "isActive": true,
-                "isPercentage": true
-            },
-            {
-                "title": "Crown Height%",
-                "apiKey": "cHgt",
-                "sequence": 7,
+                "sequence": 3,
                 "isActive": true,
                 "isPercentage": true
             },
             {
                 "title": "Crown Angle",
                 "apiKey": "cAng",
+                "sequence": 4,
+                "isActive": true
+            },
+            {
+                "title": "Depth %",
+                "apiKey": "depPer",
+                "sequence": 5,
+                "isActive": true,
+                "isPercentage": true
+            },
+            {
+                "title": "PAV ANGLE",
+                "apiKey": "pAng",
+                "sequence": 6,
+                "isActive": true
+            },
+            {
+                "title": "Crown Height (%)",
+                "apiKey": "cHgt",
+                "sequence": 7,
+                "isActive": true,
+                "isPercentage": true
+            },
+            {
+                "title": "PAVILION DEPTH (%)",
+                "apiKey": "pHgt",
                 "sequence": 8,
                 "isActive": true
             },
             {
-                "title": "Pavilion Angle",
-                "apiKey": "pAng",
+                "title": "STAR LENGTH",
+                "apiKey": "strLn",
                 "sequence": 9,
+                "isActive": true
+            },
+            {
+                "title": "LOWER HALF",
+                "apiKey": "lwrHal",
+                "sequence": 10,
                 "isActive": true
             },
             {
                 "title": "Girdle",
                 "apiKey": "girdleStr",
-                "sequence": 10,
+                "sequence": 11,
                 "isActive": true
             },
             {
-                "title": "Girdle Condition",
+                "title": "GIRDLE FACETED",
                 "apiKey": "grdlCondNm",
-                "sequence": 11,
+                "sequence": 12,
                 "isActive": true
             },
             {
                 "title": "Culet",
                 "apiKey": "cultNm",
-                "sequence": 12,
+                "sequence": 13,
                 "isActive": true
             },
             {
-                "title": "Culet Condition",
-                "apiKey": "cultCondNm",
-                "sequence": 13,
+                "title": "Ratio",
+                "apiKey": "ratio",
+                "sequence": 14,
                 "isActive": true
             }
         ]
@@ -203,8 +234,8 @@
         "orientation": "v",
         "parameters": [
             {
-                "title": "Heart & Arrow",
-                "apiKey": "hANm",
+                "title": "BLACK INCLUSION",
+                "apiKey": "blkIncNm",
                 "sequence": 1,
                 "isActive": true
             },
@@ -215,15 +246,27 @@
                 "isActive": true
             },
             {
-                "title": "Natural",
+                "title": "OPEN INCLUSION",
                 "apiKey": "",
                 "sequence": 3,
                 "isActive": true
             },
             {
-                "title": "Extra Facet",
+                "title": "EXTRA FACET",
                 "apiKey": "",
                 "sequence": 4,
+                "isActive": true
+            },
+            {
+                "title": "Natural",
+                "apiKey": "",
+                "sequence": 5,
+                "isActive": true
+            },
+            {
+                "title": "H & A",
+                "apiKey": "hANm",
+                "sequence": 6,
                 "isActive": true
             }
         ]
@@ -236,15 +279,21 @@
         "orientation": "v",
         "parameters": [
             {
-                "title": "Comment",
-                "apiKey": "comments",
+                "title": "KEY TO SYMBOL",
+                "apiKey": "kToSStr",
                 "sequence": 1,
                 "isActive": true
             },
             {
-                "title": "Keywords",
-                "apiKey": "kToSStr",
+                "title": "LAB COMMENTS",
+                "apiKey": "comments",
                 "sequence": 2,
+                "isActive": true
+            },
+            {
+                "title": "LASER INS",
+                "apiKey": "lsrInc",
+                "sequence": 3,
                 "isActive": true
             }
         ]

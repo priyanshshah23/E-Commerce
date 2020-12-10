@@ -617,7 +617,7 @@ class DiamondModel {
     isCm = json['isCm'];
     fcColDesc = json['fcColDesc'];
     ratio = json['ratio'];
-    pltFile = json['pltFile'] ?? false;
+    pltFile = isNullEmptyOrFalse(json['pltFile']) ? false : json['pltFile'];
     groupNo = json['groupNo'];
 
 //    isSelected = json['isSelected'];
