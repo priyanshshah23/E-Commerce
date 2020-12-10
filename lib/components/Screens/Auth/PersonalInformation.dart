@@ -134,7 +134,8 @@ class _PersonalInformationState extends State<PersonalInformation>
           child: Container(
             child: AppButton.flat(
               onTap: () async {
-                readOnly = !readOnly;
+               readOnly = !readOnly;
+                
 
                 if (readOnly) {
                   FocusScope.of(context).unfocus();
@@ -153,6 +154,7 @@ class _PersonalInformationState extends State<PersonalInformation>
                   } else {
                     setState(() {
                       _autoValidate = true;
+                      readOnly = false;
                     });
                   }
                 }
@@ -1190,6 +1192,10 @@ class _PersonalInformationState extends State<PersonalInformation>
             context,
             isProgress: true)
         .then((resp) async {
+          readOnly = true;
+          setState(() {
+            
+          });
       if (resp.data.accountTerm == null) {
         var oldAccTerm = app.resolve<PrefUtils>().getUserDetails().accountTerm;
         resp.data.accountTerm = oldAccTerm;
