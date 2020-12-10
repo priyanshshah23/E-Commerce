@@ -12,6 +12,10 @@ class NotificationManger {
   notificationRedirection(NotificationModel notificationModel,
       {bool isFromNotificationMenu}) {
     int type = notificationModel.module;
+    switchCaseMethod(type);
+  }
+
+  void switchCaseMethod(int type) {
     switch (type) {
       case NotificationConstant.MODULE_TYPE_SEARCH:
         NavigationUtilities.pushRoute(FilterScreen.route);

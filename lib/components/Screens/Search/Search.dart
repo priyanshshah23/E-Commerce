@@ -78,7 +78,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
           backgroundColor: appTheme.whiteColor,
           appBar: getAppBar(
             context,
-            R.string().screenTitle.search,
+            R.string.screenTitle.search,
             bgColor: appTheme.whiteColor,
             leadingButton: getBackButton(context),
             centerTitle: false,
@@ -93,7 +93,9 @@ class _SearchScreenState extends StatefulScreenWidgetState {
               },
               borderRadius: getSize(5),
               fitWidth: true,
-              text: R.string().commonString.search,
+              text: isFromSearch
+                  ? R.string.commonString.searchStoneIdCertificateNo
+                  : "Round 1.0-1.19 D H VS",
             ),
           ),
           body: SafeArea(
@@ -154,7 +156,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
                 ),
 
                 hintStyle: appTheme.grey16HintTextStyle,
-                hintText: R.string().authStrings.searchHint,
+                hintText: R.string.authStrings.searchHint,
                 labelStyle: TextStyle(
                   color: appTheme.textColor,
                   fontSize: getFontSize(16),
@@ -634,7 +636,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
     Map<String, dynamic> req = {};
 
     req["startWith"] = {
-      "keyword": searchText,
+      "keyword": searchText.toUpperCase(),
       "keys": ["rptNo", "vStnId", "stoneId"]
     };
     req["sort"] = [

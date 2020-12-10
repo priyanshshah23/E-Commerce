@@ -124,9 +124,9 @@ class _DashboardState extends StatefulScreenWidgetState {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
               context,
-              title: R.string().commonString.error,
+              title: R.string.commonString.error,
               desc: onError.message,
-              positiveBtnTitle: R.string().commonString.btnTryAgain,
+              positiveBtnTitle: R.string.commonString.btnTryAgain,
             );
       }
     });
@@ -318,6 +318,7 @@ class _DashboardState extends StatefulScreenWidgetState {
           child: Container(
             height: getSize(40),
             decoration: BoxDecoration(
+              color: appTheme.whiteColor,
               borderRadius: BorderRadius.circular(getSize(5)),
               border:
                   Border.all(color: appTheme.colorPrimary, width: getSize(1)),
@@ -356,8 +357,10 @@ class _DashboardState extends StatefulScreenWidgetState {
                       color: appTheme.dividerColor, width: getSize(1)),
                 ),
 
-                hintStyle: appTheme.grey16HintTextStyle,
-                hintText: "Search",
+                hintStyle: appTheme.grey16HintTextStyle.copyWith(
+                  color: appTheme.placeholderColor,
+                ),
+                hintText: "Round 1.0-1.19 D H VS",
                 labelStyle: TextStyle(
                   color: appTheme.textColor,
                   fontSize: getFontSize(16),
@@ -535,7 +538,7 @@ class _DashboardState extends StatefulScreenWidgetState {
 //              children: [
 //                Row(
 //                  children: [
-//                    getTitleText(R.string().screenTitle.featuredStones),
+//                    getTitleText(R.string.screenTitle.featuredStones),
 //                    Spacer(),
 //                    InkWell(
 //                      onTap: () {
@@ -619,7 +622,7 @@ class _DashboardState extends StatefulScreenWidgetState {
 //              children: [
 //                Row(
 //                  children: [
-//                    getTitleText(R.string().screenTitle.stoneOfDay),
+//                    getTitleText(R.string.screenTitle.stoneOfDay),
 //                    Spacer(),
 //                    InkWell(
 //                      onTap: () {
@@ -1087,7 +1090,7 @@ class _DashboardState extends StatefulScreenWidgetState {
             ),
             child: Row(
               children: [
-                getTitleText(R.string().screenTitle.savedSearch),
+                getTitleText(R.string.screenTitle.savedSearch),
                 Spacer(),
                 InkWell(
                   onTap: () {
@@ -1150,8 +1153,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                   color: appTheme.whiteColor,
                   borderRadius: BorderRadius.circular(getSize(5)),
                   border: Border.all(
-                    color: appTheme.lightBGColor,
-                  ),
+                      width: getSize(1), color: appTheme.borderColor),
                   // boxShadow: getBoxShadow(context),
                 ),
                 child: Padding(
@@ -1212,9 +1214,9 @@ class _DashboardState extends StatefulScreenWidgetState {
               app.resolve<CustomDialogs>().confirmDialog(context,
                   barrierDismissible: true,
                   title: "",
-                  desc: R.string().commonString.deleteItem,
-                  positiveBtnTitle: R.string().commonString.ok,
-                  negativeBtnTitle: R.string().commonString.cancel,
+                  desc: R.string.commonString.deleteItem,
+                  positiveBtnTitle: R.string.commonString.ok,
+                  negativeBtnTitle: R.string.commonString.cancel,
                   onClickCallback: (buttonType) {
                 if (buttonType == ButtonType.PositveButtonClick) {
                   SyncManager.instance.callApiForDeleteSavedSearch(
@@ -1289,7 +1291,7 @@ class _DashboardState extends StatefulScreenWidgetState {
         // mainAxisAlignment: mainaxisal,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          getTitleText(R.string().screenTitle.recentSearch),
+          getTitleText(R.string.screenTitle.recentSearch),
           SizedBox(
             height: getSize(20),
           ),
@@ -1692,7 +1694,7 @@ class _DashboardState extends StatefulScreenWidgetState {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          getTitleText(R.string().screenTitle.salesPersonDetail),
+          getTitleText(R.string.screenTitle.salesPersonDetail),
           SizedBox(
             height: getSize(20),
           ),
@@ -1710,8 +1712,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                   color: appTheme.whiteColor,
                   borderRadius: BorderRadius.circular(getSize(5)),
                   border: Border.all(
-                    color: appTheme.lightBGColor,
-                  ),
+                      width: getSize(1), color: appTheme.borderColor),
                 ),
                 child: Padding(
                   padding: EdgeInsets.all(
@@ -1748,6 +1749,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                               SizedBox(width: getSize(18)),
                               InkWell(
                                 onTap: () {
+                                  //change firstname to skypeId, when available on server.
                                   openSkype(
                                       this.dashboardModel.seller.firstName);
                                 },
@@ -1853,12 +1855,9 @@ class _DashboardState extends StatefulScreenWidgetState {
 
   void openSkype(String username) async {
     if (await canLaunch('skype:${username}')) {
-      final bool nativeAppLaunchSucceeded = await launch(
-        'skype:${username}',
-      );
-      if (!nativeAppLaunchSucceeded) {
-        // Do something else
-      }
+      await launch('skype:${username}');
+    } else {
+      showToast("skype is not installed in this device", context: context);
     }
   }
 
@@ -1873,7 +1872,7 @@ class _DashboardState extends StatefulScreenWidgetState {
 
   getViewAll() {
     return Text(
-      R.string().screenTitle.viewAll,
+      R.string.screenTitle.viewAll,
       style: appTheme.black14TextStyle.copyWith(
         fontWeight: FontWeight.w500,
         color: appTheme.colorPrimary,

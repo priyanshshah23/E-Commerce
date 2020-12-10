@@ -164,15 +164,15 @@ class CompanyInformationState extends State<CompanyInformation>
                         if (citySelect()) {
                           callCompanyInformationApi();
                         } else {
-                          showToast(R.string().commonString.cityFirst,
+                          showToast(R.string.commonString.cityFirst,
                               context: context);
                         }
                       } else {
-                        showToast(R.string().commonString.stateFirst,
+                        showToast(R.string.commonString.stateFirst,
                             context: context);
                       }
                     } else {
-                      showToast(R.string().commonString.countryFirst,
+                      showToast(R.string.commonString.countryFirst,
                           context: context);
                     }
 
@@ -180,6 +180,7 @@ class CompanyInformationState extends State<CompanyInformation>
                   } else {
                     setState(() {
                       _autoValidate = true;
+                      readOnly = false;
                     });
                   }
                 }
@@ -192,8 +193,8 @@ class CompanyInformationState extends State<CompanyInformation>
               borderRadius: getSize(5),
               fitWidth: true,
               text: !readOnly
-                  ? R.string().authStrings.saveCompanyDetails
-                  : R.string().authStrings.editCompanyInformation,
+                  ? R.string.authStrings.saveCompanyDetails
+                  : R.string.authStrings.editCompanyInformation,
               //isButtonEnabled: enableDisableSigninButton(),
             ),
           ),
@@ -263,7 +264,7 @@ class CompanyInformationState extends State<CompanyInformation>
       focusNode: _focuscompanyCode,
       readOnly: this.readOnly ? true : false,
       textOption: TextFieldOption(
-        hintText: R.string().authStrings.companyCode,
+        hintText: R.string.authStrings.companyCode,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: pincode,
@@ -277,14 +278,14 @@ class CompanyInformationState extends State<CompanyInformation>
       },
       validation: (text) {
         if (text.isEmpty) {
-          return R.string().errorString.pleaseEnterCompanyCode;
+          return R.string.errorString.pleaseEnterCompanyCode;
         }
 //          else if (await isValidMobile(_mobileController.text.trim(),
 //                  selectedDialogCountry.isoCode) ==
 //              false) {
 //            isMobilevalid = false;
 //
-//            return R.string().errorString.enterValidPhone;
+//            return R.string.errorString.enterValidPhone;
 //          }
         else {
           return null;
@@ -307,7 +308,7 @@ class CompanyInformationState extends State<CompanyInformation>
             : rd,
         textOption: TextFieldOption(
             hintText: isNullEmptyOrFalse(zipCodeTitle)
-                ? R.string().commonString.lblPinCode + "*"
+                ? R.string.commonString.lblPinCode + "*"
                 : zipCodeTitle,
             maxLine: 1,
             prefixWid: getCommonIconWidget(
@@ -327,9 +328,9 @@ class CompanyInformationState extends State<CompanyInformation>
         },
         validation: (text) {
           if (text.isEmpty) {
-            return R.string().errorString.enterPinCode;
+            return R.string.errorString.enterPinCode;
           } else if (!validatePincode(text)) {
-            return R.string().errorString.enterValidPinCode;
+            return R.string.errorString.enterValidPinCode;
           } else {
             return null;
           }
@@ -347,8 +348,8 @@ class CompanyInformationState extends State<CompanyInformation>
       focusNode: _focusCompanyName,
       readOnly: this.readOnly ? true : false,
       textOption: TextFieldOption(
-        hintText: R.string().authStrings.companyName +
-            R.string().authStrings.requiredField,
+        hintText: R.string.authStrings.companyName +
+            R.string.authStrings.requiredField,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: user,
@@ -369,7 +370,7 @@ class CompanyInformationState extends State<CompanyInformation>
       textCallback: (text) {},
       validation: (text) {
         if (text.trim().isEmpty) {
-          return R.string().authStrings.enterCompanyName;
+          return R.string.authStrings.enterCompanyName;
         } else {
           return null;
         }
@@ -387,7 +388,7 @@ class CompanyInformationState extends State<CompanyInformation>
       focusNode: _focusAddressLineOne,
       readOnly: this.readOnly ? true : false,
       textOption: TextFieldOption(
-        hintText: R.string().authStrings.addressLineOne,
+        hintText: R.string.authStrings.addressLineOne,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: company,
@@ -408,7 +409,7 @@ class CompanyInformationState extends State<CompanyInformation>
       textCallback: (text) {},
       validation: (text) {
         if (text.trim().isEmpty) {
-          return R.string().errorString.enterAddress;
+          return R.string.errorString.enterAddress;
         } else {
           return null;
         }
@@ -426,7 +427,7 @@ class CompanyInformationState extends State<CompanyInformation>
     return CommonTextfield(
       focusNode: _focusAddressLineTwo,
       textOption: TextFieldOption(
-        hintText: R.string().authStrings.addressLineTwo,
+        hintText: R.string.authStrings.addressLineTwo,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: company,
@@ -447,7 +448,7 @@ class CompanyInformationState extends State<CompanyInformation>
       textCallback: (text) {},
       validation: (text) {
         if (text.trim().isEmpty) {
-          return R.string().errorString.enterAddress;
+          return R.string.errorString.enterAddress;
         } else {
           return null;
         }
@@ -477,8 +478,8 @@ class CompanyInformationState extends State<CompanyInformation>
                     borderRadius: BorderRadius.circular(getSize(25)),
                   ),
                   child: SelectionDialogue(
-                    title: R.string().commonString.selectCountry,
-                    hintText: R.string().commonString.searchCountry,
+                    title: R.string.commonString.selectCountry,
+                    hintText: R.string.commonString.searchCountry,
                     selectionOptions: countryList,
                     applyFilterCallBack: (
                         {SelectionPopupModel selectedItem,
@@ -518,7 +519,7 @@ class CompanyInformationState extends State<CompanyInformation>
           readOnly: this.readOnly ? true : false,
           enable: false,
           textOption: TextFieldOption(
-              hintText: R.string().commonString.lblCountry,
+              hintText: R.string.commonString.lblCountry,
               maxLine: 1,
               prefixWid: getCommonIconWidget(
                   imageName: country, imageType: IconSizeType.small),
@@ -558,8 +559,8 @@ class CompanyInformationState extends State<CompanyInformation>
                           borderRadius: BorderRadius.circular(getSize(25)),
                         ),
                         child: SelectionDialogue(
-                          title: R.string().commonString.selectState,
-                          hintText: R.string().commonString.searchState,
+                          title: R.string.commonString.selectState,
+                          hintText: R.string.commonString.searchState,
                           selectionOptions: stateList,
                           applyFilterCallBack: (
                               {SelectionPopupModel selectedItem,
@@ -587,7 +588,7 @@ class CompanyInformationState extends State<CompanyInformation>
                   });
             }
           } else {
-            showToast(R.string().commonString.countryFirst, context: context);
+            showToast(R.string.commonString.countryFirst, context: context);
           }
         }
       },
@@ -596,7 +597,7 @@ class CompanyInformationState extends State<CompanyInformation>
           readOnly: this.readOnly ? true : false,
           enable: false,
           textOption: TextFieldOption(
-              hintText: R.string().commonString.lblState,
+              hintText: R.string.commonString.lblState,
               maxLine: 1,
               prefixWid: getCommonIconWidget(
                   imageName: state, imageType: IconSizeType.small),
@@ -641,8 +642,8 @@ class CompanyInformationState extends State<CompanyInformation>
                             borderRadius: BorderRadius.circular(getSize(25)),
                           ),
                           child: SelectionDialogue(
-                            title: R.string().commonString.selectCity,
-                            hintText: R.string().commonString.searchCity,
+                            title: R.string.commonString.selectCity,
+                            hintText: R.string.commonString.searchCity,
                             selectionOptions: cityList,
                             applyFilterCallBack: (
                                 {SelectionPopupModel selectedItem,
@@ -659,10 +660,10 @@ class CompanyInformationState extends State<CompanyInformation>
                     });
               }
             } else {
-              showToast(R.string().commonString.stateFirst, context: context);
+              showToast(R.string.commonString.stateFirst, context: context);
             }
           } else {
-            showToast(R.string().commonString.countryFirst, context: context);
+            showToast(R.string.commonString.countryFirst, context: context);
           }
         }
       },
@@ -673,7 +674,7 @@ class CompanyInformationState extends State<CompanyInformation>
           textOption: TextFieldOption(
               prefixWid: getCommonIconWidget(
                   imageName: city, imageType: IconSizeType.small),
-              hintText: R.string().commonString.lblCity,
+              hintText: R.string.commonString.lblCity,
               maxLine: 1,
               keyboardType: TextInputType.text,
               type: TextFieldType.DropDown,
@@ -705,8 +706,8 @@ class CompanyInformationState extends State<CompanyInformation>
                       borderRadius: BorderRadius.circular(getSize(25)),
                     ),
                     child: SelectionDialogue(
-                        title: R.string().commonString.selectBusinessType,
-                        hintText: R.string().commonString.searchBusinessType,
+                        title: R.string.commonString.selectBusinessType,
+                        hintText: R.string.commonString.searchBusinessType,
                         selectionOptions: businessTypeList,
                         applyFilterCallBack: (
                             {SelectionPopupModel selectedItem,
@@ -730,7 +731,7 @@ class CompanyInformationState extends State<CompanyInformation>
           textOption: TextFieldOption(
               prefixWid: getCommonIconWidget(
                   imageName: city, imageType: IconSizeType.small),
-              hintText: R.string().commonString.selectBusinessType,
+              hintText: R.string.commonString.selectBusinessType,
               maxLine: 1,
               keyboardType: TextInputType.text,
               type: TextFieldType.DropDown,
@@ -762,8 +763,9 @@ class CompanyInformationState extends State<CompanyInformation>
                       borderRadius: BorderRadius.circular(getSize(25)),
                     ),
                     child: SelectionDialogue(
-                        title: R.string().authStrings.selectNatureOfOrganization,
-                        hintText: R.string().authStrings.selectNatureOfOrganization,
+                        title: R.string.authStrings.selectNatureOfOrganization,
+                        hintText:
+                            R.string.authStrings.selectNatureOfOrganization,
                         selectionOptions: natureOfOrgList,
                         applyFilterCallBack: (
                             {SelectionPopupModel selectedItem,
@@ -787,7 +789,7 @@ class CompanyInformationState extends State<CompanyInformation>
           textOption: TextFieldOption(
               prefixWid: getCommonIconWidget(
                   imageName: city, imageType: IconSizeType.small),
-              hintText: R.string().authStrings.selectNatureOfOrganization,
+              hintText: R.string.authStrings.selectNatureOfOrganization,
               maxLine: 1,
               keyboardType: TextInputType.text,
               type: TextFieldType.DropDown,
@@ -906,8 +908,8 @@ class CompanyInformationState extends State<CompanyInformation>
                     borderRadius: BorderRadius.circular(getSize(25)),
                   ),
                   child: SelectionDialogue(
-                    title: R.string().commonString.selectCity,
-                    hintText: R.string().commonString.searchCity,
+                    title: R.string.commonString.selectCity,
+                    hintText: R.string.commonString.searchCity,
                     selectionOptions: cityList,
                     applyFilterCallBack: (
                         {SelectionPopupModel selectedItem,
@@ -925,9 +927,9 @@ class CompanyInformationState extends State<CompanyInformation>
     }).catchError(
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            title: R.string().commonString.error,
+            title: R.string.commonString.error,
             desc: onError.message,
-            positiveBtnTitle: R.string().commonString.btnTryAgain,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
           _callApiForCityList(stateId: stateId, countryId: countryId);
         })
@@ -965,8 +967,8 @@ class CompanyInformationState extends State<CompanyInformation>
                     borderRadius: BorderRadius.circular(getSize(25)),
                   ),
                   child: SelectionDialogue(
-                    title: R.string().commonString.selectCountry,
-                    hintText: R.string().commonString.searchCountry,
+                    title: R.string.commonString.selectCountry,
+                    hintText: R.string.commonString.searchCountry,
                     selectionOptions: countryList,
                     applyFilterCallBack: (
                         {SelectionPopupModel selectedItem,
@@ -992,9 +994,9 @@ class CompanyInformationState extends State<CompanyInformation>
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(
           context,
-          title: R.string().commonString.error,
+          title: R.string.commonString.error,
           desc: onError.message,
-          positiveBtnTitle: R.string().commonString.btnTryAgain,
+          positiveBtnTitle: R.string.commonString.btnTryAgain,
           onClickCallback: (buttonType) {
             _callApiForCountryList();
           },
@@ -1038,8 +1040,8 @@ class CompanyInformationState extends State<CompanyInformation>
                     borderRadius: BorderRadius.circular(getSize(25)),
                   ),
                   child: SelectionDialogue(
-                    title: R.string().commonString.selectState,
-                    hintText: R.string().commonString.searchState,
+                    title: R.string.commonString.selectState,
+                    hintText: R.string.commonString.searchState,
                     selectionOptions: stateList,
                     applyFilterCallBack: (
                         {SelectionPopupModel selectedItem,
@@ -1064,9 +1066,9 @@ class CompanyInformationState extends State<CompanyInformation>
     }).catchError(
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            title: R.string().commonString.error,
+            title: R.string.commonString.error,
             desc: onError.message,
-            positiveBtnTitle: R.string().commonString.btnTryAgain,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
           _callApiForStateList(countryId: countryId);
         })
@@ -1125,16 +1127,16 @@ class CompanyInformationState extends State<CompanyInformation>
       app.resolve<PrefUtils>().saveUser(user);
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-            title: R.string().commonString.successfully,
+            title: R.string.commonString.successfully,
             desc: resp.message,
-            positiveBtnTitle: R.string().commonString.ok,
+            positiveBtnTitle: R.string.commonString.ok,
           );
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-            title: R.string().commonString.error,
+            title: R.string.commonString.error,
             desc: onError.message,
-            positiveBtnTitle: R.string().commonString.btnTryAgain,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
           );
     });
   }
@@ -1195,9 +1197,9 @@ class CompanyInformationState extends State<CompanyInformation>
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-            title: R.string().commonString.error,
+            title: R.string.commonString.error,
             desc: onError.message,
-            positiveBtnTitle: R.string().commonString.btnTryAgain,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
           );
     });
   }

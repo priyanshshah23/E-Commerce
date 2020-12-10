@@ -110,31 +110,31 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
           child: Row(
             children: <Widget>[
               getColumn(
-                  widget.diamondCalculation.pcs, R.string().commonString.pcs),
+                  widget.diamondCalculation.pcs, R.string.commonString.pcs),
               Expanded(
                 child: Container(),
               ),
               getColumn(widget.diamondCalculation.totalCarat,
-                  R.string().commonString.cts),
+                  R.string.commonString.cts),
               Expanded(
                 child: Container(),
               ),
               getColumn(widget.diamondCalculation.totalDisc,
-                  R.string().commonString.disc),
+                  R.string.commonString.disc),
               Expanded(
                 child: Container(),
               ),
               getColumn(
                   widget.diamondCalculation.totalPriceCrt,
-                  R.string().commonString.avgPriceCrt +
-                      R.string().commonString.doller),
+                  R.string.commonString.avgPriceCrt + dollar),
+                      // R.string.commonString.doller),
               Expanded(
                 child: Container(),
               ),
               getColumn(
                   widget.diamondCalculation.totalAmount,
-                  R.string().commonString.amount +
-                      R.string().commonString.doller)
+                  R.string.commonString.amount +
+                      dollar)
             ],
           ),
         ),
@@ -155,7 +155,7 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
                         child: Container(
                           child: Center(
                             child: Text(
-                              R.string().commonString.bidEndsIn,
+                              R.string.commonString.bidEndsIn,
                               style: appTheme.primaryColor14TextStyle,
                             ),
                           ),
@@ -176,7 +176,7 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
                               style: appTheme.blackBold12TextStyle,
                             ),
                             Text(
-                              " " + R.string().commonString.hours,
+                              " " + R.string.commonString.hours,
                               style: appTheme.black12TextStyle,
                             ),
                             SizedBox(width: getSize(16)),
@@ -189,7 +189,7 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
                               style: appTheme.blackBold12TextStyle,
                             ),
                             Text(
-                              " " + R.string().commonString.minutes,
+                              " " + R.string.commonString.minutes,
                               style: appTheme.black12TextStyle,
                             ),
                             SizedBox(width: getSize(16)),
@@ -202,7 +202,7 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
                               style: appTheme.blackBold12TextStyle,
                             ),
                             Text(
-                              " " + R.string().commonString.seconds,
+                              " " + R.string.commonString.seconds,
                               style: appTheme.black12TextStyle,
                             ),
                           ],

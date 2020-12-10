@@ -38,7 +38,7 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
                       padding: EdgeInsets.only(
                         left: getSize(Spacing.leftPadding),
                       ),
-                      child: getTitleText(R.string().screenTitle.recentSearch),
+                      child: getTitleText(R.string.screenTitle.recentSearch),
                     ),
                     Spacer(),
                     InkWell(
@@ -113,7 +113,7 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                getText(R.string().commonString.shape,
+                getText(R.string.commonString.shape,
                     style: appTheme.grey14TextStyle),
                 SizedBox(width: getSize(5)),
                 isNullEmptyOrFalse(recentSearch.displayData) ||
@@ -137,7 +137,7 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                getText(R.string().commonString.carat,
+                getText(R.string.commonString.carat,
                     style: appTheme.grey14TextStyle),
                 SizedBox(width: getSize(5)),
                 isNullEmptyOrFalse(recentSearch.displayData) ||
@@ -156,7 +156,7 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
               ],
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              getText(R.string().commonString.color,
+              getText(R.string.commonString.color,
                   style: appTheme.grey14TextStyle),
               SizedBox(width: getSize(5)),
               isNullEmptyOrFalse(recentSearch.displayData) ||
@@ -193,7 +193,7 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
 
   getViewAll() {
     return Text(
-      R.string().screenTitle.viewAll,
+      R.string.screenTitle.viewAll,
       style: appTheme.black14TextStyle.copyWith(
         fontWeight: FontWeight.w500,
         color: appTheme.colorPrimary,

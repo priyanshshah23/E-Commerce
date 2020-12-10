@@ -83,7 +83,7 @@ class _VersionUpdateState extends State<VersionUpdate> {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.all(getSize(16)),
-              child: Text(R.string().commonString.applicationUpdate,
+              child: Text(R.string.commonString.applicationUpdate,
                   style: AppTheme.of(context)
                       .theme
                       .primaryTextTheme
@@ -95,7 +95,7 @@ class _VersionUpdateState extends State<VersionUpdate> {
             Padding(
               padding: EdgeInsets.all(getSize(16)),
               child: Text(
-                R.string().commonString.newVersionMessage,
+                R.string.commonString.newVersionMessage,
                 textAlign: TextAlign.center,
                 style: AppTheme.of(context)
                     .theme
@@ -112,11 +112,11 @@ class _VersionUpdateState extends State<VersionUpdate> {
               child: AppButton.flat(
                 onTap: () {
                   StoreRedirect.redirect(
-                      androidAppId: "com.phshah.app", iOSAppId: "1516454400");
+                      androidAppId: "com.mydiamonds.app", iOSAppId: "1516454400");
                 },
                 borderRadius: 14,
                 fitWidth: true,
-                text: R.string().commonString.btnUpdate,
+                text: R.string.commonString.btnUpdate,
               ),
             ),
             widget.isHardUpdate
@@ -129,7 +129,7 @@ class _VersionUpdateState extends State<VersionUpdate> {
                       },
                       borderRadius: 14,
                       fitWidth: true,
-                      text: R.string().commonString.btnSkip,
+                      text: R.string.commonString.btnSkip,
                     ),
                   )
                 : SizedBox(),

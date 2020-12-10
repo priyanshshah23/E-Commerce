@@ -5,9 +5,12 @@ import 'package:country_pickers/country_pickers.dart';
 import 'package:diamnow/Setting/SettingModel.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/Screens/Auth/ChangePassword.dart';
 import 'package:diamnow/components/Screens/Auth/ProfileList.dart';
+import 'package:diamnow/components/Screens/Auth/SignInWithMPINScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Home/DrawerModel.dart';
 import 'package:diamnow/components/Screens/Home/HomeDrawer.dart';
@@ -45,7 +48,7 @@ class MyAccountScreen extends StatefulWidget {
 class _MyAccountScreenState extends State<MyAccountScreen> {
   List<DrawerModel> accountItems = DrawerSetting().getAccountListItems();
   bool isFromDrawer;
-  bool isSwitched = false;
+  bool isSwitchedTouchId = false, isSwitchedMpin = false;
   List<BiometricType> availableBiometrics;
   final LocalAuthentication auth = LocalAuthentication();
 
@@ -53,7 +56,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      isSwitched = app.resolve<PrefUtils>().getBiometrcis() ?? false;
+      isSwitchedTouchId = app.resolve<PrefUtils>().getBiometrcis() ?? false;
+      isSwitchedMpin = app.resolve<PrefUtils>().getMpin() ?? false;
       availableBiometrics = await auth.getAvailableBiometrics();
       setState(() {});
     });
@@ -98,10 +102,34 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         case DiamondModuleConstant.MODULE_TYPE_PROFILE:
           openProfile();
           break;
+        case DiamondModuleConstant.MODULE_TYPE_CHANGEMPIN:
+          changeMPin();
+          break;
       }
       if (type != DiamondModuleConstant.MODULE_TYPE_LOGOUT) {
         setState(() {});
       }
+    }
+  }
+
+  changeMPin() {
+    if (app.resolve<PrefUtils>().getUserDetails().isMpinAdded == false) {
+      Map<String, dynamic> arguments = {};
+      arguments["enm"] = Mpin.createMpin;
+      NavigationUtilities.pushRoute(SignInWithMPINScreen.route,
+          args: arguments);
+    } else {
+      Map<String, dynamic> arguments = {};
+      arguments["enm"] = Mpin.changeMpin;
+      arguments["askForVerifyMpin"] = true;
+      arguments["verifyPinCallback"] = () {
+        Map<String, dynamic> arguments = {};
+        arguments["enm"] = Mpin.changeMpin;
+        NavigationUtilities.pushRoute(SignInWithMPINScreen.route,
+            args: arguments);
+      };
+      NavigationUtilities.pushRoute(SignInWithMPINScreen.route,
+          args: arguments);
     }
   }
 
@@ -143,7 +171,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         children: [
           Padding(
             padding: EdgeInsets.only(
-              left: getSize(20),
+              left: getSize(Spacing.leftPadding),
             ),
             child: Row(
               // mainAxisSize: MainAxisSize.max,
@@ -163,41 +191,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                 ),
                 Text(
                   model.title,
-                  style: appTheme.blackNormal14TitleColorblack.copyWith(
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: appTheme.blackNormal16TitleColorblack,
                 ),
                 Spacer(),
-                model.type == DiamondModuleConstant.MODULE_TYPE_TOUCH_ID
-                    ? InkWell(
-                        onTap: () {},
-                        child: Switch(
-                          value: isSwitched,
-                          onChanged: (value) {
-                            setState(() {
-                              isSwitched = !isSwitched;
-
-                              if (isSwitched == true) {
-                                askForBioMetrics();
-                              }
-                            });
-                          },
-                          activeTrackColor: appTheme.borderColor,
-                          activeColor: appTheme.colorPrimary,
-                        ),
-                      )
-                    : Padding(
-                        padding: EdgeInsets.only(
-                          left: getSize(20),
-                          right: getSize(20),
-                        ),
-                        child: Container(
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            size: getSize(14),
-                          ),
-                        ),
-                      ),
+                returnWidgetAsPerModule(model),
               ],
             ),
           ),
@@ -213,37 +210,140 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     );
   }
 
+  Widget returnWidgetAsPerModule(DrawerModel model) {
+    if (model.type == DiamondModuleConstant.MODULE_TYPE_LOGOUT) {
+      return SizedBox();
+    }
+    if (model.type == DiamondModuleConstant.MODULE_TYPE_TOUCH_ID) {
+      return InkWell(
+        onTap: () {},
+        child: SizedBox(
+          height: getSize(30),
+          child: Switch(
+            value: isSwitchedTouchId,
+            onChanged: (value) {
+              if (isSwitchedMpin == true) {
+                changeMPinTouchIdToggle(false);
+              } else {
+                setState(() {
+                  // if (isSwitchedMpin) isSwitchedMpin = false;
+                  isSwitchedTouchId = !isSwitchedTouchId;
+
+                  if (isSwitchedTouchId == true) {
+                    askForBioMetrics();
+                  }
+                });
+              }
+            },
+            activeTrackColor: appTheme.borderColor,
+            activeColor: appTheme.colorPrimary,
+          ),
+        ),
+      );
+    }
+
+    if (model.type == DiamondModuleConstant.MODULE_TYPE_MPIN) {
+      return InkWell(
+        onTap: () {},
+        child: SizedBox(
+          height: getSize(30),
+          child: Switch(
+            value: isSwitchedMpin,
+            onChanged: (value) {
+              if (isSwitchedTouchId == true) {
+                changeMPinTouchIdToggle(true);
+              } else {
+                setState(() {
+                  // if (isSwitchedTouchId)
+                  //   isSwitchedTouchId = false;
+                  isSwitchedMpin = !isSwitchedMpin;
+
+                  if (isSwitchedMpin == true) {
+                    askForMpin();
+                  } else {
+                    app.resolve<PrefUtils>().setMpinisUsage(false);
+                  }
+                });
+              }
+            },
+            activeTrackColor: appTheme.borderColor,
+            activeColor: appTheme.colorPrimary,
+          ),
+        ),
+      );
+    }
+
+    return Padding(
+      padding: EdgeInsets.only(
+        left: getSize(20),
+        right: getSize(20),
+      ),
+      child: Container(
+        child: Icon(
+          Icons.arrow_forward_ios,
+          size: getSize(14),
+        ),
+      ),
+    );
+  }
+
   askForBioMetrics() async {
     if (!isNullEmptyOrFalse(availableBiometrics)) {
       try {
         bool isAuthenticated = await auth.authenticateWithBiometrics(
           localizedReason:
               Platform.isIOS && availableBiometrics.contains(BiometricType.face)
-                  ? R.string().commonString.enableFaceId
-                  : R.string().commonString.enableTouchId,
+                  ? R.string.commonString.enableFaceId
+                  : R.string.commonString.enableTouchId,
           useErrorDialogs: false,
           stickyAuth: false,
         );
         if (isAuthenticated) {
           app.resolve<PrefUtils>().setBiometrcisUsage(true);
+          app.resolve<PrefUtils>().setMpinisUsage(false);
           setState(() {
-            isSwitched = true;
+            isSwitchedTouchId = true;
+            isSwitchedMpin = false;
           });
         } else {
           setState(() {
-            isSwitched = false;
+            isSwitchedTouchId = false;
           });
         }
       } on PlatformException catch (_) {
         setState(() {
-          isSwitched = false;
+          isSwitchedTouchId = false;
         });
       }
     } else {
+      List<BiometricType> availableBiometrics;
+      if (isNullEmptyOrFalse(availableBiometrics)) {
+        showToast(
+            R.string.commonString.faceidandtouchnotenable,
+            context: context);
+      }
       setState(() {
-        isSwitched = false;
+        isSwitchedTouchId = false;
       });
     }
+  }
+
+  askForMpin() async {
+    Map<String, dynamic> args = {};
+    args["askForVerifyMpin"] = true;
+    args["enm"] = Mpin.myAccount;
+    args["verifyPinCallback"] = () {
+      print("Verified");
+      isSwitchedMpin = true;
+      isSwitchedTouchId = false;
+      app.resolve<PrefUtils>().setMpinisUsage(true);
+      app.resolve<PrefUtils>().setBiometrcisUsage(false);
+      setState(() {});
+    };
+
+    NavigationUtilities.pushRoute(SignInWithMPINScreen.route, args: args);
+    isSwitchedMpin = false;
+    setState(() {});
   }
 
   Widget _buildAvatarRow(BuildContext context) {
@@ -302,8 +402,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                           children: [
                             Text(
                               userAccount.getFullName() ?? "-",
-                              style: appTheme.black16TextStyle.copyWith(
-                                fontWeight: FontWeight.w500,
+                              style: appTheme.blackMedium16TitleColorblack
+                                  .copyWith(
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ],
@@ -320,7 +421,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                               SizedBox(width: getSize(8)),
                               Text(
                                 userAccount.email ?? "-",
-                                style: appTheme.black12TextStyle,
+                                style: appTheme.black14TextStyle,
                               ),
                             ],
                           ),
@@ -351,7 +452,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                             SizedBox(width: getSize(8)),
                             Text(
                               userAccount.mobile ?? "-",
-                              style: appTheme.black12TextStyle,
+                              style: appTheme.black14TextStyle,
                             ),
                           ],
                         ),
@@ -409,7 +510,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     return Scaffold(
       appBar: getAppBar(
         context,
-        R.string().screenTitle.myAccount,
+        R.string.screenTitle.myAccount,
         bgColor: appTheme.whiteColor,
         leadingButton: isFromDrawer
             ? getDrawerButton(context, true)
@@ -468,5 +569,41 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     dict[ArgumentConstant.ModuleType] = type;
     dict[ArgumentConstant.IsFromDrawer] = false;
     NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+  }
+
+  changeMPinTouchIdToggle(bool isForMPin) {
+    app.resolve<CustomDialogs>().confirmDialog(context,
+        title: APPNAME,
+        desc: isForMPin
+            ? R.string.commonString.enablempintounlockmydiamonds
+            : R.string.commonString.enabletouchidtounlockmydiamonds,
+        positiveBtnTitle: R.string.commonString.yes,
+        negativeBtnTitle: R.string.commonString.no,
+        onClickCallback: (buttonType) async {
+      if (buttonType == ButtonType.PositveButtonClick) {
+        if (isForMPin) {
+          setState(() {
+            // if (isSwitchedTouchId)
+            //   isSwitchedTouchId = false;
+            isSwitchedMpin = !isSwitchedMpin;
+
+            if (isSwitchedMpin == true) {
+              askForMpin();
+            } else {
+              app.resolve<PrefUtils>().setMpinisUsage(false);
+            }
+          });
+        } else {
+          setState(() {
+            // if (isSwitchedMpin) isSwitchedMpin = false;
+            isSwitchedTouchId = !isSwitchedTouchId;
+
+            if (isSwitchedTouchId == true) {
+              askForBioMetrics();
+            }
+          });
+        }
+      } else {}
+    });
   }
 }

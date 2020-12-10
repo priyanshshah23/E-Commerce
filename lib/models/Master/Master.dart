@@ -223,11 +223,11 @@ class Master {
 
     for (Master item in masters) {
       if (item.isSelected) {
-        if (item.sId != R.string().commonString.all && item.sId != "ShowMore") {
+        if (item.sId != R.string.commonString.all && item.sId != "ShowMore") {
           ids.add(item.sId);
         }
         for (Master groped in item.grouped) {
-          if (groped.sId != R.string().commonString.all &&
+          if (groped.sId != R.string.commonString.all &&
               groped.sId != "ShowMore") {
             if (!ids.contains(groped.sId)) {
               ids.add(groped.sId);
@@ -247,13 +247,13 @@ class Master {
   static List<Map<String, dynamic>> getSelectedCarat(List<Master> masters) {
     List<Map<String, dynamic>> requestCarats = List<Map<String, dynamic>>();
 
-    for (var item in masters) {
-      for (var carat in item.grouped) {
-        if (carat.isSelected == true) {
+    for (var master in masters) {
+      for (var tCarat in master.grouped) {
+        if (master.isSelected == true) {
           Map<String, dynamic> mainDic = Map<String, dynamic>();
           Map<String, dynamic> caratDic = Map<String, dynamic>();
-          caratDic[">="] = "${carat.fromCarat}";
-          caratDic["<="] = "${carat.toCarat}";
+          caratDic[">="] = "${tCarat.webDisplay.split("-")[0]}";
+          caratDic["<="] = "${tCarat.webDisplay.split("-")[1]}";
           mainDic["crt"] = caratDic;
           requestCarats.add(mainDic);
         }

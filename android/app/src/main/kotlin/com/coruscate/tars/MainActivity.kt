@@ -1,4 +1,4 @@
-package com.phshah.app
+package com.mydiamonds.app
 
 
 import android.Manifest
@@ -20,9 +20,10 @@ import com.google.android.gms.common.api.GoogleApiClient
 //import com.google.android.gms.location.LocationServices
 //import com.google.android.gms.location.LocationSettingsRequest
 //import com.google.android.gms.location.LocationSettingsStatusCodes
-import io.flutter.app.FlutterActivity
-import io.flutter.app.FlutterFragmentActivity
+import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.plugin.common.MethodChannel
+import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugins.GeneratedPluginRegistrant
 
 class MainActivity : FlutterFragmentActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -37,7 +38,7 @@ class MainActivity : FlutterFragmentActivity(), GoogleApiClient.ConnectionCallba
     private val PERMISSION_STATUS_GRANTED = 2
     private val PERMISSION_STATUS_RESTRICTED = 3
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+/*    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        googleApiClient = GoogleApiClient.Builder(this)
 //                .addApi(LocationServices.API)
@@ -65,6 +66,30 @@ class MainActivity : FlutterFragmentActivity(), GoogleApiClient.ConnectionCallba
             } else
                 result.notImplemented()
         }
+    }*/
+
+    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+        super.configureFlutterEngine(flutterEngine)
+        Log.e("Register", "in main")
+//        GeneratedPluginRegistrant.registerWith(flutterEngine);
+        MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), GPS_CHANNEL)
+                .setMethodCallHandler { call, result ->
+                    this.result = result
+                    if (call.method == "isGPSEnabled") {
+                        if (isGpsEnabled())
+                            result.success(true);
+                        else
+                            result.error("NOT_ENABLED", "GPS Not Enabled", null)
+                    } else if (call.method == "checkAndShowGpsDialog") {
+                        if (!isGpsEnabled())
+                            showStartGpsDialog()
+                        else
+                            result.success(true)
+                    } else if (call.method == "checkPermissionStatus") {
+                        result.success(checkPermissionStatus(this))
+                    } else
+                        result.notImplemented()
+                }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -256,8 +256,8 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
           app.resolve<CustomDialogs>().confirmDialog(
                 context,
                 title: "",
-                desc: R.string().errorString.diamondSelectionError,
-                positiveBtnTitle: R.string().commonString.ok,
+                desc: R.string.errorString.diamondSelectionError,
+                positiveBtnTitle: R.string.commonString.ok,
               );
         }
 
@@ -588,7 +588,7 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
       backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(
         context,
-        R.string().screenTitle.compareStones,
+        R.string.screenTitle.compareStones,
         textalign: TextAlign.left,
         bgColor: appTheme.whiteColor,
         leadingButton: getBackButton(context),
@@ -644,8 +644,8 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
             title: "",
-            desc: R.string().errorString.diamondCompareRemove,
-            positiveBtnTitle: R.string().commonString.ok,
+            desc: R.string.errorString.diamondCompareRemove,
+            positiveBtnTitle: R.string.commonString.ok,
           );
     }
   }
@@ -661,13 +661,13 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
             showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
                 (manageClick) {
               manageBottomMenuClick(manageClick.bottomTabModel);
-            }, R.string().commonString.more, isDisplaySelection: false);
+            }, R.string.commonString.more, isDisplaySelection: false);
           } else {
             app.resolve<CustomDialogs>().confirmDialog(
                   context,
                   title: "",
-                  desc: R.string().errorString.diamondSelectionError,
-                  positiveBtnTitle: R.string().commonString.ok,
+                  desc: R.string.errorString.diamondSelectionError,
+                  positiveBtnTitle: R.string.commonString.ok,
                 );
           }
         } else {
@@ -693,8 +693,8 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
             title: "",
-            desc: R.string().errorString.diamondSelectionError,
-            positiveBtnTitle: R.string().commonString.ok,
+            desc: R.string.errorString.diamondSelectionError,
+            positiveBtnTitle: R.string.commonString.ok,
           );
     }
   }

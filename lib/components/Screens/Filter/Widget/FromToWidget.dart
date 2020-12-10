@@ -137,8 +137,8 @@ class _FromToWidgetState extends State<FromToWidget> {
               app.resolve<CustomDialogs>().confirmDialog(
                     context,
                     title: "",
-                    desc: R.string().errorString.fromValueGreateThanTo,
-                    positiveBtnTitle: R.string().commonString.ok,
+                    desc: R.string.errorString.fromValueGreateThanTo,
+                    positiveBtnTitle: R.string.commonString.ok,
                   );
               _minValueController.text = "";
               setState(() {});
@@ -184,7 +184,9 @@ class _FromToWidgetState extends State<FromToWidget> {
                   : oldValue)
         ],
         style: appTheme.blackNormal14TitleColorblack,
-        keyboardType: TextInputType.text,
+        keyboardType: widget.fromTomodel.apiKey == "back"
+            ? TextInputType.text
+            : TextInputType.number,
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
           focusedBorder: widget.fromTomodel.fromToStyle.showUnderline
@@ -224,8 +226,8 @@ class _FromToWidgetState extends State<FromToWidget> {
               app.resolve<CustomDialogs>().confirmDialog(
                     context,
                     title: "",
-                    desc: R.string().errorString.toValueGreaterThanFrom,
-                    positiveBtnTitle: R.string().commonString.ok,
+                    desc: R.string.errorString.toValueGreaterThanFrom,
+                    positiveBtnTitle: R.string.commonString.ok,
                   );
               _maxValueController.text = "";
               setState(() {});
@@ -265,7 +267,9 @@ class _FromToWidgetState extends State<FromToWidget> {
           print(oldValueForTo);
         },
         style: appTheme.blackNormal14TitleColorblack,
-        keyboardType: TextInputType.text,
+        keyboardType: widget.fromTomodel.apiKey == "back"
+            ? TextInputType.text
+            : TextInputType.number,
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(
           focusedBorder: widget.fromTomodel.fromToStyle.showUnderline

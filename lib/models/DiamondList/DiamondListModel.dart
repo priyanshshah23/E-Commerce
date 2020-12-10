@@ -619,7 +619,7 @@ class DiamondModel {
     isCm = json['isCm'];
     fcColDesc = json['fcColDesc'];
     ratio = json['ratio'];
-    pltFile = json['pltFile'] ?? false;
+    pltFile = isNullEmptyOrFalse(json['pltFile']) ? false : json['pltFile'];
     groupNo = json['groupNo'];
 
 //    isSelected = json['isSelected'];
@@ -745,6 +745,12 @@ class DiamondModel {
       case DiamondStatus.DIAMOND_STATUS_SHOW:
         color = appTheme.darkBlue;
         break;
+      case DiamondStatus.DIAMOND_STATUS_HOLD:
+        color = appTheme.redColor;
+        break;
+      case DiamondStatus.DIAMOND_STONE_OF_THE_DAY:
+        color = appTheme.statusOffer;
+        break;
     }
     return color;
   }
@@ -841,7 +847,8 @@ class DiamondModel {
   }
 
   num getFinalDiscount() {
-    return (1 - (getFinalRate() / rap)) * (-100);
+    num val = (1 - (getFinalRate() / rap)) * (-100);
+    return val.isNaN || val.isInfinite ? 0 : val;
   }
 
   num getFinalAmount() {

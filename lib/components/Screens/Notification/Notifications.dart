@@ -35,8 +35,8 @@ class _NotificationsState extends StatefulScreenWidgetState {
     notificationList = BaseList(BaseListState(
 //      imagePath: noRideHistoryFound,
       noDataMsg: APPNAME,
-      noDataDesc: R.string().noDataStrings.noDataFound,
-      refreshBtn: R.string().commonString.refresh,
+      noDataDesc: R.string.noDataStrings.noDataFound,
+      refreshBtn: R.string.commonString.refresh,
       enablePullDown: true,
       enablePullUp: true,
       onPullToRefress: () {
@@ -90,16 +90,16 @@ class _NotificationsState extends StatefulScreenWidgetState {
         final aDate = DateTime(date.year, date.month, date.day);
         if (i == 0 || (arrList[i].strDate != arrList[i - 1].strDate)) {
           if (aDate == today) {
-            arrList[i].megaTitle = R.string().commonString.today;
+            arrList[i].megaTitle = R.string.commonString.today;
           } else if (aDate == yesterday) {
-            arrList[i].megaTitle = R.string().commonString.yesterday;
+            arrList[i].megaTitle = R.string.commonString.yesterday;
           } else {
             var past = arrList
                 .where((element) =>
-                    element.megaTitle == R.string().commonString.past)
+                    element.megaTitle == R.string.commonString.past)
                 .toList();
             if (isNullEmptyOrFalse(past)) {
-              arrList[i].megaTitle = R.string().commonString.past;
+              arrList[i].megaTitle = R.string.commonString.past;
               break;
             }
           }
@@ -142,17 +142,16 @@ class _NotificationsState extends StatefulScreenWidgetState {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: AppBackground(
-        child: Scaffold(
-            appBar: getAppBar(
-              context,
-              R.string().commonString.notifications,
-              bgColor: appTheme.whiteColor,
-              leadingButton: getBackButton(context),
-              centerTitle: false,
-            ),
-            body: notificationList),
-      ),
+      child: Scaffold(
+          backgroundColor: appTheme.whiteColor,
+          appBar: getAppBar(
+            context,
+            R.string.commonString.notifications,
+            bgColor: appTheme.whiteColor,
+            leadingButton: getBackButton(context),
+            centerTitle: false,
+          ),
+          body: notificationList),
     );
   }
 
@@ -208,7 +207,7 @@ class _NotificationsState extends StatefulScreenWidgetState {
                       ),
                       decoration: BoxDecoration(
                         color: appTheme.whiteColor,
-                        boxShadow: isShowShadow
+                        boxShadow: !model.isRead
                             ? [
                                 BoxShadow(
                                     color: appTheme.lightColorPrimary,
@@ -217,9 +216,7 @@ class _NotificationsState extends StatefulScreenWidgetState {
                                     offset: Offset(1, 8)),
                               ]
                             : null,
-                        border: isShowShadow
-                            ? null
-                            : Border.all(color: appTheme.dividerColor),
+                        border: Border.all(color: appTheme.dividerColor),
                         borderRadius: BorderRadius.circular(getSize(5)),
                       ),
                       child: Padding(
@@ -306,7 +303,9 @@ class _NotificationsState extends StatefulScreenWidgetState {
         .then((resp) async {
       print("notification Readed");
       //Redirection from notification.
-      app.resolve<NotificationManger>().notificationRedirection(resp.data.list.first);
+      app
+          .resolve<NotificationManger>()
+          .notificationRedirection(resp.data.list.first);
     }).catchError(
       (onError) => {
         if (onError is ErrorResp) print(onError),
@@ -422,30 +421,30 @@ class TimeAgo {
           formatter: DateUtilities.dd_mm_yyyy_hh_mm);
     } else if ((difference.inDays / 7).floor() >= 1) {
       return (numericDates)
-          ? '${(difference.inDays / 7).floor()} ${R.string().commonString.weekAgo}'
-          : R.string().commonString.lastWeek;
+          ? '${(difference.inDays / 7).floor()} ${R.string.commonString.weekAgo}'
+          : R.string.commonString.lastWeek;
     } else if (difference.inDays >= 2) {
-      return '${difference.inDays} ${R.string().commonString.dayAgo}';
+      return '${difference.inDays} ${R.string.commonString.dayAgo}';
     } else if (difference.inDays >= 1) {
       return (numericDates)
-          ? R.string().commonString.onedayAgo
-          : R.string().commonString.yesterday;
+          ? R.string.commonString.onedayAgo
+          : R.string.commonString.yesterday;
     } else if (difference.inHours >= 2) {
-      return '${difference.inHours} ${R.string().commonString.hourAgo}';
+      return '${difference.inHours} ${R.string.commonString.hourAgo}';
     } else if (difference.inHours >= 1) {
       return (numericDates)
-          ? R.string().commonString.onehourAgo
-          : R.string().commonString.anhourAgo;
+          ? R.string.commonString.onehourAgo
+          : R.string.commonString.anhourAgo;
     } else if (difference.inMinutes >= 2) {
-      return '${difference.inMinutes} ${R.string().commonString.mintuesAgo}';
+      return '${difference.inMinutes} ${R.string.commonString.mintuesAgo}';
     } else if (difference.inMinutes >= 1) {
       return (numericDates)
-          ? R.string().commonString.onemintuesAgo
-          : R.string().commonString.amintueAgo;
+          ? R.string.commonString.onemintuesAgo
+          : R.string.commonString.amintueAgo;
     } else if (difference.inSeconds >= 3) {
-      return '${difference.inSeconds} ${R.string().commonString.secondsAgo}';
+      return '${difference.inSeconds} ${R.string.commonString.secondsAgo}';
     } else {
-      return R.string().commonString.justNow;
+      return R.string.commonString.justNow;
     }
   }
 }

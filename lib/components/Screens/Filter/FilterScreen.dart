@@ -10,6 +10,7 @@ import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/DialogueList.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
@@ -215,14 +216,14 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
       list2.forEach((element) {
         element.mainMasters.forEach((element) {
-          if (element.sId != R.string().commonString.showMore) {
+          if (element.sId != R.string.commonString.showMore) {
             element.isSelected = event.values.first;
           }
         });
       });
       list2.forEach((element) {
         element.groupMaster.forEach((element) {
-          if (element.sId != R.string().commonString.showMore) {
+          if (element.sId != R.string.commonString.showMore) {
             element.isSelected = event.values.first;
           }
         });
@@ -302,109 +303,107 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: AppBackground(
-        child: Scaffold(
-            appBar: getAppBar(context, R.string().screenTitle.searchDiamond,
-                bgColor: appTheme.whiteColor,
-                leadingButton: isFromDrawer
-                    ? getDrawerButton(context, true)
-                    : getBackButton(context),
-                centerTitle: false,
-                actionItems: [
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        arrList.forEach((element) {
-                          if (element is SelectionModel) {
-                            element.masters.forEach((element) {
-                              element.isSelected = false;
-                            });
-                            element.caratRangeChipsToShow = [];
-                          }
-                          if (element is KeyToSymbolModel) {
-                            element.masters.forEach((element) {
-                              element.isSelected = false;
-                            });
-                          }
-                          if (element is FromToModel) {
-                            element.valueFrom = "";
-                            element.valueTo = "";
-                          }
-                          if (element is ColorModel) {
-                            element.masters.forEach((element) {
-                              element.isSelected = false;
-                            });
-                            element.mainMasters.forEach((element) {
-                              element.isSelected = false;
-                            });
-                            element.groupMaster.forEach((element) {
-                              element.isSelected = false;
-                            });
-                            element.intensity.forEach((element) {
-                              element.isSelected = false;
-                            });
-                            element.overtone.forEach((element) {
-                              element.isSelected = false;
-                            });
-                          }
-                        });
+      child: Scaffold(
+          backgroundColor: appTheme.whiteColor,
+          appBar: getAppBar(context, R.string.screenTitle.searchDiamond,
+              bgColor: appTheme.whiteColor,
+              leadingButton: isFromDrawer
+                  ? getDrawerButton(context, true)
+                  : getBackButton(context),
+              centerTitle: false,
+              actionItems: [
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      arrList.forEach((element) {
+                        if (element is SelectionModel) {
+                          element.masters.forEach((element) {
+                            element.isSelected = false;
+                          });
+                          element.caratRangeChipsToShow = [];
+                        }
+                        if (element is KeyToSymbolModel) {
+                          element.masters.forEach((element) {
+                            element.isSelected = false;
+                          });
+                        }
+                        if (element is FromToModel) {
+                          element.valueFrom = "";
+                          element.valueTo = "";
+                        }
+                        if (element is ColorModel) {
+                          element.masters.forEach((element) {
+                            element.isSelected = false;
+                          });
+                          element.mainMasters.forEach((element) {
+                            element.isSelected = false;
+                          });
+                          element.groupMaster.forEach((element) {
+                            element.isSelected = false;
+                          });
+                          element.intensity.forEach((element) {
+                            element.isSelected = false;
+                          });
+                          element.overtone.forEach((element) {
+                            element.isSelected = false;
+                          });
+                        }
                       });
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          right: getSize(8.0), left: getSize(8.0)),
-                      child: Image.asset(
-                        reset,
-                        height: getSize(20),
-                        width: getSize(20),
-                      ),
+                    });
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        right: getSize(8.0), left: getSize(8.0)),
+                    child: Image.asset(
+                      reset,
+                      height: getSize(20),
+                      width: getSize(20),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      NavigationUtilities.pushRoute(Notifications.route);
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          right: getSize(Spacing.rightPadding),
-                          left: getSize(8.0)),
-                      child: Image.asset(
-                        notification,
-                        height: getSize(20),
-                        width: getSize(20),
-                      ),
+                ),
+                InkWell(
+                  onTap: () {
+                    NavigationUtilities.pushRoute(Notifications.route);
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        right: getSize(Spacing.rightPadding),
+                        left: getSize(8.0)),
+                    child: Image.asset(
+                      notification,
+                      height: getSize(20),
+                      width: getSize(20),
                     ),
                   ),
-                ]),
-            body: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: getSize(8)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      for (int i = 0; i < arrTab.length; i++)
-                        setTitleOfSegment(arrTab[i].title, i)
-                    ],
-                  ),
                 ),
-                // isNullEmptyOrFalse(arrTab)
-                //     ? SizedBox()
-                //     : SizedBox(height: getSize(16)),
-                // isNullEmptyOrFalse(arrTab) ? SizedBox() : _segmentedControl(),
-                Expanded(
-                  child: Container(
-                    color: Colors.transparent,
-                    child: isNullEmptyOrFalse(arrList)
-                        ? SizedBox()
-                        : getPageView(),
-                  ),
+              ]),
+          body: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: getSize(8)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    for (int i = 0; i < arrTab.length; i++)
+                      setTitleOfSegment(arrTab[i].title, i)
+                  ],
                 ),
-              ],
-            ),
-            bottomNavigationBar: getBottomTab()),
-      ),
+              ),
+              // isNullEmptyOrFalse(arrTab)
+              //     ? SizedBox()
+              //     : SizedBox(height: getSize(16)),
+              // isNullEmptyOrFalse(arrTab) ? SizedBox() : _segmentedControl(),
+              Expanded(
+                child: Container(
+                  color: Colors.transparent,
+                  child:
+                      isNullEmptyOrFalse(arrList) ? SizedBox() : getPageView(),
+                ),
+              ),
+            ],
+          ),
+          bottomNavigationBar: getBottomTab()),
     );
   }
 
@@ -457,7 +456,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       isProgress: true,
     )
         .then((diamondListResp) async {
-      showToast(R.string().commonString.demandAddedSuccessfully,
+      showToast(R.string.commonString.demandAddedSuccessfully,
           context: context);
     }).catchError((onError) {
       print(onError.toString());
@@ -477,7 +476,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             borderRadius: BorderRadius.circular(getSize(25)),
           ),
           child: AddDemand(
-              title: R.string().commonString.addDemand,
+              title: R.string.commonString.addDemand,
               arrList: arrList,
               applyCallBack: ({String selectedDate, String diamondTitle}) {
                 callApiForAddDemand(selectedDate, diamondTitle);
@@ -499,8 +498,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               borderRadius: BorderRadius.circular(getSize(25)),
             ),
             child: SelectionDialogue(
-              title: R.string().commonString.savedSearch,
-              hintText: R.string().commonString.searchSavedSearch,
+              title: R.string.commonString.savedSearch,
+              hintText: R.string.commonString.searchSavedSearch,
               selectionOptions: saveSearchList,
               applyFilterCallBack: (
                   {SelectionPopupModel selectedItem,
@@ -544,8 +543,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 borderRadius: BorderRadius.circular(getSize(25)),
               ),
               child: SelectionDialogue(
-                hintText: R.string().commonString.searchSavedSearch,
-                title: R.string().commonString.savedSearch,
+                hintText: R.string.commonString.searchSavedSearch,
+                title: R.string.commonString.savedSearch,
                 selectionOptions: saveSearchList,
                 applyFilterCallBack: (
                     {SelectionPopupModel selectedItem,
@@ -564,7 +563,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           },
         );
       }).catchError((onError) {
-        showToast(R.string().commonString.noSavedSearch, context: context);
+        showToast(R.string.commonString.noSavedSearch, context: context);
       });
     }
   }
@@ -592,7 +591,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList)))
               getAddDemand();
             else {
-              showToast(R.string().commonString.selectAtleastOneFilter,
+              showToast(R.string.commonString.selectAtleastOneFilter,
                   context: context);
             }
             // place code
@@ -621,7 +620,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
                   isSavedSearch: true, isSearch: true);
             else
-              showToast(R.string().commonString.selectAtleastOneFilter,
+              showToast(R.string.commonString.selectAtleastOneFilter,
                   context: context);
           } else {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
@@ -632,7 +631,17 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               .getModulePermission(
                   ModulePermissionConstant.permission_matchPair)
               .view) {
-            callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR);
+            SyncManager.instance.callApiForMatchPair(
+                context, FilterRequest().createRequest(arrList),
+                (diamondListResp) {
+              Map<String, dynamic> dict = new HashMap();
+              dict["filterId"] = diamondListResp.data.filter.id;
+              dict["filters"] = FilterRequest().createRequest(arrList);
+              dict[ArgumentConstant.ModuleType] =
+                  DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR;
+              NavigationUtilities.pushRoute(DiamondListScreen.route,
+                  args: dict);
+            }, (onError) {});
           } else {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
           }
@@ -655,9 +664,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           if (isSearch) {
             if (diamondListResp.data.count == 0) {
               app.resolve<CustomDialogs>().confirmDialog(context,
-                  desc: R.string().commonString.noDiamondFound,
-                  positiveBtnTitle: R.string().commonString.ok,
-                  negativeBtnTitle: R.string().screenTitle.addDemand,
+                  desc: R.string.commonString.noDiamondFound,
+                  positiveBtnTitle: R.string.commonString.ok,
+                  negativeBtnTitle: R.string.screenTitle.addDemand,
                   onClickCallback: (buttonType) {
                 if (buttonType == ButtonType.NagativeButtonClick) {
                   if (app
@@ -669,7 +678,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                         FilterRequest().createRequest(arrList)))
                       getAddDemand();
                     else {
-                      showToast(R.string().commonString.selectAtleastOneFilter,
+                      showToast(R.string.commonString.selectAtleastOneFilter,
                           context: context);
                     }
                     // place code
@@ -787,56 +796,49 @@ class _FilterItemState extends State<FilterItem> {
     if (model.viewType == "searchText") {
       return getSearchTextField();
     } else if (model.viewType == ViewTypes.seperator) {
-      return Padding(
-        padding: EdgeInsets.only(
-            left: getSize(0),
-            right: getSize(0),
-            top: getSize(12),
-            bottom: getSize(8)),
-        child: SeperatorWidget(model),
-      );
+      return SeperatorWidget(model);
     } else if (model.viewType == ViewTypes.selection) {
       return Padding(
         padding: EdgeInsets.only(
-            left: getSize(16),
-            right: getSize(16),
-            top: getSize(12.0),
+            left: getSize(Spacing.leftPadding),
+            right: getSize(Spacing.rightPadding),
+            top: getSize(8),
             bottom: getSize(8)),
         child: SelectionWidget(model),
       );
     } else if (model.viewType == ViewTypes.fromTo) {
       return Padding(
         padding: EdgeInsets.only(
-            left: getSize(16),
-            right: getSize(16),
-            top: getSize(12.0),
+            left: getSize(Spacing.leftPadding),
+            right: getSize(Spacing.rightPadding),
+            top: getSize(8),
             bottom: getSize(8)),
         child: FromToWidget(model),
       );
     } else if (model.viewType == ViewTypes.certNo) {
       return Padding(
         padding: EdgeInsets.only(
-            left: getSize(16),
-            right: getSize(16),
-            top: getSize(12.0),
+            left: getSize(Spacing.leftPadding),
+            right: getSize(Spacing.rightPadding),
+            top: getSize(8),
             bottom: getSize(8)),
         child: CertNoWidget(model),
       );
     } else if (model.viewType == ViewTypes.keytosymbol) {
       return Padding(
         padding: EdgeInsets.only(
-            left: getSize(16),
-            right: getSize(16),
-            top: getSize(12),
+            left: getSize(Spacing.leftPadding),
+            right: getSize(Spacing.rightPadding),
+            top: getSize(8),
             bottom: getSize(8)),
         child: KeyToSymbolWidget(model),
       );
     } else if (model.viewType == ViewTypes.groupWidget) {
       return Padding(
         padding: EdgeInsets.only(
-            left: getSize(16),
-            right: getSize(16),
-            top: getSize(12),
+            left: getSize(Spacing.leftPadding),
+            right: getSize(Spacing.rightPadding),
+            top: getSize(8),
             bottom: getSize(8)),
         child: (model as ColorModel).showGroup
             ? ColorWidget(model)
@@ -845,18 +847,18 @@ class _FilterItemState extends State<FilterItem> {
     } else if (model.viewType == ViewTypes.caratRange) {
       return Padding(
         padding: EdgeInsets.only(
-            left: getSize(16),
-            right: getSize(16),
-            top: getSize(12),
+            left: getSize(Spacing.leftPadding),
+            right: getSize(Spacing.rightPadding),
+            top: getSize(8),
             bottom: getSize(8)),
         child: CaratRangeWidget(model),
       );
     } else if (model.viewType == ViewTypes.shapeWidget) {
       return Padding(
         padding: EdgeInsets.only(
-            left: getSize(16),
-            right: getSize(16),
-            top: getSize(12.0),
+            left: getSize(Spacing.leftPadding),
+            right: getSize(Spacing.rightPadding),
+            top: getSize(8),
             bottom: getSize(8)),
         child: ShapeWidget(model),
       );
@@ -873,6 +875,7 @@ class _FilterItemState extends State<FilterItem> {
     return Hero(
       tag: 'searchTextField',
       child: Material(
+        color: appTheme.whiteColor,
         child: Padding(
           padding: EdgeInsets.only(
             left: getSize(Spacing.leftPadding),
@@ -882,6 +885,7 @@ class _FilterItemState extends State<FilterItem> {
           child: Container(
             height: getSize(40),
             decoration: BoxDecoration(
+              color: appTheme.whiteColor,
               borderRadius: BorderRadius.circular(getSize(5)),
               border:
                   Border.all(color: appTheme.colorPrimary, width: getSize(1)),
@@ -921,7 +925,7 @@ class _FilterItemState extends State<FilterItem> {
                 ),
 
                 hintStyle: appTheme.grey16HintTextStyle,
-                hintText: "Search",
+                hintText: R.string.commonString.searchStoneIdCertificateNo,
                 labelStyle: TextStyle(
                   color: appTheme.textColor,
                   fontSize: getFontSize(16),

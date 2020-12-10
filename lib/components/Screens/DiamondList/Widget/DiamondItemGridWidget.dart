@@ -88,7 +88,7 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
                                       ),
                                     ),
                                     Text(
-                                      R.string().commonString.carat,
+                                      R.string.commonString.carat,
                                       style: appTheme.blue14TextStyle.copyWith(
                                         color: widget.item.isSelected
                                             ? appTheme.whiteColor

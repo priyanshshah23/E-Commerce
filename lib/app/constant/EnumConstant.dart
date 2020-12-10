@@ -1,4 +1,4 @@
-class ViewTypes {
+  class ViewTypes {
   static const String fromTo = "fromto";
   static const String selection = "selection";
   static const String dropDown = "dropDown";
@@ -74,4 +74,21 @@ class VersionUpdateApi {
   static const String splash = "2";
   static const String signInAsGuest = "3";
   static const String signInWithMpin = "4";
+}
+
+class KYCStatus{
+  static const int pending = 1;
+  static const int approved = 2;
+  static const int rejected = 3;
+
+}
+
+class Mpin {
+  static const int splash  = 1;
+  static const int myAccount = 2;
+  static const int login = 3;
+  static const int changeMpin = 4;
+  static const int resetMpin = 5;
+  static const int forgotMpin = 6;
+  static const int createMpin = 7;
 }

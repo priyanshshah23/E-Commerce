@@ -194,9 +194,10 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: appTheme.whiteColor,
         appBar: getAppBar(
           context,
-          R.string().screenTitle.quickSearch,
+          R.string.screenTitle.quickSearch,
           bgColor: appTheme.whiteColor,
           leadingButton: getDrawerButton(context, true),
           centerTitle: false,
@@ -331,7 +332,9 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
     Map<String, dynamic> request = {};
     SelectionModel model = arrData
         .singleWhere((element) => element.viewType == ViewTypes.shapeWidget);
-    request["shp"] = Master.getSelectedId(model.masters);
+    if (!isNullEmptyOrFalse(Master.getSelectedId(model.masters))) {
+      request["shp"] = Master.getSelectedId(model.masters);
+    }
 
     SelectionModel model1 = arrData
         .singleWhere((element) => element.viewType == ViewTypes.caratRange);
@@ -354,6 +357,7 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
     }
 
     request["range"] = range;
+
     return request;
   }
 
@@ -392,7 +396,7 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
       Container(
         color: appTheme.lightBGColor,
         child: Text(
-          R.string().commonString.colorGroup,
+          R.string.commonString.colorGroup,
           textAlign: TextAlign.center,
           style: appTheme.primaryColor14TextStyle,
         ),
@@ -486,20 +490,7 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
     request["shp"] = Master.getSelectedId(arrShape);
 
     request["or"] = Master.getSelectedCarat(arrCarat);
-    //request["col"] = Master.getSelectedId([color]);
     request["col"] = color.groupingIds;
-
-    /*List<String> clarityRequest = Master.getSelectedId([clarity]);
-    if (isNullEmptyOrFalse(clarity.mergeModel)) {
-      Master mergerModel = clarity.mergeModel;
-      clarityRequest.add(mergerModel.sId ?? "");
-      for (var item in mergerModel.grouped) {
-        if (!clarityRequest.contains(item.sId ?? "")) {
-          clarityRequest?.add(item.sId ?? "");
-        }
-      }
-    }
-*/
     request["clr"] = clarity.groupingIds;
     SyncManager.instance.callApiForDiamondList(
       context,
@@ -538,63 +529,6 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
     )
         .then((resp) async {
       callDiamondCount(resp.data.list);
-      /*for (var item in this.arrCount) {
-        Master color = item.cellObj;
-        List<String> colorId = List<String>();
-        if (color.groupingIds.length > 0) {
-          colorId = color.groupingIds;
-          colorId.add(color.sId);
-        } else {
-          colorId = color.grouped.map((e) => e.sId).toList();
-          colorId.add(color.sId);
-        }
-
-        for (var count in resp.data.list) {
-          //Color
-          if (colorId.contains(count.color)) {
-            List<Master> claritys = item.dataArr;
-
-            for (var clarity in claritys) {
-              if (clarity.webDisplay?.toLowerCase() == this.flCode ||
-                  clarity.webDisplay?.toLowerCase() == this.si2Code) {
-                //Merge Clarity
-                List<String> clarityId =
-                    clarity.grouped.map((e) => e.sId).toList();
-                clarityId.add(clarity.sId);
-
-                List<String> mergeClarity =
-                    clarity.mergeModel?.grouped?.map((e) => e.sId)?.toList() ??
-                        [];
-                mergeClarity.add(clarity.mergeModel?.sId);
-
-                if (clarityId.contains(count.clarity) ||
-                    mergeClarity.contains(count.clarity)) {
-                  clarity.count += count.count;
-                  // clarity.totalAmount += count.totalAmount
-                  // clarity.carat += count.carat
-                  // clarity.arrPrice.append(count.maxPrice)
-                  // clarity.arrPrice.append(count.minPrice)
-                }
-              } else {
-                //Another
-                List<String> clarityId =
-                    clarity.grouped.map((e) => e.sId).toList();
-                clarityId.add(clarity.sId);
-
-                if (clarityId.contains(count.clarity)) {
-                  clarity.count += count.count;
-                  // clarity.totalAmount += count.totalAmount
-                  // clarity.carat += count.carat
-                  // clarity.arrPrice.append(count.maxPrice)
-                  // clarity.arrPrice.append(count.minPrice)
-
-                }
-              }
-            }
-          }
-        }
-      }*/
-
       setState(() {});
     }).catchError((onError) {
       print(onError);

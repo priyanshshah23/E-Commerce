@@ -9,6 +9,7 @@ import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/app/localization/LocalizationHelper.dart';
 import 'package:diamnow/components/Screens/Auth/ForgetPassword.dart';
 import 'package:diamnow/components/Screens/Auth/Signup.dart';
 import 'package:diamnow/components/Screens/Version/VersionUpdate.dart';
@@ -40,7 +41,7 @@ class LoginScreen extends StatefulScreenWidget {
 class LoginScreenState extends StatefulScreenWidgetState {
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController userNameController = TextEditingController();
+  TextEditingController userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   var _focusUserName = FocusNode();
@@ -48,29 +49,32 @@ class LoginScreenState extends StatefulScreenWidgetState {
   var _focusPassword = FocusNode();
   bool _isPasswordValid = false;
   bool isButtonEnabled = true;
-  bool _autoValidate = false;
-  List<String> language = <String>[
-    "English",
-    "French",
-    "Chinese",
-    "Japanese",
-    "Italian",
-    "Spanish",
-    "Germany",
-    "Hebrew",
-    "Arabic",
-  ];
+  bool autoValidate = false;
+  Map<String, String> language = <String, String>{
+    "English": English.languageCode,
+    "French": French.languageCode,
+    "Chinese": Chinese.languageCode,
+    "Japanese": Japan.languageCode,
+    "Italian": Italian.languageCode,
+    "Spanish": Spanish.languageCode,
+    "Germany": Germany.languageCode,
+    // "Hebrew",
+    // "Arabic",
+  };
 
-  String selectedLanguage = R.string().commonString.language;
+  String selectedLanguage = R.string.commonString.language;
   bool isCheckBoxSelected = false;
   final LocalAuthentication auth = LocalAuthentication();
   List<BiometricType> availableBiometrics;
+  bool canCheckBiometrics = false;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     // if (kDebugMode) {
     getUserNameAndPassword();
+
     // }
   }
 
@@ -82,6 +86,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
     }
 
     availableBiometrics = await auth.getAvailableBiometrics();
+    canCheckBiometrics = await auth.canCheckBiometrics;
   }
 
   @override
@@ -100,7 +105,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
                 body: SingleChildScrollView(
                   child: Form(
                     key: _formKey,
-                    autovalidate: _autoValidate,
+                    autovalidate: autoValidate,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
@@ -116,85 +121,107 @@ class LoginScreenState extends StatefulScreenWidgetState {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      R.string().authStrings.welcome,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: appTheme.textBlackColor,
-                                        fontSize: getFontSize(24),
-                                      ),
-                                    ),
-                                    Expanded(child: SizedBox()),
-                                    PopupMenuButton<String>(
-                                      onSelected: (newValue) {
-                                        // add this property
-                                        selectedLanguage = newValue;
-                                        setState(() {});
-                                      },
-                                      itemBuilder: (context) => [
-                                        for (var item in language)
-                                          PopupMenuItem(
-                                            value: item,
-                                            height: getSize(20),
-                                            child: Container(
-                                              width: getSize(85),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: <Widget>[
-                                                  Text(
-                                                    item,
-                                                    style: appTheme
-                                                        .black14TextStyle,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          )
-                                      ],
-                                      child: Container(
-                                        width: getSize(170),
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: getSize(10),
-                                            vertical: getSize(5)),
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: appTheme.textGreyColor)),
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                                height: getSize(10),
-                                                width: getSize(10),
-                                                child:
-                                                    Image.asset(languageIcon)),
-                                            SizedBox(
-                                              width: getSize(10),
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                selectedLanguage,
-                                                style: selectedLanguage ==
-                                                        R
-                                                            .string()
-                                                            .commonString
-                                                            .language
-                                                    ? appTheme
-                                                        .grey14HintTextStyle
-                                                    : appTheme.black14TextStyle,
-                                              ),
-                                            ),
-                                            Container(
-                                                height: getSize(10),
-                                                width: getSize(10),
-                                                child: Image.asset(dropDown)),
-                                          ],
+                                    Expanded(
+                                      flex: 7,
+                                      child: Padding(
+                                        padding:
+                                            EdgeInsets.only(right: getSize(3)),
+                                        child: Text(
+                                          R.string.authStrings.welcome,
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: appTheme.textBlackColor,
+                                            fontSize: getFontSize(24),
+                                          ),
                                         ),
                                       ),
-                                      offset: Offset(25, 110),
-                                    )
+                                    ),
+                                    Expanded(
+                                      flex: 3,
+                                      child: Container(
+                                        width: getSize(120),
+                                        child: PopupMenuButton<String>(
+                                          onSelected: (newValue) {
+                                            // add this property
+                                            selectedLanguage = newValue;
+                                            LocalizationHelper.changeLocale(
+                                                language[newValue]);
+                                            app
+                                                .resolve<PrefUtils>()
+                                                .setLocalization(
+                                                    language[newValue]);
+                                            setState(() {});
+                                          },
+                                          itemBuilder: (context) => [
+                                            for (var item in language.keys)
+                                              PopupMenuItem(
+                                                value: item,
+                                                height: getSize(20),
+                                                child: Container(
+                                                  width: getSize(85),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: <Widget>[
+                                                      Text(
+                                                        item,
+                                                        style: appTheme
+                                                            .black14TextStyle,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              )
+                                          ],
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: getSize(10),
+                                                vertical: getSize(5)),
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: appTheme
+                                                        .textGreyColor)),
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                    height: getSize(10),
+                                                    width: getSize(10),
+                                                    child: Image.asset(
+                                                        languageIcon)),
+                                                SizedBox(
+                                                  width: getSize(10),
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                    selectedLanguage,
+                                                    style: selectedLanguage ==
+                                                            R
+                                                                .string
+                                                                .commonString
+                                                                .language
+                                                        ? appTheme
+                                                            .grey14HintTextStyle
+                                                        : appTheme
+                                                            .black14TextStyle,
+                                                  ),
+                                                ),
+                                                Container(
+                                                  height: getSize(10),
+                                                  width: getSize(10),
+                                                  child: Image.asset(dropDown),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          offset: Offset(25, 110),
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 Column(
@@ -202,30 +229,15 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                   children: <Widget>[
                                     Padding(
                                       padding: EdgeInsets.symmetric(
-                                          vertical: getSize(25)),
-                                      child: Stack(
-                                        children: <Widget>[
-                                          Container(
-                                            height: getSize(90),
-                                            width: getSize(90),
-                                            padding: EdgeInsets.only(),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: appTheme.colorPrimary
-                                                      .withOpacity(0.1)),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(
-                                                left: getSize(20)),
-                                            child: Image.asset(
-                                              diamond,
-                                              height: getSize(130),
-                                              width: getSize(140),
-                                            ),
-                                          )
-                                        ],
+                                          vertical: getSize(30)),
+                                      child: Image.asset(
+                                        splashLogo,
+                                        height: Platform.isAndroid
+                                            ? getSize(160)
+                                            : getSize(130),
+                                        width: Platform.isAndroid
+                                            ? getSize(160)
+                                            : getSize(140),
                                       ),
                                     ),
 //                                Padding(
@@ -246,16 +258,16 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              InkWell(
-                                                onTap: () {
-                                                  isCheckBoxSelected =
-                                                      !isCheckBoxSelected;
-                                                  setState(() {});
-                                                },
-                                                child: Container(
+                                          InkWell(
+                                            onTap: () {
+                                              isCheckBoxSelected =
+                                                  !isCheckBoxSelected;
+                                              setState(() {});
+                                            },
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Container(
                                                   decoration: BoxDecoration(
                                                       borderRadius:
                                                           BorderRadius.circular(
@@ -270,21 +282,26 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                                     width: getSize(20),
                                                   ),
                                                 ),
-                                              ),
-                                              SizedBox(
-                                                width: getSize(6),
-                                              ),
-                                              Text("Remember Me",
-                                                  style: appTheme
-                                                      .blackMedium16TitleColorblack
-                                                      .copyWith(
-                                                          fontWeight:
-                                                              FontWeight.bold))
-                                            ],
+                                                SizedBox(
+                                                  width: getSize(6),
+                                                ),
+                                                Text(
+                                                    R.string.commonString
+                                                        .rememberme,
+                                                    style: appTheme
+                                                        .blackMedium16TitleColorblack
+                                                        .copyWith(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold))
+                                              ],
+                                            ),
                                           ),
-                                          Container(
-                                            // alignment: Alignment.centerRight,
-                                            child: getForgotPassword(),
+                                          Expanded(
+                                            child: Container(
+                                              // alignment: Alignment.centerRight,
+                                              child: getForgotPassword(),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -303,27 +320,33 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                             if (_formKey.currentState
                                                 .validate()) {
                                               _formKey.currentState.save();
-                                              callLoginApi(context);
+
+                                              Map<String, dynamic> req = {};
+                                              req["username"] =
+                                                  userNameController.text;
+                                              req["password"] =
+                                                  _passwordController.text;
+                                              callLoginApi(context, req);
                                             } else {
                                               setState(() {
-                                                _autoValidate = true;
+                                                autoValidate = true;
                                               });
                                             }
                                           },
                                           borderRadius: getSize(5),
                                           fitWidth: true,
-                                          text:
-                                              R.string().authStrings.signInCap,
+                                          text: R.string.authStrings.signInCap,
                                         ),
                                       ),
                                     ),
 
                                     Padding(
                                       padding:
-                                          EdgeInsets.only(top: getSize(60)),
+                                          EdgeInsets.only(top: getSize(50)),
                                       child: Row(
                                         children: [
                                           Expanded(
+                                            flex: 6,
                                             child: Container(
                                               alignment: Alignment.center,
                                               margin: EdgeInsets.only(
@@ -342,7 +365,8 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                                     width: getSize(10),
                                                   ),
                                                   Text(
-                                                    "Touch ID",
+                                                    R.string.commonString
+                                                        .touchId,
                                                     style: appTheme
                                                         .primary16TextStyle,
                                                   )
@@ -351,10 +375,15 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                             ),
                                           ),
                                           Expanded(
+                                            flex: 4,
                                             child: InkWell(
                                               onTap: () {
-                                                NavigationUtilities.pushRoute(
-                                                    SignInWithMPINScreen.route);
+                                                // NavigationUtilities.pushRoute(
+                                                //     SignInWithMPINScreen.route,);
+                                                NavigationUtilities.push(
+                                                    SignInWithMPINScreen(
+                                                  fromMpinButton: true,
+                                                ));
                                               },
                                               child: Container(
                                                 alignment: Alignment.center,
@@ -362,24 +391,27 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                                   top: getSize(10),
                                                   left: getSize(0),
                                                 ),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    Image.asset(
-                                                      mpin,
-                                                      width: getSize(15),
-                                                      height: getSize(15),
-                                                    ),
-                                                    SizedBox(
-                                                      width: getSize(10),
-                                                    ),
-                                                    Text(
-                                                      "MPIN",
-                                                      style: appTheme
-                                                          .primary16TextStyle,
-                                                    )
-                                                  ],
+                                                child: InkWell(
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      Image.asset(
+                                                        mpin,
+                                                        width: getSize(15),
+                                                        height: getSize(15),
+                                                      ),
+                                                      SizedBox(
+                                                        width: getSize(10),
+                                                      ),
+                                                      Text(
+                                                        R.string.commonString
+                                                            .mPin,
+                                                        style: appTheme
+                                                            .primary16TextStyle,
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -429,9 +461,9 @@ class LoginScreenState extends StatefulScreenWidgetState {
                         mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          Text("Don't have an account?",
+                          Text(R.string.authStrings.dontHaveAnAccount,
                               style: appTheme.grey16HintTextStyle),
-                          Text(" " + R.string().authStrings.signUp,
+                          Text(" " + R.string.authStrings.signUp,
                               style: appTheme.darkBlue16TextStyle),
                         ],
                       ),
@@ -452,7 +484,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
             getCommonIconWidget(imageName: user, imageType: IconSizeType.small),
         //Image.asset(profileEmail,),
 
-        hintText: R.string().authStrings.name,
+        hintText: R.string.authStrings.name,
         inputController: userNameController,
         errorBorder: _isUserNameValid
             ? null
@@ -464,7 +496,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
         formatter: [],
       ),
       textCallback: (text) {
-        if (_autoValidate) {
+        if (autoValidate) {
           if (text.isEmpty) {
             setState(() {
               _isUserNameValid = false;
@@ -484,7 +516,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
         if (text.isEmpty) {
           _isUserNameValid = false;
 
-          return R.string().errorString.enterUsername;
+          return R.string.errorString.enterUsername;
         } else {
           return null;
         }
@@ -502,15 +534,15 @@ class LoginScreenState extends StatefulScreenWidgetState {
       textOption: TextFieldOption(
           prefixWid: getCommonIconWidget(
               imageName: password, imageType: IconSizeType.small),
-          hintText: R.string().authStrings.password +
-              R.string().authStrings.requiredField,
+          hintText: R.string.authStrings.password +
+              R.string.authStrings.requiredField,
           maxLine: 1,
           formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
           keyboardType: TextInputType.text,
           inputController: _passwordController,
           isSecureTextField: true),
       textCallback: (text) {
-        if (_autoValidate) {
+        if (autoValidate) {
           if (text.isEmpty) {
             setState(() {
               _isPasswordValid = false;
@@ -525,10 +557,10 @@ class LoginScreenState extends StatefulScreenWidgetState {
       validation: (text) {
         if (text.isEmpty) {
           _isPasswordValid = false;
-          return R.string().errorString.enterPassword;
+          return R.string.errorString.enterPassword;
         }
         /* else if(!validateStructure(text)) {
-          return R.string().errorString.wrongPassword;
+          return R.string.errorString.wrongPassword;
         } */
         else {
           return null;
@@ -544,8 +576,8 @@ class LoginScreenState extends StatefulScreenWidgetState {
   getForgotPassword() {
     return InkWell(
       child: Text(
-        R.string().authStrings.forgotPassword,
-        textAlign: TextAlign.left,
+        R.string.authStrings.forgotPassword,
+        textAlign: TextAlign.right,
         style: appTheme.darkBlue16TextStyle,
       ),
       onTap: () {
@@ -555,10 +587,10 @@ class LoginScreenState extends StatefulScreenWidgetState {
     );
   }
 
-  Future callLoginApi(BuildContext context) async {
-    LoginReq req = LoginReq();
-    req.username = userNameController.text;
-    req.password = _passwordController.text;
+  Future callLoginApi(BuildContext context, Map<String, dynamic> req) async {
+    // LoginReq req = LoginReq();
+    // req.username = userNameController.text;
+    // req.password = _passwordController.text;
 
     NetworkCall<LoginResp>()
         .makeCall(
@@ -566,39 +598,52 @@ class LoginScreenState extends StatefulScreenWidgetState {
             context,
             isProgress: true)
         .then((loginResp) {
-      if (!isNullEmptyOrFalse(availableBiometrics)) {
-        auth.canCheckBiometrics.then((value) {
-          if (value) {
-            app.resolve<CustomDialogs>().confirmDialog(context,
-                title: "",
-                desc: Platform.isIOS &&
-                        availableBiometrics.contains(BiometricType.face)
-                    ? R.string().commonString.enableFaceId
-                    : R.string().commonString.enableTouchId,
-                positiveBtnTitle: R.string().commonString.ok,
-                negativeBtnTitle: R.string().commonString.cancel,
-                onClickCallback: (buttonType) async {
-              if (buttonType == ButtonType.PositveButtonClick) {
-                askForBioMetrics(loginResp)();
-              } else {
-                saveUserResponse(loginResp);
-              }
-            });
-          } else {
-            saveUserResponse(loginResp);
-          }
-        });
-      } else {
-        saveUserResponse(loginResp);
-      }
+      navigateToPopUpBox(context, loginResp);
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
               context,
-              title: R.string().commonString.error,
+              title: R.string.commonString.error,
               desc: onError.message,
-              positiveBtnTitle: R.string().commonString.ok,
+              positiveBtnTitle: R.string.commonString.ok,
             );
+      }
+    });
+  }
+
+  navigateToPopUpBox(BuildContext context, LoginResp loginResp) {
+    app.resolve<CustomDialogs>().confirmDialog(context,
+        title: APPNAME,
+        desc:
+            "Do you want to enable Touch Id/MPin to unlock $APPNAME? Please choose an option to unlock app",
+        positiveBtnTitle2: !isNullEmptyOrFalse(availableBiometrics)
+            ? R.string.commonString.usertouchid
+            : null,
+        positiveBtnTitle: R.string.commonString.usempin,
+        negativeBtnTitle: R.string.commonString.btnSkip,
+        onClickCallback: (buttonType) async {
+      if (buttonType == ButtonType.PositveButtonClick) {
+        if (loginResp.data.user.isMpinAdded == false) {
+          Map<String, dynamic> arguments = {};
+          arguments["enm"] = Mpin.createMpin;
+          arguments["userName"] = loginResp.data.user.username;
+          NavigationUtilities.pushRoute(SignInWithMPINScreen.route,
+              args: arguments);
+        } else {
+          Map<String, dynamic> args = {};
+          args["askForVerifyMpin"] = true;
+          args["enm"] = Mpin.login;
+          args["userName"] = loginResp.data.user.username;
+          args["verifyPinCallback"] = () {
+            saveUserResponse(loginResp);
+            app.resolve<PrefUtils>().setMpinisUsage(true);
+          };
+          NavigationUtilities.pushRoute(SignInWithMPINScreen.route, args: args);
+        }
+      } else if (buttonType == ButtonType.PositveButtonClick2) {
+        askForBioMetrics(loginResp)();
+      } else {
+        saveUserResponse(loginResp);
       }
     });
   }
@@ -649,9 +694,11 @@ class LoginScreenState extends StatefulScreenWidgetState {
     }
 //      NavigationUtilities.pushRoute(Notifications.route);
     // callVersionUpdateApi(id: loginResp.data.user.id); //for local
+    // isMpinAdded==false mpin swith added
     SyncManager().callVersionUpdateApi(context, VersionUpdateApi.logIn,
         id: loginResp.data.user.id);
   }
+
   // void callVersionUpdateApi({String id}) {
   //   NetworkCall<VersionUpdateResp>()
   //       .makeCall(
@@ -780,9 +827,9 @@ class LoginScreenState extends StatefulScreenWidgetState {
   //   ).catchError(
   //     (onError) => {
   //       app.resolve<CustomDialogs>().confirmDialog(context,
-  //           title: R.string().errorString.versionError,
+  //           title: R.string.errorString.versionError,
   //           desc: onError.message,
-  //           positiveBtnTitle: R.string().commonString.btnTryAgain,
+  //           positiveBtnTitle: R.string.commonString.btnTryAgain,
   //           onClickCallback: (PositveButtonClick) {
   //         callVersionUpdateApi(id: id);
   //       }),

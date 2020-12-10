@@ -53,8 +53,8 @@
     "isActive": true,
     "showFromTo": true,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -279,8 +279,8 @@
     "sequence": 15,
     "isActive": false,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -649,8 +649,8 @@
     "maxValue": 100,
     "minValue": -10,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -680,8 +680,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -791,8 +791,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -822,8 +822,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -853,8 +853,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -884,8 +884,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -915,8 +915,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -946,8 +946,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -977,8 +977,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1008,8 +1008,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1039,8 +1039,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1070,8 +1070,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1101,8 +1101,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1132,8 +1132,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1163,8 +1163,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
+      "showUnderline": false,
+      "showBorder": true,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1724,7 +1724,7 @@
     "verticalScroll": true,
     "orientation": "v",
     "isShowAll": false,
-    "isShowMore": true,
+    "isShowMore": false,
     "tab": "advance",
     "sequence": 72,
     "gridViewItemCount": 3,

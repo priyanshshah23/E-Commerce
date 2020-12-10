@@ -51,11 +51,18 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
   double offSetForTab = 0.0;
   Map<int, double> mapOfInitialPixels = {};
   final _pageController = PageController(viewportFraction: 0.9);
+  Dio dio = Dio();
 
   _DiamondDeepDetailScreenState(this.arrImages, this.diamondModel);
 
   @override
   void initState() {
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    // checkWeatherUrlContainsThingsOrNot();
+
+    // });
+    // removeNotContainedImages();
+
     super.initState();
     getPrefixSum();
     getScrollControllerEventListener();
@@ -64,6 +71,28 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
     diamondConfig = DiamondConfig(moduleType);
     diamondConfig.initItems(isDetail: true);
   }
+
+  // removeNotContainedImages() {
+  //   arrImages.forEach((element) {
+  //     if(element.arr.length==0){
+  //       arrImages.remove(element);
+  //     }
+  //   });
+  // }
+
+  // checkWeatherUrlContainsThingsOrNot() {
+  //   checkUrlUsingDio(DiamondDetailImagePagerModel model) async {
+  //     await dio.get(model.url).catchError((onError) {
+  //       print("=====> ${onError}");
+  //       arrImages.remove(model);
+  //     });
+  //   }
+
+  //   arrImages.forEach((element) {
+  //     checkUrlUsingDio(element);
+  //   });
+  //   setState(() {});
+  // }
 
   //EventListener which listen scroll position, everytime when you scroll.
   getScrollControllerEventListener() {
@@ -74,7 +103,7 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
             currTab = key;
           }
         });
-         _sc.scrollTo(index: currTab, duration: Duration(milliseconds: 500));
+        _sc.scrollTo(index: currTab, duration: Duration(milliseconds: 500));
 
         setState(() {});
       });
@@ -136,7 +165,6 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
               bottom: getSize(0)),
           height: getSize(52),
           child: ScrollablePositionedList.builder(
-          
             itemScrollController: _sc,
             scrollDirection: Axis.horizontal,
             itemCount: arrImages.length,
@@ -294,10 +322,7 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
                         (BuildContext context, AsyncSnapshot<Widget> snapshot) {
                       if (snapshot.hasData) return snapshot.data;
 
-                      return Container(
-                        color: appTheme.whiteColor,
-                        child: Image.asset(splashLogo),
-                      );
+                      return Container();
                     }),
                 // !isErroWhileLoading ?Icon(Icons.title) :SizedBox(),
                 if (isLoading)
@@ -366,7 +391,7 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
           showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
               (manageClick) {
             manageBottomMenuClick(manageClick.bottomTabModel);
-          }, R.string().commonString.more, isDisplaySelection: false);
+          }, R.string.commonString.more, isDisplaySelection: false);
         } else {
           manageBottomMenuClick(obj);
         }

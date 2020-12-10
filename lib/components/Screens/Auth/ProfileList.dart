@@ -1,4 +1,3 @@
-
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/theme/app_theme.dart';
@@ -14,11 +13,10 @@ class ProfileList extends StatefulWidget {
   static const route = "ProfileList";
   bool isFromDrawer;
 
-
   ProfileList(
-      Map<String, dynamic> arguments, {
-        Key key,
-      }) : super(key: key) {
+    Map<String, dynamic> arguments, {
+    Key key,
+  }) : super(key: key) {
     if (arguments != null) {
       if (arguments[ArgumentConstant.IsFromDrawer] != null) {
         isFromDrawer = arguments[ArgumentConstant.IsFromDrawer];
@@ -27,7 +25,8 @@ class ProfileList extends StatefulWidget {
   }
 
   @override
-  _ProfileListState createState() => _ProfileListState(isFromDrawer: isFromDrawer);
+  _ProfileListState createState() =>
+      _ProfileListState(isFromDrawer: isFromDrawer);
 }
 
 class _ProfileListState extends State<ProfileList> {
@@ -36,12 +35,11 @@ class _ProfileListState extends State<ProfileList> {
   Map<int, Widget> pages;
   bool isFromDrawer = false;
 
-
   setPages() {
     pages = {
-      0: getSegment(R.string().commonString.personal, 0),
-      1: getSegment(R.string().commonString.business, 1),
-      2: getSegment(R.string().commonString.documents, 2),
+      0: getSegment(R.string.commonString.personal, 0),
+      1: getSegment(R.string.commonString.business, 1),
+      2: getSegment(R.string.commonString.documents, 2),
     };
   }
 
@@ -67,9 +65,10 @@ class _ProfileListState extends State<ProfileList> {
   Widget build(BuildContext context) {
     setPages();
     return Scaffold(
+      backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(
         context,
-        R.string().commonString.profile,
+        R.string.commonString.profile,
         bgColor: appTheme.whiteColor,
         leadingButton: isFromDrawer
             ? getDrawerButton(context, true)
@@ -78,7 +77,9 @@ class _ProfileListState extends State<ProfileList> {
       ),
       body: Column(
         children: [
-          SizedBox(height: getSize(20),),
+          SizedBox(
+            height: getSize(20),
+          ),
           SizedBox(
             width: MathUtilities.screenWidth(context),
             child: CupertinoSegmentedControl<int>(
@@ -95,9 +96,10 @@ class _ProfileListState extends State<ProfileList> {
               },
               groupValue: sharedValue,
             ),
-
           ),
-          SizedBox(height: getSize(20),),
+          SizedBox(
+            height: getSize(20),
+          ),
           Expanded(
             child: PageView.builder(
               onPageChanged: (int val) {

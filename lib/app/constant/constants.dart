@@ -1,3 +1,5 @@
+import 'package:diamnow/app/utils/math_utils.dart';
+
 const String baseURL = "http://pndevelopapi.democ.in/";
 //const String baseURL = "192.168.0.212:8094/";
 const apiV1 = "api/v1/";
@@ -8,6 +10,9 @@ const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 100;
 const SUCCESS = 1;
 const FAIL = 2;
+
+const dollar = "\u20B9";
+const rupee = "\u0024";
 
 var IMAGEFILESIZE = 10.0;
 
@@ -34,7 +39,7 @@ const successStatusCode = 200;
 const addedSuccesStatusCode = 201;
 const notFoundStatusCode = 404;
 
-const signupURl = "http://192.168.0.187:3003/device/signup";
+const signupURl = "http://pndevelop.democ.in/signup";
 const termConditionUrl = "https://loremipsum.io/";
 const privacyPolicyUrl = "https://loremipsum.io/";
 const aboutUsUrl = "https://loremipsum.io/";
@@ -52,7 +57,7 @@ const String googleDocViewURL =
 const String diamondImageURL =
     "https://s3.ap-south-1.amazonaws.com/finestargroup/RealImages/";
 
-const String ONE_SIGNAL_KEY = "ceecb2ef-c463-45d3-a9d3-5ea755a48d8b";
+const String ONE_SIGNAL_KEY = "cd966ee9-bb9a-4679-b14c-dd8f4eb36f75";
 
 const RegexForEmoji =
     r'(?:[\u2700-\u27bf]|(?:\ud83c[\udde6-\uddff]){2}|[\ud800-\udbff][\udc00-\udfff]|[\u0023-\u0039]\ufe0f?\u20e3|\u3299|\u3297|\u303d|\u3030|\u24c2|\ud83c[\udd70-\udd71]|\ud83c[\udd7e-\udd7f]|\ud83c\udd8e|\ud83c[\udd91-\udd9a]|\ud83c[\udde6-\uddff]|\ud83c[\ude01-\ude02]|\ud83c\ude1a|\ud83c\ude2f|\ud83c[\ude32-\ude3a]|\ud83c[\ude50-\ude51]|\u203c|\u2049|[\u25aa-\u25ab]|\u25b6|\u25c0|[\u25fb-\u25fe]|\u00a9|\u00ae|\u2122|\u2139|\ud83c\udc04|[\u2600-\u26FF]|\u2b05|\u2b06|\u2b07|\u2b1b|\u2b1c|\u2b50|\u2b55|\u231a|\u231b|\u2328|\u23cf|[\u23e9-\u23f3]|[\u23f8-\u23fa]|\ud83c\udccf|\u2934|\u2935|[\u2190-\u21ff])';
@@ -78,8 +83,8 @@ const num minOfferedDiscount = -5;
 const num maxOfferedDiscount = -70;
 
 class Spacing {
-  static const num leftPadding = 16.0;
-  static const num rightPadding = 16.0;
+  static num leftPadding = 16.0;
+  static num rightPadding = 16.0;
 }
 
 //Master Code
@@ -149,6 +154,8 @@ class DiamondStatus {
   static const String DIAMOND_STATUS_SHOW = "S";
   static const String DIAMOND_STATUS_BID = "B";
   static const String DIAMOND_STATUS_UPCOMING = "U";
+  static const String DIAMOND_STATUS_HOLD = "H";
+  static const String DIAMOND_STONE_OF_THE_DAY = "D";
 }
 
 class StaticPageConstant {

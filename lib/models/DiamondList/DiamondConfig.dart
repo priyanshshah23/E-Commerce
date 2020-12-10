@@ -73,17 +73,29 @@ class DiamondCalculation {
 
     totalPriceCrt = PriceUtilities.getPrice(avgPriceCrt ?? 0);
     if (isAccountTerm) {
-      totalDisc = PriceUtilities.getPercent(arrFinalValues[2] ?? 0);
-      totalAmount = PriceUtilities.getPrice(arrFinalValues[1] ?? 0);
-      totalPriceCrt = PriceUtilities.getPrice(arrFinalValues[0] ?? 0);
+      totalDisc = PriceUtilities.getPercent(
+          arrFinalValues[2].isNaN || arrFinalValues[2].isInfinite
+              ? 0
+              : arrFinalValues[2] ?? 0);
+      totalAmount = PriceUtilities.getPrice(
+          arrFinalValues[1].isNaN || arrFinalValues[1].isInfinite
+              ? 0
+              : arrFinalValues[1] ?? 0);
+      totalPriceCrt = PriceUtilities.getPrice(
+          arrFinalValues[0].isNaN || arrFinalValues[0].isInfinite
+              ? 0
+              : arrFinalValues[0] ?? 0);
     } else {
       avgDisc = (1 - (avgPriceCrt / avgRapCrt)) * (-100);
-      totalDisc = PriceUtilities.getPercent(avgDisc ?? 0);
+      totalDisc = PriceUtilities.getPercent(
+          avgDisc.isNaN || avgDisc.isInfinite ? 0 : avgDisc ?? 0);
       avgAmount = arrValues[1];
-      totalAmount = PriceUtilities.getPrice(avgAmount ?? 0);
+      totalAmount = PriceUtilities.getPrice(
+          avgAmount.isNaN || avgAmount.isInfinite ? 0 : avgAmount ?? 0);
     }
 
-    totalCarat = PriceUtilities.getDoubleValue(carat ?? 0);
+    totalCarat = PriceUtilities.getDoubleValue(
+        carat.isNaN || carat.isInfinite ? 0 : carat ?? 0);
     pcs = filterList.length.toString();
   }
 }
@@ -115,66 +127,66 @@ class DiamondConfig {
   String getScreenTitle() {
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_MY_CART:
-        return R.string().screenTitle.myCart;
+        return R.string.screenTitle.myCart;
       case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
-        return R.string().screenTitle.myWatchlist;
+        return R.string.screenTitle.myWatchlist;
       case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
-        return R.string().screenTitle.myOffer;
+        return R.string.screenTitle.myOffer;
       case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
-        return R.string().screenTitle.myEnquiry;
+        return R.string.screenTitle.myEnquiry;
       case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
-        return R.string().screenTitle.myReminder;
+        return R.string.screenTitle.myReminder;
       case DiamondModuleConstant.MODULE_TYPE_MY_BID:
-        return R.string().screenTitle.myBid;
+        return R.string.screenTitle.myBid;
       case DiamondModuleConstant.MODULE_TYPE_MY_HOLD:
-        return R.string().screenTitle.myHold;
+        return R.string.screenTitle.myHold;
       case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
-        return R.string().screenTitle.myOrder;
+        return R.string.screenTitle.myOrder;
       case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
-        return R.string().screenTitle.myOffice;
+        return R.string.screenTitle.myOffice;
       case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
-        return R.string().screenTitle.myOffer;
+        return R.string.screenTitle.myOffer;
       case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
-        return R.string().screenTitle.myComment;
+        return R.string.screenTitle.myComment;
       case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
-        return R.string().screenTitle.myPurchased;
+        return R.string.screenTitle.myPurchased;
       case DiamondModuleConstant.MODULE_TYPE_HOME:
-        return R.string().screenTitle.home;
+        return R.string.screenTitle.home;
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
-        return R.string().screenTitle.diamondOnAuction;
+        return R.string.screenTitle.diamondOnAuction;
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
-        return R.string().screenTitle.newArrival;
+        return R.string.screenTitle.newArrival;
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
-        return R.string().screenTitle.exclusiveDiamonds;
+        return R.string.screenTitle.exclusiveDiamonds;
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
-        return R.string().screenTitle.upcoming;
+        return R.string.screenTitle.upcoming;
       case DiamondModuleConstant.MODULE_TYPE_PROFILE:
-        return R.string().screenTitle.myProfile;
+        return R.string.screenTitle.myProfile;
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
-        return R.string().screenTitle.stoneOfDay;
+        return R.string.screenTitle.stoneOfDay;
       default:
-        return R.string().screenTitle.searchDiamond;
+        return R.string.screenTitle.searchDiamond;
     }
   }
 
   String getActionScreenTitle(int actionType) {
     switch (actionType) {
       case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
-        return R.string().screenTitle.addToWatchList;
+        return R.string.screenTitle.addToWatchList;
       case DiamondTrackConstant.TRACK_TYPE_CART:
-        return R.string().screenTitle.addToCart;
+        return R.string.screenTitle.addToCart;
       case DiamondTrackConstant.TRACK_TYPE_OFFER:
-        return R.string().screenTitle.placeAnOffer;
+        return R.string.screenTitle.placeAnOffer;
       case DiamondTrackConstant.TRACK_TYPE_BID:
-        return R.string().screenTitle.bidStone;
+        return R.string.screenTitle.bidStone;
       case DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER:
-        return R.string().screenTitle.confirmStone;
+        return R.string.screenTitle.confirmStone;
       case DiamondTrackConstant.TRACK_TYPE_FINAL_CALCULATION:
-        return R.string().screenTitle.finalCalculation;
+        return R.string.screenTitle.finalCalculation;
       case DiamondTrackConstant.TRACK_TYPE_OFFICE:
-        return R.string().screenTitle.bookOffice;
+        return R.string.screenTitle.bookOffice;
       default:
-        return R.string().screenTitle.addToWatchList;
+        return R.string.screenTitle.addToWatchList;
     }
   }
 
@@ -190,6 +202,7 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
       case DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
+      case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
         return app
             .resolve<ServiceModule>()
             .networkService()
@@ -225,11 +238,11 @@ class DiamondConfig {
             .networkService()
             .diamondOfficeList(dict);
 
-      case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
-        return app
-            .resolve<ServiceModule>()
-            .networkService()
-            .stoneOfTheDay(dict);
+      // case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
+      //   return app
+      //       .resolve<ServiceModule>()
+      //       .networkService()
+      //       .stoneOfTheDay(dict);
     }
   }
 
@@ -311,12 +324,18 @@ class DiamondConfig {
                 sequence: 2,
                 isCenter: true));
           }
-          list.add(BottomTabModel(
-              title: "",
-              image: download,
-              code: BottomCodeConstant.TBDownloadView,
-              sequence: 3,
-              isCenter: true));
+          if (app
+                  .resolve<PrefUtils>()
+                  .getModulePermission(getPermissionFromModuleType(moduleType))
+                  .downloadExcel ==
+              true) {
+            list.add(BottomTabModel(
+                title: "",
+                image: download,
+                code: BottomCodeConstant.TBDownloadView,
+                sequence: 3,
+                isCenter: true));
+          }
         }
         break;
     }
@@ -375,8 +394,8 @@ class DiamondConfig {
           app.resolve<CustomDialogs>().confirmDialog(
                 context,
                 title: "",
-                desc: R.string().commonString.enter2Stone,
-                positiveBtnTitle: R.string().commonString.ok,
+                desc: R.string.commonString.enter2Stone,
+                positiveBtnTitle: R.string.commonString.ok,
               );
           return;
         }
@@ -397,7 +416,7 @@ class DiamondConfig {
 
   actionAddToCart(BuildContext context, List<DiamondModel> list) {
     callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,
-        isPop: false, title: R.string().screenTitle.addedInCart);
+        isPop: false, title: R.string.screenTitle.addedInCart);
     // List<DiamondModel> selectedList = [];
     // DiamondModel model;
     // list.forEach((element) {
@@ -425,9 +444,9 @@ class DiamondConfig {
       Function refreshList) {
     app.resolve<CustomDialogs>().confirmDialog(context,
         title: "",
-        desc: R.string().errorString.deleteStoneMsg,
-        positiveBtnTitle: R.string().commonString.yes,
-        negativeBtnTitle: R.string().commonString.no,
+        desc: R.string.errorString.deleteStoneMsg,
+        positiveBtnTitle: R.string.commonString.yes,
+        negativeBtnTitle: R.string.commonString.no,
         onClickCallback: (PositveButtonClick) {
       if (PositveButtonClick == ButtonType.PositveButtonClick) {
         callApiForDeleteTrack(context, list, moduleType, refreshList);
@@ -494,9 +513,20 @@ class DiamondConfig {
       selectedList.add(model);
     });
 
-    openDiamondActionAcreen(
-        context, DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER, selectedList,
-        placeOrder: placeOrder);
+    var filter = list
+        .where((element) =>
+            element.wSts == DiamondStatus.DIAMOND_STATUS_HOLD ||
+            element.wSts == DiamondStatus.DIAMOND_STATUS_ON_MINE)
+        .toList();
+    if (isNullEmptyOrFalse(filter)) {
+      openDiamondActionAcreen(
+          context, DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER, selectedList,
+          placeOrder: placeOrder);
+    } else {
+      showToast(R.string.commonString.holdMemoStatusDiamondorder,
+          context: context);
+    }
+
     /*showPlaceOrderDialog(context, (manageClick) {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
         callApiFoPlaceOrder(context, list, placeOrder,
@@ -546,12 +576,12 @@ class DiamondConfig {
       case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
         callApiFoCreateTrack(
             context, list, DiamondTrackConstant.TRACK_TYPE_WATCH_LIST,
-            isPop: true, title: R.string().screenTitle.addedInWatchList);
+            isPop: true, title: R.string.screenTitle.addedInWatchList);
         break;
       case DiamondTrackConstant.TRACK_TYPE_CART:
         callApiFoCreateTrack(
             context, list, DiamondTrackConstant.TRACK_TYPE_CART,
-            isPop: true, title: R.string().screenTitle.addedInCart);
+            isPop: true, title: R.string.screenTitle.addedInCart);
         break;
       case DiamondTrackConstant.TRACK_TYPE_OFFER:
         callApiFoCreateTrack(
@@ -559,11 +589,11 @@ class DiamondConfig {
             remark: remark,
             isPop: true,
             date: date,
-            title: R.string().screenTitle.addedInOffer);
+            title: R.string.screenTitle.addedInOffer);
         break;
       case DiamondTrackConstant.TRACK_TYPE_BID:
         callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_BID,
-            isPop: true, title: R.string().screenTitle.addedInBid);
+            isPop: true, title: R.string.screenTitle.addedInBid);
         break;
       case DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER:
         callApiFoPlaceOrder(context, list, () {
@@ -582,12 +612,12 @@ class DiamondConfig {
       selectedList.add(model);
     });
     app.resolve<CustomDialogs>().confirmDialog(context,
-        title: R.string().screenTitle.declaimer,
-        desc: R.string().commonString.packetNo +
+        title: R.string.screenTitle.declaimer,
+        desc: R.string.commonString.packetNo +
             list.map((item) => item.vStnId).toList().join(', ') +
-            R.string().commonString.bidDesc,
-        negativeBtnTitle: R.string().commonString.quit,
-        positiveBtnTitle: R.string().commonString.agree,
+            R.string.commonString.bidDesc,
+        negativeBtnTitle: R.string.commonString.quit,
+        positiveBtnTitle: R.string.commonString.agree,
         onClickCallback: (buttonType) {
       if (buttonType == ButtonType.PositveButtonClick) {
         openDiamondActionAcreen(
@@ -668,12 +698,12 @@ class DiamondConfig {
             child: SelectionDialogue(
               isSearchEnable: false,
               title: isForShare
-                  ? R.string().commonString.share
-                  : R.string().commonString.download,
+                  ? R.string.commonString.share
+                  : R.string.commonString.download,
               isMultiSelectionEnable: true,
               positiveButtonTitle: isForShare
-                  ? R.string().commonString.share
-                  : R.string().commonString.download,
+                  ? R.string.commonString.share
+                  : R.string.commonString.download,
               selectionOptions: downloadOptionList,
               applyFilterCallBack: (
                   {SelectionPopupModel selectedItem,
@@ -709,7 +739,7 @@ class DiamondConfig {
               },
             ),
 //          child: DownLoadAndShareDialogue(
-//            title: R.string().commonString.download,
+//            title: R.string.commonString.download,
 //          ),
           ),
         );
@@ -723,97 +753,50 @@ class DiamondConfig {
 
     for (int i = 0; i < list.length; i++) {
       DiamondModel model = list[i];
+      String diamondDetailUrl = ApiConstants.shareUrl + model.id;
+      links.add(diamondDetailUrl);
 
-      selectedOptions.forEach((element) {
-        if (element.fileType == DownloadAndShareDialogueConstant.realImage1 &&
-            element.isSelected) {
-          element.url = DiamondUrls.image + model.mfgStnId + "/" + "still.jpg";
-        } else if (element.fileType ==
-                DownloadAndShareDialogueConstant.arrowImg &&
-            element.isSelected) {
-          element.url =
-              DiamondUrls.arroImage + model.mfgStnId + "/" + "Arrow_Black_BG.jpg";
-        } else if (element.fileType ==
-                DownloadAndShareDialogueConstant.assetScopeImg &&
-            element.isSelected) {
-          element.url = DiamondUrls.image +
-              model.mfgStnId +
-              "/" +
-              "Office_Light_Black_BG.jpg";
-        }
-        // else if (element.fileType ==
-        //         DownloadAndShareDialogueConstant.plottingImg &&
-        //     model.pltFile) {
-        //   element.url = DiamondUrls.plotting + model.rptNo + ".jpg";
-        // }
-        else if (element.fileType ==
-                DownloadAndShareDialogueConstant.heartAndArrowImg &&
-            element.isSelected) {
-          element.url = DiamondUrls.heartImage +
-              model.mfgStnId +
-              "/" +
-              "Heart_Black_BG.jpg";
-        }
-        // else if (element.fileType ==
-        //         DownloadAndShareDialogueConstant.flouresenceImg &&
-        //     model.img) {
-        //   element.url = DiamondUrls.flouresenceImg + model.vStnId + ".jpg";
-        // } else if (element.fileType ==
-        //         DownloadAndShareDialogueConstant.idealScopeImg &&
-        //     model.img) {
-        //   element.url = DiamondUrls.idealScopeImg + model.vStnId + ".jpg";
-        // } else if (element.fileType ==
-        //         DownloadAndShareDialogueConstant.darkFieldImg &&
-        //     model.img) {
-        //   element.url = DiamondUrls.darkFieldImg + model.vStnId + ".jpg";
-        // } else if (element.fileType ==
-        //         DownloadAndShareDialogueConstant.faceUpImg &&
-        //     model.img) {
-        //   element.url = DiamondUrls.faceUpImg + model.vStnId + ".jpg";
-        // } else if (element.fileType ==
-        //         DownloadAndShareDialogueConstant.realImage2 &&
-        //     model.img) {
-        //   element.url = DiamondUrls.realImg2 + model.vStnId + ".jpg";
-        // }
-        else if (element.fileType == DownloadAndShareDialogueConstant.video1 &&
-            element.isSelected) {
-          element.url =
-              DiamondUrls.video + model.mfgStnId + "/" + model.mfgStnId + ".html";
-        }
-        //  else if (element.fileType ==
-        //         DownloadAndShareDialogueConstant.video2 &&
-        //     model.polVdo) {
-        //   element.url = DiamondUrls.polVideo + model.vStnId + ".mp4";
-        // }
-        else if (element.fileType ==
-                DownloadAndShareDialogueConstant.certificate &&
-            element.isSelected) {
-          element.url = DiamondUrls.certificate + model.rptNo + ".pdf";
-        }
-        // else if (element.fileType ==
-        //         DownloadAndShareDialogueConstant.typeIIA &&
-        //     model.certFile) {
-        //   element.url = DiamondUrls.type2A + model.rptNo + ".pdf";
-        // } else if (element.fileType ==
-        //         DownloadAndShareDialogueConstant.roughScope &&
-        //     model.img) {
-        //   element.url = DiamondUrls.roughScopeImg + model.vStnId + ".jpg";
-        // } else if (element.fileType == DownloadAndShareDialogueConstant.img3D &&
-        //     model.img) {
-        //   element.url = DiamondUrls.image3D + model.vStnId + ".png";
-        // } else if (element.fileType ==
-        //         DownloadAndShareDialogueConstant.roughVideo &&
-        //     model.roughVdo) {
-        //   element.url = DiamondUrls.roughVideo + model.vStnId + ".html";
-        // }
-      });
+      // selectedOptions.forEach((element) {
+      //   if (element.fileType == DownloadAndShareDialogueConstant.realImage1 &&
+      //       element.isSelected) {
+      //     element.url = DiamondUrls.image + model.vStnId + "/" + "still.jpg";
+      //   } else if (element.fileType ==
+      //           DownloadAndShareDialogueConstant.arrowImg &&
+      //       element.isSelected) {
+      //     element.url =
+      //         DiamondUrls.arroImage + model.vStnId + "/" + "Arrow_Black_BG.jpg";
+      //   } else if (element.fileType ==
+      //           DownloadAndShareDialogueConstant.assetScopeImg &&
+      //       element.isSelected) {
+      //     element.url = DiamondUrls.image +
+      //         model.vStnId +
+      //         "/" +
+      //         "Office_Light_Black_BG.jpg";
+      //   } else if (element.fileType ==
+      //           DownloadAndShareDialogueConstant.heartAndArrowImg &&
+      //       element.isSelected) {
+      //     element.url = DiamondUrls.heartImage +
+      //         model.vStnId +
+      //         "/" +
+      //         "Heart_Black_BG.jpg";
+      //   } else if (element.fileType ==
+      //           DownloadAndShareDialogueConstant.video1 &&
+      //       element.isSelected) {
+      //     element.url =
+      //         DiamondUrls.video + model.vStnId + "/" + model.vStnId + ".html";
+      //   } else if (element.fileType ==
+      //           DownloadAndShareDialogueConstant.certificate &&
+      //       element.isSelected) {
+      //     element.url = DiamondUrls.certificate + model.rptNo + ".pdf";
+      //   }
+      // });
 
-      selectedOptions.forEach((element) {
-        if (element.isSelected &&
-            element.fileType != DownloadAndShareDialogueConstant.excel) {
-          links.add(element.url);
-        }
-      });
+      // selectedOptions.forEach((element) {
+      //   if (element.isSelected &&
+      //       element.fileType != DownloadAndShareDialogueConstant.excel) {
+      //     links.add(element.url);
+      //   }
+      // });
     }
 
     var filter = selectedOptions
@@ -827,14 +810,8 @@ class DiamondConfig {
       SyncManager syncManager = SyncManager();
       syncManager.callApiForExcel(context, list, isForShare: isForShare,
           callback: (url) async {
+        links.add("\nExcelFile :- ");
         links.add(url);
-
-        // await Share.share(
-        //   "$APPNAME : Diamond Details\n\n"
-        //   "${links.toString().substring(1, links.toString().length - 1).replaceAll(",", "\n\n")}", //------------------------------------------------------------------------------------------------------------------
-        //   subject: "DiamNow",
-        //   sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
-        // );
         shareURls(links);
       });
     }
@@ -848,7 +825,7 @@ class DiamondConfig {
       urls.add(links[i]);
     }
 
-    String strUrlToShare = "Pn Shah\nDiamond Details\n\n" + urls.join(",\n");
+    String strUrlToShare = "\nDiamond Details\n\n" + urls.join("\n\n");
 
     if (!isNullEmptyOrFalse(strUrlToShare)) {
       await Share.share(
@@ -871,7 +848,7 @@ class DiamondConfig {
             borderRadius: BorderRadius.circular(getSize(25)),
           ),
           child: DownLoadAndShareDialogue(
-            title: R.string().commonString.share,
+            title: R.string.commonString.share,
             diamondList: list,
           ),
         );
@@ -959,7 +936,7 @@ class DiamondConfig {
         app.resolve<CustomDialogs>().confirmDialog(context,
             title: title,
             desc: resp.message,
-            positiveBtnTitle: R.string().commonString.ok,
+            positiveBtnTitle: R.string.commonString.ok,
             negativeBtnTitle: getNegativeButtonTitle(trackType),
             onClickCallback: (type) {
           if (type == ButtonType.NagativeButtonClick) {
@@ -973,7 +950,7 @@ class DiamondConfig {
                 context,
                 title: "",
                 desc: onError.message,
-                positiveBtnTitle: R.string().commonString.ok,
+                positiveBtnTitle: R.string.commonString.ok,
               );
         }
       },
@@ -983,22 +960,22 @@ class DiamondConfig {
   String getNegativeButtonTitle(int trackType) {
     switch (trackType) {
       case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
-        return R.string().commonString.goToMyWatchList;
+        return R.string.commonString.goToMyWatchList;
 
       case DiamondTrackConstant.TRACK_TYPE_COMMENT:
-        return R.string().commonString.gotToMyComments;
+        return R.string.commonString.gotToMyComments;
       case DiamondTrackConstant.TRACK_TYPE_ENQUIRY:
-        return R.string().commonString.gotToMyEnquiry;
+        return R.string.commonString.gotToMyEnquiry;
       case DiamondTrackConstant.TRACK_TYPE_OFFER:
-        return R.string().commonString.gotToMyOffer;
+        return R.string.commonString.gotToMyOffer;
       case DiamondTrackConstant.TRACK_TYPE_BID:
-        return R.string().commonString.gotToMyBid;
+        return R.string.commonString.gotToMyBid;
 
       case DiamondTrackConstant.TRACK_TYPE_REMINDER:
-        return R.string().commonString.gotToMyReminder;
+        return R.string.commonString.gotToMyReminder;
 
       case DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER:
-        return R.string().commonString.goToMyOrder;
+        return R.string.commonString.goToMyOrder;
       default:
         return null;
     }
@@ -1100,7 +1077,7 @@ class DiamondConfig {
       req,
       (resp) {
         app.resolve<CustomDialogs>().errorDialog(context, "", resp.message,
-            btntitle: R.string().commonString.ok,
+            btntitle: R.string.commonString.ok,
             dismissPopup: false, voidCallBack: () {
           Navigator.pop(context);
           refreshList();
@@ -1112,7 +1089,7 @@ class DiamondConfig {
                 context,
                 "",
                 onError.message,
-                btntitle: R.string().commonString.ok,
+                btntitle: R.string.commonString.ok,
               );
         }
       },
@@ -1153,7 +1130,7 @@ class DiamondConfig {
             barrierDismissible: true,
             title: "",
             desc: resp.message,
-            positiveBtnTitle: R.string().commonString.ok,
+            positiveBtnTitle: R.string.commonString.ok,
             onClickCallback: (buttonType) {
           if (buttonType == ButtonType.PositveButtonClick) {
             placeOrder();
@@ -1167,7 +1144,7 @@ class DiamondConfig {
                 barrierDismissible: true,
                 title: "",
                 desc: onError.message,
-                positiveBtnTitle: R.string().commonString.ok,
+                positiveBtnTitle: R.string.commonString.ok,
               );
         }
       },
@@ -1435,7 +1412,7 @@ openSharePopUp(BuildContext context) {
         "876654878\n"
         "Invite code : 655765757"
         "App link : $link", //------------------------------------------------------------------------------------------------------------------
-        subject: R.string().screenTitle.share,
+        subject: R.string.screenTitle.share,
         sharePositionOrigin:
             Rect.fromCenter(center: Offset.zero, width: 100, height: 100));
   }
@@ -1452,7 +1429,7 @@ openSharePopUp(BuildContext context) {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      R.string().screenTitle.shareStone,
+                      R.string.screenTitle.shareStone,
                       style: appTheme.black16TextStyle,
                     ),
                     ListView.builder(
@@ -1508,7 +1485,7 @@ openSharePopUp(BuildContext context) {
                                 borderRadius: BorderRadius.circular(getSize(5)),
                               ),
                               child: Text(
-                                R.string().commonString.cancel,
+                                R.string.commonString.cancel,
                                 textAlign: TextAlign.center,
                                 style: appTheme.blue14TextStyle
                                     .copyWith(fontSize: getFontSize(16)),
@@ -1533,7 +1510,7 @@ openSharePopUp(BuildContext context) {
                                       BorderRadius.circular(getSize(5)),
                                   boxShadow: getBoxShadow(context)),
                               child: Text(
-                                R.string().screenTitle.share,
+                                R.string.screenTitle.share,
                                 textAlign: TextAlign.center,
                                 style: appTheme.white16TextStyle,
                               ),
@@ -1554,20 +1531,19 @@ openSharePopUp(BuildContext context) {
 openAddReminder(BuildContext context, ActionClick actionClick) {
   DateUtilities dateUtilities = DateUtilities();
   List<StoneModel> reminderList = [
-    StoneModel(
-        ReminderType.ReminderTypeToday, R.string().commonString.laterToday,
+    StoneModel(ReminderType.ReminderTypeToday, R.string.commonString.laterToday,
         subtitle: "6:00 pm", image: sunrise),
     StoneModel(
-        ReminderType.ReminderTypeTomorrow, R.string().commonString.toMorrow,
+        ReminderType.ReminderTypeTomorrow, R.string.commonString.toMorrow,
         subtitle: " ${dateUtilities.getTomorrowDay(DateTime.now())} 8:00 am",
         image: sun),
     StoneModel(
-        ReminderType.ReminderTypeNextWeek, R.string().commonString.nextWeek,
+        ReminderType.ReminderTypeNextWeek, R.string.commonString.nextWeek,
         subtitle: "${dateUtilities.getNextWeekDay(DateTime.now())} 8:00 am",
         image: calender_week),
     StoneModel(
-        ReminderType.ReminderTypeCustom, R.string().commonString.chooseAnother,
-        subtitle: R.string().commonString.dateTime, image: calender),
+        ReminderType.ReminderTypeCustom, R.string.commonString.chooseAnother,
+        subtitle: R.string.commonString.dateTime, image: calender),
   ];
   return showDialog(
     context: context,
@@ -1588,7 +1564,7 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    R.string().screenTitle.addRemider,
+                    R.string.screenTitle.addRemider,
                     style: appTheme.black18TextStyle,
                   ),
                   SizedBox(height: getSize(20)),
@@ -1691,7 +1667,7 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
                                 borderRadius: BorderRadius.circular(getSize(5)),
                               ),
                               child: Text(
-                                R.string().commonString.cancel,
+                                R.string.commonString.cancel,
                                 textAlign: TextAlign.center,
                                 style: appTheme.blue14TextStyle
                                     .copyWith(fontSize: getFontSize(16)),
@@ -1765,7 +1741,7 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
                                       BorderRadius.circular(getSize(5)),
                                   boxShadow: getBoxShadow(context)),
                               child: Text(
-                                R.string().commonString.btnSubmit,
+                                R.string.commonString.btnSubmit,
                                 textAlign: TextAlign.center,
                                 style: appTheme.white16TextStyle,
                               ),
@@ -1800,4 +1776,33 @@ class StoneModel {
     this.image = "",
     this.isSelected = false,
   });
+}
+
+String getPermissionFromModuleType(int moduleType) {
+  switch (moduleType) {
+    case DiamondModuleConstant.MODULE_TYPE_SEARCH:
+      return ModulePermissionConstant.permission_searchDiamond;
+    case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
+      return ModulePermissionConstant.permission_newGoods;
+    case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
+      return ModulePermissionConstant.permission_upcomingDiamonds;
+    case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
+      return ModulePermissionConstant.permission_stone_of_the_day;
+    case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
+      return ModulePermissionConstant.permission_watchlist;
+    case DiamondModuleConstant.MODULE_TYPE_MY_CART:
+      return ModulePermissionConstant.permission_cart;
+    case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
+      return ModulePermissionConstant.permission_enquiry;
+    case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
+      return ModulePermissionConstant.permission_comment;
+    case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
+      return ModulePermissionConstant.permission_reminder;
+    case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
+      return ModulePermissionConstant.permission_order;
+    case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
+      return ModulePermissionConstant.permission_purchase;
+    default:
+      return ModulePermissionConstant.permission_searchDiamond;
+  }
 }

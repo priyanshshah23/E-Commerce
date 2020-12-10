@@ -213,7 +213,7 @@ class _SelectionDialogueState extends State<SelectionDialogue> {
                                     child: Text(
                                       negativeButtonTitle != null
                                           ? negativeButtonTitle
-                                          : R.string().commonString.cancel,
+                                          : R.string.commonString.cancel,
                                       textAlign: TextAlign.center,
                                       style: appTheme.blue14TextStyle
                                           .copyWith(fontSize: getFontSize(16)),
@@ -252,7 +252,7 @@ class _SelectionDialogueState extends State<SelectionDialogue> {
                                     child: Text(
                                       positiveButtonTitle != null
                                           ? positiveButtonTitle
-                                          : R.string().commonString.btnSubmit,
+                                          : R.string.commonString.btnSubmit,
                                       textAlign: TextAlign.center,
                                       style: appTheme.white16TextStyle,
                                     ),

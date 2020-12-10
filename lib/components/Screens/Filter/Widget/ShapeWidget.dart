@@ -46,7 +46,8 @@ class _ShapeWidgetState extends State<ShapeWidget> {
       }
     }
 
-    if (widget.selectionModel.isShowMore && widget.selectionModel.isShowMoreHorizontal == false) {
+    if (widget.selectionModel.isShowMore &&
+        widget.selectionModel.isShowMoreHorizontal == false) {
       if (widget.selectionModel.orientation == DisplayTypes.vertical) {
         if (widget.selectionModel.masters
                 .where((element) => element.sId == showMoreId)
@@ -56,8 +57,8 @@ class _ShapeWidgetState extends State<ShapeWidget> {
           Master allMaster = Master();
           allMaster.sId = showMoreId;
           allMaster.webDisplay = widget.selectionModel.isShowMoreSelected
-              ? R.string().commonString.showMore
-              : R.string().commonString.showLess;
+              ? R.string.commonString.showMore
+              : R.string.commonString.showLess;
           allMaster.isSelected = false;
 
           widget.selectionModel.masters
@@ -97,7 +98,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                     padding: EdgeInsets.all(getSize(2)),
                     crossAxisSpacing: 8,
                     mainAxisSpacing: 8,
-                    crossAxisCount: 4,
+                    crossAxisCount: isPad() ? 6 : 4,
                     children: List.generate(
                       getGridViewLength(widget.selectionModel),
                       (index) {
@@ -133,7 +134,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                               setState(() {});
                             },
                             child: ShapeItemWidget(
-                              txt: R.string().commonString.all,
+                              txt: R.string.commonString.all,
                               obj: obj,
                               selectionModel: widget.selectionModel,
                               showMoreId: this.showMoreId,
@@ -144,14 +145,14 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                             widget.selectionModel.isShowMore &&
                             index == totalIndex - 1 &&
                             !widget.selectionModel.isShowMoreHorizontal) {
-                          obj.webDisplay = R.string().commonString.showLess;
+                          obj.webDisplay = R.string.commonString.showLess;
                           return InkWell(
                             onTap: () {
                               widget.selectionModel.isShowMoreSelected = true;
                               setState(() {});
                             },
                             child: ShapeItemWidget(
-                              txt: R.string().commonString.showLess,
+                              txt: R.string.commonString.showLess,
                               obj: obj,
                               selectionModel: widget.selectionModel,
                               showMoreId: this.showMoreId,
@@ -162,14 +163,14 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                             widget.selectionModel.isShowMore &&
                             index == totalIndex - 1 &&
                             !widget.selectionModel.isShowMoreHorizontal) {
-                          obj.webDisplay = R.string().commonString.showMore;
+                          obj.webDisplay = R.string.commonString.showMore;
                           return InkWell(
                             onTap: () {
                               widget.selectionModel.isShowMoreSelected = false;
                               setState(() {});
                             },
                             child: ShapeItemWidget(
-                              txt: R.string().commonString.showMore,
+                              txt: R.string.commonString.showMore,
                               obj: obj,
                               selectionModel: widget.selectionModel,
                               showMoreId: this.showMoreId,
@@ -244,7 +245,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                R.string().commonString.seeMore,
+                                R.string.commonString.seeMore,
                                 style: appTheme.black14TextStyle,
                               ),
                               Padding(
@@ -277,7 +278,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                R.string().commonString.seeLess,
+                                R.string.commonString.seeLess,
                                 style: appTheme.black14TextStyle,
                               ),
                               Padding(

@@ -2,6 +2,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/ImageConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/Home/DrawerModel.dart';
+import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
@@ -15,7 +16,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: home,
-        title: R.string().screenTitle.home,
+        title: R.string.screenTitle.home,
         isSelected: true,
         type: DiamondModuleConstant.MODULE_TYPE_HOME,
       ));
@@ -25,7 +26,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: drawerSearch,
-        title: R.string().screenTitle.search,
+        title: R.string.screenTitle.search,
         isSelected: true,
         type: DiamondModuleConstant.MODULE_TYPE_SEARCH,
       ));
@@ -35,7 +36,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: quickSearch,
-        title: R.string().screenTitle.quickSearch,
+        title: R.string.screenTitle.quickSearch,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH,
       ));
@@ -45,7 +46,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: newArrival,
-        title: R.string().screenTitle.newArrival,
+        title: R.string.screenTitle.newArrival,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL,
         isShowCount: false,
@@ -58,7 +59,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: exclusiveDiamonds,
-        title: R.string().screenTitle.exclusiveDiamonds,
+        title: R.string.screenTitle.exclusiveDiamonds,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND,
         isShowCount: true,
@@ -71,7 +72,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: diamondOnAuction,
-        title: R.string().screenTitle.diamondOnAuction,
+        title: R.string.screenTitle.diamondOnAuction,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION,
         isShowCount: true,
@@ -85,7 +86,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: quickSearch,
-        title: R.string().screenTitle.upcoming,
+        title: R.string.screenTitle.upcoming,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_UPCOMING,
       ));
@@ -96,7 +97,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: stoneOfTheDay,
-        title: R.string().screenTitle.stoneOfTheDays,
+        title: R.string.screenTitle.stoneOfTheDays,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY,
         isShowCount: false,
@@ -109,7 +110,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: mySavedSearch,
-        title: R.string().screenTitle.mySavedSearch,
+        title: R.string.screenTitle.mySavedSearch,
         isSelected: false,
         isShowDivider: false,
         isShowUpperDivider: true,
@@ -117,7 +118,7 @@ class DrawerSetting {
       ));
     drawerList.add(DrawerModel(
       image: userTheme,
-      title: R.string().screenTitle.myAccount,
+      title: R.string.screenTitle.myAccount,
       isSelected: false,
       isShowDivider: true,
       isShowUpperDivider: false,
@@ -129,50 +130,50 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: recentSearch,
-        title: R.string().screenTitle.recentSearch,
+        title: R.string.screenTitle.recentSearch,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH,
         isShowDivider: true,
       ));*/
     drawerList.add(DrawerModel(
       image: termsAndCondition,
-      title: R.string().screenTitle.termsAndCondition,
+      title: R.string.screenTitle.termsAndCondition,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION,
     ));
     drawerList.add(DrawerModel(
       image: privacyPolicy,
-      title: R.string().screenTitle.privacyPolicy,
+      title: R.string.screenTitle.privacyPolicy,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY,
     ));
     drawerList.add(DrawerModel(
       image: aboutUs,
-      title: R.string().screenTitle.aboutUs,
+      title: R.string.screenTitle.aboutUS,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_ABOUT_US,
     ));
     drawerList.add(DrawerModel(
       image: contactUs,
-      title: R.string().screenTitle.contactUs,
+      title: R.string.screenTitle.contactUs,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_CONTACT_US,
     ));
     /*drawerList.add(DrawerModel(
       image: changePassword,
-      title: R.string().screenTitle.changePassword,
+      title: R.string.screenTitle.changePassword,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_CHANGE_PASSWORD,
     ));
     drawerList.add(DrawerModel(
       image: user,
-      title: R.string().screenTitle.myProfile,
+      title: R.string.screenTitle.myProfile,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_PROFILE,
     ));*/
     drawerList.add(DrawerModel(
       image: logout,
-      title: R.string().screenTitle.logout,
+      title: R.string.screenTitle.logout,
       isSelected: false,
       type: DiamondModuleConstant.MODULE_TYPE_LOGOUT,
     ));
@@ -186,7 +187,7 @@ class DrawerSetting {
       ),
       */ /*DrawerModel(
         image: drawer_logout,
-        title: R.string().screenTitle.logout,
+        title: R.string.screenTitle.logout,
         isSelected: false,
         type: DrawerConstant.LOGOUT,
       ),*/ /*
@@ -201,7 +202,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: myWatchlist,
-        title: R.string().screenTitle.myWatchlist,
+        title: R.string.screenTitle.myWatchlist,
         imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST,
@@ -212,7 +213,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
           image: addToCartDrawer,
-          title: R.string().screenTitle.myCart,
+          title: R.string.screenTitle.myCart,
           imageColor: appTheme.colorPrimary,
           isSelected: false,
           type: DiamondModuleConstant.MODULE_TYPE_MY_CART));
@@ -222,7 +223,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: bidImage,
-        title: R.string().screenTitle.myBid,
+        title: R.string.screenTitle.myBid,
         imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_BID,
@@ -233,7 +234,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: myHold,
-        title: R.string().screenTitle.myHold,
+        title: R.string.screenTitle.myHold,
         imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_HOLD,
@@ -244,7 +245,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: enquiryDrawer,
-        title: R.string().screenTitle.myEnquiry,
+        title: R.string.screenTitle.myEnquiry,
         imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY,
@@ -255,7 +256,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: myOffice,
-        title: R.string().screenTitle.myOffice,
+        title: R.string.screenTitle.myOffice,
         imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_OFFICE,
@@ -266,7 +267,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: myOffer,
-        title: R.string().screenTitle.myOffer,
+        title: R.string.screenTitle.myOffer,
         imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_OFFER,
@@ -277,7 +278,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: myOrder,
-        title: R.string().screenTitle.myOrder,
+        title: R.string.screenTitle.myOrder,
         imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_ORDER,
@@ -289,7 +290,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: myPurchased,
-        title: R.string().screenTitle.myPurchased,
+        title: R.string.screenTitle.myPurchased,
         isSelected: false,
         imageColor: appTheme.colorPrimary,
         type: DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE,
@@ -300,7 +301,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
           image: commentDrawer,
-          title: R.string().screenTitle.myComments,
+          title: R.string.screenTitle.myComments,
           imageColor: appTheme.colorPrimary,
           isSelected: false,
           type: DiamondModuleConstant.MODULE_TYPE_MY_COMMENT));
@@ -310,7 +311,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
           image: reminder,
-          title: R.string().screenTitle.myReminder,
+          title: R.string.screenTitle.myReminder,
           imageColor: appTheme.colorPrimary,
           isSelected: false,
           type: DiamondModuleConstant.MODULE_TYPE_MY_REMINDER));
@@ -320,7 +321,7 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: myDemandImage,
-        title: R.string().screenTitle.myDemand,
+        title: R.string.screenTitle.myDemand,
         imageColor: appTheme.colorPrimary,
         isSelected: false,
         isShowDivider: true,
@@ -332,29 +333,47 @@ class DrawerSetting {
         .view)
       drawerList.add(DrawerModel(
         image: manageAddress,
-        title: R.string().screenTitle.manageAddress,
+        title: R.string.screenTitle.manageAddress,
         isSelected: false,
         imageColor: appTheme.colorPrimary,
         type: DiamondModuleConstant.MODULE_TYPE_MANAGE_ADDRESS,
       ));
     drawerList.add(DrawerModel(
       image: manageAddress,
-      title: R.string().commonString.touchId,
+      title: R.string.commonString.touchId,
       isSelected: false,
       imageColor: appTheme.colorPrimary,
       type: DiamondModuleConstant.MODULE_TYPE_TOUCH_ID,
     ));
+    if (app.resolve<PrefUtils>().getUserDetails().isMpinAdded) {
+      drawerList.add(DrawerModel(
+        image: changePassword,
+        title: R.string.commonString.mPin,
+        isSelected: false,
+        imageColor: appTheme.colorPrimary,
+        type: DiamondModuleConstant.MODULE_TYPE_MPIN,
+      ));
+    }
+    drawerList.add(DrawerModel(
+        image: changePassword,
+        title: R.string.screenTitle.changePassword,
+        isSelected: false,
+        imageColor: appTheme.colorPrimary,
+        type: DiamondModuleConstant.MODULE_TYPE_CHANGE_PASSWORD));
+
     drawerList.add(DrawerModel(
       image: changePassword,
-      title: R.string().commonString.mPin,
+      title: app.resolve<PrefUtils>().getUserDetails().isMpinAdded == false
+          ? "Create MPin"
+          : "Change MPin",
       isSelected: false,
       imageColor: appTheme.colorPrimary,
-      type: DiamondModuleConstant.MODULE_TYPE_MPIN,
+      type: DiamondModuleConstant.MODULE_TYPE_CHANGEMPIN,
     ));
 
     drawerList.add(DrawerModel(
       image: logout,
-      title: R.string().screenTitle.logout,
+      title: R.string.screenTitle.logout,
       isSelected: false,
       imageColor: appTheme.colorPrimary,
       type: DiamondModuleConstant.MODULE_TYPE_LOGOUT,
@@ -433,103 +452,48 @@ class BottomMenuSetting {
     List<BottomTabModel> moreMenuList = [];
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ORDER) {
       if (moduleType == DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY) {
-        if (app
-            .resolve<PrefUtils>()
-            .getModulePermission(ModulePermissionConstant.permission_order)
-            .insert)
-          moreMenuList.add(BottomTabModel(
-              image: placeOrder,
-              title: R.string().screenTitle.buyNow,
-              type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER));
+        addPlaceOrderInBottomMenu(moreMenuList, placeOrder);
       }
     }
     if (!isDetail && !isCompare) {
       if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
-        if (app
-            .resolve<PrefUtils>()
-            .getModulePermission(ModulePermissionConstant.permission_compare)
-            .view)
-          moreMenuList.add(BottomTabModel(
-              image: compare,
-              title: R.string().screenTitle.compare,
-              type: ActionMenuConstant.ACTION_TYPE_COMPARE));
+        addCompareInBottomMenu(moreMenuList, compare);
       }
     }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
-      if (app
-          .resolve<PrefUtils>()
-          .getModulePermission(ModulePermissionConstant.permission_comment)
-          .insert)
-        moreMenuList.add(BottomTabModel(
-            image: comment,
-            title: R.string().screenTitle.comment,
-            type: ActionMenuConstant.ACTION_TYPE_COMMENT));
+      addCommentInBottomMenu(moreMenuList);
     }
 
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_REMINDER) {
       if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
-        if (app
-            .resolve<PrefUtils>()
-            .getModulePermission(ModulePermissionConstant.permission_reminder)
-            .insert)
-          moreMenuList.add(BottomTabModel(
-              image: reminder,
-              title: R.string().screenTitle.reminder,
-              type: ActionMenuConstant.ACTION_TYPE_REMINDER));
+        addReminderInBottomMenu(moreMenuList);
       }
     }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
       if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
-        if (moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH &&
-            !isCompare) {
-          if (app
-              .resolve<PrefUtils>()
-              .getModulePermission(ModulePermissionConstant.permission_offer)
-              .insert)
-            moreMenuList.add(BottomTabModel(
-                image: offer,
-                title: R.string().screenTitle.offer,
-                type: ActionMenuConstant.ACTION_TYPE_OFFER));
+        if (isDiamondSearchModule(moduleType) && !isCompare) {
+          addOfferInBottomMenu(moreMenuList, offer);
         }
       }
     }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
       if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
-        if (app
-            .resolve<PrefUtils>()
-            .getModulePermission(
-                ModulePermissionConstant.permission_appointment)
-            .insert)
-          moreMenuList.add(BottomTabModel(
-              image: company,
-              title: R.string().screenTitle.officeView,
-              type: ActionMenuConstant.ACTION_TYPE_APPOINTMENT));
+        addAppointmentInBottomMenu(moreMenuList);
       }
     }
     /* moreMenuList.add(BottomTabModel(
         image: hold,
-        title: R.string().screenTitle.hold,
+        title: R.string.screenTitle.hold,
         type: ActionMenuConstant.ACTION_TYPE_HOLD));*/
     if (!isCompare) {
       if (isDisplayDelete(moduleType)) {
-        moreMenuList.add(BottomTabModel(
-            image: home_delete,
-            title: R.string().screenTitle.delete,
-            type: ActionMenuConstant.ACTION_TYPE_DELETE));
+        addDeleteInBottomMenu(moreMenuList);
       }
     }
-    moreMenuList.add(BottomTabModel(
-        image: download,
-        title: R.string().screenTitle.download,
-        type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
-    moreMenuList.add(BottomTabModel(
-        image: clearSelection,
-        title: R.string().screenTitle.clearSelection,
-        type: ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION));
-    moreMenuList.add(BottomTabModel(
-        image: share,
-        title: R.string().screenTitle.share,
-        type: ActionMenuConstant.ACTION_TYPE_SHARE));
+
+    addDownloadInBottomMenu(moreMenuList, download);
+    addClearSelectionInBottomMenu(moreMenuList, clearSelection);
+    addShareInBottomMenu(moreMenuList, share);
     return moreMenuList;
   }
 
@@ -540,55 +504,20 @@ class BottomMenuSetting {
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
       case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
-        moreMenuList.add(BottomTabModel(
-            title: R.string().screenTitle.share,
-            isCenter: false,
-            image: shareWhite,
-            type: ActionMenuConstant.ACTION_TYPE_SHARE));
-        moreMenuList.add(BottomTabModel(
-            title: R.string().screenTitle.download,
-            isCenter: false,
-            image: downloadWhite,
-            type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
+        addShareInBottomMenu(moreMenuList, shareWhite, isCenter: false);
+        addDownloadInBottomMenu(moreMenuList, downloadWhite, isCenter: false);
+
         break;
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
-        if (app
-            .resolve<PrefUtils>()
-            .getModulePermission(ModulePermissionConstant.permission_bid)
-            .insert)
-          moreMenuList.add(BottomTabModel(
-              title: R.string().screenTitle.bidStone,
-              isCenter: false,
-              image: myBidWhite,
-              type: ActionMenuConstant.ACTION_TYPE_BID));
-
-        if (app
-            .resolve<PrefUtils>()
-            .getModulePermission(ModulePermissionConstant.permission_watchlist)
-            .insert)
-          moreMenuList.add(BottomTabModel(
-              image: addToWatchlist,
-              isCenter: false,
-              title: R.string().screenTitle.addToWatchList,
-              type: ActionMenuConstant.ACTION_TYPE_WISHLIST));
-        moreMenuList.add(BottomTabModel(
-            image: finalCalculation,
-            isCenter: false,
-            title: R.string().screenTitle.finalCalculation,
-            type: ActionMenuConstant.ACTION_TYPE_FINAL_CALCULATION));
+        addBidStoneInBottomMenu(moreMenuList);
+        addWatchlistInBottomMenu(moreMenuList, addToWatchlist, isCenter: false);
+        addFinalCalculationInBottomMenu(moreMenuList);
         if (!isDetail && !isCompare) {
-          if (app
-              .resolve<PrefUtils>()
-              .getModulePermission(ModulePermissionConstant.permission_compare)
-              .view)
-            moreMenuList.add(BottomTabModel(
-                title: R.string().screenTitle.compare,
-                isCenter: false,
-                image: compare,
-                type: ActionMenuConstant.ACTION_TYPE_COMPARE));
+          addCompareInBottomMenu(moreMenuList, compare, isCenter: false);
         }
+
         moreMenuList.add(BottomTabModel(
-          title: R.string().commonString.more,
+          title: R.string.commonString.more,
           isCenter: false,
           image: plusIcon,
           type: ActionMenuConstant.ACTION_TYPE_MORE,
@@ -596,148 +525,64 @@ class BottomMenuSetting {
         break;
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
         if (!isDetail && !isCompare) {
-          if (app
-              .resolve<PrefUtils>()
-              .getModulePermission(ModulePermissionConstant.permission_compare)
-              .view)
-            moreMenuList.add(BottomTabModel(
-                title: R.string().screenTitle.compare,
-                isCenter: false,
-                image: compare,
-                type: ActionMenuConstant.ACTION_TYPE_COMPARE));
-          moreMenuList.add(BottomTabModel(
-              title: R.string().screenTitle.clearSelection,
-              isCenter: false,
-              image: clearSelectionWhite,
-              type: ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION));
+          addCompareInBottomMenu(moreMenuList, compare, isCenter: false);
+          addClearSelectionInBottomMenu(moreMenuList, clearSelectionWhite,
+              isCenter: false);
         }
-        moreMenuList.add(BottomTabModel(
-            title: R.string().screenTitle.share,
-            isCenter: false,
-            image: shareWhite,
-            type: ActionMenuConstant.ACTION_TYPE_SHARE));
-        moreMenuList.add(BottomTabModel(
-            title: R.string().screenTitle.download,
-            isCenter: false,
-            image: downloadWhite,
-            type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
+        addShareInBottomMenu(moreMenuList, shareWhite, isCenter: false);
+        addDownloadInBottomMenu(moreMenuList, downloadWhite, isCenter: false);
+
         break;
 
       case DiamondModuleConstant.MODULE_TYPE_FINAL_CALCULATION:
-        if (app
-            .resolve<PrefUtils>()
-            .getModulePermission(ModulePermissionConstant.permission_order)
-            .insert) {
-          moreMenuList.add(BottomTabModel(
-              image: placeOrder,
-              title: R.string().screenTitle.placeOrder,
-              isCenter: false,
-              type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER));
-        }
+        addPlaceOrderInBottomMenu(moreMenuList, placeOrder, isCenter: false);
+
         moreMenuList.add(BottomTabModel(
             image: cancelStone,
-            title: R.string().screenTitle.cancelStone,
+            title: R.string.screenTitle.cancelStone,
             isCenter: false,
             type: ActionMenuConstant.ACTION_TYPE_CANCEL_STONE));
-        moreMenuList.add(BottomTabModel(
-            title: R.string().screenTitle.share,
-            isCenter: false,
-            image: shareWhite,
-            type: ActionMenuConstant.ACTION_TYPE_SHARE));
+        addShareInBottomMenu(moreMenuList, shareWhite, isCenter: false);
 
         break;
       default:
         if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST) {
-          if (app
-              .resolve<PrefUtils>()
-              .getModulePermission(
-                  ModulePermissionConstant.permission_watchlist)
-              .insert)
-            moreMenuList.add(BottomTabModel(
-                image: addToWatchlist,
-                isCenter: false,
-                title: R.string().screenTitle.addToWatchList,
-                type: ActionMenuConstant.ACTION_TYPE_WISHLIST));
+          addWatchlistInBottomMenu(moreMenuList, addToWatchlist,
+              isCenter: false);
         }
         if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
-          if (app
-              .resolve<PrefUtils>()
-              .getModulePermission(ModulePermissionConstant.permission_enquiry)
-              .insert)
-            moreMenuList.add(BottomTabModel(
-                image: enquiry,
-                isCenter: false,
-                title: R.string().screenTitle.enquiry,
-                type: ActionMenuConstant.ACTION_TYPE_ENQUIRY));
+          addEnquiryInBottomMenu(moreMenuList);
         }
         if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_CART) {
-          if (app
-              .resolve<PrefUtils>()
-              .getModulePermission(ModulePermissionConstant.permission_cart)
-              .insert)
-            moreMenuList.add(BottomTabModel(
-                image: addToCart,
-                title: R.string().screenTitle.addToCart,
-                isCenter: false,
-                type: ActionMenuConstant.ACTION_TYPE_ADD_TO_CART));
+          addCartInBottomMenu(moreMenuList);
         }
 
         if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY ||
             moduleType == DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST ||
             moduleType == DiamondModuleConstant.MODULE_TYPE_MY_CART ||
             moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER ||
-            moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
-          if (app
-              .resolve<PrefUtils>()
-              .getModulePermission(ModulePermissionConstant.permission_order)
-              .insert)
-            moreMenuList.add(BottomTabModel(
-                image: placeOrder,
-                title: R.string().screenTitle.buyNow,
-                isCenter: false,
-                type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER));
+            moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH ||
+            moduleType == DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH) {
+          addPlaceOrderInBottomMenu(moreMenuList, placeOrder, isCenter: false);
         }
+
         if (!isDiamondSearchModule(moduleType)) {
           if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
-            if (app
-                .resolve<PrefUtils>()
-                .getModulePermission(ModulePermissionConstant.permission_offer)
-                .insert)
-              moreMenuList.add(BottomTabModel(
-                  image: offerWhite,
-                  title: R.string().screenTitle.offer,
-                  isCenter: false,
-                  type: ActionMenuConstant.ACTION_TYPE_OFFER));
+            addOfferInBottomMenu(moreMenuList, offerWhite, isCenter: false);
           }
         }
         if (isDiamondSearchModule(moduleType) && isDetail) {
-          if (app
-              .resolve<PrefUtils>()
-              .getModulePermission(ModulePermissionConstant.permission_offer)
-              .insert)
-            moreMenuList.add(BottomTabModel(
-                image: offerWhite,
-                title: R.string().screenTitle.offer,
-                isCenter: false,
-                type: ActionMenuConstant.ACTION_TYPE_OFFER));
+          addOfferInBottomMenu(moreMenuList, offerWhite, isCenter: false);
         }
 
         //For Compare special
         if (isCompare) {
-          if (app
-              .resolve<PrefUtils>()
-              .getModulePermission(ModulePermissionConstant.permission_offer)
-              .insert)
-            moreMenuList.add(BottomTabModel(
-                image: offerWhite,
-                title: R.string().screenTitle.offer,
-                isCenter: false,
-                type: ActionMenuConstant.ACTION_TYPE_OFFER));
+          addOfferInBottomMenu(moreMenuList, offerWhite, isCenter: false);
         }
         if (!isCompare && !isDetail) {
           if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
             moreMenuList.add(BottomTabModel(
-                title: R.string().commonString.status,
+                title: R.string.commonString.status,
                 isCenter: false,
                 image: status,
                 type: ActionMenuConstant.ACTION_TYPE_STATUS));
@@ -745,7 +590,7 @@ class BottomMenuSetting {
         }
 
         moreMenuList.add(BottomTabModel(
-          title: R.string().commonString.more,
+          title: R.string.commonString.more,
           isCenter: false,
           image: plusIcon,
           type: ActionMenuConstant.ACTION_TYPE_MORE,
@@ -764,36 +609,212 @@ class BottomMenuSetting {
     BottomTabModel model = BottomTabModel(
         image: diamond,
         isCenter: false,
-        title: R.string().screenTitle.statusAvailable);
+        title: R.string.screenTitle.statusAvailable);
     model.imageColor = appTheme.statusAvailable;
     moreMenuList.add(model);
     model = BottomTabModel(
-        image: diamond,
-        isCenter: false,
-        title: R.string().screenTitle.statusNew);
+        image: diamond, isCenter: false, title: R.string.screenTitle.statusNew);
     model.imageColor = appTheme.statusNew;
     moreMenuList.add(model);
     model = BottomTabModel(
         image: diamond,
         isCenter: false,
-        title: R.string().screenTitle.statusHold);
+        title: R.string.screenTitle.statusHold);
     model.imageColor = appTheme.statusHold;
     moreMenuList.add(model);
     model = BottomTabModel(
         image: diamond,
         isCenter: false,
-        title: R.string().screenTitle.statusOnMemo);
+        title: R.string.screenTitle.statusOnMemo);
     model.imageColor = appTheme.statusOnMemo;
     moreMenuList.add(model);
 
     model = BottomTabModel(
         image: diamond,
         isCenter: false,
-        title: R.string().screenTitle.statusOffer);
+        title: R.string.screenTitle.statusOffer);
     model.imageColor = appTheme.statusOffer;
     moreMenuList.add(model);
 
     return moreMenuList;
+  }
+
+  addCartInBottomMenu(List<BottomTabModel> moreMenuList) {
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_enquiry)
+        .insert) {
+      moreMenuList.add(BottomTabModel(
+          image: enquiry,
+          isCenter: false,
+          title: R.string.screenTitle.enquiry,
+          type: ActionMenuConstant.ACTION_TYPE_ENQUIRY));
+    }
+  }
+
+  addEnquiryInBottomMenu(List<BottomTabModel> moreMenuList) {
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_cart)
+        .insert) {
+      moreMenuList.add(BottomTabModel(
+          image: addToCart,
+          title: R.string.screenTitle.addToCart,
+          isCenter: false,
+          type: ActionMenuConstant.ACTION_TYPE_ADD_TO_CART));
+    }
+  }
+
+  addFinalCalculationInBottomMenu(List<BottomTabModel> moreMenuList) {
+    moreMenuList.add(BottomTabModel(
+        image: finalCalculation,
+        isCenter: false,
+        title: R.string.screenTitle.finalCalculation,
+        type: ActionMenuConstant.ACTION_TYPE_FINAL_CALCULATION));
+  }
+
+  addWatchlistInBottomMenu(List<BottomTabModel> moreMenuList, String image,
+      {bool isCenter: true}) {
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_watchlist)
+        .insert) {
+      moreMenuList.add(BottomTabModel(
+          image: image,
+          isCenter: isCenter,
+          title: R.string.screenTitle.addToWatchList,
+          type: ActionMenuConstant.ACTION_TYPE_WISHLIST));
+    }
+  }
+
+  addBidStoneInBottomMenu(List<BottomTabModel> moreMenuList) {
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_bid)
+        .insert) {
+      moreMenuList.add(BottomTabModel(
+          title: R.string.screenTitle.bidStone,
+          isCenter: false,
+          image: myBidWhite,
+          type: ActionMenuConstant.ACTION_TYPE_BID));
+    }
+  }
+
+  addPlaceOrderInBottomMenu(List<BottomTabModel> moreMenuList, String image,
+      {bool isCenter: true}) {
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_order)
+        .insert) {
+      moreMenuList.add(BottomTabModel(
+          image: image,
+          isCenter: isCenter,
+          title: R.string.screenTitle.buyNow,
+          type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER));
+    }
+  }
+
+  addCompareInBottomMenu(List<BottomTabModel> moreMenuList, String image,
+      {bool isCenter: true}) {
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_compare)
+        .view) {
+      moreMenuList.add(BottomTabModel(
+          image: image,
+          isCenter: isCenter,
+          title: R.string.screenTitle.compare,
+          type: ActionMenuConstant.ACTION_TYPE_COMPARE));
+    }
+  }
+
+  addCommentInBottomMenu(List<BottomTabModel> moreMenuList) {
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_comment)
+        .insert) {
+      moreMenuList.add(BottomTabModel(
+          image: comment,
+          title: R.string.screenTitle.comment,
+          type: ActionMenuConstant.ACTION_TYPE_COMMENT));
+    }
+  }
+
+  addReminderInBottomMenu(List<BottomTabModel> moreMenuList) {
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_reminder)
+        .insert) {
+      moreMenuList.add(BottomTabModel(
+          image: reminder,
+          title: R.string.screenTitle.reminder,
+          type: ActionMenuConstant.ACTION_TYPE_REMINDER));
+    }
+  }
+
+  addOfferInBottomMenu(List<BottomTabModel> moreMenuList, String image,
+      {bool isCenter: true}) {
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_offer)
+        .insert) {
+      moreMenuList.add(BottomTabModel(
+          image: image,
+          isCenter: isCenter,
+          title: R.string.screenTitle.offer,
+          type: ActionMenuConstant.ACTION_TYPE_OFFER));
+    }
+  }
+
+  addAppointmentInBottomMenu(List<BottomTabModel> moreMenuList) {
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_appointment)
+        .insert) {
+      moreMenuList.add(BottomTabModel(
+          image: company,
+          title: R.string.screenTitle.officeView,
+          type: ActionMenuConstant.ACTION_TYPE_APPOINTMENT));
+    }
+  }
+
+  addDeleteInBottomMenu(List<BottomTabModel> moreMenuList) {
+    moreMenuList.add(BottomTabModel(
+        image: home_delete,
+        title: R.string.screenTitle.delete,
+        type: ActionMenuConstant.ACTION_TYPE_DELETE));
+  }
+
+  addDownloadInBottomMenu(List<BottomTabModel> moreMenuList, String image,
+      {bool isCenter: true}) {
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(getPermissionFromModuleType(moduleType))
+        .downloadExcel) {
+      moreMenuList.add(BottomTabModel(
+          image: image,
+          isCenter: isCenter,
+          title: R.string.screenTitle.download,
+          type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
+    }
+  }
+
+  addClearSelectionInBottomMenu(List<BottomTabModel> moreMenuList, String image,
+      {bool isCenter: true}) {
+    moreMenuList.add(BottomTabModel(
+        image: image,
+        isCenter: isCenter,
+        title: R.string.screenTitle.clearSelection,
+        type: ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION));
+  }
+
+  addShareInBottomMenu(List<BottomTabModel> moreMenuList, String image,
+      {bool isCenter: true}) {
+    moreMenuList.add(BottomTabModel(
+        image: image,
+        title: R.string.screenTitle.share,
+        isCenter: isCenter,
+        type: ActionMenuConstant.ACTION_TYPE_SHARE));
   }
 }
 

@@ -69,27 +69,9 @@ getBarButton(
   );
 }
 
-/*
 getDrawerButton(BuildContext context, bool isBlack) {
   return IconButton(
-    padding: EdgeInsets.all(3),
-    onPressed: () {
-      // RxBus.post(DrawerEvent(DrawerConstant.OPEN_DRAWER, false),
-      //     tag: eventBusTag);
-    },
-    icon: Image.asset(
-      "menu",
-      color: isBlack == true ? Colors.black : Colors.white,
-      width: getSize(26),
-      height: getSize(26),
-    ),
-  );
-}
-*/
-
-getDrawerButton(BuildContext context, bool isBlack) {
-  return IconButton(
-    padding: EdgeInsets.all(3),
+    padding: EdgeInsets.zero,
     onPressed: () {
       RxBus.post(
           DrawerEvent(DiamondModuleConstant.MODULE_TYPE_OPEN_DRAWER, false),
@@ -238,12 +220,16 @@ Widget getAppBar(BuildContext context, String title,
             textAlign: textalign ?? TextAlign.center,
           )
         : Container(),
-    leading: leadingButton ??= null,
+    leading: leadingButton ?? null,
+    // leading: Transform.translate(
+    //   offset: Offset(getSize(Spacing.leftPadding), 0),
+    //   child: leadingButton,
+    // ), //leadingButton ??= null,
     automaticallyImplyLeading: leadingButton != null,
     backgroundColor: bgColor,
     actions: actionItems == null ? null : actionItems,
     bottom: widget,
-    titleSpacing: 0.0,
+    titleSpacing: 0,
   );
 }
 
@@ -410,7 +396,7 @@ getBottomButton(BuildContext context, VoidCallback onTap, String title,
           child: Container(
             width: MathUtilities.screenWidth(context) / 2 - 50,
             child: getBodyText(
-                context, firstButtonTitle ?? R.string().commonString.cancel),
+                context, firstButtonTitle ?? R.string.commonString.cancel),
           ),
         ),
         Expanded(
@@ -455,9 +441,9 @@ openURLWithApp(String uri, BuildContext context, {bool isPop = false}) async {
   } else {
     app.resolve<CustomDialogs>().confirmDialog(
           context,
-          title: R.string().commonString.error,
+          title: R.string.commonString.error,
           desc: "Could not launch",
-          positiveBtnTitle: R.string().commonString.ok,
+          positiveBtnTitle: R.string.commonString.ok,
         );
   }
 }

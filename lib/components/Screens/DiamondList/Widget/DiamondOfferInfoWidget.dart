@@ -70,7 +70,7 @@ class _DiamondOfferInfoWidgetState extends State<DiamondOfferInfoWidget> {
     return Row(
       children: [
         Text(
-          R.string().commonString.offered,
+          R.string.commonString.offered,
           style: appTheme.darkBlue16TextStyle.copyWith(
             fontSize: getSize(12),
           ),
@@ -130,7 +130,7 @@ class _DiamondOfferInfoWidgetState extends State<DiamondOfferInfoWidget> {
       child: Row(
         children: [
           Text(
-            R.string().commonString.remark,
+            R.string.commonString.remark,
             style: appTheme.grey12HintTextStyle,
           ),
           SizedBox(width: getSize(16)),
@@ -164,10 +164,10 @@ class _DiamondOfferInfoWidgetState extends State<DiamondOfferInfoWidget> {
 
   String getDateTitle() {
     if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
-      return R.string().commonString.officeVisitDate;
+      return R.string.commonString.officeVisitDate;
     } else if (widget.moduleType ==
         DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
-      return R.string().commonString.validTill;
+      return R.string.commonString.validTill;
     }
 
     return "-";

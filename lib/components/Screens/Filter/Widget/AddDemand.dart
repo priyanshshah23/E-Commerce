@@ -7,8 +7,11 @@ import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CommonTextfield.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/math_utils.dart';
+import 'package:diamnow/components/widgets/shared/CommonDateTimePicker.dart';
 import 'package:diamnow/components/widgets/shared/buttons.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/modules/Filter/gridviewlist/FilterRequest.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +43,7 @@ class _AddDemandState extends State<AddDemand> {
   _AddDemandState({this.arrList, this.applyCallBack,this.title});
   
   String title;
-  String _selectedDate;
+  DateTime _selectedDate = DateTime.now();
   String diamondTitle;
   final TextEditingController _diamondTitleTextField = TextEditingController();
   var _focusDiamondTitleTextField = FocusNode();
@@ -94,7 +97,7 @@ class _AddDemandState extends State<AddDemand> {
                           Navigator.pop(context);
                         },
                         borderRadius: getSize(5),
-                        text: R.string().commonString.cancel,
+                        text: R.string.commonString.cancel,
                         textColor: appTheme.colorPrimary,
                         backgroundColor: appTheme.lightColorPrimary,
                       ),
@@ -122,7 +125,7 @@ class _AddDemandState extends State<AddDemand> {
                               _diamondTitleTextField.text = "";
                               Navigator.pop(context);
                               widget.applyCallBack(
-                                  selectedDate: _selectedDate,
+                                  selectedDate: _selectedDate.toUtc().toIso8601String(),
                                   diamondTitle: diamondTitle);
                             } else {
                               _autoValidate = true;
@@ -130,14 +133,14 @@ class _AddDemandState extends State<AddDemand> {
                           } else {
                            
                             widget.applyCallBack(
-                              selectedDate: _selectedDate,
+                              selectedDate: _selectedDate.toUtc().toIso8601String(),
               
                             );
                              Navigator.pop(context);
                           }
                         },
                         borderRadius: getSize(5),
-                        text: R.string().commonString.btnSubmit,
+                        text: R.string.commonString.btnSubmit,
                       ),
                     ),
                   )
@@ -151,11 +154,32 @@ class _AddDemandState extends State<AddDemand> {
   }
 
   void selectionChanged(DateRangePickerSelectionChangedArgs args) {
-    _selectedDate = DateFormat('dd MMMM, yyyy').format(args.value);
+    // _selectedDate = DateFormat('dd MMMM, yyyy').format(args.value);
+    // SchedulerBinding.instance.addPostFrameCallback((duration) {
+    //   setState(() {});
+    // });
+     DateTime dt = args.value;
+    _selectedDate = DateTime(dt.year, dt.month, dt.day, _selectedDate.hour,
+        _selectedDate.minute, _selectedDate.second, _selectedDate.millisecond);
     SchedulerBinding.instance.addPostFrameCallback((duration) {
-      setState(() {});
+//    setState(() {});addPostFrameCallback
+//  });
     });
   }
+
+  //  openDatePicker() {
+  //   openDateTimeDialog(context, (manageClick) {
+  //     setState(() {
+  //       _selectedDate = manageClick.date;
+  //       // _dateController.text = DateUtilities()
+  //       //     .convertServerDateToFormatterString(selectedDate,
+  //       //         formatter: DateUtilities.dd_mm_yyyy_);
+  //     });
+  //   },
+  //       isTime: false,
+  //       title: R.string.commonString.selectDate,
+  //       );
+  // }
 
   Widget getDateRangePicker() {
     return Container(
@@ -165,7 +189,8 @@ class _AddDemandState extends State<AddDemand> {
         minDate: DateTime.now(),
         selectionColor: appTheme.colorPrimary,
         todayHighlightColor: appTheme.colorPrimary,
-        // initialSelectedDate: DateTime.now(),
+        initialSelectedDate: DateTime.now(),
+        
         view: DateRangePickerView.month,
         selectionMode: DateRangePickerSelectionMode.single,
         onSelectionChanged: selectionChanged,
@@ -179,7 +204,7 @@ class _AddDemandState extends State<AddDemand> {
       textOption: TextFieldOption(
         prefixWid: getCommonIconWidget(
             imageName: diamondIcon, imageType: IconSizeType.small),
-        hintText: R.string().commonString.demandTitle,
+        hintText: R.string.commonString.demandTitle,
         maxLine: 1,
         formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
         keyboardType: TextInputType.text,
@@ -188,7 +213,7 @@ class _AddDemandState extends State<AddDemand> {
       textCallback: (text) {},
       validation: (text) {
         if (text.isEmpty) {
-          return R.string().commonString.pleaseEnterDemandTitle;
+          return R.string.commonString.pleaseEnterDemandTitle;
         } else {
           return null;
         }

@@ -129,13 +129,13 @@ class BottomTabBar {
       {bool isForEditSavedSearch = false}) {
     List<BottomTabModel> arrBootomTab = List<BottomTabModel>();
     arrBootomTab.add(BottomTabModel(
-        title: R.string().screenTitle.savedSearch,
+        title: R.string.screenTitle.savedSearch,
         image: savedSearch,
         code: BottomCodeConstant.filterSavedSearch,
         sequence: 0,
         isCenter: false));
     arrBootomTab.add(BottomTabModel(
-        title: R.string().screenTitle.addDemand,
+        title: R.string.screenTitle.addDemand,
         image: addDemand,
         code: BottomCodeConstant.filterAddDemamd,
         sequence: 1,
@@ -148,14 +148,14 @@ class BottomTabBar {
         isCenter: true));
     arrBootomTab.add(BottomTabModel(
         title: isForEditSavedSearch
-            ? R.string().screenTitle.updateAndSearch
-            : R.string().screenTitle.savedAndSearch,
+            ? R.string.screenTitle.updateAndSearch
+            : R.string.screenTitle.savedAndSearch,
         image: saveAndSearch,
         code: BottomCodeConstant.filterSaveAndSearch,
         sequence: 3,
         isCenter: false));
     arrBootomTab.add(BottomTabModel(
-        title: R.string().screenTitle.matchPair,
+        title: R.string.screenTitle.matchPair,
         image: matchPair,
         code: BottomCodeConstant.filteMatchPair,
         sequence: 4,

@@ -24,7 +24,7 @@ class _OpenDatePickerWidgetState extends State<OpenDatePickerWidget> {
         Padding(
           padding: EdgeInsets.only(top: getSize(30)),
           child: Text(
-            R.string().commonString.selectDate,
+            R.string.commonString.selectDate,
             style: appTheme.blackSemiBold18TitleColorblack,
           ),
         ),
@@ -50,7 +50,7 @@ class _OpenDatePickerWidgetState extends State<OpenDatePickerWidget> {
                       borderRadius: BorderRadius.circular(getSize(5)),
                     ),
                     child: Text(
-                      R.string().commonString.cancel,
+                      R.string.commonString.cancel,
                       textAlign: TextAlign.center,
                       style: appTheme.blue14TextStyle
                           .copyWith(fontSize: getFontSize(16)),
@@ -77,7 +77,7 @@ class _OpenDatePickerWidgetState extends State<OpenDatePickerWidget> {
                         BorderRadius.circular(getSize(5)),
                         boxShadow: getBoxShadow(context)),
                     child: Text(
-                      R.string().commonString.btnSubmit,
+                      R.string.commonString.btnSubmit,
                       textAlign: TextAlign.center,
                       style: appTheme.white16TextStyle,
                     ),

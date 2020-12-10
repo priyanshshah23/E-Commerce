@@ -48,7 +48,8 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
           Spacer(),
           widget.selectionModel.showFromTo
               ? Container(
-                  height: getSize(30),
+                  height: getSize(40),
+                  width: getSize(70),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(getSize(5)),
                     border: Border.all(
@@ -58,13 +59,17 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
                           : appTheme.borderColor,
                     ),
                   ),
-                  child: Center(child: getFromTextField()),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: getFromTextField(),
+                  ),
                 )
               : SizedBox(),
           SizedBox(width: getSize(16)),
           widget.selectionModel.showFromTo
               ? Container(
-                  height: getSize(30),
+                  height: getSize(40),
+                  width: getSize(70),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(getSize(5)),
                     border: Border.all(
@@ -74,7 +79,7 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
                           : appTheme.borderColor,
                     ),
                   ),
-                  child: Center(child: getToTextField()),
+                  child: getToTextField(),
                 )
               : SizedBox(),
           SizedBox(width: getSize(16)),
@@ -99,9 +104,8 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
                         app.resolve<CustomDialogs>().confirmDialog(
                               context,
                               title: "",
-                              desc:
-                                  R.string().errorString.fromValueGreateThanTo,
-                              positiveBtnTitle: R.string().commonString.ok,
+                              desc: R.string.errorString.fromValueGreateThanTo,
+                              positiveBtnTitle: R.string.commonString.ok,
                             );
                         _minValueController.text = "";
                         setState(() {});
@@ -173,144 +177,136 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
   }
 
   getFromTextField() {
-    return Container(
-      width: getSize(70),
-      height: getSize(30),
-      child: Focus(
-        onFocusChange: (hasfocus) {
-          if (hasfocus == false) {
-            if (_minValueController.text.isNotEmpty &&
-                _maxValueController.text.isNotEmpty) {
-              if (num.parse(_minValueController.text.trim()) <=
-                  num.parse(_maxValueController.text.trim())) {
-                // app.resolve<CustomDialogs>().confirmDialog(
-                //       context,
-                //       title: "Value Error",
-                //       desc: "okay",
-                //       positiveBtnTitle: "Try Again",
-                //     );
-              } else {
-                app.resolve<CustomDialogs>().confirmDialog(
-                      context,
-                      title: "",
-                      desc: R.string().errorString.fromValueGreateThanTo,
-                      positiveBtnTitle: R.string().commonString.ok,
-                    );
-                _minValueController.text = "";
-                setState(() {});
-              }
+    return Focus(
+      onFocusChange: (hasfocus) {
+        if (hasfocus == false) {
+          if (_minValueController.text.isNotEmpty &&
+              _maxValueController.text.isNotEmpty) {
+            if (num.parse(_minValueController.text.trim()) <=
+                num.parse(_maxValueController.text.trim())) {
+              // app.resolve<CustomDialogs>().confirmDialog(
+              //       context,
+              //       title: "Value Error",
+              //       desc: "okay",
+              //       positiveBtnTitle: "Try Again",
+              //     );
+            } else {
+              app.resolve<CustomDialogs>().confirmDialog(
+                    context,
+                    title: "",
+                    desc: R.string.errorString.fromValueGreateThanTo,
+                    positiveBtnTitle: R.string.commonString.ok,
+                  );
+              _minValueController.text = "";
+              setState(() {});
             }
           }
-          // Focus.of(context).unfocus();
+        }
+        // Focus.of(context).unfocus();
+      },
+      child: TextField(
+        textAlign: widget.selectionModel.fromToStyle.showUnderline
+            ? TextAlign.left
+            : TextAlign.center,
+        onChanged: (value) {
+          oldValueForFrom = _minValueController.text.trim();
         },
-        child: TextField(
-          textAlign: widget.selectionModel.fromToStyle.showUnderline
-              ? TextAlign.left
-              : TextAlign.center,
-          onChanged: (value) {
-            oldValueForFrom = _minValueController.text.trim();
-          },
-          onSubmitted: (value) {},
-          style: appTheme.blackNormal14TitleColorblack,
-          focusNode: _focusMinValue,
-          controller: _minValueController,
-          inputFormatters: [
-            TextInputFormatter.withFunction((oldValue, newValue) =>
-                RegExp(r'(^[+-]?\d*.?\d{0,2})$').hasMatch(newValue.text)
-                    ? newValue
-                    : oldValue),
-            LengthLimitingTextInputFormatter(4),
-          ],
-          keyboardType: TextInputType.numberWithOptions(decimal: true),
-          textInputAction: TextInputAction.next,
-          decoration: InputDecoration(
-            focusedBorder: widget.selectionModel.fromToStyle.showUnderline
-                ? new UnderlineInputBorder(
-                    borderSide: new BorderSide(
-                    color: widget.selectionModel.fromToStyle.underlineColor,
-                  ))
-                : InputBorder.none,
-            enabledBorder: widget.selectionModel.fromToStyle.showUnderline
-                ? new UnderlineInputBorder(
-                    borderSide: new BorderSide(
-                    color: widget.selectionModel.fromToStyle.underlineColor,
-                  ))
-                : InputBorder.none,
-            hintText: R.string().commonString.fromLbl,
-            hintStyle: appTheme.grey14HintTextStyle,
-          ),
+        onSubmitted: (value) {},
+        style: appTheme.blackNormal14TitleColorblack,
+        focusNode: _focusMinValue,
+        controller: _minValueController,
+        inputFormatters: [
+          TextInputFormatter.withFunction((oldValue, newValue) =>
+              RegExp(r'(^[+-]?\d*.?\d{0,2})$').hasMatch(newValue.text)
+                  ? newValue
+                  : oldValue),
+          LengthLimitingTextInputFormatter(4),
+        ],
+        keyboardType: TextInputType.numberWithOptions(decimal: true),
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          focusedBorder: widget.selectionModel.fromToStyle.showUnderline
+              ? new UnderlineInputBorder(
+                  borderSide: new BorderSide(
+                  color: widget.selectionModel.fromToStyle.underlineColor,
+                ))
+              : InputBorder.none,
+          enabledBorder: widget.selectionModel.fromToStyle.showUnderline
+              ? new UnderlineInputBorder(
+                  borderSide: new BorderSide(
+                  color: widget.selectionModel.fromToStyle.underlineColor,
+                ))
+              : InputBorder.none,
+          hintText: R.string.commonString.fromLbl,
+          hintStyle: appTheme.grey14HintTextStyle,
         ),
       ),
     );
   }
 
   getToTextField() {
-    return Container(
-      width: getSize(70),
-      height: getSize(30),
-      child: Focus(
-        onFocusChange: (hasfocus) {
-          if (hasfocus == false) {
-            if (_minValueController.text.isNotEmpty &&
-                _maxValueController.text.isNotEmpty) {
-              if (num.parse(_minValueController.text.trim()) <=
-                  num.parse(_maxValueController.text.trim())) {
-                // app.resolve<CustomDialogs>().confirmDialog(
-                //       context,
-                //       title: "Value Error",
-                //       desc: "okay",
-                //       positiveBtnTitle: "Try Again",
-                //     );
-              } else {
-                app.resolve<CustomDialogs>().confirmDialog(
-                      context,
-                      title: "",
-                      desc: R.string().errorString.toValueGreaterThanFrom,
-                      positiveBtnTitle: R.string().commonString.ok,
-                    );
-                _maxValueController.text = "";
-                setState(() {});
-              }
+    return Focus(
+      onFocusChange: (hasfocus) {
+        if (hasfocus == false) {
+          if (_minValueController.text.isNotEmpty &&
+              _maxValueController.text.isNotEmpty) {
+            if (num.parse(_minValueController.text.trim()) <=
+                num.parse(_maxValueController.text.trim())) {
+              // app.resolve<CustomDialogs>().confirmDialog(
+              //       context,
+              //       title: "Value Error",
+              //       desc: "okay",
+              //       positiveBtnTitle: "Try Again",
+              //     );
+            } else {
+              app.resolve<CustomDialogs>().confirmDialog(
+                    context,
+                    title: "",
+                    desc: R.string.errorString.toValueGreaterThanFrom,
+                    positiveBtnTitle: R.string.commonString.ok,
+                  );
+              _maxValueController.text = "";
+              setState(() {});
             }
           }
-          // Focus.of(context).unfocus();
+        }
+        // Focus.of(context).unfocus();
+      },
+      child: TextField(
+        textAlign: widget.selectionModel.fromToStyle.showUnderline
+            ? TextAlign.left
+            : TextAlign.center,
+        onChanged: (value) {
+          oldValueForTo = _maxValueController.text.trim();
         },
-        child: TextField(
-          textAlign: widget.selectionModel.fromToStyle.showUnderline
-              ? TextAlign.left
-              : TextAlign.center,
-          onChanged: (value) {
-            oldValueForTo = _maxValueController.text.trim();
-          },
-          focusNode: _focusMaxValue,
-          controller: _maxValueController,
-          inputFormatters: [
-            TextInputFormatter.withFunction((oldValue, newValue) =>
-                RegExp(r'(^[+-]?\d*.?\d{0,2})$').hasMatch(newValue.text)
-                    ? newValue
-                    : oldValue),
-            LengthLimitingTextInputFormatter(4),
-          ],
-          onSubmitted: (value) {},
-          style: appTheme.blackNormal14TitleColorblack,
-          keyboardType: TextInputType.numberWithOptions(decimal: true),
-          textInputAction: TextInputAction.done,
-          decoration: InputDecoration(
-            focusedBorder: widget.selectionModel.fromToStyle.showUnderline
-                ? new UnderlineInputBorder(
-                    borderSide: new BorderSide(
-                    color: widget.selectionModel.fromToStyle.underlineColor,
-                  ))
-                : InputBorder.none,
-            enabledBorder: widget.selectionModel.fromToStyle.showUnderline
-                ? new UnderlineInputBorder(
-                    borderSide: new BorderSide(
-                    color: widget.selectionModel.fromToStyle.underlineColor,
-                  ))
-                : InputBorder.none,
-            hintText: R.string().commonString.toLbl,
-            hintStyle: appTheme.grey14HintTextStyle,
-          ),
+        focusNode: _focusMaxValue,
+        controller: _maxValueController,
+        inputFormatters: [
+          TextInputFormatter.withFunction((oldValue, newValue) =>
+              RegExp(r'(^[+-]?\d*.?\d{0,2})$').hasMatch(newValue.text)
+                  ? newValue
+                  : oldValue),
+          LengthLimitingTextInputFormatter(4),
+        ],
+        onSubmitted: (value) {},
+        style: appTheme.blackNormal14TitleColorblack,
+        keyboardType: TextInputType.numberWithOptions(decimal: true),
+        textInputAction: TextInputAction.done,
+        decoration: InputDecoration(
+          focusedBorder: widget.selectionModel.fromToStyle.showUnderline
+              ? new UnderlineInputBorder(
+                  borderSide: new BorderSide(
+                  color: widget.selectionModel.fromToStyle.underlineColor,
+                ))
+              : InputBorder.none,
+          enabledBorder: widget.selectionModel.fromToStyle.showUnderline
+              ? new UnderlineInputBorder(
+                  borderSide: new BorderSide(
+                  color: widget.selectionModel.fromToStyle.underlineColor,
+                ))
+              : InputBorder.none,
+          hintText: R.string.commonString.toLbl,
+          hintStyle: appTheme.grey14HintTextStyle,
         ),
       ),
     );

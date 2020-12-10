@@ -29,6 +29,7 @@ class AppNavigation {
   void movetoHome({bool isPopAndSwitch = false}) {
     RxBus.destroy(tag: eventBusTag);
     if (isPopAndSwitch) {
+      
       NavigationUtilities.pushReplacementNamed(HomeScreen.route,
           type: RouteType.fade);
       // NavigationUtilities.pushReplacementNamed(DiamondListScreen.route,

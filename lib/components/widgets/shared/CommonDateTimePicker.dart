@@ -179,7 +179,7 @@ class _DateTimeDialogState extends State<DateTimeDialog>
                         borderRadius: BorderRadius.circular(getSize(5)),
                       ),
                       child: Text(
-                        R.string().commonString.cancel,
+                        R.string.commonString.cancel,
                         textAlign: TextAlign.center,
                         style: appTheme.blue14TextStyle
                             .copyWith(fontSize: getFontSize(16)),
@@ -199,7 +199,7 @@ class _DateTimeDialogState extends State<DateTimeDialog>
                             DateFormat('EEEE').format(selectedDate);
                         if (weekDay.toLowerCase() == "sunday") {
                           showToast(
-                              R.string().commonString.offerSundayRestriction,
+                              R.string.commonString.offerSundayRestriction,
                               context: context);
                           return;
                         }
@@ -218,7 +218,7 @@ class _DateTimeDialogState extends State<DateTimeDialog>
                           borderRadius: BorderRadius.circular(getSize(5)),
                           boxShadow: getBoxShadow(context)),
                       child: Text(
-                        R.string().commonString.btnSubmit,
+                        R.string.commonString.btnSubmit,
                         textAlign: TextAlign.center,
                         style: appTheme.white16TextStyle,
                       ),

@@ -121,6 +121,7 @@ class _PersonalInformationState extends State<PersonalInformation>
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
+        backgroundColor: appTheme.whiteColor,
         resizeToAvoidBottomPadding: true,
         resizeToAvoidBottomInset: false,
         bottomNavigationBar: Padding(
@@ -139,8 +140,7 @@ class _PersonalInformationState extends State<PersonalInformation>
                   FocusScope.of(context).unfocus();
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
-                    if (_mobileController.text.isNotEmpty ||
-                        _whatsAppMobileController.text.isNotEmpty) {
+                    if (_mobileController.text.isNotEmpty) {
                       if (await checkValidation()) {
                         if (isProfileImageUpload) {
                           await uploadDocument();
@@ -152,6 +152,7 @@ class _PersonalInformationState extends State<PersonalInformation>
                   } else {
                     setState(() {
                       _autoValidate = true;
+                      readOnly = false;
                     });
                   }
                 }
@@ -163,8 +164,8 @@ class _PersonalInformationState extends State<PersonalInformation>
               borderRadius: getSize(5),
               fitWidth: true,
               text: readOnly
-                  ? R.string().authStrings.editProfileTitle
-                  : R.string().authStrings.updateProfile,
+                  ? R.string.authStrings.editProfileTitle
+                  : R.string.authStrings.updateProfile,
               //isButtonEnabled: enableDisableSigninButton(),
             ),
           ),
@@ -331,8 +332,8 @@ class _PersonalInformationState extends State<PersonalInformation>
                     borderRadius: BorderRadius.circular(getSize(25)),
                   ),
                   child: SelectionDialogue(
-                    title: R.string().commonString.selectCountry,
-                    hintText: R.string().commonString.searchCountry,
+                    title: R.string.commonString.selectCountry,
+                    hintText: R.string.commonString.searchCountry,
                     selectionOptions: countryList,
                     applyFilterCallBack: (
                         {SelectionPopupModel selectedItem,
@@ -372,7 +373,7 @@ class _PersonalInformationState extends State<PersonalInformation>
           readOnly: this.readOnly ? true : false,
           enable: false,
           textOption: TextFieldOption(
-              hintText: R.string().commonString.lblCountry,
+              hintText: R.string.commonString.lblCountry,
               maxLine: 1,
               prefixWid: getCommonIconWidget(
                   imageName: country, imageType: IconSizeType.small),
@@ -419,8 +420,8 @@ class _PersonalInformationState extends State<PersonalInformation>
                           borderRadius: BorderRadius.circular(getSize(25)),
                         ),
                         child: SelectionDialogue(
-                          title: R.string().commonString.selectState,
-                          hintText: R.string().commonString.searchState,
+                          title: R.string.commonString.selectState,
+                          hintText: R.string.commonString.searchState,
                           selectionOptions: stateList,
                           applyFilterCallBack: (
                               {SelectionPopupModel selectedItem,
@@ -448,7 +449,7 @@ class _PersonalInformationState extends State<PersonalInformation>
                   });
             }
           } else {
-            showToast(R.string().commonString.countryFirst, context: context);
+            showToast(R.string.commonString.countryFirst, context: context);
           }
         }
       },
@@ -457,7 +458,7 @@ class _PersonalInformationState extends State<PersonalInformation>
           readOnly: this.readOnly ? true : false,
           enable: false,
           textOption: TextFieldOption(
-              hintText: R.string().commonString.lblState,
+              hintText: R.string.commonString.lblState,
               maxLine: 1,
               prefixWid: getCommonIconWidget(
                   imageName: state, imageType: IconSizeType.small),
@@ -516,8 +517,8 @@ class _PersonalInformationState extends State<PersonalInformation>
                     borderRadius: BorderRadius.circular(getSize(25)),
                   ),
                   child: SelectionDialogue(
-                    title: R.string().commonString.selectCity,
-                    hintText: R.string().commonString.searchCity,
+                    title: R.string.commonString.selectCity,
+                    hintText: R.string.commonString.searchCity,
                     selectionOptions: cityList,
                     applyFilterCallBack: (
                         {SelectionPopupModel selectedItem,
@@ -535,9 +536,9 @@ class _PersonalInformationState extends State<PersonalInformation>
     }).catchError(
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            title: R.string().commonString.error,
+            title: R.string.commonString.error,
             desc: onError.message,
-            positiveBtnTitle: R.string().commonString.btnTryAgain,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
           _callApiForCityList(stateId: stateId, countryId: countryId);
         })
@@ -577,8 +578,8 @@ class _PersonalInformationState extends State<PersonalInformation>
                             borderRadius: BorderRadius.circular(getSize(25)),
                           ),
                           child: SelectionDialogue(
-                            title: R.string().commonString.selectCity,
-                            hintText: R.string().commonString.searchCity,
+                            title: R.string.commonString.selectCity,
+                            hintText: R.string.commonString.searchCity,
                             selectionOptions: cityList,
                             applyFilterCallBack: (
                                 {SelectionPopupModel selectedItem,
@@ -595,10 +596,10 @@ class _PersonalInformationState extends State<PersonalInformation>
                     });
               }
             } else {
-              showToast(R.string().commonString.stateFirst, context: context);
+              showToast(R.string.commonString.stateFirst, context: context);
             }
           } else {
-            showToast(R.string().commonString.countryFirst, context: context);
+            showToast(R.string.commonString.countryFirst, context: context);
           }
         }
       },
@@ -609,7 +610,7 @@ class _PersonalInformationState extends State<PersonalInformation>
           textOption: TextFieldOption(
               prefixWid: getCommonIconWidget(
                   imageName: city, imageType: IconSizeType.small),
-              hintText: R.string().commonString.lblCity,
+              hintText: R.string.commonString.lblCity,
               maxLine: 1,
               keyboardType: TextInputType.text,
               type: TextFieldType.DropDown,
@@ -659,8 +660,8 @@ class _PersonalInformationState extends State<PersonalInformation>
                     borderRadius: BorderRadius.circular(getSize(25)),
                   ),
                   child: SelectionDialogue(
-                    title: R.string().commonString.selectCountry,
-                    hintText: R.string().commonString.searchCountry,
+                    title: R.string.commonString.selectCountry,
+                    hintText: R.string.commonString.searchCountry,
                     selectionOptions: countryList,
                     applyFilterCallBack: (
                         {SelectionPopupModel selectedItem,
@@ -686,9 +687,9 @@ class _PersonalInformationState extends State<PersonalInformation>
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(
           context,
-          title: R.string().commonString.error,
+          title: R.string.commonString.error,
           desc: onError.message,
-          positiveBtnTitle: R.string().commonString.btnTryAgain,
+          positiveBtnTitle: R.string.commonString.btnTryAgain,
           onClickCallback: (buttonType) {
             _callApiForCountryList();
           },
@@ -734,8 +735,8 @@ class _PersonalInformationState extends State<PersonalInformation>
                     borderRadius: BorderRadius.circular(getSize(25)),
                   ),
                   child: SelectionDialogue(
-                    title: R.string().commonString.selectState,
-                    hintText: R.string().commonString.searchState,
+                    title: R.string.commonString.selectState,
+                    hintText: R.string.commonString.searchState,
                     selectionOptions: stateList,
                     applyFilterCallBack: (
                         {SelectionPopupModel selectedItem,
@@ -760,9 +761,9 @@ class _PersonalInformationState extends State<PersonalInformation>
     }).catchError(
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            title: R.string().commonString.error,
+            title: R.string.commonString.error,
             desc: onError.message,
-            positiveBtnTitle: R.string().commonString.btnTryAgain,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
           _callApiForStateList(countryId: countryId);
         })
@@ -776,7 +777,7 @@ class _PersonalInformationState extends State<PersonalInformation>
       focusNode: _focusMobile,
       readOnly: this.readOnly ? true : false,
       textOption: TextFieldOption(
-        hintText: R.string().authStrings.mobileNumber + "*",
+        hintText: R.string.authStrings.mobileNumber + "*",
         prefixWid: Padding(
           padding: EdgeInsets.only(left: getSize(0)),
           child: Row(
@@ -815,7 +816,7 @@ class _PersonalInformationState extends State<PersonalInformation>
       },
       validation: (text) {
         if (text.isEmpty) {
-          return R.string().errorString.enterPhone;
+          return R.string.errorString.enterPhone;
         } else {
           return null;
         }
@@ -863,7 +864,7 @@ class _PersonalInformationState extends State<PersonalInformation>
       focusNode: _focusWhatsAppMobile,
       readOnly: this.readOnly ? true : false,
       textOption: TextFieldOption(
-        hintText: R.string().authStrings.whatsApp,
+        hintText: R.string.authStrings.whatsApp,
         prefixWid: Padding(
           padding: EdgeInsets.only(left: getSize(0)),
           child: Row(
@@ -901,7 +902,7 @@ class _PersonalInformationState extends State<PersonalInformation>
       },
       // validation: (text) {
       //   if (text.isEmpty) {
-      //     return R.string().errorString.enterPhone;
+      //     return R.string.errorString.enterPhone;
       //   } else {
       //     return null;
       //   }
@@ -919,7 +920,7 @@ class _PersonalInformationState extends State<PersonalInformation>
       focusNode: _focusEmail,
       readOnly: this.readOnly ? true : false,
       textOption: TextFieldOption(
-        hintText: R.string().authStrings.emaillbl,
+        hintText: R.string.authStrings.emaillbl,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: email,
@@ -941,9 +942,9 @@ class _PersonalInformationState extends State<PersonalInformation>
       textCallback: (text) {},
       validation: (text) {
         if (text.trim().isEmpty) {
-          return R.string().errorString.enterEmail;
+          return R.string.errorString.enterEmail;
         } else if (!validateEmail(text.trim())) {
-          return R.string().errorString.enterValidEmail;
+          return R.string.errorString.enterValidEmail;
         } else {
           return null;
         }
@@ -961,7 +962,7 @@ class _PersonalInformationState extends State<PersonalInformation>
       focusNode: _focusSkype,
       readOnly: this.readOnly ? true : false,
       textOption: TextFieldOption(
-        hintText: R.string().authStrings.skype,
+        hintText: R.string.authStrings.skype,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: skypeIcon,
@@ -984,7 +985,7 @@ class _PersonalInformationState extends State<PersonalInformation>
       },
       validation: (text) {
         if (text.trim().isEmpty) {
-          return R.string().authStrings.skype;
+          return R.string.authStrings.skype;
         } else {
           return null;
         }
@@ -1004,7 +1005,7 @@ class _PersonalInformationState extends State<PersonalInformation>
       focusNode: _focusFirstName,
       readOnly: this.readOnly ? true : false,
       textOption: TextFieldOption(
-        hintText: R.string().authStrings.firstName,
+        hintText: R.string.authStrings.firstName,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: user,
@@ -1027,7 +1028,7 @@ class _PersonalInformationState extends State<PersonalInformation>
       },
       validation: (text) {
         if (text.trim().isEmpty) {
-          return R.string().errorString.enterFirstName;
+          return R.string.errorString.enterFirstName;
         } else {
           return null;
         }
@@ -1046,7 +1047,7 @@ class _PersonalInformationState extends State<PersonalInformation>
       focusNode: _focusLastName,
       readOnly: this.readOnly ? true : false,
       textOption: TextFieldOption(
-        hintText: R.string().authStrings.lastName,
+        hintText: R.string.authStrings.lastName,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: user,
@@ -1067,7 +1068,7 @@ class _PersonalInformationState extends State<PersonalInformation>
       textCallback: (text) {},
       validation: (text) {
         if (text.trim().isEmpty) {
-          return R.string().errorString.enterLastName;
+          return R.string.errorString.enterLastName;
         } else {
           return null;
         }
@@ -1086,7 +1087,7 @@ class _PersonalInformationState extends State<PersonalInformation>
       focusNode: _focusAddressLineOne,
       readOnly: this.readOnly ? true : false,
       textOption: TextFieldOption(
-        hintText: R.string().authStrings.address,
+        hintText: R.string.authStrings.address,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: company,
@@ -1107,7 +1108,7 @@ class _PersonalInformationState extends State<PersonalInformation>
       textCallback: (text) {},
       validation: (text) {
         if (text.trim().isEmpty) {
-          return R.string().errorString.enterAddress;
+          return R.string.errorString.enterAddress;
         } else {
           return null;
         }
@@ -1137,13 +1138,7 @@ class _PersonalInformationState extends State<PersonalInformation>
     if (await isValidMobile(_mobileController.text.trim(),
             selectedDialogCountryForMobile.isoCode) ==
         false) {
-      showToast(R.string().errorString.enterValidPhone, context: context);
-      return false;
-    } else if (await isValidMobile(_whatsAppMobileController.text.trim(),
-            selectedDialogCountryForWhatsapp.isoCode) ==
-        false) {
-      showToast(R.string().errorString.enterValidWhatsappPhone,
-          context: context);
+      showToast(R.string.errorString.enterValidPhone, context: context);
       return false;
     }
     return true;
@@ -1190,6 +1185,8 @@ class _PersonalInformationState extends State<PersonalInformation>
             context,
             isProgress: true)
         .then((resp) async {
+      readOnly = true;
+      setState(() {});
       if (resp.data.accountTerm == null) {
         var oldAccTerm = app.resolve<PrefUtils>().getUserDetails().accountTerm;
         resp.data.accountTerm = oldAccTerm;
@@ -1199,9 +1196,9 @@ class _PersonalInformationState extends State<PersonalInformation>
       app.resolve<PrefUtils>().saveUser(resp.data);
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-            title: R.string().commonString.successfully,
+            title: R.string.commonString.successfully,
             desc: resp.message,
-            positiveBtnTitle: R.string().commonString.ok,
+            positiveBtnTitle: R.string.commonString.ok,
           );
 
       if (oldEmail != _emailController.text) {
@@ -1210,9 +1207,9 @@ class _PersonalInformationState extends State<PersonalInformation>
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-            title: R.string().commonString.error,
+            title: R.string.commonString.error,
             desc: onError.message,
-            positiveBtnTitle: R.string().commonString.btnTryAgain,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
           );
     });
   }
@@ -1252,9 +1249,9 @@ class _PersonalInformationState extends State<PersonalInformation>
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-            title: R.string().commonString.error,
+            title: R.string.commonString.error,
             desc: onError.message,
-            positiveBtnTitle: R.string().commonString.btnTryAgain,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
           );
     });
   }

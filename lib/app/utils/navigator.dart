@@ -200,7 +200,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       screen = ResetPassword(arguments);
       break;
     case PasswordResetSuccessfully.route:
-      screen = PasswordResetSuccessfully();
+      screen = PasswordResetSuccessfully(arguments: arguments,);
       break;
     case ProfileList.route:
       screen = ProfileList(arguments);
@@ -229,7 +229,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       screen = SearchScreen(arguments);
       break;
     case SignInWithMPINScreen.route:
-      screen = SignInWithMPINScreen();
+      screen = SignInWithMPINScreen(arguments: arguments,);
       break;
     case ForgetMPIN.route:
       screen = ForgetMPIN();

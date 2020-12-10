@@ -280,7 +280,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                     vertical: getSize(15),
                   ),
                   child: Text(
-                    R.string().commonString.cancel,
+                    R.string.commonString.cancel,
                     textAlign: TextAlign.center,
                     style: appTheme.blue14TextStyle.copyWith(
                         fontSize: getFontSize(16), fontWeight: FontWeight.w500),
@@ -343,7 +343,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                                       callApiForRequestForOffice(
                                           remark, selectedPopUpDate);
                                     } else {
-                                      if (this.isOfferUpdate) {
+                                      if (this.isOfferUpdate ?? false) {
                                         callApiForUpdateOffer(
                                             this.diamondList.first,
                                             remark,
@@ -372,7 +372,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                   ),
                   color: appTheme.colorPrimary,
                   child: Text(
-                    R.string().commonString.confirm,
+                    R.string.commonString.confirm,
                     textAlign: TextAlign.center,
                     style: appTheme.white16TextStyle,
                   ),
@@ -393,7 +393,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
             .convertServerDateToFormatterString(selectedDate,
                 formatter: DateUtilities.dd_mm_yyyy_);
       });
-    }, isTime: false, title: R.string().commonString.selectDate);
+    }, isTime: false, title: R.string.commonString.selectDate);
   }
 
   getDateTextField() {
@@ -410,7 +410,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
           textOption: TextFieldOption(
               prefixWid: getCommonIconWidget(
                   imageName: company, imageType: IconSizeType.small),
-              hintText: R.string().commonString.offerVelidTill,
+              hintText: R.string.commonString.offerVelidTill,
               maxLine: 1,
               keyboardType: TextInputType.text,
               inputController: _dateController,
@@ -422,7 +422,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
           },
           validation: (text) {
             if (text.isEmpty) {
-              return R.string().errorString.pleaseSelectOfferTillDate;
+              return R.string.errorString.pleaseSelectOfferTillDate;
             }
           },
           inputAction: TextInputAction.next,
@@ -443,7 +443,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
         textOption: TextFieldOption(
           maxLine: 4,
           inputController: _commentController,
-          hintText: R.string().screenTitle.comment,
+          hintText: R.string.screenTitle.comment,
           formatter: [
             WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
             BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
@@ -506,8 +506,8 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
             title: "",
-            desc: R.string().errorString.diamondSelectionError,
-            positiveBtnTitle: R.string().commonString.ok,
+            desc: R.string.errorString.diamondSelectionError,
+            positiveBtnTitle: R.string.commonString.ok,
           );
     }
   }
@@ -531,7 +531,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
         //       context,
         //       title: "",
         //       desc: onError.message,
-        //       positiveBtnTitle: R.string().commonString.ok,
+        //       positiveBtnTitle: R.string.commonString.ok,
         //     );
       }
     });
@@ -571,8 +571,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
       app.resolve<CustomDialogs>().confirmDialog(context,
           title: "",
           desc: resp.message,
-          positiveBtnTitle: R.string().commonString.ok,
-          onClickCallback: (type) {
+          positiveBtnTitle: R.string.commonString.ok, onClickCallback: (type) {
         Navigator.pop(context);
       });
     }).catchError((onError) {
@@ -581,7 +580,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
               context,
               title: "",
               desc: onError.message,
-              positiveBtnTitle: R.string().commonString.ok,
+              positiveBtnTitle: R.string.commonString.ok,
             );
       }
     });
@@ -613,8 +612,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
       app.resolve<CustomDialogs>().confirmDialog(context,
           title: "",
           desc: message,
-          positiveBtnTitle: R.string().commonString.ok,
-          onClickCallback: (type) {
+          positiveBtnTitle: R.string.commonString.ok, onClickCallback: (type) {
         Navigator.pop(context, true);
       });
     }, failureCallback: (status, message) {
@@ -622,8 +620,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
       app.resolve<CustomDialogs>().confirmDialog(context,
           title: "",
           desc: message,
-          positiveBtnTitle: R.string().commonString.ok,
-          onClickCallback: (type) {
+          positiveBtnTitle: R.string.commonString.ok, onClickCallback: (type) {
         Navigator.pop(context);
       });
     });

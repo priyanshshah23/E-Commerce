@@ -7,19 +7,14 @@ import 'package:flutter/services.dart';
 
 class FilterBy extends StatefulWidget {
   List<FilterOptions> optionList;
-
-  FilterBy({this.optionList});
+  Function(String value) callBack;
+  FilterBy({this.optionList, this.callBack});
 
   @override
-  _FilterByState createState() => _FilterByState(optionList: optionList);
+  _FilterByState createState() => _FilterByState();
 }
 
 class _FilterByState extends State<FilterBy> {
-  List<FilterOptions> optionList;
-
-  _FilterByState({this.optionList});
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,20 +31,25 @@ class _FilterByState extends State<FilterBy> {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(top: getSize(28), bottom: getSize(21)),
-            child: Text("Sort By",
-                style: appTheme.commonAlertDialogueTitleStyle),
+            child:
+                Text("Sort By", style: appTheme.commonAlertDialogueTitleStyle),
           ),
           ListView.builder(
             padding: EdgeInsets.only(bottom: getSize(15)),
             shrinkWrap: true,
-            itemCount: optionList.length,
+            itemCount: widget.optionList.length,
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
                 onTap: () {
-                  optionList.forEach((element) {element.isSelected = false;});
-                  optionList[index].isSelected = !optionList[index].isSelected;
+                  widget.optionList.forEach((element) {
+                    element.isSelected = false;
+                  });
+                  widget.optionList[index].isSelected =
+                      !widget.optionList[index].isSelected;
                   setState(() {});
-                  Navigator.pop(context,optionList[index].apiKey);
+
+                  Navigator.pop(context);
+                  widget.callBack(widget.optionList[index].apiKey);
                 },
                 child: Padding(
                   padding: EdgeInsets.symmetric(
@@ -60,21 +60,21 @@ class _FilterByState extends State<FilterBy> {
                         height: getSize(14),
                         width: getSize(14),
                         child: Image.asset(
-                          filterPopUpPath + optionList[index].icon,
+                          filterPopUpPath + widget.optionList[index].icon,
                         ),
                       ),
                       SizedBox(
                         width: getSize(22),
                       ),
                       Expanded(
-                        child: Text(optionList[index].title,
+                        child: Text(widget.optionList[index].title,
                             style: appTheme.black14TextStyle),
                       ),
                       Container(
                         height: getSize(16),
                         width: getSize(16),
                         child: Image.asset(
-                          optionList[index].isSelected
+                          widget.optionList[index].isSelected
                               ? selectedFilter
                               : unselectedFilter,
                         ),

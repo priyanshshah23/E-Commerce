@@ -114,19 +114,16 @@ class HomeDrawer extends StatelessWidget {
             padding: EdgeInsets.only(
               top: getSize(10),
               bottom: getSize(10),
-              left: getSize(20),
+              left: getSize(16),
               right: getSize(20),
             ),
             child: Image.asset(drawerLogo,
-                width: getSize(22), height: getSize(22)),
-          ),
-          SizedBox(
-            width: getSize(12),
+                width: getSize(40), height: getSize(40)),
           ),
           Text(
             APPNAME,
-            style: appTheme.blackNormal14TitleColorblack.copyWith(
-              fontWeight: FontWeight.w500,
+            style: appTheme.blackNormal18TitleColorblack.copyWith(
+              fontWeight: FontWeight.w600,
             ),
           ),
         ],

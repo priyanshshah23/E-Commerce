@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.phshah.app">
+    package="com.mydiamonds.app">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -19,7 +19,6 @@
 
 
     <application
-        android:name="io.flutter.app.FlutterApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="My Diamonds"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -34,6 +33,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAUiDZs6NdYaxqAgjUPTu2EVbRCzu-vFaM" />
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
 
 <provider
                 android:name="androidx.core.content.FileProvider"

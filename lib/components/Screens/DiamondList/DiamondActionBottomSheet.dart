@@ -37,7 +37,7 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
               Padding(
                 padding: EdgeInsets.only(top: getSize(28)),
                 child: Text(
-                  R.string().screenTitle.addToWatchList,
+                  R.string.screenTitle.addToWatchList,
                   style: appTheme.commonAlertDialogueTitleStyle,
                 ),
               ),
@@ -82,7 +82,7 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
                           Navigator.pop(context);
                         },
                         child: Text(
-                          R.string().commonString.cancel,
+                          R.string.commonString.cancel,
                           style: appTheme.black16TextStyle,
                         ),
                       ),
@@ -96,7 +96,7 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
                               type: clickConstant.CLICK_TYPE_CONFIRM));
                         },
                         child: Text(
-                          R.string().screenTitle.addToWatchList,
+                          R.string.screenTitle.addToWatchList,
                           style: appTheme.primary16TextStyle,
                         ),
                       ),
@@ -132,7 +132,7 @@ Future showOfferListDialog(BuildContext context, List<DiamondModel> diamondList,
               Padding(
                 padding: EdgeInsets.only(top: getSize(28)),
                 child: Text(
-                  R.string().screenTitle.offer,
+                  R.string.screenTitle.offer,
                   style: appTheme.commonAlertDialogueTitleStyle,
                 ),
               ),
@@ -177,7 +177,7 @@ Future showOfferListDialog(BuildContext context, List<DiamondModel> diamondList,
                           Navigator.pop(context);
                         },
                         child: Text(
-                          R.string().commonString.cancel,
+                          R.string.commonString.cancel,
                           style: appTheme.black16TextStyle,
                         ),
                       ),
@@ -190,7 +190,7 @@ Future showOfferListDialog(BuildContext context, List<DiamondModel> diamondList,
                           showOfferCommentDialog(context, actionClick);
                         },
                         child: Text(
-                          R.string().commonString.btnContinue,
+                          R.string.commonString.btnContinue,
                           style: appTheme.primary16TextStyle,
                         ),
                       ),
@@ -226,7 +226,7 @@ Future showBidListDialog(BuildContext context, List<DiamondModel> diamondList,
               Padding(
                 padding: EdgeInsets.only(top: getSize(28)),
                 child: Text(
-                  R.string().screenTitle.bidStone,
+                  R.string.screenTitle.bidStone,
                   style: appTheme.commonAlertDialogueTitleStyle,
                 ),
               ),
@@ -274,7 +274,7 @@ Future showBidListDialog(BuildContext context, List<DiamondModel> diamondList,
                           Navigator.pop(context);
                         },
                         child: Text(
-                          R.string().commonString.cancel,
+                          R.string.commonString.cancel,
                           style: appTheme.black16TextStyle,
                         ),
                       ),
@@ -288,7 +288,7 @@ Future showBidListDialog(BuildContext context, List<DiamondModel> diamondList,
                               type: clickConstant.CLICK_TYPE_CONFIRM));
                         },
                         child: Text(
-                          R.string().screenTitle.bidStone,
+                          R.string.screenTitle.bidStone,
                           style: appTheme.primary16TextStyle,
                         ),
                       ),
@@ -336,7 +336,7 @@ Future showOfferCommentDialog(BuildContext context, ActionClick actionClick) {
                     child: Align(
                       alignment: Alignment.center,
                       child: Text(
-                        R.string().screenTitle.offer,
+                        R.string.screenTitle.offer,
                         style: appTheme.commonAlertDialogueTitleStyle,
                       ),
                     ),
@@ -348,7 +348,7 @@ Future showOfferCommentDialog(BuildContext context, ActionClick actionClick) {
                         bottom: getSize(5),
                         top: getSize(10)),
                     child: Text(
-                      R.string().authStrings.companyName,
+                      R.string.authStrings.companyName,
                       style: appTheme.black16TextStyle,
                     ),
                   ),
@@ -357,7 +357,7 @@ Future showOfferCommentDialog(BuildContext context, ActionClick actionClick) {
                     child: CommonTextfield(
                       autoFocus: false,
                       textOption: TextFieldOption(
-                        hintText: R.string().authStrings.companyName,
+                        hintText: R.string.authStrings.companyName,
                         maxLine: 1,
                         inputController: _nameController,
                         formatter: [
@@ -369,7 +369,7 @@ Future showOfferCommentDialog(BuildContext context, ActionClick actionClick) {
                       ),
                       validation: (text) {
                         if (text.isEmpty) {
-                          return R.string().errorString.pleaseEnterCompanyName;
+                          return R.string.errorString.pleaseEnterCompanyName;
                         }
                       },
                       textCallback: (text) {},
@@ -386,7 +386,7 @@ Future showOfferCommentDialog(BuildContext context, ActionClick actionClick) {
                         bottom: getSize(5),
                         top: getSize(10)),
                     child: Text(
-                      R.string().screenTitle.comment,
+                      R.string.screenTitle.comment,
                       style: appTheme.black16TextStyle,
                     ),
                   ),
@@ -418,7 +418,7 @@ Future showOfferCommentDialog(BuildContext context, ActionClick actionClick) {
                         bottom: getSize(5),
                         top: getSize(10)),
                     child: Text(
-                      R.string().screenTitle.note,
+                      R.string.screenTitle.note,
                       style: appTheme.black16TextStyle,
                     ),
                   ),
@@ -428,7 +428,7 @@ Future showOfferCommentDialog(BuildContext context, ActionClick actionClick) {
                         right: getSize(20),
                         bottom: getSize(5)),
                     child: Text(
-                      R.string().screenTitle.offerMsg,
+                      R.string.screenTitle.offerMsg,
                       style: appTheme.black12TextStyle,
                     ),
                   ),
@@ -448,7 +448,7 @@ Future showOfferCommentDialog(BuildContext context, ActionClick actionClick) {
                               Navigator.pop(context);
                             },
                             child: Text(
-                              R.string().commonString.cancel,
+                              R.string.commonString.cancel,
                               style: appTheme.black16TextStyle,
                             ),
                           ),
@@ -470,7 +470,7 @@ Future showOfferCommentDialog(BuildContext context, ActionClick actionClick) {
                               }
                             },
                             child: Text(
-                              R.string().screenTitle.addOffer,
+                              R.string.screenTitle.addOffer,
                               style: appTheme.primary16TextStyle,
                             ),
                           ),
@@ -520,7 +520,7 @@ Future showNotesDialog(BuildContext context, ActionClick actionClick) {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              R.string().screenTitle.addComment,
+                              R.string.screenTitle.addComment,
                               style: appTheme.commonAlertDialogueTitleStyle,
                             ),
                           ),
@@ -535,7 +535,7 @@ Future showNotesDialog(BuildContext context, ActionClick actionClick) {
                             autoFocus: false,
                             textOption: TextFieldOption(
                               maxLine: 3,
-                              hintText: R.string().screenTitle.comment,
+                              hintText: R.string.screenTitle.comment,
                               inputController: _commentController,
                               formatter: [
                                 WhitelistingTextInputFormatter(
@@ -547,10 +547,7 @@ Future showNotesDialog(BuildContext context, ActionClick actionClick) {
                             ),
                             validation: (text) {
                               if (text.isEmpty) {
-                                return R
-                                    .string()
-                                    .errorString
-                                    .pleaseEnterComment;
+                                return R.string.errorString.pleaseEnterComment;
                               }
                             },
                             textCallback: (text) {},
@@ -584,7 +581,7 @@ Future showNotesDialog(BuildContext context, ActionClick actionClick) {
                                           BorderRadius.circular(getSize(5)),
                                     ),
                                     child: Text(
-                                      R.string().commonString.cancel,
+                                      R.string.commonString.cancel,
                                       textAlign: TextAlign.center,
                                       style: appTheme.blue14TextStyle
                                           .copyWith(fontSize: getFontSize(16)),
@@ -620,7 +617,7 @@ Future showNotesDialog(BuildContext context, ActionClick actionClick) {
                                             BorderRadius.circular(getSize(5)),
                                         boxShadow: getBoxShadow(context)),
                                     child: Text(
-                                      R.string().commonString.btnSubmit,
+                                      R.string.commonString.btnSubmit,
                                       textAlign: TextAlign.center,
                                       style: appTheme.white16TextStyle,
                                     ),
@@ -672,7 +669,7 @@ Future showEnquiryDialog(BuildContext context, ActionClick actionClick) {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              R.string().screenTitle.addEnquiry,
+                              R.string.screenTitle.addEnquiry,
                               style: appTheme.commonAlertDialogueTitleStyle,
                             ),
                           ),
@@ -687,7 +684,7 @@ Future showEnquiryDialog(BuildContext context, ActionClick actionClick) {
                             autoFocus: false,
                             textOption: TextFieldOption(
                               maxLine: 3,
-                              hintText: R.string().screenTitle.remarks,
+                              hintText: R.string.screenTitle.remarks,
                               inputController: _commentController,
                               formatter: [
                                 WhitelistingTextInputFormatter(
@@ -699,10 +696,7 @@ Future showEnquiryDialog(BuildContext context, ActionClick actionClick) {
                             ),
                             validation: (text) {
                               if (text.isEmpty) {
-                                return R
-                                    .string()
-                                    .errorString
-                                    .pleaseEnterRemarks;
+                                return R.string.errorString.pleaseEnterRemarks;
                               }
                             },
                             textCallback: (text) {},
@@ -736,7 +730,7 @@ Future showEnquiryDialog(BuildContext context, ActionClick actionClick) {
                                           BorderRadius.circular(getSize(5)),
                                     ),
                                     child: Text(
-                                      R.string().commonString.cancel,
+                                      R.string.commonString.cancel,
                                       textAlign: TextAlign.center,
                                       style: appTheme.blue14TextStyle
                                           .copyWith(fontSize: getFontSize(16)),
@@ -772,7 +766,7 @@ Future showEnquiryDialog(BuildContext context, ActionClick actionClick) {
                                             BorderRadius.circular(getSize(5)),
                                         boxShadow: getBoxShadow(context)),
                                     child: Text(
-                                      R.string().commonString.btnSubmit,
+                                      R.string.commonString.btnSubmit,
                                       textAlign: TextAlign.center,
                                       style: appTheme.white16TextStyle,
                                     ),
@@ -836,7 +830,7 @@ Future showPlaceOrderDialog(BuildContext context, ActionClick actionClick) {
                     child: Align(
                       alignment: Alignment.center,
                       child: Text(
-                        R.string().authStrings.confirmStoneDetail,
+                        R.string.authStrings.confirmStoneDetail,
                         style: appTheme.commonAlertDialogueTitleStyle,
                       ),
                     ),
@@ -848,7 +842,7 @@ Future showPlaceOrderDialog(BuildContext context, ActionClick actionClick) {
                         bottom: getSize(5),
                         top: getSize(10)),
                     child: Text(
-                      R.string().authStrings.companyName,
+                      R.string.authStrings.companyName,
                       style: appTheme.black16TextStyle,
                     ),
                   ),
@@ -857,7 +851,7 @@ Future showPlaceOrderDialog(BuildContext context, ActionClick actionClick) {
                     child: CommonTextfield(
                       autoFocus: false,
                       textOption: TextFieldOption(
-                        hintText: R.string().authStrings.companyName,
+                        hintText: R.string.authStrings.companyName,
                         maxLine: 1,
                         inputController: _nameController,
                         formatter: [
@@ -869,7 +863,7 @@ Future showPlaceOrderDialog(BuildContext context, ActionClick actionClick) {
                       ),
                       validation: (text) {
                         if (text.isEmpty) {
-                          return R.string().authStrings.enterCompanyName;
+                          return R.string.authStrings.enterCompanyName;
                         }
                       },
                       textCallback: (text) {},
@@ -886,7 +880,7 @@ Future showPlaceOrderDialog(BuildContext context, ActionClick actionClick) {
                         bottom: getSize(5),
                         top: getSize(10)),
                     child: Text(
-                      R.string().authStrings.invoiceDate,
+                      R.string.authStrings.invoiceDate,
                       style: appTheme.black16TextStyle,
                     ),
                   ),
@@ -901,7 +895,7 @@ Future showPlaceOrderDialog(BuildContext context, ActionClick actionClick) {
                         bottom: getSize(5),
                         top: getSize(10)),
                     child: Text(
-                      R.string().screenTitle.comment,
+                      R.string.screenTitle.comment,
                       style: appTheme.black16TextStyle,
                     ),
                   ),
@@ -933,7 +927,7 @@ Future showPlaceOrderDialog(BuildContext context, ActionClick actionClick) {
                         bottom: getSize(5),
                         top: getSize(10)),
                     child: Text(
-                      R.string().screenTitle.note,
+                      R.string.screenTitle.note,
                       style: appTheme.black16TextStyle,
                     ),
                   ),
@@ -943,7 +937,7 @@ Future showPlaceOrderDialog(BuildContext context, ActionClick actionClick) {
                         right: getSize(20),
                         bottom: getSize(5)),
                     child: Text(
-                      R.string().screenTitle.orderMsg,
+                      R.string.screenTitle.orderMsg,
                       style: appTheme.black12TextStyle,
                     ),
                   ),
@@ -963,7 +957,7 @@ Future showPlaceOrderDialog(BuildContext context, ActionClick actionClick) {
                               Navigator.pop(context);
                             },
                             child: Text(
-                              R.string().commonString.cancel,
+                              R.string.commonString.cancel,
                               style: appTheme.black16TextStyle,
                             ),
                           ),
@@ -986,7 +980,7 @@ Future showPlaceOrderDialog(BuildContext context, ActionClick actionClick) {
                               }
                             },
                             child: Text(
-                              R.string().commonString.confirmStone,
+                              R.string.commonString.confirmStone,
                               style: appTheme.primary16TextStyle,
                             ),
                           ),
@@ -1033,7 +1027,7 @@ Widget setInvoiceDropDown(
           child: CommonTextfield(
               enable: false,
               textOption: TextFieldOption(
-                  hintText: R.string().errorString.selectInvoiceDate,
+                  hintText: R.string.errorString.selectInvoiceDate,
                   maxLine: 1,
                   prefixWid: getCommonIconWidget(
                       imageName: calender, imageType: IconSizeType.small),
@@ -1048,7 +1042,7 @@ Widget setInvoiceDropDown(
               },
               validation: (text) {
                 if (text.isEmpty) {
-                  return R.string().errorString.selectInvoiceDate;
+                  return R.string.errorString.selectInvoiceDate;
                 }
               },
               inputAction: TextInputAction.next,
@@ -1104,9 +1098,9 @@ Future openBottomSheetForSavedSearch(
           }).catchError((onError) {
             app.resolve<CustomDialogs>().confirmDialog(
                   context,
-                  title: R.string().commonString.error,
+                  title: R.string.commonString.error,
                   desc: onError.message,
-                  positiveBtnTitle: R.string().commonString.ok,
+                  positiveBtnTitle: R.string.commonString.ok,
                 );
           });
         },

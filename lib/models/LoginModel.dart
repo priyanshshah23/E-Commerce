@@ -5,6 +5,36 @@ import 'package:diamnow/models/Address/CountryListModel.dart';
 import 'package:diamnow/models/Address/StateListModel.dart';
 import 'package:flutter/widgets.dart';
 
+class CreateMpinReq {
+  int mPin;
+  bool isMpinAdded;
+  String username;
+
+  CreateMpinReq({this.mPin, this.isMpinAdded, this.username});
+
+  CreateMpinReq.fromJson(Map<String, dynamic> json) {
+    mPin = json['mPin'];
+    isMpinAdded = json['isMpinAdded'];
+    username = json['username'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (!isNullEmptyOrFalse(this.mPin)) {
+      data['mPin'] = this.mPin;
+    }
+
+    if (!isNullEmptyOrFalse(this.isMpinAdded)) {
+      data['isMpinAdded'] = this.isMpinAdded;
+    }
+
+    if (!isNullEmptyOrFalse(this.username)) {
+      data['username'] = this.username;
+    }
+    return data;
+  }
+}
+
 class LoginReq {
   String username;
   String password;
@@ -172,6 +202,9 @@ class User {
   String city;
   String state;
 
+  //mpin
+  bool isMpinAdded;
+
 //  Null createdBy;
 
   User.fromJson(Map<String, dynamic> json) {
@@ -274,6 +307,9 @@ class User {
     }
     kycRequired = json["kycRequired"] ?? false;
 
+    isMpinAdded =
+        !isNullEmptyOrFalse(json["isMpinAdded"]) ? json["isMpinAdded"] : false;
+
     // city  = json['city'];
     // state = json['state'];
     // country = json['country'];
@@ -367,6 +403,9 @@ class User {
     }
     data['seller'] = this.seller;
     data["kycRequired"] = this.kycRequired;
+
+    //mpin
+    data['isMpinAdded'] = this.isMpinAdded;
     return data;
   }
 
@@ -566,6 +605,7 @@ class Account {
   String howKnow;
   String referenceFrom;
   bool isDeleted;
+  int isApproved;
   bool isActive;
   int status;
   String updateIp;
@@ -618,6 +658,7 @@ class Account {
     street = json['street'];
     area = json['area'];
     zipCode = json['zipCode'];
+    isApproved = json["isApproved"];
     defaultNarration = json['defaultNarration'];
     orderEmail = json['orderEmail'];
     newStoneEmail = json['newStoneEmail'];
@@ -694,6 +735,7 @@ class Account {
     data['profileImage'] = this.profileImage;
     data['code'] = this.code;
     data['displayName'] = this.displayName;
+    data["isApproved"] = this.isApproved;
     data['companyName'] = this.companyName;
     data['companyNormalizeName'] = this.companyNormalizeName;
     data['companyType'] = this.companyType;
@@ -760,16 +802,19 @@ class Account {
 
 class Kyc {
   String path;
+  String docType;
 
-  Kyc({this.path});
+  Kyc({this.path, this.docType});
 
   Kyc.fromJson(Map<String, dynamic> json) {
     path = json['path'];
+    docType = json["docType"];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['path'] = this.path;
+    data["docType"] = this.docType;
     return data;
   }
 }

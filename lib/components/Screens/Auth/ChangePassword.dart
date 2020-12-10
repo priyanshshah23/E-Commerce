@@ -38,7 +38,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       child: Scaffold(
         appBar: getAppBar(
           context,
-          R.string().authStrings.changePassword,
+          R.string.authStrings.changePassword,
           bgColor: appTheme.whiteColor,
           leadingButton: getBackButton(context),
           centerTitle: false,
@@ -98,7 +98,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                       //  backgroundColor: appTheme.buttonColor,
                       borderRadius: getSize(5),
                       fitWidth: true,
-                      text: R.string().authStrings.changePassword,
+                      text: R.string.authStrings.changePassword,
                       //isButtonEnabled: enableDisableSigninButton(),
                     ),
                   ),
@@ -117,7 +117,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       textOption: TextFieldOption(
           prefixWid: getCommonIconWidget(
               imageName: password, imageType: IconSizeType.small),
-          hintText: R.string().authStrings.oldPassword + "*",
+          hintText: R.string.authStrings.oldPassword + "*",
           maxLine: 1,
           formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
           keyboardType: TextInputType.text,
@@ -126,7 +126,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       textCallback: (text) {},
       validation: (text) {
         if (text.isEmpty) {
-          return R.string().errorString.enterPassword;
+          return R.string.errorString.enterPassword;
         } else {
           return null;
         }
@@ -145,7 +145,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       textOption: TextFieldOption(
           prefixWid: getCommonIconWidget(
               imageName: password, imageType: IconSizeType.small),
-          hintText: R.string().authStrings.newPassword + "*",
+          hintText: R.string.authStrings.newPassword + "*",
           maxLine: 1,
           formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
           keyboardType: TextInputType.text,
@@ -154,9 +154,9 @@ class _ChangePasswordState extends State<ChangePassword> {
       textCallback: (text) {},
       validation: (text) {
         if (text.isEmpty) {
-          return R.string().errorString.enterPassword;
+          return R.string.errorString.enterPassword;
         } else if (!validateStructure(text)) {
-          return R.string().errorString.wrongPassword;
+          return R.string.errorString.wrongPassword;
         } else {
           return null;
         }
@@ -175,7 +175,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       textOption: TextFieldOption(
           prefixWid: getCommonIconWidget(
               imageName: password, imageType: IconSizeType.small),
-          hintText: R.string().authStrings.confirmPassword + "*",
+          hintText: R.string.authStrings.confirmPassword + "*",
           maxLine: 1,
           formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
           keyboardType: TextInputType.text,
@@ -184,9 +184,9 @@ class _ChangePasswordState extends State<ChangePassword> {
       textCallback: (text) {},
       validation: (text) {
         if (text.isEmpty) {
-          return R.string().errorString.enterPassword;
+          return R.string.errorString.enterPassword;
         } else if (text != _newPasswordController.text.trim()) {
-          return R.string().errorString.enterSamePassword;
+          return R.string.errorString.enterSamePassword;
         } else {
           return null;
         }
@@ -217,7 +217,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       app.resolve<CustomDialogs>().confirmDialog(context,
           title: "",
           desc: resp.message,
-          positiveBtnTitle: R.string().commonString.ok,
+          positiveBtnTitle: R.string.commonString.ok,
           onClickCallback: (buttonType) {
         if (buttonType == ButtonType.PositveButtonClick) {
           app.resolve<PrefUtils>().resetAndLogout(context);
@@ -229,9 +229,9 @@ class _ChangePasswordState extends State<ChangePassword> {
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-            title: R.string().commonString.error,
+            title: R.string.commonString.error,
             desc: onError.message,
-            positiveBtnTitle: R.string().commonString.btnTryAgain,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
           );
     });
   }

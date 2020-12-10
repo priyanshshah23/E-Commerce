@@ -140,7 +140,7 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
               ),
             ),
           ),
-          title == R.string().commonString.share
+          title == R.string.commonString.share
               ? Row(
                   children: [
                     Expanded(
@@ -244,7 +244,7 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                             borderRadius: BorderRadius.circular(getSize(5)),
                           ),
                           child: Text(
-                            R.string().commonString.cancel,
+                            R.string.commonString.cancel,
                             textAlign: TextAlign.center,
                             style: appTheme.blue14TextStyle
                                 .copyWith(fontSize: getFontSize(16)),
@@ -268,7 +268,7 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                               borderRadius: BorderRadius.circular(getSize(5)),
                               boxShadow: getBoxShadow(context)),
                           child: Text(
-                            R.string().commonString.download,
+                            R.string.commonString.download,
                             textAlign: TextAlign.center,
                             style: appTheme.white16TextStyle,
                           ),
@@ -289,9 +289,9 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
     } else {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-            title: R.string().commonString.error,
+            title: R.string.commonString.error,
             desc: "Could not launch $uri",
-            positiveBtnTitle: R.string().commonString.ok,
+            positiveBtnTitle: R.string.commonString.ok,
           );
     }
   }
@@ -309,9 +309,9 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
 //    }).catchError((onError) {
 //      app.resolve<CustomDialogs>().confirmDialog(
 //        context,
-//        title: R.string().commonString.error,
+//        title: R.string.commonString.error,
 //        desc: onError.message,
-//        positiveBtnTitle: R.string().commonString.btnTryAgain,
+//        positiveBtnTitle: R.string.commonString.btnTryAgain,
 //      );
 //    });
 //  }

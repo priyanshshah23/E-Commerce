@@ -8,6 +8,7 @@ import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/components/Screens/Auth/ResetPassword.dart';
+import 'package:diamnow/components/Screens/Auth/SignInWithMPINScreen.dart';
 
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/components/widgets/pinView_textFields/decoration/pin_decoration.dart';
@@ -132,8 +133,8 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
                         ),
                         Text(
                           isApiCall
-                              ? R.string().authStrings.enterOTP
-                              : R.string().authStrings.sendOTPToEmail,
+                              ? R.string.authStrings.enterOTP
+                              : R.string.authStrings.sendOTPToEmail,
                           style: appTheme.black14TextStyle,
                           textAlign: TextAlign.center,
                         ),
@@ -145,17 +146,17 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
-                                    Text(R.string().authStrings.didNotReceiveOTP,
+                                    Text(R.string.authStrings.didNotReceiveOTP,
                                         style: appTheme.grey16HintTextStyle),
                                     GestureDetector(
                                         onTap: () {
                                           if(isTimerCompleted) {
-                                            callForgetPasswordApi(isResend: true);
+                                            callForgetMpinApi(isResend: true);
                                           }
                                         },
                                         child: Text(
                                             isTimerCompleted
-                                                ? " " + R.string().authStrings.resendNow
+                                                ? " " + R.string.authStrings.resendNow
                                                 : " ${_printDuration(Duration(seconds: _start))}",
                                             style:
                                                 appTheme.darkBlue16TextStyle.copyWith(color: appTheme.greenColor))),
@@ -174,7 +175,7 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
                                     FocusScope.of(context).unfocus();
                                     if (_formKey.currentState.validate()) {
                                       _formKey.currentState.save();
-                                      callForgetPasswordApi();
+                                      callForgetMpinApi(isResend: true);
 //                                callLoginApi(context);
                                     } else {
                                       setState(() {
@@ -190,7 +191,7 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
                                   //  backgroundColor: appTheme.buttonColor,
                                   borderRadius: getSize(5),
                                   fitWidth: true,
-                                  text: R.string().authStrings.sendOTP,
+                                  text: R.string.authStrings.sendOTP,
                                   //isButtonEnabled: enableDisableSigninButton(),
                                 ),
                               ),
@@ -208,7 +209,7 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        Text(R.string().authStrings.rememberPassword,
+                        Text(R.string.authStrings.rememberPassword,
                             style: appTheme.grey16HintTextStyle),
                         GestureDetector(
                             onTap: () {
@@ -217,7 +218,7 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
                                 (Route<dynamic> route) => false,
                               );
                             },
-                            child: Text(" " + R.string().authStrings.signInCap,
+                            child: Text(" " + R.string.authStrings.signInCap,
                                 style: appTheme.darkBlue16TextStyle.copyWith(color: appTheme.greenColor))),
                       ],
                     ),
@@ -245,7 +246,7 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
       child: CommonTextfield(
         focusNode: _focusEmail,
         textOption: TextFieldOption(
-          hintText: R.string().authStrings.emailAndUname,
+          hintText: R.string.authStrings.emailAndUname,
           maxLine: 1,
           prefixWid: getCommonIconWidget(
               imageName: email,
@@ -267,9 +268,9 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
         textCallback: (text) {},
         validation: (text) {
           if (text.trim().isEmpty) {
-            return R.string().errorString.enterUsername;
+            return R.string.errorString.enterUsername;
           } /*else if (!validateEmail(text.trim())) {
-            return R.string().errorString.enterValidEmail;
+            return R.string.errorString.enterValidEmail;
           }*/ else {
             return null;
           }
@@ -365,7 +366,7 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
               if (pin.trim().length != 4) {
                 isOtpTrue = false;
                 isOtpCheck = false;
-                showOTPMsg = R.string().errorString.pleaseEnterOTP;
+                showOTPMsg = R.string.errorString.pleaseEnterOTP;
               } else if (pin.trim().length == 4) {
                 FocusScope.of(context).unfocus();
                callApiForVerifyOTP();
@@ -426,13 +427,13 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
         );
   }
 
-  callForgetPasswordApi({bool isResend = false}) async {
-    ForgotPasswordReq req = ForgotPasswordReq();
-    req.value = _emailController.text;
+  callForgetMpinApi({bool isResend = false}) async {
+   Map<String,dynamic> req = {};
+   req["username"] = _emailController.value.text;
 
     NetworkCall<BaseApiResp>()
         .makeCall(
-            () => app.resolve<ServiceModule>().networkService().forgetPassword(req),
+            () => app.resolve<ServiceModule>().networkService().forgetMpin(req),
         context,
         isProgress: true)
         .then((resp) async {
@@ -452,21 +453,21 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
         context,
-        title: R.string().commonString.error,
+        title: R.string.commonString.error,
         desc: onError.message,
-        positiveBtnTitle: R.string().commonString.btnTryAgain,
+        positiveBtnTitle: R.string.commonString.btnTryAgain,
       );
     });
   }
 
   callApiForVerifyOTP() async {
-    VerifyOTPReq req = VerifyOTPReq();
-    req.email = _emailController.text;
-    req.otpNumber = _pinEditingController.text.trim();
+    Map<String,dynamic> req = {};
+    req["mPinOtp"] = _pinEditingController.text.trim();
+    req["username"] = _emailController.text;
 
     NetworkCall<BaseApiResp>()
         .makeCall(
-            () => app.resolve<ServiceModule>().networkService().verifyOTP(req),
+            () => app.resolve<ServiceModule>().networkService().verifyOTPForMpin(req),
         context,
         isProgress: true)
         .then((resp) async {
@@ -474,19 +475,21 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
       isOtpTrue = true;
       isOtpCheck = false;
       showOTPMsg = null;
-      Map<String, dynamic> dict = new HashMap();
-      dict["value"] = _emailController.text;
-      dict["otpNumber"] = _pinEditingController.text.trim();
-      NavigationUtilities.pushRoute(ResetPassword.route, args: dict);
+      Map<String, dynamic> arguments = {};
+      // arguments["resetMpin"] = true;
+      arguments["enm"] = Mpin.forgotMpin;
+      arguments["userName"] = _emailController.text;
+      arguments["mPinOtp"] = _pinEditingController.text.trim();
+      NavigationUtilities.pushRoute(SignInWithMPINScreen.route,args: arguments);
     }).catchError((onError) {
       isOtpTrue = false;
       isOtpCheck = false;
       setState(() {});
       app.resolve<CustomDialogs>().confirmDialog(
         context,
-        title: R.string().commonString.error,
+        title: R.string.commonString.error,
         desc: onError.message,
-        positiveBtnTitle: R.string().commonString.btnTryAgain,
+        positiveBtnTitle: R.string.commonString.btnTryAgain,
       );
     });
   }

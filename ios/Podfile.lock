@@ -28,6 +28,10 @@ PODS:
   - libPhoneNumber-iOS (0.9.15)
   - local_auth (0.0.1):
     - Flutter
+  - OneSignal (2.15.2)
+  - onesignal_flutter (2.6.1):
+    - Flutter
+    - OneSignal (= 2.15.2)
   - package_info (0.0.1):
     - Flutter
   - path_provider (0.0.1):
@@ -66,6 +70,8 @@ DEPENDENCIES:
   - gallery_saver (from `.symlinks/plugins/gallery_saver/ios`)
   - libphonenumber (from `.symlinks/plugins/libphonenumber/ios`)
   - local_auth (from `.symlinks/plugins/local_auth/ios`)
+  - OneSignal (< 3.0, >= 2.7.1)
+  - onesignal_flutter (from `.symlinks/plugins/onesignal_flutter/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
@@ -82,6 +88,7 @@ SPEC REPOS:
   trunk:
     - FMDB
     - libPhoneNumber-iOS
+    - OneSignal
     - Reachability
 
 EXTERNAL SOURCES:
@@ -109,6 +116,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/libphonenumber/ios"
   local_auth:
     :path: ".symlinks/plugins/local_auth/ios"
+  onesignal_flutter:
+    :path: ".symlinks/plugins/onesignal_flutter/ios"
   package_info:
     :path: ".symlinks/plugins/package_info/ios"
   path_provider:
@@ -147,6 +156,8 @@ SPEC CHECKSUMS:
   libphonenumber: bd14d5abfc5939ab0b0767234e2d8e2593af258e
   libPhoneNumber-iOS: 0a32a9525cf8744fe02c5206eb30d571e38f7d75
   local_auth: 17f985934bb4ab2637431e5b3fe1b2d6698d2051
+  OneSignal: 9531e385388565f4d31797ddadbe0fcc786430ec
+  onesignal_flutter: b4412973eac419ccce07363e43e0d6057c583a96
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: 8278954f2382902f63f00dd8828769c0bd6d511b
@@ -160,6 +171,6 @@ SPEC CHECKSUMS:
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
   webview_flutter: d2b4d6c66968ad042ad94cbb791f5b72b4678a96
 
-PODFILE CHECKSUM: 21b64fbb12492d731c9be90cbe0f2d328bef4b49
+PODFILE CHECKSUM: 6fafb14ff954ec0d94194edf038d84201d7be595
 
 COCOAPODS: 1.9.3

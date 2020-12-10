@@ -18,7 +18,7 @@ class FlutterCustomPinView extends StatefulWidget {
   final bool fingerVerify;
   final String title;
   final int passLength;
-  final bool showWrongPassDialog;
+  bool showWrongPassDialog;
   final bool showFingerPass;
   final String wrongPassTitle;
   final String wrongPassContent;
@@ -88,17 +88,6 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
                 _inputCodes.clear();
               });
             });
-            if (widget.showWrongPassDialog) {
-              app.resolve<CustomDialogs>().confirmDialog(
-                    context,
-                    barrierDismissible: true,
-                    title: "Oops!",
-                    desc: widget.wrongPassContent,
-                    positiveBtnTitle: R.string().commonString.ok,
-                    // negativeBtnTitle: R.string().commonString.cancel,
-                    onClickCallback: (buttonType) {},
-                  );
-            }
           }
         });
       }
@@ -133,71 +122,90 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.showWrongPassDialog) {
+      widget.showWrongPassDialog = false;
+      // app.resolve<CustomDialogs>().confirmDialog(
+      //       context,
+      //       barrierDismissible: true,
+      //       title: "Oops!",
+      //       desc: widget.wrongPassContent,
+      //       positiveBtnTitle: R.string.commonString.ok,
+      //       // negativeBtnTitle: R.string.commonString.cancel,
+      //       onClickCallback: (buttonType) {},
+      //     );
+      _deleteAllCode();
+    }
+    
     Future.delayed(Duration(milliseconds: 200), () {
       _fingerPrint();
     });
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  CodePanel(
-                    codeLength: widget.passLength,
-                    currentLength: _currentCodeLength,
-                    borderColor: widget.borderColor,
-                    foregroundColor: widget.foregroundColor,
-                    deleteCode: _deleteCode,
-                    fingerVerify: widget.fingerVerify,
-                    status: _currentState,
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: getSize(40),
-            ),
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.only(left: 0, top: 0),
-                child: NotificationListener<OverscrollIndicatorNotification>(
-                  onNotification: (overscroll) {
-                    overscroll.disallowGlow();
-                    return null;
-                  },
-                  child: GridView.count(
-                    crossAxisCount: 3,
-                    childAspectRatio: 2.3,
-                    mainAxisSpacing: 35,
-                    padding: EdgeInsets.all(4),
-                    children: <Widget>[
-                      buildContainerCircle(1),
-                      buildContainerCircle(2),
-                      buildContainerCircle(3),
-                      buildContainerCircle(4),
-                      buildContainerCircle(5),
-                      buildContainerCircle(6),
-                      buildContainerCircle(7),
-                      buildContainerCircle(8),
-                      buildContainerCircle(9),
-                      buildRemoveIcon(Icons.close),
-                      buildContainerCircle(0),
-                      buildContainerIcon(Icons.arrow_back),
-                    ],
-                  ),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: appTheme.whiteColor,
+        body: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    CodePanel(
+                      codeLength: widget.passLength,
+                      currentLength: _currentCodeLength,
+                      borderColor: widget.borderColor,
+                      foregroundColor: widget.foregroundColor,
+                      deleteCode: _deleteCode,
+                      fingerVerify: widget.fingerVerify,
+                      status: _currentState,
+                    ),
+                  ],
                 ),
               ),
-            )
-          ],
+              SizedBox(
+                height: getSize(40),
+              ),
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.only(left: 0, top: 0),
+                  child: NotificationListener<OverscrollIndicatorNotification>(
+                    onNotification: (overscroll) {
+                      overscroll.disallowGlow();
+                      return null;
+                    },
+                    child: GridView.count(
+                      crossAxisCount: 3,
+                      childAspectRatio: 2.3,
+                      mainAxisSpacing: 35,
+                      padding: EdgeInsets.all(4),
+                      children: <Widget>[
+                        buildContainerCircle(1),
+                        buildContainerCircle(2),
+                        buildContainerCircle(3),
+                        buildContainerCircle(4),
+                        buildContainerCircle(5),
+                        buildContainerCircle(6),
+                        buildContainerCircle(7),
+                        buildContainerCircle(8),
+                        buildContainerCircle(9),
+                        buildRemoveIcon(Icons.close),
+                        buildContainerCircle(0),
+                        buildContainerIcon(Icons.arrow_back),
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -207,6 +215,7 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
     return InkResponse(
       highlightColor: appTheme.greenColor,
       onTap: () {
+        FocusScope.of(context).unfocus();
         _onCodeClick(number);
       },
       child: Container(

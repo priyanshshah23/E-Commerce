@@ -4,13 +4,16 @@ import '../app.export.dart';
 
 class ApiConstants {
   //  static const String PROXY_URL = "PROXY 192.168.2.124:8888";
-  static String PROXY_URL = "PROXY 192.168.0.116:8888";
+  // static String PROXY_URL = "PROXY 192.168.0.114:8888";
+  static String PROXY_URL = "PROXY 192.168.0.114:8888";
+
 //    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 
   static const String imageBaseURL = baseURL;
   static const String webPageUrl = "http://pndevelopapi.democ.in/";
-  static const String shareUrl = "http://fndevelop.democ.in/diamond-details/";
-  static const String googleDocUrl = "https://docs.google.com/viewer?embedded=true&url=";
+  static const String shareUrl = "http://pndevelop.democ.in/diamond-details/";
+  static const String googleDocUrl =
+      "https://docs.google.com/viewer?embedded=true&url=";
 
   static const String apiUrl = baseURL;
   static const String commonUrl = apiUrl + "device/v1/";
@@ -56,7 +59,10 @@ class ApiConstants {
       apiUrl + "web/v1/auth/reset-password-by-user"; //done
   static const String personalInformation = commonUrl + "user/update"; //done
   static const String sendOTP = commonUrl + "user/send-otp"; //done
+  static const String forgotMpin = commonUrl + "forgot-mpin?";
   static const String verifyOTP = commonUrl + "user/verify-otp"; //done
+  static const String verifyOTPForMpin = commonUrl + "verify-mpin-otp"; //done
+  static const String verifyMpin = commonUrl + "verify-mpin"; //done
   static const String companyInformation =
       commonUrl + "user/profile/update"; //done
   static const String quickSearch = commonUrl + "diamond/quick-search";
@@ -85,6 +91,8 @@ class ApiConstants {
   static const String notificationList = apiUrl + "device/v1/notification/list";
   static const String markAsReadNotification =
       commonUrl + "notification/markAsRead";
+
+  static const String sendNotificationId = commonUrl + "user/player";
   static const String searchReportNo = "web/v1/diamond/reportno/paginate";
   static const String updateOffer = "device/v1/diamond-track/update";
 
@@ -97,6 +105,11 @@ class ApiConstants {
   static const String contactUs = webPageUrl + "contact-us";
   static const String shippingPolicy = webPageUrl + "shipping-policy";
   static const String aboutUs = webPageUrl + "about-us";
+
+  //mpin
+  static const String createMpin = commonUrl + "user/create-mpin";
+  static const String resetMpin = commonUrl + "reset-mpin";
+  static const String resetMpinByOtp = commonUrl + "reset-mpin-by-otp";
 }
 
 class DiamondUrls {

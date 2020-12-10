@@ -66,17 +66,39 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      //Kyc rejected
+      if (user.account.isApproved == KYCStatus.rejected &&
+          user.account.isKycUploaded == true) {
+        Timer(
+          Duration(seconds: 2),
+          () => (app.resolve<CustomDialogs>().confirmDialog(context,
+              dismissPopup: false,
+              title: R.string.authStrings.kYCRejected,
+              desc: R.string.authStrings.kycRejectedDesc,
+              positiveBtnTitle: R.string.commonString.upload,
+              negativeBtnTitle: R.string.commonString.btnSkip,
+              onClickCallback: (click) {
+            if (click == ButtonType.PositveButtonClick) {
+              NavigationUtilities.pushRoute(
+                UploadKYCScreen.route,
+              );
+            }
+          })),
+        );
+      }
+
+      //Documents not uploaded
       if (user.account.isKycUploaded == false) {
         if (!user.kycRequired) {
           Timer(
             Duration(seconds: 2),
             () => (app.resolve<CustomDialogs>().confirmDialog(context,
                 dismissPopup: false,
-                title: R.string().authStrings.uploadKYC,
-                desc: R.string().authStrings.uploadKycDesc,
-                positiveBtnTitle: R.string().commonString.upload,
+                title: R.string.authStrings.uploadKYC,
+                desc: R.string.authStrings.uploadKycDesc,
+                positiveBtnTitle: R.string.commonString.upload,
                 negativeBtnTitle:
-                    user.kycRequired ? null : R.string().commonString.btnSkip,
+                    user.kycRequired ? null : R.string.commonString.btnSkip,
                 onClickCallback: (click) {
               if (click == ButtonType.PositveButtonClick) {
                 NavigationUtilities.pushRoute(
@@ -109,9 +131,9 @@ class _HomeScreenState extends State<HomeScreen> {
       if (selectedType == DiamondModuleConstant.MODULE_TYPE_HOME) {
         app.resolve<CustomDialogs>().confirmDialog(context,
             title: APPNAME,
-            desc: R.string().commonString.lblAppExit,
-            positiveBtnTitle: R.string().commonString.lblExit,
-            negativeBtnTitle: R.string().commonString.cancel,
+            desc: R.string.commonString.lblAppExit,
+            positiveBtnTitle: R.string.commonString.lblExit,
+            negativeBtnTitle: R.string.commonString.cancel,
             onClickCallback: (btnType) {
           if (btnType == ButtonType.PositveButtonClick) {
             //  Navigator.pop(context);

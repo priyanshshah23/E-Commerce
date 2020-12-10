@@ -9,10 +9,12 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/Screens/Auth/ForgetMPIN.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
+import 'package:diamnow/components/Screens/Auth/PasswordResetSuccessfully.dart';
 import 'package:diamnow/components/Screens/Auth/Signup.dart';
 import 'package:diamnow/components/Screens/Version/VersionUpdate.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
@@ -29,33 +31,126 @@ import 'package:package_info/package_info.dart';
 
 class SignInWithMPINScreen extends StatefulScreenWidget {
   static const route = "SignInWithMPINScreen";
+  bool isForReEnter = false;
+  List<int> enteredPin = [];
+  Function verifyPinCallback;
+  // from mpin button on login screen.
+  bool fromMpinButton = false;
+
+  //reset mpin from otp
+
+  String userName = "";
+  String mPinOtp = "";
+
+  //verifyMpin before enable mpin from myaccount.
+  bool askForVerifyMpin = false;
+  //enum for which screen you came from
+  int enm;
+
+  //when click on mpin from popupbox
+
+  SignInWithMPINScreen(
+      {this.isForReEnter,
+      this.enteredPin,
+      this.fromMpinButton,
+      this.askForVerifyMpin,
+      this.enm,
+      Map<String, dynamic> arguments}) {
+    if (!isNullEmptyOrFalse(arguments)) {
+      if (!isNullEmptyOrFalse(arguments["userName"])) {
+        userName = arguments["userName"];
+      }
+      if (!isNullEmptyOrFalse(arguments["mPinOtp"])) {
+        mPinOtp = arguments["mPinOtp"];
+      }
+
+      if (!isNullEmptyOrFalse(arguments["askForVerifyMpin"])) {
+        askForVerifyMpin = arguments["askForVerifyMpin"];
+      }
+      if (!isNullEmptyOrFalse(arguments["enm"])) {
+        enm = arguments["enm"];
+      }
+      if (!isNullEmptyOrFalse(arguments["verifyPinCallback"])) {
+        verifyPinCallback = arguments["verifyPinCallback"];
+      }
+    }
+  }
 
   @override
-  _SignInWithMPINScreen createState() => _SignInWithMPINScreen();
+  _SignInWithMPINScreen createState() => _SignInWithMPINScreen(
+      this.isForReEnter,
+      this.enteredPin,
+      this.fromMpinButton,
+      this.userName,
+      this.mPinOtp,
+      this.askForVerifyMpin,
+      this.enm,
+      this.verifyPinCallback);
 }
 
 class _SignInWithMPINScreen extends StatefulScreenWidgetState {
   bool isFingerprint = false;
   String _userName;
+  bool isForReEnter;
+  List<int> enteredPin;
+  bool fromMpinButton;
+
+  String userName;
+  String mPinOtp = "";
+  bool askForVerifyMpin;
+  int enm;
+  Function verifyPinCallback;
+
+  final TextEditingController _userNameController = TextEditingController();
+  var _focusUserNameTextField = FocusNode();
+  final _formKey = GlobalKey<FormState>();
+  bool _autoValidate = false;
+
+  bool deleteAllCode = false;
+
   // String _lastLogin;
-  LoginScreenState loginScreenObject = LoginScreenState();
+  _SignInWithMPINScreen(
+      this.isForReEnter,
+      this.enteredPin,
+      this.fromMpinButton,
+      this.userName,
+      this.mPinOtp,
+      this.askForVerifyMpin,
+      this.enm,
+      this.verifyPinCallback);
+
+  // LoginScreenState loginScreenObject = LoginScreenState();
 
   @override
   void initState() {
     super.initState();
-    _userName = app.resolve<PrefUtils>().getString("userName");
+    if (isNullEmptyOrFalse(isForReEnter)) {
+      isForReEnter = false;
+    }
+    if (isNullEmptyOrFalse(enteredPin)) {
+      enteredPin = [];
+    }
+    if (isNullEmptyOrFalse(fromMpinButton)) {
+      fromMpinButton = false;
+    }
+
+    if (isNullEmptyOrFalse(askForVerifyMpin)) {
+      askForVerifyMpin = false;
+    }
+    _userName = isNullEmptyOrFalse(userName)
+        ? app.resolve<PrefUtils>().getString("userName")
+        : userName;
+    if (!isNullEmptyOrFalse(_userName)) _userNameController.text = _userName;
     // _lastLogin = app.resolve<PrefUtils>().getUserDetails()
   }
 
   @override
-  void dispose() { 
-    loginScreenObject.userNameController.dispose();
+  void dispose() {
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // var myPass = [1, 2, 3, 4, 5, 6];
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -63,77 +158,111 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
       child: AppBackground(
         child: SafeArea(
           child: Scaffold(
-            resizeToAvoidBottomPadding: false,
-            resizeToAvoidBottomInset: true,
-            appBar: getAppBar(
-              context,
-              R.string().authStrings.signInWithMPIN,
-              bgColor: appTheme.whiteColor,
-              leadingButton: getBackButton(context),
-              centerTitle: false,
-            ),
-            body: Container(
-              padding: EdgeInsets.only(
-                left: getSize(20),
-                right: getSize(20),
-                top: getSize(10),
-              ),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Container(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          // circle avatar
-                          Container(
-                            height: getSize(54),
-                            width: getSize(54),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(getSize(25))),
-                              child: getImageView(
-                                "",
-                                placeHolderImage: userTemp,
-                                fit: BoxFit.fill,
-                                height: getSize(50),
-                                width: getSize(50),
+              backgroundColor: appTheme.whiteColor,
+              resizeToAvoidBottomPadding: false,
+              resizeToAvoidBottomInset: true,
+              appBar: getAppBar(
+                  context,
+                  (enm == Mpin.splash ||
+                              enm == Mpin.myAccount ||
+                              askForVerifyMpin) &&
+                          !isForReEnter
+                      ? R.string.commonString.verifympin
+                      : (enm == Mpin.changeMpin ||
+                                  enm == Mpin.forgotMpin ||
+                                  enm == Mpin.createMpin) &&
+                              !isForReEnter
+                          ? R.string.commonString.createMPin
+                          : isForReEnter
+                              ? R.string.commonString.reentermpin
+                              : R.string.authStrings.signInWithMPIN,
+                  bgColor: appTheme.whiteColor,
+                  leadingButton:
+                      enm == Mpin.splash ? SizedBox() : getBackButton(context),
+                  centerTitle: false,
+                  actionItems: [
+                    if (enm != Mpin.createMpin &&
+                        fromMpinButton == false &&
+                        enm != Mpin.login &&
+                        enm != Mpin.forgotMpin &&
+                        enm != Mpin.myAccount &&
+                        enm != Mpin.changeMpin)
+                      InkWell(
+                        onTap: () {
+                          logoutFromApp(context);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(right: getSize(16.0)),
+                          child: Container(
+                              child: Image.asset(logout,
+                                  width: getSize(24), height: getSize(24))),
+                        ),
+                      )
+                  ]),
+              body: Container(
+                padding: EdgeInsets.only(
+                  left: getSize(20),
+                  right: getSize(20),
+                  top: getSize(10),
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            // circle avatar
+                            Container(
+                              height: getSize(54),
+                              width: getSize(54),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(getSize(25))),
+                                child: getImageView(
+                                  "",
+                                  placeHolderImage: userTemp,
+                                  fit: BoxFit.fill,
+                                  height: getSize(50),
+                                  width: getSize(50),
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(width: getSize(10)),
-                          //username
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                !isNullEmptyOrFalse(_userName) ? Text(
-                                  _userName,
-                                  style: appTheme.black16TextStyle.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ) :
-                                loginScreenObject.getMobileTextField(),
-                                // SizedBox(height: getSize(6)),
-                                // Text(
-                                //   "Last login: 28 October 2020 | 11:37pm",
-                                //   style: appTheme.black12TextStyle,
-                                // ),
-                              ],
+                            SizedBox(width: getSize(10)),
+                            //username
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  !isNullEmptyOrFalse(_userName) &&
+                                          !fromMpinButton
+                                      ? Text(
+                                          _userName,
+                                          style: appTheme.black16TextStyle
+                                              .copyWith(
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        )
+                                      : Form(
+                                          key: _formKey,
+                                          autovalidate: _autoValidate,
+                                          child: getUserNameTextField(),
+                                        ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: getSize(54)),
-                    Text(
-                      "Enter your 6 digit MPIN",
-                      style: appTheme.black16MediumTextStyle,
-                    ),
-                    SizedBox(height: getSize(32)),
+                      SizedBox(height: getSize(54)),
+                      Text(
+                        R.string.commonString.enteryoursixdigitcode,
+                        style: appTheme.black16MediumTextStyle,
+                      ),
+                      SizedBox(height: getSize(32)),
 //                    Row(
 //                      mainAxisAlignment: MainAxisAlignment.center,
 //                      children: [
@@ -192,64 +321,107 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
 //                        ),
 //                      ],
 //                    ),
-                    Container(
-                      height: 800,
-                      child: FlutterCustomPinView(
-                        title: "This is Screet ",
-                        passLength: 6,
-                        bgImage: "",
-                        showFingerPass: true,
-                        fingerPrintImage: "",
-                        //fingerFunction: biometrics,
-                        fingerVerify: isFingerprint,
-                        borderColor: appTheme.whiteColor,
-                        foregroundColor: appTheme.textGreyColor,
-                        showWrongPassDialog: true,
-                        wrongPassContent: "Wrong pass please try again.",
-                        wrongPassTitle: "Oops!",
-                        wrongPassCancelButtonText: "Cancel",
-                        passCodeVerify: (passcode) async {
-                          print(passcode);
-                          // for (int i = 0; i < myPass.length; i++) {
-                          //   if (passcode[i] != myPass[i]) {
-                          //     return false;
-                          //   }
-                          // }
-                          return true;
+                      GestureDetector(
+                        onTap: () {
+                          FocusScope.of(context).unfocus();
                         },
-                        onSuccess: () {
-                          print("success");
-                          print(loginScreenObject.userNameController.text);
-                          // SyncManager().callVersionUpdateApi(
-                          //   context,
-                          //   VersionUpdateApi.signInWithMpin,
-                          // );
-                        },
+                        child: Container(
+                          height: 800,
+                          child: FlutterCustomPinView(
+                            title: "This is Screet ",
+                            passLength: 6,
+                            bgImage: "",
+                            showFingerPass: true,
+                            fingerPrintImage: "",
+                            //fingerFunction: biometrics,
+                            fingerVerify: isFingerprint,
+                            borderColor: appTheme.whiteColor,
+                            foregroundColor: appTheme.textGreyColor,
+                            showWrongPassDialog: deleteAllCode,
+
+                            passCodeVerify: (passcode) async {
+                              print(passcode);
+
+                              if (isForReEnter) {
+                                for (int i = 0; i < enteredPin.length; i++) {
+                                  if (passcode[i] != enteredPin[i]) {
+                                    return false;
+                                  }
+                                }
+                                return true;
+                              } else {
+                                enteredPin = passcode;
+                                return true;
+                              }
+                            },
+                            onSuccess: () {
+                              if (!isNullEmptyOrFalse(
+                                  _userNameController.text)) {
+                                if (!isForReEnter) {
+                                  if (fromMpinButton) {
+                                    // Focus.of(context).unfocus();
+                                    callApiForLoginUsingMpin(context);
+                                  } else if (askForVerifyMpin) {
+                                    callApiForVerifyMpin(context);
+                                  } else {
+                                    Map<String, dynamic> arguments = {};
+                                    arguments["enm"] = enm;
+                                    arguments["userName"] = userName;
+                                    arguments["mPinOtp"] = mPinOtp;
+                                    NavigationUtilities.push(
+                                        SignInWithMPINScreen(
+                                      enteredPin: this.enteredPin,
+                                      isForReEnter: true,
+                                      arguments: arguments,
+                                    ));
+                                  }
+                                } else {
+                                  if (enm == Mpin.forgotMpin) {
+                                    callApiForResetMpinByOTP(context);
+                                  } else if (enm == Mpin.changeMpin) {
+                                    callApiForChangeMpin(context);
+                                  } else {
+                                    callCreateMpApi(context);
+                                  }
+                                }
+                              } else {
+                                setState(() {
+                                  _autoValidate = true;
+                                });
+                              }
+                            },
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-            bottomNavigationBar: Container(
+              bottomNavigationBar: enm != Mpin.createMpin &&
+                      enm != Mpin.login &&
+                      enm != Mpin.forgotMpin &&
+                      enm != Mpin.myAccount &&
+                      enm != Mpin.changeMpin &&
+                      enm != Mpin.splash
+                  ? Container(
 //              alignment: Alignment.bottomCenter,
-              margin: EdgeInsets.all(getSize(15)),
-              child: InkWell(
-                onTap: () {
-                  NavigationUtilities.pushRoute(ForgetMPIN.route);
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text("Forgot MPIN?",
-                        style: appTheme.black16MediumTextStyle
-                            .copyWith(color: appTheme.greenColor)),
-                  ],
-                ),
-              ),
-            ),
-          ),
+                      margin: EdgeInsets.all(getSize(15)),
+                      child: InkWell(
+                        onTap: () {
+                          NavigationUtilities.pushRoute(ForgetMPIN.route);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(R.string.commonString.forgotmpin,
+                                style: appTheme.black16MediumTextStyle
+                                    .copyWith(color: appTheme.greenColor)),
+                          ],
+                        ),
+                      ),
+                    )
+                  : SizedBox()),
         ),
       ),
     );
@@ -259,151 +431,264 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
 //    if (await isValidMobile(
 //        _mobileController.text.trim(), selectedDialogCountry.isoCode) ==
 //        false) {
-//      return showToast(R.string().errorString.enterValidPhone,context: context);
+//      return showToast(R.string.errorString.enterValidPhone,context: context);
 //    } else {
 //      callApi(context);
 //    }
   }
 
-  callApi(BuildContext context) async {
-    SignInAsGuestReq req = SignInAsGuestReq();
+  Future callCreateMpApi(BuildContext context) async {
+    CreateMpinReq req = CreateMpinReq();
+    String enteredMpinInString = "";
 
-    NetworkCall<LoginResp>()
+    enteredPin.forEach((element) {
+      enteredMpinInString += (element.toString());
+    });
+
+    int finalEnteredMpinInInt = int.parse(enteredMpinInString);
+
+    req.mPin = finalEnteredMpinInInt;
+    req.isMpinAdded = true;
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().createMpin(req),
+            context,
+            isProgress: true)
+        .then((loginResp) {
+      print("Api calling doneeeeeeeeeee");
+      Map<String, dynamic> arguments = {};
+      arguments["isForMpin"] = true;
+      arguments["createMpin"] = true;
+      NavigationUtilities.pushRoute(PasswordResetSuccessfully.route,
+          args: arguments);
+      // callLogout(context);
+      // NavigationUtilities.pushRoute(LoginScreen.route);
+    }).catchError((onError) {
+      if (onError is ErrorResp) {
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            title: R.string.commonString.error,
+            desc: onError.message,
+            positiveBtnTitle: R.string.commonString.ok,
+            onClickCallback: (ButtonType buttonType) {
+          setState(() {
+            deleteAllCode = true;
+          });
+        });
+      }
+    });
+  }
+
+  Future callApiForChangeMpin(BuildContext context) async {
+    Map<String, dynamic> req = {};
+    String enteredMpinInString = "";
+
+    enteredPin.forEach((element) {
+      enteredMpinInString += (element.toString());
+    });
+
+    req["username"] = _userNameController.text;
+    // req["mPin"] = int.parse(enteredMpinInString);
+    req["mPin"] = enteredMpinInString;
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().resetMpin(req),
+            context,
+            isProgress: true)
+        .then((loginResp) {
+      print("Api calling doneeeeeeeeeee");
+      Map<String, dynamic> arguments = {};
+      arguments["isForMpin"] = true;
+      NavigationUtilities.pushRoute(PasswordResetSuccessfully.route,
+          args: arguments);
+      // NavigationUtilities.pushRoute(LoginScreen.route);
+    }).catchError((onError) {
+      if (onError is ErrorResp) {
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            title: R.string.commonString.error,
+            desc: onError.message,
+            positiveBtnTitle: R.string.commonString.ok,
+            onClickCallback: (ButtonType buttonType) {
+          setState(() {
+            deleteAllCode = true;
+          });
+        });
+      }
+    });
+  }
+
+  Future callApiForResetMpinByOTP(BuildContext context) async {
+    Map<String, dynamic> req = {};
+    String enteredMpinInString = "";
+
+    enteredPin.forEach((element) {
+      enteredMpinInString += (element.toString());
+    });
+
+    req["username"] = _userName;
+    req["mPinOtp"] = mPinOtp;
+    req["mPin"] = (enteredMpinInString);
+
+    NetworkCall<BaseApiResp>()
         .makeCall(
             () => app
                 .resolve<ServiceModule>()
                 .networkService()
-                .signInAsGuest(req),
+                .resetMpinByOtp(req),
             context,
             isProgress: true)
-        .then((loginResp) async {
-//      if (loginResp.data != null) {
-//        app.resolve<PrefUtils>().saveUser(loginResp.data.user);
-//        await app.resolve<PrefUtils>().saveUserToken(
-//          loginResp.data.token.jwt,
-//        );
-//        await app.resolve<PrefUtils>().saveUserPermission(
-//          loginResp.data.userPermissions,
-//        );
-//      }
-      // callVersionUpdateApi(id: loginResp.data.user.id);
-      SyncManager().callVersionUpdateApi(
-          context, VersionUpdateApi.signInWithMpin,
-          id: loginResp.data.user.id);
+        .then((loginResp) {
+      print("Api calling doneeeeeeeeeee");
+      // callLogout(context);
+      Map<String, dynamic> arguments = {};
+      arguments["isForMpin"] = true;
+      NavigationUtilities.pushRoute(PasswordResetSuccessfully.route,
+          args: arguments);
     }).catchError((onError) {
       if (onError is ErrorResp) {
-        app.resolve<CustomDialogs>().confirmDialog(
-              context,
-              title: R.string().commonString.error,
-              desc: onError.message,
-              positiveBtnTitle: R.string().commonString.ok,
-            );
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            title: R.string.commonString.error,
+            desc: onError.message,
+            positiveBtnTitle: R.string.commonString.ok,
+            onClickCallback: (ButtonType buttonType) {
+          setState(() {
+            deleteAllCode = true;
+          });
+        });
       }
     });
   }
-  // void callVersionUpdateApi({String id}) {
-  //   NetworkCall<VersionUpdateResp>()
-  //       .makeCall(
-  //           () => app
-  //           .resolve<ServiceModule>()
-  //           .networkService()
-  //           .getVersionUpdate(),
-  //       context,
-  //       isProgress: true)
-  //       .then(
-  //         (resp) {
-  //       if (resp.data != null) {
-  //         PackageInfo.fromPlatform().then(
-  //               (PackageInfo packageInfo) {
-  //             print(packageInfo.buildNumber);
-  //             String appName = packageInfo.appName;
-  //             String packageName = packageInfo.packageName;
-  //             String version = packageInfo.version;
-  //             String buildNumber = packageInfo.buildNumber;
 
-  //             if (Platform.isIOS) {
-  //               if (resp.data.ios != null) {
-  //                 num respVersion = resp.data.ios.number;
-  //                 if (num.parse(version) < respVersion) {
-  //                   bool hardUpdate = resp.data.ios.isHardUpdate;
-  //                   Map<String, dynamic> dict = new HashMap();
-  //                   dict["isHardUpdate"] = hardUpdate;
-  //                   dict["oncomplete"] = () {
-  //                     Navigator.pop(context);
-  //                   };
-  //                   print(hardUpdate);
-  //                   if (hardUpdate == true) {
-  //                     NavigationUtilities.pushReplacementNamed(
-  //                       VersionUpdate.route,
-  //                       args: dict,
-  //                     );
-  //                   }
-  //                 } else {
-  //                   SyncManager.instance.callMasterSync(
-  //                       NavigationUtilities.key.currentContext, () async {
-  //                     //success
-  //                     AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-  //                   }, () {},
-  //                       isNetworkError: false,
-  //                       isProgress: true,
-  //                       id: id).then((value) {});
-  //                 }
-  //               } else {
-  //                 SyncManager.instance.callMasterSync(
-  //                     NavigationUtilities.key.currentContext, () async {
-  //                   //success
-  //                   AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-  //                 }, () {},
-  //                     isNetworkError: false,
-  //                     isProgress: true,
-  //                     id: id).then((value) {});
-  //               }
-  //             } else {
-  //               if (resp.data.android != null) {
-  //                 num respVersion = resp.data.android.number;
-  //                 if (num.parse(buildNumber) < respVersion) {
-  //                   bool hardUpdate = resp.data.android.isHardUpdate;
-  //                   if (hardUpdate == true) {
-  //                     NavigationUtilities.pushReplacementNamed(
-  //                       VersionUpdate.route,
-  //                     );
-  //                   }
-  //                 } else {
-  //                   SyncManager.instance.callMasterSync(
-  //                       NavigationUtilities.key.currentContext, () async {
-  //                     //success
-  //                     AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-  //                   }, () {},
-  //                       isNetworkError: false,
-  //                       isProgress: true,
-  //                       id: id).then((value) {});
-  //                 }
-  //               } else {
-  //                 SyncManager.instance.callMasterSync(
-  //                     NavigationUtilities.key.currentContext, () async {
-  //                   //success
-  //                   AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-  //                 }, () {},
-  //                     isNetworkError: false,
-  //                     isProgress: true,
-  //                     id: id).then((value) {});
-  //               }
-  //             }
-  //           },
-  //         );
-  //       }
-  //     },
-  //   ).catchError(
-  //         (onError) => {
-  //       app.resolve<CustomDialogs>().confirmDialog(context,
-  //           title: R.string().errorString.versionError,
-  //           desc: onError.message,
-  //           positiveBtnTitle: R.string().commonString.btnTryAgain,
-  //           onClickCallback: (PositveButtonClick) {
-  //             callVersionUpdateApi(id: id);
-  //           }),
-  //     },
-  //   );
-  // }
+  Future callApiForVerifyMpin(BuildContext context) async {
+    Map<String, dynamic> req = {};
+    String enteredMpinInString = "";
 
+    enteredPin.forEach((element) {
+      enteredMpinInString += (element.toString());
+    });
+
+    req["username"] = _userNameController.text;
+    // req["mPin"] = int.parse(enteredMpinInString);
+    req["mPin"] = enteredMpinInString;
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().verifyMpin(req),
+            context,
+            isProgress: true)
+        .then((loginResp) {
+      print("Api calling doneeeeeeeeeee");
+      // callLogout(context);
+      //here check from splash or from switch...
+      if (enm == Mpin.myAccount) {
+        Navigator.of(context).pop();
+        this.verifyPinCallback();
+      } else if (enm == Mpin.splash) {
+        SyncManager().callVersionUpdateApi(context, VersionUpdateApi.splash,
+            id: app.resolve<PrefUtils>().getUserDetails().id ?? "");
+      } else if (enm == Mpin.login) {
+        this.verifyPinCallback();
+      } else if (enm == Mpin.changeMpin) {
+        this.verifyPinCallback();
+      }
+    }).catchError((onError) {
+      if (onError is ErrorResp) {
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            title: R.string.commonString.error,
+            desc: onError.message,
+            positiveBtnTitle: R.string.commonString.ok,
+            onClickCallback: (ButtonType buttonType) {
+          setState(() {
+            deleteAllCode = true;
+          });
+        });
+      }
+    });
+  }
+
+  callApiForLoginUsingMpin(BuildContext context) {
+    Map<String, dynamic> req = {};
+
+    String enteredMpinInString = "";
+
+    enteredPin.forEach((element) {
+      enteredMpinInString += (element.toString());
+    });
+
+    int finalEnteredMpinInInt = int.parse(enteredMpinInString);
+    req["password"] = finalEnteredMpinInInt.toString();
+    req["username"] = _userNameController.text;
+    req["mPinLogin"] = true;
+
+    NetworkCall<LoginResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().login(req),
+            context,
+            isProgress: true)
+        .then((loginResp) {
+      app.resolve<PrefUtils>().setMpinisUsage(true);
+      saveUserResponse(loginResp);
+    }).catchError((onError) {
+      if (onError is ErrorResp) {
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            title: R.string.commonString.error,
+            desc: onError.message,
+            positiveBtnTitle: R.string.commonString.ok,
+            onClickCallback: (ButtonType buttonType) {
+          setState(() {
+            deleteAllCode = true;
+          });
+        });
+      }
+    });
+  }
+
+  saveUserResponse(LoginResp loginResp) async {
+    // save Logged In user
+    if (loginResp.data != null) {
+      app.resolve<PrefUtils>().saveUser(loginResp.data.user);
+      await app.resolve<PrefUtils>().saveUserToken(
+            loginResp.data.token.jwt,
+          );
+      await app.resolve<PrefUtils>().saveUserPermission(
+            loginResp.data.userPermissions,
+          );
+      if (loginResp.data.user.isMpinAdded == false) {
+        NavigationUtilities.pushRoute(SignInWithMPINScreen.route);
+      } else {
+        //varify mpin
+        SyncManager().callVersionUpdateApi(context, VersionUpdateApi.logIn,
+            id: loginResp.data.user.id);
+      }
+    }
+  }
+
+  getUserNameTextField() {
+    return CommonTextfield(
+      focusNode: _focusUserNameTextField,
+      textOption: TextFieldOption(
+        prefixWid:
+            getCommonIconWidget(imageName: user, imageType: IconSizeType.small),
+        hintText: R.string.authStrings.name,
+        maxLine: 1,
+        formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
+        keyboardType: TextInputType.text,
+        inputController: _userNameController,
+      ),
+      textCallback: (text) {},
+      validation: (text) {
+        if (text.isEmpty) {
+          return R.string.errorString.enterUsername;
+        } else {
+          return null;
+        }
+      },
+      inputAction: TextInputAction.next,
+      onNextPress: () {
+        _focusUserNameTextField.unfocus();
+        FocusScope.of(context).requestFocus(_focusUserNameTextField);
+      },
+    );
+  }
 }

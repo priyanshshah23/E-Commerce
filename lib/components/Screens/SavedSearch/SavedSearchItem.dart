@@ -50,8 +50,8 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
   callBaseList() {
     savedSearchBaseList = BaseList(BaseListState(
       noDataMsg: APPNAME,
-      noDataDesc: R.string().noDataStrings.noDataFound,
-      refreshBtn: R.string().commonString.refresh,
+      noDataDesc: R.string.noDataStrings.noDataFound,
+      refreshBtn: R.string.commonString.refresh,
       enablePullDown: true,
       enablePullUp: true,
       isApiCalling: true,
@@ -231,9 +231,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                               padding: EdgeInsets.only(
                                                   right: getSize(3)),
                                               child: Text(
-                                                R
-                                                    .string()
-                                                    .commonString
+                                                R.string.commonString
                                                     .viewDetails,
                                                 textAlign: TextAlign.center,
                                                 style: appTheme
@@ -306,7 +304,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                           MainAxisAlignment.spaceAround,
                                       children: [
                                         getPreviewItem(
-                                            R.string().commonString.modify,
+                                            R.string.commonString.modify,
                                             edit_icon,
                                             appTheme
                                                 .greenPrimaryNormal14TitleColor,
@@ -321,7 +319,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                               args: dict);
                                         }),
                                         getPreviewItem(
-                                            R.string().commonString.delete,
+                                            R.string.commonString.delete,
                                             delete_icon_medium,
                                             appTheme
                                                 .redPrimaryNormal14TitleColor,
@@ -333,13 +331,11 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                             barrierDismissible: true,
                                             title: "",
                                             desc: R
-                                                .string()
-                                                .commonString
-                                                .deleteItem,
+                                                .string.commonString.deleteItem,
                                             positiveBtnTitle:
-                                                R.string().commonString.ok,
+                                                R.string.commonString.ok,
                                             negativeBtnTitle:
-                                                R.string().commonString.cancel,
+                                                R.string.commonString.cancel,
                                             onClickCallback: (buttonType) {
                                               if (buttonType ==
                                                   ButtonType
@@ -355,7 +351,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                           );
                                         }),
                                         getPreviewItem(
-                                            R.string().commonString.search,
+                                            R.string.commonString.search,
                                             saved_medium,
                                             appTheme.primaryColor14TextStyle,
                                             () {

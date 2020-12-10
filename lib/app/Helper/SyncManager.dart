@@ -56,7 +56,7 @@ class SyncManager {
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().getMaster(req),
             context,
-            isProgress: isProgress,
+            isProgress: true,
             isNetworkError: isNetworkError)
         .then((masterResp) async {
       // save Logged In user
@@ -89,6 +89,11 @@ class SyncManager {
       // // save master sync date
       // app.resolve<PrefUtils>().saveMasterSyncDate(masterResp.data.lastSyncDate);
 
+      // if (isNullEmptyOrFalse(app.resolve<PrefUtils>().getPlayerId())) {
+      print("networkid.....${app.resolve<PrefUtils>().getPlayerId()}");
+      getcallApiGetNotificationID(context);
+      // }
+
       // success block
       success();
       // callHandler()
@@ -101,6 +106,34 @@ class SyncManager {
                   //     : onError.toString()),
                 },
             });
+  }
+
+  getcallApiGetNotificationID(
+    BuildContext context,
+  ) {
+    // Map<String,dynamic> req = {};
+    // req["playerId"] = app.resolve<PrefUtils>().getPlayerId();
+
+    // req["deviceType"] = Platform.isAndroid ? DEVICE_TYPE_ANDROID : DEVICE_TYPE_IOS;
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+            () => app
+                .resolve<ServiceModule>()
+                .networkService(
+                    playerId: app.resolve<PrefUtils>().getPlayerId())
+                .notificationId(),
+            context,
+            isProgress: false)
+        .then((resp) {})
+        .catchError((onError) {
+      // if (page == DEFAULT_PAGE) {
+      print("error....");
+
+      //aboutBaseList.clear();
+
+      //}
+    });
   }
 
   Future callApiForDiamondList(
@@ -126,6 +159,39 @@ class SyncManager {
           .resolve<ServiceModule>()
           .networkService()
           .diamondListPaginate(dict),
+      context,
+      isProgress: isProgress,
+    )
+        .then((diamondListResp) async {
+      success(diamondListResp);
+    }).catchError((onError) {
+      print(onError);
+    });
+  }
+
+  Future callApiForMatchPair(
+    BuildContext context,
+    Map<String, dynamic> req,
+    Function(DiamondListResp) success,
+    Function failure, {
+    bool isProgress = true,
+    String searchText,
+  }) async {
+    Map<String, dynamic> dict = {};
+    dict["isNotReturnTotal"] = true;
+    dict["isReturnCountOnly"] = true;
+    dict["filters"] = req;
+
+    if (!isNullEmptyOrFalse(searchText)) {
+      dict["search"] = searchText;
+    }
+
+    NetworkCall<DiamondListResp>()
+        .makeCall(
+      () => app
+          .resolve<ServiceModule>()
+          .networkService()
+          .diamondMatchPairList(dict),
       context,
       isProgress: isProgress,
     )
@@ -469,7 +535,8 @@ class SyncManager {
                 } else {
                   //for signinwithmpin / signinwithguest
                   if (screenConstant == VersionUpdateApi.signInWithMpin ||
-                      screenConstant == VersionUpdateApi.signInAsGuest || screenConstant == VersionUpdateApi.logIn) {
+                      screenConstant == VersionUpdateApi.signInAsGuest ||
+                      screenConstant == VersionUpdateApi.logIn) {
                     SyncManager.instance.callMasterSync(
                         NavigationUtilities.key.currentContext, () async {
                       //success
@@ -492,9 +559,9 @@ class SyncManager {
     ).catchError(
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            title: R.string().errorString.versionError,
+            title: R.string.errorString.versionError,
             desc: onError.message,
-            positiveBtnTitle: R.string().commonString.btnTryAgain,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
           if (screenConstant == VersionUpdateApi.splash) {
             //for splash
@@ -527,6 +594,7 @@ class SyncManager {
         .then((excelApiResponse) async {
       // success(diamondListResp);
       String url = ApiConstants.baseURLForExcel + excelApiResponse.data.data;
+      String excelFileUrl = url;
       print("Excel file URL : " + url);
       if (!Platform.isIOS) {
         url = "https://docs.google.com/viewer?embedded=true&url=" + url;
@@ -534,17 +602,21 @@ class SyncManager {
       print("Final ExcelFile Viewer Url : " + url);
 
       //navigate to static page...
-      // DownloadState downloadStateObj = DownloadState();
-      // final dir = await downloadStateObj.getDownloadDirectory();
-      // String fileName = "FinalExcel.xlsx";
-      // final savePath = path.join(dir.path, fileName);
-      // print("file:/" + savePath);
+      DownloadState downloadStateObj = DownloadState();
+      final dir = await downloadStateObj.getDownloadDirectory();
+      String fileName = "FinalExcel.xlsx";
+      final savePath = path.join(dir.path, fileName);
+      print("file:/" + savePath);
+
       if (isForShare) {
         callback(url);
       } else {
+        downloadExcel(excelFileUrl, savePath);
+
         if (Platform.isIOS) {
           Map<String, dynamic> dict = {};
           dict["strUrl"] = url;
+          dict['filePath'] = savePath;
           dict[ArgumentConstant.IsFromDrawer] = false;
           dict["isForExcel"] = true;
           dict["screenTitle"] = excelApiResponse.data.excelName;
@@ -552,6 +624,7 @@ class SyncManager {
         } else {
           Map<String, dynamic> dict = {};
           dict["strUrl"] = url;
+          dict['filePath'] = savePath;
           dict[ArgumentConstant.IsFromDrawer] = false;
           dict["isForExcel"] = true;
           dict["screenTitle"] = excelApiResponse.data.excelName;
@@ -564,6 +637,20 @@ class SyncManager {
       showToast("There is problem on server, please try again later.",
           context: context);
       print(onError);
+    });
+  }
+
+  downloadExcel(String excelFileUrl, String savePath) {
+    Dio dio = Dio();
+
+    dio
+        .download(
+      excelFileUrl,
+      savePath,
+      deleteOnError: true,
+    )
+        .then((value) {
+      print("excel downlaoded");
     });
   }
 
@@ -600,12 +687,12 @@ class SyncManager {
       if (item.rap > 0) {
         carat += item.crt;
         calcAmount += item.amt;
-        rapAvg += item.rap * item.crt;
+        rapAvg += (item.rap ?? 0) * item.crt;
         priceCrt += item.ctPr * item.crt;
       } else {
         carat += item.crt;
         calcAmount += item.amt;
-        rapAvg += item.rap * item.crt;
+        rapAvg += (item.rap ?? 0) * item.crt;
         priceCrt += item.ctPr * item.crt;
       }
     }
@@ -622,7 +709,7 @@ class SyncManager {
     for (var item in diamondList) {
       totalFinalValue += item.getFinalAmount();
       totalCarat += item.crt;
-      totalRapPrice += (item.rap * item.crt);
+      totalRapPrice += ((item.rap ?? 0) * item.crt);
     }
 
     num avgFinalValue = totalFinalValue / totalCarat;
@@ -654,9 +741,9 @@ class SyncManager {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
               context,
-              title: R.string().commonString.error,
+              title: R.string.commonString.error,
               desc: onError.message,
-              positiveBtnTitle: R.string().commonString.ok,
+              positiveBtnTitle: R.string.commonString.ok,
             );
       }
     });
