@@ -180,6 +180,7 @@ class CompanyInformationState extends State<CompanyInformation>
                   } else {
                     setState(() {
                       _autoValidate = true;
+                      readOnly = false;
                     });
                   }
                 }
