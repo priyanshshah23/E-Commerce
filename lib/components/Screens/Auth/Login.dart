@@ -632,54 +632,6 @@ class LoginScreenState extends StatefulScreenWidgetState {
         saveUserResponse(loginResp);
       }
     });
-    /*app.resolve<CustomDialogs>().confirmDialog(context,
-        title: "",
-        desc:
-            // Platform.isIOS && availableBiometrics.contains(BiometricType.face)
-            //     ? "Do you want to Enable FaceId?"
-            //     : "Do you want to Enable TouchId?",
-            "Please, choose Which you wanna set while unlocking app...",
-        positiveBtnTitle:
-            Platform.isIOS && availableBiometrics.contains(BiometricType.face)
-                ? "FaceId"
-                : "TouchId",
-        positiveBtnTitle2: "Mpin",
-        negativeBtnTitle: R.string.commonString.cancel,
-        totalButton: 3, onClickCallback: (buttonType) async {
-      if (buttonType == ButtonType.PositveButtonClick) {
-        if (canCheckBiometrics) {
-          auth.canCheckBiometrics.then((value) {
-            if (value) {
-              askForBioMetrics(loginResp)();
-            } else {
-              saveUserResponse(loginResp);
-            }
-          });
-        } else {
-          showToast("TouchId is not enabled in this device.",context: context);
-          navigateToPopUpBox(context, loginResp);
-          // saveUserResponse(loginResp);
-        }
-      } else if (buttonType == ButtonType.PositveButtonClick2) {
-        if (loginResp.data.user.isMpinAdded) {
-          Map<String, dynamic> args = {};
-          args["askForVerifyMpin"] = true;
-          args["enm"] = Mpin.login;
-          args["userName"] = loginResp.data.user.username;
-          args["verifyPinCallback"] = () {
-            saveUserResponse(loginResp);
-            app.resolve<PrefUtils>().setMpinisUsage(true);
-          };
-          NavigationUtilities.pushRoute(SignInWithMPINScreen.route, args: args);
-        } else {
-          //  Map<String, dynamic> args = {};
-          
-          NavigationUtilities.pushRoute(SignInWithMPINScreen.route);
-        }
-      } else {
-        saveUserResponse(loginResp);
-      }
-    });*/
   }
 
   askForBioMetrics(LoginResp loginResp) async {
