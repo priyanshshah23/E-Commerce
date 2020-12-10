@@ -764,7 +764,8 @@ class CompanyInformationState extends State<CompanyInformation>
                     ),
                     child: SelectionDialogue(
                         title: R.string.authStrings.selectNatureOfOrganization,
-                        hintText: R.string.authStrings.selectNatureOfOrganization,
+                        hintText:
+                            R.string.authStrings.selectNatureOfOrganization,
                         selectionOptions: natureOfOrgList,
                         applyFilterCallBack: (
                             {SelectionPopupModel selectedItem,

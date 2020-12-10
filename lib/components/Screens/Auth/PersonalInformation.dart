@@ -141,8 +141,7 @@ class _PersonalInformationState extends State<PersonalInformation>
                   FocusScope.of(context).unfocus();
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
-                    if (_mobileController.text.isNotEmpty ||
-                        _whatsAppMobileController.text.isNotEmpty) {
+                    if (_mobileController.text.isNotEmpty) {
                       if (await checkValidation()) {
                         if (isProfileImageUpload) {
                           await uploadDocument();
@@ -1142,12 +1141,7 @@ class _PersonalInformationState extends State<PersonalInformation>
         false) {
       showToast(R.string.errorString.enterValidPhone, context: context);
       return false;
-    } else if (await isValidMobile(_whatsAppMobileController.text.trim(),
-            selectedDialogCountryForWhatsapp.isoCode) ==
-        false) {
-      showToast(R.string.errorString.enterValidWhatsappPhone, context: context);
-      return false;
-    }
+    } 
     return true;
   }
 
