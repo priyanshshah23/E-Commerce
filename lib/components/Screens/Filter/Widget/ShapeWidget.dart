@@ -46,7 +46,8 @@ class _ShapeWidgetState extends State<ShapeWidget> {
       }
     }
 
-    if (widget.selectionModel.isShowMore && widget.selectionModel.isShowMoreHorizontal == false) {
+    if (widget.selectionModel.isShowMore &&
+        widget.selectionModel.isShowMoreHorizontal == false) {
       if (widget.selectionModel.orientation == DisplayTypes.vertical) {
         if (widget.selectionModel.masters
                 .where((element) => element.sId == showMoreId)
@@ -97,7 +98,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                     padding: EdgeInsets.all(getSize(2)),
                     crossAxisSpacing: 8,
                     mainAxisSpacing: 8,
-                    crossAxisCount: 4,
+                    crossAxisCount: isPad() ? 6 : 4,
                     children: List.generate(
                       getGridViewLength(widget.selectionModel),
                       (index) {

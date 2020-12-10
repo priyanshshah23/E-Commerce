@@ -114,8 +114,9 @@ class _TagWidgetState extends State<TagWidget> {
   }
 
   Widget getGridView(int getGridViewItemCount) {
+    var count = isPad() ? getGridViewItemCount + 1 : getGridViewItemCount;
     double _crossAxisSpacing = 8, _mainAxisSpacing = 12, _aspectRatio = 2.5;
-    int _crossAxisCount = getGridViewItemCount;
+    int _crossAxisCount = count;
 
     double screenWidth = MediaQuery.of(context).size.width;
 
@@ -144,7 +145,7 @@ class _TagWidgetState extends State<TagWidget> {
           // padding: EdgeInsets.all(getSize(2)),
           crossAxisSpacing: _crossAxisSpacing,
           mainAxisSpacing: _mainAxisSpacing,
-          crossAxisCount: getGridViewItemCount,
+          crossAxisCount: count,
           children: List.generate(
             getGridViewLength(widget.model),
             (index) {
@@ -339,7 +340,9 @@ class _TagWidgetState extends State<TagWidget> {
               width: getSize(80),
               child: Text(
                 widget.model.title ?? "",
-                style: appTheme.blackMedium16TitleColorblack.copyWith(fontSize: getFontSize(14),),
+                style: appTheme.blackMedium16TitleColorblack.copyWith(
+                  fontSize: getFontSize(14),
+                ),
                 textAlign: TextAlign.left,
               ),
             ),
@@ -378,8 +381,7 @@ class _TagWidgetState extends State<TagWidget> {
     if (widget.model.isShowMore) {
       if (index == widget.model.masters.length - 1 &&
           !widget.model.isShowMoreSelected) {
-        widget.model.masters[index].webDisplay =
-            R.string.commonString.showLess;
+        widget.model.masters[index].webDisplay = R.string.commonString.showLess;
       }
       if (widget.model.isShowMoreSelected) {
         widget.model.masters[widget.model.masters.length - 1].webDisplay =
