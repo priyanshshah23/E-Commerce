@@ -60,6 +60,7 @@ class SyncManager {
             isNetworkError: isNetworkError)
         .then((masterResp) async {
       // save Logged In user
+      app.resolve<CustomDialogs>().showProgressDialog(context, "");
       if (masterResp.data.loggedInUser != null) {
         app.resolve<PrefUtils>().saveUser(masterResp.data.loggedInUser);
       }
@@ -91,6 +92,7 @@ class SyncManager {
 
       // if (isNullEmptyOrFalse(app.resolve<PrefUtils>().getPlayerId())) {
       print("networkid.....${app.resolve<PrefUtils>().getPlayerId()}");
+      app.resolve<CustomDialogs>().hideProgressDialog();
       getcallApiGetNotificationID(context);
       // }
 

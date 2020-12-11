@@ -632,7 +632,7 @@ class BottomMenuSetting {
     model = BottomTabModel(
         image: diamond,
         isCenter: false,
-        title: R.string.screenTitle.statusOffer);
+        title: R.string.screenTitle.stoneOfTheDays);
     model.imageColor = appTheme.statusOffer;
     moreMenuList.add(model);
 

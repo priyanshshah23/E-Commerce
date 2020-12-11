@@ -344,13 +344,16 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
 
                               if (isForReEnter) {
                                 for (int i = 0; i < enteredPin.length; i++) {
-                                  if (passcode[i] != enteredPin[i]) {
+                                  if (passcode[i].number != enteredPin[i]) {
                                     return false;
                                   }
                                 }
                                 return true;
                               } else {
-                                enteredPin = passcode;
+                                passcode.forEach((element) {
+                                  enteredPin.add(element.number);
+                                });
+                                // enteredPin = passcode;
                                 return true;
                               }
                             },

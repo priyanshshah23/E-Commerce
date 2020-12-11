@@ -449,9 +449,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     dict["searchType"] = DiamondSearchType.DEMAND;
     dict["expiryDate"] = selectedDate;
 
-    NetworkCall<BaseApiResp>()
+    NetworkCall<AddDemandModel>()
         .makeCall(
-      () => app.resolve<ServiceModule>().networkService().saveSearch(dict),
+      () => app.resolve<ServiceModule>().networkService().addDemand(dict),
       context,
       isProgress: true,
     )
