@@ -175,7 +175,8 @@ class _DateTimeDialogState extends State<DateTimeDialog>
                         vertical: getSize(15),
                       ),
                       decoration: BoxDecoration(
-                        color: appTheme.colorPrimary.withOpacity(0.1),
+                        border: Border.all(
+                              color: appTheme.colorPrimary, width: getSize(1)),
                         borderRadius: BorderRadius.circular(getSize(5)),
                       ),
                       child: Text(

@@ -794,7 +794,13 @@ class _FilterItemState extends State<FilterItem> {
 
   getWidgets(FormBaseModel model) {
     if (model.viewType == "searchText") {
-      return getSearchTextField();
+      return Padding(
+        padding: EdgeInsets.only(
+          top: getSize(8),
+          bottom: getSize(16),
+        ),
+        child: getSearchTextField(),
+      );
     } else if (model.viewType == ViewTypes.seperator) {
       return SeperatorWidget(model);
     } else if (model.viewType == ViewTypes.selection) {

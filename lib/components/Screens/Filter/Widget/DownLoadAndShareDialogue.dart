@@ -240,7 +240,8 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                           height: getSize(46),
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            color: appTheme.colorPrimary.withOpacity(0.1),
+                            border: Border.all(
+                              color: appTheme.colorPrimary, width: getSize(1)),
                             borderRadius: BorderRadius.circular(getSize(5)),
                           ),
                           child: Text(

@@ -89,7 +89,7 @@ class _AddDemandState extends State<AddDemand> {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: appTheme.colorPrimary.withOpacity(0.1),
+                        border: Border.all(color : appTheme.colorPrimary, width : getSize(1)),
                         borderRadius: BorderRadius.circular(getSize(5)),
                       ),
                       child: AppButton.flat(
@@ -99,7 +99,7 @@ class _AddDemandState extends State<AddDemand> {
                         borderRadius: getSize(5),
                         text: R.string.commonString.cancel,
                         textColor: appTheme.colorPrimary,
-                        backgroundColor: appTheme.lightColorPrimary,
+                        backgroundColor: appTheme.whiteColor,
                       ),
                     ),
                   ),

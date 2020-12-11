@@ -251,138 +251,140 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
   }
 
   Widget getBottomTab() {
-    return Column(mainAxisSize: MainAxisSize.min, children: [
-      Container(
-        decoration: new BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              blurRadius: 5.0,
-              spreadRadius: 1.0, //extend the shadow
-              offset: Offset(
-                0, // Move to right 10  horizontally
-                1, // Move to bottom 10 Vertically
-              ),
-            )
-          ],
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  color: appTheme.whiteColor,
-                  height: getSize(50),
-                  padding: EdgeInsets.symmetric(
-                    vertical: getSize(15),
-                  ),
-                  child: Text(
-                    R.string.commonString.cancel,
-                    textAlign: TextAlign.center,
-                    style: appTheme.blue14TextStyle.copyWith(
-                        fontSize: getFontSize(16), fontWeight: FontWeight.w500),
+    return SafeArea(
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+        Container(
+          decoration: new BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                blurRadius: 5.0,
+                spreadRadius: 1.0, //extend the shadow
+                offset: Offset(
+                  0, // Move to right 10  horizontally
+                  1, // Move to bottom 10 Vertically
+                ),
+              )
+            ],
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    color: appTheme.whiteColor,
+                    height: getSize(50),
+                    padding: EdgeInsets.symmetric(
+                      vertical: getSize(15),
+                    ),
+                    child: Text(
+                      R.string.commonString.cancel,
+                      textAlign: TextAlign.center,
+                      style: appTheme.blue14TextStyle.copyWith(
+                          fontSize: getFontSize(16), fontWeight: FontWeight.w500),
+                    ),
                   ),
                 ),
               ),
-            ),
-            Expanded(
-              child: InkWell(
-                onTap: () {
-                  switch (actionType) {
-                    case DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER:
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext cnt) {
-                            return Dialog(
-                                insetPadding: EdgeInsets.symmetric(
-                                    horizontal: getSize(20),
-                                    vertical: getSize(20)),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(getSize(25)),
-                                ),
-                                child: PlaceOrderPopUp(
-                                  diamondConfig: diamondConfig,
-                                  diamondList: diamondList,
-                                  actionType: actionType,
-                                  callBack: (selectedPopUpDate) {
-                                    diamondConfig.actionAll(
-                                      context,
-                                      diamondList,
-                                      actionType,
-                                      remark: _commentController.text.trim(),
-                                      date: selectedPopUpDate,
-                                      companyName: _nameController.text.trim(),
-                                    );
-                                  },
-                                ));
-                          });
-                      break;
-                    case DiamondTrackConstant.TRACK_TYPE_OFFER:
-                    case DiamondTrackConstant.TRACK_TYPE_OFFICE:
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext cnt) {
-                            return Dialog(
-                                insetPadding: EdgeInsets.symmetric(
-                                    horizontal: getSize(20),
-                                    vertical: getSize(20)),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(getSize(25)),
-                                ),
-                                child: OfferPopup(
-                                  actionType: actionType,
-                                  callBack: (selectedPopUpDate, remark) {
-                                    if (actionType ==
-                                        DiamondTrackConstant
-                                            .TRACK_TYPE_OFFICE) {
-                                      callApiForRequestForOffice(
-                                          remark, selectedPopUpDate);
-                                    } else {
-                                      if (this.isOfferUpdate ?? false) {
-                                        callApiForUpdateOffer(
-                                            this.diamondList.first,
-                                            remark,
-                                            selectedPopUpDate);
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    switch (actionType) {
+                      case DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER:
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext cnt) {
+                              return Dialog(
+                                  insetPadding: EdgeInsets.symmetric(
+                                      horizontal: getSize(20),
+                                      vertical: getSize(20)),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(getSize(25)),
+                                  ),
+                                  child: PlaceOrderPopUp(
+                                    diamondConfig: diamondConfig,
+                                    diamondList: diamondList,
+                                    actionType: actionType,
+                                    callBack: (selectedPopUpDate) {
+                                      diamondConfig.actionAll(
+                                        context,
+                                        diamondList,
+                                        actionType,
+                                        remark: _commentController.text.trim(),
+                                        date: selectedPopUpDate,
+                                        companyName: _nameController.text.trim(),
+                                      );
+                                    },
+                                  ));
+                            });
+                        break;
+                      case DiamondTrackConstant.TRACK_TYPE_OFFER:
+                      case DiamondTrackConstant.TRACK_TYPE_OFFICE:
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext cnt) {
+                              return Dialog(
+                                  insetPadding: EdgeInsets.symmetric(
+                                      horizontal: getSize(20),
+                                      vertical: getSize(20)),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(getSize(25)),
+                                  ),
+                                  child: OfferPopup(
+                                    actionType: actionType,
+                                    callBack: (selectedPopUpDate, remark) {
+                                      if (actionType ==
+                                          DiamondTrackConstant
+                                              .TRACK_TYPE_OFFICE) {
+                                        callApiForRequestForOffice(
+                                            remark, selectedPopUpDate);
                                       } else {
-                                        diamondConfig.actionAll(
-                                            context, diamondList, actionType,
-                                            remark: remark,
-                                            date: selectedPopUpDate,
-                                            companyName: "");
+                                        if (this.isOfferUpdate ?? false) {
+                                          callApiForUpdateOffer(
+                                              this.diamondList.first,
+                                              remark,
+                                              selectedPopUpDate);
+                                        } else {
+                                          diamondConfig.actionAll(
+                                              context, diamondList, actionType,
+                                              remark: remark,
+                                              date: selectedPopUpDate,
+                                              companyName: "");
+                                        }
                                       }
-                                    }
-                                  },
-                                ));
-                          });
-                      break;
-                    default:
-                      diamondConfig.actionAll(context, diamondList, actionType);
-                      break;
-                  }
-                },
-                child: Container(
-                  height: getSize(50),
-                  padding: EdgeInsets.symmetric(
-                    vertical: getSize(15),
-                  ),
-                  color: appTheme.colorPrimary,
-                  child: Text(
-                    R.string.commonString.confirm,
-                    textAlign: TextAlign.center,
-                    style: appTheme.white16TextStyle,
+                                    },
+                                  ));
+                            });
+                        break;
+                      default:
+                        diamondConfig.actionAll(context, diamondList, actionType);
+                        break;
+                    }
+                  },
+                  child: Container(
+                    height: getSize(50),
+                    padding: EdgeInsets.symmetric(
+                      vertical: getSize(15),
+                    ),
+                    color: appTheme.colorPrimary,
+                    child: Text(
+                      R.string.commonString.confirm,
+                      textAlign: TextAlign.center,
+                      style: appTheme.white16TextStyle,
+                    ),
                   ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
-      ),
-    ]);
+      ]),
+    );
   }
 
   openDatePicker() {

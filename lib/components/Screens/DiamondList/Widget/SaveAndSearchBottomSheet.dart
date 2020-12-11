@@ -40,7 +40,7 @@ class _SaveAndSearchBottomSheetState extends State<SaveAndSearchBottomSheet> {
             padding: EdgeInsets.only(top: getSize(20)),
             child: Text(
               R.string.screenTitle.savedAndSearch,
-              style: appTheme.black16TextStyle,
+              style: appTheme.black16MediumTextStyle,
             ),
           ),
           SizedBox(
@@ -131,7 +131,10 @@ class _SaveAndSearchBottomSheetState extends State<SaveAndSearchBottomSheet> {
                         vertical: getSize(15),
                       ),
                       decoration: BoxDecoration(
-                        color: appTheme.colorPrimary.withOpacity(0.1),
+                        border: Border.all(
+                          color: appTheme.colorPrimary,
+                          width: getSize(1),
+                        ),
                         borderRadius: BorderRadius.circular(getSize(5)),
                       ),
                       child: Text(
