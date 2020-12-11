@@ -475,6 +475,7 @@
       "noDataFound": "No record found"
     },
     "screen_title": {
+      "dynamic_keys":["placeAnOffer","addedInWatchList"],
       "placeAnOffer": "Place an Offer",
       "addedInWatchList": "Added in Watchlist",
       "addedInOffer": "Offer Submitted",

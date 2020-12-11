@@ -48,7 +48,7 @@ class SyncManager {
   }) async {
     MasterReq req = MasterReq();
 
-//    req.serverLastSync = app.resolve<PrefUtils>().getMasterSyncDate();
+    req.serverLastSync = app.resolve<PrefUtils>().getMasterSyncDate();
 
     req.user = id;
 
@@ -86,8 +86,8 @@ class SyncManager {
       await AppDatabase.instance.sizeMasterDao
           .delete(masterResp.data.sizeMaster.deleted);
 
-      // // save master sync date
-      // app.resolve<PrefUtils>().saveMasterSyncDate(masterResp.data.lastSyncDate);
+      // save master sync date
+      app.resolve<PrefUtils>().saveMasterSyncDate(masterResp.data.lastSyncDate);
 
       // if (isNullEmptyOrFalse(app.resolve<PrefUtils>().getPlayerId())) {
       print("networkid.....${app.resolve<PrefUtils>().getPlayerId()}");
