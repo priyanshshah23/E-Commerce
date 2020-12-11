@@ -135,7 +135,7 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
       //     );
       _deleteAllCode();
     }
-    
+
     Future.delayed(Duration(milliseconds: 200), () {
       _fingerPrint();
     });
