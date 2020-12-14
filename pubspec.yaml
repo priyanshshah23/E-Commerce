@@ -83,6 +83,7 @@ dependencies:
   # speech_recognition: ^0.3.0+1
   # permission_handler: ^3.2.0
   marquee: ^1.6.1
+  smooth_page_indicator: ^0.2.0
 
   # flutter_tags: ^0.1.9
 
@@ -124,6 +125,7 @@ flutter:
     - assets/Share/
     - assets/PNShah/
     - assets/PNShah/ForgetMPIN/
+    - assets/Overlay/
 
 
   fonts:

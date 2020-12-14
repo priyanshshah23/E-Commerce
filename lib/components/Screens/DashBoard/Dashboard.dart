@@ -11,6 +11,7 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
+import 'package:diamnow/components/CommonWidget/OverlayScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
 import 'package:diamnow/components/Screens/DashBoard/Widget/FeaturedStone.dart';
 import 'package:diamnow/components/Screens/DashBoard/Widget/RecentSearch.dart';
@@ -247,56 +248,68 @@ class _DashboardState extends StatefulScreenWidgetState {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: Scaffold(
-          backgroundColor: appTheme.whiteColor,
-          appBar: getAppBar(
-            context,
-            diamondConfig.getScreenTitle(),
-            bgColor: appTheme.whiteColor,
-            leadingButton: isFromDrawer
-                ? getDrawerButton(context, true)
-                : getBackButton(context),
-            centerTitle: false,
-            actionItems: getToolbarItem(),
-          ),
-          // bottomNavigationBar: getBottomTab(),
-          body: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.only(
-                // left: getSize(20),
-                // right: getSize(20),
-                top: getSize(8),
-              ),
-              child: SmartRefresher(
-                header: MaterialClassicHeader(
-                    backgroundColor: AppTheme.of(context).accentColor,
-                    color: AppTheme.of(context).theme.primaryColorLight),
-                enablePullDown: true,
-                onRefresh: () {
-                  callApiForDashboard(true);
-                  refreshController.refreshCompleted();
-                  refreshController.loadComplete();
-                },
-                controller: refreshController,
-                child: ListView(
-                  physics: ClampingScrollPhysics(),
-                  children: <Widget>[
-                    getSarchTextField(),
-                    if (dashboardConfig.arrTopSection.length > 0)
-                      getTopSection(),
-                    getFeaturedSection(),
-                    getStoneOfDaySection(),
-                    getSavedSearchSection(),
-                    getRecentSection(),
-                    getSalesSection(),
-                    SizedBox(
-                      height: getSize(20),
-                    ),
-                  ],
+      child: Stack(
+        children: [
+          Scaffold(
+            backgroundColor: appTheme.whiteColor,
+            appBar: getAppBar(
+              context,
+              diamondConfig.getScreenTitle(),
+              bgColor: appTheme.whiteColor,
+              leadingButton: isFromDrawer
+                  ? getDrawerButton(context, true)
+                  : getBackButton(context),
+              centerTitle: false,
+              actionItems: getToolbarItem(),
+            ),
+            // bottomNavigationBar: getBottomTab(),
+            body: SafeArea(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  // left: getSize(20),
+                  // right: getSize(20),
+                  top: getSize(8),
+                ),
+                child: SmartRefresher(
+                  header: MaterialClassicHeader(
+                      backgroundColor: AppTheme.of(context).accentColor,
+                      color: AppTheme.of(context).theme.primaryColorLight),
+                  enablePullDown: true,
+                  onRefresh: () {
+                    callApiForDashboard(true);
+                    refreshController.refreshCompleted();
+                    refreshController.loadComplete();
+                  },
+                  controller: refreshController,
+                  child: ListView(
+                    physics: ClampingScrollPhysics(),
+                    children: <Widget>[
+                      getSarchTextField(),
+                      if (dashboardConfig.arrTopSection.length > 0)
+                        getTopSection(),
+                      getFeaturedSection(),
+                      getStoneOfDaySection(),
+                      getSavedSearchSection(),
+                      getRecentSection(),
+                      getSalesSection(),
+                      SizedBox(
+                        height: getSize(20),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          )),
+          ),
+          app.resolve<PrefUtils>().getBool(PrefUtils().keyHomeTour) == false
+              ? OverlayScreen(moduleType, finishTakeTour: (){
+                setState(() {
+                  
+                });
+              },)
+              : SizedBox(),
+        ],
+      ),
     );
   }
 
