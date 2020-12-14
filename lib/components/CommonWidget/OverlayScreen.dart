@@ -70,23 +70,26 @@ class _OverlayScreenState extends State<OverlayScreen> {
   }
 
   getColumn(int index) {
-    return Column(
-      mainAxisSize:
-          arrOverlays[index].isCenter ? MainAxisSize.min : MainAxisSize.max,
-      mainAxisAlignment: arrOverlays[index].isBottom
-          ? MainAxisAlignment.end
-          : MainAxisAlignment.start,
-      children: [
-        Padding(
-            padding: EdgeInsets.only(
-              left: getSize(16),
-              right: getSize(16),
-            ),
-            child: Image.asset(
-              arrOverlays[index].imageName,
-              fit: BoxFit.fitHeight,
-            )),
-      ],
+    return Padding(
+      padding: EdgeInsets.only(left: getSize(16), right: getSize(16)),
+      child: Column(
+        mainAxisSize:
+            arrOverlays[index].isCenter ? MainAxisSize.min : MainAxisSize.max,
+        mainAxisAlignment: arrOverlays[index].isBottom
+            ? MainAxisAlignment.end
+            : MainAxisAlignment.start,
+        children: [
+          Padding(
+              padding: EdgeInsets.only(
+                left: getSize(16),
+                right: getSize(16),
+              ),
+              child: Image.asset(
+                arrOverlays[index].imageName,
+                fit: BoxFit.fitHeight,
+              )),
+        ],
+      ),
     );
   }
 

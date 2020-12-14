@@ -301,13 +301,13 @@ class _DashboardState extends StatefulScreenWidgetState {
               ),
             ),
           ),
-          app.resolve<PrefUtils>().getBool(PrefUtils().keyHomeTour) == false
-              ? OverlayScreen(moduleType, finishTakeTour: (){
-                setState(() {
-                  
-                });
-              },)
-              : SizedBox(),
+          // app.resolve<PrefUtils>().getBool(PrefUtils().keyHomeTour) == false
+          //     ? OverlayScreen(moduleType, finishTakeTour: (){
+          //       setState(() {
+
+          //       });
+          //     },)
+          //     : SizedBox(),
         ],
       ),
     );

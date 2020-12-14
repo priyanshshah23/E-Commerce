@@ -113,11 +113,9 @@ class SyncManager {
   getcallApiGetNotificationID(
     BuildContext context,
   ) {
-    // Map<String,dynamic> req = {};
-    // req["playerId"] = app.resolve<PrefUtils>().getPlayerId();
-
-    // req["deviceType"] = Platform.isAndroid ? DEVICE_TYPE_ANDROID : DEVICE_TYPE_IOS;
-
+    if (app.resolve<PrefUtils>().isUserLogin() == false) {
+      return;
+    }
     NetworkCall<BaseApiResp>()
         .makeCall(
             () => app

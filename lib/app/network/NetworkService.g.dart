@@ -857,7 +857,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://pndevelopapi.democ.in/web/v1/diamond/search/upsert',
+        'http://pndevelopapi.democ.in/device/v1/diamond/search/upsert',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -877,7 +877,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://pndevelopapi.democ.in/web/v1/diamond/search/upsert',
+        'http://pndevelopapi.democ.in/device/v1/diamond/search/upsert',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
