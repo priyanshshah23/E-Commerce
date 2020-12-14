@@ -1242,7 +1242,8 @@ class DiamondConfig {
         } else if (i > 0 &&
             (arraDiamond[i].memoNo != arraDiamond[i - 1].memoNo)) {
           arraDiamond[i - 1].isSectionOfferDisplay = true;
-        } else if (i == arraDiamond.length - 1) {
+        }
+        if (i == arraDiamond.length - 1) {
           arraDiamond[i].isSectionOfferDisplay = true;
         }
         arraDiamond[i].isGrouping = true;
@@ -1482,7 +1483,8 @@ openSharePopUp(BuildContext context) {
                               ),
                               decoration: BoxDecoration(
                                 border: Border.all(
-                              color: appTheme.colorPrimary, width: getSize(1)),
+                                    color: appTheme.colorPrimary,
+                                    width: getSize(1)),
                                 borderRadius: BorderRadius.circular(getSize(5)),
                               ),
                               child: Text(
@@ -1665,7 +1667,8 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
                               ),
                               decoration: BoxDecoration(
                                 border: Border.all(
-                              color: appTheme.colorPrimary, width: getSize(1)),
+                                    color: appTheme.colorPrimary,
+                                    width: getSize(1)),
                                 borderRadius: BorderRadius.circular(getSize(5)),
                               ),
                               child: Text(

@@ -28,10 +28,10 @@ PODS:
   - libPhoneNumber-iOS (0.9.15)
   - local_auth (0.0.1):
     - Flutter
-  - OneSignal (2.15.2)
-  - onesignal_flutter (2.6.1):
+  - OneSignal (2.16.1)
+  - onesignal_flutter (2.6.2):
     - Flutter
-    - OneSignal (= 2.15.2)
+    - OneSignal (= 2.16.1)
   - package_info (0.0.1):
     - Flutter
   - path_provider (0.0.1):
@@ -53,6 +53,10 @@ PODS:
   - unique_identifier (0.0.1):
     - Flutter
   - url_launcher (0.0.1):
+    - Flutter
+  - video_player (0.0.1):
+    - Flutter
+  - wakelock (0.0.1):
     - Flutter
   - webview_flutter (0.0.1):
     - Flutter
@@ -82,6 +86,8 @@ DEPENDENCIES:
   - store_redirect (from `.symlinks/plugins/store_redirect/ios`)
   - unique_identifier (from `.symlinks/plugins/unique_identifier/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
+  - video_player (from `.symlinks/plugins/video_player/ios`)
+  - wakelock (from `.symlinks/plugins/wakelock/ios`)
   - webview_flutter (from `.symlinks/plugins/webview_flutter/ios`)
 
 SPEC REPOS:
@@ -138,6 +144,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/unique_identifier/ios"
   url_launcher:
     :path: ".symlinks/plugins/url_launcher/ios"
+  video_player:
+    :path: ".symlinks/plugins/video_player/ios"
+  wakelock:
+    :path: ".symlinks/plugins/wakelock/ios"
   webview_flutter:
     :path: ".symlinks/plugins/webview_flutter/ios"
 
@@ -156,8 +166,8 @@ SPEC CHECKSUMS:
   libphonenumber: bd14d5abfc5939ab0b0767234e2d8e2593af258e
   libPhoneNumber-iOS: 0a32a9525cf8744fe02c5206eb30d571e38f7d75
   local_auth: 17f985934bb4ab2637431e5b3fe1b2d6698d2051
-  OneSignal: 9531e385388565f4d31797ddadbe0fcc786430ec
-  onesignal_flutter: b4412973eac419ccce07363e43e0d6057c583a96
+  OneSignal: 5f6514ec2b931306eb067acb124afbb2e49970af
+  onesignal_flutter: 260bb95c0a2d791c990c7bd8749525c9834d43fc
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: 8278954f2382902f63f00dd8828769c0bd6d511b
@@ -169,6 +179,8 @@ SPEC CHECKSUMS:
   store_redirect: 2977747cf81689a39bd62c248c2deacb7a0d131e
   unique_identifier: ebb92b4bc4ad9c2c93f85cb5e02f70ad168a2bd6
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
+  video_player: 9cc823b1d9da7e8427ee591e8438bfbcde500e6e
+  wakelock: bfc7955c418d0db797614075aabbc58a39ab5107
   webview_flutter: d2b4d6c66968ad042ad94cbb791f5b72b4678a96
 
 PODFILE CHECKSUM: 6fafb14ff954ec0d94194edf038d84201d7be595
