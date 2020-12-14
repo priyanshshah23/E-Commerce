@@ -125,7 +125,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
-                                      flex: 7,
+                                      flex: 6,
                                       child: Padding(
                                         padding:
                                             EdgeInsets.only(right: getSize(3)),
@@ -141,7 +141,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                       ),
                                     ),
                                     Expanded(
-                                      flex: 3,
+                                      flex: 4,
                                       child: Container(
                                         width: getSize(120),
                                         child: PopupMenuButton<String>(

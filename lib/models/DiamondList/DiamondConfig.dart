@@ -165,7 +165,7 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
         return R.string.screenTitle.stoneOfDay;
       default:
-        return R.string.screenTitle.searchDiamond;
+        return R.string.screenTitle.searchResult;
     }
   }
 
