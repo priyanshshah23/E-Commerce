@@ -10,7 +10,7 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:flutter/material.dart';
 
 typedef void DeleteCode();
-typedef Future<bool> PassCodeVerify(List<int> passcode);
+typedef Future<bool> PassCodeVerify(List<NumberModel> passcode);
 
 class FlutterCustomPinView extends StatefulWidget {
   final VoidCallback onSuccess;
@@ -61,11 +61,24 @@ class FlutterCustomPinView extends StatefulWidget {
 
 class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
   var _currentCodeLength = 0;
-  var _inputCodes = <int>[];
+  var _inputCodes = <NumberModel>[];
   var _currentState = 0;
   Color circleColor = Colors.white;
+  var numberData = <NumberModel>[];
 
-  _onCodeClick(int code) {
+  @override
+  void initState() {
+    super.initState();
+    for (int i = 1; i <= 12; i++) {
+      if (i == 11) {
+        numberData.add(NumberModel(number: 0));
+      } else {
+        numberData.add(NumberModel(number: i));
+      }
+    }
+  }
+
+  _onCodeClick(NumberModel code) {
     if (_currentCodeLength < widget.passLength) {
       setState(() {
         _currentCodeLength++;
@@ -135,7 +148,7 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
       //     );
       _deleteAllCode();
     }
-    
+
     Future.delayed(Duration(milliseconds: 200), () {
       _fingerPrint();
     });
@@ -182,25 +195,19 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
                       return null;
                     },
                     child: GridView.count(
-                      crossAxisCount: 3,
-                      childAspectRatio: 2.3,
-                      mainAxisSpacing: 35,
-                      padding: EdgeInsets.all(4),
-                      children: <Widget>[
-                        buildContainerCircle(1),
-                        buildContainerCircle(2),
-                        buildContainerCircle(3),
-                        buildContainerCircle(4),
-                        buildContainerCircle(5),
-                        buildContainerCircle(6),
-                        buildContainerCircle(7),
-                        buildContainerCircle(8),
-                        buildContainerCircle(9),
-                        buildRemoveIcon(Icons.close),
-                        buildContainerCircle(0),
-                        buildContainerIcon(Icons.arrow_back),
-                      ],
-                    ),
+                        crossAxisCount: 3,
+                        childAspectRatio: 2.3,
+                        mainAxisSpacing: 35,
+                        padding: EdgeInsets.all(4),
+                        children: List.generate(numberData.length, (index) {
+                          if (index != 9 && index != 11) {
+                            return buildContainerCircle(numberData[index]);
+                          } else if (index == 9) {
+                            return buildRemoveIcon(Icons.close);
+                          } else {
+                            return buildContainerIcon(Icons.arrow_back);
+                          }
+                        })),
                   ),
                 ),
               )
@@ -211,29 +218,57 @@ class _FlutterCustomPinViewState extends State<FlutterCustomPinView> {
     );
   }
 
-  Widget buildContainerCircle(int number) {
+  //  buildContainerCircle(NumberModel(number: 1)),
+  //                       buildContainerCircle(NumberModel(number: 2)),
+  //                       buildContainerCircle(NumberModel(number: 3)),
+  //                       buildContainerCircle(NumberModel(number: 4)),
+  //                       buildContainerCircle(NumberModel(number: 5)),
+  //                       buildContainerCircle(NumberModel(number: 6)),
+  //                       buildContainerCircle(NumberModel(number: 7)),
+  //                       buildContainerCircle(NumberModel(number: 8)),
+  //                       buildContainerCircle(NumberModel(number: 9)),
+  //                       buildRemoveIcon(Icons.close),
+  //                       buildContainerCircle(NumberModel(number: 10)),
+  //                       buildContainerIcon(Icons.arrow_back),
+
+  Widget buildContainerCircle(NumberModel numberModel) {
     return InkResponse(
-      highlightColor: appTheme.greenColor,
+      // highlightColor: appTheme.greenColor,
       onTap: () {
         FocusScope.of(context).unfocus();
-        _onCodeClick(number);
+        _onCodeClick(numberModel);
+      },
+      // onTapDown: (value) {
+      //   setState(() {
+      //     numberModel.onTapDownColor = true;
+      //   });
+      // },
+      onHighlightChanged: (value) {
+        print(value);
+        if (value) {
+          setState(() {
+            numberModel.onTapDownColor = true;
+          });
+        } else {
+          Future.delayed(const Duration(milliseconds: 100), () {
+            setState(() {
+              numberModel.onTapDownColor = false;
+            });
+          });
+        }
       },
       child: Container(
-        height: getSize(50),
-        width: getSize(50),
+        height: getSize(60),
+        width: getSize(60),
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: !numberModel.onTapDownColor
+                ? Colors.white
+                : appTheme.colorPrimary,
             shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                  color: appTheme.greenColor.withOpacity(0.1),
-                  blurRadius: 20,
-                  spreadRadius: 5,
-                  offset: Offset(0.0, 6.0))
-            ]),
+            border: Border.all(color: appTheme.greenColor)),
         child: Center(
           child: Text(
-            number.toString(),
+            numberModel.number.toString(),
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.normal,
@@ -438,4 +473,11 @@ class BgClipper extends CustomClipper<Path> {
   bool shouldReclip(CustomClipper<Path> oldClipper) {
     return false;
   }
+}
+
+class NumberModel {
+  int number;
+  bool onTapDownColor;
+
+  NumberModel({this.number, this.onTapDownColor = false});
 }

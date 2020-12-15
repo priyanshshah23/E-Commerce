@@ -81,6 +81,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Text(
+          // R.string.commonString.byKey(widget.selectionModel.title) ?? "-",
           widget.selectionModel.title ?? "-",
           style: appTheme.blackMedium16TitleColorblack,
           textAlign: TextAlign.left,

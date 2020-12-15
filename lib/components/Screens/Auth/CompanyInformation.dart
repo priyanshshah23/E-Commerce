@@ -348,8 +348,7 @@ class CompanyInformationState extends State<CompanyInformation>
       focusNode: _focusCompanyName,
       readOnly: this.readOnly ? true : false,
       textOption: TextFieldOption(
-        hintText: R.string.authStrings.companyName +
-            R.string.authStrings.requiredField,
+        hintText: R.string.authStrings.companyName + "*",
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: user,

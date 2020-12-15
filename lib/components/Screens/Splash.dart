@@ -37,7 +37,7 @@ class _SplashState extends State<Splash> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       availableBiometrics = await auth.getAvailableBiometrics();
       Timer(
-        Duration(seconds: 1),
+        Duration(seconds: 2),
         () => (callMasterSync() /*callHandler()*/),
       );
     });
@@ -45,15 +45,8 @@ class _SplashState extends State<Splash> {
 
   Future openNextScreen() async {
     if (app.resolve<PrefUtils>().isUserLogin()) {
-      // NavigationUtilities.pushRoute(FilterScreen.route);
-//        NavigationUtilities.pushRoute(CompanyInformation.route);
-//      NavigationUtilities.pushRoute(Notifications.route);
-      // callVersionUpdateApi();
       SyncManager().callVersionUpdateApi(context, VersionUpdateApi.splash,
           id: app.resolve<PrefUtils>().getUserDetails().id ?? "");
-//      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-      //  NavigationUtilities.pushRoute(ForgetPasswordScreen.route);
-//      AppNavigation().movetoHome(isPopAndSwitch: true);
     } else {
       AppNavigation.shared.movetoLogin(isPopAndSwitch: true);
     }
@@ -90,7 +83,9 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     //callUpdateVehicleApi(context);
     LocalizationHelper.changeLocale(
-        app.resolve<PrefUtils>().getLocalization().isNotEmpty ? app.resolve<PrefUtils>().getLocalization() : English.languageCode);
+        app.resolve<PrefUtils>().getLocalization().isNotEmpty
+            ? app.resolve<PrefUtils>().getLocalization()
+            : English.languageCode);
     return Container(
       color: appTheme.whiteColor,
       height: MathUtilities.screenHeight(context),
@@ -126,22 +121,19 @@ class _SplashState extends State<Splash> {
   }
 
   callSyncApi() {
-    SyncManager.instance.callMasterSync(context, () {
-      callHandler();
-    }, () {
-      callHandler();
-    },
-        isNetworkError: false,
-        isProgress: false,
-        id: app.resolve<PrefUtils>().isUserLogin()
-            ? app.resolve<PrefUtils>().getUserDetails()?.id ?? ""
-            : "");
-  }
-
-  void callHandler() {
-    Timer(
-      Duration(seconds: 2),
-      () => (openNextScreen()),
-    );
+    if (app.resolve<PrefUtils>().isUserLogin()) {
+      SyncManager.instance.callMasterSync(context, () {
+        openNextScreen();
+      }, () {
+        openNextScreen();
+      },
+          isNetworkError: false,
+          isProgress: false,
+          id: app.resolve<PrefUtils>().isUserLogin()
+              ? app.resolve<PrefUtils>().getUserDetails()?.id ?? ""
+              : "");
+    } else {
+      openNextScreen();
+    }
   }
 }

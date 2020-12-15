@@ -48,7 +48,7 @@ class SyncManager {
   }) async {
     MasterReq req = MasterReq();
 
-//    req.serverLastSync = app.resolve<PrefUtils>().getMasterSyncDate();
+    req.serverLastSync = app.resolve<PrefUtils>().getMasterSyncDate();
 
     req.user = id;
 
@@ -60,6 +60,7 @@ class SyncManager {
             isNetworkError: isNetworkError)
         .then((masterResp) async {
       // save Logged In user
+      app.resolve<CustomDialogs>().showProgressDialog(context, "");
       if (masterResp.data.loggedInUser != null) {
         app.resolve<PrefUtils>().saveUser(masterResp.data.loggedInUser);
       }
@@ -86,11 +87,12 @@ class SyncManager {
       await AppDatabase.instance.sizeMasterDao
           .delete(masterResp.data.sizeMaster.deleted);
 
-      // // save master sync date
-      // app.resolve<PrefUtils>().saveMasterSyncDate(masterResp.data.lastSyncDate);
+      // save master sync date
+      app.resolve<PrefUtils>().saveMasterSyncDate(masterResp.data.lastSyncDate);
 
       // if (isNullEmptyOrFalse(app.resolve<PrefUtils>().getPlayerId())) {
       print("networkid.....${app.resolve<PrefUtils>().getPlayerId()}");
+      app.resolve<CustomDialogs>().hideProgressDialog();
       getcallApiGetNotificationID(context);
       // }
 
@@ -111,11 +113,9 @@ class SyncManager {
   getcallApiGetNotificationID(
     BuildContext context,
   ) {
-    // Map<String,dynamic> req = {};
-    // req["playerId"] = app.resolve<PrefUtils>().getPlayerId();
-
-    // req["deviceType"] = Platform.isAndroid ? DEVICE_TYPE_ANDROID : DEVICE_TYPE_IOS;
-
+    if (app.resolve<PrefUtils>().isUserLogin() == false) {
+      return;
+    }
     NetworkCall<BaseApiResp>()
         .makeCall(
             () => app

@@ -449,9 +449,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     dict["searchType"] = DiamondSearchType.DEMAND;
     dict["expiryDate"] = selectedDate;
 
-    NetworkCall<BaseApiResp>()
+    NetworkCall<AddDemandModel>()
         .makeCall(
-      () => app.resolve<ServiceModule>().networkService().saveSearch(dict),
+      () => app.resolve<ServiceModule>().networkService().addDemand(dict),
       context,
       isProgress: true,
     )
@@ -794,7 +794,13 @@ class _FilterItemState extends State<FilterItem> {
 
   getWidgets(FormBaseModel model) {
     if (model.viewType == "searchText") {
-      return getSearchTextField();
+      return Padding(
+        padding: EdgeInsets.only(
+          top: getSize(8),
+          bottom: getSize(16),
+        ),
+        child: getSearchTextField(),
+      );
     } else if (model.viewType == ViewTypes.seperator) {
       return SeperatorWidget(model);
     } else if (model.viewType == ViewTypes.selection) {

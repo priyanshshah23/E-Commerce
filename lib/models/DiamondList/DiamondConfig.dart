@@ -165,7 +165,7 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
         return R.string.screenTitle.stoneOfDay;
       default:
-        return R.string.screenTitle.searchDiamond;
+        return R.string.screenTitle.searchResult;
     }
   }
 
@@ -1242,7 +1242,8 @@ class DiamondConfig {
         } else if (i > 0 &&
             (arraDiamond[i].memoNo != arraDiamond[i - 1].memoNo)) {
           arraDiamond[i - 1].isSectionOfferDisplay = true;
-        } else if (i == arraDiamond.length - 1) {
+        }
+        if (i == arraDiamond.length - 1) {
           arraDiamond[i].isSectionOfferDisplay = true;
         }
         arraDiamond[i].isGrouping = true;
@@ -1481,7 +1482,9 @@ openSharePopUp(BuildContext context) {
                                 vertical: getSize(15),
                               ),
                               decoration: BoxDecoration(
-                                color: appTheme.colorPrimary.withOpacity(0.1),
+                                border: Border.all(
+                                    color: appTheme.colorPrimary,
+                                    width: getSize(1)),
                                 borderRadius: BorderRadius.circular(getSize(5)),
                               ),
                               child: Text(
@@ -1663,7 +1666,9 @@ openAddReminder(BuildContext context, ActionClick actionClick) {
                                 vertical: getSize(15),
                               ),
                               decoration: BoxDecoration(
-                                color: appTheme.colorPrimary.withOpacity(0.1),
+                                border: Border.all(
+                                    color: appTheme.colorPrimary,
+                                    width: getSize(1)),
                                 borderRadius: BorderRadius.circular(getSize(5)),
                               ),
                               child: Text(

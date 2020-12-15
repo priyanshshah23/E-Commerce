@@ -737,7 +737,7 @@ class DiamondModel {
         color = appTheme.darkBlue;
         break;
       case DiamondStatus.DIAMOND_STATUS_ON_MINE:
-        color = appTheme.errorColor;
+        color = appTheme.statusOnMemo;
         break;
       case DiamondStatus.DIAMOND_STATUS_OFFER:
         color = appTheme.errorColor;

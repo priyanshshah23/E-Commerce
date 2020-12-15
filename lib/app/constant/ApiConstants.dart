@@ -68,7 +68,7 @@ class ApiConstants {
   static const String quickSearch = commonUrl + "diamond/quick-search";
   static const String personalInformationView = commonUrl + "user/view";
   static const String companyInformationView = commonUrl + "user/profile";
-  static const String savedSearch = apiUrl + "web/v1/diamond/search/upsert";
+  static const String savedSearch = commonUrl + "diamond/search/upsert";
   static const String signInAsGuest = commonUrl + "guest/auth/login";
 
   //Office

@@ -562,6 +562,7 @@ class BottomMenuSetting {
             moduleType == DiamondModuleConstant.MODULE_TYPE_MY_CART ||
             moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER ||
             moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH ||
+            moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL ||
             moduleType == DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH) {
           addPlaceOrderInBottomMenu(moreMenuList, placeOrder, isCenter: false);
         }
@@ -632,7 +633,7 @@ class BottomMenuSetting {
     model = BottomTabModel(
         image: diamond,
         isCenter: false,
-        title: R.string.screenTitle.statusOffer);
+        title: R.string.screenTitle.stoneOfTheDays);
     model.imageColor = appTheme.statusOffer;
     moreMenuList.add(model);
 
@@ -642,26 +643,26 @@ class BottomMenuSetting {
   addCartInBottomMenu(List<BottomTabModel> moreMenuList) {
     if (app
         .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_enquiry)
+        .getModulePermission(ModulePermissionConstant.permission_cart)
         .insert) {
       moreMenuList.add(BottomTabModel(
-          image: enquiry,
+          image: addToCart,
           isCenter: false,
-          title: R.string.screenTitle.enquiry,
-          type: ActionMenuConstant.ACTION_TYPE_ENQUIRY));
+          title: R.string.screenTitle.addToCart,
+          type: ActionMenuConstant.ACTION_TYPE_ADD_TO_CART));
     }
   }
 
   addEnquiryInBottomMenu(List<BottomTabModel> moreMenuList) {
     if (app
         .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_cart)
+        .getModulePermission(ModulePermissionConstant.permission_enquiry)
         .insert) {
       moreMenuList.add(BottomTabModel(
-          image: addToCart,
-          title: R.string.screenTitle.addToCart,
+          image: enquiry,
+          title: R.string.screenTitle.myEnquiry,
           isCenter: false,
-          type: ActionMenuConstant.ACTION_TYPE_ADD_TO_CART));
+          type: ActionMenuConstant.ACTION_TYPE_ENQUIRY));
     }
   }
 

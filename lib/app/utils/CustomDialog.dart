@@ -588,17 +588,20 @@ Future OpenConfirmationPopUp(
                                           child: Container(
                                             height: getSize(50),
                                             decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: appTheme.colorPrimary,
+                                                width: getSize(1),
+                                              ),
                                               borderRadius:
                                                   BorderRadius.circular(
                                                       getSize(5)),
-                                              color: appTheme.lightColorPrimary,
                                             ),
                                             child: Padding(
                                               padding: EdgeInsets.fromLTRB(
                                                   getSize(8),
-                                                  getSize(16),
+                                                  getSize(14),
                                                   getSize(8),
-                                                  getSize(16)),
+                                                  getSize(14)),
                                               child: Text(
                                                 negativeBtnTitle,
                                                 textAlign: TextAlign.center,
@@ -608,7 +611,7 @@ Future OpenConfirmationPopUp(
                                                         color: appTheme
                                                             .colorPrimary,
                                                         fontSize:
-                                                            getFontSize(15)),
+                                                            getFontSize(14)),
                                               ),
                                             ),
                                           ),

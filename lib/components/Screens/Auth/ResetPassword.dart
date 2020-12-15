@@ -25,7 +25,8 @@ class ResetPassword extends StatefulScreenWidget {
   }
 
   @override
-  _ResetPasswordState createState() => _ResetPasswordState(value: value, otpNumber: otpNumber);
+  _ResetPasswordState createState() =>
+      _ResetPasswordState(value: value, otpNumber: otpNumber);
 }
 
 class _ResetPasswordState extends StatefulScreenWidgetState {
@@ -41,7 +42,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
   var _focusNewPassword = FocusNode();
   var _focusConfirmPassword = FocusNode();
 
-  _ResetPasswordState({this.value,this.otpNumber});
+  _ResetPasswordState({this.value, this.otpNumber});
 
   @override
   void initState() {
@@ -83,9 +84,10 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
                       children: <Widget>[
                         Padding(
                           padding: EdgeInsets.only(
-                              right: getSize(50),
-                              left: getSize(82),
-                              bottom: getSize(52),),
+                            right: getSize(50),
+                            left: getSize(82),
+                            bottom: getSize(52),
+                          ),
                           child: Image.asset(
                             resetPassword,
                             height: getSize(150),
@@ -119,8 +121,8 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
                               // NavigationUtilities.pushRoute(TabBarDemo.route);
                               FocusScope.of(context).unfocus();
                               if (_formKey.currentState.validate()) {
-                                  _formKey.currentState.save();
-                                  callResetPasswordApi();
+                                _formKey.currentState.save();
+                                callResetPasswordApi();
                               } else {
                                 setState(() {
                                   _autoValidate = true;
@@ -151,7 +153,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
       textOption: TextFieldOption(
           prefixWid: getCommonIconWidget(
               imageName: password, imageType: IconSizeType.small),
-          hintText: R.string.authStrings.password + R.string.authStrings.requiredField,
+          hintText: R.string.authStrings.password + "*",
           maxLine: 1,
           formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
           keyboardType: TextInputType.text,
@@ -161,7 +163,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
       validation: (text) {
         if (text.isEmpty) {
           return R.string.errorString.enterPassword;
-        } else if(!validateStructure(text)) {
+        } else if (!validateStructure(text)) {
           return R.string.errorString.wrongPassword;
         } else {
           return null;
@@ -181,7 +183,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
       textOption: TextFieldOption(
           prefixWid: getCommonIconWidget(
               imageName: password, imageType: IconSizeType.small),
-          hintText: R.string.authStrings.confirmPassword + R.string.authStrings.requiredField,
+          hintText: R.string.authStrings.confirmPassword + "*",
           maxLine: 1,
           formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
           keyboardType: TextInputType.text,
@@ -191,7 +193,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
       validation: (text) {
         if (text.isEmpty) {
           return R.string.errorString.enterPassword;
-        } else if(text != _newPasswordController.text.trim()) {
+        } else if (text != _newPasswordController.text.trim()) {
           return R.string.errorString.enterSamePassword;
         } else {
           return null;
@@ -212,19 +214,21 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
 
     NetworkCall<BaseApiResp>()
         .makeCall(
-            () => app.resolve<ServiceModule>().networkService().resetPassword(req),
-        context,
-        isProgress: true)
+            () => app
+                .resolve<ServiceModule>()
+                .networkService()
+                .resetPassword(req),
+            context,
+            isProgress: true)
         .then((Resp) async {
-          NavigationUtilities.pushRoute(PasswordResetSuccessfully.route);
+      NavigationUtilities.pushRoute(PasswordResetSuccessfully.route);
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
-        context,
-        title: R.string.commonString.error,
-        desc: onError.message,
-        positiveBtnTitle: R.string.commonString.btnTryAgain,
-      );
+            context,
+            title: R.string.commonString.error,
+            desc: onError.message,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
+          );
     });
   }
-
 }

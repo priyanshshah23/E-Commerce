@@ -58,6 +58,9 @@ class PrefUtils {
 
   String get keyLanguage => "keyLanguage";
 
+  //Take A Tour
+  String get keyHomeTour => "keyHomeTour";
+
   bool isHomeVisible;
 
   Future<void> init() async {
@@ -167,7 +170,7 @@ class PrefUtils {
     _preferences.setBool(keyToSetBiometricenabled, value);
   }
 
-   void setMpinisUsage(bool value) {
+  void setMpinisUsage(bool value) {
     _preferences.setBool(keyToSetMpinenabled, value);
   }
 
@@ -296,6 +299,7 @@ class PrefUtils {
     bool rememberMe = app.resolve<PrefUtils>().getBool("rememberMe");
     String userName = app.resolve<PrefUtils>().getString("userName");
     String passWord = app.resolve<PrefUtils>().getString("passWord");
+    bool homeTakeATour = app.resolve<PrefUtils>().getBool(keyHomeTour);
 
     app.resolve<PrefUtils>().clearPreferenceAndDB();
 
@@ -304,7 +308,11 @@ class PrefUtils {
       app.resolve<PrefUtils>().saveString("userName", userName);
       app.resolve<PrefUtils>().saveString("passWord", passWord);
     }
-    app.resolve<PrefUtils>().setPlayerID(playerId, app.resolve<PrefUtils>().keyPlayerID);
+
+    app.resolve<PrefUtils>().saveBoolean(keyHomeTour, homeTakeATour);
+    app
+        .resolve<PrefUtils>()
+        .setPlayerID(playerId, app.resolve<PrefUtils>().keyPlayerID);
     Navigator.of(context).pushNamed(LoginScreen.route);
   }
 

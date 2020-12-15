@@ -298,7 +298,7 @@ class MasterRespData {
   });
 
   MasterRespData.fromJson(Map<String, dynamic> json) {
-    lastSyncDate = json['lastSyncDate'];
+    lastSyncDate = json['syncDate'];
     loggedInUser = json['loggedInUser'] != null
         ? new User.fromJson(json['loggedInUser'])
         : null;

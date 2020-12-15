@@ -378,8 +378,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
         //enable: enable,
         focusNode: _focusMobile,
         textOption: TextFieldOption(
-          hintText: R.string.authStrings.mobileNumber +
-              R.string.authStrings.requiredField,
+          hintText: R.string.authStrings.mobileNumber + "*",
           prefixWid: Padding(
             padding: EdgeInsets.only(left: getSize(0)),
             child: Row(
@@ -453,8 +452,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
     if (await isValidMobile(
             _mobileController.text.trim(), selectedDialogCountry.isoCode) ==
         false) {
-      return showToast(R.string.errorString.enterValidPhone,
-          context: context);
+      return showToast(R.string.errorString.enterValidPhone, context: context);
     } else {
       callApi(context);
     }
@@ -464,8 +462,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
     return CommonTextfield(
       focusNode: _focusAddress,
       textOption: TextFieldOption(
-        hintText: R.string.authStrings.companyName +
-            R.string.authStrings.requiredField,
+        hintText: R.string.authStrings.companyName + "*",
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: company,
@@ -536,8 +533,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
               width: getSize(10),
             ),
             Text(
-              R.string.authStrings.termsAndCondition +
-                  R.string.authStrings.requiredField,
+              R.string.authStrings.termsAndCondition + "*",
               style: appTheme.black14TextStyle,
             )
           ],
@@ -609,7 +605,9 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
             );
       }
       // callVersionUpdateApi(id: loginResp.data.user.id);
-      SyncManager().callVersionUpdateApi(context,VersionUpdateApi.signInAsGuest,id: loginResp.data.user.id);
+      SyncManager().callVersionUpdateApi(
+          context, VersionUpdateApi.signInAsGuest,
+          id: loginResp.data.user.id);
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(

@@ -175,7 +175,8 @@ class _DateTimeDialogState extends State<DateTimeDialog>
                         vertical: getSize(15),
                       ),
                       decoration: BoxDecoration(
-                        color: appTheme.colorPrimary.withOpacity(0.1),
+                        border: Border.all(
+                            color: appTheme.colorPrimary, width: getSize(1)),
                         borderRadius: BorderRadius.circular(getSize(5)),
                       ),
                       child: Text(
@@ -251,6 +252,7 @@ class _DateTimeDialogState extends State<DateTimeDialog>
         top: getSize(16),
       ),
       child: SfDateRangePicker(
+        selectionColor: appTheme.colorPrimary,
         initialDisplayDate: DateTime.now(),
         minDate: DateTime.now(),
         view: DateRangePickerView.month,
@@ -272,7 +274,7 @@ class _DateTimeDialogState extends State<DateTimeDialog>
         TimePickerSpinner(
           is24HourMode: false,
           normalTextStyle: appTheme.black16TextStyle,
-          highlightedTextStyle: appTheme.blue20TextStyle,
+          highlightedTextStyle: appTheme.primary16TextStyle,
           spacing: 50,
           itemHeight: 70,
           isForce2Digits: true,

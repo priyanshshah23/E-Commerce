@@ -5,6 +5,35 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 
+class AddDemandModel extends BaseApiResp{
+  String code;
+  String message;
+  List<Data> data;
+
+  AddDemandModel({this.code, this.message, this.data});
+
+  AddDemandModel.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+    message = json['message'];
+    if (json['data'] != null) {
+      data = new List<Data>();
+      json['data'].forEach((v) {
+        data.add(new Data.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['code'] = this.code;
+    data['message'] = this.message;
+    if (this.data != null) {
+      data['data'] = this.data.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
 class SavedSearchResp extends BaseApiResp {
   SavedSearchResp({
     this.code,
@@ -42,10 +71,12 @@ class Data {
   int count;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        list: isNullEmptyOrFalse(json["list"]) == false ? List<SavedSearchModel>.from(
-            json["list"].map((x) => SavedSearchModel.fromJson(x))) : null,
+        list: isNullEmptyOrFalse(json["list"]) == false
+            ? List<SavedSearchModel>.from(
+                json["list"].map((x) => SavedSearchModel.fromJson(x)))
+            : null,
         count: !isNullEmptyOrFalse(json["count"]) ? json["count"] : null,
-        savedSearchModel:  SavedSearchModel.fromJson(json),
+        savedSearchModel: SavedSearchModel.fromJson(json),
       );
 
   Map<String, dynamic> toJson() => {
@@ -54,7 +85,7 @@ class Data {
       };
 }
 
-class SavedSearchModel{
+class SavedSearchModel {
   SavedSearchModel({
     this.createdAt,
     this.updatedAt,
@@ -138,7 +169,6 @@ class SavedSearchModel{
       formatter: DateUtilities.dd_mm_yyyy_hh_mm_ss_aa,
     );
   }
-
 }
 
 class DisplayDataClass {

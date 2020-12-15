@@ -59,7 +59,7 @@ class BaseTheme {
   Color get colorPrimary => fromHex("#4EB45E");
   Color get headerBgColor => fromHex("#4EB45E");
   Color get textColor => fromHex("#232323");
-  Color get bgColor => fromHex("#6E8FE7");
+  Color get bgColor => fromHex("#E3E3E3");
   Color get dividerColor => fromHex("#E3E3E3");
   Color get placeholderColor => fromHex("#999999");
   Color get textBlackColor => Colors.black;
