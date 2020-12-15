@@ -534,8 +534,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
       textOption: TextFieldOption(
           prefixWid: getCommonIconWidget(
               imageName: password, imageType: IconSizeType.small),
-          hintText: R.string.authStrings.password +
-              R.string.authStrings.requiredField,
+          hintText: R.string.authStrings.password + "*",
           maxLine: 1,
           formatter: [BlacklistingTextInputFormatter(RegExp(RegexForEmoji))],
           keyboardType: TextInputType.text,
