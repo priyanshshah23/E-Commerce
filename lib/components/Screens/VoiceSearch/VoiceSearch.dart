@@ -96,12 +96,13 @@ class _VoiceSearchState extends StatefulScreenWidgetState {
                         if (isSpeechToTextEnabled != null &&
                             isSpeechToTextEnabled == true) {
                           setState(() {
-                            isMicTapped = true;
-
+                            strText = "";
                             speech.listen(
-                              onResult: resultListener,
-                              listenFor: Duration(seconds: 60),
-                            );
+                                onResult: resultListener,
+                                listenFor: Duration(seconds: 10),
+                                cancelOnError: true,
+                                partialResults: true);
+                            isMicTapped = true;
                           });
                         }
                       },
@@ -117,22 +118,30 @@ class _VoiceSearchState extends StatefulScreenWidgetState {
                       padding: EdgeInsets.all(getSize(50)),
                       child: isSpeechToTextEnabled == false
                           ? Text(
-                              "Permission Denied! Please go to settings -> $APPNAME and enable microphone and speech recogniser services.",
+                              "Permission Denied! Please enable microphone and speech recogniser permissions.",
                               textAlign: TextAlign.center,
                               style: appTheme.primary16TextStyle,
                             )
                           : Text(
                               isMicTapped && speech.isListening
-                                  ? isNullEmptyOrFalse(strText)
-                                      ? "I am listening..."
-                                      : strText
+                                  ? "I am listening..."
                                   : "Tap mic to speak",
+                              textAlign: TextAlign.center,
                               style: appTheme.primary16TextStyle.copyWith(
                                 fontSize: getFontSize(28),
                               ),
                             ),
                     )
                   : SizedBox(),
+              isNullEmptyOrFalse(strText)
+                  ? SizedBox()
+                  : Text(
+                      strText,
+                      textAlign: TextAlign.center,
+                      style: appTheme.black16TextStyle.copyWith(
+                        fontSize: getFontSize(28),
+                      ),
+                    ),
             ],
           ),
         ),
@@ -147,7 +156,7 @@ class _VoiceSearchState extends StatefulScreenWidgetState {
   }
 
   getBottomButton() {
-    return !isNullEmptyOrFalse(strText) && speech.isListening
+    return !isNullEmptyOrFalse(strText)
         ? SafeArea(
             child: Padding(
               padding: EdgeInsets.all(getSize(16)),
