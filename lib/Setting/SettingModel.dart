@@ -116,6 +116,16 @@ class DrawerSetting {
         isShowUpperDivider: true,
         type: DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH,
       ));
+
+    drawerList.add(DrawerModel(
+      image: mySavedSearch,
+      title: "Offline Stock",
+      isSelected: false,
+      isShowDivider: false,
+      isShowUpperDivider: true,
+      type: DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK,
+    ));
+
     drawerList.add(DrawerModel(
       image: userTheme,
       title: R.string.screenTitle.myAccount,
@@ -563,7 +573,8 @@ class BottomMenuSetting {
             moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER ||
             moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH ||
             moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL ||
-            moduleType == DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH) {
+            moduleType == DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH ||
+            moduleType == DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {
           addPlaceOrderInBottomMenu(moreMenuList, placeOrder, isCenter: false);
         }
 
@@ -788,10 +799,11 @@ class BottomMenuSetting {
 
   addDownloadInBottomMenu(List<BottomTabModel> moreMenuList, String image,
       {bool isCenter: true}) {
-    if (app
-        .resolve<PrefUtils>()
-        .getModulePermission(getPermissionFromModuleType(moduleType))
-        .downloadExcel) {
+    // if (app
+    //     .resolve<PrefUtils>()
+    //     .getModulePermission(getPermissionFromModuleType(moduleType))
+    //     .downloadExcel && moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {
+    if (moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {
       moreMenuList.add(BottomTabModel(
           image: image,
           isCenter: isCenter,
@@ -827,6 +839,7 @@ bool isDiamondSearchModule(int moduleType) {
     case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
     case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
     case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
+    case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK:
       return true;
     default:
       return false;

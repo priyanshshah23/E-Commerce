@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:diamnow/models/DiamondList/DiamondDao.dart';
 import 'package:diamnow/models/Master/MasterDao.dart';
 import 'package:diamnow/models/Master/SizeMasterDao.dart';
 import 'package:path/path.dart';
@@ -13,6 +14,7 @@ class AppDatabase {
 
   MasterDao masterDao = MasterDao();
   SizeMasterDao sizeMasterDao = SizeMasterDao();
+  DiamondDao diamondDao = DiamondDao();
 
 //  DailyGoalDao dailyGoalDao = DailyGoalDao();
 

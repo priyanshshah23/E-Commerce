@@ -220,10 +220,41 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict["isAppendDiamond"] = 1;
         break;
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
-       dict["filters"] = {};
+        dict["filters"] = {};
         dict["filters"]["wSts"] = "D";
-      
+
         break;
+
+      case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK:
+        AppDatabase.instance.diamondDao
+            .getDiamondList(dict)
+            .then((diamondListResp) {
+          try {
+            if (page == DEFAULT_PAGE) {
+              hasData = diamondListResp.data.diamonds.length > 0 ||
+                  diamondListResp.data.list.length > 0;
+            }
+
+            arraDiamond.addAll(diamondListResp.data.diamonds);
+            diamondConfig.setMatchPairItem(arraDiamond);
+            diamondList.state.listCount = arraDiamond.length;
+            diamondList.state.totalCount = diamondListResp.data.count;
+            manageDiamondSelection();
+            //callBlockApi(isProgress: true);
+            page = page + 1;
+            diamondList.state.setApiCalling(false);
+          } catch (error) {
+            if (page == DEFAULT_PAGE) {
+              arraDiamond.clear();
+              diamondList.state.listCount = arraDiamond.length;
+              diamondList.state.totalCount = arraDiamond.length;
+              manageDiamondSelection();
+            }
+
+            diamondList.state.setApiCalling(false);
+          }
+        });
+        return;
     }
     NetworkCall<DiamondListResp>()
         .makeCall(
@@ -832,22 +863,28 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         );
         break;
       case BottomCodeConstant.TBDownloadView:
-        List<DiamondModel> selectedList =
-            arraDiamond.where((element) => element.isSelected).toList();
-        if (!isNullEmptyOrFalse(selectedList)) {
-          BottomTabModel tabModel = BottomTabModel();
-          tabModel.type = ActionMenuConstant.ACTION_TYPE_DOWNLOAD;
-          diamondConfig.manageDiamondAction(context, selectedList, tabModel,
-              () {
+        if (moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
+          diamondConfig.actionDownloadOffline(context, () {
             onRefreshList();
-          });
+          }, sortKey: sortingKey, filterId: filterId);
         } else {
-          app.resolve<CustomDialogs>().confirmDialog(
-                context,
-                title: "",
-                desc: R.string.errorString.diamondSelectionError,
-                positiveBtnTitle: R.string.commonString.ok,
-              );
+          List<DiamondModel> selectedList =
+              arraDiamond.where((element) => element.isSelected).toList();
+          if (!isNullEmptyOrFalse(selectedList)) {
+            BottomTabModel tabModel = BottomTabModel();
+            tabModel.type = ActionMenuConstant.ACTION_TYPE_DOWNLOAD;
+            diamondConfig.manageDiamondAction(context, arraDiamond, tabModel,
+                () {
+              onRefreshList();
+            });
+          } else {
+            app.resolve<CustomDialogs>().confirmDialog(
+                  context,
+                  title: "",
+                  desc: R.string.errorString.diamondSelectionError,
+                  positiveBtnTitle: R.string.commonString.ok,
+                );
+          }
         }
         break;
     }

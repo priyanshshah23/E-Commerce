@@ -97,9 +97,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: R.string.authStrings.uploadKYC,
                 desc: R.string.authStrings.uploadKycDesc,
                 positiveBtnTitle: R.string.commonString.upload,
-                negativeBtnTitle:
-                    user.kycRequired ? null : R.string.commonString.btnSkip,
-                onClickCallback: (click) {
+                negativeBtnTitle: user.kycRequired
+                    ? null
+                    : R.string.commonString.btnSkip, onClickCallback: (click) {
               if (click == ButtonType.PositveButtonClick) {
                 NavigationUtilities.pushRoute(
                   UploadKYCScreen.route,
@@ -316,6 +316,7 @@ class _HomeScreenState extends State<HomeScreen> {
         case DiamondModuleConstant.MODULE_TYPE_MY_BID:
         case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
         case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
+        case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK:
           openDiamondList(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:

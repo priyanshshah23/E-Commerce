@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:diamnow/Setting/SettingModel.dart';
+import 'package:diamnow/app/Helper/OfflineStockManager.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
@@ -164,6 +165,8 @@ class DiamondConfig {
         return R.string.screenTitle.myProfile;
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
         return R.string.screenTitle.stoneOfDay;
+      case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK:
+        return R.string.screenTitle.searchResult + " Offline";
       default:
         return R.string.screenTitle.searchResult;
     }
@@ -324,11 +327,13 @@ class DiamondConfig {
                 sequence: 2,
                 isCenter: true));
           }
-          if (app
-                  .resolve<PrefUtils>()
-                  .getModulePermission(getPermissionFromModuleType(moduleType))
-                  .downloadExcel ==
-              true) {
+          // if (app
+          //         .resolve<PrefUtils>()
+          //         .getModulePermission(getPermissionFromModuleType(moduleType))
+          //         .downloadExcel ==
+          //     true && if (moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {) {
+
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {
             list.add(BottomTabModel(
                 title: "",
                 image: download,
@@ -657,10 +662,73 @@ class DiamondConfig {
 
   actionHold(List<DiamondModel> list) {}
 
+  actionDownloadOffline(BuildContext context, Function refreshList,
+      {String filterId, String sortKey}) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return DownloadConfirmationPopup(
+          onAccept: (isDownloadSearched) {
+            List<SelectionPopupModel> downloadOptionList =
+                List<SelectionPopupModel>();
+            downloadOptionList.add(SelectionPopupModel("1", "Certificate",
+                fileType: DownloadAndShareDialogueConstant.certificate));
+            downloadOptionList.add(SelectionPopupModel("2", "Image",
+                fileType: DownloadAndShareDialogueConstant.realImage1));
+
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return WillPopScope(
+                  onWillPop: () {
+                    return Future.value(false);
+                  },
+                  child: Dialog(
+                    insetPadding: EdgeInsets.symmetric(
+                        horizontal: getSize(20), vertical: getSize(5)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(getSize(25)),
+                    ),
+                    child: SelectionDialogue(
+                      isSearchEnable: false,
+                      title: R.string.commonString.download,
+                      isMultiSelectionEnable: true,
+                      positiveButtonTitle: R.string.commonString.download,
+                      selectionOptions: downloadOptionList,
+                      applyFilterCallBack: (
+                          {SelectionPopupModel selectedItem,
+                          List<SelectionPopupModel> multiSelectedItem}) {
+                        // Navigator.pop(context);
+                        //check condition for only excel,if so then redirect to static page
+                        //else show showDialog method.
+
+                        OfflineStockManager.shared.downloadData(
+                          allDiamondPreviewThings: multiSelectedItem,
+                          filterId: isDownloadSearched ? filterId : null,
+                          sortKey: sortKey,
+                        );
+                      },
+                    ),
+//          child: DownLoadAndShareDialogue(
+//            title: R.string.commonString.download,
+//          ),
+                  ),
+                );
+              },
+            );
+          },
+        );
+      },
+    );
+  }
+
   actionDownload(
     BuildContext context,
     List<DiamondModel> list, {
     bool isForShare = false,
+    bool isDownloadSearched = true,
   }) {
     List<SelectionPopupModel> downloadOptionList = List<SelectionPopupModel>();
     List<SelectionPopupModel> selectedOptions = List<SelectionPopupModel>();
@@ -1331,6 +1399,166 @@ class DiamondConfig {
     link.forEach((element) {
       return element.split(",");
     });
+  }
+}
+
+class DownloadConfirmationPopup extends StatefulWidget {
+  final Function(bool) onAccept;
+  DownloadConfirmationPopup({Key key, this.onAccept}) : super(key: key);
+
+  @override
+  _DownloadConfirmationPopupState createState() =>
+      _DownloadConfirmationPopupState();
+}
+
+class _DownloadConfirmationPopupState extends State<DownloadConfirmationPopup> {
+  bool isDownloadSearched = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(getSize(8)))),
+      content: Container(
+        width: MathUtilities.screenWidth(context),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(
+              'Confirmation',
+              textAlign: TextAlign.center,
+              style: AppTheme.of(context).theme.textTheme.body1.copyWith(
+                  fontWeight: FontWeight.w600, color: appTheme.colorPrimary),
+            ),
+            SizedBox(
+              height: getSize(20),
+            ),
+            Text(
+              'Please read & accept terms before download stock offline.',
+              textAlign: TextAlign.center,
+              style: AppTheme.of(context)
+                  .theme
+                  .textTheme
+                  .display2
+                  .copyWith(color: appTheme.dividerColor),
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    if (!isDownloadSearched) {
+                      setState(() {
+                        isDownloadSearched = true;
+                      });
+                    }
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: getSize(10),
+                    ),
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          height: getSize(16),
+                          width: getSize(16),
+                          child: isDownloadSearched
+                              ? Image.asset(selectedIcon)
+                              : Image.asset(unselectedIcon),
+                        ),
+                        SizedBox(
+                          width: getSize(10),
+                        ),
+                        Text(
+                          'Searched Stock',
+                          style: isDownloadSearched
+                              ? appTheme.blackNormal14TitleColorPrimary
+                              : appTheme.blackNormal14TitleColorblack,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: getSize(20),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    if (isDownloadSearched) {
+                      setState(() {
+                        isDownloadSearched = false;
+                      });
+                    }
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: getSize(10),
+                    ),
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          height: getSize(16),
+                          width: getSize(16),
+                          child: !isDownloadSearched
+                              ? Image.asset(selectedIcon)
+                              : Image.asset(unselectedIcon),
+                        ),
+                        SizedBox(
+                          width: getSize(10),
+                        ),
+                        Text(
+                          'All Stock',
+                          style: !isDownloadSearched
+                              ? appTheme.blackNormal14TitleColorPrimary
+                              : appTheme.blackNormal14TitleColorblack,
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      R.string.commonString.cancel,
+                      textAlign: TextAlign.center,
+                      style: AppTheme.of(context)
+                          .theme
+                          .textTheme
+                          .display2
+                          .copyWith(color: appTheme.dividerColor),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: MathUtilities.screenWidth(context) / 2,
+                  margin: EdgeInsets.only(top: getSize(30)),
+                  child: AppButton.flat(
+                    onTap: () {
+                      Navigator.pop(context);
+                      widget.onAccept(isDownloadSearched);
+                    },
+                    borderRadius: 14,
+                    fitWidth: true,
+                    text: 'Accept',
+                    //isButtonEnabled: enableDisableSigninButton(),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
