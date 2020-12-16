@@ -45,11 +45,15 @@ PODS:
     - Flutter
   - sms_autofill (0.0.1):
     - Flutter
+  - speech_to_text (0.0.1):
+    - Flutter
+    - Try
   - sqflite (0.0.1):
     - Flutter
     - FMDB (~> 2.7.2)
   - store_redirect (0.0.1):
     - Flutter
+  - Try (2.1.1)
   - unique_identifier (0.0.1):
     - Flutter
   - url_launcher (0.0.1):
@@ -82,6 +86,7 @@ DEPENDENCIES:
   - share (from `.symlinks/plugins/share/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sms_autofill (from `.symlinks/plugins/sms_autofill/ios`)
+  - speech_to_text (from `.symlinks/plugins/speech_to_text/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - store_redirect (from `.symlinks/plugins/store_redirect/ios`)
   - unique_identifier (from `.symlinks/plugins/unique_identifier/ios`)
@@ -96,6 +101,7 @@ SPEC REPOS:
     - libPhoneNumber-iOS
     - OneSignal
     - Reachability
+    - Try
 
 EXTERNAL SOURCES:
   app_settings:
@@ -136,6 +142,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences/ios"
   sms_autofill:
     :path: ".symlinks/plugins/sms_autofill/ios"
+  speech_to_text:
+    :path: ".symlinks/plugins/speech_to_text/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
   store_redirect:
@@ -175,8 +183,10 @@ SPEC CHECKSUMS:
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   sms_autofill: c461043483362c3f1709ee76eaae6eb570b31686
+  speech_to_text: b43a7d99aef037bd758ed8e45d79bbac035d2dfe
   sqflite: 4001a31ff81d210346b500c55b17f4d6c7589dd0
   store_redirect: 2977747cf81689a39bd62c248c2deacb7a0d131e
+  Try: 5ef669ae832617b3cee58cb2c6f99fb767a4ff96
   unique_identifier: ebb92b4bc4ad9c2c93f85cb5e02f70ad168a2bd6
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
   video_player: 9cc823b1d9da7e8427ee591e8438bfbcde500e6e

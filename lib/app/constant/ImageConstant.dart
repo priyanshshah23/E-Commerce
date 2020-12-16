@@ -185,6 +185,7 @@ const String fingurePrint = "assets/PNShah/ForgetMPIN/fingerprint.png";
 const String mpin = "assets/PNShah/ForgetMPIN/MPIN.png";
 const String tickSelected = "assets/Common/tickSelected.png";
 const String tickUnSelected = "assets/Common/tickunSelected.png";
+const String microphone = "assets/Common/microphone.png";
 
 //Take a Tour screen
 const String homeOverlay1 = "assets/Overlay/HomeOverlay1.png";
