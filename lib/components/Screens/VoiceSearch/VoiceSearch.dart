@@ -33,7 +33,10 @@ class _VoiceSearchState extends StatefulScreenWidgetState {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       speech
-          .initialize(onStatus: statusListener, onError: errorListener)
+          .initialize(
+              onStatus: statusListener,
+              onError: errorListener,
+              debugLogging: true)
           .then((value) {
         setState(() {
           isSpeechToTextEnabled = value;
@@ -94,10 +97,10 @@ class _VoiceSearchState extends StatefulScreenWidgetState {
                             isSpeechToTextEnabled == true) {
                           setState(() {
                             isMicTapped = true;
-                            strText = "";
+
                             speech.listen(
                               onResult: resultListener,
-                              listenFor: Duration(minutes: 1),
+                              listenFor: Duration(seconds: 60),
                             );
                           });
                         }
