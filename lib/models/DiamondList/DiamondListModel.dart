@@ -133,7 +133,7 @@ class DiamondListResp extends BaseApiResp {
 }
 
 class Data {
-  Filter filter;
+  FilterResp filter;
   int count;
   bool maxLimit;
 
@@ -149,7 +149,7 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     filter =
-        json['filter'] != null ? new Filter.fromJson(json['filter']) : null;
+        json['filter'] != null ? new FilterResp.fromJson(json['filter']) : null;
     count = json['count'];
     maxLimit = json['maxLimit'];
     if (json['diamonds'] != null) {
@@ -188,7 +188,7 @@ class Data {
   }
 }
 
-class Filter {
+class FilterResp {
   String createdAt;
   String updatedAt;
   String id;
@@ -210,7 +210,7 @@ class Filter {
   String user;
   String account;
 
-  Filter({
+  FilterResp({
     this.createdAt,
     this.updatedAt,
     this.id,
@@ -233,7 +233,7 @@ class Filter {
     this.account,
   });
 
-  Filter.fromJson(Map<String, dynamic> json) {
+  FilterResp.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     id = json['id'];

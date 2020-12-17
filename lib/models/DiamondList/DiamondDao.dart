@@ -1,7 +1,11 @@
+import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/constant/constants.dart';
+import 'package:diamnow/app/utils/string_utils.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
+import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:sembast/sembast.dart';
 import 'package:diamnow/app/Helper/AppDatabase.dart';
+import 'package:diamnow/models/Master/Master.dart';
 
 import 'DiamondModel.dart';
 
@@ -42,36 +46,80 @@ class DiamondDao {
 
   int _tempDiamodTotalCount;
 
-  Future<DiamondListResp> getDiamondList(Map<String, dynamic> dict) async {
+  Future<DiamondListResp> getDiamondList(Map<String, dynamic> dict,
+      {List<FormBaseModel> list}) async {
     if (dict["page"] == DEFAULT_PAGE) {
       _tempDiamodTotalCount = null;
     }
 
-    // Finder object can also sort data.
-    final finder = Finder(
-      offset: (dict["page"] - 1) * dict["limit"],
-      limit: dict["limit"],
-    );
+    List<Filter> arrFilter = [];
+    if (!isNullEmptyOrFalse(list)) {
+      for (var element in list) {
+        //Shape Widget
+        if (element.viewType == ViewTypes.shapeWidget) {
+          SelectionModel selectionModel = element as SelectionModel;
+          List<String> arrMaster = selectionModel.masters
+              .where((element) => element.isSelected == true)
+              .toList()
+              .map((e) => e.name)
+              .toList();
 
-    if (_tempDiamodTotalCount == null) {
-      _tempDiamodTotalCount = (await _diamondStore.find((await _db))).length;
+          for (var str in arrMaster) {
+            if (selectionModel.masterCode == MasterCode.shape) {
+              arrFilter.add(Filter.equal("shpNm", str));
+            }
+          }
+        } else if (element.viewType == ViewTypes.caratRange) {
+          List<Map<String, dynamic>> caratRequest =
+              Master.getSelectedCarat((element as SelectionModel).masters) ??
+                  [];
+
+          // for (var item in caratRequest) {
+          //   arrFilter
+          //       .add(Filter.greaterThanOrEquals("crt", item.from));
+          //   arrFilter.add(Filter.lessThanOrEquals("crt", item.split("-")[1]));
+          // }
+          if (!isNullEmptyOrFalse(
+              (element as SelectionModel).caratRangeChipsToShow)) {
+            for (var item
+                in (element as SelectionModel).caratRangeChipsToShow) {
+              arrFilter
+                  .add(Filter.greaterThanOrEquals("crt", item.split("-")[0]));
+              arrFilter.add(Filter.lessThanOrEquals("crt", item.split("-")[1]));
+            }
+          }
+        }
+      }
+
+      final finder = Finder(
+        offset: (dict["page"] - 1) * dict["limit"],
+        limit: dict["limit"],
+      );
+
+      if (!isNullEmptyOrFalse(arrFilter)) {
+        finder.filter = Filter.or(arrFilter);
+      }
+
+      if (_tempDiamodTotalCount == null) {
+        _tempDiamodTotalCount = (await _diamondStore.find((await _db))).length;
+      }
+
+      final recordSnapshots = await _diamondStore.find(
+        await _db,
+        finder: finder,
+      );
+
+      // Making a List<Fruit> out of List<RecordSnapshot>
+      var diamondList = recordSnapshots.map((snapshot) {
+        final diamondModel = DiamondModel.fromJson(snapshot.value);
+        // An ID is a key of a record from the database.
+        diamondModel.id = snapshot.key.toString();
+        return diamondModel;
+      }).toList();
+
+      return DiamondListResp(
+        data: Data(count: _tempDiamodTotalCount, diamonds: diamondList),
+      );
     }
-
-    final recordSnapshots = await _diamondStore.find(
-      await _db,
-      finder: finder,
-    );
-
-    // Making a List<Fruit> out of List<RecordSnapshot>
-    var diamondList = recordSnapshots.map((snapshot) {
-      final diamondModel = DiamondModel.fromJson(snapshot.value);
-      // An ID is a key of a record from the database.
-      diamondModel.id = snapshot.key.toString();
-      return diamondModel;
-    }).toList();
-
-    return DiamondListResp(
-      data: Data(count: _tempDiamodTotalCount, diamonds: diamondList),
-    );
   }
 }

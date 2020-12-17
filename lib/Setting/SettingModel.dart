@@ -104,6 +104,30 @@ class DrawerSetting {
         countBackgroundColor: fromHex("#003365"),
         count: 15,
       ));
+
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_offline_stock)
+        .view) {
+      drawerList.add(DrawerModel(
+        image: mySavedSearch,
+        title: "Offline Stock",
+        isSelected: false,
+        isShowDivider: false,
+        isShowUpperDivider: true,
+        type: DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK,
+      ));
+
+      drawerList.add(DrawerModel(
+        image: drawerSearch,
+        title: "Offline Search",
+        isSelected: false,
+        isShowDivider: false,
+        isShowUpperDivider: false,
+        type: DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH,
+      ));
+    }
+
     if (app
         .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_mySavedSearch)
@@ -116,15 +140,6 @@ class DrawerSetting {
         isShowUpperDivider: true,
         type: DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH,
       ));
-
-    drawerList.add(DrawerModel(
-      image: mySavedSearch,
-      title: "Offline Stock",
-      isSelected: false,
-      isShowDivider: false,
-      isShowUpperDivider: true,
-      type: DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK,
-    ));
 
     drawerList.add(DrawerModel(
       image: userTheme,

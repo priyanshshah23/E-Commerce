@@ -63,7 +63,10 @@ class FilterScreen extends StatefulScreenWidget {
   SavedSearchModel savedSearchModel;
   DisplayDataClass dictSearchData;
 
-  FilterScreen(Map<String, dynamic> arguments) {
+  FilterScreen(
+    Map<String, dynamic> arguments, {
+    Key key,
+  }) : super(key: key) {
     if (arguments != null) {
       if (arguments[ArgumentConstant.ModuleType] != null) {
         moduleType = arguments[ArgumentConstant.ModuleType];
@@ -305,7 +308,12 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       },
       child: Scaffold(
           backgroundColor: appTheme.whiteColor,
-          appBar: getAppBar(context, R.string.screenTitle.searchDiamond,
+          appBar: getAppBar(
+              context,
+              moduleType ==
+                      DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH
+                  ? "Search (Offline)"
+                  : R.string.screenTitle.searchDiamond,
               bgColor: appTheme.whiteColor,
               leadingButton: isFromDrawer
                   ? getDrawerButton(context, true)
@@ -600,6 +608,18 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           }
         } else if (obj.code == BottomCodeConstant.filterSearch) {
           if (app
+                  .resolve<PrefUtils>()
+                  .getModulePermission(
+                      ModulePermissionConstant.permission_offline_stock)
+                  .view &&
+              moduleType ==
+                  DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+            //Query for sembast
+            Map<String, dynamic> dict = new HashMap();
+            dict["filterModel"] = arrList;
+            dict[ArgumentConstant.ModuleType] = moduleType;
+            NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+          } else if (app
               .resolve<PrefUtils>()
               .getModulePermission(
                   ModulePermissionConstant.permission_searchResult)

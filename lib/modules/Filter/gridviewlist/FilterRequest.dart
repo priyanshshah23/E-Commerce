@@ -83,6 +83,7 @@ class FilterRequest {
 
       if (element.viewType == ViewTypes.keytosymbol) {
         Map<String, dynamic> mapOfSelectedRadioButton = {};
+        print((element as KeyToSymbolModel).listOfRadio);
         List<RadioButton> listOfSelectedRadioButton =
             (element as KeyToSymbolModel)
                 .listOfRadio
@@ -92,10 +93,13 @@ class FilterRequest {
                 .toList();
 
         if (!isNullEmptyOrFalse(listOfSelectedRadioButton)) {
-          mapOfSelectedRadioButton[listOfSelectedRadioButton.first.apiKey] =
-              Master.getSelectedId((element as SelectionModel).masters);
+          var list = Master.getSelectedId((element as SelectionModel).masters);
+          if (!isNullEmptyOrFalse(list)) {
+            mapOfSelectedRadioButton[listOfSelectedRadioButton.first.apiKey] =
+                Master.getSelectedId((element as SelectionModel).masters);
 
-          map[element.apiKey] = mapOfSelectedRadioButton;
+            map[element.apiKey] = mapOfSelectedRadioButton;
+          }
         }
       }
 

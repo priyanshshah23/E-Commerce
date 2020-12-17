@@ -35,6 +35,7 @@ class DiamondListScreen extends StatefulScreenWidget {
   String filterId = "";
   int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
   bool isFromDrawer = false;
+  List<FormBaseModel> filterModel;
 
   DiamondListScreen(
     Map<String, dynamic> arguments, {
@@ -48,15 +49,18 @@ class DiamondListScreen extends StatefulScreenWidget {
       if (arguments[ArgumentConstant.IsFromDrawer] != null) {
         isFromDrawer = arguments[ArgumentConstant.IsFromDrawer];
       }
+      if (arguments["filterModel"] != null) {
+        filterModel = arguments["filterModel"];
+      }
     }
   }
 
   @override
   _DiamondListScreenState createState() => _DiamondListScreenState(
-        filterId: filterId,
-        moduleType: moduleType,
-        isFromDrawer: isFromDrawer,
-      );
+      filterId: filterId,
+      moduleType: moduleType,
+      isFromDrawer: isFromDrawer,
+      filterModel: filterModel);
 }
 
 class _DiamondListScreenState extends StatefulScreenWidgetState {
@@ -66,8 +70,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   String sortingKey;
   Map<String, dynamic> dictFilters;
   bool selectAllGroupDiamonds;
+  List<FormBaseModel> filterModel;
 
-  _DiamondListScreenState({this.filterId, this.moduleType, this.isFromDrawer});
+  _DiamondListScreenState(
+      {this.filterId, this.moduleType, this.isFromDrawer, this.filterModel});
 
   DiamondConfig diamondConfig;
   BaseList diamondList;
@@ -226,8 +232,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         break;
 
       case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK:
+      case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH:
         AppDatabase.instance.diamondDao
-            .getDiamondList(dict)
+            .getDiamondList(dict, list: this.filterModel)
             .then((diamondListResp) {
           try {
             if (page == DEFAULT_PAGE) {

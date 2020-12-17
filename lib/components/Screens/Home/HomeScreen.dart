@@ -176,7 +176,10 @@ class _HomeScreenState extends State<HomeScreen> {
     Map<String, dynamic> dict = new HashMap();
     dict[ArgumentConstant.ModuleType] = moduleType;
     dict[ArgumentConstant.IsFromDrawer] = true;
-    currentWidget = FilterScreen(dict);
+    currentWidget = FilterScreen(
+      dict,
+      key: Key(moduleType.toString()),
+    );
   }
 
   openQuickSearch(int moduleType) {
@@ -226,7 +229,10 @@ class _HomeScreenState extends State<HomeScreen> {
     dict["type"] = StaticPageConstant.ABOUT_US;
     dict["strUrl"] = ApiConstants.aboutUs;
     dict[ArgumentConstant.IsFromDrawer] = true;
-    currentWidget = StaticPageScreen(dict);
+    currentWidget = StaticPageScreen(
+      dict,
+      key: Key(moduleType.toString()),
+    );
   }
 
   openContactUS(int moduleType) {
@@ -236,7 +242,10 @@ class _HomeScreenState extends State<HomeScreen> {
     dict["type"] = StaticPageConstant.CONTACT_US;
     dict["strUrl"] = ApiConstants.contactUs;
     dict[ArgumentConstant.IsFromDrawer] = true;
-    currentWidget = StaticPageScreen(dict);
+    currentWidget = StaticPageScreen(
+      dict,
+      key: Key(moduleType.toString()),
+    );
   }
 
   openTermsAndCondition(int moduleType) {
@@ -246,7 +255,10 @@ class _HomeScreenState extends State<HomeScreen> {
     dict["type"] = StaticPageConstant.TERMS_CONDITION;
     dict["strUrl"] = ApiConstants.termsCondition;
     dict[ArgumentConstant.IsFromDrawer] = true;
-    currentWidget = StaticPageScreen(dict);
+    currentWidget = StaticPageScreen(
+      dict,
+      key: Key(moduleType.toString()),
+    );
   }
 
   openPrivacyPolicy(int moduleType) {
@@ -256,7 +268,10 @@ class _HomeScreenState extends State<HomeScreen> {
     dict["type"] = StaticPageConstant.PRIVACY_POLICY;
     dict["strUrl"] = ApiConstants.privacyPolicy;
     dict[ArgumentConstant.IsFromDrawer] = true;
-    currentWidget = StaticPageScreen(dict);
+    currentWidget = StaticPageScreen(
+      dict,
+      key: Key(moduleType.toString()),
+    );
   }
 
   openSavedSearch(int moduleType) {
@@ -301,6 +316,7 @@ class _HomeScreenState extends State<HomeScreen> {
           openDashboard(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_SEARCH:
+        case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH:
           openSearch(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:

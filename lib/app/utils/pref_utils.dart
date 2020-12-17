@@ -258,10 +258,6 @@ class PrefUtils {
         }
       });
     }
-
-    if (module == "order") {
-      print(module);
-    }
     if (data == null) {
       if (true) {
         data = UserPermissionsData(module: module);
@@ -271,6 +267,14 @@ class PrefUtils {
         data.delete = false;
         data.downloadExcel = false;
       }
+    }
+    if (module == ModulePermissionConstant.permission_offline_stock) {
+      data = UserPermissionsData(module: module);
+      data.view = true;
+      data.insert = true;
+      data.update = true;
+      data.delete = true;
+      data.downloadExcel = true;
     }
     return data;
   }
@@ -320,6 +324,7 @@ class PrefUtils {
     _preferences.clear();
     await AppDatabase.instance.masterDao.deleteAllMasterItems();
     await AppDatabase.instance.sizeMasterDao.deleteAllMasterItems();
+    await AppDatabase.instance.diamondDao.deleteAlldiamondModelItems();
   }
 }
 
