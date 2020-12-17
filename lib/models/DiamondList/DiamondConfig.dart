@@ -1427,8 +1427,7 @@ class _DownloadConfirmationPopupState extends State<DownloadConfirmationPopup> {
             Text(
               'Confirmation',
               textAlign: TextAlign.center,
-              style: AppTheme.of(context).theme.textTheme.body1.copyWith(
-                  fontWeight: FontWeight.w600, color: appTheme.colorPrimary),
+              style: appTheme.commonAlertDialogueTitleStyle,
             ),
             SizedBox(
               height: getSize(20),
@@ -1436,11 +1435,7 @@ class _DownloadConfirmationPopupState extends State<DownloadConfirmationPopup> {
             Text(
               'Please read & accept terms before download stock offline.',
               textAlign: TextAlign.center,
-              style: AppTheme.of(context)
-                  .theme
-                  .textTheme
-                  .display2
-                  .copyWith(color: appTheme.dividerColor),
+              style: appTheme.commonAlertDialogueDescStyle,
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -1456,7 +1451,7 @@ class _DownloadConfirmationPopupState extends State<DownloadConfirmationPopup> {
                   },
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                      vertical: getSize(10),
+                      vertical: getSize(20),
                     ),
                     child: Row(
                       children: <Widget>[
@@ -1519,41 +1514,70 @@ class _DownloadConfirmationPopupState extends State<DownloadConfirmationPopup> {
                 )
               ],
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      R.string.commonString.cancel,
-                      textAlign: TextAlign.center,
-                      style: AppTheme.of(context)
-                          .theme
-                          .textTheme
-                          .display2
-                          .copyWith(color: appTheme.dividerColor),
+            Container(
+              margin: EdgeInsets.only(
+                top: getSize(24),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        height: getSize(50),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: appTheme.colorPrimary,
+                            width: getSize(1),
+                          ),
+                          borderRadius: BorderRadius.circular(getSize(5)),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              getSize(8), getSize(14), getSize(8), getSize(14)),
+                          child: Text(
+                            R.string.commonString.cancel,
+                            textAlign: TextAlign.center,
+                            style: appTheme.commonAlertDialogueDescStyle
+                                .copyWith(
+                                    color: appTheme.colorPrimary,
+                                    fontSize: getFontSize(14)),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  width: MathUtilities.screenWidth(context) / 2,
-                  margin: EdgeInsets.only(top: getSize(30)),
-                  child: AppButton.flat(
-                    onTap: () {
-                      Navigator.pop(context);
-                      widget.onAccept(isDownloadSearched);
-                    },
-                    borderRadius: 14,
-                    fitWidth: true,
-                    text: 'Accept',
-                    //isButtonEnabled: enableDisableSigninButton(),
+                  SizedBox(
+                    width: getSize(20),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                        widget.onAccept(isDownloadSearched);
+                      },
+                      child: Container(
+                        height: getSize(50),
+                        decoration: BoxDecoration(
+                            color: appTheme.colorPrimary,
+                            borderRadius: BorderRadius.circular(getSize(5)),
+                            boxShadow: getBoxShadow(context)),
+                        child: Padding(
+                          padding: EdgeInsets.all(getSize(16)),
+                          child: Text(
+                            "Accept",
+                            textAlign: TextAlign.center,
+                            style: appTheme.white16TextStyle,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
