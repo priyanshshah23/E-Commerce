@@ -450,6 +450,8 @@ class DiamondModel {
   }
 
   String getDiamondImage() {
+    // element.url = DiamondUrls.image + item.vStnId + "/" + "still.jpg";
+
     if (isStringEmpty(vStnId) == false) {
       return DiamondUrls.image + vStnId + "/" + "still.jpg";
     }
@@ -459,7 +461,7 @@ class DiamondModel {
 
   String getCertificateImage() {
     if (isStringEmpty(certId) == false) {
-      return DiamondUrls.certificate + certId + "/" + "still.jpg";
+      return DiamondUrls.certificate + rptNo + ".pdf";
     }
     //img
     return "";

@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
@@ -7,6 +10,9 @@ import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:flutter/widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:rxbus/rxbus.dart';
 
 class OfflineStockManager {
   static final OfflineStockManager shared = OfflineStockManager();
@@ -14,17 +20,20 @@ class OfflineStockManager {
   int page = 1;
   int totalCount = 0;
   String sortKey = "";
-  int limit = 1000;
+  int limit = 300;
   double totalCarat = 0;
   String strDate = "";
   List<SelectionPopupModel> allDiamondPreviewThings;
   bool isCancel = false;
+  bool isDownloading = false;
 
   int moduleType;
   String sortingKey;
   String filterId;
 
   DateTime selectedDate;
+
+  double downloadProgress = 0;
 
   downloadData({
     String sortKey,
@@ -34,9 +43,13 @@ class OfflineStockManager {
     String filterId,
   }) {
     isCancel = false;
+    isDownloading = true;
     strDate = DateTime.now().toString();
     page = 1;
+    downloadProgress = 0;
     totalCount = 0;
+
+    RxBus.post(isDownloading, tag: eventOfflineDiamond);
 
     this.sortKey = sortKey;
     this.moduleType = moduleType;
@@ -75,28 +88,14 @@ class OfflineStockManager {
       if (this.allDiamondPreviewThings.length > 0) {
         for (var item in diamonds) {
           allDiamondPreviewThings.forEach((element) {
-            //   if (this.isDownloadImage) {
-            //   if (isNullEmptyOrFalse(item.getDiamondImage()) == false) {
-            //     // SDWebImageManager.shared.loadImage(with: URL(string : item.getDiamondImage()) , options: .fromCacheOnly, progress: .none, completed: { (img, data, errr, cache, value, url) in
-
-            //     // })
-            //   }
-            // }
-
-            // if (this.isDownloadCertificate) {
-            //   if (isNullEmptyOrFalse(item.getCertificateImage()) == false) {
-            //     // SDWebImageManager.shared.loadImage(with: URL(string : item.getCertificateImage()) , options: .fromCacheOnly, progress: .none, completed: { (img, data, errr, cache, value, url) in
-
-            //     // })
-            //   }
-            // }
-
             if (element.fileType ==
-                DownloadAndShareDialogueConstant.realImage1) {
-              element.url = DiamondUrls.image + item.vStnId + "/" + "still.jpg";
+                    DownloadAndShareDialogueConstant.realImage1 &&
+                isNullEmptyOrFalse(item.getDiamondImage()) == false) {
+              DefaultCacheManager().getSingleFile(item.getDiamondImage());
             } else if (element.fileType ==
-                DownloadAndShareDialogueConstant.certificate) {
-              element.url = DiamondUrls.certificate + item.rptNo + ".pdf";
+                    DownloadAndShareDialogueConstant.certificate &&
+                isNullEmptyOrFalse(item.getCertificateImage()) == false) {
+              DefaultCacheManager().getSingleFile(item.getCertificateImage());
             }
           });
         }
@@ -129,6 +128,9 @@ class OfflineStockManager {
         this.page += 1;
         this.getDataFromApi(sortKey: sortKey);
       } else {
+        isDownloading = false;
+        RxBus.post(isDownloading, tag: eventOfflineDiamond);
+
         //Download complete
         // NotificationCenter.default.post(name: NSNotification.Name(rawValue: AppConstants.UserDefaultKey.DownloadProgress), object: nil, userInfo: nil)
 
@@ -136,13 +138,17 @@ class OfflineStockManager {
         return;
       }
 
-      var progress = ((this.page * this.limit).toDouble()) /
-          ((this.totalCount).toDouble());
+      this.downloadProgress = min(
+          1.0,
+          ((this.page * this.limit).toDouble()) /
+              ((this.totalCount).toDouble()));
+      print('Download Progress $downloadProgress');
+      RxBus.post(isDownloading, tag: eventOfflineDiamond);
     }
 
     Map<String, dynamic> dict = {};
     dict["page"] = page;
-    dict["limit"] = DEFAULT_LIMIT;
+    dict["limit"] = this.limit;
     if (sortingKey != null) {
       dict["sort"] = sortingKey;
     }
@@ -165,6 +171,9 @@ class OfflineStockManager {
       await _downloadAndStoreDiamond(
           diamondListResp.data.count, diamondListResp.data.diamonds);
     }).catchError((onError) {
+      isDownloading = false;
+      RxBus.post(isDownloading, tag: eventOfflineDiamond);
+
       // NotificationCenter.default.post(name: NSNotification.Name(rawValue: AppConstants.UserDefaultKey.DownloadProgress), object: nil, userInfo: nil)
     });
 
@@ -180,5 +189,9 @@ class OfflineStockManager {
     // NotificationCenter.default.post(name: NSNotification.Name(rawValue: AppConstants.UserDefaultKey.DownloadProgress), object: nil, userInfo: ["progress": Utilities.getDoubleValue(value: progress)])
     //self.progress.setProgress(Float((Double(self.page * self.limit)) / Double(self.totalCount))  , animated: true)
     //print(Float((Double(self.page * self.limit)) / Double(self.totalCount)))
+  }
+
+  downloadProgressText() {
+    return "${(downloadProgress * 100).toStringAsFixed(0)}%";
   }
 }

@@ -1,4 +1,5 @@
 import 'package:diamnow/Setting/SettingModel.dart';
+import 'package:diamnow/app/Helper/OfflineStockManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/constant/constants.dart';
@@ -120,8 +121,14 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       callApi(false);
     });
-    setState(() {
-      //
+    // setState(() {
+    //   //
+    // });
+
+    RxBus.register<void>(tag: eventOfflineDiamond).listen((event) {
+      setState(() {
+        //
+      });
     });
 
     RxBus.register<Map<String, dynamic>>(tag: eventSelectAllGroupDiamonds)
@@ -145,6 +152,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   @override
   void dispose() {
     RxBus.destroy(tag: eventSelectAllGroupDiamonds);
+    RxBus.destroy(tag: eventOfflineDiamond);
     super.dispose();
   }
 
@@ -755,29 +763,74 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     List<Widget> list = [];
     for (int i = 0; i < diamondConfig.toolbarList.length; i++) {
       var element = diamondConfig.toolbarList[i];
-      list.add(GestureDetector(
-        onTap: !isNullEmptyOrFalse(arraDiamond)
-            ? () {
-                manageToolbarClick(element);
-              }
-            : null,
-        child: Padding(
-          padding: EdgeInsets.only(
-              right: i == diamondConfig.toolbarList.length - 1
-                  ? getSize(Spacing.rightPadding)
-                  : getSize(8),
-              left: getSize(8.0)),
-          child: Image.asset(
-            element.isSelected
-                ? (element.selectedImage != null
-                    ? element.selectedImage
-                    : element.image)
-                : element.image,
-            height: getSize(20),
-            width: getSize(20),
+      if (element.code == BottomCodeConstant.TBDownloadView &&
+          OfflineStockManager.shared.isDownloading) {
+        list.add(
+          Padding(
+            padding: EdgeInsets.only(
+                right: i == diamondConfig.toolbarList.length - 1
+                    ? getSize(Spacing.rightPadding)
+                    : getSize(8),
+                left: getSize(8.0)),
+            child: SizedBox(
+              height: getSize(24),
+              width: getSize(24),
+              child: Stack(
+                children: <Widget>[
+                  Center(
+                    child: Container(
+                      height: getSize(24),
+                      width: getSize(24),
+                      child: CircularProgressIndicator(
+                        strokeWidth: getSize(3),
+                        value: OfflineStockManager.shared.downloadProgress,
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(appTheme.textColor),
+                        backgroundColor: appTheme.textColor.withOpacity(0.3),
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      OfflineStockManager.shared.downloadProgressText(),
+                      style: appTheme.primaryNormal12TitleColor.copyWith(
+                        fontSize: getSize(8),
+                        color: appTheme.textColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
-      ));
+        );
+      } else {
+        list.add(GestureDetector(
+          onTap: !isNullEmptyOrFalse(arraDiamond)
+              ? () {
+                  manageToolbarClick(element);
+                }
+              : null,
+          child: Padding(
+            padding: EdgeInsets.only(
+                right: i == diamondConfig.toolbarList.length - 1
+                    ? getSize(Spacing.rightPadding)
+                    : getSize(8),
+                left: getSize(8.0)),
+            child: Image.asset(
+              element.isSelected
+                  ? (element.selectedImage != null
+                      ? element.selectedImage
+                      : element.image)
+                  : element.image,
+              height: getSize(20),
+              width: getSize(20),
+            ),
+          ),
+        ));
+      }
+
+      ;
     }
 
     return list;
