@@ -55,8 +55,9 @@ class DiamondDao {
     List<Filter> arrFilter = [];
     if (!isNullEmptyOrFalse(list)) {
       for (var element in list) {
-        //Shape Widget
-        if (element.viewType == ViewTypes.shapeWidget) {
+        //Selection Widget
+        if (element.viewType == ViewTypes.shapeWidget ||
+            element.viewType == ViewTypes.selection) {
           SelectionModel selectionModel = element as SelectionModel;
           List<String> arrMaster = selectionModel.masters
               .where((element) => element.isSelected == true)
@@ -74,52 +75,87 @@ class DiamondDao {
               Master.getSelectedCarat((element as SelectionModel).masters) ??
                   [];
 
-          // for (var item in caratRequest) {
-          //   arrFilter
-          //       .add(Filter.greaterThanOrEquals("crt", item.from));
-          //   arrFilter.add(Filter.lessThanOrEquals("crt", item.split("-")[1]));
-          // }
+          for (var item in caratRequest) {
+            Map<String, dynamic> map = item["crt"];
+
+            arrFilter.add(
+              Filter.custom(
+                (record) {
+                  if (record["crt"] >= num.parse(map[">="]) &&
+                      record["crt"] <= num.parse(map["<="])) {
+                    return true;
+                  }
+                  return false;
+                },
+              ),
+            );
+          }
           if (!isNullEmptyOrFalse(
               (element as SelectionModel).caratRangeChipsToShow)) {
             for (var item
                 in (element as SelectionModel).caratRangeChipsToShow) {
-              arrFilter
-                  .add(Filter.greaterThanOrEquals("crt", item.split("-")[0]));
-              arrFilter.add(Filter.lessThanOrEquals("crt", item.split("-")[1]));
+              arrFilter.add(
+                Filter.custom(
+                  (record) {
+                    if (record["crt"] >= num.parse(item.split("-")[0]) &&
+                        record["crt"] <= num.parse(item.split("-")[1])) {
+                      return true;
+                    }
+                    return false;
+                  },
+                ),
+              );
+            }
+          }
+        } else if (element.viewType == ViewTypes.fromTo) {
+          if (element is FromToModel) {
+            if (!isNullEmptyOrFalse(element.valueFrom) &&
+                !isNullEmptyOrFalse(element.valueTo)) {
+              arrFilter.add(
+                Filter.custom(
+                  (record) {
+                    if (record[element.apiKey] >=
+                            num.parse(element.valueFrom) &&
+                        record[element.apiKey] <= num.parse(element.valueTo)) {
+                      return true;
+                    }
+                    return false;
+                  },
+                ),
+              );
             }
           }
         }
       }
-
-      final finder = Finder(
-        offset: (dict["page"] - 1) * dict["limit"],
-        limit: dict["limit"],
-      );
-
-      if (!isNullEmptyOrFalse(arrFilter)) {
-        finder.filter = Filter.or(arrFilter);
-      }
-
-      if (_tempDiamodTotalCount == null) {
-        _tempDiamodTotalCount = (await _diamondStore.find((await _db))).length;
-      }
-
-      final recordSnapshots = await _diamondStore.find(
-        await _db,
-        finder: finder,
-      );
-
-      // Making a List<Fruit> out of List<RecordSnapshot>
-      var diamondList = recordSnapshots.map((snapshot) {
-        final diamondModel = DiamondModel.fromJson(snapshot.value);
-        // An ID is a key of a record from the database.
-        diamondModel.id = snapshot.key.toString();
-        return diamondModel;
-      }).toList();
-
-      return DiamondListResp(
-        data: Data(count: _tempDiamodTotalCount, diamonds: diamondList),
-      );
     }
+    final finder = Finder(
+      offset: (dict["page"] - 1) * dict["limit"],
+      limit: dict["limit"],
+    );
+
+    if (!isNullEmptyOrFalse(arrFilter)) {
+      finder.filter = Filter.or(arrFilter);
+    }
+
+    if (_tempDiamodTotalCount == null) {
+      _tempDiamodTotalCount = (await _diamondStore.find((await _db))).length;
+    }
+
+    final recordSnapshots = await _diamondStore.find(
+      await _db,
+      finder: finder,
+    );
+
+    // Making a List<Fruit> out of List<RecordSnapshot>
+    var diamondList = recordSnapshots.map((snapshot) {
+      final diamondModel = DiamondModel.fromJson(snapshot.value);
+      // An ID is a key of a record from the database.
+      diamondModel.id = snapshot.key.toString();
+      return diamondModel;
+    }).toList();
+
+    return DiamondListResp(
+      data: Data(count: _tempDiamodTotalCount, diamonds: diamondList),
+    );
   }
 }

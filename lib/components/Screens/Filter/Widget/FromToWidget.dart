@@ -143,6 +143,9 @@ class _FromToWidgetState extends State<FromToWidget> {
               _minValueController.text = "";
               setState(() {});
             }
+          } else {
+            oldValueForFrom = "";
+            widget.fromTomodel.valueFrom = oldValueForFrom;
           }
         }
         // Focus.of(context).unfocus();
@@ -232,6 +235,9 @@ class _FromToWidgetState extends State<FromToWidget> {
               _maxValueController.text = "";
               setState(() {});
             }
+          } else {
+            oldValueForTo = "";
+            widget.fromTomodel.valueTo = oldValueForTo;
           }
         }
         // Focus.of(context).unfocus();

@@ -646,8 +646,8 @@
     "labelFrom": "From",
     "tab": "basic",
     "labelTo": "To",
-    "maxValue": 100,
-    "minValue": -10,
+    "maxValue": 10000000,
+    "minValue": 0,
     "fromToStyle": {
       "showUnderline": false,
       "showBorder": true,
