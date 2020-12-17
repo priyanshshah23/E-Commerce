@@ -166,7 +166,8 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
         return R.string.screenTitle.stoneOfDay;
       case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK:
-        return R.string.screenTitle.searchResult + " Offline";
+      case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH:
+        return R.string.screenTitle.searchResult + " (Offline)";
       default:
         return R.string.screenTitle.searchResult;
     }
@@ -333,7 +334,10 @@ class DiamondConfig {
           //         .downloadExcel ==
           //     true && if (moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {) {
 
-          if (moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {
+          if (moduleType == DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK ||
+              moduleType ==
+                  DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+          } else {
             list.add(BottomTabModel(
                 title: "",
                 image: download,

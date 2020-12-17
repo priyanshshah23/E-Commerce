@@ -790,8 +790,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
 class FilterItem extends StatefulWidget {
   List<FormBaseModel> arrList = [];
-
-  FilterItem(this.arrList);
+  int moduleType;
+  FilterItem(this.arrList, {this.moduleType});
 
   @override
   _FilterItemState createState() => _FilterItemState();
@@ -971,6 +971,7 @@ class _FilterItemState extends State<FilterItem> {
               onTap: () {
                 Map<String, dynamic> dict = new HashMap();
                 dict["isFromSearch"] = true;
+                dict[ArgumentConstant.ModuleType] = widget.moduleType;
                 NavigationUtilities.pushRoute(SearchScreen.route, args: dict);
               },
             ),
