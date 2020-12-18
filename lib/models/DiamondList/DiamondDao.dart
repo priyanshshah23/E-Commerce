@@ -125,6 +125,55 @@ class DiamondDao {
               );
             }
           }
+        } else if (element.viewType == ViewTypes.groupWidget) {
+          if ((element is ColorModel)) {
+            if (element.groupMasterCode == MasterCode.colorGroup) {
+              //Master selection
+              if (true) {
+                List<String> arrMaster = element.masters
+                    .where((element) => element.isSelected == true)
+                    .toList()
+                    .map((e) => e.name)
+                    .toList();
+                for (var str in arrMaster) {
+                  arrFilter.add(Filter.equal("colNm", str));
+                }
+              }
+
+              if (true) {
+                List<String> arrMaster = element.groupMaster
+                    .where((element) => element.isSelected == true)
+                    .toList()
+                    .map((e) => e.name)
+                    .toList();
+                for (var str in arrMaster) {
+                  arrFilter.add(Filter.equal("clrNm", str));
+                }
+              }
+
+              if (true) {
+                List<String> arrMaster = element.overtone
+                    .where((element) => element.isSelected == true)
+                    .toList()
+                    .map((e) => e.name)
+                    .toList();
+                for (var str in arrMaster) {
+                  arrFilter.add(Filter.equal("ovrtnNm", str));
+                }
+              }
+
+              if (true) {
+                List<String> arrMaster = element.intensity
+                    .where((element) => element.isSelected == true)
+                    .toList()
+                    .map((e) => e.name)
+                    .toList();
+                for (var str in arrMaster) {
+                  arrFilter.add(Filter.equal("intenNm", str));
+                }
+              }
+            }
+          }
         }
       }
     }
