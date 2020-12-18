@@ -34,6 +34,7 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_RECENT_SEARCH = 31;
   static const MODULE_TYPE_OFFLINE_STOCK = 32;
   static const MODULE_TYPE_OFFLINE_STOCK_SEARCH = 33;
+  static const MODULE_TYPE_OFFLINE_STOCK_SEARCH_HISTORY = 34;
   static const MODULE_TYPE_OPEN_DRAWER = 1000;
   static const MODULE_TYPE_HOME = 100;
   static const MODULE_TYPE_FINAL_CALCULATION = 101;

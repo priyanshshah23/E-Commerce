@@ -126,6 +126,15 @@ class DrawerSetting {
         isShowUpperDivider: false,
         type: DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH,
       ));
+
+      drawerList.add(DrawerModel(
+        image: drawerSearch,
+        title: "Search History",
+        isSelected: false,
+        isShowDivider: false,
+        isShowUpperDivider: false,
+        type: DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH_HISTORY,
+      ));
     }
 
     if (app

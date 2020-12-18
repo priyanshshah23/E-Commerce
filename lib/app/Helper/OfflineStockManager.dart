@@ -1,16 +1,22 @@
+import 'dart:convert';
+
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
+import 'package:diamnow/app/utils/date_utils.dart';
+import 'package:diamnow/components/Screens/OfflineSearchHistory/OfflineSearchHistory.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
+import 'package:diamnow/models/OfflineSearchHistory/OfflineSearchHistoryModel.dart';
 import 'package:flutter/widgets.dart';
 
 class OfflineStockManager {
   static final OfflineStockManager shared = OfflineStockManager();
 
+  Map<String, dynamic> filterCriteria;
   int page = 1;
   int totalCount = 0;
   String sortKey = "";
@@ -34,7 +40,8 @@ class OfflineStockManager {
     String filterId,
   }) {
     isCancel = false;
-    strDate = DateTime.now().toString();
+    strDate = DateUtilities().getFormattedDateString(DateTime.now(),
+        formatter: DateUtilities.dd_mm_yyyy_hh_mm_a);
     page = 1;
     totalCount = 0;
 
@@ -68,7 +75,7 @@ class OfflineStockManager {
 
       //Adding Date in Diamond Model
       diamonds.forEach((element) {
-        element.date = this.strDate;
+        element.strDate = this.strDate;
         element.expiryDate = expDate;
       });
 
@@ -103,24 +110,23 @@ class OfflineStockManager {
       }
 
       //Store History data
-      /*var dict : [String:Any] = [:]
-                        if self.page * self.limit < self.totalCount{
-                            dict["pcs"] = self.page * self.limit
-                        }else{
-                            dict["pcs"] = self.totalCount
-                        }
-                        dict["date"] = self.strDate
-                        self.totalCarat += arrData.map { $0.carat }.reduce(0.0, +)
-                        dict["carat"] = self.totalCarat
-                        dict["expiryDate"] = expDate
-                        dict["filterParam"] = self.filterCriteria?.jsonStringRepresentation
-                        
-                        let arrHistory = Mapper<SearchHistoryModel>().mapArray(JSONArray: [dict])
-                        */
-      // realm.add(arrHistory, update: .all)
-      // realm.add(arrData, update: .all)
+      Map<String, dynamic> dict = {};
+      if (page * limit < totalCount) {
+        dict["pcs"] = page * limit;
+      } else {
+        dict["pcs"] = totalCount;
+      }
+      dict["date"] = strDate;
 
-      // print(await AppDatabase.instance.diamondDao.getAllSortedByName());
+      totalCarat += diamonds
+          .map((e) => e.crt)
+          .reduce((value, element) => value + element);
+      dict["carat"] = totalCarat;
+      dict["expiryDate"] = DateTime.now().add(Duration(days: 5)).toString();
+      dict["filterParam"] = jsonEncode(getRequest());
+
+      await AppDatabase.instance.offlineSearchHistoryDao
+          .addOrUpdate([OfflineSearchHistoryModel.fromJson(dict)]);
 
       await AppDatabase.instance.diamondDao.addOrUpdate(diamonds);
       debugPrint('Download Stock Page $page');
@@ -180,5 +186,20 @@ class OfflineStockManager {
     // NotificationCenter.default.post(name: NSNotification.Name(rawValue: AppConstants.UserDefaultKey.DownloadProgress), object: nil, userInfo: ["progress": Utilities.getDoubleValue(value: progress)])
     //self.progress.setProgress(Float((Double(self.page * self.limit)) / Double(self.totalCount))  , animated: true)
     //print(Float((Double(self.page * self.limit)) / Double(self.totalCount)))
+  }
+
+  Map<String, dynamic> getRequest() {
+    Map<String, dynamic> dict = {};
+    dict["page"] = page;
+    dict["limit"] = DEFAULT_LIMIT;
+    if (sortingKey != null) {
+      dict["sort"] = sortingKey;
+    }
+
+    dict["filters"] = {};
+    if (this.filterId != null) {
+      dict["filters"]["diamondSearchId"] = this.filterId;
+    }
+    return dict;
   }
 }
