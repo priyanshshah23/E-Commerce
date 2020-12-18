@@ -6,6 +6,7 @@ import 'package:diamnow/app/constant/constants.dart';
 import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
@@ -766,40 +767,55 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       if (element.code == BottomCodeConstant.TBDownloadView &&
           OfflineStockManager.shared.isDownloading) {
         list.add(
-          Padding(
-            padding: EdgeInsets.only(
-                right: i == diamondConfig.toolbarList.length - 1
-                    ? getSize(Spacing.rightPadding)
-                    : getSize(8),
-                left: getSize(8.0)),
-            child: SizedBox(
-              height: getSize(24),
-              width: getSize(24),
-              child: Stack(
-                children: <Widget>[
-                  Center(
-                    child: Container(
-                      height: getSize(24),
-                      width: getSize(24),
-                      child: CircularProgressIndicator(
-                        strokeWidth: getSize(3),
-                        value: OfflineStockManager.shared.downloadProgress,
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(appTheme.textColor),
-                        backgroundColor: appTheme.textColor.withOpacity(0.3),
+          GestureDetector(
+            onTap: () {
+              app.resolve<CustomDialogs>().confirmDialog(context,
+                  title: APPNAME,
+                  desc:
+                      "Are you sure you want to cancel offline stock download?",
+                  positiveBtnTitle: R.string.commonString.yes,
+                  negativeBtnTitle: R.string.commonString.no,
+                  onClickCallback: (btnType) {
+                if (btnType == ButtonType.PositveButtonClick) {
+                  OfflineStockManager.shared.canelDownload();
+                }
+              });
+            },
+            child: Padding(
+              padding: EdgeInsets.only(
+                  right: i == diamondConfig.toolbarList.length - 1
+                      ? getSize(Spacing.rightPadding)
+                      : getSize(8),
+                  left: getSize(8.0)),
+              child: SizedBox(
+                height: getSize(24),
+                width: getSize(24),
+                child: Stack(
+                  children: <Widget>[
+                    Center(
+                      child: Container(
+                        height: getSize(24),
+                        width: getSize(24),
+                        child: CircularProgressIndicator(
+                          strokeWidth: getSize(3),
+                          value: OfflineStockManager.shared.downloadProgress,
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(appTheme.textColor),
+                          backgroundColor: appTheme.textColor.withOpacity(0.3),
+                        ),
                       ),
                     ),
-                  ),
-                  Center(
-                    child: Text(
-                      OfflineStockManager.shared.downloadProgressText(),
-                      style: appTheme.primaryNormal12TitleColor.copyWith(
-                        fontSize: getSize(8),
-                        color: appTheme.textColor,
+                    Center(
+                      child: Text(
+                        OfflineStockManager.shared.downloadProgressText(),
+                        style: appTheme.primaryNormal12TitleColor.copyWith(
+                          fontSize: getSize(8),
+                          color: appTheme.textColor,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

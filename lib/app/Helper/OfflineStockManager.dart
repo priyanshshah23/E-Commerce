@@ -93,9 +93,14 @@ class OfflineStockManager {
                 isNullEmptyOrFalse(item.getDiamondImage()) == false) {
               DefaultCacheManager().getSingleFile(item.getDiamondImage());
             } else if (element.fileType ==
-                    DownloadAndShareDialogueConstant.certificate &&
-                isNullEmptyOrFalse(item.getCertificateImage()) == false) {
-              DefaultCacheManager().getSingleFile(item.getCertificateImage());
+                DownloadAndShareDialogueConstant.certificate) {
+              DefaultCacheManager()
+                  .getSingleFile(item.getCertificateImage())
+                  .then((value) async {
+                print("Certificate Download File URL $value");
+                item.offlineCertificateFile = value.path;
+                await AppDatabase.instance.diamondDao.addOrUpdate([item]);
+              });
             }
           });
         }
