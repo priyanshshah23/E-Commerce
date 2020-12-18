@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:diamnow/app/Helper/LocalNotification.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
@@ -30,7 +31,7 @@ class OfflineStockManager {
   String sortingKey;
   String filterId;
 
-  DateTime selectedDate;
+  String selectedDate;
 
   double downloadProgress = 0;
 
@@ -38,7 +39,7 @@ class OfflineStockManager {
     String sortKey,
     int moduleType,
     List<SelectionPopupModel> allDiamondPreviewThings,
-    DateTime date,
+    String date,
     String filterId,
   }) {
     isCancel = false;
@@ -64,6 +65,9 @@ class OfflineStockManager {
 
   canelDownload() {
     this.isCancel = true;
+    isDownloading = false;
+    RxBus.post(isDownloading, tag: eventOfflineDiamond);
+
     // NotificationCenter.default.post(name: NSNotification.Name(rawValue: AppConstants.UserDefaultKey.DownloadProgress), object: nil, userInfo: nil)
   }
 
@@ -77,7 +81,9 @@ class OfflineStockManager {
       this.totalCount = count;
 
       //This expiry date is configurable, It will come from server side in user response
-      var expDate = DateTime.now().add(Duration(days: 5)).toString();
+      var expDate = DateUtilities().getFormattedDateString(
+          DateTime.now().add(Duration(days: 5)),
+          formatter: DateUtilities.dd_mm_yyyy_hh_mm_a);
 
       //Adding Date in Diamond Model
       diamonds.forEach((element) {
@@ -119,7 +125,7 @@ class OfflineStockManager {
           .map((e) => e.crt)
           .reduce((value, element) => value + element);
       dict["carat"] = totalCarat;
-      dict["expiryDate"] = DateTime.now().add(Duration(days: 5)).toString();
+      dict["expiryDate"] = expDate;
       dict["filterParam"] = jsonEncode(getRequest());
 
       await AppDatabase.instance.offlineSearchHistoryDao
@@ -136,9 +142,8 @@ class OfflineStockManager {
         RxBus.post(isDownloading, tag: eventOfflineDiamond);
 
         //Download complete
+        LocalNotificationManager().showOfflineStockDownloadNotification();
         // NotificationCenter.default.post(name: NSNotification.Name(rawValue: AppConstants.UserDefaultKey.DownloadProgress), object: nil, userInfo: nil)
-
-        // self.fireNotification(title: "", body: LanguageManager.localizedString("KLblOfflineStockDownloaded"), data: nil, date: Date().addingTimeInterval(5), identifier: StringConstants.NotificationIdentifier.offlineStockDownload)
         return;
       }
 
@@ -172,27 +177,21 @@ class OfflineStockManager {
       isNetworkError: false,
     )
         .then((diamondListResp) async {
+      //Schedule notification
+      if (this.page == 1 && this.selectedDate != null) {
+        LocalNotificationManager().fireNotification(
+          DateUtilities().convertServerStringToFormatterDate(selectedDate),
+          title: APPNAME,
+          body: "Reminder about offline stock search",
+        );
+      }
+
       await _downloadAndStoreDiamond(
           diamondListResp.data.count, diamondListResp.data.diamonds);
     }).catchError((onError) {
       isDownloading = false;
       RxBus.post(isDownloading, tag: eventOfflineDiamond);
-
-      // NotificationCenter.default.post(name: NSNotification.Name(rawValue: AppConstants.UserDefaultKey.DownloadProgress), object: nil, userInfo: nil)
     });
-
-    // if let watchListName = responseDic["watchListName"] as? [String] {
-    //     Defaults[.watchListName] = Utilities.jsonToString(json: watchListName)
-    // }
-
-    //Schedule notification
-    // if self.page == 1 && self.selectedDate != nil {
-    //     self.fireNotification(title: "", body: LanguageManager.localizedString("KLblReminderNotiMsg"), data: nil, date: self.selectedDate!,identifier: StringConstants.NotificationIdentifier.offlineStockDownload)
-    // }
-
-    // NotificationCenter.default.post(name: NSNotification.Name(rawValue: AppConstants.UserDefaultKey.DownloadProgress), object: nil, userInfo: ["progress": Utilities.getDoubleValue(value: progress)])
-    //self.progress.setProgress(Float((Double(self.page * self.limit)) / Double(self.totalCount))  , animated: true)
-    //print(Float((Double(self.page * self.limit)) / Double(self.totalCount)))
   }
 
   downloadProgressText() {

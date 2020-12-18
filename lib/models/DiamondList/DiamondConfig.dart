@@ -673,7 +673,7 @@ class DiamondConfig {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return DownloadConfirmationPopup(
-          onAccept: (isDownloadSearched) {
+          onAccept: (isDownloadSearched, selectedDate) {
             List<SelectionPopupModel> downloadOptionList =
                 List<SelectionPopupModel>();
             downloadOptionList.add(SelectionPopupModel("1", "Certificate",
@@ -712,6 +712,7 @@ class DiamondConfig {
                           allDiamondPreviewThings: multiSelectedItem,
                           filterId: isDownloadSearched ? filterId : null,
                           sortKey: sortKey,
+                          date: selectedDate,
                         );
                       },
                     ),
@@ -1407,7 +1408,7 @@ class DiamondConfig {
 }
 
 class DownloadConfirmationPopup extends StatefulWidget {
-  final Function(bool) onAccept;
+  final Function(bool, String) onAccept;
   DownloadConfirmationPopup({Key key, this.onAccept}) : super(key: key);
 
   @override
@@ -1417,6 +1418,7 @@ class DownloadConfirmationPopup extends StatefulWidget {
 
 class _DownloadConfirmationPopupState extends State<DownloadConfirmationPopup> {
   bool isDownloadSearched = true;
+  String selectedDate;
 
   @override
   Widget build(BuildContext context) {
@@ -1437,13 +1439,74 @@ class _DownloadConfirmationPopupState extends State<DownloadConfirmationPopup> {
               textAlign: TextAlign.center,
               style: appTheme.commonAlertDialogueTitleStyle,
             ),
-            SizedBox(
-              height: getSize(20),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: getSize(20),
+              ),
+              child: Text(
+                'Please read & accept terms before download stock offline.',
+                textAlign: TextAlign.center,
+                style: appTheme.commonAlertDialogueDescStyle,
+              ),
             ),
             Text(
-              'Please read & accept terms before download stock offline.',
-              textAlign: TextAlign.center,
-              style: appTheme.commonAlertDialogueDescStyle,
+              'There may be price and availability variations in the intervening period between placing an order offline and when the order is confirmed online. The changed of the same will be communicated to you via message. Please ensure that you take a note of it before confirming the order.',
+              style: appTheme.blackNormal14TitleColorblack,
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(
+                vertical: getSize(20),
+              ),
+              padding: EdgeInsets.symmetric(
+                horizontal: getSize(10),
+              ),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: getSize(1),
+                  color: appTheme.borderColor,
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(
+                  getSize(10),
+                )),
+              ),
+              child: InkWell(
+                onTap: () {
+                  //
+                  openAddReminder(context, (manageClick) {
+                    setState(() {
+                      selectedDate = manageClick.date;
+                    });
+                  });
+                },
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Remind me later',
+                        textAlign: TextAlign.center,
+                        style: appTheme.commonAlertDialogueDescStyle.copyWith(
+                          color: appTheme.colorPrimary,
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    (selectedDate != null)
+                        ? Text(
+                            DateUtilities().convertServerDateToFormatterString(
+                                selectedDate,
+                                formatter:
+                                    DateUtilities.dd_mm_yyyy_hh_mm_ss_aa),
+                            style: appTheme.blackNormal14TitleColorblack,
+                          )
+                        : Container(
+                            height: getSize(26),
+                            width: getSize(26),
+                            child: Image.asset(unselectedIcon),
+                          ),
+                  ],
+                ),
+              ),
+              height: getSize(50),
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -1565,7 +1628,7 @@ class _DownloadConfirmationPopupState extends State<DownloadConfirmationPopup> {
                     child: InkWell(
                       onTap: () {
                         Navigator.pop(context);
-                        widget.onAccept(isDownloadSearched);
+                        widget.onAccept(isDownloadSearched, selectedDate);
                       },
                       child: Container(
                         height: getSize(50),

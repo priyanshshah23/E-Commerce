@@ -19,9 +19,11 @@ class OfflineSearchHistoryDao {
     // For filtering by key (ID), RegEx, greater than, and many other criteria,
     // we use a Finder.
     for (OfflineSearchHistoryModel searchHistory in arrList) {
-      await _offlineSearchStore
-          .record(searchHistory.date)
-          .put(await _db, searchHistory.toJson());
+      await _offlineSearchStore.record(searchHistory.date).put(
+            await _db,
+            searchHistory.toJson(),
+            merge: true,
+          );
     }
   }
 

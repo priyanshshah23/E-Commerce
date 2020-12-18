@@ -463,7 +463,7 @@ class DiamondModel {
   }
 
   String getCertificateImage() {
-    if (isStringEmpty(certId) == false) {
+    if (isStringEmpty(rptNo) == false) {
       return DiamondUrls.certificate + rptNo + ".pdf";
     }
     //img

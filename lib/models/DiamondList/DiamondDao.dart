@@ -25,9 +25,11 @@ class DiamondDao {
     // we use a Finder.
     if (diamondModels != null && diamondModels.length > 0) {
       for (DiamondModel diamondModel in diamondModels) {
-        await _diamondStore
-            .record(diamondModel.id)
-            .put(await _db, diamondModel.toJson());
+        await _diamondStore.record(diamondModel.id).put(
+              await _db,
+              diamondModel.toJson(),
+              merge: true,
+            );
       }
     }
   }

@@ -19,6 +19,8 @@ import 'app/theme/global_models_provider.dart';
 import 'app/utils/navigator.dart';
 import 'app/utils/route_observer.dart';
 import 'components/Screens/Search/Search.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 KiwiContainer app;
 
@@ -54,11 +56,20 @@ class _BaseState extends State<Base> {
   @override
   void initState() {
     super.initState();
+
     initPlatformState();
   }
 
   Future<void> initPlatformState() async {
     await notificationInit();
+    await _configureLocalTimeZone();
+  }
+
+  Future<void> _configureLocalTimeZone() async {
+    tz.initializeTimeZones();
+    final String timeZoneName =
+        await localNotificationPlatform.invokeMethod('getTimeZoneName');
+    tz.setLocalLocation(tz.getLocation(timeZoneName));
   }
 
   @override

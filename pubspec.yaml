@@ -86,7 +86,7 @@ dependencies:
   smooth_page_indicator: ^0.2.0
   flutter_cache_manager: any
   # flutter_tags: ^0.1.9
-
+  flutter_local_notifications: any
 
 dev_dependencies:
   flutter_test:

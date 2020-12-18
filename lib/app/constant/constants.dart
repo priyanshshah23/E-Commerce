@@ -1,4 +1,5 @@
 import 'package:diamnow/app/utils/math_utils.dart';
+import 'package:flutter/services.dart';
 
 const String baseURL = "http://pndevelopapi.democ.in/";
 //const String baseURL = "192.168.0.212:8094/";
@@ -81,6 +82,9 @@ const NATURE_OF_ORG = "NATURE_OF_ORG";
 //Offer min/max discount
 const num minOfferedDiscount = -5;
 const num maxOfferedDiscount = -70;
+
+const MethodChannel localNotificationPlatform =
+    MethodChannel('dexterx.dev/flutter_local_notifications_example');
 
 class Spacing {
   static num leftPadding = 16.0;
@@ -253,4 +257,15 @@ class NotificationConstant {
   static const MODULE_TYPE_OFFER = 97;
   static const MODULE_TYPE_REQUEST = 98;
   static const MODULE_TYPE_OTHER = 99;
+}
+//Local Notification Identifier
+
+class NotificationIdentifier {
+  static const int offlineStockDownload = 1;
+  static const int offlineOrderSynced = 2;
+}
+
+class AndroidNotificationIdentifier {
+  static const offlineStockDownloadChannelName = "Offline Stock";
+  static const offlineStockDownloadChannelDescription = "Stock";
 }
