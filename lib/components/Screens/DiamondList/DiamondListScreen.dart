@@ -247,7 +247,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         if (isNullEmptyOrFalse(this.downloadDate)) {
           getOfflineStock(dict);
         } else {
-          getOfflineStockFromDownloadedDate();
+          getOfflineStockFromDownloadedDate(dict);
         }
         return;
     }
@@ -375,9 +375,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     });
   }
 
-  getOfflineStockFromDownloadedDate() {
+  getOfflineStockFromDownloadedDate(Map<String, dynamic> dict) {
     AppDatabase.instance.diamondDao
-        .getDiamondListBySearchHistory(this.downloadDate)
+        .getDiamondListBySearchHistory(dict, this.downloadDate)
         .then((diamondListResp) {
       try {
         handleOfflineStockResponse(diamondListResp);

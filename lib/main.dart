@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:diamnow/app/Helper/ConnectionManager.dart';
 import 'package:diamnow/app/localization/LocalizationHelper.dart';
 import 'package:diamnow/app/theme/settings_models_provider.dart';
 import 'package:diamnow/app/utils/NotificationHandler.dart';
@@ -51,13 +52,38 @@ class Base extends StatefulWidget {
 }
 
 class _BaseState extends State<Base> {
+  ConnectivityManager _connectivity = ConnectivityManager.instance;
+  Map _source = {ConnectivityResult.none: false};
+
   @override
   void initState() {
     super.initState();
     initPlatformState();
   }
 
+  @override
+  void dispose() {
+    _connectivity.disposeStream();
+    super.dispose();
+  }
+
   Future<void> initPlatformState() async {
+    _connectivity.initialise();
+    _connectivity.myStream.listen((source) async {
+      String string;
+      switch (source.keys.toList()[0]) {
+        case ConnectivityResult.none:
+          string = 'offline';
+          break;
+        case ConnectivityResult.mobile:
+        case ConnectivityResult.wifi:
+          string = 'online';
+          break;
+      }
+      print("Internet " + string);
+      _source = source;
+    });
+
     await notificationInit();
   }
 

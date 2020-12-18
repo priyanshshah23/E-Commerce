@@ -59,19 +59,30 @@ class DiamondDao {
 
   int _tempDiamodTotalCount;
 
-  Future<DiamondListResp> getDiamondListBySearchHistory(String strDate) async {
-    final finder = Finder(filter: Filter.custom(
-      (record) {
-        if (record["strDate"] == strDate) {
-          return true;
-        }
-        return false;
-      },
-    ));
+  Future<DiamondListResp> getDiamondListBySearchHistory(
+      Map<String, dynamic> dict, String strDate) async {
+    if (dict["page"] == DEFAULT_PAGE) {
+      _tempDiamodTotalCount = null;
+    }
+    final finder = Finder(
+        offset: (dict["page"] - 1) * dict["limit"],
+        limit: dict["limit"],
+        filter: Filter.custom(
+          (record) {
+            if (record["strDate"] == strDate) {
+              return true;
+            }
+            return false;
+          },
+        ));
     final recordSnapshots = await _diamondStore.find(
       await _db,
       finder: finder,
     );
+
+    if (_tempDiamodTotalCount == null) {
+      _tempDiamodTotalCount = (await _diamondStore.find((await _db))).length;
+    }
 
     var diamondList = recordSnapshots.map((snapshot) {
       final diamondModel = DiamondModel.fromJson(snapshot.value);
