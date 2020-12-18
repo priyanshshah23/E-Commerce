@@ -381,7 +381,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                       hintStyle: appTheme.grey16HintTextStyle.copyWith(
                         color: appTheme.placeholderColor,
                       ),
-                      hintText: "Round 1.0-1.19 D H VS",
+                      hintText: "Round 1.0-1.19 D-H-VS",
                       labelStyle: TextStyle(
                         color: appTheme.textColor,
                         fontSize: getFontSize(16),

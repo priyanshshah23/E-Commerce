@@ -156,21 +156,20 @@ class _VoiceSearchState extends StatefulScreenWidgetState {
   }
 
   getBottomButton() {
-    return !isNullEmptyOrFalse(strText)
-        ? SafeArea(
-            child: Padding(
-              padding: EdgeInsets.all(getSize(16)),
-              child: AppButton.flat(
-                onTap: () {
-                  callCountApi();
-                },
-                borderRadius: getSize(5),
-                fitWidth: true,
-                text: R.string.commonString.search,
-              ),
-            ),
-          )
-        : SizedBox();
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.all(getSize(16)),
+        child: AppButton.flat(
+          onTap: () {
+            callCountApi();
+          },
+          borderRadius: getSize(5),
+          fitWidth: true,
+          text: R.string.commonString.search,
+          isButtonEnabled: !isNullEmptyOrFalse(strText),
+        ),
+      ),
+    );
   }
 
   void errorListener(SpeechRecognitionError error) {

@@ -95,7 +95,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
               fitWidth: true,
               text: isFromSearch
                   ? R.string.commonString.searchStoneIdCertificateNo
-                  : "Round 1.0-1.19 D H VS",
+                  : R.string.commonString.search,
             ),
           ),
           body: SafeArea(
@@ -156,7 +156,9 @@ class _SearchScreenState extends StatefulScreenWidgetState {
                 ),
 
                 hintStyle: appTheme.grey16HintTextStyle,
-                hintText: R.string.authStrings.searchHint,
+                hintText: isFromSearch
+                    ? R.string.authStrings.searchHint
+                    : "Round 1.0-1.19 D-H-VS",
                 labelStyle: TextStyle(
                   color: appTheme.textColor,
                   fontSize: getFontSize(16),
