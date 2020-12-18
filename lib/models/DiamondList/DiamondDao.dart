@@ -36,6 +36,19 @@ class DiamondDao {
     await _diamondStore.delete(await _db);
   }
 
+  Future deleteByDate(String strDate) async {
+    final finder = Finder(filter: Filter.custom(
+      (record) {
+        if (record["strDate"] == strDate) {
+          return true;
+        }
+        return false;
+      },
+    ));
+
+    await _diamondStore.delete(await _db, finder: finder);
+  }
+
   Future delete(List<String> ids) async {
     if (ids != null && ids.length > 0) {
       for (String str in ids) {
@@ -45,6 +58,32 @@ class DiamondDao {
   }
 
   int _tempDiamodTotalCount;
+
+  Future<DiamondListResp> getDiamondListBySearchHistory(String strDate) async {
+    final finder = Finder(filter: Filter.custom(
+      (record) {
+        if (record["strDate"] == strDate) {
+          return true;
+        }
+        return false;
+      },
+    ));
+    final recordSnapshots = await _diamondStore.find(
+      await _db,
+      finder: finder,
+    );
+
+    var diamondList = recordSnapshots.map((snapshot) {
+      final diamondModel = DiamondModel.fromJson(snapshot.value);
+      // An ID is a key of a record from the database.
+      diamondModel.id = snapshot.key.toString();
+      return diamondModel;
+    }).toList();
+
+    return DiamondListResp(
+      data: Data(count: _tempDiamodTotalCount, diamonds: diamondList),
+    );
+  }
 
   Future<DiamondListResp> getDiamondList(Map<String, dynamic> dict,
       {List<FormBaseModel> list}) async {

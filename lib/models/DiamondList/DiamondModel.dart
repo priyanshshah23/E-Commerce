@@ -141,6 +141,7 @@ class DiamondModel {
   bool isSectionOfferDisplay = false;
   bool isGrouping = false;
 
+  String strDate;
   String expiryDate;
 
   getSelectedDetail(int type) {
@@ -216,6 +217,7 @@ class DiamondModel {
     offerStatus = json["offerStatus"];
     offerValidDate = json["offerValidDate"];
     date = json["date"] ?? "";
+    strDate = json["strDate"] ?? "";
     expiryDate = json["expiryDate"] ?? "";
 
     remarks = json["remarks"];
@@ -416,6 +418,7 @@ class DiamondModel {
     data['groupNo'] = this.groupNo;
 //    data['isSelected'] = this.isSelected;
     data["expiryDate"] = expiryDate;
+    data["strDate"] = strDate;
 
     return data;
   }

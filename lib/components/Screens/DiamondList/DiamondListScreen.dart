@@ -39,6 +39,8 @@ class DiamondListScreen extends StatefulScreenWidget {
   bool isFromDrawer = false;
   List<FormBaseModel> filterModel;
 
+  String downloadDate = "";
+
   DiamondListScreen(
     Map<String, dynamic> arguments, {
     Key key,
@@ -54,15 +56,20 @@ class DiamondListScreen extends StatefulScreenWidget {
       if (arguments["filterModel"] != null) {
         filterModel = arguments["filterModel"];
       }
+      if (arguments["downloadDate"] != null) {
+        downloadDate = arguments["downloadDate"];
+      }
     }
   }
 
   @override
   _DiamondListScreenState createState() => _DiamondListScreenState(
-      filterId: filterId,
-      moduleType: moduleType,
-      isFromDrawer: isFromDrawer,
-      filterModel: filterModel);
+        filterId: filterId,
+        moduleType: moduleType,
+        isFromDrawer: isFromDrawer,
+        filterModel: filterModel,
+        downloadDate: downloadDate,
+      );
 }
 
 class _DiamondListScreenState extends StatefulScreenWidgetState {
@@ -70,12 +77,16 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   int moduleType;
   bool isFromDrawer;
   String sortingKey;
-  Map<String, dynamic> dictFilters;
   bool selectAllGroupDiamonds;
   List<FormBaseModel> filterModel;
+  String downloadDate = "";
 
   _DiamondListScreenState(
-      {this.filterId, this.moduleType, this.isFromDrawer, this.filterModel});
+      {this.filterId,
+      this.moduleType,
+      this.isFromDrawer,
+      this.filterModel,
+      this.downloadDate});
 
   DiamondConfig diamondConfig;
   BaseList diamondList;
@@ -242,34 +253,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
       case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK:
       case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH:
-        AppDatabase.instance.diamondDao
-            .getDiamondList(dict, list: this.filterModel)
-            .then((diamondListResp) {
-          try {
-            if (page == DEFAULT_PAGE) {
-              hasData = diamondListResp.data.diamonds.length > 0 ||
-                  diamondListResp.data.list.length > 0;
-            }
-
-            arraDiamond.addAll(diamondListResp.data.diamonds);
-            diamondConfig.setMatchPairItem(arraDiamond);
-            diamondList.state.listCount = arraDiamond.length;
-            diamondList.state.totalCount = diamondListResp.data.count;
-            manageDiamondSelection();
-            //callBlockApi(isProgress: true);
-            page = page + 1;
-            diamondList.state.setApiCalling(false);
-          } catch (error) {
-            if (page == DEFAULT_PAGE) {
-              arraDiamond.clear();
-              diamondList.state.listCount = arraDiamond.length;
-              diamondList.state.totalCount = arraDiamond.length;
-              manageDiamondSelection();
-            }
-
-            diamondList.state.setApiCalling(false);
-          }
-        });
+        if (isNullEmptyOrFalse(this.downloadDate)) {
+          getOfflineStock(dict);
+        } else {
+          getOfflineStockFromDownloadedDate();
+        }
         return;
     }
     NetworkCall<DiamondListResp>()
@@ -375,6 +363,60 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
       diamondList.state.setApiCalling(false);
     });
+  }
+
+  getOfflineStock(Map<String, dynamic> dict) {
+    AppDatabase.instance.diamondDao
+        .getDiamondList(dict, list: this.filterModel)
+        .then((diamondListResp) {
+      try {
+        handleOfflineStockResponse(diamondListResp);
+      } catch (error) {
+        if (page == DEFAULT_PAGE) {
+          arraDiamond.clear();
+          diamondList.state.listCount = arraDiamond.length;
+          diamondList.state.totalCount = arraDiamond.length;
+          manageDiamondSelection();
+        }
+
+        diamondList.state.setApiCalling(false);
+      }
+    });
+  }
+
+  getOfflineStockFromDownloadedDate() {
+    AppDatabase.instance.diamondDao
+        .getDiamondListBySearchHistory(this.downloadDate)
+        .then((diamondListResp) {
+      try {
+        handleOfflineStockResponse(diamondListResp);
+      } catch (error) {
+        if (page == DEFAULT_PAGE) {
+          arraDiamond.clear();
+          diamondList.state.listCount = arraDiamond.length;
+          diamondList.state.totalCount = arraDiamond.length;
+          manageDiamondSelection();
+        }
+
+        diamondList.state.setApiCalling(false);
+      }
+    });
+  }
+
+  handleOfflineStockResponse(DiamondListResp diamondListResp) {
+    if (page == DEFAULT_PAGE) {
+      hasData = diamondListResp.data.diamonds.length > 0 ||
+          diamondListResp.data.list.length > 0;
+    }
+
+    arraDiamond.addAll(diamondListResp.data.diamonds);
+    diamondConfig.setMatchPairItem(arraDiamond);
+    diamondList.state.listCount = arraDiamond.length;
+    diamondList.state.totalCount = diamondListResp.data.count;
+    manageDiamondSelection();
+    //callBlockApi(isProgress: true);
+    page = page + 1;
+    diamondList.state.setApiCalling(false);
   }
 
   onRefreshList() {
@@ -940,9 +982,14 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         break;
       case BottomCodeConstant.TBDownloadView:
         if (moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
-          diamondConfig.actionDownloadOffline(context, () {
-            onRefreshList();
-          }, sortKey: sortingKey, filterId: filterId);
+          diamondConfig.actionDownloadOffline(
+            context,
+            () {
+              onRefreshList();
+            },
+            sortKey: sortingKey,
+            filterId: filterId,
+          );
         } else {
           List<DiamondModel> selectedList =
               arraDiamond.where((element) => element.isSelected).toList();

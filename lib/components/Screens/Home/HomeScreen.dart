@@ -13,6 +13,7 @@ import 'package:diamnow/components/Screens/DashBoard/Dashboard.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/MyDemand/MyDemandScreen.dart';
+import 'package:diamnow/components/Screens/OfflineSearchHistory/OfflineSearchHistory.dart';
 import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
@@ -212,6 +213,16 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  openOfflineSearchHistory(int moduleType) {
+    selectedType = moduleType;
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.ModuleType] = moduleType;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = OfflineSearchHistory(
+      key: Key(moduleType.toString()),
+    );
+  }
+
 //  openProfile(int moduleType) {
 //    selectedType = moduleType;
 ////    selectedType = DiamondModuleConstant.MODULE_TYPE_PROFILE;
@@ -366,6 +377,9 @@ class _HomeScreenState extends State<HomeScreen> {
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
           openMyDemand(type);
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH_HISTORY:
+          openOfflineSearchHistory(type);
           break;
       }
       if (type != DiamondModuleConstant.MODULE_TYPE_LOGOUT) {

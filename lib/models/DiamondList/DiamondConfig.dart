@@ -667,7 +667,7 @@ class DiamondConfig {
   actionHold(List<DiamondModel> list) {}
 
   actionDownloadOffline(BuildContext context, Function refreshList,
-      {String filterId, String sortKey}) {
+      {String filterId, String sortKey, Map<String, dynamic> filterCriteria}) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -1421,6 +1421,10 @@ class _DownloadConfirmationPopupState extends State<DownloadConfirmationPopup> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      insetPadding: EdgeInsets.only(
+        left: getSize(16),
+        right: getSize(16),
+      ),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(getSize(8)))),
       content: Container(
