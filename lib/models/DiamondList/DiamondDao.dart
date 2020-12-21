@@ -198,32 +198,33 @@ class DiamondDao {
           if ((element is ColorModel)) {
             if (element.groupMasterCode == MasterCode.colorGroup) {
               //Master selection
-              if (true) {
-                List<Master> arrList = element.masters
-                    .where((element) => element.isSelected == true)
-                    .toList();
+              if (element.isGroupSelected == false) {
+                if (true) {
+                  List<Master> arrList = element.masters
+                      .where((element) => element.isSelected == true)
+                      .toList();
 
-                if (!isNullEmptyOrFalse(arrList)) {
-                  List<String> arrMaster = arrList.map((e) => e.sId).toList();
+                  if (!isNullEmptyOrFalse(arrList)) {
+                    List<String> arrMaster = arrList.map((e) => e.sId).toList();
 
-                  for (var str in arrMaster) {
-                    arrFilter.add(
-                        Filter.matches(element.apiKey, str, anyInList: true));
+                    for (var str in arrMaster) {
+                      arrFilter.add(Filter.equal("col", str));
+                    }
                   }
                 }
-              }
+              } else {
+                if (true) {
+                  List<Master> arrList = element.groupMaster
+                      .where((element) => element.isSelected == true)
+                      .toList();
 
-              if (true) {
-                List<Master> arrList = element.groupMaster
-                    .where((element) => element.isSelected == true)
-                    .toList();
+                  if (!isNullEmptyOrFalse(arrList)) {
+                    List<String> arrMaster = arrList.map((e) => e.sId).toList();
 
-                if (!isNullEmptyOrFalse(arrList)) {
-                  List<String> arrMaster = arrList.map((e) => e.sId).toList();
-
-                  for (var str in arrMaster) {
-                    arrFilter.add(
-                        Filter.matches(element.apiKey, str, anyInList: true));
+                    for (var str in arrMaster) {
+                      arrFilter
+                          .add(Filter.matches("fcCol", str, anyInList: true));
+                    }
                   }
                 }
               }
@@ -237,8 +238,8 @@ class DiamondDao {
                   List<String> arrMaster = arrList.map((e) => e.sId).toList();
 
                   for (var str in arrMaster) {
-                    arrFilter.add(
-                        Filter.matches(element.apiKey, str, anyInList: true));
+                    arrFilter
+                        .add(Filter.matches("ovrtn", str, anyInList: true));
                   }
                 }
               }
@@ -252,8 +253,44 @@ class DiamondDao {
                   List<String> arrMaster = arrList.map((e) => e.sId).toList();
 
                   for (var str in arrMaster) {
-                    arrFilter.add(
-                        Filter.matches(element.apiKey, str, anyInList: true));
+                    arrFilter
+                        .add(Filter.matches("inten", str, anyInList: true));
+                  }
+                }
+              }
+            }
+          }
+        } else
+        //Key to symbol
+        if (element.viewType == ViewTypes.keytosymbol) {
+          List<RadioButton> listOfSelectedRadioButton =
+              (element as KeyToSymbolModel)
+                  .listOfRadio
+                  .where(
+                    (element) => element.isSelected == true,
+                  )
+                  .toList();
+
+          if (!isNullEmptyOrFalse(listOfSelectedRadioButton)) {
+            var list =
+                Master.getSelectedId((element as SelectionModel).masters);
+            if (!isNullEmptyOrFalse(list)) {
+              // mapOfSelectedRadioButton[listOfSelectedRadioButton.first.apiKey] =
+              //     Master.getSelectedId((element as SelectionModel).masters);
+              if (listOfSelectedRadioButton.first.apiKey.toLowerCase() ==
+                  "in") {
+                for (var selectedMaster in Master.getSelectedId(
+                    (element as SelectionModel).masters)) {
+                  arrFilter.add(Filter.matches(element.apiKey, selectedMaster,
+                      anyInList: true));
+                }
+              } else {
+                for (var selectedMaster
+                    in (element as SelectionModel).masters) {
+                  if (selectedMaster.isSelected == false) {
+                    arrFilter.add(Filter.matches(
+                        element.apiKey, selectedMaster.sId,
+                        anyInList: true));
                   }
                 }
               }

@@ -146,6 +146,7 @@ class DiamondModel {
   List<String> inten;
   List<String> ovrtn;
   List<String> opInc;
+  List<String> fcCol;
   String mixTint;
   String eCln;
   String grdl;
@@ -359,6 +360,9 @@ class DiamondModel {
     brlncy = json['brlncy'];
     wSts = json['wSts'];
     loc = json['loc'];
+    fcCol = !isNullEmptyOrFalse(json['fcCol'])
+        ? json['fcCol'].cast<String>()
+        : null;
     blkInc = !isNullEmptyOrFalse(json['blkInc'])
         ? json['blkInc'].cast<String>()
         : null;
@@ -509,6 +513,7 @@ class DiamondModel {
     data["inten"] = this.inten;
     data["ovrtn"] = this.ovrtn;
     data["opInc"] = this.opInc;
+    data["fcCol"] = this.fcCol;
     data["mlk"] = this.mlk;
     data["mixTint"] = this.mixTint;
     data["eCln"] = this.eCln;
