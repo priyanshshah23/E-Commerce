@@ -19,7 +19,7 @@ class DiamondModel {
   bool roughVdo;
   bool polVdo;
   bool hAFile;
-  String mlk;
+  String mlkNm;
   String clrNm;
   String colNm;
   String lbCmt;
@@ -140,6 +140,7 @@ class DiamondModel {
   String pol;
   String sym;
   String lb;
+  String mlk;
   String brlncy;
   List<String> blkInc;
   List<String> inten;
@@ -265,7 +266,7 @@ class DiamondModel {
     polVdo = json['polVdo'] ?? false;
     roughVdo = json['roughVdo'] ?? false;
     hAFile = json['hAFile'] ?? false;
-    mlk = json['mlk'] ?? "-";
+    mlkNm = json['mlkNm'] ?? "-";
     clrNm = json['clrNm'];
     colNm = json['colNm'];
     lbCmt = json['lbCmt'];
@@ -413,7 +414,7 @@ class DiamondModel {
     data['polVdo'] = this.polVdo;
     data['roughVdo'] = this.roughVdo;
     data['hAFile'] = this.hAFile;
-    data['mlk'] = this.mlk;
+    data['mlkNm'] = this.mlkNm;
     data['clrNm'] = this.clrNm;
     data['colNm'] = this.colNm;
     data['lbCmt'] = this.lbCmt;

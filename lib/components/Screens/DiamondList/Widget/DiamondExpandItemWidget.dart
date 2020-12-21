@@ -289,7 +289,7 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
         children: <Widget>[
           Expanded(
             flex: 2,
-            child: getTextWithLabel(widget.item?.mlk ?? "-", "M : ",
+            child: getTextWithLabel(widget.item?.mlkNm ?? "-", "M : ",
                 aligmentOfRow: MainAxisAlignment.start),
           ),
           // PriceUtilities.getPercent(widget.item?.depPer ?? 0)

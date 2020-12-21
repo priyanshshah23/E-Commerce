@@ -109,20 +109,31 @@ class DiamondDao {
         if (element.viewType == ViewTypes.shapeWidget ||
             element.viewType == ViewTypes.selection) {
           SelectionModel selectionModel = element as SelectionModel;
+
           List<Master> arrList = selectionModel.masters
               .where((element) => element.isSelected == true)
               .toList();
 
           if (!isNullEmptyOrFalse(arrList)) {
-            List<String> arrMaster = arrList.map((e) => e.sId).toList();
+            if (selectionModel.masterCode == MasterCode.newarrivalsgroup) {
+              for (var item in arrList) {
+                if (item.code == MasterCode.newarrivals) {
+                  arrFilter.add(Filter.equal("wSts", "B"));
+                }
+              }
+            } else {
+              List<String> arrMaster = arrList.map((e) => e.sId).toList();
 
-            for (var str in arrMaster) {
-              arrFilter.add(Filter.equal(selectionModel.apiKey, str));
-              arrFilter.add(
-                  Filter.matches(selectionModel.apiKey, str, anyInList: true));
+              for (var str in arrMaster) {
+                arrFilter.add(Filter.equal(selectionModel.apiKey, str));
+                arrFilter.add(Filter.matches(selectionModel.apiKey, str,
+                    anyInList: true));
+              }
             }
           }
-        } else if (element.viewType == ViewTypes.caratRange) {
+        } else
+        //Carat Range
+        if (element.viewType == ViewTypes.caratRange) {
           List<Map<String, dynamic>> caratRequest =
               Master.getSelectedCarat((element as SelectionModel).masters) ??
                   [];
@@ -142,6 +153,8 @@ class DiamondDao {
               ),
             );
           }
+
+          //Chips to select
           if (!isNullEmptyOrFalse(
               (element as SelectionModel).caratRangeChipsToShow)) {
             for (var item
@@ -159,7 +172,9 @@ class DiamondDao {
               );
             }
           }
-        } else if (element.viewType == ViewTypes.fromTo) {
+        } else
+        //From to widget
+        if (element.viewType == ViewTypes.fromTo) {
           if (element is FromToModel) {
             if (!isNullEmptyOrFalse(element.valueFrom) &&
                 !isNullEmptyOrFalse(element.valueTo)) {
@@ -177,51 +192,69 @@ class DiamondDao {
               );
             }
           }
-        } else if (element.viewType == ViewTypes.groupWidget) {
+        }
+        //Group widget
+        else if (element.viewType == ViewTypes.groupWidget) {
           if ((element is ColorModel)) {
             if (element.groupMasterCode == MasterCode.colorGroup) {
               //Master selection
               if (true) {
-                List<String> arrMaster = element.masters
+                List<Master> arrList = element.masters
                     .where((element) => element.isSelected == true)
-                    .toList()
-                    .map((e) => e.name)
                     .toList();
-                for (var str in arrMaster) {
-                  arrFilter.add(Filter.equal("colNm", str));
+
+                if (!isNullEmptyOrFalse(arrList)) {
+                  List<String> arrMaster = arrList.map((e) => e.sId).toList();
+
+                  for (var str in arrMaster) {
+                    arrFilter.add(
+                        Filter.matches(element.apiKey, str, anyInList: true));
+                  }
                 }
               }
 
               if (true) {
-                List<String> arrMaster = element.groupMaster
+                List<Master> arrList = element.groupMaster
                     .where((element) => element.isSelected == true)
-                    .toList()
-                    .map((e) => e.name)
                     .toList();
-                for (var str in arrMaster) {
-                  arrFilter.add(Filter.equal("clrNm", str));
+
+                if (!isNullEmptyOrFalse(arrList)) {
+                  List<String> arrMaster = arrList.map((e) => e.sId).toList();
+
+                  for (var str in arrMaster) {
+                    arrFilter.add(
+                        Filter.matches(element.apiKey, str, anyInList: true));
+                  }
                 }
               }
 
               if (true) {
-                List<String> arrMaster = element.overtone
+                List<Master> arrList = element.overtone
                     .where((element) => element.isSelected == true)
-                    .toList()
-                    .map((e) => e.name)
                     .toList();
-                for (var str in arrMaster) {
-                  arrFilter.add(Filter.equal("ovrtnNm", str));
+
+                if (!isNullEmptyOrFalse(arrList)) {
+                  List<String> arrMaster = arrList.map((e) => e.sId).toList();
+
+                  for (var str in arrMaster) {
+                    arrFilter.add(
+                        Filter.matches(element.apiKey, str, anyInList: true));
+                  }
                 }
               }
 
               if (true) {
-                List<String> arrMaster = element.intensity
+                List<Master> arrList = element.intensity
                     .where((element) => element.isSelected == true)
-                    .toList()
-                    .map((e) => e.name)
                     .toList();
-                for (var str in arrMaster) {
-                  arrFilter.add(Filter.equal("intenNm", str));
+
+                if (!isNullEmptyOrFalse(arrList)) {
+                  List<String> arrMaster = arrList.map((e) => e.sId).toList();
+
+                  for (var str in arrMaster) {
+                    arrFilter.add(
+                        Filter.matches(element.apiKey, str, anyInList: true));
+                  }
                 }
               }
             }

@@ -590,7 +590,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           ),
           Expanded(
             flex: 2,
-            child: getTextWithLabel(widget.item?.mlk ?? "-", "M : "),
+            child: getTextWithLabel(widget.item?.mlkNm ?? "-", "M : "),
           ),
           // PriceUtilities.getPercent(widget.item?.depPer ?? 0)
           Expanded(
