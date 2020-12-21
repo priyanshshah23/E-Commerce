@@ -132,6 +132,7 @@ class MasterCode {
   static const String xray = "XRAY";
   static const String upcoming = "UPCOMING";
   static const String eyecleanStatic = "EYECLEANSTATIC";
+  static const String brownStatic = "BROWNSTATIC";
   static const String newarrivalsgroup = "NEWARRIVALSGROUP";
   static const String newarrivals = "NEWARRIVAL";
   static const String dor = "DOR";

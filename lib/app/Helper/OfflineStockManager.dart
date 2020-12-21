@@ -152,10 +152,11 @@ class OfflineStockManager {
     if (sortingKey != null) {
       dict["sort"] = sortingKey;
     }
-
+    dict["isReturnMasterKey"] = true;
     dict["filters"] = {};
-    if (this.filterId != null)
+    if (this.filterId != null) {
       dict["filters"]["diamondSearchId"] = this.filterId;
+    }
 
     NetworkCall<DiamondListResp>()
         .makeCall(
@@ -200,6 +201,7 @@ class OfflineStockManager {
     if (this.filterId != null) {
       dict["filters"]["diamondSearchId"] = this.filterId;
     }
+
     return dict;
   }
 }

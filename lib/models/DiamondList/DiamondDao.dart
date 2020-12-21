@@ -109,15 +109,17 @@ class DiamondDao {
         if (element.viewType == ViewTypes.shapeWidget ||
             element.viewType == ViewTypes.selection) {
           SelectionModel selectionModel = element as SelectionModel;
-          List<String> arrMaster = selectionModel.masters
+          List<Master> arrList = selectionModel.masters
               .where((element) => element.isSelected == true)
-              .toList()
-              .map((e) => e.name)
               .toList();
 
-          for (var str in arrMaster) {
-            if (selectionModel.masterCode == MasterCode.shape) {
-              arrFilter.add(Filter.equal("shpNm", str));
+          if (!isNullEmptyOrFalse(arrList)) {
+            List<String> arrMaster = arrList.map((e) => e.sId).toList();
+
+            for (var str in arrMaster) {
+              arrFilter.add(Filter.equal(selectionModel.apiKey, str));
+              arrFilter.add(
+                  Filter.matches(selectionModel.apiKey, str, anyInList: true));
             }
           }
         } else if (element.viewType == ViewTypes.caratRange) {
