@@ -34,6 +34,8 @@ class FilterRequest {
                 map["isXray"] = true;
               } else if (item.code == MasterCode.newarrivals) {
                 arrWsts.add("B");
+              } else if (item.code == MasterCode.brownStatic) {
+                map["excludeFilter"]  = {"brown" : true};
               } else if (item.code == MasterCode.eyecleanStatic) {
                 if (!isNullEmptyOrFalse(item.map))
                   map.addAll(item.map as Map<String, dynamic>);
@@ -154,6 +156,7 @@ class FilterRequest {
         if (colorModel.masterCode == MasterCode.color) {
           if (colorModel.showWhiteFancy) {
             if (colorModel.isGroupSelected) {
+              map["isFcCol"] = true;
               List<String> arrFancy =
                   Master.getSelectedId(colorModel.groupMaster);
               if (!isNullEmptyOrFalse(arrFancy)) map["fcCol"] = arrFancy;
@@ -166,6 +169,7 @@ class FilterRequest {
               if (!isNullEmptyOrFalse(arrOvertone))
                 map[colorModel.overtoneSelection.apiKey] = arrOvertone;
             } else {
+              map["isFcCol"] = false;
               List<String> arrStr = Master.getSelectedId(colorModel.masters);
               if (!isNullEmptyOrFalse(arrStr)) map[element.apiKey] = arrStr;
             }

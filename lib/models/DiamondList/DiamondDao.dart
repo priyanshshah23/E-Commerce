@@ -61,19 +61,30 @@ class DiamondDao {
 
   int _tempDiamodTotalCount;
 
-  Future<DiamondListResp> getDiamondListBySearchHistory(String strDate) async {
-    final finder = Finder(filter: Filter.custom(
-      (record) {
-        if (record["strDate"] == strDate) {
-          return true;
-        }
-        return false;
-      },
-    ));
+  Future<DiamondListResp> getDiamondListBySearchHistory(
+      Map<String, dynamic> dict, String strDate) async {
+    if (dict["page"] == DEFAULT_PAGE) {
+      _tempDiamodTotalCount = null;
+    }
+    final finder = Finder(
+        offset: (dict["page"] - 1) * dict["limit"],
+        limit: dict["limit"],
+        filter: Filter.custom(
+          (record) {
+            if (record["strDate"] == strDate) {
+              return true;
+            }
+            return false;
+          },
+        ));
     final recordSnapshots = await _diamondStore.find(
       await _db,
       finder: finder,
     );
+
+    if (_tempDiamodTotalCount == null) {
+      _tempDiamodTotalCount = (await _diamondStore.find((await _db))).length;
+    }
 
     var diamondList = recordSnapshots.map((snapshot) {
       final diamondModel = DiamondModel.fromJson(snapshot.value);
@@ -100,18 +111,31 @@ class DiamondDao {
         if (element.viewType == ViewTypes.shapeWidget ||
             element.viewType == ViewTypes.selection) {
           SelectionModel selectionModel = element as SelectionModel;
-          List<String> arrMaster = selectionModel.masters
+
+          List<Master> arrList = selectionModel.masters
               .where((element) => element.isSelected == true)
-              .toList()
-              .map((e) => e.name)
               .toList();
 
-          for (var str in arrMaster) {
-            if (selectionModel.masterCode == MasterCode.shape) {
-              arrFilter.add(Filter.equal("shpNm", str));
+          if (!isNullEmptyOrFalse(arrList)) {
+            if (selectionModel.masterCode == MasterCode.newarrivalsgroup) {
+              for (var item in arrList) {
+                if (item.code == MasterCode.newarrivals) {
+                  arrFilter.add(Filter.equal("wSts", "B"));
+                }
+              }
+            } else {
+              List<String> arrMaster = arrList.map((e) => e.sId).toList();
+
+              for (var str in arrMaster) {
+                arrFilter.add(Filter.equal(selectionModel.apiKey, str));
+                arrFilter.add(Filter.matches(selectionModel.apiKey, str,
+                    anyInList: true));
+              }
             }
           }
-        } else if (element.viewType == ViewTypes.caratRange) {
+        } else
+        //Carat Range
+        if (element.viewType == ViewTypes.caratRange) {
           List<Map<String, dynamic>> caratRequest =
               Master.getSelectedCarat((element as SelectionModel).masters) ??
                   [];
@@ -131,6 +155,8 @@ class DiamondDao {
               ),
             );
           }
+
+          //Chips to select
           if (!isNullEmptyOrFalse(
               (element as SelectionModel).caratRangeChipsToShow)) {
             for (var item
@@ -148,7 +174,9 @@ class DiamondDao {
               );
             }
           }
-        } else if (element.viewType == ViewTypes.fromTo) {
+        } else
+        //From to widget
+        if (element.viewType == ViewTypes.fromTo) {
           if (element is FromToModel) {
             if (!isNullEmptyOrFalse(element.valueFrom) &&
                 !isNullEmptyOrFalse(element.valueTo)) {
@@ -166,51 +194,106 @@ class DiamondDao {
               );
             }
           }
-        } else if (element.viewType == ViewTypes.groupWidget) {
+        }
+        //Group widget
+        else if (element.viewType == ViewTypes.groupWidget) {
           if ((element is ColorModel)) {
             if (element.groupMasterCode == MasterCode.colorGroup) {
               //Master selection
-              if (true) {
-                List<String> arrMaster = element.masters
-                    .where((element) => element.isSelected == true)
-                    .toList()
-                    .map((e) => e.name)
-                    .toList();
-                for (var str in arrMaster) {
-                  arrFilter.add(Filter.equal("colNm", str));
+              if (element.isGroupSelected == false) {
+                if (true) {
+                  List<Master> arrList = element.masters
+                      .where((element) => element.isSelected == true)
+                      .toList();
+
+                  if (!isNullEmptyOrFalse(arrList)) {
+                    List<String> arrMaster = arrList.map((e) => e.sId).toList();
+
+                    for (var str in arrMaster) {
+                      arrFilter.add(Filter.equal("col", str));
+                    }
+                  }
+                }
+              } else {
+                if (true) {
+                  List<Master> arrList = element.groupMaster
+                      .where((element) => element.isSelected == true)
+                      .toList();
+
+                  if (!isNullEmptyOrFalse(arrList)) {
+                    List<String> arrMaster = arrList.map((e) => e.sId).toList();
+
+                    for (var str in arrMaster) {
+                      arrFilter
+                          .add(Filter.matches("fcCol", str, anyInList: true));
+                    }
+                  }
                 }
               }
 
               if (true) {
-                List<String> arrMaster = element.groupMaster
+                List<Master> arrList = element.overtone
                     .where((element) => element.isSelected == true)
-                    .toList()
-                    .map((e) => e.name)
                     .toList();
-                for (var str in arrMaster) {
-                  arrFilter.add(Filter.equal("clrNm", str));
+
+                if (!isNullEmptyOrFalse(arrList)) {
+                  List<String> arrMaster = arrList.map((e) => e.sId).toList();
+
+                  for (var str in arrMaster) {
+                    arrFilter
+                        .add(Filter.matches("ovrtn", str, anyInList: true));
+                  }
                 }
               }
 
               if (true) {
-                List<String> arrMaster = element.overtone
+                List<Master> arrList = element.intensity
                     .where((element) => element.isSelected == true)
-                    .toList()
-                    .map((e) => e.name)
                     .toList();
-                for (var str in arrMaster) {
-                  arrFilter.add(Filter.equal("ovrtnNm", str));
+
+                if (!isNullEmptyOrFalse(arrList)) {
+                  List<String> arrMaster = arrList.map((e) => e.sId).toList();
+
+                  for (var str in arrMaster) {
+                    arrFilter
+                        .add(Filter.matches("inten", str, anyInList: true));
+                  }
                 }
               }
+            }
+          }
+        } else
+        //Key to symbol
+        if (element.viewType == ViewTypes.keytosymbol) {
+          List<RadioButton> listOfSelectedRadioButton =
+              (element as KeyToSymbolModel)
+                  .listOfRadio
+                  .where(
+                    (element) => element.isSelected == true,
+                  )
+                  .toList();
 
-              if (true) {
-                List<String> arrMaster = element.intensity
-                    .where((element) => element.isSelected == true)
-                    .toList()
-                    .map((e) => e.name)
-                    .toList();
-                for (var str in arrMaster) {
-                  arrFilter.add(Filter.equal("intenNm", str));
+          if (!isNullEmptyOrFalse(listOfSelectedRadioButton)) {
+            var list =
+                Master.getSelectedId((element as SelectionModel).masters);
+            if (!isNullEmptyOrFalse(list)) {
+              // mapOfSelectedRadioButton[listOfSelectedRadioButton.first.apiKey] =
+              //     Master.getSelectedId((element as SelectionModel).masters);
+              if (listOfSelectedRadioButton.first.apiKey.toLowerCase() ==
+                  "in") {
+                for (var selectedMaster in Master.getSelectedId(
+                    (element as SelectionModel).masters)) {
+                  arrFilter.add(Filter.matches(element.apiKey, selectedMaster,
+                      anyInList: true));
+                }
+              } else {
+                for (var selectedMaster
+                    in (element as SelectionModel).masters) {
+                  if (selectedMaster.isSelected == false) {
+                    arrFilter.add(Filter.matches(
+                        element.apiKey, selectedMaster.sId,
+                        anyInList: true));
+                  }
                 }
               }
             }

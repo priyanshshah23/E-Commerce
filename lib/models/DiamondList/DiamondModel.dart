@@ -19,7 +19,7 @@ class DiamondModel {
   bool roughVdo;
   bool polVdo;
   bool hAFile;
-  String mlk;
+  String mlkNm;
   String clrNm;
   String colNm;
   String lbCmt;
@@ -130,6 +130,38 @@ class DiamondModel {
   String offeredPricePerCarat;
   String createdAt;
 
+  //Id's
+  String shp;
+  String flu;
+  String col;
+  String shd;
+  String clr;
+  String cut;
+  String pol;
+  String sym;
+  String lb;
+  String mlk;
+  String brlncy;
+  List<String> blkInc;
+  List<String> inten;
+  List<String> ovrtn;
+  List<String> opInc;
+  List<String> fcCol;
+  String mixTint;
+  String eCln;
+  String grdl;
+  String cult;
+  String natural;
+  String cultCond;
+  String grdlCond;
+  String blkTbl;
+  String blkSd;
+  String wTbl;
+  String wSd;
+  String opTbl;
+  String opPav;
+  String opCrwn;
+
   TrackDiamonds trackItemCart;
   TrackDiamonds trackItemWatchList;
   TrackDiamonds trackItemEnquiry;
@@ -235,7 +267,7 @@ class DiamondModel {
     polVdo = json['polVdo'] ?? false;
     roughVdo = json['roughVdo'] ?? false;
     hAFile = json['hAFile'] ?? false;
-    mlk = json['mlk'] ?? "-";
+    mlkNm = json['mlkNm'] ?? "-";
     clrNm = json['clrNm'];
     colNm = json['colNm'];
     lbCmt = json['lbCmt'];
@@ -314,6 +346,50 @@ class DiamondModel {
     groupNo = json['groupNo'];
 
 //    isSelected = json['isSelected'];
+
+    //Id's
+    shp = json['shp'];
+    col = json['col'];
+    shd = json['shd'];
+    clr = json['clr'];
+    cut = json['cut'];
+    pol = json['pol'];
+    sym = json['sym'];
+    flu = json['flu'];
+    lb = json['lb'];
+    brlncy = json['brlncy'];
+    wSts = json['wSts'];
+    loc = json['loc'];
+    fcCol = !isNullEmptyOrFalse(json['fcCol'])
+        ? json['fcCol'].cast<String>()
+        : null;
+    blkInc = !isNullEmptyOrFalse(json['blkInc'])
+        ? json['blkInc'].cast<String>()
+        : null;
+    inten = !isNullEmptyOrFalse(json['inten'])
+        ? json['inten'].cast<String>()
+        : null;
+    ovrtn = !isNullEmptyOrFalse(json['ovrtn'])
+        ? json['ovrtn'].cast<String>()
+        : null;
+    opInc = !isNullEmptyOrFalse(json['opInc'])
+        ? json['opInc'].cast<String>()
+        : null;
+    mlk = json['mlk'];
+    mixTint = json['mixTint'];
+    hA = json['hA'];
+    eCln = json['eCln'];
+    grdl = json['grdl'];
+    cult = json['cult'];
+    natural = json['natural'];
+    cultCond = json['cultCond'];
+    grdlCond = json['grdlCond'];
+    blkTbl = json['blkTbl'];
+    blkSd = json['blkSd'];
+    wTbl = json['wTbl'];
+    wSd = json['wSd'];
+    opTbl = json['opTbl'];
+    opCrwn = json['opCrwn'];
   }
 
   DiamondModel({bool isSelected = false}) {
@@ -342,7 +418,7 @@ class DiamondModel {
     data['polVdo'] = this.polVdo;
     data['roughVdo'] = this.roughVdo;
     data['hAFile'] = this.hAFile;
-    data['mlk'] = this.mlk;
+    data['mlkNm'] = this.mlkNm;
     data['clrNm'] = this.clrNm;
     data['colNm'] = this.colNm;
     data['lbCmt'] = this.lbCmt;
@@ -417,8 +493,42 @@ class DiamondModel {
     data['pltFile'] = this.pltFile;
     data['groupNo'] = this.groupNo;
 //    data['isSelected'] = this.isSelected;
-    data["expiryDate"] = expiryDate;
-    data["strDate"] = strDate;
+    data["expiryDate"] = this.expiryDate;
+    data["strDate"] = this.strDate;
+
+    //Id's
+    data["shp"] = this.shp;
+    data["col"] = this.col;
+    data["shd"] = this.shd;
+    data["clr"] = this.clr;
+    data["cut"] = this.cut;
+    data["pol"] = this.pol;
+    data["sym"] = this.sym;
+    data["flu"] = this.flu;
+    data["lb"] = this.lb;
+    data["brlncy"] = this.brlncy;
+    data["wSts"] = this.wSts;
+    data["loc"] = this.loc;
+    data["blkInc"] = this.blkInc;
+    data["inten"] = this.inten;
+    data["ovrtn"] = this.ovrtn;
+    data["opInc"] = this.opInc;
+    data["fcCol"] = this.fcCol;
+    data["mlk"] = this.mlk;
+    data["mixTint"] = this.mixTint;
+    data["eCln"] = this.eCln;
+    data["grdl"] = this.grdl;
+    data["cult"] = this.cult;
+    data["natural"] = this.natural;
+    data["cultCond"] = this.cultCond;
+    data["grdlCond"] = this.grdlCond;
+    data["blkTbl"] = this.blkTbl;
+    data["blkSd"] = this.blkSd;
+    data["wTbl"] = this.wTbl;
+    data["wSd"] = this.wSd;
+    data["opTbl"] = this.opTbl;
+    data["opPav"] = this.opPav;
+    data["opCrwn"] = this.opCrwn;
 
     return data;
   }

@@ -136,6 +136,7 @@ class MasterCode {
   static const String xray = "XRAY";
   static const String upcoming = "UPCOMING";
   static const String eyecleanStatic = "EYECLEANSTATIC";
+  static const String brownStatic = "BROWNSTATIC";
   static const String newarrivalsgroup = "NEWARRIVALSGROUP";
   static const String newarrivals = "NEWARRIVAL";
   static const String dor = "DOR";
@@ -147,7 +148,7 @@ class MasterCode {
   static const String blackInclusion = "BLACK_INCLUSION";
   static const String docTypePersonal = "DOC_TYPE_PERSONAL";
   static const String docTypeBusiness = "DOC_TYPE_BUSINESS";
-
+  static const String milkyStatic = "MILKYSTATIC";
   // static const String mixTint = "MIX_TINT";
 }
 
