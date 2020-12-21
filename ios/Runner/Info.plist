@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Speak and watch your words become text or say a color to see the grey box change colors.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Your speech will be detected for which words you speak into this device</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -48,8 +44,12 @@
 	<string>Enable location to start log timer and allow 3eco to access your location.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Enable location to start log timer and allow 3eco to access your location.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Your speech will be detected for which words you speak into this device</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow access gallary to choose pictures. We will not share it without your permission.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Speak and watch your words become text or say a color to see the grey box change colors.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
