@@ -9,30 +9,17 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 class LocalNotificationManager {
-  // static final LocalNotificationManager shared = LocalNotificationManager();
-
-  static final LocalNotificationManager _instance =
-      LocalNotificationManager._internal();
-  LocalNotificationManager shared;
-
-  factory LocalNotificationManager() {
-    return _instance;
-  }
-
-  Future<void> init() async {
-    if (shared != null) {
-      return;
-    }
+  LocalNotificationManager._() {
     print('Init Local Notification');
     localNotiInit();
   }
-
-  LocalNotificationManager._internal();
+  static final LocalNotificationManager _singleton =
+      LocalNotificationManager._();
+  static LocalNotificationManager get instance => _singleton;
 
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
   localNotiInit() {
-    shared = LocalNotificationManager();
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
     var initializationSettingsAndroid =

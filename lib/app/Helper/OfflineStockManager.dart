@@ -93,7 +93,7 @@ class OfflineStockManager {
 
       if (this.allDiamondPreviewThings.length > 0) {
         for (var item in diamonds) {
-          allDiamondPreviewThings.forEach((element) {
+          allDiamondPreviewThings.forEach((element) async {
             if (element.fileType ==
                     DownloadAndShareDialogueConstant.realImage1 &&
                 isNullEmptyOrFalse(item.getDiamondImage()) == false) {
@@ -107,6 +107,8 @@ class OfflineStockManager {
                 // item.offlineCertificateFile = value.path;
                 await AppDatabase.instance.diamondDao.addOrUpdate([item]);
               });
+              print(
+                  "Cache File path ${await DefaultCacheManager().getFilePath()}");
             }
           });
         }
@@ -142,7 +144,8 @@ class OfflineStockManager {
         RxBus.post(isDownloading, tag: eventOfflineDiamond);
 
         //Download complete
-        LocalNotificationManager().showOfflineStockDownloadNotification();
+        LocalNotificationManager.instance
+            .showOfflineStockDownloadNotification();
         // NotificationCenter.default.post(name: NSNotification.Name(rawValue: AppConstants.UserDefaultKey.DownloadProgress), object: nil, userInfo: nil)
         return;
       }
@@ -179,7 +182,7 @@ class OfflineStockManager {
         .then((diamondListResp) async {
       //Schedule notification
       if (this.page == 1 && this.selectedDate != null) {
-        LocalNotificationManager().fireNotification(
+        LocalNotificationManager.instance.fireNotification(
           DateUtilities().convertServerStringToFormatterDate(selectedDate),
           title: APPNAME,
           body: "Reminder about offline stock search",
