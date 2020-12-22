@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:convert';
 
 import 'package:diamnow/Setting/SettingModel.dart';
 import 'package:diamnow/app/Helper/OfflineStockManager.dart';
@@ -27,12 +28,14 @@ import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/DiamondList/download.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
+import 'package:diamnow/models/OfflineSearchHistory/OfflineStockTrack.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../main.dart';
 
@@ -320,7 +323,8 @@ class DiamondConfig {
                 sequence: 1,
                 isCenter: true));
           }
-          if (moduleType != DiamondModuleConstant.MODULE_TYPE_UPCOMING) {
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_UPCOMING &&
+              moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {
             list.add(BottomTabModel(
                 title: "",
                 image: filter,
@@ -945,25 +949,41 @@ class DiamondConfig {
       String companyName,
       String date,
       String title}) {
+    Map<String, dynamic> param = {};
+
+    OfflineStockTrackModel trackModel = OfflineStockTrackModel();
     CreateDiamondTrackReq req = CreateDiamondTrackReq();
     switch (trackType) {
       case DiamondTrackConstant.TRACK_TYPE_OFFER:
         req.remarks = remark ?? "";
         req.trackType = trackType;
+        param["remarks"] = remark ?? "";
+        param["trackType"] = trackType;
         break;
       case DiamondTrackConstant.TRACK_TYPE_CART:
       case DiamondTrackConstant.TRACK_TYPE_ENQUIRY:
       case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
       case DiamondTrackConstant.TRACK_TYPE_REMINDER:
         req.trackType = trackType;
+        param["trackType"] = trackType;
         break;
       case DiamondTrackConstant.TRACK_TYPE_BID:
         req.bidType = BidConstant.BID_TYPE_ADD;
+        param["bidType"] = BidConstant.BID_TYPE_ADD;
         break;
     }
     req.diamonds = [];
     Diamonds diamonds;
+
+    List<Map<String, dynamic>> arrDiamonds = [];
     list.forEach((element) {
+      //Creating request for offline stock
+      Map<String, dynamic> reqDiamond = {};
+      reqDiamond["diamond"] = element.id;
+      reqDiamond["trackDiscount"] = element.back;
+      reqDiamond["trackAmount"] = element.amt;
+      reqDiamond["trackPricePerCarat"] = element.ctPr;
+
       diamonds = Diamonds(
           diamond: element.id,
           trackDiscount: element.back,
@@ -976,6 +996,7 @@ class DiamondConfig {
         case DiamondTrackConstant.TRACK_TYPE_COMMENT:
         case DiamondTrackConstant.TRACK_TYPE_ENQUIRY:
           diamonds.remarks = remark;
+          reqDiamond["remarks"] = remark;
           break;
         case DiamondTrackConstant.TRACK_TYPE_OFFER:
           diamonds.vStnId = element.vStnId;
@@ -984,50 +1005,134 @@ class DiamondConfig {
           diamonds.newPricePerCarat = num.parse(element.offeredPricePerCarat);
           diamonds.offerValidDate = date;
 
+          reqDiamond["vStnId"] = element.vStnId;
+          reqDiamond["newDiscount"] = num.parse(element.offeredDiscount);
+          reqDiamond["newAmount"] = element.offeredAmount;
+          reqDiamond["newPricePerCarat"] =
+              num.parse(element.offeredPricePerCarat);
+          reqDiamond["offerValidDate"] = date;
+
           break;
         case DiamondTrackConstant.TRACK_TYPE_BID:
           diamonds.vStnId = element.vStnId;
           diamonds.bidAmount = element.getBidFinalAmount();
           diamonds.bidPricePerCarat = element.getBidFinalRate();
           diamonds.bidDiscount = element.getbidFinalDiscount();
+
+          reqDiamond["vStnId"] = element.vStnId;
+          reqDiamond["bidAmount"] = element.getBidFinalAmount();
+          reqDiamond["bidPricePerCarat"] = element.getBidFinalRate();
+          reqDiamond["bidDiscount"] = element.getbidFinalDiscount();
           break;
 
         case DiamondTrackConstant.TRACK_TYPE_REMINDER:
           diamonds.reminderDate = date;
+          reqDiamond["reminderDate"] = date;
+
           break;
       }
+      arrDiamonds.add(reqDiamond);
       req.diamonds.add(diamonds);
     });
-    SyncManager.instance.callApiForCreateDiamondTrack(
-      context,
-      trackType,
-      req,
-      (resp) {
-        if (isPop) {
-          Navigator.pop(context);
-        }
-        app.resolve<CustomDialogs>().confirmDialog(context,
-            title: title,
-            desc: resp.message,
-            positiveBtnTitle: R.string.commonString.ok,
-            negativeBtnTitle: getNegativeButtonTitle(trackType),
-            onClickCallback: (type) {
-          if (type == ButtonType.NagativeButtonClick) {
-            openDiamondList(trackType);
+
+    param["diamonds"] = arrDiamonds;
+    param["uuid"] = Uuid().v1();
+
+    trackModel.diamonds = json.encode(list);
+    trackModel.request = json.encode(param);
+    trackModel.trackType = trackType;
+    trackModel.isSync = false;
+    trackModel.strDate = DateUtilities().getFormattedDateString(DateTime.now(),
+        formatter: DateUtilities.dd_mm_yyyy_hh_mm_a);
+    trackModel.uuid = Uuid().v1();
+
+    callApiForTrackDiamonds(context,
+        trackType: trackType,
+        req: req,
+        isPop: isPop,
+        trackModel: trackModel,
+        title: title,
+        arrList: list);
+  }
+
+  callApiForTrackDiamonds(
+    BuildContext context, {
+    int trackType,
+    CreateDiamondTrackReq req,
+    OfflineStockTrackModel trackModel,
+    bool isPop,
+    String title,
+    List<DiamondModel> arrList,
+  }) async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      print("No connection");
+      await AppDatabase.instance.offlineStockTracklDao
+          .addOrUpdate([trackModel]);
+
+      if (trackType == DiamondTrackConstant.TRACK_TYPE_COMMENT) {
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              desc: "${arrList.length} diamond(s) added in offline comment",
+              positiveBtnTitle: R.string.commonString.ok,
+            );
+      } else if (trackType == DiamondTrackConstant.TRACK_TYPE_REMINDER) {
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              desc: "${arrList.length} diamond(s) added in offline reminder",
+              positiveBtnTitle: R.string.commonString.ok,
+            );
+      } else if (trackType == DiamondTrackConstant.TRACK_TYPE_CART) {
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              desc: "${arrList.length} diamond(s) added in offline cart",
+              positiveBtnTitle: R.string.commonString.ok,
+            );
+      } else if (trackType == DiamondTrackConstant.TRACK_TYPE_WATCH_LIST) {
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              desc: "${arrList.length} diamond(s) added in offline watchlist",
+              positiveBtnTitle: R.string.commonString.ok,
+            );
+      } else if (trackType == DiamondTrackConstant.TRACK_TYPE_ENQUIRY) {
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              desc: "${arrList.length} diamond(s) added in offline enquiry",
+              positiveBtnTitle: R.string.commonString.ok,
+            );
+      }
+    } else {
+      SyncManager.instance.callApiForCreateDiamondTrack(
+        context,
+        trackType,
+        req,
+        (resp) {
+          if (isPop) {
+            Navigator.pop(context);
           }
-        });
-      },
-      (onError) {
-        if (onError.message != null) {
-          app.resolve<CustomDialogs>().confirmDialog(
-                context,
-                title: "",
-                desc: onError.message,
-                positiveBtnTitle: R.string.commonString.ok,
-              );
-        }
-      },
-    );
+          app.resolve<CustomDialogs>().confirmDialog(context,
+              title: title,
+              desc: resp.message,
+              positiveBtnTitle: R.string.commonString.ok,
+              negativeBtnTitle: getNegativeButtonTitle(trackType),
+              onClickCallback: (type) {
+            if (type == ButtonType.NagativeButtonClick) {
+              openDiamondList(trackType);
+            }
+          });
+        },
+        (onError) {
+          if (onError.message != null) {
+            app.resolve<CustomDialogs>().confirmDialog(
+                  context,
+                  title: "",
+                  desc: onError.message,
+                  positiveBtnTitle: R.string.commonString.ok,
+                );
+          }
+        },
+      );
+    }
   }
 
   String getNegativeButtonTitle(int trackType) {

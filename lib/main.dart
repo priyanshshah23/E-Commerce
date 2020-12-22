@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:diamnow/app/Helper/ConnectionManager.dart';
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/localization/LocalizationHelper.dart';
 import 'package:diamnow/app/theme/settings_models_provider.dart';
 import 'package:diamnow/app/utils/NotificationHandler.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kiwi/kiwi.dart';
+import 'app/Helper/OfflineStockManager.dart';
 import 'app/app.export.dart';
 import 'app/theme/app_theme.dart';
 import 'app/theme/global_models_provider.dart';
@@ -81,6 +83,7 @@ class _BaseState extends State<Base> {
         case ConnectivityResult.mobile:
         case ConnectivityResult.wifi:
           string = 'online';
+          OfflineStockManager.shared.callApiForSyncOfflineData(context);
           break;
       }
       print("Internet " + string);

@@ -589,7 +589,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           model.url,
           height: getSize(286),
           width: MathUtilities.screenWidth(context),
-          fit: BoxFit.fitWidth,
+          fit: BoxFit.fitHeight,
         );
       } else if (model.title == "Certificate" ||
           (model.title == "Video" && videoFlag)) {

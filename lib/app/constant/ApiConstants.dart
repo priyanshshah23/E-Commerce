@@ -4,8 +4,8 @@ import '../app.export.dart';
 
 class ApiConstants {
   //  static const String PROXY_URL = "PROXY 192.168.2.124:8888";
-  // static String PROXY_URL = "PROXY 192.168.0.114:8888";
-  static String PROXY_URL = "PROXY 192.168.43.16:8888";
+  static String PROXY_URL = "PROXY 192.168.0.114:8888";
+  // static String PROXY_URL = "PROXY 192.168.43.16:8888";
 
 //    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 
@@ -99,6 +99,7 @@ class ApiConstants {
   //Excel
   static const String baseURLForExcel = "http://pndevelopapi.democ.in/data";
   static const String uploadKyc = "device/v1/account/";
+  static const String dimaondTrackCreate = "device/v1/diamond-track/create";
 
   static const String termsCondition = webPageUrl + "terms-condition";
   static const String privacyPolicy = webPageUrl + "privacy-policy";

@@ -9,9 +9,12 @@ import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/OfflineSearchHistory/OfflineSearchHistoryModel.dart';
+import 'package:diamnow/models/OfflineSearchHistory/OfflineStockTrack.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:rxbus/rxbus.dart';
+
+import 'NetworkClient.dart';
 
 class OfflineStockManager {
   static final OfflineStockManager shared = OfflineStockManager();
@@ -217,4 +220,36 @@ class OfflineStockManager {
 
     return dict;
   }
+
+  //call Api for sync offline data
+  callApiForSyncOfflineData(BuildContext context) async {
+    var arrStock =
+        await AppDatabase.instance.offlineStockTracklDao.getOfflineStockTrack();
+    if (isNullEmptyOrFalse(arrStock)) {
+      return;
+    }
+    for (var item in arrStock) {
+      var map = json.decode(item.request);
+      callApiForTrackOfflineData(map, context, callBack: () async {
+        OfflineStockTrackModel trackModel = item;
+        trackModel.isSync = true;
+        await AppDatabase.instance.offlineStockTracklDao
+            .addOrUpdate([trackModel]);
+      });
+    }
+  }
+
+  callApiForTrackOfflineData(Map<String, dynamic> req, BuildContext context,
+      {Function callBack}) {
+    print("Diamonds found for offline track");
+    NetworkClient.getInstance.callApi(
+        context, baseURL, ApiConstants.dimaondTrackCreate, MethodType.Post,
+        params: req, headers: NetworkClient.getInstance.getAuthHeaders(),
+        successCallback: (response, message) {
+      callBack();
+    }, failureCallback: (status, message) {
+      print(message);
+    });
+  }
+
 }

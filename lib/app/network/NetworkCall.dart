@@ -52,9 +52,9 @@ class NetworkCall<T extends BaseApiResp> {
         return Future.error(ErrorResp(PARSING_WRONG, CODE_ERROR, false));
       }
     } else {
-      if (isNetworkError && context != null) {
-        View.showMessage(context, NO_CONNECTION);
-      }
+      // if (isNetworkError && context != null) {
+      //   View.showMessage(context, NO_CONNECTION);
+      // }
       return Future.error(ErrorResp(INTERNET_UNAWAILABLE, NO_CONNECTION, true));
     }
   }

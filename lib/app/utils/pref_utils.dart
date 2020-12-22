@@ -325,7 +325,10 @@ class PrefUtils {
     await AppDatabase.instance.masterDao.deleteAllMasterItems();
     await AppDatabase.instance.sizeMasterDao.deleteAllMasterItems();
     await AppDatabase.instance.diamondDao.deleteAlldiamondModelItems();
-    await AppDatabase.instance.offlineSearchHistoryDao.deleteAlldiamondModelItems();
+    await AppDatabase.instance.offlineSearchHistoryDao
+        .deleteAlldiamondModelItems();
+    await AppDatabase.instance.offlineStockTracklDao
+        .deleteAlldiamondModelItems();
   }
 }
 
