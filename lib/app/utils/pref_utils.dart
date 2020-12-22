@@ -7,6 +7,7 @@ import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/NotificationRedirection.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
+import 'package:diamnow/models/Dashboard/DashboardModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
@@ -60,6 +61,9 @@ class PrefUtils {
 
   //Take A Tour
   String get keyHomeTour => "keyHomeTour";
+
+  // Dashboard
+  String get keyDashboard => "keyDashboard";
 
   bool isHomeVisible;
 
@@ -209,6 +213,25 @@ class PrefUtils {
 
   void saveMasterSyncDate(String masterSyncDate) {
     _preferences.setString(keyMasterSyncDate, masterSyncDate);
+  }
+
+// Store Dashboard Data
+
+  Future<void> saveDashboardDetails(DashboardModel dashboardModel) async {
+    await _preferences.setString(
+        keyDashboard, json.encode(dashboardModel.toJson()));
+  }
+
+  DashboardModel getDashboardDetails() {
+    var data = _preferences.getString(keyDashboard);
+    if (data != null) {
+      var dashboardJson = json.decode(data);
+      return dashboardJson != null
+          ? new DashboardModel.fromJson(dashboardJson)
+          : null;
+    }
+
+    return null;
   }
 
 // User Getter setter

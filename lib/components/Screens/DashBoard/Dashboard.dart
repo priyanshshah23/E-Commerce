@@ -33,6 +33,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -89,11 +90,12 @@ class _DashboardState extends StatefulScreenWidgetState {
 
     dashboardConfig = DashboardConfig();
     dashboardConfig.initItems();
+    this.dashboardModel = app.resolve<PrefUtils>().getDashboardDetails();
 
     callApiForDashboard(false);
-    setState(() {
-      //
-    });
+    // setState(() {
+    //   //
+    // });
   }
 
   callApiForDashboard(bool isRefress, {bool isLoading = false}) {
@@ -113,14 +115,19 @@ class _DashboardState extends StatefulScreenWidgetState {
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().dashboard(dict),
             context,
-            isProgress: !isRefress && !isLoading)
+            isProgress: false)
+        // !isRefress && !isLoading
         .then((resp) async {
-      this.dashboardModel = resp.data;
-      if (!isNullEmptyOrFalse(this.dashboardModel.seller)) {
-        emailURL = this.dashboardModel.seller.email;
-      }
-      setTopCountData();
-      setState(() {});
+      await app.resolve<PrefUtils>().saveDashboardDetails(resp.data);
+
+      setState(() {
+        this.dashboardModel = resp.data;
+
+        if (!isNullEmptyOrFalse(this.dashboardModel.seller)) {
+          emailURL = this.dashboardModel.seller.email;
+        }
+        setTopCountData();
+      });
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
@@ -281,22 +288,29 @@ class _DashboardState extends StatefulScreenWidgetState {
                     refreshController.loadComplete();
                   },
                   controller: refreshController,
-                  child: ListView(
-                    physics: ClampingScrollPhysics(),
-                    children: <Widget>[
-                      getSarchTextField(),
-                      if (dashboardConfig.arrTopSection.length > 0)
-                        getTopSection(),
-                      getFeaturedSection(),
-                      getStoneOfDaySection(),
-                      getSavedSearchSection(),
-                      getRecentSection(),
-                      getSalesSection(),
-                      SizedBox(
-                        height: getSize(20),
-                      ),
-                    ],
-                  ),
+                  child: (this.dashboardModel != null)
+                      ? ListView(
+                          physics: ClampingScrollPhysics(),
+                          children: <Widget>[
+                            getSarchTextField(),
+                            if (dashboardConfig.arrTopSection.length > 0)
+                              getTopSection(),
+                            getFeaturedSection(),
+                            getStoneOfDaySection(),
+                            getSavedSearchSection(),
+                            getRecentSection(),
+                            getSalesSection(),
+                            SizedBox(
+                              height: getSize(20),
+                            ),
+                          ],
+                        )
+                      : Center(
+                          child: SpinKitFadingCircle(
+                            color: appTheme.colorPrimary,
+                            size: getSize(30),
+                          ),
+                        ),
                 ),
               ),
             ),
@@ -523,21 +537,21 @@ class _DashboardState extends StatefulScreenWidgetState {
 
   getFeaturedSection() {
     if (app
-        .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_newGoods)
-        .view) {
-      if (!isNullEmptyOrFalse(this.dashboardModel)) {
-        if (!isNullEmptyOrFalse(this.dashboardModel.newArrival)) {
-          return FeaturedStoneWidget(
-            diamondList: this.dashboardModel.newArrival.list,
-          );
-        } else {
-          return SizedBox();
-        }
+            .resolve<PrefUtils>()
+            .getModulePermission(ModulePermissionConstant.permission_newGoods)
+            .view &&
+        !isNullEmptyOrFalse(this.dashboardModel)) {
+      if (!isNullEmptyOrFalse(this.dashboardModel.newArrival)) {
+        return FeaturedStoneWidget(
+          diamondList: this.dashboardModel.newArrival.list,
+        );
       } else {
         return SizedBox();
       }
+    } else {
+      return SizedBox();
     }
+
 //    return isNullEmptyOrFalse(arrStones)
 //        ? SizedBox()
 //        : Padding(
