@@ -307,11 +307,11 @@ class PrefUtils {
     }
     if (module == ModulePermissionConstant.permission_offline_stock) {
       data = UserPermissionsData(module: module);
-      data.view = false;
-      data.insert = false;
-      data.update = false;
-      data.delete = false;
-      data.downloadExcel = false;
+      data.view = true;
+      data.insert = true;
+      data.update = true;
+      data.delete = true;
+      data.downloadExcel = true;
     }
     return data;
   }
