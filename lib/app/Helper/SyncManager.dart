@@ -317,7 +317,7 @@ class SyncManager {
   }
 
   void callVersionUpdateApi(BuildContext context, String screenConstant,
-      {String id}) {
+      {String id, bool isOfflineMode = false}) {
     NetworkCall<VersionUpdateResp>()
         .makeCall(
             () => app
@@ -557,7 +557,12 @@ class SyncManager {
         }
       },
     ).catchError(
-      (onError) => {
+      (onError) {
+        if (isOfflineMode && screenConstant == VersionUpdateApi.splash) {
+          //for splash
+          AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+          return;
+        }
         app.resolve<CustomDialogs>().confirmDialog(context,
             title: R.string.errorString.versionError,
             desc: onError.message,
@@ -569,7 +574,7 @@ class SyncManager {
           } else {
             callVersionUpdateApi(context, screenConstant, id: id);
           }
-        }),
+        });
       },
     );
   }

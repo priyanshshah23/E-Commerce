@@ -565,6 +565,8 @@ class _DashboardState extends StatefulScreenWidgetState {
       } else {
         return SizedBox();
       }
+    } else {
+      return SizedBox();
     }
 //    return isNullEmptyOrFalse(arrStones)
 //        ? SizedBox()
