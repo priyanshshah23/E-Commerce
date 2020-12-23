@@ -7,6 +7,7 @@ import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/OfflineSearchHistory/OfflineSearchHistoryModel.dart';
 import 'package:diamnow/models/OfflineSearchHistory/OfflineStockTrack.dart';
@@ -230,12 +231,21 @@ class OfflineStockManager {
     }
     for (var item in arrStock) {
       var map = json.decode(item.request);
-      callApiForTrackOfflineData(map, context, callBack: () async {
-        OfflineStockTrackModel trackModel = item;
-        trackModel.isSync = true;
-        await AppDatabase.instance.offlineStockTracklDao
-            .addOrUpdate([trackModel]);
-      });
+      if (item.trackType != DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER) {
+        callApiForTrackOfflineData(map, context, callBack: () async {
+          OfflineStockTrackModel trackModel = item;
+          trackModel.isSync = true;
+          await AppDatabase.instance.offlineStockTracklDao
+              .addOrUpdate([trackModel]);
+        });
+      } else {
+        callApiForOrderOffline(map, context, callBack: () async {
+          OfflineStockTrackModel trackModel = item;
+          trackModel.isSync = true;
+          await AppDatabase.instance.offlineStockTracklDao
+              .addOrUpdate([trackModel]);
+        });
+      }
     }
   }
 
@@ -252,4 +262,16 @@ class OfflineStockManager {
     });
   }
 
+  callApiForOrderOffline(Map<String, dynamic> req, BuildContext context,
+      {Function callBack}) {
+    print("Diamonds found for offline order");
+    NetworkClient.getInstance.callApi(
+        context, baseURL, ApiConstants.placeOrderOffline, MethodType.Post,
+        params: req, headers: NetworkClient.getInstance.getAuthHeaders(),
+        successCallback: (response, message) {
+      callBack();
+    }, failureCallback: (status, message) {
+      print(message);
+    });
+  }
 }

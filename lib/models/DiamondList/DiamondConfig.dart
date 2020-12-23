@@ -1280,10 +1280,17 @@ class DiamondConfig {
       String remark,
       String companyName,
       String title,
-      String date}) {
+      String date}) async {
+    Map<String, dynamic> dict = {};
     PlaceOrderReq req = PlaceOrderReq();
+    OfflineStockTrackModel trackModel = OfflineStockTrackModel();
+
     req.company = companyName;
     req.comment = remark;
+
+    dict["company"] = companyName;
+    dict["comment"] = comment;
+
     switch (date) {
       case InvoiceTypesString.today:
         req.date = OrderInvoiceData.today.toString();
@@ -1296,37 +1303,65 @@ class DiamondConfig {
         break;
     }
 
+    dict["date"] = req.date;
     req.diamonds = [];
+
+    List<String> arrDiamonds = [];
     list.forEach((element) {
       req.diamonds.add(element.id);
+      arrDiamonds.add(element.id);
     });
-    SyncManager.instance.callApiForPlaceOrder(
-      context,
-      req,
-      (resp) {
-        app.resolve<CustomDialogs>().confirmDialog(context,
-            barrierDismissible: true,
-            title: "",
-            desc: resp.message,
+
+    dict["diamonds"] = arrDiamonds;
+
+    trackModel.diamonds = json.encode(list);
+    trackModel.request = json.encode(dict);
+    trackModel.trackType = DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER;
+    trackModel.isSync = false;
+    trackModel.strDate = DateUtilities().getFormattedDateString(DateTime.now(),
+        formatter: DateUtilities.dd_mm_yyyy_hh_mm_a);
+    trackModel.uuid = Uuid().v1();
+
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      print("No connection");
+      await AppDatabase.instance.offlineStockTracklDao
+          .addOrUpdate([trackModel]);
+      app.resolve<CustomDialogs>().confirmDialog(
+            context,
+            desc:
+                "${list.length} diamond(s) order placed offline, When you connect with internet. Your order will placed",
             positiveBtnTitle: R.string.commonString.ok,
-            onClickCallback: (buttonType) {
-          if (buttonType == ButtonType.PositveButtonClick) {
-            placeOrder();
+          );
+    } else {
+      SyncManager.instance.callApiForPlaceOrder(
+        context,
+        req,
+        (resp) {
+          app.resolve<CustomDialogs>().confirmDialog(context,
+              barrierDismissible: true,
+              title: "",
+              desc: resp.message,
+              positiveBtnTitle: R.string.commonString.ok,
+              onClickCallback: (buttonType) {
+            if (buttonType == ButtonType.PositveButtonClick) {
+              placeOrder();
+            }
+          });
+        },
+        (onError) {
+          if (onError.message != null) {
+            app.resolve<CustomDialogs>().confirmDialog(
+                  context,
+                  barrierDismissible: true,
+                  title: "",
+                  desc: onError.message,
+                  positiveBtnTitle: R.string.commonString.ok,
+                );
           }
-        });
-      },
-      (onError) {
-        if (onError.message != null) {
-          app.resolve<CustomDialogs>().confirmDialog(
-                context,
-                barrierDismissible: true,
-                title: "",
-                desc: onError.message,
-                positiveBtnTitle: R.string.commonString.ok,
-              );
-        }
-      },
-    );
+        },
+      );
+    }
   }
 
   callApiForBlock(BuildContext context, List<DiamondModel> list,

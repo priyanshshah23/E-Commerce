@@ -86,7 +86,7 @@ class _DashboardState extends StatefulScreenWidgetState {
   @override
   void initState() {
     super.initState();
-    LocalNotificationManager.instance.localNotiInit();
+    //LocalNotificationManager.instance.localNotiInit();
     diamondConfig = DiamondConfig(moduleType);
     diamondConfig.initItems();
 

@@ -20,19 +20,19 @@ class LocalNotificationManager {
     localNotiInit();
   }
 
-  NotificationAppLaunchDetails notificationAppLaunchDetails;
   static final LocalNotificationManager _singleton =
       LocalNotificationManager._();
   static LocalNotificationManager get instance => _singleton;
 
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+  NotificationAppLaunchDetails notificationAppLaunchDetails;
 
   localNotiInit() async {
+    requestPermissions();
     notificationAppLaunchDetails =
         await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
 
-    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
     var initializationSettingsAndroid =
         AndroidInitializationSettings('ic_launcher');
     var initializationSettingsIOS = IOSInitializationSettings(
@@ -44,7 +44,6 @@ class LocalNotificationManager {
         android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: onSelectNotification);
-        requestPermissions();
   }
 
   void requestPermissions() {
@@ -94,29 +93,41 @@ class LocalNotificationManager {
 
   /// fire a notification that specifies a different icon, sound and vibration pattern
   Future<void> showOfflineStockDownloadNotification() async {
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      NotificationIdentifier.offlineStockDownload.toString(),
-      AndroidNotificationIdentifier.offlineStockDownloadChannelName,
-      AndroidNotificationIdentifier.offlineStockDownloadChannelDescription,
-      icon: '@mipmap/ic_launcher',
-    );
+    const IOSNotificationDetails iOSPlatformChannelSpecifics =
+        IOSNotificationDetails(subtitle: 'the subtitle');
 
-    var iOSPlatformChannelSpecifics =
-        IOSNotificationDetails(sound: "slow_spring_board.aiff");
-
-    var platformChannelSpecifics = NotificationDetails(
-        android: androidPlatformChannelSpecifics,
-        iOS: iOSPlatformChannelSpecifics);
-
-    // DateTime newGenDate;
-    // newGenDate = DateTime.now().add(Duration(days: 60));
-
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(iOS: iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
-      NotificationIdentifier.offlineStockDownload,
-      APPNAME,
-      "Your offline stock downloaded successfully",
-      platformChannelSpecifics,
-    );
+        0,
+        'title of notification with a subtitle',
+        'body of notification with a subtitle',
+        platformChannelSpecifics,
+        payload: 'item x');
+
+    // var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+    //   NotificationIdentifier.offlineStockDownload.toString(),
+    //   AndroidNotificationIdentifier.offlineStockDownloadChannelName,
+    //   AndroidNotificationIdentifier.offlineStockDownloadChannelDescription,
+    //   icon: '@mipmap/ic_launcher',
+    // );
+
+    // var iOSPlatformChannelSpecifics =
+    //     IOSNotificationDetails(sound: "slow_spring_board.aiff");
+
+    // var platformChannelSpecifics = NotificationDetails(
+    //     android: androidPlatformChannelSpecifics,
+    //     iOS: iOSPlatformChannelSpecifics);
+
+    // // DateTime newGenDate;
+    // // newGenDate = DateTime.now().add(Duration(days: 60));
+
+    // await flutterLocalNotificationsPlugin.show(
+    //   NotificationIdentifier.offlineStockDownload,
+    //   APPNAME,
+    //   "Your offline stock downloaded successfully",
+    //   platformChannelSpecifics,
+    // );
   }
 
   /// fire a notification that specifies a different icon, sound and vibration pattern
