@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:io';
 
+import 'package:diamnow/app/Helper/LocalNotification.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
@@ -85,6 +86,7 @@ class _DashboardState extends StatefulScreenWidgetState {
   @override
   void initState() {
     super.initState();
+    LocalNotificationManager.instance.localNotiInit();
     diamondConfig = DiamondConfig(moduleType);
     diamondConfig.initItems();
 

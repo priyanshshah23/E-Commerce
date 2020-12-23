@@ -65,6 +65,9 @@ class PrefUtils {
   // Dashboard
   String get keyDashboard => "keyDashboard";
 
+  //Store filter
+  String get keyFilter => "keyFilter";
+
   bool isHomeVisible;
 
   Future<void> init() async {
@@ -211,12 +214,23 @@ class PrefUtils {
     return getString(keyLanguage);
   }
 
+  void saveFilterOffline(Map<String, dynamic> dictFilter) {
+    _preferences.setString(keyFilter, json.encode(dictFilter));
+  }
+
+  Map<String, dynamic> getFilterOffline() {
+    var data = _preferences.getString(keyFilter);
+    if (data != null) {
+      return json.decode(data);
+    }
+    return null;
+  }
+
   void saveMasterSyncDate(String masterSyncDate) {
     _preferences.setString(keyMasterSyncDate, masterSyncDate);
   }
 
-// Store Dashboard Data
-
+  // Store Dashboard Data
   Future<void> saveDashboardDetails(DashboardModel dashboardModel) async {
     await _preferences.setString(
         keyDashboard, json.encode(dashboardModel.toJson()));

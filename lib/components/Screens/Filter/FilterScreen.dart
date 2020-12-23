@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:diamnow/app/Helper/LocalNotification.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
@@ -579,7 +580,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   Widget getBottomTab() {
     return BottomTabbarWidget(
       arrBottomTab: arrBottomTab,
-      onClickCallback: (obj) {
+      onClickCallback: (obj) async {
         //
         if (obj.code == BottomCodeConstant.filterSavedSearch) {
           if (app
@@ -607,28 +608,42 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
           }
         } else if (obj.code == BottomCodeConstant.filterSearch) {
-          if (app
-                  .resolve<PrefUtils>()
-                  .getModulePermission(
-                      ModulePermissionConstant.permission_offline_stock)
-                  .view &&
-              moduleType ==
-                  DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
-            //Query for sembast
-            Map<String, dynamic> dict = new HashMap();
-            dict["filterModel"] = arrList;
-            dict[ArgumentConstant.ModuleType] = moduleType;
-            NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
-          } else if (app
-              .resolve<PrefUtils>()
-              .getModulePermission(
-                  ModulePermissionConstant.permission_searchResult)
-              .view) {
-            callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-                isSearch: true);
-            // place code
+
+          //Check internet is online or not
+          var connectivityResult = await Connectivity().checkConnectivity();
+          if (connectivityResult == ConnectivityResult.none) {
+            //Save filter Param offline
+            Map<String, dynamic> payload = {};
+            payload["module"] =
+                DiamondModuleConstant.MODULE_TYPE_FILTER_OFFLINE_NOTI_CLICK;
+            payload["payload"] = FilterRequest().createRequest(arrList);
+
+            app.resolve<PrefUtils>().saveFilterOffline(payload);
           } else {
-            app.resolve<CustomDialogs>().accessDenideDialog(context);
+            if (app
+                    .resolve<PrefUtils>()
+                    .getModulePermission(
+                        ModulePermissionConstant.permission_offline_stock)
+                    .view &&
+                moduleType ==
+                    DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+              //Query for sembast
+              Map<String, dynamic> dict = new HashMap();
+              dict["filterModel"] = arrList;
+              dict[ArgumentConstant.ModuleType] = moduleType;
+              NavigationUtilities.pushRoute(DiamondListScreen.route,
+                  args: dict);
+            } else if (app
+                .resolve<PrefUtils>()
+                .getModulePermission(
+                    ModulePermissionConstant.permission_searchResult)
+                .view) {
+              callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+                  isSearch: true);
+              // place code
+            } else {
+              app.resolve<CustomDialogs>().accessDenideDialog(context);
+            }
           }
         } else if (obj.code == BottomCodeConstant.filterSaveAndSearch) {
           if (app
