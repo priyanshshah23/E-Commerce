@@ -43,7 +43,7 @@ class PrefUtils {
 
   String get keyMasterSyncDate => "keyMasterSyncDate";
 
-  String get keyGetLocalization => "keyGetLocalization";
+  String get keyForLocalization => "keyGetLocalization";
 
   String get keyUser => "keyUser";
 
@@ -215,11 +215,11 @@ class PrefUtils {
   }
 
   Future<void> saveLocalization(String languageCode) async {
-    await _preferences.setString(keyGetLocalization, languageCode);
+    await _preferences.setString(keyForLocalization, languageCode);
   }
 
   String getLocalizationLanguage() {
-    String str = getString(keyGetLocalization);
+    String str = getString(keyForLocalization);
     if (!isNullEmptyOrFalse(str)) {
       return str;
     } else {
