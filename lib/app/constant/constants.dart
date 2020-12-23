@@ -147,6 +147,12 @@ class MasterCode {
   // static const String mixTint = "MIX_TINT";
 }
 
+class LocalizationConstant {
+  static const String ENGLISH = "en";
+  static const String DANISH = "da-DK";
+}
+
+
 class DiamondStatus {
   static const String DIAMOND_STATUS_AVAILABLE = "A";
   static const String DIAMOND_STATUS_ON_MINE = "M";

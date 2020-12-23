@@ -36,11 +36,14 @@ class PrefUtils {
   String get keyIsShowThemeSelection => "keyIsShowThemeSelection";
 
   String get keyToSetBiometricenabled => "keyToSetBiometricenabled";
+
   String get keyToSetMpinenabled => "keyToSetMpinenabled";
 
   String get FILE_DEVIDE_INFO => "deviceDetail";
 
   String get keyMasterSyncDate => "keyMasterSyncDate";
+
+  String get keyGetLocalization => "keyGetLocalization";
 
   String get keyUser => "keyUser";
 
@@ -209,6 +212,19 @@ class PrefUtils {
 
   void saveMasterSyncDate(String masterSyncDate) {
     _preferences.setString(keyMasterSyncDate, masterSyncDate);
+  }
+
+  Future<void> saveLocalization(String languageCode) async {
+    await _preferences.setString(keyGetLocalization, languageCode);
+  }
+
+  String getLocalizationLanguage() {
+    String str = getString(keyGetLocalization);
+    if (!isNullEmptyOrFalse(str)) {
+      return str;
+    } else {
+      return LocalizationConstant.ENGLISH;
+    }
   }
 
 // User Getter setter
