@@ -33,6 +33,7 @@ import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
 import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
 import 'package:diamnow/components/Screens/Notification/Notifications.dart';
 import 'package:diamnow/components/Screens/Search/Search.dart';
+import 'package:diamnow/components/Screens/VoiceSearch/VoiceSearch.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/Address/CityListModel.dart';
 import 'package:diamnow/models/Address/CountryListModel.dart';
@@ -794,13 +795,7 @@ class _FilterItemState extends State<FilterItem> {
 
   getWidgets(FormBaseModel model) {
     if (model.viewType == "searchText") {
-      return Padding(
-        padding: EdgeInsets.only(
-          top: getSize(8),
-          bottom: getSize(16),
-        ),
-        child: getSearchTextField(),
-      );
+      return getSearchTextField();
     } else if (model.viewType == ViewTypes.seperator) {
       return SeperatorWidget(model);
     } else if (model.viewType == ViewTypes.selection) {
@@ -878,84 +873,116 @@ class _FilterItemState extends State<FilterItem> {
         .view)) {
       return SizedBox();
     }
-    return Hero(
-      tag: 'searchTextField',
-      child: Material(
-        color: appTheme.whiteColor,
-        child: Padding(
-          padding: EdgeInsets.only(
-            left: getSize(Spacing.leftPadding),
-            right: getSize(Spacing.rightPadding),
-            top: getSize(16),
-          ),
-          child: Container(
-            height: getSize(40),
-            decoration: BoxDecoration(
-              color: appTheme.whiteColor,
-              borderRadius: BorderRadius.circular(getSize(5)),
-              border:
-                  Border.all(color: appTheme.colorPrimary, width: getSize(1)),
-            ),
-            child: TextField(
-              textAlignVertical: TextAlignVertical(y: 1.0),
-              textInputAction: TextInputAction.done,
-              focusNode: _focusSearch,
-              readOnly: true,
-              autofocus: false,
-              controller: _searchController,
-              obscureText: false,
-              style: appTheme.black16TextStyle,
-              keyboardType: TextInputType.text,
-              textCapitalization: TextCapitalization.none,
-              cursorColor: appTheme.colorPrimary,
-              inputFormatters: [
-                WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
-                BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
-              ],
-              decoration: InputDecoration(
-                fillColor: fromHex("#FFEFEF"),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
-                  borderSide: BorderSide(
-                      color: appTheme.dividerColor, width: getSize(1)),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
-                  borderSide: BorderSide(
-                      color: appTheme.dividerColor, width: getSize(1)),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
-                  borderSide: BorderSide(
-                      color: appTheme.dividerColor, width: getSize(1)),
-                ),
+    return Padding(
+      padding:  EdgeInsets.only(top : getSize(16.0), bottom: getSize(16.0)),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Hero(
+              tag: 'searchTextField',
+              child: Material(
+                color: appTheme.whiteColor,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: getSize(Spacing.leftPadding),
+                    right: getSize(Spacing.rightPadding),
+                  ),
+                  child: Container(
+                    height: getSize(40),
+                    decoration: BoxDecoration(
+                      color: appTheme.whiteColor,
+                      borderRadius: BorderRadius.circular(getSize(5)),
+                      border: Border.all(
+                          color: appTheme.colorPrimary, width: getSize(1)),
+                    ),
+                    child: TextField(
+                      textAlignVertical: TextAlignVertical(y: 1.0),
+                      textInputAction: TextInputAction.done,
+                      focusNode: _focusSearch,
+                      readOnly: true,
+                      autofocus: false,
+                      controller: _searchController,
+                      obscureText: false,
+                      style: appTheme.black16TextStyle,
+                      keyboardType: TextInputType.text,
+                      textCapitalization: TextCapitalization.none,
+                      cursorColor: appTheme.colorPrimary,
+                      inputFormatters: [
+                        WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+                        BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+                      ],
+                      decoration: InputDecoration(
+                        fillColor: fromHex("#FFEFEF"),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(getSize(5))),
+                          borderSide: BorderSide(
+                              color: appTheme.dividerColor, width: getSize(1)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(getSize(5))),
+                          borderSide: BorderSide(
+                              color: appTheme.dividerColor, width: getSize(1)),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(getSize(5))),
+                          borderSide: BorderSide(
+                              color: appTheme.dividerColor, width: getSize(1)),
+                        ),
 
-                hintStyle: appTheme.grey16HintTextStyle,
-                hintText: R.string.commonString.searchStoneIdCertificateNo,
-                labelStyle: TextStyle(
-                  color: appTheme.textColor,
-                  fontSize: getFontSize(16),
+                        hintStyle: appTheme.grey16HintTextStyle,
+                        hintText:
+                            R.string.commonString.searchStoneIdCertificateNo,
+                        labelStyle: TextStyle(
+                          color: appTheme.textColor,
+                          fontSize: getFontSize(16),
+                        ),
+                        // suffix: widget.textOption.postfixWidOnFocus,
+                        suffixIcon: Padding(
+                            padding: EdgeInsets.all(getSize(10)),
+                            child: Image.asset(search)),
+                      ),
+                      onChanged: (String text) {
+                        //
+                      },
+                      onEditingComplete: () {
+                        //
+                        _focusSearch.unfocus();
+                      },
+                      onTap: () {
+                        Map<String, dynamic> dict = new HashMap();
+                        dict["isFromSearch"] = true;
+                        NavigationUtilities.pushRoute(SearchScreen.route,
+                            args: dict);
+                      },
+                    ),
+                  ),
                 ),
-                // suffix: widget.textOption.postfixWidOnFocus,
-                suffixIcon: Padding(
-                    padding: EdgeInsets.all(getSize(10)),
-                    child: Image.asset(search)),
               ),
-              onChanged: (String text) {
-                //
-              },
-              onEditingComplete: () {
-                //
-                _focusSearch.unfocus();
-              },
-              onTap: () {
-                Map<String, dynamic> dict = new HashMap();
-                dict["isFromSearch"] = true;
-                NavigationUtilities.pushRoute(SearchScreen.route, args: dict);
-              },
             ),
           ),
-        ),
+          Center(
+            child: InkWell(
+              onTap: () {
+                NavigationUtilities.pushRoute(VoiceSearch.route);
+              },
+              child: Padding(
+                padding: EdgeInsets.only(
+                  right: getSize(Spacing.leftPadding),
+                ),
+                child: Image.asset(
+                  microphone,
+                  alignment: Alignment.centerRight,
+                  width: getSize(26),
+                  height: getSize(26),
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

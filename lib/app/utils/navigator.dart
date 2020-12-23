@@ -31,6 +31,7 @@ import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
 import 'package:diamnow/components/Screens/Search/Search.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
 import 'package:diamnow/components/Screens/Version/VersionUpdate.dart';
+import 'package:diamnow/components/Screens/VoiceSearch/VoiceSearch.dart';
 import 'package:flutter/material.dart';
 
 import 'fade_route.dart';
@@ -147,6 +148,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       break;
     case HomeScreen.route:
       screen = HomeScreen();
+      break;
+      case VoiceSearch.route:
+      screen = VoiceSearch();
       break;
     case FilterScreen.route:
       screen = FilterScreen(arguments);

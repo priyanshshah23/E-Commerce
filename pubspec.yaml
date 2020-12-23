@@ -84,6 +84,7 @@ dependencies:
   # permission_handler: ^3.2.0
   marquee: ^1.6.1
   smooth_page_indicator: ^0.2.0
+  speech_to_text: ^3.1.0
 
   # flutter_tags: ^0.1.9
 

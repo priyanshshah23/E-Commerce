@@ -8,6 +8,7 @@ import 'package:diamnow/components/Screens/DiamondList/DiamondActionScreen.dart'
 import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Splash.dart';
+import 'package:diamnow/components/Screens/VoiceSearch/VoiceSearch.dart';
 import 'package:diamnow/modules/ThemeSetting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -90,6 +91,7 @@ class _BaseState extends State<Base> {
         DiamondDetailScreen.route: (BuildContext context) =>
             DiamondDetailScreen(
                 arguments: ModalRoute.of(context).settings.arguments),
+        VoiceSearch.route: (BuildContext context) => VoiceSearch(),
         SearchScreen.route: (BuildContext context) =>
             SearchScreen(ModalRoute.of(context).settings.arguments),
       },
