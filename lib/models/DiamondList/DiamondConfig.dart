@@ -1046,13 +1046,15 @@ class DiamondConfig {
         formatter: DateUtilities.dd_mm_yyyy_hh_mm_a);
     trackModel.uuid = Uuid().v1();
 
-    callApiForTrackDiamonds(context,
-        trackType: trackType,
-        req: req,
-        isPop: isPop,
-        trackModel: trackModel,
-        title: title,
-        arrList: list);
+    callApiForTrackDiamonds(
+      context,
+      trackType: trackType,
+      req: req,
+      isPop: isPop,
+      trackModel: trackModel,
+      title: title,
+      arrList: list,
+    );
   }
 
   callApiForTrackDiamonds(
@@ -1065,7 +1067,12 @@ class DiamondConfig {
     List<DiamondModel> arrList,
   }) async {
     var connectivityResult = await Connectivity().checkConnectivity();
-    if (connectivityResult == ConnectivityResult.none) {
+    if (connectivityResult == ConnectivityResult.none &&
+        app
+            .resolve<PrefUtils>()
+            .getModulePermission(
+                ModulePermissionConstant.permission_offline_stock)
+            .view) {
       print("No connection");
       await AppDatabase.instance.offlineStockTracklDao
           .addOrUpdate([trackModel]);
@@ -1323,7 +1330,12 @@ class DiamondConfig {
     trackModel.uuid = Uuid().v1();
 
     var connectivityResult = await Connectivity().checkConnectivity();
-    if (connectivityResult == ConnectivityResult.none) {
+    if (connectivityResult == ConnectivityResult.none &&
+        app
+            .resolve<PrefUtils>()
+            .getModulePermission(
+                ModulePermissionConstant.permission_offline_stock)
+            .view) {
       print("No connection");
       await AppDatabase.instance.offlineStockTracklDao
           .addOrUpdate([trackModel]);
