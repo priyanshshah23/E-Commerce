@@ -139,14 +139,15 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           section: SectionAnalytics.LIST,
           action: ActionAnalytics.OPEN);
     });
-    // setState(() {
-    //   //
-    // });
 
     RxBus.register<void>(tag: eventOfflineDiamond).listen((event) {
       setState(() {
         //
       });
+    });
+
+    RxBus.register<void>(tag: eventDiamondRefresh).listen((event) {
+      callApi(true);
     });
 
     RxBus.register<Map<String, dynamic>>(tag: eventSelectAllGroupDiamonds)
@@ -171,6 +172,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   void dispose() {
     RxBus.destroy(tag: eventSelectAllGroupDiamonds);
     RxBus.destroy(tag: eventOfflineDiamond);
+    RxBus.destroy(tag: eventDiamondRefresh);
     super.dispose();
   }
 

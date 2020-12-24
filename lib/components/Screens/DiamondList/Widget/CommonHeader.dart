@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rxbus/rxbus.dart';
 
 class DiamondListHeader extends StatefulWidget {
   DiamondCalculation diamondCalculation;
@@ -33,7 +35,8 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
   }
 
   calcualteDifference() {
-    if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
+    if (widget.moduleType ==
+        DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
       isTimerCompleted = false;
       var currentTime = DateTime.now();
       var strBlindBid = DateTime.now();
@@ -82,6 +85,8 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
             Future.delayed(Duration(seconds: 65), () {
               calcualteDifference();
             });
+
+            RxBus.post(true, tag: eventDiamondRefresh);
           } else {
             totalSeconds = totalSeconds - 1;
           }
@@ -124,17 +129,14 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
               Expanded(
                 child: Container(),
               ),
-              getColumn(
-                  widget.diamondCalculation.totalPriceCrt,
+              getColumn(widget.diamondCalculation.totalPriceCrt,
                   R.string.commonString.avgPriceCrt + dollar),
-                      // R.string.commonString.doller),
+              // R.string.commonString.doller),
               Expanded(
                 child: Container(),
               ),
-              getColumn(
-                  widget.diamondCalculation.totalAmount,
-                  R.string.commonString.amount +
-                      dollar)
+              getColumn(widget.diamondCalculation.totalAmount,
+                  R.string.commonString.amount + dollar)
             ],
           ),
         ),

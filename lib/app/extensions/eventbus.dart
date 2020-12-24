@@ -16,3 +16,4 @@ final String eventForShareCaratRangeSelected =
     "eventForShareCaratRangeSelected";
 
 final String eventOfflineDiamond = "offlineDiamond";
+final String eventDiamondRefresh = "diamondRefresh";

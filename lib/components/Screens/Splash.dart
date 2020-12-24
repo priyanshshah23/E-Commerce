@@ -43,10 +43,14 @@ class _SplashState extends State<Splash> {
     });
   }
 
-  Future openNextScreen() async {
+  Future openNextScreen({bool isOfflineMode = false}) async {
     if (app.resolve<PrefUtils>().isUserLogin()) {
-      SyncManager().callVersionUpdateApi(context, VersionUpdateApi.splash,
-          id: app.resolve<PrefUtils>().getUserDetails().id ?? "");
+      SyncManager().callVersionUpdateApi(
+        context,
+        VersionUpdateApi.splash,
+        id: app.resolve<PrefUtils>().getUserDetails().id ?? "",
+        isOfflineMode: isOfflineMode,
+      );
     } else {
       AppNavigation.shared.movetoLogin(isPopAndSwitch: true);
     }
@@ -123,9 +127,9 @@ class _SplashState extends State<Splash> {
   callSyncApi() {
     if (app.resolve<PrefUtils>().isUserLogin()) {
       SyncManager.instance.callMasterSync(context, () {
-        openNextScreen();
+        openNextScreen(isOfflineMode: true);
       }, () {
-        openNextScreen();
+        openNextScreen(isOfflineMode: true);
       },
           isNetworkError: false,
           isProgress: false,
