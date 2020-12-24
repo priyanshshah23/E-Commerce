@@ -245,7 +245,7 @@ class PrefUtils {
       return LocalizationConstant.ENGLISH;
     }
   }
-  
+
   // Store Dashboard Data
   Future<void> saveDashboardDetails(DashboardModel dashboardModel) async {
     await _preferences.setString(
@@ -295,12 +295,12 @@ class PrefUtils {
         permissions.data.length > 0) {
       permissions.data.forEach((element) {
         if (element.module == module) {
-          element.view = element.permissions?.view ?? false;
-          element.insert = element.permissions?.insert ?? false;
-          element.update = element.permissions?.update ?? false;
-          element.delete = element.permissions?.delete ?? false;
-          element.downloadExcel = element.permissions?.downloadExcel ?? false;
-          if (permissions != null && (element.permissions?.all ?? false)) {
+          element.view = element.permissions?.view ?? true;
+          element.insert = element.permissions?.insert ?? true;
+          element.update = element.permissions?.update ?? true;
+          element.delete = element.permissions?.delete ?? true;
+          element.downloadExcel = element.permissions?.downloadExcel ?? true;
+          if (permissions != null && (element.permissions?.all ?? true)) {
             element.view = true;
             element.insert = true;
             element.update = true;
@@ -314,14 +314,15 @@ class PrefUtils {
     if (data == null) {
       if (true) {
         data = UserPermissionsData(module: module);
-        data.view = false;
-        data.insert = false;
-        data.update = false;
-        data.delete = false;
-        data.downloadExcel = false;
+        data.view = true;
+        data.insert = true;
+        data.update = true;
+        data.delete = true;
+        data.downloadExcel = true;
       }
     }
-    if (module == ModulePermissionConstant.permission_offline_stock) {
+    if (module == ModulePermissionConstant.permission_offline_stock ||
+        module == ModulePermissionConstant.permission_auction) {
       data = UserPermissionsData(module: module);
       data.view = true;
       data.insert = true;

@@ -143,6 +143,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       });
     });
 
+    RxBus.register<void>(tag: eventDiamondRefresh).listen((event) {
+      callApi(true);
+    });
+
     RxBus.register<Map<String, dynamic>>(tag: eventSelectAllGroupDiamonds)
         .listen((event) async {
       setState(() {
@@ -165,6 +169,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   void dispose() {
     RxBus.destroy(tag: eventSelectAllGroupDiamonds);
     RxBus.destroy(tag: eventOfflineDiamond);
+    RxBus.destroy(tag: eventDiamondRefresh);
     super.dispose();
   }
 
@@ -1065,12 +1070,13 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            hasData
-                ? DiamondListHeader(
-                    diamondCalculation: diamondCalculation,
-                    moduleType: moduleType,
-                  )
-                : SizedBox(),
+            // hasData
+            //     ?
+            DiamondListHeader(
+              diamondCalculation: diamondCalculation,
+              moduleType: moduleType,
+            ),
+            // : SizedBox(),
             SizedBox(
               height: getSize(16),
             ),
