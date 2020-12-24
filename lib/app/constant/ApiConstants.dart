@@ -115,6 +115,7 @@ class ApiConstants {
   static const String notificationList = apiUrl + "device/v1/notification/list";
   static const String updateOffer = "device/v1/diamond-track/update";
   static const String shareThroughEmail = apiUrl + "web/v1/diamond/excel";
+  static const String analytics = "apis/analytics/create";
 }
 
 class DiamondUrls {

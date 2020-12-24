@@ -643,6 +643,27 @@ class SyncManager {
     });
   }
 
+  //Analytics
+  callAnalytics(
+      BuildContext context, String page, String section, String action,
+      {Map<String, dynamic> dict}) {
+    Map<String, dynamic> request = {};
+    request["page"] = page;
+    request["section"] = section;
+    request["action"] = action;
+
+    if (!isNullEmptyOrFalse(dict)) {
+      request["description"] = dict;
+    }
+    //Analytics
+    NetworkClient.getInstance.callApi(
+        context, baseURL, ApiConstants.analytics, MethodType.Post,
+        params: request,
+        headers: NetworkClient.getInstance.getAuthHeaders(),
+        successCallback: (response, message) {},
+        failureCallback: (statusCode, message) {});
+  }
+
   //Download excel
   downloadExcel(String excelFileUrl, String savePath) {
     Dio dio = Dio();
