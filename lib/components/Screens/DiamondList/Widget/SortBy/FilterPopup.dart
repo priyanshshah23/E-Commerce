@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,15 @@ class FilterBy extends StatefulWidget {
 }
 
 class _FilterByState extends State<FilterBy> {
+  @override
+  void initState() {
+    super.initState();
+    SyncManager.instance.callAnalytics(context,
+        page: PageAnalytics.OFFLINE_DOWNLOAD,
+        section: SectionAnalytics.VIEW,
+        action: ActionAnalytics.OPEN);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(

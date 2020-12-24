@@ -324,6 +324,13 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                             appTheme
                                                 .redPrimaryNormal14TitleColor,
                                             () {
+                                          SyncManager.instance.callAnalytics(
+                                              context,
+                                              page:
+                                                  PageAnalytics.MYSAVED_SEARCH,
+                                              section: SectionAnalytics.DELETE,
+                                              action: ActionAnalytics.LIST);
+
                                           app
                                               .resolve<CustomDialogs>()
                                               .confirmDialog(

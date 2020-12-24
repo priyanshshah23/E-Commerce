@@ -1,12 +1,13 @@
+import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/base/BaseApiResp.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 
-class OrderListResp extends BaseApiResp{
+class OrderListResp extends BaseApiResp {
   Data data;
 
-  OrderListResp({ this.data});
+  OrderListResp({this.data});
 
-  OrderListResp.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+  OrderListResp.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
   }
 
@@ -96,7 +97,6 @@ class OrderItem {
       this.companyName,
       this.updateIp,
       this.createIp,
-
       this.billType,
       this.sourceOfSale,
       this.memoDetails});

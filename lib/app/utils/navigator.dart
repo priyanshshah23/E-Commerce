@@ -26,6 +26,7 @@ import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
 import 'package:diamnow/components/Screens/MyDemand/MyDemandScreen.dart';
 import 'package:diamnow/components/Screens/Notification/Notifications.dart';
+import 'package:diamnow/components/Screens/OfflineSearchHistory/OfflineSearchHistory.dart';
 import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
@@ -152,6 +153,10 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       break;
     case VoiceSearch.route:
       screen = VoiceSearch();
+      break;
+      
+    case OfflineSearchHistory.route:
+      screen = OfflineSearchHistory();
       break;
     case FilterScreen.route:
       screen = FilterScreen(arguments);

@@ -5,7 +5,7 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 
-class AddDemandModel extends BaseApiResp{
+class AddDemandModel extends BaseApiResp {
   String code;
   String message;
   List<Data> data;
@@ -152,7 +152,7 @@ class SavedSearchModel {
         "name": name,
         "isSentReminder": isSentReminder,
         "normalizeName": normalizeName,
-        "searchData": searchData.toJson(),
+        "searchData": searchData?.toJson() ?? null,
         "type": type,
         "expiryDate": expiryDate,
         "remark": remark,
@@ -160,7 +160,7 @@ class SavedSearchModel {
         "isDeleted": isDeleted,
         "isSendNotification": isSendNotification,
         "isReturnSimilar": isReturnSimilar,
-        "displayData": displayData.toJson(),
+        "displayData": displayData?.toJson() ?? null,
       };
 
   getCreatedDate() {

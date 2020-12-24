@@ -1,10 +1,13 @@
 import 'package:diamnow/Setting/SettingModel.dart';
+import 'package:diamnow/app/Helper/OfflineStockManager.dart';
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/constant/constants.dart';
 import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
@@ -35,6 +38,9 @@ class DiamondListScreen extends StatefulScreenWidget {
   String filterId = "";
   int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
   bool isFromDrawer = false;
+  List<FormBaseModel> filterModel;
+
+  String downloadDate = "";
 
   DiamondListScreen(
     Map<String, dynamic> arguments, {
@@ -48,6 +54,12 @@ class DiamondListScreen extends StatefulScreenWidget {
       if (arguments[ArgumentConstant.IsFromDrawer] != null) {
         isFromDrawer = arguments[ArgumentConstant.IsFromDrawer];
       }
+      if (arguments["filterModel"] != null) {
+        filterModel = arguments["filterModel"];
+      }
+      if (arguments["downloadDate"] != null) {
+        downloadDate = arguments["downloadDate"];
+      }
     }
   }
 
@@ -56,6 +68,8 @@ class DiamondListScreen extends StatefulScreenWidget {
         filterId: filterId,
         moduleType: moduleType,
         isFromDrawer: isFromDrawer,
+        filterModel: filterModel,
+        downloadDate: downloadDate,
       );
 }
 
@@ -64,10 +78,16 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   int moduleType;
   bool isFromDrawer;
   String sortingKey;
-  Map<String, dynamic> dictFilters;
   bool selectAllGroupDiamonds;
+  List<FormBaseModel> filterModel;
+  String downloadDate = "";
 
-  _DiamondListScreenState({this.filterId, this.moduleType, this.isFromDrawer});
+  _DiamondListScreenState(
+      {this.filterId,
+      this.moduleType,
+      this.isFromDrawer,
+      this.filterModel,
+      this.downloadDate});
 
   DiamondConfig diamondConfig;
   BaseList diamondList;
@@ -113,9 +133,21 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       callApi(false);
+
+      SyncManager.instance.callAnalytics(context,
+          page: PageAnalytics.getPageAnalyticsFromModuleType(moduleType),
+          section: SectionAnalytics.LIST,
+          action: ActionAnalytics.OPEN);
     });
-    setState(() {
-      //
+
+    RxBus.register<void>(tag: eventOfflineDiamond).listen((event) {
+      setState(() {
+        //
+      });
+    });
+
+    RxBus.register<void>(tag: eventDiamondRefresh).listen((event) {
+      callApi(true);
     });
 
     RxBus.register<Map<String, dynamic>>(tag: eventSelectAllGroupDiamonds)
@@ -139,6 +171,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   @override
   void dispose() {
     RxBus.destroy(tag: eventSelectAllGroupDiamonds);
+    RxBus.destroy(tag: eventOfflineDiamond);
+    RxBus.destroy(tag: eventDiamondRefresh);
     super.dispose();
   }
 
@@ -220,10 +254,19 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict["isAppendDiamond"] = 1;
         break;
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
-       dict["filters"] = {};
+        dict["filters"] = {};
         dict["filters"]["wSts"] = "D";
-      
+
         break;
+
+      case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK:
+      case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH:
+        if (isNullEmptyOrFalse(this.downloadDate)) {
+          getOfflineStock(dict);
+        } else {
+          getOfflineStockFromDownloadedDate(dict);
+        }
+        return;
     }
     NetworkCall<DiamondListResp>()
         .makeCall(
@@ -328,6 +371,60 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
       diamondList.state.setApiCalling(false);
     });
+  }
+
+  getOfflineStock(Map<String, dynamic> dict) {
+    AppDatabase.instance.diamondDao
+        .getDiamondList(dict, list: this.filterModel)
+        .then((diamondListResp) {
+      try {
+        handleOfflineStockResponse(diamondListResp);
+      } catch (error) {
+        if (page == DEFAULT_PAGE) {
+          arraDiamond.clear();
+          diamondList.state.listCount = arraDiamond.length;
+          diamondList.state.totalCount = arraDiamond.length;
+          manageDiamondSelection();
+        }
+
+        diamondList.state.setApiCalling(false);
+      }
+    });
+  }
+
+  getOfflineStockFromDownloadedDate(Map<String, dynamic> dict) {
+    AppDatabase.instance.diamondDao
+        .getDiamondListBySearchHistory(dict, this.downloadDate)
+        .then((diamondListResp) {
+      try {
+        handleOfflineStockResponse(diamondListResp);
+      } catch (error) {
+        if (page == DEFAULT_PAGE) {
+          arraDiamond.clear();
+          diamondList.state.listCount = arraDiamond.length;
+          diamondList.state.totalCount = arraDiamond.length;
+          manageDiamondSelection();
+        }
+
+        diamondList.state.setApiCalling(false);
+      }
+    });
+  }
+
+  handleOfflineStockResponse(DiamondListResp diamondListResp) {
+    if (page == DEFAULT_PAGE) {
+      hasData = diamondListResp.data.diamonds.length > 0 ||
+          diamondListResp.data.list.length > 0;
+    }
+
+    arraDiamond.addAll(diamondListResp.data.diamonds);
+    diamondConfig.setMatchPairItem(arraDiamond);
+    diamondList.state.listCount = arraDiamond.length;
+    diamondList.state.totalCount = diamondListResp.data.count;
+    manageDiamondSelection();
+    //callBlockApi(isProgress: true);
+    page = page + 1;
+    diamondList.state.setApiCalling(false);
   }
 
   onRefreshList() {
@@ -717,29 +814,89 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     List<Widget> list = [];
     for (int i = 0; i < diamondConfig.toolbarList.length; i++) {
       var element = diamondConfig.toolbarList[i];
-      list.add(GestureDetector(
-        onTap: !isNullEmptyOrFalse(arraDiamond)
-            ? () {
-                manageToolbarClick(element);
-              }
-            : null,
-        child: Padding(
-          padding: EdgeInsets.only(
-              right: i == diamondConfig.toolbarList.length - 1
-                  ? getSize(Spacing.rightPadding)
-                  : getSize(8),
-              left: getSize(8.0)),
-          child: Image.asset(
-            element.isSelected
-                ? (element.selectedImage != null
-                    ? element.selectedImage
-                    : element.image)
-                : element.image,
-            height: getSize(20),
-            width: getSize(20),
+      if (element.code == BottomCodeConstant.TBDownloadView &&
+          OfflineStockManager.shared.isDownloading) {
+        list.add(
+          GestureDetector(
+            onTap: () {
+              app.resolve<CustomDialogs>().confirmDialog(context,
+                  title: APPNAME,
+                  desc:
+                      "Are you sure you want to cancel offline stock download?",
+                  positiveBtnTitle: R.string.commonString.yes,
+                  negativeBtnTitle: R.string.commonString.no,
+                  onClickCallback: (btnType) {
+                if (btnType == ButtonType.PositveButtonClick) {
+                  OfflineStockManager.shared.canelDownload();
+                }
+              });
+            },
+            child: Padding(
+              padding: EdgeInsets.only(
+                  right: i == diamondConfig.toolbarList.length - 1
+                      ? getSize(Spacing.rightPadding)
+                      : getSize(8),
+                  left: getSize(8.0)),
+              child: SizedBox(
+                height: getSize(24),
+                width: getSize(24),
+                child: Stack(
+                  children: <Widget>[
+                    Center(
+                      child: Container(
+                        height: getSize(24),
+                        width: getSize(24),
+                        child: CircularProgressIndicator(
+                          strokeWidth: getSize(3),
+                          value: OfflineStockManager.shared.downloadProgress,
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(appTheme.textColor),
+                          backgroundColor: appTheme.textColor.withOpacity(0.3),
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Text(
+                        OfflineStockManager.shared.downloadProgressText(),
+                        style: appTheme.primaryNormal12TitleColor.copyWith(
+                          fontSize: getSize(8),
+                          color: appTheme.textColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
-        ),
-      ));
+        );
+      } else {
+        list.add(GestureDetector(
+          onTap: !isNullEmptyOrFalse(arraDiamond)
+              ? () {
+                  manageToolbarClick(element);
+                }
+              : null,
+          child: Padding(
+            padding: EdgeInsets.only(
+                right: i == diamondConfig.toolbarList.length - 1
+                    ? getSize(Spacing.rightPadding)
+                    : getSize(8),
+                left: getSize(8.0)),
+            child: Image.asset(
+              element.isSelected
+                  ? (element.selectedImage != null
+                      ? element.selectedImage
+                      : element.image)
+                  : element.image,
+              height: getSize(20),
+              width: getSize(20),
+            ),
+          ),
+        ));
+      }
+
+      ;
     }
 
     return list;
@@ -832,22 +989,33 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         );
         break;
       case BottomCodeConstant.TBDownloadView:
-        List<DiamondModel> selectedList =
-            arraDiamond.where((element) => element.isSelected).toList();
-        if (!isNullEmptyOrFalse(selectedList)) {
-          BottomTabModel tabModel = BottomTabModel();
-          tabModel.type = ActionMenuConstant.ACTION_TYPE_DOWNLOAD;
-          diamondConfig.manageDiamondAction(context, selectedList, tabModel,
-              () {
-            onRefreshList();
-          });
+        if (moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
+          diamondConfig.actionDownloadOffline(
+            context,
+            () {
+              onRefreshList();
+            },
+            sortKey: sortingKey,
+            filterId: filterId,
+          );
         } else {
-          app.resolve<CustomDialogs>().confirmDialog(
-                context,
-                title: "",
-                desc: R.string.errorString.diamondSelectionError,
-                positiveBtnTitle: R.string.commonString.ok,
-              );
+          List<DiamondModel> selectedList =
+              arraDiamond.where((element) => element.isSelected).toList();
+          if (!isNullEmptyOrFalse(selectedList)) {
+            BottomTabModel tabModel = BottomTabModel();
+            tabModel.type = ActionMenuConstant.ACTION_TYPE_DOWNLOAD;
+            diamondConfig.manageDiamondAction(context, arraDiamond, tabModel,
+                () {
+              onRefreshList();
+            });
+          } else {
+            app.resolve<CustomDialogs>().confirmDialog(
+                  context,
+                  title: "",
+                  desc: R.string.errorString.diamondSelectionError,
+                  positiveBtnTitle: R.string.commonString.ok,
+                );
+          }
         }
         break;
     }

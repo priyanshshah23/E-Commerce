@@ -34,6 +34,8 @@ class FilterRequest {
                 map["isXray"] = true;
               } else if (item.code == MasterCode.newarrivals) {
                 arrWsts.add("B");
+              } else if (item.code == MasterCode.brownStatic) {
+                map["excludeFilter"]  = {"brown" : true};
               } else if (item.code == MasterCode.eyecleanStatic) {
                 if (!isNullEmptyOrFalse(item.map))
                   map.addAll(item.map as Map<String, dynamic>);
@@ -83,6 +85,7 @@ class FilterRequest {
 
       if (element.viewType == ViewTypes.keytosymbol) {
         Map<String, dynamic> mapOfSelectedRadioButton = {};
+        print((element as KeyToSymbolModel).listOfRadio);
         List<RadioButton> listOfSelectedRadioButton =
             (element as KeyToSymbolModel)
                 .listOfRadio
@@ -92,10 +95,13 @@ class FilterRequest {
                 .toList();
 
         if (!isNullEmptyOrFalse(listOfSelectedRadioButton)) {
-          mapOfSelectedRadioButton[listOfSelectedRadioButton.first.apiKey] =
-              Master.getSelectedId((element as SelectionModel).masters);
+          var list = Master.getSelectedId((element as SelectionModel).masters);
+          if (!isNullEmptyOrFalse(list)) {
+            mapOfSelectedRadioButton[listOfSelectedRadioButton.first.apiKey] =
+                Master.getSelectedId((element as SelectionModel).masters);
 
-          map[element.apiKey] = mapOfSelectedRadioButton;
+            map[element.apiKey] = mapOfSelectedRadioButton;
+          }
         }
       }
 
@@ -150,6 +156,7 @@ class FilterRequest {
         if (colorModel.masterCode == MasterCode.color) {
           if (colorModel.showWhiteFancy) {
             if (colorModel.isGroupSelected) {
+              map["isFcCol"] = true;
               List<String> arrFancy =
                   Master.getSelectedId(colorModel.groupMaster);
               if (!isNullEmptyOrFalse(arrFancy)) map["fcCol"] = arrFancy;
@@ -162,6 +169,7 @@ class FilterRequest {
               if (!isNullEmptyOrFalse(arrOvertone))
                 map[colorModel.overtoneSelection.apiKey] = arrOvertone;
             } else {
+              map["isFcCol"] = false;
               List<String> arrStr = Master.getSelectedId(colorModel.masters);
               if (!isNullEmptyOrFalse(arrStr)) map[element.apiKey] = arrStr;
             }

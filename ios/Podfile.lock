@@ -13,6 +13,8 @@ PODS:
     - Flutter
   - flutter_files_picker (0.0.2):
     - Flutter
+  - flutter_local_notifications (0.0.1):
+    - Flutter
   - flutter_money_formatter (0.0.1):
     - Flutter
   - flutter_statusbarcolor (0.0.1):
@@ -39,6 +41,8 @@ PODS:
   - "permission_handler (4.4.0+hotfix.4)":
     - Flutter
   - Reachability (3.2)
+  - screenshot_callback (0.0.1):
+    - Flutter
   - share (0.0.1):
     - Flutter
   - shared_preferences (0.0.1):
@@ -73,6 +77,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_exif_rotation (from `.symlinks/plugins/flutter_exif_rotation/ios`)
   - flutter_files_picker (from `.symlinks/plugins/flutter_files_picker/ios`)
+  - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_money_formatter (from `.symlinks/plugins/flutter_money_formatter/ios`)
   - flutter_statusbarcolor (from `.symlinks/plugins/flutter_statusbarcolor/ios`)
   - gallery_saver (from `.symlinks/plugins/gallery_saver/ios`)
@@ -83,6 +88,7 @@ DEPENDENCIES:
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+  - screenshot_callback (from `.symlinks/plugins/screenshot_callback/ios`)
   - share (from `.symlinks/plugins/share/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sms_autofill (from `.symlinks/plugins/sms_autofill/ios`)
@@ -118,6 +124,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_exif_rotation/ios"
   flutter_files_picker:
     :path: ".symlinks/plugins/flutter_files_picker/ios"
+  flutter_local_notifications:
+    :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_money_formatter:
     :path: ".symlinks/plugins/flutter_money_formatter/ios"
   flutter_statusbarcolor:
@@ -136,6 +144,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider/ios"
   permission_handler:
     :path: ".symlinks/plugins/permission_handler/ios"
+  screenshot_callback:
+    :path: ".symlinks/plugins/screenshot_callback/ios"
   share:
     :path: ".symlinks/plugins/share/ios"
   shared_preferences:
@@ -167,6 +177,7 @@ SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_exif_rotation: 85a029bc8f10235c50736be688519f4037a87f13
   flutter_files_picker: 10942b5e4c22c90e3da2faf82dc8bf9f83660089
+  flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_money_formatter: d0d18ddc5be333fad8d09964d741b59fa11a91dc
   flutter_statusbarcolor: 8afb1071ed8c58be929f1e32b36c629771fd2259
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
@@ -180,6 +191,7 @@ SPEC CHECKSUMS:
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: 8278954f2382902f63f00dd8828769c0bd6d511b
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  screenshot_callback: dcbd6a3d715947a44ed20c114172bcdfcd577e42
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   sms_autofill: c461043483362c3f1709ee76eaae6eb570b31686

@@ -1,3 +1,4 @@
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
@@ -18,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
+import 'package:screenshot_callback/screenshot_callback.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -93,6 +95,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   Dio dio = Dio();
   bool imageFlag = false;
   bool videoFlag = false;
+  ScreenshotCallback screenshotCallback = ScreenshotCallback();
 
   @override
   bool get wantKeepAlive => true;
@@ -109,6 +112,26 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       getScrollControllerEventListener();
 
       isErroWhileLoading = false;
+      SyncManager.instance.callAnalytics(context,
+          page: PageAnalytics.DIAMOND_DETAIL,
+          section: SectionAnalytics.VIEW,
+          action: ActionAnalytics.OPEN,
+          dict: {
+            "id": this.diamondModel.id ?? "",
+            "userId": app.resolve<PrefUtils>().getUserDetails().id ?? ""
+          });
+
+      screenshotCallback.addListener(() {
+        SyncManager.instance.callAnalytics(context,
+            page: PageAnalytics.DIAMOND_DETAIL,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.OPEN,
+            dict: {
+              "id": this.diamondModel.id ?? "",
+              "userId": app.resolve<PrefUtils>().getUserDetails().id ?? "",
+              "action": "SCREENSHOT_TAKEN_BY_USER"
+            });
+      });
     });
     // checkWeatherUrlContainsThingsOrNot();
   }
@@ -591,7 +614,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           model.url,
           height: getSize(286),
           width: MathUtilities.screenWidth(context),
-          fit: BoxFit.fitWidth,
+          fit: BoxFit.fitHeight,
         );
       } else if (model.title == "Certificate" ||
           (model.title == "Video" && videoFlag)) {

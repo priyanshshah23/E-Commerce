@@ -1,3 +1,4 @@
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
@@ -59,6 +60,14 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
   @override
   void initState() {
     super.initState();
+    @override
+    void initState() {
+      super.initState();
+      SyncManager.instance.callAnalytics(context,
+          page: PageAnalytics.MY_ORDER,
+          section: SectionAnalytics.VIEW,
+          action: ActionAnalytics.OPEN);
+    }
   }
 
   @override

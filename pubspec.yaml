@@ -87,8 +87,12 @@ dependencies:
   speech_to_text: ^3.1.0
   photo_view: ^0.10.2
 
+  flutter_cache_manager: any
   # flutter_tags: ^0.1.9
-
+  flutter_local_notifications: any
+  uuid: ^2.2.2
+  collection: ^1.14.13
+  screenshot_callback: any
 
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,10 @@
 import 'dart:async';
 
+import 'package:diamnow/models/DiamondList/DiamondDao.dart';
 import 'package:diamnow/models/Master/MasterDao.dart';
 import 'package:diamnow/models/Master/SizeMasterDao.dart';
+import 'package:diamnow/models/OfflineSearchHistory/OfflineSearchHistoryDao.dart';
+import 'package:diamnow/models/OfflineSearchHistory/OfflineStockTrack.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
@@ -13,6 +16,9 @@ class AppDatabase {
 
   MasterDao masterDao = MasterDao();
   SizeMasterDao sizeMasterDao = SizeMasterDao();
+  DiamondDao diamondDao = DiamondDao();
+  OfflineSearchHistoryDao offlineSearchHistoryDao = OfflineSearchHistoryDao();
+  OfflineStockTrackModelDao offlineStockTracklDao = OfflineStockTrackModelDao();
 
 //  DailyGoalDao dailyGoalDao = DailyGoalDao();
 

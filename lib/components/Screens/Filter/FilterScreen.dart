@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:diamnow/app/Helper/LocalNotification.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
@@ -64,7 +65,10 @@ class FilterScreen extends StatefulScreenWidget {
   SavedSearchModel savedSearchModel;
   DisplayDataClass dictSearchData;
 
-  FilterScreen(Map<String, dynamic> arguments) {
+  FilterScreen(
+    Map<String, dynamic> arguments, {
+    Key key,
+  }) : super(key: key) {
     if (arguments != null) {
       if (arguments[ArgumentConstant.ModuleType] != null) {
         moduleType = arguments[ArgumentConstant.ModuleType];
@@ -306,7 +310,12 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       },
       child: Scaffold(
           backgroundColor: appTheme.whiteColor,
-          appBar: getAppBar(context, R.string.screenTitle.searchDiamond,
+          appBar: getAppBar(
+              context,
+              moduleType ==
+                      DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH
+                  ? "Search (Offline)"
+                  : R.string.screenTitle.searchDiamond,
               bgColor: appTheme.whiteColor,
               leadingButton: isFromDrawer
                   ? getDrawerButton(context, true)
@@ -466,6 +475,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
   //my demand popup end.
   getAddDemand() {
+    SyncManager.instance.callAnalytics(context,
+        page: PageAnalytics.MY_DEMAND,
+        section: SectionAnalytics.ADD,
+        action: ActionAnalytics.OPEN);
+
     showDialog(
       context: context,
       barrierDismissible: true,
@@ -488,6 +502,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   }
 
   getSavedSearchPopUp() {
+    SyncManager.instance.callAnalytics(context,
+        page: PageAnalytics.MYSAVED_SEARCH,
+        section: SectionAnalytics.LIST,
+        action: ActionAnalytics.CLICK);
+
     if (!isNullEmptyOrFalse(saveSearchList)) {
       showDialog(
         context: context,
@@ -519,6 +538,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         },
       );
     } else {
+      SyncManager.instance.callAnalytics(context,
+          page: PageAnalytics.MYSAVED_SEARCH,
+          section: SectionAnalytics.ADD,
+          action: ActionAnalytics.CLICK);
+
       Map<String, dynamic> dict = {};
       dict["type"] = SavedSearchType.savedSearch;
       dict["isAppendMasters"] = true;
@@ -572,7 +596,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   Widget getBottomTab() {
     return BottomTabbarWidget(
       arrBottomTab: arrBottomTab,
-      onClickCallback: (obj) {
+      onClickCallback: (obj) async {
         //
         if (obj.code == BottomCodeConstant.filterSavedSearch) {
           if (app
@@ -600,16 +624,41 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
           }
         } else if (obj.code == BottomCodeConstant.filterSearch) {
-          if (app
-              .resolve<PrefUtils>()
-              .getModulePermission(
-                  ModulePermissionConstant.permission_searchResult)
-              .view) {
-            callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-                isSearch: true);
-            // place code
+          //Check internet is online or not
+          var connectivityResult = await Connectivity().checkConnectivity();
+          if (connectivityResult == ConnectivityResult.none) {
+            //Save filter Param offline
+            Map<String, dynamic> payload = {};
+            payload["module"] =
+                DiamondModuleConstant.MODULE_TYPE_FILTER_OFFLINE_NOTI_CLICK;
+            payload["payload"] = FilterRequest().createRequest(arrList);
+
+            app.resolve<PrefUtils>().saveFilterOffline(payload);
           } else {
-            app.resolve<CustomDialogs>().accessDenideDialog(context);
+            if (app
+                    .resolve<PrefUtils>()
+                    .getModulePermission(
+                        ModulePermissionConstant.permission_offline_stock)
+                    .view &&
+                moduleType ==
+                    DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+              //Query for sembast
+              Map<String, dynamic> dict = new HashMap();
+              dict["filterModel"] = arrList;
+              dict[ArgumentConstant.ModuleType] = moduleType;
+              NavigationUtilities.pushRoute(DiamondListScreen.route,
+                  args: dict);
+            } else if (app
+                .resolve<PrefUtils>()
+                .getModulePermission(
+                    ModulePermissionConstant.permission_searchResult)
+                .view) {
+              callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+                  isSearch: true);
+              // place code
+            } else {
+              app.resolve<CustomDialogs>().accessDenideDialog(context);
+            }
           }
         } else if (obj.code == BottomCodeConstant.filterSaveAndSearch) {
           if (app
@@ -653,6 +702,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
   callApiForGetFilterId(int moduleType,
       {bool isSavedSearch = false, bool isSearch = false}) {
+    SyncManager.instance.callAnalytics(context,
+        page: PageAnalytics.DIAMOND_SEARCH,
+        section: SectionAnalytics.SEARCH,
+        action: ActionAnalytics.CLICK);
+
     SyncManager.instance.callApiForDiamondList(
       context,
       FilterRequest().createRequest(arrList),
@@ -771,8 +825,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
 class FilterItem extends StatefulWidget {
   List<FormBaseModel> arrList = [];
-
-  FilterItem(this.arrList);
+  int moduleType;
+  FilterItem(this.arrList, {this.moduleType});
 
   @override
   _FilterItemState createState() => _FilterItemState();
@@ -874,7 +928,7 @@ class _FilterItemState extends State<FilterItem> {
       return SizedBox();
     }
     return Padding(
-      padding:  EdgeInsets.only(top : getSize(16.0), bottom: getSize(16.0)),
+      padding: EdgeInsets.only(top: getSize(16.0), bottom: getSize(16.0)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -967,7 +1021,10 @@ class _FilterItemState extends State<FilterItem> {
           Center(
             child: InkWell(
               onTap: () {
-                NavigationUtilities.pushRoute(VoiceSearch.route);
+                Map<String, dynamic> dict = new HashMap();
+                dict["isFromSearch"] = true;
+                dict[ArgumentConstant.ModuleType] = widget.moduleType;
+                NavigationUtilities.pushRoute(SearchScreen.route, args: dict);
               },
               child: Padding(
                 padding: EdgeInsets.only(

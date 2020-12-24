@@ -12,6 +12,7 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/SaveAndSearchBotto
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
+import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:diamnow/modules/Filter/gridviewlist/FilterRequest.dart';
 import 'package:flutter/cupertino.dart';
@@ -1055,8 +1056,12 @@ Widget setInvoiceDropDown(
     );
 
 Future openBottomSheetForSavedSearch(
-    BuildContext context, Map<String, dynamic> req,
-    {isSearch = false, SavedSearchModel savedSearchModel}) {
+  BuildContext context,
+  Map<String, dynamic> req, {
+  isSearch = false,
+  SavedSearchModel savedSearchModel,
+  List<FormBaseModel> filterList,
+}) {
   return showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -1089,6 +1094,7 @@ Future openBottomSheetForSavedSearch(
               Map<String, dynamic> dict = new HashMap();
               dict["filterId"] = diamondListResp.data.savedSearchModel.id;
               dict["filters"] = req;
+              dict["filterModel"] = filterList;
               dict[ArgumentConstant.ModuleType] =
                   DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
               NavigationUtilities.pushRoute(DiamondListScreen.route,
