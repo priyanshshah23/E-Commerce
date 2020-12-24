@@ -133,9 +133,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       callApi(false);
     });
-    // setState(() {
-    //   //
-    // });
 
     RxBus.register<void>(tag: eventOfflineDiamond).listen((event) {
       setState(() {
