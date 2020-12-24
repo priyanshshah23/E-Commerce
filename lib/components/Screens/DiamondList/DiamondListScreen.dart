@@ -1067,13 +1067,12 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            // hasData
-            //     ?
-            DiamondListHeader(
-              diamondCalculation: diamondCalculation,
-              moduleType: moduleType,
-            ),
-            // : SizedBox(),
+            hasData
+                ? DiamondListHeader(
+                    diamondCalculation: diamondCalculation,
+                    moduleType: moduleType,
+                  )
+                : SizedBox(),
             SizedBox(
               height: getSize(16),
             ),
