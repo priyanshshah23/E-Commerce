@@ -104,6 +104,39 @@ class DrawerSetting {
         countBackgroundColor: fromHex("#003365"),
         count: 15,
       ));
+
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_offline_stock)
+        .view) {
+      drawerList.add(DrawerModel(
+        image: mySavedSearch,
+        title: "Offline Stock",
+        isSelected: false,
+        isShowDivider: false,
+        isShowUpperDivider: true,
+        type: DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK,
+      ));
+
+      drawerList.add(DrawerModel(
+        image: drawerSearch,
+        title: "Offline Search",
+        isSelected: false,
+        isShowDivider: false,
+        isShowUpperDivider: false,
+        type: DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH,
+      ));
+
+      drawerList.add(DrawerModel(
+        image: drawerSearch,
+        title: "Search History",
+        isSelected: false,
+        isShowDivider: false,
+        isShowUpperDivider: false,
+        type: DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH_HISTORY,
+      ));
+    }
+
     if (app
         .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_mySavedSearch)
@@ -116,6 +149,7 @@ class DrawerSetting {
         isShowUpperDivider: true,
         type: DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH,
       ));
+
     drawerList.add(DrawerModel(
       image: userTheme,
       title: R.string.screenTitle.myAccount,
@@ -456,11 +490,16 @@ class BottomMenuSetting {
       }
     }
     if (!isDetail && !isCompare) {
-      if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
+      if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
+          moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
+          moduleType !=
+              DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
         addCompareInBottomMenu(moreMenuList, compare);
       }
     }
-    if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
+    if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
+        moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
+        moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
       addCommentInBottomMenu(moreMenuList);
     }
 
@@ -470,14 +509,20 @@ class BottomMenuSetting {
       }
     }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
-      if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
+      if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
+          moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
+          moduleType !=
+              DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
         if (isDiamondSearchModule(moduleType) && !isCompare) {
           addOfferInBottomMenu(moreMenuList, offer);
         }
       }
     }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
-      if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
+      if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
+          moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
+          moduleType !=
+              DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
         addAppointmentInBottomMenu(moreMenuList);
       }
     }
@@ -563,12 +608,16 @@ class BottomMenuSetting {
             moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER ||
             moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH ||
             moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL ||
-            moduleType == DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH) {
+            moduleType == DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH ||
+            moduleType == DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {
           addPlaceOrderInBottomMenu(moreMenuList, placeOrder, isCenter: false);
         }
 
         if (!isDiamondSearchModule(moduleType)) {
-          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER &&
+              moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
+              moduleType !=
+                  DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
             addOfferInBottomMenu(moreMenuList, offerWhite, isCenter: false);
           }
         }
@@ -581,7 +630,10 @@ class BottomMenuSetting {
           addOfferInBottomMenu(moreMenuList, offerWhite, isCenter: false);
         }
         if (!isCompare && !isDetail) {
-          if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
+              moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
+              moduleType !=
+                  DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
             moreMenuList.add(BottomTabModel(
                 title: R.string.commonString.status,
                 isCenter: false,
@@ -590,6 +642,11 @@ class BottomMenuSetting {
           }
         }
 
+        if (moduleType == DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK ||
+            moduleType ==
+                DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+          addCompareInBottomMenu(moreMenuList, compare, isCenter: false);
+        }
         moreMenuList.add(BottomTabModel(
           title: R.string.commonString.more,
           isCenter: false,
@@ -788,16 +845,16 @@ class BottomMenuSetting {
 
   addDownloadInBottomMenu(List<BottomTabModel> moreMenuList, String image,
       {bool isCenter: true}) {
-    if (app
-        .resolve<PrefUtils>()
-        .getModulePermission(getPermissionFromModuleType(moduleType))
-        .downloadExcel) {
-      moreMenuList.add(BottomTabModel(
-          image: image,
-          isCenter: isCenter,
-          title: R.string.screenTitle.download,
-          type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
-    }
+    // if (app
+    //     .resolve<PrefUtils>()
+    //     .getModulePermission(getPermissionFromModuleType(moduleType))
+    //     .downloadExcel && moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {
+
+    moreMenuList.add(BottomTabModel(
+        image: image,
+        isCenter: isCenter,
+        title: R.string.screenTitle.download,
+        type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
   }
 
   addClearSelectionInBottomMenu(List<BottomTabModel> moreMenuList, String image,
@@ -827,6 +884,7 @@ bool isDiamondSearchModule(int moduleType) {
     case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
     case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
     case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
+    case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK:
       return true;
     default:
       return false;

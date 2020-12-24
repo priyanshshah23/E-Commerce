@@ -2,7 +2,10 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
+import 'package:collection/collection.dart';
+import 'package:diamnow/app/Helper/NetworkClient.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
+import 'package:diamnow/models/OfflineSearchHistory/OfflineStockTrack.dart';
 import 'package:path/path.dart' as path;
 import 'package:diamnow/app/AppConfiguration/AppNavigation.dart';
 import 'package:diamnow/app/Helper/AppDatabase.dart';
@@ -640,6 +643,7 @@ class SyncManager {
     });
   }
 
+  //Download excel
   downloadExcel(String excelFileUrl, String savePath) {
     Dio dio = Dio();
 
@@ -654,6 +658,7 @@ class SyncManager {
     });
   }
 
+  //Check total carat rap amount
   List<num> getTotalCaratRapAmount(List<DiamondModel> diamondList) {
     double carat = 0.0;
     double calcAmount = 0.0;

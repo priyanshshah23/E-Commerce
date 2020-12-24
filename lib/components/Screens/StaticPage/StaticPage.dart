@@ -25,7 +25,10 @@ class StaticPageScreen extends StatefulScreenWidget {
   bool isFromDrawer;
   String filePath;
 
-  StaticPageScreen(Map<String, dynamic> arguments) {
+  StaticPageScreen(
+    Map<String, dynamic> arguments, {
+    Key key,
+  }) : super(key: key) {
     this.screenType = arguments["type"];
     this.strUrl = arguments["strUrl"];
     this.showExcel = arguments["isForExcel"] ?? false;
@@ -107,6 +110,7 @@ class _StaticPageScreenState extends StatefulScreenWidgetState {
           leadingButton: isFromDrawer
               ? getDrawerButton(context, true)
               : getBackButton(context),
+          centerTitle: false,
           actionItems: showExcel
               ? [
                   InkWell(
@@ -181,6 +185,8 @@ class _StaticPageScreenState extends StatefulScreenWidgetState {
       return R.string.screenTitle.privacyPolicy;
     } else if (screenType == StaticPageConstant.ABOUT_US) {
       return R.string.screenTitle.aboutUS;
+    } else if (screenType == StaticPageConstant.CONTACT_US) {
+      return R.string.screenTitle.contactUs;
     }
     /*else if (screenType == StaticPageConstant.CANCELLAION_POLICY) {
       return "Order Cancel Policy";

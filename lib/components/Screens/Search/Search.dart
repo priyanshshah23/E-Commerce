@@ -115,6 +115,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
     return Hero(
       tag: 'searchTextField',
       child: Material(
+        color: appTheme.whiteColor,
         child: Padding(
           padding: EdgeInsets.only(
             left: getSize(Spacing.leftPadding),

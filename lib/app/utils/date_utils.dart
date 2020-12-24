@@ -40,6 +40,15 @@ class DateUtilities {
     );
   }
 
+  DateTime convertServerStringToFormatterDate(String dateString) {
+    if (dateString == "" || dateString == null) return DateTime.now();
+    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(
+            DateTime.parse(dateString).millisecondsSinceEpoch)
+        .toLocal();
+    return getDateFromString(dateTime.toIso8601String(),
+        formatter: kSourceFormat);
+  }
+
   String dayOfWeek(DateTime date) {
     return DateFormat('EEEE').format(date);
   }
@@ -73,30 +82,30 @@ class DateUtilities {
     }
   }
 
-  String getNextWeekDay(DateTime date){
+  String getNextWeekDay(DateTime date) {
     final nextWeekDay = DateTime(date.year, date.month, date.day + 7);
     return getDayFromWeekDay(nextWeekDay.weekday);
   }
-  
-  String getTomorrowDay(DateTime date){
+
+  String getTomorrowDay(DateTime date) {
     final tomorrow = DateTime(date.year, date.month, date.day + 1);
     return (getDayFromWeekDay(tomorrow.weekday));
   }
 
-  String getDayFromWeekDay(int weekDay){
-    if(weekDay == 1){
+  String getDayFromWeekDay(int weekDay) {
+    if (weekDay == 1) {
       return "Mon";
-    } else if(weekDay == 2){
+    } else if (weekDay == 2) {
       return "Tue";
-    } else if(weekDay == 3){
+    } else if (weekDay == 3) {
       return "Wed";
-    } else if(weekDay == 4){
+    } else if (weekDay == 4) {
       return "Thur";
-    } else if(weekDay == 5){
+    } else if (weekDay == 5) {
       return "Fri";
-    } else if(weekDay == 6){
+    } else if (weekDay == 6) {
       return "Sat";
-    } else{
+    } else {
       return "Sun";
     }
   }
@@ -133,13 +142,9 @@ class DateUtilities {
 
   static const String mmm_yyyy = "MMMM yyyy";
 
-
-
-
-
   Future<DateTime> pickDateDialog(
-      BuildContext context,
-      ) async {
+    BuildContext context,
+  ) async {
     return await showRoundedDatePicker(
       initialDate: DateTime.now(),
 //      firstDate: DateTime.now().subtract(Duration(days: 1)),
@@ -149,7 +154,7 @@ class DateUtilities {
       //   theme: ThemeData(primarySwatch: appTheme.whiteColor),
       styleDatePicker: MaterialRoundedDatePickerStyle(
         textStyleDayButton:
-        TextStyle(fontSize: getFontSize(25), color: appTheme.colorPrimary),
+            TextStyle(fontSize: getFontSize(25), color: appTheme.colorPrimary),
         textStyleYearButton: TextStyle(
           fontSize: getFontSize(30),
           color: appTheme.whiteColor,
@@ -163,7 +168,7 @@ class DateUtilities {
             color: appTheme.darkBlue,
             fontWeight: FontWeight.w600),
         textStyleDayOnCalendar:
-        TextStyle(fontSize: getFontSize(20), color: appTheme.darkBlue),
+            TextStyle(fontSize: getFontSize(20), color: appTheme.darkBlue),
         textStyleDayOnCalendarSelected: TextStyle(
             fontSize: getFontSize(20),
             color: Colors.white,
@@ -186,22 +191,23 @@ class DateUtilities {
         marginTopArrowNext: getSize(0),
         marginRightArrowNext: getSize(10),
         textStyleButtonAction:
-        TextStyle(fontSize: getFontSize(18), color: Colors.white),
+            TextStyle(fontSize: getFontSize(18), color: Colors.white),
         textStyleButtonPositive: TextStyle(
             fontSize: getFontSize(18),
             color: appTheme.darkBlue,
             fontWeight: FontWeight.bold),
         textStyleButtonNegative: TextStyle(
-            fontSize: getFontSize(18), color: appTheme.darkBlue.withOpacity(0.5)),
+            fontSize: getFontSize(18),
+            color: appTheme.darkBlue.withOpacity(0.5)),
         decorationDateSelected:
-        BoxDecoration(color: appTheme.colorPrimary, shape: BoxShape.circle),
+            BoxDecoration(color: appTheme.colorPrimary, shape: BoxShape.circle),
         backgroundPicker: appTheme.whiteColor,
         backgroundActionBar: appTheme.whiteColor,
         backgroundHeaderMonth: appTheme.colorPrimary.withOpacity(0.5),
       ),
       styleYearPicker: MaterialRoundedYearPickerStyle(
         textStyleYear:
-        TextStyle(fontSize: getFontSize(40), color: appTheme.darkBlue),
+            TextStyle(fontSize: getFontSize(40), color: appTheme.darkBlue),
         textStyleYearSelected: TextStyle(
             fontSize: getFontSize(34),
             color: appTheme.darkBlue,
@@ -211,7 +217,6 @@ class DateUtilities {
       ),
     );
   }
-
 
   Future<TimeOfDay> pickTimeDialog(BuildContext context) async {
     return await showRoundedTimePicker(

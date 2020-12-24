@@ -13,6 +13,7 @@ import 'package:diamnow/components/Screens/DashBoard/Dashboard.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/MyDemand/MyDemandScreen.dart';
+import 'package:diamnow/components/Screens/OfflineSearchHistory/OfflineSearchHistory.dart';
 import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
@@ -97,9 +98,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: R.string.authStrings.uploadKYC,
                 desc: R.string.authStrings.uploadKycDesc,
                 positiveBtnTitle: R.string.commonString.upload,
-                negativeBtnTitle:
-                    user.kycRequired ? null : R.string.commonString.btnSkip,
-                onClickCallback: (click) {
+                negativeBtnTitle: user.kycRequired
+                    ? null
+                    : R.string.commonString.btnSkip, onClickCallback: (click) {
               if (click == ButtonType.PositveButtonClick) {
                 NavigationUtilities.pushRoute(
                   UploadKYCScreen.route,
@@ -176,7 +177,10 @@ class _HomeScreenState extends State<HomeScreen> {
     Map<String, dynamic> dict = new HashMap();
     dict[ArgumentConstant.ModuleType] = moduleType;
     dict[ArgumentConstant.IsFromDrawer] = true;
-    currentWidget = FilterScreen(dict);
+    currentWidget = FilterScreen(
+      dict,
+      key: Key(moduleType.toString()),
+    );
   }
 
   openQuickSearch(int moduleType) {
@@ -209,6 +213,16 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  openOfflineSearchHistory(int moduleType) {
+    selectedType = moduleType;
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.ModuleType] = moduleType;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = OfflineSearchHistory(
+      key: Key(moduleType.toString()),
+    );
+  }
+
 //  openProfile(int moduleType) {
 //    selectedType = moduleType;
 ////    selectedType = DiamondModuleConstant.MODULE_TYPE_PROFILE;
@@ -226,7 +240,10 @@ class _HomeScreenState extends State<HomeScreen> {
     dict["type"] = StaticPageConstant.ABOUT_US;
     dict["strUrl"] = ApiConstants.aboutUs;
     dict[ArgumentConstant.IsFromDrawer] = true;
-    currentWidget = StaticPageScreen(dict);
+    currentWidget = StaticPageScreen(
+      dict,
+      key: Key(moduleType.toString()),
+    );
   }
 
   openContactUS(int moduleType) {
@@ -236,7 +253,10 @@ class _HomeScreenState extends State<HomeScreen> {
     dict["type"] = StaticPageConstant.CONTACT_US;
     dict["strUrl"] = ApiConstants.contactUs;
     dict[ArgumentConstant.IsFromDrawer] = true;
-    currentWidget = StaticPageScreen(dict);
+    currentWidget = StaticPageScreen(
+      dict,
+      key: Key(moduleType.toString()),
+    );
   }
 
   openTermsAndCondition(int moduleType) {
@@ -246,7 +266,10 @@ class _HomeScreenState extends State<HomeScreen> {
     dict["type"] = StaticPageConstant.TERMS_CONDITION;
     dict["strUrl"] = ApiConstants.termsCondition;
     dict[ArgumentConstant.IsFromDrawer] = true;
-    currentWidget = StaticPageScreen(dict);
+    currentWidget = StaticPageScreen(
+      dict,
+      key: Key(moduleType.toString()),
+    );
   }
 
   openPrivacyPolicy(int moduleType) {
@@ -256,7 +279,10 @@ class _HomeScreenState extends State<HomeScreen> {
     dict["type"] = StaticPageConstant.PRIVACY_POLICY;
     dict["strUrl"] = ApiConstants.privacyPolicy;
     dict[ArgumentConstant.IsFromDrawer] = true;
-    currentWidget = StaticPageScreen(dict);
+    currentWidget = StaticPageScreen(
+      dict,
+      key: Key(moduleType.toString()),
+    );
   }
 
   openSavedSearch(int moduleType) {
@@ -301,6 +327,7 @@ class _HomeScreenState extends State<HomeScreen> {
           openDashboard(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_SEARCH:
+        case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH:
           openSearch(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
@@ -316,6 +343,7 @@ class _HomeScreenState extends State<HomeScreen> {
         case DiamondModuleConstant.MODULE_TYPE_MY_BID:
         case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
         case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
+        case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK:
           openDiamondList(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
@@ -349,6 +377,9 @@ class _HomeScreenState extends State<HomeScreen> {
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
           openMyDemand(type);
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH_HISTORY:
+          openOfflineSearchHistory(type);
           break;
       }
       if (type != DiamondModuleConstant.MODULE_TYPE_LOGOUT) {

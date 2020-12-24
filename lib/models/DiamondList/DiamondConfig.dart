@@ -1,6 +1,8 @@
 import 'dart:collection';
+import 'dart:convert';
 
 import 'package:diamnow/Setting/SettingModel.dart';
+import 'package:diamnow/app/Helper/OfflineStockManager.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
@@ -26,12 +28,14 @@ import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/DiamondList/download.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
+import 'package:diamnow/models/OfflineSearchHistory/OfflineStockTrack.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../main.dart';
 
@@ -164,6 +168,9 @@ class DiamondConfig {
         return R.string.screenTitle.myProfile;
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
         return R.string.screenTitle.stoneOfDay;
+      case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK:
+      case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH:
+        return R.string.screenTitle.searchResult + " (Offline)";
       default:
         return R.string.screenTitle.searchResult;
     }
@@ -316,7 +323,8 @@ class DiamondConfig {
                 sequence: 1,
                 isCenter: true));
           }
-          if (moduleType != DiamondModuleConstant.MODULE_TYPE_UPCOMING) {
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_UPCOMING &&
+              moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {
             list.add(BottomTabModel(
                 title: "",
                 image: filter,
@@ -324,11 +332,16 @@ class DiamondConfig {
                 sequence: 2,
                 isCenter: true));
           }
-          if (app
-                  .resolve<PrefUtils>()
-                  .getModulePermission(getPermissionFromModuleType(moduleType))
-                  .downloadExcel ==
-              true) {
+          // if (app
+          //         .resolve<PrefUtils>()
+          //         .getModulePermission(getPermissionFromModuleType(moduleType))
+          //         .downloadExcel ==
+          //     true && if (moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {) {
+
+          if (moduleType == DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK ||
+              moduleType ==
+                  DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+          } else {
             list.add(BottomTabModel(
                 title: "",
                 image: download,
@@ -657,10 +670,74 @@ class DiamondConfig {
 
   actionHold(List<DiamondModel> list) {}
 
+  actionDownloadOffline(BuildContext context, Function refreshList,
+      {String filterId, String sortKey, Map<String, dynamic> filterCriteria}) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return DownloadConfirmationPopup(
+          onAccept: (isDownloadSearched, selectedDate) {
+            List<SelectionPopupModel> downloadOptionList =
+                List<SelectionPopupModel>();
+            downloadOptionList.add(SelectionPopupModel("1", "Certificate",
+                fileType: DownloadAndShareDialogueConstant.certificate));
+            downloadOptionList.add(SelectionPopupModel("2", "Image",
+                fileType: DownloadAndShareDialogueConstant.realImage1));
+
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return WillPopScope(
+                  onWillPop: () {
+                    return Future.value(false);
+                  },
+                  child: Dialog(
+                    insetPadding: EdgeInsets.symmetric(
+                        horizontal: getSize(20), vertical: getSize(5)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(getSize(25)),
+                    ),
+                    child: SelectionDialogue(
+                      isSearchEnable: false,
+                      title: R.string.commonString.download,
+                      isMultiSelectionEnable: true,
+                      positiveButtonTitle: R.string.commonString.download,
+                      selectionOptions: downloadOptionList,
+                      applyFilterCallBack: (
+                          {SelectionPopupModel selectedItem,
+                          List<SelectionPopupModel> multiSelectedItem}) {
+                        // Navigator.pop(context);
+                        //check condition for only excel,if so then redirect to static page
+                        //else show showDialog method.
+
+                        OfflineStockManager.shared.downloadData(
+                          allDiamondPreviewThings: multiSelectedItem,
+                          filterId: isDownloadSearched ? filterId : null,
+                          sortKey: sortKey,
+                          date: selectedDate,
+                        );
+                      },
+                    ),
+//          child: DownLoadAndShareDialogue(
+//            title: R.string.commonString.download,
+//          ),
+                  ),
+                );
+              },
+            );
+          },
+        );
+      },
+    );
+  }
+
   actionDownload(
     BuildContext context,
     List<DiamondModel> list, {
     bool isForShare = false,
+    bool isDownloadSearched = true,
   }) {
     List<SelectionPopupModel> downloadOptionList = List<SelectionPopupModel>();
     List<SelectionPopupModel> selectedOptions = List<SelectionPopupModel>();
@@ -872,25 +949,41 @@ class DiamondConfig {
       String companyName,
       String date,
       String title}) {
+    Map<String, dynamic> param = {};
+
+    OfflineStockTrackModel trackModel = OfflineStockTrackModel();
     CreateDiamondTrackReq req = CreateDiamondTrackReq();
     switch (trackType) {
       case DiamondTrackConstant.TRACK_TYPE_OFFER:
         req.remarks = remark ?? "";
         req.trackType = trackType;
+        param["remarks"] = remark ?? "";
+        param["trackType"] = trackType;
         break;
       case DiamondTrackConstant.TRACK_TYPE_CART:
       case DiamondTrackConstant.TRACK_TYPE_ENQUIRY:
       case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
       case DiamondTrackConstant.TRACK_TYPE_REMINDER:
         req.trackType = trackType;
+        param["trackType"] = trackType;
         break;
       case DiamondTrackConstant.TRACK_TYPE_BID:
         req.bidType = BidConstant.BID_TYPE_ADD;
+        param["bidType"] = BidConstant.BID_TYPE_ADD;
         break;
     }
     req.diamonds = [];
     Diamonds diamonds;
+
+    List<Map<String, dynamic>> arrDiamonds = [];
     list.forEach((element) {
+      //Creating request for offline stock
+      Map<String, dynamic> reqDiamond = {};
+      reqDiamond["diamond"] = element.id;
+      reqDiamond["trackDiscount"] = element.back;
+      reqDiamond["trackAmount"] = element.amt;
+      reqDiamond["trackPricePerCarat"] = element.ctPr;
+
       diamonds = Diamonds(
           diamond: element.id,
           trackDiscount: element.back,
@@ -903,6 +996,7 @@ class DiamondConfig {
         case DiamondTrackConstant.TRACK_TYPE_COMMENT:
         case DiamondTrackConstant.TRACK_TYPE_ENQUIRY:
           diamonds.remarks = remark;
+          reqDiamond["remarks"] = remark;
           break;
         case DiamondTrackConstant.TRACK_TYPE_OFFER:
           diamonds.vStnId = element.vStnId;
@@ -911,50 +1005,141 @@ class DiamondConfig {
           diamonds.newPricePerCarat = num.parse(element.offeredPricePerCarat);
           diamonds.offerValidDate = date;
 
+          reqDiamond["vStnId"] = element.vStnId;
+          reqDiamond["newDiscount"] = num.parse(element.offeredDiscount);
+          reqDiamond["newAmount"] = element.offeredAmount;
+          reqDiamond["newPricePerCarat"] =
+              num.parse(element.offeredPricePerCarat);
+          reqDiamond["offerValidDate"] = date;
+
           break;
         case DiamondTrackConstant.TRACK_TYPE_BID:
           diamonds.vStnId = element.vStnId;
           diamonds.bidAmount = element.getBidFinalAmount();
           diamonds.bidPricePerCarat = element.getBidFinalRate();
           diamonds.bidDiscount = element.getbidFinalDiscount();
+
+          reqDiamond["vStnId"] = element.vStnId;
+          reqDiamond["bidAmount"] = element.getBidFinalAmount();
+          reqDiamond["bidPricePerCarat"] = element.getBidFinalRate();
+          reqDiamond["bidDiscount"] = element.getbidFinalDiscount();
           break;
 
         case DiamondTrackConstant.TRACK_TYPE_REMINDER:
           diamonds.reminderDate = date;
+          reqDiamond["reminderDate"] = date;
+
           break;
       }
+      arrDiamonds.add(reqDiamond);
       req.diamonds.add(diamonds);
     });
-    SyncManager.instance.callApiForCreateDiamondTrack(
+
+    param["diamonds"] = arrDiamonds;
+    param["uuid"] = Uuid().v1();
+
+    trackModel.diamonds = json.encode(list);
+    trackModel.request = json.encode(param);
+    trackModel.trackType = trackType;
+    trackModel.isSync = false;
+    trackModel.strDate = DateUtilities().getFormattedDateString(DateTime.now(),
+        formatter: DateUtilities.dd_mm_yyyy_hh_mm_a);
+    trackModel.uuid = Uuid().v1();
+
+    callApiForTrackDiamonds(
       context,
-      trackType,
-      req,
-      (resp) {
-        if (isPop) {
-          Navigator.pop(context);
-        }
-        app.resolve<CustomDialogs>().confirmDialog(context,
-            title: title,
-            desc: resp.message,
-            positiveBtnTitle: R.string.commonString.ok,
-            negativeBtnTitle: getNegativeButtonTitle(trackType),
-            onClickCallback: (type) {
-          if (type == ButtonType.NagativeButtonClick) {
-            openDiamondList(trackType);
-          }
-        });
-      },
-      (onError) {
-        if (onError.message != null) {
-          app.resolve<CustomDialogs>().confirmDialog(
-                context,
-                title: "",
-                desc: onError.message,
-                positiveBtnTitle: R.string.commonString.ok,
-              );
-        }
-      },
+      trackType: trackType,
+      req: req,
+      isPop: isPop,
+      trackModel: trackModel,
+      title: title,
+      arrList: list,
     );
+  }
+
+  callApiForTrackDiamonds(
+    BuildContext context, {
+    int trackType,
+    CreateDiamondTrackReq req,
+    OfflineStockTrackModel trackModel,
+    bool isPop,
+    String title,
+    List<DiamondModel> arrList,
+  }) async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none &&
+        app
+            .resolve<PrefUtils>()
+            .getModulePermission(
+                ModulePermissionConstant.permission_offline_stock)
+            .view) {
+      print("No connection");
+      await AppDatabase.instance.offlineStockTracklDao
+          .addOrUpdate([trackModel]);
+
+      if (trackType == DiamondTrackConstant.TRACK_TYPE_COMMENT) {
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              desc: "${arrList.length} diamond(s) added in offline comment",
+              positiveBtnTitle: R.string.commonString.ok,
+            );
+      } else if (trackType == DiamondTrackConstant.TRACK_TYPE_REMINDER) {
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              desc: "${arrList.length} diamond(s) added in offline reminder",
+              positiveBtnTitle: R.string.commonString.ok,
+            );
+      } else if (trackType == DiamondTrackConstant.TRACK_TYPE_CART) {
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              desc: "${arrList.length} diamond(s) added in offline cart",
+              positiveBtnTitle: R.string.commonString.ok,
+            );
+      } else if (trackType == DiamondTrackConstant.TRACK_TYPE_WATCH_LIST) {
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              desc: "${arrList.length} diamond(s) added in offline watchlist",
+              positiveBtnTitle: R.string.commonString.ok,
+            );
+      } else if (trackType == DiamondTrackConstant.TRACK_TYPE_ENQUIRY) {
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              desc: "${arrList.length} diamond(s) added in offline enquiry",
+              positiveBtnTitle: R.string.commonString.ok,
+            );
+      }
+    } else {
+      SyncManager.instance.callApiForCreateDiamondTrack(
+        context,
+        trackType,
+        req,
+        (resp) {
+          if (isPop) {
+            Navigator.pop(context);
+          }
+          app.resolve<CustomDialogs>().confirmDialog(context,
+              title: title,
+              desc: resp.message,
+              positiveBtnTitle: R.string.commonString.ok,
+              negativeBtnTitle: getNegativeButtonTitle(trackType),
+              onClickCallback: (type) {
+            if (type == ButtonType.NagativeButtonClick) {
+              openDiamondList(trackType);
+            }
+          });
+        },
+        (onError) {
+          if (onError.message != null) {
+            app.resolve<CustomDialogs>().confirmDialog(
+                  context,
+                  title: "",
+                  desc: onError.message,
+                  positiveBtnTitle: R.string.commonString.ok,
+                );
+          }
+        },
+      );
+    }
   }
 
   String getNegativeButtonTitle(int trackType) {
@@ -1102,10 +1287,17 @@ class DiamondConfig {
       String remark,
       String companyName,
       String title,
-      String date}) {
+      String date}) async {
+    Map<String, dynamic> dict = {};
     PlaceOrderReq req = PlaceOrderReq();
+    OfflineStockTrackModel trackModel = OfflineStockTrackModel();
+
     req.company = companyName;
     req.comment = remark;
+
+    dict["company"] = companyName;
+    dict["comment"] = comment;
+
     switch (date) {
       case InvoiceTypesString.today:
         req.date = OrderInvoiceData.today.toString();
@@ -1118,37 +1310,70 @@ class DiamondConfig {
         break;
     }
 
+    dict["date"] = req.date;
     req.diamonds = [];
+
+    List<String> arrDiamonds = [];
     list.forEach((element) {
       req.diamonds.add(element.id);
+      arrDiamonds.add(element.id);
     });
-    SyncManager.instance.callApiForPlaceOrder(
-      context,
-      req,
-      (resp) {
-        app.resolve<CustomDialogs>().confirmDialog(context,
-            barrierDismissible: true,
-            title: "",
-            desc: resp.message,
+
+    dict["diamonds"] = arrDiamonds;
+
+    trackModel.diamonds = json.encode(list);
+    trackModel.request = json.encode(dict);
+    trackModel.trackType = DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER;
+    trackModel.isSync = false;
+    trackModel.strDate = DateUtilities().getFormattedDateString(DateTime.now(),
+        formatter: DateUtilities.dd_mm_yyyy_hh_mm_a);
+    trackModel.uuid = Uuid().v1();
+
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none &&
+        app
+            .resolve<PrefUtils>()
+            .getModulePermission(
+                ModulePermissionConstant.permission_offline_stock)
+            .view) {
+      print("No connection");
+      await AppDatabase.instance.offlineStockTracklDao
+          .addOrUpdate([trackModel]);
+      app.resolve<CustomDialogs>().confirmDialog(
+            context,
+            desc:
+                "${list.length} diamond(s) order placed offline, When you connect with internet. Your order will placed",
             positiveBtnTitle: R.string.commonString.ok,
-            onClickCallback: (buttonType) {
-          if (buttonType == ButtonType.PositveButtonClick) {
-            placeOrder();
+          );
+    } else {
+      SyncManager.instance.callApiForPlaceOrder(
+        context,
+        req,
+        (resp) {
+          app.resolve<CustomDialogs>().confirmDialog(context,
+              barrierDismissible: true,
+              title: "",
+              desc: resp.message,
+              positiveBtnTitle: R.string.commonString.ok,
+              onClickCallback: (buttonType) {
+            if (buttonType == ButtonType.PositveButtonClick) {
+              placeOrder();
+            }
+          });
+        },
+        (onError) {
+          if (onError.message != null) {
+            app.resolve<CustomDialogs>().confirmDialog(
+                  context,
+                  barrierDismissible: true,
+                  title: "",
+                  desc: onError.message,
+                  positiveBtnTitle: R.string.commonString.ok,
+                );
           }
-        });
-      },
-      (onError) {
-        if (onError.message != null) {
-          app.resolve<CustomDialogs>().confirmDialog(
-                context,
-                barrierDismissible: true,
-                title: "",
-                desc: onError.message,
-                positiveBtnTitle: R.string.commonString.ok,
-              );
-        }
-      },
-    );
+        },
+      );
+    }
   }
 
   callApiForBlock(BuildContext context, List<DiamondModel> list,
@@ -1331,6 +1556,256 @@ class DiamondConfig {
     link.forEach((element) {
       return element.split(",");
     });
+  }
+}
+
+class DownloadConfirmationPopup extends StatefulWidget {
+  final Function(bool, String) onAccept;
+  DownloadConfirmationPopup({Key key, this.onAccept}) : super(key: key);
+
+  @override
+  _DownloadConfirmationPopupState createState() =>
+      _DownloadConfirmationPopupState();
+}
+
+class _DownloadConfirmationPopupState extends State<DownloadConfirmationPopup> {
+  bool isDownloadSearched = true;
+  String selectedDate;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      insetPadding: EdgeInsets.only(
+        left: getSize(16),
+        right: getSize(16),
+      ),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(getSize(8)))),
+      content: Container(
+        width: MathUtilities.screenWidth(context),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(
+              'Confirmation',
+              textAlign: TextAlign.center,
+              style: appTheme.commonAlertDialogueTitleStyle,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: getSize(20),
+              ),
+              child: Text(
+                'Please read & accept terms before download stock offline.',
+                textAlign: TextAlign.center,
+                style: appTheme.commonAlertDialogueDescStyle,
+              ),
+            ),
+            Text(
+              'There may be price and availability variations in the intervening period between placing an order offline and when the order is confirmed online. The changed of the same will be communicated to you via message. Please ensure that you take a note of it before confirming the order.',
+              style: appTheme.blackNormal14TitleColorblack,
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(
+                vertical: getSize(20),
+              ),
+              padding: EdgeInsets.symmetric(
+                horizontal: getSize(10),
+              ),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: getSize(1),
+                  color: appTheme.borderColor,
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(
+                  getSize(10),
+                )),
+              ),
+              child: InkWell(
+                onTap: () {
+                  //
+                  openAddReminder(context, (manageClick) {
+                    setState(() {
+                      selectedDate = manageClick.date;
+                    });
+                  });
+                },
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Remind me later',
+                        textAlign: TextAlign.center,
+                        style: appTheme.commonAlertDialogueDescStyle.copyWith(
+                          color: appTheme.colorPrimary,
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    (selectedDate != null)
+                        ? Text(
+                            DateUtilities().convertServerDateToFormatterString(
+                                selectedDate,
+                                formatter:
+                                    DateUtilities.dd_mm_yyyy_hh_mm_ss_aa),
+                            style: appTheme.blackNormal14TitleColorblack,
+                          )
+                        : Container(
+                            height: getSize(26),
+                            width: getSize(26),
+                            child: Image.asset(unselectedIcon),
+                          ),
+                  ],
+                ),
+              ),
+              height: getSize(50),
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    if (!isDownloadSearched) {
+                      setState(() {
+                        isDownloadSearched = true;
+                      });
+                    }
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: getSize(20),
+                    ),
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          height: getSize(16),
+                          width: getSize(16),
+                          child: isDownloadSearched
+                              ? Image.asset(selectedIcon)
+                              : Image.asset(unselectedIcon),
+                        ),
+                        SizedBox(
+                          width: getSize(10),
+                        ),
+                        Text(
+                          'Searched Stock',
+                          style: isDownloadSearched
+                              ? appTheme.blackNormal14TitleColorPrimary
+                              : appTheme.blackNormal14TitleColorblack,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: getSize(20),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    if (isDownloadSearched) {
+                      setState(() {
+                        isDownloadSearched = false;
+                      });
+                    }
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: getSize(10),
+                    ),
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          height: getSize(16),
+                          width: getSize(16),
+                          child: !isDownloadSearched
+                              ? Image.asset(selectedIcon)
+                              : Image.asset(unselectedIcon),
+                        ),
+                        SizedBox(
+                          width: getSize(10),
+                        ),
+                        Text(
+                          'All Stock',
+                          style: !isDownloadSearched
+                              ? appTheme.blackNormal14TitleColorPrimary
+                              : appTheme.blackNormal14TitleColorblack,
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                top: getSize(24),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        height: getSize(50),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: appTheme.colorPrimary,
+                            width: getSize(1),
+                          ),
+                          borderRadius: BorderRadius.circular(getSize(5)),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              getSize(8), getSize(14), getSize(8), getSize(14)),
+                          child: Text(
+                            R.string.commonString.cancel,
+                            textAlign: TextAlign.center,
+                            style: appTheme.commonAlertDialogueDescStyle
+                                .copyWith(
+                                    color: appTheme.colorPrimary,
+                                    fontSize: getFontSize(14)),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: getSize(20),
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                        widget.onAccept(isDownloadSearched, selectedDate);
+                      },
+                      child: Container(
+                        height: getSize(50),
+                        decoration: BoxDecoration(
+                            color: appTheme.colorPrimary,
+                            borderRadius: BorderRadius.circular(getSize(5)),
+                            boxShadow: getBoxShadow(context)),
+                        child: Padding(
+                          padding: EdgeInsets.all(getSize(16)),
+                          child: Text(
+                            "Accept",
+                            textAlign: TextAlign.center,
+                            style: appTheme.white16TextStyle,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 

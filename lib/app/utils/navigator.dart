@@ -25,6 +25,7 @@ import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
 import 'package:diamnow/components/Screens/MyDemand/MyDemandScreen.dart';
 import 'package:diamnow/components/Screens/Notification/Notifications.dart';
+import 'package:diamnow/components/Screens/OfflineSearchHistory/OfflineSearchHistory.dart';
 import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
@@ -152,6 +153,10 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       case VoiceSearch.route:
       screen = VoiceSearch();
       break;
+      
+    case OfflineSearchHistory.route:
+      screen = OfflineSearchHistory();
+      break;
     case FilterScreen.route:
       screen = FilterScreen(arguments);
       break;
@@ -204,7 +209,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       screen = ResetPassword(arguments);
       break;
     case PasswordResetSuccessfully.route:
-      screen = PasswordResetSuccessfully(arguments: arguments,);
+      screen = PasswordResetSuccessfully(
+        arguments: arguments,
+      );
       break;
     case ProfileList.route:
       screen = ProfileList(arguments);
@@ -233,7 +240,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       screen = SearchScreen(arguments);
       break;
     case SignInWithMPINScreen.route:
-      screen = SignInWithMPINScreen(arguments: arguments,);
+      screen = SignInWithMPINScreen(
+        arguments: arguments,
+      );
       break;
     case ForgetMPIN.route:
       screen = ForgetMPIN();

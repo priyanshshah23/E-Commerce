@@ -7,6 +7,7 @@ import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/NotificationRedirection.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
+import 'package:diamnow/models/Dashboard/DashboardModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
@@ -63,6 +64,12 @@ class PrefUtils {
 
   //Take A Tour
   String get keyHomeTour => "keyHomeTour";
+
+  // Dashboard
+  String get keyDashboard => "keyDashboard";
+
+  //Store filter
+  String get keyFilter => "keyFilter";
 
   bool isHomeVisible;
 
@@ -210,6 +217,18 @@ class PrefUtils {
     return getString(keyLanguage);
   }
 
+  void saveFilterOffline(Map<String, dynamic> dictFilter) {
+    _preferences.setString(keyFilter, json.encode(dictFilter));
+  }
+
+  Map<String, dynamic> getFilterOffline() {
+    var data = _preferences.getString(keyFilter);
+    if (data != null) {
+      return json.decode(data);
+    }
+    return null;
+  }
+
   void saveMasterSyncDate(String masterSyncDate) {
     _preferences.setString(keyMasterSyncDate, masterSyncDate);
   }
@@ -225,6 +244,24 @@ class PrefUtils {
     } else {
       return LocalizationConstant.ENGLISH;
     }
+  }
+  
+  // Store Dashboard Data
+  Future<void> saveDashboardDetails(DashboardModel dashboardModel) async {
+    await _preferences.setString(
+        keyDashboard, json.encode(dashboardModel.toJson()));
+  }
+
+  DashboardModel getDashboardDetails() {
+    var data = _preferences.getString(keyDashboard);
+    if (data != null) {
+      var dashboardJson = json.decode(data);
+      return dashboardJson != null
+          ? new DashboardModel.fromJson(dashboardJson)
+          : null;
+    }
+
+    return null;
   }
 
 // User Getter setter
@@ -274,10 +311,6 @@ class PrefUtils {
         }
       });
     }
-
-    if (module == "order") {
-      print(module);
-    }
     if (data == null) {
       if (true) {
         data = UserPermissionsData(module: module);
@@ -287,6 +320,14 @@ class PrefUtils {
         data.delete = false;
         data.downloadExcel = false;
       }
+    }
+    if (module == ModulePermissionConstant.permission_offline_stock) {
+      data = UserPermissionsData(module: module);
+      data.view = true;
+      data.insert = true;
+      data.update = true;
+      data.delete = true;
+      data.downloadExcel = true;
     }
     return data;
   }
@@ -336,6 +377,11 @@ class PrefUtils {
     _preferences.clear();
     await AppDatabase.instance.masterDao.deleteAllMasterItems();
     await AppDatabase.instance.sizeMasterDao.deleteAllMasterItems();
+    await AppDatabase.instance.diamondDao.deleteAlldiamondModelItems();
+    await AppDatabase.instance.offlineSearchHistoryDao
+        .deleteAlldiamondModelItems();
+    await AppDatabase.instance.offlineStockTracklDao
+        .deleteAlldiamondModelItems();
   }
 }
 

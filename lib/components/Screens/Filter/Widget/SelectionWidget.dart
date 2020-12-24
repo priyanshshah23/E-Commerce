@@ -693,7 +693,6 @@ class _TagWidgetState extends State<TagWidget> {
 
       RxBus.post(m, tag: eventMasterSelection);
     }
-
     //When Local data has added and multilple master has to select
     if (widget.model.isSingleSelection) {
       for (var item in widget.model.masters) {

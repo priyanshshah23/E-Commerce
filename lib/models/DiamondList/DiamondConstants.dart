@@ -32,6 +32,9 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_COMPARE = 29;
   static const MODULE_TYPE_MATCH_PAIR = 30;
   static const MODULE_TYPE_RECENT_SEARCH = 31;
+  static const MODULE_TYPE_OFFLINE_STOCK = 32;
+  static const MODULE_TYPE_OFFLINE_STOCK_SEARCH = 33;
+  static const MODULE_TYPE_OFFLINE_STOCK_SEARCH_HISTORY = 34;
   static const MODULE_TYPE_OPEN_DRAWER = 1000;
   static const MODULE_TYPE_HOME = 100;
   static const MODULE_TYPE_FINAL_CALCULATION = 101;
@@ -39,6 +42,8 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_TOUCH_ID = 103;
   static const MODULE_TYPE_MPIN = 104;
   static const MODULE_TYPE_CHANGEMPIN = 105;
+    static const MODULE_TYPE_FILTER_OFFLINE_NOTI_CLICK = 106;
+
 }
 
 class ModulePermissionConstant {
@@ -75,6 +80,7 @@ class ModulePermissionConstant {
   static const permission_hold = "hold";
   static const permission_offer = "offer";
   static const permission_notification = "notification";
+  static const permission_offline_stock = "offlineStock";
 }
 
 class ReminderType {
