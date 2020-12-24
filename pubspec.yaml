@@ -85,6 +85,7 @@ dependencies:
   marquee: ^1.6.1
   smooth_page_indicator: ^0.2.0
   speech_to_text: ^3.1.0
+  photo_view: ^0.10.2
 
   # flutter_tags: ^0.1.9
 

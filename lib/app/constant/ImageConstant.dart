@@ -143,6 +143,8 @@ const String searchIcon = "assets/DiamondDetail/search.png";
 const String selectedIcon = "assets/DiamondDetail/selectedIcon.png";
 const String unselectedIcon = "assets/DiamondDetail/unselectedIcon.png";
 const String reset = "assets/Common/Reset.png";
+const String rightArrow = 'assets/Common/rightArrow.png';
+const String leftArrrow = "assets/Common/leftArrow.png";
 
 // MyDemand icons
 const String saved_icon = "assets/diamnow/saved.png";

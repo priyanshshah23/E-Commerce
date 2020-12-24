@@ -488,10 +488,12 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     return !isNullEmptyOrFalse(list)
         ? InkWell(
             onTap: () {
-              NavigationUtilities.push(DiamondDeepDetailScreen(
-                arrImages: arrImages,
-                diamondModel: diamondModel,
-              ));
+              NavigationUtilities.push(
+                DiamondDeepDetailScreen(
+                  arrImages: arrImages,
+                  diamondModel: diamondModel,
+                ),
+              );
             },
             child: Container(
               decoration: BoxDecoration(
@@ -667,7 +669,10 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                                                   padding: EdgeInsets.only(
                                                       right: getSize(10)),
                                                   child: getRowItem(
-                                                      "Image", gallary))
+                                                    "Image",
+                                                    gallary,
+                                                  ),
+                                                )
                                               : SizedBox(),
                                           videoFlag
                                               ? Padding(

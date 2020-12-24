@@ -15,6 +15,7 @@ import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
 import 'package:diamnow/components/Screens/Auth/UploadKYC.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
+import 'package:diamnow/components/Screens/DiamondDetail/DiamondImageBrowseScreen.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/diamondDeepDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
@@ -149,11 +150,14 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case HomeScreen.route:
       screen = HomeScreen();
       break;
-      case VoiceSearch.route:
+    case VoiceSearch.route:
       screen = VoiceSearch();
       break;
     case FilterScreen.route:
       screen = FilterScreen(arguments);
+      break;
+    case DiamondImageBrowseScreen.route:
+      screen = DiamondImageBrowseScreen(arguments);
       break;
     case GuestSignInScreen.route:
       screen = GuestSignInScreen();
@@ -204,7 +208,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       screen = ResetPassword(arguments);
       break;
     case PasswordResetSuccessfully.route:
-      screen = PasswordResetSuccessfully(arguments: arguments,);
+      screen = PasswordResetSuccessfully(
+        arguments: arguments,
+      );
       break;
     case ProfileList.route:
       screen = ProfileList(arguments);
@@ -233,7 +239,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       screen = SearchScreen(arguments);
       break;
     case SignInWithMPINScreen.route:
-      screen = SignInWithMPINScreen(arguments: arguments,);
+      screen = SignInWithMPINScreen(
+        arguments: arguments,
+      );
       break;
     case ForgetMPIN.route:
       screen = ForgetMPIN();

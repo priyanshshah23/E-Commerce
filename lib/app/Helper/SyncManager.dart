@@ -612,7 +612,6 @@ class SyncManager {
         callback(url);
       } else {
         downloadExcel(excelFileUrl, savePath);
-
         if (Platform.isIOS) {
           Map<String, dynamic> dict = {};
           dict["strUrl"] = url;
