@@ -1,4 +1,4 @@
-
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
@@ -11,13 +11,21 @@ class OfflineDownloadPopup extends StatefulWidget {
   OfflineDownloadPopup({Key key, this.onAccept}) : super(key: key);
 
   @override
-  _OfflineDownloadPopupState createState() =>
-      _OfflineDownloadPopupState();
+  _OfflineDownloadPopupState createState() => _OfflineDownloadPopupState();
 }
 
 class _OfflineDownloadPopupState extends State<OfflineDownloadPopup> {
   bool isDownloadSearched = true;
   String selectedDate;
+
+  @override
+  void initState() {
+    super.initState();
+    SyncManager.instance.callAnalytics(context,
+        page: PageAnalytics.OFFLINE_DOWNLOAD,
+        section: SectionAnalytics.VIEW,
+        action: ActionAnalytics.OPEN);
+  }
 
   @override
   Widget build(BuildContext context) {

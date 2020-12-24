@@ -35,7 +35,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../main.dart';
@@ -1110,6 +1109,10 @@ class DiamondConfig {
             );
       }
     } else {
+      SyncManager.instance.callAnalytics(context,
+          page: PageAnalytics.getPageAnalyticsFromModuleType(moduleType),
+          section: SectionAnalytics.ADD,
+          action: ActionAnalytics.OPEN);
       SyncManager.instance.callApiForCreateDiamondTrack(
         context,
         trackType,
@@ -1257,6 +1260,12 @@ class DiamondConfig {
           break;
       }
     });
+
+    SyncManager.instance.callAnalytics(context,
+        page: PageAnalytics.getPageAnalyticsFromModuleType(moduleType),
+        section: SectionAnalytics.DELETE,
+        action: ActionAnalytics.LIST);
+
     SyncManager.instance.callApiForDeleteDiamondTrack(
       context,
       trackType,

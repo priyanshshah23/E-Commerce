@@ -645,8 +645,8 @@ class SyncManager {
 
   //Analytics
   callAnalytics(
-      BuildContext context, String page, String section, String action,
-      {Map<String, dynamic> dict}) {
+      BuildContext context, {String page, String section, String action,
+      Map<String, dynamic> dict}) {
     Map<String, dynamic> request = {};
     request["page"] = page;
     request["section"] = section;

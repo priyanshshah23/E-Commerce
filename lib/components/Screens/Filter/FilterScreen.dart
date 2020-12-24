@@ -475,6 +475,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
   //my demand popup end.
   getAddDemand() {
+    SyncManager.instance.callAnalytics(context,
+        page: PageAnalytics.MY_DEMAND,
+        section: SectionAnalytics.ADD,
+        action: ActionAnalytics.OPEN);
+
     showDialog(
       context: context,
       barrierDismissible: true,
@@ -497,6 +502,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   }
 
   getSavedSearchPopUp() {
+    SyncManager.instance.callAnalytics(context,
+        page: PageAnalytics.MYSAVED_SEARCH,
+        section: SectionAnalytics.LIST,
+        action: ActionAnalytics.CLICK);
+
     if (!isNullEmptyOrFalse(saveSearchList)) {
       showDialog(
         context: context,
@@ -528,6 +538,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         },
       );
     } else {
+      SyncManager.instance.callAnalytics(context,
+          page: PageAnalytics.MYSAVED_SEARCH,
+          section: SectionAnalytics.ADD,
+          action: ActionAnalytics.CLICK);
+
       Map<String, dynamic> dict = {};
       dict["type"] = SavedSearchType.savedSearch;
       dict["isAppendMasters"] = true;
@@ -609,7 +624,6 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
           }
         } else if (obj.code == BottomCodeConstant.filterSearch) {
-
           //Check internet is online or not
           var connectivityResult = await Connectivity().checkConnectivity();
           if (connectivityResult == ConnectivityResult.none) {
@@ -688,6 +702,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
   callApiForGetFilterId(int moduleType,
       {bool isSavedSearch = false, bool isSearch = false}) {
+    SyncManager.instance.callAnalytics(context,
+        page: PageAnalytics.DIAMOND_SEARCH,
+        section: SectionAnalytics.SEARCH,
+        action: ActionAnalytics.CLICK);
+
     SyncManager.instance.callApiForDiamondList(
       context,
       FilterRequest().createRequest(arrList),
@@ -909,7 +928,7 @@ class _FilterItemState extends State<FilterItem> {
       return SizedBox();
     }
     return Padding(
-      padding:  EdgeInsets.only(top : getSize(16.0), bottom: getSize(16.0)),
+      padding: EdgeInsets.only(top: getSize(16.0), bottom: getSize(16.0)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

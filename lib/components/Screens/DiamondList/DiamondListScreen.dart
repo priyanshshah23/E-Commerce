@@ -1,5 +1,6 @@
 import 'package:diamnow/Setting/SettingModel.dart';
 import 'package:diamnow/app/Helper/OfflineStockManager.dart';
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/constant/constants.dart';
@@ -132,6 +133,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       callApi(false);
+
+      SyncManager.instance.callAnalytics(context,
+          page: PageAnalytics.getPageAnalyticsFromModuleType(moduleType),
+          section: SectionAnalytics.LIST,
+          action: ActionAnalytics.OPEN);
     });
     // setState(() {
     //   //

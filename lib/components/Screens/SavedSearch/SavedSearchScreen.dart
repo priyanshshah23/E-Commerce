@@ -1,3 +1,4 @@
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/Helper/Themehelper.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/constants.dart';
@@ -49,10 +50,14 @@ class _SavedSearchScreenState extends State<SavedSearchScreen> {
   @override
   void initState() {
     super.initState();
-    if (moduleType == DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH){
+    if (moduleType == DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH) {
       segmentedControlValue = 1;
       controller = PageController(initialPage: 1);
     }
+    SyncManager.instance.callAnalytics(context,
+        page: PageAnalytics.getPageAnalyticsFromModuleType(moduleType),
+        section: SectionAnalytics.VIEW,
+        action: ActionAnalytics.OPEN);
   }
 
   @override

@@ -42,8 +42,10 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_TOUCH_ID = 103;
   static const MODULE_TYPE_MPIN = 104;
   static const MODULE_TYPE_CHANGEMPIN = 105;
-    static const MODULE_TYPE_FILTER_OFFLINE_NOTI_CLICK = 106;
-
+  static const MODULE_TYPE_FILTER_OFFLINE_NOTI_CLICK = 106;
+  static const MODULE_TYPE_NOTIFICATION = 107;
+  static const MODULE_TYPE_DIAMOND_DETAIL = 108;
+  static const MODULE_TYPE_VOICE_SEARCH = 109;
 }
 
 class ModulePermissionConstant {

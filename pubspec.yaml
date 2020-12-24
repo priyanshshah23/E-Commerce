@@ -90,6 +90,7 @@ dependencies:
   flutter_local_notifications: any
   uuid: ^2.2.2
   collection: ^1.14.13
+  screenshot_callback: any
 
 dev_dependencies:
   flutter_test:

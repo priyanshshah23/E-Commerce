@@ -1,3 +1,7 @@
+import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/components/Screens/Auth/Profile.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
+
 class ViewTypes {
   static const String fromTo = "fromto";
   static const String selection = "selection";
@@ -165,6 +169,7 @@ class PageAnalytics {
 
   //ToDo
   static const String QRCODE = "QrCode";
+  static const String MY_BID = "MyBid";
   static const String HOME = "Home";
   static const String OfflineSearchHistory = "OfflineSearchHistory";
   static const String NOTIFICATION = "Notification";
@@ -186,6 +191,64 @@ class PageAnalytics {
   static const String OFFLINE_DOWNLOAD = "offlinedownload";
   static const String STONE_OF_THE_DAY = "stoneoftheday";
   static const String SCREENSHOT = "screenShot";
+
+  static String getPageAnalyticsFromModuleType(int moduleType) {
+    if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_CART) {
+      return MY_CART;
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST) {
+      return MY_WATCHLIST;
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH) {
+      return QUICK_SERACH;
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_PROFILE) {
+      return PROFILE;
+    } else if (moduleType ==
+        DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
+      return MY_BID;
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR) {
+      return MATCH_PAIRS;
+    } else if (moduleType ==
+        DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY) {
+      return STONE_OF_THE_DAY;
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_COMPARE) {
+      return COMPARE;
+    } else if (moduleType ==
+        DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH_HISTORY) {
+      return OfflineSearchHistory;
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_NOTIFICATION) {
+      return NOTIFICATION;
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_DIAMOND_DETAIL) {
+      return DIAMOND_DETAIL;
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_DEMAND) {
+      return MY_DEMAND;
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL) {
+      return NEW_GOODS;
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_HOME) {
+      return HOME;
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_ORDER) {
+      return MY_ORDER;
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_OPEN_DRAWER) {
+      return DRAWER;
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_ABOUT_US) {
+      return ABOUT_US;
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY) {
+      return ABOUT_US;
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE) {
+      return MY_PURCHASE;
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_VOICE_SEARCH) {
+      return VOICE_SEARCH;
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
+      return MY_ENQUIRY;
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_COMMENT) {
+      return MY_COMMENT;
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_REMINDER) {
+      return MY_REMINDER;
+    } else if (moduleType ==
+        DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH) {
+      return MYSAVED_SEARCH;
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
+      return DIAMOND_SEARCH;
+    }
+  }
 }
 
 //Action Analytics
