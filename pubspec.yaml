@@ -131,7 +131,8 @@ flutter:
     - assets/Share/
     - assets/PNShah/
     - assets/PNShah/ForgetMPIN/
-    - assets/Overlay/
+    - assets/Overlay/Home/
+    - assets/Overlay/MyAccount/
 
 
   fonts:

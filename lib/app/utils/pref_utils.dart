@@ -64,6 +64,7 @@ class PrefUtils {
 
   //Take A Tour
   String get keyHomeTour => "keyHomeTour";
+  String get keyMyAccountTour => "keyMyAccountTour";
 
   // Dashboard
   String get keyDashboard => "keyDashboard";

@@ -84,6 +84,10 @@ class _DashboardState extends StatefulScreenWidgetState {
   RefreshController refreshController =
       RefreshController(initialRefresh: false);
 
+  final searchKey = new GlobalKey();
+  final savedSearchKey = new GlobalKey();
+  final sellerKey = new GlobalKey();
+
   @override
   void initState() {
     super.initState();
@@ -186,7 +190,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                         placeHolderImage: placeHolder,
                         height: getSize(30),
                         width: getSize(30),
-                        fit: BoxFit.cover,
+                        fit: BoxFit.fitHeight,
                       ),
                     ),
                   ),
@@ -295,7 +299,6 @@ class _DashboardState extends StatefulScreenWidgetState {
                       ? ListView(
                           physics: ClampingScrollPhysics(),
                           children: <Widget>[
-                            getSarchTextField(),
                             if (dashboardConfig.arrTopSection.length > 0)
                               getTopSection(),
                             getFeaturedSection(),
@@ -318,13 +321,23 @@ class _DashboardState extends StatefulScreenWidgetState {
               ),
             ),
           ),
-          // app.resolve<PrefUtils>().getBool(PrefUtils().keyHomeTour) == false
-          //     ? OverlayScreen(moduleType, finishTakeTour: (){
-          //       setState(() {
-
-          //       });
-          //     },)
-          //     : SizedBox(),
+          app.resolve<PrefUtils>().getBool(PrefUtils().keyHomeTour) == false
+              ? OverlayScreen(
+                  moduleType,
+                  finishTakeTour: () {
+                    setState(() {});
+                  },
+                  scrollIndex: (index) {
+                    if (index == 0 || index == 1) {
+                      Scrollable.ensureVisible(searchKey.currentContext);
+                    } else if (index == 2) {
+                      Scrollable.ensureVisible(savedSearchKey.currentContext);
+                    } else if (index == 3) {
+                      Scrollable.ensureVisible(sellerKey.currentContext);
+                    }
+                  },
+                )
+              : SizedBox(),
         ],
       ),
     );
@@ -339,10 +352,11 @@ class _DashboardState extends StatefulScreenWidgetState {
     }
     return Padding(
       padding: EdgeInsets.only(
-        left: getSize(Spacing.leftPadding),
-        right: getSize(Spacing.rightPadding),
+        bottom: getSize(30),
       ),
       child: Row(
+        key: searchKey,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
             child: Hero(
@@ -449,12 +463,12 @@ class _DashboardState extends StatefulScreenWidgetState {
   getTopSection() {
     return Padding(
       padding: EdgeInsets.only(
-        top: getSize(30),
         left: getSize(Spacing.leftPadding),
         right: getSize(Spacing.rightPadding),
       ),
       child: Column(
         children: [
+          getSarchTextField(),
           Material(
             elevation: 10,
             shadowColor: appTheme.shadowColorWithoutOpacity.withOpacity(0.3),
@@ -1137,7 +1151,7 @@ class _DashboardState extends StatefulScreenWidgetState {
     }
 
     return Padding(
-      padding: EdgeInsets.only(top: getSize(20)),
+      padding: EdgeInsets.only(top: getSize(8)),
       child: Column(
         children: [
           Padding(
@@ -1147,7 +1161,13 @@ class _DashboardState extends StatefulScreenWidgetState {
             ),
             child: Row(
               children: [
-                getTitleText(R.string.screenTitle.savedSearch),
+                Text(
+                  R.string.screenTitle.savedSearch,
+                  key: savedSearchKey,
+                  style: appTheme.blackNormal18TitleColorblack.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
                 Spacer(),
                 InkWell(
                   onTap: () {
@@ -1164,7 +1184,7 @@ class _DashboardState extends StatefulScreenWidgetState {
             ),
           ),
           SizedBox(
-            height: getSize(20),
+            height: getSize(16),
           ),
           ListView.builder(
               shrinkWrap: true,
@@ -1215,7 +1235,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                 ),
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(
-                      getSize(20), getSize(16), getSize(20), getSize(16)),
+                      getSize(20), getSize(8), getSize(20), getSize(8)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -1746,14 +1766,20 @@ class _DashboardState extends StatefulScreenWidgetState {
       padding: EdgeInsets.only(
         left: getSize(Spacing.leftPadding),
         right: getSize(Spacing.rightPadding),
-        top: getSize(20),
+        top: getSize(8),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          getTitleText(R.string.screenTitle.salesPersonDetail),
+          Text(
+            R.string.screenTitle.salesPersonDetail,
+            key: sellerKey,
+            style: appTheme.blackNormal18TitleColorblack.copyWith(
+              fontWeight: FontWeight.w500,
+            ),
+          ),
           SizedBox(
-            height: getSize(20),
+            height: getSize(16),
           ),
           Padding(
             padding: EdgeInsets.only(
