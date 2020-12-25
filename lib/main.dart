@@ -33,8 +33,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 
-import 'models/DiamondList/DiamondConstants.dart';
-
 KiwiContainer app;
 
 TextDirection deviceTextDirection = TextDirection.ltr;
@@ -104,10 +102,6 @@ class _BaseState extends State<Base> {
   MethodChannel platform =
       MethodChannel('dexterx.dev/flutter_local_notifications_example');
 
-  static FirebaseAnalytics analytics = FirebaseAnalytics();
-  static FirebaseAnalyticsObserver observer =
-      FirebaseAnalyticsObserver(analytics: analytics);
-
   @override
   void initState() {
     super.initState();
@@ -133,7 +127,6 @@ class _BaseState extends State<Base> {
         case ConnectivityResult.wifi:
           string = 'online';
           OfflineStockManager.shared.callApiForSyncOfflineData(context);
-          // LocalNotificationManager.instance.fireNotificationForFilterOffline();
           break;
       }
       print("Internet " + string);
@@ -170,17 +163,24 @@ class _BaseState extends State<Base> {
       home: Splash(),
       routes: <String, WidgetBuilder>{
         DiamondCompareScreen.route: (BuildContext context) =>
-            DiamondCompareScreen(ModalRoute.of(context).settings.arguments),
-        DiamondListScreen.route: (BuildContext context) =>
-            DiamondListScreen(ModalRoute.of(context).settings.arguments),
+            DiamondCompareScreen(
+              ModalRoute.of(context).settings.arguments,
+            ),
+        DiamondListScreen.route: (BuildContext context) => DiamondListScreen(
+              ModalRoute.of(context).settings.arguments,
+            ),
         DiamondActionScreen.route: (BuildContext context) =>
-            DiamondActionScreen(ModalRoute.of(context).settings.arguments),
+            DiamondActionScreen(
+              ModalRoute.of(context).settings.arguments,
+            ),
         DiamondDetailScreen.route: (BuildContext context) =>
             DiamondDetailScreen(
-                arguments: ModalRoute.of(context).settings.arguments),
+              arguments: ModalRoute.of(context).settings.arguments,
+            ),
         VoiceSearch.route: (BuildContext context) => VoiceSearch(),
-        SearchScreen.route: (BuildContext context) =>
-            SearchScreen(ModalRoute.of(context).settings.arguments),
+        SearchScreen.route: (BuildContext context) => SearchScreen(
+              ModalRoute.of(context).settings.arguments,
+            ),
       },
       builder: _builder,
     );

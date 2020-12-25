@@ -62,7 +62,7 @@ dependencies:
   custom_localization:
     git: https://gitlab.coruscate.in:8443/coruslab/flutter-localisation.git
   encrypt: ^4.0.0
-  webview_flutter: ^1.0.7
+  webview_flutter:
   material_segmented_control: ^2.1.0+1
   url_launcher: ^5.7.2
   flutter_tags: ^0.4.9
