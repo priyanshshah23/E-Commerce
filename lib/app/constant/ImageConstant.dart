@@ -190,4 +190,14 @@ const String tickUnSelected = "assets/Common/tickunSelected.png";
 const String microphone = "assets/Common/microphone.png";
 
 //Take a Tour screen
-const String homeOverlay1 = "assets/Overlay/HomeOverlay1.png";
+const String homeOverlay1 = "assets/Overlay/Home/HomeOverlay1.png";
+const String homeOverlay2 = "assets/Overlay/Home/HomeOverlay2.png";
+const String homeOverlay3 = "assets/Overlay/Home/HomeOverlay3.png";
+const String homeOverlay4 = "assets/Overlay/Home/HomeOverlay4.png";
+const String homeOverlay5 = "assets/Overlay/Home/HomeOverlay5.png";
+const String homeOverlay6 = "assets/Overlay/Home/HomeOverlay6.png";
+
+const String myAccountOverlay1 =
+    "assets/Overlay/MyAccount/MyAccountOverlay1.png";
+const String myAccountOverlay2 =
+    "assets/Overlay/MyAccount/MyAccountOverlay2.png";
