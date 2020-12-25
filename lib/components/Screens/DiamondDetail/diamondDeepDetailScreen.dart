@@ -27,6 +27,7 @@ import 'package:gallery_saver/gallery_saver.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:share/share.dart';
@@ -391,7 +392,7 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
                         getImageViewForDownloadAndShare(
                           imageName: share,
                           onTap: () {
-                            _downloadFile(
+                            downloadSingleImage(
                               model.url,
                               model.title +
                                   diamondModel.id +
@@ -407,7 +408,7 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
                         getImageViewForDownloadAndShare(
                           imageName: download,
                           onTap: () {
-                            _downloadFile(
+                            downloadSingleImage(
                               model.url,
                               model.title +
                                   diamondModel.id +
@@ -451,9 +452,8 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
     );
   }
 
-  static var httpClient = new HttpClient();
-
-  Future<File> _downloadFile(
+  // ignore: missing_return
+  Future<File> downloadSingleImage(
     String url,
     String filename, {
     bool isFileShare = false,
@@ -463,28 +463,28 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
 
     Dio dio = Dio();
 
-    dio.download(
+    dio
+        .download(
       url,
       savePath,
-      onReceiveProgress: (rcv, total) {
-        print(
-            'received: ${rcv.toStringAsFixed(0)} out of total: ${total.toStringAsFixed(0)}');
-      },
       deleteOnError: true,
-    ).then((value) {
-      if (Platform.isIOS) {
-        isImage(savePath)
-            ? GallerySaver.saveImage(savePath)
-            : GallerySaver.saveVideo(savePath);
-      }
-      if (isFileShare) {
-        Share.shareFiles([savePath], text: 'Great picture');
-      }
+    )
+        .then((value) {
+      if (value.statusCode == successStatusCode) {
+        if (Platform.isIOS) {
+          isImage(savePath)
+              ? GallerySaver.saveImage(savePath)
+              : GallerySaver.saveVideo(savePath);
+        }
+        if (isFileShare) {
+          Share.shareFiles([savePath], text: 'Great picture');
+        }
 
-      showToast(
-        "Download complete",
-        context: context,
-      );
+        showToast(
+          "Download complete",
+          context: context,
+        );
+      }
     }).catchError((error) {
       if (mounted) {
         setState(() {});

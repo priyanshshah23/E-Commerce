@@ -22,6 +22,7 @@ class LocalNotificationManager {
 
   static final LocalNotificationManager _singleton =
       LocalNotificationManager._();
+
   static LocalNotificationManager get instance => _singleton;
 
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
