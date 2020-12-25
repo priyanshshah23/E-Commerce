@@ -458,7 +458,7 @@ Future<void> _sendAnalyticsEvent({
   @required String eventName,
   @required Map<String, dynamic> parameterData,
 }) async {
-  analytics.
+
   await analytics.logEvent(
     name: 'test_event',
     parameters: <String, dynamic>{
