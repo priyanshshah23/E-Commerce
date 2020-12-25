@@ -159,11 +159,9 @@ class _UploadProgressState extends State<UploadProgress> {
   double percentge;
 
   void updateProgress(double per) {
-    print(per.toString() + "updateProgress");
     if (this.mounted) {
       setState(
         () {
-          print(per.toString() + "mounted");
           this.percentge = per;
           if (percentge >= 1.0) {
             if (widget._isDialogShown) {
