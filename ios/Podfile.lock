@@ -8,6 +8,44 @@ PODS:
     - Reachability
   - downloads_path_provider (0.0.1):
     - Flutter
+  - Firebase/Analytics (6.33.0):
+    - Firebase/Core
+  - Firebase/Core (6.33.0):
+    - Firebase/CoreOnly
+    - FirebaseAnalytics (= 6.8.3)
+  - Firebase/CoreOnly (6.33.0):
+    - FirebaseCore (= 6.10.3)
+  - firebase_analytics (6.3.0):
+    - Firebase/Analytics (~> 6.33.0)
+    - Firebase/CoreOnly (~> 6.33.0)
+    - firebase_core
+    - Flutter
+  - firebase_core (0.5.3):
+    - Firebase/CoreOnly (~> 6.33.0)
+    - Flutter
+  - FirebaseAnalytics (6.8.3):
+    - FirebaseCore (~> 6.10)
+    - FirebaseInstallations (~> 1.6)
+    - GoogleAppMeasurement (= 6.8.3)
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.7)
+    - GoogleUtilities/MethodSwizzler (~> 6.7)
+    - GoogleUtilities/Network (~> 6.7)
+    - "GoogleUtilities/NSData+zlib (~> 6.7)"
+    - nanopb (~> 1.30906.0)
+  - FirebaseCore (6.10.3):
+    - FirebaseCoreDiagnostics (~> 1.6)
+    - GoogleUtilities/Environment (~> 6.7)
+    - GoogleUtilities/Logger (~> 6.7)
+  - FirebaseCoreDiagnostics (1.7.0):
+    - GoogleDataTransport (~> 7.4)
+    - GoogleUtilities/Environment (~> 6.7)
+    - GoogleUtilities/Logger (~> 6.7)
+    - nanopb (~> 1.30906.0)
+  - FirebaseInstallations (1.7.0):
+    - FirebaseCore (~> 6.10)
+    - GoogleUtilities/Environment (~> 6.7)
+    - GoogleUtilities/UserDefaults (~> 6.7)
+    - PromisesObjC (~> 1.2)
   - Flutter (1.0.0)
   - flutter_exif_rotation (0.0.1):
     - Flutter
@@ -24,12 +62,44 @@ PODS:
   - FMDB/standard (2.7.5)
   - gallery_saver (0.0.1):
     - Flutter
+  - GoogleAppMeasurement (6.8.3):
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.7)
+    - GoogleUtilities/MethodSwizzler (~> 6.7)
+    - GoogleUtilities/Network (~> 6.7)
+    - "GoogleUtilities/NSData+zlib (~> 6.7)"
+    - nanopb (~> 1.30906.0)
+  - GoogleDataTransport (7.5.1):
+    - nanopb (~> 1.30906.0)
+  - GoogleUtilities/AppDelegateSwizzler (6.7.2):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (6.7.2):
+    - PromisesObjC (~> 1.2)
+  - GoogleUtilities/Logger (6.7.2):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/MethodSwizzler (6.7.2):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/Network (6.7.2):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (6.7.2)"
+  - GoogleUtilities/Reachability (6.7.2):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/UserDefaults (6.7.2):
+    - GoogleUtilities/Logger
   - libphonenumber (0.0.1):
     - Flutter
     - libPhoneNumber-iOS
   - libPhoneNumber-iOS (0.9.15)
   - local_auth (0.0.1):
     - Flutter
+  - nanopb (1.30906.0):
+    - nanopb/decode (= 1.30906.0)
+    - nanopb/encode (= 1.30906.0)
+  - nanopb/decode (1.30906.0)
+  - nanopb/encode (1.30906.0)
   - OneSignal (2.16.1)
   - onesignal_flutter (2.6.2):
     - Flutter
@@ -40,6 +110,7 @@ PODS:
     - Flutter
   - "permission_handler (4.4.0+hotfix.4)":
     - Flutter
+  - PromisesObjC (1.2.11)
   - Reachability (3.2)
   - screenshot_callback (0.0.1):
     - Flutter
@@ -74,6 +145,8 @@ DEPENDENCIES:
   - compressimage (from `.symlinks/plugins/compressimage/ios`)
   - connectivity (from `.symlinks/plugins/connectivity/ios`)
   - downloads_path_provider (from `.symlinks/plugins/downloads_path_provider/ios`)
+  - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
+  - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `Flutter`)
   - flutter_exif_rotation (from `.symlinks/plugins/flutter_exif_rotation/ios`)
   - flutter_files_picker (from `.symlinks/plugins/flutter_files_picker/ios`)
@@ -103,9 +176,19 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Firebase
+    - FirebaseAnalytics
+    - FirebaseCore
+    - FirebaseCoreDiagnostics
+    - FirebaseInstallations
     - FMDB
+    - GoogleAppMeasurement
+    - GoogleDataTransport
+    - GoogleUtilities
     - libPhoneNumber-iOS
+    - nanopb
     - OneSignal
+    - PromisesObjC
     - Reachability
     - Try
 
@@ -118,6 +201,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/connectivity/ios"
   downloads_path_provider:
     :path: ".symlinks/plugins/downloads_path_provider/ios"
+  firebase_analytics:
+    :path: ".symlinks/plugins/firebase_analytics/ios"
+  firebase_core:
+    :path: ".symlinks/plugins/firebase_core/ios"
   Flutter:
     :path: Flutter
   flutter_exif_rotation:
@@ -174,6 +261,13 @@ SPEC CHECKSUMS:
   compressimage: 4f597b00f6e66bdc43d0aec5f0b9e415f3b03bbd
   connectivity: c4130b2985d4ef6fd26f9702e886bd5260681467
   downloads_path_provider: fe0d06888d4b8c055a59edbc2f51f03e63cb0e28
+  Firebase: 8db6f2d1b2c5e2984efba4949a145875a8f65fe5
+  firebase_analytics: 36a619088c46224900829f14f4daa71585693a6f
+  firebase_core: 5d6a02f3d85acd5f8321c2d6d62877626a670659
+  FirebaseAnalytics: 5dd088bd2e67bb9d13dbf792d1164ceaf3052193
+  FirebaseCore: d889d9e12535b7f36ac8bfbf1713a0836a3012cd
+  FirebaseCoreDiagnostics: 770ac5958e1372ce67959ae4b4f31d8e127c3ac1
+  FirebaseInstallations: 466c7b4d1f58fe16707693091da253726a731ed2
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_exif_rotation: 85a029bc8f10235c50736be688519f4037a87f13
   flutter_files_picker: 10942b5e4c22c90e3da2faf82dc8bf9f83660089
@@ -182,14 +276,19 @@ SPEC CHECKSUMS:
   flutter_statusbarcolor: 8afb1071ed8c58be929f1e32b36c629771fd2259
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   gallery_saver: 9fc173c9f4fcc48af53b2a9ebea1b643255be542
+  GoogleAppMeasurement: 966e88df9d19c15715137bb2ddaf52373f111436
+  GoogleDataTransport: f56af7caa4ed338dc8e138a5d7c5973e66440833
+  GoogleUtilities: 7f2f5a07f888cdb145101d6042bc4422f57e70b3
   libphonenumber: bd14d5abfc5939ab0b0767234e2d8e2593af258e
   libPhoneNumber-iOS: 0a32a9525cf8744fe02c5206eb30d571e38f7d75
   local_auth: 17f985934bb4ab2637431e5b3fe1b2d6698d2051
+  nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   OneSignal: 5f6514ec2b931306eb067acb124afbb2e49970af
   onesignal_flutter: 260bb95c0a2d791c990c7bd8749525c9834d43fc
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: 8278954f2382902f63f00dd8828769c0bd6d511b
+  PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   screenshot_callback: dcbd6a3d715947a44ed20c114172bcdfcd577e42
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410

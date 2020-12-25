@@ -7,6 +7,7 @@ buildscript {
     dependencies {
         // ...
        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.1, 0.99.99]'
+       classpath 'com.google.gms:google-services:4.3.3'
     }
 }
 

@@ -28,6 +28,10 @@ import 'app/utils/route_observer.dart';
 import 'components/Screens/Search/Search.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 
 import 'models/DiamondList/DiamondConstants.dart';
 
@@ -60,6 +64,8 @@ main() {
 }
 
 configureNotification() async {
+  await Firebase.initializeApp();
+
   // await _configureLocalTimeZone();
 
   const AndroidInitializationSettings initializationSettingsAndroid =
@@ -98,6 +104,10 @@ class _BaseState extends State<Base> {
   MethodChannel platform =
       MethodChannel('dexterx.dev/flutter_local_notifications_example');
 
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
+
   @override
   void initState() {
     super.initState();
@@ -123,7 +133,7 @@ class _BaseState extends State<Base> {
         case ConnectivityResult.wifi:
           string = 'online';
           OfflineStockManager.shared.callApiForSyncOfflineData(context);
-         // LocalNotificationManager.instance.fireNotificationForFilterOffline();
+          // LocalNotificationManager.instance.fireNotificationForFilterOffline();
           break;
       }
       print("Internet " + string);
@@ -156,7 +166,7 @@ class _BaseState extends State<Base> {
       ),
       navigatorKey: NavigationUtilities.key,
       onGenerateRoute: onGenerateRoute,
-      navigatorObservers: [routeObserver],
+      navigatorObservers: <NavigatorObserver>[routeObserver],
       home: Splash(),
       routes: <String, WidgetBuilder>{
         DiamondCompareScreen.route: (BuildContext context) =>
