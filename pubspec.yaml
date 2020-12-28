@@ -133,6 +133,8 @@ flutter:
     - assets/PNShah/ForgetMPIN/
     - assets/Overlay/Home/
     - assets/Overlay/MyAccount/
+    - assets/Overlay/Search/
+    - assets/Overlay/SearchResult/
 
 
   fonts:

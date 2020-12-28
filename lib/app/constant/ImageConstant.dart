@@ -201,3 +201,30 @@ const String myAccountOverlay1 =
     "assets/Overlay/MyAccount/MyAccountOverlay1.png";
 const String myAccountOverlay2 =
     "assets/Overlay/MyAccount/MyAccountOverlay2.png";
+
+const String searchOverlay1 = "assets/Overlay/Search/SearchOverlay1.png";
+const String searchOverlay2 = "assets/Overlay/Search/SearchOverlay2.png";
+const String searchOverlay3 = "assets/Overlay/Search/SearchOverlay3.png";
+const String searchOverlay4 = "assets/Overlay/Search/SearchOverlay4.png";
+const String searchOverlay5 = "assets/Overlay/Search/SearchOverlay5.png";
+const String searchOverlay6 = "assets/Overlay/Search/SearchOverlay6.png";
+const String searchOverlay7 = "assets/Overlay/Search/SearchOverlay7.png";
+
+const String searchResultOverlay1 =
+    "assets/Overlay/SearchResult/SearchResultOverlay1.png";
+const String searchResultOverlay2 =
+    "assets/Overlay/SearchResult/SearchResultOverlay2.png";
+const String searchResultOverlay3 =
+    "assets/Overlay/SearchResult/SearchResultOverlay3.png";
+const String searchResultOverlay4 =
+    "assets/Overlay/SearchResult/SearchResultOverlay4.png";
+const String searchResultOverlay5 =
+    "assets/Overlay/SearchResult/SearchResultOverlay5.png";
+const String searchResultOverlay6 =
+    "assets/Overlay/SearchResult/SearchResultOverlay6.png";
+const String searchResultOverlay7 =
+    "assets/Overlay/SearchResult/SearchResultOverlay7.png";
+const String searchResultOverlay8 =
+    "assets/Overlay/SearchResult/SearchResultOverlay8.png";
+const String searchResultOverlay9 =
+    "assets/Overlay/SearchResult/SearchResultOverlay9.png";

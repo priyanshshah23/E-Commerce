@@ -321,7 +321,8 @@ class _DashboardState extends StatefulScreenWidgetState {
               ),
             ),
           ),
-          app.resolve<PrefUtils>().getBool(PrefUtils().keyHomeTour) == false
+          (app.resolve<PrefUtils>().getBool(PrefUtils().keyHomeTour) == false &&
+                  isNullEmptyOrFalse(this.dashboardModel) == false)
               ? OverlayScreen(
                   moduleType,
                   finishTakeTour: () {

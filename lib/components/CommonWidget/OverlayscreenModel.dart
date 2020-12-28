@@ -51,6 +51,96 @@ class OverlayscreenModel {
 
     return arrImages;
   }
+
+  List<OverlayImagesModel> getFilterOverlay() {
+    List<OverlayImagesModel> arrImages = [];
+    arrImages.add(OverlayImagesModel(
+      imageName: searchOverlay1,
+      isTop: true,
+      align: Alignment.topCenter,
+      topPadding: kBottomNavigationBarHeight - getSize(10),
+    ));
+    arrImages.add(OverlayImagesModel(
+      imageName: searchOverlay2,
+      isBottom: true,
+    ));
+    arrImages.add(OverlayImagesModel(
+      imageName: searchOverlay3,
+      isBottom: true,
+    ));
+    arrImages.add(OverlayImagesModel(
+      imageName: searchOverlay4,
+      isTop: true,
+      align: Alignment.topRight,
+      topPadding: 0.0,
+    ));
+    arrImages.add(OverlayImagesModel(
+      imageName: searchOverlay5,
+      isTop: true,
+      align: Alignment.topRight,
+      topPadding: 0.0,
+    ));
+    arrImages.add(OverlayImagesModel(
+      imageName: searchOverlay6,
+      isBottom: true,
+    ));
+    arrImages.add(OverlayImagesModel(
+      imageName: searchOverlay7,
+      isBottom: true,
+    ));
+
+    return arrImages;
+  }
+
+  List<OverlayImagesModel> getSearchResultOverlay() {
+    List<OverlayImagesModel> arrImages = [];
+    arrImages.add(OverlayImagesModel(
+      imageName: searchResultOverlay1,
+      isTop: true,
+      align: Alignment.topRight,
+      topPadding: kBottomNavigationBarHeight - getSize(30),
+    ));
+    arrImages.add(OverlayImagesModel(
+      imageName: searchResultOverlay2,
+      isTop: true,
+      align: Alignment.topRight,
+      topPadding: kBottomNavigationBarHeight - getSize(30),
+    ));
+    arrImages.add(OverlayImagesModel(
+      imageName: searchResultOverlay3,
+      isTop: true,
+      align: Alignment.topRight,
+      topPadding: kBottomNavigationBarHeight - getSize(30),
+    ));
+    arrImages.add(OverlayImagesModel(
+      imageName: searchResultOverlay4,
+      isBottom: true,
+    ));
+    arrImages.add(OverlayImagesModel(
+      imageName: searchResultOverlay5,
+      isBottom: true,
+    ));
+    arrImages.add(OverlayImagesModel(
+      imageName: searchResultOverlay6,
+      isBottom: true,
+    ));
+    arrImages.add(OverlayImagesModel(
+      imageName: searchResultOverlay7,
+      isBottom: true,
+    ));
+    arrImages.add(OverlayImagesModel(
+      imageName: searchResultOverlay8,
+      isBottom: true,
+    ));
+    arrImages.add(OverlayImagesModel(
+      imageName: searchResultOverlay9,
+      isTop: true,
+      align: Alignment.topCenter,
+      topPadding: kBottomNavigationBarHeight - getSize(20),
+    ));
+
+    return arrImages;
+  }
 }
 
 class OverlayImagesModel {
