@@ -45,11 +45,15 @@ class NetworkClient {
   }
 
   Future<Response> callApi(
-      BuildContext context, String baseUrl, String command, String method,
-      {Map<String, dynamic> params,
-      Map<String, dynamic> headers,
-      Function(dynamic response, String message) successCallback,
-      Function(String message, String statusCode) failureCallback}) async {
+    BuildContext context,
+    String baseUrl,
+    String command,
+    String method, {
+    Map<String, dynamic> params,
+    Map<String, dynamic> headers,
+    Function(dynamic response, String message) successCallback,
+    Function(String message, String statusCode) failureCallback,
+  }) async {
     var connectivityResult = await Connectivity().checkConnectivity();
     if (connectivityResult == ConnectivityResult.none) {
       failureCallback("", "No Internet Connection");
@@ -117,7 +121,7 @@ class NetworkClient {
     String statusCode = response.data['code'];
     String message = response.data['message'];
 
-    if (statusCode == "OK") {
+    if (statusCode == CODE_OK) {
       if (response.data["data"] is Map<String, dynamic> ||
           response.data["data"] is List<dynamic>) {
         successCallback(response.data["data"], message);

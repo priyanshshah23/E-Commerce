@@ -638,7 +638,6 @@ class SyncManager {
           NavigationUtilities.pushRoute(StaticPageScreen.route, args: dict);
         }
       }
-
       // getWebView(context, url);
     }).catchError((onError) {
       showToast("There is problem on server, please try again later.",

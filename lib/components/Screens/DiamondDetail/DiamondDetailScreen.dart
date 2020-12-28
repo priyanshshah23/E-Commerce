@@ -112,17 +112,21 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       getScrollControllerEventListener();
 
       isErroWhileLoading = false;
-      SyncManager.instance.callAnalytics(context,
-          page: PageAnalytics.DIAMOND_DETAIL,
-          section: SectionAnalytics.VIEW,
-          action: ActionAnalytics.OPEN,
-          dict: {
-            "id": this.diamondModel.id ?? "",
-            "userId": app.resolve<PrefUtils>().getUserDetails().id ?? ""
-          });
+      SyncManager.instance.callAnalytics(
+        context,
+        page: PageAnalytics.DIAMOND_DETAIL,
+        section: SectionAnalytics.VIEW,
+        action: ActionAnalytics.OPEN,
+        dict: {
+          "id": this.diamondModel.id ?? "",
+          "userId": app.resolve<PrefUtils>().getUserDetails().id ?? ""
+        },
+      );
 
-      screenshotCallback.addListener(() {
-        SyncManager.instance.callAnalytics(context,
+      screenshotCallback.addListener(
+        () {
+          SyncManager.instance.callAnalytics(
+            context,
             page: PageAnalytics.DIAMOND_DETAIL,
             section: SectionAnalytics.VIEW,
             action: ActionAnalytics.OPEN,
@@ -130,8 +134,10 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
               "id": this.diamondModel.id ?? "",
               "userId": app.resolve<PrefUtils>().getUserDetails().id ?? "",
               "action": "SCREENSHOT_TAKEN_BY_USER"
-            });
-      });
+            },
+          );
+        },
+      );
     });
     // checkWeatherUrlContainsThingsOrNot();
   }

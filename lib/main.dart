@@ -58,6 +58,7 @@ main() {
           }),
     ),
   ));
+
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 }
 

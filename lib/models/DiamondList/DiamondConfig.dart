@@ -1109,10 +1109,12 @@ class DiamondConfig {
             );
       }
     } else {
-      SyncManager.instance.callAnalytics(context,
-          page: PageAnalytics.getPageAnalyticsFromModuleType(moduleType),
-          section: SectionAnalytics.ADD,
-          action: ActionAnalytics.OPEN);
+      SyncManager.instance.callAnalytics(
+        context,
+        page: PageAnalytics.getPageAnalyticsFromModuleType(moduleType),
+        section: SectionAnalytics.ADD,
+        action: ActionAnalytics.OPEN,
+      );
       SyncManager.instance.callApiForCreateDiamondTrack(
         context,
         trackType,
@@ -1647,7 +1649,8 @@ openSharePopUp(BuildContext context) {
     Share.share(
         "876654878\n"
         "Invite code : 655765757"
-        "App link : $link", //------------------------------------------------------------------------------------------------------------------
+        "App link : $link",
+        //------------------------------------------------------------------------------------------------------------------
         subject: R.string.screenTitle.share,
         sharePositionOrigin:
             Rect.fromCenter(center: Offset.zero, width: 100, height: 100));
