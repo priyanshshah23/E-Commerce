@@ -56,6 +56,7 @@ class NavigationUtilities {
 
   /// A convenience method to push a new [MaterialPageRoute] to the [Navigator].
   static void push(Widget widget, {String name}) {
+
     key.currentState.push(MaterialPageRoute(
       builder: (context) => widget,
       settings: RouteSettings(name: name),
@@ -154,7 +155,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case VoiceSearch.route:
       screen = VoiceSearch();
       break;
-      
+
     case OfflineSearchHistory.route:
       screen = OfflineSearchHistory();
       break;

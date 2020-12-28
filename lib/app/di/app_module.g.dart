@@ -16,5 +16,6 @@ class _$AppModule extends AppModule {
     container.registerSingleton((c) => ServiceModule());
     container.registerSingleton((c) => CustomDialogs());
     container.registerSingleton((c) => NotificationManger());
+    container.registerSingleton((c) => AnalyticsReport());
   }
 }

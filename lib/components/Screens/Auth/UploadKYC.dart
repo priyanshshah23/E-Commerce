@@ -71,6 +71,7 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
   List<SelectionPopupModel> arrBusiness = [];
 
   _UploadKYCScreenState(this.moduleType, this.isFromDrawer);
+
   @override
   void initState() {
     super.initState();
@@ -645,31 +646,37 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
     User userData = app.resolve<PrefUtils>().getUserDetails();
     app.resolve<CustomDialogs>().showProgressDialog(context, "");
 
-    NetworkClient.getInstance.callApi(context, baseURL,
-        ApiConstants.uploadKyc + userData.account.id ?? "", MethodType.Put,
-        headers: NetworkClient.getInstance.getAuthHeaders(),
-        params: dict, successCallback: (response, message) {
-      app.resolve<CustomDialogs>().hideProgressDialog();
-      userData.account = Account.fromJson(response);
+    NetworkClient.getInstance.callApi(
+      context,
+      baseURL,
+      ApiConstants.uploadKyc + userData.account.id ?? "",
+      MethodType.Put,
+      headers: NetworkClient.getInstance.getAuthHeaders(),
+      params: dict,
+      successCallback: (response, message) {
+        app.resolve<CustomDialogs>().hideProgressDialog();
+        userData.account = Account.fromJson(response);
 
-      app.resolve<PrefUtils>().saveUser(userData);
-      app.resolve<CustomDialogs>().confirmDialog(context,
-          title: R.string.authStrings.kycSubmitted,
-          desc: R.string.authStrings.kycSubmmittedDesc,
-          positiveBtnTitle: R.string.authStrings.btnMoveToHome,
-          onClickCallback: (click) {
-        if (click == ButtonType.PositveButtonClick) {
-          AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-        }
-      });
-    }, failureCallback: (status, message) {
-      app.resolve<CustomDialogs>().hideProgressDialog();
-      print(message);
-      app.resolve<CustomDialogs>().confirmDialog(context,
-          title: R.string.commonString.error,
-          desc: message,
-          positiveBtnTitle: R.string.commonString.ok,
-          onClickCallback: (click) {});
-    });
+        app.resolve<PrefUtils>().saveUser(userData);
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            title: R.string.authStrings.kycSubmitted,
+            desc: R.string.authStrings.kycSubmmittedDesc,
+            positiveBtnTitle: R.string.authStrings.btnMoveToHome,
+            onClickCallback: (click) {
+          if (click == ButtonType.PositveButtonClick) {
+            AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+          }
+        });
+      },
+      failureCallback: (status, message) {
+        app.resolve<CustomDialogs>().hideProgressDialog();
+        print(message);
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            title: R.string.commonString.error,
+            desc: message,
+            positiveBtnTitle: R.string.commonString.ok,
+            onClickCallback: (click) {});
+      },
+    );
   }
 }

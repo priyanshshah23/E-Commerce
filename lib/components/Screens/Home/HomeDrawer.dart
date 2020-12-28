@@ -1,6 +1,7 @@
 import 'package:country_pickers/country_pickers.dart';
 import 'package:diamnow/Setting/SettingModel.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/AnalyticsReport.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/Screens/Home/DrawerModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';

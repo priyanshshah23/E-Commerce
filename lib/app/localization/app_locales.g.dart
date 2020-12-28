@@ -168,7 +168,6 @@ class AuthStrings {
   String passwordResetSuccessfully = "Password reset successfully.";
   String emailAndUname = "Email/UserName";
   String signUp = "Sign Up";
-  String requiredField = "*";
   String promotionText = "Promotional offers";
   String termsAndCondition = "Terms and Condition";
   String mustAgreeTermsAndCondition =
@@ -323,9 +322,6 @@ class CommonString {
   String popuplblCancel = "Cancel";
   String popupbtnRenew = "Renew";
   String ridelblAwesome = "Awesome";
-  String ridelblArrived = "You have arrived!";
-  String lblRideQues = "How was your Ride!";
-  String lblRideDesc = "Lorem ipsum dolor sit amet";
   String ridebtnDone = "Done";
   String offerPricePerCarat = "Offered Price (Cts)";
   String dropOffText = "Dropoff";
@@ -345,13 +341,9 @@ class CommonString {
   String cardNumberhint = "Card Number";
   String cvvhint = "CVV";
   String datehint = "MM/YY";
-  String btnBookTicket = "Book ticket";
-  String passengerName = "Passenger name";
   String btnTryAgain = "Try Again";
   String cityFirst = "Please select city first";
   String enterFareDetails = "Enter Sales Details";
-  String enterFareDetailDesc =
-      "You can not move back or change screen without adding sales details.";
   String fromDate = "From Date";
   String toDate = "Selected Date";
   String btnUnderstand = "I Understand";
@@ -983,43 +975,41 @@ class ChineseAuthStrings extends AuthStrings {
   @override
   get emailAndUname => "Email /用户名";
   @override
-  get signUp => "注册";
+  get signUp => "#ERROR!";
   @override
-  get requiredField => "*";
+  get promotionText => "#ERROR!";
   @override
-  get promotionText => "促销优惠";
+  get termsAndCondition => "#ERROR!";
   @override
-  get termsAndCondition => "附带条约";
+  get mustAgreeTermsAndCondition => "#ERROR!";
   @override
-  get mustAgreeTermsAndCondition => "你必须同意的条款和条件，以访客身分登入用户";
+  get forgotPasswordTitle => "#ERROR!";
   @override
-  get forgotPasswordTitle => "忘记密码";
+  get uploadKYC => "#ERROR!";
   @override
-  get uploadKYC => "上传KYC";
+  get uploadKycDesc => "#ERROR!";
   @override
-  get uploadKycDesc => "请上传您的KYC文件来访问完整的功能。";
+  get hintPhotoIdentityProof => "#ERROR!";
   @override
-  get hintPhotoIdentityProof => "照片的身份证明*";
+  get hintBussinerssProof => "#ERROR!";
   @override
-  get hintBussinerssProof => "商务身份证明*";
+  get btnFileUpload => "#ERROR!";
   @override
-  get btnFileUpload => "上传文件";
+  get pleaseUploadPhotoProof => "#ERROR!";
   @override
-  get pleaseUploadPhotoProof => "请上传照片的身份证明。";
+  get pleaseUploadBussinessProof => "#ERROR!";
   @override
-  get pleaseUploadBussinessProof => "请上传商家身份证明。";
+  get pleaseSelectFileFormat => "#ERROR!";
   @override
-  get pleaseSelectFileFormat => "请所有的上传以下格式的文件名：.jpg";
+  get kycSubmitted => "#ERROR!";
   @override
-  get kycSubmitted => "KYC提交";
+  get kycSubmmittedDesc => "#ERROR!";
   @override
-  get kycSubmmittedDesc => "您的KYC已成功提交。";
+  get btnMoveToHome => "#ERROR!";
   @override
-  get btnMoveToHome => "移至首页";
+  get kYCRejected => "#ERROR!";
   @override
-  get kYCRejected => "KYC拒绝";
-  @override
-  get kycRejectedDesc => "您的KYC已被拒绝。请重新上传您的文件KYC访问所有功能。";
+  get kycRejectedDesc => "#ERROR!";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -1282,12 +1272,6 @@ class ChineseCommonString extends CommonString {
   @override
   get ridelblAwesome => "真棒";
   @override
-  get ridelblArrived => "你已到达！";
-  @override
-  get lblRideQues => "如何为你的旅程！";
-  @override
-  get lblRideDesc => "Lorem存有悲坐阿梅德";
-  @override
   get ridebtnDone => "完成";
   @override
   get offerPricePerCarat => "所报的价格（CTS）";
@@ -1326,17 +1310,11 @@ class ChineseCommonString extends CommonString {
   @override
   get datehint => "MM / YY";
   @override
-  get btnBookTicket => "门票预订";
-  @override
-  get passengerName => "旅客姓名";
-  @override
   get btnTryAgain => "再试一次";
   @override
   get cityFirst => "首先请选择城市";
   @override
   get enterFareDetails => "进入销售详细信息";
-  @override
-  get enterFareDetailDesc => "不增加销售的细节，你可以背不动或改变屏幕。";
   @override
   get fromDate => "从日期";
   @override
@@ -1806,247 +1784,247 @@ class ChineseScreenTitle extends ScreenTitle {
   @override
   get todayDiscPer => "今天的折扣％";
   @override
-  get searchResult => "#ERROR!";
+  get searchResult => "搜索结果";
   @override
-  get searchDiamond => "#ERROR!";
+  get searchDiamond => "搜索钻石";
   @override
-  get basic => "#ERROR!";
+  get basic => "基本";
   @override
-  get advanced => "#ERROR!";
+  get advanced => "高级";
   @override
-  get stoneIdCertNo => "#ERROR!";
+  get stoneIdCertNo => "StoneID /证书号";
   @override
-  get takeSignature => "#ERROR!";
+  get takeSignature => "拿签名";
   @override
-  get optional => "#ERROR!";
+  get optional => "可选的";
   @override
   get myAddress => "我的地址";
   @override
   get expiryDate => "到期日";
   @override
-  get drivingLicenceDesc => "#ERROR!";
+  get drivingLicenceDesc => "你的驾驶执照图片";
   @override
-  get panDesc => "#ERROR!";
+  get panDesc => "您的PAN卡图片";
   @override
-  get selfie => "#ERROR!";
+  get selfie => "自拍";
   @override
-  get selfieDesc => "#ERROR!";
+  get selfieDesc => "您的自拍照片";
   @override
-  get pending => "#ERROR!";
+  get pending => "待定";
   @override
-  get rejected => "#ERROR!";
+  get rejected => "拒绝";
   @override
-  get uploadAgain => "#ERROR!";
+  get uploadAgain => "上传";
   @override
-  get remove => "#ERROR!";
+  get remove => "去掉";
   @override
-  get title => "#ERROR!";
+  get title => "标题";
   @override
   get description => "描述";
   @override
   get uploadYour => "上传";
   @override
-  get raiseDispute => "#ERROR!";
+  get raiseDispute => "告诉我们";
   @override
-  get drivingLicense => "#ERROR!";
+  get drivingLicense => "驾照";
   @override
-  get pANCard => "#ERROR!";
+  get pANCard => "PAN卡";
   @override
-  get saveContinue => "#ERROR!";
+  get saveContinue => "保存并继续";
   @override
-  get uploadFrontUmgText => "#ERROR!";
+  get uploadFrontUmgText => "上传正面图像";
   @override
-  get uploadPANCardImgText => "#ERROR!";
+  get uploadPANCardImgText => "上传PAN卡图片";
   @override
-  get uploadBackImageText => "#ERROR!";
+  get uploadBackImageText => "上传背面图像";
   @override
   get helptopic => "帮助主题";
   @override
-  get newRideSharingRequest => "#ERROR!";
+  get newRideSharingRequest => "新的拼车要求";
   @override
   get newRequest => "新要求";
   @override
   get welcomeTo => "欢迎来到";
   @override
-  get welcomeDesc => "#ERROR!";
+  get welcomeDesc => "登录到您的现有帐户摩尼宝石的";
   @override
   get forgotPassword => "忘了你的";
   @override
-  get forgotPasswordDesc => "#ERROR!";
+  get forgotPasswordDesc => "输入你的手机号码，以恢复您的密码。";
   @override
-  get termsAndCondition => "#ERROR!";
+  get termsAndCondition => "条款和条件";
   @override
-  get privacyPolicy => "#ERROR!";
+  get privacyPolicy => "隐私政策";
   @override
-  get aboutUS => "#ERROR!";
+  get aboutUS => "关于我们";
   @override
-  get otpVerification => "#ERROR!";
+  get otpVerification => "验证码换乘";
   @override
-  get otpVerificationDelivery => "#ERROR!";
+  get otpVerificationDelivery => "验证应答码";
   @override
-  get otpVerificationDeliveryDone => "#ERROR!";
+  get otpVerificationDeliveryDone => "验证码交付";
   @override
-  get enterOtp => "#ERROR!";
+  get enterOtp => "输入4位数";
   @override
-  get recoveryCode => "#ERROR!";
+  get recoveryCode => "恢复码";
   @override
   get editProfile => "编辑个人资料";
   @override
   get myProfile => "我的简历";
   @override
-  get reset => "#ERROR!";
+  get reset => "重启";
   @override
-  get yourPassword => "#ERROR!";
+  get yourPassword => "你的密码";
   @override
-  get photo => "#ERROR!";
+  get photo => "照片";
   @override
-  get otpDesc => "#ERROR!";
+  get otpDesc => "恢复码已发送到您的手机号码。请输入验证码。";
   @override
-  get otpVerifyDesc => "#ERROR!";
+  get otpVerifyDesc => "验证码已发送到您的手机号码。请输入验证码。";
   @override
-  get diamondDetail => "#ERROR!";
+  get diamondDetail => "钻石详细";
   @override
-  get home => "#ERROR!";
+  get home => "家";
   @override
-  get search => "#ERROR!";
+  get search => "搜索";
   @override
-  get quickSearch => "#ERROR!";
+  get quickSearch => "快速搜索";
   @override
   get newArrival => "新品到货";
   @override
-  get exclusiveDiamonds => "#ERROR!";
+  get exclusiveDiamonds => "独家钻石级";
   @override
-  get diamondOnAuction => "#ERROR!";
+  get diamondOnAuction => "钻石拍卖";
   @override
-  get stoneOfTheDays => "#ERROR!";
+  get stoneOfTheDays => "百思买";
   @override
   get myWatchlist => "我的关注";
   @override
-  get myBid => "#ERROR!";
+  get myBid => "我的出价";
   @override
-  get myHold => "#ERROR!";
+  get myHold => "我保持";
   @override
-  get myOrder => "#ERROR!";
+  get myOrder => "我的有序列表";
   @override
-  get confirmStone => "#ERROR!";
+  get confirmStone => "确认石";
   @override
-  get myOffice => "#ERROR!";
+  get myOffice => "我的办公室查看";
   @override
-  get myOffer => "#ERROR!";
+  get myOffer => "我的报价列表";
   @override
-  get myPurchased => "#ERROR!";
+  get myPurchased => "我购买的历史";
   @override
-  get mySavedSearch => "#ERROR!";
+  get mySavedSearch => "我保存的搜索";
   @override
-  get savedSearch => "#ERROR!";
+  get savedSearch => "保存的搜索";
   @override
-  get myDemand => "#ERROR!";
+  get myDemand => "我的需求";
   @override
   get contactUs => "联系我们";
   @override
-  get changePassword => "#ERROR!";
+  get changePassword => "更改密码";
   @override
-  get logout => "#ERROR!";
+  get logout => "登出";
   @override
-  get fareDetailsTitle => "#ERROR!";
+  get fareDetailsTitle => "进入销售详细信息";
   @override
-  get fairAmt => "#ERROR!";
+  get fairAmt => "销售额";
   @override
-  get noOfPassengers => "#ERROR!";
+  get noOfPassengers => "乘客人数";
   @override
-  get remarks => "#ERROR!";
+  get remarks => "备注";
   @override
-  get orderNo => "#ERROR!";
+  get orderNo => "订单号。";
   @override
-  get typeOfService => "#ERROR!";
+  get typeOfService => "服务类型";
   @override
-  get paymentType => "#ERROR!";
+  get paymentType => "支付方式*";
   @override
-  get recentlyView => "#ERROR!";
+  get recentlyView => "最近查看";
   @override
-  get uploadImgValidationText => "#ERROR!";
+  get uploadImgValidationText => "具有大小为5 MB或更少上传文件必须是.JPG，.JPEG，png格式或.PDF。";
   @override
-  get drivingLicenseHintText => "#ERROR!";
+  get drivingLicenseHintText => "驾驶执照号码";
   @override
-  get pANCARDHintText => "#ERROR!";
+  get pANCARDHintText => "PAN卡号码";
   @override
   get viewRide => "查看游戏机";
   @override
   get myVehicle => "我的车";
   @override
-  get personalDocument => "#ERROR!";
+  get personalDocument => "个人文档";
   @override
-  get help => "#ERROR!";
+  get help => "救命";
   @override
-  get about => "#ERROR!";
+  get about => "关于";
   @override
   get bankDetails => "银行明细";
   @override
-  get accountAndPayment => "#ERROR!";
+  get accountAndPayment => "帐户和付费";
   @override
-  get enquiry => "#ERROR!";
+  get enquiry => "查询";
   @override
-  get download => "#ERROR!";
+  get download => "下载";
   @override
   get addToCart => "添加到购物车";
   @override
-  get addToWatchList => "#ERROR!";
+  get addToWatchList => "加入观看列表";
   @override
-  get finalCalculation => "#ERROR!";
+  get finalCalculation => "最终计算";
   @override
   get bookOffice => "图书办公室";
   @override
-  get clearSelection => "#ERROR!";
+  get clearSelection => "清空选项";
   @override
-  get comment => "#ERROR!";
+  get comment => "评论";
   @override
-  get hold => "#ERROR!";
+  get hold => "保持";
   @override
-  get offer => "#ERROR!";
+  get offer => "提供";
   @override
   get officeView => "办公室查看";
   @override
   get placeOrder => "下订单";
   @override
-  get buyNow => "#ERROR!";
+  get buyNow => "立即购买";
   @override
   get cancelStone => "取消石";
   @override
-  get share => "#ERROR!";
+  get share => "分享";
   @override
-  get watchlist => "#ERROR!";
+  get watchlist => "监视列表";
   @override
-  get exclusive => "#ERROR!";
+  get exclusive => "独家";
   @override
-  get featuredStones => "#ERROR!";
+  get featuredStones => "特色石材";
   @override
-  get stoneOfDay => "#ERROR!";
+  get stoneOfDay => "日石";
   @override
-  get recentSearch => "#ERROR!";
+  get recentSearch => "最近的搜索";
   @override
-  get viewAll => "#ERROR!";
+  get viewAll => "查看全部";
   @override
-  get salesPersonDetail => "#ERROR!";
+  get salesPersonDetail => "销售人员详细";
   @override
-  get searchTitle => "#ERROR!";
+  get searchTitle => "搜索标题";
   @override
-  get enterSearchTitle => "#ERROR!";
+  get enterSearchTitle => "输入搜索标题";
   @override
   get timeSlots => "时隙";
   @override
-  get selectCustomDate => "#ERROR!";
+  get selectCustomDate => "选择自定义日期";
   @override
-  get availableSlot => "#ERROR!";
+  get availableSlot => "可用插槽";
   @override
-  get reqOfficeView => "#ERROR!";
+  get reqOfficeView => "要求事务查看";
   @override
   get myComments => "我的评论";
   @override
   get myReminder => "我的提醒";
   @override
-  get reminder => "#ERROR!";
+  get reminder => "提醒";
   @override
-  get manageAddress => "#ERROR!";
+  get manageAddress => "管理地址";
   @override
   get myAccount => "我的帐户";
   @override
@@ -2216,7 +2194,7 @@ class FrenchAuthStrings extends AuthStrings {
   @override
   get removeButton => "Retirer";
   @override
-  get gender => "Le genre";
+  get gender => "Le sexe";
   @override
   get male => "Masculin";
   @override
@@ -2311,49 +2289,41 @@ class FrenchAuthStrings extends AuthStrings {
   @override
   get emailAndUname => "Email /";
   @override
-  get signUp => "S'inscrire";
+  get signUp => "#ERROR!";
   @override
-  get requiredField => "*";
+  get promotionText => "#ERROR!";
   @override
-  get promotionText => "Offres promotionnelles";
+  get termsAndCondition => "#ERROR!";
   @override
-  get termsAndCondition => "Termes et conditions";
+  get mustAgreeTermsAndCondition => "#ERROR!";
   @override
-  get mustAgreeTermsAndCondition =>
-      "Vous devez accepter les termes et condition Se connecter comme Utilisateur invité";
+  get forgotPasswordTitle => "#ERROR!";
   @override
-  get forgotPasswordTitle => "Mot de passe oublié";
+  get uploadKYC => "#ERROR!";
   @override
-  get uploadKYC => "Télécharger KYC";
+  get uploadKycDesc => "#ERROR!";
   @override
-  get uploadKycDesc =>
-      "S'il vous plaît télécharger vos documents KYC pour accéder aux fonctionnalités complètes.";
+  get hintPhotoIdentityProof => "#ERROR!";
   @override
-  get hintPhotoIdentityProof => "Photo preuve d'identité *";
+  get hintBussinerssProof => "#ERROR!";
   @override
-  get hintBussinerssProof => "Identité d'entreprise Preuve *";
+  get btnFileUpload => "#ERROR!";
   @override
-  get btnFileUpload => "Téléchargement de fichiers";
+  get pleaseUploadPhotoProof => "#ERROR!";
   @override
-  get pleaseUploadPhotoProof =>
-      "S'il vous plaît télécharger Preuve photo d'identité.";
+  get pleaseUploadBussinessProof => "#ERROR!";
   @override
-  get pleaseUploadBussinessProof =>
-      "S'il vous plaît télécharger Une preuve d'identité d'entreprise.";
+  get pleaseSelectFileFormat => "#ERROR!";
   @override
-  get pleaseSelectFileFormat =>
-      "S'il vous plaît télécharger le fichier dans l'un des formats suivants: .jpg";
+  get kycSubmitted => "#ERROR!";
   @override
-  get kycSubmitted => "KYC Soumis";
+  get kycSubmmittedDesc => "#ERROR!";
   @override
-  get kycSubmmittedDesc => "Votre KYC a été soumis avec succès.";
+  get btnMoveToHome => "#ERROR!";
   @override
-  get btnMoveToHome => "Déplacer à l'accueil";
+  get kYCRejected => "#ERROR!";
   @override
-  get kYCRejected => "KYC Rejeté";
-  @override
-  get kycRejectedDesc =>
-      "Votre KYC a été rejetée. S'il vous plaît télécharger vos documents KYC à nouveau pour accéder à toutes les fonctionnalités.";
+  get kycRejectedDesc => "#ERROR!";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -2406,7 +2376,7 @@ class FrenchCommonString extends CommonString {
   @override
   get status => "Statut";
   @override
-  get save => "sauvegarder";
+  get save => "sauver";
   @override
   get verify => "Vérifier";
   @override
@@ -2617,12 +2587,6 @@ class FrenchCommonString extends CommonString {
   @override
   get ridelblAwesome => "Impressionnant";
   @override
-  get ridelblArrived => "Tu es arrivé!";
-  @override
-  get lblRideQues => "Comment était votre tour!";
-  @override
-  get lblRideDesc => "Lorem ipsum dolor sit amet";
-  @override
   get ridebtnDone => "Terminé";
   @override
   get offerPricePerCarat => "Prix ​​offert (Cts)";
@@ -2661,18 +2625,11 @@ class FrenchCommonString extends CommonString {
   @override
   get datehint => "MM / AA";
   @override
-  get btnBookTicket => "billet livre";
-  @override
-  get passengerName => "Nom du passager";
-  @override
   get btnTryAgain => "Réessayer";
   @override
   get cityFirst => "S'il vous plaît sélectionner la ville première";
   @override
   get enterFareDetails => "Entrez détails de vente";
-  @override
-  get enterFareDetailDesc =>
-      "Vous ne pouvez pas déplacer l'écran arrière ou changement sans ajouter des détails de vente.";
   @override
   get fromDate => "Partir de la date";
   @override
@@ -3179,247 +3136,251 @@ class FrenchScreenTitle extends ScreenTitle {
   @override
   get todayDiscPer => "Disque de% aujourd'hui";
   @override
-  get searchResult => "#ERROR!";
+  get searchResult => "Résultat de la recherche";
   @override
-  get searchDiamond => "#ERROR!";
+  get searchDiamond => "Recherche diamant";
   @override
-  get basic => "#ERROR!";
+  get basic => "De base";
   @override
-  get advanced => "#ERROR!";
+  get advanced => "Avancée";
   @override
-  get stoneIdCertNo => "#ERROR!";
+  get stoneIdCertNo => "StoneID / Cert Non";
   @override
-  get takeSignature => "#ERROR!";
+  get takeSignature => "Prenez Signature";
   @override
-  get optional => "#ERROR!";
+  get optional => "Optionnel";
   @override
   get myAddress => "Mon adresse";
   @override
   get expiryDate => "Date d'expiration";
   @override
-  get drivingLicenceDesc => "#ERROR!";
+  get drivingLicenceDesc => "image Votre permis de conduire";
   @override
-  get panDesc => "#ERROR!";
+  get panDesc => "Votre image de carte PAN";
   @override
-  get selfie => "#ERROR!";
+  get selfie => "selfie";
   @override
-  get selfieDesc => "#ERROR!";
+  get selfieDesc => "Votre image selfie";
   @override
-  get pending => "#ERROR!";
+  get pending => "En attente";
   @override
-  get rejected => "#ERROR!";
+  get rejected => "Rejeté";
   @override
-  get uploadAgain => "#ERROR!";
+  get uploadAgain => "Télécharger";
   @override
-  get remove => "#ERROR!";
+  get remove => "Retirer";
   @override
-  get title => "#ERROR!";
+  get title => "Titre";
   @override
   get description => "La description";
   @override
   get uploadYour => "Téléchargez votre";
   @override
-  get raiseDispute => "#ERROR!";
+  get raiseDispute => "Dis nous à propos de cela";
   @override
-  get drivingLicense => "#ERROR!";
+  get drivingLicense => "Permis de conduire";
   @override
-  get pANCard => "#ERROR!";
+  get pANCard => "PAN carte";
   @override
-  get saveContinue => "#ERROR!";
+  get saveContinue => "Sauvegarder et continuer";
   @override
-  get uploadFrontUmgText => "#ERROR!";
+  get uploadFrontUmgText => "Télécharger Image Front Side";
   @override
-  get uploadPANCardImgText => "#ERROR!";
+  get uploadPANCardImgText => "Télécharger PAN Carte image";
   @override
-  get uploadBackImageText => "#ERROR!";
+  get uploadBackImageText => "Réimportez Side image";
   @override
   get helptopic => "Sujets d'aide";
   @override
-  get newRideSharingRequest => "#ERROR!";
+  get newRideSharingRequest => "Les nouvelles demandes de covoiturage";
   @override
-  get newRequest => "#ERROR!";
+  get newRequest => "Les nouvelles demandes";
   @override
   get welcomeTo => "Bienvenue à";
   @override
-  get welcomeDesc => "#ERROR!";
+  get welcomeDesc => "Connectez-vous à votre compte existant de Mani Jewel";
   @override
   get forgotPassword => "Oublié votre";
   @override
-  get forgotPasswordDesc => "#ERROR!";
+  get forgotPasswordDesc =>
+      "Entrez votre numéro de mobile enregistré pour récupérer votre mot de passe.";
   @override
-  get termsAndCondition => "#ERROR!";
+  get termsAndCondition => "termes et conditions";
   @override
-  get privacyPolicy => "#ERROR!";
+  get privacyPolicy => "Politique de confidentialité";
   @override
-  get aboutUS => "#ERROR!";
+  get aboutUS => "À propos de nous";
   @override
-  get otpVerification => "#ERROR!";
+  get otpVerification => "Vérification du code de tour";
   @override
-  get otpVerificationDelivery => "#ERROR!";
+  get otpVerificationDelivery => "Vérification du code de ramassage";
   @override
-  get otpVerificationDeliveryDone => "#ERROR!";
+  get otpVerificationDeliveryDone => "Vérification du code de livraison";
   @override
-  get enterOtp => "#ERROR!";
+  get enterOtp => "Entrez 4 chiffres";
   @override
-  get recoveryCode => "#ERROR!";
+  get recoveryCode => "Code de récupération";
   @override
   get editProfile => "Editer le profil";
   @override
   get myProfile => "Mon profil";
   @override
-  get reset => "#ERROR!";
+  get reset => "Réinitialiser";
   @override
-  get yourPassword => "#ERROR!";
+  get yourPassword => "Votre mot de passe";
   @override
-  get photo => "#ERROR!";
+  get photo => "Photo";
   @override
-  get otpDesc => "#ERROR!";
+  get otpDesc =>
+      "Le code de récupération a été envoyé à votre numéro de téléphone mobile. S'il vous plaît entrer le code.";
   @override
-  get otpVerifyDesc => "#ERROR!";
+  get otpVerifyDesc =>
+      "Le code de vérification a été envoyé à votre numéro de téléphone mobile. S'il vous plaît entrer le code.";
   @override
-  get diamondDetail => "#ERROR!";
+  get diamondDetail => "Détail diamant";
   @override
-  get home => "#ERROR!";
+  get home => "Accueil";
   @override
-  get search => "#ERROR!";
+  get search => "Chercher";
   @override
-  get quickSearch => "#ERROR!";
+  get quickSearch => "Recherche rapide";
   @override
   get newArrival => "Nouvelle arrivee";
   @override
-  get exclusiveDiamonds => "#ERROR!";
+  get exclusiveDiamonds => "Diamants exclusifs";
   @override
-  get diamondOnAuction => "#ERROR!";
+  get diamondOnAuction => "Diamond sur Auction";
   @override
-  get stoneOfTheDays => "#ERROR!";
+  get stoneOfTheDays => "Meilleur achat";
   @override
-  get myWatchlist => "#ERROR!";
+  get myWatchlist => "Watchlist Mes";
   @override
-  get myBid => "#ERROR!";
+  get myBid => "mon offre";
   @override
-  get myHold => "#ERROR!";
+  get myHold => "mon attente";
   @override
-  get myOrder => "#ERROR!";
+  get myOrder => "Ma liste ordonnée";
   @override
-  get confirmStone => "#ERROR!";
+  get confirmStone => "Confirmer pierre";
   @override
-  get myOffice => "#ERROR!";
+  get myOffice => "Mon bureau Voir";
   @override
-  get myOffer => "#ERROR!";
+  get myOffer => "Ma liste d'offre";
   @override
-  get myPurchased => "#ERROR!";
+  get myPurchased => "Mon histoire achetée";
   @override
-  get mySavedSearch => "#ERROR!";
+  get mySavedSearch => "Mes recherches";
   @override
-  get savedSearch => "#ERROR!";
+  get savedSearch => "Recherche sauvegardée";
   @override
-  get myDemand => "#ERROR!";
+  get myDemand => "ma demande";
   @override
   get contactUs => "Nous contacter";
   @override
-  get changePassword => "#ERROR!";
+  get changePassword => "Changer le mot de passe";
   @override
-  get logout => "#ERROR!";
+  get logout => "Se déconnecter";
   @override
-  get fareDetailsTitle => "#ERROR!";
+  get fareDetailsTitle => "Entrez détails de vente";
   @override
-  get fairAmt => "#ERROR!";
+  get fairAmt => "Montant des ventes";
   @override
-  get noOfPassengers => "#ERROR!";
+  get noOfPassengers => "Nombre de passagers";
   @override
-  get remarks => "#ERROR!";
+  get remarks => "Remarques";
   @override
-  get orderNo => "#ERROR!";
+  get orderNo => "N ° de commande.";
   @override
-  get typeOfService => "#ERROR!";
+  get typeOfService => "Type de service";
   @override
-  get paymentType => "#ERROR!";
+  get paymentType => "Type de paiement*";
   @override
-  get recentlyView => "#ERROR!";
+  get recentlyView => "récemment Voir";
   @override
-  get uploadImgValidationText => "#ERROR!";
+  get uploadImgValidationText =>
+      "fichier Upload doit être .jpg, .jpeg, .png ou .pdf taille ayant 5 Mo ou moins.";
   @override
-  get drivingLicenseHintText => "#ERROR!";
+  get drivingLicenseHintText => "Numéro de permis de conduire";
   @override
-  get pANCARDHintText => "#ERROR!";
+  get pANCARDHintText => "PAN Numéro de la carte";
   @override
   get viewRide => "Manèges Voir";
   @override
   get myVehicle => "mon véhicule";
   @override
-  get personalDocument => "#ERROR!";
+  get personalDocument => "Documents personnels";
   @override
-  get help => "#ERROR!";
+  get help => "AIDEZ-MOI";
   @override
-  get about => "#ERROR!";
+  get about => "À propos";
   @override
-  get bankDetails => "#ERROR!";
+  get bankDetails => "Coordonnées bancaires";
   @override
-  get accountAndPayment => "#ERROR!";
+  get accountAndPayment => "Compte et paiement";
   @override
-  get enquiry => "#ERROR!";
+  get enquiry => "Enquête";
   @override
-  get download => "#ERROR!";
+  get download => "Télécharger";
   @override
   get addToCart => "Ajouter au chariot";
   @override
-  get addToWatchList => "#ERROR!";
+  get addToWatchList => "Ajouter à la liste";
   @override
-  get finalCalculation => "#ERROR!";
+  get finalCalculation => "Calcul final";
   @override
   get bookOffice => "Bureau du livre";
   @override
-  get clearSelection => "#ERROR!";
+  get clearSelection => "Effacer la sélection";
   @override
-  get comment => "#ERROR!";
+  get comment => "commentaires";
   @override
-  get hold => "#ERROR!";
+  get hold => "Tenir";
   @override
-  get offer => "#ERROR!";
+  get offer => "Offre";
   @override
   get officeView => "bureau Vue";
   @override
   get placeOrder => "Passer la commande";
   @override
-  get buyNow => "#ERROR!";
+  get buyNow => "Acheter maintenant";
   @override
-  get cancelStone => "#ERROR!";
+  get cancelStone => "annuler Pierre";
   @override
-  get share => "#ERROR!";
+  get share => "Partager";
   @override
-  get watchlist => "#ERROR!";
+  get watchlist => "liste";
   @override
-  get exclusive => "#ERROR!";
+  get exclusive => "Exclusif";
   @override
-  get featuredStones => "#ERROR!";
+  get featuredStones => "Pierres en vedette";
   @override
-  get stoneOfDay => "#ERROR!";
+  get stoneOfDay => "Pierres de jour";
   @override
-  get recentSearch => "#ERROR!";
+  get recentSearch => "Recherche récente";
   @override
-  get viewAll => "#ERROR!";
+  get viewAll => "Voir tout";
   @override
-  get salesPersonDetail => "#ERROR!";
+  get salesPersonDetail => "Détail des ventes Personne";
   @override
-  get searchTitle => "#ERROR!";
+  get searchTitle => "Recherche Titre";
   @override
-  get enterSearchTitle => "#ERROR!";
+  get enterSearchTitle => "Entrez votre recherche Titre";
   @override
   get timeSlots => "Tranches de temps";
   @override
-  get selectCustomDate => "#ERROR!";
+  get selectCustomDate => "Choisissez une date personnalisée";
   @override
-  get availableSlot => "#ERROR!";
+  get availableSlot => "Machines à sous disponibles";
   @override
-  get reqOfficeView => "#ERROR!";
+  get reqOfficeView => "Demander bureau Voir";
   @override
   get myComments => "Mon commentaire";
   @override
   get myReminder => "mon Rappel";
   @override
-  get reminder => "#ERROR!";
+  get reminder => "Rappel";
   @override
-  get manageAddress => "#ERROR!";
+  get manageAddress => "gérer les adresses";
   @override
   get myAccount => "Mon compte";
   @override
@@ -3427,7 +3388,7 @@ class FrenchScreenTitle extends ScreenTitle {
   @override
   get shareStone => "Partager Pierre";
   @override
-  get addRemider => "#ERROR!";
+  get addRemider => "Ajouter un rappel";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -3674,44 +3635,41 @@ class JapanAuthStrings extends AuthStrings {
   @override
   get emailAndUname => "メール/ユーザー名";
   @override
-  get signUp => "サインアップ";
+  get signUp => "#ERROR!";
   @override
-  get requiredField => "*";
+  get promotionText => "#ERROR!";
   @override
-  get promotionText => "プロモーション";
+  get termsAndCondition => "#ERROR!";
   @override
-  get termsAndCondition => "利用規約と条件";
+  get mustAgreeTermsAndCondition => "#ERROR!";
   @override
-  get mustAgreeTermsAndCondition => "あなたはゲストユーザーとしてサインインする用語と条件に同意する必要があります";
+  get forgotPasswordTitle => "#ERROR!";
   @override
-  get forgotPasswordTitle => "パスワードをお忘れですか";
+  get uploadKYC => "#ERROR!";
   @override
-  get uploadKYC => "アップロードKYC";
+  get uploadKycDesc => "#ERROR!";
   @override
-  get uploadKycDesc => "フル機能にアクセスするためにあなたのKYCのドキュメントをアップロードしてください。";
+  get hintPhotoIdentityProof => "#ERROR!";
   @override
-  get hintPhotoIdentityProof => "写真のアイデンティティの証明*";
+  get hintBussinerssProof => "#ERROR!";
   @override
-  get hintBussinerssProof => "ビジネスアイデンティティ証明*";
+  get btnFileUpload => "#ERROR!";
   @override
-  get btnFileUpload => "ファイルのアップロード";
+  get pleaseUploadPhotoProof => "#ERROR!";
   @override
-  get pleaseUploadPhotoProof => "写真のアイデンティティの証明をアップロードしてください。";
+  get pleaseUploadBussinessProof => "#ERROR!";
   @override
-  get pleaseUploadBussinessProof => "ビジネスアイデンティティの証明をアップロードしてください。";
+  get pleaseSelectFileFormat => "#ERROR!";
   @override
-  get pleaseSelectFileFormat => "次のいずれかの形式でファイルをアップロードしてください：.JPG";
+  get kycSubmitted => "#ERROR!";
   @override
-  get kycSubmitted => "KYC提出";
+  get kycSubmmittedDesc => "#ERROR!";
   @override
-  get kycSubmmittedDesc => "あなたのKYCは正常に送信されました。";
+  get btnMoveToHome => "#ERROR!";
   @override
-  get btnMoveToHome => "ホームへ移動";
+  get kYCRejected => "#ERROR!";
   @override
-  get kYCRejected => "KYC拒否";
-  @override
-  get kycRejectedDesc =>
-      "あなたのKYCは拒否されました。すべての機能にアクセスするには、再度ごKYCのドキュメントをアップロードしてください。";
+  get kycRejectedDesc => "#ERROR!";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -3974,12 +3932,6 @@ class JapanCommonString extends CommonString {
   @override
   get ridelblAwesome => "驚くばかり";
   @override
-  get ridelblArrived => "あなたは到着しました！";
-  @override
-  get lblRideQues => "どのようにあなたのライドでした！";
-  @override
-  get lblRideDesc => "Loremのイプサム嘆き座るAMET";
-  @override
   get ridebtnDone => "完了";
   @override
   get offerPricePerCarat => "提示された価格（CTS）";
@@ -4018,17 +3970,11 @@ class JapanCommonString extends CommonString {
   @override
   get datehint => "MM / YY";
   @override
-  get btnBookTicket => "ブックチケット";
-  @override
-  get passengerName => "旅客名";
-  @override
   get btnTryAgain => "再試行";
   @override
   get cityFirst => "最初の都市を選択してください";
   @override
   get enterFareDetails => "セールス詳細を入力します。";
-  @override
-  get enterFareDetailDesc => "あなたは販売の詳細を追加することなく、バックや変更画面を移動することはできません。";
   @override
   get fromDate => "日から";
   @override
@@ -4504,247 +4450,248 @@ class JapanScreenTitle extends ScreenTitle {
   @override
   get todayDiscPer => "";
   @override
-  get searchResult => "#ERROR!";
+  get searchResult => "検索結果";
   @override
-  get searchDiamond => "#ERROR!";
+  get searchDiamond => "検索ダイヤモンド";
   @override
-  get basic => "#ERROR!";
+  get basic => "基本的な";
   @override
-  get advanced => "#ERROR!";
+  get advanced => "高度";
   @override
-  get stoneIdCertNo => "#ERROR!";
+  get stoneIdCertNo => "StoneID /証明書はありません";
   @override
-  get takeSignature => "#ERROR!";
+  get takeSignature => "署名してください";
   @override
-  get optional => "#ERROR!";
+  get optional => "オプショナル";
   @override
   get myAddress => "私の住所";
   @override
   get expiryDate => "有効期限";
   @override
-  get drivingLicenceDesc => "#ERROR!";
+  get drivingLicenceDesc => "あなたの運転免許証の写真";
   @override
-  get panDesc => "#ERROR!";
+  get panDesc => "あなたのPANカード画像";
   @override
-  get selfie => "#ERROR!";
+  get selfie => "自分撮り";
   @override
-  get selfieDesc => "#ERROR!";
+  get selfieDesc => "あなたの自分撮り写真";
   @override
-  get pending => "#ERROR!";
+  get pending => "保留中";
   @override
-  get rejected => "#ERROR!";
+  get rejected => "拒否されました";
   @override
-  get uploadAgain => "#ERROR!";
+  get uploadAgain => "アップロード";
   @override
-  get remove => "#ERROR!";
+  get remove => "削除する";
   @override
-  get title => "#ERROR!";
+  get title => "題名";
   @override
   get description => "説明";
   @override
   get uploadYour => "アップロード";
   @override
-  get raiseDispute => "#ERROR!";
+  get raiseDispute => "それについて教えてください";
   @override
-  get drivingLicense => "#ERROR!";
+  get drivingLicense => "運転免許証";
   @override
-  get pANCard => "#ERROR!";
+  get pANCard => "PANカード";
   @override
-  get saveContinue => "#ERROR!";
+  get saveContinue => "保存して続行";
   @override
-  get uploadFrontUmgText => "#ERROR!";
+  get uploadFrontUmgText => "アップロード表面画像";
   @override
-  get uploadPANCardImgText => "#ERROR!";
+  get uploadPANCardImgText => "アップロードPANカードの画像";
   @override
-  get uploadBackImageText => "#ERROR!";
+  get uploadBackImageText => "アップロード裏面の画像";
   @override
   get helptopic => "ヘルプトピックス";
   @override
-  get newRideSharingRequest => "#ERROR!";
+  get newRideSharingRequest => "新ライド共有要求";
   @override
-  get newRequest => "#ERROR!";
+  get newRequest => "新しい要求";
   @override
   get welcomeTo => "へようこそ！";
   @override
-  get welcomeDesc => "#ERROR!";
+  get welcomeDesc => "マニジュエルの既存のアカウントにログイン";
   @override
   get forgotPassword => "忘れました";
   @override
-  get forgotPasswordDesc => "#ERROR!";
+  get forgotPasswordDesc => "あなたのパスワードを回復するために、ご登録の携帯電話番号を入力します。";
   @override
-  get termsAndCondition => "#ERROR!";
+  get termsAndCondition => "ご利用規約";
   @override
-  get privacyPolicy => "#ERROR!";
+  get privacyPolicy => "個人情報保護方針";
   @override
-  get aboutUS => "#ERROR!";
+  get aboutUS => "私たちに関しては";
   @override
-  get otpVerification => "#ERROR!";
+  get otpVerification => "ライドのコードを確認してください";
   @override
-  get otpVerificationDelivery => "#ERROR!";
+  get otpVerificationDelivery => "ピックアップコードを確認してください";
   @override
-  get otpVerificationDeliveryDone => "#ERROR!";
+  get otpVerificationDeliveryDone => "配達コードを確認してください";
   @override
-  get enterOtp => "#ERROR!";
+  get enterOtp => "4桁を入力します。";
   @override
-  get recoveryCode => "#ERROR!";
+  get recoveryCode => "回復コード";
   @override
   get editProfile => "プロファイル編集";
   @override
   get myProfile => "私のプロフィール";
   @override
-  get reset => "#ERROR!";
+  get reset => "リセット";
   @override
-  get yourPassword => "#ERROR!";
+  get yourPassword => "あなたのパスワード";
   @override
-  get photo => "#ERROR!";
+  get photo => "写真";
   @override
-  get otpDesc => "#ERROR!";
+  get otpDesc => "回復コードは、あなたの携帯電話番号に送信されました。コードを入力してください。";
   @override
-  get otpVerifyDesc => "#ERROR!";
+  get otpVerifyDesc => "検証コードは、あなたの携帯電話番号に送信されました。コードを入力してください。";
   @override
-  get diamondDetail => "#ERROR!";
+  get diamondDetail => "ダイヤモンドの詳細";
   @override
-  get home => "#ERROR!";
+  get home => "家";
   @override
-  get search => "#ERROR!";
+  get search => "探す";
   @override
-  get quickSearch => "#ERROR!";
+  get quickSearch => "クイック検索";
   @override
   get newArrival => "新参者";
   @override
-  get exclusiveDiamonds => "#ERROR!";
+  get exclusiveDiamonds => "独占ダイヤモンド";
   @override
-  get diamondOnAuction => "#ERROR!";
+  get diamondOnAuction => "ダイヤモンドでオークション";
   @override
-  get stoneOfTheDays => "#ERROR!";
+  get stoneOfTheDays => "ベストバイ";
   @override
-  get myWatchlist => "#ERROR!";
+  get myWatchlist => "マイウォッチリスト";
   @override
-  get myBid => "#ERROR!";
+  get myBid => "私の入札";
   @override
-  get myHold => "#ERROR!";
+  get myHold => "マイホールド";
   @override
-  get myOrder => "#ERROR!";
+  get myOrder => "私の順序付きリスト";
   @override
-  get confirmStone => "#ERROR!";
+  get confirmStone => "確認ストーン";
   @override
-  get myOffice => "#ERROR!";
+  get myOffice => "私のオフィスを見ます";
   @override
-  get myOffer => "#ERROR!";
+  get myOffer => "マイオファー一覧";
   @override
-  get myPurchased => "#ERROR!";
+  get myPurchased => "私の購入の歴史";
   @override
-  get mySavedSearch => "#ERROR!";
+  get mySavedSearch => "私の保存された検索";
   @override
-  get savedSearch => "#ERROR!";
+  get savedSearch => "保存された検索";
   @override
-  get myDemand => "#ERROR!";
+  get myDemand => "マイデマンド";
   @override
   get contactUs => "お問い合わせ";
   @override
-  get changePassword => "#ERROR!";
+  get changePassword => "パスワードを変更する";
   @override
-  get logout => "#ERROR!";
+  get logout => "ログアウト";
   @override
-  get fareDetailsTitle => "#ERROR!";
+  get fareDetailsTitle => "セールス詳細を入力します。";
   @override
-  get fairAmt => "#ERROR!";
+  get fairAmt => "売上高";
   @override
-  get noOfPassengers => "#ERROR!";
+  get noOfPassengers => "乗客の米国特許";
   @override
-  get remarks => "#ERROR!";
+  get remarks => "備考";
   @override
-  get orderNo => "#ERROR!";
+  get orderNo => "注文番号。";
   @override
-  get typeOfService => "#ERROR!";
+  get typeOfService => "サービスの種類";
   @override
-  get paymentType => "#ERROR!";
+  get paymentType => "支払いタイプ*";
   @override
-  get recentlyView => "#ERROR!";
+  get recentlyView => "最近で見ます";
   @override
-  get uploadImgValidationText => "#ERROR!";
+  get uploadImgValidationText =>
+      "アップロードファイルは.JPG、.JPEG、.pngのか.PDFたサイズ5メガバイト以下でなければなりません。";
   @override
-  get drivingLicenseHintText => "#ERROR!";
+  get drivingLicenseHintText => "運転免許証番号";
   @override
-  get pANCARDHintText => "#ERROR!";
+  get pANCARDHintText => "PANカード番号";
   @override
   get viewRide => "ビューライド";
   @override
   get myVehicle => "私の車";
   @override
-  get personalDocument => "#ERROR!";
+  get personalDocument => "パーソナルドキュメント";
   @override
-  get help => "#ERROR!";
+  get help => "助けて";
   @override
-  get about => "#ERROR!";
+  get about => "約";
   @override
-  get bankDetails => "#ERROR!";
+  get bankDetails => "銀行詳細";
   @override
-  get accountAndPayment => "#ERROR!";
+  get accountAndPayment => "アカウントとお支払い";
   @override
-  get enquiry => "#ERROR!";
+  get enquiry => "問い合わせ";
   @override
-  get download => "#ERROR!";
+  get download => "ダウンロード";
   @override
   get addToCart => "カートに追加";
   @override
-  get addToWatchList => "#ERROR!";
+  get addToWatchList => "気に入ったリストに追加する";
   @override
-  get finalCalculation => "#ERROR!";
+  get finalCalculation => "最終的な計算";
   @override
   get bookOffice => "ブックオフィス";
   @override
-  get clearSelection => "#ERROR!";
+  get clearSelection => "明確な選択";
   @override
-  get comment => "#ERROR!";
+  get comment => "注釈";
   @override
-  get hold => "#ERROR!";
+  get hold => "ホールド";
   @override
-  get offer => "#ERROR!";
+  get offer => "提供";
   @override
   get officeView => "オフィスビュー";
   @override
   get placeOrder => "オーダーします";
   @override
-  get buyNow => "#ERROR!";
+  get buyNow => "今買う";
   @override
-  get cancelStone => "#ERROR!";
+  get cancelStone => "ストーンをキャンセル";
   @override
-  get share => "#ERROR!";
+  get share => "シェア";
   @override
-  get watchlist => "#ERROR!";
+  get watchlist => "ウォッチリスト";
   @override
-  get exclusive => "#ERROR!";
+  get exclusive => "排他的";
   @override
-  get featuredStones => "#ERROR!";
+  get featuredStones => "注目のストーンズ";
   @override
-  get stoneOfDay => "#ERROR!";
+  get stoneOfDay => "デイのストーンズ";
   @override
-  get recentSearch => "#ERROR!";
+  get recentSearch => "最近の検索";
   @override
-  get viewAll => "#ERROR!";
+  get viewAll => "全てを見ます";
   @override
-  get salesPersonDetail => "#ERROR!";
+  get salesPersonDetail => "営業担当者の詳細";
   @override
-  get searchTitle => "#ERROR!";
+  get searchTitle => "検索タイトル";
   @override
-  get enterSearchTitle => "#ERROR!";
+  get enterSearchTitle => "検索タイトルを入力します。";
   @override
   get timeSlots => "タイムスロット";
   @override
-  get selectCustomDate => "#ERROR!";
+  get selectCustomDate => "カスタム日付を選択";
   @override
-  get availableSlot => "#ERROR!";
+  get availableSlot => "使用可能なスロット";
   @override
-  get reqOfficeView => "#ERROR!";
+  get reqOfficeView => "Officeのビューをリクエスト";
   @override
   get myComments => "私のコメント";
   @override
   get myReminder => "私のリマインダー";
   @override
-  get reminder => "#ERROR!";
+  get reminder => "リマインダー";
   @override
-  get manageAddress => "#ERROR!";
+  get manageAddress => "アドレスを管理";
   @override
   get myAccount => "マイアカウント";
   @override
@@ -4752,7 +4699,7 @@ class JapanScreenTitle extends ScreenTitle {
   @override
   get shareStone => "シェアストーン";
   @override
-  get addRemider => "#ERROR!";
+  get addRemider => "リマインダーを追加";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -4893,7 +4840,7 @@ class ItalianAuthStrings extends AuthStrings {
   @override
   get lblLogInErr => "Errore di accesso";
   @override
-  get enterYour => "Inserisci la tua";
+  get enterYour => "Inserisci il tuo";
   @override
   get details => "Dettagli";
   @override
@@ -5006,48 +4953,41 @@ class ItalianAuthStrings extends AuthStrings {
   @override
   get emailAndUname => "Email / Username";
   @override
-  get signUp => "Iscriviti";
+  get signUp => "#ERROR!";
   @override
-  get requiredField => "*";
+  get promotionText => "#ERROR!";
   @override
-  get promotionText => "Le offerte promozionali";
+  get termsAndCondition => "#ERROR!";
   @override
-  get termsAndCondition => "Termini e condizioni";
+  get mustAgreeTermsAndCondition => "#ERROR!";
   @override
-  get mustAgreeTermsAndCondition =>
-      "È necessario accettare i termini e condizioni per accedere come Utente ospite";
+  get forgotPasswordTitle => "#ERROR!";
   @override
-  get forgotPasswordTitle => "Ha dimenticato la password";
+  get uploadKYC => "#ERROR!";
   @override
-  get uploadKYC => "Carica KYC";
+  get uploadKycDesc => "#ERROR!";
   @override
-  get uploadKycDesc =>
-      "Si prega di caricare i documenti KYC per accedere alle funzioni complete.";
+  get hintPhotoIdentityProof => "#ERROR!";
   @override
-  get hintPhotoIdentityProof => "Foto Identità * Proof";
+  get hintBussinerssProof => "#ERROR!";
   @override
-  get hintBussinerssProof => "Affari identità * Proof";
+  get btnFileUpload => "#ERROR!";
   @override
-  get btnFileUpload => "Upload di file";
+  get pleaseUploadPhotoProof => "#ERROR!";
   @override
-  get pleaseUploadPhotoProof => "Si prega di caricare foto prova di identità.";
+  get pleaseUploadBussinessProof => "#ERROR!";
   @override
-  get pleaseUploadBussinessProof =>
-      "Si prega di caricare Affari prova di identità.";
+  get pleaseSelectFileFormat => "#ERROR!";
   @override
-  get pleaseSelectFileFormat =>
-      "Si prega di caricare file in uno dei seguenti formati: .jpg";
+  get kycSubmitted => "#ERROR!";
   @override
-  get kycSubmitted => "KYC Inserito";
+  get kycSubmmittedDesc => "#ERROR!";
   @override
-  get kycSubmmittedDesc => "Il tuo KYC è stato inviato con successo.";
+  get btnMoveToHome => "#ERROR!";
   @override
-  get btnMoveToHome => "Spostare alla Home";
+  get kYCRejected => "#ERROR!";
   @override
-  get kYCRejected => "KYC Rifiutato";
-  @override
-  get kycRejectedDesc =>
-      "Il tuo KYC è stata rifiutata. Si prega di caricare nuovamente i documenti KYC per accedere a tutte le caratteristiche.";
+  get kycRejectedDesc => "#ERROR!";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -5311,12 +5251,6 @@ class ItalianCommonString extends CommonString {
   @override
   get ridelblAwesome => "Eccezionale";
   @override
-  get ridelblArrived => "Sei arrivato!";
-  @override
-  get lblRideQues => "Come è stato il tuo Ride!";
-  @override
-  get lblRideDesc => "Lorem ipsum dolor sit amet";
-  @override
   get ridebtnDone => "Fatto";
   @override
   get offerPricePerCarat => "Offerto Prezzo (Cts)";
@@ -5355,18 +5289,11 @@ class ItalianCommonString extends CommonString {
   @override
   get datehint => "MM / AA";
   @override
-  get btnBookTicket => "Prenotare il biglietto";
-  @override
-  get passengerName => "Nome del passeggero";
-  @override
   get btnTryAgain => "Riprova";
   @override
   get cityFirst => "Si prega di selezionare la città prima";
   @override
   get enterFareDetails => "Inserire i dettagli di vendita";
-  @override
-  get enterFareDetailDesc =>
-      "Non è possibile spostare schermo posteriore o cambiamenti senza l'aggiunta di dettagli di vendita.";
   @override
   get fromDate => "dalla Data";
   @override
@@ -5863,247 +5790,251 @@ class ItalianScreenTitle extends ScreenTitle {
   @override
   get todayDiscPer => "Oggi disco%";
   @override
-  get searchResult => "#ERROR!";
+  get searchResult => "Risultato della ricerca";
   @override
-  get searchDiamond => "#ERROR!";
+  get searchDiamond => "Ricerca diamante";
   @override
-  get basic => "#ERROR!";
+  get basic => "Di base";
   @override
-  get advanced => "#ERROR!";
+  get advanced => "Avanzate";
   @override
-  get stoneIdCertNo => "#ERROR!";
+  get stoneIdCertNo => "StoneID / Cert No";
   @override
-  get takeSignature => "#ERROR!";
+  get takeSignature => "prendere Firma";
   @override
-  get optional => "#ERROR!";
+  get optional => "Opzionale";
   @override
   get myAddress => "Il mio indirizzo";
   @override
   get expiryDate => "Data di scadenza";
   @override
-  get drivingLicenceDesc => "#ERROR!";
+  get drivingLicenceDesc => "La tua foto patente di guida";
   @override
-  get panDesc => "#ERROR!";
+  get panDesc => "La tua foto carta di PAN";
   @override
-  get selfie => "#ERROR!";
+  get selfie => "Autoscatto";
   @override
-  get selfieDesc => "#ERROR!";
+  get selfieDesc => "La tua foto selfie";
   @override
-  get pending => "#ERROR!";
+  get pending => "in attesa di";
   @override
-  get rejected => "#ERROR!";
+  get rejected => "Respinto";
   @override
-  get uploadAgain => "#ERROR!";
+  get uploadAgain => "Caricare";
   @override
-  get remove => "#ERROR!";
+  get remove => "Rimuovere";
   @override
-  get title => "#ERROR!";
+  get title => "Titolo";
   @override
   get description => "Descrizione";
   @override
   get uploadYour => "Carica la tua";
   @override
-  get raiseDispute => "#ERROR!";
+  get raiseDispute => "Fatecelo sapere";
   @override
-  get drivingLicense => "#ERROR!";
+  get drivingLicense => "Patente di guida";
   @override
-  get pANCard => "#ERROR!";
+  get pANCard => "PAN carta";
   @override
-  get saveContinue => "#ERROR!";
+  get saveContinue => "Salva e continua";
   @override
-  get uploadFrontUmgText => "#ERROR!";
+  get uploadFrontUmgText => "L'immagine Caricare Front Side";
   @override
-  get uploadPANCardImgText => "#ERROR!";
+  get uploadPANCardImgText => "Carica PAN Immagine biglietto";
   @override
-  get uploadBackImageText => "#ERROR!";
+  get uploadBackImageText => "L'immagine Caricare Back Side";
   @override
   get helptopic => "Argomenti di aiuto";
   @override
-  get newRideSharingRequest => "#ERROR!";
+  get newRideSharingRequest => "Richieste Nuovo Autostop";
   @override
-  get newRequest => "#ERROR!";
+  get newRequest => "nuove richieste";
   @override
   get welcomeTo => "Benvenuto a";
   @override
-  get welcomeDesc => "#ERROR!";
+  get welcomeDesc => "Accedi al tuo account esistente di Mani Jewel";
   @override
   get forgotPassword => "Ho dimenticato il tuo";
   @override
-  get forgotPasswordDesc => "#ERROR!";
+  get forgotPasswordDesc =>
+      "Inserisci il tuo numero di cellulare registrato per recuperare la password.";
   @override
-  get termsAndCondition => "#ERROR!";
+  get termsAndCondition => "Termini & Condizioni";
   @override
-  get privacyPolicy => "#ERROR!";
+  get privacyPolicy => "politica sulla riservatezza";
   @override
-  get aboutUS => "#ERROR!";
+  get aboutUS => "Riguardo a noi";
   @override
-  get otpVerification => "#ERROR!";
+  get otpVerification => "Verifica il codice giro";
   @override
-  get otpVerificationDelivery => "#ERROR!";
+  get otpVerificationDelivery => "Verifica il codice Pickup";
   @override
-  get otpVerificationDeliveryDone => "#ERROR!";
+  get otpVerificationDeliveryDone => "Verifica il codice di consegna";
   @override
-  get enterOtp => "#ERROR!";
+  get enterOtp => "Inserire 4 cifre";
   @override
-  get recoveryCode => "#ERROR!";
+  get recoveryCode => "codice di ripristino";
   @override
   get editProfile => "Modifica Profilo";
   @override
   get myProfile => "Il mio profilo";
   @override
-  get reset => "#ERROR!";
+  get reset => "Ripristina";
   @override
-  get yourPassword => "#ERROR!";
+  get yourPassword => "La tua password";
   @override
-  get photo => "#ERROR!";
+  get photo => "Foto";
   @override
-  get otpDesc => "#ERROR!";
+  get otpDesc =>
+      "Il codice di ripristino è stato inviato al tuo numero di cellulare. Si prega di inserire il codice.";
   @override
-  get otpVerifyDesc => "#ERROR!";
+  get otpVerifyDesc =>
+      "Il codice di verifica è stato inviato al tuo numero di cellulare. Si prega di inserire il codice.";
   @override
-  get diamondDetail => "#ERROR!";
+  get diamondDetail => "diamante Dettaglio";
   @override
-  get home => "#ERROR!";
+  get home => "Casa";
   @override
-  get search => "#ERROR!";
+  get search => "Ricerca";
   @override
-  get quickSearch => "#ERROR!";
+  get quickSearch => "Ricerca rapida";
   @override
   get newArrival => "Nuovo arrivo";
   @override
-  get exclusiveDiamonds => "#ERROR!";
+  get exclusiveDiamonds => "Diamanti Exclusive";
   @override
-  get diamondOnAuction => "#ERROR!";
+  get diamondOnAuction => "Diamante all'asta";
   @override
-  get stoneOfTheDays => "#ERROR!";
+  get stoneOfTheDays => "Miglior acquisto";
   @override
-  get myWatchlist => "#ERROR!";
+  get myWatchlist => "mio Lista memo";
   @override
-  get myBid => "#ERROR!";
+  get myBid => "la mia offerta";
   @override
-  get myHold => "#ERROR!";
+  get myHold => "La mia attesa";
   @override
-  get myOrder => "#ERROR!";
+  get myOrder => "Il mio Elenco ordinato";
   @override
-  get confirmStone => "#ERROR!";
+  get confirmStone => "pietra Conferma";
   @override
-  get myOffice => "#ERROR!";
+  get myOffice => "My Office View";
   @override
-  get myOffer => "#ERROR!";
+  get myOffer => "Il mio Elenco prodotti";
   @override
-  get myPurchased => "#ERROR!";
+  get myPurchased => "La mia storia acquistati";
   @override
-  get mySavedSearch => "#ERROR!";
+  get mySavedSearch => "La mia ricerca salvata";
   @override
-  get savedSearch => "#ERROR!";
+  get savedSearch => "Saved Search";
   @override
-  get myDemand => "#ERROR!";
+  get myDemand => "La mia domanda";
   @override
   get contactUs => "Contattaci";
   @override
-  get changePassword => "#ERROR!";
+  get changePassword => "Cambia la password";
   @override
-  get logout => "#ERROR!";
+  get logout => "Disconnettersi";
   @override
-  get fareDetailsTitle => "#ERROR!";
+  get fareDetailsTitle => "Inserire i dettagli di vendita";
   @override
-  get fairAmt => "#ERROR!";
+  get fairAmt => "Ammontare delle vendite";
   @override
-  get noOfPassengers => "#ERROR!";
+  get noOfPassengers => "Numero dei passeggeri";
   @override
-  get remarks => "#ERROR!";
+  get remarks => "Osservazioni";
   @override
-  get orderNo => "#ERROR!";
+  get orderNo => "Numero d'ordine.";
   @override
-  get typeOfService => "#ERROR!";
+  get typeOfService => "Tipo di servizio";
   @override
-  get paymentType => "#ERROR!";
+  get paymentType => "Modalità di pagamento*";
   @override
-  get recentlyView => "#ERROR!";
+  get recentlyView => "recentemente View";
   @override
-  get uploadImgValidationText => "#ERROR!";
+  get uploadImgValidationText =>
+      "Carica file deve essere .jpg, .jpeg, .png o .pdf con dimensioni 5 MB o meno.";
   @override
-  get drivingLicenseHintText => "#ERROR!";
+  get drivingLicenseHintText => "Numero di patente";
   @override
-  get pANCARDHintText => "#ERROR!";
+  get pANCARDHintText => "PAN Numero di carta";
   @override
   get viewRide => "vista Rides";
   @override
   get myVehicle => "Il mio veicolo";
   @override
-  get personalDocument => "#ERROR!";
+  get personalDocument => "Documenti personali";
   @override
-  get help => "#ERROR!";
+  get help => "AIUTO";
   @override
-  get about => "#ERROR!";
+  get about => "Di";
   @override
-  get bankDetails => "#ERROR!";
+  get bankDetails => "Coordinate bancarie";
   @override
-  get accountAndPayment => "#ERROR!";
+  get accountAndPayment => "Conto e pagamento";
   @override
-  get enquiry => "#ERROR!";
+  get enquiry => "Inchiesta";
   @override
-  get download => "#ERROR!";
+  get download => "Scarica";
   @override
   get addToCart => "Aggiungi al carrello";
   @override
-  get addToWatchList => "#ERROR!";
+  get addToWatchList => "Aggiungere alla lista delle cose da vedere";
   @override
-  get finalCalculation => "#ERROR!";
+  get finalCalculation => "calcolo finale";
   @override
   get bookOffice => "book Office";
   @override
-  get clearSelection => "#ERROR!";
+  get clearSelection => "Annulla selezione";
   @override
-  get comment => "#ERROR!";
+  get comment => "Commenti";
   @override
-  get hold => "#ERROR!";
+  get hold => "Tenere";
   @override
-  get offer => "#ERROR!";
+  get offer => "Offrire";
   @override
   get officeView => "ufficio View";
   @override
   get placeOrder => "Invia ordine";
   @override
-  get buyNow => "#ERROR!";
+  get buyNow => "Acquista ora";
   @override
-  get cancelStone => "#ERROR!";
+  get cancelStone => "Annulla pietra";
   @override
-  get share => "#ERROR!";
+  get share => "Condividere";
   @override
-  get watchlist => "#ERROR!";
+  get watchlist => "Watchlist";
   @override
-  get exclusive => "#ERROR!";
+  get exclusive => "Esclusivo";
   @override
-  get featuredStones => "#ERROR!";
+  get featuredStones => "Pietre in vetrina";
   @override
-  get stoneOfDay => "#ERROR!";
+  get stoneOfDay => "Pietre di Giorno";
   @override
-  get recentSearch => "#ERROR!";
+  get recentSearch => "recenti Ricerca";
   @override
-  get viewAll => "#ERROR!";
+  get viewAll => "Mostra tutto";
   @override
-  get salesPersonDetail => "#ERROR!";
+  get salesPersonDetail => "Persona Vendite Dettaglio";
   @override
-  get searchTitle => "#ERROR!";
+  get searchTitle => "Ricerca Titolo";
   @override
-  get enterSearchTitle => "#ERROR!";
+  get enterSearchTitle => "Inserisci Ricerca Titolo";
   @override
   get timeSlots => "Fasce orarie";
   @override
-  get selectCustomDate => "#ERROR!";
+  get selectCustomDate => "Seleziona date personalizzato";
   @override
-  get availableSlot => "#ERROR!";
+  get availableSlot => "Slot disponibili";
   @override
-  get reqOfficeView => "#ERROR!";
+  get reqOfficeView => "Richiedi Ufficio View";
   @override
   get myComments => "Il mio commento";
   @override
   get myReminder => "Il mio promemoria";
   @override
-  get reminder => "#ERROR!";
+  get reminder => "Promemoria";
   @override
-  get manageAddress => "#ERROR!";
+  get manageAddress => "gestire gli indirizzi";
   @override
   get myAccount => "Il mio account";
   @override
@@ -6111,7 +6042,7 @@ class ItalianScreenTitle extends ScreenTitle {
   @override
   get shareStone => "Condividi pietra";
   @override
-  get addRemider => "#ERROR!";
+  get addRemider => "Aggiungi promemoria";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -6238,7 +6169,7 @@ class SpanishAuthStrings extends AuthStrings {
   @override
   get backToLogin => "Atrás para iniciar sesión";
   @override
-  get firstName => "Primer nombre*";
+  get firstName => "Nombre de pila*";
   @override
   get name => "Nombre de usuario *";
   @override
@@ -6366,49 +6297,41 @@ class SpanishAuthStrings extends AuthStrings {
   @override
   get emailAndUname => "Email / Usuario";
   @override
-  get signUp => "Regístrate";
+  get signUp => "#ERROR!";
   @override
-  get requiredField => "*";
+  get promotionText => "#ERROR!";
   @override
-  get promotionText => "Ofertas promocionales";
+  get termsAndCondition => "#ERROR!";
   @override
-  get termsAndCondition => "Términos y Condiciones";
+  get mustAgreeTermsAndCondition => "#ERROR!";
   @override
-  get mustAgreeTermsAndCondition =>
-      "Debe aceptar los términos y condiciones de entrar como usuario invitado";
+  get forgotPasswordTitle => "#ERROR!";
   @override
-  get forgotPasswordTitle => "Se te olvidó tu contraseña";
+  get uploadKYC => "#ERROR!";
   @override
-  get uploadKYC => "Subir KYC";
+  get uploadKycDesc => "#ERROR!";
   @override
-  get uploadKycDesc =>
-      "Por favor, subir sus documentos KYC para acceder a funciones completas.";
+  get hintPhotoIdentityProof => "#ERROR!";
   @override
-  get hintPhotoIdentityProof => "Foto Identidad * Prueba";
+  get hintBussinerssProof => "#ERROR!";
   @override
-  get hintBussinerssProof => "Identidad de negocios * Prueba";
+  get btnFileUpload => "#ERROR!";
   @override
-  get btnFileUpload => "Subir archivo";
+  get pleaseUploadPhotoProof => "#ERROR!";
   @override
-  get pleaseUploadPhotoProof => "Por favor, sube fotos prueba de identidad.";
+  get pleaseUploadBussinessProof => "#ERROR!";
   @override
-  get pleaseUploadBussinessProof =>
-      "Por favor, sube Identidad negocio a prueba.";
+  get pleaseSelectFileFormat => "#ERROR!";
   @override
-  get pleaseSelectFileFormat =>
-      "Por favor, cargar el archivo en cualquiera de los formatos siguientes: .jpg";
+  get kycSubmitted => "#ERROR!";
   @override
-  get kycSubmitted => "KYC Enviado";
+  get kycSubmmittedDesc => "#ERROR!";
   @override
-  get kycSubmmittedDesc =>
-      "Su conocimiento del cliente se ha enviado correctamente.";
+  get btnMoveToHome => "#ERROR!";
   @override
-  get btnMoveToHome => "Mover a Inicio";
+  get kYCRejected => "#ERROR!";
   @override
-  get kYCRejected => "KYC Rechazado";
-  @override
-  get kycRejectedDesc =>
-      "Su conocimiento del cliente ha sido rechazada. Por favor, subir sus documentos KYC de nuevo para acceder a todas las funciones.";
+  get kycRejectedDesc => "#ERROR!";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -6672,12 +6595,6 @@ class SpanishCommonString extends CommonString {
   @override
   get ridelblAwesome => "Increíble";
   @override
-  get ridelblArrived => "¡Has llegado!";
-  @override
-  get lblRideQues => "¿Cómo fue su paseo!";
-  @override
-  get lblRideDesc => "Lorem ipsum dolor sit amet";
-  @override
   get ridebtnDone => "Hecho";
   @override
   get offerPricePerCarat => "Precio ofrecido (CTS)";
@@ -6716,18 +6633,11 @@ class SpanishCommonString extends CommonString {
   @override
   get datehint => "MM / YY";
   @override
-  get btnBookTicket => "billete de libro";
-  @override
-  get passengerName => "Nombre del pasajero";
-  @override
   get btnTryAgain => "Inténtalo de nuevo";
   @override
   get cityFirst => "Por favor, seleccione la primera ciudad";
   @override
   get enterFareDetails => "Entrar en detalles de ventas";
-  @override
-  get enterFareDetailDesc =>
-      "No se puede mover la pantalla hacia atrás o cambio sin la adición de detalles de las ventas.";
   @override
   get fromDate => "Partir de la fecha";
   @override
@@ -6928,13 +6838,13 @@ class SpanishCommonString extends CommonString {
   @override
   get reentermpin => "重新 输入 M-PIN";
   @override
-  get forgotmpin => "#ERROR!";
+  get forgotmpin => "忘记 了 M-PIN?";
   @override
-  get verifympin => "#ERROR!";
+  get verifympin => "验证 M-PIN";
   @override
   get enteryoursixdigitcode => "输入 您 的 6 位 M-PIN";
   @override
-  get changempin => "#ERROR!";
+  get changempin => "更改 M-PIN";
   @override
   get faceidandtouchnotenable => "FaceID / TouchId 在 您 的 手机 未 启用, 请 启用 使用 此 功能";
   @override
@@ -6944,7 +6854,7 @@ class SpanishCommonString extends CommonString {
   get enabletouchidtounlockmydiamonds =>
       "允许 使用 tocco ID 解锁 应用? 这 将 禁用 M-PIN. 你 确定 你 要 继续 ​​吗?";
   @override
-  get rememberme => "#ERROR!";
+  get rememberme => "记得 我";
   @override
   get usertouchid => "使用 触摸 标识";
   @override
@@ -7221,247 +7131,252 @@ class SpanishScreenTitle extends ScreenTitle {
   @override
   get todayDiscPer => "de hoy Disco%";
   @override
-  get searchResult => "#ERROR!";
+  get searchResult => "Resultado de búsqueda";
   @override
-  get searchDiamond => "#ERROR!";
+  get searchDiamond => "Buscar diamante";
   @override
-  get basic => "#ERROR!";
+  get basic => "Básico";
   @override
-  get advanced => "#ERROR!";
+  get advanced => "Avanzado";
   @override
-  get stoneIdCertNo => "#ERROR!";
+  get stoneIdCertNo => "StoneID / Cert n";
   @override
-  get takeSignature => "#ERROR!";
+  get takeSignature => "Firma para llevar";
   @override
-  get optional => "#ERROR!";
+  get optional => "Opcional";
   @override
   get myAddress => "Mi dirección";
   @override
   get expiryDate => "Fecha de caducidad";
   @override
-  get drivingLicenceDesc => "#ERROR!";
+  get drivingLicenceDesc => "Su conducción imagen de licencia";
   @override
-  get panDesc => "#ERROR!";
+  get panDesc => "Su tarjeta de foto PAN";
   @override
-  get selfie => "#ERROR!";
+  get selfie => "selfie";
   @override
-  get selfieDesc => "#ERROR!";
+  get selfieDesc => "Su imagen autofoto";
   @override
-  get pending => "#ERROR!";
+  get pending => "Pendiente";
   @override
-  get rejected => "#ERROR!";
+  get rejected => "Rechazado";
   @override
-  get uploadAgain => "#ERROR!";
+  get uploadAgain => "Subir";
   @override
-  get remove => "#ERROR!";
+  get remove => "Eliminar";
   @override
-  get title => "#ERROR!";
+  get title => "Título";
   @override
   get description => "Descripción";
   @override
   get uploadYour => "subir su";
   @override
-  get raiseDispute => "#ERROR!";
+  get raiseDispute => "contárnoslo";
   @override
-  get drivingLicense => "#ERROR!";
+  get drivingLicense => "Licencia de conducir";
   @override
-  get pANCard => "#ERROR!";
+  get pANCard => "Tarjeta de la cacerola";
   @override
-  get saveContinue => "#ERROR!";
+  get saveContinue => "Guardar y continuar";
   @override
-  get uploadFrontUmgText => "#ERROR!";
+  get uploadFrontUmgText => "Subir Frente lado de la imagen";
   @override
-  get uploadPANCardImgText => "#ERROR!";
+  get uploadPANCardImgText => "Tarjeta PAN Subiendo imagen";
   @override
-  get uploadBackImageText => "#ERROR!";
+  get uploadBackImageText => "Subir Volver lado de la imagen";
   @override
   get helptopic => "Temas de ayuda";
   @override
-  get newRideSharingRequest => "#ERROR!";
+  get newRideSharingRequest =>
+      "Las solicitudes nueva Agencia de viajes compartidos";
   @override
-  get newRequest => "#ERROR!";
+  get newRequest => "nuevas solicitudes";
   @override
   get welcomeTo => "Bienvenido a";
   @override
-  get welcomeDesc => "#ERROR!";
+  get welcomeDesc => "Ingrese a su cuenta existente de Mani Joya";
   @override
   get forgotPassword => "Ha olvidado su";
   @override
-  get forgotPasswordDesc => "#ERROR!";
+  get forgotPasswordDesc =>
+      "Introduzca su número de móvil registrado para recuperar su contraseña.";
   @override
-  get termsAndCondition => "#ERROR!";
+  get termsAndCondition => "Términos y condiciones";
   @override
-  get privacyPolicy => "#ERROR!";
+  get privacyPolicy => "Política de privacidad";
   @override
-  get aboutUS => "#ERROR!";
+  get aboutUS => "Sobre nosotros";
   @override
-  get otpVerification => "#ERROR!";
+  get otpVerification => "Verificar el código de paseo";
   @override
-  get otpVerificationDelivery => "#ERROR!";
+  get otpVerificationDelivery => "Verificar el código de recogida";
   @override
-  get otpVerificationDeliveryDone => "#ERROR!";
+  get otpVerificationDeliveryDone => "Verificar el código de Entrega";
   @override
-  get enterOtp => "#ERROR!";
+  get enterOtp => "Introduzca 4 dígitos";
   @override
-  get recoveryCode => "#ERROR!";
+  get recoveryCode => "Código de recuperación";
   @override
   get editProfile => "Editar perfil";
   @override
   get myProfile => "Mi perfil";
   @override
-  get reset => "#ERROR!";
+  get reset => "Reiniciar";
   @override
-  get yourPassword => "#ERROR!";
+  get yourPassword => "Tu contraseña";
   @override
-  get photo => "#ERROR!";
+  get photo => "Foto";
   @override
-  get otpDesc => "#ERROR!";
+  get otpDesc =>
+      "El código de recuperación fue enviado a su número de móvil. Por favor, introduzca el código.";
   @override
-  get otpVerifyDesc => "#ERROR!";
+  get otpVerifyDesc =>
+      "El código de verificación se envió a su número de móvil. Por favor, introduzca el código.";
   @override
-  get diamondDetail => "#ERROR!";
+  get diamondDetail => "Detalle de diamantes";
   @override
-  get home => "#ERROR!";
+  get home => "Casa";
   @override
-  get search => "#ERROR!";
+  get search => "Buscar";
   @override
-  get quickSearch => "#ERROR!";
+  get quickSearch => "Búsqueda rápida";
   @override
   get newArrival => "Nueva llegada";
   @override
-  get exclusiveDiamonds => "#ERROR!";
+  get exclusiveDiamonds => "Diamantes exclusivos";
   @override
-  get diamondOnAuction => "#ERROR!";
+  get diamondOnAuction => "Diamante en subasta";
   @override
-  get stoneOfTheDays => "#ERROR!";
+  get stoneOfTheDays => "La mejor compra";
   @override
-  get myWatchlist => "#ERROR!";
+  get myWatchlist => "lista";
   @override
-  get myBid => "#ERROR!";
+  get myBid => "mi subasta";
   @override
-  get myHold => "#ERROR!";
+  get myHold => "mi Hold";
   @override
-  get myOrder => "#ERROR!";
+  get myOrder => "Mi lista ordenada";
   @override
-  get confirmStone => "#ERROR!";
+  get confirmStone => "Piedra Confirmar";
   @override
-  get myOffice => "#ERROR!";
+  get myOffice => "Mi opinión de la oficina";
   @override
-  get myOffer => "#ERROR!";
+  get myOffer => "Mi Lista de producto";
   @override
-  get myPurchased => "#ERROR!";
+  get myPurchased => "Mi Historia comprada";
   @override
-  get mySavedSearch => "#ERROR!";
+  get mySavedSearch => "Mi búsqueda guardada";
   @override
-  get savedSearch => "#ERROR!";
+  get savedSearch => "búsqueda guardada";
   @override
-  get myDemand => "#ERROR!";
+  get myDemand => "mi demanda";
   @override
   get contactUs => "Contáctenos";
   @override
-  get changePassword => "#ERROR!";
+  get changePassword => "Cambia la contraseña";
   @override
-  get logout => "#ERROR!";
+  get logout => "Cerrar sesión";
   @override
-  get fareDetailsTitle => "#ERROR!";
+  get fareDetailsTitle => "Entrar en detalles de ventas";
   @override
-  get fairAmt => "#ERROR!";
+  get fairAmt => "Cantidad de ventas";
   @override
-  get noOfPassengers => "#ERROR!";
+  get noOfPassengers => "No. de Pasajeros";
   @override
-  get remarks => "#ERROR!";
+  get remarks => "observaciones";
   @override
-  get orderNo => "#ERROR!";
+  get orderNo => "N º de pedido.";
   @override
-  get typeOfService => "#ERROR!";
+  get typeOfService => "Tipo de servicio";
   @override
-  get paymentType => "#ERROR!";
+  get paymentType => "Tipo de pago*";
   @override
-  get recentlyView => "#ERROR!";
+  get recentlyView => "recientemente Vista";
   @override
-  get uploadImgValidationText => "#ERROR!";
+  get uploadImgValidationText =>
+      "Carga de archivos debe ser .jpg, .jpeg, .png o .pdf tiene un tamaño de 5 MB o menos.";
   @override
-  get drivingLicenseHintText => "#ERROR!";
+  get drivingLicenseHintText => "Número de licencia de conducir";
   @override
-  get pANCARDHintText => "#ERROR!";
+  get pANCARDHintText => "Número de tarjeta de PAN";
   @override
   get viewRide => "Ver paseos";
   @override
   get myVehicle => "mi Vehículo";
   @override
-  get personalDocument => "#ERROR!";
+  get personalDocument => "Documentos personales";
   @override
-  get help => "#ERROR!";
+  get help => "AYUDA";
   @override
-  get about => "#ERROR!";
+  get about => "Acerca de";
   @override
-  get bankDetails => "#ERROR!";
+  get bankDetails => "Detalles del banco";
   @override
-  get accountAndPayment => "#ERROR!";
+  get accountAndPayment => "Cuenta y Pago";
   @override
-  get enquiry => "#ERROR!";
+  get enquiry => "Investigación";
   @override
-  get download => "#ERROR!";
+  get download => "Descargar";
   @override
   get addToCart => "Añadir al carrito";
   @override
-  get addToWatchList => "#ERROR!";
+  get addToWatchList => "Añadir a lista de seguimiento";
   @override
-  get finalCalculation => "#ERROR!";
+  get finalCalculation => "El cálculo final";
   @override
   get bookOffice => "Oficina libro";
   @override
-  get clearSelection => "#ERROR!";
+  get clearSelection => "Selección clara";
   @override
-  get comment => "#ERROR!";
+  get comment => "comentarios";
   @override
-  get hold => "#ERROR!";
+  get hold => "Sostener";
   @override
-  get offer => "#ERROR!";
+  get offer => "Oferta";
   @override
   get officeView => "Vista de Oficina";
   @override
   get placeOrder => "Realizar pedido";
   @override
-  get buyNow => "#ERROR!";
+  get buyNow => "Compra ahora";
   @override
-  get cancelStone => "#ERROR!";
+  get cancelStone => "Cancelar Piedra";
   @override
-  get share => "#ERROR!";
+  get share => "Compartir";
   @override
-  get watchlist => "#ERROR!";
+  get watchlist => "lista";
   @override
-  get exclusive => "#ERROR!";
+  get exclusive => "Exclusivo";
   @override
-  get featuredStones => "#ERROR!";
+  get featuredStones => "Piedras destacados";
   @override
-  get stoneOfDay => "#ERROR!";
+  get stoneOfDay => "Piedras del Día";
   @override
-  get recentSearch => "#ERROR!";
+  get recentSearch => "Búsqueda reciente";
   @override
-  get viewAll => "#ERROR!";
+  get viewAll => "Ver todo";
   @override
-  get salesPersonDetail => "#ERROR!";
+  get salesPersonDetail => "Detalle persona de ventas";
   @override
-  get searchTitle => "#ERROR!";
+  get searchTitle => "búsqueda de títulos";
   @override
-  get enterSearchTitle => "#ERROR!";
+  get enterSearchTitle => "Introduzca Búsqueda de títulos";
   @override
   get timeSlots => "Ranuras de tiempo";
   @override
-  get selectCustomDate => "#ERROR!";
+  get selectCustomDate => "Seleccione la fecha de encargo";
   @override
-  get availableSlot => "#ERROR!";
+  get availableSlot => "Ranuras disponibles";
   @override
-  get reqOfficeView => "#ERROR!";
+  get reqOfficeView => "Solicitar opinión de la oficina";
   @override
   get myComments => "Mi comentario";
   @override
   get myReminder => "mi Recordatorio";
   @override
-  get reminder => "#ERROR!";
+  get reminder => "Recordatorio";
   @override
-  get manageAddress => "#ERROR!";
+  get manageAddress => "administrar direcciones";
   @override
   get myAccount => "Mi cuenta";
   @override
@@ -7469,7 +7384,7 @@ class SpanishScreenTitle extends ScreenTitle {
   @override
   get shareStone => "Compartir Piedra";
   @override
-  get addRemider => "#ERROR!";
+  get addRemider => "Agregar recordatorio";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -7538,7 +7453,7 @@ class GermanyAuthStrings extends AuthStrings {
   get verifyMobileDesc =>
       "Bitte überprüfen Handynummer, um das Profil zu aktualisieren.";
   @override
-  get verifyNow => "Jetzt überprüfen";
+  get verifyNow => "Jetzt Prüfen";
   @override
   get password => "Passwort";
   @override
@@ -7546,7 +7461,7 @@ class GermanyAuthStrings extends AuthStrings {
   @override
   get forgotPassword => "Passwort vergessen?";
   @override
-  get signInCap => "Einloggen";
+  get signInCap => "Anmelden";
   @override
   get moveToLogIn => "Gehen Sie zu Login";
   @override
@@ -7723,47 +7638,41 @@ class GermanyAuthStrings extends AuthStrings {
   @override
   get emailAndUname => "E-Mail / Benutzername";
   @override
-  get signUp => "Anmelden";
+  get signUp => "#ERROR!";
   @override
-  get requiredField => "*";
+  get promotionText => "#ERROR!";
   @override
-  get promotionText => "Werbeangebote";
+  get termsAndCondition => "#ERROR!";
   @override
-  get termsAndCondition => "Geschäftsbedingung";
+  get mustAgreeTermsAndCondition => "#ERROR!";
   @override
-  get mustAgreeTermsAndCondition =>
-      "Sie müssen zu Bedingungen und den Zustand zustimmen als Gast Benutzer anmelden";
+  get forgotPasswordTitle => "#ERROR!";
   @override
-  get forgotPasswordTitle => "Passwort vergessen";
+  get uploadKYC => "#ERROR!";
   @override
-  get uploadKYC => "hochladen KYC";
+  get uploadKycDesc => "#ERROR!";
   @override
-  get uploadKycDesc =>
-      "Bitte laden Sie Ihre KYC-Dokumente voll Funktionen zuzugreifen.";
+  get hintPhotoIdentityProof => "#ERROR!";
   @override
-  get hintPhotoIdentityProof => "Foto Identitätsnachweis *";
+  get hintBussinerssProof => "#ERROR!";
   @override
-  get hintBussinerssProof => "Geschäfts-Identität Proof *";
+  get btnFileUpload => "#ERROR!";
   @override
-  get btnFileUpload => "Datei-Upload";
+  get pleaseUploadPhotoProof => "#ERROR!";
   @override
-  get pleaseUploadPhotoProof => "Bitte laden Foto Identitätsnachweis.";
+  get pleaseUploadBussinessProof => "#ERROR!";
   @override
-  get pleaseUploadBussinessProof => "Bitte laden Geschäfts-Identität Beweis.";
+  get pleaseSelectFileFormat => "#ERROR!";
   @override
-  get pleaseSelectFileFormat =>
-      "Bitte laden Sie Datei in einem der folgenden Formate: .jpg";
+  get kycSubmitted => "#ERROR!";
   @override
-  get kycSubmitted => "KYC eingereicht";
+  get kycSubmmittedDesc => "#ERROR!";
   @override
-  get kycSubmmittedDesc => "Ihre KYC wurde erfolgreich abgegeben.";
+  get btnMoveToHome => "#ERROR!";
   @override
-  get btnMoveToHome => "Gehen Sie zu Start";
+  get kYCRejected => "#ERROR!";
   @override
-  get kYCRejected => "KYC Zurückgewiesen";
-  @override
-  get kycRejectedDesc =>
-      "Ihre KYC wurde abgelehnt. Bitte laden Sie Ihre KYC-Dokumente wieder alle Funktionen zugreifen zu können.";
+  get kycRejectedDesc => "#ERROR!";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -8026,12 +7935,6 @@ class GermanyCommonString extends CommonString {
   @override
   get ridelblAwesome => "Genial";
   @override
-  get ridelblArrived => "Du bist angekommen!";
-  @override
-  get lblRideQues => "Wie war Ihre Fahrt!";
-  @override
-  get lblRideDesc => "Lorem ipsum dolor sit amet";
-  @override
   get ridebtnDone => "Getan";
   @override
   get offerPricePerCarat => "Angeboten Preis (cts)";
@@ -8070,18 +7973,11 @@ class GermanyCommonString extends CommonString {
   @override
   get datehint => "MM / JJ";
   @override
-  get btnBookTicket => "Ticket buchen";
-  @override
-  get passengerName => "Passagier-Name";
-  @override
   get btnTryAgain => "Versuchen Sie es nochmal";
   @override
   get cityFirst => "Bitte wählen Sie eine Stadt zuerst";
   @override
   get enterFareDetails => "Geben Sie Verkaufsdetails";
-  @override
-  get enterFareDetailDesc =>
-      "Sie können nicht Bildschirm zurück oder ändern Details ohne Zugabe Umsatz bewegen.";
   @override
   get fromDate => "Ab Datum";
   @override
@@ -8147,7 +8043,7 @@ class GermanyCommonString extends CommonString {
   @override
   get personal => "persönlich";
   @override
-  get business => "Unternehmen";
+  get business => "Geschäft";
   @override
   get documents => "Unterlagen";
   @override
@@ -8576,247 +8472,251 @@ class GermanyScreenTitle extends ScreenTitle {
   @override
   get todayDiscPer => "Heutige Disc%";
   @override
-  get searchResult => "#ERROR!";
+  get searchResult => "Suchergebnis";
   @override
-  get searchDiamond => "#ERROR!";
+  get searchDiamond => "Suchen Diamant";
   @override
-  get basic => "#ERROR!";
+  get basic => "Basic";
   @override
-  get advanced => "#ERROR!";
+  get advanced => "fortgeschritten";
   @override
-  get stoneIdCertNo => "#ERROR!";
+  get stoneIdCertNo => "StoneID / Cert No";
   @override
-  get takeSignature => "#ERROR!";
+  get takeSignature => "nehmen Signature";
   @override
-  get optional => "#ERROR!";
+  get optional => "Optional";
   @override
   get myAddress => "Meine Adresse";
   @override
   get expiryDate => "Verfallsdatum";
   @override
-  get drivingLicenceDesc => "#ERROR!";
+  get drivingLicenceDesc => "Ihr Führerschein Bild";
   @override
-  get panDesc => "#ERROR!";
+  get panDesc => "Ihre PAN-Karte Bild";
   @override
-  get selfie => "#ERROR!";
+  get selfie => "Selfie";
   @override
-  get selfieDesc => "#ERROR!";
+  get selfieDesc => "Ihr selfie Bild";
   @override
-  get pending => "#ERROR!";
+  get pending => "steht aus";
   @override
-  get rejected => "#ERROR!";
+  get rejected => "Abgelehnt";
   @override
-  get uploadAgain => "#ERROR!";
+  get uploadAgain => "Hochladen";
   @override
-  get remove => "#ERROR!";
+  get remove => "Entfernen";
   @override
-  get title => "#ERROR!";
+  get title => "Titel";
   @override
   get description => "Beschreibung";
   @override
   get uploadYour => "laden Sie Ihre";
   @override
-  get raiseDispute => "#ERROR!";
+  get raiseDispute => "Erzähl uns davon";
   @override
-  get drivingLicense => "#ERROR!";
+  get drivingLicense => "Führerschein";
   @override
-  get pANCard => "#ERROR!";
+  get pANCard => "PAN-Karte";
   @override
-  get saveContinue => "#ERROR!";
+  get saveContinue => "Speichern und fortfahren";
   @override
-  get uploadFrontUmgText => "#ERROR!";
+  get uploadFrontUmgText => "Hochladen Front Side Bild";
   @override
-  get uploadPANCardImgText => "#ERROR!";
+  get uploadPANCardImgText => "Hochladen von PAN-Karte Bild";
   @override
-  get uploadBackImageText => "#ERROR!";
+  get uploadBackImageText => "Hochladen der Rückseite Bild";
   @override
   get helptopic => "Hilfethemen";
   @override
-  get newRideSharingRequest => "#ERROR!";
+  get newRideSharingRequest => "Neue Fahrt Freigabeanfragen";
   @override
-  get newRequest => "#ERROR!";
+  get newRequest => "neue Anfragen";
   @override
   get welcomeTo => "Willkommen zu";
   @override
-  get welcomeDesc => "#ERROR!";
+  get welcomeDesc => "Anmeldung zu Ihrem bestehenden Konto von Mani Jewel";
   @override
   get forgotPassword => "Haben Sie Ihr";
   @override
-  get forgotPasswordDesc => "#ERROR!";
+  get forgotPasswordDesc =>
+      "Geben Sie Ihre registrierte Mobiltelefonnummer, Ihr Passwort zu erholen.";
   @override
-  get termsAndCondition => "#ERROR!";
+  get termsAndCondition => "Terms & amp; Bedingungen";
   @override
-  get privacyPolicy => "#ERROR!";
+  get privacyPolicy => "Datenschutz-Bestimmungen";
   @override
-  get aboutUS => "#ERROR!";
+  get aboutUS => "Über uns";
   @override
-  get otpVerification => "#ERROR!";
+  get otpVerification => "Stellen Sie sicher, Fahrt-Code";
   @override
-  get otpVerificationDelivery => "#ERROR!";
+  get otpVerificationDelivery => "Stellen Sie sicher, Pickup-Code";
   @override
-  get otpVerificationDeliveryDone => "#ERROR!";
+  get otpVerificationDeliveryDone => "Stellen Sie sicher, Liefer-Code";
   @override
-  get enterOtp => "#ERROR!";
+  get enterOtp => "Geben Sie 4-stellige";
   @override
-  get recoveryCode => "#ERROR!";
+  get recoveryCode => "Wiederherstellungscode";
   @override
   get editProfile => "Profil bearbeiten";
   @override
   get myProfile => "Mein Profil";
   @override
-  get reset => "#ERROR!";
+  get reset => "Reset";
   @override
-  get yourPassword => "#ERROR!";
+  get yourPassword => "Ihr Passwort";
   @override
-  get photo => "#ERROR!";
+  get photo => "Foto";
   @override
-  get otpDesc => "#ERROR!";
+  get otpDesc =>
+      "Der Recovery-Code wurde an Ihre Handy-Nummer gesendet. Bitte geben Sie den Code ein.";
   @override
-  get otpVerifyDesc => "#ERROR!";
+  get otpVerifyDesc =>
+      "Der Bestätigungscode wurde an Ihre Handy-Nummer gesendet. Bitte geben Sie den Code ein.";
   @override
-  get diamondDetail => "#ERROR!";
+  get diamondDetail => "Diamant-Detail";
   @override
-  get home => "#ERROR!";
+  get home => "Zuhause";
   @override
-  get search => "#ERROR!";
+  get search => "Suche";
   @override
-  get quickSearch => "#ERROR!";
+  get quickSearch => "Schnelle Suche";
   @override
   get newArrival => "Neuankömmling";
   @override
-  get exclusiveDiamonds => "#ERROR!";
+  get exclusiveDiamonds => "exklusive Diamanten";
   @override
-  get diamondOnAuction => "#ERROR!";
+  get diamondOnAuction => "Diamant ersteigern";
   @override
-  get stoneOfTheDays => "#ERROR!";
+  get stoneOfTheDays => "best Buy";
   @override
-  get myWatchlist => "#ERROR!";
+  get myWatchlist => "Meine Beobachtungsliste";
   @override
-  get myBid => "#ERROR!";
+  get myBid => "Mein Gebot";
   @override
-  get myHold => "#ERROR!";
+  get myHold => "Mein Halten";
   @override
-  get myOrder => "#ERROR!";
+  get myOrder => "Meine Sortierte Liste";
   @override
-  get confirmStone => "#ERROR!";
+  get confirmStone => "Bestätigen Stein";
   @override
-  get myOffice => "#ERROR!";
+  get myOffice => "Mein Büro Blick";
   @override
-  get myOffer => "#ERROR!";
+  get myOffer => "Mein Angebot Liste";
   @override
-  get myPurchased => "#ERROR!";
+  get myPurchased => "Meine Gekaufte Geschichte";
   @override
-  get mySavedSearch => "#ERROR!";
+  get mySavedSearch => "Gespeicherte Suchen";
   @override
-  get savedSearch => "#ERROR!";
+  get savedSearch => "Gespeicherte Suche";
   @override
-  get myDemand => "#ERROR!";
+  get myDemand => "Meine Nachfrage";
   @override
   get contactUs => "Kontaktiere uns";
   @override
-  get changePassword => "#ERROR!";
+  get changePassword => "Passwort ändern";
   @override
-  get logout => "#ERROR!";
+  get logout => "Ausloggen";
   @override
-  get fareDetailsTitle => "#ERROR!";
+  get fareDetailsTitle => "Geben Sie Verkaufsdetails";
   @override
-  get fairAmt => "#ERROR!";
+  get fairAmt => "Verkaufsmenge";
   @override
-  get noOfPassengers => "#ERROR!";
+  get noOfPassengers => "Anzahl der Passagiere";
   @override
-  get remarks => "#ERROR!";
+  get remarks => "Bemerkungen";
   @override
-  get orderNo => "#ERROR!";
+  get orderNo => "Best.-Nr.";
   @override
-  get typeOfService => "#ERROR!";
+  get typeOfService => "Art der Leistung";
   @override
-  get paymentType => "#ERROR!";
+  get paymentType => "Zahlungsart*";
   @override
-  get recentlyView => "#ERROR!";
+  get recentlyView => "Kürzlich anzeigen";
   @override
-  get uploadImgValidationText => "#ERROR!";
+  get uploadImgValidationText =>
+      "Upload-Datei muss sein .jpg, JPEG-, PNG- oder PDF-Format mit 5 MB oder weniger.";
   @override
-  get drivingLicenseHintText => "#ERROR!";
+  get drivingLicenseHintText => "Führerscheinnummer";
   @override
-  get pANCARDHintText => "#ERROR!";
+  get pANCARDHintText => "PAN Kartennummer";
   @override
   get viewRide => "Ansicht Rides";
   @override
   get myVehicle => "Mein Fahrzeug";
   @override
-  get personalDocument => "#ERROR!";
+  get personalDocument => "persönliche Dokumente";
   @override
-  get help => "#ERROR!";
+  get help => "HILFE";
   @override
-  get about => "#ERROR!";
+  get about => "Über";
   @override
-  get bankDetails => "#ERROR!";
+  get bankDetails => "Bankdaten";
   @override
-  get accountAndPayment => "#ERROR!";
+  get accountAndPayment => "Konto- und Zahlungs";
   @override
-  get enquiry => "#ERROR!";
+  get enquiry => "Anfrage";
   @override
-  get download => "#ERROR!";
+  get download => "Herunterladen";
   @override
   get addToCart => "in den Warenkorb legen";
   @override
-  get addToWatchList => "#ERROR!";
+  get addToWatchList => "Auf die Beobachtungsliste";
   @override
-  get finalCalculation => "#ERROR!";
+  get finalCalculation => "endgültige Berechnung";
   @override
   get bookOffice => "Book Office";
   @override
-  get clearSelection => "#ERROR!";
+  get clearSelection => "Auswahl löschen";
   @override
-  get comment => "#ERROR!";
+  get comment => "Bemerkungen";
   @override
-  get hold => "#ERROR!";
+  get hold => "Halt";
   @override
-  get offer => "#ERROR!";
+  get offer => "Angebot";
   @override
   get officeView => "Büro Blick";
   @override
   get placeOrder => "Bestellung aufgeben";
   @override
-  get buyNow => "#ERROR!";
+  get buyNow => "Kaufe jetzt";
   @override
-  get cancelStone => "#ERROR!";
+  get cancelStone => "Abbrechen Stein";
   @override
-  get share => "#ERROR!";
+  get share => "Aktie";
   @override
-  get watchlist => "#ERROR!";
+  get watchlist => "Beobachtungsliste";
   @override
-  get exclusive => "#ERROR!";
+  get exclusive => "Exklusiv";
   @override
-  get featuredStones => "#ERROR!";
+  get featuredStones => "Besondere Steine";
   @override
-  get stoneOfDay => "#ERROR!";
+  get stoneOfDay => "Stone of Day";
   @override
-  get recentSearch => "#ERROR!";
+  get recentSearch => "Aktuelle Suche";
   @override
-  get viewAll => "#ERROR!";
+  get viewAll => "Alle ansehen";
   @override
-  get salesPersonDetail => "#ERROR!";
+  get salesPersonDetail => "Sales Person Details";
   @override
-  get searchTitle => "#ERROR!";
+  get searchTitle => "Suche Titel";
   @override
-  get enterSearchTitle => "#ERROR!";
+  get enterSearchTitle => "Geben Sie Suche Titel";
   @override
   get timeSlots => "Zeitfenster";
   @override
-  get selectCustomDate => "#ERROR!";
+  get selectCustomDate => "Wählen Sie Benutzerdefinierte Datum";
   @override
-  get availableSlot => "#ERROR!";
+  get availableSlot => "Verfügbare Plätze";
   @override
-  get reqOfficeView => "#ERROR!";
+  get reqOfficeView => "Anfordern Büro Blick";
   @override
   get myComments => "Mein Kommentar";
   @override
   get myReminder => "Meine Erinnerung";
   @override
-  get reminder => "#ERROR!";
+  get reminder => "Erinnerung";
   @override
-  get manageAddress => "#ERROR!";
+  get manageAddress => "Adressen verwalten";
   @override
   get myAccount => "Mein Konto";
   @override
@@ -8824,7 +8724,7 @@ class GermanyScreenTitle extends ScreenTitle {
   @override
   get shareStone => "Teile Stein";
   @override
-  get addRemider => "#ERROR!";
+  get addRemider => "In Erinnerung";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }

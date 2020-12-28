@@ -376,8 +376,13 @@ double getImageSize(IconSizeType imaegType) {
   }
 }
 
-getBottomButton(BuildContext context, VoidCallback onTap, String title,
-    {String firstButtonTitle, VoidCallback onCancel}) {
+getBottomButton(
+  BuildContext context,
+  VoidCallback onTap,
+  String title, {
+  String firstButtonTitle,
+  VoidCallback onCancel,
+}) {
   return Padding(
     padding: EdgeInsets.only(
       top: getSize(24),
@@ -450,23 +455,5 @@ openURLWithApp(String uri, BuildContext context, {bool isPop = false}) async {
   }
 }
 
-FirebaseAnalytics analytics = FirebaseAnalytics();
-FirebaseAnalyticsObserver observer =
-    FirebaseAnalyticsObserver(analytics: analytics);
 
-Future<void> _sendAnalyticsEvent({
-  @required String eventName,
-  @required Map<String, dynamic> parameterData,
-}) async {
 
-  await analytics.logEvent(
-    name: 'test_event',
-    parameters: <String, dynamic>{
-      'string': 'string',
-      'int': 42,
-      'long': 12345678910,
-      'double': 42.0,
-      'bool': true,
-    },
-  );
-}
