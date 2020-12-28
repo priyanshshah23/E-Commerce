@@ -13,6 +13,7 @@ import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
+import 'package:diamnow/components/CommonWidget/OverlayScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/DialogueList.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
@@ -308,112 +309,135 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: Scaffold(
-          backgroundColor: appTheme.whiteColor,
-          appBar: getAppBar(
-              context,
-              moduleType ==
-                      DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH
-                  ? "Search (Offline)"
-                  : R.string.screenTitle.searchDiamond,
-              bgColor: appTheme.whiteColor,
-              leadingButton: isFromDrawer
-                  ? getDrawerButton(context, true)
-                  : getBackButton(context),
-              centerTitle: false,
-              actionItems: [
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      arrList.forEach((element) {
-                        if (element is SelectionModel) {
-                          element.masters.forEach((element) {
-                            element.isSelected = false;
-                          });
-                          element.caratRangeChipsToShow = [];
-                        }
-                        if (element is KeyToSymbolModel) {
-                          element.masters.forEach((element) {
-                            element.isSelected = false;
-                          });
-                        }
-                        if (element is FromToModel) {
-                          element.valueFrom = "";
-                          element.valueTo = "";
-                        }
-                        if (element is ColorModel) {
-                          element.masters.forEach((element) {
-                            element.isSelected = false;
-                          });
-                          element.mainMasters.forEach((element) {
-                            element.isSelected = false;
-                          });
-                          element.groupMaster.forEach((element) {
-                            element.isSelected = false;
-                          });
-                          element.intensity.forEach((element) {
-                            element.isSelected = false;
-                          });
-                          element.overtone.forEach((element) {
-                            element.isSelected = false;
-                          });
-                        }
+      child: Stack(
+        children: [
+          Scaffold(
+            backgroundColor: appTheme.whiteColor,
+            appBar: getAppBar(
+                context,
+                moduleType ==
+                        DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH
+                    ? "Search (Offline)"
+                    : R.string.screenTitle.searchDiamond,
+                bgColor: appTheme.whiteColor,
+                leadingButton: isFromDrawer
+                    ? getDrawerButton(context, true)
+                    : getBackButton(context),
+                centerTitle: false,
+                actionItems: [
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        arrList.forEach((element) {
+                          if (element is SelectionModel) {
+                            element.masters.forEach((element) {
+                              element.isSelected = false;
+                            });
+                            element.caratRangeChipsToShow = [];
+                          }
+                          if (element is KeyToSymbolModel) {
+                            element.masters.forEach((element) {
+                              element.isSelected = false;
+                            });
+                          }
+                          if (element is FromToModel) {
+                            element.valueFrom = "";
+                            element.valueTo = "";
+                          }
+                          if (element is ColorModel) {
+                            element.masters.forEach((element) {
+                              element.isSelected = false;
+                            });
+                            element.mainMasters.forEach((element) {
+                              element.isSelected = false;
+                            });
+                            element.groupMaster.forEach((element) {
+                              element.isSelected = false;
+                            });
+                            element.intensity.forEach((element) {
+                              element.isSelected = false;
+                            });
+                            element.overtone.forEach((element) {
+                              element.isSelected = false;
+                            });
+                          }
+                        });
                       });
-                    });
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        right: getSize(8.0), left: getSize(8.0)),
-                    child: Image.asset(
-                      reset,
-                      height: getSize(20),
-                      width: getSize(20),
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          right: getSize(8.0), left: getSize(8.0)),
+                      child: Image.asset(
+                        reset,
+                        height: getSize(20),
+                        width: getSize(20),
+                      ),
                     ),
                   ),
-                ),
-                InkWell(
-                  onTap: () {
-                    NavigationUtilities.pushRoute(Notifications.route);
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        right: getSize(Spacing.rightPadding),
-                        left: getSize(8.0)),
-                    child: Image.asset(
-                      notification,
-                      height: getSize(20),
-                      width: getSize(20),
+                  InkWell(
+                    onTap: () {
+                      NavigationUtilities.pushRoute(Notifications.route);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          right: getSize(Spacing.rightPadding),
+                          left: getSize(8.0)),
+                      child: Image.asset(
+                        notification,
+                        height: getSize(20),
+                        width: getSize(20),
+                      ),
                     ),
                   ),
+                ]),
+            body: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(top: getSize(8)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      for (int i = 0; i < arrTab.length; i++)
+                        setTitleOfSegment(arrTab[i].title, i)
+                    ],
+                  ),
                 ),
-              ]),
-          body: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: getSize(8)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    for (int i = 0; i < arrTab.length; i++)
-                      setTitleOfSegment(arrTab[i].title, i)
-                  ],
+                // isNullEmptyOrFalse(arrTab)
+                //     ? SizedBox()
+                //     : SizedBox(height: getSize(16)),
+                // isNullEmptyOrFalse(arrTab) ? SizedBox() : _segmentedControl(),
+                Expanded(
+                  child: Container(
+                    color: Colors.transparent,
+                    child: isNullEmptyOrFalse(arrList)
+                        ? SizedBox()
+                        : getPageView(),
+                  ),
                 ),
-              ),
-              // isNullEmptyOrFalse(arrTab)
-              //     ? SizedBox()
-              //     : SizedBox(height: getSize(16)),
-              // isNullEmptyOrFalse(arrTab) ? SizedBox() : _segmentedControl(),
-              Expanded(
-                child: Container(
-                  color: Colors.transparent,
-                  child:
-                      isNullEmptyOrFalse(arrList) ? SizedBox() : getPageView(),
-                ),
-              ),
-            ],
+              ],
+            ),
+            bottomNavigationBar: getBottomTab(),
           ),
-          bottomNavigationBar: getBottomTab()),
+          app.resolve<PrefUtils>().getBool(PrefUtils().keySearchTour) == false
+              ? OverlayScreen(
+                  moduleType,
+                  finishTakeTour: () {
+                    setState(() {});
+                  },
+                  scrollIndex: (index) {
+                    // if (index == 0 || index == 1) {
+                    //   Scrollable.ensureVisible(searchKey.currentContext);
+                    // } else if (index == 2) {
+                    //   Scrollable.ensureVisible(savedSearchKey.currentContext);
+                    // } else if (index == 3) {
+                    //   Scrollable.ensureVisible(sellerKey.currentContext);
+                    // }
+                  },
+                )
+              : SizedBox(),
+        ],
+      ),
     );
   }
 

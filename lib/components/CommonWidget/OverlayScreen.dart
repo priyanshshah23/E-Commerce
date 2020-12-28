@@ -36,6 +36,11 @@ class _OverlayScreenState extends State<OverlayScreen> {
       arrOverlays = OverlayscreenModel().getHomeScreenOverlay();
     } else if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_PROFILE) {
       arrOverlays = OverlayscreenModel().getAccountScreenOverlay();
+    } else if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
+      arrOverlays = OverlayscreenModel().getFilterOverlay();
+    } else if (widget.moduleType ==
+        DiamondModuleConstant.MODULE_TYPE_DIAMOND_SEARCH_RESULT) {
+      arrOverlays = OverlayscreenModel().getSearchResultOverlay();
     }
   }
 
@@ -81,7 +86,11 @@ class _OverlayScreenState extends State<OverlayScreen> {
               ? arrOverlays[index].align
               : Alignment.bottomCenter,
       child: Padding(
-        padding: EdgeInsets.only(top: arrOverlays[index].topPadding),
+        padding: EdgeInsets.only(
+          top: num.parse(
+            arrOverlays[index].topPadding.toString(),
+          ),
+        ),
         child: Image.asset(
           arrOverlays[index].imageName,
           fit: BoxFit.scaleDown,
@@ -100,7 +109,7 @@ class _OverlayScreenState extends State<OverlayScreen> {
           children: [
             Container(
               margin: EdgeInsets.only(top: getSize(10)),
-              width: getSize(80),
+              width: getSize(60),
               height: getSize(40),
               child: AppButton.flat(
                 onTap: () {
@@ -123,7 +132,7 @@ class _OverlayScreenState extends State<OverlayScreen> {
                   )
                 : SizedBox(),
             Container(
-              width: getSize(80),
+              width: getSize(60),
               height: getSize(40),
               margin: EdgeInsets.only(top: getSize(15), left: getSize(0)),
               decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
@@ -157,6 +166,13 @@ class _OverlayScreenState extends State<OverlayScreen> {
       app.resolve<PrefUtils>().saveBoolean(PrefUtils().keyHomeTour, true);
     } else if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_PROFILE) {
       app.resolve<PrefUtils>().saveBoolean(PrefUtils().keyMyAccountTour, true);
+    } else if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
+      app.resolve<PrefUtils>().saveBoolean(PrefUtils().keySearchTour, true);
+    } else if (widget.moduleType ==
+        DiamondModuleConstant.MODULE_TYPE_DIAMOND_SEARCH_RESULT) {
+      app
+          .resolve<PrefUtils>()
+          .saveBoolean(PrefUtils().keySearchResultTour, true);
     }
   }
 }

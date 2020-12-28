@@ -1,6 +1,7 @@
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 
 class DiamondModuleConstant {
+  static const MODULE_TYPE_DIAMOND_SEARCH_RESULT = 0;
   static const MODULE_TYPE_SEARCH = 1;
   static const MODULE_TYPE_QUICK_SEARCH = 2;
   static const MODULE_TYPE_NEW_ARRIVAL = 3;

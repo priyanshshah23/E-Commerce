@@ -11,6 +11,7 @@ import 'package:diamnow/app/utils/AnalyticsReport.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
+import 'package:diamnow/components/CommonWidget/OverlayScreen.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
@@ -1061,47 +1062,71 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               0;
     }
 
-    return Scaffold(
-      backgroundColor: appTheme.whiteColor,
-      appBar: getAppBar(
-        context,
-        diamondConfig.getScreenTitle(),
-        bgColor: appTheme.whiteColor,
-        leadingButton: isFromDrawer
-            ? getDrawerButton(context, true)
-            : getBackButton(context),
-        centerTitle: false,
-        textalign: TextAlign.left,
-        actionItems: getToolbarItem(),
-      ),
-      bottomNavigationBar: getBottomTab(),
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            hasData
-                ? DiamondListHeader(
-                    diamondCalculation: diamondCalculation,
-                    moduleType: moduleType,
-                  )
-                : SizedBox(),
-            SizedBox(
-              height: getSize(16),
+    return Stack(
+      children: [
+        Scaffold(
+          backgroundColor: appTheme.whiteColor,
+          appBar: getAppBar(
+            context,
+            diamondConfig.getScreenTitle(),
+            bgColor: appTheme.whiteColor,
+            leadingButton: isFromDrawer
+                ? getDrawerButton(context, true)
+                : getBackButton(context),
+            centerTitle: false,
+            textalign: TextAlign.left,
+            actionItems: getToolbarItem(),
+          ),
+          bottomNavigationBar: getBottomTab(),
+          body: SafeArea(
+            child: Column(
+              children: <Widget>[
+                hasData
+                    ? DiamondListHeader(
+                        diamondCalculation: diamondCalculation,
+                        moduleType: moduleType,
+                      )
+                    : SizedBox(),
+                SizedBox(
+                  height: getSize(16),
+                ),
+                Expanded(
+                  child: diamondList,
+                ),
+                this.moduleType ==
+                        DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION
+                    ? AnimatedOpacity(
+                        // If the widget is visible, animate to 0.0 (invisible).
+                        // If the widget is hidden, animate to 1.0 (fully visible).
+                        opacity: isVisible ? 1.0 : 0.0,
+                        duration: Duration(milliseconds: 500),
+                        child: FinalCalculationWidget(
+                            arraDiamond, this.diamondFinalCalculation))
+                    : SizedBox(),
+              ],
             ),
-            Expanded(
-              child: diamondList,
-            ),
-            this.moduleType == DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION
-                ? AnimatedOpacity(
-                    // If the widget is visible, animate to 0.0 (invisible).
-                    // If the widget is hidden, animate to 1.0 (fully visible).
-                    opacity: isVisible ? 1.0 : 0.0,
-                    duration: Duration(milliseconds: 500),
-                    child: FinalCalculationWidget(
-                        arraDiamond, this.diamondFinalCalculation))
-                : SizedBox(),
-          ],
+          ),
         ),
-      ),
+        (app.resolve<PrefUtils>().getBool(PrefUtils().keySearchResultTour) ==
+                    false &&
+                isNullEmptyOrFalse(arraDiamond) == false)
+            ? OverlayScreen(
+                DiamondModuleConstant.MODULE_TYPE_DIAMOND_SEARCH_RESULT,
+                finishTakeTour: () {
+                  setState(() {});
+                },
+                scrollIndex: (index) {
+                  // if (index == 0 || index == 1) {
+                  //   Scrollable.ensureVisible(searchKey.currentContext);
+                  // } else if (index == 2) {
+                  //   Scrollable.ensureVisible(savedSearchKey.currentContext);
+                  // } else if (index == 3) {
+                  //   Scrollable.ensureVisible(sellerKey.currentContext);
+                  // }
+                },
+              )
+            : SizedBox(),
+      ],
     );
   }
 
