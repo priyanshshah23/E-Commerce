@@ -98,19 +98,19 @@ class OverlayscreenModel {
       imageName: searchResultOverlay1,
       isTop: true,
       align: Alignment.topRight,
-      topPadding: kBottomNavigationBarHeight - getSize(30),
+      topPadding: kBottomNavigationBarHeight,
     ));
     arrImages.add(OverlayImagesModel(
       imageName: searchResultOverlay2,
       isTop: true,
       align: Alignment.topRight,
-      topPadding: kBottomNavigationBarHeight - getSize(30),
+      topPadding: kBottomNavigationBarHeight,
     ));
     arrImages.add(OverlayImagesModel(
       imageName: searchResultOverlay3,
       isTop: true,
       align: Alignment.topRight,
-      topPadding: kBottomNavigationBarHeight - getSize(30),
+      topPadding: kBottomNavigationBarHeight,
     ));
     arrImages.add(OverlayImagesModel(
       imageName: searchResultOverlay4,

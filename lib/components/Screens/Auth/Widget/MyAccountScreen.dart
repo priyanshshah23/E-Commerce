@@ -363,7 +363,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           border: Border(bottom: BorderSide(color: appTheme.dividerColor)),
         ),
         padding: EdgeInsets.only(
-          top: getSize(20),
+          top: getSize(8),
           bottom: getSize(20),
           left: getSize(16),
           right: getSize(16),

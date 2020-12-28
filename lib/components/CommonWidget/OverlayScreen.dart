@@ -109,7 +109,7 @@ class _OverlayScreenState extends State<OverlayScreen> {
           children: [
             Container(
               margin: EdgeInsets.only(top: getSize(10)),
-              width: getSize(80),
+              width: getSize(60),
               height: getSize(40),
               child: AppButton.flat(
                 onTap: () {
@@ -132,7 +132,7 @@ class _OverlayScreenState extends State<OverlayScreen> {
                   )
                 : SizedBox(),
             Container(
-              width: getSize(80),
+              width: getSize(60),
               height: getSize(40),
               margin: EdgeInsets.only(top: getSize(15), left: getSize(0)),
               decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
