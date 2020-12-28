@@ -11,11 +11,17 @@ import 'package:flutter/cupertino.dart';
 import '../../main.dart';
 
 class AnalyticsReport {
-  FirebaseAnalytics analytics = FirebaseAnalytics();
+  static final AnalyticsReport shared = AnalyticsReport._internal();
+  static final FirebaseAnalytics analytics = FirebaseAnalytics();
+  FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(
+    analytics: analytics,
+  );
 
-//  FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(
-//    analytics: analytics,
-//  );
+  factory AnalyticsReport() {
+    return shared;
+  }
+
+  AnalyticsReport._internal();
 
   Future<void> sendAnalyticsData({
     @required BuildContext buildContext,
@@ -24,13 +30,6 @@ class AnalyticsReport {
     await analytics.logEvent(
       name: req.page,
       parameters: req.toJson(),
-//          parameters: <String, dynamic>{
-//            'string': 'string',
-//            'int': 42,
-//            'long': 12345678910,
-//            'double': 42.0,
-//            'bool': true,
-//          },
     );
     NetworkClient.getInstance.callApi(
       buildContext,
@@ -41,14 +40,14 @@ class AnalyticsReport {
       successCallback: (response, message) {},
       params: req.toJson(),
       failureCallback: (status, message) {
-        print(message);
-        app.resolve<CustomDialogs>().confirmDialog(
-              buildContext,
-              title: R.string.commonString.error,
-              desc: message,
-              positiveBtnTitle: R.string.commonString.ok,
-              onClickCallback: (click) {},
-            );
+//        print(message);
+//        app.resolve<CustomDialogs>().confirmDialog(
+//              buildContext,
+//              title: R.string.commonString.error,
+//              desc: message,
+//              positiveBtnTitle: R.string.commonString.ok,
+//              onClickCallback: (click) {},
+//            );
       },
     );
   }

@@ -134,6 +134,8 @@ class SectionAnalytics {
   static const String COMMENT = "comment";
   static const String REMINDER = "reminder";
   static const String DETAILS = "details";
+  static const String MYOFFER = "Offer";
+  static const String OFFLINESEARCH = "OfflineSearch";
 
   //Todo
   static const String SHARE = "Share";
@@ -191,6 +193,7 @@ class PageAnalytics {
   static const String OFFLINE_DOWNLOAD = "offlinedownload";
   static const String STONE_OF_THE_DAY = "stoneoftheday";
   static const String SCREENSHOT = "screenShot";
+  static const String MY_OFFER = "MyOffer";
 
   static String getPageAnalyticsFromModuleType(int moduleType) {
     if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_CART) {

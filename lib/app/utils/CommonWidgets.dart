@@ -454,6 +454,3 @@ openURLWithApp(String uri, BuildContext context, {bool isPop = false}) async {
         );
   }
 }
-
-
-

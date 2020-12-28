@@ -18,7 +18,6 @@ abstract class AppModule {
   @Register.singleton(ServiceModule)
   @Register.singleton(CustomDialogs)
   @Register.singleton(NotificationManger)
-  @Register.singleton(AnalyticsReport)
   void configure();
 }
 

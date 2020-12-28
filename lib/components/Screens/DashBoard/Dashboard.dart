@@ -514,8 +514,11 @@ class _DashboardState extends StatefulScreenWidgetState {
           Map<String, dynamic> dict = new HashMap();
           dict[ArgumentConstant.ModuleType] = model.type;
           dict[ArgumentConstant.IsFromDrawer] = false;
-          NavigationUtilities.pushRoute(DiamondListScreen.route,
-              type: RouteType.fade, args: dict);
+          NavigationUtilities.pushRoute(
+            DiamondListScreen.route,
+            type: RouteType.fade,
+            args: dict,
+          );
         }
       },
       child: Container(
