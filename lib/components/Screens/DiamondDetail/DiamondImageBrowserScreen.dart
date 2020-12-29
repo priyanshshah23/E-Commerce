@@ -20,23 +20,22 @@ import 'package:path/path.dart' as path;
 import 'package:share/share.dart';
 import 'package:downloads_path_provider/downloads_path_provider.dart';
 
-class DiamondImageBrowseScreen extends StatefulWidget {
+class DiamondImageBrowserScreen extends StatefulWidget {
   static const route = "DiamondImageBrowseScreen";
 
   List<DiamondDetailImagePagerModel> arrImages =
       List<DiamondDetailImagePagerModel>();
 
-  DiamondImageBrowseScreen(Map<String, dynamic> dictArgument) {
+  DiamondImageBrowserScreen(Map<String, dynamic> dictArgument) {
     arrImages = dictArgument["imageData"];
   }
 
   @override
-  _DiamondImageBrowseScreenState createState() =>
-      _DiamondImageBrowseScreenState();
+  _DiamondImageBrowserScreenState createState() =>
+      _DiamondImageBrowserScreenState();
 }
 
-class _DiamondImageBrowseScreenState extends State<DiamondImageBrowseScreen> {
-  ItemScrollController _scrollController = ItemScrollController();
+class _DiamondImageBrowserScreenState extends State<DiamondImageBrowserScreen> {
   int currentIndex = 0;
   PageController pageController;
 

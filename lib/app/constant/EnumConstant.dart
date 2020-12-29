@@ -189,6 +189,8 @@ class PageAnalytics {
   static const String ABOUT_US = "aboutus";
   static const String MESSAGE_TO_MD = "messagetomd";
   static const String CONTACT = "contact";
+  static const String LOGOUT = "contact";
+
   static const String PROFILE = "profile";
   static const String OFFLINE_DOWNLOAD = "offlinedownload";
   static const String STONE_OF_THE_DAY = "stoneoftheday";

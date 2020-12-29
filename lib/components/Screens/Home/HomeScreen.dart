@@ -3,6 +3,7 @@ import 'dart:collection';
 
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/AnalyticsReport.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Auth/Profile.dart';
@@ -18,6 +19,7 @@ import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
+import 'package:diamnow/models/AnalyticsModel/AnalyticsModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
@@ -45,6 +47,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  AnalyticsReq req = new AnalyticsReq();
 
   bool isExpand = false;
   bool isSwitched = false;
@@ -321,17 +324,23 @@ class _HomeScreenState extends State<HomeScreen> {
       if (selectedType == type) {
         return;
       }
-
+      req.action = ActionAnalytics.CLICK;
       switch (type) {
         case DiamondModuleConstant.MODULE_TYPE_HOME:
           openDashboard(type);
+          req.page = PageAnalytics.HOME;
+          req.section = SectionAnalytics.VIEW;
           break;
         case DiamondModuleConstant.MODULE_TYPE_SEARCH:
         case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH:
           openSearch(type);
+          req.page = PageAnalytics.OfflineSearchHistory;
+          req.section = SectionAnalytics.OFFLINESEARCH;
           break;
         case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
           openQuickSearch(type);
+          req.page = PageAnalytics.QUICK_SERACH;
+          req.section = SectionAnalytics.SEARCH;
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_CART:
         case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
@@ -345,46 +354,74 @@ class _HomeScreenState extends State<HomeScreen> {
         case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
         case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK:
           openDiamondList(type);
+          req.page = PageAnalytics.OfflineSearchHistory;
+          req.section = SectionAnalytics.OFFLINESEARCH;
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
         case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
           openDiamondList(type);
+          req.page = PageAnalytics.STONE_OF_THE_DAY;
+          req.section = SectionAnalytics.FILTER;
           break;
         case DiamondModuleConstant.MODULE_TYPE_PROFILE:
           openProfile(type);
+          req.page = PageAnalytics.PROFILE;
+          req.section = SectionAnalytics.VIEW;
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
         case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
           openDiamondOrderList(type);
+          req.page = PageAnalytics.MY_PURCHASE;
+          req.section = SectionAnalytics.DETAILS;
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
           openSavedSearch(type);
+          req.page = PageAnalytics.MYSAVED_SEARCH;
+          req.section = SectionAnalytics.SAVED_SEARCH;
           break;
         case DiamondModuleConstant.MODULE_TYPE_ABOUT_US:
           openAboutUs(type);
+          req.page = PageAnalytics.ABOUT_US;
+          req.section = SectionAnalytics.VIEW;
           break;
         case DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY:
           openPrivacyPolicy(type);
+          req.page = PageAnalytics.ABOUT_US;
+          req.section = SectionAnalytics.VIEW;
           break;
         case DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION:
           openTermsAndCondition(type);
+          req.page = PageAnalytics.ABOUT_US;
+          req.section = SectionAnalytics.VIEW;
           break;
         case DiamondModuleConstant.MODULE_TYPE_CONTACT_US:
           openContactUS(type);
+          req.page = PageAnalytics.CONTACT;
+          req.section = SectionAnalytics.VIEW;
           break;
         case DiamondModuleConstant.MODULE_TYPE_LOGOUT:
           logoutFromApp(context);
+          req.page = PageAnalytics.LOGOUT;
+          req.section = SectionAnalytics.VIEW;
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
           openMyDemand(type);
+          req.page = PageAnalytics.MY_DEMAND;
+          req.section = SectionAnalytics.VIEW;
           break;
         case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH_HISTORY:
           openOfflineSearchHistory(type);
+          req.page = PageAnalytics.OFFLINE_DOWNLOAD;
+          req.section = SectionAnalytics.OFFLINESEARCH;
           break;
       }
       if (type != DiamondModuleConstant.MODULE_TYPE_LOGOUT) {
         setState(() {});
       }
+      AnalyticsReport.shared.sendAnalyticsData(
+        buildContext: context,
+        req: req,
+      );
     }
   }
 

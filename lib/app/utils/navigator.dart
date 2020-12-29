@@ -15,8 +15,8 @@ import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
 import 'package:diamnow/components/Screens/Auth/UploadKYC.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
-import 'package:diamnow/components/Screens/DiamondDetail/DiamondImageBrowseScreen.dart';
-import 'package:diamnow/components/Screens/DiamondDetail/diamondDeepDetailScreen.dart';
+import 'package:diamnow/components/Screens/DiamondDetail/DiamondImageBrowserScreen.dart';
+import 'package:diamnow/components/Screens/DiamondDetail/DiamondDeepDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
@@ -162,8 +162,8 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case FilterScreen.route:
       screen = FilterScreen(arguments);
       break;
-    case DiamondImageBrowseScreen.route:
-      screen = DiamondImageBrowseScreen(arguments);
+    case DiamondImageBrowserScreen.route:
+      screen = DiamondImageBrowserScreen(arguments);
       break;
     case GuestSignInScreen.route:
       screen = GuestSignInScreen();

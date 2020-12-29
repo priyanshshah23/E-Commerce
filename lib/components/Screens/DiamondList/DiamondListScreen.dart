@@ -1140,15 +1140,20 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 List<DiamondModel> selectedList =
                     arraDiamond.where((element) => element.isSelected).toList();
                 if (!isNullEmptyOrFalse(selectedList)) {
-                  showBottomSheetForMenu(context, diamondConfig.arrMoreMenu,
-                      (manageClick) {
-                    if (manageClick.bottomTabModel.type ==
-                        ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
-                      clearSelection();
-                    } else {
-                      manageBottomMenuClick(manageClick.bottomTabModel);
-                    }
-                  }, R.string.commonString.more, isDisplaySelection: false);
+                  showBottomSheetForMenu(
+                    context,
+                    diamondConfig.arrMoreMenu,
+                    (manageClick) {
+                      if (manageClick.bottomTabModel.type ==
+                          ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
+                        clearSelection();
+                      } else {
+                        manageBottomMenuClick(manageClick.bottomTabModel);
+                      }
+                    },
+                    R.string.commonString.more,
+                    isDisplaySelection: false,
+                  );
                 } else {
                   app.resolve<CustomDialogs>().confirmDialog(
                         context,
@@ -1204,8 +1209,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                       SizedBox(
                         height: getSize(20),
                       ),
-                      Text("Status",
-                          style: appTheme.blackSemiBold18TitleColorblack),
+                      Text(
+                        "Status",
+                        style: appTheme.blackSemiBold18TitleColorblack,
+                      ),
                       SizedBox(
                         height: getSize(10),
                       ),
@@ -1214,9 +1221,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                         itemCount: diamondConfig.arrStatusMenu.length,
                         itemBuilder: (BuildContext context, int index) {
                           return getStatusDialogueRow(
-                              title: diamondConfig.arrStatusMenu[index].title,
-                              color: diamondConfig
-                                  .arrStatusMenu[index].imageColor);
+                            title: diamondConfig.arrStatusMenu[index].title,
+                            color:
+                                diamondConfig.arrStatusMenu[index].imageColor,
+                          );
                         },
                       ),
                       SizedBox(
@@ -1302,131 +1310,71 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       case DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH:
         req.page = PageAnalytics.MYSAVED_SEARCH;
         req.section = SectionAnalytics.SEARCH;
-        AnalyticsReport.shared.sendAnalyticsData(
-          buildContext: context,
-          req: req,
-        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
         req.page = PageAnalytics.SEARCH_RESULT;
         req.section = SectionAnalytics.SEARCH;
-        AnalyticsReport.shared.sendAnalyticsData(
-          buildContext: context,
-          req: req,
-        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR:
         req.page = PageAnalytics.MATCH_PAIRS;
         req.section = SectionAnalytics.MATCHPAIRS;
-        AnalyticsReport.shared.sendAnalyticsData(
-          buildContext: context,
-          req: req,
-        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
         req.page = PageAnalytics.NEW_GOODS;
         req.section = SectionAnalytics.NEWGOODS;
-        AnalyticsReport.shared.sendAnalyticsData(
-          buildContext: context,
-          req: req,
-        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
         req.page = PageAnalytics.MY_BID;
         req.section = SectionAnalytics.LIST;
-        AnalyticsReport.shared.sendAnalyticsData(
-          buildContext: context,
-          req: req,
-        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
         req.page = PageAnalytics.UPCOMING_DIAMOND;
         req.section = SectionAnalytics.LIST;
-        AnalyticsReport.shared.sendAnalyticsData(
-          buildContext: context,
-          req: req,
-        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
         req.page = PageAnalytics.EXCLUSIVE_DIAMOND;
         req.section = SectionAnalytics.EXCLUSIVEDIAMOND;
-        AnalyticsReport.shared.sendAnalyticsData(
-          buildContext: context,
-          req: req,
-        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_MY_BID:
         req.page = PageAnalytics.MY_BID;
         req.section = SectionAnalytics.LIST;
-        AnalyticsReport.shared.sendAnalyticsData(
-          buildContext: context,
-          req: req,
-        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
         req.page = PageAnalytics.MY_REMINDER;
         req.section = SectionAnalytics.REMINDER;
-        AnalyticsReport.shared.sendAnalyticsData(
-          buildContext: context,
-          req: req,
-        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_MY_CART:
         req.page = PageAnalytics.MY_CART;
         req.section = SectionAnalytics.CART;
-        AnalyticsReport.shared.sendAnalyticsData(
-          buildContext: context,
-          req: req,
-        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
         req.page = PageAnalytics.MY_WATCHLIST;
         req.section = SectionAnalytics.WATCHLIST;
-        AnalyticsReport.shared.sendAnalyticsData(
-          buildContext: context,
-          req: req,
-        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
         req.page = PageAnalytics.MY_ENQUIRY;
         req.section = SectionAnalytics.ENQUIRY;
-        AnalyticsReport.shared.sendAnalyticsData(
-          buildContext: context,
-          req: req,
-        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
         req.page = PageAnalytics.MY_OFFER;
         req.section = SectionAnalytics.MYOFFER;
-        AnalyticsReport.shared.sendAnalyticsData(
-          buildContext: context,
-          req: req,
-        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
         req.page = PageAnalytics.MY_COMMENT;
         req.section = SectionAnalytics.COMMENT;
-        AnalyticsReport.shared.sendAnalyticsData(
-          buildContext: context,
-          req: req,
-        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
         req.page = PageAnalytics.STONE_OF_THE_DAY;
         req.section = SectionAnalytics.LIST;
-        AnalyticsReport.shared.sendAnalyticsData(
-          buildContext: context,
-          req: req,
-        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH:
         req.page = PageAnalytics.OfflineSearchHistory;
         req.section = SectionAnalytics.OFFLINESEARCH;
-        AnalyticsReport.shared.sendAnalyticsData(
-          buildContext: context,
-          req: req,
-        );
         break;
     }
+    AnalyticsReport.shared.sendAnalyticsData(
+      buildContext: context,
+      req: req,
+    );
   }
 }

@@ -5,7 +5,7 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
-import 'package:diamnow/components/Screens/DiamondDetail/diamondDeepDetailScreen.dart';
+import 'package:diamnow/components/Screens/DiamondDetail/DiamondDeepDetailScreen.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/DiamondDetail/DiamondDetailUIModel.dart';

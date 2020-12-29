@@ -36,7 +36,7 @@ import 'package:share/share.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import 'DiamondImageBrowseScreen.dart';
+import 'DiamondImageBrowserScreen.dart';
 
 class DiamondDeepDetailScreen extends StatefulScreenWidget {
   List<DiamondDetailImagePagerModel> arrImages =
@@ -274,7 +274,7 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
                   Map<String, dynamic> dict = new HashMap();
                   dict["imageData"] = arrImages[index].arr;
                   NavigationUtilities.pushRoute(
-                    DiamondImageBrowseScreen.route,
+                    DiamondImageBrowserScreen.route,
                     args: dict,
                   );
                 },

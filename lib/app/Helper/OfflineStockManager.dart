@@ -266,12 +266,18 @@ class OfflineStockManager {
       {Function callBack}) {
     print("Diamonds found for offline order");
     NetworkClient.getInstance.callApi(
-        context, baseURL, ApiConstants.placeOrderOffline, MethodType.Post,
-        params: req, headers: NetworkClient.getInstance.getAuthHeaders(),
-        successCallback: (response, message) {
-      callBack();
-    }, failureCallback: (status, message) {
-      print(message);
-    });
+      context,
+      baseURL,
+      ApiConstants.placeOrderOffline,
+      MethodType.Post,
+      params: req,
+      headers: NetworkClient.getInstance.getAuthHeaders(),
+      successCallback: (response, message) {
+        callBack();
+      },
+      failureCallback: (status, message) {
+        print(message);
+      },
+    );
   }
 }

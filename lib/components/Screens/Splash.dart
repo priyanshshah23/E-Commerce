@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:collection';
 import 'dart:io';
 
 import 'package:diamnow/app/AppConfiguration/AppNavigation.dart';
@@ -11,13 +10,8 @@ import 'package:diamnow/app/localization/LocalizationHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:lottie/lottie.dart';
-import 'package:package_info/package_info.dart';
-
-import 'Auth/ForgetPassword.dart';
-import 'Version/VersionUpdate.dart';
 
 class Splash extends StatefulWidget {
   static const route = "/splash";

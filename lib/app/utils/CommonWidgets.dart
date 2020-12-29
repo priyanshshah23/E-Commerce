@@ -76,8 +76,9 @@ getDrawerButton(BuildContext context, bool isBlack) {
     padding: EdgeInsets.zero,
     onPressed: () {
       RxBus.post(
-          DrawerEvent(DiamondModuleConstant.MODULE_TYPE_OPEN_DRAWER, false),
-          tag: eventBusTag);
+        DrawerEvent(DiamondModuleConstant.MODULE_TYPE_OPEN_DRAWER, false),
+        tag: eventBusTag,
+      );
     },
     icon: Image.asset(
       menu,

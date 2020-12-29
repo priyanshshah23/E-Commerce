@@ -39,16 +39,7 @@ class AnalyticsReport {
       headers: NetworkClient.getInstance.getAuthHeaders(),
       successCallback: (response, message) {},
       params: req.toJson(),
-      failureCallback: (status, message) {
-//        print(message);
-//        app.resolve<CustomDialogs>().confirmDialog(
-//              buildContext,
-//              title: R.string.commonString.error,
-//              desc: message,
-//              positiveBtnTitle: R.string.commonString.ok,
-//              onClickCallback: (click) {},
-//            );
-      },
+      failureCallback: (status, message) {},
     );
   }
 }

@@ -102,6 +102,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
   DiamondConfig diamondConfig;
   DiamondCalculation diamondCalculation = DiamondCalculation();
   DiamondCalculation diamondFinalCalculation = DiamondCalculation();
+
   @override
   void initState() {
     super.initState();
@@ -252,7 +253,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
 
   Widget getBottomTab() {
     return SafeArea(
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
         Container(
           decoration: new BoxDecoration(
             boxShadow: [
@@ -284,7 +285,8 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                       R.string.commonString.cancel,
                       textAlign: TextAlign.center,
                       style: appTheme.blue14TextStyle.copyWith(
-                          fontSize: getFontSize(16), fontWeight: FontWeight.w500),
+                          fontSize: getFontSize(16),
+                          fontWeight: FontWeight.w500),
                     ),
                   ),
                 ),
@@ -316,7 +318,8 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                                         actionType,
                                         remark: _commentController.text.trim(),
                                         date: selectedPopUpDate,
-                                        companyName: _nameController.text.trim(),
+                                        companyName:
+                                            _nameController.text.trim(),
                                       );
                                     },
                                   ));
@@ -362,7 +365,8 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                             });
                         break;
                       default:
-                        diamondConfig.actionAll(context, diamondList, actionType);
+                        diamondConfig.actionAll(
+                            context, diamondList, actionType);
                         break;
                     }
                   },
@@ -607,24 +611,34 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
     app.resolve<CustomDialogs>().showProgressDialog(context, "");
 
     NetworkClient.getInstance.callApi(
-        context, baseURL, ApiConstants.updateOffer, MethodType.Post,
-        headers: NetworkClient.getInstance.getAuthHeaders(),
-        params: req, successCallback: (response, message) {
-      app.resolve<CustomDialogs>().hideProgressDialog();
-      app.resolve<CustomDialogs>().confirmDialog(context,
+      context,
+      baseURL,
+      ApiConstants.updateOffer,
+      MethodType.Post,
+      headers: NetworkClient.getInstance.getAuthHeaders(),
+      params: req,
+      successCallback: (response, message) {
+        app.resolve<CustomDialogs>().hideProgressDialog();
+        app.resolve<CustomDialogs>().confirmDialog(
+          context,
           title: "",
           desc: message,
-          positiveBtnTitle: R.string.commonString.ok, onClickCallback: (type) {
-        Navigator.pop(context, true);
-      });
-    }, failureCallback: (status, message) {
-      app.resolve<CustomDialogs>().hideProgressDialog();
-      app.resolve<CustomDialogs>().confirmDialog(context,
-          title: "",
-          desc: message,
-          positiveBtnTitle: R.string.commonString.ok, onClickCallback: (type) {
-        Navigator.pop(context);
-      });
-    });
+          positiveBtnTitle: R.string.commonString.ok,
+          onClickCallback: (type) {
+            Navigator.pop(context, true);
+          },
+        );
+      },
+      failureCallback: (status, message) {
+        app.resolve<CustomDialogs>().hideProgressDialog();
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            title: "",
+            desc: message,
+            positiveBtnTitle: R.string.commonString.ok,
+            onClickCallback: (type) {
+          Navigator.pop(context);
+        });
+      },
+    );
   }
 }
