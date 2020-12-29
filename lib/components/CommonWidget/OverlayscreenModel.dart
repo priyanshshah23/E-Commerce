@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:diamnow/app/app.export.dart';
@@ -99,6 +100,19 @@ class OverlayscreenModel {
     List<OverlayImagesModel> arrImages = [];
     arrImages.add(
       OverlayImagesModel(
+        imageName: searchResultOverlay0,
+        isTop: true,
+        align: Alignment.topRight,
+        topPadding: Device.get().isIphoneX
+            ? window.viewPadding.top -
+                getSize(52) -
+                (kBottomNavigationBarHeight / 2)
+            : window.viewPadding.top -
+                (Platform.isAndroid ? getSize(40) : getSize(8)),
+      ),
+    );
+    arrImages.add(
+      OverlayImagesModel(
         imageName: searchResultOverlay1,
         isTop: true,
         align: Alignment.topRight,
@@ -106,7 +120,8 @@ class OverlayscreenModel {
             ? window.viewPadding.top -
                 getSize(52) -
                 (kBottomNavigationBarHeight / 2)
-            : window.viewPadding.top - getSize(40),
+            : window.viewPadding.top -
+                (Platform.isAndroid ? getSize(40) : getSize(8)),
       ),
     );
     arrImages.add(OverlayImagesModel(
@@ -117,7 +132,8 @@ class OverlayscreenModel {
           ? window.viewPadding.top -
               getSize(52) -
               (kBottomNavigationBarHeight / 2)
-          : window.viewPadding.top,
+          : window.viewPadding.top -
+              (Platform.isAndroid ? getSize(40) : getSize(8)),
     ));
     arrImages.add(OverlayImagesModel(
       imageName: searchResultOverlay3,
@@ -127,7 +143,8 @@ class OverlayscreenModel {
           ? window.viewPadding.top -
               getSize(52) -
               (kBottomNavigationBarHeight / 2)
-          : window.viewPadding.top,
+          : window.viewPadding.top -
+              (Platform.isAndroid ? getSize(40) : getSize(8)),
     ));
     arrImages.add(OverlayImagesModel(
       imageName: searchResultOverlay4,
@@ -157,7 +174,8 @@ class OverlayscreenModel {
           ? window.viewPadding.top -
               getSize(44) -
               (kBottomNavigationBarHeight / 2)
-          : window.viewPadding.top,
+          : window.viewPadding.top -
+              (Platform.isAndroid ? getSize(40) : getSize(8)),
     ));
 
     return arrImages;

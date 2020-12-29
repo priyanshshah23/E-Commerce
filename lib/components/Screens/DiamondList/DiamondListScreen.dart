@@ -34,6 +34,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:rxbus/rxbus.dart';
+import 'package:screenshot_callback/screenshot_callback.dart';
 
 class DiamondListScreen extends StatefulScreenWidget {
   static const route = "Diamond List Screen";
@@ -102,6 +103,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   bool isGrid = false;
   bool hasData = false;
   int viewTypeCount = 0;
+  ScreenshotCallback screenshotCallback = ScreenshotCallback();
 
   @override
   void initState() {
@@ -144,6 +146,22 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           page: PageAnalytics.getPageAnalyticsFromModuleType(moduleType),
           section: SectionAnalytics.LIST,
           action: ActionAnalytics.OPEN);
+
+      screenshotCallback.addListener(
+        () {
+          SyncManager.instance.callAnalytics(
+            context,
+            page: PageAnalytics.getPageAnalyticsFromModuleType(moduleType),
+            section: SectionAnalytics.LIST,
+            action: ActionAnalytics.OPEN,
+            dict: {
+              "diamondSearchId": this.filterId,
+              "userId": app.resolve<PrefUtils>().getUserDetails().id ?? "",
+              "action": "SCREENSHOT_TAKEN_BY_USER"
+            },
+          );
+        },
+      );
     });
 
     RxBus.register<void>(tag: eventOfflineDiamond).listen((event) {
@@ -1141,17 +1159,23 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           : SizedBox();
     }
 
-    return (app.resolve<PrefUtils>().getBool(PrefUtils().keySearchResultTour) ==
-                false &&
-            isNullEmptyOrFalse(arraDiamond) == false)
-        ? OverlayScreen(
-            DiamondModuleConstant.MODULE_TYPE_DIAMOND_SEARCH_RESULT,
-            finishTakeTour: () {
-              setState(() {});
-            },
-            scrollIndex: (index) {},
-          )
-        : SizedBox();
+    if (this.moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
+      return (app
+                      .resolve<PrefUtils>()
+                      .getBool(PrefUtils().keySearchResultTour) ==
+                  false &&
+              isNullEmptyOrFalse(arraDiamond) == false)
+          ? OverlayScreen(
+              DiamondModuleConstant.MODULE_TYPE_DIAMOND_SEARCH_RESULT,
+              finishTakeTour: () {
+                setState(() {});
+              },
+              scrollIndex: (index) {},
+            )
+          : SizedBox();
+    }
+
+    return SizedBox();
   }
 
   Widget getBottomTab() {

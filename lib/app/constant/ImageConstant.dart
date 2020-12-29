@@ -214,6 +214,8 @@ const String searchOverlay6 = "assets/Overlay/Search/SearchOverlay6.png";
 const String searchOverlay7 = "assets/Overlay/Search/SearchOverlay7.png";
 
 //Diamond list overlay constants
+const String searchResultOverlay0 =
+    "assets/Overlay/SearchResult/SearchResultOverlay0.png";
 const String searchResultOverlay1 =
     "assets/Overlay/SearchResult/SearchResultOverlay1.png";
 const String searchResultOverlay2 =
