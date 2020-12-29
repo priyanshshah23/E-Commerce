@@ -97,16 +97,18 @@ class OverlayscreenModel {
 
   List<OverlayImagesModel> getSearchResultOverlay() {
     List<OverlayImagesModel> arrImages = [];
-    arrImages.add(OverlayImagesModel(
-      imageName: searchResultOverlay1,
-      isTop: true,
-      align: Alignment.topRight,
-      topPadding: Device.get().isIphoneX
-          ? window.viewPadding.top -
-              getSize(52) -
-              (kBottomNavigationBarHeight / 2)
-          : window.viewPadding.top,
-    ));
+    arrImages.add(
+      OverlayImagesModel(
+        imageName: searchResultOverlay1,
+        isTop: true,
+        align: Alignment.topRight,
+        topPadding: Device.get().isIphoneX
+            ? window.viewPadding.top -
+                getSize(52) -
+                (kBottomNavigationBarHeight / 2)
+            : window.viewPadding.top - getSize(40),
+      ),
+    );
     arrImages.add(OverlayImagesModel(
       imageName: searchResultOverlay2,
       isTop: true,

@@ -14,6 +14,7 @@ class OverlayScreen extends StatefulWidget {
   int moduleType;
   Function finishTakeTour;
   Function(int index) scrollIndex;
+
   OverlayScreen(
     this.moduleType, {
     this.finishTakeTour,

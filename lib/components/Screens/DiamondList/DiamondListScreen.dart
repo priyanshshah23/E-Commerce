@@ -635,7 +635,17 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           child: IconSlideAction(
             color: Colors.transparent,
             onTap: () {
-              actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_DETAIL));
+              actionClick(
+                ManageCLick(type: clickConstant.CLICK_TYPE_DETAIL),
+              );
+              AnalyticsReq req = new AnalyticsReq();
+              req.page = PageAnalytics.DIAMOND_DETAIL;
+              req.section = SectionAnalytics.DETAILS;
+              req.action = ActionAnalytics.CLICK;
+              AnalyticsReport.shared.sendAnalyticsData(
+                buildContext: context,
+                req: req,
+              );
             },
             iconWidget: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -730,6 +740,14 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               color: Colors.transparent,
               onTap: () {
                 actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_DELETE));
+                AnalyticsReq req = new AnalyticsReq();
+                req.page = PageAnalytics.DIAMOND_DETAIL;
+                req.section = SectionAnalytics.DETAILS;
+                req.action = ActionAnalytics.CLICK;
+                AnalyticsReport.shared.sendAnalyticsData(
+                  buildContext: context,
+                  req: req,
+                );
               },
               iconWidget: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

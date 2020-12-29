@@ -17,6 +17,7 @@ import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
@@ -674,6 +675,9 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
             children: <Widget>[
               ListView.builder(
                 controller: _scrollController1,
+                padding: EdgeInsets.only(
+                  bottom: getSize(20),
+                ),
                 itemCount: arrDiamondDetailUIModel.length + 1,
                 itemBuilder: (context, index) {
                   if (index == 0)
