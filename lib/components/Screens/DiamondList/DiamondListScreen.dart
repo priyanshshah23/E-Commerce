@@ -1115,15 +1115,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 finishTakeTour: () {
                   setState(() {});
                 },
-                scrollIndex: (index) {
-                  // if (index == 0 || index == 1) {
-                  //   Scrollable.ensureVisible(searchKey.currentContext);
-                  // } else if (index == 2) {
-                  //   Scrollable.ensureVisible(savedSearchKey.currentContext);
-                  // } else if (index == 3) {
-                  //   Scrollable.ensureVisible(sellerKey.currentContext);
-                  // }
-                },
+                scrollIndex: (index) {},
               )
             : SizedBox(),
       ],

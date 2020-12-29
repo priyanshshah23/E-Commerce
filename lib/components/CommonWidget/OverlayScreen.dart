@@ -41,6 +41,14 @@ class _OverlayScreenState extends State<OverlayScreen> {
     } else if (widget.moduleType ==
         DiamondModuleConstant.MODULE_TYPE_DIAMOND_SEARCH_RESULT) {
       arrOverlays = OverlayscreenModel().getSearchResultOverlay();
+    } else if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_COMPARE) {
+      arrOverlays = OverlayscreenModel().getCompareStoneOverlay();
+    } else if (widget.moduleType ==
+        DiamondModuleConstant.MODULE_TYPE_DIAMOND_DETAIL) {
+      arrOverlays = OverlayscreenModel().getDiamondDetailOverlay();
+    } else if (widget.moduleType ==
+        DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+      arrOverlays = OverlayscreenModel().getOfferOverlay();
     }
   }
 
@@ -173,6 +181,18 @@ class _OverlayScreenState extends State<OverlayScreen> {
       app
           .resolve<PrefUtils>()
           .saveBoolean(PrefUtils().keySearchResultTour, true);
+    } else if (widget.moduleType ==
+        DiamondModuleConstant.MODULE_TYPE_DIAMOND_DETAIL) {
+      app
+          .resolve<PrefUtils>()
+          .saveBoolean(PrefUtils().keyDiamondDetailTour, true);
+    } else if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_COMPARE) {
+      app
+          .resolve<PrefUtils>()
+          .saveBoolean(PrefUtils().keyCompareStoneTour, true);
+    } else if (widget.moduleType ==
+        DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+      app.resolve<PrefUtils>().saveBoolean(PrefUtils().keyOfferTour, true);
     }
   }
 }
