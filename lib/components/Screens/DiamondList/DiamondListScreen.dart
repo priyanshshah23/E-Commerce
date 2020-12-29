@@ -1145,17 +1145,23 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           : SizedBox();
     }
 
-    return (app.resolve<PrefUtils>().getBool(PrefUtils().keySearchResultTour) ==
-                false &&
-            isNullEmptyOrFalse(arraDiamond) == false)
-        ? OverlayScreen(
-            DiamondModuleConstant.MODULE_TYPE_DIAMOND_SEARCH_RESULT,
-            finishTakeTour: () {
-              setState(() {});
-            },
-            scrollIndex: (index) {},
-          )
-        : SizedBox();
+    if (this.moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
+      return (app
+                      .resolve<PrefUtils>()
+                      .getBool(PrefUtils().keySearchResultTour) ==
+                  false &&
+              isNullEmptyOrFalse(arraDiamond) == false)
+          ? OverlayScreen(
+              DiamondModuleConstant.MODULE_TYPE_DIAMOND_SEARCH_RESULT,
+              finishTakeTour: () {
+                setState(() {});
+              },
+              scrollIndex: (index) {},
+            )
+          : SizedBox();
+    }
+
+    return SizedBox();
   }
 
   Widget getBottomTab() {
