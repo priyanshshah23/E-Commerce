@@ -5,6 +5,7 @@ import 'package:country_pickers/country_pickers.dart';
 import 'package:diamnow/Setting/SettingModel.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/AnalyticsReport.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
@@ -62,6 +63,12 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       availableBiometrics = await auth.getAvailableBiometrics();
       setState(() {});
     });
+    AnalyticsReport.shared.sendAnalyticsData(
+      buildContext: context,
+      action: ActionAnalytics.CLICK,
+      page: PageAnalytics.PROFILE,
+      section: SectionAnalytics.VIEW,
+    );
   }
 
   _MyAccountScreenState({this.isFromDrawer = false});

@@ -482,8 +482,19 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
         }
         if (isFileShare) {
           Share.shareFiles([savePath], text: 'Great picture');
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.OFFLINE_DOWNLOAD,
+            section: SectionAnalytics.SHARE,
+            action: ActionAnalytics.OPEN,
+          );
         }
-
+        AnalyticsReport.shared.sendAnalyticsData(
+          buildContext: context,
+          page: PageAnalytics.OFFLINE_DOWNLOAD,
+          section: SectionAnalytics.DOWNLOAD,
+          action: ActionAnalytics.OPEN,
+        );
         showToast(
           "Download complete",
           context: context,

@@ -638,13 +638,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               actionClick(
                 ManageCLick(type: clickConstant.CLICK_TYPE_DETAIL),
               );
-              AnalyticsReq req = new AnalyticsReq();
-              req.page = PageAnalytics.DIAMOND_DETAIL;
-              req.section = SectionAnalytics.DETAILS;
-              req.action = ActionAnalytics.CLICK;
               AnalyticsReport.shared.sendAnalyticsData(
                 buildContext: context,
-                req: req,
+                page: PageAnalytics.DIAMOND_DETAIL,
+                section: SectionAnalytics.DETAILS,
+                action: ActionAnalytics.CLICK,
               );
             },
             iconWidget: Column(
@@ -740,13 +738,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               color: Colors.transparent,
               onTap: () {
                 actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_DELETE));
-                AnalyticsReq req = new AnalyticsReq();
-                req.page = PageAnalytics.DIAMOND_DETAIL;
-                req.section = SectionAnalytics.DETAILS;
-                req.action = ActionAnalytics.CLICK;
                 AnalyticsReport.shared.sendAnalyticsData(
                   buildContext: context,
-                  req: req,
+                  page: PageAnalytics.DIAMOND_DETAIL,
+                  section: SectionAnalytics.DETAILS,
+                  action: ActionAnalytics.CLICK,
                 );
               },
               iconWidget: Column(
@@ -1332,77 +1328,135 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   }
 
   void sendAnalyticsReport() {
-    AnalyticsReq req = new AnalyticsReq();
-    req.action = ActionAnalytics.LIST;
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH:
-        req.page = PageAnalytics.MYSAVED_SEARCH;
-        req.section = SectionAnalytics.SEARCH;
+        AnalyticsReport.shared.sendAnalyticsData(
+          buildContext: context,
+          page: PageAnalytics.MYSAVED_SEARCH,
+          section: SectionAnalytics.SEARCH,
+          action: ActionAnalytics.LIST,
+        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
-        req.page = PageAnalytics.SEARCH_RESULT;
-        req.section = SectionAnalytics.SEARCH;
+        AnalyticsReport.shared.sendAnalyticsData(
+          buildContext: context,
+          page: PageAnalytics.SEARCH_RESULT,
+          section: SectionAnalytics.SEARCH,
+          action: ActionAnalytics.LIST,
+        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR:
-        req.page = PageAnalytics.MATCH_PAIRS;
-        req.section = SectionAnalytics.MATCHPAIRS;
+        AnalyticsReport.shared.sendAnalyticsData(
+          buildContext: context,
+          page: PageAnalytics.MATCH_PAIRS,
+          section: SectionAnalytics.MATCHPAIRS,
+          action: ActionAnalytics.LIST,
+        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
-        req.page = PageAnalytics.NEW_GOODS;
-        req.section = SectionAnalytics.NEWGOODS;
+        AnalyticsReport.shared.sendAnalyticsData(
+          buildContext: context,
+          page: PageAnalytics.NEW_GOODS,
+          section: SectionAnalytics.NEWGOODS,
+          action: ActionAnalytics.LIST,
+        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
-        req.page = PageAnalytics.MY_BID;
-        req.section = SectionAnalytics.LIST;
+        AnalyticsReport.shared.sendAnalyticsData(
+          buildContext: context,
+          page: PageAnalytics.MY_BID,
+          section: SectionAnalytics.LIST,
+          action: ActionAnalytics.LIST,
+        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
-        req.page = PageAnalytics.UPCOMING_DIAMOND;
-        req.section = SectionAnalytics.LIST;
+        AnalyticsReport.shared.sendAnalyticsData(
+          buildContext: context,
+          page: PageAnalytics.UPCOMING_DIAMOND,
+          section: SectionAnalytics.LIST,
+          action: ActionAnalytics.LIST,
+        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
-        req.page = PageAnalytics.EXCLUSIVE_DIAMOND;
-        req.section = SectionAnalytics.EXCLUSIVEDIAMOND;
+        AnalyticsReport.shared.sendAnalyticsData(
+          buildContext: context,
+          page: PageAnalytics.EXCLUSIVE_DIAMOND,
+          section: SectionAnalytics.EXCLUSIVEDIAMOND,
+          action: ActionAnalytics.LIST,
+        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_MY_BID:
-        req.page = PageAnalytics.MY_BID;
-        req.section = SectionAnalytics.LIST;
+        AnalyticsReport.shared.sendAnalyticsData(
+          buildContext: context,
+          page: PageAnalytics.MY_BID,
+          section: SectionAnalytics.LIST,
+          action: ActionAnalytics.LIST,
+        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
-        req.page = PageAnalytics.MY_REMINDER;
-        req.section = SectionAnalytics.REMINDER;
+        AnalyticsReport.shared.sendAnalyticsData(
+          buildContext: context,
+          page: PageAnalytics.MY_REMINDER,
+          section: SectionAnalytics.REMINDER,
+          action: ActionAnalytics.LIST,
+        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_MY_CART:
-        req.page = PageAnalytics.MY_CART;
-        req.section = SectionAnalytics.CART;
+        AnalyticsReport.shared.sendAnalyticsData(
+          buildContext: context,
+          page: PageAnalytics.MY_CART,
+          section: SectionAnalytics.CART,
+          action: ActionAnalytics.LIST,
+        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
-        req.page = PageAnalytics.MY_WATCHLIST;
-        req.section = SectionAnalytics.WATCHLIST;
+        AnalyticsReport.shared.sendAnalyticsData(
+          buildContext: context,
+          page: PageAnalytics.MY_WATCHLIST,
+          section: SectionAnalytics.WATCHLIST,
+          action: ActionAnalytics.LIST,
+        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
-        req.page = PageAnalytics.MY_ENQUIRY;
-        req.section = SectionAnalytics.ENQUIRY;
+        AnalyticsReport.shared.sendAnalyticsData(
+          buildContext: context,
+          page: PageAnalytics.MY_ENQUIRY,
+          section: SectionAnalytics.ENQUIRY,
+          action: ActionAnalytics.LIST,
+        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
-        req.page = PageAnalytics.MY_OFFER;
-        req.section = SectionAnalytics.MYOFFER;
+        AnalyticsReport.shared.sendAnalyticsData(
+          buildContext: context,
+          page: PageAnalytics.MY_OFFER,
+          section: SectionAnalytics.MYOFFER,
+          action: ActionAnalytics.LIST,
+        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
-        req.page = PageAnalytics.MY_COMMENT;
-        req.section = SectionAnalytics.COMMENT;
+        AnalyticsReport.shared.sendAnalyticsData(
+          buildContext: context,
+          page: PageAnalytics.MY_COMMENT,
+          section: SectionAnalytics.COMMENT,
+          action: ActionAnalytics.LIST,
+        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
-        req.page = PageAnalytics.STONE_OF_THE_DAY;
-        req.section = SectionAnalytics.LIST;
+        AnalyticsReport.shared.sendAnalyticsData(
+          buildContext: context,
+          page: PageAnalytics.STONE_OF_THE_DAY,
+          section: SectionAnalytics.LIST,
+          action: ActionAnalytics.LIST,
+        );
         break;
       case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH:
-        req.page = PageAnalytics.OfflineSearchHistory;
-        req.section = SectionAnalytics.OFFLINESEARCH;
+        AnalyticsReport.shared.sendAnalyticsData(
+          buildContext: context,
+          page: PageAnalytics.OfflineSearchHistory,
+          section: SectionAnalytics.OFFLINESEARCH,
+          action: ActionAnalytics.LIST,
+        );
         break;
     }
-    AnalyticsReport.shared.sendAnalyticsData(
-      buildContext: context,
-      req: req,
-    );
   }
 }

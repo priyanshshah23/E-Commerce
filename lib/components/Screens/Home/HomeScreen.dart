@@ -47,7 +47,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  AnalyticsReq req = new AnalyticsReq();
 
   bool isExpand = false;
   bool isSwitched = false;
@@ -324,23 +323,34 @@ class _HomeScreenState extends State<HomeScreen> {
       if (selectedType == type) {
         return;
       }
-      req.action = ActionAnalytics.CLICK;
       switch (type) {
         case DiamondModuleConstant.MODULE_TYPE_HOME:
           openDashboard(type);
-          req.page = PageAnalytics.HOME;
-          req.section = SectionAnalytics.VIEW;
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.HOME,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_SEARCH:
         case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH:
           openSearch(type);
-          req.page = PageAnalytics.OfflineSearchHistory;
-          req.section = SectionAnalytics.OFFLINESEARCH;
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.OfflineSearchHistory,
+            section: SectionAnalytics.OFFLINESEARCH,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
           openQuickSearch(type);
-          req.page = PageAnalytics.QUICK_SERACH;
-          req.section = SectionAnalytics.SEARCH;
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.QUICK_SERACH,
+            section: SectionAnalytics.SEARCH,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_CART:
         case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
@@ -354,74 +364,118 @@ class _HomeScreenState extends State<HomeScreen> {
         case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
         case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK:
           openDiamondList(type);
-          req.page = PageAnalytics.OfflineSearchHistory;
-          req.section = SectionAnalytics.OFFLINESEARCH;
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.OfflineSearchHistory,
+            section: SectionAnalytics.OFFLINESEARCH,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
         case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
           openDiamondList(type);
-          req.page = PageAnalytics.STONE_OF_THE_DAY;
-          req.section = SectionAnalytics.FILTER;
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.STONE_OF_THE_DAY,
+            section: SectionAnalytics.FILTER,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_PROFILE:
           openProfile(type);
-          req.page = PageAnalytics.PROFILE;
-          req.section = SectionAnalytics.VIEW;
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.PROFILE,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
         case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
           openDiamondOrderList(type);
-          req.page = PageAnalytics.MY_PURCHASE;
-          req.section = SectionAnalytics.DETAILS;
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.MY_PURCHASE,
+            section: SectionAnalytics.DETAILS,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
           openSavedSearch(type);
-          req.page = PageAnalytics.MYSAVED_SEARCH;
-          req.section = SectionAnalytics.SAVED_SEARCH;
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.MYSAVED_SEARCH,
+            section: SectionAnalytics.SAVED_SEARCH,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_ABOUT_US:
           openAboutUs(type);
-          req.page = PageAnalytics.ABOUT_US;
-          req.section = SectionAnalytics.VIEW;
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.ABOUT_US,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY:
           openPrivacyPolicy(type);
-          req.page = PageAnalytics.ABOUT_US;
-          req.section = SectionAnalytics.VIEW;
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.ABOUT_US,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION:
           openTermsAndCondition(type);
-          req.page = PageAnalytics.ABOUT_US;
-          req.section = SectionAnalytics.VIEW;
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.ABOUT_US,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_CONTACT_US:
           openContactUS(type);
-          req.page = PageAnalytics.CONTACT;
-          req.section = SectionAnalytics.VIEW;
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.CONTACT,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_LOGOUT:
           logoutFromApp(context);
-          req.page = PageAnalytics.LOGOUT;
-          req.section = SectionAnalytics.VIEW;
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.LOGOUT,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
           openMyDemand(type);
-          req.page = PageAnalytics.MY_DEMAND;
-          req.section = SectionAnalytics.VIEW;
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.MY_DEMAND,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH_HISTORY:
           openOfflineSearchHistory(type);
-          req.page = PageAnalytics.OFFLINE_DOWNLOAD;
-          req.section = SectionAnalytics.OFFLINESEARCH;
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.OFFLINE_DOWNLOAD,
+            section: SectionAnalytics.OFFLINESEARCH,
+            action: ActionAnalytics.CLICK,
+          );
           break;
       }
       if (type != DiamondModuleConstant.MODULE_TYPE_LOGOUT) {
         setState(() {});
       }
-      AnalyticsReport.shared.sendAnalyticsData(
-        buildContext: context,
-        req: req,
-      );
     }
   }
 

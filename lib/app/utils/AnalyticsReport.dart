@@ -25,13 +25,23 @@ class AnalyticsReport {
 
   Future<void> sendAnalyticsData({
     @required BuildContext buildContext,
-    @required AnalyticsReq req,
+    @required String page,
+    @required String section,
+    @required String action,
+    @required String desc,
   }) async {
+    AnalyticsReq req = AnalyticsReq();
+    req.page = page;
+    req.section = section;
+    req.action = action;
+    req.description = desc;
+
     await analytics.logEvent(
       name: req.page,
       parameters: req.toJson(),
     );
-    NetworkClient.getInstance.callApi(
+
+    await NetworkClient.getInstance.callApi(
       buildContext,
       baseURL,
       ApiConstants.uploadKyc,

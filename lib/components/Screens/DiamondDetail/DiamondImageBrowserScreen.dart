@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:diamnow/app/Helper/Themehelper.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/ImageConstant.dart';
+import 'package:diamnow/app/utils/AnalyticsReport.dart';
 import 'package:diamnow/app/utils/CommonWidgets.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
@@ -262,7 +263,20 @@ class _DiamondImageBrowserScreenState extends State<DiamondImageBrowserScreen> {
         }
         if (isFileShare) {
           Share.shareFiles([savePath], text: 'Great picture');
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.OFFLINE_DOWNLOAD,
+            section: SectionAnalytics.SHARE,
+            action: ActionAnalytics.OPEN,
+          );
         }
+
+        AnalyticsReport.shared.sendAnalyticsData(
+          buildContext: context,
+          page: PageAnalytics.OFFLINE_DOWNLOAD,
+          section: SectionAnalytics.DOWNLOAD,
+          action: ActionAnalytics.OPEN,
+        );
         showToast(
           "Download complete",
           context: context,
