@@ -5,6 +5,7 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
+import 'package:diamnow/components/CommonWidget/OverlayScreen.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDeepDetailScreen.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
@@ -496,18 +497,32 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Scaffold(
-      backgroundColor: appTheme.whiteColor,
-      appBar: getAppBar(
-        context,
-        R.string.screenTitle.diamondDetail,
-        bgColor: appTheme.whiteColor,
-        leadingButton: getBackButton(context),
-        centerTitle: false,
-        actionItems: getToolbarItem(),
-      ),
-      bottomNavigationBar: getBottomTab(),
-      body: getDiamondDetailComponents(),
+    return Stack(
+      children: [
+        Scaffold(
+          backgroundColor: appTheme.whiteColor,
+          appBar: getAppBar(
+            context,
+            R.string.screenTitle.diamondDetail,
+            bgColor: appTheme.whiteColor,
+            leadingButton: getBackButton(context),
+            centerTitle: false,
+            actionItems: getToolbarItem(),
+          ),
+          bottomNavigationBar: getBottomTab(),
+          body: getDiamondDetailComponents(),
+        ),
+        (app.resolve<PrefUtils>().getBool(PrefUtils().keyDiamondDetailTour) ==
+                false)
+            ? OverlayScreen(
+                DiamondModuleConstant.MODULE_TYPE_DIAMOND_DETAIL,
+                finishTakeTour: () {
+                  setState(() {});
+                },
+                scrollIndex: (index) {},
+              )
+            : SizedBox(),
+      ],
     );
   }
 

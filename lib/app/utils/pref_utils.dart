@@ -67,6 +67,9 @@ class PrefUtils {
   String get keyMyAccountTour => "keyMyAccountTour";
   String get keySearchTour => "keySearchTour";
   String get keySearchResultTour => "keySearchResultTour";
+  String get keyDiamondDetailTour => "keyDiamondDetailTour";
+  String get keyCompareStoneTour => "keyCompareStoneTour";
+  String get keyOfferTour => "keyOfferTour";
 
   // Dashboard
   String get keyDashboard => "keyDashboard";

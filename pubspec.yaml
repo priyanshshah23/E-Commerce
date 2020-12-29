@@ -93,6 +93,7 @@ dependencies:
   uuid: ^2.2.2
   collection: ^1.14.13
   screenshot_callback: any
+  flutter_device_type: ^0.3.2
 
 dev_dependencies:
   flutter_test:
@@ -131,10 +132,15 @@ flutter:
     - assets/Share/
     - assets/PNShah/
     - assets/PNShah/ForgetMPIN/
+
+    #Overlay screens
     - assets/Overlay/Home/
     - assets/Overlay/MyAccount/
     - assets/Overlay/Search/
     - assets/Overlay/SearchResult/
+    - assets/Overlay/DiamondDetail/
+    - assets/Overlay/CompareStone/
+    - assets/Overlay/Offer/
 
 
   fonts:

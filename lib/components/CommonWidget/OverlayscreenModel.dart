@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:diamnow/app/app.export.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_device_type/flutter_device_type.dart';
 
 class OverlayscreenModel {
   List<OverlayImagesModel> getHomeScreenOverlay() {
@@ -98,19 +101,31 @@ class OverlayscreenModel {
       imageName: searchResultOverlay1,
       isTop: true,
       align: Alignment.topRight,
-      topPadding: kBottomNavigationBarHeight,
+      topPadding: Device.get().isIphoneX
+          ? window.viewPadding.top -
+              getSize(52) -
+              (kBottomNavigationBarHeight / 2)
+          : window.viewPadding.top,
     ));
     arrImages.add(OverlayImagesModel(
       imageName: searchResultOverlay2,
       isTop: true,
       align: Alignment.topRight,
-      topPadding: kBottomNavigationBarHeight,
+      topPadding: Device.get().isIphoneX
+          ? window.viewPadding.top -
+              getSize(52) -
+              (kBottomNavigationBarHeight / 2)
+          : window.viewPadding.top,
     ));
     arrImages.add(OverlayImagesModel(
       imageName: searchResultOverlay3,
       isTop: true,
       align: Alignment.topRight,
-      topPadding: kBottomNavigationBarHeight,
+      topPadding: Device.get().isIphoneX
+          ? window.viewPadding.top -
+              getSize(52) -
+              (kBottomNavigationBarHeight / 2)
+          : window.viewPadding.top,
     ));
     arrImages.add(OverlayImagesModel(
       imageName: searchResultOverlay4,
@@ -136,7 +151,56 @@ class OverlayscreenModel {
       imageName: searchResultOverlay9,
       isTop: true,
       align: Alignment.topCenter,
-      topPadding: kBottomNavigationBarHeight - getSize(20),
+      topPadding: Device.get().isIphoneX
+          ? window.viewPadding.top -
+              getSize(44) -
+              (kBottomNavigationBarHeight / 2)
+          : window.viewPadding.top,
+    ));
+
+    return arrImages;
+  }
+
+  List<OverlayImagesModel> getDiamondDetailOverlay() {
+    List<OverlayImagesModel> arrImages = [];
+    arrImages.add(OverlayImagesModel(
+      imageName: diamondDetailOverlay1,
+      isCenter: true,
+    ));
+
+    return arrImages;
+  }
+
+  List<OverlayImagesModel> getCompareStoneOverlay() {
+    List<OverlayImagesModel> arrImages = [];
+    arrImages.add(OverlayImagesModel(
+      imageName: compareOverlay1,
+      isTop: true,
+      align: Alignment.topCenter,
+    ));
+
+    return arrImages;
+  }
+
+  List<OverlayImagesModel> getOfferOverlay() {
+    List<OverlayImagesModel> arrImages = [];
+    arrImages.add(OverlayImagesModel(
+      imageName: offerOverlay1,
+      isTop: true,
+      align: Alignment.topCenter,
+      topPadding: window.viewPadding.top + kBottomNavigationBarHeight,
+    ));
+    arrImages.add(OverlayImagesModel(
+      imageName: offerOverlay2,
+      isTop: true,
+      align: Alignment.topCenter,
+      topPadding: window.viewPadding.top + kBottomNavigationBarHeight,
+    ));
+    arrImages.add(OverlayImagesModel(
+      imageName: offerOverlay3,
+      isTop: true,
+      align: Alignment.topCenter,
+      topPadding: window.viewPadding.top + kBottomNavigationBarHeight,
     ));
 
     return arrImages;
