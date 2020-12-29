@@ -9,6 +9,7 @@ import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/constant/ImageConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/AnalyticsReport.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CustomBorder.dart';
@@ -401,6 +402,7 @@ class DiamondConfig {
         break;
       case ActionMenuConstant.ACTION_TYPE_SHARE:
         actionDownload(context, list, isForShare: true);
+
         break;
       case ActionMenuConstant.ACTION_TYPE_COMPARE:
         if (list.length < 2) {
@@ -569,7 +571,12 @@ class DiamondConfig {
       model.isAddToOffer = true;
       selectedList.add(model);
     });
-
+    AnalyticsReport.shared.sendAnalyticsData(
+      buildContext: context,
+      page: PageAnalytics.DIAMOND_LIST,
+      section: SectionAnalytics.MYOFFER,
+      action: ActionAnalytics.OPEN,
+    );
     openDiamondActionAcreen(
         context, DiamondTrackConstant.TRACK_TYPE_OFFER, selectedList);
     /* showOfferListDialog(context, selectedList, (manageClick) {
@@ -759,7 +766,12 @@ class DiamondConfig {
         fileType: DownloadAndShareDialogueConstant.assetScopeImg));
     downloadOptionList.add(SelectionPopupModel("7", "Video",
         fileType: DownloadAndShareDialogueConstant.video1));
-
+    AnalyticsReport.shared.sendAnalyticsData(
+      buildContext: context,
+      page: PageAnalytics.OFFLINE_DOWNLOAD,
+      section: SectionAnalytics.SHARE,
+      action: ActionAnalytics.OPEN,
+    );
     showDialog(
       context: context,
       barrierDismissible: false,

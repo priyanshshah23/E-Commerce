@@ -1,5 +1,6 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/AnalyticsReport.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
@@ -79,6 +80,13 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setCompareList();
     });
+
+    AnalyticsReport.shared.sendAnalyticsData(
+      buildContext: context,
+      page: PageAnalytics.COMPARE,
+      section: SectionAnalytics.COMPARE,
+      action: ActionAnalytics.OPEN,
+    );
     // sc = ScrollController();
     _controllers = LinkedScrollControllerGroup();
   }

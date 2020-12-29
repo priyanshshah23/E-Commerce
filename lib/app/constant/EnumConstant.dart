@@ -139,6 +139,8 @@ class SectionAnalytics {
 
   //Todo
   static const String SHARE = "Share";
+  static const String DOWNLOAD = "download";
+
   static const String MATCHPAIRS = "MatchPairs";
   static const String EXCLUSIVEDIAMOND = "ExclusiveDiamond";
   static const String NEWGOODS = "NewGoods";
@@ -163,6 +165,8 @@ class PageAnalytics {
   static const String FANCY_SEARCH = "FancySearch";
   static const String DIAMOND_SEARCH = "DiamondSearch";
   static const String MYSAVED_SEARCH = "MySavedSearch";
+  static const String DIAMOND_LIST = "DiamondList";
+
   static const String MY_ACCOUNT = "MyAccount";
   static const String DRAWER = "Drawer";
   static const String VOICE_SEARCH = "VoiceSearch";
@@ -189,7 +193,7 @@ class PageAnalytics {
   static const String ABOUT_US = "aboutus";
   static const String MESSAGE_TO_MD = "messagetomd";
   static const String CONTACT = "contact";
-  static const String LOGOUT = "contact";
+  static const String LOGOUT = "logout";
 
   static const String PROFILE = "profile";
   static const String OFFLINE_DOWNLOAD = "offlinedownload";

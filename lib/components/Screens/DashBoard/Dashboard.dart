@@ -7,6 +7,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/AnalyticsReport.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
@@ -24,6 +25,7 @@ import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
 import 'package:diamnow/components/Screens/Search/Search.dart';
 import 'package:diamnow/components/Screens/VoiceSearch/VoiceSearch.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
+import 'package:diamnow/models/AnalyticsModel/AnalyticsModel.dart';
 import 'package:diamnow/models/Dashboard/DashboardModel.dart';
 import 'package:diamnow/models/Dashbord/DashBoardConfigModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
@@ -73,6 +75,7 @@ class _DashboardState extends StatefulScreenWidgetState {
   DiamondConfig diamondConfig;
   DashboardConfig dashboardConfig;
   String emailURL;
+  AnalyticsReq req = new AnalyticsReq();
 
   final TextEditingController _searchController = TextEditingController();
   var _focusSearch = FocusNode();
@@ -199,7 +202,15 @@ class _DashboardState extends StatefulScreenWidgetState {
             : (element.code == BottomCodeConstant.TBNotification)
                 ? InkWell(
                     onTap: () {
-                      NavigationUtilities.pushRoute(Notifications.route);
+                      NavigationUtilities.pushRoute(
+                        Notifications.route,
+                      );
+                      AnalyticsReport.shared.sendAnalyticsData(
+                        buildContext: context,
+                        action: ActionAnalytics.CLICK,
+                        page: PageAnalytics.NOTIFICATION,
+                        section: SectionAnalytics.VIEW,
+                      );
                     },
                     child: Padding(
                         padding: EdgeInsets.all(getSize(8.0)),
