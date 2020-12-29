@@ -1107,19 +1107,37 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             ),
           ),
         ),
-        (app.resolve<PrefUtils>().getBool(PrefUtils().keySearchResultTour) ==
-                    false &&
-                isNullEmptyOrFalse(arraDiamond) == false)
-            ? OverlayScreen(
-                DiamondModuleConstant.MODULE_TYPE_DIAMOND_SEARCH_RESULT,
-                finishTakeTour: () {
-                  setState(() {});
-                },
-                scrollIndex: (index) {},
-              )
-            : SizedBox(),
+        showOverlayScreens(),
       ],
     );
+  }
+
+  showOverlayScreens() {
+    if (this.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+      return (app.resolve<PrefUtils>().getBool(PrefUtils().keyOfferTour) ==
+                  false &&
+              isNullEmptyOrFalse(arraDiamond) == false)
+          ? OverlayScreen(
+              DiamondModuleConstant.MODULE_TYPE_MY_OFFER,
+              finishTakeTour: () {
+                setState(() {});
+              },
+              scrollIndex: (index) {},
+            )
+          : SizedBox();
+    }
+
+    return (app.resolve<PrefUtils>().getBool(PrefUtils().keySearchResultTour) ==
+                false &&
+            isNullEmptyOrFalse(arraDiamond) == false)
+        ? OverlayScreen(
+            DiamondModuleConstant.MODULE_TYPE_DIAMOND_SEARCH_RESULT,
+            finishTakeTour: () {
+              setState(() {});
+            },
+            scrollIndex: (index) {},
+          )
+        : SizedBox();
   }
 
   Widget getBottomTab() {

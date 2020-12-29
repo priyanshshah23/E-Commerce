@@ -242,6 +242,6 @@ const String compareOverlay1 =
     "assets/Overlay/CompareStone/CompareOverlay1.png";
 
 //Offer overlay constants
-const String offerOverlay1 = "assets/Overlay/Offer/OfferOverlay1.png";
-const String offerOverlay2 = "assets/Overlay/Offer/OfferOverlay2.png";
+const String offerOverlay1 = "assets/Overlay/Offer/OfferOverlay2.png";
+const String offerOverlay2 = "assets/Overlay/Offer/OfferOverlay1.png";
 const String offerOverlay3 = "assets/Overlay/Offer/OfferOverlay3.png";
