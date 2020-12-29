@@ -612,7 +612,9 @@ class DiamondConfig {
         callApiFoPlaceOrder(context, list, () {
           Navigator.pop(context, true);
         }, isPop: true, remark: remark, companyName: companyName, date: date);
-        break;
+        break;   
+
+        
     }
   }
 
