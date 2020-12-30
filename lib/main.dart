@@ -41,7 +41,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 main() {
   WidgetsFlutterBinding.ensureInitialized();
-  configureNotification();
+  configureFirebase();
   app = KiwiContainer();
   HttpOverrides.global = new MyHttpOverrides();
   setup();
@@ -62,34 +62,8 @@ main() {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 }
 
-configureNotification() async {
+configureFirebase() async {
   await Firebase.initializeApp();
-
-  // await _configureLocalTimeZone();
-
-  const AndroidInitializationSettings initializationSettingsAndroid =
-      AndroidInitializationSettings('app_icon');
-
-  /// Note: permissions aren't requested here just to demonstrate that can be
-  /// done later
-  final IOSInitializationSettings initializationSettingsIOS =
-      IOSInitializationSettings(
-          requestAlertPermission: false,
-          requestBadgePermission: false,
-          requestSoundPermission: false,
-          onDidReceiveLocalNotification:
-              (int id, String title, String body, String payload) async {});
-
-  final InitializationSettings initializationSettings = InitializationSettings(
-    android: initializationSettingsAndroid,
-    iOS: initializationSettingsIOS,
-  );
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-      onSelectNotification: (String payload) async {
-    if (payload != null) {
-      debugPrint('notification payload: $payload');
-    }
-  });
 }
 
 class Base extends StatefulWidget {

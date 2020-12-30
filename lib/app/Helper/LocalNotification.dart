@@ -93,18 +93,6 @@ class LocalNotificationManager {
 
   /// fire a notification that specifies a different icon, sound and vibration pattern
   Future<void> showOfflineStockDownloadNotification() async {
-    // const IOSNotificationDetails iOSPlatformChannelSpecifics =
-    //     IOSNotificationDetails(subtitle: 'the subtitle');
-
-    // const NotificationDetails platformChannelSpecifics =
-    //     NotificationDetails(iOS: iOSPlatformChannelSpecifics);
-    // await flutterLocalNotificationsPlugin.show(
-    //     0,
-    //     'title of notification with a subtitle',
-    //     'body of notification with a subtitle',
-    //     platformChannelSpecifics,
-    //     payload: 'item x');
-
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       NotificationIdentifier.offlineStockDownload.toString(),
       AndroidNotificationIdentifier.offlineStockDownloadChannelName,
@@ -118,9 +106,6 @@ class LocalNotificationManager {
     var platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
-
-    // // DateTime newGenDate;
-    // // newGenDate = DateTime.now().add(Duration(days: 60));
 
     await flutterLocalNotificationsPlugin.show(
       NotificationIdentifier.offlineStockDownload,
@@ -150,7 +135,14 @@ class LocalNotificationManager {
     var platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
-    var fireDate = tz.TZDateTime.from(scheduleDate, tz.local);
+    var fireDate = tz.TZDateTime.from(
+        DateTime.now().add(
+          Duration(minutes: 1),
+        ),
+        tz.local);
+    // var fireDate = DateTime.now().add(
+    //   Duration(minutes: 1),
+    // );
     print("Noti Reminder Date $fireDate");
     await flutterLocalNotificationsPlugin.zonedSchedule(
         NotificationIdentifier.offlineStockDownload,

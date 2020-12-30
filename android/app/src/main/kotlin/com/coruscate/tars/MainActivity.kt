@@ -25,6 +25,7 @@ import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugins.GeneratedPluginRegistrant
+import java.util.*
 
 class MainActivity : FlutterFragmentActivity(), GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -85,11 +86,25 @@ class MainActivity : FlutterFragmentActivity(), GoogleApiClient.ConnectionCallba
                             showStartGpsDialog()
                         else
                             result.success(true)
+                        result.success(checkPermissionStatus(this))
                     } else if (call.method == "checkPermissionStatus") {
                         result.success(checkPermissionStatus(this))
-                    } else
+                    } else if(call.method == "getTimeZoneName") {
+                        result.success(TimeZone.getDefault().getID());
+                    }
+                    else
                         result.notImplemented()
-                }
+                    }
+
+                    MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), "dexterx.dev/flutter_local_notifications_example")
+                .setMethodCallHandler { call, result ->
+                    this.result = result
+                    if(call.method == "getTimeZoneName") {
+                        result.success(TimeZone.getDefault().getID());
+                    }
+                    else
+                        result.notImplemented()
+                    }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
