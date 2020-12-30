@@ -44,12 +44,12 @@ extension AppDelegate {
         completionHandler([.alert, .sound])
     }
     
-    override func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                didReceive response: UNNotificationResponse,
-                                withCompletionHandler completionHandler: @escaping () -> Void) {
+    // override func userNotificationCenter(_ center: UNUserNotificationCenter,
+    //                             didReceive response: UNNotificationResponse,
+    //                             withCompletionHandler completionHandler: @escaping () -> Void) {
         
-            print("Handling notifications with the Local Notification Identifier")
+    //         print("Handling notifications with the Local Notification Identifier")
                 
-        completionHandler()
-    }
+    //     completionHandler()
+    // }
 }

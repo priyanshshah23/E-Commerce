@@ -64,6 +64,8 @@ main() {
 
 configureFirebase() async {
   await Firebase.initializeApp();
+
+  LocalNotificationManager.instance;
 }
 
 class Base extends StatefulWidget {
