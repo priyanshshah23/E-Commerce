@@ -7,6 +7,7 @@ import 'package:diamnow/app/constant/constants.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
+import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -87,6 +88,14 @@ class LocalNotificationManager {
             //print("Error");
           },
         );
+      } else if (dict["moduleType"] ==
+          NotificationIdentifier.offlineStockDownload) {
+        Map<String, dynamic> dict = new HashMap();
+        dict[ArgumentConstant.ModuleType] =
+            DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH;
+        dict[ArgumentConstant.IsFromDrawer] = true;
+
+        NavigationUtilities.pushRoute(FilterScreen.route, args: dict);
       }
     }
   }
@@ -107,11 +116,15 @@ class LocalNotificationManager {
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
 
+    Map<String, dynamic> payload = {};
+    payload["moduleType"] = NotificationIdentifier.offlineStockDownload;
+
     await flutterLocalNotificationsPlugin.show(
       NotificationIdentifier.offlineStockDownload,
       APPNAME,
       "Your offline stock downloaded successfully",
       platformChannelSpecifics,
+      payload: json.encode(payload) ?? "",
     );
   }
 
@@ -140,9 +153,6 @@ class LocalNotificationManager {
           Duration(minutes: 1),
         ),
         tz.local);
-    // var fireDate = DateTime.now().add(
-    //   Duration(minutes: 1),
-    // );
     print("Noti Reminder Date $fireDate");
     await flutterLocalNotificationsPlugin.zonedSchedule(
         NotificationIdentifier.offlineStockDownload,

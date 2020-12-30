@@ -187,10 +187,14 @@ class OfflineStockManager {
         .then((diamondListResp) async {
       //Schedule notification
       if (this.page == 1 && this.selectedDate != null) {
+        Map<String, dynamic> payload = {};
+        payload["moduleType"] = NotificationIdentifier.offlineStockDownload;
+
         LocalNotificationManager.instance.fireNotification(
           DateUtilities().convertServerStringToFormatterDate(selectedDate),
           title: APPNAME,
           body: "Reminder about offline stock search",
+          dictPayload: payload,
         );
       }
 
