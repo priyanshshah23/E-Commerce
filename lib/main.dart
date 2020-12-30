@@ -102,6 +102,7 @@ class _BaseState extends State<Base> {
         case ConnectivityResult.wifi:
           string = 'online';
           OfflineStockManager.shared.callApiForSyncOfflineData(context);
+          LocalNotificationManager.instance.fireNotificationForFilterOffline();
           break;
       }
       print("Internet " + string);

@@ -11,6 +11,7 @@ import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -20,6 +21,9 @@ class LocalNotificationManager {
     print('Init Local Notification');
     localNotiInit();
   }
+
+  static const platform = MethodChannel('com.base/notification');
+  static const GET_NOTIFICATION = "getNotification";
 
   static final LocalNotificationManager _singleton =
       LocalNotificationManager._();
@@ -47,6 +51,33 @@ class LocalNotificationManager {
         onSelectNotification: onSelectNotification);
   }
 
+  Future<void> getNotification() async {
+    print("getnotifiactioncall");
+    try {
+      var result = await platform.invokeMethod(GET_NOTIFICATION);
+      if (result != null) {
+        SyncManager.instance.callApiForDiamondList(
+          NavigationUtilities.key.currentState.overlay.context,
+          result,
+          (diamondListResp) {
+            Map<String, dynamic> dict = new HashMap();
+            dict["filterId"] = diamondListResp.data.filter.id;
+            dict["filters"] = dict["payload"];
+            dict[ArgumentConstant.ModuleType] =
+                DiamondModuleConstant.MODULE_TYPE_SEARCH;
+            NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+          },
+          (onError) {
+            //print("Error");
+          },
+        );
+      }
+    } on PlatformException catch (e) {
+      print(e.toString());
+    }
+    return null;
+  }
+
   Future<void> requestPermissions() async {
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
@@ -71,25 +102,7 @@ class LocalNotificationManager {
   Future<void> onSelectNotification(String payload) async {
     if (payload != null) {
       Map<String, dynamic> dict = json.decode(payload);
-      if (dict["moduleType"] ==
-          DiamondModuleConstant.MODULE_TYPE_FILTER_OFFLINE_NOTI_CLICK) {
-        SyncManager.instance.callApiForDiamondList(
-          NavigationUtilities.key.currentState.overlay.context,
-          dict["payload"].cast<Map<String, dynamic>>(),
-          (diamondListResp) {
-            Map<String, dynamic> dict = new HashMap();
-            dict["filterId"] = diamondListResp.data.filter.id;
-            dict["filters"] = dict["payload"];
-            dict[ArgumentConstant.ModuleType] =
-                DiamondModuleConstant.MODULE_TYPE_SEARCH;
-            NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
-          },
-          (onError) {
-            //print("Error");
-          },
-        );
-      } else if (dict["moduleType"] ==
-          NotificationIdentifier.offlineStockDownload) {
+      if (dict["moduleType"] == NotificationIdentifier.offlineStockDownload) {
         Map<String, dynamic> dict = new HashMap();
         dict[ArgumentConstant.ModuleType] =
             DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH;
@@ -101,7 +114,8 @@ class LocalNotificationManager {
   }
 
   /// fire a notification that specifies a different icon, sound and vibration pattern
-  Future<void> showOfflineStockDownloadNotification() async {
+  Future<void> showOfflineStockDownloadNotification(
+      {String title, String desc}) async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       NotificationIdentifier.offlineStockDownload.toString(),
       AndroidNotificationIdentifier.offlineStockDownloadChannelName,
@@ -120,9 +134,9 @@ class LocalNotificationManager {
     payload["moduleType"] = NotificationIdentifier.offlineStockDownload;
 
     await flutterLocalNotificationsPlugin.show(
-      NotificationIdentifier.offlineStockDownload,
+      title ?? NotificationIdentifier.offlineStockDownload,
       APPNAME,
-      "Your offline stock downloaded successfully",
+      desc ?? "Your offline stock downloaded successfully",
       platformChannelSpecifics,
       payload: json.encode(payload) ?? "",
     );
@@ -148,11 +162,7 @@ class LocalNotificationManager {
     var platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
-    var fireDate = tz.TZDateTime.from(
-        DateTime.now().add(
-          Duration(minutes: 1),
-        ),
-        tz.local);
+    var fireDate = tz.TZDateTime.from(scheduleDate, tz.local);
     print("Noti Reminder Date $fireDate");
     await flutterLocalNotificationsPlugin.zonedSchedule(
         NotificationIdentifier.offlineStockDownload,
@@ -171,7 +181,10 @@ class LocalNotificationManager {
         app.resolve<PrefUtils>().getFilterOffline();
 
     if (!isNullEmptyOrFalse(dictFilter)) {
-      fireNotification(DateTime.now(),
+      fireNotification(
+          DateTime.now().add(
+            Duration(seconds: 5),
+          ),
           title: "Search diamonds",
           body: "Do you want to continue your search?",
           dictPayload: dictFilter);
