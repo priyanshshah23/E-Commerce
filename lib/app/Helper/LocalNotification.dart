@@ -94,41 +94,41 @@ class LocalNotificationManager {
 
   /// fire a notification that specifies a different icon, sound and vibration pattern
   Future<void> showOfflineStockDownloadNotification() async {
-    const IOSNotificationDetails iOSPlatformChannelSpecifics =
-        IOSNotificationDetails(subtitle: 'the subtitle');
+    // const IOSNotificationDetails iOSPlatformChannelSpecifics =
+    //     IOSNotificationDetails(subtitle: 'the subtitle');
 
-    const NotificationDetails platformChannelSpecifics =
-        NotificationDetails(iOS: iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.show(
-        0,
-        'title of notification with a subtitle',
-        'body of notification with a subtitle',
-        platformChannelSpecifics,
-        payload: 'item x');
+    // const NotificationDetails platformChannelSpecifics =
+    //     NotificationDetails(iOS: iOSPlatformChannelSpecifics);
+    // await flutterLocalNotificationsPlugin.show(
+    //     0,
+    //     'title of notification with a subtitle',
+    //     'body of notification with a subtitle',
+    //     platformChannelSpecifics,
+    //     payload: 'item x');
 
-    // var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-    //   NotificationIdentifier.offlineStockDownload.toString(),
-    //   AndroidNotificationIdentifier.offlineStockDownloadChannelName,
-    //   AndroidNotificationIdentifier.offlineStockDownloadChannelDescription,
-    //   icon: '@mipmap/ic_launcher',
-    // );
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      NotificationIdentifier.offlineStockDownload.toString(),
+      AndroidNotificationIdentifier.offlineStockDownloadChannelName,
+      AndroidNotificationIdentifier.offlineStockDownloadChannelDescription,
+      icon: '@mipmap/ic_launcher',
+    );
 
-    // var iOSPlatformChannelSpecifics =
-    //     IOSNotificationDetails(sound: "slow_spring_board.aiff");
+    var iOSPlatformChannelSpecifics =
+        IOSNotificationDetails(sound: "slow_spring_board.aiff");
 
-    // var platformChannelSpecifics = NotificationDetails(
-    //     android: androidPlatformChannelSpecifics,
-    //     iOS: iOSPlatformChannelSpecifics);
+    var platformChannelSpecifics = NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
 
     // // DateTime newGenDate;
     // // newGenDate = DateTime.now().add(Duration(days: 60));
 
-    // await flutterLocalNotificationsPlugin.show(
-    //   NotificationIdentifier.offlineStockDownload,
-    //   APPNAME,
-    //   "Your offline stock downloaded successfully",
-    //   platformChannelSpecifics,
-    // );
+    await flutterLocalNotificationsPlugin.show(
+      NotificationIdentifier.offlineStockDownload,
+      APPNAME,
+      "Your offline stock downloaded successfully",
+      platformChannelSpecifics,
+    );
   }
 
   /// fire a notification that specifies a different icon, sound and vibration pattern
