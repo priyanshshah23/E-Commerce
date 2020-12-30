@@ -110,7 +110,7 @@ class _BaseState extends State<Base> {
       print("Internet " + string);
     });
 
-    //await notificationInit();
+    await notificationInit();
     await _configureLocalTimeZone();
   }
 

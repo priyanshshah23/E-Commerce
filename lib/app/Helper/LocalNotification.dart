@@ -49,6 +49,7 @@ class LocalNotificationManager {
         android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: onSelectNotification);
+    getNotification();
   }
 
   Future<void> getNotification() async {

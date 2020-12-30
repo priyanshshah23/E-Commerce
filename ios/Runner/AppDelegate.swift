@@ -6,7 +6,7 @@ import UserNotifications
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
     
-    var notificationDict : [String:Any]?
+    var notificationChannel : FlutterMethodChannel?
     
     override func application(
         _ application: UIApplication,
@@ -34,15 +34,7 @@ import UserNotifications
         }
         
         if true{
-            let channel = FlutterMethodChannel(name: "com.base/notification", binaryMessenger: controller.binaryMessenger)
-            channel.setMethodCallHandler { (call, result) in
-                
-                if call.method == "getNotification" {
-                    if self.notificationDict != nil{
-                        result(self.notificationDict!)
-                    }
-                }
-            }
+            notificationChannel = FlutterMethodChannel(name: "com.base/notification", binaryMessenger: controller.binaryMessenger)
             
         }
         GeneratedPluginRegistrant.register(with: self)
@@ -66,8 +58,18 @@ extension AppDelegate {
         let userInfo = response.notification.request.content.userInfo
         print("Handling notifications with the Local Notification Identifier")
         print(userInfo)
-        if let dict = userInfo["payload"] as? [String:Any]{
-            notificationDict = dict
+        if let strData = userInfo["payload"] as? String{
+            if let data = strData.data(using: .utf8) {
+                if let dict = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]{
+                    notificationChannel?.setMethodCallHandler { (call, result) in
+                        
+                        if call.method == "getNotification" {
+                            result(dict)
+                        }
+                    }
+                }
+            }
         }
+        completionHandler()
     }
 }
