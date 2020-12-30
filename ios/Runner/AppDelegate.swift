@@ -69,6 +69,5 @@ extension AppDelegate {
         if let dict = userInfo["payload"] as? [String:Any]{
             notificationDict = dict
         }
-        
     }
 }
