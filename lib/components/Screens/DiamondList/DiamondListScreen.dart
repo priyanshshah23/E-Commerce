@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:diamnow/Setting/SettingModel.dart';
+import 'package:diamnow/app/Helper/LocalNotification.dart';
 import 'package:diamnow/app/Helper/OfflineStockManager.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
@@ -1028,14 +1031,29 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         break;
       case BottomCodeConstant.TBDownloadView:
         if (moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
-          diamondConfig.actionDownloadOffline(
-            context,
-            () {
-              onRefreshList();
-            },
-            sortKey: sortingKey,
-            filterId: filterId,
-          );
+          if (Platform.isIOS) {
+            LocalNotificationManager.instance
+                .requestPermissions()
+                .then((value) {
+              diamondConfig.actionDownloadOffline(
+                context,
+                () {
+                  onRefreshList();
+                },
+                sortKey: sortingKey,
+                filterId: filterId,
+              );
+            });
+          } else {
+            diamondConfig.actionDownloadOffline(
+              context,
+              () {
+                onRefreshList();
+              },
+              sortKey: sortingKey,
+              filterId: filterId,
+            );
+          }
         } else {
           List<DiamondModel> selectedList =
               arraDiamond.where((element) => element.isSelected).toList();

@@ -30,7 +30,6 @@ class LocalNotificationManager {
   NotificationAppLaunchDetails notificationAppLaunchDetails;
 
   localNotiInit() async {
-    requestPermissions();
     notificationAppLaunchDetails =
         await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
 
@@ -47,8 +46,8 @@ class LocalNotificationManager {
         onSelectNotification: onSelectNotification);
   }
 
-  void requestPermissions() {
-    flutterLocalNotificationsPlugin
+  Future<void> requestPermissions() async {
+    await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
             IOSFlutterLocalNotificationsPlugin>()
         ?.requestPermissions(
