@@ -1,14 +1,10 @@
 import 'package:diamnow/app/Helper/NetworkClient.dart';
 import 'package:diamnow/app/constant/ApiConstants.dart';
 import 'package:diamnow/app/constant/constants.dart';
-import 'package:diamnow/app/localization/app_locales.dart';
-import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/models/AnalyticsModel/AnalyticsModel.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
-import 'package:flutter/cupertino.dart';
-
-import '../../main.dart';
+import 'package:flutter/material.dart';
 
 class AnalyticsReport {
   static final AnalyticsReport shared = AnalyticsReport._internal();
@@ -44,7 +40,7 @@ class AnalyticsReport {
     await NetworkClient.getInstance.callApi(
       buildContext,
       baseURL,
-      ApiConstants.uploadKyc,
+      ApiConstants.analytics,
       MethodType.Put,
       headers: NetworkClient.getInstance.getAuthHeaders(),
       successCallback: (response, message) {},

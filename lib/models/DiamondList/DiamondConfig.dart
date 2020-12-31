@@ -168,7 +168,7 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_PROFILE:
         return R.string.screenTitle.myProfile;
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
-        return R.string.screenTitle.stoneOfDay;
+        return R.string.screenTitle.stoneOfTheDays;
       case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK:
       case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH:
         return R.string.screenTitle.searchResult + " (Offline)";

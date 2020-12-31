@@ -493,8 +493,8 @@ class ErrorString {
   String enterDesc = "Please enter description.";
   String enterTitle = "Please enter title.";
   String enterEmailOrPhone = "Please enter email/mobile.";
-  String enterPassword = "Password can't be empty. Please enter Password.";
-  String enterConfirmPassword = "Please enter confirm password.";
+  String enterPassword = "Please enter the New Password.";
+  String enterConfirmPassword = "Please enter the New Password again.";
   String enterSkype = "Please Enter Skype.";
   String enterRegisterCode = "Please enter registration code";
   String enterEmail = "Please enter the Email address.";

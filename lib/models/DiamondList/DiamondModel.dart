@@ -15,6 +15,7 @@ class DiamondModel {
   String sSts;
   String rptNo;
   bool certFile;
+  String fcColNm;
   bool videoFile;
   bool roughVdo;
   bool polVdo;
@@ -269,6 +270,8 @@ class DiamondModel {
     hAFile = json['hAFile'] ?? false;
     mlkNm = json['mlkNm'] ?? "-";
     clrNm = json['clrNm'];
+    fcColNm = json['fcColNm'];
+
     colNm = json['colNm'];
     lbCmt = json['lbCmt'];
     cAng = json['cAng'];
@@ -427,6 +430,7 @@ class DiamondModel {
     data['cultNm'] = this.cultNm;
     data['cutNm'] = this.cutNm;
     data['depPer'] = this.depPer;
+    data['fcColNm'] = this.fcColNm;
     data['img'] = this.img;
     data['eClnNm'] = this.eClnNm;
     data['isFcCol'] = this.isFcCol;
@@ -556,6 +560,18 @@ class DiamondModel {
         break;
     }
     return color;
+  }
+
+  String getColorName() {
+    if (!isNullEmptyOrFalse(this.isFcCol)) {
+      if (this.isFcCol) {
+        if (!isNullEmptyOrFalse(this.fcColNm)) {
+          return this.fcColNm;
+        }
+        return "";
+      }
+    }
+    return "";
   }
 
   setBidAmount() {

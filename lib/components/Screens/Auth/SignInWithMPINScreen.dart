@@ -34,16 +34,20 @@ class SignInWithMPINScreen extends StatefulScreenWidget {
   bool isForReEnter = false;
   List<int> enteredPin = [];
   Function verifyPinCallback;
+
   // from mpin button on login screen.
   bool fromMpinButton = false;
 
   //reset mpin from otp
 
   String userName = "";
+  String userToken = "";
+
   String mPinOtp = "";
 
   //verifyMpin before enable mpin from myaccount.
   bool askForVerifyMpin = false;
+
   //enum for which screen you came from
   int enm;
 
@@ -59,6 +63,9 @@ class SignInWithMPINScreen extends StatefulScreenWidget {
     if (!isNullEmptyOrFalse(arguments)) {
       if (!isNullEmptyOrFalse(arguments["userName"])) {
         userName = arguments["userName"];
+      }
+      if (!isNullEmptyOrFalse(arguments["userToken"])) {
+        userToken = arguments["userToken"];
       }
       if (!isNullEmptyOrFalse(arguments["mPinOtp"])) {
         mPinOtp = arguments["mPinOtp"];
@@ -83,6 +90,7 @@ class SignInWithMPINScreen extends StatefulScreenWidget {
       this.fromMpinButton,
       this.userName,
       this.mPinOtp,
+      this.userToken,
       this.askForVerifyMpin,
       this.enm,
       this.verifyPinCallback);
@@ -105,6 +113,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
   var _focusUserNameTextField = FocusNode();
   final _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
+  String userToken = "";
 
   bool deleteAllCode = false;
 
@@ -115,6 +124,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
       this.fromMpinButton,
       this.userName,
       this.mPinOtp,
+      this.userToken,
       this.askForVerifyMpin,
       this.enm,
       this.verifyPinCallback);
@@ -124,6 +134,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
   @override
   void initState() {
     super.initState();
+
     if (isNullEmptyOrFalse(isForReEnter)) {
       isForReEnter = false;
     }
@@ -357,7 +368,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                                 return true;
                               }
                             },
-                            onSuccess: () {
+                            onSuccess: () async {
                               if (!isNullEmptyOrFalse(
                                   _userNameController.text)) {
                                 if (!isForReEnter) {
@@ -371,6 +382,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                                     arguments["enm"] = enm;
                                     arguments["userName"] = userName;
                                     arguments["mPinOtp"] = mPinOtp;
+                                    arguments["userToken"] = userToken;
                                     NavigationUtilities.push(
                                         SignInWithMPINScreen(
                                       enteredPin: this.enteredPin,
@@ -384,6 +396,10 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
                                   } else if (enm == Mpin.changeMpin) {
                                     callApiForChangeMpin(context);
                                   } else {
+                                    print("token save ${userToken}");
+                                    await app
+                                        .resolve<PrefUtils>()
+                                        .saveUserToken(userToken);
                                     callCreateMpApi(context);
                                   }
                                 }
@@ -458,13 +474,16 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
             () => app.resolve<ServiceModule>().networkService().createMpin(req),
             context,
             isProgress: true)
-        .then((loginResp) {
+        .then((loginResp) async {
       print("Api calling doneeeeeeeeeee");
       Map<String, dynamic> arguments = {};
       arguments["isForMpin"] = true;
       arguments["createMpin"] = true;
-      NavigationUtilities.pushRoute(PasswordResetSuccessfully.route,
-          args: arguments);
+      NavigationUtilities.pushRoute(
+        PasswordResetSuccessfully.route,
+        args: arguments,
+      );
+      await app.resolve<PrefUtils>().clearPreferenceAndDB();
       // callLogout(context);
       // NavigationUtilities.pushRoute(LoginScreen.route);
     }).catchError((onError) {

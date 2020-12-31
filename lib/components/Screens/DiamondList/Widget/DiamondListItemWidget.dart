@@ -509,8 +509,10 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             padding: EdgeInsets.only(
               right: getSize(10),
             ),
-            child: getText(widget.item?.colNm ?? "-",
-                appTheme.blackMedium14TitleColorblack),
+            child: getText(
+              widget.item?.getColorName() ?? "-",
+              appTheme.blackMedium14TitleColorblack,
+            ),
           ),
           Padding(
             padding: EdgeInsets.only(

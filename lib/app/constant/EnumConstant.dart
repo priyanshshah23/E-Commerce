@@ -1,5 +1,3 @@
-import 'package:diamnow/app/app.export.dart';
-import 'package:diamnow/components/Screens/Auth/Profile.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 
 class ViewTypes {

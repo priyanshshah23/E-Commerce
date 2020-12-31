@@ -12,11 +12,7 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/localization/LocalizationHelper.dart';
 import 'package:diamnow/components/Screens/Auth/ForgetPassword.dart';
 import 'package:diamnow/components/Screens/Auth/Signup.dart';
-import 'package:diamnow/components/Screens/Version/VersionUpdate.dart';
-
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
-import 'package:diamnow/models/Auth/SignInAsGuestModel.dart';
-import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:diamnow/models/Version/VersionUpdateResp.dart';
 import 'package:flutter/cupertino.dart';
@@ -626,6 +622,8 @@ class LoginScreenState extends StatefulScreenWidgetState {
           Map<String, dynamic> arguments = {};
           arguments["enm"] = Mpin.createMpin;
           arguments["userName"] = loginResp.data.user.username;
+          arguments["userToken"] = loginResp.data.token.jwt;
+          print(loginResp.data.token.jwt);
           NavigationUtilities.pushRoute(SignInWithMPINScreen.route,
               args: arguments);
         } else {

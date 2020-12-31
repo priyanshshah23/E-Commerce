@@ -53,6 +53,7 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
   int moduleType;
   bool isFromDrawer;
   bool hasData = false;
+
   _OrderListScreenState({this.moduleType, this.isFromDrawer});
 
   DiamondConfig diamondConfig;

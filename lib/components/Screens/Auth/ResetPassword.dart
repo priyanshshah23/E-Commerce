@@ -192,7 +192,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
       textCallback: (text) {},
       validation: (text) {
         if (text.isEmpty) {
-          return R.string.errorString.enterPassword;
+          return R.string.errorString.enterConfirmPassword;
         } else if (text != _newPasswordController.text.trim()) {
           return R.string.errorString.enterSamePassword;
         } else {
