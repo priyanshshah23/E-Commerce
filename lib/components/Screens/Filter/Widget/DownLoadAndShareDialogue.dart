@@ -241,7 +241,8 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: appTheme.colorPrimary, width: getSize(1)),
+                                color: appTheme.colorPrimary,
+                                width: getSize(1)),
                             borderRadius: BorderRadius.circular(getSize(5)),
                           ),
                           child: Text(
@@ -290,7 +291,6 @@ class _DownLoadAndShareDialogueState extends State<DownLoadAndShareDialogue> {
     } else {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-            title: R.string.commonString.error,
             desc: "Could not launch $uri",
             positiveBtnTitle: R.string.commonString.ok,
           );

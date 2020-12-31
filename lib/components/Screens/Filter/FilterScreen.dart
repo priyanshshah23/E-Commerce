@@ -333,6 +333,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                             element.masters.forEach((element) {
                               element.isSelected = false;
                             });
+                            element.isShowAllSelected = false;
                             element.caratRangeChipsToShow = [];
                           }
                           if (element is KeyToSymbolModel) {
@@ -658,6 +659,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             payload["payload"] = FilterRequest().createRequest(arrList);
 
             app.resolve<PrefUtils>().saveFilterOffline(payload);
+
+            showToast(
+                "You are offline, Your search is saved. When you are connected with internet, You will be notified and you can continue your search.",
+                context: context);
           } else {
             if (app
                     .resolve<PrefUtils>()

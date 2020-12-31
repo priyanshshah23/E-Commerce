@@ -41,7 +41,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 main() {
   WidgetsFlutterBinding.ensureInitialized();
-  configureNotification();
+  configureFirebase();
   app = KiwiContainer();
   HttpOverrides.global = new MyHttpOverrides();
   setup();
@@ -62,34 +62,10 @@ main() {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 }
 
-configureNotification() async {
+configureFirebase() async {
   await Firebase.initializeApp();
 
-  // await _configureLocalTimeZone();
-
-  const AndroidInitializationSettings initializationSettingsAndroid =
-      AndroidInitializationSettings('app_icon');
-
-  /// Note: permissions aren't requested here just to demonstrate that can be
-  /// done later
-  final IOSInitializationSettings initializationSettingsIOS =
-      IOSInitializationSettings(
-          requestAlertPermission: false,
-          requestBadgePermission: false,
-          requestSoundPermission: false,
-          onDidReceiveLocalNotification:
-              (int id, String title, String body, String payload) async {});
-
-  final InitializationSettings initializationSettings = InitializationSettings(
-    android: initializationSettingsAndroid,
-    iOS: initializationSettingsIOS,
-  );
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-      onSelectNotification: (String payload) async {
-    if (payload != null) {
-      debugPrint('notification payload: $payload');
-    }
-  });
+  LocalNotificationManager.instance;
 }
 
 class Base extends StatefulWidget {
@@ -128,12 +104,13 @@ class _BaseState extends State<Base> {
         case ConnectivityResult.wifi:
           string = 'online';
           OfflineStockManager.shared.callApiForSyncOfflineData(context);
+          LocalNotificationManager.instance.fireNotificationForFilterOffline();
           break;
       }
       print("Internet " + string);
     });
 
-    //await notificationInit();
+    await notificationInit();
     await _configureLocalTimeZone();
   }
 

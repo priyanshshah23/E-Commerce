@@ -7,9 +7,11 @@ import 'package:diamnow/app/constant/constants.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
+import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -19,6 +21,9 @@ class LocalNotificationManager {
     print('Init Local Notification');
     localNotiInit();
   }
+
+  static const platform = MethodChannel('com.base/notification');
+  static const GET_NOTIFICATION = "getNotification";
 
   static final LocalNotificationManager _singleton =
       LocalNotificationManager._();
@@ -30,7 +35,6 @@ class LocalNotificationManager {
   NotificationAppLaunchDetails notificationAppLaunchDetails;
 
   localNotiInit() async {
-    requestPermissions();
     notificationAppLaunchDetails =
         await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
 
@@ -45,10 +49,61 @@ class LocalNotificationManager {
         android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: onSelectNotification);
+    getNotification();
+    platform.setMethodCallHandler((call) {
+      if (call.method == "onNotificationReceived") {
+        Map<String, dynamic> req = {};
+        req = Map<String, dynamic>.from(call.arguments["payload"]);
+
+        SyncManager.instance.callApiForDiamondList(
+          NavigationUtilities.key.currentState.overlay.context,
+          req,
+          (diamondListResp) {
+            Map<String, dynamic> dict = new HashMap();
+            dict["filterId"] = diamondListResp.data.filter.id;
+            dict["filters"] = dict["payload"];
+            dict[ArgumentConstant.ModuleType] =
+                DiamondModuleConstant.MODULE_TYPE_SEARCH;
+            NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+          },
+          (onError) {
+            print("Error");
+          },
+        );
+      }
+      return null;
+    });
   }
 
-  void requestPermissions() {
-    flutterLocalNotificationsPlugin
+  Future<void> getNotification() async {
+    print("getnotifiactioncall");
+    try {
+      var result = await platform.invokeMethod(GET_NOTIFICATION);
+      if (result != null) {
+        SyncManager.instance.callApiForDiamondList(
+          NavigationUtilities.key.currentState.overlay.context,
+          result,
+          (diamondListResp) {
+            Map<String, dynamic> dict = new HashMap();
+            dict["filterId"] = diamondListResp.data.filter.id;
+            dict["filters"] = dict["payload"];
+            dict[ArgumentConstant.ModuleType] =
+                DiamondModuleConstant.MODULE_TYPE_SEARCH;
+            NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+          },
+          (onError) {
+            //print("Error");
+          },
+        );
+      }
+    } on PlatformException catch (e) {
+      print(e.toString());
+    }
+    return null;
+  }
+
+  Future<void> requestPermissions() async {
+    await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
             IOSFlutterLocalNotificationsPlugin>()
         ?.requestPermissions(
@@ -71,64 +126,44 @@ class LocalNotificationManager {
   Future<void> onSelectNotification(String payload) async {
     if (payload != null) {
       Map<String, dynamic> dict = json.decode(payload);
-      if (dict["moduleType"] ==
-          DiamondModuleConstant.MODULE_TYPE_FILTER_OFFLINE_NOTI_CLICK) {
-        SyncManager.instance.callApiForDiamondList(
-          NavigationUtilities.key.currentState.overlay.context,
-          dict["payload"].cast<Map<String, dynamic>>(),
-          (diamondListResp) {
-            Map<String, dynamic> dict = new HashMap();
-            dict["filterId"] = diamondListResp.data.filter.id;
-            dict["filters"] = dict["payload"];
-            dict[ArgumentConstant.ModuleType] =
-                DiamondModuleConstant.MODULE_TYPE_SEARCH;
-            NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
-          },
-          (onError) {
-            //print("Error");
-          },
-        );
+      if (dict["moduleType"] == NotificationIdentifier.offlineStockDownload) {
+        Map<String, dynamic> dict = new HashMap();
+        dict[ArgumentConstant.ModuleType] =
+            DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH;
+        dict[ArgumentConstant.IsFromDrawer] = true;
+
+        NavigationUtilities.pushRoute(FilterScreen.route, args: dict);
       }
     }
   }
 
   /// fire a notification that specifies a different icon, sound and vibration pattern
-  Future<void> showOfflineStockDownloadNotification() async {
-    const IOSNotificationDetails iOSPlatformChannelSpecifics =
-        IOSNotificationDetails(subtitle: 'the subtitle');
+  Future<void> showOfflineStockDownloadNotification(
+      {String title, String desc}) async {
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      NotificationIdentifier.offlineStockDownload.toString(),
+      AndroidNotificationIdentifier.offlineStockDownloadChannelName,
+      AndroidNotificationIdentifier.offlineStockDownloadChannelDescription,
+      icon: '@mipmap/ic_launcher',
+    );
 
-    const NotificationDetails platformChannelSpecifics =
-        NotificationDetails(iOS: iOSPlatformChannelSpecifics);
+    var iOSPlatformChannelSpecifics =
+        IOSNotificationDetails(sound: "slow_spring_board.aiff");
+
+    var platformChannelSpecifics = NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
+
+    Map<String, dynamic> payload = {};
+    payload["moduleType"] = NotificationIdentifier.offlineStockDownload;
+
     await flutterLocalNotificationsPlugin.show(
-        0,
-        'title of notification with a subtitle',
-        'body of notification with a subtitle',
-        platformChannelSpecifics,
-        payload: 'item x');
-
-    // var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-    //   NotificationIdentifier.offlineStockDownload.toString(),
-    //   AndroidNotificationIdentifier.offlineStockDownloadChannelName,
-    //   AndroidNotificationIdentifier.offlineStockDownloadChannelDescription,
-    //   icon: '@mipmap/ic_launcher',
-    // );
-
-    // var iOSPlatformChannelSpecifics =
-    //     IOSNotificationDetails(sound: "slow_spring_board.aiff");
-
-    // var platformChannelSpecifics = NotificationDetails(
-    //     android: androidPlatformChannelSpecifics,
-    //     iOS: iOSPlatformChannelSpecifics);
-
-    // // DateTime newGenDate;
-    // // newGenDate = DateTime.now().add(Duration(days: 60));
-
-    // await flutterLocalNotificationsPlugin.show(
-    //   NotificationIdentifier.offlineStockDownload,
-    //   APPNAME,
-    //   "Your offline stock downloaded successfully",
-    //   platformChannelSpecifics,
-    // );
+      title ?? NotificationIdentifier.offlineStockDownload,
+      APPNAME,
+      desc ?? "Your offline stock downloaded successfully",
+      platformChannelSpecifics,
+      payload: json.encode(payload) ?? "",
+    );
   }
 
   /// fire a notification that specifies a different icon, sound and vibration pattern
@@ -170,7 +205,10 @@ class LocalNotificationManager {
         app.resolve<PrefUtils>().getFilterOffline();
 
     if (!isNullEmptyOrFalse(dictFilter)) {
-      fireNotification(DateTime.now(),
+      fireNotification(
+          DateTime.now().add(
+            Duration(seconds: 5),
+          ),
           title: "Search diamonds",
           body: "Do you want to continue your search?",
           dictPayload: dictFilter);

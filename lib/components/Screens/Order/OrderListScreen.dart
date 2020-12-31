@@ -104,6 +104,9 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
     Map<String, dynamic> dict = {};
     dict["page"] = page;
     dict["limit"] = DEFAULT_LIMIT;
+    dict["sort"] = [
+      {"memoNo": "DESC"}
+    ];
     dict["filters"] = {};
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
