@@ -228,7 +228,7 @@ class _DocumentsState extends State<Documents>
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-            title: R.string.commonString.error,
+           
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.btnTryAgain,
           );

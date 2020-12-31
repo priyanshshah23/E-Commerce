@@ -536,7 +536,7 @@ class _PersonalInformationState extends State<PersonalInformation>
     }).catchError(
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            title: R.string.commonString.error,
+            
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
@@ -687,7 +687,7 @@ class _PersonalInformationState extends State<PersonalInformation>
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(
           context,
-          title: R.string.commonString.error,
+       
           desc: onError.message,
           positiveBtnTitle: R.string.commonString.btnTryAgain,
           onClickCallback: (buttonType) {
@@ -761,7 +761,7 @@ class _PersonalInformationState extends State<PersonalInformation>
     }).catchError(
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            title: R.string.commonString.error,
+            
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
@@ -1207,7 +1207,7 @@ class _PersonalInformationState extends State<PersonalInformation>
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-            title: R.string.commonString.error,
+           
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.btnTryAgain,
           );
@@ -1249,7 +1249,7 @@ class _PersonalInformationState extends State<PersonalInformation>
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-            title: R.string.commonString.error,
+           
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.btnTryAgain,
           );

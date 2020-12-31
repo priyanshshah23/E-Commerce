@@ -672,7 +672,6 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
         app.resolve<CustomDialogs>().hideProgressDialog();
         print(message);
         app.resolve<CustomDialogs>().confirmDialog(context,
-            title: R.string.commonString.error,
             desc: message,
             positiveBtnTitle: R.string.commonString.ok,
             onClickCallback: (click) {});

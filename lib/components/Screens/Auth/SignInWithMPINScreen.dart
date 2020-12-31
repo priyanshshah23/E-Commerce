@@ -470,7 +470,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            title: R.string.commonString.error,
+           
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.ok,
             onClickCallback: (ButtonType buttonType) {
@@ -509,7 +509,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            title: R.string.commonString.error,
+            
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.ok,
             onClickCallback: (ButtonType buttonType) {
@@ -551,7 +551,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            title: R.string.commonString.error,
+           
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.ok,
             onClickCallback: (ButtonType buttonType) {
@@ -598,7 +598,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            title: R.string.commonString.error,
+            
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.ok,
             onClickCallback: (ButtonType buttonType) {
@@ -635,7 +635,7 @@ class _SignInWithMPINScreen extends StatefulScreenWidgetState {
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            title: R.string.commonString.error,
+           
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.ok,
             onClickCallback: (ButtonType buttonType) {

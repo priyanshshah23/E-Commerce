@@ -449,7 +449,7 @@ openURLWithApp(String uri, BuildContext context, {bool isPop = false}) async {
   } else {
     app.resolve<CustomDialogs>().confirmDialog(
           context,
-          title: R.string.commonString.error,
+         
           desc: "Could not launch",
           positiveBtnTitle: R.string.commonString.ok,
         );
