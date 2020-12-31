@@ -568,10 +568,10 @@ class DiamondModel {
         if (!isNullEmptyOrFalse(this.fcColNm)) {
           return this.fcColNm;
         }
-        return "";
+        return "-";
       }
     }
-    return "";
+    return "-";
   }
 
   setBidAmount() {

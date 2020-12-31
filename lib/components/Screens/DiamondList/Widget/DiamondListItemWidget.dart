@@ -523,8 +523,10 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           ),
           Row(
             children: <Widget>[
-              getText(widget.item?.cutNm ?? "-",
-                  appTheme.blackMedium14TitleColorblack),
+              getText(
+                widget.item?.cutNm ?? "-",
+                appTheme.blackMedium14TitleColorblack,
+              ),
               SizedBox(width: getSize(2.0)),
               Container(
                 height: getSize(4),
