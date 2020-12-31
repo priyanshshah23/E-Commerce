@@ -333,6 +333,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                             element.masters.forEach((element) {
                               element.isSelected = false;
                             });
+                            element.isShowAllSelected = false;
                             element.caratRangeChipsToShow = [];
                           }
                           if (element is KeyToSymbolModel) {
