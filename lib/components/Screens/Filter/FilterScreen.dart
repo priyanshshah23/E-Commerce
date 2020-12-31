@@ -658,6 +658,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             payload["payload"] = FilterRequest().createRequest(arrList);
 
             app.resolve<PrefUtils>().saveFilterOffline(payload);
+
+            showToast(
+                "You are offline, Your search is saved. When you are connected with internet, You will be notified and you can continue your search.",
+                context: context);
           } else {
             if (app
                     .resolve<PrefUtils>()

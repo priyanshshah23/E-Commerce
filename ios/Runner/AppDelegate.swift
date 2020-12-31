@@ -7,6 +7,7 @@ import UserNotifications
 @objc class AppDelegate: FlutterAppDelegate {
     
     var notificationChannel : FlutterMethodChannel?
+    var onNotificationClick : ((_ dict : [String:Any]) -> ())?
     
     override func application(
         _ application: UIApplication,
@@ -35,7 +36,23 @@ import UserNotifications
         
         if true{
             notificationChannel = FlutterMethodChannel(name: "com.base/notification", binaryMessenger: controller.binaryMessenger)
+            notificationChannel?.setMethodCallHandler { (call, result) in
+                
+                if call.method == "getNotification" {
+                    
+                    if let notification = UserDefaults.standard.dictionary(forKey: "notification") {
+                        result(notification)
+                        UserDefaults.standard.removeObject(forKey: "notification")
+                        return
+                    }
+                    
+                    result(nil)
+                }
+            }
             
+            self.onNotificationClick = { data in
+                self.notificationChannel?.invokeMethod("onNotificationReceived", arguments: data)
+            }
         }
         GeneratedPluginRegistrant.register(with: self)
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -61,15 +78,11 @@ extension AppDelegate {
         if let strData = userInfo["payload"] as? String{
             if let data = strData.data(using: .utf8) {
                 if let dict = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]{
-                    notificationChannel?.setMethodCallHandler { (call, result) in
-                        
-                        if call.method == "getNotification" {
-                            result(dict)
-                        }
-                    }
+                    self.onNotificationClick?(dict)
                 }
             }
         }
         completionHandler()
     }
 }
+

@@ -50,6 +50,29 @@ class LocalNotificationManager {
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: onSelectNotification);
     getNotification();
+    platform.setMethodCallHandler((call) {
+      if (call.method == "onNotificationReceived") {
+        Map<String, dynamic> req = {};
+        req = Map<String, dynamic>.from(call.arguments["payload"]);
+
+        SyncManager.instance.callApiForDiamondList(
+          NavigationUtilities.key.currentState.overlay.context,
+          req,
+          (diamondListResp) {
+            Map<String, dynamic> dict = new HashMap();
+            dict["filterId"] = diamondListResp.data.filter.id;
+            dict["filters"] = dict["payload"];
+            dict[ArgumentConstant.ModuleType] =
+                DiamondModuleConstant.MODULE_TYPE_SEARCH;
+            NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+          },
+          (onError) {
+            print("Error");
+          },
+        );
+      }
+      return null;
+    });
   }
 
   Future<void> getNotification() async {
