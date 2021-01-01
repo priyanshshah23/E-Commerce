@@ -565,6 +565,8 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
       }
     ];
 
+    req["diamonds"] = diamondList.map((e) => e.id).toList();
+
     NetworkCall<BaseApiResp>()
         .makeCall(
             () => app

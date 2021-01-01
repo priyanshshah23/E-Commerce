@@ -107,13 +107,13 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
     dict["sort"] = [
       {"memoNo": "DESC"}
     ];
-    dict["filters"] = {};
+    dict["filter"] = {};
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
-        dict["filters"]["status"] = MemoConstant.MEMO_ORDER;
+        dict["filter"]["status"] = MemoConstant.MEMO_ORDER;
         break;
       case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
-        dict["filters"]["status"] = MemoConstant.MEMO_PURCHASE;
+        dict["filter"]["status"] = MemoConstant.MEMO_PURCHASE;
         break;
     }
 
