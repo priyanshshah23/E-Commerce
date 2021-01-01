@@ -265,8 +265,8 @@ class DiamondModel {
     rptNo = json['rptNo'];
     certFile = json['certFile'] ?? false;
     videoFile = json['videoFile'] ?? false;
-    polVdo = json['polVdo'] ?? false;
-    roughVdo = json['roughVdo'] ?? false;
+    // polVdo = json['polVdo'] ?? false;
+    // roughVdo = json['roughVdo'] ?? false;
     hAFile = json['hAFile'] ?? false;
     mlkNm = json['mlkNm'] ?? "-";
     clrNm = json['clrNm'];
