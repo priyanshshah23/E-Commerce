@@ -1750,7 +1750,8 @@ class DiamondConfig {
         } else if (i > 0 &&
             (arraDiamond[i].memoNo != arraDiamond[i - 1].memoNo)) {
           arraDiamond[i - 1].isSectionOfferDisplay = true;
-        } else if (i == arraDiamond.length - 1) {
+        }
+        if (i == arraDiamond.length - 1) {
           arraDiamond[i].isSectionOfferDisplay = true;
         }
         arraDiamond[i].isGrouping = true;

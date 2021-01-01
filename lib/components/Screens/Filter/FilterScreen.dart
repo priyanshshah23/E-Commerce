@@ -717,7 +717,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 (diamondListResp) {
               Map<String, dynamic> dict = new HashMap();
               dict["filterId"] = diamondListResp.data.filter.id;
-              dict["filters"] = FilterRequest().createRequest(arrList);
+              dict["filter"] = FilterRequest().createRequest(arrList);
               dict[ArgumentConstant.ModuleType] =
                   DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR;
               NavigationUtilities.pushRoute(DiamondListScreen.route,
