@@ -215,8 +215,7 @@ class DownloadState extends State<Download> {
         //   element.url = DiamondUrls.realImg2 + model.vStnId + ".jpg";
         // }
         else if (element.fileType == DownloadAndShareDialogueConstant.video1) {
-          element.url =
-              DiamondUrls.video + model.vStnId + "/" + model.vStnId + ".html";
+          element.url = DiamondUrls.video + model.vStnId + "/video.mp4";
         }
         //  else if (element.fileType ==
         //         DownloadAndShareDialogueConstant.video2 &&
@@ -375,7 +374,7 @@ class DownloadState extends State<Download> {
     final dir = await getDownloadDirectory();
     final savePath = path.join(dir.path, fileName);
 
-    if (isPermissionStatusGranted ??true) {
+    if (isPermissionStatusGranted ?? true) {
       Dio dio = Dio();
 
       dio.download(
