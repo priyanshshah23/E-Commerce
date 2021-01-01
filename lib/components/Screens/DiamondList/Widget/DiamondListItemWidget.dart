@@ -900,8 +900,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       onFocusChange: (hasfocus) {
         if (hasfocus == false) {
           print("Focus off");
-          var discount =
-              -(num.parse(_offeredDiscountTextFieldController.text).abs());
+          var discount = num.parse(_offeredDiscountTextFieldController.text);
           if (isNullEmptyOrFalse(_offeredDiscountTextFieldController.text)) {
             _offeredDiscountTextFieldController.text =
                 PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
@@ -965,7 +964,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         style: appTheme.blackNormal14TitleColorblack.copyWith(
           color: appTheme.colorPrimary,
         ),
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.text,
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(
           focusedBorder: InputBorder.none,

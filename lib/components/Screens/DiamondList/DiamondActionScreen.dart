@@ -135,7 +135,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
       },
       child: Scaffold(
         backgroundColor: appTheme.whiteColor,
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         appBar: getAppBar(
           context,
           diamondConfig.getActionScreenTitle(actionType),
