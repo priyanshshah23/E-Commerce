@@ -898,9 +898,6 @@ class DiamondConfig {
 
   callApiForExcel(BuildContext context, List<DiamondModel> diamondList,
       {bool isForShare = false, void callback(String), bool isSummary}) {
-    final Completer<WebViewController> _controller =
-        Completer<WebViewController>();
-
     List<String> stoneId = [];
     diamondList.forEach((element) {
       stoneId.add(element.id);
