@@ -527,14 +527,9 @@ class BottomMenuSetting {
         addAppointmentInBottomMenu(moreMenuList);
       }
     }
-//    if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
-//      if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
-//          moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
-//          moduleType !=
-//              DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+
     addExcelBottomMenu(moreMenuList);
-//      }
-//    }
+
     /* moreMenuList.add(BottomTabModel(
         image: hold,
         title: R.string.screenTitle.hold,
@@ -848,10 +843,10 @@ class BottomMenuSetting {
   addExcelBottomMenu(List<BottomTabModel> moreMenuList) {
     if (app
         .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_appointment)
-        .insert) {
+        .getModulePermission(ModulePermissionConstant.permission_excel)
+        .downloadExcel) {
       moreMenuList.add(BottomTabModel(
-          image: company,
+          image: excelImage,
           title: "Excel",
           type: ActionMenuConstant.ACTION_TYPE_EXCEL));
     }

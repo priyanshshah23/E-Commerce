@@ -39,6 +39,7 @@ const String share = "assets/diamnow/share.png";
 const String diamondIcon = "assets/diamnow/diamondIcon.png";
 const String whatsappIcon = "assets/diamnow/whatsapp.png";
 const String skypeIcon = "assets/diamnow/skype.png";
+const String excelImage = "assets/diamnow/excelImage.png";
 
 //filter
 const String addDemand = "assets/filter/addDemand.png";
