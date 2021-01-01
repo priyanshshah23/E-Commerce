@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:diamnow/Setting/SettingModel.dart';
 import 'package:diamnow/app/Helper/OfflineStockManager.dart';
@@ -8,10 +10,14 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/constant/ImageConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/AnalyticsReport.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
+import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
+import 'package:path/path.dart' as path;
+
 import 'package:diamnow/app/utils/CustomBorder.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
@@ -31,12 +37,14 @@ import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/DiamondList/download.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/OfflineSearchHistory/OfflineStockTrack.dart';
+import 'package:diamnow/models/excel/ExcelApiResponse.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 import 'package:uuid/uuid.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../main.dart';
 
@@ -288,24 +296,30 @@ class DiamondConfig {
               sequence: 3,
               isCenter: true));
         } else if (isDetail) {
-          list.add(BottomTabModel(
+          list.add(
+            BottomTabModel(
               title: "",
               image: share,
               code: BottomCodeConstant.TBShare,
               sequence: 0,
-              isCenter: true));
+              isCenter: true,
+            ),
+          );
           // list.add(BottomTabModel(
           //     title: "",
           //     image: clock,
           //     code: BottomCodeConstant.TBClock,
           //     sequence: 0,
           //     isCenter: true));
-          list.add(BottomTabModel(
+          list.add(
+            BottomTabModel(
               title: "",
               image: download,
               code: BottomCodeConstant.TBDownloadView,
               sequence: 3,
-              isCenter: true));
+              isCenter: true,
+            ),
+          );
         } else {
           list.add(BottomTabModel(
               title: "",
@@ -399,6 +413,9 @@ class DiamondConfig {
         break;
       case ActionMenuConstant.ACTION_TYPE_DOWNLOAD:
         actionDownload(context, list);
+        break;
+      case ActionMenuConstant.ACTION_TYPE_EXCEL:
+        actionExportExcel(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_SHARE:
         actionDownload(context, list, isForShare: true);
@@ -619,9 +636,7 @@ class DiamondConfig {
         callApiFoPlaceOrder(context, list, () {
           Navigator.pop(context, true);
         }, isPop: true, remark: remark, companyName: companyName, date: date);
-        break;   
-
-        
+        break;
     }
   }
 
@@ -740,6 +755,230 @@ class DiamondConfig {
         );
       },
     );
+  }
+
+  actionExportExcel(
+    BuildContext context,
+    List<DiamondModel> list,
+  ) {
+    return showDialog(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Dialog(
+              insetPadding: EdgeInsets.only(
+                  left: getSize(Spacing.leftPadding),
+                  right: getSize(Spacing.rightPadding)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(getSize(15)))),
+              child: Container(
+                width: MathUtilities.screenWidth(context),
+                padding: EdgeInsets.symmetric(
+                  horizontal: getSize(20),
+                  vertical: getSize(29),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      "Export Excel",
+                      textAlign: TextAlign.center,
+                      style: appTheme.blackSemiBold18TitleColorblack,
+                    ),
+                    SizedBox(
+                      height: getSize(20),
+                    ),
+//                    Padding(
+//                      padding: EdgeInsets.symmetric(horizontal: getSize(30)),
+//                      child: Text(
+//                        "desc",
+//                        textAlign: TextAlign.center,
+//                        style: appTheme.commonAlertDialogueDescStyle,
+//                      ),
+//                    ),
+                    // SizedBox(height: getSize(20),),
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: getSize(24),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                callApiForExcel(
+                                  context,
+                                  list,
+                                  isSummary: true,
+                                );
+                              },
+                              child: Container(
+                                height: getSize(50),
+                                decoration: BoxDecoration(
+                                  color:
+                                      appTheme.colorPrimary.withOpacity(0.15),
+                                  border: Border.all(
+                                    color: appTheme.colorPrimary,
+                                    width: getSize(1),
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.circular(getSize(5)),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(getSize(8),
+                                      getSize(14), getSize(8), getSize(14)),
+                                  child: Text(
+                                    "With Summary",
+                                    textAlign: TextAlign.center,
+                                    style: appTheme.commonAlertDialogueDescStyle
+                                        .copyWith(
+                                      color: appTheme.blackColor,
+                                      fontSize: getFontSize(16),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: getSize(20),
+                          ),
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                callApiForExcel(
+                                  context,
+                                  list,
+                                  isSummary: false,
+                                );
+                              },
+                              child: Container(
+                                height: getSize(50),
+                                decoration: BoxDecoration(
+                                  color:
+                                      appTheme.colorPrimary.withOpacity(0.15),
+                                  border: Border.all(
+                                    color: appTheme.colorPrimary,
+                                    width: getSize(1),
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.circular(getSize(5)),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(getSize(8),
+                                      getSize(14), getSize(8), getSize(14)),
+                                  child: Text(
+                                    "Without Summary",
+                                    textAlign: TextAlign.center,
+                                    style: appTheme.commonAlertDialogueDescStyle
+                                        .copyWith(
+                                      color: appTheme.blackColor,
+                                      fontSize: getFontSize(16),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  callApiForExcel(BuildContext context, List<DiamondModel> diamondList,
+      {bool isForShare = false, void callback(String), bool isSummary}) {
+    final Completer<WebViewController> _controller =
+        Completer<WebViewController>();
+
+    List<String> stoneId = [];
+    diamondList.forEach((element) {
+      stoneId.add(element.id);
+    });
+    Map<String, dynamic> dict = {};
+    dict["id"] = stoneId;
+    if (isSummary) {
+      dict["allSummary"] = true;
+    } else {
+      dict["allSummary"] = false;
+    }
+
+    NetworkCall<ExcelApiResponse>()
+        .makeCall(
+      () => app.resolve<ServiceModule>().networkService().getExcel(dict),
+      context,
+    )
+        .then((excelApiResponse) async {
+      // success(diamondListResp);
+      Navigator.pop(context);
+      String url = ApiConstants.baseURLForExcel + excelApiResponse.data.data;
+      String excelFileUrl = url;
+      print("Excel file URL : " + url);
+      if (!Platform.isIOS) {
+        url = "https://docs.google.com/viewer?embedded=true&url=" + url;
+      }
+      print("Final ExcelFile Viewer Url : " + url);
+
+      //navigate to static page...
+      DownloadState downloadStateObj = DownloadState();
+      final dir = await downloadStateObj.getDownloadDirectory();
+      String fileName = "FinalExcel.xlsx";
+      final savePath = path.join(dir.path, fileName);
+      print("file:/" + savePath);
+
+      if (isForShare) {
+        callback(url);
+      } else {
+        downloadExcel(excelFileUrl, savePath);
+        if (Platform.isIOS) {
+          Map<String, dynamic> dict = {};
+          dict["strUrl"] = url;
+          dict['filePath'] = savePath;
+          dict[ArgumentConstant.IsFromDrawer] = false;
+          dict["isForExcel"] = true;
+          dict["screenTitle"] = excelApiResponse.data.excelName;
+          NavigationUtilities.pushRoute(StaticPageScreen.route, args: dict);
+        } else {
+          Map<String, dynamic> dict = {};
+          dict["strUrl"] = url;
+          dict['filePath'] = savePath;
+          dict[ArgumentConstant.IsFromDrawer] = false;
+          dict["isForExcel"] = true;
+          dict["screenTitle"] = excelApiResponse.data.excelName;
+          NavigationUtilities.pushRoute(StaticPageScreen.route, args: dict);
+        }
+      }
+      // getWebView(context, url);
+    }).catchError((onError) {
+      showToast("There is problem on server, please try again later.",
+          context: context);
+      print(onError);
+    });
+  }
+
+  //Download excel
+  downloadExcel(String excelFileUrl, String savePath) {
+    Dio dio = Dio();
+
+    dio
+        .download(
+      excelFileUrl,
+      savePath,
+      deleteOnError: true,
+    )
+        .then((value) {
+      print("excel downlaoded");
+    });
   }
 
   actionDownload(

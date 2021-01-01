@@ -70,6 +70,7 @@ class ModulePermissionConstant {
   static const permission_watchlist = "watchlist";
   static const permission_comment = "comment";
   static const permission_enquiry = "enquiry";
+  static const permission_excel = "excel";
   static const permission_order = "order";
   static const permission_purchase = "purchase";
   static const permission_stone_of_the_day = "stoneoftheday";
@@ -190,6 +191,7 @@ class ActionMenuConstant {
   static const ACTION_TYPE_OFFER = 6;
   static const ACTION_TYPE_APPOINTMENT = 7;
   static const ACTION_TYPE_HOLD = 8;
+
   static const ACTION_TYPE_DOWNLOAD = 9;
   static const ACTION_TYPE_CLEAR_SELECTION = 10;
   static const ACTION_TYPE_SHARE = 11;
@@ -201,6 +203,7 @@ class ActionMenuConstant {
   static const ACTION_TYPE_DELETE = 17;
   static const ACTION_TYPE_FINAL_CALCULATION = 18;
   static const ACTION_TYPE_CANCEL_STONE = 19;
+  static const ACTION_TYPE_EXCEL = 20;
 }
 
 class MoreMenuConstant {

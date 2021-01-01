@@ -284,6 +284,7 @@ class DrawerSetting {
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY,
       ));
+
     if (app
         .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_appointment)
@@ -526,6 +527,14 @@ class BottomMenuSetting {
         addAppointmentInBottomMenu(moreMenuList);
       }
     }
+//    if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
+//      if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
+//          moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
+//          moduleType !=
+//              DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+    addExcelBottomMenu(moreMenuList);
+//      }
+//    }
     /* moreMenuList.add(BottomTabModel(
         image: hold,
         title: R.string.screenTitle.hold,
@@ -833,6 +842,18 @@ class BottomMenuSetting {
           image: company,
           title: R.string.screenTitle.officeView,
           type: ActionMenuConstant.ACTION_TYPE_APPOINTMENT));
+    }
+  }
+
+  addExcelBottomMenu(List<BottomTabModel> moreMenuList) {
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_appointment)
+        .insert) {
+      moreMenuList.add(BottomTabModel(
+          image: company,
+          title: "Excel",
+          type: ActionMenuConstant.ACTION_TYPE_EXCEL));
     }
   }
 
