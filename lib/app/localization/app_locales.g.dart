@@ -737,6 +737,10 @@ class ScreenTitle {
   String declaimer = "Disclaimer";
   String shareStone = "Share Stone";
   String addRemider = "Add reminder";
+  String offlineSearch = "Offline Search";
+  String searchHistory = "Search History";
+  String offlineStock = "Offline Stock";
+  String searchOffline = "Search (Offline)";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -2043,6 +2047,14 @@ class ChineseScreenTitle extends ScreenTitle {
   get shareStone => "分享石";
   @override
   get addRemider => "添加提醒";
+  @override
+  get offlineSearch => "在线搜索";
+  @override
+  get searchHistory => "搜索历史记录";
+  @override
+  get offlineStock => "脱机股票";
+  @override
+  get searchOffline => "搜索（离线）";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -3412,6 +3424,14 @@ class FrenchScreenTitle extends ScreenTitle {
   get shareStone => "Partager Pierre";
   @override
   get addRemider => "Ajouter un rappel";
+  @override
+  get offlineSearch => "Hors ligne Recherche";
+  @override
+  get searchHistory => "Historique des recherches";
+  @override
+  get offlineStock => "Stock Hors ligne";
+  @override
+  get searchOffline => "Rechercher (Hors ligne)";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -4731,6 +4751,14 @@ class JapanScreenTitle extends ScreenTitle {
   get shareStone => "シェアストーン";
   @override
   get addRemider => "リマインダーを追加";
+  @override
+  get offlineSearch => "オフライン検索";
+  @override
+  get searchHistory => "検索履歴";
+  @override
+  get offlineStock => "オフライン証券";
+  @override
+  get searchOffline => "検索（オフライン）";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -6086,6 +6114,14 @@ class ItalianScreenTitle extends ScreenTitle {
   get shareStone => "Condividi pietra";
   @override
   get addRemider => "Aggiungi promemoria";
+  @override
+  get offlineSearch => "offline Cerca";
+  @override
+  get searchHistory => "Cronologia delle ricerche";
+  @override
+  get offlineStock => "offline della";
+  @override
+  get searchOffline => "Cerca (Offline)";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -7441,6 +7477,14 @@ class SpanishScreenTitle extends ScreenTitle {
   get shareStone => "Compartir Piedra";
   @override
   get addRemider => "Agregar recordatorio";
+  @override
+  get offlineSearch => "Desconectado Buscar";
+  @override
+  get searchHistory => "Buscar Historia";
+  @override
+  get offlineStock => "Desconectado de la";
+  @override
+  get searchOffline => "Buscar (fuera de línea)";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -8792,6 +8836,14 @@ class GermanyScreenTitle extends ScreenTitle {
   get shareStone => "Teile Stein";
   @override
   get addRemider => "In Erinnerung";
+  @override
+  get offlineSearch => "offline-Suche";
+  @override
+  get searchHistory => "Suchverlauf";
+  @override
+  get offlineStock => "offline-Auf";
+  @override
+  get searchOffline => "Suchen (Offline)";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }

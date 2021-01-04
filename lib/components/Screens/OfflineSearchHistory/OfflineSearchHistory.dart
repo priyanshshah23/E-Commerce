@@ -46,7 +46,7 @@ class _OfflineSearchHistoryState extends State<OfflineSearchHistory> {
       backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(
         context,
-        "Search History",
+        R.string.screenTitle.searchHistory,
         leadingButton: getDrawerButton(context, true),
         bgColor: appTheme.whiteColor,
         centerTitle: false,

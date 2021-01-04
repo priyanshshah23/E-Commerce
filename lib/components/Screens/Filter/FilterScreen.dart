@@ -317,7 +317,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 context,
                 moduleType ==
                         DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH
-                    ? "Search (Offline)"
+                    ? R.string.screenTitle.searchOffline
                     : R.string.screenTitle.searchDiamond,
                 bgColor: appTheme.whiteColor,
                 leadingButton: isFromDrawer

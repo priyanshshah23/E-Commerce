@@ -638,7 +638,11 @@
       "myAccount": "My Account",
       "declaimer": "Disclaimer",
       "shareStone": "Share Stone",
-      "addRemider": "Add reminder"
+      "addRemider": "Add reminder",
+      "offlineSearch": "Offline Search",
+      "searchHistory": "Search History",
+      "offlineStock": "Offline Stock",
+      "searchOffline": "Search (Offline)"
     },
     "dynamickeys": {
       "shape": "Shape",
@@ -1283,7 +1287,11 @@
       "myAccount": "我的帐户",
       "declaimer": "放弃",
       "shareStone": "分享石",
-      "addRemider": "添加提醒"
+      "addRemider": "添加提醒",
+      "offlineSearch": "在线搜索",
+      "searchHistory": "搜索历史记录",
+      "offlineStock": "脱机股票",
+      "searchOffline": "搜索（离线）"
     },
     "dynamickeys": {
       "shape": "形状",
@@ -1928,7 +1936,11 @@
       "myAccount": "Mon compte",
       "declaimer": "Avertissement",
       "shareStone": "Partager Pierre",
-      "addRemider": "Ajouter un rappel"
+      "addRemider": "Ajouter un rappel",
+      "offlineSearch": "Hors ligne Recherche",
+      "searchHistory": "Historique des recherches",
+      "offlineStock": "Stock Hors ligne",
+      "searchOffline": "Rechercher (Hors ligne)"
     },
     "dynamickeys": {
       "shape": "Forme",
@@ -2573,7 +2585,11 @@
       "myAccount": "マイアカウント",
       "declaimer": "免責条項",
       "shareStone": "シェアストーン",
-      "addRemider": "リマインダーを追加"
+      "addRemider": "リマインダーを追加",
+      "offlineSearch": "オフライン検索",
+      "searchHistory": "検索履歴",
+      "offlineStock": "オフライン証券",
+      "searchOffline": "検索（オフライン）"
     },
     "dynamickeys": {
       "shape": "形状",
@@ -3218,7 +3234,11 @@
       "myAccount": "Il mio account",
       "declaimer": "disconoscimento",
       "shareStone": "Condividi pietra",
-      "addRemider": "Aggiungi promemoria"
+      "addRemider": "Aggiungi promemoria",
+      "offlineSearch": "offline Cerca",
+      "searchHistory": "Cronologia delle ricerche",
+      "offlineStock": "offline della",
+      "searchOffline": "Cerca (Offline)"
     },
     "dynamickeys": {
       "shape": "Forma",
@@ -3863,7 +3883,11 @@
       "myAccount": "Mi cuenta",
       "declaimer": "Descargo de responsabilidad",
       "shareStone": "Compartir Piedra",
-      "addRemider": "Agregar recordatorio"
+      "addRemider": "Agregar recordatorio",
+      "offlineSearch": "Desconectado Buscar",
+      "searchHistory": "Buscar Historia",
+      "offlineStock": "Desconectado de la",
+      "searchOffline": "Buscar (fuera de línea)"
     },
     "dynamickeys": {
       "shape": "Forma",
@@ -4508,7 +4532,11 @@
       "myAccount": "Mein Konto",
       "declaimer": "Haftungsausschluss",
       "shareStone": "Teile Stein",
-      "addRemider": "In Erinnerung"
+      "addRemider": "In Erinnerung",
+      "offlineSearch": "offline-Suche",
+      "searchHistory": "Suchverlauf",
+      "offlineStock": "offline-Auf",
+      "searchOffline": "Suchen (Offline)"
     },
     "dynamickeys": {
       "shape": "Gestalten",
