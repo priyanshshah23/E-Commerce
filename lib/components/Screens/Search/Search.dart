@@ -84,7 +84,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
             centerTitle: false,
           ),
           bottomNavigationBar: Container(
-            margin: EdgeInsets.all(getSize(16)),
+            margin: EdgeInsets.all(getSize(20)),
             decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
             child: AppButton.flat(
               onTap: () {
@@ -118,8 +118,8 @@ class _SearchScreenState extends StatefulScreenWidgetState {
         color: appTheme.whiteColor,
         child: Padding(
           padding: EdgeInsets.only(
-            left: getSize(Spacing.leftPadding),
-            right: getSize(Spacing.rightPadding),
+            left: getSize(20),
+            right: getSize(20),
           ),
           child: Container(
             height: getSize(40),
