@@ -608,8 +608,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
   navigateToPopUpBox(BuildContext context, LoginResp loginResp) {
     app.resolve<CustomDialogs>().confirmDialog(context,
         title: APPNAME,
-        desc:
-            "Do you want to enable Touch Id/MPin to unlock $APPNAME? Please choose an option to unlock app",
+        desc: R.string.authStrings.loginDesc,
         positiveBtnTitle2: !isNullEmptyOrFalse(availableBiometrics)
             ? R.string.commonString.usertouchid
             : null,

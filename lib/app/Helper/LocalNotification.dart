@@ -209,8 +209,8 @@ class LocalNotificationManager {
           DateTime.now().add(
             Duration(seconds: 5),
           ),
-          title: "Search diamonds",
-          body: "Do you want to continue your search?",
+          title: R.string.authStrings.searchDiamonds,
+          body: R.string.authStrings.continueWithSearch,
           dictPayload: dictFilter);
       app.resolve<PrefUtils>().saveFilterOffline(null);
     }
