@@ -790,15 +790,6 @@ class DiamondConfig {
                     SizedBox(
                       height: getSize(20),
                     ),
-//                    Padding(
-//                      padding: EdgeInsets.symmetric(horizontal: getSize(30)),
-//                      child: Text(
-//                        "desc",
-//                        textAlign: TextAlign.center,
-//                        style: appTheme.commonAlertDialogueDescStyle,
-//                      ),
-//                    ),
-                    // SizedBox(height: getSize(20),),
                     Container(
                       margin: EdgeInsets.only(
                         top: getSize(24),
