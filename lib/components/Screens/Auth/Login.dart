@@ -143,7 +143,8 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                         child: PopupMenuButton<String>(
                                           onSelected: (newValue) {
                                             // add this property
-                                            selectedLanguage = newValue;
+                                            selectedLanguage =
+                                                language[newValue];
                                             LocalizationHelper.changeLocale(
                                                 language[newValue]);
                                             app
@@ -194,16 +195,14 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                                 ),
                                                 Expanded(
                                                   child: Text(
-                                                    selectedLanguage,
-                                                    style: selectedLanguage ==
-                                                            R
-                                                                .string
-                                                                .commonString
-                                                                .language
-                                                        ? appTheme
-                                                            .grey14HintTextStyle
-                                                        : appTheme
-                                                            .black14TextStyle,
+                                                    app
+                                                            .resolve<
+                                                                PrefUtils>()
+                                                            .getLocalization() ??
+                                                        R.string.commonString
+                                                            .language,
+                                                    style: appTheme
+                                                        .black14TextStyle,
                                                   ),
                                                 ),
                                                 Container(
