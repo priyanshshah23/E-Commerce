@@ -544,14 +544,16 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                     // UserDrawerHeader(), // if you want to set static
                     Expanded(
                       child: Container(
-                          padding: EdgeInsets.fromLTRB(
-                              getSize(0), getSize(0), getSize(0), getSize(0)),
-                          // color: AppTheme.of(context).theme.primaryColor,
-                          child: ListView(
-                              padding: EdgeInsets.all(getSize(0)),
-                              //shrinkWrap: true,
-                              children: getDrawerList(context))),
-                    )
+                        padding: EdgeInsets.fromLTRB(
+                            getSize(0), getSize(0), getSize(0), getSize(0)),
+                        // color: AppTheme.of(context).theme.primaryColor,
+                        child: ListView(
+                          padding: EdgeInsets.all(getSize(0)),
+                          //shrinkWrap: true,
+                          children: getDrawerList(context),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
