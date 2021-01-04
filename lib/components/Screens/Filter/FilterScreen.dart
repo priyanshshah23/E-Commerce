@@ -844,11 +844,17 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, position) {
         if (isNullEmptyOrFalse(arrTab)) {
-          return FilterItem(arrList);
+          return FilterItem(
+            arrList,
+            moduleType: moduleType,
+          );
         }
-        return FilterItem(arrList
-            .where((element) => element.tab == arrTab[position].tab)
-            .toList());
+        return FilterItem(
+          arrList
+              .where((element) => element.tab == arrTab[position].tab)
+              .toList(),
+          moduleType: moduleType,
+        );
       },
     );
   }
@@ -857,6 +863,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 class FilterItem extends StatefulWidget {
   List<FormBaseModel> arrList = [];
   int moduleType;
+
   FilterItem(this.arrList, {this.moduleType});
 
   @override
@@ -1049,13 +1056,12 @@ class _FilterItemState extends State<FilterItem> {
               ),
             ),
           ),
+          if (widget.moduleType !=
+              DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH)
           Center(
             child: InkWell(
               onTap: () {
-                Map<String, dynamic> dict = new HashMap();
-                dict["isFromSearch"] = true;
-                dict[ArgumentConstant.ModuleType] = widget.moduleType;
-                NavigationUtilities.pushRoute(SearchScreen.route, args: dict);
+                NavigationUtilities.pushRoute(VoiceSearch.route);
               },
               child: Padding(
                 padding: EdgeInsets.only(
