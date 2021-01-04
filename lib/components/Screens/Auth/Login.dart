@@ -55,7 +55,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
     "Spanish": Spanish.languageCode,
     "Germany": Germany.languageCode,
     // "Hebrew",
-    // "Arabic",
+    "Arabic" : Arabic.languageCode
   };
 
   String selectedLanguage = R.string.commonString.language;

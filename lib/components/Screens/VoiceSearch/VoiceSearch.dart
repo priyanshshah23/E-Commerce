@@ -56,7 +56,7 @@ class _VoiceSearchState extends StatefulScreenWidgetState {
     return Scaffold(
       backgroundColor: appTheme.whiteColor,
       bottomNavigationBar: getBottomButton(),
-      appBar: getAppBar(context, "Voice Search",
+      appBar: getAppBar(context, R.string.screenTitle.voiceSearch,
           leadingButton: IconButton(
             padding: EdgeInsets.all(3),
             onPressed: () {
@@ -125,7 +125,7 @@ class _VoiceSearchState extends StatefulScreenWidgetState {
                           : Text(
                               isMicTapped && speech.isListening
                                   ? "I am listening..."
-                                  : "Tap mic to speak",
+                                  : R.string.screenTitle.tapMictoSpeak,
                               textAlign: TextAlign.center,
                               style: appTheme.primary16TextStyle.copyWith(
                                 fontSize: getFontSize(28),

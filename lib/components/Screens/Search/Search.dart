@@ -419,8 +419,8 @@ class _SearchScreenState extends StatefulScreenWidgetState {
         child: Center(
           child: Text(
               _searchController.text.length > 0
-                  ? "No Data Found"
-                  : "Type to search",
+                  ? R.string.noDataStrings.noDataFound
+                  : R.string.screenTitle.typeToSearch,
               textAlign: TextAlign.center,
               style: appTheme.black18TextStyle),
         ),
@@ -536,15 +536,18 @@ class _SearchScreenState extends StatefulScreenWidgetState {
 
   getList() {
     if (isNullEmptyOrFalse(arrList)) {
-      return Container(
-        height: MediaQuery.of(context).size.height / 1.5,
-        child: Center(
-          child: Text(
-              _searchController.text.length > 0
-                  ? "No Data Found"
-                  : "Type at least 3 characters to \nsearch stones",
-              textAlign: TextAlign.center,
-              style: appTheme.black18TextStyle),
+      return Padding(
+        padding: EdgeInsets.all(getSize(20)),
+        child: Container(
+          height: MediaQuery.of(context).size.height / 1.5,
+          child: Center(
+            child: Text(
+                _searchController.text.length > 0
+                    ? R.string.noDataStrings.noDataFound
+                    : R.string.screenTitle.typeWordsToSearch,
+                textAlign: TextAlign.center,
+                style: appTheme.black18TextStyle),
+          ),
         ),
       );
     }
