@@ -90,6 +90,10 @@ class AuthStrings {
   String emailAddress = "Email Address*";
   String offlineFilter =
       "Unable to find the desired solitaire? We can help you get the best deal from our offline inventory.";
+  String loginDesc =
+      "Do you want to enable Touch Id/MPin to unlock My Diamonds? Please choose an option to unlock app";
+  String searchDiamonds = "Search diamonds";
+  String continueWithSearch = "Do you want to continue your search?";
   String mobileNumber = "Mobile";
   String searchHint = "Search...";
   String selectYourCountry = "Select Country";
@@ -493,8 +497,8 @@ class ErrorString {
   String enterDesc = "Please enter description.";
   String enterTitle = "Please enter title.";
   String enterEmailOrPhone = "Please enter email/mobile.";
-  String enterPassword = "Please enter the New Password.";
-  String enterConfirmPassword = "Please enter the New Password again.";
+  String enterPassword = "Password can't be empty. Please enter Password.";
+  String enterConfirmPassword = "Please enter confirm password.";
   String enterSkype = "Please Enter Skype.";
   String enterRegisterCode = "Please enter registration code";
   String enterEmail = "Please enter the Email address.";
@@ -733,6 +737,10 @@ class ScreenTitle {
   String declaimer = "Disclaimer";
   String shareStone = "Share Stone";
   String addRemider = "Add reminder";
+  String offlineSearch = "Offline Search";
+  String searchHistory = "Search History";
+  String offlineStock = "Offline Stock";
+  String searchOffline = "Search (Offline)";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -830,6 +838,12 @@ class ChineseAuthStrings extends AuthStrings {
   get emailAddress => "电子邮件地址*";
   @override
   get offlineFilter => "无法找到所需的纸牌？我们可以帮助你从我们的离线的库存最好的交易。";
+  @override
+  get loginDesc => "是否要启用触摸ID / M-PIN解锁我的钻石？请选择一个选项，以解锁应用";
+  @override
+  get searchDiamonds => "搜索钻石";
+  @override
+  get continueWithSearch => "你想继续搜索？";
   @override
   get mobileNumber => "移动";
   @override
@@ -975,41 +989,41 @@ class ChineseAuthStrings extends AuthStrings {
   @override
   get emailAndUname => "Email /用户名";
   @override
-  get signUp => "#ERROR!";
+  get signUp => "注册";
   @override
-  get promotionText => "#ERROR!";
+  get promotionText => "促销优惠";
   @override
-  get termsAndCondition => "#ERROR!";
+  get termsAndCondition => "附带条约";
   @override
-  get mustAgreeTermsAndCondition => "#ERROR!";
+  get mustAgreeTermsAndCondition => "你必须同意的条款和条件，以访客身分登入用户";
   @override
-  get forgotPasswordTitle => "#ERROR!";
+  get forgotPasswordTitle => "忘记密码";
   @override
-  get uploadKYC => "#ERROR!";
+  get uploadKYC => "上传KYC";
   @override
-  get uploadKycDesc => "#ERROR!";
+  get uploadKycDesc => "请上传您的KYC文件来访问完整的功能。";
   @override
-  get hintPhotoIdentityProof => "#ERROR!";
+  get hintPhotoIdentityProof => "照片的身份证明*";
   @override
-  get hintBussinerssProof => "#ERROR!";
+  get hintBussinerssProof => "商务身份证明*";
   @override
-  get btnFileUpload => "#ERROR!";
+  get btnFileUpload => "上传文件";
   @override
-  get pleaseUploadPhotoProof => "#ERROR!";
+  get pleaseUploadPhotoProof => "请上传照片的身份证明。";
   @override
-  get pleaseUploadBussinessProof => "#ERROR!";
+  get pleaseUploadBussinessProof => "请上传商家身份证明。";
   @override
-  get pleaseSelectFileFormat => "#ERROR!";
+  get pleaseSelectFileFormat => "请所有的上传以下格式的文件名：.jpg";
   @override
-  get kycSubmitted => "#ERROR!";
+  get kycSubmitted => "KYC提交";
   @override
-  get kycSubmmittedDesc => "#ERROR!";
+  get kycSubmmittedDesc => "您的KYC已成功提交。";
   @override
-  get btnMoveToHome => "#ERROR!";
+  get btnMoveToHome => "移至首页";
   @override
-  get kYCRejected => "#ERROR!";
+  get kYCRejected => "KYC拒绝";
   @override
-  get kycRejectedDesc => "#ERROR!";
+  get kycRejectedDesc => "您的KYC已被拒绝。请重新上传您的文件KYC访问所有功能。";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -1298,7 +1312,7 @@ class ChineseCommonString extends CommonString {
   @override
   get priceBreakuplbl => "价格解体";
   @override
-  get tripPricelbl => "旅行价格";
+  get tripPricelbl => "Trip价格";
   @override
   get taxeslbl => "税";
   @override
@@ -2033,6 +2047,14 @@ class ChineseScreenTitle extends ScreenTitle {
   get shareStone => "分享石";
   @override
   get addRemider => "添加提醒";
+  @override
+  get offlineSearch => "在线搜索";
+  @override
+  get searchHistory => "搜索历史记录";
+  @override
+  get offlineStock => "脱机股票";
+  @override
+  get searchOffline => "搜索（离线）";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -2139,6 +2161,13 @@ class FrenchAuthStrings extends AuthStrings {
   @override
   get offlineFilter =>
       "Impossible de trouver le solitaire désiré? Nous pouvons vous aider à obtenir la meilleure affaire de notre inventaire hors ligne.";
+  @override
+  get loginDesc =>
+      "Est-ce que vous voulez activer tactile Id / Ampin pour déverrouiller Mes diamants? S'il vous plaît choisir une option pour l'application déverrouiller";
+  @override
+  get searchDiamonds => "Recherche diamants";
+  @override
+  get continueWithSearch => "Voulez-vous continuer votre recherche?";
   @override
   get mobileNumber => "Mobile";
   @override
@@ -2289,41 +2318,47 @@ class FrenchAuthStrings extends AuthStrings {
   @override
   get emailAndUname => "Email /";
   @override
-  get signUp => "#ERROR!";
+  get signUp => "S'inscrire";
   @override
-  get promotionText => "#ERROR!";
+  get promotionText => "Offres promotionnelles";
   @override
-  get termsAndCondition => "#ERROR!";
+  get termsAndCondition => "Termes et conditions";
   @override
-  get mustAgreeTermsAndCondition => "#ERROR!";
+  get mustAgreeTermsAndCondition =>
+      "Vous devez accepter les termes et condition Se connecter comme Utilisateur invité";
   @override
-  get forgotPasswordTitle => "#ERROR!";
+  get forgotPasswordTitle => "Mot de passe oublié";
   @override
-  get uploadKYC => "#ERROR!";
+  get uploadKYC => "Télécharger KYC";
   @override
-  get uploadKycDesc => "#ERROR!";
+  get uploadKycDesc =>
+      "S'il vous plaît télécharger vos documents KYC pour accéder aux fonctionnalités complètes.";
   @override
-  get hintPhotoIdentityProof => "#ERROR!";
+  get hintPhotoIdentityProof => "Photo preuve d'identité *";
   @override
-  get hintBussinerssProof => "#ERROR!";
+  get hintBussinerssProof => "Identité d'entreprise Preuve *";
   @override
-  get btnFileUpload => "#ERROR!";
+  get btnFileUpload => "Téléchargement de fichiers";
   @override
-  get pleaseUploadPhotoProof => "#ERROR!";
+  get pleaseUploadPhotoProof =>
+      "S'il vous plaît télécharger Preuve photo d'identité.";
   @override
-  get pleaseUploadBussinessProof => "#ERROR!";
+  get pleaseUploadBussinessProof =>
+      "S'il vous plaît télécharger Une preuve d'identité d'entreprise.";
   @override
-  get pleaseSelectFileFormat => "#ERROR!";
+  get pleaseSelectFileFormat =>
+      "S'il vous plaît télécharger le fichier dans l'un des formats suivants: .jpg";
   @override
-  get kycSubmitted => "#ERROR!";
+  get kycSubmitted => "KYC Soumis";
   @override
-  get kycSubmmittedDesc => "#ERROR!";
+  get kycSubmmittedDesc => "Votre KYC a été soumis avec succès.";
   @override
-  get btnMoveToHome => "#ERROR!";
+  get btnMoveToHome => "Déplacer à l'accueil";
   @override
-  get kYCRejected => "#ERROR!";
+  get kYCRejected => "KYC Rejeté";
   @override
-  get kycRejectedDesc => "#ERROR!";
+  get kycRejectedDesc =>
+      "Votre KYC a été rejetée. S'il vous plaît télécharger vos documents KYC à nouveau pour accéder à toutes les fonctionnalités.";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -3389,6 +3424,14 @@ class FrenchScreenTitle extends ScreenTitle {
   get shareStone => "Partager Pierre";
   @override
   get addRemider => "Ajouter un rappel";
+  @override
+  get offlineSearch => "Hors ligne Recherche";
+  @override
+  get searchHistory => "Historique des recherches";
+  @override
+  get offlineStock => "Stock Hors ligne";
+  @override
+  get searchOffline => "Rechercher (Hors ligne)";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -3489,6 +3532,13 @@ class JapanAuthStrings extends AuthStrings {
   @override
   get offlineFilter =>
       "希望ソリティアを見つけることができませんでしたか？私たちは、あなたが私たちのオフラインインベントリから、最良の取引を得るのを助けることができます。";
+  @override
+  get loginDesc =>
+      "あなたは私のダイヤモンドのロックを解除するために、タッチID / MPinを有効にしますか？ロック解除アプリのオプションを選択してください";
+  @override
+  get searchDiamonds => "検索ダイヤモンド";
+  @override
+  get continueWithSearch => "あなたの検索を継続しますか？";
   @override
   get mobileNumber => "モバイル";
   @override
@@ -3635,41 +3685,42 @@ class JapanAuthStrings extends AuthStrings {
   @override
   get emailAndUname => "メール/ユーザー名";
   @override
-  get signUp => "#ERROR!";
+  get signUp => "サインアップ";
   @override
-  get promotionText => "#ERROR!";
+  get promotionText => "プロモーション";
   @override
-  get termsAndCondition => "#ERROR!";
+  get termsAndCondition => "利用規約と条件";
   @override
-  get mustAgreeTermsAndCondition => "#ERROR!";
+  get mustAgreeTermsAndCondition => "あなたはゲストユーザーとしてサインインする用語と条件に同意する必要があります";
   @override
-  get forgotPasswordTitle => "#ERROR!";
+  get forgotPasswordTitle => "パスワードをお忘れですか";
   @override
-  get uploadKYC => "#ERROR!";
+  get uploadKYC => "アップロードKYC";
   @override
-  get uploadKycDesc => "#ERROR!";
+  get uploadKycDesc => "フル機能にアクセスするためにあなたのKYCのドキュメントをアップロードしてください。";
   @override
-  get hintPhotoIdentityProof => "#ERROR!";
+  get hintPhotoIdentityProof => "写真のアイデンティティの証明*";
   @override
-  get hintBussinerssProof => "#ERROR!";
+  get hintBussinerssProof => "ビジネスアイデンティティ証明*";
   @override
-  get btnFileUpload => "#ERROR!";
+  get btnFileUpload => "ファイルのアップロード";
   @override
-  get pleaseUploadPhotoProof => "#ERROR!";
+  get pleaseUploadPhotoProof => "写真のアイデンティティの証明をアップロードしてください。";
   @override
-  get pleaseUploadBussinessProof => "#ERROR!";
+  get pleaseUploadBussinessProof => "ビジネスアイデンティティの証明をアップロードしてください。";
   @override
-  get pleaseSelectFileFormat => "#ERROR!";
+  get pleaseSelectFileFormat => "次のいずれかの形式でファイルをアップロードしてください：.JPG";
   @override
-  get kycSubmitted => "#ERROR!";
+  get kycSubmitted => "KYC提出";
   @override
-  get kycSubmmittedDesc => "#ERROR!";
+  get kycSubmmittedDesc => "あなたのKYCは正常に送信されました。";
   @override
-  get btnMoveToHome => "#ERROR!";
+  get btnMoveToHome => "ホームへ移動";
   @override
-  get kYCRejected => "#ERROR!";
+  get kYCRejected => "KYC拒否";
   @override
-  get kycRejectedDesc => "#ERROR!";
+  get kycRejectedDesc =>
+      "あなたのKYCは拒否されました。すべての機能にアクセスするには、再度ごKYCのドキュメントをアップロードしてください。";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -3722,7 +3773,7 @@ class JapanCommonString extends CommonString {
   @override
   get status => "状態";
   @override
-  get save => "セーブ";
+  get save => "保存する";
   @override
   get verify => "確認";
   @override
@@ -4181,7 +4232,7 @@ class JapanCommonString extends CommonString {
   get changempin => "変更MPin";
   @override
   get faceidandtouchnotenable =>
-      "FaceId / TouchIdお使いの携帯電話で有効になっていません、この機能を使用するために有効にしてください";
+      "FaceId / TouchIdお使いの携帯電話で有効になっていません、この機能を使用するには有効にしてください";
   @override
   get enablempintounlockmydiamonds =>
       "ロック解除アプリにMPinを有効にしますか？これは、タッチイドを無効にします。あなたが継続してもよろしいですか？";
@@ -4434,7 +4485,7 @@ class JapanScreenTitle extends ScreenTitle {
       "1）価格はこっちに言及固定されているので、交渉の余地はありません。 \\ N2）グレーディングは、パラメータは、GIAのグレーディングを越えた当社のウェブサイト上で言及しました。";
   @override
   get offerMsg =>
-      "私たちが提供する前に確認するためにあなたを要求するので、価格が承認されます場合はご提供石が直接確認されます。オファーリスト内の任意の石（S）プットは、それが、他の顧客のために利用可能であるとして、あなたのために保留されていません。";
+      "私たちが提供する前に確認するためにあなたを要求するので、価格が承認されます場合はご提供石が直接確認されます。 Offerリストに入れどれ石（複数可）、それは他の顧客のために利用可能であるとしてもだとしてあなたのために保留状態に保たれていません。";
   @override
   get note => "注意";
   @override
@@ -4700,6 +4751,14 @@ class JapanScreenTitle extends ScreenTitle {
   get shareStone => "シェアストーン";
   @override
   get addRemider => "リマインダーを追加";
+  @override
+  get offlineSearch => "オフライン検索";
+  @override
+  get searchHistory => "検索履歴";
+  @override
+  get offlineStock => "オフライン証券";
+  @override
+  get searchOffline => "検索（オフライン）";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -4803,6 +4862,13 @@ class ItalianAuthStrings extends AuthStrings {
   get offlineFilter =>
       "Impossibile trovare il solitario desiderato? Siamo in grado di aiutarvi a ottenere il miglior prezzo in nostro inventario offline.";
   @override
+  get loginDesc =>
+      "Vuoi abilitare tocco Id / MPin per sbloccare i miei diamanti? Scegliere l'opzione di sblocco app";
+  @override
+  get searchDiamonds => "ricerca diamanti";
+  @override
+  get continueWithSearch => "Vuoi continuare la ricerca?";
+  @override
   get mobileNumber => "Mobile";
   @override
   get searchHint => "Ricerca...";
@@ -4840,7 +4906,7 @@ class ItalianAuthStrings extends AuthStrings {
   @override
   get lblLogInErr => "Errore di accesso";
   @override
-  get enterYour => "Inserisci il tuo";
+  get enterYour => "Inserisci la tua";
   @override
   get details => "Dettagli";
   @override
@@ -4953,41 +5019,46 @@ class ItalianAuthStrings extends AuthStrings {
   @override
   get emailAndUname => "Email / Username";
   @override
-  get signUp => "#ERROR!";
+  get signUp => "Iscriviti";
   @override
-  get promotionText => "#ERROR!";
+  get promotionText => "Le offerte promozionali";
   @override
-  get termsAndCondition => "#ERROR!";
+  get termsAndCondition => "Termini e condizioni";
   @override
-  get mustAgreeTermsAndCondition => "#ERROR!";
+  get mustAgreeTermsAndCondition =>
+      "È necessario accettare i termini e condizioni per accedere come Utente ospite";
   @override
-  get forgotPasswordTitle => "#ERROR!";
+  get forgotPasswordTitle => "Ha dimenticato la password";
   @override
-  get uploadKYC => "#ERROR!";
+  get uploadKYC => "Carica KYC";
   @override
-  get uploadKycDesc => "#ERROR!";
+  get uploadKycDesc =>
+      "Si prega di caricare i documenti KYC per accedere alle funzioni complete.";
   @override
-  get hintPhotoIdentityProof => "#ERROR!";
+  get hintPhotoIdentityProof => "Foto Identità * Proof";
   @override
-  get hintBussinerssProof => "#ERROR!";
+  get hintBussinerssProof => "Affari identità * Proof";
   @override
-  get btnFileUpload => "#ERROR!";
+  get btnFileUpload => "Upload di file";
   @override
-  get pleaseUploadPhotoProof => "#ERROR!";
+  get pleaseUploadPhotoProof => "Si prega di caricare foto prova di identità.";
   @override
-  get pleaseUploadBussinessProof => "#ERROR!";
+  get pleaseUploadBussinessProof =>
+      "Si prega di caricare Affari prova di identità.";
   @override
-  get pleaseSelectFileFormat => "#ERROR!";
+  get pleaseSelectFileFormat =>
+      "Si prega di caricare file in uno dei seguenti formati: .jpg";
   @override
-  get kycSubmitted => "#ERROR!";
+  get kycSubmitted => "KYC Inserito";
   @override
-  get kycSubmmittedDesc => "#ERROR!";
+  get kycSubmmittedDesc => "Il tuo KYC è stato inviato con successo.";
   @override
-  get btnMoveToHome => "#ERROR!";
+  get btnMoveToHome => "Spostare alla Home";
   @override
-  get kYCRejected => "#ERROR!";
+  get kYCRejected => "KYC Rifiutato";
   @override
-  get kycRejectedDesc => "#ERROR!";
+  get kycRejectedDesc =>
+      "Il tuo KYC è stata rifiutata. Si prega di caricare nuovamente i documenti KYC per accedere a tutte le caratteristiche.";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -6043,6 +6114,14 @@ class ItalianScreenTitle extends ScreenTitle {
   get shareStone => "Condividi pietra";
   @override
   get addRemider => "Aggiungi promemoria";
+  @override
+  get offlineSearch => "offline Cerca";
+  @override
+  get searchHistory => "Cronologia delle ricerche";
+  @override
+  get offlineStock => "offline della";
+  @override
+  get searchOffline => "Cerca (Offline)";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -6148,6 +6227,13 @@ class SpanishAuthStrings extends AuthStrings {
   get offlineFilter =>
       "No es posible encontrar el solitario deseada? Podemos ayudarle a obtener la mejor oferta de nuestro inventario en línea.";
   @override
+  get loginDesc =>
+      "¿Quieres activar Touch ID / MPIN para desbloquear mis diamantes? Por favor seleccione una opción para la aplicación de desbloqueo";
+  @override
+  get searchDiamonds => "diamantes de búsqueda";
+  @override
+  get continueWithSearch => "¿Quieres continuar su búsqueda?";
+  @override
   get mobileNumber => "Móvil";
   @override
   get searchHint => "Buscar...";
@@ -6169,7 +6255,7 @@ class SpanishAuthStrings extends AuthStrings {
   @override
   get backToLogin => "Atrás para iniciar sesión";
   @override
-  get firstName => "Nombre de pila*";
+  get firstName => "Primer nombre*";
   @override
   get name => "Nombre de usuario *";
   @override
@@ -6297,41 +6383,47 @@ class SpanishAuthStrings extends AuthStrings {
   @override
   get emailAndUname => "Email / Usuario";
   @override
-  get signUp => "#ERROR!";
+  get signUp => "Regístrate";
   @override
-  get promotionText => "#ERROR!";
+  get promotionText => "Ofertas promocionales";
   @override
-  get termsAndCondition => "#ERROR!";
+  get termsAndCondition => "Términos y Condiciones";
   @override
-  get mustAgreeTermsAndCondition => "#ERROR!";
+  get mustAgreeTermsAndCondition =>
+      "Debe aceptar los términos y condiciones de entrar como usuario invitado";
   @override
-  get forgotPasswordTitle => "#ERROR!";
+  get forgotPasswordTitle => "Se te olvidó tu contraseña";
   @override
-  get uploadKYC => "#ERROR!";
+  get uploadKYC => "Subir KYC";
   @override
-  get uploadKycDesc => "#ERROR!";
+  get uploadKycDesc =>
+      "Por favor, subir sus documentos KYC para acceder a funciones completas.";
   @override
-  get hintPhotoIdentityProof => "#ERROR!";
+  get hintPhotoIdentityProof => "Foto Identidad * Prueba";
   @override
-  get hintBussinerssProof => "#ERROR!";
+  get hintBussinerssProof => "Identidad de negocios * Prueba";
   @override
-  get btnFileUpload => "#ERROR!";
+  get btnFileUpload => "Subir archivo";
   @override
-  get pleaseUploadPhotoProof => "#ERROR!";
+  get pleaseUploadPhotoProof => "Por favor, sube fotos prueba de identidad.";
   @override
-  get pleaseUploadBussinessProof => "#ERROR!";
+  get pleaseUploadBussinessProof =>
+      "Por favor, sube Identidad negocio a prueba.";
   @override
-  get pleaseSelectFileFormat => "#ERROR!";
+  get pleaseSelectFileFormat =>
+      "Por favor, cargar el archivo en cualquiera de los formatos siguientes: .jpg";
   @override
-  get kycSubmitted => "#ERROR!";
+  get kycSubmitted => "KYC Enviado";
   @override
-  get kycSubmmittedDesc => "#ERROR!";
+  get kycSubmmittedDesc =>
+      "Su conocimiento del cliente se ha enviado correctamente.";
   @override
-  get btnMoveToHome => "#ERROR!";
+  get btnMoveToHome => "Mover a Inicio";
   @override
-  get kYCRejected => "#ERROR!";
+  get kYCRejected => "KYC Rechazado";
   @override
-  get kycRejectedDesc => "#ERROR!";
+  get kycRejectedDesc =>
+      "Su conocimiento del cliente ha sido rechazada. Por favor, subir sus documentos KYC de nuevo para acceder a todas las funciones.";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -7385,6 +7477,14 @@ class SpanishScreenTitle extends ScreenTitle {
   get shareStone => "Compartir Piedra";
   @override
   get addRemider => "Agregar recordatorio";
+  @override
+  get offlineSearch => "Desconectado Buscar";
+  @override
+  get searchHistory => "Buscar Historia";
+  @override
+  get offlineStock => "Desconectado de la";
+  @override
+  get searchOffline => "Buscar (fuera de línea)";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -7453,7 +7553,7 @@ class GermanyAuthStrings extends AuthStrings {
   get verifyMobileDesc =>
       "Bitte überprüfen Handynummer, um das Profil zu aktualisieren.";
   @override
-  get verifyNow => "Jetzt Prüfen";
+  get verifyNow => "Jetzt überprüfen";
   @override
   get password => "Passwort";
   @override
@@ -7487,6 +7587,13 @@ class GermanyAuthStrings extends AuthStrings {
   @override
   get offlineFilter =>
       "Kann nicht die gewünschte Solitär finden? Wir bieten Ihnen das beste Angebot aus unserem Offline Inventar helfen zu bekommen.";
+  @override
+  get loginDesc =>
+      "Haben Sie Touch-Id / MPIN aktivieren möchten My Diamanten zu entsperren? Bitte wählen Sie eine Option zum Entsperren App";
+  @override
+  get searchDiamonds => "Suche nach Diamanten";
+  @override
+  get continueWithSearch => "Möchten Sie Ihre Suche fortsetzen?";
   @override
   get mobileNumber => "Handy, Mobiltelefon";
   @override
@@ -7638,41 +7745,45 @@ class GermanyAuthStrings extends AuthStrings {
   @override
   get emailAndUname => "E-Mail / Benutzername";
   @override
-  get signUp => "#ERROR!";
+  get signUp => "Anmelden";
   @override
-  get promotionText => "#ERROR!";
+  get promotionText => "Werbeangebote";
   @override
-  get termsAndCondition => "#ERROR!";
+  get termsAndCondition => "Geschäftsbedingung";
   @override
-  get mustAgreeTermsAndCondition => "#ERROR!";
+  get mustAgreeTermsAndCondition =>
+      "Sie müssen zu Bedingungen und den Zustand zustimmen als Gast Benutzer anmelden";
   @override
-  get forgotPasswordTitle => "#ERROR!";
+  get forgotPasswordTitle => "Passwort vergessen";
   @override
-  get uploadKYC => "#ERROR!";
+  get uploadKYC => "hochladen KYC";
   @override
-  get uploadKycDesc => "#ERROR!";
+  get uploadKycDesc =>
+      "Bitte laden Sie Ihre KYC-Dokumente voll Funktionen zuzugreifen.";
   @override
-  get hintPhotoIdentityProof => "#ERROR!";
+  get hintPhotoIdentityProof => "Foto Identitätsnachweis *";
   @override
-  get hintBussinerssProof => "#ERROR!";
+  get hintBussinerssProof => "Geschäfts-Identität Proof *";
   @override
-  get btnFileUpload => "#ERROR!";
+  get btnFileUpload => "Datei-Upload";
   @override
-  get pleaseUploadPhotoProof => "#ERROR!";
+  get pleaseUploadPhotoProof => "Bitte laden Foto Identitätsnachweis.";
   @override
-  get pleaseUploadBussinessProof => "#ERROR!";
+  get pleaseUploadBussinessProof => "Bitte laden Geschäfts-Identität Beweis.";
   @override
-  get pleaseSelectFileFormat => "#ERROR!";
+  get pleaseSelectFileFormat =>
+      "Bitte laden Sie Datei in einem der folgenden Formate: .jpg";
   @override
-  get kycSubmitted => "#ERROR!";
+  get kycSubmitted => "KYC eingereicht";
   @override
-  get kycSubmmittedDesc => "#ERROR!";
+  get kycSubmmittedDesc => "Ihre KYC wurde erfolgreich abgegeben.";
   @override
-  get btnMoveToHome => "#ERROR!";
+  get btnMoveToHome => "Gehen Sie zu Start";
   @override
-  get kYCRejected => "#ERROR!";
+  get kYCRejected => "KYC Zurückgewiesen";
   @override
-  get kycRejectedDesc => "#ERROR!";
+  get kycRejectedDesc =>
+      "Ihre KYC wurde abgelehnt. Bitte laden Sie Ihre KYC-Dokumente wieder alle Funktionen zugreifen zu können.";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -8386,7 +8497,7 @@ class GermanyScreenTitle extends ScreenTitle {
   @override
   get placeAnOffer => "Legen Sie ein Angebot";
   @override
-  get addedInWatchList => "Hinzugefügt in Merkliste";
+  get addedInWatchList => "Hinzugefügt in Beobachtungsliste";
   @override
   get addedInOffer => "Angebot eingereicht";
   @override
@@ -8725,6 +8836,14 @@ class GermanyScreenTitle extends ScreenTitle {
   get shareStone => "Teile Stein";
   @override
   get addRemider => "In Erinnerung";
+  @override
+  get offlineSearch => "offline-Suche";
+  @override
+  get searchHistory => "Suchverlauf";
+  @override
+  get offlineStock => "offline-Auf";
+  @override
+  get searchOffline => "Suchen (Offline)";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }

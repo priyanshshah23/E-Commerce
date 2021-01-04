@@ -111,7 +111,7 @@ class DrawerSetting {
         .view) {
       drawerList.add(DrawerModel(
         image: mySavedSearch,
-        title: "Offline Stock",
+        title: R.string.screenTitle.offlineStock,
         isSelected: false,
         isShowDivider: false,
         isShowUpperDivider: true,
@@ -120,7 +120,7 @@ class DrawerSetting {
 
       drawerList.add(DrawerModel(
         image: drawerSearch,
-        title: "Offline Search",
+        title: R.string.screenTitle.offlineSearch,
         isSelected: false,
         isShowDivider: false,
         isShowUpperDivider: false,
@@ -129,7 +129,7 @@ class DrawerSetting {
 
       drawerList.add(DrawerModel(
         image: drawerSearch,
-        title: "Search History",
+        title: R.string.screenTitle.searchHistory,
         isSelected: false,
         isShowDivider: false,
         isShowUpperDivider: false,
