@@ -32,7 +32,7 @@ class OfflineStockManager {
   bool isDownloading = false;
 
   int moduleType;
-  String sortingKey;
+  List<Map<String, dynamic>> sortRequest;
   String filterId;
 
   String selectedDate;
@@ -40,7 +40,7 @@ class OfflineStockManager {
   double downloadProgress = 0;
 
   downloadData({
-    String sortKey,
+    List<Map<String, dynamic>> sortRequest,
     int moduleType,
     List<SelectionPopupModel> allDiamondPreviewThings,
     String date,
@@ -56,7 +56,7 @@ class OfflineStockManager {
 
     RxBus.post(isDownloading, tag: eventOfflineDiamond);
 
-    this.sortKey = sortKey;
+    this.sortRequest = sortRequest;
     this.moduleType = moduleType;
     this.allDiamondPreviewThings = allDiamondPreviewThings;
     this.filterId = filterId;
@@ -165,8 +165,8 @@ class OfflineStockManager {
     Map<String, dynamic> dict = {};
     dict["page"] = page;
     dict["limit"] = this.limit;
-    if (sortingKey != null) {
-      dict["sort"] = sortingKey;
+    if (sortRequest != null) {
+      dict["sort"] = sortRequest;
     }
     dict["isReturnMasterKey"] = true;
     dict["filters"] = {};
@@ -214,8 +214,8 @@ class OfflineStockManager {
     Map<String, dynamic> dict = {};
     dict["page"] = page;
     dict["limit"] = DEFAULT_LIMIT;
-    if (sortingKey != null) {
-      dict["sort"] = sortingKey;
+    if (sortRequest != null) {
+      dict["sort"] = sortRequest;
     }
 
     dict["filters"] = {};

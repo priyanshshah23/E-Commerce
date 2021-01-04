@@ -183,7 +183,7 @@ class SyncManager {
     Map<String, dynamic> dict = {};
     dict["isNotReturnTotal"] = true;
     dict["isReturnCountOnly"] = true;
-    dict["filters"] = req;
+    dict["filter"] = req;
 
     if (!isNullEmptyOrFalse(searchText)) {
       dict["search"] = searchText;
@@ -647,9 +647,8 @@ class SyncManager {
   }
 
   //Analytics
-  callAnalytics(
-      BuildContext context, {String page, String section, String action,
-      Map<String, dynamic> dict}) {
+  callAnalytics(BuildContext context,
+      {String page, String section, String action, Map<String, dynamic> dict}) {
     Map<String, dynamic> request = {};
     request["page"] = page;
     request["section"] = section;
@@ -770,7 +769,6 @@ class SyncManager {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
               context,
-              
               desc: onError.message,
               positiveBtnTitle: R.string.commonString.ok,
             );

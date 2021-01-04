@@ -695,7 +695,7 @@ class DiamondConfig {
   actionHold(List<DiamondModel> list) {}
 
   actionDownloadOffline(BuildContext context, Function refreshList,
-      {String filterId, String sortKey, Map<String, dynamic> filterCriteria}) {
+      {String filterId, List<Map<String,dynamic>> sortRequest, Map<String, dynamic> filterCriteria}) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -739,7 +739,7 @@ class DiamondConfig {
                         OfflineStockManager.shared.downloadData(
                           allDiamondPreviewThings: multiSelectedItem,
                           filterId: isDownloadSearched ? filterId : null,
-                          sortKey: sortKey,
+                          sortRequest: sortRequest,
                           date: selectedDate,
                         );
                       },
@@ -1741,7 +1741,8 @@ class DiamondConfig {
         } else if (i > 0 &&
             (arraDiamond[i].memoNo != arraDiamond[i - 1].memoNo)) {
           arraDiamond[i - 1].isSectionOfferDisplay = true;
-        } else if (i == arraDiamond.length - 1) {
+        }
+        if (i == arraDiamond.length - 1) {
           arraDiamond[i].isSectionOfferDisplay = true;
         }
         arraDiamond[i].isGrouping = true;

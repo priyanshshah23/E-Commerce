@@ -64,7 +64,20 @@ class Config {
       for (int i = 0; i < fieldList.length; i++) {
         dynamic element = fieldList[i];
         if (element is Map<String, dynamic>) {
-          arrSorting.add(FilterOptions.fromJson(element));
+          if (element["request"] is List<dynamic>) {
+            dynamic request = element;
+
+            List<Map<String, dynamic>> list = [];
+            (element["request"] as List<dynamic>).forEach((item) {
+              if (item is Map<String, dynamic>) {
+                list.add(item);
+              }
+            });
+            request["request"] = list;
+            arrSorting.add(FilterOptions.fromJson(request));
+          } else {
+            arrSorting.add(FilterOptions.fromJson(element));
+          }
         }
       }
     }

@@ -141,7 +141,6 @@ class _DashboardState extends StatefulScreenWidgetState {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
               context,
-              
               desc: onError.message,
               positiveBtnTitle: R.string.commonString.btnTryAgain,
             );
@@ -363,7 +362,7 @@ class _DashboardState extends StatefulScreenWidgetState {
     }
     return Padding(
       padding: EdgeInsets.only(
-        bottom: getSize(30),
+        bottom: getSize(16),
       ),
       child: Row(
         key: searchKey,

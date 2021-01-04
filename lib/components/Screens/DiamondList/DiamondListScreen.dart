@@ -85,6 +85,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   int moduleType;
   bool isFromDrawer;
   String sortingKey;
+  List<Map<String, dynamic>> sortRequest;
   bool selectAllGroupDiamonds;
   List<FormBaseModel> filterModel;
   String downloadDate = "";
@@ -212,8 +213,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     Map<String, dynamic> dict = {};
     dict["page"] = page;
     dict["limit"] = DEFAULT_LIMIT;
-    if (sortingKey != null) {
-      dict["sort"] = sortingKey;
+    if (sortRequest != null) {
+      dict["sort"] = sortRequest;
     }
 
     switch (moduleType) {
@@ -230,8 +231,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
         break;
       case DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR:
-        dict["filters"] = {};
-        dict["filters"]["diamondSearchId"] = this.filterId;
+        dict["filter"] = {};
+        dict["filter"]["diamondSearchId"] = this.filterId;
         break;
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
         dict["filters"] = {};
@@ -1023,7 +1024,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           builder: (_) => FilterBy(
             optionList: optionList,
             callBack: (value) {
-              sortingKey = value;
+              sortRequest = value;
               callApi(true);
             },
           ),
@@ -1040,7 +1041,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 () {
                   onRefreshList();
                 },
-                sortKey: sortingKey,
+                sortRequest: sortRequest,
                 filterId: filterId,
               );
             });
@@ -1050,7 +1051,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               () {
                 onRefreshList();
               },
-              sortKey: sortingKey,
+              sortRequest: sortRequest,
               filterId: filterId,
             );
           }

@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 
 class FilterBy extends StatefulWidget {
   List<FilterOptions> optionList;
-  Function(String value) callBack;
+  Function(List<Map<String,dynamic>> request) callBack;
   FilterBy({this.optionList, this.callBack});
 
   @override
@@ -59,7 +59,7 @@ class _FilterByState extends State<FilterBy> {
                   setState(() {});
 
                   Navigator.pop(context);
-                  widget.callBack(widget.optionList[index].apiKey);
+                  widget.callBack(widget.optionList[index].request);
                 },
                 child: Padding(
                   padding: EdgeInsets.symmetric(
@@ -107,13 +107,16 @@ class FilterOptions {
   String icon;
   bool isActive;
   String apiKey;
+  List<Map<String, dynamic>> request;
 
-  FilterOptions(
-      {this.title,
-      this.isSelected = false,
-      this.icon,
-      this.isActive = true,
-      this.apiKey});
+  FilterOptions({
+    this.title,
+    this.isSelected = false,
+    this.icon,
+    this.isActive = true,
+    this.apiKey,
+    this.request,
+  });
 
   FilterOptions.fromJson(Map<String, dynamic> json) {
     title = json['title'];
@@ -121,6 +124,7 @@ class FilterOptions {
     icon = json['icon'];
     isActive = json['isActive'];
     apiKey = json['apiKey'];
+    request = json["request"];
   }
 
   Map<String, dynamic> toJson() {
@@ -130,6 +134,7 @@ class FilterOptions {
     data['icon'] = this.icon;
     data['isActive'] = this.isActive;
     data['apiKey'] = this.apiKey;
+    data["request"] = this.request;
     return data;
   }
 }
