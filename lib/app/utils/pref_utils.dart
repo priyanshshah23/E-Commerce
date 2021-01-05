@@ -373,6 +373,7 @@ class PrefUtils {
     bool compareStoneTour =
         app.resolve<PrefUtils>().getBool(keyCompareStoneTour);
     bool offerTour = app.resolve<PrefUtils>().getBool(keyOfferTour);
+    String language = app.resolve<PrefUtils>().getLocalization();
 
     app.resolve<PrefUtils>().clearPreferenceAndDB();
 
@@ -390,6 +391,7 @@ class PrefUtils {
         .resolve<PrefUtils>()
         .saveBoolean(keyDiamondDetailTour, diamondDetailTour);
     app.resolve<PrefUtils>().saveBoolean(keyCompareStoneTour, compareStoneTour);
+    app.resolve<PrefUtils>().saveString(keyLanguage, language);
     app.resolve<PrefUtils>().saveBoolean(keyOfferTour, offerTour);
     app
         .resolve<PrefUtils>()
