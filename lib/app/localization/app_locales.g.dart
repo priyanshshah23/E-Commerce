@@ -79,8 +79,9 @@ class AuthStrings {
   String forgotPassword = "Forgot Password?";
   String signInCap = "Sign In";
   String moveToLogIn = "Move to Log In";
-  String dontHaveAnAccount = "to set up your account.";
+  String dontHaveAnAccount = "Don't have an account? ";
   String clickHere = "Click here";
+  String signUpHere = "Signup here";
   String reset = "Reset";
   String haveRegisterCode = "Have a registration code?";
   String welcome = "Welcome Back!";
@@ -896,9 +897,11 @@ class ChineseAuthStrings extends AuthStrings {
   @override
   get moveToLogIn => "移动登录";
   @override
-  get dontHaveAnAccount => "设置您的帐户。";
+  get dontHaveAnAccount => "#ERROR!";
   @override
   get clickHere => "点击这里";
+  @override
+  get signUpHere => "在此注册";
   @override
   get reset => "重启";
   @override
@@ -2299,9 +2302,11 @@ class FrenchAuthStrings extends AuthStrings {
   @override
   get moveToLogIn => "Déplacer vers Connexion";
   @override
-  get dontHaveAnAccount => "pour configurer votre compte.";
+  get dontHaveAnAccount => "#ERROR!";
   @override
   get clickHere => "Cliquez ici";
+  @override
+  get signUpHere => "Inscrivez-vous ici";
   @override
   get reset => "Réinitialiser";
   @override
@@ -3751,9 +3756,11 @@ class JapanAuthStrings extends AuthStrings {
   @override
   get moveToLogIn => "ログインに移動";
   @override
-  get dontHaveAnAccount => "アカウントを設定します。";
+  get dontHaveAnAccount => "#ERROR!";
   @override
   get clickHere => "ここをクリック";
+  @override
+  get signUpHere => "ここにサインアップします";
   @override
   get reset => "リセット";
   @override
@@ -5161,9 +5168,11 @@ class ItalianAuthStrings extends AuthStrings {
   @override
   get moveToLogIn => "Spostare a Login";
   @override
-  get dontHaveAnAccount => "per configurare l'account.";
+  get dontHaveAnAccount => "#ERROR!";
   @override
   get clickHere => "Clicca qui";
+  @override
+  get signUpHere => "Registrati qui";
   @override
   get reset => "Ripristina";
   @override
@@ -6607,9 +6616,11 @@ class SpanishAuthStrings extends AuthStrings {
   @override
   get moveToLogIn => "Mover a Entrar";
   @override
-  get dontHaveAnAccount => "para configurar su cuenta.";
+  get dontHaveAnAccount => "#ERROR!";
   @override
   get clickHere => "haga clic aquí";
+  @override
+  get signUpHere => "Registrate aquí";
   @override
   get reset => "Reiniciar";
   @override
@@ -8049,9 +8060,11 @@ class GermanyAuthStrings extends AuthStrings {
   @override
   get moveToLogIn => "Gehen Sie zu Login";
   @override
-  get dontHaveAnAccount => "Ihr Konto einzurichten.";
+  get dontHaveAnAccount => "#ERROR!";
   @override
   get clickHere => "Klicke hier";
+  @override
+  get signUpHere => "Hier anmelden";
   @override
   get reset => "Reset";
   @override
@@ -9488,9 +9501,11 @@ class ArabicAuthStrings extends AuthStrings {
   @override
   get moveToLogIn => "الانتقال إلى تسجيل الدخول";
   @override
-  get dontHaveAnAccount => "لإعداد حسابك.";
+  get dontHaveAnAccount => "#ERROR!";
   @override
   get clickHere => "انقر هنا";
+  @override
+  get signUpHere => "سجل هنا";
   @override
   get reset => "إعادة تعيين";
   @override
@@ -10845,6 +10860,6 @@ class ArabicDynamickeys extends Dynamickeys {
     "cluetConditionTitle": "Culet الحالة",
     "disTitle": "ديس٪",
     "depthTitleWithoutPerc": "عمق",
-    "otherInformationTitle": "معلومات أخرى",
+    "otherInformationTitle": "#ERROR!",
   };
 }
