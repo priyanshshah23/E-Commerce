@@ -55,7 +55,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
     "Spanish": Spanish.languageCode,
     "Germany": Germany.languageCode,
     // "Hebrew",
-    "Arabic" : Arabic.languageCode
+    "Arabic": Arabic.languageCode
   };
 
   String selectedLanguage = R.string.commonString.language;
@@ -195,12 +195,15 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                                 ),
                                                 Expanded(
                                                   child: Text(
-                                                    app
+                                                    isNullEmptyOrFalse(app
                                                             .resolve<
                                                                 PrefUtils>()
-                                                            .getLocalization() ??
-                                                        R.string.commonString
-                                                            .language,
+                                                            .getLocalization())
+                                                        ? language["English"]
+                                                        : app
+                                                            .resolve<
+                                                                PrefUtils>()
+                                                            .getLocalization(),
                                                     style: appTheme
                                                         .black14TextStyle,
                                                   ),
@@ -303,7 +306,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                     ),
                                     Padding(
                                       padding:
-                                          EdgeInsets.only(top: getSize(70)),
+                                          EdgeInsets.only(top: getSize(60)),
                                       child: Container(
                                         margin: EdgeInsets.only(
                                             top: getSize(15), left: getSize(0)),

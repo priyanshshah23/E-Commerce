@@ -222,7 +222,7 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
   getColumn(String text, String lable) {
     return Container(
       padding:
-          EdgeInsets.symmetric(vertical: getSize(15), horizontal: getSize(4)),
+          EdgeInsets.symmetric(vertical: getSize(12), horizontal: getSize(4)),
       child: Column(
         children: <Widget>[
           getDetailText(text),
@@ -254,6 +254,7 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
   getLableText(String text) {
     return Text(
       text,
+      overflow: TextOverflow.fade,
       style: widget.moduleType ==
               DiamondModuleConstant.MODULE_TYPE_FINAL_CALCULATION
           ? appTheme.white16TextStyle.copyWith(fontSize: getFontSize(10))
