@@ -1,18 +1,18 @@
 [
   {
-    "title": "Basic",
+    "title": "basicTitle",
     "tab": "basic",
     "sequence": 1,
     "isActive": true
   },
   {
-    "title": "Advanced",
+    "title": "advancedTitle",
     "tab": "advance",
     "sequence": 2,
     "isActive": true
   },
   {
-    "title": "Stone ID/Cert No",
+    "title": "stoneIdTitle",
     "tab": "stoneid",
     "sequence": 3,
     "isActive": false

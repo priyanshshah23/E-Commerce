@@ -1,6 +1,6 @@
 [
   {
-    "title": "Default",
+    "title": "defaultTitle",
     "isSelected": true,
     "icon": "filterUnionArrow.png",
     "isActive": true,
@@ -8,7 +8,7 @@
     "request": null
   },
   {
-    "title": "New Diamonds",
+    "title": "newDiamondsTitle",
     "isSelected": false,
     "icon": "filterRightArrow.png",
     "isActive": false,
@@ -16,7 +16,7 @@
     "request": null
   },
   {
-    "title": "Price Low to High",
+    "title": "priceLowToHigh",
     "isSelected": false,
     "icon": "filterUpArrow.png",
     "isActive": true,
@@ -28,7 +28,7 @@
     ]
   },
   {
-    "title": "Price High to Low",
+    "title": "priceHighToLow",
     "isSelected": false,
     "icon": "filterDownArrow.png",
     "isActive": true,
@@ -40,7 +40,7 @@
     ]
   },
   {
-    "title": "Discount Low to High",
+    "title": "disLowToHigh",
     "isSelected": false,
     "icon": "filterUpArrow.png",
     "isActive": true,
@@ -52,7 +52,7 @@
     ]
   },
   {
-    "title": "Discount High to Low",
+    "title": "disHighToLow",
     "isSelected": false,
     "icon": "filterDownArrow.png",
     "isActive": true,
@@ -64,7 +64,7 @@
     ]
   },
   {
-    "title": "Color Low to High",
+    "title": "colorLowToHigh",
     "isSelected": false,
     "icon": "filterUpArrow.png",
     "isActive": true,
@@ -76,7 +76,7 @@
     ]
   },
   {
-    "title": "Color High to Low",
+    "title": "colorHighToLow",
     "isSelected": false,
     "icon": "filterDownArrow.png",
     "isActive": true,
@@ -88,7 +88,7 @@
     ]
   },
   {
-    "title": "Carat Low to High",
+    "title": "caratLowToHigh",
     "isSelected": false,
     "icon": "filterUpArrow.png",
     "isActive": true,
@@ -100,7 +100,7 @@
     ]
   },
   {
-    "title": "Carat High to Low",
+    "title": "caratHighToLow",
     "isSelected": false,
     "icon": "filterDownArrow.png",
     "isActive": true,
@@ -112,7 +112,7 @@
     ]
   },
   {
-    "title": "Clarity Low to High",
+    "title": "clarityLowToHigh",
     "isSelected": false,
     "icon": "filterUpArrow.png",
     "isActive": true,
@@ -124,7 +124,7 @@
     ]
   },
   {
-    "title": "Clarity High to Low",
+    "title": "clarityHighToLow",
     "isSelected": false,
     "icon": "filterDownArrow.png",
     "isActive": true,

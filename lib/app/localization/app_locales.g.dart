@@ -19,6 +19,7 @@ class R {
     "Italian": Italian(),
     "Spanish": Spanish(),
     "Germany": Germany(),
+    "Arabic": Arabic(),
   };
 
   static English _getDefaultLocal() {
@@ -603,11 +604,11 @@ class ScreenTitle {
       "Offered stone will directly be confirmed if the price gets approved so we request you to be sure before offering. Any stone(s) put in Offer list is not kept on hold for you as it is available for other customer's as well.";
   String note = "Note";
   String hours = "Hours";
-  String offeredDisc = "Offered Dis%";
+  String offeredDisc = "Offered Dis";
   String offeredPriceCt = "Offered Pr/Ct";
   String addOffer = "Add Offer";
-  String expDiscPer = "Expected Discount%";
-  String todayDiscPer = "Today's Disc%";
+  String expDiscPer = "Expected Discount";
+  String todayDiscPer = "Today's Disc";
   String searchResult = "Search Result";
   String searchDiamond = "Search Diamond";
   String basic = "Basic";
@@ -741,15 +742,93 @@ class ScreenTitle {
   String searchHistory = "Search History";
   String offlineStock = "Offline Stock";
   String searchOffline = "Search (Offline)";
+  String voiceSearch = "Voice Search";
+  String tapMictoSpeak = "Tap mic to Speak";
+  String typeToSearch = "Type to Search";
+  String typeWordsToSearch = "Type at least 3 words to search stones";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
 
 class Dynamickeys {
-  String shape = "Shape";
-  String caratRange = "Carat Range";
+  String stoneIdTitle = "Stone ID/Cert No";
   String byKey(String key) => _dynamicValues[key];
-  Map<String, String> _dynamicValues = {};
+  Map<String, String> _dynamicValues = {
+    "shape": "Shape",
+    "caratRange": "Carat Range",
+    "basicDetail": "Basic Details",
+    "measurementTitle": "Measurements",
+    "inclusionDetail": "Inclusion Details",
+    "other": "Other",
+    "stoneID": "Stone ID",
+    "labTitle": "Lab",
+    "certNo": "CERT. NO.",
+    "locationTitle": "LOCATION",
+    "shapeTitle": "Shape",
+    "caratTitle": "Carat",
+    "colorTitle": "Color",
+    "clarityTitle": "CLARITY",
+    "cutTitle": "Cut",
+    "polishTitle": "Polish",
+    "symmentryTitle": "Symmentry",
+    "fluorescenceTitle": "Fluorescence",
+    "rapTitle": "RAP (%)",
+    "discountTitle": "Discount (%)",
+    "priceAndCt": "Price/Ct",
+    "amountTitle": "Amount",
+    "eyeCleanTitle": "Eye Clean",
+    "brownTitle": "BROWN",
+    "milkyTitle": "Milky",
+    "mixTingeTitle": "MIX TINGE",
+    "dimensionTitle": "DIMENSIONS  (MM)",
+    "girdleTitle": "GIRDLE (%)",
+    "tableTitle": "Table %",
+    "crownAngleTitle": "Crown Angle",
+    "depthTitle": "Depth %",
+    "pavAngleTitle": "PAV ANGLE",
+    "crownHeightTitle": "Crown Height  (%)",
+    "pavDepthTitle": "Pavilion Depth (%)",
+    "starLengthTitle": "Star Length",
+    "lowerHalfTitle": "Lower Half",
+    "gridleTitle": "Girdle",
+    "gridleFacetedTitle": "GIRDLE FACETED",
+    "culetTitle": "Culet",
+    "rationTitle": "Ratio",
+    "blackInclusionTitle": "BLACK INCLUSION",
+    "otherInclusionTitle": "Other Inclusion",
+    "openInclusionTitle": "OPEN INCLUSION",
+    "extraFacetTitle": "EXTRA FACET",
+    "naturalTitle": "Natural",
+    "hAndATitle": "H & A",
+    "keyToSymbol": "KEY TO SYMBOL",
+    "labComments": "LAB COMMENTS",
+    "laserInsTitle": "LASER INS",
+    "basicTitle": "Basic",
+    "advancedTitle": "Advanced",
+    "defaultTitle": "Default",
+    "newDiamondsTitle": "New Diamonds",
+    "priceLowToHigh": "Price Low to High",
+    "priceHighToLow": "Price High to Low",
+    "disLowToHigh": "Discount Low to High",
+    "disHighToLow": "Discount High to Low",
+    "colorLowToHigh": "Color Low to High",
+    "colorHighToLow": "Color High to Low",
+    "caratLowToHigh": "Carat Low to High",
+    "caratHighToLow": "Carat High to Low",
+    "clarityLowToHigh": "Clarity Low to High",
+    "clarityHighToLow": "Clarity High to Low",
+    "colorShadeTitle": "Color Shade",
+    "certiTitle": "Certificate Number",
+    "arrivalsTitle": "Arrivals",
+    "lenghTitle": "Length",
+    "widthTitle": "Width",
+    "pavilionAngleTitle": "Pavilion Angle",
+    "girdleConditionTitle": "Girdle Condition",
+    "cluetConditionTitle": "Culet Condition",
+    "disTitle": "Dis%",
+    "depthTitleWithoutPerc": "Depth",
+    "otherInformationTitle": "Other Information",
+  };
 }
 
 class Chinese extends English {
@@ -1312,7 +1391,7 @@ class ChineseCommonString extends CommonString {
   @override
   get priceBreakuplbl => "价格解体";
   @override
-  get tripPricelbl => "Trip价格";
+  get tripPricelbl => "旅行价格";
   @override
   get taxeslbl => "税";
   @override
@@ -1450,8 +1529,6 @@ class ChineseCommonString extends CommonString {
   @override
   get bidEndsIn => "投标结束在：";
   @override
-  get shape => "形状";
-  @override
   get download => "下载";
   @override
   get share => "分享";
@@ -1562,7 +1639,9 @@ class ChineseCommonString extends CommonString {
   @override
   get youreallywanttodelete => "你真的要删除";
   String byKey(String key) => _dynamicValues[key];
-  Map<String, String> _dynamicValues = {};
+  Map<String, String> _dynamicValues = {
+    "shape": "形状",
+  };
 }
 
 class ChineseErrorString extends ErrorString {
@@ -1788,15 +1867,15 @@ class ChineseScreenTitle extends ScreenTitle {
   @override
   get hours => "小时";
   @override
-  get offeredDisc => "参团派息％";
+  get offeredDisc => "参团派息";
   @override
   get offeredPriceCt => "提供镨/ CT";
   @override
   get addOffer => "新增优惠";
   @override
-  get expDiscPer => "预计折扣％";
+  get expDiscPer => "预计折扣";
   @override
-  get todayDiscPer => "今天的折扣％";
+  get todayDiscPer => "今天的盘";
   @override
   get searchResult => "搜索结果";
   @override
@@ -2055,17 +2134,98 @@ class ChineseScreenTitle extends ScreenTitle {
   get offlineStock => "脱机股票";
   @override
   get searchOffline => "搜索（离线）";
+  @override
+  get voiceSearch => "声音搜索";
+  @override
+  get tapMictoSpeak => "点击麦克风讲";
+  @override
+  get typeToSearch => "键入搜索";
+  @override
+  get typeWordsToSearch => "键入至少3个字进行搜索石头";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
 
 class ChineseDynamickeys extends Dynamickeys {
   @override
-  get shape => "形状";
-  @override
-  get caratRange => "克拉范围";
+  get stoneIdTitle => "石ID /证书号";
   String byKey(String key) => _dynamicValues[key];
-  Map<String, String> _dynamicValues = {};
+  Map<String, String> _dynamicValues = {
+    "shape": "形状",
+    "caratRange": "克拉范围",
+    "basicDetail": "基本详情",
+    "measurementTitle": "测量",
+    "inclusionDetail": "包容详情",
+    "other": "其他",
+    "stoneID": "石ID",
+    "labTitle": "实验室",
+    "certNo": "CERT。没有。",
+    "locationTitle": "位置",
+    "shapeTitle": "形状",
+    "caratTitle": "克拉",
+    "colorTitle": "颜色",
+    "clarityTitle": "明晰",
+    "cutTitle": "切",
+    "polishTitle": "抛光",
+    "symmentryTitle": "Symmentry",
+    "fluorescenceTitle": "荧光",
+    "rapTitle": "RAP（％）",
+    "discountTitle": "折扣（％）",
+    "priceAndCt": "价格/ CT",
+    "amountTitle": "量",
+    "eyeCleanTitle": "眼部清洁",
+    "brownTitle": "棕色",
+    "milkyTitle": "乳白色",
+    "mixTingeTitle": "MIX色彩",
+    "dimensionTitle": "尺寸（mm）",
+    "girdleTitle": "腰带（％）",
+    "tableTitle": "表％",
+    "crownAngleTitle": "皇冠角",
+    "depthTitle": "深度％",
+    "pavAngleTitle": "PAV ANGLE",
+    "crownHeightTitle": "冠高（％）",
+    "pavDepthTitle": "亭深比（％）",
+    "starLengthTitle": "长星",
+    "lowerHalfTitle": "下半",
+    "gridleTitle": "腰带",
+    "gridleFacetedTitle": "束带FACETED",
+    "culetTitle": "底尖",
+    "rationTitle": "比",
+    "blackInclusionTitle": "黑色包裹体",
+    "otherInclusionTitle": "其他入选",
+    "openInclusionTitle": "打开包裹",
+    "extraFacetTitle": "EXTRA FACET",
+    "naturalTitle": "自然",
+    "hAndATitle": "哈",
+    "keyToSymbol": "关键符号",
+    "labComments": "LAB评论",
+    "laserInsTitle": "激光惯导系统",
+    "basicTitle": "基本",
+    "advancedTitle": "高级",
+    "defaultTitle": "默认",
+    "newDiamondsTitle": "新的钻石",
+    "priceLowToHigh": "价格由低到高",
+    "priceHighToLow": "价格从高到低",
+    "disLowToHigh": "折扣低到高",
+    "disHighToLow": "折扣高至低",
+    "colorLowToHigh": "颜色从低到高",
+    "colorHighToLow": "颜色从高到低",
+    "caratLowToHigh": "克拉低到高",
+    "caratHighToLow": "克拉从高到低",
+    "clarityLowToHigh": "净度从低到高",
+    "clarityHighToLow": "净度从高到低",
+    "colorShadeTitle": "色光",
+    "certiTitle": "证书编号",
+    "arrivalsTitle": "到达",
+    "lenghTitle": "长度",
+    "widthTitle": "宽度",
+    "pavilionAngleTitle": "亭角",
+    "girdleConditionTitle": "束带条件",
+    "cluetConditionTitle": "底尖状况",
+    "disTitle": "派息％",
+    "depthTitleWithoutPerc": "深度",
+    "otherInformationTitle": "其他信息",
+  };
 }
 
 class French extends English {
@@ -2790,8 +2950,6 @@ class FrenchCommonString extends CommonString {
   @override
   get bidEndsIn => "Offre se termine par:";
   @override
-  get shape => "Forme";
-  @override
   get download => "Télécharger";
   @override
   get share => "Partager";
@@ -2909,7 +3067,9 @@ class FrenchCommonString extends CommonString {
   @override
   get youreallywanttodelete => "Vous voulez vraiment supprimer";
   String byKey(String key) => _dynamicValues[key];
-  Map<String, String> _dynamicValues = {};
+  Map<String, String> _dynamicValues = {
+    "shape": "Forme",
+  };
 }
 
 class FrenchErrorString extends ErrorString {
@@ -3161,15 +3321,15 @@ class FrenchScreenTitle extends ScreenTitle {
   @override
   get hours => "Heures";
   @override
-  get offeredDisc => "Offert% Dis";
+  get offeredDisc => "Dis offerts";
   @override
   get offeredPriceCt => "Offert Pr / Ct";
   @override
   get addOffer => "Ajouter une offre";
   @override
-  get expDiscPer => "Remise prévue%";
+  get expDiscPer => "Remise prévue";
   @override
-  get todayDiscPer => "Disque de% aujourd'hui";
+  get todayDiscPer => "Disque d'aujourd'hui";
   @override
   get searchResult => "Résultat de la recherche";
   @override
@@ -3432,17 +3592,98 @@ class FrenchScreenTitle extends ScreenTitle {
   get offlineStock => "Stock Hors ligne";
   @override
   get searchOffline => "Rechercher (Hors ligne)";
+  @override
+  get voiceSearch => "Recherche vocale";
+  @override
+  get tapMictoSpeak => "Appuyez sur micro à parler";
+  @override
+  get typeToSearch => "Tapez pour rechercher";
+  @override
+  get typeWordsToSearch => "Tapez au moins 3 mots pour rechercher des pierres";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
 
 class FrenchDynamickeys extends Dynamickeys {
   @override
-  get shape => "Forme";
-  @override
-  get caratRange => "carat Gamme";
+  get stoneIdTitle => "Pierre ID / Cert Non";
   String byKey(String key) => _dynamicValues[key];
-  Map<String, String> _dynamicValues = {};
+  Map<String, String> _dynamicValues = {
+    "shape": "Forme",
+    "caratRange": "carat Gamme",
+    "basicDetail": "Détails de base",
+    "measurementTitle": "Des mesures",
+    "inclusionDetail": "Détails d'inclusion",
+    "other": "Autre",
+    "stoneID": "Stone ID",
+    "labTitle": "Laboratoire",
+    "certNo": "Cert. NON.",
+    "locationTitle": "EMPLACEMENT",
+    "shapeTitle": "Forme",
+    "caratTitle": "Carat",
+    "colorTitle": "Couleur",
+    "clarityTitle": "CLARTÉ",
+    "cutTitle": "Couper",
+    "polishTitle": "polonais",
+    "symmentryTitle": "Symmentry",
+    "fluorescenceTitle": "Fluorescence",
+    "rapTitle": "RAP (%)",
+    "discountTitle": "Remise (%)",
+    "priceAndCt": "Prix ​​/ Ct",
+    "amountTitle": "Montant",
+    "eyeCleanTitle": "Nettoyer les yeux",
+    "brownTitle": "MARRON",
+    "milkyTitle": "Laiteux",
+    "mixTingeTitle": "MIX Tinge",
+    "dimensionTitle": "Dimensions (mm)",
+    "girdleTitle": "GIRDLE (%)",
+    "tableTitle": "Table %",
+    "crownAngleTitle": "Couronne Angle",
+    "depthTitle": "profondeur%",
+    "pavAngleTitle": "PAV ANGLE",
+    "crownHeightTitle": "Couronne Hauteur (%)",
+    "pavDepthTitle": "Profondeur du Pavillon (en%)",
+    "starLengthTitle": "Longueur étoiles",
+    "lowerHalfTitle": "Moitié inférieure",
+    "gridleTitle": "Ceinture",
+    "gridleFacetedTitle": "GIRDLE FACETTES",
+    "culetTitle": "colette",
+    "rationTitle": "Rapport",
+    "blackInclusionTitle": "BLACK INCLUSION",
+    "otherInclusionTitle": "autres inclusion",
+    "openInclusionTitle": "INCLUSION OUVERT",
+    "extraFacetTitle": "EXTRA FACETTES",
+    "naturalTitle": "Naturel",
+    "hAndATitle": "H & A",
+    "keyToSymbol": "CLÉ DE SYMBOLE",
+    "labComments": "LAB COMMENTAIRES",
+    "laserInsTitle": "LASER INS",
+    "basicTitle": "De base",
+    "advancedTitle": "Avancée",
+    "defaultTitle": "Défaut",
+    "newDiamondsTitle": "nouveaux diamants",
+    "priceLowToHigh": "Prix ​​croissant",
+    "priceHighToLow": "Prix ​​élevé au plus bas",
+    "disLowToHigh": "Remise bas au plus élevé",
+    "disHighToLow": "Remise élevé au plus bas",
+    "colorLowToHigh": "Couleur bas au plus élevé",
+    "colorHighToLow": "Couleur élevé au plus bas",
+    "caratLowToHigh": "Carat bas au plus élevé",
+    "caratHighToLow": "Carat élevé au plus bas",
+    "clarityLowToHigh": "Clarté bas au plus élevé",
+    "clarityHighToLow": "Clarté élevé au plus bas",
+    "colorShadeTitle": "Nuance de couleur",
+    "certiTitle": "Numéro de certificat",
+    "arrivalsTitle": "Arrivées",
+    "lenghTitle": "Longueur",
+    "widthTitle": "Largeur",
+    "pavilionAngleTitle": "pavillon Angle",
+    "girdleConditionTitle": "Condition Ceinturon",
+    "cluetConditionTitle": "colette Condition",
+    "disTitle": "Dis%",
+    "depthTitleWithoutPerc": "Profondeur",
+    "otherInformationTitle": "les autres informations",
+  };
 }
 
 class Japan extends English {
@@ -4147,8 +4388,6 @@ class JapanCommonString extends CommonString {
   @override
   get bidEndsIn => "入札に終了します。";
   @override
-  get shape => "形状";
-  @override
   get download => "ダウンロード";
   @override
   get share => "シェア";
@@ -4232,7 +4471,7 @@ class JapanCommonString extends CommonString {
   get changempin => "変更MPin";
   @override
   get faceidandtouchnotenable =>
-      "FaceId / TouchIdお使いの携帯電話で有効になっていません、この機能を使用するには有効にしてください";
+      "FaceId / TouchIdお使いの携帯電話で有効になっていません、この機能を使用するために有効にしてください";
   @override
   get enablempintounlockmydiamonds =>
       "ロック解除アプリにMPinを有効にしますか？これは、タッチイドを無効にします。あなたが継続してもよろしいですか？";
@@ -4262,7 +4501,9 @@ class JapanCommonString extends CommonString {
   @override
   get youreallywanttodelete => "あなたは本当に削除したいです";
   String byKey(String key) => _dynamicValues[key];
-  Map<String, String> _dynamicValues = {};
+  Map<String, String> _dynamicValues = {
+    "shape": "形状",
+  };
 }
 
 class JapanErrorString extends ErrorString {
@@ -4485,21 +4726,21 @@ class JapanScreenTitle extends ScreenTitle {
       "1）価格はこっちに言及固定されているので、交渉の余地はありません。 \\ N2）グレーディングは、パラメータは、GIAのグレーディングを越えた当社のウェブサイト上で言及しました。";
   @override
   get offerMsg =>
-      "私たちが提供する前に確認するためにあなたを要求するので、価格が承認されます場合はご提供石が直接確認されます。 Offerリストに入れどれ石（複数可）、それは他の顧客のために利用可能であるとしてもだとしてあなたのために保留状態に保たれていません。";
+      "私たちが提供する前に確認するためにあなたを要求するので、価格が承認されます場合はご提供石が直接確認されます。オファーリスト内の任意の石（S）プットは、それが、他の顧客のために利用可能であるとして、あなたのために保留されていません。";
   @override
   get note => "注意";
   @override
   get hours => "時間";
   @override
-  get offeredDisc => "";
+  get offeredDisc => "提供されるディス";
   @override
   get offeredPriceCt => "提供されるのPr / CT";
   @override
   get addOffer => "オファーを追加";
   @override
-  get expDiscPer => "期待ディスカウント％";
+  get expDiscPer => "期待ディスカウント";
   @override
-  get todayDiscPer => "";
+  get todayDiscPer => "今日のディスク";
   @override
   get searchResult => "検索結果";
   @override
@@ -4759,17 +5000,98 @@ class JapanScreenTitle extends ScreenTitle {
   get offlineStock => "オフライン証券";
   @override
   get searchOffline => "検索（オフライン）";
+  @override
+  get voiceSearch => "音声検索";
+  @override
+  get tapMictoSpeak => "話すようにマイクをタップ";
+  @override
+  get typeToSearch => "検索の種類";
+  @override
+  get typeWordsToSearch => "石を検索するには、少なくとも3つのワードを入力";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
 
 class JapanDynamickeys extends Dynamickeys {
   @override
-  get shape => "形状";
-  @override
-  get caratRange => "カラットの範囲";
+  get stoneIdTitle => "ストーンID /証明書はありません";
   String byKey(String key) => _dynamicValues[key];
-  Map<String, String> _dynamicValues = {};
+  Map<String, String> _dynamicValues = {
+    "shape": "形状",
+    "caratRange": "カラットの範囲",
+    "basicDetail": "基本的な詳細",
+    "measurementTitle": "測定",
+    "inclusionDetail": "インクルージョンの詳細",
+    "other": "他の",
+    "stoneID": "石のID",
+    "labTitle": "ラボ",
+    "certNo": "CERT。番号。",
+    "locationTitle": "ロケーション",
+    "shapeTitle": "形状",
+    "caratTitle": "カラット",
+    "colorTitle": "色",
+    "clarityTitle": "CLARITY",
+    "cutTitle": "切る",
+    "polishTitle": "研磨",
+    "symmentryTitle": "Symmentry",
+    "fluorescenceTitle": "蛍光",
+    "rapTitle": "RAP（％）",
+    "discountTitle": "割引（％）",
+    "priceAndCt": "価格/ CT",
+    "amountTitle": "量",
+    "eyeCleanTitle": "アイクリーン",
+    "brownTitle": "褐色",
+    "milkyTitle": "ミルキー",
+    "mixTingeTitle": "MIX色合い",
+    "dimensionTitle": "寸法（mm）",
+    "girdleTitle": "ガードル（％）",
+    "tableTitle": "テーブル ％",
+    "crownAngleTitle": "クラウン角度",
+    "depthTitle": "深％",
+    "pavAngleTitle": "PAV ANGLE",
+    "crownHeightTitle": "クラウン高さ（％）",
+    "pavDepthTitle": "パビリオンの深さ（％）",
+    "starLengthTitle": "スターの長さ",
+    "lowerHalfTitle": "下半分",
+    "gridleTitle": "ガードル",
+    "gridleFacetedTitle": "ガードルファセット",
+    "culetTitle": "キューレット",
+    "rationTitle": "比",
+    "blackInclusionTitle": "BLACK INCLUSION",
+    "otherInclusionTitle": "その他のインクルージョン",
+    "openInclusionTitle": "OPEN INCLUSION",
+    "extraFacetTitle": "EXTRA FACET",
+    "naturalTitle": "ナチュラル",
+    "hAndATitle": "H＆A",
+    "keyToSymbol": "KEY TO SYMBOL",
+    "labComments": "LABコメント",
+    "laserInsTitle": "LASER INS",
+    "basicTitle": "基本的な",
+    "advancedTitle": "高度",
+    "defaultTitle": "デフォルト",
+    "newDiamondsTitle": "新しいダイヤモンド",
+    "priceLowToHigh": "高いに価格低",
+    "priceHighToLow": "低価格高へ",
+    "disLowToHigh": "ハイへの割引、低コスト",
+    "disHighToLow": "低への割引高いです",
+    "colorLowToHigh": "ハイへの色の低",
+    "colorHighToLow": "低への色のハイ",
+    "caratLowToHigh": "ハイへカラット低",
+    "caratHighToLow": "低へカラット高いです",
+    "clarityLowToHigh": "ハイへクラリティ低",
+    "clarityHighToLow": "低へクラリティ高いです",
+    "colorShadeTitle": "色合い",
+    "certiTitle": "証明書番号",
+    "arrivalsTitle": "到着",
+    "lenghTitle": "長さ",
+    "widthTitle": "幅",
+    "pavilionAngleTitle": "パビリオン角",
+    "girdleConditionTitle": "ガードル条件",
+    "cluetConditionTitle": "キューレット条件",
+    "disTitle": "ディス％",
+    "depthTitleWithoutPerc": "深さ",
+    "otherInformationTitle": "その他の情報",
+  };
 }
 
 class Italian extends English {
@@ -5488,8 +5810,6 @@ class ItalianCommonString extends CommonString {
   @override
   get bidEndsIn => "Bid finisce in:";
   @override
-  get shape => "Forma";
-  @override
   get download => "Scarica";
   @override
   get share => "Condividere";
@@ -5607,7 +5927,9 @@ class ItalianCommonString extends CommonString {
   @override
   get youreallywanttodelete => "Si vuole veramente cancellare";
   String byKey(String key) => _dynamicValues[key];
-  Map<String, String> _dynamicValues = {};
+  Map<String, String> _dynamicValues = {
+    "shape": "Forma",
+  };
 }
 
 class ItalianErrorString extends ErrorString {
@@ -5851,15 +6173,15 @@ class ItalianScreenTitle extends ScreenTitle {
   @override
   get hours => "Ore";
   @override
-  get offeredDisc => "Offerto Dis%";
+  get offeredDisc => "Dis offerti";
   @override
   get offeredPriceCt => "Offerto Pr / Ct";
   @override
   get addOffer => "Aggiungere offerta";
   @override
-  get expDiscPer => "% Di sconto atteso";
+  get expDiscPer => "Sconto previsto";
   @override
-  get todayDiscPer => "Oggi disco%";
+  get todayDiscPer => "Disco di oggi";
   @override
   get searchResult => "Risultato della ricerca";
   @override
@@ -6122,17 +6444,98 @@ class ItalianScreenTitle extends ScreenTitle {
   get offlineStock => "offline della";
   @override
   get searchOffline => "Cerca (Offline)";
+  @override
+  get voiceSearch => "Ricerca vocale";
+  @override
+  get tapMictoSpeak => "Toccare microfono a parlare";
+  @override
+  get typeToSearch => "Digita per ricerca";
+  @override
+  get typeWordsToSearch => "Digitare almeno 3 parole per cercare pietre";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
 
 class ItalianDynamickeys extends Dynamickeys {
   @override
-  get shape => "Forma";
-  @override
-  get caratRange => "Carat Gamma";
+  get stoneIdTitle => "Pietra ID / Cert No";
   String byKey(String key) => _dynamicValues[key];
-  Map<String, String> _dynamicValues = {};
+  Map<String, String> _dynamicValues = {
+    "shape": "Forma",
+    "caratRange": "Carat Gamma",
+    "basicDetail": "Dettagli di base",
+    "measurementTitle": "misure",
+    "inclusionDetail": "Dettagli di inclusione",
+    "other": "Altro",
+    "stoneID": "pietra ID",
+    "labTitle": "Laboratorio",
+    "certNo": "CERT. NO.",
+    "locationTitle": "POSIZIONE",
+    "shapeTitle": "Forma",
+    "caratTitle": "carato",
+    "colorTitle": "Colore",
+    "clarityTitle": "CHIAREZZA",
+    "cutTitle": "Taglio",
+    "polishTitle": "polacco",
+    "symmentryTitle": "Symmentry",
+    "fluorescenceTitle": "Fluorescenza",
+    "rapTitle": "RAP (%)",
+    "discountTitle": "Sconto (%)",
+    "priceAndCt": "Prezzo / Ct",
+    "amountTitle": "Quantità",
+    "eyeCleanTitle": "Clean Eye",
+    "brownTitle": "MARRONE",
+    "milkyTitle": "latteo",
+    "mixTingeTitle": "MIX tinge",
+    "dimensionTitle": "Dimensioni (mm)",
+    "girdleTitle": "CINTURA (%)",
+    "tableTitle": "Tavolo %",
+    "crownAngleTitle": "Angolo di corona",
+    "depthTitle": "profondità%",
+    "pavAngleTitle": "PAV ANGOLO",
+    "crownHeightTitle": "Corona Altezza (%)",
+    "pavDepthTitle": "Padiglione Profondità (%)",
+    "starLengthTitle": "stella Lunghezza",
+    "lowerHalfTitle": "La metà inferiore",
+    "gridleTitle": "Cintura",
+    "gridleFacetedTitle": "CINTURA SFACCETTATA",
+    "culetTitle": "culet",
+    "rationTitle": "Rapporto",
+    "blackInclusionTitle": "INCLUSIONE NERO",
+    "otherInclusionTitle": "Altro inclusione",
+    "openInclusionTitle": "INCLUSIONE APERTO",
+    "extraFacetTitle": "FACET EXTRA",
+    "naturalTitle": "Naturale",
+    "hAndATitle": "H & A",
+    "keyToSymbol": "LEGENDA SIMBOLO",
+    "labComments": "COMMENTI LAB",
+    "laserInsTitle": "LASER INS",
+    "basicTitle": "Di base",
+    "advancedTitle": "Avanzate",
+    "defaultTitle": "Predefinito",
+    "newDiamondsTitle": "nuovi Diamonds",
+    "priceLowToHigh": "Prezzo basso al più alto",
+    "priceHighToLow": "Prezzo decrescente",
+    "disLowToHigh": "Sconto basso al più alto",
+    "disHighToLow": "Alto sconto per Basso",
+    "colorLowToHigh": "Colore basso al più alto",
+    "colorHighToLow": "Colore decrescente",
+    "caratLowToHigh": "Carat basso al più alto",
+    "caratHighToLow": "Carat decrescente",
+    "clarityLowToHigh": "Chiarezza basso al più alto",
+    "clarityHighToLow": "La chiarezza decrescente",
+    "colorShadeTitle": "color Shade",
+    "certiTitle": "Numero di certificato",
+    "arrivalsTitle": "Arrivi",
+    "lenghTitle": "Lunghezza",
+    "widthTitle": "Larghezza",
+    "pavilionAngleTitle": "Angolo Pavilion",
+    "girdleConditionTitle": "Cintola Condizione",
+    "cluetConditionTitle": "culet Condizione",
+    "disTitle": "Dis%",
+    "depthTitleWithoutPerc": "Profondità",
+    "otherInformationTitle": "Altre informazioni",
+  };
 }
 
 class Spanish extends English {
@@ -6853,8 +7256,6 @@ class SpanishCommonString extends CommonString {
   @override
   get bidEndsIn => "La subasta termina en:";
   @override
-  get shape => "Forma";
-  @override
   get download => "Descargar";
   @override
   get share => "Compartir";
@@ -6968,7 +7369,9 @@ class SpanishCommonString extends CommonString {
   @override
   get youreallywanttodelete => "你 真的 要 删除";
   String byKey(String key) => _dynamicValues[key];
-  Map<String, String> _dynamicValues = {};
+  Map<String, String> _dynamicValues = {
+    "shape": "Forma",
+  };
 }
 
 class SpanishErrorString extends ErrorString {
@@ -7213,15 +7616,15 @@ class SpanishScreenTitle extends ScreenTitle {
   @override
   get hours => "horas";
   @override
-  get offeredDisc => "Presentado Dis%";
+  get offeredDisc => "Dis ofrecidos";
   @override
   get offeredPriceCt => "Presentado Pr / Ct";
   @override
   get addOffer => "Agregar una Oferta";
   @override
-  get expDiscPer => "";
+  get expDiscPer => "Descuento espera";
   @override
-  get todayDiscPer => "de hoy Disco%";
+  get todayDiscPer => "Disco de hoy";
   @override
   get searchResult => "Resultado de búsqueda";
   @override
@@ -7485,17 +7888,98 @@ class SpanishScreenTitle extends ScreenTitle {
   get offlineStock => "Desconectado de la";
   @override
   get searchOffline => "Buscar (fuera de línea)";
+  @override
+  get voiceSearch => "Búsqueda por voz";
+  @override
+  get tapMictoSpeak => "Toca el micrófono a hablar";
+  @override
+  get typeToSearch => "Escribe para buscar";
+  @override
+  get typeWordsToSearch => "Escriba al menos 3 palabras para buscar piedras";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
 
 class SpanishDynamickeys extends Dynamickeys {
   @override
-  get shape => "Forma";
-  @override
-  get caratRange => "Rango de quilates";
+  get stoneIdTitle => "Piedra ID / Cert n";
   String byKey(String key) => _dynamicValues[key];
-  Map<String, String> _dynamicValues = {};
+  Map<String, String> _dynamicValues = {
+    "shape": "Forma",
+    "caratRange": "Rango de quilates",
+    "basicDetail": "Detalles básicos",
+    "measurementTitle": "Mediciones",
+    "inclusionDetail": "Detalles de inclusión",
+    "other": "Otro",
+    "stoneID": "piedra ID",
+    "labTitle": "Laboratorio",
+    "certNo": "CERT. NO.",
+    "locationTitle": "UBICACIÓN",
+    "shapeTitle": "Forma",
+    "caratTitle": "Quilate",
+    "colorTitle": "Color",
+    "clarityTitle": "CLARIDAD",
+    "cutTitle": "Cortar",
+    "polishTitle": "polaco",
+    "symmentryTitle": "Symmentry",
+    "fluorescenceTitle": "Fluorescencia",
+    "rapTitle": "RAP (%)",
+    "discountTitle": "Descuento (%)",
+    "priceAndCt": "Precio / Ct",
+    "amountTitle": "Cantidad",
+    "eyeCleanTitle": "A simple vista",
+    "brownTitle": "MARRÓN",
+    "milkyTitle": "lechoso",
+    "mixTingeTitle": "MIX tinte",
+    "dimensionTitle": "Dimensiones (mm)",
+    "girdleTitle": "FAJA (%)",
+    "tableTitle": "Mesa %",
+    "crownAngleTitle": "ángulo de la corona",
+    "depthTitle": "profundidad%",
+    "pavAngleTitle": "PAV ÁNGULO",
+    "crownHeightTitle": "Altura de la corona (%)",
+    "pavDepthTitle": "Profundidad Pabellón (%)",
+    "starLengthTitle": "Longitud de la estrella",
+    "lowerHalfTitle": "Mitad inferior",
+    "gridleTitle": "Faja",
+    "gridleFacetedTitle": "FAJA FACETADO",
+    "culetTitle": "culet",
+    "rationTitle": "Proporción",
+    "blackInclusionTitle": "INCLUSIÓN NEGRO",
+    "otherInclusionTitle": "otro Inclusión",
+    "openInclusionTitle": "INCLUSIÓN ABIERTO",
+    "extraFacetTitle": "FACET EXTRA",
+    "naturalTitle": "Natural",
+    "hAndATitle": "H & A",
+    "keyToSymbol": "CLAVE PARA EL SÍMBOLO",
+    "labComments": "COMENTARIOS DE LABORATORIO",
+    "laserInsTitle": "LASER INS",
+    "basicTitle": "Básico",
+    "advancedTitle": "Avanzado",
+    "defaultTitle": "Defecto",
+    "newDiamondsTitle": "nuevos Diamantes",
+    "priceLowToHigh": "Precios de barato a caro",
+    "priceHighToLow": "Precio de mayor a menor",
+    "disLowToHigh": "Descuento de menor a mayor",
+    "disHighToLow": "Descuento de mayor a menor",
+    "colorLowToHigh": "El color de menor a mayor",
+    "colorHighToLow": "El color de mayor a menor",
+    "caratLowToHigh": "Quilates de menor a mayor",
+    "caratHighToLow": "Quilates de mayor a menor",
+    "clarityLowToHigh": "La claridad de menor a mayor",
+    "clarityHighToLow": "La claridad de mayor a menor",
+    "colorShadeTitle": "Color sombra",
+    "certiTitle": "Número certificado",
+    "arrivalsTitle": "Llegadas",
+    "lenghTitle": "Longitud",
+    "widthTitle": "Anchura",
+    "pavilionAngleTitle": "pabellón ángulo",
+    "girdleConditionTitle": "faja Condición",
+    "cluetConditionTitle": "Condición culata",
+    "disTitle": "Dis%",
+    "depthTitleWithoutPerc": "Profundidad",
+    "otherInformationTitle": "Otra información",
+  };
 }
 
 class Germany extends English {
@@ -8212,8 +8696,6 @@ class GermanyCommonString extends CommonString {
   @override
   get bidEndsIn => "Bid endet in:";
   @override
-  get shape => "Gestalten";
-  @override
   get download => "Herunterladen";
   @override
   get share => "Aktie";
@@ -8331,7 +8813,9 @@ class GermanyCommonString extends CommonString {
   @override
   get youreallywanttodelete => "Sie wollen wirklich löschen";
   String byKey(String key) => _dynamicValues[key];
-  Map<String, String> _dynamicValues = {};
+  Map<String, String> _dynamicValues = {
+    "shape": "Gestalten",
+  };
 }
 
 class GermanyErrorString extends ErrorString {
@@ -8497,7 +8981,7 @@ class GermanyScreenTitle extends ScreenTitle {
   @override
   get placeAnOffer => "Legen Sie ein Angebot";
   @override
-  get addedInWatchList => "Hinzugefügt in Beobachtungsliste";
+  get addedInWatchList => "Hinzugefügt in Merkliste";
   @override
   get addedInOffer => "Angebot eingereicht";
   @override
@@ -8573,15 +9057,15 @@ class GermanyScreenTitle extends ScreenTitle {
   @override
   get hours => "Std";
   @override
-  get offeredDisc => "Angeboten Dis%";
+  get offeredDisc => "angeboten Dis";
   @override
   get offeredPriceCt => "Angeboten Pr / Ct";
   @override
   get addOffer => "Angebot melden";
   @override
-  get expDiscPer => "";
+  get expDiscPer => "Erwartete Discount";
   @override
-  get todayDiscPer => "Heutige Disc%";
+  get todayDiscPer => "Die heutige Disc";
   @override
   get searchResult => "Suchergebnis";
   @override
@@ -8844,15 +9328,1523 @@ class GermanyScreenTitle extends ScreenTitle {
   get offlineStock => "offline-Auf";
   @override
   get searchOffline => "Suchen (Offline)";
+  @override
+  get voiceSearch => "Sprachsuche";
+  @override
+  get tapMictoSpeak => "Tippen Sie Mikrofon zu sprechen";
+  @override
+  get typeToSearch => "Tippe um zu suchen";
+  @override
+  get typeWordsToSearch => "Geben Sie mindestens 3 Wörter Steine ​​suchen";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
 
 class GermanyDynamickeys extends Dynamickeys {
   @override
-  get shape => "Gestalten";
+  get stoneIdTitle => "Stein ID / Cert No";
+  String byKey(String key) => _dynamicValues[key];
+  Map<String, String> _dynamicValues = {
+    "shape": "Gestalten",
+    "caratRange": "Carat-Strecke",
+    "basicDetail": "Grundlegende Details",
+    "measurementTitle": "Messungen",
+    "inclusionDetail": "Aufnahme-Details",
+    "other": "Andere",
+    "stoneID": "Stein ID",
+    "labTitle": "Labor",
+    "certNo": "CERT. NEIN.",
+    "locationTitle": "STANDORT",
+    "shapeTitle": "Gestalten",
+    "caratTitle": "Karat",
+    "colorTitle": "Farbe",
+    "clarityTitle": "KLARHEIT",
+    "cutTitle": "Schnitt",
+    "polishTitle": "Polieren",
+    "symmentryTitle": "Symmentry",
+    "fluorescenceTitle": "Fluoreszenz",
+    "rapTitle": "RAP (%)",
+    "discountTitle": "Rabatt (%)",
+    "priceAndCt": "Preis / Ct",
+    "amountTitle": "Menge",
+    "eyeCleanTitle": "Augen-saubere",
+    "brownTitle": "BRAUN",
+    "milkyTitle": "Milchig",
+    "mixTingeTitle": "MIX tinge",
+    "dimensionTitle": "MASSE (MM)",
+    "girdleTitle": "GÜRTELN (%)",
+    "tableTitle": "Tabelle %",
+    "crownAngleTitle": "Crown Winkel",
+    "depthTitle": "Tiefes%",
+    "pavAngleTitle": "PAV ANGLE",
+    "crownHeightTitle": "Kronenhöhe (%)",
+    "pavDepthTitle": "Pavilion Tiefe (%)",
+    "starLengthTitle": "Stern Länge",
+    "lowerHalfTitle": "Untere Hälfte",
+    "gridleTitle": "Gürtel",
+    "gridleFacetedTitle": "GÜRTELN FACETED",
+    "culetTitle": "culet",
+    "rationTitle": "Verhältnis",
+    "blackInclusionTitle": "BLACK INCLUSION",
+    "otherInclusionTitle": "andere Inclusion",
+    "openInclusionTitle": "OPEN INCLUSION",
+    "extraFacetTitle": "EXTRA FACET",
+    "naturalTitle": "Natürlich",
+    "hAndATitle": "H & A",
+    "keyToSymbol": "SCHLÜSSEL ZUM SYMBOL",
+    "labComments": "LAB KOMMENTAR",
+    "laserInsTitle": "LASER IN",
+    "basicTitle": "Basic",
+    "advancedTitle": "fortgeschritten",
+    "defaultTitle": "Standard",
+    "newDiamondsTitle": "New Diamanten",
+    "priceLowToHigh": "Preis niedrig bis hoch",
+    "priceHighToLow": "Preis absteigend",
+    "disLowToHigh": "Rabatt aufsteigend",
+    "disHighToLow": "Rabatt absteigend",
+    "colorLowToHigh": "Farbe aufsteigend",
+    "colorHighToLow": "Farbe absteigend",
+    "caratLowToHigh": "Carat aufsteigend",
+    "caratHighToLow": "Carat absteigend",
+    "clarityLowToHigh": "Klarheit aufsteigend",
+    "clarityHighToLow": "Klarheit absteigend",
+    "colorShadeTitle": "Farbschattierung",
+    "certiTitle": "Zertifikatsnummer",
+    "arrivalsTitle": "Ankünfte",
+    "lenghTitle": "Länge",
+    "widthTitle": "Breite",
+    "pavilionAngleTitle": "Pavilion Winkel",
+    "girdleConditionTitle": "Hüfthalter Zustand",
+    "cluetConditionTitle": "culet Zustand",
+    "disTitle": "Dis%",
+    "depthTitleWithoutPerc": "Tiefe",
+    "otherInformationTitle": "Andere Informationen",
+  };
+}
+
+class Arabic extends English {
   @override
-  get caratRange => "Carat-Strecke";
+  get authStrings => ArabicAuthStrings();
+  @override
+  get commonString => ArabicCommonString();
+  @override
+  get errorString => ArabicErrorString();
+  @override
+  get noDataStrings => ArabicNoDataStrings();
+  @override
+  get screenTitle => ArabicScreenTitle();
+  @override
+  get dynamickeys => ArabicDynamickeys();
+  static String get languageCode => "Arabic";
+  static String get languageName => "Arabic";
+}
+
+class ArabicAuthStrings extends AuthStrings {
+  @override
+  get editCompanyInformation => "تحرير معلومات عن الشركة";
+  @override
+  get selectNatureOfOrganization => "تحديد طبيعة منظمة";
+  @override
+  get setNewPassword => "تعيين كلمة المرور الجديدة وتسجيل الدخول مرة أخرى.";
+  @override
+  get enterCompanyName => "الرجاء إدخال اسم الشركة.";
+  @override
+  get pleaseEnterCustomerOTP => "الرجاء إدخال العملاء كود ركوب.";
+  @override
+  get pleaseEnterPickupOTP => "الرجاء إدخال العملاء كود صغيرة.";
+  @override
+  get pleaseEnterDeliveryOTP => "الرجاء إدخال العملاء كود التسليم.";
+  @override
+  get verified => "تم التحقق";
+  @override
+  get verify => "تحقق";
+  @override
+  get addressLineOne => "العنوان 1";
+  @override
+  get addressLineTwo => "العنوان 2";
+  @override
+  get addressLineThree => "العنوان 3";
+  @override
+  get oldPassword => "كلمة سر قديمة";
+  @override
+  get skype => "سكايب";
+  @override
+  get whatsApp => "ال WhatsApp";
+  @override
+  get pinCode => "الرقم السري *";
+  @override
+  get verifyMobileDesc =>
+      "يرجى التحقق من رقم الهاتف المحمول لتحديث ملف التعريف.";
+  @override
+  get verifyNow => "تحقق الآن";
+  @override
+  get password => "كلمه السر";
+  @override
+  get backToHome => "الذهاب إلى الصفحة الرئيسية";
+  @override
+  get forgotPassword => "هل نسيت كلمة المرور؟";
+  @override
+  get signInCap => "تسجيل الدخول";
+  @override
+  get moveToLogIn => "الانتقال إلى تسجيل الدخول";
+  @override
+  get dontHaveAnAccount => "لإعداد حسابك.";
+  @override
+  get clickHere => "انقر هنا";
+  @override
+  get reset => "إعادة تعيين";
+  @override
+  get haveRegisterCode => "لديك رمز التسجيل؟";
+  @override
+  get welcome => "مرحبا بعودتك!";
+  @override
+  get signInAsGuest => "تسجيل الدخول كضيف";
+  @override
+  get editProfileTitle => "تعديل الملف الشخصي";
+  @override
+  get emaillbl => "البريد الإلكتروني";
+  @override
+  get searchInventory => "البحث عن المنتج";
+  @override
+  get emailAddress => "عنوان البريد الالكترونى*";
+  @override
+  get offlineFilter =>
+      "تعذر العثور على الماس المنشود؟ يمكننا مساعدتك في الحصول على صفقة أفضل من المخزون لدينا حاليا.";
+  @override
+  get loginDesc =>
+      "هل تريد تمكين اللمس رقم / MPin لفتح بلدي الماس؟ يرجى اختيار خيار التطبيق فتح";
+  @override
+  get searchDiamonds => "البحث الماس";
+  @override
+  get continueWithSearch => "هل ترغب في الاستمرار في البحث؟";
+  @override
+  get mobileNumber => "التليفون المحمول";
+  @override
+  get searchHint => "بحث...";
+  @override
+  get selectYourCountry => "حدد الدولة";
+  @override
+  get resendCodeIn => "إعادة إرسال الرمز في";
+  @override
+  get resendCode => "إعادة إرسال";
+  @override
+  get haveAnAccount => "هل لديك حساب؟";
+  @override
+  get dontReceiveCode => "إذا لم يحصل على رمز!";
+  @override
+  get inLogin => "لتسجيل الدخول.";
+  @override
+  get resetPwdDesc =>
+      "إضافة كلمة المرور و تأكيد كلمة المرور لإعادة تعيين كلمة المرور الخاصة بك.";
+  @override
+  get backToLogin => "العودة إلى تسجيل الدخول";
+  @override
+  get firstName => "الاسم الاول*";
+  @override
+  get name => "اسم المستخدم*";
+  @override
+  get lastName => "الكنية*";
+  @override
+  get middleName => "الاسم الوسطى*";
+  @override
+  get confirmPassword => "تأكيد كلمة المرور";
+  @override
+  get currentPasswordErr => "خطأ كلمة المرور الحالية";
+  @override
+  get passwordChanged => "تم تغيير كلمة السر";
+  @override
+  get lblLogInErr => "خطأ في تسجيل الدخول";
+  @override
+  get enterYour => "ادخل";
+  @override
+  get details => "تفاصيل";
+  @override
+  get registerCode => "رمز التسجيل";
+  @override
+  get registerCodeDesc => "إضافة رمز التسجيل لبدء التسجيل الخاص بك مع 3eco.";
+  @override
+  get uploadPhotoDesc => "تأخذ صورة شخصية لنفسك";
+  @override
+  get updateProfile => "تحديث الملف";
+  @override
+  get postalCode => "الرمز البريدي*";
+  @override
+  get removeButton => "إزالة";
+  @override
+  get gender => "جنس";
+  @override
+  get male => "الذكر";
+  @override
+  get female => "أنثى";
+  @override
+  get changePassword => "غير كلمة السر";
+  @override
+  get currentPassword => "كلمة المرور الحالي*";
+  @override
+  get newPassword => "كلمة مرور جديدة*";
+  @override
+  get confirmNewPassword => "تأكيد كلمة المرور*";
+  @override
+  get personalDocuments => "مستندات شخصية";
+  @override
+  get assignedAuto => "تعيين السيارات";
+  @override
+  get logout => "تسجيل خروج";
+  @override
+  get logoutConfirmationMsg => "هل أنت متأكد أنك تريد تسجيل الخروج؟";
+  @override
+  get address => "عنوان*";
+  @override
+  get accountNumber => "رقم حساب";
+  @override
+  get bankerName => "اسم المصرفيين";
+  @override
+  get nameLable => "اسم";
+  @override
+  get ifscCode => "كود IFSC";
+  @override
+  get businessRegistrationNumbr => "رقم التسجيل التجاري";
+  @override
+  get businessRelationshipPeriod => "العمل فترة العلاقة (في سنوات)";
+  @override
+  get designation => "تعيين";
+  @override
+  get nameofDesignation => "اسم";
+  @override
+  get natureofOrganization => "طبيعة منظمة";
+  @override
+  get uploadFile => "لا ملف إخبارية";
+  @override
+  get update => "تحديث";
+  @override
+  get resetPwd => "إعادة تعيين كلمة المرور";
+  @override
+  get pwdReset => "إعادة تعيين كلمة المرور";
+  @override
+  get signInWithMPIN => "تسجيل الدخول مع MPIN";
+  @override
+  get pwdChanged => "تم تغيير كلمة السر";
+  @override
+  get successfullyPwdDesc =>
+      "لقد بنجاح إعادة تعيين كلمة المرور الخاصة بك. الرجاء استخدام كلمة المرور الجديدة عند تسجيل الدخول.";
+  @override
+  get lblProfileSetup => "ومن المقرر الشخصي الخاص بك";
+  @override
+  get lblProfileSetupDesc => "لقد تلقينا تفاصيل ملفك الشخصي";
+  @override
+  get hoursAvailable => "إجمالي Shifttime";
+  @override
+  get confirmStoneDetail => "تأكيد تفاصيل الحجر";
+  @override
+  get companyName => "اسم الشركة";
+  @override
+  get invoiceDate => "تاريخ الفاتورة";
+  @override
+  get companyCode => "رمز الشركة";
+  @override
+  get saveCompanyDetails => "حفظ معلومات الشركة";
+  @override
+  get passwordNotChange => "كلمة السر غير متطابقة";
+  @override
+  get rememberPassword => "تذكر كلمة المرور؟";
+  @override
+  get sendOTP => "إرسال OTP";
+  @override
+  get resendNow => "إعادة إرسال الآن";
+  @override
+  get didNotReceiveOTP => "إذا كنت لا تتلقى مكتب المدعي العام!";
+  @override
+  get sendOTPToEmail =>
+      "سوف نقوم بإرسال OTP إلى عنوان البريد الإلكتروني الخاص بك دخل أو اسم المستخدم. يرجى إدخال عنوان البريد الإلكتروني أو اسم المستخدم.";
+  @override
+  get enterOTP =>
+      "تم إرسال OTP إلى عنوان بريدك الإلكتروني المسجل. الرجاء إدخال مكتب المدعي العام.";
+  @override
+  get backToSignIn => "ارجع إلى تسجيل الدخول";
+  @override
+  get passwordResetSuccessfully => "إستعادة كلمة بنجاح.";
+  @override
+  get emailAndUname => "البريد الالكتروني / اسم المستخدم";
+  @override
+  get signUp => "سجل";
+  @override
+  get promotionText => "عروض ترويجية";
+  @override
+  get termsAndCondition => "أحكام وشروط";
+  @override
+  get mustAgreeTermsAndCondition =>
+      "يجب أن توافق على أحكام وشروط لتسجيل الدخول كما مستخدم ضيف";
+  @override
+  get forgotPasswordTitle => "هل نسيت كلمة المرور";
+  @override
+  get uploadKYC => "تحميل KYC";
+  @override
+  get uploadKycDesc => "يرجى تحميل الوثائق KYC للوصول إلى ميزات الكامل.";
+  @override
+  get hintPhotoIdentityProof => "صور الهوية * والدليل على";
+  @override
+  get hintBussinerssProof => "الهوية التجارية * والدليل على";
+  @override
+  get btnFileUpload => "تحميل الملف";
+  @override
+  get pleaseUploadPhotoProof => "يرجى تحميل إثبات صور الهوية.";
+  @override
+  get pleaseUploadBussinessProof => "يرجى تحميل إثبات الهوية الأعمال.";
+  @override
+  get pleaseSelectFileFormat =>
+      "يرجى تحميل الملف في أي من التنسيقات التالية: .JPG";
+  @override
+  get kycSubmitted => "KYC مقدم";
+  @override
+  get kycSubmmittedDesc => "وقد قدمت KYC بنجاح.";
+  @override
+  get btnMoveToHome => "انتقال إلى الصفحة الرئيسية";
+  @override
+  get kYCRejected => "KYC رفض";
+  @override
+  get kycRejectedDesc =>
+      "تم رفض KYC الخاص بك. يرجى تحميل الوثائق KYC مرة أخرى للوصول إلى كافة الميزات.";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
+}
+
+class ArabicCommonString extends CommonString {
+  @override
+  get seeMore => "شاهد المزيد";
+  @override
+  get seeLess => "انظر أقل";
+  @override
+  get modify => "تعديل";
+  @override
+  get delete => "حذف";
+  @override
+  get details => "تفاصيل";
+  @override
+  get edit => "تعديل";
+  @override
+  get addDemand => "الطلب إضافة";
+  @override
+  get demandTitle => "الطلب عنوان";
+  @override
+  get pleaseEnterDemandTitle => "يرجى إدخال عنوان الطلب";
+  @override
+  get demandAddedSuccessfully => "الطلب أضيف بنجاح";
+  @override
+  get selectAtleastOneFilter => "رجاء";
+  @override
+  get savedSearch => "بحث محفوظ";
+  @override
+  get searchSavedSearch => "بحث بحث محفوظ";
+  @override
+  get viewDetails => "عرض التفاصيل";
+  @override
+  get viewLessDetails => "عرض أقل تفاصيل";
+  @override
+  get myDemand => "بلدي الطلب";
+  @override
+  get date => "تاريخ";
+  @override
+  get selectTime => "اختر الوقت";
+  @override
+  get selectDate => "حدد تاريخ";
+  @override
+  get offerVelidTill => "يسري العرض حتى";
+  @override
+  get officeVisitDate => "مكتب موقع التسجيل";
+  @override
+  get all => "الكل";
+  @override
+  get status => "الحالة";
+  @override
+  get save => "حفظ";
+  @override
+  get verify => "تحقق";
+  @override
+  get readMore => "قراءة المزيد";
+  @override
+  get goodMorning => "صباح الخير";
+  @override
+  get goodAfternoon => "طاب مسائك";
+  @override
+  get goodEvening => "مساء الخير";
+  @override
+  get btnSkip => "تخطى";
+  @override
+  get btnUpdate => "تحديث";
+  @override
+  get btnContinue => "استمر";
+  @override
+  get btnContinueCap => "استمر";
+  @override
+  get btnEdit => "تعديل";
+  @override
+  get btnSubmit => "إرسال";
+  @override
+  get btnNextCap => "التالى";
+  @override
+  get btnSaveCap => "تطوير كلمة السر";
+  @override
+  get btnWithdrawCap => "انسحب";
+  @override
+  get btnSaveAndContinueCap => "حفظ ومتابعة";
+  @override
+  get btnUnregister => "غير مسجل موبايل";
+  @override
+  get btnClose => "قريب";
+  @override
+  get remove => "إزالة";
+  @override
+  get refresh => "تحديث";
+  @override
+  get fetchLocationMessage => "يرجى الانتظار نحن جلب موقعك";
+  @override
+  get done => "منجز";
+  @override
+  get doneCap => "منجز";
+  @override
+  get cancel => "إلغاء";
+  @override
+  get allow => "السماح";
+  @override
+  get countryFirst => "الرجاء اختيار الدولة أولا";
+  @override
+  get apply => "تطبيق";
+  @override
+  get cancelCap => "إلغاء";
+  @override
+  get uploadCap => "رفع";
+  @override
+  get yesCancelCap => "نعم";
+  @override
+  get upload => "رفع";
+  @override
+  get ok => "حسنا";
+  @override
+  get home => "الصفحة الرئيسية";
+  @override
+  get goToMyWatchList => "انتقل إلى جهاز قائمة الرغبات";
+  @override
+  get goToMyOrder => "الذهاب إلى طلبي";
+  @override
+  get gotToMyOffer => "انتقل إلى جهاز العرض";
+  @override
+  get gotToMyHold => "انتقل إلى جهاز عقد";
+  @override
+  get gotToMyEnquiry => "انتقل إلى جهاز رسالتك";
+  @override
+  get gotToMyBid => "انتقل إلى جهاز المزايدة";
+  @override
+  get gotToMyReminder => "انتقل إلى جهاز تذكير";
+  @override
+  get gotToMyComments => "الذهاب إلى ملاحظاتي";
+  @override
+  get yes => "نعم";
+  @override
+  get no => "لا";
+  @override
+  get selectCountry => "حدد الدولة";
+  @override
+  get clickHere => "انقر هنا";
+  @override
+  get btnAddNewAddress => "أضف عنوان جديد";
+  @override
+  get btnCancel => "إلغاء";
+  @override
+  get btnTakeSelfie => "أخذ الصور الشخصية لل";
+  @override
+  get successfully => "بنجاح";
+  @override
+  get lblAppExit => "هل أنت متأكد من انك تريد الخروج؟";
+  @override
+  get lblExit => "خروج";
+  @override
+  get openAppSetting => "أفتح الإعدادات";
+  @override
+  get lblOr => "أو";
+  @override
+  get fromLbl => "من عند";
+  @override
+  get toLbl => "إلى";
+  @override
+  get showMore => "أظهر المزيد";
+  @override
+  get showLess => "عرض أقل";
+  @override
+  get selectCity => "اختر مدينة";
+  @override
+  get notYetAvailable => "لم تتوفر بعد";
+  @override
+  get updateAvailable => "تحديث متوفر!";
+  @override
+  get downloadAppFrom => "تحميل تطبيق التحديث من";
+  @override
+  get playStore => "لعب مخزن";
+  @override
+  get skipUpdate => "تخطي تحديث";
+  @override
+  get stateFirst => "الرجاء اختيار الدولة أولا";
+  @override
+  get reallyExit => "الخروج حقا؟";
+  @override
+  get alert => "إنذار!";
+  @override
+  get loading => "جار التحميل";
+  @override
+  get error => "خطأ";
+  @override
+  get jumpToTop => "إذهب إلى أعلى";
+  @override
+  get ihaveread => "لقد قرأت واستعرض";
+  @override
+  get selected => "تحديد";
+  @override
+  get lbllogout => "تسجيل خروج";
+  @override
+  get lblThanx => "شكرا لك";
+  @override
+  get lblSelectCity => "اختر مدينة";
+  @override
+  get lblSelectState => "اختر ولايه";
+  @override
+  get lblSelectCountry => "حدد الدولة";
+  @override
+  get lblCity => "مدينة";
+  @override
+  get lblCountry => "بلد";
+  @override
+  get lblName => "اسم";
+  @override
+  get lblPinCode => "كود PIN";
+  @override
+  get lblMobileNumber => "رقم الهاتف المحمول";
+  @override
+  get lblState => "حالة";
+  @override
+  get lblCode => "الشفرة:";
+  @override
+  get lblOrderNo => "أجل لا:";
+  @override
+  get lblOrderItem => "قائمة الطلبات:";
+  @override
+  get lblDelivered => "تم التوصيل";
+  @override
+  get lblTicketReady => "تذكرتك جاهز";
+  @override
+  get lblPersonTicket => "تذكرة من 2 شخص";
+  @override
+  get lblShuttleBus => "اتوبيس داخلي";
+  @override
+  get lblPickup => "امسك";
+  @override
+  get lblDropoff => "إنزال";
+  @override
+  get lblPassenger => "راكب";
+  @override
+  get lblDeliveryNo => "أي التسليم.";
+  @override
+  get lblPrice => "السعر";
+  @override
+  get lblValid => "صالحة ل";
+  @override
+  get lblRenew => "جدد";
+  @override
+  get lblDeparture => "مغادرة";
+  @override
+  get lblArrived => "وصل";
+  @override
+  get lblSendtoFriend => "أرسل إلى صديق";
+  @override
+  get popupRenewTitle => "تجديد تذكرة";
+  @override
+  get popupRenewDesc => "أبجد هوز دولور الجلوس امات";
+  @override
+  get popuplblPassenger => "راكب";
+  @override
+  get popuplblCancel => "إلغاء";
+  @override
+  get popupbtnRenew => "جدد";
+  @override
+  get ridelblAwesome => "رائع";
+  @override
+  get ridebtnDone => "منجز";
+  @override
+  get offerPricePerCarat => "عرض السعر (CTS)";
+  @override
+  get dropOffText => "إنزال";
+  @override
+  get pickUpText => "امسك";
+  @override
+  get startAtText => "تبدأ في";
+  @override
+  get endAtText => "يغلق عند مستوى";
+  @override
+  get personText => "شخص";
+  @override
+  get paymentScreenTitle => "دفع";
+  @override
+  get pickuplbl => "امسك";
+  @override
+  get droplbl => "إنزال";
+  @override
+  get makePaymentButtonlbl => "قم بالدفع";
+  @override
+  get pessangerslbl => "ركاب";
+  @override
+  get priceBreakuplbl => "سعر تفكك";
+  @override
+  get tripPricelbl => "الأسعار رحلة";
+  @override
+  get taxeslbl => "الضرائب";
+  @override
+  get totallbl => "مجموع";
+  @override
+  get cardNumberhint => "رقم البطاقة";
+  @override
+  get cvvhint => "CVV";
+  @override
+  get datehint => "MM / YY";
+  @override
+  get btnTryAgain => "حاول مرة أخري";
+  @override
+  get cityFirst => "الرجاء تحديد المدينة أولا";
+  @override
+  get enterFareDetails => "أدخل تفاصيل المبيعات";
+  @override
+  get fromDate => "من التاريخ";
+  @override
+  get toDate => "التاريخ المحدد";
+  @override
+  get btnUnderstand => "أنا أفهم";
+  @override
+  get applicationUpdate => "تطبيق تحديث";
+  @override
+  get newVersionMessage => "نسخة جديدة من تطبيق مجانية متاحة";
+  @override
+  get paymentCollected => "الدفع يتم جمعها";
+  @override
+  get addComment => "اضف تعليق";
+  @override
+  get more => "أكثر";
+  @override
+  get carat => "قيراط";
+  @override
+  get pcs => "جهاز كمبيوتر شخصى";
+  @override
+  get cts => "سنت";
+  @override
+  get disc => "القرص٪";
+  @override
+  get avgPriceCrt => "متوسط السعر / ط م";
+  @override
+  get amount => "كمية";
+  @override
+  get confirmStone => "ستون تأكيد";
+  @override
+  get confirm => "تؤكد";
+  @override
+  get offered => "تقدم";
+  @override
+  get validTill => "صالح حتى";
+  @override
+  get remark => "تعليق";
+  @override
+  get color => "اللون";
+  @override
+  get colorGroup => "المجموعة اللون";
+  @override
+  get colorFancy => "مولع ب";
+  @override
+  get colorWhite => "أبيض";
+  @override
+  get clarity => "وضوح";
+  @override
+  get clarityGroup => "المجموعة الوضوح";
+  @override
+  get intensity => "الشدة";
+  @override
+  get overtone => "يغلب";
+  @override
+  get selectBusinessType => "اختر نوع الشركة";
+  @override
+  get selectState => "اختر ولايه";
+  @override
+  get search => "بحث";
+  @override
+  get profile => "ملفي";
+  @override
+  get personal => "شخصي";
+  @override
+  get business => "اعمال";
+  @override
+  get documents => "مستندات";
+  @override
+  get noSlotFound => "لا توجد فتحات";
+  @override
+  get noDiamondFound => "لا الماس مطابقة بحثك. الرجاء إضافة كنت الطلب.";
+  @override
+  get selectType => "حدد نوع الظاهري";
+  @override
+  get noSavedSearch => "لا بحث محفوظ موجود";
+  @override
+  get searchCity => "المدينة بحث";
+  @override
+  get searchCountry => "بحث البلد";
+  @override
+  get searchState => "الدولة البحث";
+  @override
+  get notifications => "تنبيه";
+  @override
+  get enter2Stone => "يرجى تحديد ما لا يقل عن 2 الحجر للمقارنة.";
+  @override
+  get bidDesc =>
+      "يقع حاليا في الهند وللتسليم في أي بلد آخر بصرف النظر عن الهند سوف يستغرق 7-10 أيام عمل على الأقل.";
+  @override
+  get packetNo => "حزمة رقم:";
+  @override
+  get quit => "استقال";
+  @override
+  get agree => "أنا موافق";
+  @override
+  get laterToday => "في وقت لاحق اليوم";
+  @override
+  get toMorrow => "غدا";
+  @override
+  get nextWeek => "الاسبوع المقبل";
+  @override
+  get chooseAnother => "اختيار آخر";
+  @override
+  get dateTime => "التاريخ والوقت";
+  @override
+  get language => "لغة";
+  @override
+  get diamNow => "DiamNow";
+  @override
+  get noDocument => "لا توجد وثائق تم العثور عليها";
+  @override
+  get searchBusinessType => "بحث نوع الشركة";
+  @override
+  get hours => "ساعات";
+  @override
+  get minutes => "الدقائق";
+  @override
+  get seconds => "ثواني";
+  @override
+  get bidEndsIn => "المزايدة ينتهي في:";
+  @override
+  get download => "تحميل";
+  @override
+  get share => "شارك";
+  @override
+  get placeOrder => "مكان الامر";
+  @override
+  get enterComment => "الرجاء إدخال تعليق";
+  @override
+  get deleteItem => "هل أنت متأكد أنك تريد حذف؟";
+  @override
+  get shippingPolicy => "سياسة الشحن";
+  @override
+  get offerSundayRestriction =>
+      "لا يسمح الاحد. مكتب أيام عمل من الاثنين إلى السبت";
+  @override
+  get weekAgo => "1 قبل أسبوع";
+  @override
+  get lastWeek => "الاسبوع الماضى";
+  @override
+  get dayAgo => "أيام مضت";
+  @override
+  get onedayAgo => "1 منذ يوم";
+  @override
+  get yesterday => "في الامس";
+  @override
+  get hourAgo => "منذ ساعات";
+  @override
+  get onehourAgo => "منذ 1 ساعة";
+  @override
+  get anhourAgo => "قبل ساعة";
+  @override
+  get mintuesAgo => "دقائق مضت";
+  @override
+  get onemintuesAgo => "منذ 1 دقيقة";
+  @override
+  get amintueAgo => "وقبل دقيقة";
+  @override
+  get secondsAgo => "منذ ثوانى";
+  @override
+  get justNow => "في هذة اللحظة";
+  @override
+  get today => "اليوم";
+  @override
+  get past => "الماضي";
+  @override
+  get selectPhotoProof => "حدد مستند";
+  @override
+  get pleaseSelectPhotoProof => "الرجاء تحديد ثيقة";
+  @override
+  get selectBusinessProof => "حدد مستند";
+  @override
+  get pleaseSelectBusinessProof => "الرجاء تحديد ثيقة";
+  @override
+  get touchId => "معرف اتصال";
+  @override
+  get faceId => "وجه إيد";
+  @override
+  get enableTouchId => "تمكين اللمس رقم لفتح بلدي الماس؟";
+  @override
+  get enableFaceId => "تمكين الوجه رقم لفتح بلدي الماس؟";
+  @override
+  get unlockWithTouchId => "فتح بلدي الماس باستخدام اللمس رقم";
+  @override
+  get unlockWithFaceId => "فتح بلدي الماس باستخدام الوجه رقم.";
+  @override
+  get mPin => "MPin";
+  @override
+  get holdMemoStatusDiamondorder =>
+      "لا يمكنك أكدت الحجارة التي هي بالفعل في عقد أو مذكرة الوضع";
+  @override
+  get searchStoneIdCertificateNo => "بحث ستون رقم / شهادة لا";
+  @override
+  get createMPin => "إنشاء MPin جديد";
+  @override
+  get reentermpin => "إعادة إدخال MPin";
+  @override
+  get forgotmpin => "نسيت MPIN؟";
+  @override
+  get verifympin => "تحقق Mpin";
+  @override
+  get enteryoursixdigitcode => "أدخل MPIN 6 أرقام";
+  @override
+  get changempin => "تغيير MPin";
+  @override
+  get faceidandtouchnotenable =>
+      "لم يتم تمكين في هاتفك FaceId / TouchId، الرجاء تمكن من استخدام هذه الميزة";
+  @override
+  get enablempintounlockmydiamonds =>
+      "تمكين MPin إلى التطبيق فتح؟ وسوف تعطيل لمسة إيد. هل أنت متأكد أنك تريد المتابعة؟";
+  @override
+  get enabletouchidtounlockmydiamonds =>
+      "تمكين اللمس رقم إلى التطبيق فتح؟ وسوف تعطيل MPin. هل أنت متأكد أنك تريد المتابعة؟";
+  @override
+  get rememberme => "تذكرنى";
+  @override
+  get usertouchid => "استخدام اللمس رقم";
+  @override
+  get usempin => "استخدام MPin";
+  @override
+  get filesarenotavailableonserver =>
+      "الملفات غير متوفرة على الخادم، الرجاء إعادة المحاولة لاحقا";
+  @override
+  get allfileshavebeendownloaded => "تم تحميل جميع الملفات.";
+  @override
+  get filesisdownloaded => "يتم تحميل الملفات";
+  @override
+  get filesisnotdownloadedbcz =>
+      "لن يتم تحميل الملفات لأنه غير موجود في الملقم.";
+  @override
+  get downloadingCanceled => "تحميل إلغاء";
+  @override
+  get downloading => "جارى التحميل...";
+  @override
+  get expirydate => "تاريخ الانتهاء :";
+  @override
+  get youreallywanttodelete => "هل حقا تريد حذف";
+  String byKey(String key) => _dynamicValues[key];
+  Map<String, String> _dynamicValues = {
+    "shape": "شكل",
+  };
+}
+
+class ArabicErrorString extends ErrorString {
+  @override
+  get accessDenide => "تم الرفض";
+  @override
+  get pleaseSelectOfferTillDate => "الرجاء تحديد العرض حتى الآن.";
+  @override
+  get pleaseSelectOfficeVisitDate => "يرجى اختيار مكتب موعد الزيارة";
+  @override
+  get deleteStoneMsg => "هل أنت متأكد أنك تريد حذف الحجر (ق)؟";
+  @override
+  get acceptTermsAndCondition => "وتفضلوا بقبول الشروط والأحكام";
+  @override
+  get diamondCompareRemove => "ويلزم على الأقل 2 الأحجار للمقارنة.";
+  @override
+  get diamondSelectionError => "الرجاء تحديد بحجر واحد على الأقل.";
+  @override
+  get pleaseEnterCompanyName => "يرجى إدخال اسم الشركة.";
+  @override
+  get selectInvoiceDate => "تحديد تاريخ الفاتورة";
+  @override
+  get pleaseEnterComment => "الرجاء إدخال تعليق.";
+  @override
+  get pleaseEnterRemarks => "الرجاء إدخال الملاحظات.";
+  @override
+  get selectExpiryDate => "يرجى تحديد تاريخ انتهاء الصلاحية.";
+  @override
+  get enterOTP => "الرجاء إدخال الرمز";
+  @override
+  get pleaseEnterOTP => "الرجاء إدخال رمز التحقق.";
+  @override
+  get enteredCodeNotMatching => "كود دخلت ليست مطابقة. حاول مرة أخري";
+  @override
+  get selectCancellationReason => "يرجى تحديد سبب الإلغاء";
+  @override
+  get enterDesc => "الرجاء إدخال الوصف.";
+  @override
+  get enterTitle => "يرجى إدخال عنوان.";
+  @override
+  get enterEmailOrPhone => "يرجى إدخال البريد الإلكتروني / المحمول.";
+  @override
+  get enterPassword =>
+      "كلمة سر لا يمكن أن يكون فارغا. الرجاء إدخال كلمة المرور.";
+  @override
+  get enterConfirmPassword => "الرجاء إدخال تأكيد كلمة المرور.";
+  @override
+  get enterSkype => "الرجاء إدخال سكايب.";
+  @override
+  get enterRegisterCode => "الرجاء إدخال رمز التسجيل";
+  @override
+  get enterEmail => "يرجى إدخال عنوان البريد الإلكتروني.";
+  @override
+  get enterPhone => "الرجاء إدخال رقم الجوال.";
+  @override
+  get enterUsername =>
+      "اسم المستخدم لا يمكن أن يكون فارغا. الرجاء إدخال اسم المستخدم.";
+  @override
+  get enterValidEmail => "الرجاء إدخال عنوان البريد الإلكتروني الصحيح.";
+  @override
+  get enterValidPhone => "الرجاء إدخال رقم الجوال صحيح.";
+  @override
+  get enterValidWhatsappPhone => "الرجاء إدخال صالح ال WhatsApp رقم الجوال.";
+  @override
+  get enterValidPassword => "الرجاء إدخال 6 أحرف أو كلمة المرور طويلة.";
+  @override
+  get mismatchPassword => "كلمة المرور وتأكيد كلمة المرور لم يتم مطابقة.";
+  @override
+  get enterFirstName => "الرجاء إدخال الاسم الأول.";
+  @override
+  get enterMiddleName => "الرجاء إدخال الاسم الأوسط.";
+  @override
+  get enterPinCode => "الرجاء إدخال الرقم السري.";
+  @override
+  get enterName => "الرجاء إدخال اسم.";
+  @override
+  get enterLastName => "الرجاء إدخال اسم العائلة.";
+  @override
+  get enterAddress => "يرجى إدخال عنوان.";
+  @override
+  get enterValidPinCode => "أدخل الرقم السري صالح.";
+  @override
+  get enterValidAddress => "الرجاء إدخال 10 حرفا أو عنوان طويل.";
+  @override
+  get enterPostalCode => "الرجاء إدخال الرمز البريدي.";
+  @override
+  get enterValidPostalCode => "الرجاء إدخال 6 أرقام الرمز البريدي الرقمية.";
+  @override
+  get enterCurrentPassword => "الرجاء إدخال كلمة المرور الحالية.";
+  @override
+  get enterNewPassword => "يرجى إدخال كلمة المرور الجديدة.";
+  @override
+  get enterFareAmount => "الرجاء إدخال كمية المبيعات.";
+  @override
+  get enterOrderNO => "الرجاء إدخال أي نظام.";
+  @override
+  get enterServiceType => "يرجى تحديد نوع الخدمة.";
+  @override
+  get enterPaymentType => "يرجى تحديد نوع الدفع.";
+  @override
+  get enterValidFareAmount => "كمية المبيعات لا يمكن أن يكون صفرا.";
+  @override
+  get enterPassangerNo => "الرجاء إدخال رقم الركاب.";
+  @override
+  get enterValidPassangerNo => "عدد الركاب لا يمكن أن يكون صفرا.";
+  @override
+  get notEnterMorePassangerNo =>
+      "عدد الركاب لا يمكن أن يكون أكثر من سبع سنوات.";
+  @override
+  get drivingLicenseValidationText =>
+      "الرجاء إدخال 15 أرقام أبجدية القيادة رقم الترخيص.";
+  @override
+  get pANCardValidationText => "الرجاء إدخال 10 أرقام أبجدية رقم بطاقة PAN.";
+  @override
+  get selectFromDate => "الرجاء تحديد من تاريخ";
+  @override
+  get selectToDate => "الرجاء تحديد حتى الآن";
+  @override
+  get fromGreaterTo => "يجب أن يكون التاريخ المحدد أكبر من التاريخ الحالي";
+  @override
+  get wrongPassword =>
+      "يحتوي كلمة لا بد منه، والحد الأدنى 8 أحرف، 1 الأبجدية الكبيرة (1)، أقل حالة الأبجدية، الرقم 1، 1 charater خاص";
+  @override
+  get fromValueGreateThanTo => "من القيمة يجب أن تكون أقل من أو يساوي قيمة ل";
+  @override
+  get toValueGreaterThanFrom =>
+      "إلى القيمة يجب أن يكون أكبر من أو يساوي من قيمة";
+  @override
+  get pleaseEnterCompanyCode => "الرجاء إدخال رمز الشركة";
+  @override
+  get enterSamePassword =>
+      "لا يتطابق مع تأكيد كلمة المرور مع كلمة المرور الجديدة. الرجاء إدخال تأكيد كلمة المرور نفس كلمة المرور الجديدة.";
+  @override
+  get selectAppointmentDate => "يرجى تحديد تاريخ التعيين";
+  @override
+  get selectTimeSlot => "الرجاء تحديد فتحة وقت";
+  @override
+  get enterComments => "الرجاء إدخال تعليق";
+  @override
+  get selectVirtualType => "يرجى تحديد نوع الظاهري";
+  @override
+  get versionError => "خطأ نسخة";
+  String byKey(String key) => _dynamicValues[key];
+  Map<String, String> _dynamicValues = {};
+}
+
+class ArabicNoDataStrings extends NoDataStrings {
+  @override
+  get noDataFound => "لا يوجد سجلات";
+  String byKey(String key) => _dynamicValues[key];
+  Map<String, String> _dynamicValues = {};
+}
+
+class ArabicScreenTitle extends ScreenTitle {
+  @override
+  get placeAnOffer => "وضع العرض";
+  @override
+  get addedInWatchList => "وأضاف في قائمة الرغبات";
+  @override
+  get addedInOffer => "العرض المقدم";
+  @override
+  get addedInCart => "وأضاف في العربة";
+  @override
+  get addedInBid => "وأضاف في المزايدة";
+  @override
+  get myEnquiry => "بلدي رسالتك";
+  @override
+  get delete => "حذف";
+  @override
+  get addDemand => "إضافة الطلب";
+  @override
+  get matchPair => "مباراة زوج";
+  @override
+  get savedAndSearch => "حفظ البحث";
+  @override
+  get updateAndSearch => "تحديث والبحث";
+  @override
+  get upcoming => "القادمة";
+  @override
+  get bidPricePerCt => "سعر العرض / ط م";
+  @override
+  get bidDisc => "محاولة القرص";
+  @override
+  get bidValue => "المزايدة القيمة";
+  @override
+  get bidStone => "محاولة ستون";
+  @override
+  get myCart => "سلتي";
+  @override
+  get myComment => "ملاحظاتي";
+  @override
+  get compare => "قارن";
+  @override
+  get compareStones => "الأحجار قارن";
+  @override
+  get statusHold => "في الانتظار";
+  @override
+  get statusOnMemo => "على مذكرة";
+  @override
+  get statusAvailable => "متاح";
+  @override
+  get statusNew => "قادم جديد";
+  @override
+  get statusOffer => "حجر من اليوم / الترويج";
+  @override
+  get statusMyHold => "بلدي الانتظار";
+  @override
+  get signup => "سجل";
+  @override
+  get addToOffice => "إضافة مكتب ل";
+  @override
+  get addComment => "أضف تعليق";
+  @override
+  get addEnquiry => "إضافة رسالتك";
+  @override
+  get finalOffer => "العرض الأخير";
+  @override
+  get finalDisc => "القرص النهائي";
+  @override
+  get finalRate => "تقييم النهائي";
+  @override
+  get finalValue => "القيمة النهائية";
+  @override
+  get orderMsg =>
+      "1) المذكورة أسعار أكثر من هنا وثابتة، وبالتالي غير قابلة للتفاوض. \\ N2) والدرجات، وذكرت المعلمات على موقعنا على الانترنت وراء تصنيف GIA ل.";
+  @override
+  get offerMsg =>
+      "ومباشرة تأكيد الحجر إذا عرضت يحصل على الموافقة على السعر لذلك نحن نطلب من سيادتكم التأكد قبل الطرح. لا يتم الاحتفاظ أي الحجر (ق) وضعت في قائمة عرض في الانتظار بالنسبة لك كما هو متاح للعملاء الآخرين أيضا.";
+  @override
+  get note => "ملحوظة";
+  @override
+  get hours => "ساعات";
+  @override
+  get offeredDisc => "ديس المقدمة";
+  @override
+  get offeredPriceCt => "عرضت العلاقات العامة / ط م";
+  @override
+  get addOffer => "إضافة عرض";
+  @override
+  get expDiscPer => "الخصم المتوقع";
+  @override
+  get todayDiscPer => "قرص اليوم";
+  @override
+  get searchResult => "نتيجة البحث";
+  @override
+  get searchDiamond => "البحث الماس";
+  @override
+  get basic => "الأساسي";
+  @override
+  get advanced => "المتقدمة";
+  @override
+  get stoneIdCertNo => "StoneID / سيرت لا";
+  @override
+  get takeSignature => "خذ التوقيع";
+  @override
+  get optional => "اختياري";
+  @override
+  get myAddress => "عنواني";
+  @override
+  get expiryDate => "تاريخ الانتهاء";
+  @override
+  get drivingLicenceDesc => "القيادة الصورة الترخيص الخاص بك";
+  @override
+  get panDesc => "PAN الصورة بطاقتك";
+  @override
+  get selfie => "صورة شخصية";
+  @override
+  get selfieDesc => "الصورة صورك الشخصية";
+  @override
+  get pending => "قيد الانتظار";
+  @override
+  get rejected => "مرفوض";
+  @override
+  get uploadAgain => "رفع";
+  @override
+  get remove => "إزالة";
+  @override
+  get title => "عنوان";
+  @override
+  get description => "وصف";
+  @override
+  get uploadYour => "حمل سيرتك";
+  @override
+  get raiseDispute => "اخبرنا عنها";
+  @override
+  get drivingLicense => "رخصة قيادة";
+  @override
+  get pANCard => "بطاقة الطعام";
+  @override
+  get saveContinue => "حفظ ومتابعة";
+  @override
+  get uploadFrontUmgText => "تحميل الأمامي صورة";
+  @override
+  get uploadPANCardImgText => "تحميل بطاقة PAN صورة";
+  @override
+  get uploadBackImageText => "تحميل الجانب الخلفي صورة";
+  @override
+  get helptopic => "مواضيع التعليمات";
+  @override
+  get newRideSharingRequest => "طلبات جديدة ركوب مشاركة";
+  @override
+  get newRequest => "طلبات جديدة";
+  @override
+  get welcomeTo => "مرحبا بك في";
+  @override
+  get welcomeDesc => "تسجيل الدخول إلى حسابك الحالي ماني جوهرة";
+  @override
+  get forgotPassword => "نسيت";
+  @override
+  get forgotPasswordDesc =>
+      "أدخل رقم الجوال المسجل لاستعادة كلمة السر الخاصة بك.";
+  @override
+  get termsAndCondition => "البنود و الظروف";
+  @override
+  get privacyPolicy => "سياسة الخصوصية";
+  @override
+  get aboutUS => "معلومات عنا";
+  @override
+  get otpVerification => "التحقق من كود ركوب";
+  @override
+  get otpVerificationDelivery => "التحقق من شفرة بيك اب";
+  @override
+  get otpVerificationDeliveryDone => "التحقق من كود تسليم";
+  @override
+  get enterOtp => "أدخل 4 أرقام";
+  @override
+  get recoveryCode => "رمز الاسترداد";
+  @override
+  get editProfile => "تعديل الملف الشخصي";
+  @override
+  get myProfile => "ملفي";
+  @override
+  get reset => "إعادة تعيين";
+  @override
+  get yourPassword => "كلمة السر خاصتك";
+  @override
+  get photo => "صورة فوتوغرافية";
+  @override
+  get otpDesc =>
+      "تم إرسال رمز الاسترداد إلى رقم هاتفك المحمول. الرجاء إدخال الرمز.";
+  @override
+  get otpVerifyDesc =>
+      "تم إرسال رمز التحقق إلى رقم هاتفك المحمول. الرجاء إدخال الرمز.";
+  @override
+  get diamondDetail => "الماس التفاصيل";
+  @override
+  get home => "الصفحة الرئيسية";
+  @override
+  get search => "بحث";
+  @override
+  get quickSearch => "بحث سريع";
+  @override
+  get newArrival => "قادم جديد";
+  @override
+  get exclusiveDiamonds => "الماس الحصرية";
+  @override
+  get diamondOnAuction => "الماس في مزاد";
+  @override
+  get stoneOfTheDays => "افضل شراء";
+  @override
+  get myWatchlist => "بلدي قائمة الرغبات";
+  @override
+  get myBid => "بلدي المزايدة";
+  @override
+  get myHold => "بلدي الانتظار";
+  @override
+  get myOrder => "بلدي قائمة أمرت";
+  @override
+  get confirmStone => "ستون تأكيد";
+  @override
+  get myOffice => "مكتبي مشاهدة";
+  @override
+  get myOffer => "بلدي قائمة المنتجات";
+  @override
+  get myPurchased => "بلدي التاريخ شراؤها";
+  @override
+  get mySavedSearch => "بلدي بحث محفوظ";
+  @override
+  get savedSearch => "بحث محفوظ";
+  @override
+  get myDemand => "بلدي الطلب";
+  @override
+  get contactUs => "اتصل بنا";
+  @override
+  get changePassword => "غير كلمة السر";
+  @override
+  get logout => "تسجيل خروج";
+  @override
+  get fareDetailsTitle => "أدخل تفاصيل المبيعات";
+  @override
+  get fairAmt => "مبيعات المبلغ";
+  @override
+  get noOfPassengers => "عدد الركاب";
+  @override
+  get remarks => "ملاحظات";
+  @override
+  get orderNo => "الأمر رقم";
+  @override
+  get typeOfService => "نوع الخدمة";
+  @override
+  get paymentType => "نوع الدفع*";
+  @override
+  get recentlyView => "مؤخرا عرض";
+  @override
+  get uploadImgValidationText =>
+      "يجب أن يكون إيداع الملف. jpg أو JPEG أو بابوا نيو غينيا أو قوات الدفاع الشعبي وجود حجم 5 ميغا بايت أو أقل.";
+  @override
+  get drivingLicenseHintText => "القيادة رقم الرخصة";
+  @override
+  get pANCARDHintText => "PAN رقم البطاقة";
+  @override
+  get viewRide => "عرض ركوب الخيل";
+  @override
+  get myVehicle => "سيارتي";
+  @override
+  get personalDocument => "مستندات شخصية";
+  @override
+  get help => "مساعدة";
+  @override
+  get about => "حول";
+  @override
+  get bankDetails => "التفاصيل المصرفية";
+  @override
+  get accountAndPayment => "الحساب والدفع";
+  @override
+  get enquiry => "تحقيق";
+  @override
+  get download => "تحميل";
+  @override
+  get addToCart => "أضف إلى السلة";
+  @override
+  get addToWatchList => "أضافة إلى قائمة المشاهدة";
+  @override
+  get finalCalculation => "حساب النهائي";
+  @override
+  get bookOffice => "مكتب كتاب";
+  @override
+  get clearSelection => "مسح التحديد";
+  @override
+  get comment => "تعليقات";
+  @override
+  get hold => "معلق";
+  @override
+  get offer => "عرض";
+  @override
+  get officeView => "مكتب مشاهدة";
+  @override
+  get placeOrder => "مكان الامر";
+  @override
+  get buyNow => "اشتري الآن";
+  @override
+  get cancelStone => "إلغاء الحجر";
+  @override
+  get share => "شارك";
+  @override
+  get watchlist => "قائمة الرغبات";
+  @override
+  get exclusive => "حصرية";
+  @override
+  get featuredStones => "احجار مميزة";
+  @override
+  get stoneOfDay => "حجارة يوم";
+  @override
+  get recentSearch => "البحث الأخيرة";
+  @override
+  get viewAll => "عرض جميع";
+  @override
+  get salesPersonDetail => "شخص المبيعات التفاصيل";
+  @override
+  get searchTitle => "عنوان البحث";
+  @override
+  get enterSearchTitle => "أدخل عنوان البحث";
+  @override
+  get timeSlots => "فتحات الوقت";
+  @override
+  get selectCustomDate => "تحديد موعد مخصص";
+  @override
+  get availableSlot => "فتحات متاحة";
+  @override
+  get reqOfficeView => "طلب مكتب مشاهدة";
+  @override
+  get myComments => "تعليقي";
+  @override
+  get myReminder => "بلدي تذكير";
+  @override
+  get reminder => "تذكير";
+  @override
+  get manageAddress => "إدارة العناوين";
+  @override
+  get myAccount => "حسابي";
+  @override
+  get declaimer => "تنصل";
+  @override
+  get shareStone => "حصة ستون";
+  @override
+  get addRemider => "إضافة تذكير";
+  @override
+  get offlineSearch => "غير متصل البحث";
+  @override
+  get searchHistory => "عمليات البحث السابقة";
+  @override
+  get offlineStock => "الأسهم حاليا";
+  @override
+  get searchOffline => "بحث (غير متصل)";
+  @override
+  get voiceSearch => "البحث الصوتي";
+  @override
+  get tapMictoSpeak => "اضغط هيئة التصنيع العسكري في الكلام";
+  @override
+  get typeToSearch => "اكتب للبحث";
+  @override
+  get typeWordsToSearch => "اكتب على الأقل 3 كلمات للبحث الحجارة";
+  String byKey(String key) => _dynamicValues[key];
+  Map<String, String> _dynamicValues = {};
+}
+
+class ArabicDynamickeys extends Dynamickeys {
+  @override
+  get stoneIdTitle => "حجر ID / سيرت لا";
+  String byKey(String key) => _dynamicValues[key];
+  Map<String, String> _dynamicValues = {
+    "shape": "شكل",
+    "caratRange": "المدى قيراط",
+    "basicDetail": "تفاصيل أساسية",
+    "measurementTitle": "قياسات",
+    "inclusionDetail": "تفاصيل إدراج",
+    "other": "آخر",
+    "stoneID": "ID الحجر",
+    "labTitle": "مختبر",
+    "certNo": "CERT. لا.",
+    "locationTitle": "موقعك",
+    "shapeTitle": "شكل",
+    "caratTitle": "قيراط",
+    "colorTitle": "اللون",
+    "clarityTitle": "وضوح",
+    "cutTitle": "يقطع",
+    "polishTitle": "تلميع",
+    "symmentryTitle": "Symmentry",
+    "fluorescenceTitle": "ضوئي",
+    "rapTitle": "موسيقى الراب (٪)",
+    "discountTitle": "خصم (٪)",
+    "priceAndCt": "السعر / ط م",
+    "amountTitle": "كمية",
+    "eyeCleanTitle": "العين النظيفة",
+    "brownTitle": "بنى",
+    "milkyTitle": "حليبي",
+    "mixTingeTitle": "MIX مسحة",
+    "dimensionTitle": "الأبعاد (MM)",
+    "girdleTitle": "حزام (٪)",
+    "tableTitle": "الطاولة ٪",
+    "crownAngleTitle": "تاج زاوية",
+    "depthTitle": "٪ العمق",
+    "pavAngleTitle": "PAV ANGLE",
+    "crownHeightTitle": "ولي العهد الارتفاع (٪)",
+    "pavDepthTitle": "عمق جناح (٪)",
+    "starLengthTitle": "نجمة طول",
+    "lowerHalfTitle": "النصف السفلي",
+    "gridleTitle": "حزام",
+    "gridleFacetedTitle": "حزام الأوجه",
+    "culetTitle": "Culet",
+    "rationTitle": "نسبة",
+    "blackInclusionTitle": "إدراج أسود",
+    "otherInclusionTitle": "إدراج الآخرين",
+    "openInclusionTitle": "إدراج المفتوح",
+    "extraFacetTitle": "FACET اكسترا",
+    "naturalTitle": "طبيعي >> صفة",
+    "hAndATitle": "H & A",
+    "keyToSymbol": "KEY TO SYMBOL",
+    "labComments": "تعليقات LAB",
+    "laserInsTitle": "LASER INS",
+    "basicTitle": "الأساسي",
+    "advancedTitle": "المتقدمة",
+    "defaultTitle": "إفتراضي",
+    "newDiamondsTitle": "الماس جديدة",
+    "priceLowToHigh": "السعر من الارخص للاعلى",
+    "priceHighToLow": "السعر الاعلى الى الادنى",
+    "disLowToHigh": "خصم الأدنى إلى الأعلى",
+    "disHighToLow": "خصم الاعلى الى الادنى",
+    "colorLowToHigh": "اللون الأدنى إلى الأعلى",
+    "colorHighToLow": "اللون من الأعلى إلى الأقل",
+    "caratLowToHigh": "قيراط الأدنى إلى الأعلى",
+    "caratHighToLow": "قيراط الاعلى الى الادنى",
+    "clarityLowToHigh": "وضوح الأدنى إلى الأعلى",
+    "clarityHighToLow": "وضوح الاعلى الى الادنى",
+    "colorShadeTitle": "لون الظل",
+    "certiTitle": "رقم شهادة",
+    "arrivalsTitle": "الوصول",
+    "lenghTitle": "الطول",
+    "widthTitle": "عرض",
+    "pavilionAngleTitle": "جناح زاوية",
+    "girdleConditionTitle": "حزام الحالة",
+    "cluetConditionTitle": "Culet الحالة",
+    "disTitle": "ديس٪",
+    "depthTitleWithoutPerc": "عمق",
+    "otherInformationTitle": "معلومات أخرى",
+  };
 }
