@@ -364,6 +364,15 @@ class PrefUtils {
     String userName = app.resolve<PrefUtils>().getString("userName");
     String passWord = app.resolve<PrefUtils>().getString("passWord");
     bool homeTakeATour = app.resolve<PrefUtils>().getBool(keyHomeTour);
+    bool myAccountTour = app.resolve<PrefUtils>().getBool(keyMyAccountTour);
+    bool searchTour = app.resolve<PrefUtils>().getBool(keySearchTour);
+    bool searchResultTour =
+        app.resolve<PrefUtils>().getBool(keySearchResultTour);
+    bool diamondDetailTour =
+        app.resolve<PrefUtils>().getBool(keyDiamondDetailTour);
+    bool compareStoneTour =
+        app.resolve<PrefUtils>().getBool(keyCompareStoneTour);
+    bool offerTour = app.resolve<PrefUtils>().getBool(keyOfferTour);
 
     app.resolve<PrefUtils>().clearPreferenceAndDB();
 
@@ -374,6 +383,14 @@ class PrefUtils {
     }
 
     app.resolve<PrefUtils>().saveBoolean(keyHomeTour, homeTakeATour);
+    app.resolve<PrefUtils>().saveBoolean(keyMyAccountTour, myAccountTour);
+    app.resolve<PrefUtils>().saveBoolean(keySearchTour, searchTour);
+    app.resolve<PrefUtils>().saveBoolean(keySearchResultTour, searchResultTour);
+    app
+        .resolve<PrefUtils>()
+        .saveBoolean(keyDiamondDetailTour, diamondDetailTour);
+    app.resolve<PrefUtils>().saveBoolean(keyCompareStoneTour, compareStoneTour);
+    app.resolve<PrefUtils>().saveBoolean(keyOfferTour, offerTour);
     app
         .resolve<PrefUtils>()
         .setPlayerID(playerId, app.resolve<PrefUtils>().keyPlayerID);

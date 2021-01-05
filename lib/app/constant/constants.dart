@@ -40,7 +40,7 @@ const successStatusCode = 200;
 const addedSuccesStatusCode = 201;
 const notFoundStatusCode = 404;
 
-const signupURl = "http://pndevelop.democ.in/signup";
+const signupURl = "http://pndevelop.democ.in/device/signup";
 const termConditionUrl = "https://loremipsum.io/";
 const privacyPolicyUrl = "https://loremipsum.io/";
 const aboutUsUrl = "https://loremipsum.io/";
@@ -156,7 +156,6 @@ class LocalizationConstant {
   static const String ENGLISH = "en";
   static const String DANISH = "da-DK";
 }
-
 
 class DiamondStatus {
   static const String DIAMOND_STATUS_AVAILABLE = "A";

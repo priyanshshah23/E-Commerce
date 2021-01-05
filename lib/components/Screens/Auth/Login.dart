@@ -55,7 +55,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
     "Spanish": Spanish.languageCode,
     "Germany": Germany.languageCode,
     // "Hebrew",
-    // "Arabic",
+    "Arabic": Arabic.languageCode
   };
 
   String selectedLanguage = R.string.commonString.language;
@@ -143,7 +143,8 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                         child: PopupMenuButton<String>(
                                           onSelected: (newValue) {
                                             // add this property
-                                            selectedLanguage = newValue;
+                                            selectedLanguage =
+                                                language[newValue];
                                             LocalizationHelper.changeLocale(
                                                 language[newValue]);
                                             app
@@ -194,16 +195,17 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                                 ),
                                                 Expanded(
                                                   child: Text(
-                                                    selectedLanguage,
-                                                    style: selectedLanguage ==
-                                                            R
-                                                                .string
-                                                                .commonString
-                                                                .language
-                                                        ? appTheme
-                                                            .grey14HintTextStyle
-                                                        : appTheme
-                                                            .black14TextStyle,
+                                                    isNullEmptyOrFalse(app
+                                                            .resolve<
+                                                                PrefUtils>()
+                                                            .getLocalization())
+                                                        ? language["English"]
+                                                        : app
+                                                            .resolve<
+                                                                PrefUtils>()
+                                                            .getLocalization(),
+                                                    style: appTheme
+                                                        .black14TextStyle,
                                                   ),
                                                 ),
                                                 Container(
@@ -304,7 +306,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                     ),
                                     Padding(
                                       padding:
-                                          EdgeInsets.only(top: getSize(70)),
+                                          EdgeInsets.only(top: getSize(60)),
                                       child: Container(
                                         margin: EdgeInsets.only(
                                             top: getSize(15), left: getSize(0)),
@@ -459,7 +461,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
                         children: <Widget>[
                           Text(R.string.authStrings.dontHaveAnAccount,
                               style: appTheme.grey16HintTextStyle),
-                          Text(" " + R.string.authStrings.signUp,
+                          Text(" " + R.string.authStrings.signUpHere,
                               style: appTheme.darkBlue16TextStyle),
                         ],
                       ),
