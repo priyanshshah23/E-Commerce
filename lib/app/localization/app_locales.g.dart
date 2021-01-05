@@ -50,7 +50,6 @@ class English {
   NoDataStrings noDataStrings = NoDataStrings();
   ScreenTitle screenTitle = ScreenTitle();
   Dynamickeys dynamickeys = Dynamickeys();
-  Jsontitle jsontitle = Jsontitle();
   static String get languageCode => "English";
   static String get languageName => "English";
 }
@@ -80,8 +79,9 @@ class AuthStrings {
   String forgotPassword = "Forgot Password?";
   String signInCap = "Sign In";
   String moveToLogIn = "Move to Log In";
-  String dontHaveAnAccount = "to set up your account.";
+  String dontHaveAnAccount = "Don't have an account? ";
   String clickHere = "Click here";
+  String signUpHere = "Signup here";
   String reset = "Reset";
   String haveRegisterCode = "Have a registration code?";
   String welcome = "Welcome Back!";
@@ -754,11 +754,6 @@ class ScreenTitle {
 class Dynamickeys {
   String shape = "Shape";
   String caratRange = "Carat Range";
-  String byKey(String key) => _dynamicValues[key];
-  Map<String, String> _dynamicValues = {};
-}
-
-class Jsontitle {
   String basicDetail = "Basic Details";
   String measurementTitle = "Measurements";
   String inclusionDetail = "Inclusion Details";
@@ -775,8 +770,8 @@ class Jsontitle {
   String polishTitle = "Polish";
   String symmentryTitle = "Symmentry";
   String fluorescenceTitle = "Fluorescence";
-  String rapTitle = "RAP";
-  String discountTitle = "Discount";
+  String rapTitle = "RAP (%)";
+  String discountTitle = "Discount (%)";
   String priceAndCt = "Price/Ct";
   String amountTitle = "Amount";
   String eyeCleanTitle = "Eye Clean";
@@ -784,13 +779,13 @@ class Jsontitle {
   String milkyTitle = "Milky";
   String mixTingeTitle = "MIX TINGE";
   String dimensionTitle = "DIMENSIONS  (MM)";
-  String girdleTitle = "GIRDLE";
-  String tableTitle = "Table";
+  String girdleTitle = "GIRDLE (%)";
+  String tableTitle = "Table %";
   String crownAngleTitle = "Crown Angle";
-  String depthTitle = "Depth";
+  String depthTitle = "Depth %";
   String pavAngleTitle = "PAV ANGLE";
-  String crownHeightTitle = "Crown Height";
-  String pavDepthTitle = "Pavilion Depth";
+  String crownHeightTitle = "Crown Height  (%)";
+  String pavDepthTitle = "Pavilion Depth (%)";
   String starLengthTitle = "Star Length";
   String lowerHalfTitle = "Lower Half";
   String gridleTitle = "Girdle";
@@ -808,7 +803,7 @@ class Jsontitle {
   String laserInsTitle = "LASER INS";
   String basicTitle = "Basic";
   String advancedTitle = "Advanced";
-  String stonrIdTitle = "Stone ID/Cert No";
+  String stoneIdTitle = "Stone ID/Cert No";
   String defaultTitle = "Default";
   String newDiamondsTitle = "New Diamonds";
   String priceLowToHigh = "Price Low to High";
@@ -829,6 +824,9 @@ class Jsontitle {
   String pavilionAngleTitle = "Pavilion Angle";
   String girdleConditionTitle = "Girdle Condition";
   String cluetConditionTitle = "Culet Condition";
+  String disTitle = "Dis%";
+  String depthTitleWithoutPerc = "Depth";
+  String otherInformationTitle = "Other Information";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -846,8 +844,6 @@ class Chinese extends English {
   get screenTitle => ChineseScreenTitle();
   @override
   get dynamickeys => ChineseDynamickeys();
-  @override
-  get jsontitle => ChineseJsontitle();
   static String get languageCode => "Chinese";
   static String get languageName => "Chinese";
 }
@@ -900,9 +896,11 @@ class ChineseAuthStrings extends AuthStrings {
   @override
   get moveToLogIn => "移动登录";
   @override
-  get dontHaveAnAccount => "设置您的帐户。";
+  get dontHaveAnAccount => "#ERROR!";
   @override
   get clickHere => "点击这里";
+  @override
+  get signUpHere => "在此注册";
   @override
   get reset => "重启";
   @override
@@ -1395,7 +1393,7 @@ class ChineseCommonString extends CommonString {
   @override
   get priceBreakuplbl => "价格解体";
   @override
-  get tripPricelbl => "Trip价格";
+  get tripPricelbl => "旅行价格";
   @override
   get taxeslbl => "税";
   @override
@@ -2155,11 +2153,6 @@ class ChineseDynamickeys extends Dynamickeys {
   get shape => "形状";
   @override
   get caratRange => "克拉范围";
-  String byKey(String key) => _dynamicValues[key];
-  Map<String, String> _dynamicValues = {};
-}
-
-class ChineseJsontitle extends Jsontitle {
   @override
   get basicDetail => "基本详情";
   @override
@@ -2193,9 +2186,9 @@ class ChineseJsontitle extends Jsontitle {
   @override
   get fluorescenceTitle => "荧光";
   @override
-  get rapTitle => "RAP";
+  get rapTitle => "RAP（％）";
   @override
-  get discountTitle => "折扣";
+  get discountTitle => "折扣（％）";
   @override
   get priceAndCt => "价格/ CT";
   @override
@@ -2211,19 +2204,19 @@ class ChineseJsontitle extends Jsontitle {
   @override
   get dimensionTitle => "尺寸（mm）";
   @override
-  get girdleTitle => "腰带";
+  get girdleTitle => "腰带（％）";
   @override
-  get tableTitle => "表";
+  get tableTitle => "表％";
   @override
   get crownAngleTitle => "皇冠角";
   @override
-  get depthTitle => "深度";
+  get depthTitle => "深度％";
   @override
   get pavAngleTitle => "PAV ANGLE";
   @override
-  get crownHeightTitle => "冠高";
+  get crownHeightTitle => "冠高（％）";
   @override
-  get pavDepthTitle => "亭深";
+  get pavDepthTitle => "亭深比（％）";
   @override
   get starLengthTitle => "长星";
   @override
@@ -2259,7 +2252,7 @@ class ChineseJsontitle extends Jsontitle {
   @override
   get advancedTitle => "高级";
   @override
-  get stonrIdTitle => "石ID /证书号";
+  get stoneIdTitle => "石ID /证书号";
   @override
   get defaultTitle => "默认";
   @override
@@ -2300,6 +2293,12 @@ class ChineseJsontitle extends Jsontitle {
   get girdleConditionTitle => "束带条件";
   @override
   get cluetConditionTitle => "底尖状况";
+  @override
+  get disTitle => "派息％";
+  @override
+  get depthTitleWithoutPerc => "深度";
+  @override
+  get otherInformationTitle => "其他信息";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -2317,8 +2316,6 @@ class French extends English {
   get screenTitle => FrenchScreenTitle();
   @override
   get dynamickeys => FrenchDynamickeys();
-  @override
-  get jsontitle => FrenchJsontitle();
   static String get languageCode => "French";
   static String get languageName => "French";
 }
@@ -2377,9 +2374,11 @@ class FrenchAuthStrings extends AuthStrings {
   @override
   get moveToLogIn => "Déplacer vers Connexion";
   @override
-  get dontHaveAnAccount => "pour configurer votre compte.";
+  get dontHaveAnAccount => "#ERROR!";
   @override
   get clickHere => "Cliquez ici";
+  @override
+  get signUpHere => "Inscrivez-vous ici";
   @override
   get reset => "Réinitialiser";
   @override
@@ -3687,11 +3686,6 @@ class FrenchDynamickeys extends Dynamickeys {
   get shape => "Forme";
   @override
   get caratRange => "carat Gamme";
-  String byKey(String key) => _dynamicValues[key];
-  Map<String, String> _dynamicValues = {};
-}
-
-class FrenchJsontitle extends Jsontitle {
   @override
   get basicDetail => "Détails de base";
   @override
@@ -3725,9 +3719,9 @@ class FrenchJsontitle extends Jsontitle {
   @override
   get fluorescenceTitle => "Fluorescence";
   @override
-  get rapTitle => "RAP";
+  get rapTitle => "RAP (%)";
   @override
-  get discountTitle => "Remise";
+  get discountTitle => "Remise (%)";
   @override
   get priceAndCt => "Prix ​​/ Ct";
   @override
@@ -3743,19 +3737,19 @@ class FrenchJsontitle extends Jsontitle {
   @override
   get dimensionTitle => "Dimensions (mm)";
   @override
-  get girdleTitle => "CEINTURE";
+  get girdleTitle => "GIRDLE (%)";
   @override
-  get tableTitle => "Table";
+  get tableTitle => "Table %";
   @override
   get crownAngleTitle => "Couronne Angle";
   @override
-  get depthTitle => "Profondeur";
+  get depthTitle => "profondeur%";
   @override
   get pavAngleTitle => "PAV ANGLE";
   @override
-  get crownHeightTitle => "Hauteur de la couronne";
+  get crownHeightTitle => "Couronne Hauteur (%)";
   @override
-  get pavDepthTitle => "Profondeur du Pavillon";
+  get pavDepthTitle => "Profondeur du Pavillon (en%)";
   @override
   get starLengthTitle => "Longueur étoiles";
   @override
@@ -3791,7 +3785,7 @@ class FrenchJsontitle extends Jsontitle {
   @override
   get advancedTitle => "Avancée";
   @override
-  get stonrIdTitle => "Pierre ID / Cert Non";
+  get stoneIdTitle => "Pierre ID / Cert Non";
   @override
   get defaultTitle => "Défaut";
   @override
@@ -3832,6 +3826,12 @@ class FrenchJsontitle extends Jsontitle {
   get girdleConditionTitle => "Condition Ceinturon";
   @override
   get cluetConditionTitle => "colette Condition";
+  @override
+  get disTitle => "Dis%";
+  @override
+  get depthTitleWithoutPerc => "Profondeur";
+  @override
+  get otherInformationTitle => "les autres informations";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -3849,8 +3849,6 @@ class Japan extends English {
   get screenTitle => JapanScreenTitle();
   @override
   get dynamickeys => JapanDynamickeys();
-  @override
-  get jsontitle => JapanJsontitle();
   static String get languageCode => "JAPAN";
   static String get languageName => "JAPAN";
 }
@@ -3903,9 +3901,11 @@ class JapanAuthStrings extends AuthStrings {
   @override
   get moveToLogIn => "ログインに移動";
   @override
-  get dontHaveAnAccount => "アカウントを設定します。";
+  get dontHaveAnAccount => "#ERROR!";
   @override
   get clickHere => "ここをクリック";
+  @override
+  get signUpHere => "ここにサインアップします";
   @override
   get reset => "リセット";
   @override
@@ -4625,7 +4625,7 @@ class JapanCommonString extends CommonString {
   get changempin => "変更MPin";
   @override
   get faceidandtouchnotenable =>
-      "FaceId / TouchIdお使いの携帯電話で有効になっていません、この機能を使用するには有効にしてください";
+      "FaceId / TouchIdお使いの携帯電話で有効になっていません、この機能を使用するために有効にしてください";
   @override
   get enablempintounlockmydiamonds =>
       "ロック解除アプリにMPinを有効にしますか？これは、タッチイドを無効にします。あなたが継続してもよろしいですか？";
@@ -4878,7 +4878,7 @@ class JapanScreenTitle extends ScreenTitle {
       "1）価格はこっちに言及固定されているので、交渉の余地はありません。 \\ N2）グレーディングは、パラメータは、GIAのグレーディングを越えた当社のウェブサイト上で言及しました。";
   @override
   get offerMsg =>
-      "私たちが提供する前に確認するためにあなたを要求するので、価格が承認されます場合はご提供石が直接確認されます。 Offerリストに入れどれ石（複数可）、それは他の顧客のために利用可能であるとしてもだとしてあなたのために保留状態に保たれていません。";
+      "私たちが提供する前に確認するためにあなたを要求するので、価格が承認されます場合はご提供石が直接確認されます。オファーリスト内の任意の石（S）プットは、それが、他の顧客のために利用可能であるとして、あなたのために保留されていません。";
   @override
   get note => "注意";
   @override
@@ -5169,11 +5169,6 @@ class JapanDynamickeys extends Dynamickeys {
   get shape => "形状";
   @override
   get caratRange => "カラットの範囲";
-  String byKey(String key) => _dynamicValues[key];
-  Map<String, String> _dynamicValues = {};
-}
-
-class JapanJsontitle extends Jsontitle {
   @override
   get basicDetail => "基本的な詳細";
   @override
@@ -5207,9 +5202,9 @@ class JapanJsontitle extends Jsontitle {
   @override
   get fluorescenceTitle => "蛍光";
   @override
-  get rapTitle => "RAP";
+  get rapTitle => "RAP（％）";
   @override
-  get discountTitle => "ディスカウント";
+  get discountTitle => "割引（％）";
   @override
   get priceAndCt => "価格/ CT";
   @override
@@ -5225,19 +5220,19 @@ class JapanJsontitle extends Jsontitle {
   @override
   get dimensionTitle => "寸法（mm）";
   @override
-  get girdleTitle => "ガードル";
+  get girdleTitle => "ガードル（％）";
   @override
-  get tableTitle => "テーブル";
+  get tableTitle => "テーブル ％";
   @override
   get crownAngleTitle => "クラウン角度";
   @override
-  get depthTitle => "深さ";
+  get depthTitle => "深％";
   @override
   get pavAngleTitle => "PAV ANGLE";
   @override
-  get crownHeightTitle => "クラウン高さ";
+  get crownHeightTitle => "クラウン高さ（％）";
   @override
-  get pavDepthTitle => "パビリオンの深さ";
+  get pavDepthTitle => "パビリオンの深さ（％）";
   @override
   get starLengthTitle => "スターの長さ";
   @override
@@ -5273,7 +5268,7 @@ class JapanJsontitle extends Jsontitle {
   @override
   get advancedTitle => "高度";
   @override
-  get stonrIdTitle => "ストーンID /証明書はありません";
+  get stoneIdTitle => "ストーンID /証明書はありません";
   @override
   get defaultTitle => "デフォルト";
   @override
@@ -5314,6 +5309,12 @@ class JapanJsontitle extends Jsontitle {
   get girdleConditionTitle => "ガードル条件";
   @override
   get cluetConditionTitle => "キューレット条件";
+  @override
+  get disTitle => "ディス％";
+  @override
+  get depthTitleWithoutPerc => "深さ";
+  @override
+  get otherInformationTitle => "その他の情報";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -5331,8 +5332,6 @@ class Italian extends English {
   get screenTitle => ItalianScreenTitle();
   @override
   get dynamickeys => ItalianDynamickeys();
-  @override
-  get jsontitle => ItalianJsontitle();
   static String get languageCode => "Italian";
   static String get languageName => "Italian";
 }
@@ -5387,9 +5386,11 @@ class ItalianAuthStrings extends AuthStrings {
   @override
   get moveToLogIn => "Spostare a Login";
   @override
-  get dontHaveAnAccount => "per configurare l'account.";
+  get dontHaveAnAccount => "#ERROR!";
   @override
   get clickHere => "Clicca qui";
+  @override
+  get signUpHere => "Registrati qui";
   @override
   get reset => "Ripristina";
   @override
@@ -6687,11 +6688,6 @@ class ItalianDynamickeys extends Dynamickeys {
   get shape => "Forma";
   @override
   get caratRange => "Carat Gamma";
-  String byKey(String key) => _dynamicValues[key];
-  Map<String, String> _dynamicValues = {};
-}
-
-class ItalianJsontitle extends Jsontitle {
   @override
   get basicDetail => "Dettagli di base";
   @override
@@ -6725,9 +6721,9 @@ class ItalianJsontitle extends Jsontitle {
   @override
   get fluorescenceTitle => "Fluorescenza";
   @override
-  get rapTitle => "RAP";
+  get rapTitle => "RAP (%)";
   @override
-  get discountTitle => "Sconto";
+  get discountTitle => "Sconto (%)";
   @override
   get priceAndCt => "Prezzo / Ct";
   @override
@@ -6743,19 +6739,19 @@ class ItalianJsontitle extends Jsontitle {
   @override
   get dimensionTitle => "Dimensioni (mm)";
   @override
-  get girdleTitle => "CINTURA";
+  get girdleTitle => "CINTURA (%)";
   @override
-  get tableTitle => "tavolo";
+  get tableTitle => "Tavolo %";
   @override
   get crownAngleTitle => "Angolo di corona";
   @override
-  get depthTitle => "Profondità";
+  get depthTitle => "profondità%";
   @override
   get pavAngleTitle => "PAV ANGOLO";
   @override
-  get crownHeightTitle => "corona Altezza";
+  get crownHeightTitle => "Corona Altezza (%)";
   @override
-  get pavDepthTitle => "Padiglione Profondità";
+  get pavDepthTitle => "Padiglione Profondità (%)";
   @override
   get starLengthTitle => "stella Lunghezza";
   @override
@@ -6791,7 +6787,7 @@ class ItalianJsontitle extends Jsontitle {
   @override
   get advancedTitle => "Avanzate";
   @override
-  get stonrIdTitle => "Pietra ID / Cert No";
+  get stoneIdTitle => "Pietra ID / Cert No";
   @override
   get defaultTitle => "Predefinito";
   @override
@@ -6832,6 +6828,12 @@ class ItalianJsontitle extends Jsontitle {
   get girdleConditionTitle => "Cintola Condizione";
   @override
   get cluetConditionTitle => "culet Condizione";
+  @override
+  get disTitle => "Dis%";
+  @override
+  get depthTitleWithoutPerc => "Profondità";
+  @override
+  get otherInformationTitle => "Altre informazioni";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -6849,8 +6851,6 @@ class Spanish extends English {
   get screenTitle => SpanishScreenTitle();
   @override
   get dynamickeys => SpanishDynamickeys();
-  @override
-  get jsontitle => SpanishJsontitle();
   static String get languageCode => "Spanish";
   static String get languageName => "Spanish";
 }
@@ -6907,9 +6907,11 @@ class SpanishAuthStrings extends AuthStrings {
   @override
   get moveToLogIn => "Mover a Entrar";
   @override
-  get dontHaveAnAccount => "para configurar su cuenta.";
+  get dontHaveAnAccount => "#ERROR!";
   @override
   get clickHere => "haga clic aquí";
+  @override
+  get signUpHere => "Registrate aquí";
   @override
   get reset => "Reiniciar";
   @override
@@ -8205,11 +8207,6 @@ class SpanishDynamickeys extends Dynamickeys {
   get shape => "Forma";
   @override
   get caratRange => "Rango de quilates";
-  String byKey(String key) => _dynamicValues[key];
-  Map<String, String> _dynamicValues = {};
-}
-
-class SpanishJsontitle extends Jsontitle {
   @override
   get basicDetail => "Detalles básicos";
   @override
@@ -8243,9 +8240,9 @@ class SpanishJsontitle extends Jsontitle {
   @override
   get fluorescenceTitle => "Fluorescencia";
   @override
-  get rapTitle => "RAP";
+  get rapTitle => "RAP (%)";
   @override
-  get discountTitle => "Descuento";
+  get discountTitle => "Descuento (%)";
   @override
   get priceAndCt => "Precio / Ct";
   @override
@@ -8261,19 +8258,19 @@ class SpanishJsontitle extends Jsontitle {
   @override
   get dimensionTitle => "Dimensiones (mm)";
   @override
-  get girdleTitle => "FAJA";
+  get girdleTitle => "FAJA (%)";
   @override
-  get tableTitle => "Mesa";
+  get tableTitle => "Mesa %";
   @override
   get crownAngleTitle => "ángulo de la corona";
   @override
-  get depthTitle => "Profundidad";
+  get depthTitle => "profundidad%";
   @override
   get pavAngleTitle => "PAV ÁNGULO";
   @override
-  get crownHeightTitle => "Altura de la corona";
+  get crownHeightTitle => "Altura de la corona (%)";
   @override
-  get pavDepthTitle => "Profundidad pabellón";
+  get pavDepthTitle => "Profundidad Pabellón (%)";
   @override
   get starLengthTitle => "Longitud de la estrella";
   @override
@@ -8309,7 +8306,7 @@ class SpanishJsontitle extends Jsontitle {
   @override
   get advancedTitle => "Avanzado";
   @override
-  get stonrIdTitle => "Piedra ID / Cert n";
+  get stoneIdTitle => "Piedra ID / Cert n";
   @override
   get defaultTitle => "Defecto";
   @override
@@ -8350,6 +8347,12 @@ class SpanishJsontitle extends Jsontitle {
   get girdleConditionTitle => "faja Condición";
   @override
   get cluetConditionTitle => "Condición culata";
+  @override
+  get disTitle => "Dis%";
+  @override
+  get depthTitleWithoutPerc => "Profundidad";
+  @override
+  get otherInformationTitle => "Otra información";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -8367,8 +8370,6 @@ class Germany extends English {
   get screenTitle => GermanyScreenTitle();
   @override
   get dynamickeys => GermanyDynamickeys();
-  @override
-  get jsontitle => GermanyJsontitle();
   static String get languageCode => "Germany";
   static String get languageName => "Germany";
 }
@@ -8423,9 +8424,11 @@ class GermanyAuthStrings extends AuthStrings {
   @override
   get moveToLogIn => "Gehen Sie zu Login";
   @override
-  get dontHaveAnAccount => "Ihr Konto einzurichten.";
+  get dontHaveAnAccount => "#ERROR!";
   @override
   get clickHere => "Klicke hier";
+  @override
+  get signUpHere => "Hier anmelden";
   @override
   get reset => "Reset";
   @override
@@ -9355,7 +9358,7 @@ class GermanyScreenTitle extends ScreenTitle {
   @override
   get placeAnOffer => "Legen Sie ein Angebot";
   @override
-  get addedInWatchList => "Hinzugefügt in Beobachtungsliste";
+  get addedInWatchList => "Hinzugefügt in Merkliste";
   @override
   get addedInOffer => "Angebot eingereicht";
   @override
@@ -9719,11 +9722,6 @@ class GermanyDynamickeys extends Dynamickeys {
   get shape => "Gestalten";
   @override
   get caratRange => "Carat-Strecke";
-  String byKey(String key) => _dynamicValues[key];
-  Map<String, String> _dynamicValues = {};
-}
-
-class GermanyJsontitle extends Jsontitle {
   @override
   get basicDetail => "Grundlegende Details";
   @override
@@ -9757,9 +9755,9 @@ class GermanyJsontitle extends Jsontitle {
   @override
   get fluorescenceTitle => "Fluoreszenz";
   @override
-  get rapTitle => "RAP";
+  get rapTitle => "RAP (%)";
   @override
-  get discountTitle => "Rabatt";
+  get discountTitle => "Rabatt (%)";
   @override
   get priceAndCt => "Preis / Ct";
   @override
@@ -9775,19 +9773,19 @@ class GermanyJsontitle extends Jsontitle {
   @override
   get dimensionTitle => "MASSE (MM)";
   @override
-  get girdleTitle => "GÜRTEL";
+  get girdleTitle => "GÜRTELN (%)";
   @override
-  get tableTitle => "Tabelle";
+  get tableTitle => "Tabelle %";
   @override
   get crownAngleTitle => "Crown Winkel";
   @override
-  get depthTitle => "Tiefe";
+  get depthTitle => "Tiefes%";
   @override
   get pavAngleTitle => "PAV ANGLE";
   @override
-  get crownHeightTitle => "Krone Höhe";
+  get crownHeightTitle => "Kronenhöhe (%)";
   @override
-  get pavDepthTitle => "Pavilion Tiefe";
+  get pavDepthTitle => "Pavilion Tiefe (%)";
   @override
   get starLengthTitle => "Stern Länge";
   @override
@@ -9823,7 +9821,7 @@ class GermanyJsontitle extends Jsontitle {
   @override
   get advancedTitle => "fortgeschritten";
   @override
-  get stonrIdTitle => "Stein ID / Cert No";
+  get stoneIdTitle => "Stein ID / Cert No";
   @override
   get defaultTitle => "Standard";
   @override
@@ -9864,6 +9862,12 @@ class GermanyJsontitle extends Jsontitle {
   get girdleConditionTitle => "Hüfthalter Zustand";
   @override
   get cluetConditionTitle => "culet Zustand";
+  @override
+  get disTitle => "Dis%";
+  @override
+  get depthTitleWithoutPerc => "Tiefe";
+  @override
+  get otherInformationTitle => "Andere Informationen";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -9881,8 +9885,6 @@ class Arabic extends English {
   get screenTitle => ArabicScreenTitle();
   @override
   get dynamickeys => ArabicDynamickeys();
-  @override
-  get jsontitle => ArabicJsontitle();
   static String get languageCode => "Arabic";
   static String get languageName => "Arabic";
 }
@@ -9936,9 +9938,11 @@ class ArabicAuthStrings extends AuthStrings {
   @override
   get moveToLogIn => "الانتقال إلى تسجيل الدخول";
   @override
-  get dontHaveAnAccount => "لإعداد حسابك.";
+  get dontHaveAnAccount => "#ERROR!";
   @override
   get clickHere => "انقر هنا";
+  @override
+  get signUpHere => "سجل هنا";
   @override
   get reset => "إعادة تعيين";
   @override
@@ -11220,11 +11224,6 @@ class ArabicDynamickeys extends Dynamickeys {
   get shape => "شكل";
   @override
   get caratRange => "المدى قيراط";
-  String byKey(String key) => _dynamicValues[key];
-  Map<String, String> _dynamicValues = {};
-}
-
-class ArabicJsontitle extends Jsontitle {
   @override
   get basicDetail => "تفاصيل أساسية";
   @override
@@ -11258,9 +11257,9 @@ class ArabicJsontitle extends Jsontitle {
   @override
   get fluorescenceTitle => "ضوئي";
   @override
-  get rapTitle => "موسيقى الراب";
+  get rapTitle => "موسيقى الراب (٪)";
   @override
-  get discountTitle => "خصم";
+  get discountTitle => "خصم (٪)";
   @override
   get priceAndCt => "السعر / ط م";
   @override
@@ -11276,19 +11275,19 @@ class ArabicJsontitle extends Jsontitle {
   @override
   get dimensionTitle => "الأبعاد (MM)";
   @override
-  get girdleTitle => "حزام";
+  get girdleTitle => "حزام (٪)";
   @override
-  get tableTitle => "الطاولة";
+  get tableTitle => "الطاولة ٪";
   @override
   get crownAngleTitle => "تاج زاوية";
   @override
-  get depthTitle => "عمق";
+  get depthTitle => "٪ العمق";
   @override
   get pavAngleTitle => "PAV ANGLE";
   @override
-  get crownHeightTitle => "تاج الطول";
+  get crownHeightTitle => "ولي العهد الارتفاع (٪)";
   @override
-  get pavDepthTitle => "جناح العمق";
+  get pavDepthTitle => "عمق جناح (٪)";
   @override
   get starLengthTitle => "نجمة طول";
   @override
@@ -11324,7 +11323,7 @@ class ArabicJsontitle extends Jsontitle {
   @override
   get advancedTitle => "المتقدمة";
   @override
-  get stonrIdTitle => "حجر ID / سيرت لا";
+  get stoneIdTitle => "حجر ID / سيرت لا";
   @override
   get defaultTitle => "إفتراضي";
   @override
@@ -11365,6 +11364,12 @@ class ArabicJsontitle extends Jsontitle {
   get girdleConditionTitle => "حزام الحالة";
   @override
   get cluetConditionTitle => "Culet الحالة";
+  @override
+  get disTitle => "ديس٪";
+  @override
+  get depthTitleWithoutPerc => "عمق";
+  @override
+  get otherInformationTitle => "#ERROR!";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }

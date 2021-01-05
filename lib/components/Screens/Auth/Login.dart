@@ -461,7 +461,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
                         children: <Widget>[
                           Text(R.string.authStrings.dontHaveAnAccount,
                               style: appTheme.grey16HintTextStyle),
-                          Text(" " + R.string.authStrings.signUp,
+                          Text(" " + R.string.authStrings.signUpHere,
                               style: appTheme.darkBlue16TextStyle),
                         ],
                       ),
