@@ -256,7 +256,7 @@ class DiamondModel {
     remarks = json["remarks"];
     purpose = json["purpose"];
     createdAt = json["createdAt"];
-    id = json['id'];
+    id = json['id'] ?? json['_id'];
     stoneId = json['stoneId'];
     pltId = json['pltId'] ?? "";
     arrowImgId = json['packet_no'] ?? "";
