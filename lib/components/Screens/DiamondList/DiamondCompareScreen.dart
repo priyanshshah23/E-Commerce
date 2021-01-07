@@ -837,10 +837,6 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
                                 ? Text(
                                     compareModel.compareDetailList[i]
                                         .parameters[j].title,
-//                                    R.string?.dynamickeys?.byKey(
-//                                          compareModel.compareDetailList[i]
-//                                              .parameters[j].title,
-//                                    ) ?? "-",
                                     style:
                                         appTheme.blackNormal12TitleColorblack,
                                   )

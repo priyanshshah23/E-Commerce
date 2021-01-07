@@ -179,9 +179,11 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
-                                      child: Text(model.name ?? "-",
-                                          style: appTheme
-                                              .blackNormal16TitleColorblack),
+                                      child: Text(
+                                        model.name ?? "-",
+                                        style: appTheme
+                                            .blackNormal16TitleColorblack,
+                                      ),
                                     ),
                                     arr.length > 3
                                         ? SizedBox(width: getSize(8))
@@ -197,11 +199,14 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                                             child: Container(
                                               width: getSize(102),
                                               decoration: BoxDecoration(
-                                                  border: Border(
-                                                      bottom: BorderSide(
-                                                color: appTheme.colorPrimary,
-                                                width: 1.0,
-                                              ))),
+                                                border: Border(
+                                                  bottom: BorderSide(
+                                                    color:
+                                                        appTheme.colorPrimary,
+                                                    width: 1.0,
+                                                  ),
+                                                ),
+                                              ),
                                               child: Row(
                                                 children: [
                                                   Padding(
@@ -316,7 +321,7 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                                       barrierDismissible: true,
                                       title: "",
                                       desc:
-                                          "${R.string.commonString.youreallywanttodelete} model.name}.",
+                                          "${R.string.commonString.youreallywanttodelete} ${model.name}.",
                                       positiveBtnTitle:
                                           R.string.commonString.ok,
                                       negativeBtnTitle:

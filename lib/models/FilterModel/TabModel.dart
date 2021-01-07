@@ -1,3 +1,5 @@
+import 'package:diamnow/app/localization/app_locales.dart';
+
 class TabModel {
   String title;
   String tab;
@@ -6,7 +8,9 @@ class TabModel {
   TabModel({this.title, this.tab, this.sequence});
 
   TabModel.fromJson(Map<String, dynamic> json) {
-    title = json['title'];
+    title = R.string?.dynamickeys?.byKey(
+      json['title'],
+    );
     tab = json['tab'];
     sequence = json['sequence'];
   }

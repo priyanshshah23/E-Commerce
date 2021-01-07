@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -119,7 +120,9 @@ class FilterOptions {
   });
 
   FilterOptions.fromJson(Map<String, dynamic> json) {
-    title = json['title'];
+    title =  R.string?.dynamickeys?.byKey(
+      json['title'],
+    );
     isSelected = json['isSelected'];
     icon = json['icon'];
     isActive = json['isActive'];

@@ -150,7 +150,7 @@
         "isActive": true
       },
       {
-        "title": "lenghTitle",
+        "title": "lengthTitle",
         "apiKey": "length",
         "sequence": 1,
         "isActive": true
