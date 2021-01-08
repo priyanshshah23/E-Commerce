@@ -1522,21 +1522,22 @@ class DiamondConfig {
       trackType,
       req,
       (resp) {
-        app.resolve<CustomDialogs>().errorDialog(context, "", resp.message,
-            btntitle: R.string.commonString.ok,
-            dismissPopup: false, voidCallBack: () {
-          Navigator.pop(context);
-          refreshList();
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            desc: resp.message, positiveBtnTitle: R.string.commonString.ok,
+            onClickCallback: (click) {
+          if (click == ButtonType.PositveButtonClick) {
+            Navigator.pop(context);
+            refreshList();
+          }
         });
       },
       (onError) {
         if (onError.message != null) {
-          app.resolve<CustomDialogs>().errorDialog(
-                context,
-                "",
-                onError.message,
-                btntitle: R.string.commonString.ok,
-              );
+          app.resolve<CustomDialogs>().confirmDialog(context,
+              desc: onError.message, positiveBtnTitle: R.string.commonString.ok,
+              onClickCallback: (click) {
+            if (click == ButtonType.PositveButtonClick) {}
+          });
         }
       },
     );
@@ -1561,20 +1562,21 @@ class DiamondConfig {
         params: req, headers: NetworkClient.getInstance.getAuthHeaders(),
         successCallback: (response, message) {
       app.resolve<CustomDialogs>().hideProgressDialog();
-      app.resolve<CustomDialogs>().errorDialog(context, "", message,
-          btntitle: R.string.commonString.ok,
-          dismissPopup: false, voidCallBack: () {
-        Navigator.pop(context);
-        refreshList();
+      app.resolve<CustomDialogs>().confirmDialog(context,
+          desc: message,
+          positiveBtnTitle: R.string.commonString.ok, onClickCallback: (click) {
+        if (click == ButtonType.PositveButtonClick) {
+          Navigator.pop(context);
+          refreshList();
+        }
       });
     }, failureCallback: (status, message) {
       app.resolve<CustomDialogs>().hideProgressDialog();
-      app.resolve<CustomDialogs>().errorDialog(
-            context,
-            "",
-            message,
-            btntitle: R.string.commonString.ok,
-          );
+      app.resolve<CustomDialogs>().confirmDialog(context,
+          desc: message,
+          positiveBtnTitle: R.string.commonString.ok, onClickCallback: (click) {
+        if (click == ButtonType.PositveButtonClick) {}
+      });
     });
   }
 

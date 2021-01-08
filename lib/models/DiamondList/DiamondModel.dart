@@ -395,6 +395,18 @@ class DiamondModel {
     opCrwn = json['opCrwn'];
   }
 
+  String getOfferStatus() {
+    if (offerStatus == OfferStatus.rejected) {
+      return "REJECTED";
+    } else if (offerStatus == OfferStatus.pending) {
+      return "PENDING";
+    } else if (offerStatus == OfferStatus.accepted) {
+      return "ACCEPTED";
+    }
+
+    return "-";
+  }
+
   DiamondModel({bool isSelected = false}) {
     this.isSelected = isSelected;
   }

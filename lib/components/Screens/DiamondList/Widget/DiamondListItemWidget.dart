@@ -2,6 +2,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondOfferInfoWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
@@ -898,6 +899,9 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   }
 
   getOfferedBottomSection() {
+    if (widget.moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+      return SizedBox();
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -916,18 +920,23 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           child: Row(
             children: [
               Container(
-                width: getPercentageWidth(33),
+                width: getPercentageWidth(40),
                 padding: EdgeInsets.only(
                   right: getSize(20),
                 ),
                 child: RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
-                    text: "Exp. D.:\t",
+                    text: "Exp. Date.:\t",
                     style: appTheme.grey12TextStyle,
                     children: <TextSpan>[
                       TextSpan(
-                        text: "25-10-2020",
+                        text: isNullEmptyOrFalse(widget.item.offerValidDate)
+                            ? "-"
+                            : DateUtilities()
+                                .convertServerDateToFormatterString(
+                                    widget.item.offerValidDate,
+                                    formatter: DateUtilities.dd_mm_yyyy),
                         style: appTheme.black12TextStyleMedium,
                       )
                     ],
@@ -935,9 +944,9 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 ),
               ),
               Container(
-                width: getPercentageWidth(28),
+                width: getPercentageWidth(20),
                 child: Text(
-                  "PENDING",
+                  widget.item.getOfferStatus(),
                   style: appTheme.blackNormal14TitleColorPrimary,
                   textAlign: TextAlign.center,
                 ),
@@ -948,23 +957,22 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Tooltip(
-                      waitDuration: Duration(seconds: 1),
-                      showDuration: Duration(seconds: 2),
-                      padding: EdgeInsets.all(5),
-                      height: 35,
-                      textStyle: TextStyle(
-                          fontSize: 15,
-                          color: Colors.white,
-                          fontWeight: FontWeight.normal),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.green),
-                      message: 'My Account',
-                      child: Image.asset(
-                        exclamation,
-                        width: getSize(20),
-                        height: getSize(20),
+                    InkWell(
+                      onTap: () {
+                        app.resolve<CustomDialogs>().confirmDialog(
+                              context,
+                              title: R.string.screenTitle.remarks,
+                              desc: widget.item.purpose ?? "-",
+                              positiveBtnTitle: R.string.commonString.ok,
+                            );
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.all(getSize(2.0)),
+                        child: Image.asset(
+                          exclamation,
+                          width: getSize(16),
+                          height: getSize(16),
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -975,10 +983,13 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                         widget.actionClick(
                             ManageCLick(type: clickConstant.CLICK_TYPE_EDIT));
                       },
-                      child: Image.asset(
-                        edit_icon,
-                        width: getSize(20),
-                        height: getSize(20),
+                      child: Padding(
+                        padding: EdgeInsets.all(getSize(2.0)),
+                        child: Image.asset(
+                          edit_icon,
+                          width: getSize(16),
+                          height: getSize(16),
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -990,10 +1001,13 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                           ManageCLick(type: clickConstant.CLICK_TYPE_DELETE),
                         );
                       },
-                      child: Image.asset(
-                        delete_icon_medium,
-                        width: getSize(20),
-                        height: getSize(20),
+                      child: Padding(
+                        padding: EdgeInsets.all(getSize(2.0)),
+                        child: Image.asset(
+                          delete_icon_medium,
+                          width: getSize(16),
+                          height: getSize(16),
+                        ),
                       ),
                     ),
                   ],
