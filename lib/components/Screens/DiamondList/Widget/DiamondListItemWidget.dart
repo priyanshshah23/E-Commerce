@@ -895,6 +895,10 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         : SizedBox();
   }
 
+  getOfferedBottomSection() {
+    // return 
+  }
+
   getOfferedDiscountTextField() {
     return Focus(
       onFocusChange: (hasfocus) {

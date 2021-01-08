@@ -16,6 +16,7 @@ import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/MyDemand/MyDemandScreen.dart';
 import 'package:diamnow/components/Screens/OfflineSearchHistory/OfflineSearchHistory.dart';
 import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
+import 'package:diamnow/components/Screens/PriceCalculator/PriceCalculator.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
@@ -317,6 +318,15 @@ class _HomeScreenState extends State<HomeScreen> {
     currentWidget = MyAccountScreen(dict);
   }
 
+  openPriceCalculator(int moduleType) {
+    selectedType = moduleType;
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.ModuleType] =
+        DiamondModuleConstant.MODULE_TYPE_PRICE_CALCULATOR;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = PriceCalculator(dict);
+  }
+
   manageDrawerClick(BuildContext context, int type, bool isPop) {
     if (context != null) {
       if (isPop) Navigator.pop(context);
@@ -471,6 +481,9 @@ class _HomeScreenState extends State<HomeScreen> {
             section: SectionAnalytics.OFFLINESEARCH,
             action: ActionAnalytics.CLICK,
           );
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_PRICE_CALCULATOR:
+          openPriceCalculator(type);
           break;
       }
       if (type != DiamondModuleConstant.MODULE_TYPE_LOGOUT) {

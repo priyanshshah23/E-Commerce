@@ -695,7 +695,9 @@ class DiamondConfig {
   actionHold(List<DiamondModel> list) {}
 
   actionDownloadOffline(BuildContext context, Function refreshList,
-      {String filterId, List<Map<String,dynamic>> sortRequest, Map<String, dynamic> filterCriteria}) {
+      {String filterId,
+      List<Map<String, dynamic>> sortRequest,
+      Map<String, dynamic> filterCriteria}) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -1715,7 +1717,7 @@ class DiamondConfig {
           arraDiamond[i].showCheckBox = true;
         }
 
-        if (arraDiamond.length == 1) {
+        /*if (arraDiamond.length == 1) {
           arraDiamond[i].isSectionOfferDisplay = true;
         } else if (i > 0 &&
             (arraDiamond[i].memoNo != arraDiamond[i - 1].memoNo)) {
@@ -1724,7 +1726,7 @@ class DiamondConfig {
         if (i == arraDiamond.length - 1) {
           arraDiamond[i].isSectionOfferDisplay = true;
         }
-        arraDiamond[i].isGrouping = true;
+        arraDiamond[i].isGrouping = true;*/
       }
     } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
       for (int i = 0; i < arraDiamond.length; i++) {
