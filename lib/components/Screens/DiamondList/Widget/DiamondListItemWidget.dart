@@ -7,6 +7,7 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondOfferInfoWi
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -320,6 +321,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                     ],
                                   ),
                                 ),
+                              getOfferedBottomSection(),
                             ],
                           ),
                         ),
@@ -896,7 +898,79 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   }
 
   getOfferedBottomSection() {
-    // return 
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: EdgeInsets.only(
+            left: getSize(8),
+          ),
+          color: appTheme.dividerColor,
+          height: 0.6,
+        ),
+        Padding(
+          padding: EdgeInsets.only(
+            top: getSize(8),
+            bottom: getSize(8),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: getPercentageWidth(33),
+                padding: EdgeInsets.only(
+                  right: getSize(20),
+                ),
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    text: "Exp. D.:\t",
+                    style: appTheme.grey12TextStyle,
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: "25-10-2020",
+                        style: appTheme.black12TextStyleMedium,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                width: getPercentageWidth(28),
+                child: Text(
+                  "PENDING",
+                  style: appTheme.primaryNormal12TitleColor,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Container(
+                width: getPercentageWidth(30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(
+                      edit_icon,
+                      width: getSize(20),
+                      height: getSize(20),
+                    ),
+                    Image.asset(
+                      edit_icon,
+                      width: getSize(20),
+                      height: getSize(20),
+                    ),
+                    Image.asset(
+                      delete_icon_medium,
+                      width: getSize(20),
+                      height: getSize(16),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 
   getOfferedDiscountTextField() {
