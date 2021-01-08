@@ -958,6 +958,30 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         selectedList.add(arraDiamond[index]);
         callDeleteDiamond(selectedList);
         break;
+      case clickConstant.CLICK_TYPE_EDIT:
+        List<DiamondModel> selectedList = [];
+        DiamondModel model;
+
+        model = DiamondModel.fromJson(arraDiamond[index].toJson());
+        model.isAddToOffer = true;
+        model.isUpdateOffer = true;
+        model.trackItemOffer = arraDiamond[index].trackItemOffer;
+        selectedList.add(model);
+
+        var dict = Map<String, dynamic>();
+        dict[ArgumentConstant.DiamondList] = selectedList;
+        dict[ArgumentConstant.ModuleType] = moduleType;
+        dict[ArgumentConstant.ActionType] =
+            DiamondTrackConstant.TRACK_TYPE_OFFER;
+        dict["isOfferUpdate"] = true;
+
+        bool isBack = await NavigationUtilities.pushRoute(
+            DiamondActionScreen.route,
+            args: dict);
+        if (isBack != null && isBack) {
+          onRefreshList();
+        }
+        break;
       case clickConstant.CLICK_TYPE_SELECTION:
       case clickConstant.CLICK_TYPE_ROW:
         setState(() {

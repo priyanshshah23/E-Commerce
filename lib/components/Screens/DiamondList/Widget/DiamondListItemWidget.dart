@@ -938,7 +938,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 width: getPercentageWidth(28),
                 child: Text(
                   "PENDING",
-                  style: appTheme.primaryNormal12TitleColor,
+                  style: appTheme.blackNormal14TitleColorPrimary,
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -948,20 +948,53 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Image.asset(
-                      edit_icon,
-                      width: getSize(20),
-                      height: getSize(20),
+                    Tooltip(
+                      waitDuration: Duration(seconds: 1),
+                      showDuration: Duration(seconds: 2),
+                      padding: EdgeInsets.all(5),
+                      height: 35,
+                      textStyle: TextStyle(
+                          fontSize: 15,
+                          color: Colors.white,
+                          fontWeight: FontWeight.normal),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.green),
+                      message: 'My Account',
+                      child: Image.asset(
+                        exclamation,
+                        width: getSize(20),
+                        height: getSize(20),
+                      ),
                     ),
-                    Image.asset(
-                      edit_icon,
-                      width: getSize(20),
-                      height: getSize(20),
+                    SizedBox(
+                      width: getSize(10),
                     ),
-                    Image.asset(
-                      delete_icon_medium,
-                      width: getSize(20),
-                      height: getSize(16),
+                    InkWell(
+                      onTap: () {
+                        widget.actionClick(
+                            ManageCLick(type: clickConstant.CLICK_TYPE_EDIT));
+                      },
+                      child: Image.asset(
+                        edit_icon,
+                        width: getSize(20),
+                        height: getSize(20),
+                      ),
+                    ),
+                    SizedBox(
+                      width: getSize(10),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        widget.actionClick(
+                          ManageCLick(type: clickConstant.CLICK_TYPE_DELETE),
+                        );
+                      },
+                      child: Image.asset(
+                        delete_icon_medium,
+                        width: getSize(20),
+                        height: getSize(20),
+                      ),
                     ),
                   ],
                 ),

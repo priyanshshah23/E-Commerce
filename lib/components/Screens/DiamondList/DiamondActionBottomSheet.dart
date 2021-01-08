@@ -55,7 +55,9 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext context, int index) {
                         return DiamondItemWidget(
-                            item: diamondList[index], actionClick: actionClick);
+                          item: diamondList[index],
+                          actionClick: actionClick,
+                        );
                       },
                     )
                   : Container(
@@ -1104,7 +1106,6 @@ Future openBottomSheetForSavedSearch(
           }).catchError((onError) {
             app.resolve<CustomDialogs>().confirmDialog(
                   context,
-                  
                   desc: onError.message,
                   positiveBtnTitle: R.string.commonString.ok,
                 );
