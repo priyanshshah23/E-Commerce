@@ -1058,24 +1058,24 @@ class _FilterItemState extends State<FilterItem> {
           ),
           if (widget.moduleType !=
               DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH)
-          Center(
-            child: InkWell(
-              onTap: () {
-                NavigationUtilities.pushRoute(VoiceSearch.route);
-              },
-              child: Padding(
-                padding: EdgeInsets.only(
-                  right: getSize(Spacing.leftPadding),
-                ),
-                child: Image.asset(
-                  microphone,
-                  alignment: Alignment.centerRight,
-                  width: getSize(26),
-                  height: getSize(26),
+            Center(
+              child: InkWell(
+                onTap: () {
+                  NavigationUtilities.pushRoute(VoiceSearch.route);
+                },
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    right: getSize(Spacing.leftPadding),
+                  ),
+                  child: Image.asset(
+                    microphone,
+                    alignment: Alignment.centerRight,
+                    width: getSize(26),
+                    height: getSize(26),
+                  ),
                 ),
               ),
-            ),
-          )
+            )
         ],
       ),
     );

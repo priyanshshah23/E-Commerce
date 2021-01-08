@@ -121,6 +121,8 @@ getBarButtonWithColor(
   );
 }
 
+
+
 getNavigationTheme(BuildContext context) {
   return TextTheme(
     title: TextStyle(
