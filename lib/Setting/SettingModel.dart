@@ -454,10 +454,11 @@ isDisplayDelete(int moduleType) {
           .delete) isDisplay = true;
       break;
     case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
-      if (app
-          .resolve<PrefUtils>()
-          .getModulePermission(ModulePermissionConstant.permission_offer)
-          .delete) isDisplay = true;
+      // if (app
+      //     .resolve<PrefUtils>()
+      //     .getModulePermission(ModulePermissionConstant.permission_offer)
+      //     .delete) isDisplay = true;
+      isDisplay = false;
       break;
     case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
       if (app
@@ -469,6 +470,12 @@ isDisplayDelete(int moduleType) {
       if (app
           .resolve<PrefUtils>()
           .getModulePermission(ModulePermissionConstant.permission_bid)
+          .delete) isDisplay = true;
+      break;
+    case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
+      if (app
+          .resolve<PrefUtils>()
+          .getModulePermission(ModulePermissionConstant.permission_appointment)
           .delete) isDisplay = true;
       break;
   }

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:diamnow/Setting/SettingModel.dart';
+import 'package:diamnow/app/Helper/NetworkClient.dart';
 import 'package:diamnow/app/Helper/OfflineStockManager.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
@@ -481,7 +482,11 @@ class DiamondConfig {
         negativeBtnTitle: R.string.commonString.no,
         onClickCallback: (PositveButtonClick) {
       if (PositveButtonClick == ButtonType.PositveButtonClick) {
-        callApiForDeleteTrack(context, list, moduleType, refreshList);
+        if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
+          callApiForDeleteOffice(context, list, refreshList);
+        } else {
+          callApiForDeleteTrack(context, list, moduleType, refreshList);
+        }
       }
     });
   }
@@ -1475,6 +1480,7 @@ class DiamondConfig {
           req.id.add(element.trackItemCart?.trackId ?? "");
           trackType = req.trackType;
           break;
+
         case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
           req.trackType = DiamondTrackConstant.TRACK_TYPE_WATCH_LIST;
           req.id.add(element.trackItemWatchList?.trackId ?? "");
@@ -1534,6 +1540,42 @@ class DiamondConfig {
         }
       },
     );
+  }
+
+  callApiForDeleteOffice(
+      BuildContext context, List<DiamondModel> list, Function refreshList) {
+    var req = Map<String, dynamic>();
+    var arr = List<Map<String, dynamic>>();
+
+    for (var item in list) {
+      var dict = Map<String, dynamic>();
+      dict["id"] = [item.memoNo];
+      dict["diamonds"] = item.id;
+      arr.add(dict);
+    }
+    req["schedule"] = arr;
+    app.resolve<CustomDialogs>().showProgressDialog(context, "");
+
+    NetworkClient.getInstance.callApi(
+        context, baseURL, ApiConstants.deleteOffice, MethodType.Post,
+        params: req, headers: NetworkClient.getInstance.getAuthHeaders(),
+        successCallback: (response, message) {
+      app.resolve<CustomDialogs>().hideProgressDialog();
+      app.resolve<CustomDialogs>().errorDialog(context, "", message,
+          btntitle: R.string.commonString.ok,
+          dismissPopup: false, voidCallBack: () {
+        Navigator.pop(context);
+        refreshList();
+      });
+    }, failureCallback: (status, message) {
+      app.resolve<CustomDialogs>().hideProgressDialog();
+      app.resolve<CustomDialogs>().errorDialog(
+            context,
+            "",
+            message,
+            btntitle: R.string.commonString.ok,
+          );
+    });
   }
 
   callApiFoPlaceOrder(

@@ -651,7 +651,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   getRightAction(ActionClick actionClick) {
     List<Widget> list = [];
-    if (isDiamondSearchModule(moduleType)) {
+    if (isDiamondSearchModule(moduleType) ||
+        moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
       list.add(
         IntrinsicHeight(
           child: IconSlideAction(
@@ -752,7 +753,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   getLeftAction(ActionClick actionClick) {
     List<Widget> leftSwipeList = [];
 
-    if (isDisplayDetail(moduleType)) {
+    if (isDisplayDetail(moduleType) &&
+        moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
       if (!isDiamondSearchModule(moduleType)) {
         leftSwipeList.add(
           IntrinsicHeight(
@@ -804,7 +806,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       }
     }
 
-    if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+    /*if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
       leftSwipeList.add(
         IntrinsicHeight(
           child: IconSlideAction(
@@ -847,7 +849,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           ),
         ),
       );
-    }
+    }*/
 
     return leftSwipeList;
   }
