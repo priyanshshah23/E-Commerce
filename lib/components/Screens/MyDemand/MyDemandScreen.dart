@@ -321,7 +321,7 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                                       barrierDismissible: true,
                                       title: "",
                                       desc:
-                                          "${R.string.commonString.youreallywanttodelete} ${model.name}.",
+                                          "${R.string.commonString.youreallywanttodelete} ${model.name}?.",
                                       positiveBtnTitle:
                                           R.string.commonString.ok,
                                       negativeBtnTitle:
@@ -387,8 +387,11 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(getSize(15)),
                   border: Border.all(color: appTheme.borderColor)),
-              child: Image.asset(
-                img,
+              child: Padding(
+                padding:  EdgeInsets.all(4),
+                child: Image.asset(
+                  img,
+                ),
               ),
             ),
             SizedBox(

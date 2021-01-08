@@ -403,15 +403,18 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              padding: EdgeInsets.all(2),
+              margin: EdgeInsets.all(getSize(4)),
               width: getSize(30),
               height: getSize(30),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(getSize(15)),
                   border: Border.all(color: appTheme.borderColor)),
-              child: Image.asset(
-                img,
+              child: Padding(
+                padding:  EdgeInsets.all(4),
+                child: Image.asset(
+                  img,
+                ),
               ),
             ),
             SizedBox(
