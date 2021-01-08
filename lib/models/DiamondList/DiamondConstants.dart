@@ -47,6 +47,7 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_NOTIFICATION = 107;
   static const MODULE_TYPE_DIAMOND_DETAIL = 108;
   static const MODULE_TYPE_VOICE_SEARCH = 109;
+  static const MODULE_TYPE_PRICE_CALCULATOR = 110;
 }
 
 class ModulePermissionConstant {

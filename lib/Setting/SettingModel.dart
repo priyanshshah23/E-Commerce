@@ -105,6 +105,15 @@ class DrawerSetting {
         count: 15,
       ));
 
+    /*drawerList.add(DrawerModel(
+      image: stoneOfTheDay,
+      title: "Price Calculator",
+      isSelected: false,
+      type: DiamondModuleConstant.MODULE_TYPE_PRICE_CALCULATOR,
+      isShowCount: false,
+      countBackgroundColor: fromHex("#003365"),
+    ));*/
+
     if (app
         .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_offline_stock)

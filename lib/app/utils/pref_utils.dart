@@ -220,7 +220,7 @@ class PrefUtils {
   }
 
   String getLocalization() {
-    return getString(keyLanguage);
+    return getString(keyLanguage) ?? "";
   }
 
   void saveFilterOffline(Map<String, dynamic> dictFilter) {
@@ -320,14 +320,14 @@ class PrefUtils {
     if (data == null) {
       if (true) {
         data = UserPermissionsData(module: module);
-        data.view = true;
-        data.insert = true;
-        data.update = true;
-        data.delete = true;
-        data.downloadExcel = true;
+        data.view = false;
+        data.insert = false;
+        data.update = false;
+        data.delete = false;
+        data.downloadExcel = false;
       }
     }
-    if (module == ModulePermissionConstant.permission_offline_stock ||
+    /*if (module == ModulePermissionConstant.permission_offline_stock ||
         module == ModulePermissionConstant.permission_auction) {
       data = UserPermissionsData(module: module);
       data.view = true;
@@ -335,7 +335,7 @@ class PrefUtils {
       data.update = true;
       data.delete = true;
       data.downloadExcel = true;
-    }
+    }*/
     return data;
   }
 

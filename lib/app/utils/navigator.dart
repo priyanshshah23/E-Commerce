@@ -28,6 +28,7 @@ import 'package:diamnow/components/Screens/MyDemand/MyDemandScreen.dart';
 import 'package:diamnow/components/Screens/Notification/Notifications.dart';
 import 'package:diamnow/components/Screens/OfflineSearchHistory/OfflineSearchHistory.dart';
 import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
+import 'package:diamnow/components/Screens/PriceCalculator/PriceCalculator.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
 import 'package:diamnow/components/Screens/Search/Search.dart';
@@ -56,7 +57,6 @@ class NavigationUtilities {
 
   /// A convenience method to push a new [MaterialPageRoute] to the [Navigator].
   static void push(Widget widget, {String name}) {
-
     key.currentState.push(MaterialPageRoute(
       builder: (context) => widget,
       settings: RouteSettings(name: name),
@@ -164,6 +164,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       break;
     case DiamondImageBrowserScreen.route:
       screen = DiamondImageBrowserScreen(arguments);
+      break;
+    case PriceCalculator.route:
+      screen = PriceCalculator(arguments);
       break;
     case GuestSignInScreen.route:
       screen = GuestSignInScreen();
