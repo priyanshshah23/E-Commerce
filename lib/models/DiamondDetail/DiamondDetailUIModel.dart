@@ -52,7 +52,9 @@ class DiamondDetailUIModel {
   });
 
   DiamondDetailUIModel.fromJson(Map<String, dynamic> json) {
-    title = json['title'];
+    title = R.string?.dynamickeys?.byKey(
+      json['title'],
+    );
     sequence = json['sequence'];
     if (json['parameters'] != null) {
       parameters = new List<DiamondDetailUIComponentModel>();
