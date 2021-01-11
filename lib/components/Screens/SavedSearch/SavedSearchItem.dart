@@ -411,7 +411,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                   borderRadius: BorderRadius.circular(getSize(15)),
                   border: Border.all(color: appTheme.borderColor)),
               child: Padding(
-                padding:  EdgeInsets.all(4),
+                padding: EdgeInsets.all(6),
                 child: Image.asset(
                   img,
                 ),

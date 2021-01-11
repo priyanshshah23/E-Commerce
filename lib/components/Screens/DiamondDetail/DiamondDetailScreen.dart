@@ -748,7 +748,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                         ? EdgeInsets.only(
                             left: getSize(20),
                             right: getSize(20),
-                            top: getSize(30),
+                            top: getSize(20),
                             bottom: getSize(0))
                         : EdgeInsets.only(
                             left: getSize(20),
@@ -765,16 +765,17 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                            color: appTheme.whiteColor,
-                            // borderRadius: BorderRadius.circular(getSize(5)),
-                            // color: appTheme.lightBGColor
-                            border: Border.all(color: appTheme.lightBGColor)),
+                          color: appTheme.whiteColor,
+                          borderRadius: BorderRadius.circular(getSize(5)),
+                          // color: appTheme.lightBGColor
+                          border: Border.all(color: appTheme.borderColor),
+                        ),
                         child: Column(
                           children: [
                             Padding(
                               padding: EdgeInsets.only(
-                                top: getSize(30),
-                                bottom: getSize(30),
+                                top: getSize(20),
+                                bottom: getSize(20),
                                 left: getSize(20),
                                 right: getSize(20),
                               ),
