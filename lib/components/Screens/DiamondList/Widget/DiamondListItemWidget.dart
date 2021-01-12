@@ -947,7 +947,9 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 width: getPercentageWidth(20),
                 child: Text(
                   widget.item.getOfferStatus(),
-                  style: appTheme.blackNormal14TitleColorPrimary,
+                  style: appTheme.blackNormal14TitleColorPrimary.copyWith(
+                    color: widget.item.getOfferStatusColor(),
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -978,23 +980,27 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                     SizedBox(
                       width: getSize(10),
                     ),
-                    InkWell(
-                      onTap: () {
-                        widget.actionClick(
-                            ManageCLick(type: clickConstant.CLICK_TYPE_EDIT));
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.all(getSize(2.0)),
-                        child: Image.asset(
-                          edit_icon,
-                          width: getSize(16),
-                          height: getSize(16),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: getSize(10),
-                    ),
+                    widget.item.offerStatus != OfferStatus.rejected
+                        ? InkWell(
+                            onTap: () {
+                              widget.actionClick(ManageCLick(
+                                  type: clickConstant.CLICK_TYPE_EDIT));
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.all(getSize(2.0)),
+                              child: Image.asset(
+                                edit_icon,
+                                width: getSize(16),
+                                height: getSize(16),
+                              ),
+                            ),
+                          )
+                        : SizedBox(),
+                    widget.item.offerStatus != OfferStatus.rejected
+                        ? SizedBox(
+                            width: getSize(10),
+                          )
+                        : SizedBox(),
                     InkWell(
                       onTap: () {
                         widget.actionClick(

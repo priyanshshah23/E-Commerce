@@ -407,6 +407,18 @@ class DiamondModel {
     return "-";
   }
 
+  Color getOfferStatusColor() {
+    if (offerStatus == OfferStatus.rejected) {
+      return appTheme.redColor;
+    } else if (offerStatus == OfferStatus.pending) {
+      return appTheme.colorPrimary;
+    } else if (offerStatus == OfferStatus.accepted) {
+      return appTheme.colorPrimary;
+    }
+
+    return appTheme.colorPrimary;
+  }
+
   DiamondModel({bool isSelected = false}) {
     this.isSelected = isSelected;
   }

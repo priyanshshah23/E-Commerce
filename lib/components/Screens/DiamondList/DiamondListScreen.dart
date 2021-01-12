@@ -327,6 +327,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
                     diamonds.memoNo = element.id;
                     diamonds.date = element.date;
+                    diamonds.createdAt = element.createdAt;
                     diamonds.purpose = element.purpose;
                     break;
                 }
