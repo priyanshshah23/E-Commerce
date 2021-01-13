@@ -26,7 +26,7 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
         ? SizedBox()
         : Padding(
             padding: EdgeInsets.only(
-              top: getSize(20),
+              top: getSize(8),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,14 +55,16 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
                   ),
                 ),
                 SizedBox(
-                  height: getSize(20),
+                  height: getSize(8),
                 ),
                 Container(
-                  height: getSize(170),
+                  height: widget.diamondList.length > 1
+                      ? getSize(170)
+                      : getSize(85),
                   child: GridView.count(
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
-                    crossAxisCount: 2,
+                    crossAxisCount: widget.diamondList.length > 1 ? 2 : 1,
 //              childAspectRatio: 0.36,
                     // without Price
                     childAspectRatio: 0.23,
@@ -111,7 +113,7 @@ class _FeaturedStoneWidgetState extends State<FeaturedStoneWidget> {
               color: appTheme.textGreyColor.withOpacity(0.2),
               blurRadius: getSize(10),
               spreadRadius: getSize(8),
-              offset: Offset(0, 8),
+              offset: Offset(3, 4),
             ),
           ],
           borderRadius: BorderRadius.circular(getSize(5)),

@@ -857,15 +857,15 @@ class BottomMenuSetting {
   }
 
   addExcelBottomMenu(List<BottomTabModel> moreMenuList) {
-    if (app
-        .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_excel)
-        .downloadExcel) {
-      moreMenuList.add(BottomTabModel(
-          image: excelImage,
-          title: "Excel",
-          type: ActionMenuConstant.ACTION_TYPE_EXCEL));
-    }
+    // if (app
+    //     .resolve<PrefUtils>()
+    //     .getModulePermission(ModulePermissionConstant.permission_excel)
+    //     .downloadExcel) {
+    moreMenuList.add(BottomTabModel(
+        image: excelImage,
+        title: "Excel",
+        type: ActionMenuConstant.ACTION_TYPE_EXCEL));
+    // }
   }
 
   addDeleteInBottomMenu(List<BottomTabModel> moreMenuList) {

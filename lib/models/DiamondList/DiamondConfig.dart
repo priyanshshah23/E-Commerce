@@ -984,8 +984,8 @@ class DiamondConfig {
   }) {
     List<SelectionPopupModel> downloadOptionList = List<SelectionPopupModel>();
     List<SelectionPopupModel> selectedOptions = List<SelectionPopupModel>();
-    downloadOptionList.add(SelectionPopupModel("1", "Excel",
-        fileType: DownloadAndShareDialogueConstant.excel));
+    // downloadOptionList.add(SelectionPopupModel("1", "Excel",
+    //     fileType: DownloadAndShareDialogueConstant.excel));
     downloadOptionList.add(SelectionPopupModel("2", "Certificate",
         fileType: DownloadAndShareDialogueConstant.certificate));
     downloadOptionList.add(SelectionPopupModel("3", "Real Image",

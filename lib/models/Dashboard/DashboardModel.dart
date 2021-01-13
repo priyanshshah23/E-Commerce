@@ -33,38 +33,56 @@ class DashboardModel {
   });
 
   Seller seller;
-  NewArrival newArrival;
-  List<FeaturedStone> featuredStone;
+  List<DiamondModel> featuredStone;
+  List<DiamondModel> newArrival;
   List<SavedSearchModel> savedSearch;
   List<SavedSearchModel> recentSearch;
   Map<String, Track> tracks;
   List<DashboardCount> dashboardCount;
 
-  factory DashboardModel.fromJson(Map<String, dynamic> json) => DashboardModel(
-        seller: isNullEmptyOrFalse(json["seller"])
-            ? null
-            : Seller.fromJson(json["seller"]),
-        featuredStone: List<FeaturedStone>.from(
-            json["featuredStone"].map((x) => FeaturedStone.fromJson(x))),
-        recentSearch: List<SavedSearchModel>.from(
-            json["recentSearch"].map((x) => SavedSearchModel.fromJson(x))),
-        savedSearch: List<SavedSearchModel>.from(
-            json["savedSearch"].map((x) => SavedSearchModel.fromJson(x))),
-        newArrival: NewArrival.fromJson(json["newArrival"]),
-        // // recentSearch: List<SavedSearchModel>.from(
-        // //     json["recentSearch"].map((x) => SavedSearchModel.fromJson(x))),
-        tracks: Map.from(json["tracks"])
-            .map((k, v) => MapEntry<String, Track>(k, Track.fromJson(v))),
-        dashboardCount: List<DashboardCount>.from(
-            json["dashboardCount"].map((x) => DashboardCount.fromJson(x))),
-      );
+  factory DashboardModel.fromJson(Map<String, dynamic> json) {
+    List<DiamondModel> arrFeaturestone = [];
+    if (!isNullEmptyOrFalse(json["featuredStone"])) {
+      if (json["featuredStone"] is List<dynamic>) {
+        json["featuredStone"].forEach((element) {
+          arrFeaturestone.add(DiamondModel.fromJson(element));
+        });
+      }
+    }
+
+    List<DiamondModel> arrNewArrivals = [];
+    if (!isNullEmptyOrFalse(json["newArrival"])) {
+      if (json["newArrival"] is List<dynamic>) {
+        json["newArrival"].forEach((element) {
+          arrNewArrivals.add(DiamondModel.fromJson(element));
+        });
+      }
+    }
+    return DashboardModel(
+      seller: isNullEmptyOrFalse(json["seller"])
+          ? null
+          : Seller.fromJson(json["seller"]),
+      featuredStone: arrFeaturestone,
+      recentSearch: List<SavedSearchModel>.from(
+          json["recentSearch"].map((x) => SavedSearchModel.fromJson(x))),
+      savedSearch: List<SavedSearchModel>.from(
+          json["savedSearch"].map((x) => SavedSearchModel.fromJson(x))),
+      newArrival: arrNewArrivals,
+      // // recentSearch: List<SavedSearchModel>.from(
+      // //     json["recentSearch"].map((x) => SavedSearchModel.fromJson(x))),
+      tracks: Map.from(json["tracks"])
+          .map((k, v) => MapEntry<String, Track>(k, Track.fromJson(v))),
+      dashboardCount: List<DashboardCount>.from(
+          json["dashboardCount"].map((x) => DashboardCount.fromJson(x))),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "seller": seller.toJson(),
         "savedSearch": List<dynamic>.from(savedSearch.map((x) => x.toJson())),
         "featuredStone":
             List<dynamic>.from(featuredStone.map((x) => x.toJson())),
-        "newArrival": newArrival.toJson(),
+        "newArrival": List<dynamic>.from(newArrival.map((x) => x.toJson())),
         "tracks": Map.from(tracks)
             .map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
         "dashboardCount":
