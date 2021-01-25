@@ -337,27 +337,38 @@ class _DashboardState extends StatefulScreenWidgetState {
               ),
             ),
           ),
-          (app.resolve<PrefUtils>().getBool(PrefUtils().keyHomeTour) == false &&
-                  isNullEmptyOrFalse(this.dashboardModel) == false)
-              ? OverlayScreen(
-                  moduleType,
-                  finishTakeTour: () {
-                    setState(() {});
-                  },
-                  scrollIndex: (index) {
-                    if (index == 0 || index == 1) {
-                      Scrollable.ensureVisible(searchKey.currentContext);
-                    } else if (index == 2) {
-                      Scrollable.ensureVisible(savedSearchKey.currentContext);
-                    } else if (index == 3) {
-                      Scrollable.ensureVisible(sellerKey.currentContext);
-                    }
-                  },
-                )
-              : SizedBox(),
+          showTour(),
         ],
       ),
     );
+  }
+
+  checkTourIsShown() {
+    return (app.resolve<PrefUtils>().getBool(PrefUtils().keyHomeTour) ==
+            false &&
+        isNullEmptyOrFalse(this.dashboardModel) == false);
+  }
+
+  showTour() {
+    return (app.resolve<PrefUtils>().getBool(PrefUtils().keyHomeTour) ==
+                false &&
+            isNullEmptyOrFalse(this.dashboardModel) == false)
+        ? OverlayScreen(
+            moduleType,
+            finishTakeTour: () {
+              setState(() {});
+            },
+            scrollIndex: (index) {
+              if (index == 0 || index == 1) {
+                Scrollable.ensureVisible(searchKey.currentContext);
+              } else if (index == 2) {
+                Scrollable.ensureVisible(savedSearchKey.currentContext);
+              } else if (index == 3) {
+                Scrollable.ensureVisible(sellerKey.currentContext);
+              }
+            },
+          )
+        : SizedBox();
   }
 
   getSarchTextField() {
@@ -372,7 +383,7 @@ class _DashboardState extends StatefulScreenWidgetState {
         bottom: getSize(16),
       ),
       child: Row(
-        key: searchKey,
+        key: checkTourIsShown() ? searchKey : null,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
@@ -628,9 +639,15 @@ class _DashboardState extends StatefulScreenWidgetState {
           return StoneOfDayWidget(
             stoneList: this.dashboardModel.featuredStone,
           );
+        } else {
+          return SizedBox();
         }
       }
+
+      return SizedBox();
     }
+
+    return SizedBox();
   }
 
   getStoneOfDayItem(DiamondModel model) {
@@ -1065,7 +1082,7 @@ class _DashboardState extends StatefulScreenWidgetState {
               children: [
                 Text(
                   R.string.screenTitle.savedSearch,
-                  key: savedSearchKey,
+                  key: checkTourIsShown() ? savedSearchKey : null,
                   style: appTheme.blackNormal18TitleColorblack.copyWith(
                     fontWeight: FontWeight.w500,
                   ),
@@ -1675,7 +1692,7 @@ class _DashboardState extends StatefulScreenWidgetState {
         children: [
           Text(
             R.string.screenTitle.salesPersonDetail,
-            key: sellerKey,
+            key: checkTourIsShown() ? sellerKey : null,
             style: appTheme.blackNormal18TitleColorblack.copyWith(
               fontWeight: FontWeight.w500,
             ),
