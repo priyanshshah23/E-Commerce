@@ -1,9 +1,7 @@
-import 'dart:collection';
 import 'dart:io';
 
 import 'package:diamnow/app/Helper/ConnectionManager.dart';
 import 'package:diamnow/app/Helper/LocalNotification.dart';
-import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/localization/LocalizationHelper.dart';
 import 'package:diamnow/app/theme/settings_models_provider.dart';
 import 'package:diamnow/app/utils/NotificationHandler.dart';
@@ -13,15 +11,12 @@ import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Splash.dart';
 import 'package:diamnow/components/Screens/VoiceSearch/VoiceSearch.dart';
-import 'package:diamnow/modules/ThemeSetting.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:kiwi/kiwi.dart';
 import 'app/Helper/OfflineStockManager.dart';
 import 'app/app.export.dart';
-import 'app/theme/app_theme.dart';
 import 'app/theme/global_models_provider.dart';
 import 'app/utils/navigator.dart';
 import 'app/utils/route_observer.dart';
@@ -30,8 +25,6 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
 
 KiwiContainer app;
 

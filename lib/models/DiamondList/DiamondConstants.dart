@@ -156,6 +156,7 @@ class DiamondTrackConstant {
   static const TRACK_TYPE_ENQUIRY = 6;
   static const TRACK_TYPE_SHIPMENT = 7;
   static const TRACK_TYPE_SHOWSELECTED = 8;
+  static const TRACK_TYPE_BEST_BUY = 9;
   static const TRACK_TYPE_COMMENT = 99;
   static const TRACK_TYPE_APPOINTMENT = 100;
   static const TRACK_TYPE_BID = 101;

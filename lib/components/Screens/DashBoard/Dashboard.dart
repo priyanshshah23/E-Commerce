@@ -164,11 +164,14 @@ class _DashboardState extends StatefulScreenWidgetState {
         }
       } else if (item.type ==
           DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY) {
-        if (!isNullEmptyOrFalse(this.dashboardModel)) {
-          if (!isNullEmptyOrFalse(this.dashboardModel.featuredStone)) {
-            item.value = this.dashboardModel.featuredStone.length.toString();
-          }
-        }
+        //TRACK_TYPE_BEST_BUY
+        item.value =
+            "${this.dashboardModel.tracks[DiamondTrackConstant.TRACK_TYPE_BEST_BUY.toString()].pieces}";
+        // if (!isNullEmptyOrFalse(this.dashboardModel)) {
+        //   if (!isNullEmptyOrFalse(this.dashboardModel.featuredStone)) {
+        //     item.value = this.dashboardModel.featuredStone.length.toString();
+        //   }
+        // }
       }
     }
   }
