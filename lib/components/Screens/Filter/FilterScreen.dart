@@ -303,6 +303,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     });
   }
 
+  bool checkedValue = false;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -367,11 +369,12 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                                           title: Text(
                                             "title text",
                                           ),
-                                          value: true,
+                                          value: checkedValue,
+                                          activeColor: appTheme.colorPrimary,
                                           onChanged: (newValue) {
-//                                              setState(() {
-//                                                checkedValue = newValue;
-//                                              });
+                                            setsetter(() {
+                                              checkedValue = newValue;
+                                            });
                                           },
                                           controlAffinity: ListTileControlAffinity
                                               .leading, //  <-- leading Checkbox
@@ -393,7 +396,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                                               right: getSize(20),
                                             ),
                                             child: AppButton.flat(
-                                              onTap: () {},
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                              },
                                               text: "cancel",
                                               borderRadius: getSize(5),
                                               textColor: appTheme.colorPrimary,

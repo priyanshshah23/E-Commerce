@@ -189,6 +189,7 @@ class User {
   String termsCondAgreeAt;
   String address;
   bool kycRequired;
+
 //  Null loginOtp;
   String group;
 
