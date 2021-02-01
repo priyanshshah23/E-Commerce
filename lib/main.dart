@@ -4,7 +4,9 @@ import 'package:diamnow/app/Helper/ConnectionManager.dart';
 import 'package:diamnow/app/Helper/LocalNotification.dart';
 import 'package:diamnow/app/localization/LocalizationHelper.dart';
 import 'package:diamnow/app/theme/settings_models_provider.dart';
+import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/NotificationHandler.dart';
+import 'package:diamnow/components/Screens/Dialogue/SelectionScreen.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
@@ -132,6 +134,35 @@ class _BaseState extends State<Base> {
       onGenerateRoute: onGenerateRoute,
       navigatorObservers: <NavigatorObserver>[routeObserver],
       home: Splash(),
+//      home: SelectionScreen(
+//        selectionOptions: [
+//          SelectionPopupModel("id1", "one"),
+//          SelectionPopupModel("id2", "two"),
+//          SelectionPopupModel("id3", "three"),
+//          SelectionPopupModel("id4", "four"),
+//          SelectionPopupModel("id5", "five"),
+//          SelectionPopupModel("id6", "six"),
+//          SelectionPopupModel("id6", "six"),
+//          SelectionPopupModel("id6", "six"),
+//          SelectionPopupModel("id6", "six"),
+//          SelectionPopupModel("id6", "six"),
+//          SelectionPopupModel("id6", "six"),
+//          SelectionPopupModel("id6", "six"),
+//          SelectionPopupModel("id6", "six"),
+//          SelectionPopupModel("id6", "six"),
+//          SelectionPopupModel("id6", "six"),
+//          SelectionPopupModel("id6", "six"),
+//        ],
+//        title: "Select Country",
+//        hintText: "Select Country",
+//        positiveButtonTitle: "Apply",
+//        negativeButtonTitle: "Cancel",
+//        isSearchEnable: true,
+//        isMultiSelectionEnable: true,
+//        applyFilterCallBack: (
+//            {SelectionPopupModel selectedItem,
+//            List<SelectionPopupModel> multiSelectedItem}) {},
+//      ),
       routes: <String, WidgetBuilder>{
         DiamondCompareScreen.route: (BuildContext context) =>
             DiamondCompareScreen(
