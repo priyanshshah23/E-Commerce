@@ -70,7 +70,6 @@ class LoginScreenState extends StatefulScreenWidgetState {
     super.initState();
     // if (kDebugMode) {
     getUserNameAndPassword();
-
     // }
   }
 

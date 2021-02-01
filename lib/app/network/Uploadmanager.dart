@@ -7,7 +7,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
-//import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:diamnow/app/constant/ApiConstants.dart';
 import 'package:diamnow/app/constant/ColorConstant.dart';
 import 'package:diamnow/app/constant/constants.dart';
@@ -15,11 +14,14 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/math_utils.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
-Future<FileUploadResp> uploadFile(BuildContext context, String folderName,
-    {List<File> files,
-    File file,
-    List<int> bytes,
-    bool pdfUpload = false}) async {
+Future<FileUploadResp> uploadFile(
+  BuildContext context,
+  String folderName, {
+  List<File> files,
+  File file,
+  List<int> bytes,
+  bool pdfUpload = false,
+}) async {
   var dio = Dio();
   dio.options.baseUrl = ApiConstants.documentUpload;
 
