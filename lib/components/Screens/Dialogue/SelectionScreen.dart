@@ -77,38 +77,19 @@ class _SelectionScreenState extends State<SelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: getBotoomButtons(),
       body: SafeArea(
         child: Container(
           width: MediaQuery.of(context).size.width,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                SizedBox(
-                  height: getSize(20),
-                ),
-                Container(
-                  child: Padding(
-                    padding: isSearchEnable
-                        ? EdgeInsets.symmetric(
-                            horizontal: getSize(16), vertical: getSize(10))
-                        : EdgeInsets.only(
-                            left: getSize(16),
-                            right: getSize(16),
-                            top: getSize(10),
-                          ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          title,
-                          style: appTheme.blackMedium20TitleColorblack,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              SizedBox(
+                height: getSize(10),
+              ),
+              getBackButtonAndTitleText(),
+              Expanded(
+                child: Padding(
                   padding: EdgeInsets.only(
                       right: getSize(20),
                       left: getSize(20),
@@ -117,163 +98,13 @@ class _SelectionScreenState extends State<SelectionScreen> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      isSearchEnable
-                          ? Container(
-                              height: getSize(50),
-                              child: TextField(
-                                onChanged: (value) {
-                                  filterSearchResults(value);
-                                },
-                                controller: searchController,
-                                decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: getSize(20)),
-                                    hintText: hintText,
-                                    hintStyle: appTheme
-                                        .blackNormal18TitleColorblack
-                                        .copyWith(
-                                      color: appTheme.placeholderColor,
-                                    ),
-                                    suffixIcon: getCommonIconWidget(
-                                        imageName: search,
-                                        imageType: IconSizeType.medium),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5.0))),
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5.0)))),
-                              ),
-                            )
-                          : SizedBox(),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.symmetric(
-                          vertical: getSize(10),
-                        ),
-                        itemCount: items.length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              if (!isMultiSelectionEnable) {
-                                items.forEach((element) {
-                                  element.isSelected = false;
-                                });
-                              }
-                              items[index].isSelected =
-                                  !items[index].isSelected;
-                              setState(() {});
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                vertical: getSize(2),
-                              ),
-                              child: Container(
-                                decoration: items[index].isSelected
-                                    ? BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                          getSize(5),
-                                        ),
-                                        color: appTheme.colorPrimary,
-                                      )
-                                    : null,
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: getSize(10),
-                                      horizontal: getSize(16)),
-                                  child: Row(
-                                    children: <Widget>[
-                                      Expanded(
-                                          child: Text(
-                                        items[index].title,
-                                        style: items[index].isSelected
-                                            ? appTheme.white18TextStyle
-                                            : appTheme
-                                                .blackNormal18TitleColorblack,
-                                      )),
-                                      SizedBox(
-                                        width: getSize(10),
-                                      ),
-                                      Container(
-                                        child: items[index].isSelected
-                                            ? Icon(
-                                                Icons.check,
-                                                color: appTheme.whiteColor,
-                                              )
-                                            : SizedBox(),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                      SizedBox(
-                        height: getSize(5),
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Expanded(
-                            child: AppButton.flat(
-                              onTap: () {
-//                                  Navigator.pop(context);
-                              },
-                              borderRadius: getSize(5),
-                              fitWidth: true,
-                              text: negativeButtonTitle != null
-                                  ? negativeButtonTitle
-                                  : R.string.commonString.cancel,
-                              //isButtonEnabled: enableDisableSigninButton(),
-                            ),
-                          ),
-                          SizedBox(
-                            width: getSize(20),
-                          ),
-                          Expanded(
-                            child: AppButton.flat(
-                              onTap: () {
-//                                  Navigator.pop(context);
-                                if (isMultiSelectionEnable) {
-                                  List<SelectionPopupModel> dummyList =
-                                      List<SelectionPopupModel>();
-                                  items.forEach((element) {
-                                    if (element.isSelected) {
-                                      print("-------multi----${element.title}");
-                                      dummyList.add(element);
-                                    }
-                                  });
-//                                      applyFilterCallBack(
-//                                          multiSelectedItem: dummyList);
-                                } else {
-                                  for (int i = 0; i < items.length; i++) {
-                                    if (items[i].isSelected) {
-                                      print("-------one----${items[i].title}");
-                                      applyFilterCallBack(
-                                          selectedItem: items[i]);
-                                      break;
-                                    }
-                                  }
-                                }
-                              },
-                              borderRadius: getSize(5),
-                              fitWidth: true,
-                              text: positiveButtonTitle != null
-                                  ? positiveButtonTitle
-                                  : R.string.commonString.btnSubmit,
-                              //isButtonEnabled: enableDisableSigninButton(),
-                            ),
-                          ),
-                        ],
-                      ),
+                      isSearchEnable ? getSearchTextField() : SizedBox(),
+                      getListView(),
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -303,5 +134,179 @@ class _SelectionScreenState extends State<SelectionScreen> {
         items.addAll(selectionOptions);
       });
     }
+  }
+
+  getBotoomButtons() {
+    return Padding(
+      padding: EdgeInsets.only(
+          left: getSize(20), right: getSize(20), bottom: getSize(20)),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Expanded(
+            child: AppButton.flat(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              text: negativeButtonTitle != null
+                  ? negativeButtonTitle
+                  : R.string.commonString.cancel,
+              borderRadius: getSize(5),
+              textColor: appTheme.colorPrimary,
+              backgroundColor: Colors.transparent,
+              fitWidth: true,
+              isBorder: true,
+            ),
+          ),
+          SizedBox(
+            width: getSize(20),
+          ),
+          Expanded(
+            child: AppButton.flat(
+              onTap: () {
+                if (isMultiSelectionEnable) {
+                  List<SelectionPopupModel> dummyList =
+                      List<SelectionPopupModel>();
+                  items.forEach((element) {
+                    if (element.isSelected) {
+                      dummyList.add(element);
+                    }
+                  });
+                  applyFilterCallBack(multiSelectedItem: dummyList);
+                } else {
+                  for (int i = 0; i < items.length; i++) {
+                    if (items[i].isSelected) {
+                      applyFilterCallBack(selectedItem: items[i]);
+                      break;
+                    }
+                  }
+                }
+                Navigator.pop(context);
+              },
+              borderRadius: getSize(5),
+              fitWidth: true,
+              text: positiveButtonTitle != null
+                  ? positiveButtonTitle
+                  : R.string.commonString.btnSubmit,
+              //isButtonEnabled: enableDisableSigninButton(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  getSearchTextField() {
+    return Container(
+      height: getSize(50),
+      child: TextField(
+        onChanged: (value) {
+          filterSearchResults(value);
+        },
+        controller: searchController,
+        decoration: InputDecoration(
+            contentPadding: EdgeInsets.symmetric(horizontal: getSize(20)),
+            hintText: hintText,
+            hintStyle: appTheme.blackNormal18TitleColorblack.copyWith(
+              color: appTheme.placeholderColor,
+            ),
+            suffixIcon: getCommonIconWidget(
+                imageName: search, imageType: IconSizeType.medium),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(5.0))),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(5.0)))),
+      ),
+    );
+  }
+
+  getBackButtonAndTitleText() {
+    return Container(
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: getSize(16),
+          right: getSize(16),
+          top: getSize(10),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            getBackButton(context),
+            Text(
+              title,
+              style: appTheme.blackMedium20TitleColorblack,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  getListView() {
+    return Expanded(
+      child: ListView.builder(
+        shrinkWrap: true,
+        padding: EdgeInsets.symmetric(
+          vertical: getSize(10),
+        ),
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+              if (!isMultiSelectionEnable) {
+                items.forEach((element) {
+                  element.isSelected = false;
+                });
+              }
+              items[index].isSelected = !items[index].isSelected;
+              setState(() {});
+            },
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: getSize(2),
+              ),
+              child: Container(
+                decoration: items[index].isSelected
+                    ? BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          getSize(5),
+                        ),
+                        color: appTheme.colorPrimary,
+                      )
+                    : null,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: getSize(10), horizontal: getSize(16)),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                          child: Text(
+                        items[index].title,
+                        style: items[index].isSelected
+                            ? appTheme.white18TextStyle
+                            : appTheme.blackNormal18TitleColorblack,
+                      )),
+                      SizedBox(
+                        width: getSize(10),
+                      ),
+                      Container(
+                        child: items[index].isSelected
+                            ? Icon(
+                                Icons.check,
+                                color: appTheme.whiteColor,
+                              )
+                            : SizedBox(),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
 }
