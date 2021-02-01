@@ -300,10 +300,15 @@ class AppButton extends StatelessWidget {
           canvasColor: bgColor,
           // text color
           textTheme: TextTheme(
-            button: TextStyle(color: appTheme.colorPrimary),
+            button: TextStyle(
+              color: appTheme.colorPrimary,
+            ),
           ),
           // icon color
-          iconTheme: IconThemeData(color: fgColor, size: iconSize),
+          iconTheme: IconThemeData(
+            color: fgColor,
+            size: iconSize,
+          ),
         ),
         child: Material(
           elevation: elevation,
