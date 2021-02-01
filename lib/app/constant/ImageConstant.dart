@@ -60,6 +60,8 @@ const String showSelected = "assets/diamnow/showSelected.png";
 const String compare = "assets/diamnow/compare.png";
 const String status = "assets/diamnow/status.png";
 const String info = "assets/Common/info.png";
+const String sale_hold = "assets/PNShah/hold.png";
+const String sale_note = "assets/PNShah/note.png";
 
 const String filterDownArrow = "assets/filter/filterDownArrow.png";
 const String filterRightArrow = "assets/filter/filterRightArrow.png";
@@ -191,6 +193,9 @@ const String mpin = "assets/PNShah/ForgetMPIN/MPIN.png";
 const String tickSelected = "assets/Common/tickSelected.png";
 const String tickUnSelected = "assets/Common/tickunSelected.png";
 const String microphone = "assets/Common/microphone.png";
+const String buyer = "assets/PNShah/customer.png";
+const String salesman = "assets/PNShah/salesman.png";
+const String broker = "assets/PNShah/broker.png";
 
 //Take a Tour screen
 //Dashboard overlay constants
