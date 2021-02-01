@@ -327,6 +327,147 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 actionItems: [
                   InkWell(
                     onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Dialog(
+                            insetPadding: EdgeInsets.symmetric(
+                              horizontal: getSize(20),
+                              vertical: getSize(20),
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                getSize(25),
+                              ),
+                            ),
+                            child: StatefulBuilder(
+                                builder: (context, StateSetter setsetter) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      top: getSize(30),
+                                      bottom: getSize(14),
+                                    ),
+                                    child: Text(
+                                      "Select Status",
+                                      style: appTheme.black18TextStyle,
+                                    ),
+                                  ),
+                                  ListView.builder(
+                                    itemCount: 4,
+                                    shrinkWrap: true,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Container(
+                                        height: getSize(50),
+                                        child: CheckboxListTile(
+                                          title: Text(
+                                            "title text",
+                                          ),
+                                          value: true,
+                                          onChanged: (newValue) {
+//                                              setState(() {
+//                                                checkedValue = newValue;
+//                                              });
+                                          },
+                                          controlAffinity: ListTileControlAffinity
+                                              .leading, //  <-- leading Checkbox
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      top: getSize(20),
+                                      bottom: getSize(30),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Container(
+                                            margin: EdgeInsets.only(
+                                              left: getSize(20),
+                                              right: getSize(20),
+                                            ),
+                                            child: AppButton.flat(
+                                              onTap: () {},
+                                              text: "cancel",
+                                              borderRadius: getSize(5),
+                                              textColor: appTheme.colorPrimary,
+                                              backgroundColor:
+                                                  appTheme.whiteColor,
+                                              fitWidth: true,
+                                              isBorder: true,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                            margin: EdgeInsets.only(
+                                              right: getSize(20),
+                                            ),
+                                            child: AppButton.flat(
+                                              onTap: () {},
+                                              text: "Apply",
+                                              backgroundColor:
+                                                  appTheme.colorPrimary,
+                                              borderRadius: getSize(5),
+                                              fitWidth: true,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              );
+                            }),
+                          );
+                        },
+                      );
+//                      showModalBottomSheet(
+//                        context: context,
+//                        isScrollControlled: true,
+//                        backgroundColor: appTheme.whiteColor,
+//                        shape: RoundedRectangleBorder(
+//                          borderRadius: BorderRadius.only(
+//                            topLeft: Radius.circular(15),
+//                            topRight: Radius.circular(15),
+//                          ),
+//                        ),
+//                      );
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        right: getSize(Spacing.rightPadding),
+                        left: getSize(8.0),
+                      ),
+                      child: Image.asset(
+                        buildingIcon,
+                        height: getSize(20),
+                        width: getSize(20),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        right: getSize(Spacing.rightPadding),
+                        left: getSize(8.0),
+                      ),
+                      child: Image.asset(
+                        descendantIcon,
+                        height: getSize(20),
+                        width: getSize(20),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
                       setState(() {
                         arrList.forEach((element) {
                           if (element is SelectionModel) {
@@ -873,6 +1014,9 @@ class FilterItem extends StatefulWidget {
 class _FilterItemState extends State<FilterItem> {
   final TextEditingController _searchController = TextEditingController();
   var _focusSearch = FocusNode();
+  final TextEditingController _searchStoneIdController =
+      TextEditingController();
+  var _focusSearchStoneId = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -958,126 +1102,218 @@ class _FilterItemState extends State<FilterItem> {
     }
   }
 
-  getSearchTextField() {
+  Widget getSearchTextField() {
     if (!(app
         .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_searchDiamond)
         .view)) {
       return SizedBox();
     }
-    return Padding(
-      padding: EdgeInsets.only(top: getSize(16.0), bottom: getSize(16.0)),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Hero(
-              tag: 'searchTextField',
-              child: Material(
-                color: appTheme.whiteColor,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: getSize(Spacing.leftPadding),
-                    right: getSize(Spacing.rightPadding),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          color: fromHex("#FAFAFA"),
+          margin: EdgeInsets.only(
+            top: getSize(20),
+          ),
+          child: TextField(
+            textAlignVertical: TextAlignVertical(y: 0.2),
+            textInputAction: TextInputAction.done,
+            focusNode: _focusSearchStoneId,
+            controller: _searchStoneIdController,
+            obscureText: false,
+            style: appTheme.black16TextStyle,
+            keyboardType: TextInputType.text,
+            textCapitalization: TextCapitalization.none,
+            cursorColor: appTheme.colorPrimary,
+            inputFormatters: [
+              WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+              BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+            ],
+            decoration: InputDecoration(
+              fillColor: fromHex("#FAFAFA"),
+              border: InputBorder.none,
+              hintStyle: appTheme.grey16HintTextStyle,
+              hintText: "Search by Stone Id/Auto Stone Id",
+              labelStyle: TextStyle(
+                color: appTheme.textColor,
+                fontSize: getFontSize(16),
+              ),
+              // suffix: widget.textOption.postfixWidOnFocus,
+              prefixIcon: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: getSize(20),
                   ),
-                  child: Container(
-                    height: getSize(40),
-                    decoration: BoxDecoration(
-                      color: appTheme.whiteColor,
-                      borderRadius: BorderRadius.circular(getSize(5)),
-                      border: Border.all(
-                          color: appTheme.colorPrimary, width: getSize(1)),
-                    ),
-                    child: TextField(
-                      textAlignVertical: TextAlignVertical(y: 1.0),
-                      textInputAction: TextInputAction.done,
-                      focusNode: _focusSearch,
-                      readOnly: true,
-                      autofocus: false,
-                      controller: _searchController,
-                      obscureText: false,
-                      style: appTheme.black16TextStyle,
-                      keyboardType: TextInputType.text,
-                      textCapitalization: TextCapitalization.none,
-                      cursorColor: appTheme.colorPrimary,
-                      inputFormatters: [
-                        WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
-                        BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
-                      ],
-                      decoration: InputDecoration(
-                        fillColor: fromHex("#FFEFEF"),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(getSize(5))),
-                          borderSide: BorderSide(
-                              color: appTheme.dividerColor, width: getSize(1)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(getSize(5))),
-                          borderSide: BorderSide(
-                              color: appTheme.dividerColor, width: getSize(1)),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(getSize(5))),
-                          borderSide: BorderSide(
-                              color: appTheme.dividerColor, width: getSize(1)),
-                        ),
-
-                        hintStyle: appTheme.grey16HintTextStyle,
-                        hintText:
-                            R.string.commonString.searchStoneIdCertificateNo,
-                        labelStyle: TextStyle(
-                          color: appTheme.textColor,
-                          fontSize: getFontSize(16),
-                        ),
-                        // suffix: widget.textOption.postfixWidOnFocus,
-                        suffixIcon: Padding(
-                            padding: EdgeInsets.all(getSize(10)),
-                            child: Image.asset(search)),
-                      ),
-                      onChanged: (String text) {
-                        //
-                      },
-                      onEditingComplete: () {
-                        //
-                        _focusSearch.unfocus();
-                      },
-                      onTap: () {
-                        Map<String, dynamic> dict = new HashMap();
-                        dict["isFromSearch"] = true;
-                        NavigationUtilities.pushRoute(SearchScreen.route,
-                            args: dict);
-                      },
+                  Image.asset(
+                    search,
+                    height: getSize(20),
+                    width: getSize(20),
+                  ),
+                ],
+              ),
+              suffixIcon: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "M",
+                    style: appTheme.black16MediumTextStyle.copyWith(
+                      decoration: TextDecoration.underline,
                     ),
                   ),
-                ),
+                  SizedBox(
+                    width: getSize(20),
+                  ),
+                  Text(
+                    "A",
+                    style: appTheme.grey16HintTextStyle.copyWith(
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                  SizedBox(
+                    width: getSize(20),
+                  ),
+                ],
               ),
             ),
+            onChanged: (String text) {
+              //
+            },
+            onEditingComplete: () {
+              //
+              _focusSearch.unfocus();
+            },
+//                onTap: () {
+//                  Map<String, dynamic> dict = new HashMap();
+//                  dict["isFromSearch"] = true;
+//                  NavigationUtilities.pushRoute(SearchScreen.route, args: dict);
+//                },
           ),
-          if (widget.moduleType !=
-              DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH)
-            Center(
-              child: InkWell(
-                onTap: () {
-                  NavigationUtilities.pushRoute(VoiceSearch.route);
-                },
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    right: getSize(Spacing.leftPadding),
-                  ),
-                  child: Image.asset(
-                    microphone,
-                    alignment: Alignment.centerRight,
-                    width: getSize(26),
-                    height: getSize(26),
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: getSize(16.0), bottom: getSize(16.0)),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Hero(
+                  tag: 'searchTextField',
+                  child: Material(
+                    color: appTheme.whiteColor,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: getSize(Spacing.leftPadding),
+                        right: getSize(Spacing.rightPadding),
+                      ),
+                      child: Container(
+                        height: getSize(40),
+                        decoration: BoxDecoration(
+                          color: appTheme.whiteColor,
+                          borderRadius: BorderRadius.circular(getSize(5)),
+                          border: Border.all(
+                              color: appTheme.colorPrimary, width: getSize(1)),
+                        ),
+                        child: TextField(
+                          textAlignVertical: TextAlignVertical(y: 1.0),
+                          textInputAction: TextInputAction.done,
+                          focusNode: _focusSearch,
+                          readOnly: true,
+                          autofocus: false,
+                          controller: _searchController,
+                          obscureText: false,
+                          style: appTheme.black16TextStyle,
+                          keyboardType: TextInputType.text,
+                          textCapitalization: TextCapitalization.none,
+                          cursorColor: appTheme.colorPrimary,
+                          inputFormatters: [
+                            WhitelistingTextInputFormatter(
+                                new RegExp(alphaRegEx)),
+                            BlacklistingTextInputFormatter(
+                                RegExp(RegexForEmoji))
+                          ],
+                          decoration: InputDecoration(
+                            fillColor: fromHex("#FFEFEF"),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(getSize(5))),
+                              borderSide: BorderSide(
+                                  color: appTheme.dividerColor,
+                                  width: getSize(1)),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(getSize(5))),
+                              borderSide: BorderSide(
+                                  color: appTheme.dividerColor,
+                                  width: getSize(1)),
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(getSize(5))),
+                              borderSide: BorderSide(
+                                  color: appTheme.dividerColor,
+                                  width: getSize(1)),
+                            ),
+
+                            hintStyle: appTheme.grey16HintTextStyle,
+                            hintText: R
+                                .string.commonString.searchStoneIdCertificateNo,
+                            labelStyle: TextStyle(
+                              color: appTheme.textColor,
+                              fontSize: getFontSize(16),
+                            ),
+                            // suffix: widget.textOption.postfixWidOnFocus,
+                            suffixIcon: Padding(
+                                padding: EdgeInsets.all(getSize(10)),
+                                child: Image.asset(search)),
+                          ),
+                          onChanged: (String text) {
+                            //
+                          },
+                          onEditingComplete: () {
+                            //
+                            _focusSearch.unfocus();
+                          },
+                          onTap: () {
+                            Map<String, dynamic> dict = new HashMap();
+                            dict["isFromSearch"] = true;
+                            NavigationUtilities.pushRoute(SearchScreen.route,
+                                args: dict);
+                          },
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
-            )
-        ],
-      ),
+              if (widget.moduleType !=
+                  DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH)
+                Center(
+                  child: InkWell(
+                    onTap: () {
+                      NavigationUtilities.pushRoute(VoiceSearch.route);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        right: getSize(Spacing.leftPadding),
+                      ),
+                      child: Image.asset(
+                        microphone,
+                        alignment: Alignment.centerRight,
+                        width: getSize(26),
+                        height: getSize(26),
+                      ),
+                    ),
+                  ),
+                )
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

@@ -112,6 +112,7 @@ class AppButton extends StatelessWidget {
     this.iconSize,
     this.iconBuilder,
     this.backgroundColor,
+    this.isBorder = false,
     this.isButtonEnabled = true,
     this.dense = false,
     this.fitWidth = false,
@@ -135,6 +136,7 @@ class AppButton extends StatelessWidget {
       this.backgroundColor,
       this.dense = false,
       this.fitWidth = false,
+      this.isBorder = false,
       this.padding,
       this.foregroundColor,
       this.isButtonEnabled = true,
@@ -189,6 +191,7 @@ class AppButton extends StatelessWidget {
   final bool dense;
   final bool isButtonEnabled;
   final bool fitWidth;
+  final bool isBorder;
 
   /// The padding for the button.
   ///
@@ -215,7 +218,6 @@ class AppButton extends StatelessWidget {
 
   /// Returns the color for the [icon] and [text].
   Color _getForegroundColor() {
-
     if (foregroundColor != null) {
       return foregroundColor;
     } else if (materialType == MaterialType.transparency) {
@@ -300,7 +302,6 @@ class AppButton extends StatelessWidget {
           textTheme: TextTheme(
             button: TextStyle(color: appTheme.colorPrimary),
           ),
-
           // icon color
           iconTheme: IconThemeData(color: fgColor, size: iconSize),
         ),
@@ -311,6 +312,15 @@ class AppButton extends StatelessWidget {
           child: Container(
             height: getSize(50),
             width: fitWidth ? MediaQuery.of(context).size.width : null,
+            decoration: BoxDecoration(
+              borderRadius: borderRadius,
+              border: isBorder
+                  ? Border.all(
+                      color: appTheme.colorPrimary,
+                      width: isBorder ? getSize(0.6) : 0,
+                    )
+                  : null,
+            ),
             child: Center(
               child: Builder(builder: _buildContent),
             ),
