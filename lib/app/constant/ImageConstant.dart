@@ -1,6 +1,4 @@
 //Common
-import 'package:diamnow/app/app.export.dart';
-
 const String splashLogo = "assets/diamnow/splashLogo.png";
 const String placeHolder = "assets/PlaceHolder/user_placeholder.png";
 const String user = "assets/auth/user.png";
@@ -16,12 +14,12 @@ const String plusIcon = "assets/diamnow/plusIcon.png";
 const String minusIcon = "assets/diamnow/minusIcon.png";
 const String exclamation = "assets/diamnow/exclamation.png";
 
+//AUTH
 const String bussinessCard = "assets/auth/ic_file.png";
 const String photoCard = "assets/auth/ic_card.png";
 const String pdfIcon = "assets/auth/pdf.png";
 const String viewDetail = "assets/diamnow/viewDetail.png";
 const String editPen = "assets/diamnow/pen.png";
-
 const String selectedCheckbox = "assets/auth/checkbox.png";
 const String unSelectedCheckbox = "assets/auth/unselectedcheckbox.png";
 const String forgetPassword = "assets/auth/forgetPassword.png";
@@ -50,6 +48,8 @@ const String saveAndSearch = "assets/filter/saveAndSearch.png";
 const String savedSearch = "assets/filter/savedSearch.png";
 const String search = "assets/filter/search.png";
 const String upAndDownArrow = "assets/filter/upAndDownArrow.png";
+const String descendantIcon = "assets/filter/descendantIcon.png";
+const String buildingIcon = "assets/filter/buildingIcon.png";
 
 //DiamodList
 const String selectAll = "assets/diamnow/select_all.png";
@@ -61,6 +61,7 @@ const String compare = "assets/diamnow/compare.png";
 const String status = "assets/diamnow/status.png";
 const String info = "assets/Common/info.png";
 
+//FILTER
 const String filterDownArrow = "assets/filter/filterDownArrow.png";
 const String filterRightArrow = "assets/filter/filterRightArrow.png";
 const String filterUnionArrow = "assets/filter/filterUnionArrow.png";
@@ -95,7 +96,6 @@ const String editProfile = "assets/Common/editProfile.png";
 
 //Drawer
 const String menu = "assets/drawer/menu.png";
-
 const String aboutUs = "assets/drawer/aboutUs.png";
 const String drawerSearch = "assets/drawer/search.png";
 const String changePassword = "assets/drawer/changePassword.png";
@@ -124,6 +124,7 @@ const String edit = "assets/drawer/edit.png";
 const String enquiryDrawer = "assets/drawer/enquiry.png";
 const String addToCartDrawer = "assets/drawer/addToCart.png";
 const String commentDrawer = "assets/drawer/comment.png";
+
 //Home
 const String home_clock = "assets/Home/clock.png";
 const String home_delete = "assets/Home/delete.png";
@@ -136,7 +137,6 @@ const String home_newArrivalBg = "assets/Home/newArrivalBg.png";
 const String home_watchlist = "assets/Home/watchlist.png";
 const String home_watchlistBg = "assets/Home/watchlistBg.png";
 const String finalCalculation = "assets/diamnow/finalCalculation.png";
-
 const String calender = "assets/diamnow/calendar.png";
 const String reminder = "assets/DiamondDetail/reminder.png";
 const String recentSearch = "assets/drawer/saved.png";
@@ -152,7 +152,6 @@ const String leftArrrow = "assets/Common/leftArrow.png";
 // MyDemand icons
 const String saved_icon = "assets/diamnow/saved.png";
 const String edit_icon = "assets/diamnow/edit.png";
-
 const String calender_week = "assets/diamnow/calendar_week.png";
 const String sun = "assets/diamnow/sun.png";
 const String sunrise = "assets/diamnow/sunrise.png";
@@ -178,6 +177,7 @@ const String gmail = "assets/Share/gmail.png";
 const String hangout = "assets/Share/hangout.png";
 const String whatsapp = "assets/Share/whatsapp.png";
 
+//Common
 const String myBidWhite = "assets/Common/myBidWhite.png";
 const String clearSelectionWhite = "assets/Common/clearWhite.png";
 const String shareWhite = "assets/Common/shareWhite.png";
@@ -192,8 +192,7 @@ const String tickSelected = "assets/Common/tickSelected.png";
 const String tickUnSelected = "assets/Common/tickunSelected.png";
 const String microphone = "assets/Common/microphone.png";
 
-//Take a Tour screen
-//Dashboard overlay constants
+//Home
 const String homeOverlay1 = "assets/Overlay/Home/HomeOverlay1.png";
 const String homeOverlay2 = "assets/Overlay/Home/HomeOverlay2.png";
 const String homeOverlay3 = "assets/Overlay/Home/HomeOverlay3.png";
