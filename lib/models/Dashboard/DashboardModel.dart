@@ -79,10 +79,16 @@ class DashboardModel {
 
   Map<String, dynamic> toJson() => {
         "seller": seller.toJson(),
-        "savedSearch": List<dynamic>.from(savedSearch.map((x) => x.toJson())),
+        "savedSearch": List<dynamic>.from(
+          savedSearch.map((x) => x.toJson()),
+        ),
         "featuredStone":
             List<dynamic>.from(featuredStone.map((x) => x.toJson())),
-        "newArrival": List<dynamic>.from(newArrival.map((x) => x.toJson())),
+        "newArrival": List<dynamic>.from(
+          newArrival.map(
+            (x) => x.toJson(),
+          ),
+        ),
         "tracks": Map.from(tracks)
             .map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
         "dashboardCount":
