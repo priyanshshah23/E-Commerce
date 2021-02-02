@@ -1938,7 +1938,6 @@ openSharePopUp(BuildContext context) {
         "876654878\n"
         "Invite code : 655765757"
         "App link : $link",
-        //------------------------------------------------------------------------------------------------------------------
         subject: R.string.screenTitle.share,
         sharePositionOrigin:
             Rect.fromCenter(center: Offset.zero, width: 100, height: 100));

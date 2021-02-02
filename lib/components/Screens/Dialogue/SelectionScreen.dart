@@ -1,7 +1,9 @@
+import 'package:diamnow/app/Helper/NetworkClient.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/models/Address/CityListModel.dart';
 import 'package:diamnow/models/Address/CountryListModel.dart';
 import 'package:diamnow/models/Address/StateListModel.dart';
@@ -44,8 +46,8 @@ class SelectionScreen extends StatefulWidget {
 
 class _SelectionScreenState extends State<SelectionScreen> {
   TextEditingController searchController = TextEditingController();
-  List<SelectionPopupModel> selectionOptions = List();
-  List<SelectionPopupModel> items = List();
+  List<SelectionPopupModel> options = List();
+  List<SelectionPopupModel> selectedOptions = List();
   Function(
       {SelectionPopupModel selectedItem,
       List<SelectionPopupModel> multiSelectedItem}) applyFilterCallBack;
@@ -57,7 +59,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
   String negativeButtonTitle;
 
   _SelectionScreenState(
-      this.selectionOptions,
+      this.options,
       this.applyFilterCallBack,
       this.hintText,
       this.title,
@@ -68,9 +70,6 @@ class _SelectionScreenState extends State<SelectionScreen> {
 
   @override
   void initState() {
-    if (selectionOptions != null) {
-      items.addAll(selectionOptions);
-    }
     super.initState();
   }
 
@@ -111,31 +110,6 @@ class _SelectionScreenState extends State<SelectionScreen> {
     );
   }
 
-  void filterSearchResults(String query) {
-    query = query.toLowerCase();
-    List<SelectionPopupModel> dummySearchList = List<SelectionPopupModel>();
-    dummySearchList.addAll(selectionOptions);
-    if (query.isNotEmpty) {
-      List<SelectionPopupModel> dummyListData = List<SelectionPopupModel>();
-      dummySearchList.forEach((item) {
-        item.title = item.title.toLowerCase();
-        if (item.title.contains(query)) {
-          dummyListData.add(item);
-        }
-      });
-      setState(() {
-        items.clear();
-        items.addAll(dummyListData);
-      });
-      return;
-    } else {
-      setState(() {
-        items.clear();
-        items.addAll(selectionOptions);
-      });
-    }
-  }
-
   getBotoomButtons() {
     return Padding(
       padding: EdgeInsets.only(
@@ -165,23 +139,23 @@ class _SelectionScreenState extends State<SelectionScreen> {
           Expanded(
             child: AppButton.flat(
               onTap: () {
-                if (isMultiSelectionEnable) {
-                  List<SelectionPopupModel> dummyList =
-                      List<SelectionPopupModel>();
-                  items.forEach((element) {
-                    if (element.isSelected) {
-                      dummyList.add(element);
-                    }
-                  });
-                  applyFilterCallBack(multiSelectedItem: dummyList);
-                } else {
-                  for (int i = 0; i < items.length; i++) {
-                    if (items[i].isSelected) {
-                      applyFilterCallBack(selectedItem: items[i]);
+//                if (isMultiSelectionEnable) {
+                List<SelectionPopupModel> dummyList =
+                    List<SelectionPopupModel>();
+                options.forEach((element) {
+                  if (element.isSelected) {
+                    dummyList.add(element);
+                  }
+                });
+                applyFilterCallBack(multiSelectedItem: dummyList);
+                /*  } else {
+                  for (int i = 0; i < selectionOptions.length; i++) {
+                    if (selectionOptions[i].isSelected) {
+                      applyFilterCallBack(selectedItem: selectionOptions[i]);
                       break;
                     }
                   }
-                }
+                }*/
                 Navigator.pop(context);
               },
               borderRadius: getSize(5),
@@ -202,7 +176,9 @@ class _SelectionScreenState extends State<SelectionScreen> {
       height: getSize(50),
       child: TextField(
         onChanged: (value) {
-          filterSearchResults(value);
+          if (value.length > 3) {
+            callApiForGetCompanyList(value);
+          }
         },
         controller: searchController,
         decoration: InputDecoration(
@@ -250,17 +226,20 @@ class _SelectionScreenState extends State<SelectionScreen> {
         padding: EdgeInsets.symmetric(
           vertical: getSize(10),
         ),
-        itemCount: items.length,
+        itemCount: options.length,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
               FocusScope.of(context).unfocus();
               if (!isMultiSelectionEnable) {
-                items.forEach((element) {
+                options.forEach((element) {
                   element.isSelected = false;
                 });
               }
-              items[index].isSelected = !items[index].isSelected;
+              options[index].isSelected = !options[index].isSelected;
+              if(options[index].isSelected) {
+                selectedOptions.add(options[index]);
+              }
               setState(() {});
             },
             child: Padding(
@@ -268,7 +247,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                 vertical: getSize(2),
               ),
               child: Container(
-                decoration: items[index].isSelected
+                decoration: options[index].isSelected
                     ? BoxDecoration(
                         borderRadius: BorderRadius.circular(
                           getSize(5),
@@ -283,8 +262,8 @@ class _SelectionScreenState extends State<SelectionScreen> {
                     children: <Widget>[
                       Expanded(
                           child: Text(
-                        items[index].title,
-                        style: items[index].isSelected
+                        options[index].title,
+                        style: options[index].isSelected
                             ? appTheme.white18TextStyle
                             : appTheme.blackNormal18TitleColorblack,
                       )),
@@ -292,7 +271,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                         width: getSize(10),
                       ),
                       Container(
-                        child: items[index].isSelected
+                        child: options[index].isSelected
                             ? Icon(
                                 Icons.check,
                                 color: appTheme.whiteColor,
@@ -307,6 +286,45 @@ class _SelectionScreenState extends State<SelectionScreen> {
           );
         },
       ),
+    );
+  }
+
+  callApiForGetCompanyList(String title) {
+    Map<String, dynamic> dict = {};
+
+    dict["page"] = DEFAULT_PAGE;
+    dict["limit"] = DEFAULT_LIMIT;
+    dict["startWith"] = {
+      "keyword": title,
+      "keys": ["companyName", "name", "firstName", "lastName", "mobile"]
+    };
+    dict["filter"] = {"isActive": true};
+    dict["sort"] = [
+      {"createdAt": "DESC"}
+    ];
+
+    app.resolve<CustomDialogs>().showProgressDialog(context, "");
+
+    NetworkClient.getInstance.callApi(
+      context,
+      baseURL,
+      ApiConstants.companyList,
+      MethodType.Post,
+      headers: NetworkClient.getInstance.getAuthHeaders(),
+      params: dict,
+      successCallback: (response, message) {
+        app.resolve<CustomDialogs>().hideProgressDialog();
+        print("response--------------------${response.toString()}");
+//        selectionOptions
+      },
+      failureCallback: (status, message) {
+        app.resolve<CustomDialogs>().hideProgressDialog();
+        print(message);
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            desc: message,
+            positiveBtnTitle: R.string.commonString.ok,
+            onClickCallback: (click) {});
+      },
     );
   }
 }
