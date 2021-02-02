@@ -180,6 +180,22 @@ class UserConstant {
   static const int RECENT = 1;
 }
 
+class selectStatusList {
+  static Map<String, dynamic> mappingData = {
+    "Available": "S",
+    "Memo": "I",
+    "Hold": "W",
+    "Best Buy": "D",
+    "Reserved": "Y",
+    "Available On Result": "C",
+    "Reject": "R",
+    "Blocked": "B",
+    "Recut Issue": "K",
+    "Unreserved Sold": "U",
+    "Sold": "O",
+  };
+}
+
 class DiamondSearchType {
   static const int RECENT = 1;
   static const int SAVE = 2;
