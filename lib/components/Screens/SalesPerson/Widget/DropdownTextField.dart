@@ -1,7 +1,7 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/constants.dart';
 import 'package:diamnow/app/utils/CommonTextfield.dart';
-import 'package:diamnow/components/Screens/MemoStone/Widget/CellModel.dart';
+import 'package:diamnow/components/Screens/SalesPerson/Widget/CellModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

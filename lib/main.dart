@@ -11,6 +11,7 @@ import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dar
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
+import 'package:diamnow/components/Screens/SalesPerson/BuyNowScreen.dart';
 import 'package:diamnow/components/Screens/Splash.dart';
 import 'package:diamnow/components/Screens/VoiceSearch/VoiceSearch.dart';
 import 'package:flutter/material.dart';
@@ -125,6 +126,7 @@ class _BaseState extends State<Base> {
         // Define the default brightness and colors.
         brightness: Brightness.light,
         primaryColor: appTheme.colorPrimary,
+        accentColor: appTheme.colorPrimary,
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
         // Define the default font family.
@@ -133,7 +135,7 @@ class _BaseState extends State<Base> {
       navigatorKey: NavigationUtilities.key,
       onGenerateRoute: onGenerateRoute,
       navigatorObservers: <NavigatorObserver>[routeObserver],
-      home: Splash(),
+      home: BuyNowScreen(),
 //      home: SelectionScreen(
 //        selectionOptions: [
 //          SelectionPopupModel("id1", "one"),
