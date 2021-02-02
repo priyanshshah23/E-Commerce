@@ -337,7 +337,6 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                         MaterialPageRoute(
                           builder: (BuildContext context) {
                             return SelectionScreen(
-                              selectionOptions: selectedOptions,
                               title: "Select Country",
                               hintText: "Select Country",
                               positiveButtonTitle: "Apply",
@@ -348,6 +347,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                                   {SelectionPopupModel selectedItem,
                                   List<SelectionPopupModel>
                                       multiSelectedItem}) {
+                                selectedOptions.clear();
                                 selectedOptions.addAll(multiSelectedItem);
                                 print(
                                     "-------------${selectedOptions.first.title}");

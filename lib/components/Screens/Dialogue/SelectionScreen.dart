@@ -1,17 +1,11 @@
 import 'package:diamnow/app/Helper/NetworkClient.dart';
 import 'package:diamnow/app/app.export.dart';
-import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
-import 'package:diamnow/models/Address/CityListModel.dart';
-import 'package:diamnow/models/Address/CountryListModel.dart';
-import 'package:diamnow/models/Address/StateListModel.dart';
-import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:flutter/material.dart';
 
 class SelectionScreen extends StatefulWidget {
-  List<SelectionPopupModel> selectionOptions = List();
   Function(
       {SelectionPopupModel selectedItem,
       List<SelectionPopupModel> multiSelectedItem}) applyFilterCallBack;
@@ -23,8 +17,7 @@ class SelectionScreen extends StatefulWidget {
   String negativeButtonTitle;
 
   SelectionScreen(
-      {this.selectionOptions,
-      this.applyFilterCallBack,
+      {this.applyFilterCallBack,
       this.hintText,
       this.title,
       this.isSearchEnable = true,
@@ -34,7 +27,6 @@ class SelectionScreen extends StatefulWidget {
 
   @override
   _SelectionScreenState createState() => _SelectionScreenState(
-      selectionOptions,
       applyFilterCallBack,
       hintText,
       title,
@@ -59,7 +51,6 @@ class _SelectionScreenState extends State<SelectionScreen> {
   String negativeButtonTitle;
 
   _SelectionScreenState(
-      this.options,
       this.applyFilterCallBack,
       this.hintText,
       this.title,
@@ -239,6 +230,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
               options[index].isSelected = !options[index].isSelected;
               if (options[index].isSelected) {
                 selectedOptions.add(options[index]);
+                print("-------title${options[index].title}");
               }
               setState(() {});
             },
