@@ -122,7 +122,6 @@ class ApiConstants {
   static const String companyList = "admin/v1/account/paginate";
   static const String deleteOffice =
       "device/v1/cabin-schedule/destroyDiamondAndSlot";
-
 }
 
 class DiamondUrls {
