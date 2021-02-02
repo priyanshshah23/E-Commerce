@@ -553,6 +553,15 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                         onChanged: (newValue) {
                           setsetter(() {
                             mapData.isSelected = newValue;
+                            if (mapData.isSelected) {
+                              selectStatus.add(
+                                mapData.typeConstant,
+                              );
+                            } else {
+                              selectStatus.removeWhere(
+                                (element) => element == mapData.typeConstant,
+                              );
+                            }
                           });
                         },
                         controlAffinity: ListTileControlAffinity
@@ -597,11 +606,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                           ),
                           child: AppButton.flat(
                             onTap: () {
-                              selectStatusModel.forEach((element) {
-                                if (element.isSelected) {
-                                  selectStatus.add(element.typeConstant);
-                                }
-                              });
+                              print(selectStatus);
+
                             },
                             text: "Apply",
                             backgroundColor: appTheme.colorPrimary,
