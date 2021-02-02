@@ -5,8 +5,9 @@ import '../app.export.dart';
 class ApiConstants {
   //  static const String PROXY_URL = "PROXY 192.168.2.124:8888";
 //  static String PROXY_URL = "PROXY 192.168.0.206:8888"; //RAJ
-  static String PROXY_URL = "PROXY 192.168.0.170:8888"; //HIMANSHI
+//  static String PROXY_URL = "PROXY 192.168.0.170:8888"; //HIMANSHI
 //  static String PROXY_URL = "PROXY 192.168.0.114:8888"; //JECKY
+  static String PROXY_URL = "PROXY 192.168.2.124:8888"; //HONEY
 //    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 
   static const String imageBaseURL = baseURL;
@@ -39,7 +40,6 @@ class ApiConstants {
   static const String mySaveSearch = commonUrl + "diamond/search/list";
 
   static const String diamondTrackList = commonUrl + "diamond-track/paginate";
-
   static const String diamondCommentList =
       commonUrl + "diamond-comment/by-user";
   static const String diamondBidList = commonUrl + "diamond-bid/paginate";
@@ -114,10 +114,12 @@ class ApiConstants {
   static const String dimaondTrackCreate = "device/v1/diamond-track/create";
   static const String placeOrderOffline = "device/v1/diamond-confirm/request";
   static const String uploadKyc = "device/v1/account/";
+
   static const String notificationList = apiUrl + "device/v1/notification/list";
   static const String updateOffer = "device/v1/diamond-track/update";
   static const String shareThroughEmail = apiUrl + "web/v1/diamond/excel";
   static const String analytics = "apis/analytics/create";
+  static const String companyList = "admin/v1/account/paginate";
   static const String deleteOffice =
       "device/v1/cabin-schedule/destroyDiamondAndSlot";
 }
