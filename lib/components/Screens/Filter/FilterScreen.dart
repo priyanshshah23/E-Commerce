@@ -16,6 +16,7 @@ import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/CommonWidget/OverlayScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/DialogueList.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
+import 'package:diamnow/components/Screens/Dialogue/SelectionScreen.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
@@ -303,6 +304,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     });
   }
 
+  bool checkedValue = false;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -327,118 +330,30 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 actionItems: [
                   InkWell(
                     onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return Dialog(
-                            insetPadding: EdgeInsets.symmetric(
-                              horizontal: getSize(20),
-                              vertical: getSize(20),
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                getSize(25),
-                              ),
-                            ),
-                            child: StatefulBuilder(
-                                builder: (context, StateSetter setsetter) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      top: getSize(30),
-                                      bottom: getSize(14),
-                                    ),
-                                    child: Text(
-                                      "Select Status",
-                                      style: appTheme.black18TextStyle,
-                                    ),
-                                  ),
-                                  ListView.builder(
-                                    itemCount: 4,
-                                    shrinkWrap: true,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Container(
-                                        height: getSize(50),
-                                        child: CheckboxListTile(
-                                          title: Text(
-                                            "title text",
-                                          ),
-                                          value: true,
-                                          onChanged: (newValue) {
-//                                              setState(() {
-//                                                checkedValue = newValue;
-//                                              });
-                                          },
-                                          controlAffinity: ListTileControlAffinity
-                                              .leading, //  <-- leading Checkbox
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      top: getSize(20),
-                                      bottom: getSize(30),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                              left: getSize(20),
-                                              right: getSize(20),
-                                            ),
-                                            child: AppButton.flat(
-                                              onTap: () {},
-                                              text: "cancel",
-                                              borderRadius: getSize(5),
-                                              textColor: appTheme.colorPrimary,
-                                              backgroundColor:
-                                                  appTheme.whiteColor,
-                                              fitWidth: true,
-                                              isBorder: true,
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                              right: getSize(20),
-                                            ),
-                                            child: AppButton.flat(
-                                              onTap: () {},
-                                              text: "Apply",
-                                              backgroundColor:
-                                                  appTheme.colorPrimary,
-                                              borderRadius: getSize(5),
-                                              fitWidth: true,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              );
-                            }),
-                          );
-                        },
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return SelectionScreen(
+                              selectionOptions: [
+                                //LIST
+                                SelectionPopupModel("id1", "one"),
+                                SelectionPopupModel("id2", "two"),
+                              ],
+                              title: "Select Country",
+                              hintText: "Select Country",
+                              positiveButtonTitle: "Apply",
+                              negativeButtonTitle: "Cancel",
+                              isSearchEnable: true,
+                              isMultiSelectionEnable: true,
+                              applyFilterCallBack: (
+                                  {SelectionPopupModel selectedItem,
+                                  List<SelectionPopupModel>
+                                      multiSelectedItem}) {},
+                            );
+                          },
+                        ),
                       );
-//                      showModalBottomSheet(
-//                        context: context,
-//                        isScrollControlled: true,
-//                        backgroundColor: appTheme.whiteColor,
-//                        shape: RoundedRectangleBorder(
-//                          borderRadius: BorderRadius.only(
-//                            topLeft: Radius.circular(15),
-//                            topRight: Radius.circular(15),
-//                          ),
-//                        ),
-//                      );
                     },
                     child: Padding(
                       padding: EdgeInsets.only(
@@ -453,7 +368,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                     ),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      openDialogueForSelectStatus();
+                    },
                     child: Padding(
                       padding: EdgeInsets.only(
                         right: getSize(Spacing.rightPadding),
@@ -582,6 +499,109 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               : SizedBox(),
         ],
       ),
+    );
+  }
+
+  openDialogueForSelectStatus() {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          insetPadding: EdgeInsets.symmetric(
+            horizontal: getSize(20),
+            vertical: getSize(20),
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(
+              getSize(25),
+            ),
+          ),
+          child: StatefulBuilder(builder: (context, StateSetter setsetter) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: getSize(30),
+                    bottom: getSize(14),
+                  ),
+                  child: Text(
+                    "Select Status",
+                    style: appTheme.black18TextStyle,
+                  ),
+                ),
+                ListView.builder(
+                  itemCount: 4,
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      height: getSize(50),
+                      child: CheckboxListTile(
+                        title: Text(
+                          "title text",
+                        ),
+                        value: checkedValue,
+                        activeColor: appTheme.colorPrimary,
+                        onChanged: (newValue) {
+                          setsetter(() {
+                            checkedValue = newValue;
+                          });
+                        },
+                        controlAffinity: ListTileControlAffinity
+                            .leading, //  <-- leading Checkbox
+                      ),
+                    );
+                  },
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: getSize(20),
+                    bottom: getSize(30),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            left: getSize(20),
+                            right: getSize(20),
+                          ),
+                          child: AppButton.flat(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            text: "cancel",
+                            borderRadius: getSize(5),
+                            textColor: appTheme.colorPrimary,
+                            backgroundColor: appTheme.whiteColor,
+                            fitWidth: true,
+                            isBorder: true,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            right: getSize(20),
+                          ),
+                          child: AppButton.flat(
+                            onTap: () {},
+                            text: "Apply",
+                            backgroundColor: appTheme.colorPrimary,
+                            borderRadius: getSize(5),
+                            fitWidth: true,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            );
+          }),
+        );
+      },
     );
   }
 
@@ -1112,88 +1132,95 @@ class _FilterItemState extends State<FilterItem> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          color: fromHex("#FAFAFA"),
-          margin: EdgeInsets.only(
-            top: getSize(20),
-          ),
-          child: TextField(
-            textAlignVertical: TextAlignVertical(y: 0.2),
-            textInputAction: TextInputAction.done,
-            focusNode: _focusSearchStoneId,
-            controller: _searchStoneIdController,
-            obscureText: false,
-            style: appTheme.black16TextStyle,
-            keyboardType: TextInputType.text,
-            textCapitalization: TextCapitalization.none,
-            cursorColor: appTheme.colorPrimary,
-            inputFormatters: [
-              WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
-              BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
-            ],
-            decoration: InputDecoration(
-              fillColor: fromHex("#FAFAFA"),
-              border: InputBorder.none,
-              hintStyle: appTheme.grey16HintTextStyle,
-              hintText: "Search by Stone Id/Auto Stone Id",
-              labelStyle: TextStyle(
-                color: appTheme.textColor,
-                fontSize: getFontSize(16),
-              ),
-              // suffix: widget.textOption.postfixWidOnFocus,
-              prefixIcon: Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: getSize(20),
-                  ),
-                  Image.asset(
-                    search,
-                    height: getSize(20),
-                    width: getSize(20),
-                  ),
-                ],
-              ),
-              suffixIcon: Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "M",
-                    style: appTheme.black16MediumTextStyle.copyWith(
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                  SizedBox(
-                    width: getSize(20),
-                  ),
-                  Text(
-                    "A",
-                    style: appTheme.grey16HintTextStyle.copyWith(
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                  SizedBox(
-                    width: getSize(20),
-                  ),
-                ],
-              ),
+        if (app.resolve<PrefUtils>().getUserDetails().type ==
+            UserConstant.SALES)
+          Container(
+            color: fromHex("#FAFAFA"),
+            margin: EdgeInsets.only(
+              top: getSize(20),
             ),
-            onChanged: (String text) {
-              //
-            },
-            onEditingComplete: () {
-              //
-              _focusSearch.unfocus();
-            },
-//                onTap: () {
-//                  Map<String, dynamic> dict = new HashMap();
-//                  dict["isFromSearch"] = true;
-//                  NavigationUtilities.pushRoute(SearchScreen.route, args: dict);
-//                },
+            child: TextField(
+              textAlignVertical: TextAlignVertical(y: 0.2),
+              textInputAction: TextInputAction.done,
+              focusNode: _focusSearchStoneId,
+              controller: _searchStoneIdController,
+              obscureText: false,
+              readOnly: true,
+              autofocus: false,
+              style: appTheme.black16TextStyle,
+              keyboardType: TextInputType.text,
+              textCapitalization: TextCapitalization.none,
+              cursorColor: appTheme.colorPrimary,
+              inputFormatters: [
+                WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+                BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+              ],
+              decoration: InputDecoration(
+                fillColor: fromHex("#FAFAFA"),
+                border: InputBorder.none,
+                hintStyle: appTheme.grey16HintTextStyle,
+                hintText: "Search by Stone Id/Auto Stone Id",
+                labelStyle: TextStyle(
+                  color: appTheme.textColor,
+                  fontSize: getFontSize(16),
+                ),
+                // suffix: widget.textOption.postfixWidOnFocus,
+                prefixIcon: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: getSize(20),
+                    ),
+                    Image.asset(
+                      search,
+                      height: getSize(20),
+                      width: getSize(20),
+                    ),
+                  ],
+                ),
+                suffixIcon: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "M",
+                      style: appTheme.black16MediumTextStyle.copyWith(
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                    SizedBox(
+                      width: getSize(20),
+                    ),
+                    Text(
+                      "A",
+                      style: appTheme.grey16HintTextStyle.copyWith(
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                    SizedBox(
+                      width: getSize(20),
+                    ),
+                  ],
+                ),
+              ),
+              onChanged: (String text) {
+                //
+              },
+              onEditingComplete: () {
+                //
+                _focusSearch.unfocus();
+              },
+              onTap: () {
+                Map<String, dynamic> dict = new HashMap();
+                dict["isFromSearch"] = true;
+                NavigationUtilities.pushRoute(
+                  SearchScreen.route,
+                  args: dict,
+                );
+              },
+            ),
           ),
-        ),
         Padding(
           padding: EdgeInsets.only(top: getSize(16.0), bottom: getSize(16.0)),
           child: Row(
@@ -1215,7 +1242,9 @@ class _FilterItemState extends State<FilterItem> {
                           color: appTheme.whiteColor,
                           borderRadius: BorderRadius.circular(getSize(5)),
                           border: Border.all(
-                              color: appTheme.colorPrimary, width: getSize(1)),
+                            color: appTheme.colorPrimary,
+                            width: getSize(1),
+                          ),
                         ),
                         child: TextField(
                           textAlignVertical: TextAlignVertical(y: 1.0),
@@ -1238,8 +1267,11 @@ class _FilterItemState extends State<FilterItem> {
                           decoration: InputDecoration(
                             fillColor: fromHex("#FFEFEF"),
                             enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(getSize(5))),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  getSize(5),
+                                ),
+                              ),
                               borderSide: BorderSide(
                                   color: appTheme.dividerColor,
                                   width: getSize(1)),
@@ -1248,8 +1280,9 @@ class _FilterItemState extends State<FilterItem> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(getSize(5))),
                               borderSide: BorderSide(
-                                  color: appTheme.dividerColor,
-                                  width: getSize(1)),
+                                color: appTheme.dividerColor,
+                                width: getSize(1),
+                              ),
                             ),
                             border: OutlineInputBorder(
                               borderRadius:

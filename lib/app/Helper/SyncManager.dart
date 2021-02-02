@@ -314,9 +314,11 @@ class SyncManager {
       context,
       isProgress: isProgress,
     )
-        .then((resp) async {
-      success(resp);
-    }).catchError((onError) => {if (onError is ErrorResp) failure(onError)});
+        .then(
+      (resp) async {
+        success(resp);
+      },
+    ).catchError((onError) => {if (onError is ErrorResp) failure(onError)});
   }
 
   void callVersionUpdateApi(BuildContext context, String screenConstant,

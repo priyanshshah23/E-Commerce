@@ -6,13 +6,12 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/AnalyticsReport.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
-import 'package:diamnow/components/Screens/Auth/Profile.dart';
-import 'package:diamnow/components/Screens/Auth/ProfileList.dart';
 import 'package:diamnow/components/Screens/Auth/UploadKYC.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
 import 'package:diamnow/components/Screens/DashBoard/Dashboard.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
+import 'package:diamnow/components/Screens/MemoStone/MemoStoneScreen.dart';
 import 'package:diamnow/components/Screens/MyDemand/MyDemandScreen.dart';
 import 'package:diamnow/components/Screens/OfflineSearchHistory/OfflineSearchHistory.dart';
 import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
@@ -20,7 +19,6 @@ import 'package:diamnow/components/Screens/PriceCalculator/PriceCalculator.dart'
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
-import 'package:diamnow/models/AnalyticsModel/AnalyticsModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
@@ -447,13 +445,18 @@ class _HomeScreenState extends State<HomeScreen> {
           );
           break;
         case DiamondModuleConstant.MODULE_TYPE_CONTACT_US:
-          openContactUS(type);
-          AnalyticsReport.shared.sendAnalyticsData(
-            buildContext: context,
-            page: PageAnalytics.CONTACT,
-            section: SectionAnalytics.VIEW,
-            action: ActionAnalytics.CLICK,
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => MemoStoneScreen()),
           );
+//          openContactUS(type);
+//          AnalyticsReport.shared.sendAnalyticsData(
+//            buildContext: context,
+//            page: PageAnalytics.CONTACT,
+//            section: SectionAnalytics.VIEW,
+//            action: ActionAnalytics.CLICK,
+//          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_LOGOUT:
           logoutFromApp(context);

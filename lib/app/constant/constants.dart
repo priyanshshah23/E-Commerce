@@ -150,7 +150,7 @@ class MasterCode {
   static const String docTypePersonal = "DOC_TYPE_PERSONAL";
   static const String docTypeBusiness = "DOC_TYPE_BUSINESS";
   static const String milkyStatic = "MILKYSTATIC";
-  // static const String mixTint = "MIX_TINT";
+// static const String mixTint = "MIX_TINT";
 }
 
 class LocalizationConstant {
@@ -174,6 +174,11 @@ class StaticPageConstant {
   static const String PRIVACY_POLICY = "PRIVACY_POLICY";
   static const String TERMS_CONDITION = "TERMS_CONDITION";
   static const String CONTACT_US = "CONTACT_US";
+}
+
+class UserConstant {
+  static const int SALES = 4;
+  static const int RECENT = 1;
 }
 
 class DiamondSearchType {
