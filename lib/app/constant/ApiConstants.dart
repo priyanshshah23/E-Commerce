@@ -113,10 +113,12 @@ class ApiConstants {
   static const String dimaondTrackCreate = "device/v1/diamond-track/create";
   static const String placeOrderOffline = "device/v1/diamond-confirm/request";
   static const String uploadKyc = "device/v1/account/";
+
   static const String notificationList = apiUrl + "device/v1/notification/list";
   static const String updateOffer = "device/v1/diamond-track/update";
   static const String shareThroughEmail = apiUrl + "web/v1/diamond/excel";
   static const String analytics = "apis/analytics/create";
+  static const String companyList = "admin/v1/account/paginate";
   static const String deleteOffice =
       "device/v1/cabin-schedule/destroyDiamondAndSlot";
 }

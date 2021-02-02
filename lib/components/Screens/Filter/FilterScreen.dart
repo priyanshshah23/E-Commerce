@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:diamnow/app/Helper/LocalNotification.dart';
+import 'package:diamnow/app/Helper/NetworkClient.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
@@ -105,6 +106,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
   _FilterScreenState(this.moduleType, this.isFromDrawer,
       {this.dictSearchData, this.savedSearchModel});
+  List<SelectionPopupModel> selectedOptions = List();
 
   int segmentedControlValue = 0;
   PageController controller = PageController();
@@ -338,21 +340,21 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                         MaterialPageRoute(
                           builder: (BuildContext context) {
                             return SelectionScreen(
-                              selectionOptions: [
-                                //LIST
-                                SelectionPopupModel("id1", "one"),
-                                SelectionPopupModel("id2", "two"),
-                              ],
+                              selectionOptions: selectedOptions,
                               title: "Select Country",
                               hintText: "Select Country",
                               positiveButtonTitle: "Apply",
                               negativeButtonTitle: "Cancel",
                               isSearchEnable: true,
-                              isMultiSelectionEnable: true,
+                              isMultiSelectionEnable: false,
                               applyFilterCallBack: (
                                   {SelectionPopupModel selectedItem,
                                   List<SelectionPopupModel>
-                                      multiSelectedItem}) {},
+                                      multiSelectedItem}) {
+                                selectedOptions.addAll(multiSelectedItem);
+                                print(
+                                    "-------------${selectedOptions.first.title}");
+                              },
                             );
                           },
                         ),

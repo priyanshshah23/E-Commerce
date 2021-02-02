@@ -28,6 +28,7 @@ class CellModel {
   bool isIFSC;
   bool isBankAccount;
   String utcDateString;
+  double leftPadding;
 
   CellModel({
     this.lableText = "",
@@ -57,6 +58,7 @@ class CellModel {
     this.isBankAccount = false,
     this.utcDateString,
     this.perfixImage,
+    this.leftPadding = 0,
   });
 }
 
@@ -71,5 +73,18 @@ enum TextFieldEnum {
 }
 
 enum CellType {
-  Demo,
+  //Memo Stone
+  Party,
+  BuyerName,
+  SalesPersonName,
+  BrokerName,
+
+  //Hold Stone
+  HoldTime,
+  Comment,
+
+  //Buy now
+  Invoice,
+  BillType,
+  Term,
 }
