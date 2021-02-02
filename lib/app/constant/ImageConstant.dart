@@ -196,6 +196,7 @@ const String microphone = "assets/Common/microphone.png";
 const String buyer = "assets/PNShah/customer.png";
 const String salesman = "assets/PNShah/salesman.png";
 const String broker = "assets/PNShah/broker.png";
+const String invoice = "assets/PNShah/invoice.png";
 
 //Home
 const String homeOverlay1 = "assets/Overlay/Home/HomeOverlay1.png";

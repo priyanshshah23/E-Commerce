@@ -11,12 +11,14 @@ import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
 import 'package:diamnow/components/Screens/DashBoard/Dashboard.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
-import 'package:diamnow/components/Screens/MemoStone/MemoStoneScreen.dart';
 import 'package:diamnow/components/Screens/MyDemand/MyDemandScreen.dart';
 import 'package:diamnow/components/Screens/OfflineSearchHistory/OfflineSearchHistory.dart';
 import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
 import 'package:diamnow/components/Screens/PriceCalculator/PriceCalculator.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
+import 'package:diamnow/components/Screens/SalesPerson/BuyNowScreen.dart';
+import 'package:diamnow/components/Screens/SalesPerson/HoldStoneScreen.dart';
+import 'package:diamnow/components/Screens/SalesPerson/MemoStoneScreen.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
@@ -448,7 +450,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (BuildContext context) => MemoStoneScreen()),
+                builder: (BuildContext context) => BuyNowScreen()),
           );
 //          openContactUS(type);
 //          AnalyticsReport.shared.sendAnalyticsData(
