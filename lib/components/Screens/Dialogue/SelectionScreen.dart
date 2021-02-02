@@ -237,7 +237,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                 });
               }
               options[index].isSelected = !options[index].isSelected;
-              if(options[index].isSelected) {
+              if (options[index].isSelected) {
                 selectedOptions.add(options[index]);
               }
               setState(() {});
