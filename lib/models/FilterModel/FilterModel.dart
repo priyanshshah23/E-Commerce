@@ -254,6 +254,7 @@ class Config {
     Master allMaster = Master();
     allMaster.sId = model.allLableTitle;
     allMaster.webDisplay = model.allLableTitle;
+    allMaster.code = model.allLableTitle;
     allMaster.group = model.allLableTitle;
 
     List<Master> arrSelectedMaster =
@@ -284,6 +285,7 @@ class Config {
     Master allMaster = Master();
     allMaster.sId = R.string.commonString.showMore;
     allMaster.webDisplay = R.string.commonString.showMore;
+    allMaster.code = R.string.commonString.showMore;
     allMaster.group = R.string.commonString.showMore;
 
     List<Master> arrSelectedMaster =
@@ -379,6 +381,8 @@ class SelectionModel extends FormBaseModel {
   int numberOfelementsToShow;
   bool showFromTo;
   int showMoreTagAfterTotalItemCount = 9;
+  bool valueKeyisCode;
+
   SelectionModel(
       {title,
       this.masters,
@@ -391,6 +395,7 @@ class SelectionModel extends FormBaseModel {
       this.showMoreTagAfterTotalItemCount,
       this.isShowMore,
       this.isShowMoreHorizontal,
+      this.valueKeyisCode,
       apiKey,
       viewType}) {
     super.title = title;
@@ -422,6 +427,7 @@ class SelectionModel extends FormBaseModel {
       });
     }
     showFromTo = json["showFromTo"] ?? true;
+    valueKeyisCode = json["valueKeyisCode"] ?? false;
   }
 
   void onSelectionClick(int index) {
