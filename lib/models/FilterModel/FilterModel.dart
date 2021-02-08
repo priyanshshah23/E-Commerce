@@ -99,7 +99,28 @@ class Config {
             if (viewType == "searchText") {
               arrFilter.add(FormBaseModel.fromJson(element));
             } else if (viewType == ViewTypes.fromTo) {
-              arrFilter.add(FromToModel.fromJson(element));
+              var fromToModel = FromToModel.fromJson(element);
+              arrFilter.add(fromToModel);
+
+              if (fromToModel.isCaratRange) {
+                SelectionModel selectionModel =
+                    SelectionModel.fromJson(element);
+
+                List<Master> arrMaster = await Master.getSizeMaster();
+
+                selectionModel.masters = arrMaster;
+
+                if (selectionModel.isShowAll == true) {
+                  appendAllTitle(selectionModel);
+                }
+
+                if (selectionModel.isShowMore == true) {
+                  appendShowMoreTitle(selectionModel);
+                }
+
+                fromToModel.selectionModel = selectionModel;
+                // arrFilter.add(FromToModel.fromJson(element));
+              }
             } else if (viewType == ViewTypes.shapeWidget) {
               SelectionModel selectionModel = SelectionModel.fromJson(element);
               arrFilter.add(selectionModel);
@@ -349,6 +370,8 @@ class FromToModel extends FormBaseModel {
   num maxValue;
   num minValue;
   FromToStyle fromToStyle;
+  bool isCaratRange;
+  SelectionModel selectionModel;
 
   FromToModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     labelFrom = json['labelFrom'];
@@ -358,6 +381,7 @@ class FromToModel extends FormBaseModel {
     fromToStyle = json['fromToStyle'] != null
         ? new FromToStyle.fromJson(json['fromToStyle'])
         : null;
+    isCaratRange = json["isCaratRange"] ?? false;
   }
 }
 

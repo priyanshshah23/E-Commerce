@@ -1,6 +1,7 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,9 +41,39 @@ class _FromToWidgetState extends State<FromToWidget> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              widget.fromTomodel?.title ?? "-",
-              style: appTheme.blackMedium16TitleColorblack,
+            Row(
+              children: [
+                Text(
+                  widget.fromTomodel?.title ?? "-",
+                  style: appTheme.blackMedium16TitleColorblack,
+                ),
+                widget.fromTomodel.isCaratRange ? Spacer() : SizedBox(),
+                widget.fromTomodel.isCaratRange
+                    ? InkWell(
+                        onTap: () {
+                          openCaratRangeBottomSheet();
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: appTheme.colorPrimary,
+                            borderRadius: BorderRadius.circular(
+                              getSize(5),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Center(
+                              child: Image.asset(
+                                plusIcon,
+                                width: getSize(16),
+                                height: getSize(16),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    : SizedBox()
+              ],
             ),
             !widget.fromTomodel.fromToStyle.showUnderline
                 ? SizedBox(height: getSize(16))
@@ -302,6 +333,103 @@ class _FromToWidgetState extends State<FromToWidget> {
     RegExp regex = new RegExp(pattern);
     print(regex.hasMatch(value));
     return (!regex.hasMatch(value)) ? false : true;
+  }
+
+  openCaratRangeBottomSheet() {
+    return showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: appTheme.whiteColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15),
+            topRight: Radius.circular(15),
+          ),
+        ),
+        builder: (context) {
+          return StatefulBuilder(builder: (context, StateSetter setSetter) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(top: getSize(28)),
+                  child: Text(
+                    "Select Range",
+                    style: appTheme.commonAlertDialogueTitleStyle,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                      left: getSize(Spacing.leftPadding),
+                      right: getSize(Spacing.rightPadding),
+                      top: getSize(8),
+                      bottom: getSize(8)),
+                  child: SelectionWidget(widget.fromTomodel.selectionModel),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: getSize(Spacing.leftPadding),
+                      vertical: getSize(16)),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            // alignment: Alignment.bottomCenter,
+                            padding: EdgeInsets.symmetric(
+                              vertical: getSize(15),
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: appTheme.colorPrimary,
+                                width: getSize(1),
+                              ),
+                              borderRadius: BorderRadius.circular(getSize(5)),
+                            ),
+                            child: Text(
+                              R.string.commonString.cancel,
+                              textAlign: TextAlign.center,
+                              style: appTheme.blue14TextStyle
+                                  .copyWith(fontSize: getFontSize(16)),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: getSize(20),
+                      ),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            //alignment: Alignment.bottomCenter,
+                            padding: EdgeInsets.symmetric(
+                              vertical: getSize(15),
+                            ),
+                            decoration: BoxDecoration(
+                                color: appTheme.colorPrimary,
+                                borderRadius: BorderRadius.circular(getSize(5)),
+                                boxShadow: getBoxShadow(context)),
+                            child: Text(
+                              R.string.commonString.btnSubmit,
+                              textAlign: TextAlign.center,
+                              style: appTheme.white16TextStyle,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            );
+          });
+        });
   }
 }
 

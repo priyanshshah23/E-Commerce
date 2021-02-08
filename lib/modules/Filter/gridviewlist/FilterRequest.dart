@@ -35,7 +35,7 @@ class FilterRequest {
               } else if (item.code == MasterCode.newarrivals) {
                 arrWsts.add("B");
               } else if (item.code == MasterCode.brownStatic) {
-                map["excludeFilter"]  = {"brown" : true};
+                map["excludeFilter"] = {"brown": true};
               } else if (item.code == MasterCode.eyecleanStatic) {
                 if (!isNullEmptyOrFalse(item.map))
                   map.addAll(item.map as Map<String, dynamic>);
@@ -80,6 +80,14 @@ class FilterRequest {
           fromToValue["<="] = int.parse((element as FromToModel).valueTo);
 
           map[element.apiKey] = fromToValue;
+        }
+
+        if ((element as FromToModel).isCaratRange) {
+          List<Map<String, dynamic>> caratRequest = Master.getSelectedCarat(
+                  (element as FromToModel).selectionModel.masters) ??
+              [];
+
+          if (!isNullEmptyOrFalse(caratRequest)) map["or"] = caratRequest;
         }
       }
 
