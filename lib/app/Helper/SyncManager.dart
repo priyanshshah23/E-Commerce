@@ -2,7 +2,10 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
+import 'package:collection/collection.dart';
+import 'package:diamnow/app/Helper/NetworkClient.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
+import 'package:diamnow/models/OfflineSearchHistory/OfflineStockTrack.dart';
 import 'package:path/path.dart' as path;
 import 'package:diamnow/app/AppConfiguration/AppNavigation.dart';
 import 'package:diamnow/app/Helper/AppDatabase.dart';
@@ -180,7 +183,7 @@ class SyncManager {
     Map<String, dynamic> dict = {};
     dict["isNotReturnTotal"] = true;
     dict["isReturnCountOnly"] = true;
-    dict["filters"] = req;
+    dict["filter"] = req;
 
     if (!isNullEmptyOrFalse(searchText)) {
       dict["search"] = searchText;
@@ -317,7 +320,7 @@ class SyncManager {
   }
 
   void callVersionUpdateApi(BuildContext context, String screenConstant,
-      {String id}) {
+      {String id, bool isOfflineMode = false}) {
     NetworkCall<VersionUpdateResp>()
         .makeCall(
             () => app
@@ -557,7 +560,12 @@ class SyncManager {
         }
       },
     ).catchError(
-      (onError) => {
+      (onError) {
+        if (isOfflineMode && screenConstant == VersionUpdateApi.splash) {
+          //for splash
+          AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+          return;
+        }
         app.resolve<CustomDialogs>().confirmDialog(context,
             title: R.string.errorString.versionError,
             desc: onError.message,
@@ -569,7 +577,7 @@ class SyncManager {
           } else {
             callVersionUpdateApi(context, screenConstant, id: id);
           }
-        }),
+        });
       },
     );
   }
@@ -612,7 +620,6 @@ class SyncManager {
         callback(url);
       } else {
         downloadExcel(excelFileUrl, savePath);
-
         if (Platform.isIOS) {
           Map<String, dynamic> dict = {};
           dict["strUrl"] = url;
@@ -631,7 +638,6 @@ class SyncManager {
           NavigationUtilities.pushRoute(StaticPageScreen.route, args: dict);
         }
       }
-
       // getWebView(context, url);
     }).catchError((onError) {
       showToast("There is problem on server, please try again later.",
@@ -640,6 +646,27 @@ class SyncManager {
     });
   }
 
+  //Analytics
+  callAnalytics(BuildContext context,
+      {String page, String section, String action, Map<String, dynamic> dict}) {
+    Map<String, dynamic> request = {};
+    request["page"] = page;
+    request["section"] = section;
+    request["action"] = action;
+
+    if (!isNullEmptyOrFalse(dict)) {
+      request["description"] = dict;
+    }
+    //Analytics
+    NetworkClient.getInstance.callApi(
+        context, baseURL, ApiConstants.analytics, MethodType.Post,
+        params: request,
+        headers: NetworkClient.getInstance.getAuthHeaders(),
+        successCallback: (response, message) {},
+        failureCallback: (statusCode, message) {});
+  }
+
+  //Download excel
   downloadExcel(String excelFileUrl, String savePath) {
     Dio dio = Dio();
 
@@ -654,6 +681,7 @@ class SyncManager {
     });
   }
 
+  //Check total carat rap amount
   List<num> getTotalCaratRapAmount(List<DiamondModel> diamondList) {
     double carat = 0.0;
     double calcAmount = 0.0;
@@ -741,7 +769,6 @@ class SyncManager {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
               context,
-              title: R.string.commonString.error,
               desc: onError.message,
               positiveBtnTitle: R.string.commonString.ok,
             );

@@ -1,10 +1,12 @@
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
-import 'package:diamnow/components/Screens/DiamondDetail/diamondDeepDetailScreen.dart';
+import 'package:diamnow/components/CommonWidget/OverlayScreen.dart';
+import 'package:diamnow/components/Screens/DiamondDetail/DiamondDeepDetailScreen.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/DiamondDetail/DiamondDetailUIModel.dart';
@@ -15,9 +17,11 @@ import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
+import 'package:screenshot_callback/screenshot_callback.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -93,6 +97,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   Dio dio = Dio();
   bool imageFlag = false;
   bool videoFlag = false;
+  ScreenshotCallback screenshotCallback = ScreenshotCallback();
 
   @override
   bool get wantKeepAlive => true;
@@ -109,6 +114,32 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       getScrollControllerEventListener();
 
       isErroWhileLoading = false;
+      SyncManager.instance.callAnalytics(
+        context,
+        page: PageAnalytics.DIAMOND_DETAIL,
+        section: SectionAnalytics.VIEW,
+        action: ActionAnalytics.OPEN,
+        dict: {
+          "id": this.diamondModel.id ?? "",
+          "userId": app.resolve<PrefUtils>().getUserDetails().id ?? ""
+        },
+      );
+
+      screenshotCallback.addListener(
+        () {
+          SyncManager.instance.callAnalytics(
+            context,
+            page: PageAnalytics.DIAMOND_DETAIL,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.OPEN,
+            dict: {
+              "id": this.diamondModel.id ?? "",
+              "userId": app.resolve<PrefUtils>().getUserDetails().id ?? "",
+              "action": "SCREENSHOT_TAKEN_BY_USER"
+            },
+          );
+        },
+      );
     });
     // checkWeatherUrlContainsThingsOrNot();
   }
@@ -467,18 +498,32 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Scaffold(
-      backgroundColor: appTheme.whiteColor,
-      appBar: getAppBar(
-        context,
-        R.string.screenTitle.diamondDetail,
-        bgColor: appTheme.whiteColor,
-        leadingButton: getBackButton(context),
-        centerTitle: false,
-        actionItems: getToolbarItem(),
-      ),
-      bottomNavigationBar: getBottomTab(),
-      body: getDiamondDetailComponents(),
+    return Stack(
+      children: [
+        Scaffold(
+          backgroundColor: appTheme.whiteColor,
+          appBar: getAppBar(
+            context,
+            R.string.screenTitle.diamondDetail,
+            bgColor: appTheme.whiteColor,
+            leadingButton: getBackButton(context),
+            centerTitle: false,
+            actionItems: getToolbarItem(),
+          ),
+          bottomNavigationBar: getBottomTab(),
+          body: getDiamondDetailComponents(),
+        ),
+        (app.resolve<PrefUtils>().getBool(PrefUtils().keyDiamondDetailTour) ==
+                false)
+            ? OverlayScreen(
+                DiamondModuleConstant.MODULE_TYPE_DIAMOND_DETAIL,
+                finishTakeTour: () {
+                  setState(() {});
+                },
+                scrollIndex: (index) {},
+              )
+            : SizedBox(),
+      ],
     );
   }
 
@@ -488,10 +533,12 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     return !isNullEmptyOrFalse(list)
         ? InkWell(
             onTap: () {
-              NavigationUtilities.push(DiamondDeepDetailScreen(
-                arrImages: arrImages,
-                diamondModel: diamondModel,
-              ));
+              NavigationUtilities.push(
+                DiamondDeepDetailScreen(
+                  arrImages: arrImages,
+                  diamondModel: diamondModel,
+                ),
+              );
             },
             child: Container(
               decoration: BoxDecoration(
@@ -537,23 +584,25 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     List<Widget> list = [];
     for (int i = 0; i < diamondConfig.toolbarList.length; i++) {
       var element = diamondConfig.toolbarList[i];
-      list.add(GestureDetector(
-        onTap: () {
-          manageToolbarClick(element);
-        },
-        child: Padding(
-          padding: EdgeInsets.only(
-              right: i == diamondConfig.toolbarList.length - 1
-                  ? getSize(Spacing.rightPadding)
-                  : getSize(8),
-              left: getSize(8.0)),
-          child: Image.asset(
-            element.image,
-            height: getSize(20),
-            width: getSize(20),
+      list.add(
+        GestureDetector(
+          onTap: () {
+            manageToolbarClick(element);
+          },
+          child: Padding(
+            padding: EdgeInsets.only(
+                right: i == diamondConfig.toolbarList.length - 1
+                    ? getSize(Spacing.rightPadding)
+                    : getSize(8),
+                left: getSize(8.0)),
+            child: Image.asset(
+              element.image,
+              height: getSize(20),
+              width: getSize(20),
+            ),
           ),
         ),
-      ));
+      );
     }
     return list;
   }
@@ -589,7 +638,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           model.url,
           height: getSize(286),
           width: MathUtilities.screenWidth(context),
-          fit: BoxFit.fitWidth,
+          fit: BoxFit.fitHeight,
         );
       } else if (model.title == "Certificate" ||
           (model.title == "Video" && videoFlag)) {
@@ -626,6 +675,9 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
             children: <Widget>[
               ListView.builder(
                 controller: _scrollController1,
+                padding: EdgeInsets.only(
+                  bottom: getSize(20),
+                ),
                 itemCount: arrDiamondDetailUIModel.length + 1,
                 itemBuilder: (context, index) {
                   if (index == 0)
@@ -667,7 +719,10 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                                                   padding: EdgeInsets.only(
                                                       right: getSize(10)),
                                                   child: getRowItem(
-                                                      "Image", gallary))
+                                                    "Image",
+                                                    gallary,
+                                                  ),
+                                                )
                                               : SizedBox(),
                                           videoFlag
                                               ? Padding(
@@ -693,7 +748,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                         ? EdgeInsets.only(
                             left: getSize(20),
                             right: getSize(20),
-                            top: getSize(30),
+                            top: getSize(20),
                             bottom: getSize(0))
                         : EdgeInsets.only(
                             left: getSize(20),
@@ -710,16 +765,17 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                            color: appTheme.whiteColor,
-                            // borderRadius: BorderRadius.circular(getSize(5)),
-                            // color: appTheme.lightBGColor
-                            border: Border.all(color: appTheme.lightBGColor)),
+                          color: appTheme.whiteColor,
+                          borderRadius: BorderRadius.circular(getSize(5)),
+                          // color: appTheme.lightBGColor
+                          border: Border.all(color: appTheme.borderColor),
+                        ),
                         child: Column(
                           children: [
                             Padding(
                               padding: EdgeInsets.only(
-                                top: getSize(30),
-                                bottom: getSize(30),
+                                top: getSize(20),
+                                bottom: getSize(20),
                                 left: getSize(20),
                                 right: getSize(20),
                               ),

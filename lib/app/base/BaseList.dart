@@ -135,18 +135,20 @@ class BaseListState extends State<BaseList> {
                 ),
               if (noDataMsg != null)
                 Text(noDataMsg,
-                    style: Theme.of(context).textTheme.title.copyWith(
-                        fontWeight: FontWeight.bold, color: textColor),
+                    style: appTheme.greenPrimaryNormal14TitleColor.copyWith(
+                      fontSize: getFontSize(28),
+                      fontWeight: FontWeight.w700,
+                    ),
                     textAlign: TextAlign.center),
               if (noDataMsg != null)
                 SizedBox(
-                  height: getSize(16),
+                  height: getSize(8),
                 ),
               if (noDataDesc != null)
                 Text(noDataDesc,
-                    style: AppTheme.of(context).theme.textTheme.body1.copyWith(
-                        color: appTheme.colorPrimary,
-                        fontWeight: FontWeight.bold),
+                    style: appTheme.grey14HintTextStyle.copyWith(
+                      fontSize: getFontSize(22),
+                    ),
                     textAlign: TextAlign.center),
               if (noDataDesc != null)
                 SizedBox(

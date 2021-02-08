@@ -18,6 +18,7 @@ import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/string_utils.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
+
 // import 'package:downloads_path_provider_28/downloads_path_provider_28.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -52,6 +53,7 @@ class DownloadState extends State<Download> {
   double finalDownloadProgress = 0;
   dynamic isPermissionStatusGranted;
   bool cancleDownload = false;
+
   // CancelToken cancelToken;
   Map<String, CancelToken> mapOfCancelToken = {};
   bool breakForLoop = false;
@@ -141,7 +143,8 @@ class DownloadState extends State<Download> {
                         value.cancel();
                       });
 
-                      showToast(R.string.commonString.downloadingCanceled, context: context);
+                      showToast(R.string.commonString.downloadingCanceled,
+                          context: context);
                     },
                     borderRadius: getSize(5),
                     text: R.string.commonString.cancel,
@@ -212,8 +215,7 @@ class DownloadState extends State<Download> {
         //   element.url = DiamondUrls.realImg2 + model.vStnId + ".jpg";
         // }
         else if (element.fileType == DownloadAndShareDialogueConstant.video1) {
-          element.url =
-              DiamondUrls.video + model.mfgStnId + "/" + model.mfgStnId + ".mp4";
+          element.url = DiamondUrls.video + model.vStnId + "/video.mp4";
         }
         //  else if (element.fileType ==
         //         DownloadAndShareDialogueConstant.video2 &&
@@ -346,19 +348,21 @@ class DownloadState extends State<Download> {
         //   url:canceltokens
         // }
         await downloadFile(
-            element.url,
-            element.title +
-                diamondModel.id +
-                "." +
-                getExtensionOfUrl(element.url),
-            0, (value, isFromError) {
-          callBack(value, isFromError);
-        },
-            element.url +
-                element.title +
-                diamondModel.id +
-                "." +
-                getExtensionOfUrl(element.url));
+          element.url,
+          element.title +
+              diamondModel.id +
+              "." +
+              getExtensionOfUrl(element.url),
+          0,
+          (value, isFromError) {
+            callBack(value, isFromError);
+          },
+          element.url +
+              element.title +
+              diamondModel.id +
+              "." +
+              getExtensionOfUrl(element.url),
+        );
       }
     }
   }
@@ -370,7 +374,7 @@ class DownloadState extends State<Download> {
     final dir = await getDownloadDirectory();
     final savePath = path.join(dir.path, fileName);
 
-    if (isPermissionStatusGranted) {
+    if (isPermissionStatusGranted ?? true) {
       Dio dio = Dio();
 
       dio.download(
@@ -437,29 +441,29 @@ class DownloadState extends State<Download> {
     return permission == PermissionStatus.granted;
   }
 
-  // Future<WebView> getWebView(BuildContext context, String url) async {
-  //   // if (!model.isImage) print(model.url);
-  //   print(url);
-  //   return WebView(
-  //       initialUrl: url,
-  //       // onPageStarted: (url) {
-  //       //   // app.resolve<CustomDialogs>().showProgressDialog(context, "");
-  //       //   setState(() {
-  //       //     isLoading = true;
-  //       //   });
-  //       // },
-  //       // onPageFinished: (finish) {
-  //       //   // app.resolve<CustomDialogs>().hideProgressDialog();
-  //       //   setState(() {
-  //       //     isLoading = false;
-  //       //   });
-  //       // },
-  //       onWebResourceError: (error) {
-  //         print(error);
-  //         setState(() {
-  //           // isErroWhileLoading = true;
-  //         });
-  //       },
-  //       javascriptMode: JavascriptMode.unrestricted);
-  // }
+// Future<WebView> getWebView(BuildContext context, String url) async {
+//   // if (!model.isImage) print(model.url);
+//   print(url);
+//   return WebView(
+//       initialUrl: url,
+//       // onPageStarted: (url) {
+//       //   // app.resolve<CustomDialogs>().showProgressDialog(context, "");
+//       //   setState(() {
+//       //     isLoading = true;
+//       //   });
+//       // },
+//       // onPageFinished: (finish) {
+//       //   // app.resolve<CustomDialogs>().hideProgressDialog();
+//       //   setState(() {
+//       //     isLoading = false;
+//       //   });
+//       // },
+//       onWebResourceError: (error) {
+//         print(error);
+//         setState(() {
+//           // isErroWhileLoading = true;
+//         });
+//       },
+//       javascriptMode: JavascriptMode.unrestricted);
+// }
 }

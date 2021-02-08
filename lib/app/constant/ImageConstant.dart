@@ -14,6 +14,8 @@ const String india = "assets/auth/india.png";
 const String back = "assets/auth/back.png";
 const String plusIcon = "assets/diamnow/plusIcon.png";
 const String minusIcon = "assets/diamnow/minusIcon.png";
+const String exclamation = "assets/diamnow/exclamation.png";
+
 const String bussinessCard = "assets/auth/ic_file.png";
 const String photoCard = "assets/auth/ic_card.png";
 const String pdfIcon = "assets/auth/pdf.png";
@@ -39,6 +41,7 @@ const String share = "assets/diamnow/share.png";
 const String diamondIcon = "assets/diamnow/diamondIcon.png";
 const String whatsappIcon = "assets/diamnow/whatsapp.png";
 const String skypeIcon = "assets/diamnow/skype.png";
+const String excelImage = "assets/diamnow/excelImage.png";
 
 //filter
 const String addDemand = "assets/filter/addDemand.png";
@@ -143,6 +146,8 @@ const String searchIcon = "assets/DiamondDetail/search.png";
 const String selectedIcon = "assets/DiamondDetail/selectedIcon.png";
 const String unselectedIcon = "assets/DiamondDetail/unselectedIcon.png";
 const String reset = "assets/Common/Reset.png";
+const String rightArrow = 'assets/Common/rightArrow.png';
+const String leftArrrow = "assets/Common/leftArrow.png";
 
 // MyDemand icons
 const String saved_icon = "assets/diamnow/saved.png";
@@ -185,6 +190,63 @@ const String fingurePrint = "assets/PNShah/ForgetMPIN/fingerprint.png";
 const String mpin = "assets/PNShah/ForgetMPIN/MPIN.png";
 const String tickSelected = "assets/Common/tickSelected.png";
 const String tickUnSelected = "assets/Common/tickunSelected.png";
+const String microphone = "assets/Common/microphone.png";
 
 //Take a Tour screen
-const String homeOverlay1 = "assets/Overlay/HomeOverlay1.png";
+//Dashboard overlay constants
+const String homeOverlay1 = "assets/Overlay/Home/HomeOverlay1.png";
+const String homeOverlay2 = "assets/Overlay/Home/HomeOverlay2.png";
+const String homeOverlay3 = "assets/Overlay/Home/HomeOverlay3.png";
+const String homeOverlay4 = "assets/Overlay/Home/HomeOverlay4.png";
+const String homeOverlay5 = "assets/Overlay/Home/HomeOverlay5.png";
+const String homeOverlay6 = "assets/Overlay/Home/HomeOverlay6.png";
+
+//My account overlay constants
+const String myAccountOverlay1 =
+    "assets/Overlay/MyAccount/MyAccountOverlay1.png";
+const String myAccountOverlay2 =
+    "assets/Overlay/MyAccount/MyAccountOverlay2.png";
+
+//Filter overlay constants
+const String searchOverlay1 = "assets/Overlay/Search/SearchOverlay1.png";
+const String searchOverlay2 = "assets/Overlay/Search/SearchOverlay2.png";
+const String searchOverlay3 = "assets/Overlay/Search/SearchOverlay3.png";
+const String searchOverlay4 = "assets/Overlay/Search/SearchOverlay4.png";
+const String searchOverlay5 = "assets/Overlay/Search/SearchOverlay5.png";
+const String searchOverlay6 = "assets/Overlay/Search/SearchOverlay6.png";
+const String searchOverlay7 = "assets/Overlay/Search/SearchOverlay7.png";
+
+//Diamond list overlay constants
+const String searchResultOverlay0 =
+    "assets/Overlay/SearchResult/SearchResultOverlay0.png";
+const String searchResultOverlay1 =
+    "assets/Overlay/SearchResult/SearchResultOverlay1.png";
+const String searchResultOverlay2 =
+    "assets/Overlay/SearchResult/SearchResultOverlay2.png";
+const String searchResultOverlay3 =
+    "assets/Overlay/SearchResult/SearchResultOverlay3.png";
+const String searchResultOverlay4 =
+    "assets/Overlay/SearchResult/SearchResultOverlay4.png";
+const String searchResultOverlay5 =
+    "assets/Overlay/SearchResult/SearchResultOverlay5.png";
+const String searchResultOverlay6 =
+    "assets/Overlay/SearchResult/SearchResultOverlay6.png";
+const String searchResultOverlay7 =
+    "assets/Overlay/SearchResult/SearchResultOverlay7.png";
+const String searchResultOverlay8 =
+    "assets/Overlay/SearchResult/SearchResultOverlay8.png";
+const String searchResultOverlay9 =
+    "assets/Overlay/SearchResult/SearchResultOverlay9.png";
+
+//Diamond detail overlay constants
+const String diamondDetailOverlay1 =
+    "assets/Overlay/DiamondDetail/DiamondDetailOverlay1.png";
+
+//Compare stone overlay constants
+const String compareOverlay1 =
+    "assets/Overlay/CompareStone/CompareOverlay1.png";
+
+//Offer overlay constants
+const String offerOverlay1 = "assets/Overlay/Offer/OfferOverlay2.png";
+const String offerOverlay2 = "assets/Overlay/Offer/OfferOverlay1.png";
+const String offerOverlay3 = "assets/Overlay/Offer/OfferOverlay3.png";

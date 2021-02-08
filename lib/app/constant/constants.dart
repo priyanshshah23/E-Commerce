@@ -1,4 +1,5 @@
 import 'package:diamnow/app/utils/math_utils.dart';
+import 'package:flutter/services.dart';
 
 const String baseURL = "http://pndevelopapi.democ.in/";
 //const String baseURL = "192.168.0.212:8094/";
@@ -29,7 +30,7 @@ const CODE_ERROR = "E_ERROR";
 const CODE_DEVICE_LOGOUT = "CODE_DEVICE_LOGOUT";
 const CODE_KILL_SWITCH = "CODE_KILL_SWITCH";
 const TOKEN_EXPIRY_CODE = "TOKEN_EXPIRY_CODE";
-const INTERNET_UNAWAILABLE = "INTERNET_UNAWAILABLE";
+const INTERNET_UNAWAILABLE = "No Internet Connection";
 const NO_CONNECTION = "Internet unavailable.";
 const MOBILE_NOT_VERIFIED = "Your mobile is not verified.";
 const SOMETHING_WENT_WRONG = "Something went wrong, please try again later.";
@@ -39,7 +40,7 @@ const successStatusCode = 200;
 const addedSuccesStatusCode = 201;
 const notFoundStatusCode = 404;
 
-const signupURl = "http://pndevelop.democ.in/signup";
+const signupURl = "http://pndevelop.democ.in/device/signup";
 const termConditionUrl = "https://loremipsum.io/";
 const privacyPolicyUrl = "https://loremipsum.io/";
 const aboutUsUrl = "https://loremipsum.io/";
@@ -81,6 +82,9 @@ const NATURE_OF_ORG = "NATURE_OF_ORG";
 //Offer min/max discount
 const num minOfferedDiscount = -5;
 const num maxOfferedDiscount = -70;
+
+const MethodChannel localNotificationPlatform =
+    MethodChannel('dexterx.dev/flutter_local_notifications_example');
 
 class Spacing {
   static num leftPadding = 16.0;
@@ -132,6 +136,7 @@ class MasterCode {
   static const String xray = "XRAY";
   static const String upcoming = "UPCOMING";
   static const String eyecleanStatic = "EYECLEANSTATIC";
+  static const String brownStatic = "BROWNSTATIC";
   static const String newarrivalsgroup = "NEWARRIVALSGROUP";
   static const String newarrivals = "NEWARRIVAL";
   static const String dor = "DOR";
@@ -143,8 +148,13 @@ class MasterCode {
   static const String blackInclusion = "BLACK_INCLUSION";
   static const String docTypePersonal = "DOC_TYPE_PERSONAL";
   static const String docTypeBusiness = "DOC_TYPE_BUSINESS";
-
+  static const String milkyStatic = "MILKYSTATIC";
   // static const String mixTint = "MIX_TINT";
+}
+
+class LocalizationConstant {
+  static const String ENGLISH = "en";
+  static const String DANISH = "da-DK";
 }
 
 class DiamondStatus {
@@ -253,4 +263,15 @@ class NotificationConstant {
   static const MODULE_TYPE_OFFER = 97;
   static const MODULE_TYPE_REQUEST = 98;
   static const MODULE_TYPE_OTHER = 99;
+}
+//Local Notification Identifier
+
+class NotificationIdentifier {
+  static const int offlineStockDownload = 1;
+  static const int offlineOrderSynced = 2;
+}
+
+class AndroidNotificationIdentifier {
+  static const offlineStockDownloadChannelName = "Offline Stock";
+  static const offlineStockDownloadChannelDescription = "Stock";
 }

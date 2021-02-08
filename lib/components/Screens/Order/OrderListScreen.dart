@@ -53,6 +53,7 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
   int moduleType;
   bool isFromDrawer;
   bool hasData = false;
+
   _OrderListScreenState({this.moduleType, this.isFromDrawer});
 
   DiamondConfig diamondConfig;
@@ -103,13 +104,16 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
     Map<String, dynamic> dict = {};
     dict["page"] = page;
     dict["limit"] = DEFAULT_LIMIT;
-    dict["filters"] = {};
+    dict["sort"] = [
+      {"memoNo": "DESC"}
+    ];
+    dict["filter"] = {};
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
-        dict["filters"]["status"] = MemoConstant.MEMO_ORDER;
+        dict["filter"]["status"] = MemoConstant.MEMO_ORDER;
         break;
       case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
-        dict["filters"]["status"] = MemoConstant.MEMO_PURCHASE;
+        dict["filter"]["status"] = MemoConstant.MEMO_PURCHASE;
         break;
     }
 

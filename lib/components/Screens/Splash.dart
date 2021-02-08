@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:collection';
 import 'dart:io';
 
 import 'package:diamnow/app/AppConfiguration/AppNavigation.dart';
@@ -11,13 +10,8 @@ import 'package:diamnow/app/localization/LocalizationHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:lottie/lottie.dart';
-import 'package:package_info/package_info.dart';
-
-import 'Auth/ForgetPassword.dart';
-import 'Version/VersionUpdate.dart';
 
 class Splash extends StatefulWidget {
   static const route = "/splash";
@@ -43,10 +37,14 @@ class _SplashState extends State<Splash> {
     });
   }
 
-  Future openNextScreen() async {
+  Future openNextScreen({bool isOfflineMode = false}) async {
     if (app.resolve<PrefUtils>().isUserLogin()) {
-      SyncManager().callVersionUpdateApi(context, VersionUpdateApi.splash,
-          id: app.resolve<PrefUtils>().getUserDetails().id ?? "");
+      SyncManager().callVersionUpdateApi(
+        context,
+        VersionUpdateApi.splash,
+        id: app.resolve<PrefUtils>().getUserDetails().id ?? "",
+        isOfflineMode: isOfflineMode,
+      );
     } else {
       AppNavigation.shared.movetoLogin(isPopAndSwitch: true);
     }
@@ -123,9 +121,9 @@ class _SplashState extends State<Splash> {
   callSyncApi() {
     if (app.resolve<PrefUtils>().isUserLogin()) {
       SyncManager.instance.callMasterSync(context, () {
-        openNextScreen();
+        openNextScreen(isOfflineMode: true);
       }, () {
-        openNextScreen();
+        openNextScreen(isOfflineMode: true);
       },
           isNetworkError: false,
           isProgress: false,

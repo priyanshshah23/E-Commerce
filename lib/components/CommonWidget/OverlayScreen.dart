@@ -13,7 +13,13 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 class OverlayScreen extends StatefulWidget {
   int moduleType;
   Function finishTakeTour;
-  OverlayScreen(this.moduleType, {this.finishTakeTour});
+  Function(int index) scrollIndex;
+
+  OverlayScreen(
+    this.moduleType, {
+    this.finishTakeTour,
+    this.scrollIndex,
+  });
 
   @override
   _OverlayScreenState createState() => _OverlayScreenState();
@@ -29,7 +35,21 @@ class _OverlayScreenState extends State<OverlayScreen> {
     super.initState();
     if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_HOME) {
       arrOverlays = OverlayscreenModel().getHomeScreenOverlay();
-      print(arrOverlays);
+    } else if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_PROFILE) {
+      arrOverlays = OverlayscreenModel().getAccountScreenOverlay();
+    } else if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
+      arrOverlays = OverlayscreenModel().getFilterOverlay();
+    } else if (widget.moduleType ==
+        DiamondModuleConstant.MODULE_TYPE_DIAMOND_SEARCH_RESULT) {
+      arrOverlays = OverlayscreenModel().getSearchResultOverlay();
+    } else if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_COMPARE) {
+      arrOverlays = OverlayscreenModel().getCompareStoneOverlay();
+    } else if (widget.moduleType ==
+        DiamondModuleConstant.MODULE_TYPE_DIAMOND_DETAIL) {
+      arrOverlays = OverlayscreenModel().getDiamondDetailOverlay();
+    } else if (widget.moduleType ==
+        DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+      arrOverlays = OverlayscreenModel().getOfferOverlay();
     }
   }
 
@@ -37,30 +57,28 @@ class _OverlayScreenState extends State<OverlayScreen> {
   Widget build(BuildContext context) {
     return Container(
       color: appTheme.blackColor.withOpacity(0.5),
-      child: Padding(
-        padding: EdgeInsets.only(top: kBottomNavigationBarHeight),
-        child: Column(
-          children: [
-            Expanded(
-              child: PageView.builder(
-                onPageChanged: (page) {
-                  setState(() {
-                    currentPage = page;
-                  });
-                },
-                controller: controller,
-                itemBuilder: (context, index) {
-                  return arrOverlays[index].isCenter
-                      ? getCenteredColumn(index)
-                      : getColumn(index);
-                },
-                itemCount: arrOverlays.length,
-              ),
+      child: Column(
+        children: [
+          Expanded(
+            child: PageView.builder(
+              onPageChanged: (page) {
+                setState(() {
+                  currentPage = page;
+                  widget.scrollIndex(page);
+                });
+              },
+              controller: controller,
+              itemBuilder: (context, index) {
+                return arrOverlays[index].isCenter
+                    ? getCenteredColumn(index)
+                    : getColumn(index);
+              },
+              itemCount: arrOverlays.length,
             ),
-            // Spacer(),
-            getBottomTab(),
-          ],
-        ),
+          ),
+          // Spacer(),
+          getBottomTab(),
+        ],
       ),
     );
   }
@@ -70,25 +88,22 @@ class _OverlayScreenState extends State<OverlayScreen> {
   }
 
   getColumn(int index) {
-    return Padding(
-      padding: EdgeInsets.only(left: getSize(16), right: getSize(16)),
-      child: Column(
-        mainAxisSize:
-            arrOverlays[index].isCenter ? MainAxisSize.min : MainAxisSize.max,
-        mainAxisAlignment: arrOverlays[index].isBottom
-            ? MainAxisAlignment.end
-            : MainAxisAlignment.start,
-        children: [
-          Padding(
-              padding: EdgeInsets.only(
-                left: getSize(16),
-                right: getSize(16),
-              ),
-              child: Image.asset(
-                arrOverlays[index].imageName,
-                fit: BoxFit.fitHeight,
-              )),
-        ],
+    return Align(
+      alignment: arrOverlays[index].isCenter
+          ? Alignment.center
+          : arrOverlays[index].isTop
+              ? arrOverlays[index].align
+              : Alignment.bottomCenter,
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: num.parse(
+            arrOverlays[index].topPadding.toString(),
+          ),
+        ),
+        child: Image.asset(
+          arrOverlays[index].imageName,
+          fit: BoxFit.scaleDown,
+        ),
       ),
     );
   }
@@ -102,8 +117,9 @@ class _OverlayScreenState extends State<OverlayScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              margin: EdgeInsets.only(top: getSize(10), left: getSize(0)),
-              width: getSize(80),
+              margin: EdgeInsets.only(top: getSize(10)),
+              width: getSize(60),
+              height: getSize(40),
               child: AppButton.flat(
                 onTap: () {
                   setTakeaTourValueAsTrue();
@@ -114,15 +130,19 @@ class _OverlayScreenState extends State<OverlayScreen> {
               ),
             ),
             arrOverlays.length > 1
-                ? SmoothPageIndicator(
-                    controller: controller,
-                    count: arrOverlays.length,
-                    effect:
-                        JumpingDotEffect(activeDotColor: appTheme.colorPrimary),
+                ? Padding(
+                    padding: EdgeInsets.only(top: getSize(10)),
+                    child: SmoothPageIndicator(
+                      controller: controller,
+                      count: arrOverlays.length,
+                      effect: JumpingDotEffect(
+                          activeDotColor: appTheme.colorPrimary),
+                    ),
                   )
                 : SizedBox(),
             Container(
-              width: getSize(80),
+              width: getSize(60),
+              height: getSize(40),
               margin: EdgeInsets.only(top: getSize(15), left: getSize(0)),
               decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
               child: AppButton.flat(
@@ -132,6 +152,7 @@ class _OverlayScreenState extends State<OverlayScreen> {
                       setTakeaTourValueAsTrue();
                       widget.finishTakeTour();
                     } else {
+                      widget.scrollIndex(currentPage + 1);
                       controller.animateToPage(currentPage + 1,
                           duration: Duration(milliseconds: 500),
                           curve: Curves.easeInOut);
@@ -152,6 +173,27 @@ class _OverlayScreenState extends State<OverlayScreen> {
   setTakeaTourValueAsTrue() {
     if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_HOME) {
       app.resolve<PrefUtils>().saveBoolean(PrefUtils().keyHomeTour, true);
+    } else if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_PROFILE) {
+      app.resolve<PrefUtils>().saveBoolean(PrefUtils().keyMyAccountTour, true);
+    } else if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
+      app.resolve<PrefUtils>().saveBoolean(PrefUtils().keySearchTour, true);
+    } else if (widget.moduleType ==
+        DiamondModuleConstant.MODULE_TYPE_DIAMOND_SEARCH_RESULT) {
+      app
+          .resolve<PrefUtils>()
+          .saveBoolean(PrefUtils().keySearchResultTour, true);
+    } else if (widget.moduleType ==
+        DiamondModuleConstant.MODULE_TYPE_DIAMOND_DETAIL) {
+      app
+          .resolve<PrefUtils>()
+          .saveBoolean(PrefUtils().keyDiamondDetailTour, true);
+    } else if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_COMPARE) {
+      app
+          .resolve<PrefUtils>()
+          .saveBoolean(PrefUtils().keyCompareStoneTour, true);
+    } else if (widget.moduleType ==
+        DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+      app.resolve<PrefUtils>().saveBoolean(PrefUtils().keyOfferTour, true);
     }
   }
 }

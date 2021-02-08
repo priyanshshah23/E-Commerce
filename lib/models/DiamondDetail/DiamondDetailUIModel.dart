@@ -1,3 +1,5 @@
+import 'package:diamnow/app/localization/app_locales.dart';
+
 class DiamondDetailUIAPIKeys {
   static const String pricePerCarat = "ctPr";
   static const String amount = "amt";
@@ -50,7 +52,9 @@ class DiamondDetailUIModel {
   });
 
   DiamondDetailUIModel.fromJson(Map<String, dynamic> json) {
-    title = json['title'];
+    title = R.string?.dynamickeys?.byKey(
+      json['title'],
+    );
     sequence = json['sequence'];
     if (json['parameters'] != null) {
       parameters = new List<DiamondDetailUIComponentModel>();
@@ -95,7 +99,9 @@ class DiamondDetailUIComponentModel {
   });
 
   DiamondDetailUIComponentModel.fromJson(Map<String, dynamic> json) {
-    title = json['title'];
+    title = R.string?.dynamickeys?.byKey(
+      json['title'],
+    );
     apiKey = json['apiKey'];
     sequence = json['sequence'];
     isActive = json["isActive"];

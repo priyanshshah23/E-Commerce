@@ -12,6 +12,7 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/SaveAndSearchBotto
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
+import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:diamnow/modules/Filter/gridviewlist/FilterRequest.dart';
 import 'package:flutter/cupertino.dart';
@@ -54,7 +55,9 @@ Future showWatchListDialog(BuildContext context, List<DiamondModel> diamondList,
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext context, int index) {
                         return DiamondItemWidget(
-                            item: diamondList[index], actionClick: actionClick);
+                          item: diamondList[index],
+                          actionClick: actionClick,
+                        );
                       },
                     )
                   : Container(
@@ -1055,8 +1058,12 @@ Widget setInvoiceDropDown(
     );
 
 Future openBottomSheetForSavedSearch(
-    BuildContext context, Map<String, dynamic> req,
-    {isSearch = false, SavedSearchModel savedSearchModel}) {
+  BuildContext context,
+  Map<String, dynamic> req, {
+  isSearch = false,
+  SavedSearchModel savedSearchModel,
+  List<FormBaseModel> filterList,
+}) {
   return showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -1089,6 +1096,7 @@ Future openBottomSheetForSavedSearch(
               Map<String, dynamic> dict = new HashMap();
               dict["filterId"] = diamondListResp.data.savedSearchModel.id;
               dict["filters"] = req;
+              dict["filterModel"] = filterList;
               dict[ArgumentConstant.ModuleType] =
                   DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
               NavigationUtilities.pushRoute(DiamondListScreen.route,
@@ -1098,7 +1106,6 @@ Future openBottomSheetForSavedSearch(
           }).catchError((onError) {
             app.resolve<CustomDialogs>().confirmDialog(
                   context,
-                  title: R.string.commonString.error,
                   desc: onError.message,
                   positiveBtnTitle: R.string.commonString.ok,
                 );

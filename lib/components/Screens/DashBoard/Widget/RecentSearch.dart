@@ -26,7 +26,7 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
         ? SizedBox()
         : Padding(
             padding: EdgeInsets.only(
-              top: getSize(20),
+              top: getSize(8),
               right: getSize(Spacing.rightPadding),
             ),
             child: Column(
@@ -55,7 +55,7 @@ class _RecentSearchWidgetState extends State<RecentSearchWidget> {
                   ],
                 ),
                 SizedBox(
-                  height: getSize(20),
+                  height: getSize(8),
                 ),
                 Container(
                   height: getSize(150),

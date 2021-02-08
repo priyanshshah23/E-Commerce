@@ -1,337 +1,337 @@
 [
-    {
-        "title": "Basic Details",
+  {
+    "title": "basicDetail",
+    "sequence": 1,
+    "isExpand": true,
+    "columns": 1,
+    "orientation": "h",
+    "parameters": [
+      {
+        "title": "stoneID",
+        "apiKey": "vStnId",
         "sequence": 1,
-        "isExpand": true,
-        "columns": 1,
-        "orientation": "h",
-        "parameters": [
-            {
-                "title": "Stone ID",
-                "apiKey": "vStnId",
-                "sequence": 1,
-                "isActive": true
-            },
-            {
-                "title": "Shape",
-                "apiKey": "shpNm",
-                "sequence": 2,
-                "isActive": true
-            },
-            {
-                "title": "Carat Range",
-                "apiKey": "crt",
-                "sequence": 3,
-                "isActive": true
-            },
-            {
-                "title": "Color Shade",
-                "apiKey": "shdNm",
-                "sequence": 4,
-                "isActive": true
-            },
-            {
-                "title": "Cut",
-                "apiKey": "cutNm",
-                "sequence": 5,
-                "isActive": true
-            },
-            {
-                "title": "Polish",
-                "apiKey": "polNm",
-                "sequence": 6,
-                "isActive": true
-            },
-            {
-                "title": "Symmentry",
-                "apiKey": "symNm",
-                "sequence": 7,
-                "isActive": true
-            },
-            {
-                "title": "Fluorescence",
-                "apiKey": "fluNm",
-                "sequence": 8,
-                "isActive": true
-            },
-            {
-                "title": "Lab",
-                "apiKey": "lbNm",
-                "sequence": 9,
-                "isActive": true
-            },
-            {
-                "title": "Certificate Number",
-                "apiKey": "rptNo",
-                "sequence": 10,
-                "isActive": true
-            },
-            {
-                "title": "Rap(%)",
-                "apiKey": "rap",
-                "sequence": 11,
-                "isActive": true,
-                "isPercentage": false
-            },
-            {
-                "title": "Dis%",
-                "apiKey": "back",
-                "sequence": 11,
-                "isActive": true,
-                "isPercentage": true
-            },
-            {
-                "title": "Price/Ct",
-                "apiKey": "ctPr",
-                "sequence": 12,
-                "isActive": true
-            },
-            {
-                "title": "Amount",
-                "apiKey": "amt",
-                "sequence": 13,
-                "isActive": true
-            },
-            {
-                "title": "Milky",
-                "apiKey": "mlkNm",
-                "sequence": 14,
-                "isActive": true
-            },
-            {
-                "title": "Eye Clean",
-                "apiKey": "eClnNm",
-                "sequence": 15,
-                "isActive": true
-            },
-            {
-                "title": "Arrivals",
-                "apiKey": "",
-                "sequence": 16,
-                "isActive": true
-            },
-            {
-                "title": "Location",
-                "apiKey": "locNm",
-                "sequence": 17,
-                "isActive": true
-            },
-            {
-                "title": "Clarity",
-                "apiKey": "clrNm",
-                "sequence": 18,
-                "isActive": true
-            },
-            {
-                "title": "Brown",
-                "apiKey": "shd",
-                "sequence": 19,
-                "isActive": true
-            },
-            {
-                "title": "Mix Tinge",
-                "apiKey": "mixTintNm",
-                "sequence": 20,
-                "isActive": true
-            }
-        ]
-    },
-    {
-        "title": "Measurements",
+        "isActive": true
+      },
+      {
+        "title": "shape",
+        "apiKey": "shpNm",
         "sequence": 2,
-        "isExpand": true,
-        "columns": 1,
-        "orientation": "h",
-        "parameters": [
-            {
-                "title": "Dimensions (MM)",
-                "apiKey": "",
-                "sequence": 1,
-                "isActive": true
-            },
-            {
-                "title": "Length",
-                "apiKey": "length",
-                "sequence": 1,
-                "isActive": true
-            },
-            {
-                "title": "Width",
-                "apiKey": "width",
-                "sequence": 2,
-                "isActive": true
-            },
-            {
-                "title": "Depth",
-                "apiKey": "height",
-                "sequence": 3,
-                "isActive": true
-            },
-            {
-                "title": "Ratio",
-                "apiKey": "ratio",
-                "sequence": 4,
-                "isActive": true
-            },
-            {
-                "title": "Depth%",
-                "apiKey": "depPer",
-                "sequence": 5,
-                "isActive": true,
-                "isPercentage": true
-            },
-            {
-                "title": "Table%",
-                "apiKey": "tblPer",
-                "sequence": 6,
-                "isActive": true,
-                "isPercentage": true
-            },
-            {
-                "title": "Crown Height%",
-                "apiKey": "cHgt",
-                "sequence": 7,
-                "isActive": true,
-                "isPercentage": true
-            },
-            {
-                "title": "Crown Angle",
-                "apiKey": "cAng",
-                "sequence": 8,
-                "isActive": true
-            },
-            {
-                "title": "Pavilion Angle",
-                "apiKey": "pAng",
-                "sequence": 9,
-                "isActive": true
-            },
-            {
-                "title": "Girdle",
-                "apiKey": "girdleStr",
-                "sequence": 10,
-                "isActive": true
-            },
-            {
-                "title": "Girdle Condition",
-                "apiKey": "grdlCondNm",
-                "sequence": 11,
-                "isActive": true
-            },
-            {
-                "title": "Culet",
-                "apiKey": "cultNm",
-                "sequence": 12,
-                "isActive": true
-            },
-            {
-                "title": "Culet Condition",
-                "apiKey": "cultCondNm",
-                "sequence": 13,
-                "isActive": true
-            },
-            {
-                "title": "Pavilion Depth (%)",
-                "apiKey": "pHgt",
-                "sequence": 14,
-                "isActive": true
-            },
-            {
-                "title": "Star Length",
-                "apiKey": "strLn",
-                "sequence": 15,
-                "isActive": true
-            },
-            {
-                "title": "Lower Half",
-                "apiKey": "lwrHal",
-                "sequence": 16,
-                "isActive": true
-            },
-            {
-                "title": "Girdle Faceted",
-                "apiKey": "grdlPer",
-                "sequence": 17,
-                "isActive": true
-            },
-            {
-                "title": "Culet",
-                "apiKey": "cultNm",
-                "sequence": 18,
-                "isActive": true
-            }
-        ]
-    },
-    {
-        "title": "Inclusion Details",
+        "isActive": true
+      },
+      {
+        "title": "caratRange",
+        "apiKey": "crt",
         "sequence": 3,
-        "isExpand": true,
-        "columns": 1,
-        "orientation": "v",
-        "parameters": [
-            {
-                "title": "H & A",
-                "apiKey": "hANm",
-                "sequence": 1,
-                "isActive": true
-            },
-            {
-                "title": "Other Inclusion",
-                "apiKey": "wInclNm",
-                "sequence": 2,
-                "isActive": true
-            },
-            {
-                "title": "Natural",
-                "apiKey": "natural",
-                "sequence": 3,
-                "isActive": true
-            },
-            {
-                "title": "Extra Facet",
-                "apiKey": "eFact",
-                "sequence": 4,
-                "isActive": true
-            },
-            {
-                "title": "Black Inclusion",
-                "apiKey": "blkIncNm",
-                "sequence": 5,
-                "isActive": true
-            },
-            {
-                "title": "Open Inclusion",
-                "apiKey": "opIncNm",
-                "sequence": 6,
-                "isActive": true
-            }
-        ]
-    },
-    {
-        "title": "Other Information",
+        "isActive": true
+      },
+      {
+        "title": "colorShadeTitle",
+        "apiKey": "shdNm",
         "sequence": 4,
-        "isExpand": true,
-        "columns": 1,
-        "orientation": "v",
-        "parameters": [
-            {
-                "title": "Lab Comment",
-                "apiKey": "comments",
-                "sequence": 1,
-                "isActive": true
-            },
-            {
-                "title": "Key to Symbol",
-                "apiKey": "kToSStr",
-                "sequence": 2,
-                "isActive": true
-            },
-            {
-                "title": "Laser Ins",
-                "apiKey": "lsrInc",
-                "sequence": 3,
-                "isActive": true
-            }
-        ]
-    }
+        "isActive": true
+      },
+      {
+        "title": "cutTitle",
+        "apiKey": "cutNm",
+        "sequence": 5,
+        "isActive": true
+      },
+      {
+        "title": "polishTitle",
+        "apiKey": "polNm",
+        "sequence": 6,
+        "isActive": true
+      },
+      {
+        "title": "symmentryTitle",
+        "apiKey": "symNm",
+        "sequence": 7,
+        "isActive": true
+      },
+      {
+        "title": "fluorescenceTitle",
+        "apiKey": "fluNm",
+        "sequence": 8,
+        "isActive": true
+      },
+      {
+        "title": "labTitle",
+        "apiKey": "lbNm",
+        "sequence": 9,
+        "isActive": true
+      },
+      {
+        "title": "certiTitle",
+        "apiKey": "rptNo",
+        "sequence": 10,
+        "isActive": true
+      },
+      {
+        "title": "rapTitle",
+        "apiKey": "rap",
+        "sequence": 11,
+        "isActive": true,
+        "isPercentage": false
+      },
+      {
+        "title": "disTitle",
+        "apiKey": "back",
+        "sequence": 11,
+        "isActive": true,
+        "isPercentage": true
+      },
+      {
+        "title": "priceAndCt",
+        "apiKey": "ctPr",
+        "sequence": 12,
+        "isActive": true
+      },
+      {
+        "title": "amountTitle",
+        "apiKey": "amt",
+        "sequence": 13,
+        "isActive": true
+      },
+      {
+        "title": "milkyTitle",
+        "apiKey": "mlkNm",
+        "sequence": 14,
+        "isActive": true
+      },
+      {
+        "title": "eyeCleanTitle",
+        "apiKey": "eClnNm",
+        "sequence": 15,
+        "isActive": true
+      },
+      {
+        "title": "arrivalsTitle",
+        "apiKey": "",
+        "sequence": 16,
+        "isActive": true
+      },
+      {
+        "title": "locationTitle",
+        "apiKey": "locNm",
+        "sequence": 17,
+        "isActive": true
+      },
+      {
+        "title": "clarityTitle",
+        "apiKey": "clrNm",
+        "sequence": 18,
+        "isActive": true
+      },
+      {
+        "title": "brownTitle",
+        "apiKey": "shd",
+        "sequence": 19,
+        "isActive": true
+      },
+      {
+        "title": "mixTingeTitle",
+        "apiKey": "mixTintNm",
+        "sequence": 20,
+        "isActive": true
+      }
+    ]
+  },
+  {
+    "title": "measurementTitle",
+    "sequence": 2,
+    "isExpand": true,
+    "columns": 1,
+    "orientation": "h",
+    "parameters": [
+      {
+        "title": "dimensionTitle",
+        "apiKey": "",
+        "sequence": 1,
+        "isActive": true
+      },
+      {
+        "title": "lengthTitle",
+        "apiKey": "length",
+        "sequence": 1,
+        "isActive": true
+      },
+      {
+        "title": "widthTitle",
+        "apiKey": "width",
+        "sequence": 2,
+        "isActive": true
+      },
+      {
+        "title": "depthTitleWithoutPerc",
+        "apiKey": "height",
+        "sequence": 3,
+        "isActive": true
+      },
+      {
+        "title": "rationTitle",
+        "apiKey": "ratio",
+        "sequence": 4,
+        "isActive": true
+      },
+      {
+        "title": "depthTitle",
+        "apiKey": "depPer",
+        "sequence": 5,
+        "isActive": true,
+        "isPercentage": true
+      },
+      {
+        "title": "tableTitle",
+        "apiKey": "tblPer",
+        "sequence": 6,
+        "isActive": true,
+        "isPercentage": true
+      },
+      {
+        "title": "crownHeightTitle",
+        "apiKey": "cHgt",
+        "sequence": 7,
+        "isActive": true,
+        "isPercentage": true
+      },
+      {
+        "title": "crownAngleTitle",
+        "apiKey": "cAng",
+        "sequence": 8,
+        "isActive": true
+      },
+      {
+        "title": "pavilionAngleTitle",
+        "apiKey": "pAng",
+        "sequence": 9,
+        "isActive": true
+      },
+      {
+        "title": "gridleTitle",
+        "apiKey": "girdleStr",
+        "sequence": 10,
+        "isActive": true
+      },
+      {
+        "title": "girdleConditionTitle",
+        "apiKey": "grdlCondNm",
+        "sequence": 11,
+        "isActive": true
+      },
+      {
+        "title": "culetTitle",
+        "apiKey": "cultNm",
+        "sequence": 12,
+        "isActive": true
+      },
+      {
+        "title": "cluetConditionTitle",
+        "apiKey": "cultCondNm",
+        "sequence": 13,
+        "isActive": true
+      },
+      {
+        "title": "pavDepthTitle",
+        "apiKey": "pHgt",
+        "sequence": 14,
+        "isActive": true
+      },
+      {
+        "title": "starLengthTitle",
+        "apiKey": "strLn",
+        "sequence": 15,
+        "isActive": true
+      },
+      {
+        "title": "lowerHalfTitle",
+        "apiKey": "lwrHal",
+        "sequence": 16,
+        "isActive": true
+      },
+      {
+        "title": "gridleFacetedTitle",
+        "apiKey": "grdlPer",
+        "sequence": 17,
+        "isActive": true
+      },
+      {
+        "title": "culetTitle",
+        "apiKey": "cultNm",
+        "sequence": 18,
+        "isActive": true
+      }
+    ]
+  },
+  {
+    "title": "inclusionDetail",
+    "sequence": 3,
+    "isExpand": true,
+    "columns": 1,
+    "orientation": "v",
+    "parameters": [
+      {
+        "title": "hAndATitle",
+        "apiKey": "hANm",
+        "sequence": 1,
+        "isActive": true
+      },
+      {
+        "title": "otherInclusionTitle",
+        "apiKey": "wInclNm",
+        "sequence": 2,
+        "isActive": true
+      },
+      {
+        "title": "naturalTitle",
+        "apiKey": "natural",
+        "sequence": 3,
+        "isActive": true
+      },
+      {
+        "title": "extraFacetTitle",
+        "apiKey": "eFact",
+        "sequence": 4,
+        "isActive": true
+      },
+      {
+        "title": "blackInclusionTitle",
+        "apiKey": "blkIncNm",
+        "sequence": 5,
+        "isActive": true
+      },
+      {
+        "title": "openInclusionTitle",
+        "apiKey": "opIncNm",
+        "sequence": 6,
+        "isActive": true
+      }
+    ]
+  },
+  {
+    "title": "otherInformationTitle",
+    "sequence": 4,
+    "isExpand": true,
+    "columns": 1,
+    "orientation": "v",
+    "parameters": [
+      {
+        "title": "labComments",
+        "apiKey": "comments",
+        "sequence": 1,
+        "isActive": true
+      },
+      {
+        "title": "keyToSymbol",
+        "apiKey": "kToSStr",
+        "sequence": 2,
+        "isActive": true
+      },
+      {
+        "title": "laserInsTitle",
+        "apiKey": "lsrInc",
+        "sequence": 3,
+        "isActive": true
+      }
+    ]
+  }
 ]

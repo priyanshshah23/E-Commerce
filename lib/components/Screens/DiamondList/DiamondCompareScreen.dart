@@ -1,8 +1,10 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/AnalyticsReport.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
+import 'package:diamnow/components/CommonWidget/OverlayScreen.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/DiamondDetail/DiamondDetailUIModel.dart';
@@ -78,6 +80,13 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setCompareList();
     });
+
+    AnalyticsReport.shared.sendAnalyticsData(
+      buildContext: context,
+      page: PageAnalytics.COMPARE,
+      section: SectionAnalytics.COMPARE,
+      action: ActionAnalytics.OPEN,
+    );
     // sc = ScrollController();
     _controllers = LinkedScrollControllerGroup();
   }
@@ -204,8 +213,10 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
                       SizedBox(
                         width: getSize(5),
                       ),
-                      Text("Show only difference",
-                          style: appTheme.blackNormal14TitleColorblack,)
+                      Text(
+                        "Show only difference",
+                        style: appTheme.blackNormal14TitleColorblack,
+                      )
                     ],
                   ),
 
@@ -584,55 +595,71 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: appTheme.whiteColor,
-      appBar: getAppBar(
-        context,
-        R.string.screenTitle.compareStones,
-        textalign: TextAlign.left,
-        bgColor: appTheme.whiteColor,
-        leadingButton: getBackButton(context),
-        centerTitle: false,
-        actionItems: getToolbarItem(),
-      ),
-      bottomNavigationBar: getBottomTab(),
-      body: SingleChildScrollView(
-        child: Container(
-          height: viewHeight,
-          child: Padding(
-            padding: EdgeInsets.only(left: getSize(20), right: getSize(20)),
-            child: Directionality(
-              textDirection: TextDirection.ltr,
-              child: compareDetailList.length == 0
-                  ? Container()
-                  : ReorderableListView(
-                      onReorder: (int oldIndex, int newIndex) {
-                        setState(
-                          () {
-                            if (newIndex > oldIndex) {
-                              newIndex -= 1;
-                            }
-                            final DiamondCompare item =
-                                compareDetailList[oldIndex];
-                            compareDetailList.removeAt(oldIndex);
-                            compareDetailList.insert(newIndex, item);
+    return Stack(
+      children: [
+        Scaffold(
+          backgroundColor: appTheme.whiteColor,
+          appBar: getAppBar(
+            context,
+            R.string.screenTitle.compareStones,
+            textalign: TextAlign.left,
+            bgColor: appTheme.whiteColor,
+            leadingButton: getBackButton(context),
+            centerTitle: false,
+            actionItems: getToolbarItem(),
+          ),
+          bottomNavigationBar: getBottomTab(),
+          body: SingleChildScrollView(
+            child: Container(
+              height: viewHeight,
+              child: Padding(
+                padding: EdgeInsets.only(left: getSize(20), right: getSize(20)),
+                child: Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: compareDetailList.length == 0
+                      ? Container()
+                      : ReorderableListView(
+                          onReorder: (int oldIndex, int newIndex) {
+                            setState(
+                              () {
+                                if (newIndex > oldIndex) {
+                                  newIndex -= 1;
+                                }
+                                final DiamondCompare item =
+                                    compareDetailList[oldIndex];
+                                compareDetailList.removeAt(oldIndex);
+                                compareDetailList.insert(newIndex, item);
+                              },
+                            );
                           },
-                        );
-                      },
-                      scrollDirection: Axis.horizontal,
-                      padding: EdgeInsets.symmetric(horizontal: 8.0),
-                      children: List.generate(
-                        compareDetailList.length,
-                        (index) {
-                          return getDiamondCompareItem(index,
-                              Key(index.toString()), compareDetailList[index]);
-                        },
-                      ),
-                    ),
+                          scrollDirection: Axis.horizontal,
+                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          children: List.generate(
+                            compareDetailList.length,
+                            (index) {
+                              return getDiamondCompareItem(
+                                  index,
+                                  Key(index.toString()),
+                                  compareDetailList[index]);
+                            },
+                          ),
+                        ),
+                ),
+              ),
             ),
           ),
         ),
-      ),
+        (app.resolve<PrefUtils>().getBool(PrefUtils().keyCompareStoneTour) ==
+                false)
+            ? OverlayScreen(
+                DiamondModuleConstant.MODULE_TYPE_COMPARE,
+                finishTakeTour: () {
+                  setState(() {});
+                },
+                scrollIndex: (index) {},
+              )
+            : SizedBox(),
+      ],
     );
   }
 

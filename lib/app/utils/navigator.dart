@@ -15,7 +15,8 @@ import 'package:diamnow/components/Screens/Auth/TabBarDemo.dart';
 import 'package:diamnow/components/Screens/Auth/UploadKYC.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
-import 'package:diamnow/components/Screens/DiamondDetail/diamondDeepDetailScreen.dart';
+import 'package:diamnow/components/Screens/DiamondDetail/DiamondImageBrowserScreen.dart';
+import 'package:diamnow/components/Screens/DiamondDetail/DiamondDeepDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
@@ -25,12 +26,15 @@ import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
 import 'package:diamnow/components/Screens/MyDemand/MyDemandScreen.dart';
 import 'package:diamnow/components/Screens/Notification/Notifications.dart';
+import 'package:diamnow/components/Screens/OfflineSearchHistory/OfflineSearchHistory.dart';
 import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
+import 'package:diamnow/components/Screens/PriceCalculator/PriceCalculator.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
 import 'package:diamnow/components/Screens/Search/Search.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
 import 'package:diamnow/components/Screens/Version/VersionUpdate.dart';
+import 'package:diamnow/components/Screens/VoiceSearch/VoiceSearch.dart';
 import 'package:flutter/material.dart';
 
 import 'fade_route.dart';
@@ -148,8 +152,21 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case HomeScreen.route:
       screen = HomeScreen();
       break;
+    case VoiceSearch.route:
+      screen = VoiceSearch();
+      break;
+
+    case OfflineSearchHistory.route:
+      screen = OfflineSearchHistory();
+      break;
     case FilterScreen.route:
       screen = FilterScreen(arguments);
+      break;
+    case DiamondImageBrowserScreen.route:
+      screen = DiamondImageBrowserScreen(arguments);
+      break;
+    case PriceCalculator.route:
+      screen = PriceCalculator(arguments);
       break;
     case GuestSignInScreen.route:
       screen = GuestSignInScreen();
@@ -200,7 +217,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       screen = ResetPassword(arguments);
       break;
     case PasswordResetSuccessfully.route:
-      screen = PasswordResetSuccessfully(arguments: arguments,);
+      screen = PasswordResetSuccessfully(
+        arguments: arguments,
+      );
       break;
     case ProfileList.route:
       screen = ProfileList(arguments);
@@ -229,7 +248,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       screen = SearchScreen(arguments);
       break;
     case SignInWithMPINScreen.route:
-      screen = SignInWithMPINScreen(arguments: arguments,);
+      screen = SignInWithMPINScreen(
+        arguments: arguments,
+      );
       break;
     case ForgetMPIN.route:
       screen = ForgetMPIN();

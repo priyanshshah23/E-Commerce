@@ -926,7 +926,7 @@ class CompanyInformationState extends State<CompanyInformation>
     }).catchError(
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            title: R.string.commonString.error,
+            
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
@@ -993,7 +993,7 @@ class CompanyInformationState extends State<CompanyInformation>
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(
           context,
-          title: R.string.commonString.error,
+          
           desc: onError.message,
           positiveBtnTitle: R.string.commonString.btnTryAgain,
           onClickCallback: (buttonType) {
@@ -1065,7 +1065,7 @@ class CompanyInformationState extends State<CompanyInformation>
     }).catchError(
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            title: R.string.commonString.error,
+            
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
@@ -1133,7 +1133,7 @@ class CompanyInformationState extends State<CompanyInformation>
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-            title: R.string.commonString.error,
+            
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.btnTryAgain,
           );
@@ -1196,7 +1196,7 @@ class CompanyInformationState extends State<CompanyInformation>
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-            title: R.string.commonString.error,
+           
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.btnTryAgain,
           );

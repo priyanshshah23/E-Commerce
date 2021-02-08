@@ -1,86 +1,138 @@
 [
   {
-    "title": "Default",
+    "title": "defaultTitle",
     "isSelected": true,
     "icon": "filterUnionArrow.png",
     "isActive": true,
-    "apiKey": ""
+    "apiKey": "",
+    "request": null
   },
   {
-    "title": "New Diamonds",
+    "title": "newDiamondsTitle",
     "isSelected": false,
     "icon": "filterRightArrow.png",
     "isActive": false,
-    "apiKey": ""
+    "apiKey": "",
+    "request": null
   },
   {
-    "title": "Price Low to High",
+    "title": "priceLowToHigh",
     "isSelected": false,
     "icon": "filterUpArrow.png",
     "isActive": true,
-    "apiKey": "amt ASC"
+    "apiKey": "amt ASC",
+    "request": [
+      {
+        "amt": "ASC"
+      }
+    ]
   },
   {
-    "title": "Price High to Low",
+    "title": "priceHighToLow",
     "isSelected": false,
     "icon": "filterDownArrow.png",
     "isActive": true,
-    "apiKey": "amt DESC"
+    "apiKey": "amt DESC",
+    "request": [
+      {
+        "amt": "DESC"
+      }
+    ]
   },
   {
-    "title": "Discount Low to High",
+    "title": "disLowToHigh",
     "isSelected": false,
     "icon": "filterUpArrow.png",
     "isActive": true,
-    "apiKey": "back ASC"
+    "apiKey": "back ASC",
+    "request": [
+      {
+        "back": "ASC"
+      }
+    ]
   },
   {
-    "title": "Discount High to Low",
+    "title": "disHighToLow",
     "isSelected": false,
     "icon": "filterDownArrow.png",
     "isActive": true,
-    "apiKey": "back DESC"
+    "apiKey": "back DESC",
+    "request": [
+      {
+        "back": "DESC"
+      }
+    ]
   },
   {
-    "title": "Color Low to High",
+    "title": "colorLowToHigh",
     "isSelected": false,
     "icon": "filterUpArrow.png",
     "isActive": true,
-    "apiKey": "colNm ASC"
+    "apiKey": "colNm ASC",
+    "request": [
+      {
+        "colNm": "ASC"
+      }
+    ]
   },
   {
-    "title": "Color High to Low",
+    "title": "colorHighToLow",
     "isSelected": false,
     "icon": "filterDownArrow.png",
     "isActive": true,
-    "apiKey": "colNm DESC"
+    "apiKey": "colNm DESC",
+    "request": [
+      {
+        "colNm": "DESC"
+      }
+    ]
   },
   {
-    "title": "Carat Low to High",
+    "title": "caratLowToHigh",
     "isSelected": false,
     "icon": "filterUpArrow.png",
     "isActive": true,
-    "apiKey": "crt ASC"
+    "apiKey": "crt ASC",
+    "request": [
+      {
+        "crt": "ASC"
+      }
+    ]
   },
   {
-    "title": "Carat High to Low",
+    "title": "caratHighToLow",
     "isSelected": false,
     "icon": "filterDownArrow.png",
     "isActive": true,
-    "apiKey": "crt DESC"
+    "apiKey": "crt DESC",
+    "request": [
+      {
+        "crt": "DESC"
+      }
+    ]
   },
   {
-    "title": "Clarity Low to High",
+    "title": "clarityLowToHigh",
     "isSelected": false,
     "icon": "filterUpArrow.png",
     "isActive": true,
-    "apiKey": "clrNm ASC"
+    "apiKey": "clrNm ASC",
+    "request": [
+      {
+        "clrNm": "ASC"
+      }
+    ]
   },
   {
-    "title": "Clarity High to Low",
+    "title": "clarityHighToLow",
     "isSelected": false,
     "icon": "filterDownArrow.png",
     "isActive": true,
-    "apiKey": "clrNm DESC"
+    "apiKey": "clrNm DESC",
+    "request": [
+      {
+        "clrNm": "DESC"
+      }
+    ]
   }
 ]

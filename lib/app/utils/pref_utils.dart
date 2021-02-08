@@ -7,6 +7,7 @@ import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/NotificationRedirection.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
+import 'package:diamnow/models/Dashboard/DashboardModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
@@ -36,11 +37,14 @@ class PrefUtils {
   String get keyIsShowThemeSelection => "keyIsShowThemeSelection";
 
   String get keyToSetBiometricenabled => "keyToSetBiometricenabled";
+
   String get keyToSetMpinenabled => "keyToSetMpinenabled";
 
   String get FILE_DEVIDE_INFO => "deviceDetail";
 
   String get keyMasterSyncDate => "keyMasterSyncDate";
+
+  String get keyForLocalization => "keyGetLocalization";
 
   String get keyUser => "keyUser";
 
@@ -60,6 +64,18 @@ class PrefUtils {
 
   //Take A Tour
   String get keyHomeTour => "keyHomeTour";
+  String get keyMyAccountTour => "keyMyAccountTour";
+  String get keySearchTour => "keySearchTour";
+  String get keySearchResultTour => "keySearchResultTour";
+  String get keyDiamondDetailTour => "keyDiamondDetailTour";
+  String get keyCompareStoneTour => "keyCompareStoneTour";
+  String get keyOfferTour => "keyOfferTour";
+
+  // Dashboard
+  String get keyDashboard => "keyDashboard";
+
+  //Store filter
+  String get keyFilter => "keyFilter";
 
   bool isHomeVisible;
 
@@ -204,11 +220,54 @@ class PrefUtils {
   }
 
   String getLocalization() {
-    return getString(keyLanguage);
+    return getString(keyLanguage) ?? "";
+  }
+
+  void saveFilterOffline(Map<String, dynamic> dictFilter) {
+    _preferences.setString(keyFilter, json.encode(dictFilter));
+  }
+
+  Map<String, dynamic> getFilterOffline() {
+    var data = _preferences.getString(keyFilter);
+    if (data != null) {
+      return json.decode(data);
+    }
+    return null;
   }
 
   void saveMasterSyncDate(String masterSyncDate) {
     _preferences.setString(keyMasterSyncDate, masterSyncDate);
+  }
+
+  Future<void> saveLocalization(String languageCode) async {
+    await _preferences.setString(keyForLocalization, languageCode);
+  }
+
+  String getLocalizationLanguage() {
+    String str = getString(keyForLocalization);
+    if (!isNullEmptyOrFalse(str)) {
+      return str;
+    } else {
+      return LocalizationConstant.ENGLISH;
+    }
+  }
+
+  // Store Dashboard Data
+  Future<void> saveDashboardDetails(DashboardModel dashboardModel) async {
+    await _preferences.setString(
+        keyDashboard, json.encode(dashboardModel.toJson()));
+  }
+
+  DashboardModel getDashboardDetails() {
+    var data = _preferences.getString(keyDashboard);
+    if (data != null) {
+      var dashboardJson = json.decode(data);
+      return dashboardJson != null
+          ? new DashboardModel.fromJson(dashboardJson)
+          : null;
+    }
+
+    return null;
   }
 
 // User Getter setter
@@ -242,12 +301,12 @@ class PrefUtils {
         permissions.data.length > 0) {
       permissions.data.forEach((element) {
         if (element.module == module) {
-          element.view = element.permissions?.view ?? false;
-          element.insert = element.permissions?.insert ?? false;
-          element.update = element.permissions?.update ?? false;
-          element.delete = element.permissions?.delete ?? false;
-          element.downloadExcel = element.permissions?.downloadExcel ?? false;
-          if (permissions != null && (element.permissions?.all ?? false)) {
+          element.view = element.permissions?.view ?? true;
+          element.insert = element.permissions?.insert ?? true;
+          element.update = element.permissions?.update ?? true;
+          element.delete = element.permissions?.delete ?? true;
+          element.downloadExcel = element.permissions?.downloadExcel ?? true;
+          if (permissions != null && (element.permissions?.all ?? true)) {
             element.view = true;
             element.insert = true;
             element.update = true;
@@ -257,10 +316,6 @@ class PrefUtils {
           data = element;
         }
       });
-    }
-
-    if (module == "order") {
-      print(module);
     }
     if (data == null) {
       if (true) {
@@ -272,6 +327,15 @@ class PrefUtils {
         data.downloadExcel = false;
       }
     }
+    /*if (module == ModulePermissionConstant.permission_offline_stock ||
+        module == ModulePermissionConstant.permission_auction) {
+      data = UserPermissionsData(module: module);
+      data.view = true;
+      data.insert = true;
+      data.update = true;
+      data.delete = true;
+      data.downloadExcel = true;
+    }*/
     return data;
   }
 
@@ -300,6 +364,16 @@ class PrefUtils {
     String userName = app.resolve<PrefUtils>().getString("userName");
     String passWord = app.resolve<PrefUtils>().getString("passWord");
     bool homeTakeATour = app.resolve<PrefUtils>().getBool(keyHomeTour);
+    bool myAccountTour = app.resolve<PrefUtils>().getBool(keyMyAccountTour);
+    bool searchTour = app.resolve<PrefUtils>().getBool(keySearchTour);
+    bool searchResultTour =
+        app.resolve<PrefUtils>().getBool(keySearchResultTour);
+    bool diamondDetailTour =
+        app.resolve<PrefUtils>().getBool(keyDiamondDetailTour);
+    bool compareStoneTour =
+        app.resolve<PrefUtils>().getBool(keyCompareStoneTour);
+    bool offerTour = app.resolve<PrefUtils>().getBool(keyOfferTour);
+    String language = app.resolve<PrefUtils>().getLocalization();
 
     app.resolve<PrefUtils>().clearPreferenceAndDB();
 
@@ -310,6 +384,15 @@ class PrefUtils {
     }
 
     app.resolve<PrefUtils>().saveBoolean(keyHomeTour, homeTakeATour);
+    app.resolve<PrefUtils>().saveBoolean(keyMyAccountTour, myAccountTour);
+    app.resolve<PrefUtils>().saveBoolean(keySearchTour, searchTour);
+    app.resolve<PrefUtils>().saveBoolean(keySearchResultTour, searchResultTour);
+    app
+        .resolve<PrefUtils>()
+        .saveBoolean(keyDiamondDetailTour, diamondDetailTour);
+    app.resolve<PrefUtils>().saveBoolean(keyCompareStoneTour, compareStoneTour);
+    app.resolve<PrefUtils>().saveString(keyLanguage, language);
+    app.resolve<PrefUtils>().saveBoolean(keyOfferTour, offerTour);
     app
         .resolve<PrefUtils>()
         .setPlayerID(playerId, app.resolve<PrefUtils>().keyPlayerID);
@@ -320,6 +403,11 @@ class PrefUtils {
     _preferences.clear();
     await AppDatabase.instance.masterDao.deleteAllMasterItems();
     await AppDatabase.instance.sizeMasterDao.deleteAllMasterItems();
+    await AppDatabase.instance.diamondDao.deleteAlldiamondModelItems();
+    await AppDatabase.instance.offlineSearchHistoryDao
+        .deleteAlldiamondModelItems();
+    await AppDatabase.instance.offlineStockTracklDao
+        .deleteAlldiamondModelItems();
   }
 }
 

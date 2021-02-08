@@ -3,6 +3,7 @@ import 'dart:collection';
 
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/AnalyticsReport.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Auth/Profile.dart';
@@ -13,10 +14,13 @@ import 'package:diamnow/components/Screens/DashBoard/Dashboard.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/MyDemand/MyDemandScreen.dart';
+import 'package:diamnow/components/Screens/OfflineSearchHistory/OfflineSearchHistory.dart';
 import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
+import 'package:diamnow/components/Screens/PriceCalculator/PriceCalculator.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
+import 'package:diamnow/models/AnalyticsModel/AnalyticsModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
@@ -97,9 +101,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: R.string.authStrings.uploadKYC,
                 desc: R.string.authStrings.uploadKycDesc,
                 positiveBtnTitle: R.string.commonString.upload,
-                negativeBtnTitle:
-                    user.kycRequired ? null : R.string.commonString.btnSkip,
-                onClickCallback: (click) {
+                negativeBtnTitle: user.kycRequired
+                    ? null
+                    : R.string.commonString.btnSkip, onClickCallback: (click) {
               if (click == ButtonType.PositveButtonClick) {
                 NavigationUtilities.pushRoute(
                   UploadKYCScreen.route,
@@ -176,7 +180,10 @@ class _HomeScreenState extends State<HomeScreen> {
     Map<String, dynamic> dict = new HashMap();
     dict[ArgumentConstant.ModuleType] = moduleType;
     dict[ArgumentConstant.IsFromDrawer] = true;
-    currentWidget = FilterScreen(dict);
+    currentWidget = FilterScreen(
+      dict,
+      key: Key(moduleType.toString()),
+    );
   }
 
   openQuickSearch(int moduleType) {
@@ -209,6 +216,16 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  openOfflineSearchHistory(int moduleType) {
+    selectedType = moduleType;
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.ModuleType] = moduleType;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = OfflineSearchHistory(
+      key: Key(moduleType.toString()),
+    );
+  }
+
 //  openProfile(int moduleType) {
 //    selectedType = moduleType;
 ////    selectedType = DiamondModuleConstant.MODULE_TYPE_PROFILE;
@@ -226,7 +243,10 @@ class _HomeScreenState extends State<HomeScreen> {
     dict["type"] = StaticPageConstant.ABOUT_US;
     dict["strUrl"] = ApiConstants.aboutUs;
     dict[ArgumentConstant.IsFromDrawer] = true;
-    currentWidget = StaticPageScreen(dict);
+    currentWidget = StaticPageScreen(
+      dict,
+      key: Key(moduleType.toString()),
+    );
   }
 
   openContactUS(int moduleType) {
@@ -236,7 +256,10 @@ class _HomeScreenState extends State<HomeScreen> {
     dict["type"] = StaticPageConstant.CONTACT_US;
     dict["strUrl"] = ApiConstants.contactUs;
     dict[ArgumentConstant.IsFromDrawer] = true;
-    currentWidget = StaticPageScreen(dict);
+    currentWidget = StaticPageScreen(
+      dict,
+      key: Key(moduleType.toString()),
+    );
   }
 
   openTermsAndCondition(int moduleType) {
@@ -246,7 +269,10 @@ class _HomeScreenState extends State<HomeScreen> {
     dict["type"] = StaticPageConstant.TERMS_CONDITION;
     dict["strUrl"] = ApiConstants.termsCondition;
     dict[ArgumentConstant.IsFromDrawer] = true;
-    currentWidget = StaticPageScreen(dict);
+    currentWidget = StaticPageScreen(
+      dict,
+      key: Key(moduleType.toString()),
+    );
   }
 
   openPrivacyPolicy(int moduleType) {
@@ -256,7 +282,10 @@ class _HomeScreenState extends State<HomeScreen> {
     dict["type"] = StaticPageConstant.PRIVACY_POLICY;
     dict["strUrl"] = ApiConstants.privacyPolicy;
     dict[ArgumentConstant.IsFromDrawer] = true;
-    currentWidget = StaticPageScreen(dict);
+    currentWidget = StaticPageScreen(
+      dict,
+      key: Key(moduleType.toString()),
+    );
   }
 
   openSavedSearch(int moduleType) {
@@ -289,22 +318,49 @@ class _HomeScreenState extends State<HomeScreen> {
     currentWidget = MyAccountScreen(dict);
   }
 
+  openPriceCalculator(int moduleType) {
+    selectedType = moduleType;
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.ModuleType] =
+        DiamondModuleConstant.MODULE_TYPE_PRICE_CALCULATOR;
+    dict[ArgumentConstant.IsFromDrawer] = true;
+    currentWidget = PriceCalculator(dict);
+  }
+
   manageDrawerClick(BuildContext context, int type, bool isPop) {
     if (context != null) {
       if (isPop) Navigator.pop(context);
       if (selectedType == type) {
         return;
       }
-
       switch (type) {
         case DiamondModuleConstant.MODULE_TYPE_HOME:
           openDashboard(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.HOME,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_SEARCH:
+        case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH:
           openSearch(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.OfflineSearchHistory,
+            section: SectionAnalytics.OFFLINESEARCH,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
           openQuickSearch(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.QUICK_SERACH,
+            section: SectionAnalytics.SEARCH,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_CART:
         case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
@@ -316,39 +372,118 @@ class _HomeScreenState extends State<HomeScreen> {
         case DiamondModuleConstant.MODULE_TYPE_MY_BID:
         case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
         case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
+        case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK:
           openDiamondList(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.OfflineSearchHistory,
+            section: SectionAnalytics.OFFLINESEARCH,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
         case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
           openDiamondList(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.STONE_OF_THE_DAY,
+            section: SectionAnalytics.FILTER,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_PROFILE:
           openProfile(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.PROFILE,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
         case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
           openDiamondOrderList(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.MY_PURCHASE,
+            section: SectionAnalytics.DETAILS,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
           openSavedSearch(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.MYSAVED_SEARCH,
+            section: SectionAnalytics.SAVED_SEARCH,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_ABOUT_US:
           openAboutUs(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.ABOUT_US,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY:
           openPrivacyPolicy(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.ABOUT_US,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION:
           openTermsAndCondition(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.ABOUT_US,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_CONTACT_US:
           openContactUS(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.CONTACT,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_LOGOUT:
           logoutFromApp(context);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.LOGOUT,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
           openMyDemand(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.MY_DEMAND,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH_HISTORY:
+          openOfflineSearchHistory(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.OFFLINE_DOWNLOAD,
+            section: SectionAnalytics.OFFLINESEARCH,
+            action: ActionAnalytics.CLICK,
+          );
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_PRICE_CALCULATOR:
+          openPriceCalculator(type);
           break;
       }
       if (type != DiamondModuleConstant.MODULE_TYPE_LOGOUT) {

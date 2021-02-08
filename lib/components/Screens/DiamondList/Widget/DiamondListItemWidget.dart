@@ -2,11 +2,13 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondOfferInfoWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -320,6 +322,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                     ],
                                   ),
                                 ),
+                              getOfferedBottomSection(),
                             ],
                           ),
                         ),
@@ -509,8 +512,10 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             padding: EdgeInsets.only(
               right: getSize(10),
             ),
-            child: getText(widget.item?.colNm ?? "-",
-                appTheme.blackMedium14TitleColorblack),
+            child: getText(
+              widget.item?.getColorName() ?? "-",
+              appTheme.blackMedium14TitleColorblack,
+            ),
           ),
           Padding(
             padding: EdgeInsets.only(
@@ -521,8 +526,10 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           ),
           Row(
             children: <Widget>[
-              getText(widget.item?.cutNm ?? "-",
-                  appTheme.blackMedium14TitleColorblack),
+              getText(
+                widget.item?.cutNm ?? "-",
+                appTheme.blackMedium14TitleColorblack,
+              ),
               SizedBox(width: getSize(2.0)),
               Container(
                 height: getSize(4),
@@ -590,7 +597,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           ),
           Expanded(
             flex: 2,
-            child: getTextWithLabel(widget.item?.mlk ?? "-", "M : "),
+            child: getTextWithLabel(widget.item?.mlkNm ?? "-", "M : "),
           ),
           // PriceUtilities.getPercent(widget.item?.depPer ?? 0)
           Expanded(
@@ -891,13 +898,140 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         : SizedBox();
   }
 
+  getOfferedBottomSection() {
+    if (widget.moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+      return SizedBox();
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: EdgeInsets.only(
+            left: getSize(8),
+          ),
+          color: appTheme.dividerColor,
+          height: 0.6,
+        ),
+        Padding(
+          padding: EdgeInsets.only(
+            top: getSize(8),
+            bottom: getSize(8),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: getPercentageWidth(40),
+                padding: EdgeInsets.only(
+                  right: getSize(20),
+                ),
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    text: "Exp. Date.:\t",
+                    style: appTheme.grey12TextStyle,
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: isNullEmptyOrFalse(widget.item.offerValidDate)
+                            ? "-"
+                            : DateUtilities()
+                                .convertServerDateToFormatterString(
+                                    widget.item.offerValidDate,
+                                    formatter: DateUtilities.dd_mm_yyyy),
+                        style: appTheme.black12TextStyleMedium,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                width: getPercentageWidth(20),
+                child: Text(
+                  widget.item.getOfferStatus(),
+                  style: appTheme.blackNormal14TitleColorPrimary.copyWith(
+                    color: widget.item.getOfferStatusColor(),
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Container(
+                width: getPercentageWidth(30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        app.resolve<CustomDialogs>().confirmDialog(
+                              context,
+                              title: R.string.screenTitle.remarks,
+                              desc: widget.item.purpose ?? "-",
+                              positiveBtnTitle: R.string.commonString.ok,
+                            );
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.all(getSize(2.0)),
+                        child: Image.asset(
+                          exclamation,
+                          width: getSize(16),
+                          height: getSize(16),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: getSize(10),
+                    ),
+                    widget.item.offerStatus != OfferStatus.rejected
+                        ? InkWell(
+                            onTap: () {
+                              widget.actionClick(ManageCLick(
+                                  type: clickConstant.CLICK_TYPE_EDIT));
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.all(getSize(2.0)),
+                              child: Image.asset(
+                                edit_icon,
+                                width: getSize(16),
+                                height: getSize(16),
+                              ),
+                            ),
+                          )
+                        : SizedBox(),
+                    widget.item.offerStatus != OfferStatus.rejected
+                        ? SizedBox(
+                            width: getSize(10),
+                          )
+                        : SizedBox(),
+                    InkWell(
+                      onTap: () {
+                        widget.actionClick(
+                          ManageCLick(type: clickConstant.CLICK_TYPE_DELETE),
+                        );
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.all(getSize(2.0)),
+                        child: Image.asset(
+                          delete_icon_medium,
+                          width: getSize(16),
+                          height: getSize(16),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   getOfferedDiscountTextField() {
     return Focus(
       onFocusChange: (hasfocus) {
         if (hasfocus == false) {
           print("Focus off");
-          var discount =
-              -(num.parse(_offeredDiscountTextFieldController.text).abs());
+          var discount = num.parse(_offeredDiscountTextFieldController.text);
           if (isNullEmptyOrFalse(_offeredDiscountTextFieldController.text)) {
             _offeredDiscountTextFieldController.text =
                 PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
@@ -961,7 +1095,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         style: appTheme.blackNormal14TitleColorblack.copyWith(
           color: appTheme.colorPrimary,
         ),
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.text,
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(
           focusedBorder: InputBorder.none,

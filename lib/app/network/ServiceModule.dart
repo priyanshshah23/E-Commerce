@@ -28,6 +28,11 @@ class ServiceModule {
     if (playerId != null) {
       dio.options.headers["playerId"] = playerId;
     }
+    if (!isNullEmptyOrFalse(
+        app.resolve<PrefUtils>().getLocalizationLanguage())) {
+      dio.options.headers["Language"] =
+          app.resolve<PrefUtils>().getLocalizationLanguage();
+    }
 
     if (kDebugMode) {
       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =

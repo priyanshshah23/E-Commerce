@@ -1,3 +1,4 @@
+import 'package:diamnow/app/utils/AnalyticsReport.dart';
 import 'package:diamnow/components/Screens/Notification/NotificationManager.dart';
 import 'package:kiwi/kiwi.dart';
 

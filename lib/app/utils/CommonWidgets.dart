@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -74,8 +76,9 @@ getDrawerButton(BuildContext context, bool isBlack) {
     padding: EdgeInsets.zero,
     onPressed: () {
       RxBus.post(
-          DrawerEvent(DiamondModuleConstant.MODULE_TYPE_OPEN_DRAWER, false),
-          tag: eventBusTag);
+        DrawerEvent(DiamondModuleConstant.MODULE_TYPE_OPEN_DRAWER, false),
+        tag: eventBusTag,
+      );
     },
     icon: Image.asset(
       menu,
@@ -117,6 +120,8 @@ getBarButtonWithColor(
     ),
   );
 }
+
+
 
 getNavigationTheme(BuildContext context) {
   return TextTheme(
@@ -226,7 +231,7 @@ Widget getAppBar(BuildContext context, String title,
     //   child: leadingButton,
     // ), //leadingButton ??= null,
     automaticallyImplyLeading: leadingButton != null,
-    backgroundColor: bgColor,
+    backgroundColor: bgColor ?? appTheme.whiteColor,
     actions: actionItems == null ? null : actionItems,
     bottom: widget,
     titleSpacing: 0,
@@ -374,8 +379,13 @@ double getImageSize(IconSizeType imaegType) {
   }
 }
 
-getBottomButton(BuildContext context, VoidCallback onTap, String title,
-    {String firstButtonTitle, VoidCallback onCancel}) {
+getBottomButton(
+  BuildContext context,
+  VoidCallback onTap,
+  String title, {
+  String firstButtonTitle,
+  VoidCallback onCancel,
+}) {
   return Padding(
     padding: EdgeInsets.only(
       top: getSize(24),
@@ -441,7 +451,7 @@ openURLWithApp(String uri, BuildContext context, {bool isPop = false}) async {
   } else {
     app.resolve<CustomDialogs>().confirmDialog(
           context,
-          title: R.string.commonString.error,
+         
           desc: "Could not launch",
           positiveBtnTitle: R.string.commonString.ok,
         );

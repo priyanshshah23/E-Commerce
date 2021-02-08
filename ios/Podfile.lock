@@ -8,10 +8,50 @@ PODS:
     - Reachability
   - downloads_path_provider (0.0.1):
     - Flutter
+  - Firebase/Analytics (6.33.0):
+    - Firebase/Core
+  - Firebase/Core (6.33.0):
+    - Firebase/CoreOnly
+    - FirebaseAnalytics (= 6.8.3)
+  - Firebase/CoreOnly (6.33.0):
+    - FirebaseCore (= 6.10.3)
+  - firebase_analytics (6.3.0):
+    - Firebase/Analytics (~> 6.33.0)
+    - Firebase/CoreOnly (~> 6.33.0)
+    - firebase_core
+    - Flutter
+  - firebase_core (0.5.3):
+    - Firebase/CoreOnly (~> 6.33.0)
+    - Flutter
+  - FirebaseAnalytics (6.8.3):
+    - FirebaseCore (~> 6.10)
+    - FirebaseInstallations (~> 1.6)
+    - GoogleAppMeasurement (= 6.8.3)
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.7)
+    - GoogleUtilities/MethodSwizzler (~> 6.7)
+    - GoogleUtilities/Network (~> 6.7)
+    - "GoogleUtilities/NSData+zlib (~> 6.7)"
+    - nanopb (~> 1.30906.0)
+  - FirebaseCore (6.10.3):
+    - FirebaseCoreDiagnostics (~> 1.6)
+    - GoogleUtilities/Environment (~> 6.7)
+    - GoogleUtilities/Logger (~> 6.7)
+  - FirebaseCoreDiagnostics (1.7.0):
+    - GoogleDataTransport (~> 7.4)
+    - GoogleUtilities/Environment (~> 6.7)
+    - GoogleUtilities/Logger (~> 6.7)
+    - nanopb (~> 1.30906.0)
+  - FirebaseInstallations (1.7.0):
+    - FirebaseCore (~> 6.10)
+    - GoogleUtilities/Environment (~> 6.7)
+    - GoogleUtilities/UserDefaults (~> 6.7)
+    - PromisesObjC (~> 1.2)
   - Flutter (1.0.0)
   - flutter_exif_rotation (0.0.1):
     - Flutter
   - flutter_files_picker (0.0.2):
+    - Flutter
+  - flutter_local_notifications (0.0.1):
     - Flutter
   - flutter_money_formatter (0.0.1):
     - Flutter
@@ -22,12 +62,44 @@ PODS:
   - FMDB/standard (2.7.5)
   - gallery_saver (0.0.1):
     - Flutter
+  - GoogleAppMeasurement (6.8.3):
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.7)
+    - GoogleUtilities/MethodSwizzler (~> 6.7)
+    - GoogleUtilities/Network (~> 6.7)
+    - "GoogleUtilities/NSData+zlib (~> 6.7)"
+    - nanopb (~> 1.30906.0)
+  - GoogleDataTransport (7.5.1):
+    - nanopb (~> 1.30906.0)
+  - GoogleUtilities/AppDelegateSwizzler (6.7.2):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (6.7.2):
+    - PromisesObjC (~> 1.2)
+  - GoogleUtilities/Logger (6.7.2):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/MethodSwizzler (6.7.2):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/Network (6.7.2):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (6.7.2)"
+  - GoogleUtilities/Reachability (6.7.2):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/UserDefaults (6.7.2):
+    - GoogleUtilities/Logger
   - libphonenumber (0.0.1):
     - Flutter
     - libPhoneNumber-iOS
   - libPhoneNumber-iOS (0.9.15)
   - local_auth (0.0.1):
     - Flutter
+  - nanopb (1.30906.0):
+    - nanopb/decode (= 1.30906.0)
+    - nanopb/encode (= 1.30906.0)
+  - nanopb/decode (1.30906.0)
+  - nanopb/encode (1.30906.0)
   - OneSignal (2.16.1)
   - onesignal_flutter (2.6.2):
     - Flutter
@@ -38,18 +110,25 @@ PODS:
     - Flutter
   - "permission_handler (4.4.0+hotfix.4)":
     - Flutter
+  - PromisesObjC (1.2.11)
   - Reachability (3.2)
+  - screenshot_callback (0.0.1):
+    - Flutter
   - share (0.0.1):
     - Flutter
   - shared_preferences (0.0.1):
     - Flutter
   - sms_autofill (0.0.1):
     - Flutter
+  - speech_to_text (0.0.1):
+    - Flutter
+    - Try
   - sqflite (0.0.1):
     - Flutter
     - FMDB (~> 2.7.2)
   - store_redirect (0.0.1):
     - Flutter
+  - Try (2.1.1)
   - unique_identifier (0.0.1):
     - Flutter
   - url_launcher (0.0.1):
@@ -66,9 +145,12 @@ DEPENDENCIES:
   - compressimage (from `.symlinks/plugins/compressimage/ios`)
   - connectivity (from `.symlinks/plugins/connectivity/ios`)
   - downloads_path_provider (from `.symlinks/plugins/downloads_path_provider/ios`)
+  - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
+  - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `Flutter`)
   - flutter_exif_rotation (from `.symlinks/plugins/flutter_exif_rotation/ios`)
   - flutter_files_picker (from `.symlinks/plugins/flutter_files_picker/ios`)
+  - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_money_formatter (from `.symlinks/plugins/flutter_money_formatter/ios`)
   - flutter_statusbarcolor (from `.symlinks/plugins/flutter_statusbarcolor/ios`)
   - gallery_saver (from `.symlinks/plugins/gallery_saver/ios`)
@@ -79,9 +161,11 @@ DEPENDENCIES:
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+  - screenshot_callback (from `.symlinks/plugins/screenshot_callback/ios`)
   - share (from `.symlinks/plugins/share/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sms_autofill (from `.symlinks/plugins/sms_autofill/ios`)
+  - speech_to_text (from `.symlinks/plugins/speech_to_text/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - store_redirect (from `.symlinks/plugins/store_redirect/ios`)
   - unique_identifier (from `.symlinks/plugins/unique_identifier/ios`)
@@ -92,10 +176,21 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Firebase
+    - FirebaseAnalytics
+    - FirebaseCore
+    - FirebaseCoreDiagnostics
+    - FirebaseInstallations
     - FMDB
+    - GoogleAppMeasurement
+    - GoogleDataTransport
+    - GoogleUtilities
     - libPhoneNumber-iOS
+    - nanopb
     - OneSignal
+    - PromisesObjC
     - Reachability
+    - Try
 
 EXTERNAL SOURCES:
   app_settings:
@@ -106,12 +201,18 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/connectivity/ios"
   downloads_path_provider:
     :path: ".symlinks/plugins/downloads_path_provider/ios"
+  firebase_analytics:
+    :path: ".symlinks/plugins/firebase_analytics/ios"
+  firebase_core:
+    :path: ".symlinks/plugins/firebase_core/ios"
   Flutter:
     :path: Flutter
   flutter_exif_rotation:
     :path: ".symlinks/plugins/flutter_exif_rotation/ios"
   flutter_files_picker:
     :path: ".symlinks/plugins/flutter_files_picker/ios"
+  flutter_local_notifications:
+    :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_money_formatter:
     :path: ".symlinks/plugins/flutter_money_formatter/ios"
   flutter_statusbarcolor:
@@ -130,12 +231,16 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider/ios"
   permission_handler:
     :path: ".symlinks/plugins/permission_handler/ios"
+  screenshot_callback:
+    :path: ".symlinks/plugins/screenshot_callback/ios"
   share:
     :path: ".symlinks/plugins/share/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
   sms_autofill:
     :path: ".symlinks/plugins/sms_autofill/ios"
+  speech_to_text:
+    :path: ".symlinks/plugins/speech_to_text/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
   store_redirect:
@@ -156,27 +261,43 @@ SPEC CHECKSUMS:
   compressimage: 4f597b00f6e66bdc43d0aec5f0b9e415f3b03bbd
   connectivity: c4130b2985d4ef6fd26f9702e886bd5260681467
   downloads_path_provider: fe0d06888d4b8c055a59edbc2f51f03e63cb0e28
+  Firebase: 8db6f2d1b2c5e2984efba4949a145875a8f65fe5
+  firebase_analytics: 36a619088c46224900829f14f4daa71585693a6f
+  firebase_core: 5d6a02f3d85acd5f8321c2d6d62877626a670659
+  FirebaseAnalytics: 5dd088bd2e67bb9d13dbf792d1164ceaf3052193
+  FirebaseCore: d889d9e12535b7f36ac8bfbf1713a0836a3012cd
+  FirebaseCoreDiagnostics: 770ac5958e1372ce67959ae4b4f31d8e127c3ac1
+  FirebaseInstallations: 466c7b4d1f58fe16707693091da253726a731ed2
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_exif_rotation: 85a029bc8f10235c50736be688519f4037a87f13
   flutter_files_picker: 10942b5e4c22c90e3da2faf82dc8bf9f83660089
+  flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_money_formatter: d0d18ddc5be333fad8d09964d741b59fa11a91dc
   flutter_statusbarcolor: 8afb1071ed8c58be929f1e32b36c629771fd2259
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   gallery_saver: 9fc173c9f4fcc48af53b2a9ebea1b643255be542
+  GoogleAppMeasurement: 966e88df9d19c15715137bb2ddaf52373f111436
+  GoogleDataTransport: f56af7caa4ed338dc8e138a5d7c5973e66440833
+  GoogleUtilities: 7f2f5a07f888cdb145101d6042bc4422f57e70b3
   libphonenumber: bd14d5abfc5939ab0b0767234e2d8e2593af258e
   libPhoneNumber-iOS: 0a32a9525cf8744fe02c5206eb30d571e38f7d75
   local_auth: 17f985934bb4ab2637431e5b3fe1b2d6698d2051
+  nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   OneSignal: 5f6514ec2b931306eb067acb124afbb2e49970af
   onesignal_flutter: 260bb95c0a2d791c990c7bd8749525c9834d43fc
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: 8278954f2382902f63f00dd8828769c0bd6d511b
+  PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  screenshot_callback: dcbd6a3d715947a44ed20c114172bcdfcd577e42
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   sms_autofill: c461043483362c3f1709ee76eaae6eb570b31686
+  speech_to_text: b43a7d99aef037bd758ed8e45d79bbac035d2dfe
   sqflite: 4001a31ff81d210346b500c55b17f4d6c7589dd0
   store_redirect: 2977747cf81689a39bd62c248c2deacb7a0d131e
+  Try: 5ef669ae832617b3cee58cb2c6f99fb767a4ff96
   unique_identifier: ebb92b4bc4ad9c2c93f85cb5e02f70ad168a2bd6
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
   video_player: 9cc823b1d9da7e8427ee591e8438bfbcde500e6e

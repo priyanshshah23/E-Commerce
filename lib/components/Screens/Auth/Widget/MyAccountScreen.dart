@@ -5,9 +5,11 @@ import 'package:country_pickers/country_pickers.dart';
 import 'package:diamnow/Setting/SettingModel.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/AnalyticsReport.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
+import 'package:diamnow/components/CommonWidget/OverlayScreen.dart';
 import 'package:diamnow/components/Screens/Auth/ChangePassword.dart';
 import 'package:diamnow/components/Screens/Auth/ProfileList.dart';
 import 'package:diamnow/components/Screens/Auth/SignInWithMPINScreen.dart';
@@ -61,6 +63,12 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       availableBiometrics = await auth.getAvailableBiometrics();
       setState(() {});
     });
+    AnalyticsReport.shared.sendAnalyticsData(
+      buildContext: context,
+      action: ActionAnalytics.CLICK,
+      page: PageAnalytics.PROFILE,
+      section: SectionAnalytics.VIEW,
+    );
   }
 
   _MyAccountScreenState({this.isFromDrawer = false});
@@ -171,7 +179,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         children: [
           Padding(
             padding: EdgeInsets.only(
-              left: getSize(Spacing.leftPadding),
+              left: getSize(20),
             ),
             child: Row(
               // mainAxisSize: MainAxisSize.max,
@@ -318,8 +326,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     } else {
       List<BiometricType> availableBiometrics;
       if (isNullEmptyOrFalse(availableBiometrics)) {
-        showToast(
-            R.string.commonString.faceidandtouchnotenable,
+        showToast(R.string.commonString.faceidandtouchnotenable,
             context: context);
       }
       setState(() {
@@ -363,7 +370,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           border: Border(bottom: BorderSide(color: appTheme.dividerColor)),
         ),
         padding: EdgeInsets.only(
-          top: getSize(20),
+          top: getSize(8),
           bottom: getSize(20),
           left: getSize(16),
           right: getSize(16),
@@ -507,46 +514,62 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: getAppBar(
-        context,
-        R.string.screenTitle.myAccount,
-        bgColor: appTheme.whiteColor,
-        leadingButton: isFromDrawer
-            ? getDrawerButton(context, true)
-            : getBackButton(context),
-        centerTitle: false,
-      ),
-      body: Container(
-        margin: EdgeInsets.zero,
-        child: ClipRRect(
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(getSize(26)),
-              bottomRight: Radius.circular(getSize(26))),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(topRight: Radius.circular(26)),
-              color: AppTheme.of(context).theme.primaryColor,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                // UserDrawerHeader(), // if you want to set static
-                Expanded(
-                  child: Container(
-                      padding: EdgeInsets.fromLTRB(
-                          getSize(0), getSize(0), getSize(0), getSize(0)),
-                      // color: AppTheme.of(context).theme.primaryColor,
-                      child: ListView(
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: getAppBar(
+            context,
+            R.string.screenTitle.myAccount,
+            bgColor: appTheme.whiteColor,
+            leadingButton: isFromDrawer
+                ? getDrawerButton(context, true)
+                : getBackButton(context),
+            centerTitle: false,
+          ),
+          body: Container(
+            margin: EdgeInsets.zero,
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(getSize(26)),
+                  bottomRight: Radius.circular(getSize(26))),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius:
+                      BorderRadius.only(topRight: Radius.circular(26)),
+                  color: AppTheme.of(context).theme.primaryColor,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    // UserDrawerHeader(), // if you want to set static
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.fromLTRB(
+                            getSize(0), getSize(0), getSize(0), getSize(0)),
+                        // color: AppTheme.of(context).theme.primaryColor,
+                        child: ListView(
                           padding: EdgeInsets.all(getSize(0)),
                           //shrinkWrap: true,
-                          children: getDrawerList(context))),
-                )
-              ],
+                          children: getDrawerList(context),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         ),
-      ),
+        app.resolve<PrefUtils>().getBool(PrefUtils().keyMyAccountTour) == false
+            ? OverlayScreen(
+                DiamondModuleConstant.MODULE_TYPE_PROFILE,
+                finishTakeTour: () {
+                  setState(() {});
+                },
+                scrollIndex: (index) {},
+              )
+            : SizedBox(),
+      ],
     );
   }
 

@@ -34,6 +34,8 @@ class FilterRequest {
                 map["isXray"] = true;
               } else if (item.code == MasterCode.newarrivals) {
                 arrWsts.add("B");
+              } else if (item.code == MasterCode.brownStatic) {
+                map["excludeFilter"] = {"brown": true};
               } else if (item.code == MasterCode.eyecleanStatic) {
                 if (!isNullEmptyOrFalse(item.map))
                   map.addAll(item.map as Map<String, dynamic>);
@@ -79,10 +81,19 @@ class FilterRequest {
 
           map[element.apiKey] = fromToValue;
         }
+
+        if ((element as FromToModel).isCaratRange) {
+          List<Map<String, dynamic>> caratRequest = Master.getSelectedCarat(
+                  (element as FromToModel).selectionModel.masters) ??
+              [];
+
+          if (!isNullEmptyOrFalse(caratRequest)) map["or"] = caratRequest;
+        }
       }
 
       if (element.viewType == ViewTypes.keytosymbol) {
         Map<String, dynamic> mapOfSelectedRadioButton = {};
+        print((element as KeyToSymbolModel).listOfRadio);
         List<RadioButton> listOfSelectedRadioButton =
             (element as KeyToSymbolModel)
                 .listOfRadio
@@ -92,10 +103,13 @@ class FilterRequest {
                 .toList();
 
         if (!isNullEmptyOrFalse(listOfSelectedRadioButton)) {
-          mapOfSelectedRadioButton[listOfSelectedRadioButton.first.apiKey] =
-              Master.getSelectedId((element as SelectionModel).masters);
+          var list = Master.getSelectedId((element as SelectionModel).masters);
+          if (!isNullEmptyOrFalse(list)) {
+            mapOfSelectedRadioButton[listOfSelectedRadioButton.first.apiKey] =
+                Master.getSelectedId((element as SelectionModel).masters);
 
-          map[element.apiKey] = mapOfSelectedRadioButton;
+            map[element.apiKey] = mapOfSelectedRadioButton;
+          }
         }
       }
 
@@ -150,6 +164,7 @@ class FilterRequest {
         if (colorModel.masterCode == MasterCode.color) {
           if (colorModel.showWhiteFancy) {
             if (colorModel.isGroupSelected) {
+              map["isFcCol"] = true;
               List<String> arrFancy =
                   Master.getSelectedId(colorModel.groupMaster);
               if (!isNullEmptyOrFalse(arrFancy)) map["fcCol"] = arrFancy;
@@ -162,6 +177,7 @@ class FilterRequest {
               if (!isNullEmptyOrFalse(arrOvertone))
                 map[colorModel.overtoneSelection.apiKey] = arrOvertone;
             } else {
+              map["isFcCol"] = false;
               List<String> arrStr = Master.getSelectedId(colorModel.masters);
               if (!isNullEmptyOrFalse(arrStr)) map[element.apiKey] = arrStr;
             }
@@ -211,6 +227,31 @@ class FilterDataSource {
           if (!isNullEmptyOrFalse(dict[item.apiKey])) {
             item.valueFrom = dict[item.apiKey][">="];
             item.valueTo = dict[item.apiKey]["<="];
+          }
+
+          if (item.isCaratRange) {
+            if (!isNullEmptyOrFalse(dict["or"])) {
+              List<dynamic> arr = dict["or"];
+
+              List<dynamic> arrSelected =
+                  arr.map((e) => e[item.apiKey]).toList();
+              List<dynamic> arrDup = arr.map((e) => e[item.apiKey]).toList();
+
+              for (var master in item.selectionModel.masters) {
+                for (var tCarat in master.grouped) {
+                  for (var model in arrSelected) {
+                    if (num.parse(tCarat.webDisplay.split("-")[0]) ==
+                            num.parse(model[">="].toString()) &&
+                        num.parse(tCarat.webDisplay.split("-")[1]) ==
+                            num.parse(model["<="].toString())) {
+                      tCarat.isSelected = true;
+                      master.isSelected = true;
+                      arrDup.remove(model);
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       } else {

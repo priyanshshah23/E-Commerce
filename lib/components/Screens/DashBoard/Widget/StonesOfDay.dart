@@ -26,7 +26,7 @@ class _StoneOfDayWidgetState extends State<StoneOfDayWidget> {
         ? SizedBox()
         : Padding(
             padding: EdgeInsets.only(
-              top: getSize(20),
+              top: getSize(8),
               right: getSize(Spacing.rightPadding),
             ),
             child: Column(
@@ -55,7 +55,7 @@ class _StoneOfDayWidgetState extends State<StoneOfDayWidget> {
                   ],
                 ),
                 SizedBox(
-                  height: getSize(20),
+                  height: getSize(8),
                 ),
                 Container(
                   height: getSize(180),
@@ -109,9 +109,9 @@ class _StoneOfDayWidgetState extends State<StoneOfDayWidget> {
           boxShadow: [
             BoxShadow(
               color: appTheme.textGreyColor.withOpacity(0.2),
-              blurRadius: getSize(10),
-              spreadRadius: getSize(8),
-              offset: Offset(3, 4),
+                blurRadius: getSize(10),
+                spreadRadius: getSize(8),
+                offset: Offset(3, 4),
             ),
           ],
           borderRadius: BorderRadius.circular(getSize(5)),

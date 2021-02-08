@@ -14,3 +14,6 @@ final String eventMasterForGroupWidgetSelectAll =
 final String eventSelectAllGroupDiamonds = "selectAllGroupDiamonds";
 final String eventForShareCaratRangeSelected =
     "eventForShareCaratRangeSelected";
+
+final String eventOfflineDiamond = "offlineDiamond";
+final String eventDiamondRefresh = "diamondRefresh";

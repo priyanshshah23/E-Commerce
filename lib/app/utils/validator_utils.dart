@@ -13,11 +13,11 @@ class ValidationUtils {
     RegExp regExp = new RegExp(patttern);
     if (isStingEmpty(value)) {
       View.showMessage(context, R.string.errorString.enterPhone,
-          title: R.string.commonString.error, mode: DisplayMode.ERROR);
+           mode: DisplayMode.ERROR);
       return false;
     } else if (!regExp.hasMatch(value)) {
       View.showMessage(context, R.string.errorString.enterValidPhone,
-          title: R.string.commonString.error, mode: DisplayMode.ERROR);
+       mode: DisplayMode.ERROR);
       return false;
     }
     return true;

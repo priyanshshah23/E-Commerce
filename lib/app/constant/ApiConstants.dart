@@ -4,8 +4,8 @@ import '../app.export.dart';
 
 class ApiConstants {
   //  static const String PROXY_URL = "PROXY 192.168.2.124:8888";
-  // static String PROXY_URL = "PROXY 192.168.0.114:8888";
-  static String PROXY_URL = "PROXY 192.168.0.114:8888";
+  // static String PROXY_URL = "PROXY 192.168.0.206:8888"; //RAJ
+  static String PROXY_URL = "PROXY 192.168.0.114:8888"; //JECKY
 
 //    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 
@@ -39,6 +39,7 @@ class ApiConstants {
   static const String mySaveSearch = commonUrl + "diamond/search/list";
 
   static const String diamondTrackList = commonUrl + "diamond-track/paginate";
+
   static const String diamondCommentList =
       commonUrl + "diamond-comment/by-user";
   static const String diamondBidList = commonUrl + "diamond-bid/paginate";
@@ -82,23 +83,21 @@ class ApiConstants {
   static const String dashboard = commonUrl + "user/dashboard";
   static const String deleteSavedSearch = commonUrl + "diamond/search/delete";
   static const String logout = commonUrl + "auth/logout";
+  static const String sendAnalytics = commonUrl + "auth/logout";
 
   static const String diamondTrackDelete = commonUrl + "diamond-track/delete";
   static const String diamondComentDelete =
       commonUrl + "diamond-comment/delete";
   static const String diamondBidDelete = commonUrl + "diamond-bid/delete";
-  static const String shareThroughEmail = apiUrl + "web/v1/diamond/excel";
-  static const String notificationList = apiUrl + "device/v1/notification/list";
+
   static const String markAsReadNotification =
       commonUrl + "notification/markAsRead";
 
   static const String sendNotificationId = commonUrl + "user/player";
   static const String searchReportNo = "web/v1/diamond/reportno/paginate";
-  static const String updateOffer = "device/v1/diamond-track/update";
 
   //Excel
   static const String baseURLForExcel = "http://pndevelopapi.democ.in/data";
-  static const String uploadKyc = "device/v1/account/";
 
   static const String termsCondition = webPageUrl + "terms-condition";
   static const String privacyPolicy = webPageUrl + "privacy-policy";
@@ -110,6 +109,17 @@ class ApiConstants {
   static const String createMpin = commonUrl + "user/create-mpin";
   static const String resetMpin = commonUrl + "reset-mpin";
   static const String resetMpinByOtp = commonUrl + "reset-mpin-by-otp";
+
+  //Networkclient api calls
+  static const String dimaondTrackCreate = "device/v1/diamond-track/create";
+  static const String placeOrderOffline = "device/v1/diamond-confirm/request";
+  static const String uploadKyc = "device/v1/account/";
+  static const String notificationList = apiUrl + "device/v1/notification/list";
+  static const String updateOffer = "device/v1/diamond-track/update";
+  static const String shareThroughEmail = apiUrl + "web/v1/diamond/excel";
+  static const String analytics = "apis/analytics/create";
+  static const String deleteOffice =
+      "device/v1/cabin-schedule/destroyDiamondAndSlot";
 }
 
 class DiamondUrls {

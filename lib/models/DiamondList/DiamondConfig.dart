@@ -1,14 +1,24 @@
+import 'dart:async';
 import 'dart:collection';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:diamnow/Setting/SettingModel.dart';
+import 'package:diamnow/app/Helper/NetworkClient.dart';
+import 'package:diamnow/app/Helper/OfflineStockManager.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/constant/ImageConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/AnalyticsReport.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
+import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
+import 'package:path/path.dart' as path;
+
 import 'package:diamnow/app/utils/CustomBorder.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
@@ -18,6 +28,7 @@ import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/OfflineDownloadPopup.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/DownLoadAndShareDialogue.dart';
 import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
 import 'package:diamnow/components/widgets/shared/CommonDateTimePicker.dart';
@@ -26,12 +37,15 @@ import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/DiamondList/download.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
+import 'package:diamnow/models/OfflineSearchHistory/OfflineStockTrack.dart';
+import 'package:diamnow/models/excel/ExcelApiResponse.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:uuid/uuid.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../main.dart';
 
@@ -163,7 +177,10 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_PROFILE:
         return R.string.screenTitle.myProfile;
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
-        return R.string.screenTitle.stoneOfDay;
+        return R.string.screenTitle.stoneOfTheDays;
+      case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK:
+      case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH:
+        return R.string.screenTitle.searchResult + " (Offline)";
       default:
         return R.string.screenTitle.searchResult;
     }
@@ -280,24 +297,30 @@ class DiamondConfig {
               sequence: 3,
               isCenter: true));
         } else if (isDetail) {
-          list.add(BottomTabModel(
+          list.add(
+            BottomTabModel(
               title: "",
               image: share,
               code: BottomCodeConstant.TBShare,
               sequence: 0,
-              isCenter: true));
+              isCenter: true,
+            ),
+          );
           // list.add(BottomTabModel(
           //     title: "",
           //     image: clock,
           //     code: BottomCodeConstant.TBClock,
           //     sequence: 0,
           //     isCenter: true));
-          list.add(BottomTabModel(
+          list.add(
+            BottomTabModel(
               title: "",
               image: download,
               code: BottomCodeConstant.TBDownloadView,
               sequence: 3,
-              isCenter: true));
+              isCenter: true,
+            ),
+          );
         } else {
           list.add(BottomTabModel(
               title: "",
@@ -316,7 +339,8 @@ class DiamondConfig {
                 sequence: 1,
                 isCenter: true));
           }
-          if (moduleType != DiamondModuleConstant.MODULE_TYPE_UPCOMING) {
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_UPCOMING &&
+              moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {
             list.add(BottomTabModel(
                 title: "",
                 image: filter,
@@ -324,11 +348,16 @@ class DiamondConfig {
                 sequence: 2,
                 isCenter: true));
           }
-          if (app
-                  .resolve<PrefUtils>()
-                  .getModulePermission(getPermissionFromModuleType(moduleType))
-                  .downloadExcel ==
-              true) {
+          // if (app
+          //         .resolve<PrefUtils>()
+          //         .getModulePermission(getPermissionFromModuleType(moduleType))
+          //         .downloadExcel ==
+          //     true && if (moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {) {
+
+          if (moduleType == DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK ||
+              moduleType ==
+                  DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+          } else {
             list.add(BottomTabModel(
                 title: "",
                 image: download,
@@ -386,8 +415,12 @@ class DiamondConfig {
       case ActionMenuConstant.ACTION_TYPE_DOWNLOAD:
         actionDownload(context, list);
         break;
+      case ActionMenuConstant.ACTION_TYPE_EXCEL:
+        actionExportExcel(context, list);
+        break;
       case ActionMenuConstant.ACTION_TYPE_SHARE:
         actionDownload(context, list, isForShare: true);
+
         break;
       case ActionMenuConstant.ACTION_TYPE_COMPARE:
         if (list.length < 2) {
@@ -449,7 +482,11 @@ class DiamondConfig {
         negativeBtnTitle: R.string.commonString.no,
         onClickCallback: (PositveButtonClick) {
       if (PositveButtonClick == ButtonType.PositveButtonClick) {
-        callApiForDeleteTrack(context, list, moduleType, refreshList);
+        if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
+          callApiForDeleteOffice(context, list, refreshList);
+        } else {
+          callApiForDeleteTrack(context, list, moduleType, refreshList);
+        }
       }
     });
   }
@@ -556,7 +593,12 @@ class DiamondConfig {
       model.isAddToOffer = true;
       selectedList.add(model);
     });
-
+    AnalyticsReport.shared.sendAnalyticsData(
+      buildContext: context,
+      page: PageAnalytics.DIAMOND_LIST,
+      section: SectionAnalytics.MYOFFER,
+      action: ActionAnalytics.OPEN,
+    );
     openDiamondActionAcreen(
         context, DiamondTrackConstant.TRACK_TYPE_OFFER, selectedList);
     /* showOfferListDialog(context, selectedList, (manageClick) {
@@ -657,15 +699,293 @@ class DiamondConfig {
 
   actionHold(List<DiamondModel> list) {}
 
+  actionDownloadOffline(BuildContext context, Function refreshList,
+      {String filterId,
+      List<Map<String, dynamic>> sortRequest,
+      Map<String, dynamic> filterCriteria}) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return OfflineDownloadPopup(
+          onAccept: (isDownloadSearched, selectedDate) {
+            List<SelectionPopupModel> downloadOptionList =
+                List<SelectionPopupModel>();
+            downloadOptionList.add(SelectionPopupModel("1", "Certificate",
+                fileType: DownloadAndShareDialogueConstant.certificate));
+            downloadOptionList.add(SelectionPopupModel("2", "Image",
+                fileType: DownloadAndShareDialogueConstant.realImage1));
+
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return WillPopScope(
+                  onWillPop: () {
+                    return Future.value(false);
+                  },
+                  child: Dialog(
+                    insetPadding: EdgeInsets.symmetric(
+                        horizontal: getSize(20), vertical: getSize(5)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(getSize(25)),
+                    ),
+                    child: SelectionDialogue(
+                      isSearchEnable: false,
+                      title: R.string.commonString.download,
+                      isMultiSelectionEnable: true,
+                      positiveButtonTitle: R.string.commonString.download,
+                      selectionOptions: downloadOptionList,
+                      applyFilterCallBack: (
+                          {SelectionPopupModel selectedItem,
+                          List<SelectionPopupModel> multiSelectedItem}) {
+                        // Navigator.pop(context);
+                        //check condition for only excel,if so then redirect to static page
+                        //else show showDialog method.
+
+                        OfflineStockManager.shared.downloadData(
+                          allDiamondPreviewThings: multiSelectedItem,
+                          filterId: isDownloadSearched ? filterId : null,
+                          sortRequest: sortRequest,
+                          date: selectedDate,
+                        );
+                      },
+                    ),
+//          child: DownLoadAndShareDialogue(
+//            title: R.string.commonString.download,
+//          ),
+                  ),
+                );
+              },
+            );
+          },
+        );
+      },
+    );
+  }
+
+  actionExportExcel(
+    BuildContext context,
+    List<DiamondModel> list,
+  ) {
+    return showDialog(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Dialog(
+              insetPadding: EdgeInsets.only(
+                  left: getSize(Spacing.leftPadding),
+                  right: getSize(Spacing.rightPadding)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(getSize(15)))),
+              child: Container(
+                width: MathUtilities.screenWidth(context),
+                padding: EdgeInsets.symmetric(
+                  horizontal: getSize(20),
+                  vertical: getSize(29),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      "Export Excel",
+                      textAlign: TextAlign.center,
+                      style: appTheme.blackSemiBold18TitleColorblack,
+                    ),
+                    SizedBox(
+                      height: getSize(20),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: getSize(24),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                callApiForExcel(
+                                  context,
+                                  list,
+                                  isSummary: true,
+                                );
+                              },
+                              child: Container(
+                                height: getSize(50),
+                                decoration: BoxDecoration(
+                                  color:
+                                      appTheme.colorPrimary.withOpacity(0.15),
+                                  border: Border.all(
+                                    color: appTheme.colorPrimary,
+                                    width: getSize(1),
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.circular(getSize(5)),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(getSize(8),
+                                      getSize(14), getSize(8), getSize(14)),
+                                  child: Text(
+                                    "With Summary",
+                                    textAlign: TextAlign.center,
+                                    style: appTheme.commonAlertDialogueDescStyle
+                                        .copyWith(
+                                      color: appTheme.blackColor,
+                                      fontSize: getFontSize(16),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: getSize(20),
+                          ),
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                callApiForExcel(
+                                  context,
+                                  list,
+                                  isSummary: false,
+                                );
+                              },
+                              child: Container(
+                                height: getSize(50),
+                                decoration: BoxDecoration(
+                                  color:
+                                      appTheme.colorPrimary.withOpacity(0.15),
+                                  border: Border.all(
+                                    color: appTheme.colorPrimary,
+                                    width: getSize(1),
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.circular(getSize(5)),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(getSize(8),
+                                      getSize(14), getSize(8), getSize(14)),
+                                  child: Text(
+                                    "Without Summary",
+                                    textAlign: TextAlign.center,
+                                    style: appTheme.commonAlertDialogueDescStyle
+                                        .copyWith(
+                                      color: appTheme.blackColor,
+                                      fontSize: getFontSize(16),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  callApiForExcel(BuildContext context, List<DiamondModel> diamondList,
+      {bool isForShare = false, void callback(String), bool isSummary}) {
+    List<String> stoneId = [];
+    diamondList.forEach((element) {
+      stoneId.add(element.id);
+    });
+    Map<String, dynamic> dict = {};
+    dict["id"] = stoneId;
+    if (isSummary) {
+      dict["allSummary"] = true;
+    } else {
+      dict["allSummary"] = false;
+    }
+
+    NetworkCall<ExcelApiResponse>()
+        .makeCall(
+      () => app.resolve<ServiceModule>().networkService().getExcel(dict),
+      context,
+    )
+        .then((excelApiResponse) async {
+      // success(diamondListResp);
+      Navigator.pop(context);
+      String url = ApiConstants.baseURLForExcel + excelApiResponse.data.data;
+      String excelFileUrl = url;
+      print("Excel file URL : " + url);
+      if (!Platform.isIOS) {
+        url = "https://docs.google.com/viewer?embedded=true&url=" + url;
+      }
+      print("Final ExcelFile Viewer Url : " + url);
+
+      //navigate to static page...
+      DownloadState downloadStateObj = DownloadState();
+      final dir = await downloadStateObj.getDownloadDirectory();
+      String fileName = "FinalExcel.xlsx";
+      final savePath = path.join(dir.path, fileName);
+      print("file:/" + savePath);
+
+      if (isForShare) {
+        callback(url);
+      } else {
+        downloadExcel(excelFileUrl, savePath);
+        if (Platform.isIOS) {
+          Map<String, dynamic> dict = {};
+          dict["strUrl"] = url;
+          dict['filePath'] = savePath;
+          dict[ArgumentConstant.IsFromDrawer] = false;
+          dict["isForExcel"] = true;
+          dict["screenTitle"] = excelApiResponse.data.excelName;
+          NavigationUtilities.pushRoute(StaticPageScreen.route, args: dict);
+        } else {
+          Map<String, dynamic> dict = {};
+          dict["strUrl"] = url;
+          dict['filePath'] = savePath;
+          dict[ArgumentConstant.IsFromDrawer] = false;
+          dict["isForExcel"] = true;
+          dict["screenTitle"] = excelApiResponse.data.excelName;
+          NavigationUtilities.pushRoute(StaticPageScreen.route, args: dict);
+        }
+      }
+      // getWebView(context, url);
+    }).catchError((onError) {
+      showToast("There is problem on server, please try again later.",
+          context: context);
+      print(onError);
+    });
+  }
+
+  //Download excel
+  downloadExcel(String excelFileUrl, String savePath) {
+    Dio dio = Dio();
+
+    dio
+        .download(
+      excelFileUrl,
+      savePath,
+      deleteOnError: true,
+    )
+        .then((value) {
+      print("excel downlaoded");
+    });
+  }
+
   actionDownload(
     BuildContext context,
     List<DiamondModel> list, {
     bool isForShare = false,
+    bool isDownloadSearched = true,
   }) {
     List<SelectionPopupModel> downloadOptionList = List<SelectionPopupModel>();
     List<SelectionPopupModel> selectedOptions = List<SelectionPopupModel>();
-    downloadOptionList.add(SelectionPopupModel("1", "Excel",
-        fileType: DownloadAndShareDialogueConstant.excel));
+    // downloadOptionList.add(SelectionPopupModel("1", "Excel",
+    //     fileType: DownloadAndShareDialogueConstant.excel));
     downloadOptionList.add(SelectionPopupModel("2", "Certificate",
         fileType: DownloadAndShareDialogueConstant.certificate));
     downloadOptionList.add(SelectionPopupModel("3", "Real Image",
@@ -680,7 +1000,12 @@ class DiamondConfig {
         fileType: DownloadAndShareDialogueConstant.assetScopeImg));
     downloadOptionList.add(SelectionPopupModel("7", "Video",
         fileType: DownloadAndShareDialogueConstant.video1));
-
+    AnalyticsReport.shared.sendAnalyticsData(
+      buildContext: context,
+      page: PageAnalytics.OFFLINE_DOWNLOAD,
+      section: SectionAnalytics.SHARE,
+      action: ActionAnalytics.OPEN,
+    );
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -872,25 +1197,41 @@ class DiamondConfig {
       String companyName,
       String date,
       String title}) {
+    Map<String, dynamic> param = {};
+
+    OfflineStockTrackModel trackModel = OfflineStockTrackModel();
     CreateDiamondTrackReq req = CreateDiamondTrackReq();
     switch (trackType) {
       case DiamondTrackConstant.TRACK_TYPE_OFFER:
         req.remarks = remark ?? "";
         req.trackType = trackType;
+        param["remarks"] = remark ?? "";
+        param["trackType"] = trackType;
         break;
       case DiamondTrackConstant.TRACK_TYPE_CART:
       case DiamondTrackConstant.TRACK_TYPE_ENQUIRY:
       case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
       case DiamondTrackConstant.TRACK_TYPE_REMINDER:
         req.trackType = trackType;
+        param["trackType"] = trackType;
         break;
       case DiamondTrackConstant.TRACK_TYPE_BID:
         req.bidType = BidConstant.BID_TYPE_ADD;
+        param["bidType"] = BidConstant.BID_TYPE_ADD;
         break;
     }
     req.diamonds = [];
     Diamonds diamonds;
+
+    List<Map<String, dynamic>> arrDiamonds = [];
     list.forEach((element) {
+      //Creating request for offline stock
+      Map<String, dynamic> reqDiamond = {};
+      reqDiamond["diamond"] = element.id;
+      reqDiamond["trackDiscount"] = element.back;
+      reqDiamond["trackAmount"] = element.amt;
+      reqDiamond["trackPricePerCarat"] = element.ctPr;
+
       diamonds = Diamonds(
           diamond: element.id,
           trackDiscount: element.back,
@@ -903,6 +1244,7 @@ class DiamondConfig {
         case DiamondTrackConstant.TRACK_TYPE_COMMENT:
         case DiamondTrackConstant.TRACK_TYPE_ENQUIRY:
           diamonds.remarks = remark;
+          reqDiamond["remarks"] = remark;
           break;
         case DiamondTrackConstant.TRACK_TYPE_OFFER:
           diamonds.vStnId = element.vStnId;
@@ -911,50 +1253,147 @@ class DiamondConfig {
           diamonds.newPricePerCarat = num.parse(element.offeredPricePerCarat);
           diamonds.offerValidDate = date;
 
+          reqDiamond["vStnId"] = element.vStnId;
+          reqDiamond["newDiscount"] = num.parse(element.offeredDiscount);
+          reqDiamond["newAmount"] = element.offeredAmount;
+          reqDiamond["newPricePerCarat"] =
+              num.parse(element.offeredPricePerCarat);
+          reqDiamond["offerValidDate"] = date;
+
           break;
         case DiamondTrackConstant.TRACK_TYPE_BID:
           diamonds.vStnId = element.vStnId;
           diamonds.bidAmount = element.getBidFinalAmount();
           diamonds.bidPricePerCarat = element.getBidFinalRate();
           diamonds.bidDiscount = element.getbidFinalDiscount();
+
+          reqDiamond["vStnId"] = element.vStnId;
+          reqDiamond["bidAmount"] = element.getBidFinalAmount();
+          reqDiamond["bidPricePerCarat"] = element.getBidFinalRate();
+          reqDiamond["bidDiscount"] = element.getbidFinalDiscount();
           break;
 
         case DiamondTrackConstant.TRACK_TYPE_REMINDER:
           diamonds.reminderDate = date;
+          reqDiamond["reminderDate"] = date;
+
           break;
       }
+      arrDiamonds.add(reqDiamond);
       req.diamonds.add(diamonds);
     });
-    SyncManager.instance.callApiForCreateDiamondTrack(
+
+    param["diamonds"] = arrDiamonds;
+    param["uuid"] = Uuid().v1();
+
+    trackModel.diamonds = json.encode(list);
+    trackModel.request = json.encode(param);
+    trackModel.trackType = trackType;
+    trackModel.isSync = false;
+    trackModel.strDate = DateUtilities().getFormattedDateString(DateTime.now(),
+        formatter: DateUtilities.dd_mm_yyyy_hh_mm_a);
+    trackModel.uuid = Uuid().v1();
+
+    callApiForTrackDiamonds(
       context,
-      trackType,
-      req,
-      (resp) {
-        if (isPop) {
-          Navigator.pop(context);
-        }
-        app.resolve<CustomDialogs>().confirmDialog(context,
-            title: title,
-            desc: resp.message,
-            positiveBtnTitle: R.string.commonString.ok,
-            negativeBtnTitle: getNegativeButtonTitle(trackType),
-            onClickCallback: (type) {
-          if (type == ButtonType.NagativeButtonClick) {
-            openDiamondList(trackType);
-          }
-        });
-      },
-      (onError) {
-        if (onError.message != null) {
-          app.resolve<CustomDialogs>().confirmDialog(
-                context,
-                title: "",
-                desc: onError.message,
-                positiveBtnTitle: R.string.commonString.ok,
-              );
-        }
-      },
+      trackType: trackType,
+      req: req,
+      isPop: isPop,
+      trackModel: trackModel,
+      title: title,
+      arrList: list,
     );
+  }
+
+  callApiForTrackDiamonds(
+    BuildContext context, {
+    int trackType,
+    CreateDiamondTrackReq req,
+    OfflineStockTrackModel trackModel,
+    bool isPop,
+    String title,
+    List<DiamondModel> arrList,
+  }) async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none &&
+        app
+            .resolve<PrefUtils>()
+            .getModulePermission(
+                ModulePermissionConstant.permission_offline_stock)
+            .view) {
+      print("No connection");
+      await AppDatabase.instance.offlineStockTracklDao
+          .addOrUpdate([trackModel]);
+
+      if (trackType == DiamondTrackConstant.TRACK_TYPE_COMMENT) {
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              desc: "${arrList.length} diamond(s) added in offline comment",
+              positiveBtnTitle: R.string.commonString.ok,
+            );
+      } else if (trackType == DiamondTrackConstant.TRACK_TYPE_REMINDER) {
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              desc: "${arrList.length} diamond(s) added in offline reminder",
+              positiveBtnTitle: R.string.commonString.ok,
+            );
+      } else if (trackType == DiamondTrackConstant.TRACK_TYPE_CART) {
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              desc: "${arrList.length} diamond(s) added in offline cart",
+              positiveBtnTitle: R.string.commonString.ok,
+            );
+      } else if (trackType == DiamondTrackConstant.TRACK_TYPE_WATCH_LIST) {
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              desc: "${arrList.length} diamond(s) added in offline watchlist",
+              positiveBtnTitle: R.string.commonString.ok,
+            );
+      } else if (trackType == DiamondTrackConstant.TRACK_TYPE_ENQUIRY) {
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              desc: "${arrList.length} diamond(s) added in offline enquiry",
+              positiveBtnTitle: R.string.commonString.ok,
+            );
+      }
+    } else {
+      SyncManager.instance.callAnalytics(
+        context,
+        page: PageAnalytics.getPageAnalyticsFromModuleType(moduleType),
+        section: SectionAnalytics.ADD,
+        action: ActionAnalytics.OPEN,
+      );
+      SyncManager.instance.callApiForCreateDiamondTrack(
+        context,
+        trackType,
+        req,
+        (resp) {
+          if (isPop) {
+            Navigator.pop(context);
+          }
+          app.resolve<CustomDialogs>().confirmDialog(context,
+              title: title,
+              desc: resp.message,
+              positiveBtnTitle: R.string.commonString.ok,
+              negativeBtnTitle: getNegativeButtonTitle(trackType),
+              onClickCallback: (type) {
+            if (type == ButtonType.NagativeButtonClick) {
+              openDiamondList(trackType);
+            }
+          });
+        },
+        (onError) {
+          if (onError.message != null) {
+            app.resolve<CustomDialogs>().confirmDialog(
+                  context,
+                  title: "",
+                  desc: onError.message,
+                  positiveBtnTitle: R.string.commonString.ok,
+                );
+          }
+        },
+      );
+    }
   }
 
   String getNegativeButtonTitle(int trackType) {
@@ -1041,6 +1480,7 @@ class DiamondConfig {
           req.id.add(element.trackItemCart?.trackId ?? "");
           trackType = req.trackType;
           break;
+
         case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
           req.trackType = DiamondTrackConstant.TRACK_TYPE_WATCH_LIST;
           req.id.add(element.trackItemWatchList?.trackId ?? "");
@@ -1071,29 +1511,73 @@ class DiamondConfig {
           break;
       }
     });
+
+    SyncManager.instance.callAnalytics(context,
+        page: PageAnalytics.getPageAnalyticsFromModuleType(moduleType),
+        section: SectionAnalytics.DELETE,
+        action: ActionAnalytics.LIST);
+
     SyncManager.instance.callApiForDeleteDiamondTrack(
       context,
       trackType,
       req,
       (resp) {
-        app.resolve<CustomDialogs>().errorDialog(context, "", resp.message,
-            btntitle: R.string.commonString.ok,
-            dismissPopup: false, voidCallBack: () {
-          Navigator.pop(context);
-          refreshList();
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            desc: resp.message, positiveBtnTitle: R.string.commonString.ok,
+            onClickCallback: (click) {
+          if (click == ButtonType.PositveButtonClick) {
+            Navigator.pop(context);
+            refreshList();
+          }
         });
       },
       (onError) {
         if (onError.message != null) {
-          app.resolve<CustomDialogs>().errorDialog(
-                context,
-                "",
-                onError.message,
-                btntitle: R.string.commonString.ok,
-              );
+          app.resolve<CustomDialogs>().confirmDialog(context,
+              desc: onError.message, positiveBtnTitle: R.string.commonString.ok,
+              onClickCallback: (click) {
+            if (click == ButtonType.PositveButtonClick) {}
+          });
         }
       },
     );
+  }
+
+  callApiForDeleteOffice(
+      BuildContext context, List<DiamondModel> list, Function refreshList) {
+    var req = Map<String, dynamic>();
+    var arr = List<Map<String, dynamic>>();
+
+    for (var item in list) {
+      var dict = Map<String, dynamic>();
+      dict["id"] = [item.memoNo];
+      dict["diamonds"] = item.id;
+      arr.add(dict);
+    }
+    req["schedule"] = arr;
+    app.resolve<CustomDialogs>().showProgressDialog(context, "");
+
+    NetworkClient.getInstance.callApi(
+        context, baseURL, ApiConstants.deleteOffice, MethodType.Post,
+        params: req, headers: NetworkClient.getInstance.getAuthHeaders(),
+        successCallback: (response, message) {
+      app.resolve<CustomDialogs>().hideProgressDialog();
+      app.resolve<CustomDialogs>().confirmDialog(context,
+          desc: message,
+          positiveBtnTitle: R.string.commonString.ok, onClickCallback: (click) {
+        if (click == ButtonType.PositveButtonClick) {
+          Navigator.pop(context);
+          refreshList();
+        }
+      });
+    }, failureCallback: (status, message) {
+      app.resolve<CustomDialogs>().hideProgressDialog();
+      app.resolve<CustomDialogs>().confirmDialog(context,
+          desc: message,
+          positiveBtnTitle: R.string.commonString.ok, onClickCallback: (click) {
+        if (click == ButtonType.PositveButtonClick) {}
+      });
+    });
   }
 
   callApiFoPlaceOrder(
@@ -1102,10 +1586,17 @@ class DiamondConfig {
       String remark,
       String companyName,
       String title,
-      String date}) {
+      String date}) async {
+    Map<String, dynamic> dict = {};
     PlaceOrderReq req = PlaceOrderReq();
+    OfflineStockTrackModel trackModel = OfflineStockTrackModel();
+
     req.company = companyName;
     req.comment = remark;
+
+    dict["company"] = companyName;
+    dict["comment"] = comment;
+
     switch (date) {
       case InvoiceTypesString.today:
         req.date = OrderInvoiceData.today.toString();
@@ -1118,37 +1609,70 @@ class DiamondConfig {
         break;
     }
 
+    dict["date"] = req.date;
     req.diamonds = [];
+
+    List<String> arrDiamonds = [];
     list.forEach((element) {
       req.diamonds.add(element.id);
+      arrDiamonds.add(element.id);
     });
-    SyncManager.instance.callApiForPlaceOrder(
-      context,
-      req,
-      (resp) {
-        app.resolve<CustomDialogs>().confirmDialog(context,
-            barrierDismissible: true,
-            title: "",
-            desc: resp.message,
+
+    dict["diamonds"] = arrDiamonds;
+
+    trackModel.diamonds = json.encode(list);
+    trackModel.request = json.encode(dict);
+    trackModel.trackType = DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER;
+    trackModel.isSync = false;
+    trackModel.strDate = DateUtilities().getFormattedDateString(DateTime.now(),
+        formatter: DateUtilities.dd_mm_yyyy_hh_mm_a);
+    trackModel.uuid = Uuid().v1();
+
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none &&
+        app
+            .resolve<PrefUtils>()
+            .getModulePermission(
+                ModulePermissionConstant.permission_offline_stock)
+            .view) {
+      print("No connection");
+      await AppDatabase.instance.offlineStockTracklDao
+          .addOrUpdate([trackModel]);
+      app.resolve<CustomDialogs>().confirmDialog(
+            context,
+            desc:
+                "${list.length} diamond(s) order placed offline, When you connect with internet. Your order will placed",
             positiveBtnTitle: R.string.commonString.ok,
-            onClickCallback: (buttonType) {
-          if (buttonType == ButtonType.PositveButtonClick) {
-            placeOrder();
+          );
+    } else {
+      SyncManager.instance.callApiForPlaceOrder(
+        context,
+        req,
+        (resp) {
+          app.resolve<CustomDialogs>().confirmDialog(context,
+              barrierDismissible: true,
+              title: "",
+              desc: resp.message,
+              positiveBtnTitle: R.string.commonString.ok,
+              onClickCallback: (buttonType) {
+            if (buttonType == ButtonType.PositveButtonClick) {
+              placeOrder();
+            }
+          });
+        },
+        (onError) {
+          if (onError.message != null) {
+            app.resolve<CustomDialogs>().confirmDialog(
+                  context,
+                  barrierDismissible: true,
+                  title: "",
+                  desc: onError.message,
+                  positiveBtnTitle: R.string.commonString.ok,
+                );
           }
-        });
-      },
-      (onError) {
-        if (onError.message != null) {
-          app.resolve<CustomDialogs>().confirmDialog(
-                context,
-                barrierDismissible: true,
-                title: "",
-                desc: onError.message,
-                positiveBtnTitle: R.string.commonString.ok,
-              );
-        }
-      },
-    );
+        },
+      );
+    }
   }
 
   callApiForBlock(BuildContext context, List<DiamondModel> list,
@@ -1237,7 +1761,7 @@ class DiamondConfig {
           arraDiamond[i].showCheckBox = true;
         }
 
-        if (arraDiamond.length == 1) {
+        /*if (arraDiamond.length == 1) {
           arraDiamond[i].isSectionOfferDisplay = true;
         } else if (i > 0 &&
             (arraDiamond[i].memoNo != arraDiamond[i - 1].memoNo)) {
@@ -1246,7 +1770,7 @@ class DiamondConfig {
         if (i == arraDiamond.length - 1) {
           arraDiamond[i].isSectionOfferDisplay = true;
         }
-        arraDiamond[i].isGrouping = true;
+        arraDiamond[i].isGrouping = true;*/
       }
     } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
       for (int i = 0; i < arraDiamond.length; i++) {
@@ -1263,7 +1787,8 @@ class DiamondConfig {
         } else if (i > 0 &&
             (arraDiamond[i].memoNo != arraDiamond[i - 1].memoNo)) {
           arraDiamond[i - 1].isSectionOfferDisplay = true;
-        } else if (i == arraDiamond.length - 1) {
+        }
+        if (i == arraDiamond.length - 1) {
           arraDiamond[i].isSectionOfferDisplay = true;
         }
         arraDiamond[i].isGrouping = true;
@@ -1412,7 +1937,8 @@ openSharePopUp(BuildContext context) {
     Share.share(
         "876654878\n"
         "Invite code : 655765757"
-        "App link : $link", //------------------------------------------------------------------------------------------------------------------
+        "App link : $link",
+        //------------------------------------------------------------------------------------------------------------------
         subject: R.string.screenTitle.share,
         sharePositionOrigin:
             Rect.fromCenter(center: Offset.zero, width: 100, height: 100));

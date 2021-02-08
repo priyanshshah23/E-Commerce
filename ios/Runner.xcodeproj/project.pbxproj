@@ -11,6 +11,7 @@
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		3D424F5D257A2F14009F52AB /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D424F5C257A2F14009F52AB /* NotificationService.swift */; };
 		3D424F61257A2F14009F52AB /* NotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3D424F5A257A2F14009F52AB /* NotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		3DD017C7259598690062991C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DD017C6259598690062991C /* GoogleService-Info.plist */; };
 		66461E5CB593CCDD8AA18F4F /* Pods_NotificationService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E381CA80CEE1BCDEED4F43 /* Pods_NotificationService.framework */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
@@ -63,6 +64,7 @@
 		3D424F5C257A2F14009F52AB /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		3D424F5E257A2F14009F52AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D946D1B2493AF8B00D4FE85 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
+		3DD017C6259598690062991C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6DF8957099AFDF13EE8204E0 /* Pods-NotificationService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationService.release.xcconfig"; path = "Target Support Files/Pods-NotificationService/Pods-NotificationService.release.xcconfig"; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
+				3DD017C6259598690062991C /* GoogleService-Info.plist */,
 				3D946D1B2493AF8B00D4FE85 /* Runner.entitlements */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
@@ -289,6 +292,7 @@
 			files = (
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
+				3DD017C7259598690062991C /* GoogleService-Info.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
 			);
@@ -378,24 +382,31 @@
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
 				"${PODS_ROOT}/../Flutter/Flutter.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/Try/Try.framework",
 				"${BUILT_PRODUCTS_DIR}/app_settings/app_settings.framework",
 				"${BUILT_PRODUCTS_DIR}/compressimage/compressimage.framework",
 				"${BUILT_PRODUCTS_DIR}/connectivity/connectivity.framework",
 				"${BUILT_PRODUCTS_DIR}/downloads_path_provider/downloads_path_provider.framework",
 				"${BUILT_PRODUCTS_DIR}/flutter_exif_rotation/flutter_exif_rotation.framework",
 				"${BUILT_PRODUCTS_DIR}/flutter_files_picker/flutter_files_picker.framework",
+				"${BUILT_PRODUCTS_DIR}/flutter_local_notifications/flutter_local_notifications.framework",
 				"${BUILT_PRODUCTS_DIR}/flutter_money_formatter/flutter_money_formatter.framework",
 				"${BUILT_PRODUCTS_DIR}/flutter_statusbarcolor/flutter_statusbarcolor.framework",
 				"${BUILT_PRODUCTS_DIR}/gallery_saver/gallery_saver.framework",
 				"${BUILT_PRODUCTS_DIR}/libPhoneNumber-iOS/libPhoneNumber_iOS.framework",
 				"${BUILT_PRODUCTS_DIR}/libphonenumber/libphonenumber.framework",
 				"${BUILT_PRODUCTS_DIR}/local_auth/local_auth.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 				"${BUILT_PRODUCTS_DIR}/package_info/package_info.framework",
 				"${BUILT_PRODUCTS_DIR}/path_provider/path_provider.framework",
+				"${BUILT_PRODUCTS_DIR}/screenshot_callback/screenshot_callback.framework",
 				"${BUILT_PRODUCTS_DIR}/share/share.framework",
 				"${BUILT_PRODUCTS_DIR}/shared_preferences/shared_preferences.framework",
 				"${BUILT_PRODUCTS_DIR}/sms_autofill/sms_autofill.framework",
+				"${BUILT_PRODUCTS_DIR}/speech_to_text/speech_to_text.framework",
 				"${BUILT_PRODUCTS_DIR}/sqflite/sqflite.framework",
 				"${BUILT_PRODUCTS_DIR}/store_redirect/store_redirect.framework",
 				"${BUILT_PRODUCTS_DIR}/unique_identifier/unique_identifier.framework",
@@ -408,24 +419,31 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Flutter.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Try.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/app_settings.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/compressimage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/connectivity.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/downloads_path_provider.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/flutter_exif_rotation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/flutter_files_picker.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/flutter_local_notifications.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/flutter_money_formatter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/flutter_statusbarcolor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/gallery_saver.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libPhoneNumber_iOS.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libphonenumber.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/local_auth.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/package_info.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/path_provider.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/screenshot_callback.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/share.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/shared_preferences.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/sms_autofill.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/speech_to_text.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/sqflite.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/store_redirect.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/unique_identifier.framework",
@@ -550,7 +568,7 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.10;
 				DEVELOPMENT_TEAM = 5JZBA6FV4W;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -587,7 +605,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.10;
 				DEVELOPMENT_TEAM = 5JZBA6FV4W;
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -618,7 +636,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.10;
 				DEVELOPMENT_TEAM = 5JZBA6FV4W;
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -646,7 +664,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.10;
 				DEVELOPMENT_TEAM = 5JZBA6FV4W;
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -780,7 +798,7 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.10;
 				DEVELOPMENT_TEAM = 5JZBA6FV4W;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -816,7 +834,7 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.10;
 				DEVELOPMENT_TEAM = 5JZBA6FV4W;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

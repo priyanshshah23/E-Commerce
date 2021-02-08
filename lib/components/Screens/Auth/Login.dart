@@ -12,11 +12,7 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/localization/LocalizationHelper.dart';
 import 'package:diamnow/components/Screens/Auth/ForgetPassword.dart';
 import 'package:diamnow/components/Screens/Auth/Signup.dart';
-import 'package:diamnow/components/Screens/Version/VersionUpdate.dart';
-
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
-import 'package:diamnow/models/Auth/SignInAsGuestModel.dart';
-import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:diamnow/models/Version/VersionUpdateResp.dart';
 import 'package:flutter/cupertino.dart';
@@ -59,7 +55,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
     "Spanish": Spanish.languageCode,
     "Germany": Germany.languageCode,
     // "Hebrew",
-    // "Arabic",
+    "Arabic": Arabic.languageCode
   };
 
   String selectedLanguage = R.string.commonString.language;
@@ -74,7 +70,6 @@ class LoginScreenState extends StatefulScreenWidgetState {
     super.initState();
     // if (kDebugMode) {
     getUserNameAndPassword();
-
     // }
   }
 
@@ -92,334 +87,328 @@ class LoginScreenState extends StatefulScreenWidgetState {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: onWillPop,
-        child: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-          },
-          child: AppBackground(
-            child: SafeArea(
-              child: Scaffold(
-                resizeToAvoidBottomPadding: false,
-                resizeToAvoidBottomInset: true,
-                body: SingleChildScrollView(
-                  child: Form(
-                    key: _formKey,
-                    autovalidate: autoValidate,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Container(
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              top: getSize(20),
-                              left: getSize(20),
-                              right: getSize(20),
-                              bottom: getSize(10),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      flex: 6,
-                                      child: Padding(
-                                        padding:
-                                            EdgeInsets.only(right: getSize(3)),
-                                        child: Text(
-                                          R.string.authStrings.welcome,
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: appTheme.textBlackColor,
-                                            fontSize: getFontSize(24),
-                                          ),
+      onWillPop: onWillPop,
+      child: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: AppBackground(
+          child: SafeArea(
+            child: Scaffold(
+              resizeToAvoidBottomPadding: false,
+              resizeToAvoidBottomInset: true,
+              body: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  autovalidate: autoValidate,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Container(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            top: getSize(20),
+                            left: getSize(20),
+                            right: getSize(20),
+                            bottom: getSize(10),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    flex: 6,
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.only(right: getSize(3)),
+                                      child: Text(
+                                        R.string.authStrings.welcome,
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: appTheme.textBlackColor,
+                                          fontSize: getFontSize(24),
                                         ),
                                       ),
                                     ),
-                                    Expanded(
-                                      flex: 4,
-                                      child: Container(
-                                        width: getSize(120),
-                                        child: PopupMenuButton<String>(
-                                          onSelected: (newValue) {
-                                            // add this property
-                                            selectedLanguage = newValue;
-                                            LocalizationHelper.changeLocale(
-                                                language[newValue]);
-                                            app
-                                                .resolve<PrefUtils>()
-                                                .setLocalization(
-                                                    language[newValue]);
-                                            setState(() {});
-                                          },
-                                          itemBuilder: (context) => [
-                                            for (var item in language.keys)
-                                              PopupMenuItem(
-                                                value: item,
-                                                height: getSize(20),
-                                                child: Container(
-                                                  width: getSize(85),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: <Widget>[
-                                                      Text(
-                                                        item,
-                                                        style: appTheme
-                                                            .black14TextStyle,
-                                                      ),
-                                                    ],
-                                                  ),
+                                  ),
+                                  Expanded(
+                                    flex: 4,
+                                    child: Container(
+                                      width: getSize(120),
+                                      child: PopupMenuButton<String>(
+                                        onSelected: (newValue) {
+                                          // add this property
+                                          selectedLanguage = language[newValue];
+                                          LocalizationHelper.changeLocale(
+                                              language[newValue]);
+                                          app
+                                              .resolve<PrefUtils>()
+                                              .setLocalization(
+                                                  language[newValue]);
+                                          setState(() {});
+                                        },
+                                        itemBuilder: (context) => [
+                                          for (var item in language.keys)
+                                            PopupMenuItem(
+                                              value: item,
+                                              height: getSize(20),
+                                              child: Container(
+                                                width: getSize(85),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: <Widget>[
+                                                    Text(
+                                                      item,
+                                                      style: appTheme
+                                                          .black14TextStyle,
+                                                    ),
+                                                  ],
                                                 ),
-                                              )
-                                          ],
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: getSize(10),
-                                                vertical: getSize(5)),
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: appTheme
-                                                        .textGreyColor)),
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                    height: getSize(10),
-                                                    width: getSize(10),
-                                                    child: Image.asset(
-                                                        languageIcon)),
-                                                SizedBox(
-                                                  width: getSize(10),
-                                                ),
-                                                Expanded(
-                                                  child: Text(
-                                                    selectedLanguage,
-                                                    style: selectedLanguage ==
-                                                            R
-                                                                .string
-                                                                .commonString
-                                                                .language
-                                                        ? appTheme
-                                                            .grey14HintTextStyle
-                                                        : appTheme
-                                                            .black14TextStyle,
-                                                  ),
-                                                ),
-                                                Container(
+                                              ),
+                                            )
+                                        ],
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: getSize(10),
+                                              vertical: getSize(5)),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color:
+                                                      appTheme.textGreyColor)),
+                                          child: Row(
+                                            children: [
+                                              Container(
                                                   height: getSize(10),
                                                   width: getSize(10),
-                                                  child: Image.asset(dropDown),
+                                                  child: Image.asset(
+                                                      languageIcon)),
+                                              SizedBox(
+                                                width: getSize(10),
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  isNullEmptyOrFalse(app
+                                                          .resolve<PrefUtils>()
+                                                          .getLocalization())
+                                                      ? language["English"]
+                                                      : app
+                                                          .resolve<PrefUtils>()
+                                                          .getLocalization(),
+                                                  style:
+                                                      appTheme.black14TextStyle,
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                              Container(
+                                                height: getSize(10),
+                                                width: getSize(10),
+                                                child: Image.asset(dropDown),
+                                              ),
+                                            ],
                                           ),
-                                          offset: Offset(25, 110),
                                         ),
+                                        offset: Offset(25, 110),
                                       ),
                                     ),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: getSize(30)),
-                                      child: Image.asset(
-                                        splashLogo,
-                                        height: Platform.isAndroid
-                                            ? getSize(160)
-                                            : getSize(130),
-                                        width: Platform.isAndroid
-                                            ? getSize(160)
-                                            : getSize(140),
-                                      ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: getSize(30)),
+                                    child: Image.asset(
+                                      splashLogo,
+                                      height: Platform.isAndroid
+                                          ? getSize(160)
+                                          : getSize(130),
+                                      width: Platform.isAndroid
+                                          ? getSize(160)
+                                          : getSize(140),
                                     ),
+                                  ),
 //                                Padding(
 //                                  padding: EdgeInsets.only(
 //                                      top: getSize(20), left: getSize(0)),
 //                                  child: getMobileTextField(),
 //                                ),
-                                    getMobileTextField(),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          top: getSize(15), left: getSize(0)),
-                                      child: getPasswordTextField(),
+                                  getMobileTextField(),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        top: getSize(15), left: getSize(0)),
+                                    child: getPasswordTextField(),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(top: getSize(15)),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            isCheckBoxSelected =
+                                                !isCheckBoxSelected;
+                                            setState(() {});
+                                          },
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            getSize(3))),
+                                                width: getSize(21),
+                                                height: getSize(21),
+                                                child: Image.asset(
+                                                  isCheckBoxSelected
+                                                      ? selectedCheckbox
+                                                      : unSelectedCheckbox,
+                                                  height: getSize(20),
+                                                  width: getSize(20),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: getSize(6),
+                                              ),
+                                              Text(
+                                                  R.string.commonString
+                                                      .rememberme,
+                                                  style: appTheme
+                                                      .blackMedium16TitleColorblack
+                                                      .copyWith(
+                                                          fontWeight:
+                                                              FontWeight.bold))
+                                            ],
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                            // alignment: Alignment.centerRight,
+                                            child: getForgotPassword(),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.only(top: getSize(15)),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              isCheckBoxSelected =
-                                                  !isCheckBoxSelected;
-                                              setState(() {});
-                                            },
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(top: getSize(60)),
+                                    child: Container(
+                                      margin: EdgeInsets.only(
+                                          top: getSize(15), left: getSize(0)),
+                                      decoration: BoxDecoration(
+                                          boxShadow: getBoxShadow(context)),
+                                      child: AppButton.flat(
+                                        onTap: () {
+                                          FocusScope.of(context).unfocus();
+                                          if (_formKey.currentState
+                                              .validate()) {
+                                            _formKey.currentState.save();
+
+                                            Map<String, dynamic> req = {};
+                                            req["username"] =
+                                                userNameController.text;
+                                            req["password"] =
+                                                _passwordController.text;
+                                            callLoginApi(context, req);
+                                          } else {
+                                            setState(() {
+                                              autoValidate = true;
+                                            });
+                                          }
+                                        },
+                                        borderRadius: getSize(5),
+                                        fitWidth: true,
+                                        text: R.string.authStrings.signInCap,
+                                      ),
+                                    ),
+                                  ),
+
+                                  Padding(
+                                    padding: EdgeInsets.only(top: getSize(50)),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 6,
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            margin: EdgeInsets.only(
+                                              top: getSize(10),
+                                              left: getSize(0),
+                                            ),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              getSize(3))),
-                                                  width: getSize(21),
-                                                  height: getSize(21),
-                                                  child: Image.asset(
-                                                    isCheckBoxSelected
-                                                        ? selectedCheckbox
-                                                        : unSelectedCheckbox,
-                                                    height: getSize(20),
-                                                    width: getSize(20),
-                                                  ),
+                                                Image.asset(
+                                                  fingurePrint,
+                                                  width: getSize(15),
+                                                  height: getSize(15),
                                                 ),
                                                 SizedBox(
-                                                  width: getSize(6),
+                                                  width: getSize(10),
                                                 ),
                                                 Text(
-                                                    R.string.commonString
-                                                        .rememberme,
-                                                    style: appTheme
-                                                        .blackMedium16TitleColorblack
-                                                        .copyWith(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold))
+                                                  R.string.commonString.touchId,
+                                                  style: appTheme
+                                                      .primary16TextStyle,
+                                                )
                                               ],
                                             ),
                                           ),
-                                          Expanded(
-                                            child: Container(
-                                              // alignment: Alignment.centerRight,
-                                              child: getForgotPassword(),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.only(top: getSize(70)),
-                                      child: Container(
-                                        margin: EdgeInsets.only(
-                                            top: getSize(15), left: getSize(0)),
-                                        decoration: BoxDecoration(
-                                            boxShadow: getBoxShadow(context)),
-                                        child: AppButton.flat(
-                                          onTap: () {
-                                            FocusScope.of(context).unfocus();
-                                            if (_formKey.currentState
-                                                .validate()) {
-                                              _formKey.currentState.save();
-
-                                              Map<String, dynamic> req = {};
-                                              req["username"] =
-                                                  userNameController.text;
-                                              req["password"] =
-                                                  _passwordController.text;
-                                              callLoginApi(context, req);
-                                            } else {
-                                              setState(() {
-                                                autoValidate = true;
-                                              });
-                                            }
-                                          },
-                                          borderRadius: getSize(5),
-                                          fitWidth: true,
-                                          text: R.string.authStrings.signInCap,
                                         ),
-                                      ),
-                                    ),
-
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.only(top: getSize(50)),
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            flex: 6,
+                                        Expanded(
+                                          flex: 4,
+                                          child: InkWell(
+                                            onTap: () {
+                                              // NavigationUtilities.pushRoute(
+                                              //     SignInWithMPINScreen.route,);
+                                              NavigationUtilities.push(
+                                                  SignInWithMPINScreen(
+                                                fromMpinButton: true,
+                                              ));
+                                            },
                                             child: Container(
                                               alignment: Alignment.center,
                                               margin: EdgeInsets.only(
                                                 top: getSize(10),
                                                 left: getSize(0),
                                               ),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Image.asset(
-                                                    fingurePrint,
-                                                    width: getSize(15),
-                                                    height: getSize(15),
-                                                  ),
-                                                  SizedBox(
-                                                    width: getSize(10),
-                                                  ),
-                                                  Text(
-                                                    R.string.commonString
-                                                        .touchId,
-                                                    style: appTheme
-                                                        .primary16TextStyle,
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 4,
-                                            child: InkWell(
-                                              onTap: () {
-                                                // NavigationUtilities.pushRoute(
-                                                //     SignInWithMPINScreen.route,);
-                                                NavigationUtilities.push(
-                                                    SignInWithMPINScreen(
-                                                  fromMpinButton: true,
-                                                ));
-                                              },
-                                              child: Container(
-                                                alignment: Alignment.center,
-                                                margin: EdgeInsets.only(
-                                                  top: getSize(10),
-                                                  left: getSize(0),
-                                                ),
-                                                child: InkWell(
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      Image.asset(
-                                                        mpin,
-                                                        width: getSize(15),
-                                                        height: getSize(15),
-                                                      ),
-                                                      SizedBox(
-                                                        width: getSize(10),
-                                                      ),
-                                                      Text(
-                                                        R.string.commonString
-                                                            .mPin,
-                                                        style: appTheme
-                                                            .primary16TextStyle,
-                                                      )
-                                                    ],
-                                                  ),
+                                              child: InkWell(
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Image.asset(
+                                                      mpin,
+                                                      width: getSize(15),
+                                                      height: getSize(15),
+                                                    ),
+                                                    SizedBox(
+                                                      width: getSize(10),
+                                                    ),
+                                                    Text(
+                                                      R.string.commonString
+                                                          .mPin,
+                                                      style: appTheme
+                                                          .primary16TextStyle,
+                                                    )
+                                                  ],
                                                 ),
                                               ),
                                             ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                    /*Container(
+                                  ),
+                                  /*Container(
                                       margin: EdgeInsets.only(
                                           top: getSize(10), left: getSize(0)),
                                       child: AppButton.flat(
@@ -439,41 +428,42 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                         //isButtonEnabled: enableDisableSigninButton(),
                                       ),
                                     ),*/
-                                  ],
-                                ),
-                              ],
-                            ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                        Flexible(child: Container()),
-                      ],
-                    ),
+                      ),
+                      Flexible(child: Container()),
+                    ],
                   ),
                 ),
-                bottomNavigationBar: Container(
-                  child: InkWell(
-                    onTap: () {
-                      NavigationUtilities.pushRoute(SignupScreen.route);
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(bottom: getSize(16)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Text(R.string.authStrings.dontHaveAnAccount,
-                              style: appTheme.grey16HintTextStyle),
-                          Text(" " + R.string.authStrings.signUp,
-                              style: appTheme.darkBlue16TextStyle),
-                        ],
-                      ),
+              ),
+              bottomNavigationBar: Container(
+                child: InkWell(
+                  onTap: () {
+                    NavigationUtilities.pushRoute(SignupScreen.route);
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: getSize(16)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Text(R.string.authStrings.dontHaveAnAccount,
+                            style: appTheme.grey16HintTextStyle),
+                        Text(" " + R.string.authStrings.signUpHere,
+                            style: appTheme.darkBlue16TextStyle),
+                      ],
                     ),
                   ),
                 ),
               ),
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   getMobileTextField() {
@@ -602,7 +592,6 @@ class LoginScreenState extends StatefulScreenWidgetState {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
               context,
-              title: R.string.commonString.error,
               desc: onError.message,
               positiveBtnTitle: R.string.commonString.ok,
             );
@@ -613,8 +602,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
   navigateToPopUpBox(BuildContext context, LoginResp loginResp) {
     app.resolve<CustomDialogs>().confirmDialog(context,
         title: APPNAME,
-        desc:
-            "Do you want to enable Touch Id/MPin to unlock $APPNAME? Please choose an option to unlock app",
+        desc: R.string.authStrings.loginDesc,
         positiveBtnTitle2: !isNullEmptyOrFalse(availableBiometrics)
             ? R.string.commonString.usertouchid
             : null,
@@ -626,6 +614,8 @@ class LoginScreenState extends StatefulScreenWidgetState {
           Map<String, dynamic> arguments = {};
           arguments["enm"] = Mpin.createMpin;
           arguments["userName"] = loginResp.data.user.username;
+          arguments["userToken"] = loginResp.data.token.jwt;
+          print(loginResp.data.token.jwt);
           NavigationUtilities.pushRoute(SignInWithMPINScreen.route,
               args: arguments);
         } else {

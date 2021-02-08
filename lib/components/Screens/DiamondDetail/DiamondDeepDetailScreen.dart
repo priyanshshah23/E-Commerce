@@ -1,25 +1,42 @@
+import 'dart:collection';
+import 'dart:io';
+
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/AnalyticsReport.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
+import 'package:diamnow/models/AnalyticsModel/AnalyticsModel.dart';
 import 'package:diamnow/models/DiamondDetail/DiamondDetailUIModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
+import 'package:diamnow/models/DiamondList/download.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
+import 'package:downloads_path_provider/downloads_path_provider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
+import 'package:percent_indicator/linear_percent_indicator.dart';
+
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:share/share.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import 'DiamondImageBrowserScreen.dart';
 
 class DiamondDeepDetailScreen extends StatefulScreenWidget {
   List<DiamondDetailImagePagerModel> arrImages =
@@ -252,7 +269,19 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
             scrollDirection: Axis.horizontal,
             itemCount: arrImages[index].arr.length,
             itemBuilder: (BuildContext context, int i) {
-              return getTabBlock(arrImages[index].arr[i]);
+              return InkWell(
+                onTap: () {
+                  Map<String, dynamic> dict = new HashMap();
+                  dict["imageData"] = arrImages[index].arr;
+                  NavigationUtilities.pushRoute(
+                    DiamondImageBrowserScreen.route,
+                    args: dict,
+                  );
+                },
+                child: getTabBlock(
+                  arrImages[index].arr[i],
+                ),
+              );
             },
           ),
         ),
@@ -337,21 +366,161 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
           )
         : Container(
             margin: EdgeInsets.only(right: getSize(10)),
-            child: getImageView(
-                (model.arr != null &&
-                        model.arr.length > 0 &&
-                        isStringEmpty(model.url) == false)
-                    ? model.arr[model.subIndex].url
-                    : model.url,
-                height: getSize(245),
-                width: getSize(354),
-                fit: BoxFit.fill,
-                shape: BoxDecoration(
+            child: Stack(
+              children: [
+                getImageView(
+                  (model.arr != null &&
+                          model.arr.length > 0 &&
+                          isStringEmpty(model.url) == false)
+                      ? model.arr[model.subIndex].url
+                      : model.url,
+                  height: getSize(245),
+                  width: getSize(354),
+                  fit: BoxFit.fill,
+                  shape: BoxDecoration(
                     color: appTheme.whiteColor,
                     // color: Colors.yellow,
                     borderRadius: BorderRadius.circular(getSize(20)),
-                    border: Border.all(color: appTheme.lightBGColor))),
+                    border: Border.all(color: appTheme.lightBGColor),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Container(
+                    padding: EdgeInsets.only(
+                      bottom: getSize(10),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        getImageViewForDownloadAndShare(
+                          imageName: share,
+                          onTap: () {
+                            downloadSingleImage(
+                              model.url,
+                              model.title +
+                                  diamondModel.id +
+                                  "." +
+                                  getExtensionOfUrl(model.url),
+                              isFileShare: true,
+                            );
+                          },
+                        ),
+                        SizedBox(
+                          width: getSize(10),
+                        ),
+                        getImageViewForDownloadAndShare(
+                          imageName: download,
+                          onTap: () {
+                            downloadSingleImage(
+                              model.url,
+                              model.title +
+                                  diamondModel.id +
+                                  "." +
+                                  getExtensionOfUrl(model.url),
+                            );
+                          },
+                        ),
+                        SizedBox(
+                          width: getSize(10),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           );
+  }
+
+  Widget getImageViewForDownloadAndShare({
+    @required String imageName,
+    @required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(getSize(5)),
+            border: Border.all(color: appTheme.borderColor),
+            color: appTheme.unSelectedBgColor),
+        child: Padding(
+          padding: EdgeInsets.all(getSize(10)),
+          child: Image.asset(
+            imageName,
+            height: getSize(16),
+            width: getSize(16),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // ignore: missing_return
+  Future<File> downloadSingleImage(
+    String url,
+    String filename, {
+    bool isFileShare = false,
+  }) async {
+    final dir = await getDownloadDirectory();
+    final savePath = path.join(dir.path, filename);
+
+    Dio dio = Dio();
+
+    dio
+        .download(
+      url,
+      savePath,
+      deleteOnError: true,
+    )
+        .then((value) {
+      if (value.statusCode == successStatusCode) {
+        if (Platform.isIOS) {
+          isImage(savePath)
+              ? GallerySaver.saveImage(savePath)
+              : GallerySaver.saveVideo(savePath);
+        }
+        if (isFileShare) {
+          Share.shareFiles([savePath], text: 'Great picture');
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.OFFLINE_DOWNLOAD,
+            section: SectionAnalytics.SHARE,
+            action: ActionAnalytics.OPEN,
+          );
+        }
+        AnalyticsReport.shared.sendAnalyticsData(
+          buildContext: context,
+          page: PageAnalytics.OFFLINE_DOWNLOAD,
+          section: SectionAnalytics.DOWNLOAD,
+          action: ActionAnalytics.OPEN,
+        );
+        showToast(
+          "Download complete",
+          context: context,
+        );
+      }
+    }).catchError((error) {
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
+  Future<Directory> getDownloadDirectory() async {
+    if (Platform.isAndroid) {
+      return await DownloadsPathProvider.downloadsDirectory;
+    }
+
+    // in this example we are using only Android and iOS so I can assume
+    // that you are not trying it for other platforms and the if statement
+    // for iOS is unnecessary
+
+    // iOS directory visible to user
+    if (Platform.isIOS) {
+      return await getApplicationDocumentsDirectory();
+    }
+    return await getExternalStorageDirectory();
   }
 
   Future<WebView> getPDFView(

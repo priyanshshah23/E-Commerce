@@ -1,6 +1,7 @@
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 
 class DiamondModuleConstant {
+  static const MODULE_TYPE_DIAMOND_SEARCH_RESULT = 0;
   static const MODULE_TYPE_SEARCH = 1;
   static const MODULE_TYPE_QUICK_SEARCH = 2;
   static const MODULE_TYPE_NEW_ARRIVAL = 3;
@@ -32,6 +33,9 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_COMPARE = 29;
   static const MODULE_TYPE_MATCH_PAIR = 30;
   static const MODULE_TYPE_RECENT_SEARCH = 31;
+  static const MODULE_TYPE_OFFLINE_STOCK = 32;
+  static const MODULE_TYPE_OFFLINE_STOCK_SEARCH = 33;
+  static const MODULE_TYPE_OFFLINE_STOCK_SEARCH_HISTORY = 34;
   static const MODULE_TYPE_OPEN_DRAWER = 1000;
   static const MODULE_TYPE_HOME = 100;
   static const MODULE_TYPE_FINAL_CALCULATION = 101;
@@ -39,6 +43,11 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_TOUCH_ID = 103;
   static const MODULE_TYPE_MPIN = 104;
   static const MODULE_TYPE_CHANGEMPIN = 105;
+  static const MODULE_TYPE_FILTER_OFFLINE_NOTI_CLICK = 106;
+  static const MODULE_TYPE_NOTIFICATION = 107;
+  static const MODULE_TYPE_DIAMOND_DETAIL = 108;
+  static const MODULE_TYPE_VOICE_SEARCH = 109;
+  static const MODULE_TYPE_PRICE_CALCULATOR = 110;
 }
 
 class ModulePermissionConstant {
@@ -62,6 +71,7 @@ class ModulePermissionConstant {
   static const permission_watchlist = "watchlist";
   static const permission_comment = "comment";
   static const permission_enquiry = "enquiry";
+  static const permission_excel = "excel";
   static const permission_order = "order";
   static const permission_purchase = "purchase";
   static const permission_stone_of_the_day = "stoneoftheday";
@@ -75,6 +85,7 @@ class ModulePermissionConstant {
   static const permission_hold = "hold";
   static const permission_offer = "offer";
   static const permission_notification = "notification";
+  static const permission_offline_stock = "offlineStock";
 }
 
 class ReminderType {
@@ -128,6 +139,7 @@ class clickConstant {
   static const CLICK_TYPE_DELETE = 4;
   static const CLICK_TYPE_OFFER_EDIT = 5;
   static const CLICK_TYPE_DETAIL = 6;
+  static const CLICK_TYPE_EDIT = 7;
 }
 
 class DiamondBlockType {
@@ -144,6 +156,7 @@ class DiamondTrackConstant {
   static const TRACK_TYPE_ENQUIRY = 6;
   static const TRACK_TYPE_SHIPMENT = 7;
   static const TRACK_TYPE_SHOWSELECTED = 8;
+  static const TRACK_TYPE_BEST_BUY = 9;
   static const TRACK_TYPE_COMMENT = 99;
   static const TRACK_TYPE_APPOINTMENT = 100;
   static const TRACK_TYPE_BID = 101;
@@ -181,6 +194,7 @@ class ActionMenuConstant {
   static const ACTION_TYPE_OFFER = 6;
   static const ACTION_TYPE_APPOINTMENT = 7;
   static const ACTION_TYPE_HOLD = 8;
+
   static const ACTION_TYPE_DOWNLOAD = 9;
   static const ACTION_TYPE_CLEAR_SELECTION = 10;
   static const ACTION_TYPE_SHARE = 11;
@@ -192,6 +206,7 @@ class ActionMenuConstant {
   static const ACTION_TYPE_DELETE = 17;
   static const ACTION_TYPE_FINAL_CALCULATION = 18;
   static const ACTION_TYPE_CANCEL_STONE = 19;
+  static const ACTION_TYPE_EXCEL = 20;
 }
 
 class MoreMenuConstant {

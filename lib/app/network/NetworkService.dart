@@ -1,6 +1,7 @@
 import 'package:diamnow/models/Address/CityListModel.dart';
 import 'package:diamnow/models/Address/CountryListModel.dart';
 import 'package:diamnow/models/Address/StateListModel.dart';
+import 'package:diamnow/models/AnalyticsModel/AnalyticsModel.dart';
 import 'package:diamnow/models/Auth/ChangePasswordModel.dart';
 import 'package:diamnow/models/Auth/CompanyInformationModel.dart';
 import 'package:diamnow/models/Auth/ForgetPassword.dart';
@@ -184,6 +185,9 @@ abstract class NetworkService {
   @POST(ApiConstants.logout)
   Future<BaseApiResp> logout();
 
+//  @POST(ApiConstants.sendAnalytics)
+//  Future<BaseApiResp> sendAnalytics(AnalyticsReq req);
+
   @GET(ApiConstants.getUpdation)
   Future<VersionUpdateResp> getVersionUpdate();
 
@@ -195,5 +199,5 @@ abstract class NetworkService {
 
   @POST(ApiConstants.sendNotificationId)
   Future<BaseApiResp> notificationId();
-  
+
 }

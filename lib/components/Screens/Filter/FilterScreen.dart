@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:diamnow/app/Helper/LocalNotification.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
@@ -12,6 +13,7 @@ import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
+import 'package:diamnow/components/CommonWidget/OverlayScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/DialogueList.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
@@ -33,6 +35,7 @@ import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
 import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
 import 'package:diamnow/components/Screens/Notification/Notifications.dart';
 import 'package:diamnow/components/Screens/Search/Search.dart';
+import 'package:diamnow/components/Screens/VoiceSearch/VoiceSearch.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/Address/CityListModel.dart';
 import 'package:diamnow/models/Address/CountryListModel.dart';
@@ -63,7 +66,10 @@ class FilterScreen extends StatefulScreenWidget {
   SavedSearchModel savedSearchModel;
   DisplayDataClass dictSearchData;
 
-  FilterScreen(Map<String, dynamic> arguments) {
+  FilterScreen(
+    Map<String, dynamic> arguments, {
+    Key key,
+  }) : super(key: key) {
     if (arguments != null) {
       if (arguments[ArgumentConstant.ModuleType] != null) {
         moduleType = arguments[ArgumentConstant.ModuleType];
@@ -301,109 +307,140 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus.unfocus();
       },
-      child: Scaffold(
-          backgroundColor: appTheme.whiteColor,
-          appBar: getAppBar(context, R.string.screenTitle.searchDiamond,
-              bgColor: appTheme.whiteColor,
-              leadingButton: isFromDrawer
-                  ? getDrawerButton(context, true)
-                  : getBackButton(context),
-              centerTitle: false,
-              actionItems: [
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      arrList.forEach((element) {
-                        if (element is SelectionModel) {
-                          element.masters.forEach((element) {
-                            element.isSelected = false;
-                          });
-                          element.caratRangeChipsToShow = [];
-                        }
-                        if (element is KeyToSymbolModel) {
-                          element.masters.forEach((element) {
-                            element.isSelected = false;
-                          });
-                        }
-                        if (element is FromToModel) {
-                          element.valueFrom = "";
-                          element.valueTo = "";
-                        }
-                        if (element is ColorModel) {
-                          element.masters.forEach((element) {
-                            element.isSelected = false;
-                          });
-                          element.mainMasters.forEach((element) {
-                            element.isSelected = false;
-                          });
-                          element.groupMaster.forEach((element) {
-                            element.isSelected = false;
-                          });
-                          element.intensity.forEach((element) {
-                            element.isSelected = false;
-                          });
-                          element.overtone.forEach((element) {
-                            element.isSelected = false;
-                          });
-                        }
+      child: Stack(
+        children: [
+          Scaffold(
+            backgroundColor: appTheme.whiteColor,
+            appBar: getAppBar(
+                context,
+                moduleType ==
+                        DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH
+                    ? R.string.screenTitle.searchOffline
+                    : R.string.screenTitle.searchDiamond,
+                bgColor: appTheme.whiteColor,
+                leadingButton: isFromDrawer
+                    ? getDrawerButton(context, true)
+                    : getBackButton(context),
+                centerTitle: false,
+                actionItems: [
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        arrList.forEach((element) {
+                          if (element is SelectionModel) {
+                            element.masters.forEach((element) {
+                              element.isSelected = false;
+                            });
+                            element.isShowAllSelected = false;
+                            element.caratRangeChipsToShow = [];
+                          }
+                          if (element is KeyToSymbolModel) {
+                            element.masters.forEach((element) {
+                              element.isSelected = false;
+                            });
+                          }
+                          if (element is FromToModel) {
+                            element.valueFrom = "";
+                            element.valueTo = "";
+                          }
+                          if (element is ColorModel) {
+                            element.masters.forEach((element) {
+                              element.isSelected = false;
+                            });
+                            element.mainMasters.forEach((element) {
+                              element.isSelected = false;
+                            });
+                            element.groupMaster.forEach((element) {
+                              element.isSelected = false;
+                            });
+                            element.intensity.forEach((element) {
+                              element.isSelected = false;
+                            });
+                            element.overtone.forEach((element) {
+                              element.isSelected = false;
+                            });
+                          }
+                        });
                       });
-                    });
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        right: getSize(8.0), left: getSize(8.0)),
-                    child: Image.asset(
-                      reset,
-                      height: getSize(20),
-                      width: getSize(20),
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          right: getSize(8.0), left: getSize(8.0)),
+                      child: Image.asset(
+                        reset,
+                        height: getSize(20),
+                        width: getSize(20),
+                      ),
                     ),
                   ),
-                ),
-                InkWell(
-                  onTap: () {
-                    NavigationUtilities.pushRoute(Notifications.route);
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        right: getSize(Spacing.rightPadding),
-                        left: getSize(8.0)),
-                    child: Image.asset(
-                      notification,
-                      height: getSize(20),
-                      width: getSize(20),
+                  InkWell(
+                    onTap: () {
+                      NavigationUtilities.pushRoute(Notifications.route);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          right: getSize(Spacing.rightPadding),
+                          left: getSize(8.0)),
+                      child: Image.asset(
+                        notification,
+                        height: getSize(20),
+                        width: getSize(20),
+                      ),
                     ),
                   ),
+                ]),
+            body: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(top: getSize(8)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      for (int i = 0; i < arrTab.length; i++)
+                        setTitleOfSegment(arrTab[i].title, i)
+                    ],
+                  ),
                 ),
-              ]),
-          body: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: getSize(8)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    for (int i = 0; i < arrTab.length; i++)
-                      setTitleOfSegment(arrTab[i].title, i)
-                  ],
+                // isNullEmptyOrFalse(arrTab)
+                //     ? SizedBox()
+                //     : SizedBox(height: getSize(16)),
+                // isNullEmptyOrFalse(arrTab) ? SizedBox() : _segmentedControl(),
+                Expanded(
+                  child: Container(
+                    color: Colors.transparent,
+                    child: isNullEmptyOrFalse(arrList)
+                        ? SizedBox()
+                        : getPageView(),
+                  ),
                 ),
-              ),
-              // isNullEmptyOrFalse(arrTab)
-              //     ? SizedBox()
-              //     : SizedBox(height: getSize(16)),
-              // isNullEmptyOrFalse(arrTab) ? SizedBox() : _segmentedControl(),
-              Expanded(
-                child: Container(
-                  color: Colors.transparent,
-                  child:
-                      isNullEmptyOrFalse(arrList) ? SizedBox() : getPageView(),
-                ),
-              ),
-            ],
+              ],
+            ),
+            bottomNavigationBar: getBottomTab(),
           ),
-          bottomNavigationBar: getBottomTab()),
+          (app.resolve<PrefUtils>().getBool(PrefUtils().keySearchTour) ==
+                      false &&
+                  this.moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH)
+              ? OverlayScreen(
+                  moduleType,
+                  finishTakeTour: () {
+                    setState(() {});
+                  },
+                  scrollIndex: (index) {
+                    // if (index == 0 || index == 1) {
+                    //   Scrollable.ensureVisible(searchKey.currentContext);
+                    // } else if (index == 2) {
+                    //   Scrollable.ensureVisible(savedSearchKey.currentContext);
+                    // } else if (index == 3) {
+                    //   Scrollable.ensureVisible(sellerKey.currentContext);
+                    // }
+                  },
+                )
+              : SizedBox(),
+        ],
+      ),
     );
   }
 
@@ -465,6 +502,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
   //my demand popup end.
   getAddDemand() {
+    SyncManager.instance.callAnalytics(context,
+        page: PageAnalytics.MY_DEMAND,
+        section: SectionAnalytics.ADD,
+        action: ActionAnalytics.OPEN);
+
     showDialog(
       context: context,
       barrierDismissible: true,
@@ -487,6 +529,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   }
 
   getSavedSearchPopUp() {
+    SyncManager.instance.callAnalytics(context,
+        page: PageAnalytics.MYSAVED_SEARCH,
+        section: SectionAnalytics.LIST,
+        action: ActionAnalytics.CLICK);
+
     if (!isNullEmptyOrFalse(saveSearchList)) {
       showDialog(
         context: context,
@@ -518,6 +565,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         },
       );
     } else {
+      SyncManager.instance.callAnalytics(context,
+          page: PageAnalytics.MYSAVED_SEARCH,
+          section: SectionAnalytics.ADD,
+          action: ActionAnalytics.CLICK);
+
       Map<String, dynamic> dict = {};
       dict["type"] = SavedSearchType.savedSearch;
       dict["isAppendMasters"] = true;
@@ -571,7 +623,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   Widget getBottomTab() {
     return BottomTabbarWidget(
       arrBottomTab: arrBottomTab,
-      onClickCallback: (obj) {
+      onClickCallback: (obj) async {
         //
         if (obj.code == BottomCodeConstant.filterSavedSearch) {
           if (app
@@ -599,16 +651,45 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
           }
         } else if (obj.code == BottomCodeConstant.filterSearch) {
-          if (app
-              .resolve<PrefUtils>()
-              .getModulePermission(
-                  ModulePermissionConstant.permission_searchResult)
-              .view) {
-            callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-                isSearch: true);
-            // place code
+          //Check internet is online or not
+          var connectivityResult = await Connectivity().checkConnectivity();
+          if (connectivityResult == ConnectivityResult.none) {
+            //Save filter Param offline
+            Map<String, dynamic> payload = {};
+            payload["module"] =
+                DiamondModuleConstant.MODULE_TYPE_FILTER_OFFLINE_NOTI_CLICK;
+            payload["payload"] = FilterRequest().createRequest(arrList);
+
+            app.resolve<PrefUtils>().saveFilterOffline(payload);
+
+            showToast(
+                "You are offline, Your search is saved. When you are connected with internet, You will be notified and you can continue your search.",
+                context: context);
           } else {
-            app.resolve<CustomDialogs>().accessDenideDialog(context);
+            if (app
+                    .resolve<PrefUtils>()
+                    .getModulePermission(
+                        ModulePermissionConstant.permission_offline_stock)
+                    .view &&
+                moduleType ==
+                    DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+              //Query for sembast
+              Map<String, dynamic> dict = new HashMap();
+              dict["filterModel"] = arrList;
+              dict[ArgumentConstant.ModuleType] = moduleType;
+              NavigationUtilities.pushRoute(DiamondListScreen.route,
+                  args: dict);
+            } else if (app
+                .resolve<PrefUtils>()
+                .getModulePermission(
+                    ModulePermissionConstant.permission_searchResult)
+                .view) {
+              callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+                  isSearch: true);
+              // place code
+            } else {
+              app.resolve<CustomDialogs>().accessDenideDialog(context);
+            }
           }
         } else if (obj.code == BottomCodeConstant.filterSaveAndSearch) {
           if (app
@@ -636,7 +717,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 (diamondListResp) {
               Map<String, dynamic> dict = new HashMap();
               dict["filterId"] = diamondListResp.data.filter.id;
-              dict["filters"] = FilterRequest().createRequest(arrList);
+              dict["filter"] = FilterRequest().createRequest(arrList);
               dict[ArgumentConstant.ModuleType] =
                   DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR;
               NavigationUtilities.pushRoute(DiamondListScreen.route,
@@ -652,6 +733,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
   callApiForGetFilterId(int moduleType,
       {bool isSavedSearch = false, bool isSearch = false}) {
+    SyncManager.instance.callAnalytics(context,
+        page: PageAnalytics.DIAMOND_SEARCH,
+        section: SectionAnalytics.SEARCH,
+        action: ActionAnalytics.CLICK);
+
     SyncManager.instance.callApiForDiamondList(
       context,
       FilterRequest().createRequest(arrList),
@@ -758,11 +844,17 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, position) {
         if (isNullEmptyOrFalse(arrTab)) {
-          return FilterItem(arrList);
+          return FilterItem(
+            arrList,
+            moduleType: moduleType,
+          );
         }
-        return FilterItem(arrList
-            .where((element) => element.tab == arrTab[position].tab)
-            .toList());
+        return FilterItem(
+          arrList
+              .where((element) => element.tab == arrTab[position].tab)
+              .toList(),
+          moduleType: moduleType,
+        );
       },
     );
   }
@@ -770,8 +862,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
 class FilterItem extends StatefulWidget {
   List<FormBaseModel> arrList = [];
+  int moduleType;
 
-  FilterItem(this.arrList);
+  FilterItem(this.arrList, {this.moduleType});
 
   @override
   _FilterItemState createState() => _FilterItemState();
@@ -794,13 +887,7 @@ class _FilterItemState extends State<FilterItem> {
 
   getWidgets(FormBaseModel model) {
     if (model.viewType == "searchText") {
-      return Padding(
-        padding: EdgeInsets.only(
-          top: getSize(8),
-          bottom: getSize(16),
-        ),
-        child: getSearchTextField(),
-      );
+      return getSearchTextField();
     } else if (model.viewType == ViewTypes.seperator) {
       return SeperatorWidget(model);
     } else if (model.viewType == ViewTypes.selection) {
@@ -878,84 +965,118 @@ class _FilterItemState extends State<FilterItem> {
         .view)) {
       return SizedBox();
     }
-    return Hero(
-      tag: 'searchTextField',
-      child: Material(
-        color: appTheme.whiteColor,
-        child: Padding(
-          padding: EdgeInsets.only(
-            left: getSize(Spacing.leftPadding),
-            right: getSize(Spacing.rightPadding),
-            top: getSize(16),
-          ),
-          child: Container(
-            height: getSize(40),
-            decoration: BoxDecoration(
-              color: appTheme.whiteColor,
-              borderRadius: BorderRadius.circular(getSize(5)),
-              border:
-                  Border.all(color: appTheme.colorPrimary, width: getSize(1)),
-            ),
-            child: TextField(
-              textAlignVertical: TextAlignVertical(y: 1.0),
-              textInputAction: TextInputAction.done,
-              focusNode: _focusSearch,
-              readOnly: true,
-              autofocus: false,
-              controller: _searchController,
-              obscureText: false,
-              style: appTheme.black16TextStyle,
-              keyboardType: TextInputType.text,
-              textCapitalization: TextCapitalization.none,
-              cursorColor: appTheme.colorPrimary,
-              inputFormatters: [
-                WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
-                BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
-              ],
-              decoration: InputDecoration(
-                fillColor: fromHex("#FFEFEF"),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
-                  borderSide: BorderSide(
-                      color: appTheme.dividerColor, width: getSize(1)),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
-                  borderSide: BorderSide(
-                      color: appTheme.dividerColor, width: getSize(1)),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
-                  borderSide: BorderSide(
-                      color: appTheme.dividerColor, width: getSize(1)),
-                ),
+    return Padding(
+      padding: EdgeInsets.only(top: getSize(16.0), bottom: getSize(16.0)),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Hero(
+              tag: 'searchTextField',
+              child: Material(
+                color: appTheme.whiteColor,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: getSize(Spacing.leftPadding),
+                    right: getSize(Spacing.rightPadding),
+                  ),
+                  child: Container(
+                    height: getSize(40),
+                    decoration: BoxDecoration(
+                      color: appTheme.whiteColor,
+                      borderRadius: BorderRadius.circular(getSize(5)),
+                      border: Border.all(
+                          color: appTheme.colorPrimary, width: getSize(1)),
+                    ),
+                    child: TextField(
+                      textAlignVertical: TextAlignVertical(y: 1.0),
+                      textInputAction: TextInputAction.done,
+                      focusNode: _focusSearch,
+                      readOnly: true,
+                      autofocus: false,
+                      controller: _searchController,
+                      obscureText: false,
+                      style: appTheme.black16TextStyle,
+                      keyboardType: TextInputType.text,
+                      textCapitalization: TextCapitalization.none,
+                      cursorColor: appTheme.colorPrimary,
+                      inputFormatters: [
+                        WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+                        BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+                      ],
+                      decoration: InputDecoration(
+                        fillColor: fromHex("#FFEFEF"),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(getSize(5))),
+                          borderSide: BorderSide(
+                              color: appTheme.dividerColor, width: getSize(1)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(getSize(5))),
+                          borderSide: BorderSide(
+                              color: appTheme.dividerColor, width: getSize(1)),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(getSize(5))),
+                          borderSide: BorderSide(
+                              color: appTheme.dividerColor, width: getSize(1)),
+                        ),
 
-                hintStyle: appTheme.grey16HintTextStyle,
-                hintText: R.string.commonString.searchStoneIdCertificateNo,
-                labelStyle: TextStyle(
-                  color: appTheme.textColor,
-                  fontSize: getFontSize(16),
+                        hintStyle: appTheme.grey16HintTextStyle,
+                        hintText:
+                            R.string.commonString.searchStoneIdCertificateNo,
+                        labelStyle: TextStyle(
+                          color: appTheme.textColor,
+                          fontSize: getFontSize(16),
+                        ),
+                        // suffix: widget.textOption.postfixWidOnFocus,
+                        suffixIcon: Padding(
+                            padding: EdgeInsets.all(getSize(10)),
+                            child: Image.asset(search)),
+                      ),
+                      onChanged: (String text) {
+                        //
+                      },
+                      onEditingComplete: () {
+                        //
+                        _focusSearch.unfocus();
+                      },
+                      onTap: () {
+                        Map<String, dynamic> dict = new HashMap();
+                        dict["isFromSearch"] = true;
+                        NavigationUtilities.pushRoute(SearchScreen.route,
+                            args: dict);
+                      },
+                    ),
+                  ),
                 ),
-                // suffix: widget.textOption.postfixWidOnFocus,
-                suffixIcon: Padding(
-                    padding: EdgeInsets.all(getSize(10)),
-                    child: Image.asset(search)),
               ),
-              onChanged: (String text) {
-                //
-              },
-              onEditingComplete: () {
-                //
-                _focusSearch.unfocus();
-              },
-              onTap: () {
-                Map<String, dynamic> dict = new HashMap();
-                dict["isFromSearch"] = true;
-                NavigationUtilities.pushRoute(SearchScreen.route, args: dict);
-              },
             ),
           ),
-        ),
+          if (widget.moduleType !=
+              DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH)
+            Center(
+              child: InkWell(
+                onTap: () {
+                  NavigationUtilities.pushRoute(VoiceSearch.route);
+                },
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    right: getSize(Spacing.leftPadding),
+                  ),
+                  child: Image.asset(
+                    microphone,
+                    alignment: Alignment.centerRight,
+                    width: getSize(26),
+                    height: getSize(26),
+                  ),
+                ),
+              ),
+            )
+        ],
       ),
     );
   }

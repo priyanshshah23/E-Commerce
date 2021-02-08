@@ -84,7 +84,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
             centerTitle: false,
           ),
           bottomNavigationBar: Container(
-            margin: EdgeInsets.all(getSize(16)),
+            margin: EdgeInsets.all(getSize(20)),
             decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
             child: AppButton.flat(
               onTap: () {
@@ -95,7 +95,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
               fitWidth: true,
               text: isFromSearch
                   ? R.string.commonString.searchStoneIdCertificateNo
-                  : "Round 1.0-1.19 D H VS",
+                  : R.string.commonString.search,
             ),
           ),
           body: SafeArea(
@@ -115,10 +115,11 @@ class _SearchScreenState extends StatefulScreenWidgetState {
     return Hero(
       tag: 'searchTextField',
       child: Material(
+        color: appTheme.whiteColor,
         child: Padding(
           padding: EdgeInsets.only(
-            left: getSize(Spacing.leftPadding),
-            right: getSize(Spacing.rightPadding),
+            left: getSize(20),
+            right: getSize(20),
           ),
           child: Container(
             height: getSize(40),
@@ -156,7 +157,9 @@ class _SearchScreenState extends StatefulScreenWidgetState {
                 ),
 
                 hintStyle: appTheme.grey16HintTextStyle,
-                hintText: R.string.authStrings.searchHint,
+                hintText: isFromSearch
+                    ? R.string.authStrings.searchHint
+                    : "Round 1.0-1.19 D-H-VS",
                 labelStyle: TextStyle(
                   color: appTheme.textColor,
                   fontSize: getFontSize(16),
@@ -416,8 +419,8 @@ class _SearchScreenState extends StatefulScreenWidgetState {
         child: Center(
           child: Text(
               _searchController.text.length > 0
-                  ? "No Data Found"
-                  : "Type to search",
+                  ? R.string.noDataStrings.noDataFound
+                  : R.string.screenTitle.typeToSearch,
               textAlign: TextAlign.center,
               style: appTheme.black18TextStyle),
         ),
@@ -533,15 +536,18 @@ class _SearchScreenState extends StatefulScreenWidgetState {
 
   getList() {
     if (isNullEmptyOrFalse(arrList)) {
-      return Container(
-        height: MediaQuery.of(context).size.height / 1.5,
-        child: Center(
-          child: Text(
-              _searchController.text.length > 0
-                  ? "No Data Found"
-                  : "Type at least 3 characters to \nsearch stones",
-              textAlign: TextAlign.center,
-              style: appTheme.black18TextStyle),
+      return Padding(
+        padding: EdgeInsets.all(getSize(20)),
+        child: Container(
+          height: MediaQuery.of(context).size.height / 1.5,
+          child: Center(
+            child: Text(
+                _searchController.text.length > 0
+                    ? R.string.noDataStrings.noDataFound
+                    : R.string.screenTitle.typeWordsToSearch,
+                textAlign: TextAlign.center,
+                style: appTheme.black18TextStyle),
+          ),
         ),
       );
     }
