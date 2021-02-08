@@ -228,6 +228,31 @@ class FilterDataSource {
             item.valueFrom = dict[item.apiKey][">="];
             item.valueTo = dict[item.apiKey]["<="];
           }
+
+          if (item.isCaratRange) {
+            if (!isNullEmptyOrFalse(dict["or"])) {
+              List<dynamic> arr = dict["or"];
+
+              List<dynamic> arrSelected =
+                  arr.map((e) => e[item.apiKey]).toList();
+              List<dynamic> arrDup = arr.map((e) => e[item.apiKey]).toList();
+
+              for (var master in item.selectionModel.masters) {
+                for (var tCarat in master.grouped) {
+                  for (var model in arrSelected) {
+                    if (num.parse(tCarat.webDisplay.split("-")[0]) ==
+                            num.parse(model[">="].toString()) &&
+                        num.parse(tCarat.webDisplay.split("-")[1]) ==
+                            num.parse(model["<="].toString())) {
+                      tCarat.isSelected = true;
+                      master.isSelected = true;
+                      arrDup.remove(model);
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       } else {
         if (item is ColorModel) {
