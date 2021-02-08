@@ -37,7 +37,7 @@
   {
     "title": "Carat Range",
     "desc": "Desc",
-    "viewType": "fromto",
+    "viewType": "caratrange",
     "isCaratRange": true,
     "allLableTitle": "All",
     "apiKey": "crt",
