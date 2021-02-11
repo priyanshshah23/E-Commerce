@@ -50,7 +50,8 @@ class DiamondDeepDetailScreen extends StatefulScreenWidget {
       _DiamondDeepDetailScreenState(this.arrImages, this.diamondModel);
 }
 
-class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
+class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
+    with SingleTickerProviderStateMixin {
   bool isLoading = true;
   bool isErroWhileLoading = false;
   DiamondConfig diamondConfig;
@@ -72,6 +73,8 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
 
   _DiamondDeepDetailScreenState(this.arrImages, this.diamondModel);
 
+  TabController _tabController;
+
   @override
   void initState() {
     // WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -79,6 +82,8 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
 
     // });
     // removeNotContainedImages();
+    print("------------${arrImages.length}");
+    _tabController = new TabController(length: arrImages.length, vsync: this);
 
     super.initState();
     getPrefixSum();
@@ -175,73 +180,83 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
     return Column(
       children: <Widget>[
         Container(
-          margin: EdgeInsets.only(
-              left: getSize(20),
-              right: getSize(20),
-              top: getSize(0),
-              bottom: getSize(0)),
           height: getSize(52),
-          child: ScrollablePositionedList.builder(
-            itemScrollController: _sc,
-            scrollDirection: Axis.horizontal,
-            itemCount: arrImages.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Padding(
-                padding: EdgeInsets.only(right: getSize(30)),
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      jumpToAnyTabFromTabBarClick(index);
-                    });
-                  },
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        arrImages[index].title,
-                        style: appTheme.blackNormal18TitleColorblack,
-                      ),
-                      index == currTab
-                          ? Padding(
-                              padding: EdgeInsets.only(top: getSize(8)),
-                              child: Container(
-                                width: getSize(50),
-                                height: getSize(3),
-                                decoration: BoxDecoration(
-                                  color: appTheme.colorPrimary,
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(3),
-                                      topRight: Radius.circular(3)),
-                                ),
-                              ),
-                            )
-                          : SizedBox(),
-                    ],
-                  ),
-                ),
-              );
+          child: TabBar(
+            unselectedLabelColor: Colors.white,
+            labelColor: Colors.amber,
+            controller: _tabController,
+            indicatorColor: Colors.transparent,
+            onTap: (index) {
+              currTab = index;
+              setState(() {});
             },
+            tabs: getTabs(),
           ),
+//          child: ScrollablePositionedList.builder(
+//            itemScrollController: _sc,
+//            scrollDirection: Axis.horizontal,
+//            itemCount: arrImages.length,
+//            itemBuilder: (BuildContext context, int index) {
+//              return Padding(
+//                padding: EdgeInsets.only(right: getSize(30)),
+//                child: InkWell(
+//                  onTap: () {
+//                    setState(() {
+//                      jumpToAnyTabFromTabBarClick(index);
+//                    });
+//                  },
+//                  child: Column(
+//                    children: <Widget>[
+//                      Text(
+//                        arrImages[index].title,
+//                        style: appTheme.blackNormal18TitleColorblack,
+//                      ),
+//                      index == currTab
+//                          ? Padding(
+//                              padding: EdgeInsets.only(top: getSize(8)),
+//                              child: Container(
+//                                width: getSize(50),
+//                                height: getSize(3),
+//                                decoration: BoxDecoration(
+//                                  color: appTheme.colorPrimary,
+//                                  borderRadius: BorderRadius.only(
+//                                      topLeft: Radius.circular(3),
+//                                      topRight: Radius.circular(3)),
+//                                ),
+//                              ),
+//                            )
+//                          : SizedBox(),
+//                    ],
+//                  ),
+//                ),
+//              );
+//            },
+//          ),
         ),
         SizedBox(
           height: getSize(25),
         ),
         Expanded(
-          child: ListView.builder(
-            shrinkWrap: true,
-            controller: _scrollController1,
-            itemCount: arrImages.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: EdgeInsets.only(
-                  left: getSize(20),
-                  right: getSize(20),
-                  top: getSize(0),
-                  bottom: getSize(25),
-                ),
-                child: getListViewItem(index),
-              );
-            },
+          child: TabBarView(
+            children: getChildren(),
+            controller: _tabController,
           ),
+//          child: ListView.builder(
+//            shrinkWrap: true,
+//            controller: _scrollController1,
+//            itemCount: arrImages.length,
+//            itemBuilder: (context, index) {
+//              return Padding(
+//                padding: EdgeInsets.only(
+//                  left: getSize(20),
+//                  right: getSize(20),
+//                  top: getSize(0),
+//                  bottom: getSize(25),
+//                ),
+//                child: getListViewItem(index),
+//              );
+//            },
+//          ),
         ),
       ],
     );
@@ -575,5 +590,47 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
         () {
       Navigator.pop(context, true);
     }, moduleType: moduleType);
+  }
+
+  List<Widget> getTabs() {
+    List<Widget> list = [];
+    for (int i = 0; i < arrImages.length; i++) {
+      print("--------tabs---${arrImages.length}");
+      list.add(Tab(
+        child: Column(
+          children: [
+            Text(
+              arrImages[i].title,
+              style: appTheme.blackNormal18TitleColorblack,
+            ),
+            currTab == i
+                ? Padding(
+                    padding: EdgeInsets.only(top: getSize(8)),
+                    child: Container(
+                      width: getSize(50),
+                      height: getSize(3),
+                      decoration: BoxDecoration(
+                        color: appTheme.colorPrimary,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(3),
+                            topRight: Radius.circular(3)),
+                      ),
+                    ),
+                  )
+                : SizedBox(),
+          ],
+        ),
+      ));
+    }
+    return list;
+  }
+
+  getChildren() {
+    List<Widget> list = [];
+    for (int i = 0; i < arrImages.length; i++) {
+      print("--------tabs---${arrImages.length}");
+      list.add(Center(child: Text("Hekkoo")));
+    }
+    return list;
   }
 }
