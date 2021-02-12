@@ -560,7 +560,7 @@ class DiamondModel {
     data["opTbl"] = this.opTbl;
     data["opPav"] = this.opPav;
     data["opCrwn"] = this.opCrwn;
-
+    data['offerValidDate'] = this.offerValidDate;
     return data;
   }
 

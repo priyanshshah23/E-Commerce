@@ -23,7 +23,14 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 class OfferPopup extends StatefulWidget {
   Function(String selectedDate, String comment) callBack;
   int actionType = DiamondTrackConstant.TRACK_TYPE_OFFER;
-  OfferPopup({this.callBack, this.actionType});
+  String date;
+  bool isFromOfferUpdate = false;
+  OfferPopup(
+      {this.callBack,
+      this.actionType,
+      this.date,
+      this.isFromOfferUpdate = false});
+
   @override
   _OfferPopupState createState() => _OfferPopupState();
 }
@@ -47,6 +54,12 @@ class _OfferPopupState extends State<OfferPopup> {
 
   @override
   void initState() {
+    if (widget.isFromOfferUpdate) {
+      selectedDate = widget.date;
+      _dateController.text = DateUtilities().convertServerDateToFormatterString(
+          selectedDate,
+          formatter: DateUtilities.dd_mm_yyyy_);
+    }
     super.initState();
   }
 
@@ -157,6 +170,7 @@ class _OfferPopupState extends State<OfferPopup> {
                     child: InkWell(
                       onTap: () {
                         if (_formKey.currentState.validate()) {
+                          print("---1----${_commentController.text}");
                           Navigator.pop(context);
                           widget.callBack(
                               selectedDate, _commentController.text);

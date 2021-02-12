@@ -53,6 +53,7 @@ class DiamondDetailImagePagerModel {
   bool isImage;
   bool isVideo;
   int subIndex = 0;
+  List<String> urlList;
 
   List<DiamondDetailImagePagerModel> arr = List<DiamondDetailImagePagerModel>();
 
@@ -64,6 +65,7 @@ class DiamondDetailImagePagerModel {
     this.isVideo = false,
     this.subIndex = 0,
     this.arr,
+    this.urlList,
   });
 }
 
@@ -367,7 +369,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       DiamondDetailImagePagerModel(
         title: "H&A",
         url: DiamondUrls.heartImage +
-            diamondModel.vStnId +
+            diamondModel.mfgStnId +
             "/" +
             "Heart_Black_BG.jpg",
         isSelected: true,
@@ -376,6 +378,17 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     );
     // }
 
+    arrOfHA.add(
+      DiamondDetailImagePagerModel(
+        title: "H&A",
+        url: DiamondUrls.heartImage +
+            diamondModel.mfgStnId +
+            "/" +
+            "Arrow_Black_BG.jpg",
+        isSelected: true,
+        isImage: true,
+      ),
+    );
     // if (diamondModel.hAFile) {
     arrImages.add(
       DiamondDetailImagePagerModel(

@@ -658,6 +658,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             Map<String, dynamic> payload = {};
             payload["module"] =
                 DiamondModuleConstant.MODULE_TYPE_FILTER_OFFLINE_NOTI_CLICK;
+
             payload["payload"] = FilterRequest().createRequest(arrList);
 
             app.resolve<PrefUtils>().saveFilterOffline(payload);
@@ -686,6 +687,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 .view) {
               callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
                   isSearch: true);
+
               // place code
             } else {
               app.resolve<CustomDialogs>().accessDenideDialog(context);

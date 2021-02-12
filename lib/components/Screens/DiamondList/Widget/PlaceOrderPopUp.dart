@@ -25,7 +25,7 @@ class PlaceOrderPopUp extends StatefulWidget {
   DiamondConfig diamondConfig;
   int actionType;
   List<DiamondModel> diamondList;
-  Function(String selectedDate) callBack;
+  Function(String selectedDate, String remark) callBack;
   PlaceOrderPopUp(
       {this.diamondConfig, this.actionType, this.diamondList, this.callBack});
 
@@ -241,7 +241,8 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
                             return;
                           }
                           Navigator.pop(context);
-                          widget.callBack(selectedPopUpDate);
+                          widget.callBack(selectedPopUpDate,
+                              _commentController.text.trim());
                         } else {
                           setState(() {
                             autovalid = true;

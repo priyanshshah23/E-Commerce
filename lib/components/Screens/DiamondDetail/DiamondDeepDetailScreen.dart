@@ -22,6 +22,7 @@ import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:downloads_path_provider/downloads_path_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -82,8 +83,9 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
 
     // });
     // removeNotContainedImages();
-    print("------------${arrImages.length}");
-    _tabController = new TabController(length: arrImages.length, vsync: this);
+    print("------------${arrImages.toList().toString()}");
+    _tabController = new TabController(length: arrImages.length, vsync: this)
+      ..addListener(_setActiveTabIndex);
 
     super.initState();
     getPrefixSum();
@@ -92,6 +94,11 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
     isErroWhileLoading = false;
     diamondConfig = DiamondConfig(moduleType);
     diamondConfig.initItems(isDetail: true);
+  }
+
+  void _setActiveTabIndex() {
+    currTab = _tabController.index;
+    setState(() {});
   }
 
   // removeNotContainedImages() {
@@ -179,59 +186,17 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
   Widget getDiamondDetailComponents() {
     return Column(
       children: <Widget>[
-        Container(
-          height: getSize(52),
-          child: TabBar(
-            unselectedLabelColor: Colors.white,
-            labelColor: Colors.amber,
-            controller: _tabController,
-            indicatorColor: Colors.transparent,
-            onTap: (index) {
-              currTab = index;
-              setState(() {});
-            },
-            tabs: getTabs(),
-          ),
-//          child: ScrollablePositionedList.builder(
-//            itemScrollController: _sc,
-//            scrollDirection: Axis.horizontal,
-//            itemCount: arrImages.length,
-//            itemBuilder: (BuildContext context, int index) {
-//              return Padding(
-//                padding: EdgeInsets.only(right: getSize(30)),
-//                child: InkWell(
-//                  onTap: () {
-//                    setState(() {
-//                      jumpToAnyTabFromTabBarClick(index);
-//                    });
-//                  },
-//                  child: Column(
-//                    children: <Widget>[
-//                      Text(
-//                        arrImages[index].title,
-//                        style: appTheme.blackNormal18TitleColorblack,
-//                      ),
-//                      index == currTab
-//                          ? Padding(
-//                              padding: EdgeInsets.only(top: getSize(8)),
-//                              child: Container(
-//                                width: getSize(50),
-//                                height: getSize(3),
-//                                decoration: BoxDecoration(
-//                                  color: appTheme.colorPrimary,
-//                                  borderRadius: BorderRadius.only(
-//                                      topLeft: Radius.circular(3),
-//                                      topRight: Radius.circular(3)),
-//                                ),
-//                              ),
-//                            )
-//                          : SizedBox(),
-//                    ],
-//                  ),
-//                ),
-//              );
-//            },
-//          ),
+        TabBar(
+          isScrollable: true,
+          unselectedLabelColor: Colors.white,
+          labelColor: Colors.amber,
+          controller: _tabController,
+          indicatorColor: Colors.transparent,
+          onTap: (index) {
+            currTab = index;
+            setState(() {});
+          },
+          tabs: getTabs(),
         ),
         SizedBox(
           height: getSize(25),
@@ -267,37 +232,32 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Text(
-          arrImages[index].title,
-          style: appTheme.blackMedium16TitleColorblack,
-        ),
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          margin: EdgeInsets.only(top: getSize(10)),
-          height: getSize(245),
-          child: PageView.builder(
-            // physics: New,
-            // shrinkWrap: true,
-            controller: _pageController,
-            scrollDirection: Axis.horizontal,
-            itemCount: arrImages[index].arr.length,
-            itemBuilder: (BuildContext context, int i) {
-              return InkWell(
-                onTap: () {
-                  Map<String, dynamic> dict = new HashMap();
-                  dict["imageData"] = arrImages[index].arr;
-                  NavigationUtilities.pushRoute(
-                    DiamondImageBrowserScreen.route,
-                    args: dict,
-                  );
-                },
-                child: getTabBlock(
-                  arrImages[index].arr[i],
-                ),
-              );
-            },
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: ListView.builder(
+              // physics: New,
+              // shrinkWrap: true,
+              controller: _pageController,
+              itemCount: arrImages[index].arr.length,
+              itemBuilder: (BuildContext context, int i) {
+                return InkWell(
+                  onTap: () {
+                    Map<String, dynamic> dict = new HashMap();
+                    dict["imageData"] = arrImages[index].arr;
+                    NavigationUtilities.pushRoute(
+                      DiamondImageBrowserScreen.route,
+                      args: dict,
+                    );
+                  },
+                  child: getTabBlock(
+                    arrImages[index].arr[i],
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ],
@@ -356,7 +316,7 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
   Widget getTabBlock(DiamondDetailImagePagerModel model) {
     return (model.isImage == false)
         ? Container(
-            height: getSize(245),
+//            height: getSize(245),
             width: getSize(354),
             child: Stack(
               children: [
@@ -365,7 +325,6 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
                     builder:
                         (BuildContext context, AsyncSnapshot<Widget> snapshot) {
                       if (snapshot.hasData) return snapshot.data;
-
                       return Container();
                     }),
                 // !isErroWhileLoading ?Icon(Icons.title) :SizedBox(),
@@ -379,19 +338,20 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
               ],
             ),
           )
-        : Container(
-            margin: EdgeInsets.only(right: getSize(10)),
-            child: Stack(
-              children: [
-                getImageView(
+        : Stack(
+            alignment: Alignment.bottomRight,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(bottom: 10),
+                child: getImageView(
                   (model.arr != null &&
                           model.arr.length > 0 &&
                           isStringEmpty(model.url) == false)
                       ? model.arr[model.subIndex].url
                       : model.url,
-                  height: getSize(245),
-                  width: getSize(354),
-                  fit: BoxFit.fill,
+                  height: getSize(286),
+                  width: MathUtilities.screenWidth(context),
+                  fit: BoxFit.fitHeight,
                   shape: BoxDecoration(
                     color: appTheme.whiteColor,
                     // color: Colors.yellow,
@@ -399,52 +359,49 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
                     border: Border.all(color: appTheme.lightBGColor),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Container(
-                    padding: EdgeInsets.only(
-                      bottom: getSize(10),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        getImageViewForDownloadAndShare(
-                          imageName: share,
-                          onTap: () {
-                            downloadSingleImage(
-                              model.url,
-                              model.title +
-                                  diamondModel.id +
-                                  "." +
-                                  getExtensionOfUrl(model.url),
-                              isFileShare: true,
-                            );
-                          },
-                        ),
-                        SizedBox(
-                          width: getSize(10),
-                        ),
-                        getImageViewForDownloadAndShare(
-                          imageName: download,
-                          onTap: () {
-                            downloadSingleImage(
-                              model.url,
-                              model.title +
-                                  diamondModel.id +
-                                  "." +
-                                  getExtensionOfUrl(model.url),
-                            );
-                          },
-                        ),
-                        SizedBox(
-                          width: getSize(10),
-                        ),
-                      ],
-                    ),
-                  ),
+              ),
+              Container(
+                padding: EdgeInsets.only(
+                  bottom: getSize(10),
                 ),
-              ],
-            ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    getImageViewForDownloadAndShare(
+                      imageName: share,
+                      onTap: () {
+                        downloadSingleImage(
+                          model.url,
+                          model.title +
+                              diamondModel.id +
+                              "." +
+                              getExtensionOfUrl(model.url),
+                          isFileShare: true,
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      width: getSize(10),
+                    ),
+                    getImageViewForDownloadAndShare(
+                      imageName: download,
+                      onTap: () {
+                        downloadSingleImage(
+                          model.url,
+                          model.title +
+                              diamondModel.id +
+                              "." +
+                              getExtensionOfUrl(model.url),
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      width: getSize(10),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           );
   }
 
@@ -629,7 +586,15 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
     List<Widget> list = [];
     for (int i = 0; i < arrImages.length; i++) {
       print("--------tabs---${arrImages.length}");
-      list.add(Center(child: Text("Hekkoo")));
+      list.add(Padding(
+        padding: EdgeInsets.only(
+          left: getSize(20),
+          right: getSize(20),
+          top: getSize(0),
+          bottom: getSize(25),
+        ),
+        child: getListViewItem(i),
+      ));
     }
     return list;
   }

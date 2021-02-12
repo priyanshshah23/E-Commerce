@@ -721,7 +721,7 @@ class ScreenTitle {
   String watchlist = "Watchlist";
   String exclusive = "Exclusive";
   String featuredStones = "Featured Stones";
-  String stoneOfDay = "Stones of Day";
+  String stoneOfDay = "Best Buy";
   String recentSearch = "Recent Search";
   String viewAll = "View All";
   String salesPersonDetail = "Sales Person Detail";
@@ -752,7 +752,6 @@ class ScreenTitle {
 }
 
 class Dynamickeys {
-  String stoneIdTitle = "Stone ID/Cert No";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
     "shape": "Shape",
@@ -806,6 +805,7 @@ class Dynamickeys {
     "laserInsTitle": "LASER INS",
     "basicTitle": "Basic",
     "advancedTitle": "Advanced",
+    "stoneIdTitle": "Stone ID/Cert No",
     "defaultTitle": "Default",
     "newDiamondsTitle": "New Diamonds",
     "priceLowToHigh": "Price Low to High",
@@ -2150,8 +2150,6 @@ class ChineseScreenTitle extends ScreenTitle {
 }
 
 class ChineseDynamickeys extends Dynamickeys {
-  @override
-  get stoneIdTitle => "石ID /证书号";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
     "shape": "形状",
@@ -2205,6 +2203,7 @@ class ChineseDynamickeys extends Dynamickeys {
     "laserInsTitle": "激光惯导系统",
     "basicTitle": "基本",
     "advancedTitle": "高级",
+    "stoneIdTitle": "石ID /证书号",
     "defaultTitle": "默认",
     "newDiamondsTitle": "新的钻石",
     "priceLowToHigh": "价格由低到高",
@@ -3610,8 +3609,6 @@ class FrenchScreenTitle extends ScreenTitle {
 }
 
 class FrenchDynamickeys extends Dynamickeys {
-  @override
-  get stoneIdTitle => "Pierre ID / Cert Non";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
     "shape": "Forme",
@@ -3665,6 +3662,7 @@ class FrenchDynamickeys extends Dynamickeys {
     "laserInsTitle": "LASER INS",
     "basicTitle": "De base",
     "advancedTitle": "Avancée",
+    "stoneIdTitle": "Pierre ID / Cert Non",
     "defaultTitle": "Défaut",
     "newDiamondsTitle": "nouveaux diamants",
     "priceLowToHigh": "Prix ​​croissant",
@@ -5020,8 +5018,6 @@ class JapanScreenTitle extends ScreenTitle {
 }
 
 class JapanDynamickeys extends Dynamickeys {
-  @override
-  get stoneIdTitle => "ストーンID /証明書はありません";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
     "shape": "形状",
@@ -5075,6 +5071,7 @@ class JapanDynamickeys extends Dynamickeys {
     "laserInsTitle": "LASER INS",
     "basicTitle": "基本的な",
     "advancedTitle": "高度",
+    "stoneIdTitle": "ストーンID /証明書はありません",
     "defaultTitle": "デフォルト",
     "newDiamondsTitle": "新しいダイヤモンド",
     "priceLowToHigh": "高いに価格低",
@@ -6466,8 +6463,6 @@ class ItalianScreenTitle extends ScreenTitle {
 }
 
 class ItalianDynamickeys extends Dynamickeys {
-  @override
-  get stoneIdTitle => "Pietra ID / Cert No";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
     "shape": "Forma",
@@ -6521,6 +6516,7 @@ class ItalianDynamickeys extends Dynamickeys {
     "laserInsTitle": "LASER INS",
     "basicTitle": "Di base",
     "advancedTitle": "Avanzate",
+    "stoneIdTitle": "Pietra ID / Cert No",
     "defaultTitle": "Predefinito",
     "newDiamondsTitle": "nuovi Diamonds",
     "priceLowToHigh": "Prezzo basso al più alto",
@@ -7912,8 +7908,6 @@ class SpanishScreenTitle extends ScreenTitle {
 }
 
 class SpanishDynamickeys extends Dynamickeys {
-  @override
-  get stoneIdTitle => "Piedra ID / Cert n";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
     "shape": "Forma",
@@ -7967,6 +7961,7 @@ class SpanishDynamickeys extends Dynamickeys {
     "laserInsTitle": "LASER INS",
     "basicTitle": "Básico",
     "advancedTitle": "Avanzado",
+    "stoneIdTitle": "Piedra ID / Cert n",
     "defaultTitle": "Defecto",
     "newDiamondsTitle": "nuevos Diamantes",
     "priceLowToHigh": "Precios de barato a caro",
@@ -9354,8 +9349,6 @@ class GermanyScreenTitle extends ScreenTitle {
 }
 
 class GermanyDynamickeys extends Dynamickeys {
-  @override
-  get stoneIdTitle => "Stein ID / Cert No";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
     "shape": "Gestalten",
@@ -9409,6 +9402,7 @@ class GermanyDynamickeys extends Dynamickeys {
     "laserInsTitle": "LASER IN",
     "basicTitle": "Basic",
     "advancedTitle": "fortgeschritten",
+    "stoneIdTitle": "Stein ID / Cert No",
     "defaultTitle": "Standard",
     "newDiamondsTitle": "New Diamanten",
     "priceLowToHigh": "Preis niedrig bis hoch",
@@ -10783,8 +10777,6 @@ class ArabicScreenTitle extends ScreenTitle {
 }
 
 class ArabicDynamickeys extends Dynamickeys {
-  @override
-  get stoneIdTitle => "حجر ID / سيرت لا";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
     "shape": "شكل",
@@ -10838,6 +10830,7 @@ class ArabicDynamickeys extends Dynamickeys {
     "laserInsTitle": "LASER INS",
     "basicTitle": "الأساسي",
     "advancedTitle": "المتقدمة",
+    "stoneIdTitle": "حجر ID / سيرت لا",
     "defaultTitle": "إفتراضي",
     "newDiamondsTitle": "الماس جديدة",
     "priceLowToHigh": "السعر من الارخص للاعلى",
