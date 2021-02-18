@@ -357,7 +357,7 @@ class DownloadState extends State<Download> {
         //   url:canceltokens
         // }
         await downloadFile(
-          element.url.replaceFirst("https", "http"),
+          element.url,
           element.title +
               diamondModel.id +
               "." +
