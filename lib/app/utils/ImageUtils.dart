@@ -21,6 +21,7 @@ CachedNetworkImage getImageView(String url,
               ? (ApiConstants.imageBaseURL + url)
               : url);
   print("-----imageurl----$imageUrl");
+  //imageUrl = imageUrl.replaceFirst("https", "http");
   return new CachedNetworkImage(
     height: height,
     width: width,
