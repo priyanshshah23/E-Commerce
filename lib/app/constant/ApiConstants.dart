@@ -3,8 +3,8 @@ import 'dart:io';
 import '../app.export.dart';
 
 class ApiConstants {
-  static const String PROXY_URL = "PROXY 192.168.0.114:8888";
-  // static String PROXY_URL = "PROXY 192.168.0.206:8888"; //RAJ
+//  static const String PROXY_URL = "PROXY 192.168.0.114:8888";
+  static String PROXY_URL = "PROXY 192.168.2.124:8888"; //HONEY
 //  static String PROXY_URL = "PROXY 192.168.0.114:8888"; //JECKY
 
 //    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
@@ -125,10 +125,13 @@ class ApiConstants {
 class DiamondUrls {
   static const String commonUrl =
       "https://s3.us-east-2.wasabisys.com/cdn.pndiamonds.com/";
-  static const String image = commonUrl + "stonevideos/StoneImage_04-01-2020/";
-  static const String video = commonUrl + "stonevideos/StoneImage_04-01-2020/";
+  static const String commonUrlForImage = "https://cdn.pndiamonds.com/";
+  static const String image =
+      commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
+  static const String video =
+      commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
   static const String heartImage =
-      commonUrl + "stonevideos/StoneImage_04-01-2020/";
+      commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
   static const String plotting = commonUrl + "PlottingImages/";
   static const String certificate =
       "https://s3.us-east-2.wasabisys.com/" + "certificates/";
