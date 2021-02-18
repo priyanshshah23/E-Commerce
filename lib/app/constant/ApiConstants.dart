@@ -136,7 +136,7 @@ class DiamondUrls {
   static const String certificate =
       "https://s3.us-east-2.wasabisys.com/" + "certificates/";
   static const String arroImage =
-      commonUrl + "stonevideos/StoneImage_04-01-2020/";
+      commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
   static const String videomp4 = commonUrl + "Mov/";
   static const String roughVideo = commonUrl + "MFG/RoughVideo/";
   static const String polVideo = commonUrl + "viewer3/mp4_videos/";

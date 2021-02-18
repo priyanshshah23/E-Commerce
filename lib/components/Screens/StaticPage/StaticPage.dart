@@ -15,6 +15,8 @@ import 'package:flutter/services.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:share/share.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart' as xmlWebview;
+
 
 class StaticPageScreen extends StatefulScreenWidget {
   static const route = "StaticPageScreen";
@@ -48,6 +50,10 @@ class StaticPageScreen extends StatefulScreenWidget {
 }
 
 class _StaticPageScreenState extends StatefulScreenWidgetState {
+
+  xmlWebview.InAppWebViewController webView;
+  double progress = 0;
+
   String strUrl;
   String screenType;
   String screenTitle;
@@ -130,7 +136,41 @@ class _StaticPageScreenState extends StatefulScreenWidgetState {
                 ]
               : null,
         ),
-        body: Container(
+        body:Expanded(
+          child: Container(
+            margin: const EdgeInsets.all(10.0),
+            decoration:
+            BoxDecoration(border: Border.all(color: Colors.blueAccent)),
+            child: xmlWebview.InAppWebView(
+              initialUrl: strUrl ?? "http://pn`develop.democ.in/",
+              initialHeaders: {},
+              initialOptions: xmlWebview.InAppWebViewGroupOptions(
+                  crossPlatform: xmlWebview.InAppWebViewOptions(
+                    debuggingEnabled: true,
+                  )
+              ),
+              onWebViewCreated: (xmlWebview.InAppWebViewController controller) {
+                webView = controller;
+              },
+              onLoadStart: (xmlWebview.InAppWebViewController controller, String url) {
+                setState(() {
+                  this.strUrl = url;
+                });
+              },
+              onLoadStop: (xmlWebview.InAppWebViewController controller, String url) async {
+                setState(() {
+                  this.strUrl = url;
+                });
+              },
+              onProgressChanged: (xmlWebview.InAppWebViewController controller, int progress) {
+                setState(() {
+                  this.progress = progress / 100;
+                });
+              },
+            ),
+          ),
+        ),
+       /* body: Container(
           height: MathUtilities.screenHeight(context),
           color: ColorConstants.white,
           padding: EdgeInsets.only(
@@ -159,10 +199,12 @@ class _StaticPageScreenState extends StatefulScreenWidgetState {
                   print(error.toString());
                 },
                 gestureNavigationEnabled: true,
+
               ),
             ),
           ),
-        ));
+        )*/
+        );
   }
 
 //  _loadHtmlFromAssets(String desc) async {
