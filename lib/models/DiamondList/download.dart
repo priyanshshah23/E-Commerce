@@ -152,7 +152,7 @@ class DownloadState extends State<Download> {
                 ),
               )
             ],
-          )
+          ),
         ],
       ),
     );
@@ -170,7 +170,9 @@ class DownloadState extends State<Download> {
       allDiamondPreviewThings.forEach((element) {
         if (element.fileType == DownloadAndShareDialogueConstant.realImage1) {
           print("-----type----realImage1");
-          element.url = DiamondUrls.image + model.mfgStnId + "/" + "still.jpg";
+//          element.url = DiamondUrls.image + model.mfgStnId + "/" + "still.jpg";
+          element.url =
+              "https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8ZGF3bnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80";
         } else if (element.fileType ==
             DownloadAndShareDialogueConstant.arrowImg) {
           print("-----type----arrowImg");
