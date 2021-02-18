@@ -43,12 +43,13 @@ class DiamondDeepDetailScreen extends StatefulScreenWidget {
   List<DiamondDetailImagePagerModel> arrImages =
       List<DiamondDetailImagePagerModel>();
   DiamondModel diamondModel;
+  int index;
 
-  DiamondDeepDetailScreen({this.arrImages, this.diamondModel});
+  DiamondDeepDetailScreen({this.arrImages, this.diamondModel, this.index});
 
   @override
-  _DiamondDeepDetailScreenState createState() =>
-      _DiamondDeepDetailScreenState(this.arrImages, this.diamondModel);
+  _DiamondDeepDetailScreenState createState() => _DiamondDeepDetailScreenState(
+      this.arrImages, this.diamondModel, this.index);
 }
 
 class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
@@ -57,7 +58,7 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
   bool isErroWhileLoading = false;
   DiamondConfig diamondConfig;
   int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
-
+  int index;
   List<DiamondDetailImagePagerModel> arrImages =
       List<DiamondDetailImagePagerModel>();
 
@@ -72,7 +73,7 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
   final _pageController = PageController(viewportFraction: 0.9);
   Dio dio = Dio();
 
-  _DiamondDeepDetailScreenState(this.arrImages, this.diamondModel);
+  _DiamondDeepDetailScreenState(this.arrImages, this.diamondModel, this.index);
 
   TabController _tabController;
 
@@ -83,10 +84,15 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
 
     // });
     // removeNotContainedImages();
-    print("------------${arrImages.toList().toString()}");
-    _tabController = new TabController(length: arrImages.length, vsync: this)
-      ..addListener(_setActiveTabIndex);
 
+    print("------------${arrImages.toList().toString()}");
+    _tabController = TabController(length: arrImages.length, vsync: this)
+      ..addListener(_setActiveTabIndex);
+    if (index != null) {
+      print("----index$index");
+      currTab = index;
+      _tabController.animateTo(index);
+    }
     super.initState();
     getPrefixSum();
     getScrollControllerEventListener();
@@ -313,26 +319,37 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
   }
 
   Widget getTabBlock(DiamondDetailImagePagerModel model) {
-    print(
-        "------------${(model.arr != null && model.arr.length > 0 && isStringEmpty(model.url) == false) ? model.arr[model.subIndex].url : model.url}");
     return (model.isImage == false)
-        ? Container(
-            height: MediaQuery.of(context).size.height / 3,
-            width: getSize(354),
-            child: FutureBuilder<Widget>(
-                future: getPDFView(context, model),
-                builder:
-                    (BuildContext context, AsyncSnapshot<Widget> snapshot) {
-                  if (snapshot.hasData) return snapshot.data;
-                  return (isLoading)
-                      ? Center(
-                          child: SpinKitFadingCircle(
-                            color: appTheme.colorPrimary,
-                            size: getSize(30),
-                          ),
-                        )
-                      : Container();
-                }),
+        ? Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height / 3,
+                width: getSize(354),
+                child: FutureBuilder<Widget>(
+                    future: getPDFView(context, model),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+                      if (snapshot.hasData) {
+                        return snapshot.data;
+                      }
+                      return Center(
+                        child: SpinKitFadingCircle(
+                          color: appTheme.colorPrimary,
+                          size: getSize(30),
+                        ),
+                      );
+                    }),
+              ),
+              (isLoading)
+                  ? Center(
+                      child: SpinKitFadingCircle(
+                        color: appTheme.colorPrimary,
+                        size: getSize(30),
+                      ),
+                    )
+                  : Container()
+            ],
           )
         : Stack(
             alignment: Alignment.bottomRight,
@@ -510,6 +527,7 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
         initialUrl: model.url,
         onPageStarted: (url) {
           // app.resolve<CustomDialogs>().showProgressDialog(context, "");
+          print("---345678----");
           setState(() {
             isLoading = true;
           });

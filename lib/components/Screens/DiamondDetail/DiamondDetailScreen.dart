@@ -53,6 +53,7 @@ class DiamondDetailImagePagerModel {
   bool isImage;
   bool isVideo;
   int subIndex = 0;
+  String type;
 
   List<DiamondDetailImagePagerModel> arr = List<DiamondDetailImagePagerModel>();
 
@@ -64,6 +65,7 @@ class DiamondDetailImagePagerModel {
     this.isVideo = false,
     this.subIndex = 0,
     this.arr,
+    this.type,
   });
 }
 
@@ -256,6 +258,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         url: DiamondUrls.image + diamondModel.mfgStnId + "/" + "still.jpg",
         isSelected: true,
         isImage: true,
+        type: "AssetImage",
       ),
     );
     // }
@@ -284,6 +287,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
             "/" +
             "Office_Light_Black_BG.jpg",
         isSelected: false,
+        type: "AssetImage",
         isImage: true,
       ),
     );
@@ -296,6 +300,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           url: DiamondUrls.image + diamondModel.mfgStnId + "/" + "still.jpg",
           isSelected: true,
           isImage: true,
+          type: "Image",
           arr: arrOfImages),
     );
     // }
@@ -313,6 +318,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
             "/" +
             diamondModel.mfgStnId +
             ".html",
+        type: "Video",
         isSelected: true,
         isVideo: true,
       ),
@@ -350,6 +356,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
             "/" +
             diamondModel.mfgStnId +
             ".html",
+        type: "Video",
         isSelected: true,
         isVideo: true,
         arr: arrOfVideos,
@@ -364,12 +371,13 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     // if (diamondModel.hAFile) {
     arrOfHA.add(
       DiamondDetailImagePagerModel(
-        title: "H&A",
+        title: "AssetImage",
         url: (DiamondUrls.heartImage +
             diamondModel.mfgStnId +
             "/" +
             "Heart_Black_BG.jpg"),
 //        url: "",
+        type: "AssetImage",
         isSelected: true,
         isImage: true,
       ),
@@ -383,6 +391,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
             diamondModel.mfgStnId +
             "/" +
             "Arrow_Black_BG.jpg",
+        type: "AssetImage",
         isSelected: true,
         isImage: true,
       ),
@@ -395,6 +404,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
             diamondModel.mfgStnId +
             "/" +
             "Heart_Black_BG.jpg",
+        type: "Image",
         isSelected: false,
         isImage: true,
         arr: arrOfHA,
@@ -414,6 +424,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
             DiamondUrls.certificate +
             diamondModel.rptNo +
             ".pdf",
+        type: "Certificate",
         isSelected: true,
         isImage: false,
       ),
@@ -433,6 +444,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
               ".pdf",
           isSelected: false,
           isImage: false,
+          type: "Certificate",
           arr: arrOfCertificates),
     );
     // }
@@ -538,15 +550,54 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     );
   }
 
-  getRowItem(String type, String img) {
-    var list = arrImages.where((element) => element.title == type).toList();
+  getRowItem(String type, String img, int index) {
+    var list = arrImages.where((element) => element.type == type).toList();
+    var listHAndA =
+        arrImages.where((element) => element.type == "Certificate").toList();
+    int num = 0;
+    for (var model in arrImages) {
+      if (model.type == type) {
+        if (model.type == "Image") {
+          if (imageFlag) {
+            num = (num + model.arr.length);
+          } else {
+            num = num;
+          }
+        } else if (model.type == "Video") {
+          if (videoFlag) {
+            num = (num + model.arr.length);
+          } else {
+            num = num;
+          }
+        } else {
+          num = (num + model.arr.length);
+          if (!isNullEmptyOrFalse(listHAndA)) {
+            index++;
+          }
+        }
+      } else {
+        num = num;
+      }
+    }
 
+//      model.type == type
+//          ? model.type == "Image"
+//              ? imageFlag
+//                  ? num = (num + model.arr.length)
+//                  : num = num
+//              : model.type == "Video"
+//                  ? videoFlag
+//                      ? num = (num + model.arr.length)
+//                      : num = num
+//                  : num = (num + model.arr.length)
+//          : num = num;
     return !isNullEmptyOrFalse(list)
         ? InkWell(
             onTap: () {
               NavigationUtilities.push(
                 DiamondDeepDetailScreen(
                   arrImages: arrImages,
+                  index: index,
                   diamondModel: diamondModel,
                 ),
               );
@@ -564,25 +615,29 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                     SizedBox(
                       width: getSize(10),
                     ),
-                    for (var model in arrImages)
-                      model.title == type
-                          ? model.title == "Image"
-                              ? Text(
-                                  imageFlag ? model.arr.length.toString() : "0",
-                                  style: appTheme.primaryColor14TextStyle,
-                                )
-                              : model.title == "Video"
-                                  ? Text(
-                                      videoFlag
-                                          ? model.arr.length.toString()
-                                          : "0",
-                                      style: appTheme.primaryColor14TextStyle,
-                                    )
-                                  : Text(
-                                      model.arr.length.toString(),
-                                      style: appTheme.primaryColor14TextStyle,
-                                    )
-                          : SizedBox(),
+                    Text(
+                      num != 0 ? num.toString() : "0",
+                      style: appTheme.primaryColor14TextStyle,
+                    )
+//                    for (var model in arrImages)
+//                      model.title == type
+//                          ? model.title == "Image"
+//                              ? Text(
+//                                  imageFlag ? list.length.toString() : "0",
+//                                  style: appTheme.primaryColor14TextStyle,
+//                                )
+//                              : model.title == "Video"
+//                                  ? Text(
+//                                      videoFlag
+//                                          ? model.arr.length.toString()
+//                                          : "0",
+//                                      style: appTheme.primaryColor14TextStyle,
+//                                    )
+//                                  : Text(
+//                                      model.arr.length.toString(),
+//                                      style: appTheme.primaryColor14TextStyle,
+//                                    )
+//                          : SizedBox(),
                   ],
                 ),
               ),
@@ -732,6 +787,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                                                   child: getRowItem(
                                                     "Image",
                                                     gallary,
+                                                    0,
                                                   ),
                                                 )
                                               : SizedBox(),
@@ -740,11 +796,18 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                                                   padding: EdgeInsets.only(
                                                       right: getSize(10)),
                                                   child: getRowItem(
-                                                      "Video", playButton))
+                                                    "Video",
+                                                    playButton,
+                                                    1,
+                                                  ))
                                               : SizedBox(),
                                           // getRowItem("Video", playButton),
 
-                                          getRowItem("Certificate", medal),
+                                          getRowItem(
+                                            "Certificate",
+                                            medal,
+                                            2,
+                                          ),
                                         ],
                                       ),
                                     )
