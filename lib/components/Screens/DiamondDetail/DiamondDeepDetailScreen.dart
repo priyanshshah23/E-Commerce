@@ -230,7 +230,6 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
   getListViewItem(int index) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Expanded(
           child: Container(
@@ -327,29 +326,26 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
   }
 
   Widget getTabBlock(DiamondDetailImagePagerModel model) {
+    print(
+        "------------${(model.arr != null && model.arr.length > 0 && isStringEmpty(model.url) == false) ? model.arr[model.subIndex].url : model.url}");
     return (model.isImage == false)
         ? Container(
-//            height: getSize(245),
+            height: MediaQuery.of(context).size.height / 3,
             width: getSize(354),
-            child: Stack(
-              children: [
-                FutureBuilder<Widget>(
-                    future: getPDFView(context, model),
-                    builder:
-                        (BuildContext context, AsyncSnapshot<Widget> snapshot) {
-                      if (snapshot.hasData) return snapshot.data;
-                      return Container();
-                    }),
-                // !isErroWhileLoading ?Icon(Icons.title) :SizedBox(),
-                if (isLoading)
-                  Center(
-                    child: SpinKitFadingCircle(
-                      color: appTheme.colorPrimary,
-                      size: getSize(30),
-                    ),
-                  ),
-              ],
-            ),
+            child: FutureBuilder<Widget>(
+                future: getPDFView(context, model),
+                builder:
+                    (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+                  if (snapshot.hasData) return snapshot.data;
+                  return (isLoading)
+                      ? Center(
+                          child: SpinKitFadingCircle(
+                            color: appTheme.colorPrimary,
+                            size: getSize(30),
+                          ),
+                        )
+                      : Container();
+                }),
           )
         : Stack(
             alignment: Alignment.bottomRight,
@@ -365,13 +361,23 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
                   height: getSize(286),
                   width: MathUtilities.screenWidth(context),
                   fit: BoxFit.fitHeight,
-                  shape: BoxDecoration(
-                    color: appTheme.whiteColor,
-                    // color: Colors.yellow,
-                    borderRadius: BorderRadius.circular(getSize(20)),
-                    border: Border.all(color: appTheme.lightBGColor),
-                  ),
+//                  shape: BoxDecoration(
+//                    color: appTheme.whiteColor,
+//                    // color: Colors.yellow,
+//                    borderRadius: BorderRadius.circular(getSize(20)),
+//                    border: Border.all(color: appTheme.lightBGColor),
+//                  ),
                 ),
+//                  child: Image.network(
+//                    (model.arr != null &&
+//                            model.arr.length > 0 &&
+//                            isStringEmpty(model.url) == false)
+//                        ? model.arr[model.subIndex].url
+//                        : model.url,
+//                    height: getSize(286),
+//                    width: MathUtilities.screenWidth(context),
+//                    fit: BoxFit.fitHeight,
+//                  ),
               ),
               Container(
                 padding: EdgeInsets.only(

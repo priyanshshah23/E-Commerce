@@ -53,7 +53,6 @@ class DiamondDetailImagePagerModel {
   bool isImage;
   bool isVideo;
   int subIndex = 0;
-  List<String> urlList;
 
   List<DiamondDetailImagePagerModel> arr = List<DiamondDetailImagePagerModel>();
 
@@ -65,7 +64,6 @@ class DiamondDetailImagePagerModel {
     this.isVideo = false,
     this.subIndex = 0,
     this.arr,
-    this.urlList,
   });
 }
 
@@ -107,7 +105,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   @override
   void initState() {
     super.initState();
-
     setupData();
     diamondConfig = DiamondConfig(moduleType);
     diamondConfig.initItems(isDetail: true);
@@ -255,8 +252,8 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     // if (diamondModel.img) {
     arrOfImages.add(
       DiamondDetailImagePagerModel(
-        title: "Image",
-        url: DiamondUrls.image + diamondModel.vStnId + "/" + "still.jpg",
+        title: "AssetImage",
+        url: DiamondUrls.image + diamondModel.mfgStnId + "/" + "still.jpg",
         isSelected: true,
         isImage: true,
       ),
@@ -265,17 +262,17 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
 
     // print(DiamondUrls.image + diamondModel.vStnId + "/" + "still.jpg");
     // if (diamondModel.arrowFile) {
-    arrOfImages.add(
+    /*  arrOfImages.add(
       DiamondDetailImagePagerModel(
         title: "ArrowImage",
         url: DiamondUrls.arroImage +
-            diamondModel.vStnId +
+            diamondModel.mfgStnId +
             "/" +
             "Arrow_Black_BG.jpg",
         isSelected: false,
         isImage: true,
       ),
-    );
+    );*/
     // }
 
     // if (diamondModel.assetFile) {
@@ -283,7 +280,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       DiamondDetailImagePagerModel(
         title: "AssetImage",
         url: DiamondUrls.image +
-            diamondModel.vStnId +
+            diamondModel.mfgStnId +
             "/" +
             "Office_Light_Black_BG.jpg",
         isSelected: false,
@@ -312,9 +309,9 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       DiamondDetailImagePagerModel(
         title: "Video",
         url: DiamondUrls.video +
-            diamondModel.vStnId +
+            diamondModel.mfgStnId +
             "/" +
-            diamondModel.vStnId +
+            diamondModel.mfgStnId +
             ".html",
         isSelected: true,
         isVideo: true,
@@ -349,9 +346,9 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       DiamondDetailImagePagerModel(
         title: "Video",
         url: DiamondUrls.video +
-            diamondModel.vStnId +
+            diamondModel.mfgStnId +
             "/" +
-            diamondModel.vStnId +
+            diamondModel.mfgStnId +
             ".html",
         isSelected: true,
         isVideo: true,
@@ -368,10 +365,11 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     arrOfHA.add(
       DiamondDetailImagePagerModel(
         title: "H&A",
-        url: DiamondUrls.heartImage +
+        url: (DiamondUrls.heartImage +
             diamondModel.mfgStnId +
             "/" +
-            "Heart_Black_BG.jpg",
+            "Heart_Black_BG.jpg"),
+//        url: "",
         isSelected: true,
         isImage: true,
       ),
@@ -394,7 +392,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       DiamondDetailImagePagerModel(
         title: "H&A",
         url: DiamondUrls.heartImage +
-            diamondModel.vStnId +
+            diamondModel.mfgStnId +
             "/" +
             "Heart_Black_BG.jpg",
         isSelected: false,

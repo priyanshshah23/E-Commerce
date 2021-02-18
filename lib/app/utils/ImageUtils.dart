@@ -20,6 +20,7 @@ CachedNetworkImage getImageView(String url,
           : ((url.startsWith("images") || url.startsWith("/"))
               ? (ApiConstants.imageBaseURL + url)
               : url);
+  print("-----imageurl----$imageUrl");
   return new CachedNetworkImage(
     height: height,
     width: width,
