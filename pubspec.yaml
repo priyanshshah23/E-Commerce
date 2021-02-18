@@ -93,6 +93,7 @@ dependencies:
   collection: ^1.14.13
   screenshot_callback: any
   flutter_device_type: ^0.3.2
+  flutter_inappwebview: ^4.0.0+4
 
 dev_dependencies:
   flutter_test:
