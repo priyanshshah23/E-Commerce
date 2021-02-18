@@ -286,7 +286,7 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
     List<Widget> list = [];
     for (int i = 0; i < diamondConfig.toolbarList.length; i++) {
       var element = diamondConfig.toolbarList[i];
-      list.add(GestureDetector(
+      list.add(InkWell(
         onTap: () {
           manageToolbarClick(element);
         },

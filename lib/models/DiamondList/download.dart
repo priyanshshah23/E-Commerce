@@ -169,13 +169,18 @@ class DownloadState extends State<Download> {
 
       allDiamondPreviewThings.forEach((element) {
         if (element.fileType == DownloadAndShareDialogueConstant.realImage1) {
+          print("-----type----realImage1");
           element.url = DiamondUrls.image + model.mfgStnId + "/" + "still.jpg";
         } else if (element.fileType ==
             DownloadAndShareDialogueConstant.arrowImg) {
-          element.url =
-              DiamondUrls.arroImage + model.mfgStnId + "/" + "Arrow_Black_BG.jpg";
+          print("-----type----arrowImg");
+          element.url = DiamondUrls.heartImage +
+              model.mfgStnId +
+              "/" +
+              "Arrow_Black_BG.jpg";
         } else if (element.fileType ==
             DownloadAndShareDialogueConstant.assetScopeImg) {
+          print("-----type----assetScopeImg");
           element.url = DiamondUrls.image +
               model.mfgStnId +
               "/" +
@@ -188,6 +193,7 @@ class DownloadState extends State<Download> {
         // }
         else if (element.fileType ==
             DownloadAndShareDialogueConstant.heartAndArrowImg) {
+          print("-----type----heartAndArrowImg");
           element.url = DiamondUrls.heartImage +
               model.mfgStnId +
               "/" +
@@ -215,7 +221,8 @@ class DownloadState extends State<Download> {
         //   element.url = DiamondUrls.realImg2 + model.vStnId + ".jpg";
         // }
         else if (element.fileType == DownloadAndShareDialogueConstant.video1) {
-          element.url = DiamondUrls.video + model.vStnId + "/video.mp4";
+          print("-----type----video1");
+          element.url = DiamondUrls.video + model.mfgStnId + "/video.mp4";
         }
         //  else if (element.fileType ==
         //         DownloadAndShareDialogueConstant.video2 &&
@@ -224,6 +231,7 @@ class DownloadState extends State<Download> {
         // }
         else if (element.fileType ==
             DownloadAndShareDialogueConstant.certificate) {
+          print("-----type----certificate");
           element.url = DiamondUrls.certificate + model.rptNo + ".pdf";
         }
         // else if (element.fileType ==
@@ -242,6 +250,7 @@ class DownloadState extends State<Download> {
         //     model.roughVdo) {
         //   element.url = DiamondUrls.roughVideo + model.vStnId + ".html";
         // }
+        print("-------------url-----------${element.url}");
       });
 
       //download code
@@ -348,7 +357,7 @@ class DownloadState extends State<Download> {
         //   url:canceltokens
         // }
         await downloadFile(
-          element.url,
+          element.url.replaceFirst("https", "http"),
           element.title +
               diamondModel.id +
               "." +
