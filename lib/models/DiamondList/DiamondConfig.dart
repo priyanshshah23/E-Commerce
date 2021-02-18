@@ -896,10 +896,13 @@ class DiamondConfig {
 
   callApiForExcel(BuildContext context, List<DiamondModel> diamondList,
       {bool isForShare = false, void callback(String), bool isSummary}) {
+    var dio = Dio();
+
     List<String> stoneId = [];
     diamondList.forEach((element) {
       stoneId.add(element.id);
     });
+
     Map<String, dynamic> dict = {};
     dict["id"] = stoneId;
     if (isSummary) {
@@ -934,7 +937,7 @@ class DiamondConfig {
       if (isForShare) {
         callback(url);
       } else {
-        downloadExcel(excelFileUrl, savePath);
+        download2(dio,excelFileUrl, savePath);
         if (Platform.isIOS) {
           Map<String, dynamic> dict = {};
           dict["strUrl"] = url;
@@ -961,19 +964,53 @@ class DiamondConfig {
     });
   }
 
+  void showDownloadProgress(received, total) {
+    if (total != -1) {
+      print((received / total * 100).toStringAsFixed(0) + "%");
+    }
+  }
+
+  Future download2(Dio dio, String url, String savePath) async {
+    try {
+      Response response = await dio.get(
+        url,
+        onReceiveProgress: showDownloadProgress,
+        //Received data with List<int>
+        options: Options(
+            responseType: ResponseType.bytes,
+            followRedirects: false,
+            validateStatus: (status) {
+              return status < 500;
+            }),
+      );
+      print("------------------${response.headers}");
+      File file = File(savePath);
+      var raf = file.openSync(mode: FileMode.write);
+      // response.data is List<int> type
+      raf.writeFromSync(response.data);
+      await raf.close();
+    } catch (e) {
+      print(e);
+    }
+  }
+
   //Download excel
   downloadExcel(String excelFileUrl, String savePath) {
-    Dio dio = Dio();
 
-    dio
-        .download(
-      excelFileUrl,
-      savePath,
-      deleteOnError: true,
-    )
-        .then((value) {
-      print("excel downlaoded");
-    });
+
+
+
+//    Dio dio = Dio();
+//
+//    dio
+//        .download(
+//      excelFileUrl,
+//      savePath,
+//      deleteOnError: true,
+//    )
+//        .then((value) {
+//      print("excel downlaoded");
+//    });
   }
 
   actionDownload(
