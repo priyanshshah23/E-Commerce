@@ -128,7 +128,7 @@ class DiamondUrls {
   static const String commonUrlForImage = "https://cdn.pndiamonds.com/";
   static const String image =
       commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
-  static const String video =
+  static String video =
       commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
   static const String heartImage =
       commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";

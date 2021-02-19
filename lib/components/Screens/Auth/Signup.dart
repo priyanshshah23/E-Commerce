@@ -46,8 +46,8 @@ class _SignupScreenState extends State<SignupScreen> {
             _controller.complete(webViewController);
           },
           javascriptChannels: <JavascriptChannel>[
-            loginCallBacks(context),
             registerCallBacks(context),
+            loginCallBacks(context),
           ].toSet(),
           onPageStarted: (String url) {
             app.resolve<CustomDialogs>().showProgressDialog(context, "");
@@ -74,9 +74,11 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   JavascriptChannel registerCallBacks(BuildContext context) {
+    print("---register");
     return JavascriptChannel(
         name: 'RegisterCallBack',
         onMessageReceived: (JavascriptMessage message) {
+          print("---register message $message");
           app.resolve<CustomDialogs>().confirmDialog(context,
               title: "",
               desc: message.message,

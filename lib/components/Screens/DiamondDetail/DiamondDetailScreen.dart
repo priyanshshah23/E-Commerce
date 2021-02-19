@@ -107,10 +107,10 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   @override
   void initState() {
     super.initState();
-    setupData();
     diamondConfig = DiamondConfig(moduleType);
     diamondConfig.initItems(isDetail: true);
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      setupData();
       checkWeatherUrlContainsThingsOrNot();
       getScrollControllerEventListener();
 
@@ -255,7 +255,8 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     arrOfImages.add(
       DiamondDetailImagePagerModel(
         title: "AssetImage",
-        url: DiamondUrls.image + diamondModel.mfgStnId + "/" + "still.jpg",
+//        url: (DiamondUrls.image + diamondModel.mfgStnId + "/" + "still.jpg"),
+        url: "${DiamondUrls.image}${diamondModel.mfgStnId}/still.jpg",
         isSelected: true,
         isImage: true,
         type: "AssetImage",
@@ -282,10 +283,12 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     arrOfImages.add(
       DiamondDetailImagePagerModel(
         title: "AssetImage",
-        url: DiamondUrls.image +
-            diamondModel.mfgStnId +
-            "/" +
-            "Office_Light_Black_BG.jpg",
+//        url: DiamondUrls.image +
+//            diamondModel.mfgStnId +
+//            "/" +
+//            "Office_Light_Black_BG.jpg",
+        url:
+            "${DiamondUrls.image}${diamondModel.mfgStnId}/Office_Light_Black_BG.jpg",
         isSelected: false,
         type: "AssetImage",
         isImage: true,
@@ -297,7 +300,8 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     arrImages.add(
       DiamondDetailImagePagerModel(
           title: "Image",
-          url: DiamondUrls.image + diamondModel.mfgStnId + "/" + "still.jpg",
+//          url: DiamondUrls.image + diamondModel.mfgStnId + "/" + "still.jpg",
+          url: "${DiamondUrls.image}${diamondModel.mfgStnId}/still.jpg",
           isSelected: true,
           isImage: true,
           type: "Image",
@@ -313,11 +317,11 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     arrOfVideos.add(
       DiamondDetailImagePagerModel(
         title: "Video",
-        url: DiamondUrls.video +
+        url: (DiamondUrls.video +
             diamondModel.mfgStnId +
             "/" +
             diamondModel.mfgStnId +
-            ".html",
+            ".html"),
         type: "Video",
         isSelected: true,
         isVideo: true,

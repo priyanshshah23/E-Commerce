@@ -111,7 +111,7 @@ class AuthStrings {
   String name = "Username*";
   String lastName = "Last Name*";
   String middleName = "Middle Name*";
-  String confirmPassword = "Confirm Password";
+  String confirmPassword = "Confirm Password Again";
   String currentPasswordErr = "Current Password Error";
   String passwordChanged = "Password Changed";
   String lblLogInErr = "Log In Error";
