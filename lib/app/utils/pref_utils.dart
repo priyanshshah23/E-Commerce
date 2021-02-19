@@ -64,11 +64,17 @@ class PrefUtils {
 
   //Take A Tour
   String get keyHomeTour => "keyHomeTour";
+
   String get keyMyAccountTour => "keyMyAccountTour";
+
   String get keySearchTour => "keySearchTour";
+
   String get keySearchResultTour => "keySearchResultTour";
+
   String get keyDiamondDetailTour => "keyDiamondDetailTour";
+
   String get keyCompareStoneTour => "keyCompareStoneTour";
+
   String get keyOfferTour => "keyOfferTour";
 
   // Dashboard
@@ -327,15 +333,32 @@ class PrefUtils {
         data.downloadExcel = false;
       }
     }
-    /*if (module == ModulePermissionConstant.permission_offline_stock ||
-        module == ModulePermissionConstant.permission_auction) {
-      data = UserPermissionsData(module: module);
-      data.view = true;
-      data.insert = true;
-      data.update = true;
-      data.delete = true;
-      data.downloadExcel = true;
-    }*/
+    if (app.resolve<PrefUtils>().getUserDetails().account.isApproved !=
+        KYCStatus.approved) {
+      if (module == ModulePermissionConstant.permission_searchDiamond ||
+          module == ModulePermissionConstant.permission_quickSearch ||
+          module == ModulePermissionConstant.permission_newGoods ||
+          module == ModulePermissionConstant.permission_stone_of_the_day ||
+          module == ModulePermissionConstant.permission_watchlist ||
+          module == ModulePermissionConstant.permission_cart ||
+          module == ModulePermissionConstant.permission_appointment ||
+          module == ModulePermissionConstant.permission_offer ||
+          module == ModulePermissionConstant.permission_order ||
+          module == ModulePermissionConstant.permission_purchase ||
+          module == ModulePermissionConstant.permission_myDemand ||
+          module == ModulePermissionConstant.permission_mySavedSearch) {
+        data = UserPermissionsData(module: module);
+        if (module == ModulePermissionConstant.permission_searchDiamond ||
+            module == ModulePermissionConstant.permission_quickSearch) {
+        } else {
+          data.view = false;
+        }
+        data.insert = false;
+        data.update = false;
+        data.delete = false;
+        data.downloadExcel = false;
+      }
+    }
     return data;
   }
 
