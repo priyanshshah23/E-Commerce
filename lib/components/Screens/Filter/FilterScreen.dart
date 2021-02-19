@@ -741,7 +741,12 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         action: ActionAnalytics.CLICK);
     Map<String, dynamic> map = FilterRequest().createRequest(arrList);
     if (map.length < 3) {
-
+      app.resolve<CustomDialogs>().errorDialog(
+            context,
+            "",
+            "Please select any 2 criteria.",
+            btntitle: R.string.commonString.ok,
+          );
     } else {
       SyncManager.instance.callApiForDiamondList(
         context,

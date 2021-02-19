@@ -111,7 +111,7 @@ class AuthStrings {
   String name = "Username*";
   String lastName = "Last Name*";
   String middleName = "Middle Name*";
-  String confirmPassword = "Confirm Password Again";
+  String confirmPassword = "Confirm Password";
   String currentPasswordErr = "Current Password Error";
   String passwordChanged = "Password Changed";
   String lblLogInErr = "Log In Error";
@@ -499,8 +499,8 @@ class ErrorString {
   String enterDesc = "Please enter description.";
   String enterTitle = "Please enter title.";
   String enterEmailOrPhone = "Please enter email/mobile.";
-  String enterPassword = "Password can't be empty. Please enter Password.";
-  String enterConfirmPassword = "Please enter confirm password.";
+  String enterPassword = "Please enter new password.";
+  String enterConfirmPassword = "Please enter new password again.";
   String enterSkype = "Please Enter Skype.";
   String enterRegisterCode = "Please enter registration code";
   String enterEmail = "Please enter the Email address.";

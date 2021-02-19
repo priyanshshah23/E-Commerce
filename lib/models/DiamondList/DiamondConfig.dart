@@ -1599,7 +1599,6 @@ class DiamondConfig {
           desc: message,
           positiveBtnTitle: R.string.commonString.ok, onClickCallback: (click) {
         if (click == ButtonType.PositveButtonClick) {
-          Navigator.pop(context);
           refreshList();
         }
       });
