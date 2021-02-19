@@ -348,7 +348,6 @@ class PrefUtils {
           module == ModulePermissionConstant.permission_purchase ||
           module == ModulePermissionConstant.permission_myDemand ||
           module == ModulePermissionConstant.permission_mySavedSearch) {
-        data = UserPermissionsData(module: module);
         if (module == ModulePermissionConstant.permission_searchDiamond ||
             module == ModulePermissionConstant.permission_quickSearch) {
         } else {
