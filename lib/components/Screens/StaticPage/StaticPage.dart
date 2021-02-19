@@ -17,7 +17,6 @@ import 'package:share/share.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart' as xmlWebview;
 
-
 class StaticPageScreen extends StatefulScreenWidget {
   static const route = "StaticPageScreen";
   String strUrl;
@@ -50,7 +49,6 @@ class StaticPageScreen extends StatefulScreenWidget {
 }
 
 class _StaticPageScreenState extends StatefulScreenWidgetState {
-
   xmlWebview.InAppWebViewController webView;
   double progress = 0;
 
@@ -108,103 +106,67 @@ class _StaticPageScreenState extends StatefulScreenWidgetState {
   Widget build(BuildContext context) {
     //callApi();
     return Scaffold(
-        backgroundColor: appTheme.whiteColor,
-        appBar: getAppBar(
-          context,
-          screenTitle ?? getScreenTitle(),
-          bgColor: appTheme.whiteColor,
-          leadingButton: isFromDrawer
-              ? getDrawerButton(context, true)
-              : getBackButton(context),
-          centerTitle: false,
-          actionItems: showExcel
-              ? [
-                  InkWell(
-                    onTap: () async {
-                      await Share.shareFiles([filePath],
-                          text: screenTitle ?? "");
-                    },
-                    child: Container(
-                      margin: EdgeInsets.all(getSize(16)),
-                      child: Image.asset(
-                        share,
-                        width: getSize(24),
-                        height: getSize(24),
-                      ),
+      backgroundColor: appTheme.whiteColor,
+      appBar: getAppBar(
+        context,
+        screenTitle ?? getScreenTitle(),
+        bgColor: appTheme.whiteColor,
+        leadingButton: isFromDrawer
+            ? getDrawerButton(context, true)
+            : getBackButton(context),
+        centerTitle: false,
+        actionItems: showExcel
+            ? [
+                InkWell(
+                  onTap: () async {
+                    await Share.shareFiles([filePath], text: screenTitle ?? "");
+                  },
+                  child: Container(
+                    margin: EdgeInsets.all(getSize(16)),
+                    child: Image.asset(
+                      share,
+                      width: getSize(24),
+                      height: getSize(24),
                     ),
-                  )
-                ]
-              : null,
+                  ),
+                )
+              ]
+            : null,
+      ),
+      body: Container(
+        height: MathUtilities.screenHeight(context),
+        color: ColorConstants.white,
+        padding: EdgeInsets.only(
+          top: getSize(15),
         ),
-        body:Expanded(
-          child: Container(
-            margin: const EdgeInsets.all(10.0),
-            decoration:
-            BoxDecoration(border: Border.all(color: Colors.blueAccent)),
-            child: xmlWebview.InAppWebView(
-              initialUrl: strUrl ?? "http://pn`develop.democ.in/",
-              initialHeaders: {},
-              initialOptions: xmlWebview.InAppWebViewGroupOptions(
-                  crossPlatform: xmlWebview.InAppWebViewOptions(
-                    debuggingEnabled: true,
-                  )
-              ),
-              onWebViewCreated: (xmlWebview.InAppWebViewController controller) {
-                webView = controller;
+        child: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.only(left: getSize(20), right: getSize(20)),
+            child: WebView(
+              initialUrl:
+                  // "http://pndevelop.democ.in/",
+                  // "/storage/emulated/0/Download/test.pdf",
+                  strUrl ?? "http://pn`develop.democ.in/",
+              javascriptMode: JavascriptMode.unrestricted,
+              onWebViewCreated: (WebViewController webViewController) {
+                _controller.complete(webViewController);
               },
-              onLoadStart: (xmlWebview.InAppWebViewController controller, String url) {
-                setState(() {
-                  this.strUrl = url;
-                });
+              onPageStarted: (String url) {
+                app.resolve<CustomDialogs>().showProgressDialog(context, "");
               },
-              onLoadStop: (xmlWebview.InAppWebViewController controller, String url) async {
-                setState(() {
-                  this.strUrl = url;
-                });
+              onPageFinished: (String url) {
+                print('Page finished loading: $url');
+                app.resolve<CustomDialogs>().hideProgressDialog();
               },
-              onProgressChanged: (xmlWebview.InAppWebViewController controller, int progress) {
-                setState(() {
-                  this.progress = progress / 100;
-                });
+              onWebResourceError: (error) {
+                print(error.toString());
               },
+              gestureNavigationEnabled: true,
             ),
           ),
         ),
-       /* body: Container(
-          height: MathUtilities.screenHeight(context),
-          color: ColorConstants.white,
-          padding: EdgeInsets.only(
-            top: getSize(15),
-          ),
-          child: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.only(left: getSize(20), right: getSize(20)),
-              child: WebView(
-                initialUrl:
-                    // "http://pndevelop.democ.in/",
-                    // "/storage/emulated/0/Download/test.pdf",
-                    strUrl ?? "http://pn`develop.democ.in/",
-                javascriptMode: JavascriptMode.unrestricted,
-                onWebViewCreated: (WebViewController webViewController) {
-                  _controller.complete(webViewController);
-                },
-                onPageStarted: (String url) {
-                  app.resolve<CustomDialogs>().showProgressDialog(context, "");
-                },
-                onPageFinished: (String url) {
-                  print('Page finished loading: $url');
-                  app.resolve<CustomDialogs>().hideProgressDialog();
-                },
-                onWebResourceError: (error) {
-                  print(error.toString());
-                },
-                gestureNavigationEnabled: true,
-
-              ),
-            ),
-          ),
-        )*/
-        );
+      ),
+    );
   }
 
 //  _loadHtmlFromAssets(String desc) async {

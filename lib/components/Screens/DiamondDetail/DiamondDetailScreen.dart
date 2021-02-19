@@ -238,6 +238,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
 
   setupData() {
     //List of Images
+
     List<DiamondDetailImagePagerModel> arrOfImages =
         List<DiamondDetailImagePagerModel>();
 
@@ -255,8 +256,11 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     arrOfImages.add(
       DiamondDetailImagePagerModel(
         title: "AssetImage",
-//        url: (DiamondUrls.image + diamondModel.mfgStnId + "/" + "still.jpg"),
-        url: "${DiamondUrls.image}${diamondModel.mfgStnId}/still.jpg",
+        url: (DiamondUrls.image +
+            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+            "/" +
+            "still.jpg"),
+//        url: "${DiamondUrls.image}${diamondModel.mfgStnId}/still.jpg",
         isSelected: true,
         isImage: true,
         type: "AssetImage",
@@ -283,12 +287,10 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     arrOfImages.add(
       DiamondDetailImagePagerModel(
         title: "AssetImage",
-//        url: DiamondUrls.image +
-//            diamondModel.mfgStnId +
-//            "/" +
-//            "Office_Light_Black_BG.jpg",
-        url:
-            "${DiamondUrls.image}${diamondModel.mfgStnId}/Office_Light_Black_BG.jpg",
+        url: DiamondUrls.image +
+            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+            "/" +
+            "Office_Light_Black_BG.jpg",
         isSelected: false,
         type: "AssetImage",
         isImage: true,
@@ -300,8 +302,10 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     arrImages.add(
       DiamondDetailImagePagerModel(
           title: "Image",
-//          url: DiamondUrls.image + diamondModel.mfgStnId + "/" + "still.jpg",
-          url: "${DiamondUrls.image}${diamondModel.mfgStnId}/still.jpg",
+          url: DiamondUrls.image +
+              (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+              "/" +
+              "still.jpg",
           isSelected: true,
           isImage: true,
           type: "Image",
@@ -318,9 +322,9 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       DiamondDetailImagePagerModel(
         title: "Video",
         url: (DiamondUrls.video +
-            diamondModel.mfgStnId +
+            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
             "/" +
-            diamondModel.mfgStnId +
+            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
             ".html"),
         type: "Video",
         isSelected: true,
@@ -356,9 +360,9 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       DiamondDetailImagePagerModel(
         title: "Video",
         url: DiamondUrls.video +
-            diamondModel.mfgStnId +
+            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
             "/" +
-            diamondModel.mfgStnId +
+            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
             ".html",
         type: "Video",
         isSelected: true,
@@ -377,7 +381,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       DiamondDetailImagePagerModel(
         title: "AssetImage",
         url: (DiamondUrls.heartImage +
-            diamondModel.mfgStnId +
+            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
             "/" +
             "Heart_Black_BG.jpg"),
 //        url: "",
@@ -392,7 +396,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       DiamondDetailImagePagerModel(
         title: "H&A",
         url: DiamondUrls.heartImage +
-            diamondModel.mfgStnId +
+            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
             "/" +
             "Arrow_Black_BG.jpg",
         type: "AssetImage",
@@ -405,7 +409,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       DiamondDetailImagePagerModel(
         title: "H&A",
         url: DiamondUrls.heartImage +
-            diamondModel.mfgStnId +
+            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
             "/" +
             "Heart_Black_BG.jpg",
         type: "Image",

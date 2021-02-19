@@ -419,7 +419,7 @@ class SelectionModel extends FormBaseModel {
       this.showMoreTagAfterTotalItemCount,
       this.isShowMore,
       this.isShowMoreHorizontal,
-      this.valueKeyisCode,
+      this.valueKeyisCode = false,
       apiKey,
       viewType}) {
     super.title = title;

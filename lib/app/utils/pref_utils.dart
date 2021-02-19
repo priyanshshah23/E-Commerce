@@ -314,6 +314,8 @@ class PrefUtils {
             element.downloadExcel = true;
           }
           data = element;
+          print("----module------$module");
+          print("----------data-------${data.toJson().toString()}");
         }
       });
     }
@@ -327,6 +329,7 @@ class PrefUtils {
         data.downloadExcel = false;
       }
     }
+
     /*if (module == ModulePermissionConstant.permission_offline_stock ||
         module == ModulePermissionConstant.permission_auction) {
       data = UserPermissionsData(module: module);

@@ -937,7 +937,7 @@ class DiamondConfig {
       if (isForShare) {
         callback(url);
       } else {
-        download2(dio,excelFileUrl, savePath);
+        download2(dio, excelFileUrl, savePath);
         if (Platform.isIOS) {
           Map<String, dynamic> dict = {};
           dict["strUrl"] = url;
@@ -996,10 +996,6 @@ class DiamondConfig {
 
   //Download excel
   downloadExcel(String excelFileUrl, String savePath) {
-
-
-
-
 //    Dio dio = Dio();
 //
 //    dio
@@ -1563,7 +1559,7 @@ class DiamondConfig {
             desc: resp.message, positiveBtnTitle: R.string.commonString.ok,
             onClickCallback: (click) {
           if (click == ButtonType.PositveButtonClick) {
-            Navigator.pop(context);
+            //Navigator.pop(context);
             refreshList();
           }
         });
