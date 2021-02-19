@@ -370,11 +370,12 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
               Padding(
                 padding: EdgeInsets.only(bottom: 10),
                 child: getImageView(
-                  (model.arr != null &&
-                          model.arr.length > 0 &&
-                          isStringEmpty(model.url) == false)
-                      ? model.arr[model.subIndex].url
-                      : model.url,
+                  ((model.arr != null &&
+                              model.arr.length > 0 &&
+                              isStringEmpty(model.url) == false)
+                          ? model.arr[model.subIndex].url
+                          : model.url)
+                      ,
                   height: getSize(286),
                   width: MathUtilities.screenWidth(context),
                   fit: BoxFit.fitHeight,
@@ -540,7 +541,6 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
         initialUrl: model.url,
         onPageStarted: (url) {
           // app.resolve<CustomDialogs>().showProgressDialog(context, "");
-          print("---345678----");
           setState(() {
             isLoading = true;
           });

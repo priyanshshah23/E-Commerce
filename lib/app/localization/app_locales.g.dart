@@ -752,6 +752,81 @@ class ScreenTitle {
 }
 
 class Dynamickeys {
+  String shape = "Shape";
+  String caratRange = "Carat Range";
+  String basicDetail = "Basic Details";
+  String measurementTitle = "Measurements";
+  String inclusionDetail = "Inclusion Details";
+  String other = "Other";
+  String stoneID = "Stone ID";
+  String labTitle = "Lab";
+  String certNo = "CERT. NO.";
+  String locationTitle = "LOCATION";
+  String shapeTitle = "Shape";
+  String caratTitle = "Carat";
+  String colorTitle = "Color";
+  String clarityTitle = "CLARITY";
+  String cutTitle = "Cut";
+  String polishTitle = "Polish";
+  String symmentryTitle = "Symmentry";
+  String fluorescenceTitle = "Fluorescence";
+  String rapTitle = "RAP (%)";
+  String discountTitle = "Discount (%)";
+  String priceAndCt = "Price/Ct";
+  String amountTitle = "Amount";
+  String eyeCleanTitle = "Eye Clean";
+  String brownTitle = "BROWN";
+  String milkyTitle = "Milky";
+  String mixTingeTitle = "MIX TINGE";
+  String dimensionTitle = "DIMENSIONS  (MM)";
+  String girdleTitle = "GIRDLE (%)";
+  String tableTitle = "Table %";
+  String crownAngleTitle = "Crown Angle";
+  String depthTitle = "Depth %";
+  String pavAngleTitle = "PAV ANGLE";
+  String crownHeightTitle = "Crown Height  (%)";
+  String pavDepthTitle = "Pavilion Depth (%)";
+  String starLengthTitle = "Star Length";
+  String lowerHalfTitle = "Lower Half";
+  String gridleTitle = "Girdle";
+  String gridleFacetedTitle = "GIRDLE FACETED";
+  String culetTitle = "Culet";
+  String rationTitle = "Ratio";
+  String blackInclusionTitle = "BLACK INCLUSION";
+  String otherInclusionTitle = "Other Inclusion";
+  String openInclusionTitle = "OPEN INCLUSION";
+  String extraFacetTitle = "EXTRA FACET";
+  String naturalTitle = "Natural";
+  String hAndATitle = "H & A";
+  String keyToSymbol = "KEY TO SYMBOL";
+  String labComments = "LAB COMMENTS";
+  String laserInsTitle = "LASER INS";
+  String basicTitle = "Basic";
+  String advancedTitle = "Advanced";
+  String stoneIdTitle = "Stone ID/Cert No";
+  String defaultTitle = "Default";
+  String newDiamondsTitle = "New Diamonds";
+  String priceLowToHigh = "Price Low to High";
+  String priceHighToLow = "Price High to Low";
+  String disLowToHigh = "Discount Low to High";
+  String disHighToLow = "Discount High to Low";
+  String colorLowToHigh = "Color Low to High";
+  String colorHighToLow = "Color High to Low";
+  String caratLowToHigh = "Carat Low to High";
+  String caratHighToLow = "Carat High to Low";
+  String clarityLowToHigh = "Clarity Low to High";
+  String clarityHighToLow = "Clarity High to Low";
+  String colorShadeTitle = "Color Shade";
+  String certiTitle = "Certificate Number";
+  String arrivalsTitle = "Arrivals";
+  String lengthTitle = "Length";
+  String widthTitle = "Width";
+  String pavilionAngleTitle = "Pavilion Angle";
+  String girdleConditionTitle = "Girdle Condition";
+  String cluetConditionTitle = "Culet Condition";
+  String disTitle = "Dis%";
+  String depthTitleWithoutPerc = "Depth";
+  String otherInformationTitle = "Other Information";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
     "shape": "Shape",
@@ -1532,6 +1607,8 @@ class ChineseCommonString extends CommonString {
   @override
   get bidEndsIn => "投标结束在：";
   @override
+  get shape => "形状";
+  @override
   get download => "下载";
   @override
   get share => "分享";
@@ -2150,6 +2227,156 @@ class ChineseScreenTitle extends ScreenTitle {
 }
 
 class ChineseDynamickeys extends Dynamickeys {
+  @override
+  get shape => "形状";
+  @override
+  get caratRange => "克拉范围";
+  @override
+  get basicDetail => "基本详情";
+  @override
+  get measurementTitle => "测量";
+  @override
+  get inclusionDetail => "包容详情";
+  @override
+  get other => "其他";
+  @override
+  get stoneID => "石ID";
+  @override
+  get labTitle => "实验室";
+  @override
+  get certNo => "CERT。没有。";
+  @override
+  get locationTitle => "位置";
+  @override
+  get shapeTitle => "形状";
+  @override
+  get caratTitle => "克拉";
+  @override
+  get colorTitle => "颜色";
+  @override
+  get clarityTitle => "明晰";
+  @override
+  get cutTitle => "切";
+  @override
+  get polishTitle => "抛光";
+  @override
+  get symmentryTitle => "Symmentry";
+  @override
+  get fluorescenceTitle => "荧光";
+  @override
+  get rapTitle => "RAP（％）";
+  @override
+  get discountTitle => "折扣（％）";
+  @override
+  get priceAndCt => "价格/ CT";
+  @override
+  get amountTitle => "量";
+  @override
+  get eyeCleanTitle => "眼部清洁";
+  @override
+  get brownTitle => "棕色";
+  @override
+  get milkyTitle => "乳白色";
+  @override
+  get mixTingeTitle => "MIX色彩";
+  @override
+  get dimensionTitle => "尺寸（mm）";
+  @override
+  get girdleTitle => "腰带（％）";
+  @override
+  get tableTitle => "表％";
+  @override
+  get crownAngleTitle => "皇冠角";
+  @override
+  get depthTitle => "深度％";
+  @override
+  get pavAngleTitle => "PAV ANGLE";
+  @override
+  get crownHeightTitle => "冠高（％）";
+  @override
+  get pavDepthTitle => "亭深比（％）";
+  @override
+  get starLengthTitle => "长星";
+  @override
+  get lowerHalfTitle => "下半";
+  @override
+  get gridleTitle => "腰带";
+  @override
+  get gridleFacetedTitle => "束带FACETED";
+  @override
+  get culetTitle => "底尖";
+  @override
+  get rationTitle => "比";
+  @override
+  get blackInclusionTitle => "黑色包裹体";
+  @override
+  get otherInclusionTitle => "其他入选";
+  @override
+  get openInclusionTitle => "打开包裹";
+  @override
+  get extraFacetTitle => "EXTRA FACET";
+  @override
+  get naturalTitle => "自然";
+  @override
+  get hAndATitle => "哈";
+  @override
+  get keyToSymbol => "关键符号";
+  @override
+  get labComments => "LAB评论";
+  @override
+  get laserInsTitle => "激光惯导系统";
+  @override
+  get basicTitle => "基本";
+  @override
+  get advancedTitle => "高级";
+  @override
+  get stoneIdTitle => "石ID /证书号";
+  @override
+  get defaultTitle => "默认";
+  @override
+  get newDiamondsTitle => "新的钻石";
+  @override
+  get priceLowToHigh => "价格由低到高";
+  @override
+  get priceHighToLow => "价格从高到低";
+  @override
+  get disLowToHigh => "折扣低到高";
+  @override
+  get disHighToLow => "折扣高至低";
+  @override
+  get colorLowToHigh => "颜色从低到高";
+  @override
+  get colorHighToLow => "颜色从高到低";
+  @override
+  get caratLowToHigh => "克拉低到高";
+  @override
+  get caratHighToLow => "克拉从高到低";
+  @override
+  get clarityLowToHigh => "净度从低到高";
+  @override
+  get clarityHighToLow => "净度从高到低";
+  @override
+  get colorShadeTitle => "色光";
+  @override
+  get certiTitle => "证书编号";
+  @override
+  get arrivalsTitle => "到达";
+  @override
+  get lengthTitle => "长度";
+  @override
+  get widthTitle => "宽度";
+  @override
+  get pavilionAngleTitle => "亭角";
+  @override
+  get girdleConditionTitle => "束带条件";
+  @override
+  get cluetConditionTitle => "底尖状况";
+  @override
+  get disTitle => "派息％";
+  @override
+  get depthTitleWithoutPerc => "深度";
+  @override
+  get otherInformationTitle => "其他信息";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
     "shape": "形状",
@@ -2954,6 +3181,8 @@ class FrenchCommonString extends CommonString {
   @override
   get bidEndsIn => "Offre se termine par:";
   @override
+  get shape => "Forme";
+  @override
   get download => "Télécharger";
   @override
   get share => "Partager";
@@ -3609,6 +3838,156 @@ class FrenchScreenTitle extends ScreenTitle {
 }
 
 class FrenchDynamickeys extends Dynamickeys {
+  @override
+  get shape => "Forme";
+  @override
+  get caratRange => "carat Gamme";
+  @override
+  get basicDetail => "Détails de base";
+  @override
+  get measurementTitle => "Des mesures";
+  @override
+  get inclusionDetail => "Détails d'inclusion";
+  @override
+  get other => "Autre";
+  @override
+  get stoneID => "Stone ID";
+  @override
+  get labTitle => "Laboratoire";
+  @override
+  get certNo => "Cert. NON.";
+  @override
+  get locationTitle => "EMPLACEMENT";
+  @override
+  get shapeTitle => "Forme";
+  @override
+  get caratTitle => "Carat";
+  @override
+  get colorTitle => "Couleur";
+  @override
+  get clarityTitle => "CLARTÉ";
+  @override
+  get cutTitle => "Couper";
+  @override
+  get polishTitle => "polonais";
+  @override
+  get symmentryTitle => "Symmentry";
+  @override
+  get fluorescenceTitle => "Fluorescence";
+  @override
+  get rapTitle => "RAP (%)";
+  @override
+  get discountTitle => "Remise (%)";
+  @override
+  get priceAndCt => "Prix ​​/ Ct";
+  @override
+  get amountTitle => "Montant";
+  @override
+  get eyeCleanTitle => "Nettoyer les yeux";
+  @override
+  get brownTitle => "MARRON";
+  @override
+  get milkyTitle => "Laiteux";
+  @override
+  get mixTingeTitle => "MIX Tinge";
+  @override
+  get dimensionTitle => "Dimensions (mm)";
+  @override
+  get girdleTitle => "GIRDLE (%)";
+  @override
+  get tableTitle => "Table %";
+  @override
+  get crownAngleTitle => "Couronne Angle";
+  @override
+  get depthTitle => "profondeur%";
+  @override
+  get pavAngleTitle => "PAV ANGLE";
+  @override
+  get crownHeightTitle => "Couronne Hauteur (%)";
+  @override
+  get pavDepthTitle => "Profondeur du Pavillon (en%)";
+  @override
+  get starLengthTitle => "Longueur étoiles";
+  @override
+  get lowerHalfTitle => "Moitié inférieure";
+  @override
+  get gridleTitle => "Ceinture";
+  @override
+  get gridleFacetedTitle => "GIRDLE FACETTES";
+  @override
+  get culetTitle => "colette";
+  @override
+  get rationTitle => "Rapport";
+  @override
+  get blackInclusionTitle => "BLACK INCLUSION";
+  @override
+  get otherInclusionTitle => "autres inclusion";
+  @override
+  get openInclusionTitle => "INCLUSION OUVERT";
+  @override
+  get extraFacetTitle => "EXTRA FACETTES";
+  @override
+  get naturalTitle => "Naturel";
+  @override
+  get hAndATitle => "H & A";
+  @override
+  get keyToSymbol => "CLÉ DE SYMBOLE";
+  @override
+  get labComments => "LAB COMMENTAIRES";
+  @override
+  get laserInsTitle => "LASER INS";
+  @override
+  get basicTitle => "De base";
+  @override
+  get advancedTitle => "Avancée";
+  @override
+  get stoneIdTitle => "Pierre ID / Cert Non";
+  @override
+  get defaultTitle => "Défaut";
+  @override
+  get newDiamondsTitle => "nouveaux diamants";
+  @override
+  get priceLowToHigh => "Prix ​​croissant";
+  @override
+  get priceHighToLow => "Prix ​​élevé au plus bas";
+  @override
+  get disLowToHigh => "Remise bas au plus élevé";
+  @override
+  get disHighToLow => "Remise élevé au plus bas";
+  @override
+  get colorLowToHigh => "Couleur bas au plus élevé";
+  @override
+  get colorHighToLow => "Couleur élevé au plus bas";
+  @override
+  get caratLowToHigh => "Carat bas au plus élevé";
+  @override
+  get caratHighToLow => "Carat élevé au plus bas";
+  @override
+  get clarityLowToHigh => "Clarté bas au plus élevé";
+  @override
+  get clarityHighToLow => "Clarté élevé au plus bas";
+  @override
+  get colorShadeTitle => "Nuance de couleur";
+  @override
+  get certiTitle => "Numéro de certificat";
+  @override
+  get arrivalsTitle => "Arrivées";
+  @override
+  get lengthTitle => "Longueur";
+  @override
+  get widthTitle => "Largeur";
+  @override
+  get pavilionAngleTitle => "pavillon Angle";
+  @override
+  get girdleConditionTitle => "Condition Ceinturon";
+  @override
+  get cluetConditionTitle => "colette Condition";
+  @override
+  get disTitle => "Dis%";
+  @override
+  get depthTitleWithoutPerc => "Profondeur";
+  @override
+  get otherInformationTitle => "les autres informations";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
     "shape": "Forme",
@@ -4393,6 +4772,8 @@ class JapanCommonString extends CommonString {
   @override
   get bidEndsIn => "入札に終了します。";
   @override
+  get shape => "形状";
+  @override
   get download => "ダウンロード";
   @override
   get share => "シェア";
@@ -5018,6 +5399,156 @@ class JapanScreenTitle extends ScreenTitle {
 }
 
 class JapanDynamickeys extends Dynamickeys {
+  @override
+  get shape => "形状";
+  @override
+  get caratRange => "カラットの範囲";
+  @override
+  get basicDetail => "基本的な詳細";
+  @override
+  get measurementTitle => "測定";
+  @override
+  get inclusionDetail => "インクルージョンの詳細";
+  @override
+  get other => "他の";
+  @override
+  get stoneID => "石のID";
+  @override
+  get labTitle => "ラボ";
+  @override
+  get certNo => "CERT。番号。";
+  @override
+  get locationTitle => "ロケーション";
+  @override
+  get shapeTitle => "形状";
+  @override
+  get caratTitle => "カラット";
+  @override
+  get colorTitle => "色";
+  @override
+  get clarityTitle => "CLARITY";
+  @override
+  get cutTitle => "切る";
+  @override
+  get polishTitle => "研磨";
+  @override
+  get symmentryTitle => "Symmentry";
+  @override
+  get fluorescenceTitle => "蛍光";
+  @override
+  get rapTitle => "RAP（％）";
+  @override
+  get discountTitle => "割引（％）";
+  @override
+  get priceAndCt => "価格/ CT";
+  @override
+  get amountTitle => "量";
+  @override
+  get eyeCleanTitle => "アイクリーン";
+  @override
+  get brownTitle => "褐色";
+  @override
+  get milkyTitle => "ミルキー";
+  @override
+  get mixTingeTitle => "MIX色合い";
+  @override
+  get dimensionTitle => "寸法（mm）";
+  @override
+  get girdleTitle => "ガードル（％）";
+  @override
+  get tableTitle => "テーブル ％";
+  @override
+  get crownAngleTitle => "クラウン角度";
+  @override
+  get depthTitle => "深％";
+  @override
+  get pavAngleTitle => "PAV ANGLE";
+  @override
+  get crownHeightTitle => "クラウン高さ（％）";
+  @override
+  get pavDepthTitle => "パビリオンの深さ（％）";
+  @override
+  get starLengthTitle => "スターの長さ";
+  @override
+  get lowerHalfTitle => "下半分";
+  @override
+  get gridleTitle => "ガードル";
+  @override
+  get gridleFacetedTitle => "ガードルファセット";
+  @override
+  get culetTitle => "キューレット";
+  @override
+  get rationTitle => "比";
+  @override
+  get blackInclusionTitle => "BLACK INCLUSION";
+  @override
+  get otherInclusionTitle => "その他のインクルージョン";
+  @override
+  get openInclusionTitle => "OPEN INCLUSION";
+  @override
+  get extraFacetTitle => "EXTRA FACET";
+  @override
+  get naturalTitle => "ナチュラル";
+  @override
+  get hAndATitle => "H＆A";
+  @override
+  get keyToSymbol => "KEY TO SYMBOL";
+  @override
+  get labComments => "LABコメント";
+  @override
+  get laserInsTitle => "LASER INS";
+  @override
+  get basicTitle => "基本的な";
+  @override
+  get advancedTitle => "高度";
+  @override
+  get stoneIdTitle => "ストーンID /証明書はありません";
+  @override
+  get defaultTitle => "デフォルト";
+  @override
+  get newDiamondsTitle => "新しいダイヤモンド";
+  @override
+  get priceLowToHigh => "高いに価格低";
+  @override
+  get priceHighToLow => "低価格高へ";
+  @override
+  get disLowToHigh => "ハイへの割引、低コスト";
+  @override
+  get disHighToLow => "低への割引高いです";
+  @override
+  get colorLowToHigh => "ハイへの色の低";
+  @override
+  get colorHighToLow => "低への色のハイ";
+  @override
+  get caratLowToHigh => "ハイへカラット低";
+  @override
+  get caratHighToLow => "低へカラット高いです";
+  @override
+  get clarityLowToHigh => "ハイへクラリティ低";
+  @override
+  get clarityHighToLow => "低へクラリティ高いです";
+  @override
+  get colorShadeTitle => "色合い";
+  @override
+  get certiTitle => "証明書番号";
+  @override
+  get arrivalsTitle => "到着";
+  @override
+  get lengthTitle => "長さ";
+  @override
+  get widthTitle => "幅";
+  @override
+  get pavilionAngleTitle => "パビリオン角";
+  @override
+  get girdleConditionTitle => "ガードル条件";
+  @override
+  get cluetConditionTitle => "キューレット条件";
+  @override
+  get disTitle => "ディス％";
+  @override
+  get depthTitleWithoutPerc => "深さ";
+  @override
+  get otherInformationTitle => "その他の情報";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
     "shape": "形状",
@@ -5816,6 +6347,8 @@ class ItalianCommonString extends CommonString {
   @override
   get bidEndsIn => "Bid finisce in:";
   @override
+  get shape => "Forma";
+  @override
   get download => "Scarica";
   @override
   get share => "Condividere";
@@ -6463,6 +6996,156 @@ class ItalianScreenTitle extends ScreenTitle {
 }
 
 class ItalianDynamickeys extends Dynamickeys {
+  @override
+  get shape => "Forma";
+  @override
+  get caratRange => "Carat Gamma";
+  @override
+  get basicDetail => "Dettagli di base";
+  @override
+  get measurementTitle => "misure";
+  @override
+  get inclusionDetail => "Dettagli di inclusione";
+  @override
+  get other => "Altro";
+  @override
+  get stoneID => "pietra ID";
+  @override
+  get labTitle => "Laboratorio";
+  @override
+  get certNo => "CERT. NO.";
+  @override
+  get locationTitle => "POSIZIONE";
+  @override
+  get shapeTitle => "Forma";
+  @override
+  get caratTitle => "carato";
+  @override
+  get colorTitle => "Colore";
+  @override
+  get clarityTitle => "CHIAREZZA";
+  @override
+  get cutTitle => "Taglio";
+  @override
+  get polishTitle => "polacco";
+  @override
+  get symmentryTitle => "Symmentry";
+  @override
+  get fluorescenceTitle => "Fluorescenza";
+  @override
+  get rapTitle => "RAP (%)";
+  @override
+  get discountTitle => "Sconto (%)";
+  @override
+  get priceAndCt => "Prezzo / Ct";
+  @override
+  get amountTitle => "Quantità";
+  @override
+  get eyeCleanTitle => "Clean Eye";
+  @override
+  get brownTitle => "MARRONE";
+  @override
+  get milkyTitle => "latteo";
+  @override
+  get mixTingeTitle => "MIX tinge";
+  @override
+  get dimensionTitle => "Dimensioni (mm)";
+  @override
+  get girdleTitle => "CINTURA (%)";
+  @override
+  get tableTitle => "Tavolo %";
+  @override
+  get crownAngleTitle => "Angolo di corona";
+  @override
+  get depthTitle => "profondità%";
+  @override
+  get pavAngleTitle => "PAV ANGOLO";
+  @override
+  get crownHeightTitle => "Corona Altezza (%)";
+  @override
+  get pavDepthTitle => "Padiglione Profondità (%)";
+  @override
+  get starLengthTitle => "stella Lunghezza";
+  @override
+  get lowerHalfTitle => "La metà inferiore";
+  @override
+  get gridleTitle => "Cintura";
+  @override
+  get gridleFacetedTitle => "CINTURA SFACCETTATA";
+  @override
+  get culetTitle => "culet";
+  @override
+  get rationTitle => "Rapporto";
+  @override
+  get blackInclusionTitle => "INCLUSIONE NERO";
+  @override
+  get otherInclusionTitle => "Altro inclusione";
+  @override
+  get openInclusionTitle => "INCLUSIONE APERTO";
+  @override
+  get extraFacetTitle => "FACET EXTRA";
+  @override
+  get naturalTitle => "Naturale";
+  @override
+  get hAndATitle => "H & A";
+  @override
+  get keyToSymbol => "LEGENDA SIMBOLO";
+  @override
+  get labComments => "COMMENTI LAB";
+  @override
+  get laserInsTitle => "LASER INS";
+  @override
+  get basicTitle => "Di base";
+  @override
+  get advancedTitle => "Avanzate";
+  @override
+  get stoneIdTitle => "Pietra ID / Cert No";
+  @override
+  get defaultTitle => "Predefinito";
+  @override
+  get newDiamondsTitle => "nuovi Diamonds";
+  @override
+  get priceLowToHigh => "Prezzo basso al più alto";
+  @override
+  get priceHighToLow => "Prezzo decrescente";
+  @override
+  get disLowToHigh => "Sconto basso al più alto";
+  @override
+  get disHighToLow => "Alto sconto per Basso";
+  @override
+  get colorLowToHigh => "Colore basso al più alto";
+  @override
+  get colorHighToLow => "Colore decrescente";
+  @override
+  get caratLowToHigh => "Carat basso al più alto";
+  @override
+  get caratHighToLow => "Carat decrescente";
+  @override
+  get clarityLowToHigh => "Chiarezza basso al più alto";
+  @override
+  get clarityHighToLow => "La chiarezza decrescente";
+  @override
+  get colorShadeTitle => "color Shade";
+  @override
+  get certiTitle => "Numero di certificato";
+  @override
+  get arrivalsTitle => "Arrivi";
+  @override
+  get lengthTitle => "Lunghezza";
+  @override
+  get widthTitle => "Larghezza";
+  @override
+  get pavilionAngleTitle => "Angolo Pavilion";
+  @override
+  get girdleConditionTitle => "Cintola Condizione";
+  @override
+  get cluetConditionTitle => "culet Condizione";
+  @override
+  get disTitle => "Dis%";
+  @override
+  get depthTitleWithoutPerc => "Profondità";
+  @override
+  get otherInformationTitle => "Altre informazioni";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
     "shape": "Forma",
@@ -7263,6 +7946,8 @@ class SpanishCommonString extends CommonString {
   @override
   get bidEndsIn => "La subasta termina en:";
   @override
+  get shape => "Forma";
+  @override
   get download => "Descargar";
   @override
   get share => "Compartir";
@@ -7908,6 +8593,156 @@ class SpanishScreenTitle extends ScreenTitle {
 }
 
 class SpanishDynamickeys extends Dynamickeys {
+  @override
+  get shape => "Forma";
+  @override
+  get caratRange => "Rango de quilates";
+  @override
+  get basicDetail => "Detalles básicos";
+  @override
+  get measurementTitle => "Mediciones";
+  @override
+  get inclusionDetail => "Detalles de inclusión";
+  @override
+  get other => "Otro";
+  @override
+  get stoneID => "piedra ID";
+  @override
+  get labTitle => "Laboratorio";
+  @override
+  get certNo => "CERT. NO.";
+  @override
+  get locationTitle => "UBICACIÓN";
+  @override
+  get shapeTitle => "Forma";
+  @override
+  get caratTitle => "Quilate";
+  @override
+  get colorTitle => "Color";
+  @override
+  get clarityTitle => "CLARIDAD";
+  @override
+  get cutTitle => "Cortar";
+  @override
+  get polishTitle => "polaco";
+  @override
+  get symmentryTitle => "Symmentry";
+  @override
+  get fluorescenceTitle => "Fluorescencia";
+  @override
+  get rapTitle => "RAP (%)";
+  @override
+  get discountTitle => "Descuento (%)";
+  @override
+  get priceAndCt => "Precio / Ct";
+  @override
+  get amountTitle => "Cantidad";
+  @override
+  get eyeCleanTitle => "A simple vista";
+  @override
+  get brownTitle => "MARRÓN";
+  @override
+  get milkyTitle => "lechoso";
+  @override
+  get mixTingeTitle => "MIX tinte";
+  @override
+  get dimensionTitle => "Dimensiones (mm)";
+  @override
+  get girdleTitle => "FAJA (%)";
+  @override
+  get tableTitle => "Mesa %";
+  @override
+  get crownAngleTitle => "ángulo de la corona";
+  @override
+  get depthTitle => "profundidad%";
+  @override
+  get pavAngleTitle => "PAV ÁNGULO";
+  @override
+  get crownHeightTitle => "Altura de la corona (%)";
+  @override
+  get pavDepthTitle => "Profundidad Pabellón (%)";
+  @override
+  get starLengthTitle => "Longitud de la estrella";
+  @override
+  get lowerHalfTitle => "Mitad inferior";
+  @override
+  get gridleTitle => "Faja";
+  @override
+  get gridleFacetedTitle => "FAJA FACETADO";
+  @override
+  get culetTitle => "culet";
+  @override
+  get rationTitle => "Proporción";
+  @override
+  get blackInclusionTitle => "INCLUSIÓN NEGRO";
+  @override
+  get otherInclusionTitle => "otro Inclusión";
+  @override
+  get openInclusionTitle => "INCLUSIÓN ABIERTO";
+  @override
+  get extraFacetTitle => "FACET EXTRA";
+  @override
+  get naturalTitle => "Natural";
+  @override
+  get hAndATitle => "H & A";
+  @override
+  get keyToSymbol => "CLAVE PARA EL SÍMBOLO";
+  @override
+  get labComments => "COMENTARIOS DE LABORATORIO";
+  @override
+  get laserInsTitle => "LASER INS";
+  @override
+  get basicTitle => "Básico";
+  @override
+  get advancedTitle => "Avanzado";
+  @override
+  get stoneIdTitle => "Piedra ID / Cert n";
+  @override
+  get defaultTitle => "Defecto";
+  @override
+  get newDiamondsTitle => "nuevos Diamantes";
+  @override
+  get priceLowToHigh => "Precios de barato a caro";
+  @override
+  get priceHighToLow => "Precio de mayor a menor";
+  @override
+  get disLowToHigh => "Descuento de menor a mayor";
+  @override
+  get disHighToLow => "Descuento de mayor a menor";
+  @override
+  get colorLowToHigh => "El color de menor a mayor";
+  @override
+  get colorHighToLow => "El color de mayor a menor";
+  @override
+  get caratLowToHigh => "Quilates de menor a mayor";
+  @override
+  get caratHighToLow => "Quilates de mayor a menor";
+  @override
+  get clarityLowToHigh => "La claridad de menor a mayor";
+  @override
+  get clarityHighToLow => "La claridad de mayor a menor";
+  @override
+  get colorShadeTitle => "Color sombra";
+  @override
+  get certiTitle => "Número certificado";
+  @override
+  get arrivalsTitle => "Llegadas";
+  @override
+  get lengthTitle => "Longitud";
+  @override
+  get widthTitle => "Anchura";
+  @override
+  get pavilionAngleTitle => "pabellón ángulo";
+  @override
+  get girdleConditionTitle => "faja Condición";
+  @override
+  get cluetConditionTitle => "Condición culata";
+  @override
+  get disTitle => "Dis%";
+  @override
+  get depthTitleWithoutPerc => "Profundidad";
+  @override
+  get otherInformationTitle => "Otra información";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
     "shape": "Forma",
@@ -8704,6 +9539,8 @@ class GermanyCommonString extends CommonString {
   @override
   get bidEndsIn => "Bid endet in:";
   @override
+  get shape => "Gestalten";
+  @override
   get download => "Herunterladen";
   @override
   get share => "Aktie";
@@ -9349,6 +10186,156 @@ class GermanyScreenTitle extends ScreenTitle {
 }
 
 class GermanyDynamickeys extends Dynamickeys {
+  @override
+  get shape => "Gestalten";
+  @override
+  get caratRange => "Carat-Strecke";
+  @override
+  get basicDetail => "Grundlegende Details";
+  @override
+  get measurementTitle => "Messungen";
+  @override
+  get inclusionDetail => "Aufnahme-Details";
+  @override
+  get other => "Andere";
+  @override
+  get stoneID => "Stein ID";
+  @override
+  get labTitle => "Labor";
+  @override
+  get certNo => "CERT. NEIN.";
+  @override
+  get locationTitle => "STANDORT";
+  @override
+  get shapeTitle => "Gestalten";
+  @override
+  get caratTitle => "Karat";
+  @override
+  get colorTitle => "Farbe";
+  @override
+  get clarityTitle => "KLARHEIT";
+  @override
+  get cutTitle => "Schnitt";
+  @override
+  get polishTitle => "Polieren";
+  @override
+  get symmentryTitle => "Symmentry";
+  @override
+  get fluorescenceTitle => "Fluoreszenz";
+  @override
+  get rapTitle => "RAP (%)";
+  @override
+  get discountTitle => "Rabatt (%)";
+  @override
+  get priceAndCt => "Preis / Ct";
+  @override
+  get amountTitle => "Menge";
+  @override
+  get eyeCleanTitle => "Augen-saubere";
+  @override
+  get brownTitle => "BRAUN";
+  @override
+  get milkyTitle => "Milchig";
+  @override
+  get mixTingeTitle => "MIX tinge";
+  @override
+  get dimensionTitle => "MASSE (MM)";
+  @override
+  get girdleTitle => "GÜRTELN (%)";
+  @override
+  get tableTitle => "Tabelle %";
+  @override
+  get crownAngleTitle => "Crown Winkel";
+  @override
+  get depthTitle => "Tiefes%";
+  @override
+  get pavAngleTitle => "PAV ANGLE";
+  @override
+  get crownHeightTitle => "Kronenhöhe (%)";
+  @override
+  get pavDepthTitle => "Pavilion Tiefe (%)";
+  @override
+  get starLengthTitle => "Stern Länge";
+  @override
+  get lowerHalfTitle => "Untere Hälfte";
+  @override
+  get gridleTitle => "Gürtel";
+  @override
+  get gridleFacetedTitle => "GÜRTELN FACETED";
+  @override
+  get culetTitle => "culet";
+  @override
+  get rationTitle => "Verhältnis";
+  @override
+  get blackInclusionTitle => "BLACK INCLUSION";
+  @override
+  get otherInclusionTitle => "andere Inclusion";
+  @override
+  get openInclusionTitle => "OPEN INCLUSION";
+  @override
+  get extraFacetTitle => "EXTRA FACET";
+  @override
+  get naturalTitle => "Natürlich";
+  @override
+  get hAndATitle => "H & A";
+  @override
+  get keyToSymbol => "SCHLÜSSEL ZUM SYMBOL";
+  @override
+  get labComments => "LAB KOMMENTAR";
+  @override
+  get laserInsTitle => "LASER IN";
+  @override
+  get basicTitle => "Basic";
+  @override
+  get advancedTitle => "fortgeschritten";
+  @override
+  get stoneIdTitle => "Stein ID / Cert No";
+  @override
+  get defaultTitle => "Standard";
+  @override
+  get newDiamondsTitle => "New Diamanten";
+  @override
+  get priceLowToHigh => "Preis niedrig bis hoch";
+  @override
+  get priceHighToLow => "Preis absteigend";
+  @override
+  get disLowToHigh => "Rabatt aufsteigend";
+  @override
+  get disHighToLow => "Rabatt absteigend";
+  @override
+  get colorLowToHigh => "Farbe aufsteigend";
+  @override
+  get colorHighToLow => "Farbe absteigend";
+  @override
+  get caratLowToHigh => "Carat aufsteigend";
+  @override
+  get caratHighToLow => "Carat absteigend";
+  @override
+  get clarityLowToHigh => "Klarheit aufsteigend";
+  @override
+  get clarityHighToLow => "Klarheit absteigend";
+  @override
+  get colorShadeTitle => "Farbschattierung";
+  @override
+  get certiTitle => "Zertifikatsnummer";
+  @override
+  get arrivalsTitle => "Ankünfte";
+  @override
+  get lengthTitle => "Länge";
+  @override
+  get widthTitle => "Breite";
+  @override
+  get pavilionAngleTitle => "Pavilion Winkel";
+  @override
+  get girdleConditionTitle => "Hüfthalter Zustand";
+  @override
+  get cluetConditionTitle => "culet Zustand";
+  @override
+  get disTitle => "Dis%";
+  @override
+  get depthTitleWithoutPerc => "Tiefe";
+  @override
+  get otherInformationTitle => "Andere Informationen";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
     "shape": "Gestalten",
@@ -10140,6 +11127,8 @@ class ArabicCommonString extends CommonString {
   @override
   get bidEndsIn => "المزايدة ينتهي في:";
   @override
+  get shape => "شكل";
+  @override
   get download => "تحميل";
   @override
   get share => "شارك";
@@ -10777,6 +11766,156 @@ class ArabicScreenTitle extends ScreenTitle {
 }
 
 class ArabicDynamickeys extends Dynamickeys {
+  @override
+  get shape => "شكل";
+  @override
+  get caratRange => "المدى قيراط";
+  @override
+  get basicDetail => "تفاصيل أساسية";
+  @override
+  get measurementTitle => "قياسات";
+  @override
+  get inclusionDetail => "تفاصيل إدراج";
+  @override
+  get other => "آخر";
+  @override
+  get stoneID => "ID الحجر";
+  @override
+  get labTitle => "مختبر";
+  @override
+  get certNo => "CERT. لا.";
+  @override
+  get locationTitle => "موقعك";
+  @override
+  get shapeTitle => "شكل";
+  @override
+  get caratTitle => "قيراط";
+  @override
+  get colorTitle => "اللون";
+  @override
+  get clarityTitle => "وضوح";
+  @override
+  get cutTitle => "يقطع";
+  @override
+  get polishTitle => "تلميع";
+  @override
+  get symmentryTitle => "Symmentry";
+  @override
+  get fluorescenceTitle => "ضوئي";
+  @override
+  get rapTitle => "موسيقى الراب (٪)";
+  @override
+  get discountTitle => "خصم (٪)";
+  @override
+  get priceAndCt => "السعر / ط م";
+  @override
+  get amountTitle => "كمية";
+  @override
+  get eyeCleanTitle => "العين النظيفة";
+  @override
+  get brownTitle => "بنى";
+  @override
+  get milkyTitle => "حليبي";
+  @override
+  get mixTingeTitle => "MIX مسحة";
+  @override
+  get dimensionTitle => "الأبعاد (MM)";
+  @override
+  get girdleTitle => "حزام (٪)";
+  @override
+  get tableTitle => "الطاولة ٪";
+  @override
+  get crownAngleTitle => "تاج زاوية";
+  @override
+  get depthTitle => "٪ العمق";
+  @override
+  get pavAngleTitle => "PAV ANGLE";
+  @override
+  get crownHeightTitle => "ولي العهد الارتفاع (٪)";
+  @override
+  get pavDepthTitle => "عمق جناح (٪)";
+  @override
+  get starLengthTitle => "نجمة طول";
+  @override
+  get lowerHalfTitle => "النصف السفلي";
+  @override
+  get gridleTitle => "حزام";
+  @override
+  get gridleFacetedTitle => "حزام الأوجه";
+  @override
+  get culetTitle => "Culet";
+  @override
+  get rationTitle => "نسبة";
+  @override
+  get blackInclusionTitle => "إدراج أسود";
+  @override
+  get otherInclusionTitle => "إدراج الآخرين";
+  @override
+  get openInclusionTitle => "إدراج المفتوح";
+  @override
+  get extraFacetTitle => "FACET اكسترا";
+  @override
+  get naturalTitle => "طبيعي >> صفة";
+  @override
+  get hAndATitle => "H & A";
+  @override
+  get keyToSymbol => "KEY TO SYMBOL";
+  @override
+  get labComments => "تعليقات LAB";
+  @override
+  get laserInsTitle => "LASER INS";
+  @override
+  get basicTitle => "الأساسي";
+  @override
+  get advancedTitle => "المتقدمة";
+  @override
+  get stoneIdTitle => "حجر ID / سيرت لا";
+  @override
+  get defaultTitle => "إفتراضي";
+  @override
+  get newDiamondsTitle => "الماس جديدة";
+  @override
+  get priceLowToHigh => "السعر من الارخص للاعلى";
+  @override
+  get priceHighToLow => "السعر الاعلى الى الادنى";
+  @override
+  get disLowToHigh => "خصم الأدنى إلى الأعلى";
+  @override
+  get disHighToLow => "خصم الاعلى الى الادنى";
+  @override
+  get colorLowToHigh => "اللون الأدنى إلى الأعلى";
+  @override
+  get colorHighToLow => "اللون من الأعلى إلى الأقل";
+  @override
+  get caratLowToHigh => "قيراط الأدنى إلى الأعلى";
+  @override
+  get caratHighToLow => "قيراط الاعلى الى الادنى";
+  @override
+  get clarityLowToHigh => "وضوح الأدنى إلى الأعلى";
+  @override
+  get clarityHighToLow => "وضوح الاعلى الى الادنى";
+  @override
+  get colorShadeTitle => "لون الظل";
+  @override
+  get certiTitle => "رقم شهادة";
+  @override
+  get arrivalsTitle => "الوصول";
+  @override
+  get lengthTitle => "الطول";
+  @override
+  get widthTitle => "عرض";
+  @override
+  get pavilionAngleTitle => "جناح زاوية";
+  @override
+  get girdleConditionTitle => "حزام الحالة";
+  @override
+  get cluetConditionTitle => "Culet الحالة";
+  @override
+  get disTitle => "ديس٪";
+  @override
+  get depthTitleWithoutPerc => "عمق";
+  @override
+  get otherInformationTitle => "#ERROR!";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
     "shape": "شكل",
