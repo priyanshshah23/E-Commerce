@@ -229,7 +229,6 @@ class AppButton extends StatelessWidget {
       // dont override the button color
       return appTheme.colorPrimary;
     } else {
-      print("button");
       return backgroundColor;
     }
   }

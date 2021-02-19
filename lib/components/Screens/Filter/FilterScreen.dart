@@ -46,6 +46,7 @@ import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
+import 'package:diamnow/models/FilterModel/SelectStatusModel.dart';
 import 'package:diamnow/models/FilterModel/TabModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
@@ -115,6 +116,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   String filterId;
   List<FilterOptions> optionList = List<FilterOptions>();
   Config config = Config();
+  List<SelectStatusModel> selectStatusModel = [];
 
   //PopUp data for savedsearch...
   List<SelectionPopupModel> saveSearchList = List<SelectionPopupModel>();
@@ -123,6 +125,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   void initState() {
     super.initState();
     registerRsBus();
+    selectStatusModel.addAll(SelectStatusModel.dynamicList);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       config.getFilterJson().then((result) {
         setState(() {
@@ -337,7 +340,6 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                         MaterialPageRoute(
                           builder: (BuildContext context) {
                             return SelectionScreen(
-                              selectionOptions: selectedOptions,
                               title: "Select Country",
                               hintText: "Select Country",
                               positiveButtonTitle: "Apply",
@@ -348,6 +350,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                                   {SelectionPopupModel selectedItem,
                                   List<SelectionPopupModel>
                                       multiSelectedItem}) {
+                                selectedOptions.clear();
                                 selectedOptions.addAll(multiSelectedItem);
                                 print(
                                     "-------------${selectedOptions.first.title}");
@@ -504,6 +507,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     );
   }
 
+  List<String> selectStatus = [];
+
   openDialogueForSelectStatus() {
     return showDialog(
       context: context,
@@ -534,20 +539,31 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                   ),
                 ),
                 ListView.builder(
-                  itemCount: 4,
+                  itemCount: selectStatusModel.length,
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
+                    var mapData = selectStatusModel[index];
                     return Container(
                       height: getSize(50),
                       child: CheckboxListTile(
                         title: Text(
-                          "title text",
+                          mapData.title,
+                          style: appTheme.black14TextStyle,
                         ),
-                        value: checkedValue,
+                        value: mapData.isSelected,
                         activeColor: appTheme.colorPrimary,
                         onChanged: (newValue) {
                           setsetter(() {
-                            checkedValue = newValue;
+                            mapData.isSelected = newValue;
+                            if (mapData.isSelected) {
+                              selectStatus.add(
+                                mapData.typeConstant,
+                              );
+                            } else {
+                              selectStatus.removeWhere(
+                                (element) => element == mapData.typeConstant,
+                              );
+                            }
                           });
                         },
                         controlAffinity: ListTileControlAffinity
@@ -572,6 +588,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                           child: AppButton.flat(
                             onTap: () {
                               Navigator.pop(context);
+                              selectStatusModel.forEach((element) {
+                                element.isSelected = false;
+                              });
                             },
                             text: "cancel",
                             borderRadius: getSize(5),
@@ -588,7 +607,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                             right: getSize(20),
                           ),
                           child: AppButton.flat(
-                            onTap: () {},
+                            onTap: () {
+                              print(selectStatus);
+
+                            },
                             text: "Apply",
                             backgroundColor: appTheme.colorPrimary,
                             borderRadius: getSize(5),
@@ -840,8 +862,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               Map<String, dynamic> dict = new HashMap();
               dict["filterModel"] = arrList;
               dict[ArgumentConstant.ModuleType] = moduleType;
-              NavigationUtilities.pushRoute(DiamondListScreen.route,
-                  args: dict);
+              NavigationUtilities.pushRoute(
+                DiamondListScreen.route,
+                args: dict,
+              );
             } else if (app
                 .resolve<PrefUtils>()
                 .getModulePermission(
