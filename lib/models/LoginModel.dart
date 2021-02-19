@@ -189,14 +189,16 @@ class User {
   String termsCondAgreeAt;
   String address;
   bool kycRequired;
-
+  bool isKycUploaded;
+  int isApproved;
 //  Null loginOtp;
   String group;
 
 //  Null addedBy;
 //  Null updatedBy;
   Account account;
-  AccountTerm accountTerm;
+  String accountTerm;
+//  AccountTerm accountTerm;
   String seller;
 
   String country;
@@ -291,10 +293,10 @@ class User {
         account = new Account.fromJson(json['account']);
       }
     }
-
-    accountTerm = json['accountTerm'] != null
-        ? new AccountTerm.fromJson(json['accountTerm'])
-        : null;
+accountTerm = json['accountTerm'] ;
+//     accountTerm = json['accountTerm'] != null
+//         ? new AccountTerm.fromJson(json['accountTerm'])
+//         : null;
     seller = json['seller'];
 
     if (json['city'] is Map<String, dynamic>) {
@@ -307,6 +309,8 @@ class User {
       state = json['state']['name'];
     }
     kycRequired = json["kycRequired"] ?? false;
+    isKycUploaded = json["isKycUploaded"] ?? false;
+    isApproved = json["isApproved"];
 
     isMpinAdded =
         !isNullEmptyOrFalse(json["isMpinAdded"]) ? json["isMpinAdded"] : false;
@@ -376,6 +380,7 @@ class User {
     data['updateIp'] = this.updateIp;
     data['createIp'] = this.createIp;
     data['address'] = this.address;
+    data['isApproved'] = this.isApproved;
     if (this.fingerPrints != null) {
       data['fingerPrints'] = this.fingerPrints.map((v) => v.toJson()).toList();
     }
@@ -399,11 +404,13 @@ class User {
     if (this.account != null) {
       data['account'] = this.account.toJson();
     }
-    if (this.accountTerm != null) {
-      data['accountTerm'] = this.accountTerm.toJson();
-    }
+    data['accountTerm'] = this.accountTerm;
+//     if (this.accountTerm != null) {
+//       data['accountTerm'] = this.accountTerm.toJson();
+//     }
     data['seller'] = this.seller;
     data["kycRequired"] = this.kycRequired;
+    data["isKycUploaded"] = this.isKycUploaded;
 
     //mpin
     data['isMpinAdded'] = this.isMpinAdded;

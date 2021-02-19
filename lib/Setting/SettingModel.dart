@@ -611,16 +611,7 @@ class BottomMenuSetting {
 
         break;
       default:
-        if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST) {
-          addWatchlistInBottomMenu(moreMenuList, addToWatchlist,
-              isCenter: false);
-        }
-        if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
-          addEnquiryInBottomMenu(moreMenuList);
-        }
-        if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_CART) {
-          addCartInBottomMenu(moreMenuList);
-        }
+
 
         if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY ||
             moduleType == DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST ||
@@ -632,6 +623,27 @@ class BottomMenuSetting {
             moduleType == DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {
           addPlaceOrderInBottomMenu(moreMenuList, placeOrder, isCenter: false);
         }
+
+//
+        if (moduleType != DiamondModuleConstant.MODULE_TYPE_HOLD) {
+          addHoldInBottomMenu(moreMenuList, sale_hold,
+              isCenter: false);
+        }
+
+        if (moduleType != DiamondModuleConstant.MODULE_TYPE_MEMO) {
+          addMemoInBottomMenu(moreMenuList, sale_note,
+              isCenter: false,);
+        }
+//        if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST) {
+//          addWatchlistInBottomMenu(moreMenuList, addToWatchlist,
+//              isCenter: false);
+//        }
+        if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
+          addEnquiryInBottomMenu(moreMenuList);
+        }
+//        if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_CART) {
+//          addCartInBottomMenu(moreMenuList);
+//        }
 
         if (!isDiamondSearchModule(moduleType)) {
           if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER &&
@@ -763,6 +775,35 @@ class BottomMenuSetting {
           title: R.string.screenTitle.addToWatchList,
           type: ActionMenuConstant.ACTION_TYPE_WISHLIST));
     }
+  }
+
+
+  addHoldInBottomMenu(List<BottomTabModel> moreMenuList, String image,
+      {bool isCenter: true}) {
+//    if (app
+//        .resolve<PrefUtils>()
+//        .getModulePermission(ModulePermissionConstant.permission_watchlist)
+//        .insert) {
+      moreMenuList.add(BottomTabModel(
+          image: image,
+          isCenter: isCenter,
+          title: R.string.screenTitle.hold,
+          type: ActionMenuConstant.ACTION_TYPE_HOLD));
+//    }
+  }
+
+  addMemoInBottomMenu(List<BottomTabModel> moreMenuList, String image,
+      {bool isCenter: true}) {
+//    if (app
+//        .resolve<PrefUtils>()
+//        .getModulePermission(ModulePermissionConstant.permission_watchlist)
+//        .insert) {
+      moreMenuList.add(BottomTabModel(
+          image: image,
+          isCenter: isCenter,
+          title: R.string.screenTitle.memo,
+          type: ActionMenuConstant.ACTION_TYPE_MEMO));
+//    }
   }
 
   addBidStoneInBottomMenu(List<BottomTabModel> moreMenuList) {

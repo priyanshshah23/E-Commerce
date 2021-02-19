@@ -17,7 +17,7 @@ class ApiConstants {
       "https://docs.google.com/viewer?embedded=true&url=";
 
   static const String apiUrl = baseURL;
-  static const String commonUrl = apiUrl + "device/v1/";
+  static const String commonUrl = apiUrl + "admin/v1/";
   static const String authUrl = apiUrl + "web/v1/auth/";
   static const String shareAndEarn = "";
 
@@ -29,7 +29,7 @@ class ApiConstants {
 
   static const String masterSync = commonUrl + "masterSync";
 
-  static const String login = commonUrl + "auth/login";
+  static const String login = commonUrl + "auth/send-login-otp";
 
   static const String diamondList = commonUrl + "diamond/paginate";
   static const String diamondMatchPair =
@@ -80,7 +80,7 @@ class ApiConstants {
   static const getUpdation = commonUrl + "version";
 
   //Dashboard
-  static const String dashboard = commonUrl + "user/dashboard";
+  static const String dashboard = commonUrl + "dashboard";
   static const String deleteSavedSearch = commonUrl + "diamond/search/delete";
   static const String logout = commonUrl + "auth/logout";
   static const String sendAnalytics = commonUrl + "auth/logout";
@@ -119,7 +119,7 @@ class ApiConstants {
   static const String updateOffer = "device/v1/diamond-track/update";
   static const String shareThroughEmail = apiUrl + "web/v1/diamond/excel";
   static const String analytics = "apis/analytics/create";
-  static const String companyList = "admin/v1/account/paginate";
+  static const String companyList = commonUrl+"account/paginate";
   static const String deleteOffice =
       "device/v1/cabin-schedule/destroyDiamondAndSlot";
 }

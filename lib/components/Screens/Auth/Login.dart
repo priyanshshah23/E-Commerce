@@ -1,30 +1,25 @@
-import 'dart:collection';
 import 'dart:io';
 
 import 'package:diamnow/app/AppConfiguration/AppNavigation.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/localization/LocalizationHelper.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
-import 'package:diamnow/app/localization/LocalizationHelper.dart';
 import 'package:diamnow/components/Screens/Auth/ForgetPassword.dart';
 import 'package:diamnow/components/Screens/Auth/Signup.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/LoginModel.dart';
-import 'package:diamnow/models/Version/VersionUpdateResp.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:package_info/package_info.dart';
 
 import '../../../app/utils/navigator.dart';
-import '../../../modules/ThemeSetting.dart';
 import 'SignInWithMPINScreen.dart';
 
 class LoginScreen extends StatefulScreenWidget {
@@ -68,7 +63,10 @@ class LoginScreenState extends StatefulScreenWidgetState {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // if (kDebugMode) {
+     if (kDebugMode) {
+       userNameController.text="admin@pnshah.com";
+       _passwordController.text = "Admin#01032021";
+     }
     getUserNameAndPassword();
     // }
   }
@@ -317,6 +315,54 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                                 userNameController.text;
                                             req["password"] =
                                                 _passwordController.text;
+                                            req["masters"] = [
+                                              "COLOR",
+                                              "CLARITY",
+                                              "SHAPE",
+                                              "CUT",
+                                              "FLUORESCENCE",
+                                              "SHADE",
+                                              "LAB",
+                                              "POLISH",
+                                              "SYMMETRY",
+                                              "LOCATION",
+                                              "BLACK_INCLUSION",
+                                              "OPEN_TABLE",
+                                              "MILKEY",
+                                              "WHITE_INCLUSION_CROWN",
+                                              "OPEN_CROWN",
+                                              "EYECLEAN",
+                                              "OPEN_PAVILION",
+                                              "ORIGIN",
+                                              "BLACK_INCLUSION_CROWN",
+                                              "H_AND_A",
+                                              "WHITE_INCLUSION_TABLE",
+                                              "FANCY_COLOR",
+                                              "INTENSITY",
+                                              "OVERTONE",
+                                              "KEY_TO_SYMBOLS",
+                                              "GIRDLE",
+                                              "CULET",
+                                              "GIRDLE_COND",
+                                              "CULET_COND",
+                                              "COMPANY_SIZE",
+                                              "BLACK_INCLUSION_TABLE",
+                                              "BLACK_INCLUSION_SIDE",
+                                              "WHITE_INCLUSION_SIDE",
+                                              "BRILLIANCY",
+                                              "EYECLEAN",
+                                              "DAY_TERM",
+                                              "CURRENCY",
+                                              "COMPANY_GROUP",
+                                              "BLOCK_STAGE",
+                                              "NATURE_OF_ORG",
+                                              "BUSINESS_TYPE",
+                                              "DOC_TYPE_PERSONAL",
+                                              "DOC_TYPE_BUSINESS",
+                                              "MIX_TINT",
+                                              "NATURAL",
+                                              "OPEN_INCLUSION"
+                                            ];
                                             callLoginApi(context, req);
                                           } else {
                                             setState(() {
@@ -587,7 +633,11 @@ class LoginScreenState extends StatefulScreenWidgetState {
             context,
             isProgress: true)
         .then((loginResp) {
-      navigateToPopUpBox(context, loginResp);
+      app.resolve<PrefUtils>().saveUser(loginResp.data.user);
+      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+
+//      saveUserResponse(loginResp);
+//      navigateToPopUpBox(context, loginResp);
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(

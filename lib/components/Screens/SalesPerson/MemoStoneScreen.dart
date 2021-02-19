@@ -4,9 +4,26 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart'
 import 'package:diamnow/components/Screens/SalesPerson/Widget/CellModel.dart';
 import 'package:diamnow/components/Screens/SalesPerson/Widget/DropdownTextField.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/material.dart';
 
 class MemoStoneScreen extends StatefulWidget {
+  static const route = "MemoStoneScreen";
+
+  List<DiamondModel> diamondList;
+
+  MemoStoneScreen(
+      Map<String, dynamic> arguments, {
+        Key key,
+      }) : super(key: key) {
+    if (arguments != null) {
+      if (arguments[ArgumentConstant.DiamondList] != null) {
+        diamondList = arguments[ArgumentConstant.DiamondList];
+      }
+
+    }
+  }
+
   @override
   _MemoStoneScreenState createState() => _MemoStoneScreenState();
 }
@@ -28,19 +45,19 @@ class _MemoStoneScreenState extends State<MemoStoneScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
-      child: Scaffold(
-        backgroundColor: appTheme.whiteColor,
-        appBar: getAppBar(
-          context,
-          "Memo Stone",
-          centerTitle: false,
-          leadingButton: getBackButton(context),
-        ),
-        body: SafeArea(
+    return Scaffold(
+      backgroundColor: appTheme.whiteColor,
+      appBar: getAppBar(
+        context,
+        "Memo Stone",
+        centerTitle: false,
+        leadingButton: getBackButton(context),
+      ),
+      body: InkWell(
+        onTap: (){
+          FocusScope.of(context).unfocus();
+        },
+        child: SafeArea(
           child: Form(
             key: _formkey,
             child: Column(
@@ -63,8 +80,8 @@ class _MemoStoneScreenState extends State<MemoStoneScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: getBottomButton(),
       ),
+      bottomNavigationBar: getBottomButton(),
     );
   }
 

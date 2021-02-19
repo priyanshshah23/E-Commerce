@@ -81,6 +81,7 @@ class _DashboardState extends StatefulScreenWidgetState {
   var _focusSearch = FocusNode();
 
   DashboardModel dashboardModel;
+  AdminDashboardModel admindashboardModel;
 
   _DashboardState({this.moduleType, this.isFromDrawer});
 
@@ -99,7 +100,7 @@ class _DashboardState extends StatefulScreenWidgetState {
 
     dashboardConfig = DashboardConfig();
     dashboardConfig.initItems();
-    this.dashboardModel = app.resolve<PrefUtils>().getDashboardDetails();
+//    this.dashboardModel = app.resolve<PrefUtils>().getDashboardDetails();
 
     callApiForDashboard(false);
     // setState(() {
@@ -110,17 +111,18 @@ class _DashboardState extends StatefulScreenWidgetState {
   callApiForDashboard(bool isRefress, {bool isLoading = false}) {
     Map<String, dynamic> dict = {};
 
-    dict["savedSearch"] = true;
-    dict["recentSearch"] = true;
-    dict["recentActivity"] = true;
-    dict["track"] = true;
-    dict["dashboardCount"] = true;
-    dict["seller"] = true;
-    dict["account"] = true;
-    dict["featuredStone"] = true;
-    dict["newArrival"] = true;
+    dict["counts"] = true;
+//    dict["savedSearch"] = true;
+//    dict["recentSearch"] = true;
+//    dict["recentActivity"] = true;
+//    dict["track"] = true;
+//    dict["dashboardCount"] = true;
+//    dict["seller"] = true;
+//    dict["account"] = true;
+//    dict["featuredStone"] = true;
+//    dict["newArrival"] = true;
 
-    NetworkCall<DashboardResp>()
+    NetworkCall<AdminDashboardResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().dashboard(dict),
             context,
@@ -130,7 +132,8 @@ class _DashboardState extends StatefulScreenWidgetState {
       await app.resolve<PrefUtils>().saveDashboardDetails(resp.data);
 
       setState(() {
-        this.dashboardModel = resp.data;
+//        this.dashboardModel = resp.data;
+        this.admindashboardModel = resp.data;
 
         if (!isNullEmptyOrFalse(this.dashboardModel.seller)) {
           emailURL = this.dashboardModel.seller.email;

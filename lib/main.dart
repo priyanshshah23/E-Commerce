@@ -135,7 +135,7 @@ class _BaseState extends State<Base> {
       navigatorKey: NavigationUtilities.key,
       onGenerateRoute: onGenerateRoute,
       navigatorObservers: <NavigatorObserver>[routeObserver],
-      home: BuyNowScreen(),
+      home: Splash(),
 //      home: SelectionScreen(
 //        selectionOptions: [
 //          SelectionPopupModel("id1", "one"),

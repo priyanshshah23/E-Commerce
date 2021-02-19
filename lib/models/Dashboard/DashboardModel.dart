@@ -2,6 +2,124 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 
+
+class AdminDashboardResp extends BaseApiResp{
+  AdminDashboardModel data;
+
+  AdminDashboardResp({ this.data});
+
+  AdminDashboardResp.fromJson(Map<String, dynamic> json) : super.fromJson(json){
+    data = json['data'] != null ? new AdminDashboardModel.fromJson(json['data']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.data != null) {
+      data['data'] = this.data.toJson();
+    }
+    return data;
+  }
+}
+
+class AdminDashboardModel {
+//  TotalDiamond totalDiamond;
+//  TotalDiamond totalSupplier;
+//  TotalDiamond totalCarat;
+//  TotalDiamond totalValue;
+//  TotalDiamond recentLoginUsers;
+//  TotalDiamond recentSearch;
+//  TotalDiamond analytics;
+//  TotalDiamond recentEnquiryTracksAndNotes;
+  Counts counts;
+
+  AdminDashboardModel({
+//    this.totalDiamond,
+//    this.totalSupplier,
+//    this.totalCarat,
+//    this.totalValue,
+//    this.recentLoginUsers,
+//    this.recentSearch,
+//    this.analytics,
+//    this.recentEnquiryTracksAndNotes,
+    this.counts,
+  });
+
+  AdminDashboardModel.fromJson(Map<String, dynamic> json) {
+//    totalDiamond = json['totalDiamond'] != null ? new TotalDiamond.fromJson(json['totalDiamond']) : null;
+//    totalSupplier = json['totalSupplier'] != null ? new TotalDiamond.fromJson(json['totalSupplier']) : null;
+//    totalCarat = json['totalCarat'] != null ? new TotalDiamond.fromJson(json['totalCarat']) : null;
+//    totalValue = json['totalValue'] != null ? new TotalDiamond.fromJson(json['totalValue']) : null;
+//    recentLoginUsers = json['recentLoginUsers'] != null ? new TotalDiamond.fromJson(json['recentLoginUsers']) : null;
+//    recentSearch = json['recentSearch'] != null ? new TotalDiamond.fromJson(json['recentSearch']) : null;
+//    analytics = json['analytics'] != null ? new TotalDiamond.fromJson(json['analytics']) : null;
+//    recentEnquiryTracksAndNotes = json['recentEnquiryTracksAndNotes'] != null ? new TotalDiamond.fromJson(json['recentEnquiryTracksAndNotes']) : null;
+    counts = json['counts'] != null ? new Counts.fromJson(json['counts']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+//    if (this.totalDiamond != null) {
+//      data['totalDiamond'] = this.totalDiamond.toJson();
+//    }
+//    if (this.totalSupplier != null) {
+//      data['totalSupplier'] = this.totalSupplier.toJson();
+//    }
+//    if (this.totalCarat != null) {
+//      data['totalCarat'] = this.totalCarat.toJson();
+//    }
+//    if (this.totalValue != null) {
+//      data['totalValue'] = this.totalValue.toJson();
+//    }
+//    if (this.recentLoginUsers != null) {
+//      data['recentLoginUsers'] = this.recentLoginUsers.toJson();
+//    }
+//    if (this.recentSearch != null) {
+//      data['recentSearch'] = this.recentSearch.toJson();
+//    }
+//    if (this.analytics != null) {
+//      data['analytics'] = this.analytics.toJson();
+//    }
+//    if (this.recentEnquiryTracksAndNotes != null) {
+//      data['recentEnquiryTracksAndNotes'] = this.recentEnquiryTracksAndNotes.toJson();
+//    }
+    if (this.counts != null) {
+      data['counts'] = this.counts.toJson();
+    }
+    return data;
+  }
+}
+
+class Counts {
+  int cart;
+  int watchlist;
+  int offer;
+  int office;
+  int order;
+  int memo;
+
+  Counts({this.cart, this.watchlist, this.offer, this.office, this.order, this.memo});
+
+  Counts.fromJson(Map<String, dynamic> json) {
+    cart = json['Cart'];
+    watchlist = json['Watchlist'];
+    offer = json['Offer'];
+    office = json['Office'];
+    order = json['Order'];
+    memo = json['Memo'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Cart'] = this.cart;
+    data['Watchlist'] = this.watchlist;
+    data['Offer'] = this.offer;
+    data['Office'] = this.office;
+    data['Order'] = this.order;
+    data['Memo'] = this.memo;
+    return data;
+  }
+}
+
 class DashboardResp extends BaseApiResp {
   DashboardModel data;
 

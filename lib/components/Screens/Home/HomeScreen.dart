@@ -59,7 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     User user = app.resolve<PrefUtils>().getUserDetails();
-    if (user.account.isKycUploaded == false) {
+    openDashboard(DiamondModuleConstant.MODULE_TYPE_HOME);
+    if (user.isKycUploaded == false) {
       if (user.kycRequired) {
         openKYCUpload(DiamondModuleConstant.MODULE_TYPE_UPLOAD_KYC);
       } else {
@@ -71,8 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       //Kyc rejected
-      if (user.account.isApproved == KYCStatus.rejected &&
-          user.account.isKycUploaded == true) {
+      if (user.isApproved == KYCStatus.rejected &&
+          user.isKycUploaded == true) {
         Timer(
           Duration(seconds: 2),
           () => (app.resolve<CustomDialogs>().confirmDialog(context,
@@ -92,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
 
       //Documents not uploaded
-      if (user.account.isKycUploaded == false) {
+      if (user.isKycUploaded == false) {
         if (!user.kycRequired) {
           Timer(
             Duration(seconds: 2),
@@ -447,18 +448,13 @@ class _HomeScreenState extends State<HomeScreen> {
           );
           break;
         case DiamondModuleConstant.MODULE_TYPE_CONTACT_US:
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (BuildContext context) => BuyNowScreen()),
+          openContactUS(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.CONTACT,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
           );
-//          openContactUS(type);
-//          AnalyticsReport.shared.sendAnalyticsData(
-//            buildContext: context,
-//            page: PageAnalytics.CONTACT,
-//            section: SectionAnalytics.VIEW,
-//            action: ActionAnalytics.CLICK,
-//          );
           break;
         case DiamondModuleConstant.MODULE_TYPE_LOGOUT:
           logoutFromApp(context);

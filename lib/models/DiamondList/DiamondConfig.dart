@@ -16,6 +16,9 @@ import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/AnalyticsReport.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
+import 'package:diamnow/components/Screens/SalesPerson/BuyNowScreen.dart';
+import 'package:diamnow/components/Screens/SalesPerson/HoldStoneScreen.dart';
+import 'package:diamnow/components/Screens/SalesPerson/MemoStoneScreen.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
 import 'package:path/path.dart' as path;
 
@@ -392,7 +395,8 @@ class DiamondConfig {
         actionAddToWishList(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_PLACE_ORDER:
-        actionPlaceOrder(context, list, refreshList);
+        actionBuyNow(context,list);
+//        actionPlaceOrder(context, list, refreshList);
         break;
       case ActionMenuConstant.ACTION_TYPE_REMINDER:
         actionReminder(context, list);
@@ -410,7 +414,10 @@ class DiamondConfig {
         actionAppointment(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_HOLD:
-        actionHold(list);
+        actionHold(context,list);
+        break;
+      case ActionMenuConstant.ACTION_TYPE_MEMO:
+        actionMemo(context,list);
         break;
       case ActionMenuConstant.ACTION_TYPE_DOWNLOAD:
         actionDownload(context, list);
@@ -421,6 +428,8 @@ class DiamondConfig {
       case ActionMenuConstant.ACTION_TYPE_SHARE:
         actionDownload(context, list, isForShare: true);
 
+        break;
+      case ActionMenuConstant.ACTION_TYPE_PLACE_ORDER:
         break;
       case ActionMenuConstant.ACTION_TYPE_COMPARE:
         if (list.length < 2) {
@@ -697,7 +706,69 @@ class DiamondConfig {
     });*/
   }
 
-  actionHold(List<DiamondModel> list) {}
+  actionBuyNow(BuildContext context, List<DiamondModel> list) {
+    List<DiamondModel> selectedList = [];
+    DiamondModel model;
+    list.forEach((element) {
+      model = DiamondModel.fromJson(element.toJson());
+      selectedList.add(model);
+    });
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.IsFromDrawer] = false;
+    dict[ArgumentConstant.DiamondList] = selectedList;
+    Navigator.of(context)
+        .push(MaterialPageRoute(
+      settings: RouteSettings(name: BuyNowScreen.route),
+      builder: (context) => BuyNowScreen(dict),
+    ))
+        .then((value) => {
+//Navigator.pop(context, true)
+    });
+
+  }
+
+  actionHold(BuildContext context, List<DiamondModel> list) {
+    List<DiamondModel> selectedList = [];
+    DiamondModel model;
+    list.forEach((element) {
+      model = DiamondModel.fromJson(element.toJson());
+      selectedList.add(model);
+    });
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.IsFromDrawer] = false;
+    dict[ArgumentConstant.DiamondList] = selectedList;
+    Navigator.of(context)
+        .push(MaterialPageRoute(
+      settings: RouteSettings(name: HoldStoneScreen.route),
+      builder: (context) => HoldStoneScreen(dict),
+    ))
+        .then((value) => {
+//Navigator.pop(context, true)
+    });
+
+  }
+
+  actionMemo(BuildContext context, List<DiamondModel> list) {
+    List<DiamondModel> selectedList = [];
+    DiamondModel model;
+    list.forEach((element) {
+      model = DiamondModel.fromJson(element.toJson());
+      selectedList.add(model);
+    });
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.IsFromDrawer] = false;
+    dict[ArgumentConstant.DiamondList] = selectedList;
+
+    Navigator.of(context)
+        .push(MaterialPageRoute(
+      settings: RouteSettings(name: MemoStoneScreen.route),
+      builder: (context) => MemoStoneScreen(dict),
+    ))
+        .then((value) => {
+// Navigator.pop(context, true)
+    });
+
+  }
 
   actionDownloadOffline(BuildContext context, Function refreshList,
       {String filterId,

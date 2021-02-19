@@ -2,7 +2,9 @@ import 'dart:collection';
 
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
+import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
+import 'package:diamnow/components/Screens/Search/Search.dart';
 import 'package:flutter/services.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:rxbus/rxbus.dart';
@@ -30,12 +32,12 @@ class AppNavigation {
     RxBus.destroy(tag: eventBusTag);
     if (isPopAndSwitch) {
       
-      NavigationUtilities.pushReplacementNamed(HomeScreen.route,
+      NavigationUtilities.pushReplacementNamed(FilterScreen.route,
           type: RouteType.fade);
       // NavigationUtilities.pushReplacementNamed(DiamondListScreen.route,
       // type: RouteType.fade);
     } else {
-      NavigationUtilities.pushRoute(HomeScreen.route, type: RouteType.fade);
+      NavigationUtilities.pushRoute(FilterScreen.route, type: RouteType.fade);
     }
   }
 

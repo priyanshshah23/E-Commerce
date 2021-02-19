@@ -175,8 +175,10 @@ abstract class NetworkService {
   Future<BaseApiResp> createOfficerequest(@Body() Map<String, dynamic> req);
 
   //Dashboard
+//  @POST(ApiConstants.dashboard)
+//  Future<DashboardResp> dashboard(@Body() Map<String, dynamic> req);
   @POST(ApiConstants.dashboard)
-  Future<DashboardResp> dashboard(@Body() Map<String, dynamic> req);
+  Future<AdminDashboardResp> dashboard(@Body() Map<String, dynamic> req);
 
   //Delete saved search
   @POST(ApiConstants.deleteSavedSearch)

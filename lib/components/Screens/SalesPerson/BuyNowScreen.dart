@@ -5,9 +5,27 @@ import 'package:diamnow/components/Screens/SalesPerson/Widget/CellModel.dart';
 import 'package:diamnow/components/Screens/SalesPerson/Widget/CommonTextField.dart';
 import 'package:diamnow/components/Screens/SalesPerson/Widget/DropdownTextField.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/material.dart';
 
 class BuyNowScreen extends StatefulWidget {
+
+  static const route = "BuyNowScreen";
+
+  List<DiamondModel> diamondList;
+
+  BuyNowScreen(
+      Map<String, dynamic> arguments, {
+        Key key,
+      }) : super(key: key) {
+    if (arguments != null) {
+      if (arguments[ArgumentConstant.DiamondList] != null) {
+        diamondList = arguments[ArgumentConstant.DiamondList];
+      }
+
+    }
+  }
+
   @override
   _BuyNowScreenState createState() => _BuyNowScreenState();
 }
@@ -30,19 +48,19 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: (){
-        FocusScope.of(context).unfocus();
-      },
-      child: Scaffold(
-        backgroundColor: appTheme.whiteColor,
-        appBar: getAppBar(
-          context,
-          "Buy Now",
-          centerTitle: false,
-          leadingButton: getBackButton(context),
-        ),
-        body: SafeArea(
+    return Scaffold(
+      backgroundColor: appTheme.whiteColor,
+      appBar: getAppBar(
+        context,
+        "Buy Now",
+        centerTitle: false,
+        leadingButton: getBackButton(context),
+      ),
+      body: InkWell(
+        onTap: (){
+          FocusScope.of(context).unfocus();
+        },
+        child: SafeArea(
           child: Form(
             key: _formkey,
             autovalidate: _autovalidate,
@@ -74,8 +92,8 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: getBottomButton(),
       ),
+      bottomNavigationBar: getBottomButton(),
     );
   }
 
@@ -189,7 +207,6 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
       ),*/
       CellModel(
         hintText: "Comment",
-//        perfixImage: clock,
         type: CellType.Comment,
         inputAction: TextInputAction.done,
         leftPadding: 20,
