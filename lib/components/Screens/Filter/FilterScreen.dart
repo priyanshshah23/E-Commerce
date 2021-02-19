@@ -739,40 +739,51 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         page: PageAnalytics.DIAMOND_SEARCH,
         section: SectionAnalytics.SEARCH,
         action: ActionAnalytics.CLICK);
+    Map<String, dynamic> map = FilterRequest().createRequest(arrList);
+    if (map.length < 3) {
 
-    SyncManager.instance.callApiForDiamondList(
-      context,
-      FilterRequest().createRequest(arrList),
-      (diamondListResp) {
-        if (isSavedSearch) {
-          openBottomSheetForSavedSearch(
-              context, FilterRequest().createRequest(arrList),
-              isSearch: isSearch, savedSearchModel: this.savedSearchModel);
-        } else {
-          if (isSearch) {
-            if (diamondListResp.data.count == 0) {
-              app.resolve<CustomDialogs>().confirmDialog(context,
-                  desc: R.string.commonString.noDiamondFound,
-                  positiveBtnTitle: R.string.commonString.ok,
-                  negativeBtnTitle: R.string.screenTitle.addDemand,
-                  onClickCallback: (buttonType) {
-                if (buttonType == ButtonType.NagativeButtonClick) {
-                  if (app
-                      .resolve<PrefUtils>()
-                      .getModulePermission(
-                          ModulePermissionConstant.permission_myDemand)
-                      .insert) {
-                    if (!isNullEmptyOrFalse(
-                        FilterRequest().createRequest(arrList)))
-                      getAddDemand();
-                    else {
-                      showToast(R.string.commonString.selectAtleastOneFilter,
-                          context: context);
+    } else {
+      SyncManager.instance.callApiForDiamondList(
+        context,
+        map,
+        (diamondListResp) {
+          if (isSavedSearch) {
+            openBottomSheetForSavedSearch(
+                context, FilterRequest().createRequest(arrList),
+                isSearch: isSearch, savedSearchModel: this.savedSearchModel);
+          } else {
+            if (isSearch) {
+              if (diamondListResp.data.count == 0) {
+                app.resolve<CustomDialogs>().confirmDialog(context,
+                    desc: R.string.commonString.noDiamondFound,
+                    positiveBtnTitle: R.string.commonString.ok,
+                    negativeBtnTitle: R.string.screenTitle.addDemand,
+                    onClickCallback: (buttonType) {
+                  if (buttonType == ButtonType.NagativeButtonClick) {
+                    if (app
+                        .resolve<PrefUtils>()
+                        .getModulePermission(
+                            ModulePermissionConstant.permission_myDemand)
+                        .insert) {
+                      if (!isNullEmptyOrFalse(
+                          FilterRequest().createRequest(arrList)))
+                        getAddDemand();
+                      else {
+                        showToast(R.string.commonString.selectAtleastOneFilter,
+                            context: context);
+                      }
+                      // place code
                     }
-                    // place code
                   }
-                }
-              });
+                });
+              } else {
+                Map<String, dynamic> dict = new HashMap();
+                dict["filterId"] = diamondListResp.data.filter.id;
+                dict["filters"] = FilterRequest().createRequest(arrList);
+                dict[ArgumentConstant.ModuleType] = moduleType;
+                NavigationUtilities.pushRoute(DiamondListScreen.route,
+                    args: dict);
+              }
             } else {
               Map<String, dynamic> dict = new HashMap();
               dict["filterId"] = diamondListResp.data.filter.id;
@@ -781,19 +792,13 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               NavigationUtilities.pushRoute(DiamondListScreen.route,
                   args: dict);
             }
-          } else {
-            Map<String, dynamic> dict = new HashMap();
-            dict["filterId"] = diamondListResp.data.filter.id;
-            dict["filters"] = FilterRequest().createRequest(arrList);
-            dict[ArgumentConstant.ModuleType] = moduleType;
-            NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
           }
-        }
-      },
-      (onError) {
-        //print("Error");
-      },
-    );
+        },
+        (onError) {
+          //print("Error");
+        },
+      );
+    }
   }
 
   Widget _segmentedControl() {
