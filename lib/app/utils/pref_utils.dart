@@ -333,7 +333,8 @@ class PrefUtils {
         data.downloadExcel = false;
       }
     }
-    if (app.resolve<PrefUtils>().getUserDetails().account.isApproved !=
+    if ((app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
+            KYCStatus.pending) !=
         KYCStatus.approved) {
       if (module == ModulePermissionConstant.permission_searchDiamond ||
           module == ModulePermissionConstant.permission_quickSearch ||
