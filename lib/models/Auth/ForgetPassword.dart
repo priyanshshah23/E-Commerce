@@ -14,6 +14,22 @@ class ForgotPasswordReq {
   }
 }
 
+class ForgotPasswordEmailReq {
+  String username;
+
+  ForgotPasswordEmailReq({this.username});
+
+  ForgotPasswordEmailReq.fromJson(Map<String, dynamic> json) {
+    username = json['username'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['username'] = this.username;
+    return data;
+  }
+}
+
 class VerifyOTPReq {
   String email;
   String otpNumber;
@@ -32,4 +48,3 @@ class VerifyOTPReq {
     return data;
   }
 }
-

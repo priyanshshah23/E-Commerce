@@ -506,12 +506,16 @@ class BottomMenuSetting {
         addPlaceOrderInBottomMenu(moreMenuList, placeOrder);
       }
     }
-    if (!isDetail && !isCompare) {
-      if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
-          moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
-          moduleType !=
-              DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
-        addCompareInBottomMenu(moreMenuList, compare);
+    if ((app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
+            KYCStatus.pending) !=
+        KYCStatus.approved) {
+      if (!isDetail && !isCompare) {
+        if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
+            moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
+            moduleType !=
+                DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+          addCompareInBottomMenu(moreMenuList, compare);
+        }
       }
     }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&

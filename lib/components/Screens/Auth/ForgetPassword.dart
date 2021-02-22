@@ -59,7 +59,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
 
   @override
   void dispose() {
-    _timer.cancel();
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -133,7 +133,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                         Text(
                           isApiCall
                               ? R.string.authStrings.enterOTP
-                              : R.string.authStrings.sendOTPToEmail,
+                              : R.string.authStrings.sendEmailForForgetPassword,
                           style: appTheme.black14TextStyle,
                           textAlign: TextAlign.center,
                         ),
@@ -145,8 +145,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
-                                    Text(
-                                        R.string.authStrings.didNotReceiveOTP,
+                                    Text(R.string.authStrings.didNotReceiveOTP,
                                         style: appTheme.grey16HintTextStyle),
                                     GestureDetector(
                                         onTap: () {
@@ -158,7 +157,8 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                                         child: Text(
                                             isTimerCompleted
                                                 ? " " +
-                                                    R.string.authStrings.resendNow
+                                                    R.string.authStrings
+                                                        .resendNow
                                                 : " ${_printDuration(Duration(seconds: _start))}",
                                             style:
                                                 appTheme.darkBlue16TextStyle)),
@@ -177,6 +177,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                                     if (_formKey.currentState.validate()) {
                                       _formKey.currentState.save();
                                       callForgetPasswordApi();
+//                                      callForgetMpinApi();
 //                                callLoginApi(context);
                                     } else {
                                       setState(() {
@@ -192,7 +193,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                                   //  backgroundColor: appTheme.buttonColor,
                                   borderRadius: getSize(5),
                                   fitWidth: true,
-                                  text: R.string.authStrings.sendOTP,
+                                  text: R.string.commonString.done,
                                   //isButtonEnabled: enableDisableSigninButton(),
                                 ),
                               ),
@@ -429,16 +430,13 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
         );
   }
 
-  callForgetPasswordApi({bool isResend = false}) async {
-    ForgotPasswordReq req = ForgotPasswordReq();
-    req.value = _emailController.text;
+  callForgetMpinApi({bool isResend = false}) async {
+    Map<String, dynamic> req = {};
+    req["username"] = _emailController.value.text;
 
     NetworkCall<BaseApiResp>()
         .makeCall(
-            () => app
-                .resolve<ServiceModule>()
-                .networkService()
-                .forgetPassword(req),
+            () => app.resolve<ServiceModule>().networkService().forgetMpin(req),
             context,
             isProgress: true)
         .then((resp) async {
@@ -458,7 +456,30 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-            
+            desc: onError.message,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
+          );
+    });
+  }
+
+  callForgetPasswordApi({bool isResend = false}) async {
+    ForgotPasswordEmailReq req = ForgotPasswordEmailReq();
+    req.username = _emailController.text.trim();
+
+    NetworkCall<BaseApiResp>()
+        .makeCall(
+            () => app
+                .resolve<ServiceModule>()
+                .networkService()
+                .forgetPasswordEmail(req),
+            context,
+            isProgress: true)
+        .then((resp) async {
+      FocusScope.of(context).unfocus();
+      Navigator.pop(context);
+    }).catchError((onError) {
+      app.resolve<CustomDialogs>().confirmDialog(
+            context,
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.btnTryAgain,
           );
@@ -490,7 +511,6 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
       setState(() {});
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-            
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.btnTryAgain,
           );

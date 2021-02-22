@@ -295,6 +295,26 @@ class _NetworkService implements NetworkService {
   }
 
   @override
+  forgetPasswordEmail(req) async {
+    ArgumentError.checkNotNull(req, 'req');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(req?.toJson() ?? <String, dynamic>{});
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'http://pndevelopapi.democ.in/device/v1/forgot-password',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = BaseApiResp.fromJson(_result.data);
+    return Future.value(value);
+  }
+
+  @override
   forgetMpin(req) async {
     ArgumentError.checkNotNull(req, 'req');
     const _extra = <String, dynamic>{};
@@ -302,7 +322,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'http://pndevelopapi.democ.in/device/v1/forgot-mpin?',
+        'http://pndevelopapi.democ.in/device/v1/forgot-mpin',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',

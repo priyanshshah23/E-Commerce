@@ -379,7 +379,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     // if (diamondModel.hAFile) {
     arrOfHA.add(
       DiamondDetailImagePagerModel(
-        title: "AssetImage",
+        title: "H&A",
         url: (DiamondUrls.heartImage +
             (diamondModel.mfgStnId ?? diamondModel.vStnId) +
             "/" +
@@ -561,7 +561,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   getRowItem(String type, String img, int index) {
     var list = arrImages.where((element) => element.type == type).toList();
     var listHAndA =
-        arrImages.where((element) => element.type == "Certificate").toList();
+        arrImages.where((element) => element.title == "H&A").toList();
     int num = 0;
     for (var model in arrImages) {
       if (model.type == type) {
@@ -579,7 +579,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           }
         } else {
           num = (num + model.arr.length);
-          if (!isNullEmptyOrFalse(listHAndA)) {
+          if (!isNullEmptyOrFalse(listHAndA) && imageFlag && videoFlag) {
             index++;
           }
         }
@@ -814,7 +814,13 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                                           getRowItem(
                                             "Certificate",
                                             medal,
-                                            2,
+                                            (imageFlag && videoFlag)
+                                                ? 2
+                                                : imageFlag
+                                                    ? 1
+                                                    : videoFlag
+                                                        ? 1
+                                                        : 0,
                                           ),
                                         ],
                                       ),

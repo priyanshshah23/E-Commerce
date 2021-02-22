@@ -387,7 +387,6 @@ class ShapeItemWidget extends StatelessWidget {
   }
 
   showWebDisplay() {
-    print(obj.code);
     return selectionModel.valueKeyisCode
         ? (obj.code ?? "-").toLowerCase().capitalize()
         : (obj.webDisplay ?? "-").toLowerCase().capitalize();

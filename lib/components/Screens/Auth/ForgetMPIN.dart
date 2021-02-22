@@ -52,7 +52,7 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
   @override
   void initState() {
     super.initState();
-    if(kDebugMode) {
+    if (kDebugMode) {
       _emailController.text = "mobileuser";
     }
     _pinEditingController.clear();
@@ -92,7 +92,7 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
           child: Scaffold(
             appBar: getAppBar(
               context,
-             "Forgot MPIN",
+              "Forgot MPIN",
               bgColor: appTheme.whiteColor,
               leadingButton: isApiCall
                   ? getBackButton(context, ontap: () {
@@ -150,16 +150,20 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
                                         style: appTheme.grey16HintTextStyle),
                                     GestureDetector(
                                         onTap: () {
-                                          if(isTimerCompleted) {
+                                          if (isTimerCompleted) {
                                             callForgetMpinApi(isResend: true);
                                           }
                                         },
                                         child: Text(
                                             isTimerCompleted
-                                                ? " " + R.string.authStrings.resendNow
+                                                ? " " +
+                                                    R.string.authStrings
+                                                        .resendNow
                                                 : " ${_printDuration(Duration(seconds: _start))}",
-                                            style:
-                                                appTheme.darkBlue16TextStyle.copyWith(color: appTheme.greenColor))),
+                                            style: appTheme.darkBlue16TextStyle
+                                                .copyWith(
+                                                    color:
+                                                        appTheme.greenColor))),
                                   ],
                                 ),
                               )
@@ -219,7 +223,8 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
                               );
                             },
                             child: Text(" " + R.string.authStrings.signInCap,
-                                style: appTheme.darkBlue16TextStyle.copyWith(color: appTheme.greenColor))),
+                                style: appTheme.darkBlue16TextStyle
+                                    .copyWith(color: appTheme.greenColor))),
                       ],
                     ),
                   ),
@@ -271,7 +276,8 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
             return R.string.errorString.enterUsername;
           } /*else if (!validateEmail(text.trim())) {
             return R.string.errorString.enterValidEmail;
-          }*/ else {
+          }*/
+          else {
             return null;
           }
         },
@@ -326,7 +332,7 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
         child: PinInputTextFormField(
           key: _formKeyPin,
           autoFocus: autoFocus,
-          pinLength: 4,
+          pinLength: 6,
           decoration: UnderlineDecoration(
             color: isOtpCheck
                 ? ColorConstants.lightgrey
@@ -346,7 +352,7 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
             obscureStyle: ObscureStyle(
               isTextObscure: false,
             ),
-            hintText: '    ',
+            hintText: '      ',
           ),
           controller: _pinEditingController,
           textInputAction: TextInputAction.done,
@@ -354,7 +360,7 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
           inputFormatter: [
             BlacklistingTextInputFormatter(RegExp(RegexForEmoji)),
             ValidatorInputFormatter(
-                editingValidator: DecimalNumberEditingRegexValidator(4)),
+                editingValidator: DecimalNumberEditingRegexValidator(6)),
           ],
           keyboardType: TextInputType.number,
           focusNode: _focusPinTextField,
@@ -363,13 +369,13 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
             setState(() {});
             if (_formKey.currentState.validate()) {
               _formKey.currentState.save();
-              if (pin.trim().length != 4) {
+              if (pin.trim().length != 6) {
                 isOtpTrue = false;
                 isOtpCheck = false;
                 showOTPMsg = R.string.errorString.pleaseEnterOTP;
-              } else if (pin.trim().length == 4) {
+              } else if (pin.trim().length == 6) {
                 FocusScope.of(context).unfocus();
-               callApiForVerifyOTP();
+                callApiForVerifyOTP();
               }
             } else {
               setState(() {
@@ -379,10 +385,10 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
             }
           },
           onChanged: (pin) {
-            if (pin.trim().length < 4) {
+            if (pin.trim().length < 6) {
               showOTPMsg = null;
               isOtpTrue = false;
-            } else if (pin.trim().length == 4) {
+            } else if (pin.trim().length == 6) {
               callApiForVerifyOTP();
             }
             setState(() {});
@@ -428,17 +434,17 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
   }
 
   callForgetMpinApi({bool isResend = false}) async {
-   Map<String,dynamic> req = {};
-   req["username"] = _emailController.value.text;
+    Map<String, dynamic> req = {};
+    req["username"] = _emailController.value.text;
 
     NetworkCall<BaseApiResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().forgetMpin(req),
-        context,
-        isProgress: true)
+            context,
+            isProgress: true)
         .then((resp) async {
       FocusScope.of(context).unfocus();
-      if(isResend) {
+      if (isResend) {
         if (isTimerCompleted) {
           _start = 30;
           isTimerCompleted = false;
@@ -452,24 +458,26 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
       setState(() {});
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
-        context,
-        
-        desc: onError.message,
-        positiveBtnTitle: R.string.commonString.btnTryAgain,
-      );
+            context,
+            desc: onError.message,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
+          );
     });
   }
 
   callApiForVerifyOTP() async {
-    Map<String,dynamic> req = {};
+    Map<String, dynamic> req = {};
     req["mPinOtp"] = _pinEditingController.text.trim();
     req["username"] = _emailController.text;
 
     NetworkCall<BaseApiResp>()
         .makeCall(
-            () => app.resolve<ServiceModule>().networkService().verifyOTPForMpin(req),
-        context,
-        isProgress: true)
+            () => app
+                .resolve<ServiceModule>()
+                .networkService()
+                .verifyOTPForMpin(req),
+            context,
+            isProgress: true)
         .then((resp) async {
       FocusScope.of(context).unfocus();
       isOtpTrue = true;
@@ -480,18 +488,17 @@ class _ForgetMPINState extends StatefulScreenWidgetState {
       arguments["enm"] = Mpin.forgotMpin;
       arguments["userName"] = _emailController.text;
       arguments["mPinOtp"] = _pinEditingController.text.trim();
-      NavigationUtilities.pushRoute(SignInWithMPINScreen.route,args: arguments);
+      NavigationUtilities.pushRoute(SignInWithMPINScreen.route,
+          args: arguments);
     }).catchError((onError) {
       isOtpTrue = false;
       isOtpCheck = false;
       setState(() {});
       app.resolve<CustomDialogs>().confirmDialog(
-        context,
-        
-        desc: onError.message,
-        positiveBtnTitle: R.string.commonString.btnTryAgain,
-      );
+            context,
+            desc: onError.message,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
+          );
     });
   }
-
 }

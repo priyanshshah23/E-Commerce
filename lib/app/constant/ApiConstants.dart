@@ -53,14 +53,13 @@ class ApiConstants {
 
   static const String placeOrder = commonUrl + "diamond-confirm/request";
   static const String staticPage = apiV1 + "static-page/{id}";
-  static const String forgetPassword =
-      apiUrl + "web/v1/auth/forgot-password"; //done
+  static const String forgetPassword = commonUrl + "forgot-password"; //done
   static const String resetPassword = commonUrl + "user/reset-password";
   static const String changePassword =
       apiUrl + "web/v1/auth/reset-password-by-user"; //done
   static const String personalInformation = commonUrl + "user/update"; //done
   static const String sendOTP = commonUrl + "user/send-otp"; //done
-  static const String forgotMpin = commonUrl + "forgot-mpin?";
+  static const String forgotMpin = commonUrl + "forgot-mpin";
   static const String verifyOTP = commonUrl + "user/verify-otp"; //done
   static const String verifyOTPForMpin = commonUrl + "verify-mpin-otp"; //done
   static const String verifyMpin = commonUrl + "verify-mpin"; //done
