@@ -3,6 +3,7 @@
     "language_code": "English",
     "is_default": true,
     "auth_strings": {
+      "sendEmailForForgetPassword" : "We will send an email to your entered email address. Please enter the email address.",
       "editCompanyInformation": "Edit Company Information",
       "selectNatureOfOrganization": "Select Nature Of Organization",
       "setNewPassword": "Set your new password and sign in again.",
