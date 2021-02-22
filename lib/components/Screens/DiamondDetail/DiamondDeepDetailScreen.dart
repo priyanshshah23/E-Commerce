@@ -59,9 +59,10 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
   DiamondConfig diamondConfig;
   int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
   int index;
+  bool isPageLoading = false;
   List<DiamondDetailImagePagerModel> arrImages =
       List<DiamondDetailImagePagerModel>();
-
+  WebView webView = WebView();
   DiamondModel diamondModel;
 
   //new design
@@ -532,9 +533,10 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
     DiamondDetailImagePagerModel model,
   ) async {
     // if (!model.isImage) print(model.url);
-    return WebView(
+    return webView = WebView(
         initialUrl: model.url,
         onPageStarted: (url) {
+          isPageLoading = true;
           // app.resolve<CustomDialogs>().showProgressDialog(context, "");
           setState(() {
             isLoading = true;
@@ -542,9 +544,12 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
         },
         onPageFinished: (finish) {
           // app.resolve<CustomDialogs>().hideProgressDialog();
-          setState(() {
+          if (!isPageLoading) {
+            webView.onPageStarted(model.url);
+          } else {
             isLoading = false;
-          });
+            setState(() {});
+          }
         },
         onWebResourceError: (error) {
           print(error);
@@ -616,7 +621,6 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
   getChildren() {
     List<Widget> list = [];
     for (int i = 0; i < arrImages.length; i++) {
-      print("--------tabs---${arrImages.length}");
       list.add(Padding(
         padding: EdgeInsets.only(
           left: getSize(20),
