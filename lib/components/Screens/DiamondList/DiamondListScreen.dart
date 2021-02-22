@@ -115,7 +115,18 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     Config().getOptionsJson().then((result) {
       result.forEach((element) {
         if (element.isActive) {
-          optionList.add(element);
+          if (moduleType ==
+              DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY) {
+            if (element.apiKey == "amt ASC" ||
+                element.apiKey == "amt DESC" ||
+                element.apiKey == "back ASC" ||
+                element.apiKey == "back DESC") {
+            } else {
+              optionList.add(element);
+            }
+          } else {
+            optionList.add(element);
+          }
         }
       });
       setState(() {});

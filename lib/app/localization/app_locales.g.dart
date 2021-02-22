@@ -168,6 +168,8 @@ class AuthStrings {
   String didNotReceiveOTP = "If you didn't receive an OTP!";
   String sendOTPToEmail =
       "We will send an OTP to your entered email address or user name. Please enter the email address or user name.";
+  String sendEmailForForgetPassword =
+      "We will send an email to your entered email address. Please enter the email address.";
   String enterOTP =
       "The OTP has been sent to your registered Email address. Please enter the OTP.";
   String backToSignIn = "Back to Sign In";
@@ -499,8 +501,8 @@ class ErrorString {
   String enterDesc = "Please enter description.";
   String enterTitle = "Please enter title.";
   String enterEmailOrPhone = "Please enter email/mobile.";
-  String enterPassword = "Please enter new password.";
-  String enterConfirmPassword = "Please enter new password again.";
+  String enterPassword = "Password can't be empty. Please enter Password.";
+  String enterConfirmPassword = "Please enter confirm password.";
   String enterSkype = "Please Enter Skype.";
   String enterRegisterCode = "Please enter registration code";
   String enterEmail = "Please enter the Email address.";

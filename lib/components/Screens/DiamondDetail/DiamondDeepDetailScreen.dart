@@ -89,7 +89,6 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
     _tabController = TabController(length: arrImages.length, vsync: this)
       ..addListener(_setActiveTabIndex);
     if (index != null) {
-      print("----index$index");
       currTab = index;
       _tabController.animateTo(index);
     }
@@ -161,9 +160,6 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
       }
       mapOfInitialPixels[j] = value;
     }
-    mapOfInitialPixels.forEach((key, value) {
-      print("${key} => ${value}");
-    });
   }
 
   @override
@@ -371,11 +367,10 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
                 padding: EdgeInsets.only(bottom: 10),
                 child: getImageView(
                   ((model.arr != null &&
-                              model.arr.length > 0 &&
-                              isStringEmpty(model.url) == false)
-                          ? model.arr[model.subIndex].url
-                          : model.url)
-                      ,
+                          model.arr.length > 0 &&
+                          isStringEmpty(model.url) == false)
+                      ? model.arr[model.subIndex].url
+                      : model.url),
                   height: getSize(286),
                   width: MathUtilities.screenWidth(context),
                   fit: BoxFit.fitHeight,
@@ -589,7 +584,6 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
   List<Widget> getTabs() {
     List<Widget> list = [];
     for (int i = 0; i < arrImages.length; i++) {
-      print("--------tabs---${arrImages.length}");
       list.add(Tab(
         child: Column(
           children: [
