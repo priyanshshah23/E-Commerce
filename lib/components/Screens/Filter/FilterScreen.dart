@@ -903,7 +903,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 context, FilterRequest().createRequest(arrList),
                 (diamondListResp) {
               Map<String, dynamic> dict = new HashMap();
-              dict["filterId"] = diamondListResp.data.filter.id;
+              dict["filterId"] = diamondListResp.data[0].filter.id;
               dict["filter"] = FilterRequest().createRequest(arrList);
               dict[ArgumentConstant.ModuleType] =
                   DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR;
@@ -935,7 +935,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               isSearch: isSearch, savedSearchModel: this.savedSearchModel);
         } else {
           if (isSearch) {
-            if (diamondListResp.data.count == 0) {
+            if (diamondListResp.data[0].count == 0) {
               app.resolve<CustomDialogs>().confirmDialog(context,
                   desc: R.string.commonString.noDiamondFound,
                   positiveBtnTitle: R.string.commonString.ok,
@@ -960,7 +960,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               });
             } else {
               Map<String, dynamic> dict = new HashMap();
-              dict["filterId"] = diamondListResp.data.filter.id;
+              dict["filterId"] = diamondListResp.data[0].filter.id;
               dict["filters"] = FilterRequest().createRequest(arrList);
               dict[ArgumentConstant.ModuleType] = moduleType;
               NavigationUtilities.pushRoute(DiamondListScreen.route,
@@ -968,7 +968,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             }
           } else {
             Map<String, dynamic> dict = new HashMap();
-            dict["filterId"] = diamondListResp.data.filter.id;
+            dict["filterId"] = diamondListResp.data[0].filter.id;
             dict["filters"] = FilterRequest().createRequest(arrList);
             dict[ArgumentConstant.ModuleType] = moduleType;
             NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);

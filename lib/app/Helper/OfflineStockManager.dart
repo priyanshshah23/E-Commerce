@@ -199,7 +199,7 @@ class OfflineStockManager {
       }
 
       await _downloadAndStoreDiamond(
-          diamondListResp.data.count, diamondListResp.data.diamonds);
+          diamondListResp.data[0].count, diamondListResp.data[0].diamonds);
     }).catchError((onError) {
       isDownloading = false;
       RxBus.post(isDownloading, tag: eventOfflineDiamond);

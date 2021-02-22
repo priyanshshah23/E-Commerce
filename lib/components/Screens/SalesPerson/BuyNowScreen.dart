@@ -39,9 +39,10 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
   @override
   void initState() {
     super.initState();
+    _arrDropDown = getDropdownTextFieldList();
     WidgetsBinding.instance.addPostFrameCallback(
           (_) => setState(() {
-        _arrDropDown = getDropdownTextFieldList();
+//        _arrDropDown = getDropdownTextFieldList();
       }),
     );
   }
@@ -109,7 +110,9 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
                 right: getSize(20),
               ),
               child: AppButton.flat(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pop(context);
+                },
                 text: R.string.commonString.cancel,
                 borderRadius: getSize(5),
                 textColor: appTheme.colorPrimary,

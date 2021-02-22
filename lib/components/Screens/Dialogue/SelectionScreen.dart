@@ -306,6 +306,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
       params: dict,
       successCallback: (response, message) {
         app.resolve<CustomDialogs>().hideProgressDialog();
+
         print("response--------------------${response.toString()}");
 //        selectionOptions
       },

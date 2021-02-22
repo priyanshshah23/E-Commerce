@@ -59,15 +59,17 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     User user = app.resolve<PrefUtils>().getUserDetails();
-    openDashboard(DiamondModuleConstant.MODULE_TYPE_HOME);
+    openSearch(DiamondModuleConstant.MODULE_TYPE_SEARCH);
     if (user.isKycUploaded == false) {
       if (user.kycRequired) {
         openKYCUpload(DiamondModuleConstant.MODULE_TYPE_UPLOAD_KYC);
       } else {
-        openDashboard(DiamondModuleConstant.MODULE_TYPE_HOME);
+        openSearch(DiamondModuleConstant.MODULE_TYPE_SEARCH);
+//        openDashboard(DiamondModuleConstant.MODULE_TYPE_HOME);
       }
     } else {
-      openDashboard(DiamondModuleConstant.MODULE_TYPE_HOME);
+      openSearch(DiamondModuleConstant.MODULE_TYPE_SEARCH);
+//      openDashboard(DiamondModuleConstant.MODULE_TYPE_HOME);
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -114,7 +116,8 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         }
       } else {
-        openDashboard(DiamondModuleConstant.MODULE_TYPE_HOME);
+        openSearch(DiamondModuleConstant.MODULE_TYPE_SEARCH);
+//        openDashboard(DiamondModuleConstant.MODULE_TYPE_HOME);
       }
       RxBus.register<DrawerEvent>(tag: eventBusTag).listen((event) {
         if (event.index == DiamondModuleConstant.MODULE_TYPE_OPEN_DRAWER) {

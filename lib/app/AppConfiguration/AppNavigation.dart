@@ -5,6 +5,7 @@ import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
 import 'package:diamnow/components/Screens/Search/Search.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/services.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:rxbus/rxbus.dart';
@@ -31,13 +32,20 @@ class AppNavigation {
   void movetoHome({bool isPopAndSwitch = false}) {
     RxBus.destroy(tag: eventBusTag);
     if (isPopAndSwitch) {
-      
-      NavigationUtilities.pushReplacementNamed(FilterScreen.route,
+//      Map<String, dynamic> dict = new HashMap();
+//      dict[ArgumentConstant.IsFromDrawer] = true;
+//      NavigationUtilities.pushReplacementNamed(FilterScreen.route,
+//          type: RouteType.fade,args: dict);
+      NavigationUtilities.pushReplacementNamed(HomeScreen.route,
           type: RouteType.fade);
       // NavigationUtilities.pushReplacementNamed(DiamondListScreen.route,
       // type: RouteType.fade);
     } else {
-      NavigationUtilities.pushRoute(FilterScreen.route, type: RouteType.fade);
+//      Map<String, dynamic> dict = new HashMap();
+//      dict[ArgumentConstant.IsFromDrawer] = true;
+//      NavigationUtilities.pushRoute(FilterScreen.route, type: RouteType.fade,args: dict);
+      NavigationUtilities.pushReplacementNamed(HomeScreen.route,
+          type: RouteType.fade);
     }
   }
 

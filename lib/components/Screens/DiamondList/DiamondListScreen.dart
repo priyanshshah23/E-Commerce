@@ -222,28 +222,33 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
       case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH:
-        dict["filters"] = {};
+        dict["filters"] = [{
+          "diamondSearchId" : this.filterId
+        }];
         dict["filters"]["diamondSearchId"] = this.filterId;
         break;
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
-        dict["filters"] = {};
-        dict["filters"]["diamondSearchId"] = this.filterId;
+      dict["filters"] = [{
+          "diamondSearchId" : this.filterId
+        }];
+        // dict["filters"] = [{}];
+        // dict["filters"]["diamondSearchId"] = this.filterId;
 
         break;
       case DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR:
-        dict["filter"] = {};
+        dict["filters"] = [{}];
         dict["filter"]["diamondSearchId"] = this.filterId;
         break;
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
-        dict["filters"] = {};
+        dict["filters"] = [{}];
         dict["viewType"] = 2;
         break;
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
-        dict["filters"] = {};
+        dict["filters"] = [{}];
         dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_BID;
         break;
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
-        dict["filters"] = {};
+        dict["filters"] = [{}];
         dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_UPCOMING;
         dict["filters"]["inDt"] = {};
         var date = DateTime.now();
@@ -304,8 +309,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     )
         .then((diamondListResp) async {
       if (page == DEFAULT_PAGE) {
-        hasData = diamondListResp.data.diamonds.length > 0 ||
-            diamondListResp.data.list.length > 0;
+        hasData = diamondListResp.data[0].diamonds.length > 0 ||
+            diamondListResp.data[0].list.length > 0;
       }
       switch (moduleType) {
         case DiamondModuleConstant.MODULE_TYPE_MY_CART:
@@ -320,7 +325,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           List<DiamondModel> list = [];
           DiamondModel diamondModel;
           TrackDiamonds trackDiamonds;
-          diamondListResp.data.list.forEach((element) {
+          diamondListResp.data[0].list.forEach((element) {
             if (element.diamonds != null) {
               element.diamonds.forEach((diamonds) {
                 switch (moduleType) {
@@ -380,12 +385,12 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           break;
 
         default:
-          arraDiamond.addAll(diamondListResp.data.diamonds);
+          arraDiamond.addAll(diamondListResp.data[0].diamonds);
           break;
       }
       diamondConfig.setMatchPairItem(arraDiamond);
       diamondList.state.listCount = arraDiamond.length;
-      diamondList.state.totalCount = diamondListResp.data.count;
+      diamondList.state.totalCount = diamondListResp.data[0].count;
       manageDiamondSelection();
       //callBlockApi(isProgress: true);
       page = page + 1;
@@ -442,14 +447,14 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   handleOfflineStockResponse(DiamondListResp diamondListResp) {
     if (page == DEFAULT_PAGE) {
-      hasData = diamondListResp.data.diamonds.length > 0 ||
-          diamondListResp.data.list.length > 0;
+      hasData = diamondListResp.data[0].diamonds.length > 0 ||
+          diamondListResp.data[0].list.length > 0;
     }
 
-    arraDiamond.addAll(diamondListResp.data.diamonds);
+    arraDiamond.addAll(diamondListResp.data[0].diamonds);
     diamondConfig.setMatchPairItem(arraDiamond);
     diamondList.state.listCount = arraDiamond.length;
-    diamondList.state.totalCount = diamondListResp.data.count;
+    diamondList.state.totalCount = diamondListResp.data[0].count;
     manageDiamondSelection();
     //callBlockApi(isProgress: true);
     page = page + 1;

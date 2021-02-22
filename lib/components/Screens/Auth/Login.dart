@@ -315,54 +315,54 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                                 userNameController.text;
                                             req["password"] =
                                                 _passwordController.text;
-                                            req["masters"] = [
-                                              "COLOR",
-                                              "CLARITY",
-                                              "SHAPE",
-                                              "CUT",
-                                              "FLUORESCENCE",
-                                              "SHADE",
-                                              "LAB",
-                                              "POLISH",
-                                              "SYMMETRY",
-                                              "LOCATION",
-                                              "BLACK_INCLUSION",
-                                              "OPEN_TABLE",
-                                              "MILKEY",
-                                              "WHITE_INCLUSION_CROWN",
-                                              "OPEN_CROWN",
-                                              "EYECLEAN",
-                                              "OPEN_PAVILION",
-                                              "ORIGIN",
-                                              "BLACK_INCLUSION_CROWN",
-                                              "H_AND_A",
-                                              "WHITE_INCLUSION_TABLE",
-                                              "FANCY_COLOR",
-                                              "INTENSITY",
-                                              "OVERTONE",
-                                              "KEY_TO_SYMBOLS",
-                                              "GIRDLE",
-                                              "CULET",
-                                              "GIRDLE_COND",
-                                              "CULET_COND",
-                                              "COMPANY_SIZE",
-                                              "BLACK_INCLUSION_TABLE",
-                                              "BLACK_INCLUSION_SIDE",
-                                              "WHITE_INCLUSION_SIDE",
-                                              "BRILLIANCY",
-                                              "EYECLEAN",
-                                              "DAY_TERM",
-                                              "CURRENCY",
-                                              "COMPANY_GROUP",
-                                              "BLOCK_STAGE",
-                                              "NATURE_OF_ORG",
-                                              "BUSINESS_TYPE",
-                                              "DOC_TYPE_PERSONAL",
-                                              "DOC_TYPE_BUSINESS",
-                                              "MIX_TINT",
-                                              "NATURAL",
-                                              "OPEN_INCLUSION"
-                                            ];
+//                                            req["masters"] = [
+//                                              "COLOR",
+//                                              "CLARITY",
+//                                              "SHAPE",
+//                                              "CUT",
+//                                              "FLUORESCENCE",
+//                                              "SHADE",
+//                                              "LAB",
+//                                              "POLISH",
+//                                              "SYMMETRY",
+//                                              "LOCATION",
+//                                              "BLACK_INCLUSION",
+//                                              "OPEN_TABLE",
+//                                              "MILKEY",
+//                                              "WHITE_INCLUSION_CROWN",
+//                                              "OPEN_CROWN",
+//                                              "EYECLEAN",
+//                                              "OPEN_PAVILION",
+//                                              "ORIGIN",
+//                                              "BLACK_INCLUSION_CROWN",
+//                                              "H_AND_A",
+//                                              "WHITE_INCLUSION_TABLE",
+//                                              "FANCY_COLOR",
+//                                              "INTENSITY",
+//                                              "OVERTONE",
+//                                              "KEY_TO_SYMBOLS",
+//                                              "GIRDLE",
+//                                              "CULET",
+//                                              "GIRDLE_COND",
+//                                              "CULET_COND",
+//                                              "COMPANY_SIZE",
+//                                              "BLACK_INCLUSION_TABLE",
+//                                              "BLACK_INCLUSION_SIDE",
+//                                              "WHITE_INCLUSION_SIDE",
+//                                              "BRILLIANCY",
+//                                              "EYECLEAN",
+//                                              "DAY_TERM",
+//                                              "CURRENCY",
+//                                              "COMPANY_GROUP",
+//                                              "BLOCK_STAGE",
+//                                              "NATURE_OF_ORG",
+//                                              "BUSINESS_TYPE",
+//                                              "DOC_TYPE_PERSONAL",
+//                                              "DOC_TYPE_BUSINESS",
+//                                              "MIX_TINT",
+//                                              "NATURAL",
+//                                              "OPEN_INCLUSION"
+//                                            ];
                                             callLoginApi(context, req);
                                           } else {
                                             setState(() {
@@ -632,12 +632,17 @@ class LoginScreenState extends StatefulScreenWidgetState {
             () => app.resolve<ServiceModule>().networkService().login(req),
             context,
             isProgress: true)
-        .then((loginResp) {
-      app.resolve<PrefUtils>().saveUser(loginResp.data.user);
-      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+        .then((loginResp) async{
+//      app.resolve<PrefUtils>().saveUser(loginResp.data.user);
+//      if (loginResp.data.userPermissions != null) {
+//        await app.resolve<PrefUtils>().saveUserPermission(
+//          loginResp.data.userPermissions,
+//        );
+//      }
+//      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
 
 //      saveUserResponse(loginResp);
-//      navigateToPopUpBox(context, loginResp);
+      navigateToPopUpBox(context, loginResp);
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(

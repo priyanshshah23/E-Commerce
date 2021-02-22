@@ -115,18 +115,25 @@ class InDt {
 }
 
 class DiamondListResp extends BaseApiResp {
-  Data data;
+  List<Data> data;
 
   DiamondListResp({this.data});
 
   DiamondListResp.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    if (json['data'] != null) {
+      data = new List<Data>();
+      json['data'].forEach((v) {
+        data.add(new Data.fromJson(v));
+      });
+    }
+    // data = json['data'] != null ? new Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      //  data['data'] = this.data.toJson();
+      data['data'] = this.data.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -291,15 +298,22 @@ class SearchData {
   bool isDeleted;
 
   // List<String> wSts;
-  bool isSearchVisible;
+//  List<bool> isSearchVisible;
 
-  SearchData({this.pktType, this.isDeleted, this.isSearchVisible});
+  // bool isSearchVisible;
+
+  SearchData({
+    this.pktType,
+    this.isDeleted,
+//    this.isSearchVisible,
+  });
 
   SearchData.fromJson(Map<String, dynamic> json) {
     pktType = json['pktType'];
     isDeleted = json['isDeleted'];
     // wSts = json['wSts'].cast<String>();
-    isSearchVisible = json['isSearchVisible'];
+//    isSearchVisible = json['isSearchVisible'].cast<bool>();
+    // isSearchVisible = json['isSearchVisible'];
   }
 
   Map<String, dynamic> toJson() {
@@ -307,7 +321,7 @@ class SearchData {
     data['pktType'] = this.pktType;
     data['isDeleted'] = this.isDeleted;
     // data['wSts'] = this.wSts;
-    data['isSearchVisible'] = this.isSearchVisible;
+//    data['isSearchVisible'] = this.isSearchVisible;
     return data;
   }
 }

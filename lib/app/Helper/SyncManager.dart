@@ -150,7 +150,7 @@ class SyncManager {
     Map<String, dynamic> dict = {};
     dict["isNotReturnTotal"] = true;
     dict["isReturnCountOnly"] = true;
-    dict["filters"] = req;
+    dict["filters"] = [req];
 
     if (!isNullEmptyOrFalse(searchText)) {
       dict["search"] = searchText;
