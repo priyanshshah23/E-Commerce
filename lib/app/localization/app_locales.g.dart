@@ -55,6 +55,8 @@ class English {
 }
 
 class AuthStrings {
+  String sendEmailForForgetPassword =
+      "We will send an email to your entered email address. Please enter the email address.";
   String editCompanyInformation = "Edit Company Information";
   String selectNatureOfOrganization = "Select Nature Of Organization";
   String setNewPassword = "Set your new password and sign in again.";
@@ -168,8 +170,6 @@ class AuthStrings {
   String didNotReceiveOTP = "If you didn't receive an OTP!";
   String sendOTPToEmail =
       "We will send an OTP to your entered email address or user name. Please enter the email address or user name.";
-  String sendEmailForForgetPassword =
-      "We will send an email to your entered email address. Please enter the email address.";
   String enterOTP =
       "The OTP has been sent to your registered Email address. Please enter the OTP.";
   String backToSignIn = "Back to Sign In";
@@ -755,7 +755,7 @@ class ScreenTitle {
 
 class Dynamickeys {
   String shape = "Shape";
-  String caratRange = "Carat Range";
+  String caratRange = "Carat";
   String basicDetail = "Basic Details";
   String measurementTitle = "Measurements";
   String inclusionDetail = "Inclusion Details";
@@ -763,11 +763,11 @@ class Dynamickeys {
   String stoneID = "Stone ID";
   String labTitle = "Lab";
   String certNo = "CERT. NO.";
-  String locationTitle = "LOCATION";
+  String locationTitle = "Location";
   String shapeTitle = "Shape";
   String caratTitle = "Carat";
   String colorTitle = "Color";
-  String clarityTitle = "CLARITY";
+  String clarityTitle = "Clarity";
   String cutTitle = "Cut";
   String polishTitle = "Polish";
   String symmentryTitle = "Symmentry";
@@ -777,9 +777,9 @@ class Dynamickeys {
   String priceAndCt = "Price/Ct";
   String amountTitle = "Amount";
   String eyeCleanTitle = "Eye Clean";
-  String brownTitle = "BROWN";
+  String brownTitle = "Brown";
   String milkyTitle = "Milky";
-  String mixTingeTitle = "MIX TINGE";
+  String mixTingeTitle = "Mix Tinge";
   String dimensionTitle = "DIMENSIONS  (MM)";
   String girdleTitle = "GIRDLE (%)";
   String tableTitle = "Table %";
@@ -791,18 +791,18 @@ class Dynamickeys {
   String starLengthTitle = "Star Length";
   String lowerHalfTitle = "Lower Half";
   String gridleTitle = "Girdle";
-  String gridleFacetedTitle = "GIRDLE FACETED";
+  String gridleFacetedTitle = "Gridle Faceted";
   String culetTitle = "Culet";
   String rationTitle = "Ratio";
-  String blackInclusionTitle = "BLACK INCLUSION";
+  String blackInclusionTitle = "Black Inclusion";
   String otherInclusionTitle = "Other Inclusion";
-  String openInclusionTitle = "OPEN INCLUSION";
-  String extraFacetTitle = "EXTRA FACET";
+  String openInclusionTitle = "Open Inclusion";
+  String extraFacetTitle = "Extra Facet";
   String naturalTitle = "Natural";
   String hAndATitle = "H & A";
-  String keyToSymbol = "KEY TO SYMBOL";
-  String labComments = "LAB COMMENTS";
-  String laserInsTitle = "LASER INS";
+  String keyToSymbol = "Key To Symbol";
+  String labComments = "Lab Comments";
+  String laserInsTitle = "Laser Ins";
   String basicTitle = "Basic";
   String advancedTitle = "Advanced";
   String stoneIdTitle = "Stone ID/Cert No";
@@ -832,7 +832,7 @@ class Dynamickeys {
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
     "shape": "Shape",
-    "caratRange": "Carat Range",
+    "caratRange": "Carat",
     "basicDetail": "Basic Details",
     "measurementTitle": "Measurements",
     "inclusionDetail": "Inclusion Details",
@@ -840,11 +840,11 @@ class Dynamickeys {
     "stoneID": "Stone ID",
     "labTitle": "Lab",
     "certNo": "CERT. NO.",
-    "locationTitle": "LOCATION",
+    "locationTitle": "Location",
     "shapeTitle": "Shape",
     "caratTitle": "Carat",
     "colorTitle": "Color",
-    "clarityTitle": "CLARITY",
+    "clarityTitle": "Clarity",
     "cutTitle": "Cut",
     "polishTitle": "Polish",
     "symmentryTitle": "Symmentry",
@@ -854,9 +854,9 @@ class Dynamickeys {
     "priceAndCt": "Price/Ct",
     "amountTitle": "Amount",
     "eyeCleanTitle": "Eye Clean",
-    "brownTitle": "BROWN",
+    "brownTitle": "Brown",
     "milkyTitle": "Milky",
-    "mixTingeTitle": "MIX TINGE",
+    "mixTingeTitle": "Mix Tinge",
     "dimensionTitle": "DIMENSIONS  (MM)",
     "girdleTitle": "GIRDLE (%)",
     "tableTitle": "Table %",
@@ -868,18 +868,18 @@ class Dynamickeys {
     "starLengthTitle": "Star Length",
     "lowerHalfTitle": "Lower Half",
     "gridleTitle": "Girdle",
-    "gridleFacetedTitle": "GIRDLE FACETED",
+    "gridleFacetedTitle": "Gridle Faceted",
     "culetTitle": "Culet",
     "rationTitle": "Ratio",
-    "blackInclusionTitle": "BLACK INCLUSION",
+    "blackInclusionTitle": "Black Inclusion",
     "otherInclusionTitle": "Other Inclusion",
-    "openInclusionTitle": "OPEN INCLUSION",
-    "extraFacetTitle": "EXTRA FACET",
+    "openInclusionTitle": "Open Inclusion",
+    "extraFacetTitle": "Extra Facet",
     "naturalTitle": "Natural",
     "hAndATitle": "H & A",
-    "keyToSymbol": "KEY TO SYMBOL",
-    "labComments": "LAB COMMENTS",
-    "laserInsTitle": "LASER INS",
+    "keyToSymbol": "Key To Symbol",
+    "labComments": "Lab Comments",
+    "laserInsTitle": "Laser Ins",
     "basicTitle": "Basic",
     "advancedTitle": "Advanced",
     "stoneIdTitle": "Stone ID/Cert No",
