@@ -55,6 +55,8 @@ class English {
 }
 
 class AuthStrings {
+  String sendEmailForForgetPassword =
+      "We will send an email to your entered email address. Please enter the email address.";
   String editCompanyInformation = "Edit Company Information";
   String selectNatureOfOrganization = "Select Nature Of Organization";
   String setNewPassword = "Set your new password and sign in again.";
@@ -761,11 +763,11 @@ class Dynamickeys {
   String stoneID = "Stone ID";
   String labTitle = "Lab";
   String certNo = "CERT. NO.";
-  String locationTitle = "LOCATION";
+  String locationTitle = "Location";
   String shapeTitle = "Shape";
   String caratTitle = "Carat";
   String colorTitle = "Color";
-  String clarityTitle = "CLARITY";
+  String clarityTitle = "Clarity";
   String cutTitle = "Cut";
   String polishTitle = "Polish";
   String symmentryTitle = "Symmentry";
@@ -775,9 +777,9 @@ class Dynamickeys {
   String priceAndCt = "Price/Ct";
   String amountTitle = "Amount";
   String eyeCleanTitle = "Eye Clean";
-  String brownTitle = "BROWN";
+  String brownTitle = "Brown";
   String milkyTitle = "Milky";
-  String mixTingeTitle = "MIX TINGE";
+  String mixTingeTitle = "Mix Tinge";
   String dimensionTitle = "DIMENSIONS  (MM)";
   String girdleTitle = "GIRDLE (%)";
   String tableTitle = "Table %";
@@ -838,11 +840,11 @@ class Dynamickeys {
     "stoneID": "Stone ID",
     "labTitle": "Lab",
     "certNo": "CERT. NO.",
-    "locationTitle": "LOCATION",
+    "locationTitle": "Location",
     "shapeTitle": "Shape",
     "caratTitle": "Carat",
     "colorTitle": "Color",
-    "clarityTitle": "CLARITY",
+    "clarityTitle": "Clarity",
     "cutTitle": "Cut",
     "polishTitle": "Polish",
     "symmentryTitle": "Symmentry",
@@ -852,9 +854,9 @@ class Dynamickeys {
     "priceAndCt": "Price/Ct",
     "amountTitle": "Amount",
     "eyeCleanTitle": "Eye Clean",
-    "brownTitle": "BROWN",
+    "brownTitle": "Brown",
     "milkyTitle": "Milky",
-    "mixTingeTitle": "MIX TINGE",
+    "mixTingeTitle": "Mix Tinge",
     "dimensionTitle": "DIMENSIONS  (MM)",
     "girdleTitle": "GIRDLE (%)",
     "tableTitle": "Table %",
