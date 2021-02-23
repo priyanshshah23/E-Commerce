@@ -1583,8 +1583,8 @@ class DiamondConfig {
 
     for (var item in list) {
       var dict = Map<String, dynamic>();
-      dict["id"] = [item.memoNo];
-      dict["diamonds"] = item.id;
+      dict["id"] = item.memoNo;
+      dict["diamonds"] = [item.id];
       arr.add(dict);
     }
     req["schedule"] = arr;
