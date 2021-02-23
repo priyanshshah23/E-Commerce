@@ -1,13 +1,17 @@
-class Data {
+
+
+class CompanyListData {
   List<CompanyModel> list;
   int count;
 
-  Data({this.list, this.count});
+  CompanyListData({this.list, this.count});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  CompanyListData.fromJson(Map<String, dynamic> json) {
     if (json['list'] != null) {
       list = new List<CompanyModel>();
-      json['list'].forEach((v) { list.add(new CompanyModel.fromJson(v)); });
+      json['list'].forEach((v) {
+        list.add(new CompanyModel.fromJson(v));
+      });
     }
     count = json['count'];
   }
@@ -26,6 +30,9 @@ class CompanyModel {
   String createdAt;
   String updatedAt;
   String id;
+  String firstName;
+  String lastName;
+  String middleName;
   String stockCategory;
   String vendorLogo;
   String vendorCode;
@@ -50,7 +57,7 @@ class CompanyModel {
   String street;
   String area;
   String zipCode;
-  List<String> emails;
+//  List<String> emails;
   String website;
   List<String> faxes;
   String phones;
@@ -82,7 +89,7 @@ class CompanyModel {
   Null connectedSockets;
   String updateIp;
   String createIp;
-  int isApproved;
+//  int isApproved;
   bool isKycUploaded;
   String founded;
   String companySize;
@@ -130,12 +137,121 @@ class CompanyModel {
   bool isSyncAccount;
   bool isDefault;
 
-  CompanyModel({this.createdAt, this.updatedAt, this.id, this.stockCategory, this.vendorLogo, this.vendorCode, this.vendorNormalizeCode, this.vendorNo, this.prefix, this.gender, this.profileImage, this.code, this.displayName, this.companyName, this.companyNormalizeName, this.companyType, this.ledgerType, this.normalizeName, this.accountType, this.dateOfJoin, this.dateOfAnniversary, this.addressType, this.address, this.landMark, this.street, this.area, this.zipCode, this.emails, this.website, this.faxes, this.phones, this.mobiles, this.bank, this.social, this.defaultNarration, this.orderEmail, this.newStoneEmail, this.newsEventEmail, this.noOfEmployee, this.contactSource, this.dateOfBirth, this.accountName, this.isSubscribeForNewGoodFavourite, this.isSubscribeForNewGoodPurchase, this.isSubscribeForNotification, this.gstNo, this.verifyBy, this.verifyDate, this.designation, this.howKnow, this.referenceFrom, this.isDeleted, this.isActive, this.androidPlayerId, this.iosPlayerId, this.status, this.connectedSockets, this.updateIp, this.createIp, this.isApproved, this.isKycUploaded, this.founded, this.companySize, this.videoUrl, this.about, this.showPublicly, this.coverImage, this.isVerified, this.group, this.contactEmail, this.contactMobile, this.name, this.natureOfOrg, this.kyc, this.lastLoginDate, this.addedBy, this.updatedBy, this.broker, this.grpCompany, this.departmentHead, this.department, this.country, this.state, this.city, this.seller, this.businessType, this.createdBy, this.user, this.hasBroker, this.brokerInfo, this.registrationType, this.panNo, this.specialties, this.accountTerm, this.references, this.syncId, this.syncExtra, this.isFm, this.approvedBy, this.companyId, this.deptId, this.approvedAt, this.businessId, this.isSpam, this.isSyncAccount, this.isDefault});
+  CompanyModel({
+    this.createdAt,
+    this.updatedAt,
+    this.id,
+    this.stockCategory,
+    this.vendorLogo,
+    this.vendorCode,
+    this.vendorNormalizeCode,
+    this.vendorNo,
+    this.prefix,
+    this.gender,
+    this.profileImage,
+    this.code,
+    this.displayName,
+    this.companyName,
+    this.companyNormalizeName,
+    this.companyType,
+    this.ledgerType,
+    this.normalizeName,
+    this.accountType,
+    this.dateOfJoin,
+    this.dateOfAnniversary,
+    this.addressType,
+    this.address,
+    this.landMark,
+    this.street,
+    this.area,
+    this.zipCode,
+//    this.emails,
+    this.website,
+    this.faxes,
+    this.phones,
+    this.mobiles,
+    this.bank,
+    this.social,
+    this.defaultNarration,
+    this.orderEmail,
+    this.newStoneEmail,
+    this.newsEventEmail,
+    this.noOfEmployee,
+    this.contactSource,
+    this.dateOfBirth,
+    this.accountName,
+    this.isSubscribeForNewGoodFavourite,
+    this.isSubscribeForNewGoodPurchase,
+    this.isSubscribeForNotification,
+    this.gstNo,
+    this.verifyBy,
+    this.verifyDate,
+    this.designation,
+    this.howKnow,
+    this.referenceFrom,
+    this.isDeleted,
+    this.isActive,
+    this.androidPlayerId,
+    this.iosPlayerId,
+    this.status,
+    this.connectedSockets,
+    this.updateIp,
+    this.createIp,
+//    this.isApproved,
+    this.isKycUploaded,
+    this.founded,
+    this.companySize,
+    this.videoUrl,
+    this.about,
+    this.showPublicly,
+    this.coverImage,
+    this.isVerified,
+    this.group,
+    this.contactEmail,
+    this.contactMobile,
+    this.name,
+    this.natureOfOrg,
+    this.kyc,
+    this.lastLoginDate,
+    this.addedBy,
+    this.updatedBy,
+    this.broker,
+    this.grpCompany,
+    this.departmentHead,
+    this.department,
+    this.country,
+    this.state,
+    this.city,
+    this.seller,
+    this.businessType,
+    this.createdBy,
+    this.user,
+    this.hasBroker,
+    this.brokerInfo,
+    this.registrationType,
+    this.panNo,
+    this.specialties,
+    this.accountTerm,
+    this.references,
+    this.syncId,
+    this.syncExtra,
+    this.isFm,
+    this.approvedBy,
+    this.companyId,
+    this.deptId,
+    this.approvedAt,
+    this.businessId,
+    this.isSpam,
+    this.isSyncAccount,
+    this.isDefault,
+  });
 
   CompanyModel.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     id = json['id'];
+    firstName = json['firstName']!=null?json['firstName']:json['companyName'];
+    lastName =  json['lastName']!=null?json['lastName']:"";
     stockCategory = json['stockCategory'];
     vendorLogo = json['vendorLogo'];
     vendorCode = json['vendorCode'];
@@ -155,21 +271,20 @@ class CompanyModel {
     dateOfJoin = json['dateOfJoin'];
     dateOfAnniversary = json['dateOfAnniversary'];
     addressType = json['addressType'];
-    address = json['address'];
     landMark = json['landMark'];
     street = json['street'];
     area = json['area'];
     zipCode = json['zipCode'];
-    emails = json['emails'].cast<String>();
     website = json['Website'];
-    faxes = json['faxes'].cast<String>();
     phones = json['phones'];
-    mobiles = json['mobiles'].cast<String>();
     if (json['bank'] != null) {
       bank = new List<Bank>();
-      json['bank'].forEach((v) { bank.add(new Bank.fromJson(v)); });
+      json['bank'].forEach((v) {
+        bank.add(new Bank.fromJson(v));
+      });
     }
-    social = json['social'] != null ? new Social.fromJson(json['social']) : null;
+    social =
+        json['social'] != null ? new Social.fromJson(json['social']) : null;
     defaultNarration = json['defaultNarration'];
     orderEmail = json['orderEmail'];
     newStoneEmail = json['newStoneEmail'];
@@ -190,65 +305,54 @@ class CompanyModel {
     isDeleted = json['isDeleted'];
     isActive = json['isActive'];
     androidPlayerId = json['androidPlayerId'];
-    iosPlayerId = json['iosPlayerId'];
     status = json['status'];
     connectedSockets = json['connectedSockets'];
     updateIp = json['updateIp'];
     createIp = json['createIp'];
-    isApproved = json['isApproved'];
+//    isApproved = json['isApproved'];
     isKycUploaded = json['isKycUploaded'];
     founded = json['founded'];
     companySize = json['companySize'];
     videoUrl = json['videoUrl'];
     about = json['about'];
-    showPublicly = json['showPublicly'];
-    coverImage = json['coverImage'];
-    isVerified = json['isVerified'];
-    if (json['group'] != null) {
-      group = new List<Group>();
-      json['group'].forEach((v) { group.add(new Group.fromJson(v)); });
-    }
+  isVerified = json['isVerified'];
     contactEmail = json['contactEmail'];
     contactMobile = json['contactMobile'];
     name = json['name'];
-    natureOfOrg = json['natureOfOrg'].cast<String>();
-    if (json['kyc'] != null) {
-      kyc = new List<Kyc>();
-      json['kyc'].forEach((v) { kyc.add(new Kyc.fromJson(v)); });
-    }
-    lastLoginDate = json['lastLoginDate'];
     addedBy = json['addedBy'];
     updatedBy = json['updatedBy'];
-    broker = json['broker'] != null ? new Broker.fromJson(json['broker']) : null;
+    broker =
+        json['broker'] != null ? new Broker.fromJson(json['broker']) : null;
     grpCompany = json['grpCompany'];
     departmentHead = json['departmentHead'];
     department = json['department'];
     country = json['country'];
     state = json['state'];
     city = json['city'];
-    seller = json['seller'] != null ? new Seller.fromJson(json['seller']) : null;
+    seller =
+        json['seller'] != null ? new Seller.fromJson(json['seller']) : null;
     businessType = json['businessType'];
     createdBy = json['createdBy'];
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+//    user = json['user'] != null ? new User.fromJson(json['user']) : null;
     hasBroker = json['hasBroker'];
-    brokerInfo = json['brokerInfo'] != null ? new BrokerInfo.fromJson(json['brokerInfo']) : null;
+    brokerInfo = json['brokerInfo'] != null
+        ? new BrokerInfo.fromJson(json['brokerInfo'])
+        : null;
     registrationType = json['registrationType'];
     panNo = json['panNo'];
     specialties = json['specialties'];
     accountTerm = json['accountTerm'];
     if (json['references'] != null) {
       references = new List<References>();
-      json['references'].forEach((v) { references.add(new References.fromJson(v)); });
+      json['references'].forEach((v) {
+        references.add(new References.fromJson(v));
+      });
     }
     syncId = json['syncId'];
-    syncExtra = json['syncExtra'];
-    isFm = json['isFm'];
-    approvedBy = json['approvedBy'];
     companyId = json['companyId'];
     deptId = json['deptId'];
     approvedAt = json['approvedAt'];
     businessId = json['businessId'];
-    isSpam = json['isSpam'];
     isSyncAccount = json['isSyncAccount'];
     isDefault = json['isDefault'];
   }
@@ -282,7 +386,7 @@ class CompanyModel {
     data['street'] = this.street;
     data['area'] = this.area;
     data['zipCode'] = this.zipCode;
-    data['emails'] = this.emails;
+//    data['emails'] = this.emails;
     data['Website'] = this.website;
     data['faxes'] = this.faxes;
     data['phones'] = this.phones;
@@ -301,7 +405,8 @@ class CompanyModel {
     data['contactSource'] = this.contactSource;
     data['dateOfBirth'] = this.dateOfBirth;
     data['accountName'] = this.accountName;
-    data['isSubscribeForNewGoodFavourite'] = this.isSubscribeForNewGoodFavourite;
+    data['isSubscribeForNewGoodFavourite'] =
+        this.isSubscribeForNewGoodFavourite;
     data['isSubscribeForNewGoodPurchase'] = this.isSubscribeForNewGoodPurchase;
     data['isSubscribeForNotification'] = this.isSubscribeForNotification;
     data['gstNo'] = this.gstNo;
@@ -318,7 +423,7 @@ class CompanyModel {
     data['connectedSockets'] = this.connectedSockets;
     data['updateIp'] = this.updateIp;
     data['createIp'] = this.createIp;
-    data['isApproved'] = this.isApproved;
+//    data['isApproved'] = this.isApproved;
     data['isKycUploaded'] = this.isKycUploaded;
     data['founded'] = this.founded;
     data['companySize'] = this.companySize;
@@ -393,7 +498,15 @@ class Bank {
   String ifsc;
   String swiftCode;
 
-  Bank({this.bankName, this.branchName, this.currency, this.account, this.acNo, this.acType, this.ifsc, this.swiftCode});
+  Bank(
+      {this.bankName,
+      this.branchName,
+      this.currency,
+      this.account,
+      this.acNo,
+      this.acType,
+      this.ifsc,
+      this.swiftCode});
 
   Bank.fromJson(Map<String, dynamic> json) {
     bankName = json['bankName'];
@@ -589,7 +702,108 @@ class Broker {
   Null deptId;
   String user;
 
-  Broker({this.createdAt, this.updatedAt, this.id, this.stockCategory, this.vendorLogo, this.vendorCode, this.vendorNormalizeCode, this.vendorNo, this.prefix, this.gender, this.profileImage, this.code, this.displayName, this.companyName, this.companyNormalizeName, this.companyType, this.ledgerType, this.normalizeName, this.accountType, this.hasBroker, this.brokerInfo, this.registrationType, this.dateOfJoin, this.dateOfAnniversary, this.addressType, this.address, this.landMark, this.street, this.area, this.zipCode, this.emails, this.website, this.faxes, this.phones, this.mobiles, this.bank, this.social, this.defaultNarration, this.orderEmail, this.newStoneEmail, this.newsEventEmail, this.noOfEmployee, this.contactSource, this.dateOfBirth, this.accountName, this.isSubscribeForNewGoodFavourite, this.isSubscribeForNewGoodPurchase, this.isSubscribeForNotification, this.gstNo, this.panNo, this.verifyBy, this.verifyDate, this.designation, this.howKnow, this.referenceFrom, this.isDeleted, this.isActive, this.androidPlayerId, this.iosPlayerId, this.status, this.connectedSockets, this.updateIp, this.createIp, this.approvedAt, this.isApproved, this.isKycUploaded, this.founded, this.specialties, this.companySize, this.videoUrl, this.about, this.showPublicly, this.coverImage, this.isVerified, this.group, this.references, this.contactEmail, this.contactMobile, this.name, this.syncId, this.syncExtra, this.isFm, this.natureOfOrg, this.kyc, this.addedBy, this.updatedBy, this.broker, this.grpCompany, this.departmentHead, this.department, this.country, this.state, this.city, this.seller, this.businessType, this.createdBy, this.accountTerm, this.approvedBy, this.companyId, this.deptId, this.user});
+  Broker(
+      {this.createdAt,
+      this.updatedAt,
+      this.id,
+      this.stockCategory,
+      this.vendorLogo,
+      this.vendorCode,
+      this.vendorNormalizeCode,
+      this.vendorNo,
+      this.prefix,
+      this.gender,
+      this.profileImage,
+      this.code,
+      this.displayName,
+      this.companyName,
+      this.companyNormalizeName,
+      this.companyType,
+      this.ledgerType,
+      this.normalizeName,
+      this.accountType,
+      this.hasBroker,
+      this.brokerInfo,
+      this.registrationType,
+      this.dateOfJoin,
+      this.dateOfAnniversary,
+      this.addressType,
+      this.address,
+      this.landMark,
+      this.street,
+      this.area,
+      this.zipCode,
+      this.emails,
+      this.website,
+      this.faxes,
+      this.phones,
+      this.mobiles,
+      this.bank,
+      this.social,
+      this.defaultNarration,
+      this.orderEmail,
+      this.newStoneEmail,
+      this.newsEventEmail,
+      this.noOfEmployee,
+      this.contactSource,
+      this.dateOfBirth,
+      this.accountName,
+      this.isSubscribeForNewGoodFavourite,
+      this.isSubscribeForNewGoodPurchase,
+      this.isSubscribeForNotification,
+      this.gstNo,
+      this.panNo,
+      this.verifyBy,
+      this.verifyDate,
+      this.designation,
+      this.howKnow,
+      this.referenceFrom,
+      this.isDeleted,
+      this.isActive,
+      this.androidPlayerId,
+      this.iosPlayerId,
+      this.status,
+      this.connectedSockets,
+      this.updateIp,
+      this.createIp,
+      this.approvedAt,
+      this.isApproved,
+      this.isKycUploaded,
+      this.founded,
+      this.specialties,
+      this.companySize,
+      this.videoUrl,
+      this.about,
+      this.showPublicly,
+      this.coverImage,
+      this.isVerified,
+      this.group,
+      this.references,
+      this.contactEmail,
+      this.contactMobile,
+      this.name,
+      this.syncId,
+      this.syncExtra,
+      this.isFm,
+      this.natureOfOrg,
+      this.kyc,
+      this.addedBy,
+      this.updatedBy,
+      this.broker,
+      this.grpCompany,
+      this.departmentHead,
+      this.department,
+      this.country,
+      this.state,
+      this.city,
+      this.seller,
+      this.businessType,
+      this.createdBy,
+      this.accountTerm,
+      this.approvedBy,
+      this.companyId,
+      this.deptId,
+      this.user});
 
   Broker.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
@@ -612,7 +826,9 @@ class Broker {
     normalizeName = json['normalizeName'];
     accountType = json['accountType'];
     hasBroker = json['hasBroker'];
-    brokerInfo = json['brokerInfo'] != null ? new BrokerInfo.fromJson(json['brokerInfo']) : null;
+    brokerInfo = json['brokerInfo'] != null
+        ? new BrokerInfo.fromJson(json['brokerInfo'])
+        : null;
     registrationType = json['registrationType'];
     dateOfJoin = json['dateOfJoin'];
     dateOfAnniversary = json['dateOfAnniversary'];
@@ -622,14 +838,16 @@ class Broker {
     street = json['street'];
     area = json['area'];
     zipCode = json['zipCode'];
-    emails = json['emails'].cast<String>();
+//    emails = json['emails'].cast<String>();
     website = json['Website'];
-    faxes = json['faxes'].cast<String>();
+//    faxes = json['faxes'].cast<String>();
     phones = json['phones'];
-    mobiles = json['mobiles'].cast<String>();
+//    mobiles = json['mobiles'].cast<String>();
     if (json['bank'] != null) {
       bank = new List<Bank>();
-      json['bank'].forEach((v) { bank.add(new Bank.fromJson(v)); });
+      json['bank'].forEach((v) {
+        bank.add(new Bank.fromJson(v));
+      });
     }
     social = json['social'];
     defaultNarration = json['defaultNarration'];
@@ -659,7 +877,7 @@ class Broker {
     updateIp = json['updateIp'];
     createIp = json['createIp'];
     approvedAt = json['approvedAt'];
-    isApproved = json['isApproved'];
+//    isApproved = json['isApproved'];
     isKycUploaded = json['isKycUploaded'];
     founded = json['founded'];
     specialties = json['specialties'];
@@ -671,11 +889,15 @@ class Broker {
     isVerified = json['isVerified'];
     if (json['group'] != null) {
       group = new List<Group>();
-      json['group'].forEach((v) { group.add(new Group.fromJson(v)); });
+      json['group'].forEach((v) {
+        group.add(new Group.fromJson(v));
+      });
     }
     if (json['references'] != null) {
       references = new List<References>();
-      json['references'].forEach((v) { references.add(new References.fromJson(v)); });
+      json['references'].forEach((v) {
+        references.add(new References.fromJson(v));
+      });
     }
     contactEmail = json['contactEmail'];
     contactMobile = json['contactMobile'];
@@ -683,10 +905,12 @@ class Broker {
     syncId = json['syncId'];
     syncExtra = json['syncExtra'];
     isFm = json['isFm'];
-    natureOfOrg = json['natureOfOrg'].cast<String>();
+//    natureOfOrg = json['natureOfOrg'].cast<String>();
     if (json['kyc'] != null) {
       kyc = new List<Kyc>();
-      json['kyc'].forEach((v) { kyc.add(new Kyc.fromJson(v)); });
+      json['kyc'].forEach((v) {
+        kyc.add(new Kyc.fromJson(v));
+      });
     }
     addedBy = json['addedBy'];
     updatedBy = json['updatedBy'];
@@ -758,7 +982,8 @@ class Broker {
     data['contactSource'] = this.contactSource;
     data['dateOfBirth'] = this.dateOfBirth;
     data['accountName'] = this.accountName;
-    data['isSubscribeForNewGoodFavourite'] = this.isSubscribeForNewGoodFavourite;
+    data['isSubscribeForNewGoodFavourite'] =
+        this.isSubscribeForNewGoodFavourite;
     data['isSubscribeForNewGoodPurchase'] = this.isSubscribeForNewGoodPurchase;
     data['isSubscribeForNotification'] = this.isSubscribeForNotification;
     data['gstNo'] = this.gstNo;
@@ -919,6 +1144,7 @@ class Seller {
   String createIp;
   BrokerInfo loggedInSession;
   String updatedBy;
+
 //  Null account;
 //  Null accountTerm;
 //  Null defaultFilter;
@@ -952,7 +1178,91 @@ class Seller {
   bool isMpinAdded;
   Null resetmPinLink;
 
-  Seller({this.updatedAt, this.id, this.firstName, this.lastName, this.name, this.address, this.otpNumber, this.username, this.email, this.mobile, this.type, this.isEmailVerified, this.isVerified, this.status, this.syncExtra, this.designation, this.pinCode, this.roles, this.failedAttempts, this.noKycLogInAttempts, this.state, this.country, this.createdAt, this.companyName, this.companyAddress, this.spaceCodeIp, this.hostName, this.macAddress, this.toAuthenticate, this.isDeleted, this.isActive, this.setting, this.androidPlayerId, this.iosPlayerId, this.connectedSockets, this.termsDiscount, this.resetPasswordLink, this.apiTokens, this.anniversary, this.businessId, this.businessType, this.countryCode, this.device, this.dob, this.fax, this.gender, this.howKnow, this.phone, this.photoId, this.reference, this.updateRequired, this.isIntoHide, this.updateIp, this.createIp, this.loggedInSession, this.updatedBy, this.createdBy, this.vendorNo, this.middleName, this.isOtpVerified, this.roleType, this.emailHash, this.dateOfJoin, this.clientSecret, this.profileImage, this.whatsapp, this.whatsappCounCode, this.skype, this.wechat, this.token, this.version, this.isTermsCondAgree, this.termsCondAgreeAt, this.termsCondHistory, this.loginOtp, this.group, this.sendPromotions, this.addedBy, this.seller, this.companyId, this.deptId, this.mPin, this.isMpinAdded, this.resetmPinLink});
+  Seller(
+      {this.updatedAt,
+      this.id,
+      this.firstName,
+      this.lastName,
+      this.name,
+      this.address,
+      this.otpNumber,
+      this.username,
+      this.email,
+      this.mobile,
+      this.type,
+      this.isEmailVerified,
+      this.isVerified,
+      this.status,
+      this.syncExtra,
+      this.designation,
+      this.pinCode,
+      this.roles,
+      this.failedAttempts,
+      this.noKycLogInAttempts,
+      this.state,
+      this.country,
+      this.createdAt,
+      this.companyName,
+      this.companyAddress,
+      this.spaceCodeIp,
+      this.hostName,
+      this.macAddress,
+      this.toAuthenticate,
+      this.isDeleted,
+      this.isActive,
+      this.setting,
+      this.androidPlayerId,
+      this.iosPlayerId,
+      this.connectedSockets,
+      this.termsDiscount,
+      this.resetPasswordLink,
+      this.apiTokens,
+      this.anniversary,
+      this.businessId,
+      this.businessType,
+      this.countryCode,
+      this.device,
+      this.dob,
+      this.fax,
+      this.gender,
+      this.howKnow,
+      this.phone,
+      this.photoId,
+      this.reference,
+      this.updateRequired,
+      this.isIntoHide,
+      this.updateIp,
+      this.createIp,
+      this.loggedInSession,
+      this.updatedBy,
+      this.createdBy,
+      this.vendorNo,
+      this.middleName,
+      this.isOtpVerified,
+      this.roleType,
+      this.emailHash,
+      this.dateOfJoin,
+      this.clientSecret,
+      this.profileImage,
+      this.whatsapp,
+      this.whatsappCounCode,
+      this.skype,
+      this.wechat,
+      this.token,
+      this.version,
+      this.isTermsCondAgree,
+      this.termsCondAgreeAt,
+      this.termsCondHistory,
+      this.loginOtp,
+      this.group,
+      this.sendPromotions,
+      this.addedBy,
+      this.seller,
+      this.companyId,
+      this.deptId,
+      this.mPin,
+      this.isMpinAdded,
+      this.resetmPinLink});
 
   Seller.fromJson(Map<String, dynamic> json) {
     updatedAt = json['updatedAt'];
@@ -969,11 +1279,15 @@ class Seller {
     isEmailVerified = json['isEmailVerified'];
     isVerified = json['isVerified'];
     status = json['status'];
-    syncExtra = json['syncExtra'] != null ? new SyncExtra.fromJson(json['syncExtra']) : null;
+    syncExtra = json['syncExtra'] != null
+        ? new SyncExtra.fromJson(json['syncExtra'])
+        : null;
     designation = json['designation'];
     pinCode = json['pinCode'];
     roles = json['roles'].cast<String>();
-    failedAttempts = json['failedAttempts'] != null ? new FailedAttempts.fromJson(json['failedAttempts']) : null;
+    failedAttempts = json['failedAttempts'] != null
+        ? new FailedAttempts.fromJson(json['failedAttempts'])
+        : null;
     noKycLogInAttempts = json['noKycLogInAttempts'];
     state = json['state'];
     country = json['country'];
@@ -986,12 +1300,15 @@ class Seller {
     toAuthenticate = json['toAuthenticate'];
     isDeleted = json['isDeleted'];
     isActive = json['isActive'];
-    setting = json['setting'] != null ? new Setting.fromJson(json['setting']) : null;
+    setting =
+        json['setting'] != null ? new Setting.fromJson(json['setting']) : null;
     androidPlayerId = json['androidPlayerId'];
     iosPlayerId = json['iosPlayerId'];
     connectedSockets = json['connectedSockets'];
     termsDiscount = json['termsDiscount'];
-    resetPasswordLink = json['resetPasswordLink'] != null ? new ResetPasswordLink.fromJson(json['resetPasswordLink']) : null;
+    resetPasswordLink = json['resetPasswordLink'] != null
+        ? new ResetPasswordLink.fromJson(json['resetPasswordLink'])
+        : null;
     apiTokens = json['apiTokens'];
     anniversary = json['anniversary'];
     businessId = json['businessId'];
@@ -1011,7 +1328,9 @@ class Seller {
     updateIp = json['updateIp'];
     createIp = json['createIp'];
 
-    loggedInSession = json['loggedInSession'] != null ? new BrokerInfo.fromJson(json['loggedInSession']) : null;
+    loggedInSession = json['loggedInSession'] != null
+        ? new BrokerInfo.fromJson(json['loggedInSession'])
+        : null;
     updatedBy = json['updatedBy'];
 //    account = json['account'];
 //    accountTerm = json['accountTerm'];
@@ -1030,7 +1349,8 @@ class Seller {
     whatsappCounCode = json['whatsappCounCode'];
     skype = json['skype'];
     wechat = json['wechat'];
-    token = json['token'] != null ? new BrokerInfo.fromJson(json['token']) : null;
+    token =
+        json['token'] != null ? new BrokerInfo.fromJson(json['token']) : null;
     version = json['version'];
     isTermsCondAgree = json['isTermsCondAgree'];
     termsCondAgreeAt = json['termsCondAgreeAt'];
@@ -1175,7 +1495,26 @@ class SyncExtra {
   Null mobileNo;
   String address1;
 
-  SyncExtra({this.middleName, this.webEmailId, this.webUserId, this.addSeq, this.address2, this.address3, this.city, this.phoneNo, this.citySeq, this.stateSeq, this.countrySeq, this.designationSeq, this.insTime, this.updTime, this.webUserName, this.country, this.emailId, this.mobileNo, this.address1});
+  SyncExtra(
+      {this.middleName,
+      this.webEmailId,
+      this.webUserId,
+      this.addSeq,
+      this.address2,
+      this.address3,
+      this.city,
+      this.phoneNo,
+      this.citySeq,
+      this.stateSeq,
+      this.countrySeq,
+      this.designationSeq,
+      this.insTime,
+      this.updTime,
+      this.webUserName,
+      this.country,
+      this.emailId,
+      this.mobileNo,
+      this.address1});
 
   SyncExtra.fromJson(Map<String, dynamic> json) {
     middleName = json['middle_name'];
@@ -1249,13 +1588,21 @@ class Setting {
   AllowedOperations allowedOperations;
   BrokerInfo luckyFilter;
 
-  Setting({this.diamondListLimit, this.offlineStockLimit, this.allowedOperations, this.luckyFilter});
+  Setting(
+      {this.diamondListLimit,
+      this.offlineStockLimit,
+      this.allowedOperations,
+      this.luckyFilter});
 
   Setting.fromJson(Map<String, dynamic> json) {
     diamondListLimit = json['diamondListLimit'];
     offlineStockLimit = json['offlineStockLimit'];
-    allowedOperations = json['allowedOperations'] != null ? new AllowedOperations.fromJson(json['allowedOperations']) : null;
-    luckyFilter = json['luckyFilter'] != null ? new BrokerInfo.fromJson(json['luckyFilter']) : null;
+    allowedOperations = json['allowedOperations'] != null
+        ? new AllowedOperations.fromJson(json['allowedOperations'])
+        : null;
+    luckyFilter = json['luckyFilter'] != null
+        ? new BrokerInfo.fromJson(json['luckyFilter'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -1319,7 +1666,17 @@ class User {
   Null accountTerm;
   String seller;
 
-  User({this.id, this.firstName, this.lastName, this.name, this.username, this.email, this.mobile, this.account, this.accountTerm, this.seller});
+  User(
+      {this.id,
+      this.firstName,
+      this.lastName,
+      this.name,
+      this.username,
+      this.email,
+      this.mobile,
+      this.account,
+      this.accountTerm,
+      this.seller});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -1356,7 +1713,11 @@ class BrokerInfo {
   String brokerMobile;
   String brokerPhoneNo;
 
-  BrokerInfo({this.brokerName, this.brokerEmail, this.brokerMobile, this.brokerPhoneNo});
+  BrokerInfo(
+      {this.brokerName,
+      this.brokerEmail,
+      this.brokerMobile,
+      this.brokerPhoneNo});
 
   BrokerInfo.fromJson(Map<String, dynamic> json) {
     brokerName = json['brokerName'];

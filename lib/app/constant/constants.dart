@@ -1,5 +1,6 @@
-import 'package:diamnow/app/utils/math_utils.dart';
+import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 const String baseURL = "http://pndevelopapi.democ.in/";
 
@@ -150,6 +151,8 @@ class MasterCode {
   static const String docTypePersonal = "DOC_TYPE_PERSONAL";
   static const String docTypeBusiness = "DOC_TYPE_BUSINESS";
   static const String milkyStatic = "MILKYSTATIC";
+  static const String billType = "BILL_TYPE";
+  static const String dayTerm = "DAY_TERM";
 // static const String mixTint = "MIX_TINT";
 }
 
@@ -296,4 +299,32 @@ class NotificationIdentifier {
 class AndroidNotificationIdentifier {
   static const offlineStockDownloadChannelName = "Offline Stock";
   static const offlineStockDownloadChannelDescription = "Stock";
+}
+
+List<SelectionPopupModel> getInvoiceArr() {
+  List<SelectionPopupModel> arrInvoiceTypes = List<SelectionPopupModel>();
+  final now = DateTime.now().toLocal();
+  final today = DateTime(now.year, now.month, now.day);
+  final tomorrow = DateTime(now.year, now.month, now.day + 1);
+  arrInvoiceTypes.add(
+    SelectionPopupModel(
+//      DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(now).toString(),
+      now.toUtc().toIso8601String(),
+      "Today",
+    ),
+  );
+  arrInvoiceTypes.add(
+    SelectionPopupModel(
+      tomorrow.toUtc().toIso8601String(),
+      "Tomorrow",
+    ),
+  );
+  arrInvoiceTypes.add(
+    SelectionPopupModel(
+      "Later",
+      "Later",
+    ),
+  );
+
+  return arrInvoiceTypes;
 }

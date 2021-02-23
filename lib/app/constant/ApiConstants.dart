@@ -119,8 +119,12 @@ class ApiConstants {
   static const String shareThroughEmail = apiUrl + "web/v1/diamond/excel";
   static const String analytics = "apis/analytics/create";
   static const String companyList = "device/v1/common/account/paginate";
+  static const String buyerList = "device/v1/common/user/paginate";
+  static const String salesmanList = "device/v1/common/seller/paginate";
   static const String deleteOffice =
       "device/v1/cabin-schedule/destroyDiamondAndSlot";
+
+  static const String buyNow = "device/v1/common/diamond-confirm/request";
 }
 
 class DiamondUrls {

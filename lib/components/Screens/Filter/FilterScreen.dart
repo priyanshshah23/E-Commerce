@@ -347,8 +347,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                               isSearchEnable: true,
                               isMultiSelectionEnable: false,
                               applyFilterCallBack: (
-                                  {SelectionPopupModel selectedItem,
-                                  List<SelectionPopupModel>
+                                  {List<SelectionPopupModel>
                                       multiSelectedItem}) {
                                 selectedOptions.clear();
                                 selectedOptions.addAll(multiSelectedItem);

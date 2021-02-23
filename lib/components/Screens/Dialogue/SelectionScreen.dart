@@ -3,65 +3,76 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/components/Screens/SalesPerson/Widget/CellModel.dart';
+import 'package:diamnow/models/SalesPerson/CompanyListModel.dart';
 import 'package:flutter/material.dart';
 
 class SelectionScreen extends StatefulWidget {
-  Function(
-      {SelectionPopupModel selectedItem,
-      List<SelectionPopupModel> multiSelectedItem}) applyFilterCallBack;
+  Function({List<SelectionPopupModel> multiSelectedItem}) applyFilterCallBack;
   String title = "Select Item";
   String hintText = "Search Item";
   bool isSearchEnable;
   bool isMultiSelectionEnable;
   String positiveButtonTitle;
   String negativeButtonTitle;
+  CellType type;
 
-  SelectionScreen(
-      {this.applyFilterCallBack,
-      this.hintText,
-      this.title,
-      this.isSearchEnable = true,
-      this.isMultiSelectionEnable = false,
-      this.negativeButtonTitle,
-      this.positiveButtonTitle});
+  SelectionScreen({
+    this.applyFilterCallBack,
+    this.hintText,
+    this.title,
+    this.isSearchEnable = true,
+    this.isMultiSelectionEnable = false,
+    this.negativeButtonTitle,
+    this.positiveButtonTitle,
+    this.type = CellType.Party,
+  });
 
   @override
   _SelectionScreenState createState() => _SelectionScreenState(
-      applyFilterCallBack,
-      hintText,
-      title,
-      isSearchEnable,
-      isMultiSelectionEnable,
-      positiveButtonTitle,
-      negativeButtonTitle);
+        applyFilterCallBack,
+        hintText,
+        title,
+        isSearchEnable,
+        isMultiSelectionEnable,
+        positiveButtonTitle,
+        negativeButtonTitle,
+        type,
+      );
 }
 
 class _SelectionScreenState extends State<SelectionScreen> {
   TextEditingController searchController = TextEditingController();
   List<SelectionPopupModel> options = List();
   List<SelectionPopupModel> selectedOptions = List();
-  Function(
-      {SelectionPopupModel selectedItem,
-      List<SelectionPopupModel> multiSelectedItem}) applyFilterCallBack;
+  CompanyListData companyListData;
+  Function({List<SelectionPopupModel> multiSelectedItem}) applyFilterCallBack;
   String title = "Select Item";
   String hintText = "Search Item";
   bool isSearchEnable;
   bool isMultiSelectionEnable;
   String positiveButtonTitle;
   String negativeButtonTitle;
+  bool isEmptyList = true;
+  CellType type = CellType.Party;
 
   _SelectionScreenState(
-      this.applyFilterCallBack,
-      this.hintText,
-      this.title,
-      this.isSearchEnable,
-      this.isMultiSelectionEnable,
-      this.positiveButtonTitle,
-      this.negativeButtonTitle);
+    this.applyFilterCallBack,
+    this.hintText,
+    this.title,
+    this.isSearchEnable,
+    this.isMultiSelectionEnable,
+    this.positiveButtonTitle,
+    this.negativeButtonTitle,
+    this.type,
+  );
 
   @override
   void initState() {
     super.initState();
+    if (type == CellType.SalesPersonName) {
+      callApiForGetSalesmanList();
+    }
   }
 
   @override
@@ -89,7 +100,16 @@ class _SelectionScreenState extends State<SelectionScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       isSearchEnable ? getSearchTextField() : SizedBox(),
-                      getListView(),
+                      isEmptyList
+                          ? Expanded(
+                              child: Center(
+                                child: Text(
+                                  "Record not found",
+                                  style: appTheme.blackNormal18TitleColorblack,
+                                ),
+                              ),
+                            )
+                          : getListView(),
                     ],
                   ),
                 ),
@@ -139,6 +159,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                   }
                 });
                 applyFilterCallBack(multiSelectedItem: dummyList);
+//                Navigator.pop(context);
                 /*  } else {
                   for (int i = 0; i < selectionOptions.length; i++) {
                     if (selectionOptions[i].isSelected) {
@@ -230,7 +251,6 @@ class _SelectionScreenState extends State<SelectionScreen> {
               options[index].isSelected = !options[index].isSelected;
               if (options[index].isSelected) {
                 selectedOptions.add(options[index]);
-                print("-------title${options[index].title}");
               }
               setState(() {});
             },
@@ -283,14 +303,15 @@ class _SelectionScreenState extends State<SelectionScreen> {
 
   callApiForGetCompanyList(String title) {
     Map<String, dynamic> dict = {};
-
+    if (type == CellType.BrokerName) {
+      dict["ledgerType"] = "broker";
+    }
     dict["page"] = DEFAULT_PAGE;
-    dict["limit"] = DEFAULT_LIMIT;
+    dict["limit"] = 15;
     dict["startWith"] = {
       "keyword": title,
       "keys": ["companyName", "name", "firstName", "lastName", "mobile"]
     };
-    dict["filter"] = {"isActive": true};
     dict["sort"] = [
       {"createdAt": "DESC"}
     ];
@@ -300,23 +321,63 @@ class _SelectionScreenState extends State<SelectionScreen> {
     NetworkClient.getInstance.callApi(
       context,
       baseURL,
-      ApiConstants.companyList,
+      type == CellType.BuyerName
+          ? ApiConstants.buyerList
+          : ApiConstants.companyList,
       MethodType.Post,
       headers: NetworkClient.getInstance.getAuthHeaders(),
       params: dict,
       successCallback: (response, message) {
         app.resolve<CustomDialogs>().hideProgressDialog();
-
-        print("response--------------------${response.toString()}");
-//        selectionOptions
+        companyListData = CompanyListData.fromJson(response);
+        companyListData.list.forEach((element) {
+          options.add(SelectionPopupModel(
+              element.id, element.firstName + " " + element.lastName));
+        });
+        setState(() {
+          isEmptyList = false;
+        });
       },
       failureCallback: (status, message) {
         app.resolve<CustomDialogs>().hideProgressDialog();
         print(message);
-        app.resolve<CustomDialogs>().confirmDialog(context,
-            desc: message,
-            positiveBtnTitle: R.string.commonString.ok,
-            onClickCallback: (click) {});
+        setState(() {
+          isEmptyList = true;
+        });
+      },
+    );
+  }
+
+  callApiForGetSalesmanList() {
+//    app.resolve<CustomDialogs>().showProgressDialog(context, "");
+
+    NetworkClient.getInstance.callApi(
+      context,
+      baseURL,
+      ApiConstants.salesmanList,
+      MethodType.Post,
+      headers: NetworkClient.getInstance.getAuthHeaders(),
+      successCallback: (response, message) {
+//        app.resolve<CustomDialogs>().hideProgressDialog();
+        List<CompanyModel> salesList = List();
+        response.forEach((v) {
+          salesList.add(new CompanyModel.fromJson(v));
+        });
+//        salesList  = CompanyListData.fromJson(response);
+        salesList.forEach((element) {
+          options.add(SelectionPopupModel(
+              element.id, element.firstName + " " + element.lastName));
+        });
+        setState(() {
+          isEmptyList = false;
+        });
+      },
+      failureCallback: (status, message) {
+//        app.resolve<CustomDialogs>().hideProgressDialog();
+        print(message);
+        setState(() {
+          isEmptyList = true;
+        });
       },
     );
   }
