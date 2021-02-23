@@ -59,7 +59,7 @@ dependencies:
   flutter_statusbarcolor: ^0.2.3
   libphonenumber: ^1.0.1
   custom_localization:
-    git: https://gitlab.coruscate.in:8443/coruslab/flutter-localisation.git
+     git: https://gitlab.coruscate.in:8443/coruslab/flutter-localisation.git
   encrypt: ^4.0.0
   webview_flutter: 1.0.7
   material_segmented_control: ^2.1.0+1
