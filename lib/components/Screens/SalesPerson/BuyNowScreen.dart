@@ -351,9 +351,9 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
                 shadowColor: fromHex("#4EB45E4D"),
                 child: AppButton.flat(
                   onTap: () {
-                    if(_formkey.currentState.validate()){
+                    if (_formkey.currentState.validate()) {
                       callApiForBuyNow();
-                    }else{
+                    } else {
                       setState(() {
                         _autovalidate = true;
                       });
@@ -376,29 +376,29 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
   callApiForBuyNow() {
     Map<String, dynamic> dict = {};
     _arrDropDown.forEach((element) {
-      if(element.type == CellType.Party){
-        dict["companyName"]= element.id;
-      }else if(element.type == CellType.BuyerName){
-        dict["user"]= element.id;
-      }else if(element.type == CellType.SalesPersonName){
-        dict["seller"]= element.id;
-      }else if(element.type == CellType.BrokerName){
-        dict["account"]= element.id;
-      }else if(element.type == CellType.Invoice){
-        dict["invoiceDate"]= element.id;
-      }else if(element.type == CellType.BillType){
-        dict["billType"]= element.id;
-      }else if(element.type == CellType.Term){
-        dict["terms"]= element.id;
-      }else if(element.type == CellType.Comment){
-        dict['comment'] = element.userText;
+      if (element.type == CellType.Party) {
+        dict["companyName"] = element.id;
+      } else if (element.type == CellType.BuyerName) {
+        dict["user"] = element.id;
+      } else if (element.type == CellType.SalesPersonName) {
+        dict["seller"] = element.id;
+      } else if (element.type == CellType.BrokerName) {
+        dict["account"] = element.id;
+      } else if (element.type == CellType.Invoice) {
+        dict["invoiceDate"] = element.id;
+      } else if (element.type == CellType.BillType) {
+        dict["billType"] = element.id;
+      } else if (element.type == CellType.Term) {
+        dict["terms"] = element.id;
+      } else if (element.type == CellType.Comment) {
+        if (element.userText.isNotEmpty) dict['comment'] = element.userText;
       }
     });
     List<String> list = [];
     widget.diamondList.forEach((element) {
       list.add(element.id);
     });
-    dict["diamonds"]= list;
+    dict["diamonds"] = list;
     print(dict);
     app.resolve<CustomDialogs>().showProgressDialog(context, "");
 
@@ -410,11 +410,22 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
       params: dict,
       headers: NetworkClient.getInstance.getAuthHeaders(),
       successCallback: (response, message) {
+        app.resolve<CustomDialogs>().hideProgressDialog();
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              title: "",
+              desc: message,
+              positiveBtnTitle: R.string.commonString.ok,
+            );
       },
       failureCallback: (status, message) {
         app.resolve<CustomDialogs>().hideProgressDialog();
-        print(message);
-
+        app.resolve<CustomDialogs>().confirmDialog(
+              context,
+              title: "",
+              desc: message,
+              positiveBtnTitle: R.string.commonString.ok,
+            );
       },
     );
   }

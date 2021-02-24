@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 void modalBottomSheetMenu(
   context, {
@@ -135,6 +135,8 @@ class SelectionPopupModel {
   int type;
   int fileType;
   String url;
+  String subTitle;
+  String subId;
 
   SelectionPopupModel.fromJson(Map<String, dynamic> parsedJson) {
     id = parsedJson["id"] ?? "";
@@ -143,14 +145,24 @@ class SelectionPopupModel {
     url = parsedJson["url"] ?? "";
   }
 
-  SelectionPopupModel(String id, String title,
-      {bool isSelected = false, int type, int fileType, String url}) {
+  SelectionPopupModel(
+    String id,
+    String title, {
+    bool isSelected = false,
+    int type,
+    int fileType,
+    String url,
+    String subTitle,
+    String subId,
+  }) {
     this.id = id;
     this.title = title;
     this.isSelected = isSelected;
     this.type = type;
     this.fileType = fileType;
     this.url = url;
+    this.subTitle = subTitle;
+    this.subId = subId;
   }
 }
 

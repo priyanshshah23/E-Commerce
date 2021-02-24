@@ -1,6 +1,5 @@
 import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
 const String baseURL = "http://pndevelopapi.democ.in/";
 
@@ -301,6 +300,16 @@ class AndroidNotificationIdentifier {
   static const offlineStockDownloadChannelDescription = "Stock";
 }
 
+class BlockSetting {
+  static const HOLD = '5faa3e10fee4d616f95d9c42';
+  static const MEMO = '5f9ff997acf27d10033f0171';
+}
+
+class BlockType {
+  static const HOLD = 1;
+  static const MEMO = 2;
+}
+
 List<SelectionPopupModel> getInvoiceArr() {
   List<SelectionPopupModel> arrInvoiceTypes = List<SelectionPopupModel>();
   final now = DateTime.now().toLocal();
@@ -308,7 +317,6 @@ List<SelectionPopupModel> getInvoiceArr() {
   final tomorrow = DateTime(now.year, now.month, now.day + 1);
   arrInvoiceTypes.add(
     SelectionPopupModel(
-//      DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(now).toString(),
       now.toUtc().toIso8601String(),
       "Today",
     ),
@@ -325,6 +333,5 @@ List<SelectionPopupModel> getInvoiceArr() {
       "Later",
     ),
   );
-
   return arrInvoiceTypes;
 }

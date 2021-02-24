@@ -77,9 +77,11 @@ enum CellType {
   Party,
   BuyerName,
   SalesPersonName,
-  BrokerName,
+  Memo_BrokerName,
 
   //Hold Stone
+  Hold_Party,
+  Hold_Buyer,
   HoldTime,
   Comment,
 
@@ -87,4 +89,5 @@ enum CellType {
   Invoice,
   BillType,
   Term,
+  BrokerName
 }

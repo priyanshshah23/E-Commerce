@@ -1,5 +1,3 @@
-
-
 class CompanyListData {
   List<CompanyModel> list;
   int count;
@@ -57,6 +55,7 @@ class CompanyModel {
   String street;
   String area;
   String zipCode;
+
 //  List<String> emails;
   String website;
   List<String> faxes;
@@ -89,6 +88,7 @@ class CompanyModel {
   Null connectedSockets;
   String updateIp;
   String createIp;
+
 //  int isApproved;
   bool isKycUploaded;
   String founded;
@@ -136,6 +136,7 @@ class CompanyModel {
   bool isSpam;
   bool isSyncAccount;
   bool isDefault;
+  Broker account;
 
   CompanyModel({
     this.createdAt,
@@ -250,8 +251,9 @@ class CompanyModel {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     id = json['id'];
-    firstName = json['firstName']!=null?json['firstName']:json['companyName'];
-    lastName =  json['lastName']!=null?json['lastName']:"";
+    firstName =
+        json['firstName'] != null ? json['firstName'] : json['companyName'];
+    lastName = json['lastName'] != null ? json['lastName'] : "";
     stockCategory = json['stockCategory'];
     vendorLogo = json['vendorLogo'];
     vendorCode = json['vendorCode'];
@@ -315,7 +317,7 @@ class CompanyModel {
     companySize = json['companySize'];
     videoUrl = json['videoUrl'];
     about = json['about'];
-  isVerified = json['isVerified'];
+    isVerified = json['isVerified'];
     contactEmail = json['contactEmail'];
     contactMobile = json['contactMobile'];
     name = json['name'];
@@ -333,7 +335,7 @@ class CompanyModel {
         json['seller'] != null ? new Seller.fromJson(json['seller']) : null;
     businessType = json['businessType'];
     createdBy = json['createdBy'];
-//    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    user = json['user'] != null ? new User.fromJson(json['user']) : null;
     hasBroker = json['hasBroker'];
     brokerInfo = json['brokerInfo'] != null
         ? new BrokerInfo.fromJson(json['brokerInfo'])
@@ -355,6 +357,9 @@ class CompanyModel {
     businessId = json['businessId'];
     isSyncAccount = json['isSyncAccount'];
     isDefault = json['isDefault'];
+    account = json['account'] != null
+        ? new Broker.fromJson(json['account'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -484,6 +489,9 @@ class CompanyModel {
     data['isSpam'] = this.isSpam;
     data['isSyncAccount'] = this.isSyncAccount;
     data['isDefault'] = this.isDefault;
+    if (this.account != null) {
+      data['account'] = this.account.toJson();
+    }
     return data;
   }
 }
@@ -603,6 +611,8 @@ class Broker {
   String createdAt;
   String updatedAt;
   String id;
+  String firstName;
+  String lastName;
   String stockCategory;
   String vendorLogo;
   String vendorCode;
@@ -809,6 +819,9 @@ class Broker {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     id = json['id'];
+    firstName =
+    json['firstName'] != null ? json['firstName'] : json['companyName'];
+    lastName = json['lastName'] != null ? json['lastName'] : "";
     stockCategory = json['stockCategory'];
     vendorLogo = json['vendorLogo'];
     vendorCode = json['vendorCode'];
@@ -833,7 +846,6 @@ class Broker {
     dateOfJoin = json['dateOfJoin'];
     dateOfAnniversary = json['dateOfAnniversary'];
     addressType = json['addressType'];
-    address = json['address'];
     landMark = json['landMark'];
     street = json['street'];
     area = json['area'];
@@ -841,7 +853,7 @@ class Broker {
 //    emails = json['emails'].cast<String>();
     website = json['Website'];
 //    faxes = json['faxes'].cast<String>();
-    phones = json['phones'];
+//    phones = json['phones'];
 //    mobiles = json['mobiles'].cast<String>();
     if (json['bank'] != null) {
       bank = new List<Bank>();
@@ -887,12 +899,6 @@ class Broker {
     showPublicly = json['showPublicly'];
     coverImage = json['coverImage'];
     isVerified = json['isVerified'];
-    if (json['group'] != null) {
-      group = new List<Group>();
-      json['group'].forEach((v) {
-        group.add(new Group.fromJson(v));
-      });
-    }
     if (json['references'] != null) {
       references = new List<References>();
       json['references'].forEach((v) {
@@ -903,15 +909,14 @@ class Broker {
     contactMobile = json['contactMobile'];
     name = json['name'];
     syncId = json['syncId'];
-    syncExtra = json['syncExtra'];
     isFm = json['isFm'];
 //    natureOfOrg = json['natureOfOrg'].cast<String>();
-    if (json['kyc'] != null) {
-      kyc = new List<Kyc>();
-      json['kyc'].forEach((v) {
-        kyc.add(new Kyc.fromJson(v));
-      });
-    }
+//    if (json['kyc'] != null) {
+//      kyc = new List<Kyc>();
+//      json['kyc'].forEach((v) {
+//        kyc.add(new Kyc.fromJson(v));
+//      });
+//    }
     addedBy = json['addedBy'];
     updatedBy = json['updatedBy'];
     broker = json['broker'];
@@ -923,7 +928,6 @@ class Broker {
     city = json['city'];
     seller = json['seller'];
     businessType = json['businessType'];
-    createdBy = json['createdBy'];
     accountTerm = json['accountTerm'];
     approvedBy = json['approvedBy'];
     companyId = json['companyId'];

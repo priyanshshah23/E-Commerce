@@ -125,6 +125,7 @@ class ApiConstants {
       "device/v1/cabin-schedule/destroyDiamondAndSlot";
 
   static const String buyNow = "device/v1/common/diamond-confirm/request";
+  static const String holdDiamond = "device/v1/common/diamond-block/create";
 }
 
 class DiamondUrls {

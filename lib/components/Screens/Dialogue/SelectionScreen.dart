@@ -192,6 +192,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
             callApiForGetCompanyList(value);
           }
         },
+        autofocus: true,
         controller: searchController,
         decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(horizontal: getSize(20)),
@@ -303,7 +304,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
 
   callApiForGetCompanyList(String title) {
     Map<String, dynamic> dict = {};
-    if (type == CellType.BrokerName) {
+    if (type == CellType.BrokerName || type == CellType.Memo_BrokerName) {
       dict["ledgerType"] = "broker";
     }
     dict["page"] = DEFAULT_PAGE;
@@ -321,7 +322,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
     NetworkClient.getInstance.callApi(
       context,
       baseURL,
-      type == CellType.BuyerName
+      type == CellType.BuyerName || type == CellType.Hold_Buyer
           ? ApiConstants.buyerList
           : ApiConstants.companyList,
       MethodType.Post,
@@ -331,8 +332,42 @@ class _SelectionScreenState extends State<SelectionScreen> {
         app.resolve<CustomDialogs>().hideProgressDialog();
         companyListData = CompanyListData.fromJson(response);
         companyListData.list.forEach((element) {
-          options.add(SelectionPopupModel(
-              element.id, element.firstName + " " + element.lastName));
+          if (type == CellType.Hold_Buyer) {
+            options.add(SelectionPopupModel(
+              element.id,
+              element.firstName + " " + element.lastName,
+              subTitle: element.account.companyName,
+              subId: element.account.id,
+            ));
+          } else if (type == CellType.Hold_Party) {
+            if (element.seller != null) {
+              options.add(SelectionPopupModel(
+                element.id,
+                element.firstName + " " + element.lastName,
+                subTitle: element.seller.name,
+                subId: element.seller.id,
+              ));
+            } else {
+              options.add(SelectionPopupModel(
+                element.id,
+                element.firstName + " " + element.lastName,
+              ));
+            }
+          } else if (type == CellType.Memo_BrokerName) {
+            options.add(SelectionPopupModel(
+              element.id,
+              element.firstName +
+                  " " +
+                  element.lastName +
+                  " | " +
+                  element.user.name,
+            ));
+          } else {
+            options.add(SelectionPopupModel(
+              element.id,
+              element.firstName + " " + element.lastName,
+            ));
+          }
         });
         setState(() {
           isEmptyList = false;
@@ -359,11 +394,10 @@ class _SelectionScreenState extends State<SelectionScreen> {
       headers: NetworkClient.getInstance.getAuthHeaders(),
       successCallback: (response, message) {
 //        app.resolve<CustomDialogs>().hideProgressDialog();
-        List<CompanyModel> salesList = List();
+        List<Broker> salesList = List();
         response.forEach((v) {
-          salesList.add(new CompanyModel.fromJson(v));
+          salesList.add(new Broker.fromJson(v));
         });
-//        salesList  = CompanyListData.fromJson(response);
         salesList.forEach((element) {
           options.add(SelectionPopupModel(
               element.id, element.firstName + " " + element.lastName));
