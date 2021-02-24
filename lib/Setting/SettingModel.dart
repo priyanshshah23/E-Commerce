@@ -507,7 +507,7 @@ class BottomMenuSetting {
       }
     }
     if ((app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
-            KYCStatus.pending) !=
+            KYCStatus.pending) ==
         KYCStatus.approved) {
       if (!isDetail && !isCompare) {
         if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
@@ -865,10 +865,14 @@ class BottomMenuSetting {
     //     .resolve<PrefUtils>()
     //     .getModulePermission(ModulePermissionConstant.permission_excel)
     //     .downloadExcel) {
-    moreMenuList.add(BottomTabModel(
-        image: excelImage,
-        title: "Excel",
-        type: ActionMenuConstant.ACTION_TYPE_EXCEL));
+    if ((app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
+            KYCStatus.pending) ==
+        KYCStatus.approved) {
+      moreMenuList.add(BottomTabModel(
+          image: excelImage,
+          title: "Excel",
+          type: ActionMenuConstant.ACTION_TYPE_EXCEL));
+    }
     // }
   }
 
@@ -885,12 +889,15 @@ class BottomMenuSetting {
     //     .resolve<PrefUtils>()
     //     .getModulePermission(getPermissionFromModuleType(moduleType))
     //     .downloadExcel && moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {
-
-    moreMenuList.add(BottomTabModel(
-        image: image,
-        isCenter: isCenter,
-        title: R.string.screenTitle.download,
-        type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
+    if ((app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
+            KYCStatus.pending) ==
+        KYCStatus.approved) {
+      moreMenuList.add(BottomTabModel(
+          image: image,
+          isCenter: isCenter,
+          title: R.string.screenTitle.download,
+          type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
+    }
   }
 
   addClearSelectionInBottomMenu(List<BottomTabModel> moreMenuList, String image,

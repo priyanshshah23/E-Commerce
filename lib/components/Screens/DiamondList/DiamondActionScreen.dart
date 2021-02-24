@@ -552,6 +552,8 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
     Map<String, dynamic> req = {};
     req["purpose"] = comment;
     req["date"] = pickedDate;
+    req["start"] = pickedDate;
+    req["end"] = pickedDate;
     req["type"] = 2;
     req["meetingType"] = 2;
     req["cabinSlot"] = [

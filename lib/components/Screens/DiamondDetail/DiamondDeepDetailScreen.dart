@@ -318,13 +318,16 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
       case BottomCodeConstant.TBClock:
         break;
       case BottomCodeConstant.TBDownloadView:
-        BottomTabModel tabModel = BottomTabModel();
-        tabModel.type = ActionMenuConstant.ACTION_TYPE_DOWNLOAD;
-        List<DiamondModel> selectedList = [diamondModel];
+        if ((app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
+                KYCStatus.pending) ==
+            KYCStatus.approved) {
+          BottomTabModel tabModel = BottomTabModel();
+          tabModel.type = ActionMenuConstant.ACTION_TYPE_DOWNLOAD;
+          List<DiamondModel> selectedList = [diamondModel];
 
-        diamondConfig.manageDiamondAction(
-            context, selectedList, tabModel, () {});
-
+          diamondConfig.manageDiamondAction(
+              context, selectedList, tabModel, () {});
+        }
         break;
     }
   }
