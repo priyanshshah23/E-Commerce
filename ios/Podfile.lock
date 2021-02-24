@@ -51,6 +51,8 @@ PODS:
     - Flutter
   - flutter_files_picker (0.0.2):
     - Flutter
+  - flutter_inappwebview (0.0.1):
+    - Flutter
   - flutter_local_notifications (0.0.1):
     - Flutter
   - flutter_money_formatter (0.0.1):
@@ -150,6 +152,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_exif_rotation (from `.symlinks/plugins/flutter_exif_rotation/ios`)
   - flutter_files_picker (from `.symlinks/plugins/flutter_files_picker/ios`)
+  - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_money_formatter (from `.symlinks/plugins/flutter_money_formatter/ios`)
   - flutter_statusbarcolor (from `.symlinks/plugins/flutter_statusbarcolor/ios`)
@@ -211,6 +214,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_exif_rotation/ios"
   flutter_files_picker:
     :path: ".symlinks/plugins/flutter_files_picker/ios"
+  flutter_inappwebview:
+    :path: ".symlinks/plugins/flutter_inappwebview/ios"
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_money_formatter:
@@ -271,6 +276,7 @@ SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_exif_rotation: 85a029bc8f10235c50736be688519f4037a87f13
   flutter_files_picker: 10942b5e4c22c90e3da2faf82dc8bf9f83660089
+  flutter_inappwebview: 69dfbac46157b336ffbec19ca6dfd4638c7bf189
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_money_formatter: d0d18ddc5be333fad8d09964d741b59fa11a91dc
   flutter_statusbarcolor: 8afb1071ed8c58be929f1e32b36c629771fd2259
