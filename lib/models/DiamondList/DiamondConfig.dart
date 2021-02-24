@@ -312,15 +312,19 @@ class DiamondConfig {
           //     code: BottomCodeConstant.TBClock,
           //     sequence: 0,
           //     isCenter: true));
-          list.add(
-            BottomTabModel(
-              title: "",
-              image: download,
-              code: BottomCodeConstant.TBDownloadView,
-              sequence: 3,
-              isCenter: true,
-            ),
-          );
+          if ((app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
+                  KYCStatus.pending) ==
+              KYCStatus.approved) {
+            list.add(
+              BottomTabModel(
+                title: "",
+                image: download,
+                code: BottomCodeConstant.TBDownloadView,
+                sequence: 3,
+                isCenter: true,
+              ),
+            );
+          }
         } else {
           list.add(BottomTabModel(
               title: "",

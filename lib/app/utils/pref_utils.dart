@@ -345,6 +345,7 @@ class PrefUtils {
           module == ModulePermissionConstant.permission_appointment ||
           module == ModulePermissionConstant.permission_offer ||
           module == ModulePermissionConstant.permission_order ||
+          module == ModulePermissionConstant.permission_upcomingDiamonds ||
           module == ModulePermissionConstant.permission_purchase ||
           module == ModulePermissionConstant.permission_myDemand ||
           module == ModulePermissionConstant.permission_mySavedSearch) {
