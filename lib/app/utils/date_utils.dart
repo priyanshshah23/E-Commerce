@@ -57,6 +57,10 @@ class DateUtilities {
     return DateTime(date.year, date.month, date.day, 0, 0, 0);
   }
 
+  DateTime getSpecificTimeOfDate(DateTime date, int hour, int minute, int sec) {
+    return DateTime(date.year, date.month, date.day, hour, minute, sec);
+  }
+
   DateTime getEndOfDay(DateTime date) {
     return DateTime(date.year, date.month, date.day, 23, 59, 59, 999);
   }
