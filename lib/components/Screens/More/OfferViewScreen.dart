@@ -96,9 +96,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                 ? VirtualTypes.webConference
                 : VirtualTypes.inPerson;
     req["cabinSlot"] = [
-      {
-        "id": arrSlots[selectedSlot].id ?? ""
-      }
+      {"id": arrSlots[selectedSlot].id ?? ""}
     ];
 
     NetworkCall<BaseApiResp>()
