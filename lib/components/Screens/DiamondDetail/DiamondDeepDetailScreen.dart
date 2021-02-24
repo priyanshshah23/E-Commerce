@@ -53,7 +53,7 @@ class DiamondDeepDetailScreen extends StatefulScreenWidget {
 }
 
 class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   bool isLoading = true;
   bool isErroWhileLoading = false;
   DiamondConfig diamondConfig;
@@ -171,6 +171,7 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(
@@ -633,4 +634,7 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
     }
     return list;
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
