@@ -257,6 +257,11 @@ class DiamondConfig {
             .resolve<ServiceModule>()
             .networkService()
             .diamondOfficeList(dict);
+      case DiamondModuleConstant.MODULE_TYPE_MY_HOLD:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .holdListPaginate(dict);
 
       // case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
       //   return app
@@ -715,6 +720,7 @@ class DiamondConfig {
     });
     Map<String, dynamic> dict = new HashMap();
     dict[ArgumentConstant.IsFromDrawer] = false;
+    dict[ArgumentConstant.ModuleType] = moduleType;
     dict[ArgumentConstant.DiamondList] = selectedList;
     Navigator.of(context)
         .push(MaterialPageRoute(
@@ -736,6 +742,7 @@ class DiamondConfig {
     });
     Map<String, dynamic> dict = new HashMap();
     dict[ArgumentConstant.IsFromDrawer] = false;
+    dict[ArgumentConstant.ModuleType] = moduleType;
     dict[ArgumentConstant.DiamondList] = selectedList;
     Navigator.of(context)
         .push(MaterialPageRoute(
@@ -757,6 +764,7 @@ class DiamondConfig {
     });
     Map<String, dynamic> dict = new HashMap();
     dict[ArgumentConstant.IsFromDrawer] = false;
+    dict[ArgumentConstant.ModuleType] = moduleType;
     dict[ArgumentConstant.DiamondList] = selectedList;
 
     Navigator.of(context)

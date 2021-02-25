@@ -183,13 +183,18 @@ class _MemoStoneScreenState extends State<MemoStoneScreen> {
                     .where(
                         (element) => element.type == CellType.SalesPersonName)
                     .toList();
+                List<CellModel> arr2 = _arrDropDown
+                    .where((element) => element.type == CellType.Hold_Buyer)
+                    .toList();
                 setState(() {
                   arr.first.userText = multiSelectedItem.first.title;
                   arr.first.id = multiSelectedItem.first.id;
                   arr1.first.userText = multiSelectedItem.first.subTitle;
                   arr1.first.id = multiSelectedItem.first.subId;
+                  arr2.first.userText = multiSelectedItem.first.buyername;
+                  arr2.first.id = multiSelectedItem.first.buyerId;
                 });
-                callApiForGetBuyerDetail(arr.first.id);
+//                callApiForGetBuyerDetail(arr.first.id);
               },
             );
           },

@@ -25,7 +25,7 @@ class SelectionScreen extends StatefulWidget {
     this.isMultiSelectionEnable = false,
     this.negativeButtonTitle,
     this.positiveButtonTitle,
-    this.type = CellType.Party,
+    this.type = CellType.Hold_Party,
   });
 
   @override
@@ -54,7 +54,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
   String positiveButtonTitle;
   String negativeButtonTitle;
   bool isEmptyList = true;
-  CellType type = CellType.Party;
+  CellType type = CellType.Hold_Party;
 
   _SelectionScreenState(
     this.applyFilterCallBack,
@@ -78,6 +78,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: appTheme.whiteColor,
       bottomNavigationBar: getBotoomButtons(),
       body: SafeArea(
         child: Container(
@@ -322,7 +323,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
     NetworkClient.getInstance.callApi(
       context,
       baseURL,
-      type == CellType.BuyerName || type == CellType.Hold_Buyer
+     type == CellType.Hold_Buyer
           ? ApiConstants.buyerList
           : ApiConstants.companyList,
       MethodType.Post,
@@ -346,6 +347,8 @@ class _SelectionScreenState extends State<SelectionScreen> {
                 element.firstName + " " + element.lastName,
                 subTitle: element.seller.name,
                 subId: element.seller.id,
+                buyerId: element.user.id,
+                buyername: element.user.name,
               ));
             } else {
               options.add(SelectionPopupModel(

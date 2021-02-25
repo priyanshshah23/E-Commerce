@@ -22,6 +22,7 @@ import 'package:flutter/services.dart';
 class SearchScreen extends StatefulScreenWidget {
   static const route = "SearchScreen";
   bool isFromSearch;
+  bool isFromManual = true;
 
   SearchScreen(
     Map<String, dynamic> arguments, {
@@ -29,11 +30,13 @@ class SearchScreen extends StatefulScreenWidget {
   }) : super(key: key) {
     if (arguments != null) {
       this.isFromSearch = arguments["isFromSearch"] ?? false;
+      this.isFromManual = arguments['isFromManual'] ?? true;
     }
   }
 
   @override
-  _SearchScreenState createState() => _SearchScreenState(this.isFromSearch);
+  _SearchScreenState createState() =>
+      _SearchScreenState(this.isFromSearch, this.isFromManual);
 }
 
 class _SearchScreenState extends StatefulScreenWidgetState {
@@ -46,8 +49,13 @@ class _SearchScreenState extends StatefulScreenWidgetState {
   List<String> arrList = [];
   List<String> arrSelected = [];
   Timer timer;
+  bool isFromManual = true;
 
-  _SearchScreenState(this.isFromSearch);
+  _SearchScreenState(
+    this.isFromSearch,
+    this.isFromManual,
+  );
+
   @override
   void initState() {
     super.initState();
@@ -75,39 +83,42 @@ class _SearchScreenState extends StatefulScreenWidgetState {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-          backgroundColor: appTheme.whiteColor,
-          appBar: getAppBar(
-            context,
-            R.string.screenTitle.search,
-            bgColor: appTheme.whiteColor,
-            leadingButton: getBackButton(context),
-            centerTitle: false,
+        backgroundColor: appTheme.whiteColor,
+        appBar: getAppBar(
+          context,
+          isFromManual
+              ? "Manual Search"
+              : "Auto Search" /*R.string.screenTitle.search*/,
+          bgColor: appTheme.whiteColor,
+          leadingButton: getBackButton(context),
+          centerTitle: false,
+        ),
+        bottomNavigationBar: Container(
+          margin: EdgeInsets.all(getSize(20)),
+          decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
+          child: AppButton.flat(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+              callCountApi();
+            },
+            borderRadius: getSize(5),
+            fitWidth: true,
+            text: isFromSearch
+                ? R.string.commonString.searchStoneIdCertificateNo
+                : R.string.commonString.search,
           ),
-          bottomNavigationBar: Container(
-            margin: EdgeInsets.all(getSize(20)),
-            decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
-            child: AppButton.flat(
-              onTap: () {
-                FocusScope.of(context).unfocus();
-                callCountApi();
-              },
-              borderRadius: getSize(5),
-              fitWidth: true,
-              text: isFromSearch
-                  ? R.string.commonString.searchStoneIdCertificateNo
-                  : R.string.commonString.search,
-            ),
-          ),
-          body: SafeArea(
-            child: isFromSearch
-                ? showListView()
-                : ListView(
-                    children: [
-                      getSearchTextField(),
-                      openSuggestion(),
-                    ],
-                  ),
-          )),
+        ),
+        body: SafeArea(
+          child: isFromSearch
+              ? showListView()
+              : ListView(
+                  children: [
+                    getSearchTextField(),
+                    isFromManual ? Container() : openSuggestion(),
+                  ],
+                ),
+        ),
+      ),
     );
   }
 
@@ -122,9 +133,10 @@ class _SearchScreenState extends StatefulScreenWidgetState {
             right: getSize(20),
           ),
           child: Container(
-            height: getSize(40),
+//            height: getSize(40),
             child: TextFormField(
-              maxLines: 1,
+              minLines: 1,
+              maxLines: /*isFromManual ? null :*/ 10,
               textAlignVertical: TextAlignVertical(y: 1.0),
               textInputAction: TextInputAction.search,
               focusNode: _focusSearch,
@@ -139,6 +151,11 @@ class _SearchScreenState extends StatefulScreenWidgetState {
                 BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
               ],
               decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(
+                  top: getSize(0),
+                  bottom: getSize(10),
+                  left: getSize(10),
+                ),
                 fillColor: fromHex("#FFEFEF"),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
@@ -176,11 +193,13 @@ class _SearchScreenState extends StatefulScreenWidgetState {
                   openSuggestion();
                   setState(() {});
                 } else {
-                  if (text.length > 2) {
-                    if (timer != null) timer.cancel();
-                    timer = Timer(Duration(seconds: 2), () {
-                      callApiForSearchStoneId(text);
-                    });
+                  if (!isFromManual) {
+                    if (text.length > 2) {
+                      if (timer != null) timer.cancel();
+                      timer = Timer(Duration(seconds: 2), () {
+                        callApiForSearchStoneId(text);
+                      });
+                    }
                   }
                 }
               },
@@ -484,17 +503,21 @@ class _SearchScreenState extends StatefulScreenWidgetState {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         getSearchTextField(),
-        Padding(
-          padding: EdgeInsets.only(
-            top: getSize(16),
-            left: getSize(16),
-            right: getSize(16),
-          ),
-          child: getChips(),
-        ),
-        Expanded(
-          child: getList(),
-        )
+        isFromManual
+            ? Container()
+            : Padding(
+                padding: EdgeInsets.only(
+                  top: getSize(16),
+                  left: getSize(16),
+                  right: getSize(16),
+                ),
+                child: getChips(),
+              ),
+        isFromManual
+            ? Container()
+            : Expanded(
+                child: getList(),
+              )
       ],
     );
   }
@@ -610,6 +633,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
   }
 
   callCountApi() {
+    print("-------------------$isFromManual");
     Map<String, dynamic> req = {};
     req = {
       "or": [
@@ -619,9 +643,22 @@ class _SearchScreenState extends StatefulScreenWidgetState {
       ]
     };
 
+    Map<String, dynamic> manualReq = {};
+    manualReq = {
+      "or": [
+        {"stoneId": [_searchController.text]},
+        {"rptNo": [_searchController.text]},
+        {"vStnId": [_searchController.text]}
+      ]
+    };
+
     SyncManager.instance.callApiForDiamondList(
       context,
-      isFromSearch ? req : {},
+      isFromManual
+          ? manualReq
+          : isFromSearch
+              ? req
+              : {},
       (diamondListResp) {
         Map<String, dynamic> dict = new HashMap();
 

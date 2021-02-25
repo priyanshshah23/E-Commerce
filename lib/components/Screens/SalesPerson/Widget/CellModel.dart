@@ -74,8 +74,6 @@ enum TextFieldEnum {
 
 enum CellType {
   //Memo Stone
-  Party,
-  BuyerName,
   SalesPersonName,
   Memo_BrokerName,
 

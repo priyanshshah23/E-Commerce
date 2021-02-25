@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isSwitched = false;
   double bottomPadding = 0;
   Widget currentWidget;
-  int selectedType = DiamondModuleConstant.MODULE_TYPE_HOME;
+  int selectedType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
 
   @override
   void initState() {

@@ -11,12 +11,14 @@ import 'package:diamnow/components/Screens/SalesPerson/Widget/DropdownTextField.
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/Master/Master.dart';
+import 'package:diamnow/models/SalesPerson/CompanyListModel.dart';
 import 'package:flutter/material.dart';
 
 class BuyNowScreen extends StatefulWidget {
   static const route = "BuyNowScreen";
 
   List<DiamondModel> diamondList;
+  int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
 
   BuyNowScreen(
     Map<String, dynamic> arguments, {
@@ -26,6 +28,9 @@ class BuyNowScreen extends StatefulWidget {
       if (arguments[ArgumentConstant.DiamondList] != null) {
         diamondList = arguments[ArgumentConstant.DiamondList];
       }
+      if (arguments[ArgumentConstant.ModuleType] != null) {
+        moduleType = arguments[ArgumentConstant.ModuleType];
+      }
     }
   }
 
@@ -34,7 +39,11 @@ class BuyNowScreen extends StatefulWidget {
 }
 
 class _BuyNowScreenState extends State<BuyNowScreen> {
+
+  DiamondConfig diamondConfig;
   DiamondCalculation diamondCalculation = DiamondCalculation();
+  DiamondCalculation diamondFinalCalculation = DiamondCalculation();
+
   List<CellModel> _arrDropDown;
   bool _autovalidate = false;
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
@@ -48,6 +57,17 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
     _arrDropDown = getDropdownTextFieldList();
     getBillType();
     getTermType();
+      diamondConfig =
+          DiamondConfig(widget.moduleType);
+
+    manageDiamondCalculation();
+    diamondConfig.initItems();
+  }
+
+  manageDiamondCalculation() {
+    diamondFinalCalculation.setAverageCalculation(widget.diamondList,
+        isFinalCalculation: true);
+    diamondCalculation.setAverageCalculation(widget.diamondList);
   }
 
   getBillType() async {
@@ -106,9 +126,9 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
                         return DropDownTextField(
                           _arrDropDown[index],
                           onTapCallBack: (model) {
-                            if (model.type == CellType.Party) {
+                            if (model.type == CellType.Hold_Party) {
                               openPartypopup();
-                            } else if (model.type == CellType.BuyerName) {
+                            } else if (model.type == CellType.Hold_Buyer) {
                               openBuyerNamepopup();
                             } else if (model.type == CellType.SalesPersonName) {
                               openSalesmanPopup();
@@ -142,7 +162,7 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
 
   openPartypopup() {
     List<CellModel> arr = _arrDropDown
-        .where((element) => element.type == CellType.Party)
+        .where((element) => element.type == CellType.Hold_Party)
         .toList();
     if (arr != null) {
       Navigator.push(
@@ -155,13 +175,26 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
               positiveButtonTitle: "Done",
               negativeButtonTitle: "Cancel",
               isSearchEnable: true,
+              type: CellType.Hold_Party,
               isMultiSelectionEnable: false,
               applyFilterCallBack: (
                   {List<SelectionPopupModel> multiSelectedItem}) {
+                List<CellModel> arr1 = _arrDropDown
+                    .where(
+                        (element) => element.type == CellType.SalesPersonName)
+                    .toList();
+                List<CellModel> arr2 = _arrDropDown
+                    .where((element) => element.type == CellType.Hold_Buyer)
+                    .toList();
                 setState(() {
                   arr.first.userText = multiSelectedItem.first.title;
                   arr.first.id = multiSelectedItem.first.id;
+                  arr1.first.userText = multiSelectedItem.first.subTitle;
+                  arr1.first.id = multiSelectedItem.first.subId;
+                  arr2.first.userText = multiSelectedItem.first.buyername;
+                  arr2.first.id = multiSelectedItem.first.buyerId;
                 });
+//                callApiForGetBuyerDetail(arr.first.id);
               },
             );
           },
@@ -172,7 +205,7 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
 
   openBuyerNamepopup() {
     List<CellModel> arr = _arrDropDown
-        .where((element) => element.type == CellType.BuyerName)
+        .where((element) => element.type == CellType.Hold_Buyer)
         .toList();
     if (arr != null) {
       Navigator.push(
@@ -185,13 +218,19 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
               positiveButtonTitle: "Done",
               negativeButtonTitle: "Cancel",
               isSearchEnable: true,
-              type: CellType.BuyerName,
+              type: CellType.Hold_Buyer,
               isMultiSelectionEnable: false,
               applyFilterCallBack: (
                   {List<SelectionPopupModel> multiSelectedItem}) {
+                List<CellModel> arr1 = _arrDropDown
+                    .where((element) => element.type == CellType.Hold_Party)
+                    .toList();
+                print("----------------------");
                 setState(() {
                   arr.first.userText = multiSelectedItem.first.title;
                   arr.first.id = multiSelectedItem.first.id;
+                  arr1.first.userText = multiSelectedItem.first.subTitle;
+                  arr1.first.id = multiSelectedItem.first.subId;
                 });
               },
             );
@@ -318,6 +357,44 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
     }
   }
 
+  callApiForGetBuyerDetail(String id) {
+    print(id);
+    List<CellModel> arr = _arrDropDown
+        .where((element) => element.type == CellType.Hold_Buyer)
+        .toList();
+    Map<String, dynamic> dict = {};
+
+    dict["filter"] = {"account": id};
+    dict["page"] = DEFAULT_PAGE;
+    dict["limit"] = 15;
+    dict["startWith"] = {
+      "keys": ["companyName", "name", "firstName", "lastName", "mobile"]
+    };
+    dict["sort"] = [
+      {"createdAt": "DESC"}
+    ];
+
+    NetworkClient.getInstance.callApi(
+      context,
+      baseURL,
+      ApiConstants.buyerList,
+      MethodType.Post,
+      headers: NetworkClient.getInstance.getAuthHeaders(),
+      params: dict,
+      successCallback: (response, message) {
+        CompanyListData companyListData;
+        companyListData = CompanyListData.fromJson(response);
+        arr.first.userText = companyListData.list.first.name;
+        arr.first.id = companyListData.list.first.id;
+        setState(() {});
+      },
+      failureCallback: (status, message) {
+        print(message);
+        setState(() {});
+      },
+    );
+  }
+
   getBottomButton() {
     return Padding(
       padding: EdgeInsets.only(bottom: getSize(20), top: getSize(5)),
@@ -376,9 +453,9 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
   callApiForBuyNow() {
     Map<String, dynamic> dict = {};
     _arrDropDown.forEach((element) {
-      if (element.type == CellType.Party) {
+      if (element.type == CellType.Hold_Party) {
         dict["companyName"] = element.id;
-      } else if (element.type == CellType.BuyerName) {
+      } else if (element.type == CellType.Hold_Buyer) {
         dict["user"] = element.id;
       } else if (element.type == CellType.SalesPersonName) {
         dict["seller"] = element.id;
@@ -436,14 +513,14 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
         hintText: "Party*",
         perfixImage: buildingIcon,
         emptyValidationText: "Please select and enter party.",
-        type: CellType.Party,
+        type: CellType.Hold_Party,
         textFieldType: TextFieldEnum.DropDown,
       ),
       CellModel(
         hintText: "Buyer Name*",
         perfixImage: buyer,
         emptyValidationText: "Please select and enter buyer name.",
-        type: CellType.BuyerName,
+        type: CellType.Hold_Buyer,
         textFieldType: TextFieldEnum.DropDown,
       ),
       CellModel(

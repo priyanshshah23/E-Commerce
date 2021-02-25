@@ -1,7 +1,5 @@
 import 'dart:collection';
 
-import 'package:diamnow/app/Helper/LocalNotification.dart';
-import 'package:diamnow/app/Helper/NetworkClient.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
@@ -12,39 +10,28 @@ import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
-import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/CommonWidget/OverlayScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/DialogueList.dart';
-import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
 import 'package:diamnow/components/Screens/Dialogue/SelectionScreen.dart';
-import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionBottomSheet.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/AddDemand.dart';
-
-import 'package:diamnow/components/Screens/Filter/Widget/CertNoWidget.dart';
-
 import 'package:diamnow/components/Screens/Filter/Widget/CaratRangeWidget.dart';
+import 'package:diamnow/components/Screens/Filter/Widget/CertNoWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/ColorWhiteFancyWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/ColorWidget.dart';
-
 import 'package:diamnow/components/Screens/Filter/Widget/FromToWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SeperatorWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
-import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
 import 'package:diamnow/components/Screens/Notification/Notifications.dart';
+import 'package:diamnow/components/Screens/SalesPerson/Widget/CellModel.dart';
 import 'package:diamnow/components/Screens/Search/Search.dart';
-import 'package:diamnow/components/Screens/VoiceSearch/VoiceSearch.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
-import 'package:diamnow/models/Address/CityListModel.dart';
-import 'package:diamnow/models/Address/CountryListModel.dart';
-import 'package:diamnow/models/Address/StateListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
-import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/FilterModel/SelectStatusModel.dart';
 import 'package:diamnow/models/FilterModel/TabModel.dart';
@@ -54,12 +41,9 @@ import 'package:diamnow/modules/Filter/gridviewlist/FilterRequest.dart';
 import 'package:diamnow/modules/Filter/gridviewlist/KeyToSymbol.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
 import 'package:rxbus/rxbus.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class FilterScreen extends StatefulScreenWidget {
   static const route = "FilterScreen";
@@ -106,6 +90,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
   _FilterScreenState(this.moduleType, this.isFromDrawer,
       {this.dictSearchData, this.savedSearchModel});
+
   List<SelectionPopupModel> selectedOptions = List();
 
   int segmentedControlValue = 0;
@@ -335,24 +320,26 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 actionItems: [
                   InkWell(
                     onTap: () {
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (BuildContext context) {
                             return SelectionScreen(
-                              title: "Select Country",
-                              hintText: "Select Country",
+                              title: "Select Company",
+                              hintText: "Select Company",
                               positiveButtonTitle: "Apply",
                               negativeButtonTitle: "Cancel",
                               isSearchEnable: true,
+                              type: CellType.Hold_Party,
                               isMultiSelectionEnable: false,
                               applyFilterCallBack: (
                                   {List<SelectionPopupModel>
                                       multiSelectedItem}) {
+                                app.resolve<PrefUtils>().saveCompany(multiSelectedItem.first);
+                                print("------------------------------${app.resolve<PrefUtils>().getCompanyDetails().title}");
                                 selectedOptions.clear();
                                 selectedOptions.addAll(multiSelectedItem);
-                                print(
-                                    "-------------${selectedOptions.first.title}");
                               },
                             );
                           },
@@ -608,7 +595,6 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                           child: AppButton.flat(
                             onTap: () {
                               print(selectStatus);
-
                             },
                             text: "Apply",
                             backgroundColor: appTheme.colorPrimary,
@@ -1157,96 +1143,118 @@ class _FilterItemState extends State<FilterItem> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (app.resolve<PrefUtils>().getUserDetails().type ==
-            UserConstant.SALES)
-          Container(
-            color: fromHex("#FAFAFA"),
-            margin: EdgeInsets.only(
-              top: getSize(20),
-            ),
-            child: TextField(
-              textAlignVertical: TextAlignVertical(y: 0.2),
-              textInputAction: TextInputAction.done,
-              focusNode: _focusSearchStoneId,
-              controller: _searchStoneIdController,
-              obscureText: false,
-              readOnly: true,
-              autofocus: false,
-              style: appTheme.black16TextStyle,
-              keyboardType: TextInputType.text,
-              textCapitalization: TextCapitalization.none,
-              cursorColor: appTheme.colorPrimary,
-              inputFormatters: [
-                WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
-                BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
-              ],
-              decoration: InputDecoration(
-                fillColor: fromHex("#FAFAFA"),
-                border: InputBorder.none,
-                hintStyle: appTheme.grey16HintTextStyle,
-                hintText: "Search by Stone Id/Auto Stone Id",
-                labelStyle: TextStyle(
-                  color: appTheme.textColor,
-                  fontSize: getFontSize(16),
-                ),
-                // suffix: widget.textOption.postfixWidOnFocus,
-                prefixIcon: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: getSize(20),
-                    ),
-                    Image.asset(
-                      search,
-                      height: getSize(20),
-                      width: getSize(20),
-                    ),
-                  ],
-                ),
-                suffixIcon: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
+//        if (app.resolve<PrefUtils>().getUserDetails().type ==
+//            UserConstant.SALES)
+        Container(
+          color: fromHex("#FAFAFA"),
+          margin: EdgeInsets.only(
+            top: getSize(20),
+          ),
+          child: TextField(
+            textAlignVertical: TextAlignVertical(y: 0.2),
+            textInputAction: TextInputAction.done,
+            focusNode: _focusSearchStoneId,
+            controller: _searchStoneIdController,
+            obscureText: false,
+            readOnly: true,
+            autofocus: false,
+            style: appTheme.black16TextStyle,
+            keyboardType: TextInputType.text,
+            textCapitalization: TextCapitalization.none,
+            cursorColor: appTheme.colorPrimary,
+            inputFormatters: [
+              WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+              BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+            ],
+            decoration: InputDecoration(
+              fillColor: fromHex("#FAFAFA"),
+              border: InputBorder.none,
+              hintStyle: appTheme.grey16HintTextStyle,
+              hintText: "Search by Stone Id/Auto Stone Id",
+              labelStyle: TextStyle(
+                color: appTheme.textColor,
+                fontSize: getFontSize(16),
+              ),
+              // suffix: widget.textOption.postfixWidOnFocus,
+              prefixIcon: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: getSize(20),
+                  ),
+                  Image.asset(
+                    search,
+                    height: getSize(20),
+                    width: getSize(20),
+                  ),
+                ],
+              ),
+              suffixIcon: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Map<String, dynamic> dict = new HashMap();
+                      dict["isFromSearch"] = true;
+                      dict["isFromManual"] = true;
+                      NavigationUtilities.pushRoute(
+                        SearchScreen.route,
+                        args: dict,
+                      );
+                    },
+                    child: Text(
                       "M",
                       style: appTheme.black16MediumTextStyle.copyWith(
                         decoration: TextDecoration.underline,
                       ),
                     ),
-                    SizedBox(
-                      width: getSize(20),
-                    ),
-                    Text(
+                  ),
+                  SizedBox(
+                    width: getSize(20),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Map<String, dynamic> dict = new HashMap();
+                      dict["isFromSearch"] = true;
+                      dict["isFromManual"] = false;
+                      NavigationUtilities.pushRoute(
+                        SearchScreen.route,
+                        args: dict,
+                      );
+                    },
+                    child: Text(
                       "A",
                       style: appTheme.grey16HintTextStyle.copyWith(
                         decoration: TextDecoration.underline,
                       ),
                     ),
-                    SizedBox(
-                      width: getSize(20),
-                    ),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    width: getSize(20),
+                  ),
+                ],
               ),
-              onChanged: (String text) {
-                //
-              },
-              onEditingComplete: () {
-                //
-                _focusSearch.unfocus();
-              },
-              onTap: () {
-                Map<String, dynamic> dict = new HashMap();
-                dict["isFromSearch"] = true;
-                NavigationUtilities.pushRoute(
-                  SearchScreen.route,
-                  args: dict,
-                );
-              },
             ),
+            onChanged: (String text) {
+              //
+            },
+            onEditingComplete: () {
+              //
+              _focusSearch.unfocus();
+            },
+            onTap: () {
+//              Map<String, dynamic> dict = new HashMap();
+//              dict["isFromSearch"] = true;
+//              NavigationUtilities.pushRoute(
+//                SearchScreen.route,
+//                args: dict,
+//              );
+            },
           ),
-        Padding(
+        ),
+        /* Padding(
           padding: EdgeInsets.only(top: getSize(16.0), bottom: getSize(16.0)),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -1370,7 +1378,7 @@ class _FilterItemState extends State<FilterItem> {
                 )
             ],
           ),
-        ),
+        ),*/
       ],
     );
   }

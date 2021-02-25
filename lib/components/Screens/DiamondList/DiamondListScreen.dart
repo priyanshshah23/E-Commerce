@@ -225,7 +225,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict["filters"] = [{
           "diamondSearchId" : this.filterId
         }];
-        dict["filters"]["diamondSearchId"] = this.filterId;
+//        dict["filters"]["diamondSearchId"] = this.filterId;
         break;
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
       dict["filters"] = [{
@@ -236,33 +236,53 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
         break;
       case DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR:
-        dict["filters"] = [{}];
-        dict["filter"]["diamondSearchId"] = this.filterId;
+        dict["filters"] = [{
+          "diamondSearchId" : this.filterId
+        }];
+//        dict["filters"] = [{}];
+//        dict["filter"]["diamondSearchId"] = this.filterId;
         break;
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
         dict["filters"] = [{}];
         dict["viewType"] = 2;
         break;
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
-        dict["filters"] = [{}];
-        dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_BID;
+        dict["filters"] = [{
+          "wSts" : DiamondStatus.DIAMOND_STATUS_BID
+        }];
+//        dict["filters"] = [{}];
+//        dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_BID;
         break;
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
-        dict["filters"] = [{}];
-        dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_UPCOMING;
-        dict["filters"]["inDt"] = {};
         var date = DateTime.now();
-        print(date.add(Duration(days: 5, hours: 5, minutes: 30)));
-        dict["filters"]["inDt"]["<="] =
-            date.add(Duration(days: 7)).toUtc().toIso8601String();
+        dict["filters"] = [{
+          "wSts" : DiamondStatus.DIAMOND_STATUS_UPCOMING,
+          "inDt":{
+            "<=" : date.add(Duration(days: 7)).toUtc().toIso8601String()
+          }
+        }];
         Map<String, dynamic> dict1 = Map<String, dynamic>();
         dict1["inDt"] = "ASC";
         dict["sort"] = [dict1];
 
+//        dict["filters"] = [{}];
+//        dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_UPCOMING;
+//        dict["filters"]["inDt"] = {};
+//
+//        print(date.add(Duration(days: 5, hours: 5, minutes: 30)));
+//        dict["filters"]["inDt"]["<="] =
+//            date.add(Duration(days: 7)).toUtc().toIso8601String();
+//        Map<String, dynamic> dict1 = Map<String, dynamic>();
+//        dict1["inDt"] = "ASC";
+//        dict["sort"] = [dict1];
+
         break;
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
-        dict["filters"] = {};
-        dict["filters"]["or"] = diamondConfig.getExclusiveDiamondReq();
+        dict["filters"] = [{
+          "or" : diamondConfig.getExclusiveDiamondReq()
+        }];
+//        dict["filters"] = {};
+//        dict["filters"]["or"] = diamondConfig.getExclusiveDiamondReq();
         break;
       case DiamondModuleConstant.MODULE_TYPE_MY_BID:
         dict["bidType"] = [BidConstant.BID_TYPE_ADD];
@@ -287,8 +307,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict["isAppendDiamond"] = 1;
         break;
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
-        dict["filters"] = {};
-        dict["filters"]["wSts"] = "D";
+        dict["filters"] = [{
+          "wSts" : "D"
+        }];
+//        dict["filters"] = {};
+//        dict["filters"]["wSts"] = "D";
 
         break;
 
@@ -300,6 +323,13 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           getOfflineStockFromDownloadedDate(dict);
         }
         return;
+      case DiamondModuleConstant.MODULE_TYPE_MY_HOLD:
+        dict["blockType"] = BlockType.HOLD;
+        dict['status'] = HoldListStatus.HOLD;
+        Map<String, dynamic> dict1 = Map<String, dynamic>();
+        dict1["createdAt"] = "DESC";
+        dict["sort"] = [dict1];
+        break;
     }
     NetworkCall<DiamondListResp>()
         .makeCall(

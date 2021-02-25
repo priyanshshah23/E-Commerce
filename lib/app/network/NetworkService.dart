@@ -121,6 +121,9 @@ abstract class NetworkService {
   @POST(ApiConstants.diamondList)
   Future<DiamondListResp> diamondListPaginate(@Body() Map<String, dynamic> req);
 
+  @POST(ApiConstants.holdList)
+  Future<DiamondListResp> holdListPaginate(@Body() Map<String, dynamic> req);
+
   @POST(ApiConstants.shareThroughEmail)
   Future<BaseApiResp> shareThroughEmail(@Body() ShareThroughEmailReq req);
 

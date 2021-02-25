@@ -5,6 +5,7 @@ import 'package:diamnow/app/Helper/EncryptionHelper.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/NotificationRedirection.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/models/Dashboard/DashboardModel.dart';
@@ -47,6 +48,8 @@ class PrefUtils {
   String get keyForLocalization => "keyGetLocalization";
 
   String get keyUser => "keyUser";
+
+  String get keyCompany => "keyCompany";
 
   String get keyUserPermission => "keyUserPermission";
 
@@ -279,6 +282,16 @@ class PrefUtils {
   User getUserDetails() {
     var userJson = json.decode(_preferences.getString(keyUser));
     return userJson != null ? new User.fromJson(userJson) : null;
+  }
+
+  // Company detail Getter setter
+  Future<void> saveCompany(SelectionPopupModel company)  {
+    _preferences.setString(keyCompany, json.encode(company));
+  }
+
+  SelectionPopupModel getCompanyDetails() {
+    var companyJson = json.decode(_preferences.getString(keyCompany));
+    return companyJson != null ? new SelectionPopupModel.fromJson(companyJson) : null;
   }
 
   Future<void> saveUserPermission(UserPermissions user) async {

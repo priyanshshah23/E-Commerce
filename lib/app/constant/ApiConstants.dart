@@ -126,6 +126,8 @@ class ApiConstants {
 
   static const String buyNow = "device/v1/common/diamond-confirm/request";
   static const String holdDiamond = "device/v1/common/diamond-block/create";
+  static const String holdList = "device/v1/common/diamond-block/paginate";
+  static const String byunowList = "device/v1/common/diamond-confirm/paginate";
 }
 
 class DiamondUrls {

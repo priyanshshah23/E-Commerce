@@ -10,16 +10,16 @@ import 'package:diamnow/models/LoginModel.dart';
 class DrawerSetting {
   List<DrawerModel> getDrawerItems() {
     List<DrawerModel> drawerList = [];
-    if (app
-        .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_dashboard)
-        .view)
-      drawerList.add(DrawerModel(
-        image: home,
-        title: R.string.screenTitle.home,
-        isSelected: true,
-        type: DiamondModuleConstant.MODULE_TYPE_HOME,
-      ));
+//    if (app
+//        .resolve<PrefUtils>()
+//        .getModulePermission(ModulePermissionConstant.permission_dashboard)
+//        .view)
+//      drawerList.add(DrawerModel(
+//        image: home,
+//        title: R.string.screenTitle.home,
+//        isSelected: true,
+//        type: DiamondModuleConstant.MODULE_TYPE_HOME,
+//      ));
     if (app
         .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_searchDiamond)
@@ -624,8 +624,9 @@ class BottomMenuSetting {
           addPlaceOrderInBottomMenu(moreMenuList, placeOrder, isCenter: false);
         }
 
+
 //
-        if (moduleType != DiamondModuleConstant.MODULE_TYPE_HOLD) {
+        if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_HOLD) {
           addHoldInBottomMenu(moreMenuList, sale_hold,
               isCenter: false);
         }

@@ -310,6 +310,11 @@ class BlockType {
   static const MEMO = 2;
 }
 
+class HoldListStatus {
+  static const HOLD = 2;
+  static const MEMO = 2;
+}
+
 List<SelectionPopupModel> getInvoiceArr() {
   List<SelectionPopupModel> arrInvoiceTypes = List<SelectionPopupModel>();
   final now = DateTime.now().toLocal();
