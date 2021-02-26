@@ -101,7 +101,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       isSearchEnable ? getSearchTextField() : SizedBox(),
-                      isEmptyList
+                      /*isEmptyList
                           ? Expanded(
                               child: Center(
                                 child: Text(
@@ -110,7 +110,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                                 ),
                               ),
                             )
-                          : getListView(),
+                          :*/ getListView(),
                     ],
                   ),
                 ),
@@ -213,27 +213,37 @@ class _SelectionScreenState extends State<SelectionScreen> {
 
   getBackButtonAndTitleText() {
     return Container(
-      child: Padding(
-        padding: EdgeInsets.only(
-          left: getSize(16),
-          right: getSize(16),
-          top: getSize(10),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            getBackButton(context),
-            Text(
-              title,
-              style: appTheme.blackMedium20TitleColorblack,
-            ),
-          ],
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          getBackButton(context),
+          Text(
+            title,
+            style: appTheme.blackMedium20TitleColorblack,
+          ),
+        ],
       ),
     );
   }
 
   getListView() {
+    if (isNullEmptyOrFalse(options)) {
+      return Expanded(
+        child: Padding(
+          padding: EdgeInsets.all(getSize(20)),
+          child: Container(
+            child: Center(
+              child: Text(
+                  searchController.text.length > 0
+                      ? R.string.noDataStrings.noDataFound
+                      : "Type at least 3 words to search",
+                  textAlign: TextAlign.center,
+                  style: appTheme.black18TextStyle),
+            ),
+          ),
+        ),
+      );
+    }
     return Expanded(
       child: ListView.builder(
         shrinkWrap: true,

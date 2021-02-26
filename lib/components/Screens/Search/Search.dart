@@ -136,7 +136,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
 //            height: getSize(40),
             child: TextFormField(
               minLines: 1,
-              maxLines: /*isFromManual ? null :*/ 10,
+              maxLines: isFromManual ? null : 1,
               textAlignVertical: TextAlignVertical(y: 1.0),
               textInputAction: TextInputAction.search,
               focusNode: _focusSearch,
@@ -152,8 +152,8 @@ class _SearchScreenState extends StatefulScreenWidgetState {
               ],
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.only(
-                  top: getSize(0),
-                  bottom: getSize(10),
+                  top: getSize(10),
+                  bottom: getSize(20),
                   left: getSize(10),
                 ),
                 fillColor: fromHex("#FFEFEF"),
@@ -183,7 +183,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
                 ),
                 // suffix: widget.textOption.postfixWidOnFocus,
                 suffixIcon: Padding(
-                    padding: EdgeInsets.all(getSize(12)),
+                    padding: EdgeInsets.all(getSize(15)),
                     child: Image.asset(search,
                         height: getSize(16), width: getSize(16))),
               ),

@@ -102,6 +102,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   List<FilterOptions> optionList = List<FilterOptions>();
   Config config = Config();
   List<SelectStatusModel> selectStatusModel = [];
+  bool isCompanySelected = false;
+  bool isStatusSelected = false;
 
   //PopUp data for savedsearch...
   List<SelectionPopupModel> saveSearchList = List<SelectionPopupModel>();
@@ -139,6 +141,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     setState(() {
       //
     });
+    app.resolve<PrefUtils>().saveCompany(null);
+    if(app.resolve<PrefUtils>().getCompanyDetails()!=null){
+      isCompanySelected = true;
+    }
   }
 
   @override
@@ -298,7 +304,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
   @override
   Widget build(BuildContext context) {
-    app.resolve<PrefUtils>().saveCompany(null);
+//    app.resolve<PrefUtils>().saveCompany(null);
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus.unfocus();
@@ -336,10 +342,15 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                               applyFilterCallBack: (
                                   {List<SelectionPopupModel>
                                       multiSelectedItem}) {
-                                app.resolve<PrefUtils>().saveCompany(multiSelectedItem.first);
-                                print("------------------------------${app.resolve<PrefUtils>().getCompanyDetails().title}");
+                                isCompanySelected = true;
+                                app
+                                    .resolve<PrefUtils>()
+                                    .saveCompany(multiSelectedItem.first);
                                 selectedOptions.clear();
                                 selectedOptions.addAll(multiSelectedItem);
+                                setState(() {
+
+                                });
                               },
                             );
                           },
@@ -351,10 +362,31 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                         right: getSize(Spacing.rightPadding),
                         left: getSize(8.0),
                       ),
-                      child: Image.asset(
-                        buildingIcon,
-                        height: getSize(20),
-                        width: getSize(20),
+                      child: Stack(
+                        alignment: Alignment.topCenter,
+                        children: [
+                          Center(
+                            child: Image.asset(
+                              buildingIcon,
+                              height: getSize(20),
+                              width: getSize(20),
+                            ),
+                          ),
+                          Visibility(
+                            visible: isCompanySelected,
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                top: getSize(10),
+                              ),
+                              height: getSize(8),
+                              width: getSize(8),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: appTheme.colorPrimary,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                     ),
                   ),
@@ -949,6 +981,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               Map<String, dynamic> dict = new HashMap();
               dict["filterId"] = diamondListResp.data[0].filter.id;
               dict["filters"] = FilterRequest().createRequest(arrList);
+              dict['isCompanySelected'] = isCompanySelected ?? false;
               dict[ArgumentConstant.ModuleType] = moduleType;
               NavigationUtilities.pushRoute(DiamondListScreen.route,
                   args: dict);
@@ -957,6 +990,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             Map<String, dynamic> dict = new HashMap();
             dict["filterId"] = diamondListResp.data[0].filter.id;
             dict["filters"] = FilterRequest().createRequest(arrList);
+            dict['isCompanySelected'] = isCompanySelected ?? false;
             dict[ArgumentConstant.ModuleType] = moduleType;
             NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
           }
@@ -1050,6 +1084,8 @@ class _FilterItemState extends State<FilterItem> {
   final TextEditingController _searchStoneIdController =
       TextEditingController();
   var _focusSearchStoneId = FocusNode();
+  bool isManualSearch = true;
+  bool isAutoSearch = false;
 
   @override
   Widget build(BuildContext context) {
@@ -1147,7 +1183,7 @@ class _FilterItemState extends State<FilterItem> {
       children: [
 //        if (app.resolve<PrefUtils>().getUserDetails().type ==
 //            UserConstant.SALES)
-        Container(
+        /*Container(
           color: fromHex("#FAFAFA"),
           margin: EdgeInsets.only(
             top: getSize(20),
@@ -1255,8 +1291,8 @@ class _FilterItemState extends State<FilterItem> {
 //              );
             },
           ),
-        ),
-        /* Padding(
+        ),*/
+        Padding(
           padding: EdgeInsets.only(top: getSize(16.0), bottom: getSize(16.0)),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -1349,8 +1385,11 @@ class _FilterItemState extends State<FilterItem> {
                           onTap: () {
                             Map<String, dynamic> dict = new HashMap();
                             dict["isFromSearch"] = true;
-                            NavigationUtilities.pushRoute(SearchScreen.route,
-                                args: dict);
+                            dict["isFromManual"] = isManualSearch ?? true;
+                            NavigationUtilities.pushRoute(
+                              SearchScreen.route,
+                              args: dict,
+                            );
                           },
                         ),
                       ),
@@ -1358,29 +1397,77 @@ class _FilterItemState extends State<FilterItem> {
                   ),
                 ),
               ),
-              if (widget.moduleType !=
-                  DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH)
-                Center(
-                  child: InkWell(
-                    onTap: () {
-                      NavigationUtilities.pushRoute(VoiceSearch.route);
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        right: getSize(Spacing.leftPadding),
-                      ),
-                      child: Image.asset(
-                        microphone,
-                        alignment: Alignment.centerRight,
-                        width: getSize(26),
-                        height: getSize(26),
+              Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        isManualSearch = true;
+                        isAutoSearch = false;
+                        print(isManualSearch);
+                        setState(() {});
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(right: getSize(20)),
+                        child: Text(
+                          "M",
+                          style: appTheme.blue20TextStyle.copyWith(
+                            color: isManualSearch
+                                ? appTheme.blackColor
+                                : appTheme.textGray,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                )
+                    InkWell(
+                      onTap: () {
+                        isManualSearch = false;
+                        isAutoSearch = true;
+                        print(isAutoSearch);
+                        setState(() {});
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(right: getSize(20)),
+                        child: Text(
+                          "A",
+                          style: appTheme.blue20TextStyle.copyWith(
+                            color: isAutoSearch
+                                ? appTheme.blackColor
+                                : appTheme.textGray,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+//              if (widget.moduleType !=
+//                  DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH)
+//                Center(
+//                  child: InkWell(
+//                    onTap: () {
+////                      NavigationUtilities.pushRoute(VoiceSearch.route);
+//                    },
+//                    child: Padding(
+//                      padding: EdgeInsets.only(
+//                        right: getSize(Spacing.leftPadding),
+//                      ),
+//                      child: Image.asset(
+//                        microphone,
+//                        alignment: Alignment.centerRight,
+//                        width: getSize(26),
+//                        height: getSize(26),
+//                      ),
+//                    ),
+//                  ),
+//                )
             ],
           ),
-        ),*/
+        ),
       ],
     );
   }

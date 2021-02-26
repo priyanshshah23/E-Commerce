@@ -3,11 +3,13 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/components/Screens/Dialogue/SelectionScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
 import 'package:diamnow/components/Screens/SalesPerson/Widget/CellModel.dart';
 import 'package:diamnow/components/Screens/SalesPerson/Widget/CommonTextField.dart';
 import 'package:diamnow/components/Screens/SalesPerson/Widget/DropdownTextField.dart';
+import 'package:diamnow/components/widgets/shared/CommonDateTimePicker.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/Master/Master.dart';
@@ -39,7 +41,6 @@ class BuyNowScreen extends StatefulWidget {
 }
 
 class _BuyNowScreenState extends State<BuyNowScreen> {
-
   DiamondConfig diamondConfig;
   DiamondCalculation diamondCalculation = DiamondCalculation();
   DiamondCalculation diamondFinalCalculation = DiamondCalculation();
@@ -50,21 +51,23 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
   List<SelectionPopupModel> arrBillType = List<SelectionPopupModel>();
   List<SelectionPopupModel> arrTermType = List<SelectionPopupModel>();
   List<SelectionPopupModel> arrInvoiceType = getInvoiceArr();
-  SelectionPopupModel details= app.resolve<PrefUtils>().getCompanyDetails();
+  SelectionPopupModel details = app.resolve<PrefUtils>().getCompanyDetails();
+
+  String selectedDate;
+
   @override
   void initState() {
     super.initState();
     _arrDropDown = getDropdownTextFieldList();
     getBillType();
     getTermType();
-      diamondConfig =
-          DiamondConfig(widget.moduleType);
+    diamondConfig = DiamondConfig(widget.moduleType);
 
     manageDiamondCalculation();
     diamondConfig.initItems();
   }
 
-  getSelectedDetail(){
+  getSelectedDetail() {
     List<CellModel> arr = _arrDropDown
         .where((element) => element.type == CellType.Hold_Party)
         .toList();
@@ -74,7 +77,7 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
     List<CellModel> arr2 = _arrDropDown
         .where((element) => element.type == CellType.SalesPersonName)
         .toList();
-    if(details!=null){
+    if (details != null) {
       arr.first.userText = details.title;
       arr.first.id = details.id;
       arr1.first.userText = details.buyername;
@@ -355,6 +358,9 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
       modalBottomSheetMenu(context,
           title: "Select Invoice Type",
           selectionOptions: arrInvoiceType, callback: (model) {
+        if(model.id == "Later"){
+          openDatePicker();
+        }
         arrInvoiceType.forEach((value) => value.isSelected = false);
         arrInvoiceType.firstWhere((value) => value == model).isSelected = true;
         arr.first.userText = model.title;
@@ -530,6 +536,24 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
             );
       },
     );
+  }
+
+  openDatePicker() {
+    List<CellModel> arr = _arrDropDown
+        .where((element) => element.type == CellType.Invoice)
+        .toList();
+    openDateTimeDialog(context, (manageClick) {
+      setState(() {
+        selectedDate = manageClick.date;
+        arr.first.id = DateTime.parse(selectedDate).toUtc().toIso8601String();
+        arr.first.userText = DateUtilities().convertServerDateToFormatterString(
+            selectedDate,
+            formatter: DateUtilities.dd_mm_yyyy_);
+      });
+    },
+        isTime: false,
+        title: R.string.commonString.selectDate,
+        actionType: DiamondTrackConstant.TRACK_TYPE_OFFICE);
   }
 
   List<CellModel> getDropdownTextFieldList() {

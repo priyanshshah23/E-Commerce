@@ -248,7 +248,6 @@ class _MemoStoneScreenState extends State<MemoStoneScreen> {
                 List<CellModel> arr1 = _arrDropDown
                     .where((element) => element.type == CellType.Hold_Party)
                     .toList();
-                print("----------------------");
                 setState(() {
                   details = null;
                   arr.first.userText = multiSelectedItem.first.title;

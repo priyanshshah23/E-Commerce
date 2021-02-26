@@ -333,9 +333,33 @@ class DiamondConfig {
           list.add(BottomTabModel(
               title: "",
               image: buildingIcon,
-              code: BottomCodeConstant.TBCompanySelction,
+              code: BottomCodeConstant.TBCompanySelection,
               sequence: 0,
-              isCenter: true));
+              isCenter: true,
+           /* widget: Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                Center(
+                  child: Image.asset(
+                    buildingIcon,
+                    height: getSize(20),
+                    width: getSize(20),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    top: getSize(10),
+                  ),
+                  height: getSize(8),
+                  width: getSize(8),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: appTheme.colorPrimary,
+                  ),
+                )
+              ],
+            ),*/
+          ));
           list.add(BottomTabModel(
               title: "",
               image: selectAll,
