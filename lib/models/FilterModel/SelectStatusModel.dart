@@ -31,28 +31,29 @@ class SelectStatusModel {
       typeConstant: "Y",
     ),
     SelectStatusModel(
-      title: "Available On Result",
-      typeConstant: "C",
-    ),
-    SelectStatusModel(
-      title: "Reject",
+      title: "Reserved Sold",
       typeConstant: "R",
     ),
     SelectStatusModel(
-      title: "Blocked",
-      typeConstant: "B",
-    ),
-    SelectStatusModel(
-      title: "Recut Issue",
-      typeConstant: "K",
+      title: "Available On Result",
+      typeConstant: "C",
     ),
     SelectStatusModel(
       title: "Unreserved Sold",
       typeConstant: "U",
     ),
-    SelectStatusModel(
-      title: "Sold",
-      typeConstant: "O",
-    ),
+//    SelectStatusModel(
+//      title: "Blocked",
+//      typeConstant: "B",
+//    ),
+//    SelectStatusModel(
+//      title: "Recut Issue",
+//      typeConstant: "K",
+//    ),
+//
+//    SelectStatusModel(
+//      title: "Sold",
+//      typeConstant: "O",
+//    ),
   ];
 }

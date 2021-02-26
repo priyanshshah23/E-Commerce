@@ -50,7 +50,7 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
   List<SelectionPopupModel> arrBillType = List<SelectionPopupModel>();
   List<SelectionPopupModel> arrTermType = List<SelectionPopupModel>();
   List<SelectionPopupModel> arrInvoiceType = getInvoiceArr();
-
+  SelectionPopupModel details= app.resolve<PrefUtils>().getCompanyDetails();
   @override
   void initState() {
     super.initState();
@@ -62,6 +62,26 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
 
     manageDiamondCalculation();
     diamondConfig.initItems();
+  }
+
+  getSelectedDetail(){
+    List<CellModel> arr = _arrDropDown
+        .where((element) => element.type == CellType.Hold_Party)
+        .toList();
+    List<CellModel> arr1 = _arrDropDown
+        .where((element) => element.type == CellType.Hold_Buyer)
+        .toList();
+    List<CellModel> arr2 = _arrDropDown
+        .where((element) => element.type == CellType.SalesPersonName)
+        .toList();
+    if(details!=null){
+      arr.first.userText = details.title;
+      arr.first.id = details.id;
+      arr1.first.userText = details.buyername;
+      arr1.first.id = details.buyerId;
+      arr2.first.userText = details.subTitle;
+      arr2.first.id = details.subId;
+    }
   }
 
   manageDiamondCalculation() {
@@ -90,6 +110,7 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
 
   @override
   Widget build(BuildContext context) {
+    getSelectedDetail();
     return Scaffold(
       backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(
@@ -187,6 +208,7 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
                     .where((element) => element.type == CellType.Hold_Buyer)
                     .toList();
                 setState(() {
+                  details = null;
                   arr.first.userText = multiSelectedItem.first.title;
                   arr.first.id = multiSelectedItem.first.id;
                   arr1.first.userText = multiSelectedItem.first.subTitle;
@@ -222,11 +244,13 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
               isMultiSelectionEnable: false,
               applyFilterCallBack: (
                   {List<SelectionPopupModel> multiSelectedItem}) {
+                app.resolve<PrefUtils>().saveCompany(null);
                 List<CellModel> arr1 = _arrDropDown
                     .where((element) => element.type == CellType.Hold_Party)
                     .toList();
                 print("----------------------");
                 setState(() {
+                  details = null;
                   arr.first.userText = multiSelectedItem.first.title;
                   arr.first.id = multiSelectedItem.first.id;
                   arr1.first.userText = multiSelectedItem.first.subTitle;
@@ -259,6 +283,7 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
               isMultiSelectionEnable: false,
               applyFilterCallBack: (
                   {List<SelectionPopupModel> multiSelectedItem}) {
+                details = null;
                 arr.first.userText = multiSelectedItem.first.title;
                 arr.first.id = multiSelectedItem.first.id;
                 setState(() {});

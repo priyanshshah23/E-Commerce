@@ -33,6 +33,7 @@ class BottomCodeConstant {
   static const String TBDownloadView = "TB_DOWNLOAD_VIEW";
   static const String TBShare = "TB_SHARE";
   static const String TBClock = "TB_CLOCK";
+  static const String TBCompanySelction = "TB_COMPANY_SELECTION";
 
   static const String TBProfile = "TB_PROFILE";
   static const String TBNotification = "TB_NOTIFICATION";

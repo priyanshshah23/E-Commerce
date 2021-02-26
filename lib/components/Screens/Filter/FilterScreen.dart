@@ -320,7 +320,6 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 actionItems: [
                   InkWell(
                     onTap: () {
-
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -524,39 +523,41 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                     style: appTheme.black18TextStyle,
                   ),
                 ),
-                ListView.builder(
-                  itemCount: selectStatusModel.length,
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    var mapData = selectStatusModel[index];
-                    return Container(
-                      height: getSize(50),
-                      child: CheckboxListTile(
-                        title: Text(
-                          mapData.title,
-                          style: appTheme.black14TextStyle,
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: selectStatusModel.length,
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      var mapData = selectStatusModel[index];
+                      return Container(
+                        height: getSize(50),
+                        child: CheckboxListTile(
+                          title: Text(
+                            mapData.title,
+                            style: appTheme.black14TextStyle,
+                          ),
+                          value: mapData.isSelected,
+                          activeColor: appTheme.colorPrimary,
+                          onChanged: (newValue) {
+                            setsetter(() {
+                              mapData.isSelected = newValue;
+                              if (mapData.isSelected) {
+                                selectStatus.add(
+                                  mapData.typeConstant,
+                                );
+                              } else {
+                                selectStatus.removeWhere(
+                                  (element) => element == mapData.typeConstant,
+                                );
+                              }
+                            });
+                          },
+                          controlAffinity: ListTileControlAffinity
+                              .leading, //  <-- leading Checkbox
                         ),
-                        value: mapData.isSelected,
-                        activeColor: appTheme.colorPrimary,
-                        onChanged: (newValue) {
-                          setsetter(() {
-                            mapData.isSelected = newValue;
-                            if (mapData.isSelected) {
-                              selectStatus.add(
-                                mapData.typeConstant,
-                              );
-                            } else {
-                              selectStatus.removeWhere(
-                                (element) => element == mapData.typeConstant,
-                              );
-                            }
-                          });
-                        },
-                        controlAffinity: ListTileControlAffinity
-                            .leading, //  <-- leading Checkbox
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(

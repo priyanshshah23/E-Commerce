@@ -332,10 +332,16 @@ class DiamondConfig {
         } else {
           list.add(BottomTabModel(
               title: "",
+              image: buildingIcon,
+              code: BottomCodeConstant.TBCompanySelction,
+              sequence: 0,
+              isCenter: true));
+          list.add(BottomTabModel(
+              title: "",
               image: selectAll,
               selectedImage: selectList,
               code: BottomCodeConstant.TBSelectAll,
-              sequence: 0,
+              sequence: 1,
               isCenter: true));
           if (moduleType != DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR &&
               moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER &&
@@ -344,7 +350,7 @@ class DiamondConfig {
                 title: "",
                 image: gridView,
                 code: BottomCodeConstant.TBGrideView,
-                sequence: 1,
+                sequence: 2,
                 isCenter: true));
           }
           if (moduleType != DiamondModuleConstant.MODULE_TYPE_UPCOMING &&
@@ -353,7 +359,7 @@ class DiamondConfig {
                 title: "",
                 image: filter,
                 code: BottomCodeConstant.TBSortView,
-                sequence: 2,
+                sequence: 3,
                 isCenter: true));
           }
           // if (app
@@ -362,17 +368,17 @@ class DiamondConfig {
           //         .downloadExcel ==
           //     true && if (moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {) {
 
-          if (moduleType == DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK ||
-              moduleType ==
-                  DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
-          } else {
-            list.add(BottomTabModel(
-                title: "",
-                image: download,
-                code: BottomCodeConstant.TBDownloadView,
-                sequence: 3,
-                isCenter: true));
-          }
+//          if (moduleType == DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK ||
+//              moduleType ==
+//                  DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+//          } else {
+//            list.add(BottomTabModel(
+//                title: "",
+//                image: download,
+//                code: BottomCodeConstant.TBDownloadView,
+//                sequence: 4,
+//                isCenter: true));
+//          }
         }
         break;
     }

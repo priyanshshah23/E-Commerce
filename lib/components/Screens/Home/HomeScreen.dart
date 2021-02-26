@@ -74,8 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       //Kyc rejected
-      if (user.isApproved == KYCStatus.rejected &&
-          user.isKycUploaded == true) {
+      if (user.isApproved == KYCStatus.rejected && user.isKycUploaded == true) {
         Timer(
           Duration(seconds: 2),
           () => (app.resolve<CustomDialogs>().confirmDialog(context,
@@ -136,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<bool> _onWillPop(BuildContext context) {
     if (!Navigator.of(context).canPop()) {
-      if (selectedType == DiamondModuleConstant.MODULE_TYPE_HOME) {
+      if (selectedType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
         app.resolve<CustomDialogs>().confirmDialog(context,
             title: APPNAME,
             desc: R.string.commonString.lblAppExit,
@@ -146,11 +145,12 @@ class _HomeScreenState extends State<HomeScreen> {
           if (btnType == ButtonType.PositveButtonClick) {
             //  Navigator.pop(context);
             SystemNavigator.pop();
+            app.resolve<PrefUtils>().saveCompany(null);
           }
         });
       } else {
         manageDrawerClick(
-            context, DiamondModuleConstant.MODULE_TYPE_HOME, false);
+            context, DiamondModuleConstant.MODULE_TYPE_SEARCH, false);
       }
     } else {
       return Future.value(true);

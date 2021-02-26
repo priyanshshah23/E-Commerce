@@ -37,6 +37,7 @@ class _MemoStoneScreenState extends State<MemoStoneScreen> {
   List<CellModel> _arrDropDown;
   bool _autovalidate = false;
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  SelectionPopupModel details = app.resolve<PrefUtils>().getCompanyDetails();
 
   @override
   void initState() {
@@ -49,8 +50,29 @@ class _MemoStoneScreenState extends State<MemoStoneScreen> {
     );
   }
 
+  getSelectedDetail() {
+    List<CellModel> arr = _arrDropDown
+        .where((element) => element.type == CellType.Hold_Party)
+        .toList();
+    List<CellModel> arr1 = _arrDropDown
+        .where((element) => element.type == CellType.Hold_Buyer)
+        .toList();
+    List<CellModel> arr2 = _arrDropDown
+        .where((element) => element.type == CellType.SalesPersonName)
+        .toList();
+    if (details != null) {
+      arr.first.userText = details.title;
+      arr.first.id = details.id;
+      arr1.first.userText = details.buyername;
+      arr1.first.id = details.buyerId;
+      arr2.first.userText = details.subTitle;
+      arr2.first.id = details.subId;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    getSelectedDetail();
     return Scaffold(
       backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(
@@ -187,6 +209,7 @@ class _MemoStoneScreenState extends State<MemoStoneScreen> {
                     .where((element) => element.type == CellType.Hold_Buyer)
                     .toList();
                 setState(() {
+                  details = null;
                   arr.first.userText = multiSelectedItem.first.title;
                   arr.first.id = multiSelectedItem.first.id;
                   arr1.first.userText = multiSelectedItem.first.subTitle;
@@ -227,6 +250,7 @@ class _MemoStoneScreenState extends State<MemoStoneScreen> {
                     .toList();
                 print("----------------------");
                 setState(() {
+                  details = null;
                   arr.first.userText = multiSelectedItem.first.title;
                   arr.first.id = multiSelectedItem.first.id;
                   arr1.first.userText = multiSelectedItem.first.subTitle;
@@ -259,6 +283,7 @@ class _MemoStoneScreenState extends State<MemoStoneScreen> {
               isMultiSelectionEnable: false,
               applyFilterCallBack: (
                   {List<SelectionPopupModel> multiSelectedItem}) {
+                details = null;
                 arr.first.userText = multiSelectedItem.first.title;
                 arr.first.id = multiSelectedItem.first.id;
                 setState(() {});
@@ -383,20 +408,20 @@ class _MemoStoneScreenState extends State<MemoStoneScreen> {
       successCallback: (response, message) {
         app.resolve<CustomDialogs>().hideProgressDialog();
         app.resolve<CustomDialogs>().confirmDialog(
-          context,
-          title: "",
-          desc: message,
-          positiveBtnTitle: R.string.commonString.ok,
-        );
+              context,
+              title: "",
+              desc: message,
+              positiveBtnTitle: R.string.commonString.ok,
+            );
       },
       failureCallback: (status, message) {
         app.resolve<CustomDialogs>().hideProgressDialog();
         app.resolve<CustomDialogs>().confirmDialog(
-          context,
-          title: "",
-          desc: message,
-          positiveBtnTitle: R.string.commonString.ok,
-        );
+              context,
+              title: "",
+              desc: message,
+              positiveBtnTitle: R.string.commonString.ok,
+            );
       },
     );
   }

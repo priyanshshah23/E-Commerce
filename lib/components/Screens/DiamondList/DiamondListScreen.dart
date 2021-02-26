@@ -12,9 +12,11 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/utils/AnalyticsReport.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
+import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/CommonWidget/OverlayScreen.dart';
+import 'package:diamnow/components/Screens/Dialogue/SelectionScreen.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
@@ -25,6 +27,7 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondSquareGridI
 import 'package:diamnow/components/Screens/DiamondList/Widget/FinalCalculation.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
+import 'package:diamnow/components/Screens/SalesPerson/Widget/CellModel.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/AnalyticsModel/AnalyticsModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
@@ -1065,6 +1068,29 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   manageToolbarClick(BottomTabModel model) {
     switch (model.code) {
+      case BottomCodeConstant.TBCompanySelction:
+        Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) {
+            return SelectionScreen(
+              title: "Select Company",
+              hintText: "Select Company",
+              positiveButtonTitle: "Apply",
+              negativeButtonTitle: "Cancel",
+              isSearchEnable: true,
+              type: CellType.Hold_Party,
+              isMultiSelectionEnable: false,
+              applyFilterCallBack: (
+                  {List<SelectionPopupModel>
+                  multiSelectedItem}) {
+                app.resolve<PrefUtils>().saveCompany(multiSelectedItem.first);
+              },
+            );
+          },
+        ),
+      );
+        break;
       case BottomCodeConstant.TBSelectAll:
         model.isSelected = !model.isSelected;
         setSelectAllDiamond(model);
