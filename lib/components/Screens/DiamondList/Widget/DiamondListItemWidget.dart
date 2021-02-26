@@ -964,7 +964,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                         app.resolve<CustomDialogs>().confirmDialog(
                               context,
                               title: R.string.screenTitle.remarks,
-                              desc: widget.item.purpose ?? "-",
+                              desc: widget.item.remarks ?? "-",
                               positiveBtnTitle: R.string.commonString.ok,
                             );
                       },

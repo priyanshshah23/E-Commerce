@@ -176,7 +176,7 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
       backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(
         context,
-        diamondModel.stoneId.toString(),
+        diamondModel?.vStnId?.toString() ?? "-",
         bgColor: appTheme.whiteColor,
         leadingButton: getBackButton(context),
         centerTitle: false,
