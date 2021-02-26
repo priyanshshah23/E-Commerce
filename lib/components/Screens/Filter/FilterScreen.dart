@@ -298,6 +298,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
   @override
   Widget build(BuildContext context) {
+    app.resolve<PrefUtils>().saveCompany(null);
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus.unfocus();
