@@ -112,7 +112,14 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   void initState() {
     super.initState();
     registerRsBus();
+    if (selectStatus != null && selectStatus.length > 0) {
+      isStatusSelected = true;
+    }
     selectStatusModel.addAll(SelectStatusModel.dynamicList);
+    selectStatusModel.forEach((element) {
+      element.isSelected = false;
+    });
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       config.getFilterJson().then((result) {
         setState(() {
@@ -142,7 +149,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       //
     });
     app.resolve<PrefUtils>().saveCompany(null);
-    if(app.resolve<PrefUtils>().getCompanyDetails()!=null){
+    if (app.resolve<PrefUtils>().getCompanyDetails() != null) {
       isCompanySelected = true;
     }
   }
@@ -304,6 +311,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
   @override
   Widget build(BuildContext context) {
+    if (selectStatus != null && selectStatus.length > 0) {
+      isStatusSelected = true;
+    }
 //    app.resolve<PrefUtils>().saveCompany(null);
     return GestureDetector(
       onTap: () {
@@ -348,9 +358,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                                     .saveCompany(multiSelectedItem.first);
                                 selectedOptions.clear();
                                 selectedOptions.addAll(multiSelectedItem);
-                                setState(() {
-
-                                });
+                                setState(() {});
                               },
                             );
                           },
@@ -392,17 +400,38 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                   ),
                   InkWell(
                     onTap: () {
-                      openDialogueForSelectStatus();
+                      openDialogueForSelectStatus(context);
                     },
                     child: Padding(
                       padding: EdgeInsets.only(
                         right: getSize(Spacing.rightPadding),
                         left: getSize(8.0),
                       ),
-                      child: Image.asset(
-                        descendantIcon,
-                        height: getSize(20),
-                        width: getSize(20),
+                      child: Stack(
+                        alignment: Alignment.topCenter,
+                        children: [
+                          Center(
+                            child: Image.asset(
+                              descendantIcon,
+                              height: getSize(20),
+                              width: getSize(20),
+                            ),
+                          ),
+                          Visibility(
+                            visible: isStatusSelected,
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                top: getSize(10),
+                              ),
+                              height: getSize(8),
+                              width: getSize(8),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: appTheme.colorPrimary,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                     ),
                   ),
@@ -526,11 +555,23 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   }
 
   List<String> selectStatus = [];
+  List<String> oldSelectStatus = [];
 
-  openDialogueForSelectStatus() {
+  openDialogueForSelectStatus(BuildContext context) {
     return showDialog(
       context: context,
-      builder: (context) {
+      builder: (BuildContext localContext) {
+//        selectStatusModel.forEach((element) {
+//          selectStatus.forEach((item) {
+//                print(element.typeConstant);
+//                print(item);
+//                print(element.typeConstant == item);
+//            if (element.typeConstant == item) {
+//              element.isSelected = true;
+////              selectStatus.add(element.typeConstant);
+//            }
+//          });
+//        });
         return Dialog(
           insetPadding: EdgeInsets.symmetric(
             horizontal: getSize(20),
@@ -541,7 +582,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               getSize(25),
             ),
           ),
-          child: StatefulBuilder(builder: (context, StateSetter setsetter) {
+          child: StatefulBuilder(builder: (localContext, StateSetter setState) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
@@ -556,41 +597,27 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                     style: appTheme.black18TextStyle,
                   ),
                 ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: selectStatusModel.length,
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, int index) {
-                      var mapData = selectStatusModel[index];
-                      return Container(
-                        height: getSize(50),
-                        child: CheckboxListTile(
-                          title: Text(
-                            mapData.title,
-                            style: appTheme.black14TextStyle,
-                          ),
-                          value: mapData.isSelected,
-                          activeColor: appTheme.colorPrimary,
-                          onChanged: (newValue) {
-                            setsetter(() {
-                              mapData.isSelected = newValue;
-                              if (mapData.isSelected) {
-                                selectStatus.add(
-                                  mapData.typeConstant,
-                                );
-                              } else {
-                                selectStatus.removeWhere(
-                                  (element) => element == mapData.typeConstant,
-                                );
-                              }
-                            });
-                          },
-                          controlAffinity: ListTileControlAffinity
-                              .leading, //  <-- leading Checkbox
-                        ),
-                      );
-                    },
-                  ),
+                ListView.builder(
+                  itemCount: selectStatusModel.length,
+                  shrinkWrap: true,
+                  itemBuilder: (localContext, int index) {
+                    var mapData = selectStatusModel[index];
+                    return CheckboxListTile(
+                      title: Text(
+                        mapData.title,
+                        style: appTheme.black14TextStyle,
+                      ),
+                      value: mapData.isSelected,
+                      activeColor: appTheme.colorPrimary,
+                      onChanged: (newValue) {
+                        setState(() {
+                          mapData.isSelected = newValue;
+                        });
+                      },
+                      controlAffinity: ListTileControlAffinity
+                          .leading, //  <-- leading Checkbox
+                    );
+                  },
                 ),
                 Padding(
                   padding: EdgeInsets.only(
@@ -607,10 +634,22 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                           ),
                           child: AppButton.flat(
                             onTap: () {
-                              Navigator.pop(context);
+                              selectStatus = oldSelectStatus;
                               selectStatusModel.forEach((element) {
                                 element.isSelected = false;
                               });
+                              selectStatusModel.forEach((element) {
+                                selectStatus.forEach((item) {
+                                  print(element.typeConstant);
+                                  print(item);
+                                  print(element.typeConstant == item);
+                                  if (element.typeConstant == item) {
+                                    element.isSelected = true;
+                                  }
+                                });
+                              });
+                              Navigator.pop(context, true);
+                              setState(() {});
                             },
                             text: "cancel",
                             borderRadius: getSize(5),
@@ -628,7 +667,21 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                           ),
                           child: AppButton.flat(
                             onTap: () {
+                              selectStatus.clear();
+                              selectStatusModel.forEach((element) {
+                                if (element.isSelected) {
+                                  selectStatus.add(element.typeConstant);
+                                }
+                              });
+                              selectStatus = selectStatus.toSet().toList();
+                              oldSelectStatus = selectStatus;
+                              if (selectStatus.length > 0) {
+                                isStatusSelected = true;
+                              } else {
+                                isStatusSelected = false;
+                              }
                               print(selectStatus);
+                              Navigator.pop(context, true);
                             },
                             text: "Apply",
                             backgroundColor: appTheme.colorPrimary,
@@ -645,7 +698,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           }),
         );
       },
-    );
+    ).then((value) {
+      setState(() {});
+    });
   }
 
   setTitleOfSegment(String title, int index) {
@@ -946,7 +1001,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
     SyncManager.instance.callApiForDiamondList(
       context,
-      FilterRequest().createRequest(arrList),
+      FilterRequest().createRequest(arrList, selectedStatus: selectStatus),
       (diamondListResp) {
         if (isSavedSearch) {
           openBottomSheetForSavedSearch(
