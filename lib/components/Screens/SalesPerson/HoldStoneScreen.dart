@@ -1,6 +1,7 @@
 import 'package:diamnow/app/Helper/NetworkClient.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Dialogue/SelectionScreen.dart';
@@ -35,6 +36,9 @@ class HoldStoneScreen extends StatefulWidget {
 
 class _HoldStoneScreenState extends State<HoldStoneScreen> {
   DiamondCalculation diamondCalculation = DiamondCalculation();
+  DiamondCalculation diamondFinalCalculation = DiamondCalculation();
+  DiamondConfig diamondConfig;
+
   List<CellModel> _arrDropDown;
   bool _autovalidate = false;
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
@@ -44,11 +48,21 @@ class _HoldStoneScreenState extends State<HoldStoneScreen> {
   void initState() {
     super.initState();
     _arrDropDown = getDropdownTextFieldList();
+    diamondConfig = DiamondConfig(DiamondModuleConstant.MODULE_TYPE_SEARCH);
+
+    manageDiamondCalculation();
+    diamondConfig.initItems();
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => setState(() {
 //        _arrDropDown = getDropdownTextFieldList();
       }),
     );
+  }
+
+  manageDiamondCalculation() {
+    diamondFinalCalculation.setAverageCalculation(widget.diamondList,
+        isFinalCalculation: true);
+    diamondCalculation.setAverageCalculation(widget.diamondList);
   }
 
   getSelectedDetail(){
@@ -352,7 +366,14 @@ class _HoldStoneScreenState extends State<HoldStoneScreen> {
           context,
           title: "",
           desc: message,
+          barrierDismissible: false,
+          dismissPopup: true,
           positiveBtnTitle: R.string.commonString.ok,
+            onClickCallback: (buttonType) {
+              if (buttonType == ButtonType.PositveButtonClick) {
+                Navigator.pop(context, true);
+              }
+            }
         );
       },
       failureCallback: (status, message) {

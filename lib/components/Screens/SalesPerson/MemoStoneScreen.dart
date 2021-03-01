@@ -1,6 +1,7 @@
 import 'package:diamnow/app/Helper/NetworkClient.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Dialogue/SelectionScreen.dart';
@@ -34,6 +35,8 @@ class MemoStoneScreen extends StatefulWidget {
 
 class _MemoStoneScreenState extends State<MemoStoneScreen> {
   DiamondCalculation diamondCalculation = DiamondCalculation();
+  DiamondCalculation diamondFinalCalculation = DiamondCalculation();
+  DiamondConfig diamondConfig;
   List<CellModel> _arrDropDown;
   bool _autovalidate = false;
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
@@ -43,11 +46,20 @@ class _MemoStoneScreenState extends State<MemoStoneScreen> {
   void initState() {
     super.initState();
     _arrDropDown = getDropdownTextFieldList();
+    diamondConfig = DiamondConfig(DiamondModuleConstant.MODULE_TYPE_SEARCH);
+    manageDiamondCalculation();
+    diamondConfig.initItems();
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => setState(() {
 //        _arrDropDown = getDropdownTextFieldList();
       }),
     );
+  }
+
+  manageDiamondCalculation() {
+    diamondFinalCalculation.setAverageCalculation(widget.diamondList,
+        isFinalCalculation: true);
+    diamondCalculation.setAverageCalculation(widget.diamondList);
   }
 
   getSelectedDetail() {
@@ -410,7 +422,14 @@ class _MemoStoneScreenState extends State<MemoStoneScreen> {
               context,
               title: "",
               desc: message,
-              positiveBtnTitle: R.string.commonString.ok,
+            barrierDismissible: false,
+            dismissPopup: true,
+            positiveBtnTitle: R.string.commonString.ok,
+            onClickCallback: (buttonType) {
+              if (buttonType == ButtonType.PositveButtonClick) {
+                Navigator.pop(context, true);
+              }
+            }
             );
       },
       failureCallback: (status, message) {

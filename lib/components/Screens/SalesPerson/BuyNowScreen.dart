@@ -1,6 +1,7 @@
 import 'package:diamnow/app/Helper/NetworkClient.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
@@ -358,7 +359,7 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
       modalBottomSheetMenu(context,
           title: "Select Invoice Type",
           selectionOptions: arrInvoiceType, callback: (model) {
-        if(model.id == "Later"){
+        if (model.id == "Later") {
           openDatePicker();
         }
         arrInvoiceType.forEach((value) => value.isSelected = false);
@@ -519,12 +520,17 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
       headers: NetworkClient.getInstance.getAuthHeaders(),
       successCallback: (response, message) {
         app.resolve<CustomDialogs>().hideProgressDialog();
-        app.resolve<CustomDialogs>().confirmDialog(
-              context,
-              title: "",
-              desc: message,
-              positiveBtnTitle: R.string.commonString.ok,
-            );
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            title: "",
+            desc: message,
+            barrierDismissible: false,
+            dismissPopup: true,
+            positiveBtnTitle: R.string.commonString.ok,
+            onClickCallback: (buttonType) {
+          if (buttonType == ButtonType.PositveButtonClick) {
+            Navigator.pop(context, true);
+          }
+        });
       },
       failureCallback: (status, message) {
         app.resolve<CustomDialogs>().hideProgressDialog();

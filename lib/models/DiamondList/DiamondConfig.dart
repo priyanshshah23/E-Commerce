@@ -383,12 +383,12 @@ class DiamondConfig {
           } else {
             if (app.resolve<PrefUtils>().getUserDetails().type ==
                 UserConstant.CUSTOMER)
-            list.add(BottomTabModel(
-                title: "",
-                image: download,
-                code: BottomCodeConstant.TBDownloadView,
-                sequence: 4,
-                isCenter: true));
+              list.add(BottomTabModel(
+                  title: "",
+                  image: download,
+                  code: BottomCodeConstant.TBDownloadView,
+                  sequence: 4,
+                  isCenter: true));
           }
         }
         break;
@@ -417,7 +417,7 @@ class DiamondConfig {
         actionAddToWishList(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_PLACE_ORDER:
-        actionBuyNow(context, list);
+        actionBuyNow(context, list, refreshList);
 //        actionPlaceOrder(context, list, refreshList);
         break;
       case ActionMenuConstant.ACTION_TYPE_REMINDER:
@@ -436,10 +436,10 @@ class DiamondConfig {
         actionAppointment(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_HOLD:
-        actionHold(context, list);
+        actionHold(context, list,refreshList);
         break;
       case ActionMenuConstant.ACTION_TYPE_MEMO:
-        actionMemo(context, list);
+        actionMemo(context, list,refreshList);
         break;
       case ActionMenuConstant.ACTION_TYPE_DOWNLOAD:
         actionDownload(context, list);
@@ -728,7 +728,8 @@ class DiamondConfig {
     });*/
   }
 
-  actionBuyNow(BuildContext context, List<DiamondModel> list) {
+  actionBuyNow(
+      BuildContext context, List<DiamondModel> list, Function refreshList) {
     List<DiamondModel> selectedList = [];
     DiamondModel model;
     list.forEach((element) {
@@ -745,11 +746,11 @@ class DiamondConfig {
           builder: (context) => BuyNowScreen(dict),
         ))
         .then((value) => {
-//Navigator.pop(context, true)
+              if (value != null && value) {refreshList()}
             });
   }
 
-  actionHold(BuildContext context, List<DiamondModel> list) {
+  actionHold(BuildContext context, List<DiamondModel> list,Function refreshList) {
     List<DiamondModel> selectedList = [];
     DiamondModel model;
     list.forEach((element) {
@@ -766,11 +767,11 @@ class DiamondConfig {
           builder: (context) => HoldStoneScreen(dict),
         ))
         .then((value) => {
-//Navigator.pop(context, true)
+      if (value != null && value) {refreshList()}
             });
   }
 
-  actionMemo(BuildContext context, List<DiamondModel> list) {
+  actionMemo(BuildContext context, List<DiamondModel> list,Function refreshList) {
     List<DiamondModel> selectedList = [];
     DiamondModel model;
     list.forEach((element) {
@@ -788,8 +789,7 @@ class DiamondConfig {
           builder: (context) => MemoStoneScreen(dict),
         ))
         .then((value) => {
-// Navigator.pop(context, true)
-            });
+      if (value != null && value) {refreshList()}            });
   }
 
   actionDownloadOffline(BuildContext context, Function refreshList,

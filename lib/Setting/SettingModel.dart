@@ -501,6 +501,15 @@ class BottomMenuSetting {
   List<BottomTabModel> getMoreMenuItems(
       {bool isDetail = false, bool isCompare = false}) {
     List<BottomTabModel> moreMenuList = [];
+    if (app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES &&
+        moduleType != DiamondModuleConstant.MODULE_TYPE_MY_CART) {
+      addCartInBottomMenu(moreMenuList);
+    }
+    if (app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES &&
+        moduleType != DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST) {
+      addWatchlistInBottomMenu(moreMenuList,home_watchlist);
+    }
+
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ORDER) {
       if (moduleType == DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY) {
         addPlaceOrderInBottomMenu(moreMenuList, placeOrder);
