@@ -112,6 +112,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   void initState() {
     super.initState();
     registerRsBus();
+    selectStatusModel = [];
     if (selectStatus != null && selectStatus.length > 0) {
       isStatusSelected = true;
     }
@@ -356,8 +357,6 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                                 app
                                     .resolve<PrefUtils>()
                                     .saveCompany(multiSelectedItem.first);
-                                selectedOptions.clear();
-                                selectedOptions.addAll(multiSelectedItem);
                                 setState(() {});
                               },
                             );
