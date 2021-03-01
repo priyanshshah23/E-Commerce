@@ -80,6 +80,15 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
         .toUtc();
     req["date"] = DateUtilities().getStartOfDay(date).toUtc().toIso8601String();
     req["type"] = 2;
+    req["start"] = DateUtilities()
+        .getSpecificTimeOfDate(date, 9, 30, 00)
+        .toUtc()
+        .toIso8601String();
+    req["end"] = DateUtilities()
+        .getSpecificTimeOfDate(date, 5, 00, 00)
+        .toUtc()
+        .toIso8601String();
+
     req["meetingType"] =
         _virtualTypeController.text == VirtualTypesString.phoneCall
             ? VirtualTypes.phoneCall
@@ -102,8 +111,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
       app.resolve<CustomDialogs>().confirmDialog(context,
           title: "",
           desc: resp.message,
-          positiveBtnTitle: R.string.commonString.ok,
-          onClickCallback: (type) {
+          positiveBtnTitle: R.string.commonString.ok, onClickCallback: (type) {
         Navigator.pop(context);
       });
     }).catchError((onError) {

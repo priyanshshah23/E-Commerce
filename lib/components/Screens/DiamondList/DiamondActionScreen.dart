@@ -311,12 +311,12 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                                     diamondConfig: diamondConfig,
                                     diamondList: diamondList,
                                     actionType: actionType,
-                                    callBack: (selectedPopUpDate) {
+                                    callBack: (selectedPopUpDate, remark) {
                                       diamondConfig.actionAll(
                                         context,
                                         diamondList,
                                         actionType,
-                                        remark: _commentController.text.trim(),
+                                        remark: remark,
                                         date: selectedPopUpDate,
                                         companyName:
                                             _nameController.text.trim(),
@@ -340,6 +340,11 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                                   ),
                                   child: OfferPopup(
                                     actionType: actionType,
+                                    isFromOfferUpdate:
+                                        this.isOfferUpdate ?? false,
+                                    date: this.isOfferUpdate ?? false
+                                        ? diamondList.first.offerValidDate
+                                        : null,
                                     callBack: (selectedPopUpDate, remark) {
                                       if (actionType ==
                                           DiamondTrackConstant
@@ -547,6 +552,8 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
     Map<String, dynamic> req = {};
     req["purpose"] = comment;
     req["date"] = pickedDate;
+    req["start"] = pickedDate;
+    req["end"] = pickedDate;
     req["type"] = 2;
     req["meetingType"] = 2;
     req["cabinSlot"] = [

@@ -9,11 +9,9 @@ CachedNetworkImage getImageView(String url,
     {String finalUrl,
     height = 100.0,
     width = 100.0,
-      double errorHeight = 100.0,
-      double errorWidth = 100.0,
     placeHolderImage = diamond,
     fit: BoxFit.contain,
-      bool isFitApply = true,
+    bool isFitApply = true,
     Decoration shape}) {
   String imageUrl = !isNullEmptyOrFalse(finalUrl)
       ? finalUrl
@@ -22,6 +20,7 @@ CachedNetworkImage getImageView(String url,
           : ((url.startsWith("images") || url.startsWith("/"))
               ? (ApiConstants.imageBaseURL + url)
               : url);
+  // imageUrl = imageUrl.replaceFirst("https", "http");
   return new CachedNetworkImage(
     height: height,
     width: width,
@@ -33,11 +32,11 @@ CachedNetworkImage getImageView(String url,
       decoration: shape != null ? shape : null,
       child: isStringEmpty(imageUrl)
           ? Image.asset(
-                placeHolderImage,
-                width: errorWidth,
-                height: errorHeight,
-                fit: isFitApply ? fit : null,
-              )
+              placeHolderImage,
+              width: width,
+              height: height,
+              fit: isFitApply ? fit : null,
+            )
           : SpinKitFadingCircle(
               color: appTheme.colorPrimary,
               size: getSize(20),
@@ -47,8 +46,8 @@ CachedNetworkImage getImageView(String url,
       placeHolderImage == null || placeHolderImage.length == 0
           ? placeHolder
           : placeHolderImage,
-      width: errorWidth,
-      height: errorHeight,
+      width: width,
+      height: height,
       fit: isFitApply ? fit : null,
     ),
   );

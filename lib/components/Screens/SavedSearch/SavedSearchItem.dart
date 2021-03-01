@@ -571,15 +571,15 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
         arrData.add(displayDataKeyValue);
       }
 
-      if (!isNullEmptyOrFalse(displayDataClass.wSts)) {
-        Map<String, String> displayDataKeyValue = {};
-        displayDataKeyValue["key"] = "Web Status";
-        for (int i = 0; i < displayDataClass.wSts.length; i++) {
-          displayDataKeyValue["value"] = displayDataClass.wSts.join(", ");
-        }
-
-        arrData.add(displayDataKeyValue);
-      }
+//      if (!isNullEmptyOrFalse(displayDataClass.wSts)) {
+//        Map<String, String> displayDataKeyValue = {};
+//        displayDataKeyValue["key"] = "Web Status";
+//        for (int i = 0; i < displayDataClass.wSts.length; i++) {
+//          displayDataKeyValue["value"] = displayDataClass.wSts.join(", ");
+//        }
+//
+//        arrData.add(displayDataKeyValue);
+//      }
 
       if (!isNullEmptyOrFalse(displayDataClass.isCm)) {
         Map<String, String> displayDataKeyValue = {};

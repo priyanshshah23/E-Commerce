@@ -24,6 +24,7 @@ class _BottomTabbarWidgetState extends State<BottomTabbarWidget> {
           height: getSize(60),
           color: appTheme.colorPrimary,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               for (var i = 0; i < widget.arrBottomTab.length; i++)
                 InkWell(
@@ -34,6 +35,7 @@ class _BottomTabbarWidgetState extends State<BottomTabbarWidget> {
                     }
                   },
                   child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: getSize(10)),
                     width: MathUtilities.screenWidth(context) /
                         widget.arrBottomTab.length,
                     color: widget.arrBottomTab[i].getBackgroundColor(),
@@ -72,17 +74,25 @@ class _BottomTabbarWidgetState extends State<BottomTabbarWidget> {
                           ),
                           if (widget.arrBottomTab[i].isCenter == false)
                             SizedBox(
-                              height: getSize(8),
+                              height: i == 0 ? getSize(10) : getSize(8),
                             ),
                           if (widget.arrBottomTab[i].isCenter == false)
-                            FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Text(
-                                widget.arrBottomTab[i].title,
-                                style: appTheme.getTabbarTextStyle(
-                                    textColor:
-                                        widget.arrBottomTab[i].getTextColor()),
-                                textAlign: TextAlign.center,
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: i == 0 ? getSize(5) : getSize(0),
+                                right: i == widget.arrBottomTab.length - 1
+                                    ? getSize(5)
+                                    : getSize(0),
+                              ),
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  widget.arrBottomTab[i].title,
+                                  style: appTheme.getTabbarTextStyle(
+                                      textColor: widget.arrBottomTab[i]
+                                          .getTextColor()),
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
                             ),
                         ],

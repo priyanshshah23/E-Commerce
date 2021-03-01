@@ -2,24 +2,24 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/ImageConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/Home/DrawerModel.dart';
-import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
-import 'package:diamnow/models/LoginModel.dart';
 
 class DrawerSetting {
   List<DrawerModel> getDrawerItems() {
     List<DrawerModel> drawerList = [];
-//    if (app
-//        .resolve<PrefUtils>()
-//        .getModulePermission(ModulePermissionConstant.permission_dashboard)
-//        .view)
-//      drawerList.add(DrawerModel(
-//        image: home,
-//        title: R.string.screenTitle.home,
-//        isSelected: true,
-//        type: DiamondModuleConstant.MODULE_TYPE_HOME,
-//      ));
+    if (app.resolve<PrefUtils>().getUserDetails().type ==
+            UserConstant.CUSTOMER &&
+        app
+            .resolve<PrefUtils>()
+            .getModulePermission(ModulePermissionConstant.permission_dashboard)
+            .view)
+      drawerList.add(DrawerModel(
+        image: home,
+        title: R.string.screenTitle.home,
+        isSelected: true,
+        type: DiamondModuleConstant.MODULE_TYPE_HOME,
+      ));
     if (app
         .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_searchDiamond)
@@ -506,12 +506,16 @@ class BottomMenuSetting {
         addPlaceOrderInBottomMenu(moreMenuList, placeOrder);
       }
     }
-    if (!isDetail && !isCompare) {
-      if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
-          moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
-          moduleType !=
-              DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
-        addCompareInBottomMenu(moreMenuList, compare);
+    if ((app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
+            KYCStatus.pending) ==
+        KYCStatus.approved) {
+      if (!isDetail && !isCompare) {
+        if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
+            moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
+            moduleType !=
+                DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+          addCompareInBottomMenu(moreMenuList, compare);
+        }
       }
     }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
@@ -611,81 +615,150 @@ class BottomMenuSetting {
 
         break;
       default:
-
-
-        if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY ||
-            moduleType == DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST ||
-            moduleType == DiamondModuleConstant.MODULE_TYPE_MY_CART ||
-            moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER ||
-            moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH ||
-            moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL ||
-            moduleType == DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH ||
-            moduleType == DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {
-          addPlaceOrderInBottomMenu(moreMenuList, placeOrder, isCenter: false);
-        }
-
+        if (app.resolve<PrefUtils>().getUserDetails().type ==
+            UserConstant.SALES) {
+          if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY ||
+              moduleType == DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST ||
+              moduleType == DiamondModuleConstant.MODULE_TYPE_MY_CART ||
+              moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER ||
+              moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH ||
+              moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL ||
+              moduleType == DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH ||
+              moduleType == DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {
+            addPlaceOrderInBottomMenu(moreMenuList, placeOrder,
+                isCenter: false);
+          }
 
 //
-        if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_HOLD) {
-          addHoldInBottomMenu(moreMenuList, sale_hold,
-              isCenter: false);
-        }
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_HOLD) {
+            addHoldInBottomMenu(moreMenuList, sale_hold, isCenter: false);
+          }
 
-        if (moduleType != DiamondModuleConstant.MODULE_TYPE_MEMO) {
-          addMemoInBottomMenu(moreMenuList, sale_note,
-              isCenter: false,);
-        }
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MEMO) {
+            addMemoInBottomMenu(
+              moreMenuList,
+              sale_note,
+              isCenter: false,
+            );
+          }
 //        if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST) {
 //          addWatchlistInBottomMenu(moreMenuList, addToWatchlist,
 //              isCenter: false);
 //        }
-        if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
-          addEnquiryInBottomMenu(moreMenuList);
-        }
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
+            addEnquiryInBottomMenu(moreMenuList);
+          }
 //        if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_CART) {
 //          addCartInBottomMenu(moreMenuList);
 //        }
 
-        if (!isDiamondSearchModule(moduleType)) {
-          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER &&
-              moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
-              moduleType !=
-                  DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+          if (!isDiamondSearchModule(moduleType)) {
+            if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER &&
+                moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
+                moduleType !=
+                    DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+              addOfferInBottomMenu(moreMenuList, offerWhite, isCenter: false);
+            }
+          }
+          if (isDiamondSearchModule(moduleType) && isDetail) {
             addOfferInBottomMenu(moreMenuList, offerWhite, isCenter: false);
           }
-        }
-        if (isDiamondSearchModule(moduleType) && isDetail) {
-          addOfferInBottomMenu(moreMenuList, offerWhite, isCenter: false);
-        }
 
-        //For Compare special
-        if (isCompare) {
-          addOfferInBottomMenu(moreMenuList, offerWhite, isCenter: false);
-        }
-        if (!isCompare && !isDetail) {
-          if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
-              moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
-              moduleType !=
-                  DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
-            moreMenuList.add(BottomTabModel(
-                title: R.string.commonString.status,
-                isCenter: false,
-                image: status,
-                type: ActionMenuConstant.ACTION_TYPE_STATUS));
+          //For Compare special
+          if (isCompare) {
+            addOfferInBottomMenu(moreMenuList, offerWhite, isCenter: false);
           }
-        }
+          if (!isCompare && !isDetail) {
+            if (moduleType !=
+                    DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
+                moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
+                moduleType !=
+                    DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+              moreMenuList.add(BottomTabModel(
+                  title: R.string.commonString.status,
+                  isCenter: false,
+                  image: status,
+                  type: ActionMenuConstant.ACTION_TYPE_STATUS));
+            }
+          }
 
-        if (moduleType == DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK ||
-            moduleType ==
-                DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
-          addCompareInBottomMenu(moreMenuList, compare, isCenter: false);
+          if (moduleType == DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK ||
+              moduleType ==
+                  DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+            addCompareInBottomMenu(moreMenuList, compare, isCenter: false);
+          }
+          moreMenuList.add(BottomTabModel(
+            title: R.string.commonString.more,
+            isCenter: false,
+            image: plusIcon,
+            type: ActionMenuConstant.ACTION_TYPE_MORE,
+          ));
+        } else {
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST) {
+            addWatchlistInBottomMenu(moreMenuList, addToWatchlist,
+                isCenter: false);
+          }
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
+            addEnquiryInBottomMenu(moreMenuList);
+          }
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_CART) {
+            addCartInBottomMenu(moreMenuList);
+          }
+
+          if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY ||
+              moduleType == DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST ||
+              moduleType == DiamondModuleConstant.MODULE_TYPE_MY_CART ||
+              moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER ||
+              moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH ||
+              moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL ||
+              moduleType == DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH ||
+              moduleType == DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {
+            addPlaceOrderInBottomMenu(moreMenuList, placeOrder,
+                isCenter: false);
+          }
+
+          if (!isDiamondSearchModule(moduleType)) {
+            if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER &&
+                moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
+                moduleType !=
+                    DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+              addOfferInBottomMenu(moreMenuList, offerWhite, isCenter: false);
+            }
+          }
+          if (isDiamondSearchModule(moduleType) && isDetail) {
+            addOfferInBottomMenu(moreMenuList, offerWhite, isCenter: false);
+          }
+
+          //For Compare special
+          if (isCompare) {
+            addOfferInBottomMenu(moreMenuList, offerWhite, isCenter: false);
+          }
+          if (!isCompare && !isDetail) {
+            if (moduleType !=
+                    DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
+                moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
+                moduleType !=
+                    DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+              moreMenuList.add(BottomTabModel(
+                  title: R.string.commonString.status,
+                  isCenter: false,
+                  image: status,
+                  type: ActionMenuConstant.ACTION_TYPE_STATUS));
+            }
+          }
+
+          if (moduleType == DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK ||
+              moduleType ==
+                  DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+            addCompareInBottomMenu(moreMenuList, compare, isCenter: false);
+          }
+          moreMenuList.add(BottomTabModel(
+            title: R.string.commonString.more,
+            isCenter: false,
+            image: plusIcon,
+            type: ActionMenuConstant.ACTION_TYPE_MORE,
+          ));
         }
-        moreMenuList.add(BottomTabModel(
-          title: R.string.commonString.more,
-          isCenter: false,
-          image: plusIcon,
-          type: ActionMenuConstant.ACTION_TYPE_MORE,
-        ));
         break;
     }
     // moreMenuList.forEach((element) {
@@ -778,18 +851,17 @@ class BottomMenuSetting {
     }
   }
 
-
   addHoldInBottomMenu(List<BottomTabModel> moreMenuList, String image,
       {bool isCenter: true}) {
 //    if (app
 //        .resolve<PrefUtils>()
 //        .getModulePermission(ModulePermissionConstant.permission_watchlist)
 //        .insert) {
-      moreMenuList.add(BottomTabModel(
-          image: image,
-          isCenter: isCenter,
-          title: R.string.screenTitle.hold,
-          type: ActionMenuConstant.ACTION_TYPE_HOLD));
+    moreMenuList.add(BottomTabModel(
+        image: image,
+        isCenter: isCenter,
+        title: R.string.screenTitle.hold,
+        type: ActionMenuConstant.ACTION_TYPE_HOLD));
 //    }
   }
 
@@ -799,11 +871,11 @@ class BottomMenuSetting {
 //        .resolve<PrefUtils>()
 //        .getModulePermission(ModulePermissionConstant.permission_watchlist)
 //        .insert) {
-      moreMenuList.add(BottomTabModel(
-          image: image,
-          isCenter: isCenter,
-          title: R.string.screenTitle.memo,
-          type: ActionMenuConstant.ACTION_TYPE_MEMO));
+    moreMenuList.add(BottomTabModel(
+        image: image,
+        isCenter: isCenter,
+        title: R.string.screenTitle.memo,
+        type: ActionMenuConstant.ACTION_TYPE_MEMO));
 //    }
   }
 
@@ -903,10 +975,14 @@ class BottomMenuSetting {
     //     .resolve<PrefUtils>()
     //     .getModulePermission(ModulePermissionConstant.permission_excel)
     //     .downloadExcel) {
-    moreMenuList.add(BottomTabModel(
-        image: excelImage,
-        title: "Excel",
-        type: ActionMenuConstant.ACTION_TYPE_EXCEL));
+    if ((app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
+            KYCStatus.pending) ==
+        KYCStatus.approved) {
+      moreMenuList.add(BottomTabModel(
+          image: excelImage,
+          title: "Excel",
+          type: ActionMenuConstant.ACTION_TYPE_EXCEL));
+    }
     // }
   }
 
@@ -923,12 +999,15 @@ class BottomMenuSetting {
     //     .resolve<PrefUtils>()
     //     .getModulePermission(getPermissionFromModuleType(moduleType))
     //     .downloadExcel && moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {
-
-    moreMenuList.add(BottomTabModel(
-        image: image,
-        isCenter: isCenter,
-        title: R.string.screenTitle.download,
-        type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
+    if ((app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
+            KYCStatus.pending) ==
+        KYCStatus.approved) {
+      moreMenuList.add(BottomTabModel(
+          image: image,
+          isCenter: isCenter,
+          title: R.string.screenTitle.download,
+          type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
+    }
   }
 
   addClearSelectionInBottomMenu(List<BottomTabModel> moreMenuList, String image,

@@ -79,7 +79,9 @@ class _TagWidgetState extends State<TagWidget> {
         widget.model.masters.forEach((element) {
           _tags.add(Tag(
             // id: item.id,
-            title: element.webDisplay ?? "-",
+            title: widget.model.valueKeyisCode
+                ? (element.code ?? "-")
+                : (element.webDisplay ?? "-"),
             active: false,
           ));
         });
@@ -382,9 +384,12 @@ class _TagWidgetState extends State<TagWidget> {
       if (index == widget.model.masters.length - 1 &&
           !widget.model.isShowMoreSelected) {
         widget.model.masters[index].webDisplay = R.string.commonString.showLess;
+        widget.model.masters[index].code = R.string.commonString.showLess;
       }
       if (widget.model.isShowMoreSelected) {
         widget.model.masters[widget.model.masters.length - 1].webDisplay =
+            R.string.commonString.showMore;
+        widget.model.masters[widget.model.masters.length - 1].code =
             R.string.commonString.showMore;
       }
     }
@@ -856,6 +861,8 @@ class _TagWidgetState extends State<TagWidget> {
       return model.masters[index].group ?? "-";
     }
 
-    return model.masters[index].webDisplay ?? "-";
+    return widget.model.valueKeyisCode
+        ? (model.masters[index].code ?? "-")
+        : (model.masters[index].webDisplay ?? "-");
   }
 }

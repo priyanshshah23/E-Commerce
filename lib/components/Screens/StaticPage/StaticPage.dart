@@ -48,6 +48,8 @@ class StaticPageScreen extends StatefulScreenWidget {
 }
 
 class _StaticPageScreenState extends StatefulScreenWidgetState {
+  double progress = 0;
+
   String strUrl;
   String screenType;
   String screenTitle;
@@ -102,67 +104,67 @@ class _StaticPageScreenState extends StatefulScreenWidgetState {
   Widget build(BuildContext context) {
     //callApi();
     return Scaffold(
-        backgroundColor: appTheme.whiteColor,
-        appBar: getAppBar(
-          context,
-          screenTitle ?? getScreenTitle(),
-          bgColor: appTheme.whiteColor,
-          leadingButton: isFromDrawer
-              ? getDrawerButton(context, true)
-              : getBackButton(context),
-          centerTitle: false,
-          actionItems: showExcel
-              ? [
-                  InkWell(
-                    onTap: () async {
-                      await Share.shareFiles([filePath],
-                          text: screenTitle ?? "");
-                    },
-                    child: Container(
-                      margin: EdgeInsets.all(getSize(16)),
-                      child: Image.asset(
-                        share,
-                        width: getSize(24),
-                        height: getSize(24),
-                      ),
+      backgroundColor: appTheme.whiteColor,
+      appBar: getAppBar(
+        context,
+        screenTitle ?? getScreenTitle(),
+        bgColor: appTheme.whiteColor,
+        leadingButton: isFromDrawer
+            ? getDrawerButton(context, true)
+            : getBackButton(context),
+        centerTitle: false,
+        actionItems: showExcel
+            ? [
+                InkWell(
+                  onTap: () async {
+                    await Share.shareFiles([filePath], text: screenTitle ?? "");
+                  },
+                  child: Container(
+                    margin: EdgeInsets.all(getSize(16)),
+                    child: Image.asset(
+                      share,
+                      width: getSize(24),
+                      height: getSize(24),
                     ),
-                  )
-                ]
-              : null,
+                  ),
+                )
+              ]
+            : null,
+      ),
+      body: Container(
+        height: MathUtilities.screenHeight(context),
+        color: ColorConstants.white,
+        padding: EdgeInsets.only(
+          top: getSize(15),
         ),
-        body: Container(
-          height: MathUtilities.screenHeight(context),
-          color: ColorConstants.white,
-          padding: EdgeInsets.only(
-            top: getSize(15),
-          ),
-          child: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.only(left: getSize(20), right: getSize(20)),
-              child: WebView(
-                initialUrl:
-                    // "http://pndevelop.democ.in/",
-                    // "/storage/emulated/0/Download/test.pdf",
-                    strUrl ?? "http://pn`develop.democ.in/",
-                javascriptMode: JavascriptMode.unrestricted,
-                onWebViewCreated: (WebViewController webViewController) {
-                  _controller.complete(webViewController);
-                },
-                onPageStarted: (String url) {
-                  app.resolve<CustomDialogs>().showProgressDialog(context, "");
-                },
-                onPageFinished: (String url) {
-                  print('Page finished loading: $url');
-                  app.resolve<CustomDialogs>().hideProgressDialog();
-                },
-                onWebResourceError: (error) {
-                  print(error.toString());
-                },
-                gestureNavigationEnabled: true,
-              ),
+        child: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.only(left: getSize(20), right: getSize(20)),
+            child: WebView(
+              initialUrl:
+                  // "http://pndevelop.democ.in/",
+                  // "/storage/emulated/0/Download/test.pdf",
+                  strUrl ?? "http://pn`develop.democ.in/",
+              javascriptMode: JavascriptMode.unrestricted,
+              onWebViewCreated: (WebViewController webViewController) {
+                _controller.complete(webViewController);
+              },
+              onPageStarted: (String url) {
+                app.resolve<CustomDialogs>().showProgressDialog(context, "");
+              },
+              onPageFinished: (String url) {
+                print('Page finished loading: $url');
+                app.resolve<CustomDialogs>().hideProgressDialog();
+              },
+              onWebResourceError: (error) {
+                print(error.toString());
+              },
+              gestureNavigationEnabled: true,
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 
 //  _loadHtmlFromAssets(String desc) async {

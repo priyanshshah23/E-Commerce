@@ -115,25 +115,27 @@ class InDt {
 }
 
 class DiamondListResp extends BaseApiResp {
-  List<Data> data;
+  Data data;
 
   DiamondListResp({this.data});
 
   DiamondListResp.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
-    if (json['data'] != null) {
-      data = new List<Data>();
-      json['data'].forEach((v) {
-        data.add(new Data.fromJson(v));
-      });
+    try{
+      data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+
+    }catch( e){
+      if (json['data'] != null) {
+        json['data'].forEach((v) {
+          data = new Data.fromJson(v);
+        });
+      }
     }
-    // data = json['data'] != null ? new Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.data != null) {
-      //  data['data'] = this.data.toJson();
-      data['data'] = this.data.map((v) => v.toJson()).toList();
+      data['data'] = this.data.toJson();
     }
     return data;
   }

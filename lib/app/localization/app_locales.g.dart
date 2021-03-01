@@ -55,6 +55,8 @@ class English {
 }
 
 class AuthStrings {
+  String sendEmailForForgetPassword =
+      "We will send an email to your entered email address. Please enter the email address.";
   String editCompanyInformation = "Edit Company Information";
   String selectNatureOfOrganization = "Select Nature Of Organization";
   String setNewPassword = "Set your new password and sign in again.";
@@ -722,7 +724,7 @@ class ScreenTitle {
   String watchlist = "Watchlist";
   String exclusive = "Exclusive";
   String featuredStones = "Featured Stones";
-  String stoneOfDay = "Stones of Day";
+  String stoneOfDay = "Best Buy";
   String recentSearch = "Recent Search";
   String viewAll = "View All";
   String salesPersonDetail = "Sales Person Detail";
@@ -754,54 +756,54 @@ class ScreenTitle {
 
 class Dynamickeys {
   String shape = "Shape";
-  String caratRange = "Carat Range";
+  String caratRange = "Carat";
   String basicDetail = "Basic Details";
   String measurementTitle = "Measurements";
   String inclusionDetail = "Inclusion Details";
   String other = "Other";
   String stoneID = "Stone ID";
   String labTitle = "Lab";
-  String certNo = "CERT. NO.";
-  String locationTitle = "LOCATION";
+  String certNo = "Cert. No.";
+  String locationTitle = "Location";
   String shapeTitle = "Shape";
   String caratTitle = "Carat";
   String colorTitle = "Color";
-  String clarityTitle = "CLARITY";
+  String clarityTitle = "Clarity";
   String cutTitle = "Cut";
   String polishTitle = "Polish";
   String symmentryTitle = "Symmentry";
   String fluorescenceTitle = "Fluorescence";
-  String rapTitle = "RAP (%)";
+  String rapTitle = "Rap (%)";
   String discountTitle = "Discount (%)";
   String priceAndCt = "Price/Ct";
   String amountTitle = "Amount";
   String eyeCleanTitle = "Eye Clean";
-  String brownTitle = "BROWN";
+  String brownTitle = "Brown";
   String milkyTitle = "Milky";
-  String mixTingeTitle = "MIX TINGE";
-  String dimensionTitle = "DIMENSIONS  (MM)";
-  String girdleTitle = "GIRDLE (%)";
+  String mixTingeTitle = "Mix Tinge";
+  String dimensionTitle = "Dimensions  (MM)";
+  String girdleTitle = "Girdle (%)";
   String tableTitle = "Table %";
   String crownAngleTitle = "Crown Angle";
   String depthTitle = "Depth %";
-  String pavAngleTitle = "PAV ANGLE";
+  String pavAngleTitle = "Pav Angle";
   String crownHeightTitle = "Crown Height  (%)";
   String pavDepthTitle = "Pavilion Depth (%)";
   String starLengthTitle = "Star Length";
   String lowerHalfTitle = "Lower Half";
   String gridleTitle = "Girdle";
-  String gridleFacetedTitle = "GIRDLE FACETED";
+  String gridleFacetedTitle = "Gridle Faceted";
   String culetTitle = "Culet";
   String rationTitle = "Ratio";
-  String blackInclusionTitle = "BLACK INCLUSION";
+  String blackInclusionTitle = "Black Inclusion";
   String otherInclusionTitle = "Other Inclusion";
-  String openInclusionTitle = "OPEN INCLUSION";
-  String extraFacetTitle = "EXTRA FACET";
+  String openInclusionTitle = "Open Inclusion";
+  String extraFacetTitle = "Extra Facet";
   String naturalTitle = "Natural";
   String hAndATitle = "H & A";
-  String keyToSymbol = "KEY TO SYMBOL";
-  String labComments = "LAB COMMENTS";
-  String laserInsTitle = "LASER INS";
+  String keyToSymbol = "Key To Symbol";
+  String labComments = "Lab Comments";
+  String laserInsTitle = "Laser Ins";
   String basicTitle = "Basic";
   String advancedTitle = "Advanced";
   String stoneIdTitle = "Stone ID/Cert No";
@@ -831,54 +833,54 @@ class Dynamickeys {
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
     "shape": "Shape",
-    "caratRange": "Carat Range",
+    "caratRange": "Carat",
     "basicDetail": "Basic Details",
     "measurementTitle": "Measurements",
     "inclusionDetail": "Inclusion Details",
     "other": "Other",
     "stoneID": "Stone ID",
     "labTitle": "Lab",
-    "certNo": "CERT. NO.",
-    "locationTitle": "LOCATION",
+    "certNo": "Cert. No.",
+    "locationTitle": "Location",
     "shapeTitle": "Shape",
     "caratTitle": "Carat",
     "colorTitle": "Color",
-    "clarityTitle": "CLARITY",
+    "clarityTitle": "Clarity",
     "cutTitle": "Cut",
     "polishTitle": "Polish",
     "symmentryTitle": "Symmentry",
     "fluorescenceTitle": "Fluorescence",
-    "rapTitle": "RAP (%)",
+    "rapTitle": "Rap (%)",
     "discountTitle": "Discount (%)",
     "priceAndCt": "Price/Ct",
     "amountTitle": "Amount",
     "eyeCleanTitle": "Eye Clean",
-    "brownTitle": "BROWN",
+    "brownTitle": "Brown",
     "milkyTitle": "Milky",
-    "mixTingeTitle": "MIX TINGE",
-    "dimensionTitle": "DIMENSIONS  (MM)",
-    "girdleTitle": "GIRDLE (%)",
+    "mixTingeTitle": "Mix Tinge",
+    "dimensionTitle": "Dimensions  (MM)",
+    "girdleTitle": "Girdle (%)",
     "tableTitle": "Table %",
     "crownAngleTitle": "Crown Angle",
     "depthTitle": "Depth %",
-    "pavAngleTitle": "PAV ANGLE",
+    "pavAngleTitle": "Pav Angle",
     "crownHeightTitle": "Crown Height  (%)",
     "pavDepthTitle": "Pavilion Depth (%)",
     "starLengthTitle": "Star Length",
     "lowerHalfTitle": "Lower Half",
     "gridleTitle": "Girdle",
-    "gridleFacetedTitle": "GIRDLE FACETED",
+    "gridleFacetedTitle": "Gridle Faceted",
     "culetTitle": "Culet",
     "rationTitle": "Ratio",
-    "blackInclusionTitle": "BLACK INCLUSION",
+    "blackInclusionTitle": "Black Inclusion",
     "otherInclusionTitle": "Other Inclusion",
-    "openInclusionTitle": "OPEN INCLUSION",
-    "extraFacetTitle": "EXTRA FACET",
+    "openInclusionTitle": "Open Inclusion",
+    "extraFacetTitle": "Extra Facet",
     "naturalTitle": "Natural",
     "hAndATitle": "H & A",
-    "keyToSymbol": "KEY TO SYMBOL",
-    "labComments": "LAB COMMENTS",
-    "laserInsTitle": "LASER INS",
+    "keyToSymbol": "Key To Symbol",
+    "labComments": "Lab Comments",
+    "laserInsTitle": "Laser Ins",
     "basicTitle": "Basic",
     "advancedTitle": "Advanced",
     "stoneIdTitle": "Stone ID/Cert No",
@@ -2265,7 +2267,7 @@ class ChineseDynamickeys extends Dynamickeys {
   @override
   get fluorescenceTitle => "荧光";
   @override
-  get rapTitle => "RAP（％）";
+  get rapTitle => "Rap（％）";
   @override
   get discountTitle => "折扣（％）";
   @override
@@ -2291,7 +2293,7 @@ class ChineseDynamickeys extends Dynamickeys {
   @override
   get depthTitle => "深度％";
   @override
-  get pavAngleTitle => "PAV ANGLE";
+  get pavAngleTitle => "Pav Angle";
   @override
   get crownHeightTitle => "冠高（％）";
   @override
@@ -2398,7 +2400,7 @@ class ChineseDynamickeys extends Dynamickeys {
     "polishTitle": "抛光",
     "symmentryTitle": "Symmentry",
     "fluorescenceTitle": "荧光",
-    "rapTitle": "RAP（％）",
+    "rapTitle": "Rap（％）",
     "discountTitle": "折扣（％）",
     "priceAndCt": "价格/ CT",
     "amountTitle": "量",
@@ -2411,7 +2413,7 @@ class ChineseDynamickeys extends Dynamickeys {
     "tableTitle": "表％",
     "crownAngleTitle": "皇冠角",
     "depthTitle": "深度％",
-    "pavAngleTitle": "PAV ANGLE",
+    "pavAngleTitle": "Pav Angle",
     "crownHeightTitle": "冠高（％）",
     "pavDepthTitle": "亭深比（％）",
     "starLengthTitle": "长星",
@@ -3856,7 +3858,7 @@ class FrenchDynamickeys extends Dynamickeys {
   @override
   get labTitle => "Laboratoire";
   @override
-  get certNo => "Cert. NON.";
+  get certNo => "Cert. Non.";
   @override
   get locationTitle => "EMPLACEMENT";
   @override
@@ -3876,7 +3878,7 @@ class FrenchDynamickeys extends Dynamickeys {
   @override
   get fluorescenceTitle => "Fluorescence";
   @override
-  get rapTitle => "RAP (%)";
+  get rapTitle => "Rap (%)";
   @override
   get discountTitle => "Remise (%)";
   @override
@@ -3894,7 +3896,7 @@ class FrenchDynamickeys extends Dynamickeys {
   @override
   get dimensionTitle => "Dimensions (mm)";
   @override
-  get girdleTitle => "GIRDLE (%)";
+  get girdleTitle => "Girdle (%)";
   @override
   get tableTitle => "Table %";
   @override
@@ -3902,7 +3904,7 @@ class FrenchDynamickeys extends Dynamickeys {
   @override
   get depthTitle => "profondeur%";
   @override
-  get pavAngleTitle => "PAV ANGLE";
+  get pavAngleTitle => "Pav Angle";
   @override
   get crownHeightTitle => "Couronne Hauteur (%)";
   @override
@@ -3999,7 +4001,7 @@ class FrenchDynamickeys extends Dynamickeys {
     "other": "Autre",
     "stoneID": "Stone ID",
     "labTitle": "Laboratoire",
-    "certNo": "Cert. NON.",
+    "certNo": "Cert. Non.",
     "locationTitle": "EMPLACEMENT",
     "shapeTitle": "Forme",
     "caratTitle": "Carat",
@@ -4009,7 +4011,7 @@ class FrenchDynamickeys extends Dynamickeys {
     "polishTitle": "polonais",
     "symmentryTitle": "Symmentry",
     "fluorescenceTitle": "Fluorescence",
-    "rapTitle": "RAP (%)",
+    "rapTitle": "Rap (%)",
     "discountTitle": "Remise (%)",
     "priceAndCt": "Prix ​​/ Ct",
     "amountTitle": "Montant",
@@ -4018,11 +4020,11 @@ class FrenchDynamickeys extends Dynamickeys {
     "milkyTitle": "Laiteux",
     "mixTingeTitle": "MIX Tinge",
     "dimensionTitle": "Dimensions (mm)",
-    "girdleTitle": "GIRDLE (%)",
+    "girdleTitle": "Girdle (%)",
     "tableTitle": "Table %",
     "crownAngleTitle": "Couronne Angle",
     "depthTitle": "profondeur%",
-    "pavAngleTitle": "PAV ANGLE",
+    "pavAngleTitle": "Pav Angle",
     "crownHeightTitle": "Couronne Hauteur (%)",
     "pavDepthTitle": "Profondeur du Pavillon (en%)",
     "starLengthTitle": "Longueur étoiles",
@@ -5463,7 +5465,7 @@ class JapanDynamickeys extends Dynamickeys {
   @override
   get depthTitle => "深％";
   @override
-  get pavAngleTitle => "PAV ANGLE";
+  get pavAngleTitle => "Pav Angle";
   @override
   get crownHeightTitle => "クラウン高さ（％）";
   @override
@@ -5583,7 +5585,7 @@ class JapanDynamickeys extends Dynamickeys {
     "tableTitle": "テーブル ％",
     "crownAngleTitle": "クラウン角度",
     "depthTitle": "深％",
-    "pavAngleTitle": "PAV ANGLE",
+    "pavAngleTitle": "Pav Angle",
     "crownHeightTitle": "クラウン高さ（％）",
     "pavDepthTitle": "パビリオンの深さ（％）",
     "starLengthTitle": "スターの長さ",
@@ -7014,7 +7016,7 @@ class ItalianDynamickeys extends Dynamickeys {
   @override
   get labTitle => "Laboratorio";
   @override
-  get certNo => "CERT. NO.";
+  get certNo => "Cert. No.";
   @override
   get locationTitle => "POSIZIONE";
   @override
@@ -7034,7 +7036,7 @@ class ItalianDynamickeys extends Dynamickeys {
   @override
   get fluorescenceTitle => "Fluorescenza";
   @override
-  get rapTitle => "RAP (%)";
+  get rapTitle => "Rap (%)";
   @override
   get discountTitle => "Sconto (%)";
   @override
@@ -7052,7 +7054,7 @@ class ItalianDynamickeys extends Dynamickeys {
   @override
   get dimensionTitle => "Dimensioni (mm)";
   @override
-  get girdleTitle => "CINTURA (%)";
+  get girdleTitle => "Cintura (%)";
   @override
   get tableTitle => "Tavolo %";
   @override
@@ -7060,7 +7062,7 @@ class ItalianDynamickeys extends Dynamickeys {
   @override
   get depthTitle => "profondità%";
   @override
-  get pavAngleTitle => "PAV ANGOLO";
+  get pavAngleTitle => "Pav Angolo";
   @override
   get crownHeightTitle => "Corona Altezza (%)";
   @override
@@ -7157,7 +7159,7 @@ class ItalianDynamickeys extends Dynamickeys {
     "other": "Altro",
     "stoneID": "pietra ID",
     "labTitle": "Laboratorio",
-    "certNo": "CERT. NO.",
+    "certNo": "Cert. No.",
     "locationTitle": "POSIZIONE",
     "shapeTitle": "Forma",
     "caratTitle": "carato",
@@ -7167,7 +7169,7 @@ class ItalianDynamickeys extends Dynamickeys {
     "polishTitle": "polacco",
     "symmentryTitle": "Symmentry",
     "fluorescenceTitle": "Fluorescenza",
-    "rapTitle": "RAP (%)",
+    "rapTitle": "Rap (%)",
     "discountTitle": "Sconto (%)",
     "priceAndCt": "Prezzo / Ct",
     "amountTitle": "Quantità",
@@ -7176,11 +7178,11 @@ class ItalianDynamickeys extends Dynamickeys {
     "milkyTitle": "latteo",
     "mixTingeTitle": "MIX tinge",
     "dimensionTitle": "Dimensioni (mm)",
-    "girdleTitle": "CINTURA (%)",
+    "girdleTitle": "Cintura (%)",
     "tableTitle": "Tavolo %",
     "crownAngleTitle": "Angolo di corona",
     "depthTitle": "profondità%",
-    "pavAngleTitle": "PAV ANGOLO",
+    "pavAngleTitle": "Pav Angolo",
     "crownHeightTitle": "Corona Altezza (%)",
     "pavDepthTitle": "Padiglione Profondità (%)",
     "starLengthTitle": "stella Lunghezza",
@@ -8611,7 +8613,7 @@ class SpanishDynamickeys extends Dynamickeys {
   @override
   get labTitle => "Laboratorio";
   @override
-  get certNo => "CERT. NO.";
+  get certNo => "Cert. No.";
   @override
   get locationTitle => "UBICACIÓN";
   @override
@@ -8631,7 +8633,7 @@ class SpanishDynamickeys extends Dynamickeys {
   @override
   get fluorescenceTitle => "Fluorescencia";
   @override
-  get rapTitle => "RAP (%)";
+  get rapTitle => "Rap (%)";
   @override
   get discountTitle => "Descuento (%)";
   @override
@@ -8649,7 +8651,7 @@ class SpanishDynamickeys extends Dynamickeys {
   @override
   get dimensionTitle => "Dimensiones (mm)";
   @override
-  get girdleTitle => "FAJA (%)";
+  get girdleTitle => "Faja (%)";
   @override
   get tableTitle => "Mesa %";
   @override
@@ -8754,7 +8756,7 @@ class SpanishDynamickeys extends Dynamickeys {
     "other": "Otro",
     "stoneID": "piedra ID",
     "labTitle": "Laboratorio",
-    "certNo": "CERT. NO.",
+    "certNo": "Cert. No.",
     "locationTitle": "UBICACIÓN",
     "shapeTitle": "Forma",
     "caratTitle": "Quilate",
@@ -8764,7 +8766,7 @@ class SpanishDynamickeys extends Dynamickeys {
     "polishTitle": "polaco",
     "symmentryTitle": "Symmentry",
     "fluorescenceTitle": "Fluorescencia",
-    "rapTitle": "RAP (%)",
+    "rapTitle": "Rap (%)",
     "discountTitle": "Descuento (%)",
     "priceAndCt": "Precio / Ct",
     "amountTitle": "Cantidad",
@@ -8773,7 +8775,7 @@ class SpanishDynamickeys extends Dynamickeys {
     "milkyTitle": "lechoso",
     "mixTingeTitle": "MIX tinte",
     "dimensionTitle": "Dimensiones (mm)",
-    "girdleTitle": "FAJA (%)",
+    "girdleTitle": "Faja (%)",
     "tableTitle": "Mesa %",
     "crownAngleTitle": "ángulo de la corona",
     "depthTitle": "profundidad%",
@@ -10204,7 +10206,7 @@ class GermanyDynamickeys extends Dynamickeys {
   @override
   get labTitle => "Labor";
   @override
-  get certNo => "CERT. NEIN.";
+  get certNo => "Cert. Nein.";
   @override
   get locationTitle => "STANDORT";
   @override
@@ -10224,7 +10226,7 @@ class GermanyDynamickeys extends Dynamickeys {
   @override
   get fluorescenceTitle => "Fluoreszenz";
   @override
-  get rapTitle => "RAP (%)";
+  get rapTitle => "Rap (%)";
   @override
   get discountTitle => "Rabatt (%)";
   @override
@@ -10240,9 +10242,9 @@ class GermanyDynamickeys extends Dynamickeys {
   @override
   get mixTingeTitle => "MIX tinge";
   @override
-  get dimensionTitle => "MASSE (MM)";
+  get dimensionTitle => "Masse (MM)";
   @override
-  get girdleTitle => "GÜRTELN (%)";
+  get girdleTitle => "Gurteln (%)";
   @override
   get tableTitle => "Tabelle %";
   @override
@@ -10250,7 +10252,7 @@ class GermanyDynamickeys extends Dynamickeys {
   @override
   get depthTitle => "Tiefes%";
   @override
-  get pavAngleTitle => "PAV ANGLE";
+  get pavAngleTitle => "Pav Angle";
   @override
   get crownHeightTitle => "Kronenhöhe (%)";
   @override
@@ -10347,7 +10349,7 @@ class GermanyDynamickeys extends Dynamickeys {
     "other": "Andere",
     "stoneID": "Stein ID",
     "labTitle": "Labor",
-    "certNo": "CERT. NEIN.",
+    "certNo": "Cert. Nein.",
     "locationTitle": "STANDORT",
     "shapeTitle": "Gestalten",
     "caratTitle": "Karat",
@@ -10357,7 +10359,7 @@ class GermanyDynamickeys extends Dynamickeys {
     "polishTitle": "Polieren",
     "symmentryTitle": "Symmentry",
     "fluorescenceTitle": "Fluoreszenz",
-    "rapTitle": "RAP (%)",
+    "rapTitle": "Rap (%)",
     "discountTitle": "Rabatt (%)",
     "priceAndCt": "Preis / Ct",
     "amountTitle": "Menge",
@@ -10365,12 +10367,12 @@ class GermanyDynamickeys extends Dynamickeys {
     "brownTitle": "BRAUN",
     "milkyTitle": "Milchig",
     "mixTingeTitle": "MIX tinge",
-    "dimensionTitle": "MASSE (MM)",
-    "girdleTitle": "GÜRTELN (%)",
+    "dimensionTitle": "Masse (MM)",
+    "girdleTitle": "Gurteln (%)",
     "tableTitle": "Tabelle %",
     "crownAngleTitle": "Crown Winkel",
     "depthTitle": "Tiefes%",
-    "pavAngleTitle": "PAV ANGLE",
+    "pavAngleTitle": "Pav Angle",
     "crownHeightTitle": "Kronenhöhe (%)",
     "pavDepthTitle": "Pavilion Tiefe (%)",
     "starLengthTitle": "Stern Länge",
@@ -11784,7 +11786,7 @@ class ArabicDynamickeys extends Dynamickeys {
   @override
   get labTitle => "مختبر";
   @override
-  get certNo => "CERT. لا.";
+  get certNo => "Cert. لا.";
   @override
   get locationTitle => "موقعك";
   @override
@@ -11830,7 +11832,7 @@ class ArabicDynamickeys extends Dynamickeys {
   @override
   get depthTitle => "٪ العمق";
   @override
-  get pavAngleTitle => "PAV ANGLE";
+  get pavAngleTitle => "Pav Angle";
   @override
   get crownHeightTitle => "ولي العهد الارتفاع (٪)";
   @override
@@ -11927,7 +11929,7 @@ class ArabicDynamickeys extends Dynamickeys {
     "other": "آخر",
     "stoneID": "ID الحجر",
     "labTitle": "مختبر",
-    "certNo": "CERT. لا.",
+    "certNo": "Cert. لا.",
     "locationTitle": "موقعك",
     "shapeTitle": "شكل",
     "caratTitle": "قيراط",
@@ -11950,7 +11952,7 @@ class ArabicDynamickeys extends Dynamickeys {
     "tableTitle": "الطاولة ٪",
     "crownAngleTitle": "تاج زاوية",
     "depthTitle": "٪ العمق",
-    "pavAngleTitle": "PAV ANGLE",
+    "pavAngleTitle": "Pav Angle",
     "crownHeightTitle": "ولي العهد الارتفاع (٪)",
     "pavDepthTitle": "عمق جناح (٪)",
     "starLengthTitle": "نجمة طول",

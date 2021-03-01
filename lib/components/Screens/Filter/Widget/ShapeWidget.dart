@@ -39,6 +39,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
           Master allMaster = Master();
           allMaster.sId = widget.selectionModel.allLableTitle;
           allMaster.webDisplay = widget.selectionModel.allLableTitle;
+          allMaster.code = widget.selectionModel.allLableTitle;
           allMaster.isSelected = false;
 
           widget.selectionModel.masters.insert(0, allMaster);
@@ -57,6 +58,9 @@ class _ShapeWidgetState extends State<ShapeWidget> {
           Master allMaster = Master();
           allMaster.sId = showMoreId;
           allMaster.webDisplay = widget.selectionModel.isShowMoreSelected
+              ? R.string.commonString.showMore
+              : R.string.commonString.showLess;
+          allMaster.code = widget.selectionModel.isShowMoreSelected
               ? R.string.commonString.showMore
               : R.string.commonString.showLess;
           allMaster.isSelected = false;
@@ -147,6 +151,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                             index == totalIndex - 1 &&
                             !widget.selectionModel.isShowMoreHorizontal) {
                           obj.webDisplay = R.string.commonString.showLess;
+                          obj.code = R.string.commonString.showLess;
                           return InkWell(
                             onTap: () {
                               widget.selectionModel.isShowMoreSelected = true;
@@ -165,6 +170,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                             index == totalIndex - 1 &&
                             !widget.selectionModel.isShowMoreHorizontal) {
                           obj.webDisplay = R.string.commonString.showMore;
+                          obj.code = R.string.commonString.showMore;
                           return InkWell(
                             onTap: () {
                               widget.selectionModel.isShowMoreSelected = false;
@@ -368,7 +374,7 @@ class ShapeItemWidget extends StatelessWidget {
                     : SizedBox(),
                 Padding(
                   padding: EdgeInsets.only(top: getSize(12.0)),
-                  child: Text(obj.webDisplay.toLowerCase().capitalize(),
+                  child: Text(showWebDisplay(),
                       textAlign: TextAlign.center,
                       style: obj.isSelected
                           ? appTheme.primaryNormal12TitleColor
@@ -378,6 +384,12 @@ class ShapeItemWidget extends StatelessWidget {
             )
           : SizedBox(),
     );
+  }
+
+  showWebDisplay() {
+    return selectionModel.valueKeyisCode
+        ? (obj.code ?? "-").toLowerCase().capitalize()
+        : (obj.webDisplay ?? "-").toLowerCase().capitalize();
   }
 }
 

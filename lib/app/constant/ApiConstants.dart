@@ -29,8 +29,9 @@ class ApiConstants {
   static const String masterSync = commonUrl + "masterSync";
 
   static const String login = commonUrl + "auth/login";
+  static const String diamondListSales = commonUrl + "common/diamond/paginate";
 
-  static const String diamondList = commonUrl + "common/diamond/paginate";
+  static const String diamondList = commonUrl + "diamond/paginate";
   static const String diamondMatchPair =
       commonUrl + "match-pair/diamond/filter";
 
@@ -52,14 +53,13 @@ class ApiConstants {
 
   static const String placeOrder = commonUrl + "diamond-confirm/request";
   static const String staticPage = apiV1 + "static-page/{id}";
-  static const String forgetPassword =
-      apiUrl + "web/v1/auth/forgot-password"; //done
+  static const String forgetPassword = commonUrl + "forgot-password"; //done
   static const String resetPassword = commonUrl + "user/reset-password";
   static const String changePassword =
       apiUrl + "web/v1/auth/reset-password-by-user"; //done
   static const String personalInformation = commonUrl + "user/update"; //done
   static const String sendOTP = commonUrl + "user/send-otp"; //done
-  static const String forgotMpin = commonUrl + "forgot-mpin?";
+  static const String forgotMpin = commonUrl + "forgot-mpin";
   static const String verifyOTP = commonUrl + "user/verify-otp"; //done
   static const String verifyOTPForMpin = commonUrl + "verify-mpin-otp"; //done
   static const String verifyMpin = commonUrl + "verify-mpin"; //done
@@ -79,7 +79,7 @@ class ApiConstants {
   static const getUpdation = commonUrl + "version";
 
   //Dashboard
-  static const String dashboard = commonUrl + "dashboard";
+  static const String dashboard = commonUrl + "user/dashboard";
   static const String deleteSavedSearch = commonUrl + "diamond/search/delete";
   static const String logout = commonUrl + "auth/logout";
   static const String sendAnalytics = commonUrl + "auth/logout";
@@ -131,15 +131,20 @@ class ApiConstants {
 }
 
 class DiamondUrls {
-  static const String commonUrl = "http://cdn.pndiamonds.com/";
-  static const String image = commonUrl + "stonevideos/StoneImage_04-01-2020/";
-  static const String video = commonUrl + "stonevideos/StoneImage_04-01-2020/";
+  static const String commonUrl =
+      "https://s3.us-east-2.wasabisys.com/cdn.pndiamonds.com/";
+  static const String commonUrlForImage = "https://cdn.pndiamonds.com/";
+  static const String image =
+      commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
+  static String video =
+      commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
   static const String heartImage =
-      commonUrl + "stonevideos/StoneImage_04-01-2020/";
+      commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
   static const String plotting = commonUrl + "PlottingImages/";
-  static const String certificate = commonUrl + "certificates/";
+  static const String certificate =
+      "https://s3.us-east-2.wasabisys.com/" + "certificates/";
   static const String arroImage =
-      commonUrl + "stonevideos/StoneImage_04-01-2020/";
+      commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
   static const String videomp4 = commonUrl + "Mov/";
   static const String roughVideo = commonUrl + "MFG/RoughVideo/";
   static const String polVideo = commonUrl + "viewer3/mp4_videos/";

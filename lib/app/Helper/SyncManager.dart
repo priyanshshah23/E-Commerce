@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:collection/collection.dart';
 import 'package:diamnow/app/Helper/NetworkClient.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
 import 'package:diamnow/models/OfflineSearchHistory/OfflineStockTrack.dart';
 import 'package:path/path.dart' as path;
@@ -150,26 +151,54 @@ class SyncManager {
     Map<String, dynamic> dict = {};
     dict["isNotReturnTotal"] = true;
     dict["isReturnCountOnly"] = true;
-    dict["filters"] = [req];
+    if(app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES){
+      dict["filters"] = [req];
+    }else{
+      dict["filters"] = req;
+    }
+
 
     if (!isNullEmptyOrFalse(searchText)) {
       dict["search"] = searchText;
     }
 
-    NetworkCall<DiamondListResp>()
-        .makeCall(
-      () => app
-          .resolve<ServiceModule>()
-          .networkService()
-          .diamondListPaginate(dict),
-      context,
-      isProgress: isProgress,
-    )
-        .then((diamondListResp) async {
-      success(diamondListResp);
-    }).catchError((onError) {
-      print(onError);
-    });
+    if(app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES){
+      NetworkCall<DiamondListResp>()
+          .makeCall(
+            () => app
+            .resolve<ServiceModule>()
+            .networkService()
+            .salesDiamondListPaginate(dict),
+        context,
+        isProgress: isProgress,
+      )
+          .then((diamondListResp) async {
+//        DiamondListResp resp=DiamondListResp();
+//        resp.message=diamondListResp.message;
+//        resp.data=diamondListResp.data.first;
+        success(diamondListResp);
+      }).catchError((onError) {
+        print(onError);
+      });
+    }else{
+      NetworkCall<DiamondListResp>()
+          .makeCall(
+            () => app
+            .resolve<ServiceModule>()
+            .networkService()
+            .diamondListPaginate(dict),
+        context,
+        isProgress: isProgress,
+      )
+          .then((diamondListResp) async {
+        success(diamondListResp);
+      }).catchError((onError) {
+        print(onError);
+      });
+
+    }
+
+
   }
 
   Future callApiForMatchPair(
@@ -621,7 +650,7 @@ class SyncManager {
       if (isForShare) {
         callback(url);
       } else {
-        downloadExcel(excelFileUrl, savePath);
+        await downloadExcel(excelFileUrl, savePath, context);
         if (Platform.isIOS) {
           Map<String, dynamic> dict = {};
           dict["strUrl"] = url;
@@ -669,7 +698,7 @@ class SyncManager {
   }
 
   //Download excel
-  downloadExcel(String excelFileUrl, String savePath) {
+  downloadExcel(String excelFileUrl, String savePath, BuildContext context) {
     Dio dio = Dio();
 
     dio
@@ -679,7 +708,12 @@ class SyncManager {
       deleteOnError: true,
     )
         .then((value) {
-      print("excel downlaoded");
+      app.resolve<CustomDialogs>().errorDialog(
+            context,
+            "Downloded",
+            "Excel File is downloded.",
+            btntitle: R.string.commonString.ok,
+          );
     });
   }
 

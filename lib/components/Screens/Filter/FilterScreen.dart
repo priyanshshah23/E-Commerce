@@ -29,6 +29,7 @@ import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
 import 'package:diamnow/components/Screens/Notification/Notifications.dart';
 import 'package:diamnow/components/Screens/SalesPerson/Widget/CellModel.dart';
 import 'package:diamnow/components/Screens/Search/Search.dart';
+import 'package:diamnow/components/Screens/VoiceSearch/VoiceSearch.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
@@ -336,6 +337,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                     : getBackButton(context),
                 centerTitle: false,
                 actionItems: [
+                  if(app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES)
                   InkWell(
                     onTap: () {
                       Navigator.push(
@@ -397,7 +399,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                       ),
                     ),
                   ),
-                  InkWell(
+                  if(app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES)
+                    InkWell(
                     onTap: () {
                       openDialogueForSelectStatus(context);
                     },
@@ -916,6 +919,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             Map<String, dynamic> payload = {};
             payload["module"] =
                 DiamondModuleConstant.MODULE_TYPE_FILTER_OFFLINE_NOTI_CLICK;
+
             payload["payload"] = FilterRequest().createRequest(arrList);
 
             app.resolve<PrefUtils>().saveFilterOffline(payload);
@@ -944,8 +948,16 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 .getModulePermission(
                     ModulePermissionConstant.permission_searchResult)
                 .view) {
-              callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-                  isSearch: true);
+              if (app.resolve<PrefUtils>().getUserDetails().type == 1) {
+                callApiForGetFilterId(
+                    DiamondModuleConstant.MODULE_TYPE_SEARCH,
+                    isSearch: true);
+              } else {
+                callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+                    isSearch: true);
+              }
+//              callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+//                  isSearch: true);
               // place code
             } else {
               app.resolve<CustomDialogs>().accessDenideDialog(context);
@@ -957,12 +969,22 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               .getModulePermission(
                   ModulePermissionConstant.permission_mySavedSearch)
               .insert) {
-            if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList)))
-              callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-                  isSavedSearch: true, isSearch: true);
-            else
+            if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList))) {
+              if (app.resolve<PrefUtils>().getUserDetails().type == 1) {
+                callApiForGetFilterId(
+                    DiamondModuleConstant.MODULE_TYPE_SEARCH,
+                    isSearch: true);
+              } else {
+                callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+                    isSearch: true);
+              }
+            }
+//              callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+//                  isSavedSearch: true, isSearch: true);
+            else {
               showToast(R.string.commonString.selectAtleastOneFilter,
                   context: context);
+            }
           } else {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
           }
@@ -976,7 +998,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 context, FilterRequest().createRequest(arrList),
                 (diamondListResp) {
               Map<String, dynamic> dict = new HashMap();
-              dict["filterId"] = diamondListResp.data[0].filter.id;
+              dict["filterId"] = diamondListResp.data.filter.id;
               dict["filter"] = FilterRequest().createRequest(arrList);
               dict[ArgumentConstant.ModuleType] =
                   DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR;
@@ -997,6 +1019,81 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         page: PageAnalytics.DIAMOND_SEARCH,
         section: SectionAnalytics.SEARCH,
         action: ActionAnalytics.CLICK);
+    Map<String, dynamic> map = FilterRequest().createRequest(arrList);
+    if (app.resolve<PrefUtils>().getUserDetails().type == UserConstant.CUSTOMER&&map.length < 3) {
+      app.resolve<CustomDialogs>().errorDialog(
+            context,
+            "",
+            "Please select any 2 criteria.",
+            btntitle: R.string.commonString.ok,
+          );
+    } else {
+      SyncManager.instance.callApiForDiamondList(
+        context,
+        map,
+        (diamondListResp) {
+          if (isSavedSearch) {
+            openBottomSheetForSavedSearch(
+                context, FilterRequest().createRequest(arrList),
+                isSearch: isSearch, savedSearchModel: this.savedSearchModel);
+          } else {
+            if (isSearch) {
+              if (diamondListResp.data.count == 0) {
+                app.resolve<CustomDialogs>().confirmDialog(context,
+                    desc: R.string.commonString.noDiamondFound,
+                    positiveBtnTitle: R.string.commonString.ok,
+                    negativeBtnTitle: R.string.screenTitle.addDemand,
+                    onClickCallback: (buttonType) {
+                  if (buttonType == ButtonType.NagativeButtonClick) {
+                    if (app
+                        .resolve<PrefUtils>()
+                        .getModulePermission(
+                            ModulePermissionConstant.permission_myDemand)
+                        .insert) {
+                      if (!isNullEmptyOrFalse(
+                          FilterRequest().createRequest(arrList)))
+                        getAddDemand();
+                      else {
+                        showToast(R.string.commonString.selectAtleastOneFilter,
+                            context: context);
+                      }
+                      // place code
+                    }
+                  }
+                });
+              } else {
+                Map<String, dynamic> dict = new HashMap();
+                dict["filterId"] = diamondListResp.data.filter.id;
+                dict["filters"] = FilterRequest().createRequest(arrList);
+                dict['isCompanySelected'] = isCompanySelected ?? false;
+                dict[ArgumentConstant.ModuleType] = moduleType;
+                NavigationUtilities.pushRoute(DiamondListScreen.route,
+                    args: dict);
+              }
+            } else {
+              Map<String, dynamic> dict = new HashMap();
+              dict["filterId"] = diamondListResp.data.filter.id;
+              dict["filters"] = FilterRequest().createRequest(arrList);
+              dict['isCompanySelected'] = isCompanySelected ?? false;
+              dict[ArgumentConstant.ModuleType] = moduleType;
+              NavigationUtilities.pushRoute(DiamondListScreen.route,
+                  args: dict);
+            }
+          }
+        },
+        (onError) {
+          //print("Error");
+        },
+      );
+    }
+  }
+
+  callApiForGetFilterIdForSales(int moduleType,
+      {bool isSavedSearch = false, bool isSearch = false}) {
+    SyncManager.instance.callAnalytics(context,
+        page: PageAnalytics.DIAMOND_SEARCH,
+        section: SectionAnalytics.SEARCH,
+        action: ActionAnalytics.CLICK);
 
     SyncManager.instance.callApiForDiamondList(
       context,
@@ -1008,7 +1105,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               isSearch: isSearch, savedSearchModel: this.savedSearchModel);
         } else {
           if (isSearch) {
-            if (diamondListResp.data[0].count == 0) {
+            if (diamondListResp.data.count == 0) {
               app.resolve<CustomDialogs>().confirmDialog(context,
                   desc: R.string.commonString.noDiamondFound,
                   positiveBtnTitle: R.string.commonString.ok,
@@ -1033,7 +1130,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               });
             } else {
               Map<String, dynamic> dict = new HashMap();
-              dict["filterId"] = diamondListResp.data[0].filter.id;
+              dict["filterId"] = diamondListResp.data.filter.id;
               dict["filters"] = FilterRequest().createRequest(arrList);
               dict['isCompanySelected'] = isCompanySelected ?? false;
               dict[ArgumentConstant.ModuleType] = moduleType;
@@ -1042,7 +1139,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             }
           } else {
             Map<String, dynamic> dict = new HashMap();
-            dict["filterId"] = diamondListResp.data[0].filter.id;
+            dict["filterId"] = diamondListResp.data.filter.id;
             dict["filters"] = FilterRequest().createRequest(arrList);
             dict['isCompanySelected'] = isCompanySelected ?? false;
             dict[ArgumentConstant.ModuleType] = moduleType;
@@ -1235,117 +1332,186 @@ class _FilterItemState extends State<FilterItem> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-//        if (app.resolve<PrefUtils>().getUserDetails().type ==
-//            UserConstant.SALES)
-        /*Container(
-          color: fromHex("#FAFAFA"),
-          margin: EdgeInsets.only(
-            top: getSize(20),
-          ),
-          child: TextField(
-            textAlignVertical: TextAlignVertical(y: 0.2),
-            textInputAction: TextInputAction.done,
-            focusNode: _focusSearchStoneId,
-            controller: _searchStoneIdController,
-            obscureText: false,
-            readOnly: true,
-            autofocus: false,
-            style: appTheme.black16TextStyle,
-            keyboardType: TextInputType.text,
-            textCapitalization: TextCapitalization.none,
-            cursorColor: appTheme.colorPrimary,
-            inputFormatters: [
-              WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
-              BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
-            ],
-            decoration: InputDecoration(
-              fillColor: fromHex("#FAFAFA"),
-              border: InputBorder.none,
-              hintStyle: appTheme.grey16HintTextStyle,
-              hintText: "Search by Stone Id/Auto Stone Id",
-              labelStyle: TextStyle(
-                color: appTheme.textColor,
-                fontSize: getFontSize(16),
-              ),
-              // suffix: widget.textOption.postfixWidOnFocus,
-              prefixIcon: Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: getSize(20),
-                  ),
-                  Image.asset(
-                    search,
-                    height: getSize(20),
-                    width: getSize(20),
-                  ),
-                ],
-              ),
-              suffixIcon: Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Map<String, dynamic> dict = new HashMap();
-                      dict["isFromSearch"] = true;
-                      dict["isFromManual"] = true;
-                      NavigationUtilities.pushRoute(
-                        SearchScreen.route,
-                        args: dict,
-                      );
-                    },
-                    child: Text(
-                      "M",
-                      style: appTheme.black16MediumTextStyle.copyWith(
-                        decoration: TextDecoration.underline,
+        if (app.resolve<PrefUtils>().getUserDetails().type ==
+            UserConstant.SALES)
+          Padding(
+            padding: EdgeInsets.only(top: getSize(16.0), bottom: getSize(16.0)),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Hero(
+                    tag: 'searchTextField',
+                    child: Material(
+                      color: appTheme.whiteColor,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: getSize(Spacing.leftPadding),
+                          right: getSize(Spacing.rightPadding),
+                        ),
+                        child: Container(
+                          height: getSize(40),
+                          decoration: BoxDecoration(
+                            color: appTheme.whiteColor,
+                            borderRadius: BorderRadius.circular(getSize(5)),
+                            border: Border.all(
+                              color: appTheme.colorPrimary,
+                              width: getSize(1),
+                            ),
+                          ),
+                          child: TextField(
+                            textAlignVertical: TextAlignVertical(y: 1.0),
+                            textInputAction: TextInputAction.done,
+                            focusNode: _focusSearch,
+                            readOnly: true,
+                            autofocus: false,
+                            controller: _searchController,
+                            obscureText: false,
+                            style: appTheme.black16TextStyle,
+                            keyboardType: TextInputType.text,
+                            textCapitalization: TextCapitalization.none,
+                            cursorColor: appTheme.colorPrimary,
+                            inputFormatters: [
+                              WhitelistingTextInputFormatter(
+                                  new RegExp(alphaRegEx)),
+                              BlacklistingTextInputFormatter(
+                                  RegExp(RegexForEmoji))
+                            ],
+                            decoration: InputDecoration(
+                              fillColor: fromHex("#FFEFEF"),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(
+                                    getSize(5),
+                                  ),
+                                ),
+                                borderSide: BorderSide(
+                                    color: appTheme.dividerColor,
+                                    width: getSize(1)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(getSize(5))),
+                                borderSide: BorderSide(
+                                  color: appTheme.dividerColor,
+                                  width: getSize(1),
+                                ),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(getSize(5))),
+                                borderSide: BorderSide(
+                                    color: appTheme.dividerColor,
+                                    width: getSize(1)),
+                              ),
+
+                              hintStyle: appTheme.grey16HintTextStyle,
+                              hintText: R
+                                  .string.commonString.searchStoneIdCertificateNo,
+                              labelStyle: TextStyle(
+                                color: appTheme.textColor,
+                                fontSize: getFontSize(16),
+                              ),
+                              // suffix: widget.textOption.postfixWidOnFocus,
+                              suffixIcon: Padding(
+                                  padding: EdgeInsets.all(getSize(10)),
+                                  child: Image.asset(search)),
+                            ),
+                            onChanged: (String text) {
+                              //
+                            },
+                            onEditingComplete: () {
+                              //
+                              _focusSearch.unfocus();
+                            },
+                            onTap: () {
+                              Map<String, dynamic> dict = new HashMap();
+                              dict["isFromSearch"] = true;
+                              dict["isFromManual"] = isManualSearch ?? true;
+                              NavigationUtilities.pushRoute(
+                                SearchScreen.route,
+                                args: dict,
+                              );
+                            },
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: getSize(20),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Map<String, dynamic> dict = new HashMap();
-                      dict["isFromSearch"] = true;
-                      dict["isFromManual"] = false;
-                      NavigationUtilities.pushRoute(
-                        SearchScreen.route,
-                        args: dict,
-                      );
-                    },
-                    child: Text(
-                      "A",
-                      style: appTheme.grey16HintTextStyle.copyWith(
-                        decoration: TextDecoration.underline,
+                ),
+                Center(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          isManualSearch = true;
+                          isAutoSearch = false;
+                          print(isManualSearch);
+                          setState(() {});
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(right: getSize(20)),
+                          child: Text(
+                            "M",
+                            style: appTheme.blue20TextStyle.copyWith(
+                              color: isManualSearch
+                                  ? appTheme.blackColor
+                                  : appTheme.textGray,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                      InkWell(
+                        onTap: () {
+                          isManualSearch = false;
+                          isAutoSearch = true;
+                          print(isAutoSearch);
+                          setState(() {});
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(right: getSize(20)),
+                          child: Text(
+                            "A",
+                            style: appTheme.blue20TextStyle.copyWith(
+                              color: isAutoSearch
+                                  ? appTheme.blackColor
+                                  : appTheme.textGray,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    width: getSize(20),
-                  ),
-                ],
-              ),
+                )
+//              if (widget.moduleType !=
+//                  DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH)
+//                Center(
+//                  child: InkWell(
+//                    onTap: () {
+////                      NavigationUtilities.pushRoute(VoiceSearch.route);
+//                    },
+//                    child: Padding(
+//                      padding: EdgeInsets.only(
+//                        right: getSize(Spacing.leftPadding),
+//                      ),
+//                      child: Image.asset(
+//                        microphone,
+//                        alignment: Alignment.centerRight,
+//                        width: getSize(26),
+//                        height: getSize(26),
+//                      ),
+//                    ),
+//                  ),
+//                )
+              ],
             ),
-            onChanged: (String text) {
-              //
-            },
-            onEditingComplete: () {
-              //
-              _focusSearch.unfocus();
-            },
-            onTap: () {
-//              Map<String, dynamic> dict = new HashMap();
-//              dict["isFromSearch"] = true;
-//              NavigationUtilities.pushRoute(
-//                SearchScreen.route,
-//                args: dict,
-//              );
-            },
           ),
-        ),*/
+        if (app.resolve<PrefUtils>().getUserDetails().type ==
+            UserConstant.CUSTOMER)
         Padding(
           padding: EdgeInsets.only(top: getSize(16.0), bottom: getSize(16.0)),
           child: Row(
@@ -1403,7 +1569,7 @@ class _FilterItemState extends State<FilterItem> {
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(getSize(5))),
+                              BorderRadius.all(Radius.circular(getSize(5))),
                               borderSide: BorderSide(
                                 color: appTheme.dividerColor,
                                 width: getSize(1),
@@ -1411,7 +1577,7 @@ class _FilterItemState extends State<FilterItem> {
                             ),
                             border: OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(getSize(5))),
+                              BorderRadius.all(Radius.circular(getSize(5))),
                               borderSide: BorderSide(
                                   color: appTheme.dividerColor,
                                   width: getSize(1)),
@@ -1439,7 +1605,7 @@ class _FilterItemState extends State<FilterItem> {
                           onTap: () {
                             Map<String, dynamic> dict = new HashMap();
                             dict["isFromSearch"] = true;
-                            dict["isFromManual"] = isManualSearch ?? true;
+                            dict["isFromManual"] = false;
                             NavigationUtilities.pushRoute(
                               SearchScreen.route,
                               args: dict,
@@ -1451,74 +1617,26 @@ class _FilterItemState extends State<FilterItem> {
                   ),
                 ),
               ),
-              Center(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        isManualSearch = true;
-                        isAutoSearch = false;
-                        print(isManualSearch);
-                        setState(() {});
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.only(right: getSize(20)),
-                        child: Text(
-                          "M",
-                          style: appTheme.blue20TextStyle.copyWith(
-                            color: isManualSearch
-                                ? appTheme.blackColor
-                                : appTheme.textGray,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
+              if (widget.moduleType !=
+                  DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH)
+                Center(
+                  child: InkWell(
+                    onTap: () {
+                      NavigationUtilities.pushRoute(VoiceSearch.route);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        right: getSize(Spacing.leftPadding),
+                      ),
+                      child: Image.asset(
+                        microphone,
+                        alignment: Alignment.centerRight,
+                        width: getSize(26),
+                        height: getSize(26),
                       ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        isManualSearch = false;
-                        isAutoSearch = true;
-                        print(isAutoSearch);
-                        setState(() {});
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.only(right: getSize(20)),
-                        child: Text(
-                          "A",
-                          style: appTheme.blue20TextStyle.copyWith(
-                            color: isAutoSearch
-                                ? appTheme.blackColor
-                                : appTheme.textGray,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-//              if (widget.moduleType !=
-//                  DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH)
-//                Center(
-//                  child: InkWell(
-//                    onTap: () {
-////                      NavigationUtilities.pushRoute(VoiceSearch.route);
-//                    },
-//                    child: Padding(
-//                      padding: EdgeInsets.only(
-//                        right: getSize(Spacing.leftPadding),
-//                      ),
-//                      child: Image.asset(
-//                        microphone,
-//                        alignment: Alignment.centerRight,
-//                        width: getSize(26),
-//                        height: getSize(26),
-//                      ),
-//                    ),
-//                  ),
-//                )
+                  ),
+                )
             ],
           ),
         ),

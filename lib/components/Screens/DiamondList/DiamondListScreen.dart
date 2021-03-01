@@ -122,7 +122,18 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     Config().getOptionsJson().then((result) {
       result.forEach((element) {
         if (element.isActive) {
-          optionList.add(element);
+          if (moduleType ==
+              DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY) {
+            if (element.apiKey == "amt ASC" ||
+                element.apiKey == "amt DESC" ||
+                element.apiKey == "back ASC" ||
+                element.apiKey == "back DESC") {
+            } else {
+              optionList.add(element);
+            }
+          } else {
+            optionList.add(element);
+          }
         }
       });
       setState(() {});
@@ -229,69 +240,81 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
       case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH:
-        dict["filters"] = [
-          {"diamondSearchId": this.filterId}
-        ];
-//        dict["filters"]["diamondSearchId"] = this.filterId;
+        if (app.resolve<PrefUtils>().getUserDetails().type ==
+            UserConstant.SALES) {
+          dict["filters"] = [
+            {"diamondSearchId": this.filterId}
+          ];
+        } else {
+          dict["filters"] = {};
+          dict["filters"]["diamondSearchId"] = this.filterId;
+        }
         break;
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
-        dict["filters"] = [
-          {"diamondSearchId": this.filterId}
-        ];
-        // dict["filters"] = [{}];
-        // dict["filters"]["diamondSearchId"] = this.filterId;
-
+        if (app.resolve<PrefUtils>().getUserDetails().type ==
+            UserConstant.SALES) {
+          dict["filters"] = [
+            {"diamondSearchId": this.filterId}
+          ];
+        } else {
+          dict["filters"] = {};
+          dict["filters"]["diamondSearchId"] = this.filterId;
+        }
         break;
       case DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR:
-        dict["filters"] = [
-          {"diamondSearchId": this.filterId}
-        ];
-//        dict["filters"] = [{}];
-//        dict["filter"]["diamondSearchId"] = this.filterId;
+//        dict["filters"] = [
+//          {"diamondSearchId": this.filterId}
+//        ];
+        dict["filters"] = {};
+        dict["filter"]["diamondSearchId"] = this.filterId;
         break;
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
-        dict["filters"] = [{}];
+        dict["filters"] = {};
         dict["viewType"] = 2;
         break;
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
-        dict["filters"] = [
-          {"wSts": DiamondStatus.DIAMOND_STATUS_BID}
-        ];
-//        dict["filters"] = [{}];
-//        dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_BID;
+//        dict["filters"] = [
+//          {"wSts": DiamondStatus.DIAMOND_STATUS_BID}
+//        ];
+        dict["filters"] = [{}];
+        dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_BID;
         break;
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
         var date = DateTime.now();
-        dict["filters"] = [
-          {
-            "wSts": DiamondStatus.DIAMOND_STATUS_UPCOMING,
-            "inDt": {
-              "<=": date.add(Duration(days: 7)).toUtc().toIso8601String()
-            }
-          }
-        ];
-        Map<String, dynamic> dict1 = Map<String, dynamic>();
-        dict1["inDt"] = "ASC";
-        dict["sort"] = [dict1];
-
-//        dict["filters"] = [{}];
-//        dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_UPCOMING;
-//        dict["filters"]["inDt"] = {};
-//
-//        print(date.add(Duration(days: 5, hours: 5, minutes: 30)));
-//        dict["filters"]["inDt"]["<="] =
-//            date.add(Duration(days: 7)).toUtc().toIso8601String();
+//        dict["filters"] = [
+//          {
+//            "wSts": DiamondStatus.DIAMOND_STATUS_UPCOMING,
+//            "inDt": {
+//              "<=": date.add(Duration(days: 7)).toUtc().toIso8601String()
+//            }
+//          }
+//        ];
 //        Map<String, dynamic> dict1 = Map<String, dynamic>();
 //        dict1["inDt"] = "ASC";
 //        dict["sort"] = [dict1];
 
+        dict["filters"] = {};
+        dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_UPCOMING;
+        dict["filters"]["inDt"] = {};
+
+        print(date.add(Duration(days: 5, hours: 5, minutes: 30)));
+        dict["filters"]["inDt"]["<="] =
+            date.add(Duration(days: 7)).toUtc().toIso8601String();
+        Map<String, dynamic> dict1 = Map<String, dynamic>();
+        dict1["inDt"] = "ASC";
+        dict["sort"] = [dict1];
+
         break;
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
-        dict["filters"] = [
-          {"or": diamondConfig.getExclusiveDiamondReq()}
-        ];
-//        dict["filters"] = {};
-//        dict["filters"]["or"] = diamondConfig.getExclusiveDiamondReq();
+        if (app.resolve<PrefUtils>().getUserDetails().type ==
+            UserConstant.SALES) {
+          dict["filters"] = [
+            {"or": diamondConfig.getExclusiveDiamondReq()}
+          ];
+        } else {
+          dict["filters"] = {};
+          dict["filters"]["or"] = diamondConfig.getExclusiveDiamondReq();
+        }
         break;
       case DiamondModuleConstant.MODULE_TYPE_MY_BID:
         dict["bidType"] = [BidConstant.BID_TYPE_ADD];
@@ -316,12 +339,15 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict["isAppendDiamond"] = 1;
         break;
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
-        dict["filters"] = [
-          {"wSts": "D"}
-        ];
-//        dict["filters"] = {};
-//        dict["filters"]["wSts"] = "D";
-
+        if (app.resolve<PrefUtils>().getUserDetails().type ==
+            UserConstant.SALES) {
+          dict["filters"] = [
+            {"wSts": "D"}
+          ];
+        } else {
+          dict["filters"] = {};
+          dict["filters"]["wSts"] = "D";
+        }
         break;
 
       case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK:
@@ -348,8 +374,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     )
         .then((diamondListResp) async {
       if (page == DEFAULT_PAGE) {
-        hasData = diamondListResp.data[0].diamonds.length > 0 ||
-            diamondListResp.data[0].list.length > 0;
+        hasData = diamondListResp.data.diamonds.length > 0 ||
+            diamondListResp.data.list.length > 0;
       }
       switch (moduleType) {
         case DiamondModuleConstant.MODULE_TYPE_MY_CART:
@@ -364,7 +390,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           List<DiamondModel> list = [];
           DiamondModel diamondModel;
           TrackDiamonds trackDiamonds;
-          diamondListResp.data[0].list.forEach((element) {
+          diamondListResp.data.list.forEach((element) {
             if (element.diamonds != null) {
               element.diamonds.forEach((diamonds) {
                 switch (moduleType) {
@@ -424,12 +450,12 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           break;
 
         default:
-          arraDiamond.addAll(diamondListResp.data[0].diamonds);
+          arraDiamond.addAll(diamondListResp.data.diamonds);
           break;
       }
       diamondConfig.setMatchPairItem(arraDiamond);
       diamondList.state.listCount = arraDiamond.length;
-      diamondList.state.totalCount = diamondListResp.data[0].count;
+      diamondList.state.totalCount = diamondListResp.data.count;
       manageDiamondSelection();
       //callBlockApi(isProgress: true);
       page = page + 1;
@@ -486,14 +512,14 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   handleOfflineStockResponse(DiamondListResp diamondListResp) {
     if (page == DEFAULT_PAGE) {
-      hasData = diamondListResp.data[0].diamonds.length > 0 ||
-          diamondListResp.data[0].list.length > 0;
+      hasData = diamondListResp.data.diamonds.length > 0 ||
+          diamondListResp.data.list.length > 0;
     }
 
-    arraDiamond.addAll(diamondListResp.data[0].diamonds);
+    arraDiamond.addAll(diamondListResp.data.diamonds);
     diamondConfig.setMatchPairItem(arraDiamond);
     diamondList.state.listCount = arraDiamond.length;
-    diamondList.state.totalCount = diamondListResp.data[0].count;
+    diamondList.state.totalCount = diamondListResp.data.count;
     manageDiamondSelection();
     //callBlockApi(isProgress: true);
     page = page + 1;
@@ -1285,10 +1311,12 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             bgColor: appTheme.whiteColor,
             leadingButton: isFromDrawer
                 ? getDrawerButton(context, true)
-                : getBackButton(context,/*ontap: (){
+                : getBackButton(
+                    context, /*ontap: (){
                   Navigator.pop(context);
                   app.resolve<PrefUtils>().saveCompany(null);
-            }*/),
+            }*/
+                  ),
             centerTitle: false,
             textalign: TextAlign.left,
             actionItems: getToolbarItem(),

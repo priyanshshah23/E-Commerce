@@ -154,9 +154,9 @@ class _DiamondOfferInfoWidgetState extends State<DiamondOfferInfoWidget> {
           : widget.diamondModel.remarks;
     } else if (widget.moduleType ==
         DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
-      return isNullEmptyOrFalse(widget.diamondModel.purpose)
+      return isNullEmptyOrFalse(widget.diamondModel.remarks)
           ? "-"
-          : widget.diamondModel.purpose;
+          : widget.diamondModel.remarks;
     }
 
     return "-";

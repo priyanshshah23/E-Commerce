@@ -19,7 +19,8 @@
     "isShowMoreHorizontal": true,
     "tab": "basic",
     "sequence": 1,
-    "isActive": true
+    "isActive": true,
+    "valueKeyisCode": true
   },
   {
     "viewType": "seperator",
@@ -37,12 +38,15 @@
     "title": "Carat Range",
     "desc": "Desc",
     "viewType": "caratrange",
+    "isCaratRange": true,
     "allLableTitle": "All",
     "apiKey": "crt",
     "masterCode": "Size",
     "verticalScroll": true,
     "orientation": "v",
     "gridViewItemCount": 3,
+    "labelFrom": "From",
+    "labelTo": "To",
     "showMoreTagAfterTotalItemCount": 9,
     "isShowAll": false,
     "isShowMore": false,
@@ -58,7 +62,8 @@
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
-    }
+    },
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -142,7 +147,8 @@
           }
         ]
       }
-    ]
+    ],
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -170,7 +176,8 @@
     "tab": "basic",
     "isWhiteColor": false,
     "sequence": 7,
-    "isActive": false
+    "isActive": false,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -251,7 +258,8 @@
           }
         ]
       }
-    ]
+    ],
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -284,7 +292,8 @@
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
-    }
+    },
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -409,7 +418,8 @@
           }
         ]
       }
-    ]
+    ],
+    "valueKeyisCode": false
   },
   {
     "title": "Cut",
@@ -423,7 +433,8 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 20,
-    "isActive": true
+    "isActive": true,
+    "valueKeyisCode": false
   },
   {
     "title": "Polish",
@@ -437,7 +448,8 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 21,
-    "isActive": true
+    "isActive": true,
+    "valueKeyisCode": false
   },
   {
     "title": "Symmetry",
@@ -451,7 +463,8 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 22,
-    "isActive": true
+    "isActive": true,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -479,7 +492,8 @@
     "sequence": 11,
     "gridViewItemCount": 3,
     "showMoreTagAfterTotalItemCount": 9,
-    "isActive": true
+    "isActive": true,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -507,7 +521,8 @@
     "gridViewItemCount": 5,
     "showMoreTagAfterTotalItemCount": 5,
     "sequence": 13,
-    "isActive": true
+    "isActive": true,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -533,7 +548,8 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 25,
-    "isActive": false
+    "isActive": false,
+    "valueKeyisCode": false
   },
   {
     "title": "Stage",
@@ -547,7 +563,8 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 26,
-    "isActive": false
+    "isActive": false,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -623,7 +640,8 @@
           }
         ]
       }
-    ]
+    ],
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -711,7 +729,8 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 17,
-    "isActive": true
+    "isActive": true,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -737,7 +756,8 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 70,
-    "isActive": false
+    "isActive": false,
+    "valueKeyisCode": false
   },
   {
     "title": "FM",
@@ -751,7 +771,8 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 70,
-    "isActive": false
+    "isActive": false,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -777,7 +798,8 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 70,
-    "isActive": false
+    "isActive": false,
+    "valueKeyisCode": false
   },
   {
     "title": "Table%",
@@ -1196,7 +1218,8 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 58,
-    "isActive": true
+    "isActive": true,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -1224,7 +1247,8 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 58,
-    "isActive": true
+    "isActive": true,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -1252,7 +1276,8 @@
     "showMoreTagAfterTotalItemCount": 5,
     "tab": "advance",
     "sequence": 70,
-    "isActive": true
+    "isActive": true,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -1282,7 +1307,8 @@
     "tab": "advance",
     "isWhiteColor": false,
     "sequence": 7,
-    "isActive": true
+    "isActive": true,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -1310,7 +1336,8 @@
     "showMoreTagAfterTotalItemCount": 5,
     "tab": "advance",
     "sequence": 58,
-    "isActive": true
+    "isActive": true,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -1338,7 +1365,8 @@
     "showMoreTagAfterTotalItemCount": 5,
     "tab": "advance",
     "sequence": 24,
-    "isActive": true
+    "isActive": true,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -1366,7 +1394,8 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 68,
-    "isActive": true
+    "isActive": true,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -1394,7 +1423,8 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 62,
-    "isActive": true
+    "isActive": true,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -1422,7 +1452,8 @@
     "showMoreTagAfterTotalItemCount": 5,
     "tab": "advance",
     "sequence": 58,
-    "isActive": true
+    "isActive": true,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -1450,7 +1481,8 @@
     "showMoreTagAfterTotalItemCount": 5,
     "tab": "advance",
     "sequence": 58,
-    "isActive": true
+    "isActive": true,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -1476,7 +1508,8 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 60,
-    "isActive": false
+    "isActive": false,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -1502,7 +1535,8 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 64,
-    "isActive": false
+    "isActive": false,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -1529,7 +1563,8 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 68,
-    "isActive": false
+    "isActive": false,
+    "valueKeyisCode": false
   },
   {
     "title": "Side Natts",
@@ -1543,7 +1578,8 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 68,
-    "isActive": false
+    "isActive": false,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -1570,7 +1606,8 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 68,
-    "isActive": false
+    "isActive": false,
+    "valueKeyisCode": false
   },
   {
     "title": "Side",
@@ -1584,7 +1621,8 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 68,
-    "isActive": false
+    "isActive": false,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -1610,7 +1648,8 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 68,
-    "isActive": false
+    "isActive": false,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -1636,7 +1675,8 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 68,
-    "isActive": false
+    "isActive": false,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -1662,7 +1702,8 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 68,
-    "isActive": false
+    "isActive": false,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -1688,7 +1729,8 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 68,
-    "isActive": false
+    "isActive": false,
+    "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
@@ -1729,7 +1771,8 @@
     "sequence": 72,
     "gridViewItemCount": 3,
     "showMoreTagAfterTotalItemCount": 9,
-    "isActive": true
+    "isActive": true,
+    "valueKeyisCode": false
   },
   {
     "title": "Search, Enter Comma for Multiple Stone ID",

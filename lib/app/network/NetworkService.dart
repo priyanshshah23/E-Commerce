@@ -35,16 +35,16 @@ abstract class NetworkService {
   Future<MasterResp> getMaster(@Body() MasterReq req);
 
   @POST(ApiConstants.login)
-  Future<LoginResp> login(@Body() Map<String,dynamic > req);
+  Future<LoginResp> login(@Body() Map<String, dynamic> req);
 
   @POST(ApiConstants.createMpin)
   Future<BaseApiResp> createMpin(@Body() CreateMpinReq req);
 
   @POST(ApiConstants.resetMpin)
-  Future<BaseApiResp> resetMpin(@Body() Map<String,dynamic > req);
+  Future<BaseApiResp> resetMpin(@Body() Map<String, dynamic> req);
 
   @POST(ApiConstants.resetMpinByOtp)
-  Future<BaseApiResp> resetMpinByOtp(@Body() Map<String,dynamic > req);
+  Future<BaseApiResp> resetMpinByOtp(@Body() Map<String, dynamic> req);
 
   @POST(ApiConstants.signInAsGuest)
   Future<LoginResp> signInAsGuest(@Body() SignInAsGuestReq req);
@@ -73,6 +73,9 @@ abstract class NetworkService {
   @POST(ApiConstants.sendOTP)
   Future<BaseApiResp> forgetPassword(@Body() ForgotPasswordReq req);
 
+  @POST(ApiConstants.forgetPassword)
+  Future<BaseApiResp> forgetPasswordEmail(@Body() ForgotPasswordEmailReq req);
+
   @POST(ApiConstants.forgotMpin)
   Future<BaseApiResp> forgetMpin(@Body() Map<String, dynamic> req);
 
@@ -84,7 +87,6 @@ abstract class NetworkService {
 
   @POST(ApiConstants.verifyMpin)
   Future<BaseApiResp> verifyMpin(@Body() Map<String, dynamic> req);
-
 
   @POST(ApiConstants.resetPassword)
   Future<BaseApiResp> resetPassword(@Body() ResetPasswordReq req);
@@ -120,6 +122,9 @@ abstract class NetworkService {
 
   @POST(ApiConstants.diamondList)
   Future<DiamondListResp> diamondListPaginate(@Body() Map<String, dynamic> req);
+
+  @POST(ApiConstants.diamondListSales)
+  Future<DiamondListResp> salesDiamondListPaginate(@Body() Map<String, dynamic> req);
 
   @POST(ApiConstants.holdList)
   Future<DiamondListResp> holdListPaginate(@Body() Map<String, dynamic> req);
@@ -181,7 +186,7 @@ abstract class NetworkService {
 //  @POST(ApiConstants.dashboard)
 //  Future<DashboardResp> dashboard(@Body() Map<String, dynamic> req);
   @POST(ApiConstants.dashboard)
-  Future<AdminDashboardResp> dashboard(@Body() Map<String, dynamic> req);
+  Future<DashboardResp> dashboard(@Body() Map<String, dynamic> req);
 
   //Delete saved search
   @POST(ApiConstants.deleteSavedSearch)
@@ -197,12 +202,13 @@ abstract class NetworkService {
   Future<VersionUpdateResp> getVersionUpdate();
 
   @POST(ApiConstants.notificationList)
-  Future<NotificationResp> getNotificationList(@Body() Map<String, dynamic> req);
+  Future<NotificationResp> getNotificationList(
+      @Body() Map<String, dynamic> req);
 
   @POST(ApiConstants.markAsReadNotification)
-  Future<NotificationResp> markAsReadNotification(@Body() Map<String, dynamic> req);
+  Future<NotificationResp> markAsReadNotification(
+      @Body() Map<String, dynamic> req);
 
   @POST(ApiConstants.sendNotificationId)
   Future<BaseApiResp> notificationId();
-
 }

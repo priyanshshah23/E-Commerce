@@ -321,8 +321,8 @@ class CompanyModel {
     contactEmail = json['contactEmail'];
     contactMobile = json['contactMobile'];
     name = json['name'];
-    addedBy = json['addedBy'];
-    updatedBy = json['updatedBy'];
+//    addedBy = json['addedBy'];
+//    updatedBy = json['updatedBy'];
     broker =
         json['broker'] != null ? new Broker.fromJson(json['broker']) : null;
     grpCompany = json['grpCompany'];
@@ -919,7 +919,7 @@ class Broker {
 //    }
     addedBy = json['addedBy'];
     updatedBy = json['updatedBy'];
-    broker = json['broker'];
+//    broker = json['broker'];
     grpCompany = json['grpCompany'];
     departmentHead = json['departmentHead'];
     department = json['department'];

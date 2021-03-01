@@ -69,6 +69,7 @@ class _SignupScreenState extends State<SignupScreen> {
     return JavascriptChannel(
         name: 'LoginCallBack',
         onMessageReceived: (JavascriptMessage message) {
+          print("---login message $message");
           Navigator.pop(context);
         });
   }
@@ -77,9 +78,10 @@ class _SignupScreenState extends State<SignupScreen> {
     return JavascriptChannel(
         name: 'RegisterCallBack',
         onMessageReceived: (JavascriptMessage message) {
+          print("---register message $message");
           app.resolve<CustomDialogs>().confirmDialog(context,
               title: "",
-              desc: message.message,
+              desc: "Registration Successful.",
               positiveBtnTitle: R.string.commonString.ok,
               onClickCallback: (type) {
             Navigator.pop(context);

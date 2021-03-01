@@ -152,7 +152,7 @@ class DownloadState extends State<Download> {
                 ),
               )
             ],
-          )
+          ),
         ],
       ),
     );
@@ -169,15 +169,22 @@ class DownloadState extends State<Download> {
 
       allDiamondPreviewThings.forEach((element) {
         if (element.fileType == DownloadAndShareDialogueConstant.realImage1) {
-          element.url = DiamondUrls.image + model.vStnId + "/" + "still.jpg";
+          print("-----type----realImage1");
+//          element.url = DiamondUrls.image + model.mfgStnId + "/" + "still.jpg";
+          element.url =
+              "https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8ZGF3bnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80";
         } else if (element.fileType ==
             DownloadAndShareDialogueConstant.arrowImg) {
-          element.url =
-              DiamondUrls.arroImage + model.vStnId + "/" + "Arrow_Black_BG.jpg";
+          print("-----type----arrowImg");
+          element.url = DiamondUrls.heartImage +
+              model.mfgStnId +
+              "/" +
+              "Arrow_Black_BG.jpg";
         } else if (element.fileType ==
             DownloadAndShareDialogueConstant.assetScopeImg) {
+          print("-----type----assetScopeImg");
           element.url = DiamondUrls.image +
-              model.vStnId +
+              model.mfgStnId +
               "/" +
               "Office_Light_Black_BG.jpg";
         }
@@ -188,8 +195,9 @@ class DownloadState extends State<Download> {
         // }
         else if (element.fileType ==
             DownloadAndShareDialogueConstant.heartAndArrowImg) {
+          print("-----type----heartAndArrowImg");
           element.url = DiamondUrls.heartImage +
-              model.vStnId +
+              model.mfgStnId +
               "/" +
               "Heart_Black_BG.jpg";
         }
@@ -215,7 +223,8 @@ class DownloadState extends State<Download> {
         //   element.url = DiamondUrls.realImg2 + model.vStnId + ".jpg";
         // }
         else if (element.fileType == DownloadAndShareDialogueConstant.video1) {
-          element.url = DiamondUrls.video + model.vStnId + "/video.mp4";
+          print("-----type----video1");
+          element.url = DiamondUrls.video + model.mfgStnId + "/video.mp4";
         }
         //  else if (element.fileType ==
         //         DownloadAndShareDialogueConstant.video2 &&
@@ -224,6 +233,7 @@ class DownloadState extends State<Download> {
         // }
         else if (element.fileType ==
             DownloadAndShareDialogueConstant.certificate) {
+          print("-----type----certificate");
           element.url = DiamondUrls.certificate + model.rptNo + ".pdf";
         }
         // else if (element.fileType ==
@@ -242,6 +252,7 @@ class DownloadState extends State<Download> {
         //     model.roughVdo) {
         //   element.url = DiamondUrls.roughVideo + model.vStnId + ".html";
         // }
+        print("-------------url-----------${element.url}");
       });
 
       //download code

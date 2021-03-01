@@ -111,29 +111,27 @@ class _DashboardState extends StatefulScreenWidgetState {
   callApiForDashboard(bool isRefress, {bool isLoading = false}) {
     Map<String, dynamic> dict = {};
 
-    dict["counts"] = true;
-//    dict["savedSearch"] = true;
-//    dict["recentSearch"] = true;
-//    dict["recentActivity"] = true;
-//    dict["track"] = true;
-//    dict["dashboardCount"] = true;
-//    dict["seller"] = true;
-//    dict["account"] = true;
-//    dict["featuredStone"] = true;
-//    dict["newArrival"] = true;
+    dict["savedSearch"] = true;
+    dict["recentSearch"] = true;
+    dict["recentActivity"] = true;
+    dict["track"] = true;
+    dict["dashboardCount"] = true;
+    dict["seller"] = true;
+    dict["account"] = true;
+    dict["featuredStone"] = true;
+    dict["newArrival"] = true;
 
-    NetworkCall<AdminDashboardResp>()
+    NetworkCall<DashboardResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().dashboard(dict),
-            context,
-            isProgress: false)
-        // !isRefress && !isLoading
+        context,
+        isProgress: false)
+    // !isRefress && !isLoading
         .then((resp) async {
       await app.resolve<PrefUtils>().saveDashboardDetails(resp.data);
 
       setState(() {
-//        this.dashboardModel = resp.data;
-        this.admindashboardModel = resp.data;
+        this.dashboardModel = resp.data;
 
         if (!isNullEmptyOrFalse(this.dashboardModel.seller)) {
           emailURL = this.dashboardModel.seller.email;
@@ -143,10 +141,10 @@ class _DashboardState extends StatefulScreenWidgetState {
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
-              context,
-              desc: onError.message,
-              positiveBtnTitle: R.string.commonString.btnTryAgain,
-            );
+          context,
+          desc: onError.message,
+          positiveBtnTitle: R.string.commonString.btnTryAgain,
+        );
       }
     });
   }
@@ -716,7 +714,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                             "",
                             finalUrl: true //model.img
                                 ? DiamondUrls.image +
-                                    model.vStnId +
+                                    model.mfgStnId +
                                     "/" +
                                     "still.jpg"
                                 : "",
@@ -907,7 +905,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                           child: getImageView(
                             "",
                             finalUrl: DiamondUrls.image +
-                                model.vStnId +
+                                model.mfgStnId +
                                 "/" +
                                 "still.jpg",
                             width: getSize(122),
@@ -1428,7 +1426,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                                 child: getImageView(
                                   "",
                                   finalUrl: DiamondUrls.image +
-                                      model.vStnId +
+                                      model.mfgStnId +
                                       "/" +
                                       "still.jpg",
                                   width: getSize(40),

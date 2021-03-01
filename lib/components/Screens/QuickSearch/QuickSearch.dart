@@ -498,7 +498,7 @@ class _QuickSearchScreenState extends State<QuickSearchScreen> {
       (diamondListResp) {
         Map<String, dynamic> dict = new HashMap();
 
-        dict["filterId"] = diamondListResp.data[0].filter.id;
+        dict["filterId"] = diamondListResp.data.filter.id;
         dict["filters"] = request;
         dict[ArgumentConstant.ModuleType] =
             DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH;

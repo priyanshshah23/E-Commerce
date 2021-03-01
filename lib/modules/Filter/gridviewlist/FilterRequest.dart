@@ -35,7 +35,7 @@ class FilterRequest {
               } else if (item.code == MasterCode.newarrivals) {
                 arrWsts.add("B");
               } else if (item.code == MasterCode.brownStatic) {
-                map["excludeFilter"]  = {"brown" : true};
+                map["excludeFilter"] = {"brown": true};
               } else if (item.code == MasterCode.eyecleanStatic) {
                 if (!isNullEmptyOrFalse(item.map))
                   map.addAll(item.map as Map<String, dynamic>);
@@ -80,6 +80,14 @@ class FilterRequest {
           fromToValue["<="] = int.parse((element as FromToModel).valueTo);
 
           map[element.apiKey] = fromToValue;
+        }
+
+        if ((element as FromToModel).isCaratRange) {
+          List<Map<String, dynamic>> caratRequest = Master.getSelectedCarat(
+                  (element as FromToModel).selectionModel.masters) ??
+              [];
+
+          if (!isNullEmptyOrFalse(caratRequest)) map["or"] = caratRequest;
         }
       }
 
@@ -222,6 +230,31 @@ class FilterDataSource {
           if (!isNullEmptyOrFalse(dict[item.apiKey])) {
             item.valueFrom = dict[item.apiKey][">="];
             item.valueTo = dict[item.apiKey]["<="];
+          }
+
+          if (item.isCaratRange) {
+            if (!isNullEmptyOrFalse(dict["or"])) {
+              List<dynamic> arr = dict["or"];
+
+              List<dynamic> arrSelected =
+                  arr.map((e) => e[item.apiKey]).toList();
+              List<dynamic> arrDup = arr.map((e) => e[item.apiKey]).toList();
+
+              for (var master in item.selectionModel.masters) {
+                for (var tCarat in master.grouped) {
+                  for (var model in arrSelected) {
+                    if (num.parse(tCarat.webDisplay.split("-")[0]) ==
+                            num.parse(model[">="].toString()) &&
+                        num.parse(tCarat.webDisplay.split("-")[1]) ==
+                            num.parse(model["<="].toString())) {
+                      tCarat.isSelected = true;
+                      master.isSelected = true;
+                      arrDup.remove(model);
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       } else {

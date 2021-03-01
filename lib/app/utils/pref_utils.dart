@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:diamnow/app/Helper/EncryptionHelper.dart';
+import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
@@ -14,8 +14,6 @@ import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:diamnow/app/app.export.dart';
-
 import 'package:unique_identifier/unique_identifier.dart';
 
 import 'BaseDialog.dart';
@@ -67,11 +65,17 @@ class PrefUtils {
 
   //Take A Tour
   String get keyHomeTour => "keyHomeTour";
+
   String get keyMyAccountTour => "keyMyAccountTour";
+
   String get keySearchTour => "keySearchTour";
+
   String get keySearchResultTour => "keySearchResultTour";
+
   String get keyDiamondDetailTour => "keyDiamondDetailTour";
+
   String get keyCompareStoneTour => "keyCompareStoneTour";
+
   String get keyOfferTour => "keyOfferTour";
 
   // Dashboard
@@ -256,17 +260,17 @@ class PrefUtils {
   }
 
   // Store Dashboard Data
-  Future<void> saveDashboardDetails(AdminDashboardModel dashboardModel) async {
+  Future<void> saveDashboardDetails(DashboardModel dashboardModel) async {
     await _preferences.setString(
         keyDashboard, json.encode(dashboardModel.toJson()));
   }
 
-  AdminDashboardModel getDashboardDetails() {
+  DashboardModel getDashboardDetails() {
     var data = _preferences.getString(keyDashboard);
     if (data != null) {
       var dashboardJson = json.decode(data);
       return dashboardJson != null
-          ? new AdminDashboardModel.fromJson(dashboardJson)
+          ? new DashboardModel.fromJson(dashboardJson)
           : null;
     }
 
@@ -285,13 +289,15 @@ class PrefUtils {
   }
 
   // Company detail Getter setter
-  Future<void> saveCompany(SelectionPopupModel company)  {
+  Future<void> saveCompany(SelectionPopupModel company) {
     _preferences.setString(keyCompany, json.encode(company));
   }
 
   SelectionPopupModel getCompanyDetails() {
     var companyJson = json.decode(_preferences.getString(keyCompany));
-    return companyJson != null ? new SelectionPopupModel.fromJson(companyJson) : null;
+    return companyJson != null
+        ? new SelectionPopupModel.fromJson(companyJson)
+        : null;
   }
 
   Future<void> saveUserPermission(UserPermissions user) async {
@@ -340,15 +346,36 @@ class PrefUtils {
         data.downloadExcel = false;
       }
     }
-    /*if (module == ModulePermissionConstant.permission_offline_stock ||
-        module == ModulePermissionConstant.permission_auction) {
-      data = UserPermissionsData(module: module);
-      data.view = true;
-      data.insert = true;
-      data.update = true;
-      data.delete = true;
-      data.downloadExcel = true;
-    }*/
+    if (app.resolve<PrefUtils>().getUserDetails() == UserConstant.CUSTOMER &&
+        (app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
+                KYCStatus.pending) !=
+            KYCStatus.approved) {
+      if (module == ModulePermissionConstant.permission_searchDiamond ||
+          module == ModulePermissionConstant.permission_quickSearch ||
+          module == ModulePermissionConstant.permission_newGoods ||
+          module == ModulePermissionConstant.permission_stone_of_the_day ||
+          module == ModulePermissionConstant.permission_watchlist ||
+          module == ModulePermissionConstant.permission_cart ||
+          module == ModulePermissionConstant.permission_appointment ||
+          module == ModulePermissionConstant.permission_offer ||
+          module == ModulePermissionConstant.permission_order ||
+          module == ModulePermissionConstant.permission_upcomingDiamonds ||
+          module == ModulePermissionConstant.permission_purchase ||
+          module == ModulePermissionConstant.permission_myDemand ||
+          module == ModulePermissionConstant.permission_mySavedSearch) {
+        if (module == ModulePermissionConstant.permission_searchDiamond ||
+            module == ModulePermissionConstant.permission_quickSearch) {
+        } else {
+          data.view = false;
+        }
+        data.insert = false;
+        data.update = false;
+        data.delete = false;
+        data.downloadExcel = false;
+      }
+    }else{
+      //Admin permission
+    }
     return data;
   }
 

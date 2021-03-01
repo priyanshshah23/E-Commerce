@@ -60,7 +60,7 @@ class LocalNotificationManager {
           req,
           (diamondListResp) {
             Map<String, dynamic> dict = new HashMap();
-            dict["filterId"] = diamondListResp.data[0].filter.id;
+            dict["filterId"] = diamondListResp.data.filter.id;
             dict["filters"] = dict["payload"];
             dict[ArgumentConstant.ModuleType] =
                 DiamondModuleConstant.MODULE_TYPE_SEARCH;
@@ -85,7 +85,7 @@ class LocalNotificationManager {
           result,
           (diamondListResp) {
             Map<String, dynamic> dict = new HashMap();
-            dict["filterId"] = diamondListResp.data[0].filter.id;
+            dict["filterId"] = diamondListResp.data.filter.id;
             dict["filters"] = dict["payload"];
             dict[ArgumentConstant.ModuleType] =
                 DiamondModuleConstant.MODULE_TYPE_SEARCH;

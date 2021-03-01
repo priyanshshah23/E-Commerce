@@ -16,12 +16,6 @@ import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/AnalyticsReport.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
-import 'package:diamnow/components/Screens/SalesPerson/BuyNowScreen.dart';
-import 'package:diamnow/components/Screens/SalesPerson/HoldStoneScreen.dart';
-import 'package:diamnow/components/Screens/SalesPerson/MemoStoneScreen.dart';
-import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
-import 'package:path/path.dart' as path;
-
 import 'package:diamnow/app/utils/CustomBorder.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
@@ -33,7 +27,10 @@ import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/OfflineDownloadPopup.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/DownLoadAndShareDialogue.dart';
-import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
+import 'package:diamnow/components/Screens/SalesPerson/BuyNowScreen.dart';
+import 'package:diamnow/components/Screens/SalesPerson/HoldStoneScreen.dart';
+import 'package:diamnow/components/Screens/SalesPerson/MemoStoneScreen.dart';
+import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
 import 'package:diamnow/components/widgets/shared/CommonDateTimePicker.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
@@ -44,11 +41,9 @@ import 'package:diamnow/models/OfflineSearchHistory/OfflineStockTrack.dart';
 import 'package:diamnow/models/excel/ExcelApiResponse.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:intl/intl.dart';
+import 'package:path/path.dart' as path;
 import 'package:share/share.dart';
 import 'package:uuid/uuid.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../main.dart';
 
@@ -223,10 +218,17 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
-        return app
-            .resolve<ServiceModule>()
-            .networkService()
-            .diamondListPaginate(dict);
+//        if(app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES)
+        return app.resolve<PrefUtils>().getUserDetails().type ==
+                UserConstant.SALES
+            ? app
+                .resolve<ServiceModule>()
+                .networkService()
+                .salesDiamondListPaginate(dict)
+            : app
+                .resolve<ServiceModule>()
+                .networkService()
+                .diamondListPaginate(dict);
 
       case DiamondModuleConstant.MODULE_TYPE_MY_CART:
       case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
@@ -320,46 +322,29 @@ class DiamondConfig {
           //     code: BottomCodeConstant.TBClock,
           //     sequence: 0,
           //     isCenter: true));
-          list.add(
-            BottomTabModel(
-              title: "",
-              image: download,
-              code: BottomCodeConstant.TBDownloadView,
-              sequence: 3,
-              isCenter: true,
-            ),
-          );
+          if ((app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
+                  KYCStatus.pending) ==
+              KYCStatus.approved) {
+            list.add(
+              BottomTabModel(
+                title: "",
+                image: download,
+                code: BottomCodeConstant.TBDownloadView,
+                sequence: 3,
+                isCenter: true,
+              ),
+            );
+          }
         } else {
-          list.add(BottomTabModel(
+          if (app.resolve<PrefUtils>().getUserDetails().type ==
+              UserConstant.SALES)
+            list.add(BottomTabModel(
               title: "",
               image: buildingIcon,
               code: BottomCodeConstant.TBCompanySelection,
               sequence: 0,
               isCenter: true,
-           /* widget: Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                Center(
-                  child: Image.asset(
-                    buildingIcon,
-                    height: getSize(20),
-                    width: getSize(20),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(
-                    top: getSize(10),
-                  ),
-                  height: getSize(8),
-                  width: getSize(8),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: appTheme.colorPrimary,
-                  ),
-                )
-              ],
-            ),*/
-          ));
+            ));
           list.add(BottomTabModel(
               title: "",
               image: selectAll,
@@ -392,17 +377,19 @@ class DiamondConfig {
           //         .downloadExcel ==
           //     true && if (moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {) {
 
-//          if (moduleType == DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK ||
-//              moduleType ==
-//                  DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
-//          } else {
-//            list.add(BottomTabModel(
-//                title: "",
-//                image: download,
-//                code: BottomCodeConstant.TBDownloadView,
-//                sequence: 4,
-//                isCenter: true));
-//          }
+          if (moduleType == DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK ||
+              moduleType ==
+                  DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+          } else {
+            if (app.resolve<PrefUtils>().getUserDetails().type ==
+                UserConstant.CUSTOMER)
+            list.add(BottomTabModel(
+                title: "",
+                image: download,
+                code: BottomCodeConstant.TBDownloadView,
+                sequence: 4,
+                isCenter: true));
+          }
         }
         break;
     }
@@ -430,7 +417,7 @@ class DiamondConfig {
         actionAddToWishList(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_PLACE_ORDER:
-        actionBuyNow(context,list);
+        actionBuyNow(context, list);
 //        actionPlaceOrder(context, list, refreshList);
         break;
       case ActionMenuConstant.ACTION_TYPE_REMINDER:
@@ -449,10 +436,10 @@ class DiamondConfig {
         actionAppointment(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_HOLD:
-        actionHold(context,list);
+        actionHold(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_MEMO:
-        actionMemo(context,list);
+        actionMemo(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_DOWNLOAD:
         actionDownload(context, list);
@@ -754,13 +741,12 @@ class DiamondConfig {
     dict[ArgumentConstant.DiamondList] = selectedList;
     Navigator.of(context)
         .push(MaterialPageRoute(
-      settings: RouteSettings(name: BuyNowScreen.route),
-      builder: (context) => BuyNowScreen(dict),
-    ))
+          settings: RouteSettings(name: BuyNowScreen.route),
+          builder: (context) => BuyNowScreen(dict),
+        ))
         .then((value) => {
 //Navigator.pop(context, true)
-    });
-
+            });
   }
 
   actionHold(BuildContext context, List<DiamondModel> list) {
@@ -776,13 +762,12 @@ class DiamondConfig {
     dict[ArgumentConstant.DiamondList] = selectedList;
     Navigator.of(context)
         .push(MaterialPageRoute(
-      settings: RouteSettings(name: HoldStoneScreen.route),
-      builder: (context) => HoldStoneScreen(dict),
-    ))
+          settings: RouteSettings(name: HoldStoneScreen.route),
+          builder: (context) => HoldStoneScreen(dict),
+        ))
         .then((value) => {
 //Navigator.pop(context, true)
-    });
-
+            });
   }
 
   actionMemo(BuildContext context, List<DiamondModel> list) {
@@ -799,13 +784,12 @@ class DiamondConfig {
 
     Navigator.of(context)
         .push(MaterialPageRoute(
-      settings: RouteSettings(name: MemoStoneScreen.route),
-      builder: (context) => MemoStoneScreen(dict),
-    ))
+          settings: RouteSettings(name: MemoStoneScreen.route),
+          builder: (context) => MemoStoneScreen(dict),
+        ))
         .then((value) => {
 // Navigator.pop(context, true)
-    });
-
+            });
   }
 
   actionDownloadOffline(BuildContext context, Function refreshList,
@@ -1005,10 +989,13 @@ class DiamondConfig {
 
   callApiForExcel(BuildContext context, List<DiamondModel> diamondList,
       {bool isForShare = false, void callback(String), bool isSummary}) {
+    var dio = Dio();
+
     List<String> stoneId = [];
     diamondList.forEach((element) {
       stoneId.add(element.id);
     });
+
     Map<String, dynamic> dict = {};
     dict["id"] = stoneId;
     if (isSummary) {
@@ -1043,7 +1030,7 @@ class DiamondConfig {
       if (isForShare) {
         callback(url);
       } else {
-        downloadExcel(excelFileUrl, savePath);
+        download2(dio, excelFileUrl, savePath);
         if (Platform.isIOS) {
           Map<String, dynamic> dict = {};
           dict["strUrl"] = url;
@@ -1070,19 +1057,49 @@ class DiamondConfig {
     });
   }
 
+  void showDownloadProgress(received, total) {
+    if (total != -1) {
+      print((received / total * 100).toStringAsFixed(0) + "%");
+    }
+  }
+
+  Future download2(Dio dio, String url, String savePath) async {
+    try {
+      Response response = await dio.get(
+        url,
+        onReceiveProgress: showDownloadProgress,
+        //Received data with List<int>
+        options: Options(
+            responseType: ResponseType.bytes,
+            followRedirects: false,
+            validateStatus: (status) {
+              return status < 500;
+            }),
+      );
+      print("------------------${response.headers}");
+      File file = File(savePath);
+      var raf = file.openSync(mode: FileMode.write);
+      // response.data is List<int> type
+      raf.writeFromSync(response.data);
+      await raf.close();
+    } catch (e) {
+      print(e);
+    }
+  }
+
   //Download excel
   downloadExcel(String excelFileUrl, String savePath) {
-    Dio dio = Dio();
-
-    dio
-        .download(
-      excelFileUrl,
-      savePath,
-      deleteOnError: true,
-    )
-        .then((value) {
-      print("excel downlaoded");
-    });
+//    Dio dio = Dio();
+//
+//    dio
+//        .download(
+//      excelFileUrl,
+//      savePath,
+//      deleteOnError: true,
+//    )
+//        .then((value) {
+//      print("excel downlaoded");
+//    });
   }
 
   actionDownload(
@@ -1635,7 +1652,7 @@ class DiamondConfig {
             desc: resp.message, positiveBtnTitle: R.string.commonString.ok,
             onClickCallback: (click) {
           if (click == ButtonType.PositveButtonClick) {
-            Navigator.pop(context);
+            //Navigator.pop(context);
             refreshList();
           }
         });
@@ -1659,8 +1676,8 @@ class DiamondConfig {
 
     for (var item in list) {
       var dict = Map<String, dynamic>();
-      dict["id"] = [item.memoNo];
-      dict["diamonds"] = item.id;
+      dict["id"] = item.memoNo;
+      dict["diamonds"] = [item.id];
       arr.add(dict);
     }
     req["schedule"] = arr;
@@ -1675,7 +1692,6 @@ class DiamondConfig {
           desc: message,
           positiveBtnTitle: R.string.commonString.ok, onClickCallback: (click) {
         if (click == ButtonType.PositveButtonClick) {
-          Navigator.pop(context);
           refreshList();
         }
       });

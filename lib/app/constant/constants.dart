@@ -1,8 +1,8 @@
-import 'package:diamnow/app/utils/BottomSheet.dart';
+import 'package:diamnow/app/utils/math_utils.dart';
 import 'package:flutter/services.dart';
+import 'package:diamnow/app/utils/BottomSheet.dart';
 
 const String baseURL = "http://pndevelopapi.democ.in/";
-
 //const String baseURL = "192.168.0.212:8094/";
 const apiV1 = "api/v1/";
 
@@ -13,7 +13,7 @@ const DEFAULT_LIMIT = 100;
 const SUCCESS = 1;
 const FAIL = 2;
 
-const dollar = "\u20B9";
+const dollar = "\$";
 const rupee = "\u0024";
 
 var IMAGEFILESIZE = 10.0;
@@ -152,7 +152,7 @@ class MasterCode {
   static const String milkyStatic = "MILKYSTATIC";
   static const String billType = "BILL_TYPE";
   static const String dayTerm = "DAY_TERM";
-// static const String mixTint = "MIX_TINT";
+  // static const String mixTint = "MIX_TINT";
 }
 
 class LocalizationConstant {
@@ -179,8 +179,8 @@ class StaticPageConstant {
 }
 
 class UserConstant {
-  static const int SALES = 4;
-  static const int RECENT = 1;
+  static const int SALES = 1;
+  static const int CUSTOMER = 4;
 }
 
 class selectStatusList {

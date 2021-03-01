@@ -136,7 +136,7 @@ class _StoneOfDayWidgetState extends State<StoneOfDayWidget> {
                         child: getImageView(
                           "",
                           finalUrl: DiamondUrls.image +
-                              model.vStnId +
+                              model.mfgStnId +
                               "/" +
                               "still.jpg",
                           width: getSize(104),
