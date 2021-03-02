@@ -110,7 +110,8 @@ class _SelectionScreenState extends State<SelectionScreen> {
                                 ),
                               ),
                             )
-                          :*/ getListView(),
+                          :*/
+                      getListView(),
                     ],
                   ),
                 ),
@@ -189,8 +190,12 @@ class _SelectionScreenState extends State<SelectionScreen> {
       height: getSize(50),
       child: TextField(
         onChanged: (value) {
-          if (value.length > 3) {
+          if (value.length > 2) {
             callApiForGetCompanyList(value);
+          } else {
+            options.clear();
+            isEmptyList = true;
+            setState(() {});
           }
         },
         autofocus: true,
@@ -234,9 +239,9 @@ class _SelectionScreenState extends State<SelectionScreen> {
           child: Container(
             child: Center(
               child: Text(
-                  searchController.text.length > 0
+                  searchController.text.length > 2
                       ? R.string.noDataStrings.noDataFound
-                      : "Type at least 3 words to search",
+                      : "Type at least 3 characters to search",
                   textAlign: TextAlign.center,
                   style: appTheme.black18TextStyle),
             ),
@@ -252,6 +257,9 @@ class _SelectionScreenState extends State<SelectionScreen> {
         ),
         itemCount: options.length,
         itemBuilder: (context, index) {
+          print("---------------${/*options[index].title +
+              " | " +*/
+              options[index]?.buyername}");
           return GestureDetector(
             onTap: () {
               FocusScope.of(context).unfocus();
@@ -286,7 +294,12 @@ class _SelectionScreenState extends State<SelectionScreen> {
                     children: <Widget>[
                       Expanded(
                           child: Text(
-                        options[index].title,
+                        type == CellType.Company
+                            ? options[index].title +
+                                    " | " +
+                                    options[index]?.buyername ??
+                                ""
+                            : options[index].title,
                         style: options[index].isSelected
                             ? appTheme.white18TextStyle
                             : appTheme.blackNormal18TitleColorblack,
@@ -333,7 +346,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
     NetworkClient.getInstance.callApi(
       context,
       baseURL,
-     type == CellType.Hold_Buyer
+      type == CellType.Hold_Buyer
           ? ApiConstants.buyerList
           : ApiConstants.companyList,
       MethodType.Post,
@@ -341,8 +354,10 @@ class _SelectionScreenState extends State<SelectionScreen> {
       params: dict,
       successCallback: (response, message) {
         app.resolve<CustomDialogs>().hideProgressDialog();
+        options.clear();
         companyListData = CompanyListData.fromJson(response);
         companyListData.list.forEach((element) {
+          print("------------------------------------------${element.user.firstName + " " + element.user.lastName}");
           if (type == CellType.Hold_Buyer) {
             options.add(SelectionPopupModel(
               element.id,
@@ -350,22 +365,22 @@ class _SelectionScreenState extends State<SelectionScreen> {
               subTitle: element.account.companyName,
               subId: element.account.id,
             ));
-          } else if (type == CellType.Hold_Party) {
-            if (element.seller != null) {
+          } else if (type == CellType.Hold_Party || type == CellType.Company) {
+//            if (element.seller != null || element.user != null) {
               options.add(SelectionPopupModel(
                 element.id,
                 element.firstName + " " + element.lastName,
-                subTitle: element.seller.name,
-                subId: element.seller.id,
-                buyerId: element.user.id,
-                buyername: element.user.name,
+                subTitle: element.seller?.name ?? "",
+                subId: element.seller?.id ?? "",
+                buyerId: element.user?.id ?? "",
+                buyername: element.user.firstName + " " + element.user.lastName,
               ));
-            } else {
-              options.add(SelectionPopupModel(
-                element.id,
-                element.firstName + " " + element.lastName,
-              ));
-            }
+//            } else {
+//              options.add(SelectionPopupModel(
+//                element.id,
+//                element.firstName + " " + element.lastName,
+//              ));
+//            }
           } else if (type == CellType.Memo_BrokerName) {
             options.add(SelectionPopupModel(
               element.id,
@@ -373,7 +388,9 @@ class _SelectionScreenState extends State<SelectionScreen> {
                   " " +
                   element.lastName +
                   " | " +
-                  element.user.name,
+                  element.user.firstName +
+                  " " +
+                  element.user.lastName,
             ));
           } else {
             options.add(SelectionPopupModel(

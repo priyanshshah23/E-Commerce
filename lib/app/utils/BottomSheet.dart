@@ -161,7 +161,7 @@ class SelectionPopupModel {
     String url,
     String subTitle,
     String subId,
-    String buyername,
+    String buyername = "",
     String buyerId,
   }) {
     this.id = id;

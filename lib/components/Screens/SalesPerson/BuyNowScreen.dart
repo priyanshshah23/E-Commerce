@@ -99,6 +99,7 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
     list = await AppDatabase.instance.masterDao
         .getSubMastersFromParentCode(MasterCode.billType);
     list.forEach((element) {
+      print("=============${element.code}");
       arrBillType.add(SelectionPopupModel(element.sId, element.name));
     });
   }
@@ -340,6 +341,17 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
       modalBottomSheetMenu(context,
           title: "Select Bill Type",
           selectionOptions: arrBillType, callback: (model) {
+//        if (model.id == "LOCAL_BILL") {
+//          _arrDropDown.insert(7, CellModel(
+//
+//              hintText: "Comment",
+//              type: CellType.Comment,
+//              inputAction: TextInputAction.done,
+//              leftPadding: 20,
+//              maxLine: 5,
+//              isRequired: false,
+//          ),);
+//        }
         arrBillType.forEach((value) => value.isSelected = false);
         arrBillType.firstWhere((value) => value == model).isSelected = true;
         arr.first.userText = model.title;

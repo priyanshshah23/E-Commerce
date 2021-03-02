@@ -1664,11 +1664,6 @@ class User {
   String lastName;
   String name;
   String username;
-  String email;
-  String mobile;
-  String account;
-  Null accountTerm;
-  String seller;
 
   User(
       {this.id,
@@ -1676,11 +1671,7 @@ class User {
       this.lastName,
       this.name,
       this.username,
-      this.email,
-      this.mobile,
-      this.account,
-      this.accountTerm,
-      this.seller});
+     });
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -1688,11 +1679,6 @@ class User {
     lastName = json['lastName'];
     name = json['name'];
     username = json['username'];
-    email = json['email'];
-    mobile = json['mobile'];
-    account = json['account'];
-    accountTerm = json['accountTerm'];
-    seller = json['seller'];
   }
 
   Map<String, dynamic> toJson() {
@@ -1702,11 +1688,6 @@ class User {
     data['lastName'] = this.lastName;
     data['name'] = this.name;
     data['username'] = this.username;
-    data['email'] = this.email;
-    data['mobile'] = this.mobile;
-    data['account'] = this.account;
-    data['accountTerm'] = this.accountTerm;
-    data['seller'] = this.seller;
     return data;
   }
 }

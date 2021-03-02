@@ -73,6 +73,7 @@ enum TextFieldEnum {
 }
 
 enum CellType {
+  Company,
   //Memo Stone
   SalesPersonName,
   Memo_BrokerName,

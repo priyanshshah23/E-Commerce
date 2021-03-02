@@ -1178,7 +1178,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 positiveButtonTitle: "Apply",
                 negativeButtonTitle: "Cancel",
                 isSearchEnable: true,
-                type: CellType.Hold_Party,
+                type: CellType.Company,
                 isMultiSelectionEnable: false,
                 applyFilterCallBack: (
                     {List<SelectionPopupModel> multiSelectedItem}) {

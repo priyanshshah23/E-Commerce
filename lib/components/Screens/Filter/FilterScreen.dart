@@ -350,7 +350,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                               positiveButtonTitle: "Apply",
                               negativeButtonTitle: "Cancel",
                               isSearchEnable: true,
-                              type: CellType.Hold_Party,
+                              type: CellType.Company,
                               isMultiSelectionEnable: false,
                               applyFilterCallBack: (
                                   {List<SelectionPopupModel>
@@ -1019,7 +1019,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         page: PageAnalytics.DIAMOND_SEARCH,
         section: SectionAnalytics.SEARCH,
         action: ActionAnalytics.CLICK);
-    Map<String, dynamic> map = FilterRequest().createRequest(arrList);
+    Map<String, dynamic> map = FilterRequest().createRequest(arrList,selectedStatus: selectStatus);
     if (app.resolve<PrefUtils>().getUserDetails().type == UserConstant.CUSTOMER&&map.length < 3) {
       app.resolve<CustomDialogs>().errorDialog(
             context,
@@ -1034,7 +1034,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         (diamondListResp) {
           if (isSavedSearch) {
             openBottomSheetForSavedSearch(
-                context, FilterRequest().createRequest(arrList),
+                context, FilterRequest().createRequest(arrList,selectedStatus: selectStatus),
                 isSearch: isSearch, savedSearchModel: this.savedSearchModel);
           } else {
             if (isSearch) {
