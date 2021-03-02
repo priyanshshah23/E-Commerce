@@ -245,7 +245,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                         child: Container(
                           height: getSize(26),
                           decoration: BoxDecoration(
-                            color: appTheme.selectedFilterColor,
+                            color: appTheme.unSelectedBgColor,
                             borderRadius: BorderRadius.circular(getSize(5)),
                           ),
                           child: Row(
@@ -278,7 +278,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                         child: Container(
                           height: getSize(26),
                           decoration: BoxDecoration(
-                            color: appTheme.selectedFilterColor,
+                            color: appTheme.unSelectedBgColor,
                             borderRadius: BorderRadius.circular(getSize(5)),
                           ),
                           child: Row(
@@ -351,7 +351,7 @@ class ShapeItemWidget extends StatelessWidget {
               : ((obj.isSelected) || (selectionModel.isShowAllSelected))
                   ? appTheme.selectedFilterColor
                   : appTheme.unSelectedBgColor,
-          borderRadius: BorderRadius.circular(40),
+          borderRadius: BorderRadius.circular(getSize(10)),
           border: Border.all(
             color: obj.sId == showMoreId
                 ? appTheme.borderColor
@@ -377,7 +377,7 @@ class ShapeItemWidget extends StatelessWidget {
                   child: Text(showWebDisplay(),
                       textAlign: TextAlign.center,
                       style: obj.isSelected
-                          ? appTheme.primaryNormal12TitleColor
+                          ? appTheme.whiteNormal12TitleColor
                           : appTheme.blackNormal12TitleColorblack),
                 ),
               ],
