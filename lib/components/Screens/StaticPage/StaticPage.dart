@@ -15,7 +15,6 @@ import 'package:flutter/services.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:share/share.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart' as xmlWebview;
 
 class StaticPageScreen extends StatefulScreenWidget {
   static const route = "StaticPageScreen";
@@ -49,7 +48,6 @@ class StaticPageScreen extends StatefulScreenWidget {
 }
 
 class _StaticPageScreenState extends StatefulScreenWidgetState {
-  xmlWebview.InAppWebViewController webView;
   double progress = 0;
 
   String strUrl;

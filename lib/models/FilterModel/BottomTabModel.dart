@@ -33,6 +33,7 @@ class BottomCodeConstant {
   static const String TBDownloadView = "TB_DOWNLOAD_VIEW";
   static const String TBShare = "TB_SHARE";
   static const String TBClock = "TB_CLOCK";
+  static const String TBCompanySelection = "TB_COMPANY_SELECTION";
 
   static const String TBProfile = "TB_PROFILE";
   static const String TBNotification = "TB_NOTIFICATION";
@@ -91,6 +92,7 @@ class BottomTabModel extends TabConfiguration {
   bool isCenter = true;
   bool isSelected;
   VoidCallback onTap;
+  Widget widget;
 
   BottomTabModel({
     this.title,
@@ -103,6 +105,7 @@ class BottomTabModel extends TabConfiguration {
     this.color,
     this.isSelected = false,
     this.onTap,
+    this.widget,
   });
 
   BottomTabModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {

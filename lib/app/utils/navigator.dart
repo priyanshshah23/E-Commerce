@@ -30,6 +30,9 @@ import 'package:diamnow/components/Screens/OfflineSearchHistory/OfflineSearchHis
 import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
 import 'package:diamnow/components/Screens/PriceCalculator/PriceCalculator.dart';
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
+import 'package:diamnow/components/Screens/SalesPerson/BuyNowScreen.dart';
+import 'package:diamnow/components/Screens/SalesPerson/HoldStoneScreen.dart';
+import 'package:diamnow/components/Screens/SalesPerson/MemoStoneScreen.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
 import 'package:diamnow/components/Screens/Search/Search.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
@@ -254,6 +257,15 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       break;
     case ForgetMPIN.route:
       screen = ForgetMPIN();
+      break;
+    case BuyNowScreen.route:
+      screen = BuyNowScreen(arguments);
+      break;
+    case HoldStoneScreen.route:
+      screen = HoldStoneScreen(arguments);
+      break;
+    case MemoStoneScreen.route:
+      screen = MemoStoneScreen(arguments);
       break;
   }
 

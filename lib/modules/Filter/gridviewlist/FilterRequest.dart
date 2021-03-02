@@ -11,7 +11,7 @@ import 'package:diamnow/models/Master/Master.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 
 class FilterRequest {
-  Map<String, dynamic> createRequest(List<FormBaseModel> list) {
+  Map<String, dynamic> createRequest(List<FormBaseModel> list,{List selectedStatus}) {
     Map<String, dynamic> map = {};
     List<String> arrWsts = [];
     List<String> arrStage = [];
@@ -193,6 +193,9 @@ class FilterRequest {
     }
     if (!isNullEmptyOrFalse(arrWsts)) {
       map["wSts"] = arrWsts;
+    }
+    if(selectedStatus != null && selectedStatus.length>0){
+      map['sSts'] = selectedStatus;
     }
     return map;
   }

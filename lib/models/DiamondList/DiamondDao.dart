@@ -94,7 +94,7 @@ class DiamondDao {
     }).toList();
 
     return DiamondListResp(
-      data: Data(count: _tempDiamodTotalCount, diamonds: diamondList),
+      data:Data(count: _tempDiamodTotalCount, diamonds: diamondList),
     );
   }
 

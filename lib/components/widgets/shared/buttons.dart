@@ -136,6 +136,7 @@ class AppButton extends StatelessWidget {
       this.backgroundColor,
       this.dense = false,
       this.fitWidth = false,
+      this.isBorder = false,
       this.padding,
       this.foregroundColor,
       this.isButtonEnabled = true,
@@ -193,6 +194,7 @@ class AppButton extends StatelessWidget {
   final bool dense;
   final bool isButtonEnabled;
   final bool fitWidth;
+  final bool isBorder;
 
   /// The padding for the button.
   ///
@@ -230,7 +232,6 @@ class AppButton extends StatelessWidget {
       // dont override the button color
       return appTheme.colorPrimary;
     } else {
-      print("button");
       return backgroundColor;
     }
   }
@@ -301,11 +302,15 @@ class AppButton extends StatelessWidget {
           canvasColor: bgColor,
           // text color
           textTheme: TextTheme(
-            button: TextStyle(color: appTheme.colorPrimary),
+            button: TextStyle(
+              color: appTheme.colorPrimary,
+            ),
           ),
-
           // icon color
-          iconTheme: IconThemeData(color: fgColor, size: iconSize),
+          iconTheme: IconThemeData(
+            color: fgColor,
+            size: iconSize,
+          ),
         ),
         child: Material(
           elevation: elevation,

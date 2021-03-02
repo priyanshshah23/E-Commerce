@@ -39,6 +39,7 @@ class _SplashState extends State<Splash> {
 
   Future openNextScreen({bool isOfflineMode = false}) async {
     if (app.resolve<PrefUtils>().isUserLogin()) {
+
       SyncManager().callVersionUpdateApi(
         context,
         VersionUpdateApi.splash,
