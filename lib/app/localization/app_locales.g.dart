@@ -665,11 +665,11 @@ class ScreenTitle {
   String otpVerifyDesc =
       "The verification code was sent to your mobile number. Please enter the code.";
   String diamondDetail = "Diamond Detail";
-  String home = "Home";
-  String search = "Search";
+  String home = "Dashboard";
+  String search = "Stone Search";
   String quickSearch = "Quick Search";
   String newArrival = "New Arrival";
-  String exclusiveDiamonds = "Exclusive Diamonds";
+  String exclusiveDiamonds = "Arjiv Diamonds";
   String diamondOnAuction = "Diamond On Auction";
   String stoneOfTheDays = "Best Buy";
   String myWatchlist = "My Watchlist";
