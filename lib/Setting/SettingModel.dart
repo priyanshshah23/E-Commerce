@@ -42,19 +42,6 @@ class DrawerSetting {
       ));
     if (app
         .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_newGoods)
-        .view)
-      drawerList.add(DrawerModel(
-        image: newArrival,
-        title: R.string.screenTitle.newArrival,
-        isSelected: false,
-        type: DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL,
-        isShowCount: false,
-        countBackgroundColor: fromHex("#2193B0"),
-        count: 250,
-      ));
-    if (app
-        .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_exclusive)
         .view)
       drawerList.add(DrawerModel(
@@ -65,6 +52,19 @@ class DrawerSetting {
         isShowCount: true,
         countBackgroundColor: fromHex("#288F5A"),
         count: 25,
+      ));
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_newGoods)
+        .view)
+      drawerList.add(DrawerModel(
+        image: newArrival,
+        title: R.string.screenTitle.newArrival,
+        isSelected: false,
+        type: DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL,
+        isShowCount: false,
+        countBackgroundColor: fromHex("#2193B0"),
+        count: 250,
       ));
     if (app
         .resolve<PrefUtils>()

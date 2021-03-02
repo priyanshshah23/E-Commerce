@@ -278,7 +278,7 @@ Future OpenErrorDialog(BuildContext context, String title, String disc,
                                   () {
                                     Navigator.pop(context);
                                   },
-                              borderRadius: 5,
+                              borderRadius: 25,
                               fitWidth: true,
                               text: btntitle,
                               //isButtonEnabled: enableDisableSigninButton(),
@@ -483,7 +483,7 @@ Future OpenConfirmationPopUp(
                                     decoration: BoxDecoration(
                                         color: appTheme.colorPrimary,
                                         borderRadius:
-                                            BorderRadius.circular(getSize(5)),
+                                            BorderRadius.circular(getSize(25)),
                                         boxShadow: getBoxShadow(context)),
                                     child: Padding(
                                       padding: EdgeInsets.all(getSize(16)),
@@ -511,7 +511,7 @@ Future OpenConfirmationPopUp(
                                     decoration: BoxDecoration(
                                         color: appTheme.colorPrimary,
                                         borderRadius:
-                                            BorderRadius.circular(getSize(5)),
+                                            BorderRadius.circular(getSize(25)),
                                         boxShadow: getBoxShadow(context)),
                                     child: Padding(
                                       padding: EdgeInsets.all(getSize(16)),
@@ -541,7 +541,7 @@ Future OpenConfirmationPopUp(
                                           height: getSize(50),
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(
-                                                getSize(5)),
+                                                getSize(25)),
                                             color: appTheme.lightColorPrimary,
                                           ),
                                           child: Padding(
@@ -594,7 +594,7 @@ Future OpenConfirmationPopUp(
                                               ),
                                               borderRadius:
                                                   BorderRadius.circular(
-                                                      getSize(5)),
+                                                      getSize(25)),
                                             ),
                                             child: Padding(
                                               padding: EdgeInsets.fromLTRB(
@@ -638,8 +638,8 @@ Future OpenConfirmationPopUp(
                                       height: getSize(50),
                                       decoration: BoxDecoration(
                                           color: appTheme.colorPrimary,
-                                          borderRadius:
-                                              BorderRadius.circular(getSize(5)),
+                                          borderRadius: BorderRadius.circular(
+                                              getSize(25)),
                                           boxShadow: getBoxShadow(context)),
                                       child: Padding(
                                         padding: EdgeInsets.all(getSize(16)),

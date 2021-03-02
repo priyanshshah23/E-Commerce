@@ -32,7 +32,7 @@ class HomeDrawer extends StatelessWidget {
               margin: EdgeInsets.symmetric(vertical: getSize(10)),
               height: getSize(1),
               width: MathUtilities.screenWidth(context),
-              color: appTheme.dividerColor.withOpacity(0.5),
+              color: appTheme.dividerColor,
             ),
           Padding(
             padding: EdgeInsets.only(
@@ -92,7 +92,7 @@ class HomeDrawer extends StatelessWidget {
               margin: EdgeInsets.symmetric(vertical: getSize(10)),
               height: getSize(1),
               width: MathUtilities.screenWidth(context),
-              color: appTheme.dividerColor.withOpacity(0.5),
+              color: appTheme.dividerColor,
             )
         ],
       ),
@@ -105,30 +105,40 @@ class HomeDrawer extends StatelessWidget {
 //    list.add(UserDrawerHeader());
 
     list.add(Container(
-      color: appTheme.drawerTitleColor,
+      // color: appTheme.drawerTitleColor,
       child: Row(
         // mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(
-              top: getSize(10),
-              bottom: getSize(10),
-              left: getSize(16),
-              right: getSize(20),
+              top: getSize(1),
+              bottom: getSize(1),
+              // left: getSize(16),
+              // right: getSize(20),
             ),
             child: Image.asset(drawerLogo,
-                width: getSize(40), height: getSize(40)),
+                width: getSize(44), height: getSize(44)),
           ),
-          Text(
-            APPNAME,
-            style: appTheme.blackNormal18TitleColorblack.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
-          ),
+          // Text(
+          //   APPNAME,
+          //   style: appTheme.blackNormal18TitleColorblack.copyWith(
+          //     fontWeight: FontWeight.w600,
+          //   ),
+          // ),
         ],
       ),
+    ));
+
+    list.add(SizedBox(
+      height: getSize(10),
+    ));
+    list.add(Container(
+      margin: EdgeInsets.symmetric(vertical: getSize(10)),
+      height: getSize(1),
+      width: MathUtilities.screenWidth(context),
+      color: appTheme.dividerColor,
     ));
 
     list.add(SizedBox(
@@ -141,20 +151,20 @@ class HomeDrawer extends StatelessWidget {
       }));
     }
 
-    list.add(
-      Container(
-        child: Padding(
-          padding: EdgeInsets.only(
-              left: getSize(20), top: getSize(16), bottom: getSize(10)),
-          child: Text(
-            "App Version 1.0.0",
-            style: appTheme.blackNormal12TitleColorblack.copyWith(
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-      ),
-    );
+    // list.add(
+    //   Container(
+    //     child: Padding(
+    //       padding: EdgeInsets.only(
+    //           left: getSize(20), top: getSize(16), bottom: getSize(10)),
+    //       child: Text(
+    //         "App Version 1.0.0",
+    //         style: appTheme.blackNormal12TitleColorblack.copyWith(
+    //           fontWeight: FontWeight.w500,
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
     return list;
   }
 
@@ -177,12 +187,12 @@ class HomeDrawer extends StatelessWidget {
                 ),
                 child: Stack(
                   children: [
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        child: Image.asset(bottomGradient),
-                      ),
-                    ),
+                    // Align(
+                    //   alignment: Alignment.bottomCenter,
+                    //   child: Container(
+                    //     child: Image.asset(bottomGradient),
+                    //   ),
+                    // ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
