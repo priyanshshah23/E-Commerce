@@ -8,6 +8,7 @@ class ColorConstants {
   static Color colorPrimary = fromHex("#4EB45E");
   static Color lightPrimary = fromHex("#ADEFEF");
   static Color textGray = fromHex("#7B7E84");
+  
   static Color borderColor = fromHex("#DDDDDD");
   static Color placeholderColor = fromHex("#999999");
   static Color bgColor = fromHex("#F2F5F7");

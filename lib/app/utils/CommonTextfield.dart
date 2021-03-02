@@ -95,17 +95,17 @@ class _CommonTextfieldState extends State<CommonTextfield> {
           errorMaxLines: 3,
 //          fillColor: widget.textOption.fillColor ?? fromHex("#F6F6F6"),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+            borderRadius: BorderRadius.all(Radius.circular(getSize(66))),
             borderSide:
                 BorderSide(color: appTheme.dividerColor, width: getSize(1)),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+            borderRadius: BorderRadius.all(Radius.circular(getSize(66))),
             borderSide:
                 BorderSide(color: appTheme.dividerColor, width: getSize(1)),
           ),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+            borderRadius: BorderRadius.all(Radius.circular(getSize(66))),
             borderSide:
                 BorderSide(color: appTheme.dividerColor, width: getSize(1)),
           ),
