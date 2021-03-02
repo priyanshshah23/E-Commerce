@@ -63,7 +63,7 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
                         : appTheme.dividerColor,
                   ),
                   color: widget.item.isSelected
-                      ? appTheme.lightColorPrimary
+                      ? appTheme.whiteColor
                       : appTheme.whiteColor,
                   boxShadow: widget.item.isSelected
                       ? [
@@ -80,11 +80,37 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
                     Expanded(
                       child: Column(
                         children: [
-                          getImageView(
-                            widget.item.getDiamondImage(),
-                            placeHolderImage: diamond,
-                            width: MathUtilities.screenWidth(context),
-                            height: getSize(96),
+                          Stack(
+                            children: [
+                              getImageView(
+                                widget.item.getDiamondImage(),
+                                placeHolderImage: diamond,
+                                width: MathUtilities.screenWidth(context),
+                                height: getSize(96),
+                              ),
+                              Positioned(
+                                  right: getSize(10),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width: getSize(6),
+                                        height: getSize(6),
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color:
+                                                widget.item.getStatusColor()),
+                                      ),
+                                      SizedBox(
+                                        width: getSize(2),
+                                      ),
+                                      getText(
+                                          widget.item.getStatusText(),
+                                          appTheme.black12TextStyle.copyWith(
+                                              color:
+                                                  widget.item.getStatusColor()))
+                                    ],
+                                  ))
+                            ],
                           ),
                           getFirstRow(),
                           getSecondRow(),
@@ -93,19 +119,19 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
                         ],
                       ),
                     ),
-                    Container(
-                      child: Center(
-                          child: Container(
-                        decoration: BoxDecoration(
-                            color: widget.item.getStatusColor(),
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(5),
-                                bottomLeft: Radius.circular(5))),
-                        height: getSize(26),
-                        width: getSize(4),
-                        // color: Colors.red,
-                      )),
-                    ),
+                    // Container(
+                    //   child: Center(
+                    //       child: Container(
+                    //     decoration: BoxDecoration(
+                    //         color: widget.item.getStatusColor(),
+                    //         borderRadius: BorderRadius.only(
+                    //             topLeft: Radius.circular(5),
+                    //             bottomLeft: Radius.circular(5))),
+                    //     height: getSize(26),
+                    //     width: getSize(4),
+                    //     // color: Colors.red,
+                    //   )),
+                    // ),
                   ],
                 ),
               ),
@@ -138,7 +164,7 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
     return Padding(
       padding: EdgeInsets.only(
         top: getSize(10),
-        right: getSize(5),
+        right: getSize(10),
       ),
       child: Row(
 //        mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -192,7 +218,7 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
 
   getSecondRow() {
     return Padding(
-      padding: EdgeInsets.only(top: getSize(4), bottom: getSize(4)),
+      padding: EdgeInsets.only(top: getSize(10), right: getSize(10)),
       child: Row(
         children: [
           Expanded(
@@ -235,6 +261,11 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
             ),
           ),
           Expanded(
+            flex: 1,
+            child: getText(
+                widget.item?.lbNm ?? "", appTheme.blackMedium12TitleColorblack),
+          ),
+          Expanded(
             flex: 4,
             child: getAmountText(
               widget.item?.getPricePerCarat() ?? "",
@@ -248,24 +279,26 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
 
   getThirdRow() {
     return Padding(
-      padding: EdgeInsets.only(top: getSize(4), bottom: getSize(4)),
+      padding: EdgeInsets.only(top: getSize(10), right: getSize(10)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Expanded(
             flex: 2,
-            child: getText(
-                widget.item?.lbNm ?? "", appTheme.blackMedium12TitleColorblack),
-          ),
-          Expanded(
-            flex: 2,
-            child: getTextWithLabel(widget.item?.shdNm ?? "", "S : "),
+            child: getTextWithLabel(widget.item?.shdNm ?? "-", "S : ",
+                aligmentOfRow: MainAxisAlignment.start),
           ),
           // getText(widget.item?.msrmnt ?? ""),
           Expanded(
             flex: 2,
-            child: getText(
-                widget.item?.fluNm ?? "", appTheme.blackMedium12TitleColorblack,
+            child: getTextWithLabel(widget.item?.fluNm ?? "-", "FL : ",
+                align: TextAlign.right),
+          ),
+
+          Expanded(
+            flex: 2,
+            child: getTextWithLabel(
+                widget.item?.ratio.toString() ?? "-", "R : ",
                 align: TextAlign.right),
           ),
 
@@ -283,13 +316,13 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
 
   getFourthRow() {
     return Padding(
-      padding: EdgeInsets.only(top: getSize(4)),
+      padding: EdgeInsets.only(top: getSize(10), right: getSize(10)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Expanded(
             flex: 2,
-            child: getTextWithLabel(widget.item?.mlkNm ?? "-", "M : ",
+            child: getTextWithLabel(widget.item?.eClnNm ?? "-", "EC : ",
                 aligmentOfRow: MainAxisAlignment.start),
           ),
           // PriceUtilities.getPercent(widget.item?.depPer ?? 0)
@@ -298,18 +331,18 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
             child: getTextWithLabel(
                 PriceUtilities.getPercentWithoutPercentSign(
                     widget.item?.depPer ?? 0),
-                "D : "),
+                "D%: "),
           ),
           Expanded(
             flex: 2,
             child: getTextWithLabel(
                 PriceUtilities.getPercentWithoutPercentSign(
                     widget.item?.tblPer ?? 0),
-                "T : "),
+                "T%: "),
           ),
           Expanded(
             flex: 4,
-            child: getTextWithLabel(widget.item?.msrmnt ?? "", "M : ",
+            child: getTextWithLabel(widget.item?.msrmnt ?? "-", "M : ",
                 align: TextAlign.right),
           ),
           // getAmountText(widget.item?.getAmount() ?? ""),

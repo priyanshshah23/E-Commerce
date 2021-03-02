@@ -1,4 +1,5 @@
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:flutter/material.dart';
@@ -584,6 +585,33 @@ class DiamondModel {
         break;
       case DiamondStatus.DIAMOND_STONE_OF_THE_DAY:
         color = appTheme.statusOffer;
+        break;
+    }
+    return color;
+  }
+
+  String getStatusText() {
+    String color;
+    switch (wSts) {
+      case DiamondStatus.DIAMOND_STATUS_AVAILABLE:
+        color = R.string.screenTitle.statusAvailable;
+        break;
+      case DiamondStatus.DIAMOND_STATUS_ON_MINE:
+        color = R.string.screenTitle.statusOnMemo;
+        break;
+      case DiamondStatus.DIAMOND_STATUS_OFFER:
+        color = R.string.screenTitle.statusOffer;
+        break;
+      case DiamondStatus.DIAMOND_STATUS_SHOW:
+        ///////////////////change in status to => show
+        color = R.string.screenTitle.statusAvailable;
+        //////////////////////////////////////////////////
+        break;
+      case DiamondStatus.DIAMOND_STATUS_HOLD:
+        color = R.string.screenTitle.statusHold;
+        break;
+      case DiamondStatus.DIAMOND_STONE_OF_THE_DAY:
+        color = R.string.screenTitle.stoneOfDay;
         break;
     }
     return color;

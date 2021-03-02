@@ -542,7 +542,7 @@ Future OpenConfirmationPopUp(
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(
                                                 getSize(25)),
-                                            color: appTheme.lightColorPrimary,
+                                            color: appTheme.whiteColor,
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.fromLTRB(
