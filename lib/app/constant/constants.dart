@@ -1,8 +1,8 @@
 import 'package:diamnow/app/utils/math_utils.dart';
 import 'package:flutter/services.dart';
+import 'package:diamnow/app/utils/BottomSheet.dart';
 
 const String baseURL = "http://pndevelopapi.democ.in/";
-// const String baseURL = "https://www.mydiamonds.co/";
 //const String baseURL = "192.168.0.212:8094/";
 const apiV1 = "api/v1/";
 
@@ -150,6 +150,8 @@ class MasterCode {
   static const String docTypePersonal = "DOC_TYPE_PERSONAL";
   static const String docTypeBusiness = "DOC_TYPE_BUSINESS";
   static const String milkyStatic = "MILKYSTATIC";
+  static const String billType = "BILL_TYPE";
+  static const String dayTerm = "DAY_TERM";
   // static const String mixTint = "MIX_TINT";
 }
 
@@ -174,6 +176,27 @@ class StaticPageConstant {
   static const String PRIVACY_POLICY = "PRIVACY_POLICY";
   static const String TERMS_CONDITION = "TERMS_CONDITION";
   static const String CONTACT_US = "CONTACT_US";
+}
+
+class UserConstant {
+  static const int SALES = 1;
+  static const int CUSTOMER = 4;
+}
+
+class selectStatusList {
+  static Map<String, dynamic> mappingData = {
+    "Available": "S",
+    "Memo": "I",
+    "Hold": "W",
+    "Best Buy": "D",
+    "Reserved": "Y",
+    "Available On Result": "C",
+    "Reject": "R",
+    "Blocked": "B",
+    "Recut Issue": "K",
+    "Unreserved Sold": "U",
+    "Sold": "O",
+  };
 }
 
 class DiamondSearchType {
@@ -275,4 +298,45 @@ class NotificationIdentifier {
 class AndroidNotificationIdentifier {
   static const offlineStockDownloadChannelName = "Offline Stock";
   static const offlineStockDownloadChannelDescription = "Stock";
+}
+
+class BlockSetting {
+  static const HOLD = '5faa3e10fee4d616f95d9c42';
+  static const MEMO = '5f9ff997acf27d10033f0171';
+}
+
+class BlockType {
+  static const HOLD = 1;
+  static const MEMO = 2;
+}
+
+class HoldListStatus {
+  static const HOLD = 2;
+  static const MEMO = 2;
+}
+
+List<SelectionPopupModel> getInvoiceArr() {
+  List<SelectionPopupModel> arrInvoiceTypes = List<SelectionPopupModel>();
+  final now = DateTime.now().toLocal();
+  final today = DateTime(now.year, now.month, now.day);
+  final tomorrow = DateTime(now.year, now.month, now.day + 1);
+  arrInvoiceTypes.add(
+    SelectionPopupModel(
+      now.toUtc().toIso8601String(),
+      "Today",
+    ),
+  );
+  arrInvoiceTypes.add(
+    SelectionPopupModel(
+      tomorrow.toUtc().toIso8601String(),
+      "Tomorrow",
+    ),
+  );
+  arrInvoiceTypes.add(
+    SelectionPopupModel(
+      "Later",
+      "Later",
+    ),
+  );
+  return arrInvoiceTypes;
 }

@@ -709,6 +709,7 @@ class ScreenTitle {
   String download = "Download";
   String addToCart = "Add to Cart";
   String addToWatchList = "Add to Watchlist";
+  String memo = "Memo";
   String finalCalculation = "Final Calculation";
   String bookOffice = "Book Office";
   String clearSelection = "Clear Selection";

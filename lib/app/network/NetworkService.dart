@@ -123,6 +123,12 @@ abstract class NetworkService {
   @POST(ApiConstants.diamondList)
   Future<DiamondListResp> diamondListPaginate(@Body() Map<String, dynamic> req);
 
+  @POST(ApiConstants.diamondListSales)
+  Future<DiamondListResp> salesDiamondListPaginate(@Body() Map<String, dynamic> req);
+
+  @POST(ApiConstants.holdList)
+  Future<DiamondListResp> holdListPaginate(@Body() Map<String, dynamic> req);
+
   @POST(ApiConstants.shareThroughEmail)
   Future<BaseApiResp> shareThroughEmail(@Body() ShareThroughEmailReq req);
 
@@ -177,6 +183,8 @@ abstract class NetworkService {
   Future<BaseApiResp> createOfficerequest(@Body() Map<String, dynamic> req);
 
   //Dashboard
+//  @POST(ApiConstants.dashboard)
+//  Future<DashboardResp> dashboard(@Body() Map<String, dynamic> req);
   @POST(ApiConstants.dashboard)
   Future<DashboardResp> dashboard(@Body() Map<String, dynamic> req);
 

@@ -673,25 +673,26 @@ class DiamondModel {
 
   num getBidFinalRate() {
     DateTime now = DateTime.now();
-    if (now.hour >= 15 || (now.hour <= 10 && now.month < 30)) {
-      return getFinalRate() -
-          ((getFinalRate() *
-                  ((-app
-                          .resolve<PrefUtils>()
-                          .getUserDetails()
-                          .accountTerm
-                          .extraPer) +
-                      0.5)) /
-              100);
-    }
-    return getFinalRate() -
-        ((getFinalRate() *
-                (-app
-                    .resolve<PrefUtils>()
-                    .getUserDetails()
-                    .accountTerm
-                    .extraPer)) /
-            100);
+    return 0;
+//    if (now.hour >= 15 || (now.hour <= 10 && now.month < 30)) {
+//      return getFinalRate() -
+//          ((getFinalRate() *
+//                  ((-app
+//                          .resolve<PrefUtils>()
+//                          .getUserDetails()
+//                          .accountTerm
+//                          .extraPer) +
+//                      0.5)) /
+//              100);
+//    }
+//    return getFinalRate() -
+//        ((getFinalRate() *
+//                (-app
+//                    .resolve<PrefUtils>()
+//                    .getUserDetails()
+//                    .accountTerm
+//                    .extraPer)) /
+//            100);
   }
 
   num getbidFinalDiscount() {

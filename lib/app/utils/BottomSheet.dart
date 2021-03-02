@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 void modalBottomSheetMenu(
   context, {
@@ -132,25 +132,62 @@ class SelectionPopupModel {
   String id;
   String title;
   bool isSelected;
-  int type;
+  String type;
   int fileType;
   String url;
+  String subTitle;
+  String subId;
+  String buyername;
+  String buyerId;
 
   SelectionPopupModel.fromJson(Map<String, dynamic> parsedJson) {
     id = parsedJson["id"] ?? "";
     title = parsedJson["name"] ?? "";
     isSelected = parsedJson["isSelected"] ?? false;
+    type = parsedJson["type"] ?? "";
     url = parsedJson["url"] ?? "";
+    subTitle = parsedJson["subTitle"] ?? "";
+    subId = parsedJson["subId"] ?? "";
+    buyername = parsedJson["buyername"] ?? "";
+    buyerId = parsedJson["buyerId"] ?? "";
   }
 
-  SelectionPopupModel(String id, String title,
-      {bool isSelected = false, int type, int fileType, String url}) {
+  SelectionPopupModel(
+    String id,
+    String title, {
+    bool isSelected = false,
+    String type,
+    int fileType,
+    String url,
+    String subTitle,
+    String subId,
+    String buyername = "",
+    String buyerId,
+  }) {
     this.id = id;
     this.title = title;
     this.isSelected = isSelected;
     this.type = type;
     this.fileType = fileType;
     this.url = url;
+    this.subTitle = subTitle;
+    this.subId = subId;
+    this.buyername = buyername;
+    this.buyerId = buyerId;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.title;
+    data['isSelected'] = this.isSelected;
+    data['type'] = this.type;
+    data['url'] = this.url;
+    data['subTitle'] = this.subTitle;
+    data['subId'] = this.subId;
+    data['buyername'] = this.buyername;
+    data['buyerId'] = this.buyerId;
+    return data;
   }
 }
 

@@ -67,7 +67,9 @@ class _DiamondImageBrowserScreenState extends State<DiamondImageBrowserScreen> {
                     widget.arrImages[currentIndex].url,
                     widget.arrImages[currentIndex].title +
                         "." +
-                        getExtensionOfUrl(widget.arrImages[currentIndex].url),
+                        getExtensionOfUrl(
+                          widget.arrImages[currentIndex].url,
+                        ),
                     isFileShare: true,
                   );
                 },
@@ -79,7 +81,9 @@ class _DiamondImageBrowserScreenState extends State<DiamondImageBrowserScreen> {
                     widget.arrImages[currentIndex].url,
                     widget.arrImages[currentIndex].title +
                         "." +
-                        getExtensionOfUrl(widget.arrImages[currentIndex].url),
+                        getExtensionOfUrl(
+                          widget.arrImages[currentIndex].url,
+                        ),
                   );
                 },
                 imageName: download,
