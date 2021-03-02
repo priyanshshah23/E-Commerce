@@ -2,6 +2,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondOfferInfoWidget.dart';
@@ -232,10 +233,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                   ? getBoxShadow(context)
                                   : [BoxShadow(color: Colors.transparent)],
                               borderRadius: BorderRadius.circular(getSize(6)),
-                              border: Border.all(
-                                  color: widget.item.isSelected
-                                      ? appTheme.colorPrimary
-                                      : appTheme.dividerColor)
+                              border: Border.all(color: appTheme.bodercolour)
                               //boxShadow: getBoxShadow(context),
                               ),
                           child: Column(
@@ -246,6 +244,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                     getCaratAndDiscountDetail(
                                         widget.actionClick),
                                     //   getIdColorDetail(),
+
                                     Expanded(
                                       child: Container(
                                         // height: getSize(120),
@@ -259,32 +258,55 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: <Widget>[
-                                              getIdShapeDetail(),
-                                              getDymentionAndCaratDetail(),
+                                              Expanded(
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Column(
+                                                        children: [
+                                                          getIdShapeDetail(),
+                                                          getDymentionAndCaratDetail(),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    getImageView(
+                                                      widget.item
+                                                          .getDiamondImage(),
+                                                      placeHolderImage: diamond,
+                                                      width: getSize(62),
+                                                      height: getSize(62),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                               getMeasurementAndColorDetails(),
                                               getTableDepthAndAmountDetail(),
-                                              // getWatchlistData(),
                                               getOfferData(),
+
+                                              // getWatchlistData(),
+
+                                              //
                                               // getBidDetail(),
                                             ],
                                           ),
                                         ),
                                       ),
                                     ),
-                                    Container(
-                                      child: Center(
-                                          child: Container(
-                                        decoration: BoxDecoration(
-                                            color: widget.item.getStatusColor(),
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(5),
-                                                bottomLeft:
-                                                    Radius.circular(5))),
-                                        height: getSize(26),
-                                        width: getSize(4),
-                                        // color: Colors.red,
-                                      )),
-                                    ),
+
+                                    // Container(
+                                    //   child: Center(
+                                    //       child: Container(
+                                    //     decoration: BoxDecoration(
+                                    //         color: widget.item.getStatusColor(),
+                                    //         borderRadius: BorderRadius.only(
+                                    //             topLeft: Radius.circular(5),
+                                    //             bottomLeft:
+                                    //                 Radius.circular(5))),
+                                    //     height: getSize(26),
+                                    //     width: getSize(4),
+                                    //     // color: Colors.red,
+                                    //   )),
+                                    // ),
                                   ],
                                 ),
                               ),
@@ -408,26 +430,45 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             topLeft: Radius.circular(getSize(5)),
             bottomLeft: Radius.circular(getSize(5)),
           ),
-          color: widget.item.isSelected
-              ? appTheme.colorPrimary
-              : appTheme.dividerColor,
+          // color: Colors.red,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              PriceUtilities.getDoubleValue(widget.item?.crt ?? 0),
-              style: appTheme.blue14TextStyle.copyWith(
-                  color: widget.item.isSelected
-                      ? appTheme.whiteColor
-                      : appTheme.colorPrimary),
-            ),
-            Text(
-              R.string.commonString.carat,
-              style: appTheme.blue14TextStyle.copyWith(
-                  color: widget.item.isSelected
-                      ? appTheme.whiteColor
-                      : appTheme.colorPrimary),
+            Container(
+              child: Column(
+                children: [
+                  Container(
+                      decoration: BoxDecoration(
+                          color: widget.item.isSelected
+                              ? appTheme.colorPrimary
+                              : appTheme.dividerColor,
+                          borderRadius: BorderRadius.circular(getSize(5))),
+                      width: getSize(52),
+                      height: getSize(62),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            PriceUtilities.getDoubleValue(
+                                widget.item?.crt ?? 0),
+                            style: appTheme.blue14TextStyle.copyWith(
+                                color: widget.item.isSelected
+                                    ? appTheme.whiteColor
+                                    : appTheme.colorPrimary),
+                          ),
+                          Text(
+                            R.string.commonString.carat,
+                            style: appTheme.blue14TextStyle.copyWith(
+                                color: widget.item.isSelected
+                                    ? appTheme.whiteColor
+                                    : appTheme.colorPrimary),
+                          ),
+                        ],
+                      )),
+                ],
+              ),
             ),
             SizedBox(height: getSize(4)),
             Container(

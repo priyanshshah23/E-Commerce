@@ -56,6 +56,7 @@ class PnShahTheme extends BaseTheme {
 }
 
 class BaseTheme {
+  Color get bodercolour => fromHex("#DDDDDD");
   Color get colorPrimary => fromHex("#414143");
   Color get colorPrimaryShadow => fromHex("#4141434D");
   Color get headerBgColor => fromHex("#4EB45E");
