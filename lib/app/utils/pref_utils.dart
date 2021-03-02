@@ -1,10 +1,11 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:diamnow/app/Helper/EncryptionHelper.dart';
+import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/NotificationRedirection.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/models/Dashboard/DashboardModel.dart';
@@ -13,8 +14,6 @@ import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:diamnow/app/app.export.dart';
-
 import 'package:unique_identifier/unique_identifier.dart';
 
 import 'BaseDialog.dart';
@@ -47,6 +46,8 @@ class PrefUtils {
   String get keyForLocalization => "keyGetLocalization";
 
   String get keyUser => "keyUser";
+
+  String get keyCompany => "keyCompany";
 
   String get keyUserPermission => "keyUserPermission";
 
@@ -287,6 +288,18 @@ class PrefUtils {
     return userJson != null ? new User.fromJson(userJson) : null;
   }
 
+  // Company detail Getter setter
+  Future<void> saveCompany(SelectionPopupModel company) {
+    _preferences.setString(keyCompany, json.encode(company));
+  }
+
+  SelectionPopupModel getCompanyDetails() {
+    var companyJson = json.decode(_preferences.getString(keyCompany));
+    return companyJson != null
+        ? new SelectionPopupModel.fromJson(companyJson)
+        : null;
+  }
+
   Future<void> saveUserPermission(UserPermissions user) async {
     _preferences.setString(keyUserPermission, json.encode(user));
   }
@@ -333,9 +346,10 @@ class PrefUtils {
         data.downloadExcel = false;
       }
     }
-    if ((app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
-            KYCStatus.pending) !=
-        KYCStatus.approved) {
+    if (app.resolve<PrefUtils>().getUserDetails() == UserConstant.CUSTOMER &&
+        (app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
+                KYCStatus.pending) !=
+            KYCStatus.approved) {
       if (module == ModulePermissionConstant.permission_searchDiamond ||
           module == ModulePermissionConstant.permission_quickSearch ||
           module == ModulePermissionConstant.permission_newGoods ||
@@ -359,6 +373,8 @@ class PrefUtils {
         data.delete = false;
         data.downloadExcel = false;
       }
+    }else{
+      //Admin permission
     }
     return data;
   }

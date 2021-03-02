@@ -12,9 +12,11 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/utils/AnalyticsReport.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
+import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/CommonWidget/BottomTabbarWidget.dart';
 import 'package:diamnow/components/CommonWidget/OverlayScreen.dart';
+import 'package:diamnow/components/Screens/Dialogue/SelectionScreen.dart';
 import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondActionScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/CommonHeader.dart';
@@ -25,8 +27,8 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondSquareGridI
 import 'package:diamnow/components/Screens/DiamondList/Widget/FinalCalculation.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
+import 'package:diamnow/components/Screens/SalesPerson/Widget/CellModel.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
-import 'package:diamnow/models/AnalyticsModel/AnalyticsModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
@@ -35,7 +37,6 @@ import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:intl/intl.dart';
 import 'package:rxbus/rxbus.dart';
 import 'package:screenshot_callback/screenshot_callback.dart';
 
@@ -46,7 +47,7 @@ class DiamondListScreen extends StatefulScreenWidget {
   int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
   bool isFromDrawer = false;
   List<FormBaseModel> filterModel;
-
+  bool isCompanySelected = false;
   String downloadDate = "";
 
   DiamondListScreen(
@@ -67,6 +68,9 @@ class DiamondListScreen extends StatefulScreenWidget {
       if (arguments["downloadDate"] != null) {
         downloadDate = arguments["downloadDate"];
       }
+      if (arguments["isCompanySelected"] != null) {
+        isCompanySelected = arguments["isCompanySelected"];
+      }
     }
   }
 
@@ -77,6 +81,7 @@ class DiamondListScreen extends StatefulScreenWidget {
         isFromDrawer: isFromDrawer,
         filterModel: filterModel,
         downloadDate: downloadDate,
+        isCompanySelected: isCompanySelected,
       );
 }
 
@@ -89,13 +94,15 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   bool selectAllGroupDiamonds;
   List<FormBaseModel> filterModel;
   String downloadDate = "";
+  bool isCompanySelected = false;
 
   _DiamondListScreenState(
       {this.filterId,
       this.moduleType,
       this.isFromDrawer,
       this.filterModel,
-      this.downloadDate});
+      this.downloadDate,
+      this.isCompanySelected});
 
   DiamondConfig diamondConfig;
   BaseList diamondList;
@@ -233,16 +240,32 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
       case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH:
-        dict["filters"] = {};
-        dict["filters"]["diamondSearchId"] = this.filterId;
+        if (app.resolve<PrefUtils>().getUserDetails().type ==
+            UserConstant.SALES) {
+          dict["filters"] = [
+            {"diamondSearchId": this.filterId}
+          ];
+        } else {
+          dict["filters"] = {};
+          dict["filters"]["diamondSearchId"] = this.filterId;
+        }
         break;
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
-        dict["filters"] = {};
-        dict["filters"]["diamondSearchId"] = this.filterId;
-
+        if (app.resolve<PrefUtils>().getUserDetails().type ==
+            UserConstant.SALES) {
+          dict["filters"] = [
+            {"diamondSearchId": this.filterId}
+          ];
+        } else {
+          dict["filters"] = {};
+          dict["filters"]["diamondSearchId"] = this.filterId;
+        }
         break;
       case DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR:
-        dict["filter"] = {};
+//        dict["filters"] = [
+//          {"diamondSearchId": this.filterId}
+//        ];
+        dict["filters"] = {};
         dict["filter"]["diamondSearchId"] = this.filterId;
         break;
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
@@ -250,14 +273,30 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict["viewType"] = 2;
         break;
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
+//        dict["filters"] = [
+//          {"wSts": DiamondStatus.DIAMOND_STATUS_BID}
+//        ];
         dict["filters"] = {};
         dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_BID;
         break;
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
+        var date = DateTime.now();
+//        dict["filters"] = [
+//          {
+//            "wSts": DiamondStatus.DIAMOND_STATUS_UPCOMING,
+//            "inDt": {
+//              "<=": date.add(Duration(days: 7)).toUtc().toIso8601String()
+//            }
+//          }
+//        ];
+//        Map<String, dynamic> dict1 = Map<String, dynamic>();
+//        dict1["inDt"] = "ASC";
+//        dict["sort"] = [dict1];
+
         dict["filters"] = {};
         dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_UPCOMING;
         dict["filters"]["inDt"] = {};
-        var date = DateTime.now();
+
         print(date.add(Duration(days: 5, hours: 5, minutes: 30)));
         dict["filters"]["inDt"]["<="] =
             date.add(Duration(days: 7)).toUtc().toIso8601String();
@@ -267,8 +306,15 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
         break;
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
-        dict["filters"] = {};
-        dict["filters"]["or"] = diamondConfig.getExclusiveDiamondReq();
+        if (app.resolve<PrefUtils>().getUserDetails().type ==
+            UserConstant.SALES) {
+          dict["filters"] = [
+            {"or": diamondConfig.getExclusiveDiamondReq()}
+          ];
+        } else {
+          dict["filters"] = {};
+          dict["filters"]["or"] = diamondConfig.getExclusiveDiamondReq();
+        }
         break;
       case DiamondModuleConstant.MODULE_TYPE_MY_BID:
         dict["bidType"] = [BidConstant.BID_TYPE_ADD];
@@ -293,9 +339,15 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict["isAppendDiamond"] = 1;
         break;
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
-        dict["filters"] = {};
-        dict["filters"]["wSts"] = "D";
-
+        if (app.resolve<PrefUtils>().getUserDetails().type ==
+            UserConstant.SALES) {
+          dict["filters"] = [
+            {"wSts": "D"}
+          ];
+        } else {
+          dict["filters"] = {};
+          dict["filters"]["wSts"] = "D";
+        }
         break;
 
       case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK:
@@ -306,6 +358,13 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           getOfflineStockFromDownloadedDate(dict);
         }
         return;
+      case DiamondModuleConstant.MODULE_TYPE_MY_HOLD:
+        dict["blockType"] = BlockType.HOLD;
+        dict['status'] = HoldListStatus.HOLD;
+        Map<String, dynamic> dict1 = Map<String, dynamic>();
+        dict1["createdAt"] = "DESC";
+        dict["sort"] = [dict1];
+        break;
     }
     NetworkCall<DiamondListResp>()
         .makeCall(
@@ -926,7 +985,47 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             ),
           ),
         );
-      } else {
+      }
+      /*else if (element.code == BottomCodeConstant.TBCompanySelction) {
+        GestureDetector(
+          onTap: !isNullEmptyOrFalse(arraDiamond)
+              ? () {
+            manageToolbarClick(element);
+          }
+              : null,
+          child: Padding(
+            padding: EdgeInsets.only(
+                right: */ /*i == diamondConfig.toolbarList.length - 1
+                    ? getSize(Spacing.rightPadding)
+                    : */ /*getSize(8),
+                left: getSize(8.0)),
+            child: Column(
+//              alignment: Alignment.topCenter,
+              children: [
+                Center(
+                  child: Image.asset(
+                    buildingIcon,
+                    height: getSize(20),
+                    width: getSize(20),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    top: getSize(10),
+                  ),
+                  height: getSize(8),
+                  width: getSize(8),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: appTheme.colorPrimary,
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      }*/
+      else {
         list.add(GestureDetector(
           onTap: !isNullEmptyOrFalse(arraDiamond)
               ? () {
@@ -939,15 +1038,42 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                     ? getSize(Spacing.rightPadding)
                     : getSize(8),
                 left: getSize(8.0)),
-            child: Image.asset(
-              element.isSelected
-                  ? (element.selectedImage != null
-                      ? element.selectedImage
-                      : element.image)
-                  : element.image,
-              height: getSize(20),
-              width: getSize(20),
-            ),
+            child: element.code == BottomCodeConstant.TBCompanySelection
+                ? Stack(
+                    alignment: Alignment.topCenter,
+                    children: [
+                      Center(
+                        child: Image.asset(
+                          buildingIcon,
+                          height: getSize(20),
+                          width: getSize(20),
+                        ),
+                      ),
+                      Visibility(
+                        visible: isCompanySelected,
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            top: getSize(10),
+                          ),
+                          height: getSize(8),
+                          width: getSize(8),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: appTheme.colorPrimary,
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                : Image.asset(
+                    element.isSelected
+                        ? (element.selectedImage != null
+                            ? element.selectedImage
+                            : element.image)
+                        : element.image,
+                    height: getSize(20),
+                    width: getSize(20),
+                  ),
           ),
         ));
       }
@@ -1041,6 +1167,30 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   manageToolbarClick(BottomTabModel model) {
     switch (model.code) {
+      case BottomCodeConstant.TBCompanySelection:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) {
+              return SelectionScreen(
+                title: "Select Company",
+                hintText: "Select Company",
+                positiveButtonTitle: "Apply",
+                negativeButtonTitle: "Cancel",
+                isSearchEnable: true,
+                type: CellType.Company,
+                isMultiSelectionEnable: false,
+                applyFilterCallBack: (
+                    {List<SelectionPopupModel> multiSelectedItem}) {
+                  isCompanySelected = true;
+                  app.resolve<PrefUtils>().saveCompany(multiSelectedItem.first);
+                  setState(() {});
+                },
+              );
+            },
+          ),
+        );
+        break;
       case BottomCodeConstant.TBSelectAll:
         model.isSelected = !model.isSelected;
         setSelectAllDiamond(model);
@@ -1161,7 +1311,12 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             bgColor: appTheme.whiteColor,
             leadingButton: isFromDrawer
                 ? getDrawerButton(context, true)
-                : getBackButton(context),
+                : getBackButton(
+                    context, /*ontap: (){
+                  Navigator.pop(context);
+                  app.resolve<PrefUtils>().saveCompany(null);
+            }*/
+                  ),
             centerTitle: false,
             textalign: TextAlign.left,
             actionItems: getToolbarItem(),

@@ -6,8 +6,6 @@ import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/AnalyticsReport.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
-import 'package:diamnow/components/Screens/Auth/Profile.dart';
-import 'package:diamnow/components/Screens/Auth/ProfileList.dart';
 import 'package:diamnow/components/Screens/Auth/UploadKYC.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/MyAccountScreen.dart';
 import 'package:diamnow/components/Screens/DashBoard/Dashboard.dart';
@@ -20,7 +18,6 @@ import 'package:diamnow/components/Screens/PriceCalculator/PriceCalculator.dart'
 import 'package:diamnow/components/Screens/QuickSearch/QuickSearch.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
-import 'package:diamnow/models/AnalyticsModel/AnalyticsModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
@@ -53,13 +50,17 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isSwitched = false;
   double bottomPadding = 0;
   Widget currentWidget;
-  int selectedType = DiamondModuleConstant.MODULE_TYPE_HOME;
+  User user;
+  int selectedType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
 
   @override
   void initState() {
     super.initState();
-    User user = app.resolve<PrefUtils>().getUserDetails();
-    if (user.account.isKycUploaded == false) {
+    user = app.resolve<PrefUtils>().getUserDetails();
+    selectedType = getDefaultModuleType();
+    if (user.type == UserConstant.SALES) {
+      openSearch(DiamondModuleConstant.MODULE_TYPE_SEARCH);
+    } else if (user.isKycUploaded == false) {
       if (user.kycRequired) {
         openKYCUpload(DiamondModuleConstant.MODULE_TYPE_UPLOAD_KYC);
       } else {
@@ -70,40 +71,19 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      //Kyc rejected
-      if (user.account.isApproved == KYCStatus.rejected &&
-          user.account.isKycUploaded == true) {
-        Timer(
-          Duration(seconds: 2),
-          () => (app.resolve<CustomDialogs>().confirmDialog(context,
-              dismissPopup: false,
-              title: R.string.authStrings.kYCRejected,
-              desc: R.string.authStrings.kycRejectedDesc,
-              positiveBtnTitle: R.string.commonString.upload,
-              negativeBtnTitle: R.string.commonString.btnSkip,
-              onClickCallback: (click) {
-            if (click == ButtonType.PositveButtonClick) {
-              NavigationUtilities.pushRoute(
-                UploadKYCScreen.route,
-              );
-            }
-          })),
-        );
-      }
-
-      //Documents not uploaded
-      if (user.account.isKycUploaded == false) {
-        if (!user.kycRequired) {
+      if (user.type == UserConstant.CUSTOMER) {
+        //Kyc rejected
+        if (user.isApproved == KYCStatus.rejected &&
+            user.isKycUploaded == true) {
           Timer(
             Duration(seconds: 2),
             () => (app.resolve<CustomDialogs>().confirmDialog(context,
                 dismissPopup: false,
-                title: R.string.authStrings.uploadKYC,
-                desc: R.string.authStrings.uploadKycDesc,
+                title: R.string.authStrings.kYCRejected,
+                desc: R.string.authStrings.kycRejectedDesc,
                 positiveBtnTitle: R.string.commonString.upload,
-                negativeBtnTitle: user.kycRequired
-                    ? null
-                    : R.string.commonString.btnSkip, onClickCallback: (click) {
+                negativeBtnTitle: R.string.commonString.btnSkip,
+                onClickCallback: (click) {
               if (click == ButtonType.PositveButtonClick) {
                 NavigationUtilities.pushRoute(
                   UploadKYCScreen.route,
@@ -112,8 +92,31 @@ class _HomeScreenState extends State<HomeScreen> {
             })),
           );
         }
-      } else {
-        openDashboard(DiamondModuleConstant.MODULE_TYPE_HOME);
+
+        //Documents not uploaded
+        if (user.isKycUploaded == false) {
+          if (!user.kycRequired) {
+            Timer(
+              Duration(seconds: 2),
+              () => (app.resolve<CustomDialogs>().confirmDialog(context,
+                  dismissPopup: false,
+                  title: R.string.authStrings.uploadKYC,
+                  desc: R.string.authStrings.uploadKycDesc,
+                  positiveBtnTitle: R.string.commonString.upload,
+                  negativeBtnTitle:
+                      user.kycRequired ? null : R.string.commonString.btnSkip,
+                  onClickCallback: (click) {
+                if (click == ButtonType.PositveButtonClick) {
+                  NavigationUtilities.pushRoute(
+                    UploadKYCScreen.route,
+                  );
+                }
+              })),
+            );
+          }
+        } else {
+          openDashboard(DiamondModuleConstant.MODULE_TYPE_HOME);
+        }
       }
       RxBus.register<DrawerEvent>(tag: eventBusTag).listen((event) {
         if (event.index == DiamondModuleConstant.MODULE_TYPE_OPEN_DRAWER) {
@@ -130,9 +133,15 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
+  int getDefaultModuleType() {
+    return user.type == UserConstant.CUSTOMER
+        ? DiamondModuleConstant.MODULE_TYPE_HOME
+        : DiamondModuleConstant.MODULE_TYPE_SEARCH;
+  }
+
   Future<bool> _onWillPop(BuildContext context) {
     if (!Navigator.of(context).canPop()) {
-      if (selectedType == DiamondModuleConstant.MODULE_TYPE_HOME) {
+      if (selectedType == getDefaultModuleType()) {
         app.resolve<CustomDialogs>().confirmDialog(context,
             title: APPNAME,
             desc: R.string.commonString.lblAppExit,
@@ -142,11 +151,17 @@ class _HomeScreenState extends State<HomeScreen> {
           if (btnType == ButtonType.PositveButtonClick) {
             //  Navigator.pop(context);
             SystemNavigator.pop();
+            app.resolve<PrefUtils>().saveCompany(null);
           }
         });
       } else {
-        manageDrawerClick(
-            context, DiamondModuleConstant.MODULE_TYPE_HOME, false);
+        if (user.type == UserConstant.CUSTOMER) {
+          manageDrawerClick(
+              context, DiamondModuleConstant.MODULE_TYPE_HOME, false);
+        } else {
+          manageDrawerClick(
+              context, DiamondModuleConstant.MODULE_TYPE_SEARCH, false);
+        }
       }
     } else {
       return Future.value(true);
