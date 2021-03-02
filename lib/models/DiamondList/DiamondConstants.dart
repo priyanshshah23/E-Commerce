@@ -84,6 +84,7 @@ class ModulePermissionConstant {
   static const permission_exclusive = "exclusive";
   static const permission_bid = "bid";
   static const permission_hold = "hold";
+  static const permission_memo = "memo";
   static const permission_offer = "offer";
   static const permission_notification = "notification";
   static const permission_offline_stock = "offlineStock";

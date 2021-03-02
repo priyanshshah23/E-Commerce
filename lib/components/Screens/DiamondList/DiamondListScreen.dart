@@ -276,7 +276,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 //        dict["filters"] = [
 //          {"wSts": DiamondStatus.DIAMOND_STATUS_BID}
 //        ];
-        dict["filters"] = [{}];
+        dict["filters"] = {};
         dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_BID;
         break;
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:

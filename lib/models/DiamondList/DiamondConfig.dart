@@ -417,8 +417,12 @@ class DiamondConfig {
         actionAddToWishList(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_PLACE_ORDER:
-        actionBuyNow(context, list, refreshList);
-//        actionPlaceOrder(context, list, refreshList);
+        if (app.resolve<PrefUtils>().getUserDetails().type ==
+            UserConstant.SALES) {
+          actionBuyNow(context, list, refreshList);
+        } else {
+          actionPlaceOrder(context, list, refreshList);
+        }
         break;
       case ActionMenuConstant.ACTION_TYPE_REMINDER:
         actionReminder(context, list);
@@ -436,10 +440,10 @@ class DiamondConfig {
         actionAppointment(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_HOLD:
-        actionHold(context, list,refreshList);
+        actionHold(context, list, refreshList);
         break;
       case ActionMenuConstant.ACTION_TYPE_MEMO:
-        actionMemo(context, list,refreshList);
+        actionMemo(context, list, refreshList);
         break;
       case ActionMenuConstant.ACTION_TYPE_DOWNLOAD:
         actionDownload(context, list);
@@ -591,8 +595,14 @@ class DiamondConfig {
           context, DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER, selectedList,
           placeOrder: placeOrder);
     } else {
-      showToast(R.string.commonString.holdMemoStatusDiamondorder,
-          context: context);
+      app.resolve<CustomDialogs>().errorDialog(
+            context,
+            "",
+            R.string.commonString.holdMemoStatusDiamondorder,
+            btntitle: R.string.commonString.ok,
+          );
+//      showToast(R.string.commonString.holdMemoStatusDiamondorder,
+//          context: context);
     }
 
     /*showPlaceOrderDialog(context, (manageClick) {
@@ -750,7 +760,8 @@ class DiamondConfig {
             });
   }
 
-  actionHold(BuildContext context, List<DiamondModel> list,Function refreshList) {
+  actionHold(
+      BuildContext context, List<DiamondModel> list, Function refreshList) {
     List<DiamondModel> selectedList = [];
     DiamondModel model;
     list.forEach((element) {
@@ -767,11 +778,12 @@ class DiamondConfig {
           builder: (context) => HoldStoneScreen(dict),
         ))
         .then((value) => {
-      if (value != null && value) {refreshList()}
+              if (value != null && value) {refreshList()}
             });
   }
 
-  actionMemo(BuildContext context, List<DiamondModel> list,Function refreshList) {
+  actionMemo(
+      BuildContext context, List<DiamondModel> list, Function refreshList) {
     List<DiamondModel> selectedList = [];
     DiamondModel model;
     list.forEach((element) {
@@ -789,7 +801,8 @@ class DiamondConfig {
           builder: (context) => MemoStoneScreen(dict),
         ))
         .then((value) => {
-      if (value != null && value) {refreshList()}            });
+              if (value != null && value) {refreshList()}
+            });
   }
 
   actionDownloadOffline(BuildContext context, Function refreshList,

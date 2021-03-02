@@ -862,30 +862,30 @@ class BottomMenuSetting {
 
   addHoldInBottomMenu(List<BottomTabModel> moreMenuList, String image,
       {bool isCenter: true}) {
-//    if (app
-//        .resolve<PrefUtils>()
-//        .getModulePermission(ModulePermissionConstant.permission_watchlist)
-//        .insert) {
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_hold)
+        .insert) {
     moreMenuList.add(BottomTabModel(
         image: image,
         isCenter: isCenter,
         title: R.string.screenTitle.hold,
         type: ActionMenuConstant.ACTION_TYPE_HOLD));
-//    }
+    }
   }
 
   addMemoInBottomMenu(List<BottomTabModel> moreMenuList, String image,
       {bool isCenter: true}) {
-//    if (app
-//        .resolve<PrefUtils>()
-//        .getModulePermission(ModulePermissionConstant.permission_watchlist)
-//        .insert) {
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_memo)
+        .insert) {
     moreMenuList.add(BottomTabModel(
         image: image,
         isCenter: isCenter,
         title: R.string.screenTitle.memo,
         type: ActionMenuConstant.ACTION_TYPE_MEMO));
-//    }
+    }
   }
 
   addBidStoneInBottomMenu(List<BottomTabModel> moreMenuList) {
