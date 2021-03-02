@@ -56,7 +56,8 @@ class PnShahTheme extends BaseTheme {
 }
 
 class BaseTheme {
-  Color get colorPrimary => fromHex("#4EB45E");
+  Color get colorPrimary => fromHex("#414143");
+  Color get colorPrimaryShadow => fromHex("#4141434D");
   Color get headerBgColor => fromHex("#4EB45E");
   Color get textColor => fromHex("#232323");
   Color get bgColor => fromHex("#E3E3E3");
@@ -65,7 +66,7 @@ class BaseTheme {
   Color get textBlackColor => Colors.black;
   Color get blackColor => Colors.black;
   Color get whiteColor => Colors.white;
-  Color get textGreyColor => fromHex("#999999");
+  Color get textGreyColor => fromHex("#454545");
   Color get buttonColor => fromHex("#4EB45E");
   Color get darkBlue => fromHex("#4EB45E");
   Color get errorColor => fromHex("#FF4D4D");
@@ -360,6 +361,14 @@ class BaseTheme {
     return TextStyle(
       fontSize: getFontSize(16),
       color: textGreyColor,
+      fontWeight: FontWeight.w500,
+    );
+  }
+
+  TextStyle get darkgray16TextStyle {
+    return TextStyle(
+      fontSize: getFontSize(16),
+      color: colorPrimary,
       fontWeight: FontWeight.w500,
     );
   }

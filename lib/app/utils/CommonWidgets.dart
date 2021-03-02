@@ -121,8 +121,6 @@ getBarButtonWithColor(
   );
 }
 
-
-
 getNavigationTheme(BuildContext context) {
   return TextTheme(
     title: TextStyle(
@@ -150,7 +148,7 @@ List<BoxShadow> getBoxShadow(BuildContext context) {
     BoxShadow(
         color: appTheme.colorPrimary.withOpacity(0.2),
         blurRadius: getSize(10),
-        spreadRadius: getSize(5),
+        spreadRadius: getSize(3),
         offset: Offset(0, 3)),
   ];
 }
@@ -451,7 +449,6 @@ openURLWithApp(String uri, BuildContext context, {bool isPop = false}) async {
   } else {
     app.resolve<CustomDialogs>().confirmDialog(
           context,
-         
           desc: "Could not launch",
           positiveBtnTitle: R.string.commonString.ok,
         );

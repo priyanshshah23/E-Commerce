@@ -83,7 +83,7 @@ class AuthStrings {
   String moveToLogIn = "Move to Log In";
   String dontHaveAnAccount = "Don't have an account? ";
   String clickHere = "Click here";
-  String signUpHere = "Signup here";
+  String signUpHere = "Sign Up";
   String reset = "Reset";
   String haveRegisterCode = "Have a registration code?";
   String welcome = "Welcome Back!";
