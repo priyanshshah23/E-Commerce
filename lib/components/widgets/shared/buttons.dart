@@ -117,6 +117,7 @@ class AppButton extends StatelessWidget {
       this.fitWidth = false,
       this.padding,
       this.foregroundColor,
+      this.isBorder,
       this.borderRadius = 0,
       this.borderColor})
       : materialType = MaterialType.canvas,
