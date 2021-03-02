@@ -127,7 +127,7 @@ class _SelectionDialogueState extends State<SelectionDialogue> {
                                         BorderRadius.all(Radius.circular(5.0))),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
-                                        Radius.circular(5.0)))),
+                                        Radius.circular(25.0)))),
                           ),
                         )
                       : SizedBox(),

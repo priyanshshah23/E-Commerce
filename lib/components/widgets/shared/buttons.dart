@@ -104,42 +104,44 @@ class AppButton extends StatelessWidget {
   /// A button that appears raised with a shadow.
   ///
   /// Uses the [ThemeData.buttonColor] as the [backgroundColor] by default.
-  const AppButton.raised({
-    @required this.onTap,
-    this.text,
-    this.textColor,
-    this.icon,
-    this.iconSize,
-    this.iconBuilder,
-    this.backgroundColor,
-    this.isButtonEnabled = true,
-    this.dense = false,
-    this.fitWidth = false,
-    this.padding,
-    this.foregroundColor,
-    this.borderRadius = 0,
-  })  : materialType = MaterialType.canvas,
+  const AppButton.raised(
+      {@required this.onTap,
+      this.text,
+      this.textColor,
+      this.icon,
+      this.iconSize,
+      this.iconBuilder,
+      this.backgroundColor,
+      this.isButtonEnabled = true,
+      this.dense = false,
+      this.fitWidth = false,
+      this.padding,
+      this.foregroundColor,
+      this.borderRadius = 0,
+      this.borderColor})
+      : materialType = MaterialType.canvas,
         elevation = 8,
         assert(text != null || icon != null || iconBuilder != null);
 
   /// A flat button that has a transparent background and no shadow.
   ///
   /// Should only be used when the context makes it clear it can be tapped.
-  const AppButton.flat({
-    @required this.onTap,
-    this.text,
-    this.textColor,
-    this.icon,
-    this.iconSize,
-    this.iconBuilder,
-    this.backgroundColor,
-    this.dense = false,
-    this.fitWidth = false,
-    this.padding,
-    this.foregroundColor,
-    this.isButtonEnabled = true,
-    this.borderRadius = 40,
-  })  : materialType = MaterialType.canvas,
+  const AppButton.flat(
+      {@required this.onTap,
+      this.text,
+      this.textColor,
+      this.icon,
+      this.iconSize,
+      this.iconBuilder,
+      this.backgroundColor,
+      this.dense = false,
+      this.fitWidth = false,
+      this.padding,
+      this.foregroundColor,
+      this.isButtonEnabled = true,
+      this.borderRadius = 30,
+      this.borderColor})
+      : materialType = MaterialType.canvas,
         elevation = 0,
         assert(text != null || icon != null || iconBuilder != null);
 
@@ -175,6 +177,8 @@ class AppButton extends StatelessWidget {
   final Color backgroundColor;
 
   final double borderRadius;
+
+  final Color borderColor;
 
   /// The color of the [icon] and [text] of the button.
   ///
@@ -308,13 +312,13 @@ class AppButton extends StatelessWidget {
           type: materialType,
           borderRadius: borderRadius,
           child: Container(
+            height: getSize(50),
             decoration: BoxDecoration(
               borderRadius: borderRadius,
               border: Border.all(
                 color: appTheme.colorPrimary,
               ),
             ),
-            height: getSize(50),
             width: fitWidth ? MediaQuery.of(context).size.width : null,
             child: Center(
               child: Builder(builder: _buildContent),

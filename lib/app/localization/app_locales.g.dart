@@ -176,7 +176,7 @@ class AuthStrings {
   String passwordResetSuccessfully = "Password reset successfully.";
   String emailAndUname = "Email/UserName";
   String signUp = "Sign Up";
-  String promotionText = "Promotional offers";
+  String promotionText = "Promotional offers, newsletters and stock update";
   String termsAndCondition = "Terms and Condition";
   String mustAgreeTermsAndCondition =
       "You must agree to terms and condition to Sign In as Guest User";
