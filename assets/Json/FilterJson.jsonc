@@ -15,7 +15,7 @@
     "verticalScroll": true,
     "orientation": "v",
     "isShowAll": false,
-    "isShowMore": false,
+    "isShowMore": true,
     "isShowMoreHorizontal": true,
     "tab": "basic",
     "sequence": 1,
@@ -1274,7 +1274,7 @@
     "isShowMore": false,
     "gridViewItemCount": 5,
     "showMoreTagAfterTotalItemCount": 5,
-    "tab": "advance",
+    "tab": "basic",
     "sequence": 70,
     "isActive": true,
     "valueKeyisCode": false
@@ -1799,5 +1799,40 @@
         "apiKey": "Show"
       }
     ]
+  },
+  {
+    "title": "Shape",
+    "viewType": "searchText",
+    "tab": "matchpair",
+    "isActive": true
+  },
+  {
+    "title": "Shape",
+    "viewType": "shape",
+    "allLableTitle": "All Shapes",
+    "apiKey": "shp",
+    "numberOfelementsToShow": 7,
+    "masterCode": "SHAPE",
+    "verticalScroll": true,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": true,
+    "isShowMoreHorizontal": true,
+    "tab": "matchpair",
+    "sequence": 1,
+    "isActive": true,
+    "valueKeyisCode": true
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 2,
+    "isActive": true,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "matchpair",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
   }
 ]

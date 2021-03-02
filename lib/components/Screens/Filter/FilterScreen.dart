@@ -717,7 +717,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       child: Column(
         children: [
           Text(
-            title,
+            title ?? "",
             style: segmentedControlValue == index
                 ? appTheme.blackSemiBold18TitleColorblack
                 : appTheme.greySemibold18TitleColor,

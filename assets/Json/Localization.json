@@ -727,7 +727,8 @@
         "cluetConditionTitle",
         "disTitle",
         "depthTitleWithoutPerc",
-        "otherInformationTitle"
+        "otherInformationTitle",
+        "matchPairTitle"
       ],
       "shape": "Shape",
       "caratRange": "Carat",
@@ -803,7 +804,8 @@
       "cluetConditionTitle": "Culet Condition",
       "disTitle": "Dis%",
       "depthTitleWithoutPerc": "Depth",
-      "otherInformationTitle": "Other Information"
+      "otherInformationTitle": "Other Information",
+      "matchPairTitle" : "Match Pair"
     }
   },
   "Chinese": {

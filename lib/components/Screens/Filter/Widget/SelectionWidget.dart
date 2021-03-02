@@ -420,7 +420,7 @@ class _TagWidgetState extends State<TagWidget> {
             child: Text(
               showWebDisplayAccordingToMaster(widget.model, index),
               style: widget.model.masters[index].isSelected
-                  ? appTheme.primaryColor14TextStyle
+                  ? appTheme.whiteColor14TextStyle
                   : appTheme.blackNormal14TitleColorblack,
             ),
           ),
@@ -457,7 +457,7 @@ class _TagWidgetState extends State<TagWidget> {
             child: Text(
               showWebDisplayAccordingToMaster(widget.model, index),
               style: widget.model.masters[index].isSelected
-                  ? appTheme.primaryColor14TextStyle
+                  ? appTheme.whiteColor14TextStyle
                   : appTheme.blackNormal14TitleColorblack,
             ),
           ),
