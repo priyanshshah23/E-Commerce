@@ -268,7 +268,7 @@ class Master {
     if (isSelected) {
       return Image.asset(
         "assets/shape/${strCode.toLowerCase()}.png",
-        color: appTheme.colorPrimary,
+        color: appTheme.whiteColor,
         width: getSize(32),
         height: getSize(32),
       );

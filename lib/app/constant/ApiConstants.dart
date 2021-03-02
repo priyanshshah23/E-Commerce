@@ -29,6 +29,7 @@ class ApiConstants {
   static const String masterSync = commonUrl + "masterSync";
 
   static const String login = commonUrl + "auth/login";
+  static const String diamondListSales = commonUrl + "common/diamond/paginate";
 
   static const String diamondList = commonUrl + "diamond/paginate";
   static const String diamondMatchPair =
@@ -39,7 +40,6 @@ class ApiConstants {
   static const String mySaveSearch = commonUrl + "diamond/search/list";
 
   static const String diamondTrackList = commonUrl + "diamond-track/paginate";
-
   static const String diamondCommentList =
       commonUrl + "diamond-comment/by-user";
   static const String diamondBidList = commonUrl + "diamond-bid/paginate";
@@ -113,12 +113,21 @@ class ApiConstants {
   static const String dimaondTrackCreate = "device/v1/diamond-track/create";
   static const String placeOrderOffline = "device/v1/diamond-confirm/request";
   static const String uploadKyc = "device/v1/account/";
+
   static const String notificationList = apiUrl + "device/v1/notification/list";
   static const String updateOffer = "device/v1/diamond-track/update";
   static const String shareThroughEmail = apiUrl + "web/v1/diamond/excel";
   static const String analytics = "apis/analytics/create";
+  static const String companyList = "device/v1/common/account/paginate";
+  static const String buyerList = "device/v1/common/user/paginate";
+  static const String salesmanList = "device/v1/common/seller/paginate";
   static const String deleteOffice =
       "device/v1/cabin-schedule/destroyDiamondAndSlot";
+
+  static const String buyNow = "device/v1/common/diamond-confirm/request";
+  static const String holdDiamond = "device/v1/common/diamond-block/create";
+  static const String holdList = "device/v1/common/diamond-block/paginate";
+  static const String byunowList = "device/v1/common/diamond-confirm/paginate";
 }
 
 class DiamondUrls {

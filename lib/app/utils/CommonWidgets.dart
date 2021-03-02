@@ -369,9 +369,9 @@ getCommonIconWidget(
 
 double getImageSize(IconSizeType imaegType) {
   if (imaegType == IconSizeType.small) {
-    return getSize(12);
-  } else if (imaegType == IconSizeType.medium) {
     return getSize(14);
+  } else if (imaegType == IconSizeType.medium) {
+    return getSize(10);
   } else if (imaegType == IconSizeType.large) {
     return getSize(4);
   }

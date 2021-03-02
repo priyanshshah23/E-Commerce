@@ -96,6 +96,7 @@ class Config {
         if (element is Map<String, dynamic>) {
           String viewType = element["viewType"];
           if (element["isActive"] ?? true) {
+
             if (viewType == "searchText") {
               arrFilter.add(FormBaseModel.fromJson(element));
             } else if (viewType == ViewTypes.fromTo) {
@@ -704,3 +705,5 @@ class MasterToSelect {
     return data;
   }
 }
+
+

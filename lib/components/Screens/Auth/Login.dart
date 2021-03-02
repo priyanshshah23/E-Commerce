@@ -1,30 +1,26 @@
-import 'dart:collection';
 import 'dart:io';
 
 import 'package:diamnow/app/AppConfiguration/AppNavigation.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/localization/LocalizationHelper.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
-import 'package:diamnow/app/localization/LocalizationHelper.dart';
 import 'package:diamnow/components/Screens/Auth/ForgetPassword.dart';
+import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
 import 'package:diamnow/components/Screens/Auth/Signup.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/LoginModel.dart';
-import 'package:diamnow/models/Version/VersionUpdateResp.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:package_info/package_info.dart';
 
 import '../../../app/utils/navigator.dart';
-import '../../../modules/ThemeSetting.dart';
 import 'SignInWithMPINScreen.dart';
 
 class LoginScreen extends StatefulScreenWidget {
@@ -68,7 +64,10 @@ class LoginScreenState extends StatefulScreenWidgetState {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // if (kDebugMode) {
+     if (kDebugMode) {
+       userNameController.text="admin@pnshah.com";
+       _passwordController.text = "Admin#01032021";
+     }
     getUserNameAndPassword();
     // }
   }
@@ -178,12 +177,13 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                               horizontal: getSize(10),
                                               vertical: getSize(5)),
                                           decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      getSize(23)),
-                                              border: Border.all(
-                                                  color:
-                                                      appTheme.textGreyColor)),
+                                            borderRadius: BorderRadius.circular(
+                                                getSize(23)),
+                                            border: Border.all(
+                                              color: appTheme.textGreyColor,
+                                            ),
+                                            // borderRadius: getSize(23),
+                                          ),
                                           child: Row(
                                             children: [
                                               Container(
@@ -254,44 +254,44 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        /*InkWell(
-                                          onTap: () {
-                                            isCheckBoxSelected =
-                                                !isCheckBoxSelected;
-                                            setState(() {});
-                                          },
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            getSize(3))),
-                                                width: getSize(21),
-                                                height: getSize(21),
-                                                child: Image.asset(
-                                                  isCheckBoxSelected
-                                                      ? selectedCheckbox
-                                                      : unSelectedCheckbox,
-                                                  height: getSize(20),
-                                                  width: getSize(20),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: getSize(6),
-                                              ),
-                                              Text(
-                                                  R.string.commonString
-                                                      .rememberme,
-                                                  style: appTheme
-                                                      .blackMedium16TitleColorblack
-                                                      .copyWith(
-                                                          fontWeight:
-                                                              FontWeight.bold))
-                                            ],
-                                          ),
-                                        ),*/
+                                        // /*InkWell(
+                                        //   onTap: () {
+                                        //     isCheckBoxSelected =
+                                        //         !isCheckBoxSelected;
+                                        //     setState(() {});
+                                        //   },
+                                        //   child: Row(
+                                        //     mainAxisSize: MainAxisSize.min,
+                                        //     children: [
+                                        //       Container(
+                                        //         decoration: BoxDecoration(
+                                        //             borderRadius:
+                                        //                 BorderRadius.circular(
+                                        //                     getSize(3))),
+                                        //         width: getSize(21),
+                                        //         height: getSize(21),
+                                        //         child: Image.asset(
+                                        //           isCheckBoxSelected
+                                        //               ? selectedCheckbox
+                                        //               : unSelectedCheckbox,
+                                        //           height: getSize(20),
+                                        //           width: getSize(20),
+                                        //         ),
+                                        //       ),
+                                        //       SizedBox(
+                                        //         width: getSize(6),
+                                        //       ),
+                                        //       Text(
+                                        //           R.string.commonString
+                                        //               .rememberme,
+                                        //           style: appTheme
+                                        //               .blackMedium16TitleColorblack
+                                        //               .copyWith(
+                                        //                   fontWeight:
+                                        //                       FontWeight.bold))
+                                        //     ],
+                                        //   ),
+                                        // ),*/
                                         Expanded(
                                           child: Container(
                                             // alignment: Alignment.centerRight,
@@ -302,24 +302,12 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(
-                                      top: getSize(60),
-                                      // left: getSize(30),
-                                      // right: getSize(30)
-                                    ),
+                                    padding: EdgeInsets.only(top: getSize(60)),
                                     child: Container(
                                       margin: EdgeInsets.only(
                                           top: getSize(15), left: getSize(0)),
                                       decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: appTheme.colorPrimaryShadow,
-                                            // .withOpacity(0.55),
-                                            blurRadius: getSize(15),
-                                            spreadRadius: getSize(4),
-                                          )
-                                        ],
-                                      ),
+                                          boxShadow: getBoxShadow(context)),
                                       child: AppButton.flat(
                                         onTap: () {
                                           FocusScope.of(context).unfocus();
@@ -332,6 +320,54 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                                 userNameController.text;
                                             req["password"] =
                                                 _passwordController.text;
+//                                            req["masters"] = [
+//                                              "COLOR",
+//                                              "CLARITY",
+//                                              "SHAPE",
+//                                              "CUT",
+//                                              "FLUORESCENCE",
+//                                              "SHADE",
+//                                              "LAB",
+//                                              "POLISH",
+//                                              "SYMMETRY",
+//                                              "LOCATION",
+//                                              "BLACK_INCLUSION",
+//                                              "OPEN_TABLE",
+//                                              "MILKEY",
+//                                              "WHITE_INCLUSION_CROWN",
+//                                              "OPEN_CROWN",
+//                                              "EYECLEAN",
+//                                              "OPEN_PAVILION",
+//                                              "ORIGIN",
+//                                              "BLACK_INCLUSION_CROWN",
+//                                              "H_AND_A",
+//                                              "WHITE_INCLUSION_TABLE",
+//                                              "FANCY_COLOR",
+//                                              "INTENSITY",
+//                                              "OVERTONE",
+//                                              "KEY_TO_SYMBOLS",
+//                                              "GIRDLE",
+//                                              "CULET",
+//                                              "GIRDLE_COND",
+//                                              "CULET_COND",
+//                                              "COMPANY_SIZE",
+//                                              "BLACK_INCLUSION_TABLE",
+//                                              "BLACK_INCLUSION_SIDE",
+//                                              "WHITE_INCLUSION_SIDE",
+//                                              "BRILLIANCY",
+//                                              "EYECLEAN",
+//                                              "DAY_TERM",
+//                                              "CURRENCY",
+//                                              "COMPANY_GROUP",
+//                                              "BLOCK_STAGE",
+//                                              "NATURE_OF_ORG",
+//                                              "BUSINESS_TYPE",
+//                                              "DOC_TYPE_PERSONAL",
+//                                              "DOC_TYPE_BUSINESS",
+//                                              "MIX_TINT",
+//                                              "NATURAL",
+//                                              "OPEN_INCLUSION"
+//                                            ];
                                             callLoginApi(context, req);
                                           } else {
                                             setState(() {
@@ -339,7 +375,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                             });
                                           }
                                         },
-                                        // borderRadius: getSize(5),
+                                        //borderRadius: getSize(5),
                                         fitWidth: true,
                                         text: R.string.authStrings.signInCap,
                                       ),
@@ -425,14 +461,16 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                   ),*/
                                   Padding(
                                     padding: EdgeInsets.only(
-                                        top: getSize(10), bottom: getSize(20)),
+                                      top: getSize(20),
+                                      bottom: getSize(20),
+                                    ),
                                     child: Container(
                                       child: Text(
                                         R.string.commonString.lblOr
                                             .toLowerCase(),
                                         style: TextStyle(
-                                          color: appTheme.textGreyColor,
                                           fontSize: getFontSize(21),
+                                          color: appTheme.textGreyColor,
                                         ),
                                       ),
                                     ),
@@ -442,12 +480,13 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                     //     top: getSize(10), left: getSize(0)),
                                     child: AppButton.flat(
                                       onTap: () {
-                                        // NavigationUtilities.pushRoute(
-                                        //     GuestSignInScreen.route);
+                                        NavigationUtilities.pushRoute(
+                                            GuestSignInScreen.route);
                                       },
                                       textColor: appTheme.colorPrimary,
-                                      backgroundColor: appTheme.whiteColor,
-                                      // borderRadius: getSize(23),
+                                      backgroundColor:
+                                          appTheme.whiteColor.withOpacity(0.1),
+                                      // borderRadius: getSize(5),
                                       fitWidth: true,
                                       text: R.string.authStrings.signInAsGuest,
                                       //isButtonEnabled: enableDisableSigninButton(),
@@ -477,10 +516,8 @@ class LoginScreenState extends StatefulScreenWidgetState {
                       children: <Widget>[
                         Text(R.string.authStrings.dontHaveAnAccount,
                             style: appTheme.grey16HintTextStyle),
-                        Text(
-                          " " + R.string.authStrings.signUpHere,
-                          style: appTheme.darkgray16TextStyle,
-                        ),
+                        Text(" " + R.string.authStrings.signUpHere,
+                            style: appTheme.darkgray16TextStyle),
                       ],
                     ),
                   ),
@@ -613,7 +650,16 @@ class LoginScreenState extends StatefulScreenWidgetState {
             () => app.resolve<ServiceModule>().networkService().login(req),
             context,
             isProgress: true)
-        .then((loginResp) {
+        .then((loginResp) async{
+//      app.resolve<PrefUtils>().saveUser(loginResp.data.user);
+//      if (loginResp.data.userPermissions != null) {
+//        await app.resolve<PrefUtils>().saveUserPermission(
+//          loginResp.data.userPermissions,
+//        );
+//      }
+//      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+
+//      saveUserResponse(loginResp);
       navigateToPopUpBox(context, loginResp);
     }).catchError((onError) {
       if (onError is ErrorResp) {

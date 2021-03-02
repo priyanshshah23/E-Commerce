@@ -16,5 +16,11 @@
     "tab": "stoneid",
     "sequence": 3,
     "isActive": false
+  },
+  {
+    "title": "matchPairTitle",
+    "tab": "matchpair",
+    "sequence": 4,
+    "isActive": true
   }
 ]

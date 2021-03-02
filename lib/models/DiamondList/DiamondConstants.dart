@@ -48,6 +48,7 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_DIAMOND_DETAIL = 108;
   static const MODULE_TYPE_VOICE_SEARCH = 109;
   static const MODULE_TYPE_PRICE_CALCULATOR = 110;
+  static const MODULE_TYPE_MEMO = 111;
 }
 
 class ModulePermissionConstant {
@@ -83,6 +84,7 @@ class ModulePermissionConstant {
   static const permission_exclusive = "exclusive";
   static const permission_bid = "bid";
   static const permission_hold = "hold";
+  static const permission_memo = "memo";
   static const permission_offer = "offer";
   static const permission_notification = "notification";
   static const permission_offline_stock = "offlineStock";
@@ -207,6 +209,7 @@ class ActionMenuConstant {
   static const ACTION_TYPE_FINAL_CALCULATION = 18;
   static const ACTION_TYPE_CANCEL_STONE = 19;
   static const ACTION_TYPE_EXCEL = 20;
+  static const ACTION_TYPE_MEMO = 21;
 }
 
 class MoreMenuConstant {

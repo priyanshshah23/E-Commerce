@@ -56,6 +56,7 @@ class PnShahTheme extends BaseTheme {
 }
 
 class BaseTheme {
+  Color get bodercolour => fromHex("#DDDDDD");
   Color get colorPrimary => fromHex("#414143");
   Color get colorPrimaryShadow => fromHex("#4141434D");
   Color get headerBgColor => fromHex("#4EB45E");
@@ -72,7 +73,7 @@ class BaseTheme {
   Color get errorColor => fromHex("#FF4D4D");
   Color get segmentSelectedColor => Colors.white;
   Color get borderColor => fromHex("#DDDDDD");
-  Color get selectedFilterColor => fromHex("#F2FCF4");
+  Color get selectedFilterColor => fromHex("#414143");
   Color get unSelectedBgColor => fromHex("#f7f7f7");
   Color get greenColor => fromHex("#0EAC33");
   Color get lightBGColor => fromHex("#F8F8F8");
@@ -143,6 +144,12 @@ class BaseTheme {
         fontSize: getFontSize(12),
         fontWeight: FontWeight.normal,
         color: colorPrimary);
+  }
+TextStyle get whiteNormal12TitleColor {
+    return TextStyle(
+        fontSize: getFontSize(12),
+        fontWeight: FontWeight.normal,
+        color: whiteColor);
   }
 
   TextStyle get greenPrimaryNormal12TitleColor {
@@ -336,6 +343,13 @@ class BaseTheme {
         fontWeight: FontWeight.normal);
   }
 
+  TextStyle get white18TextStyle {
+    return TextStyle(
+        fontSize: getFontSize(18),
+        color: whiteColor,
+        fontWeight: FontWeight.normal);
+  }
+
   TextStyle get black14TextStyle {
     return TextStyle(
         fontSize: getFontSize(14),
@@ -392,6 +406,13 @@ class BaseTheme {
     return TextStyle(
         fontSize: getFontSize(14),
         color: colorPrimary,
+        fontWeight: FontWeight.w500);
+  }
+
+  TextStyle get whiteColor14TextStyle {
+    return TextStyle(
+        fontSize: getFontSize(14),
+        color: whiteColor,
         fontWeight: FontWeight.w500);
   }
 

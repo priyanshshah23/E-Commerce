@@ -229,9 +229,9 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
               callApiForUploadKyc();
             }
           },
-          backgroundColor: appTheme.colorPrimary.withOpacity(0.1),
+          backgroundColor: appTheme.whiteColor.withOpacity(0.1),
           textColor: appTheme.colorPrimary,
-          borderRadius: getSize(5),
+          // borderRadius: getSize(5),
           fitWidth: true,
           text: R.string.commonString.save,
           //isButtonEnabled: enableDisableSigninButton(),
@@ -262,7 +262,7 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(
                       Radius.circular(
-                        getSize(5),
+                        getSize(25),
                       ),
                     ),
                     border: Border.all(
@@ -276,7 +276,7 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
                       ? ClipRRect(
                           borderRadius: BorderRadius.all(
                             Radius.circular(
-                              getSize(5),
+                              getSize(25),
                             ),
                           ),
                           child: Image.file(
@@ -325,7 +325,7 @@ class _UploadKYCScreenState extends StatefulScreenWidgetState {
                           decoration: BoxDecoration(
                               color: appTheme.colorPrimary,
                               borderRadius: BorderRadius.circular(
-                                getSize(5),
+                                getSize(25),
                               ),
                               boxShadow: getBoxShadow(context)),
                           child: Center(

@@ -176,7 +176,7 @@ class AuthStrings {
   String passwordResetSuccessfully = "Password reset successfully.";
   String emailAndUname = "Email/UserName";
   String signUp = "Sign Up";
-  String promotionText = "Promotional offers";
+  String promotionText = "Promotional offers, newsletters and stock update";
   String termsAndCondition = "Terms and Condition";
   String mustAgreeTermsAndCondition =
       "You must agree to terms and condition to Sign In as Guest User";
@@ -709,6 +709,7 @@ class ScreenTitle {
   String download = "Download";
   String addToCart = "Add to Cart";
   String addToWatchList = "Add to Watchlist";
+  String memo = "Memo";
   String finalCalculation = "Final Calculation";
   String bookOffice = "Book Office";
   String clearSelection = "Clear Selection";

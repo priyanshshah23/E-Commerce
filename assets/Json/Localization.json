@@ -115,7 +115,7 @@
       "passwordResetSuccessfully": "Password reset successfully.",
       "emailAndUname": "Email/UserName",
       "signUp": "Sign Up",
-      "promotionText": "Promotional offers",
+      "promotionText": "Promotional offers, newsletters and stock update",
       "termsAndCondition": "Terms and Condition",
       "mustAgreeTermsAndCondition": "You must agree to terms and condition to Sign In as Guest User",
       "forgotPasswordTitle": "Forgot Password",
@@ -609,6 +609,7 @@
       "download": "Download",
       "addToCart": "Add to Cart",
       "addToWatchList": "Add to Watchlist",
+      "memo" : "Memo",
       "finalCalculation": "Final Calculation",
       "bookOffice": "Book Office",
       "clearSelection": "Clear Selection",
@@ -726,7 +727,8 @@
         "cluetConditionTitle",
         "disTitle",
         "depthTitleWithoutPerc",
-        "otherInformationTitle"
+        "otherInformationTitle",
+        "matchPairTitle"
       ],
       "shape": "Shape",
       "caratRange": "Carat",
@@ -802,7 +804,8 @@
       "cluetConditionTitle": "Culet Condition",
       "disTitle": "Dis%",
       "depthTitleWithoutPerc": "Depth",
-      "otherInformationTitle": "Other Information"
+      "otherInformationTitle": "Other Information",
+      "matchPairTitle" : "Match Pair"
     }
   },
   "Chinese": {

@@ -144,31 +144,31 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
                             }
                           },
                           fitWidth: true,
-                          borderRadius: getSize(5),
+                          // borderRadius: getSize(5),
                           text: R.string.authStrings.signInAsGuest,
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: getSize(10)),
+                        padding: EdgeInsets.only(
+                            top: getSize(4), bottom: getSize(20)),
                         child: Align(
                           alignment: Alignment.center,
                           child: Text(
-                            R.string.commonString.lblOr,
+                            R.string.commonString.lblOr.toLowerCase(),
                             style: appTheme.grey16HintTextStyle,
                           ),
                         ),
                       ),
                       Container(
-                        margin:
-                            EdgeInsets.only(top: getSize(10), left: getSize(0)),
+                        // margin:
+                        //     EdgeInsets.only(top: getSize(10), left: getSize(0)),
                         child: AppButton.flat(
                           onTap: () {
                             NavigationUtilities.pushRoute(LoginScreen.route);
                           },
                           textColor: appTheme.colorPrimary,
-                          backgroundColor:
-                              appTheme.colorPrimary.withOpacity(0.1),
-                          borderRadius: getSize(5),
+                          backgroundColor: appTheme.whiteColor.withOpacity(0.1),
+                          // borderRadius: getSize(5),
                           fitWidth: true,
                           text: R.string.authStrings.signInCap,
                           //isButtonEnabled: enableDisableSigninButton(),
@@ -193,7 +193,7 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
                     Text(R.string.authStrings.haveRegisterCode,
                         style: appTheme.grey16HintTextStyle),
                     Text(" " + R.string.authStrings.signUp,
-                        style: appTheme.darkBlue16TextStyle),
+                        style: appTheme.darkgray16TextStyle),
                   ],
                 ),
               ),
@@ -612,7 +612,6 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
               context,
-             
               desc: onError.message,
               positiveBtnTitle: R.string.commonString.ok,
             );

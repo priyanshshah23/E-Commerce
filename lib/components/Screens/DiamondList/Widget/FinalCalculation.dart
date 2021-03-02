@@ -43,7 +43,8 @@ class _FinalCalculationWidgetState extends State<FinalCalculationWidget> {
                   top: getSize(20.0),
                 ),
                 child: Text(
-                  "Note : The additional ${app.resolve<PrefUtils>().getUserDetails().accountTerm.extraPer}% on amount value has already been added in the final calculation.",
+                  "",
+//                  "Note : The additional ${app.resolve<PrefUtils>().getUserDetails().accountTerm.extraPer}% on amount value has already been added in the final calculation.",
                   style: appTheme.redPrimaryNormal12TitleColor,
                 ),
               ),

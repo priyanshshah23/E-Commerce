@@ -46,6 +46,7 @@ dynamic getPercentageWidth(double percentage) {
 
 class MathUtilities {
   static screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
+
   static screenWidthDensity(BuildContext context) =>
       MediaQuery.of(context).devicePixelRatio;
 

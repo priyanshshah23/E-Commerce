@@ -191,9 +191,9 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                                     // NavigationUtilities.push(ThemeSetting());
                                   },
                                   //  backgroundColor: appTheme.buttonColor,
-                                  borderRadius: getSize(5),
+                                  // borderRadius: getSize(5),
                                   fitWidth: true,
-                                  text: R.string.commonString.done,
+                                  text: R.string.authStrings.sendOTP,
                                   //isButtonEnabled: enableDisableSigninButton(),
                                 ),
                               ),
@@ -221,7 +221,7 @@ class _ForgetPasswordScreenState extends StatefulScreenWidgetState {
                               );
                             },
                             child: Text(" " + R.string.authStrings.signInCap,
-                                style: appTheme.darkBlue16TextStyle)),
+                                style: appTheme.darkgray16TextStyle)),
                       ],
                     ),
                   ),

@@ -16,9 +16,6 @@ import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/AnalyticsReport.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
-import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
-import 'package:path/path.dart' as path;
-
 import 'package:diamnow/app/utils/CustomBorder.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
@@ -30,7 +27,10 @@ import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/OfflineDownloadPopup.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/DownLoadAndShareDialogue.dart';
-import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
+import 'package:diamnow/components/Screens/SalesPerson/BuyNowScreen.dart';
+import 'package:diamnow/components/Screens/SalesPerson/HoldStoneScreen.dart';
+import 'package:diamnow/components/Screens/SalesPerson/MemoStoneScreen.dart';
+import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
 import 'package:diamnow/components/widgets/shared/CommonDateTimePicker.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
@@ -41,11 +41,9 @@ import 'package:diamnow/models/OfflineSearchHistory/OfflineStockTrack.dart';
 import 'package:diamnow/models/excel/ExcelApiResponse.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:intl/intl.dart';
+import 'package:path/path.dart' as path;
 import 'package:share/share.dart';
 import 'package:uuid/uuid.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../main.dart';
 
@@ -220,10 +218,17 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
-        return app
-            .resolve<ServiceModule>()
-            .networkService()
-            .diamondListPaginate(dict);
+//        if(app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES)
+        return app.resolve<PrefUtils>().getUserDetails().type ==
+                UserConstant.SALES
+            ? app
+                .resolve<ServiceModule>()
+                .networkService()
+                .salesDiamondListPaginate(dict)
+            : app
+                .resolve<ServiceModule>()
+                .networkService()
+                .diamondListPaginate(dict);
 
       case DiamondModuleConstant.MODULE_TYPE_MY_CART:
       case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
@@ -254,6 +259,11 @@ class DiamondConfig {
             .resolve<ServiceModule>()
             .networkService()
             .diamondOfficeList(dict);
+      case DiamondModuleConstant.MODULE_TYPE_MY_HOLD:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .holdListPaginate(dict);
 
       // case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
       //   return app
@@ -326,12 +336,21 @@ class DiamondConfig {
             );
           }
         } else {
+          if (app.resolve<PrefUtils>().getUserDetails().type ==
+              UserConstant.SALES)
+            list.add(BottomTabModel(
+              title: "",
+              image: buildingIcon,
+              code: BottomCodeConstant.TBCompanySelection,
+              sequence: 0,
+              isCenter: true,
+            ));
           list.add(BottomTabModel(
               title: "",
               image: selectAll,
               selectedImage: selectList,
               code: BottomCodeConstant.TBSelectAll,
-              sequence: 0,
+              sequence: 1,
               isCenter: true));
           if (moduleType != DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR &&
               moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER &&
@@ -340,7 +359,7 @@ class DiamondConfig {
                 title: "",
                 image: gridView,
                 code: BottomCodeConstant.TBGrideView,
-                sequence: 1,
+                sequence: 2,
                 isCenter: true));
           }
           if (moduleType != DiamondModuleConstant.MODULE_TYPE_UPCOMING &&
@@ -349,7 +368,7 @@ class DiamondConfig {
                 title: "",
                 image: filter,
                 code: BottomCodeConstant.TBSortView,
-                sequence: 2,
+                sequence: 3,
                 isCenter: true));
           }
           // if (app
@@ -362,12 +381,14 @@ class DiamondConfig {
               moduleType ==
                   DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
           } else {
-            list.add(BottomTabModel(
-                title: "",
-                image: download,
-                code: BottomCodeConstant.TBDownloadView,
-                sequence: 3,
-                isCenter: true));
+            if (app.resolve<PrefUtils>().getUserDetails().type ==
+                UserConstant.CUSTOMER)
+              list.add(BottomTabModel(
+                  title: "",
+                  image: download,
+                  code: BottomCodeConstant.TBDownloadView,
+                  sequence: 4,
+                  isCenter: true));
           }
         }
         break;
@@ -396,7 +417,12 @@ class DiamondConfig {
         actionAddToWishList(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_PLACE_ORDER:
-        actionPlaceOrder(context, list, refreshList);
+        if (app.resolve<PrefUtils>().getUserDetails().type ==
+            UserConstant.SALES) {
+          actionBuyNow(context, list, refreshList);
+        } else {
+          actionPlaceOrder(context, list, refreshList);
+        }
         break;
       case ActionMenuConstant.ACTION_TYPE_REMINDER:
         actionReminder(context, list);
@@ -414,7 +440,10 @@ class DiamondConfig {
         actionAppointment(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_HOLD:
-        actionHold(list);
+        actionHold(context, list, refreshList);
+        break;
+      case ActionMenuConstant.ACTION_TYPE_MEMO:
+        actionMemo(context, list, refreshList);
         break;
       case ActionMenuConstant.ACTION_TYPE_DOWNLOAD:
         actionDownload(context, list);
@@ -425,6 +454,8 @@ class DiamondConfig {
       case ActionMenuConstant.ACTION_TYPE_SHARE:
         actionDownload(context, list, isForShare: true);
 
+        break;
+      case ActionMenuConstant.ACTION_TYPE_PLACE_ORDER:
         break;
       case ActionMenuConstant.ACTION_TYPE_COMPARE:
         if (list.length < 2) {
@@ -564,8 +595,14 @@ class DiamondConfig {
           context, DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER, selectedList,
           placeOrder: placeOrder);
     } else {
-      showToast(R.string.commonString.holdMemoStatusDiamondorder,
-          context: context);
+      app.resolve<CustomDialogs>().errorDialog(
+            context,
+            "",
+            R.string.commonString.holdMemoStatusDiamondorder,
+            btntitle: R.string.commonString.ok,
+          );
+//      showToast(R.string.commonString.holdMemoStatusDiamondorder,
+//          context: context);
     }
 
     /*showPlaceOrderDialog(context, (manageClick) {
@@ -701,7 +738,72 @@ class DiamondConfig {
     });*/
   }
 
-  actionHold(List<DiamondModel> list) {}
+  actionBuyNow(
+      BuildContext context, List<DiamondModel> list, Function refreshList) {
+    List<DiamondModel> selectedList = [];
+    DiamondModel model;
+    list.forEach((element) {
+      model = DiamondModel.fromJson(element.toJson());
+      selectedList.add(model);
+    });
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.IsFromDrawer] = false;
+    dict[ArgumentConstant.ModuleType] = moduleType;
+    dict[ArgumentConstant.DiamondList] = selectedList;
+    Navigator.of(context)
+        .push(MaterialPageRoute(
+          settings: RouteSettings(name: BuyNowScreen.route),
+          builder: (context) => BuyNowScreen(dict),
+        ))
+        .then((value) => {
+              if (value != null && value) {refreshList()}
+            });
+  }
+
+  actionHold(
+      BuildContext context, List<DiamondModel> list, Function refreshList) {
+    List<DiamondModel> selectedList = [];
+    DiamondModel model;
+    list.forEach((element) {
+      model = DiamondModel.fromJson(element.toJson());
+      selectedList.add(model);
+    });
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.IsFromDrawer] = false;
+    dict[ArgumentConstant.ModuleType] = moduleType;
+    dict[ArgumentConstant.DiamondList] = selectedList;
+    Navigator.of(context)
+        .push(MaterialPageRoute(
+          settings: RouteSettings(name: HoldStoneScreen.route),
+          builder: (context) => HoldStoneScreen(dict),
+        ))
+        .then((value) => {
+              if (value != null && value) {refreshList()}
+            });
+  }
+
+  actionMemo(
+      BuildContext context, List<DiamondModel> list, Function refreshList) {
+    List<DiamondModel> selectedList = [];
+    DiamondModel model;
+    list.forEach((element) {
+      model = DiamondModel.fromJson(element.toJson());
+      selectedList.add(model);
+    });
+    Map<String, dynamic> dict = new HashMap();
+    dict[ArgumentConstant.IsFromDrawer] = false;
+    dict[ArgumentConstant.ModuleType] = moduleType;
+    dict[ArgumentConstant.DiamondList] = selectedList;
+
+    Navigator.of(context)
+        .push(MaterialPageRoute(
+          settings: RouteSettings(name: MemoStoneScreen.route),
+          builder: (context) => MemoStoneScreen(dict),
+        ))
+        .then((value) => {
+              if (value != null && value) {refreshList()}
+            });
+  }
 
   actionDownloadOffline(BuildContext context, Function refreshList,
       {String filterId,
@@ -1974,7 +2076,6 @@ openSharePopUp(BuildContext context) {
         "876654878\n"
         "Invite code : 655765757"
         "App link : $link",
-        //------------------------------------------------------------------------------------------------------------------
         subject: R.string.screenTitle.share,
         sharePositionOrigin:
             Rect.fromCenter(center: Offset.zero, width: 100, height: 100));
