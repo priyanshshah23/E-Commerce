@@ -88,5 +88,6 @@ enum CellType {
   Invoice,
   BillType,
   Term,
-  BrokerName
+  BrokerName,
+  Bank_Rate,
 }

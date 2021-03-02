@@ -341,21 +341,31 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
       modalBottomSheetMenu(context,
           title: "Select Bill Type",
           selectionOptions: arrBillType, callback: (model) {
-//        if (model.id == "LOCAL_BILL") {
-//          _arrDropDown.insert(7, CellModel(
-//
-//              hintText: "Comment",
-//              type: CellType.Comment,
-//              inputAction: TextInputAction.done,
-//              leftPadding: 20,
-//              maxLine: 5,
-//              isRequired: false,
-//          ),);
-//        }
         arrBillType.forEach((value) => value.isSelected = false);
         arrBillType.firstWhere((value) => value == model).isSelected = true;
         arr.first.userText = model.title;
         arr.first.id = model.id;
+        if (model.title == "Local Bill") {
+          _arrDropDown.forEach((element) {
+            _arrDropDown
+                .removeWhere((element) => element.type == CellType.Bank_Rate);
+          });
+          _arrDropDown.insert(
+            7,
+            CellModel(
+              hintText: "Bank Rate",
+              type: CellType.Bank_Rate,
+              inputAction: TextInputAction.done,
+              leftPadding: 20,
+              keyboardType: TextInputType.number,
+              isRequired: false,
+            ),
+          );
+          setState(() {});
+        } else {
+          _arrDropDown
+              .removeWhere((element) => element.type == CellType.Bank_Rate);
+        }
         setState(() {});
       });
     }
@@ -513,6 +523,8 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
         dict["terms"] = element.id;
       } else if (element.type == CellType.Comment) {
         if (element.userText.isNotEmpty) dict['comment'] = element.userText;
+      } else if (element.type == CellType.Bank_Rate) {
+        dict['bankRate'] = int.tryParse(element.userText);
       }
     });
     List<String> list = [];
