@@ -346,7 +346,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                           MaterialPageRoute(
                             builder: (BuildContext context) {
                               return SelectionScreen(
-                                title: "Select Company",
+                                title: R.string.screenTitle.selectCompany,
                                 hintText: R.string.commonString.search,
                                 positiveButtonTitle: R.string.commonString.apply,
                                 negativeButtonTitle: R.string.commonString.cancel,
