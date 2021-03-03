@@ -12,7 +12,8 @@ class AppTheme {
       backgroundColors = [Colors.black, const Color(0xff17233d)];
     }
 
-    accentColor = _colorFromValue(data.accentColor) ?? const Color(0xffDDDDDD);
+    accentColor =
+        _colorFromValue(data.accentColor) ?? const Color(0xff00000029);
   }
 
   /// Returns the currently selected [AppTheme].
@@ -217,7 +218,7 @@ class PredefinedThemes {
     return AppThemeData()
       ..name = "light"
       ..backgroundColors = [Colors.white.value, Colors.white.value]
-      ..accentColor = 0xffDDDDDD;
+      ..accentColor = 0xff00000029;
   }
 }
 
