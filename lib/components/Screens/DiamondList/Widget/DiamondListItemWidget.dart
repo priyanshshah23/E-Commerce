@@ -975,7 +975,6 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
 
   getTableDetails() {
     return Expanded(
-      //comment
       child: Container(
         height: getSize(16),
         // padding: EdgeInsets.only(left: getSize(16)),

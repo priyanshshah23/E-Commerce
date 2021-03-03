@@ -30,6 +30,7 @@ import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
 import 'package:diamnow/components/Screens/MyDemand/MyDemandScreen.dart';
 import 'package:diamnow/components/Screens/Notification/Notifications.dart';
 import 'package:diamnow/components/Screens/SalesPerson/Widget/CellModel.dart';
+import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
 import 'package:diamnow/components/Screens/Search/Search.dart';
 import 'package:diamnow/components/Screens/VoiceSearch/VoiceSearch.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
@@ -837,6 +838,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               title: R.string.commonString.savedSearch,
               hintText: R.string.commonString.searchSavedSearch,
               selectionOptions: saveSearchList,
+              showViewAllButton: true,
+              showViewAllButtonCallBack: () {
+                NavigationUtilities.pushRoute(SavedSearchScreen.route);
+              },
               applyFilterCallBack: (
                   {SelectionPopupModel selectedItem,
                   List<SelectionPopupModel> multiSelectedItem}) {
