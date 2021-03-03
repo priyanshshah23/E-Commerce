@@ -24,7 +24,7 @@ class AddDemand extends StatefulWidget {
   String title;
   List<FormBaseModel> arrList;
   Function({String selectedDate, String diamondTitle}) applyCallBack;
-  bool isShowTextField ;
+  bool isShowTextField;
   AddDemand({
     this.title,
     this.arrList,
@@ -34,14 +34,14 @@ class AddDemand extends StatefulWidget {
 
   @override
   _AddDemandState createState() =>
-      _AddDemandState(applyCallBack: this.applyCallBack,title: this.title);
+      _AddDemandState(applyCallBack: this.applyCallBack, title: this.title);
 }
 
 class _AddDemandState extends State<AddDemand> {
   List<FormBaseModel> arrList;
   Function({String selectedDate, String diamondTitle}) applyCallBack;
-  _AddDemandState({this.arrList, this.applyCallBack,this.title});
-  
+  _AddDemandState({this.arrList, this.applyCallBack, this.title});
+
   String title;
   DateTime _selectedDate = DateTime.now();
   String diamondTitle;
@@ -89,14 +89,15 @@ class _AddDemandState extends State<AddDemand> {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                        border: Border.all(color : appTheme.colorPrimary, width : getSize(1)),
+                        // border: Border.all(
+                        //     color: appTheme.colorPrimary, width: getSize(1)),
                         borderRadius: BorderRadius.circular(getSize(5)),
                       ),
                       child: AppButton.flat(
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        borderRadius: getSize(5),
+                        // borderRadius: getSize(5),
                         text: R.string.commonString.cancel,
                         textColor: appTheme.colorPrimary,
                         backgroundColor: appTheme.whiteColor,
@@ -109,8 +110,8 @@ class _AddDemandState extends State<AddDemand> {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                          color: appTheme.colorPrimary,
-                          borderRadius: BorderRadius.circular(getSize(5)),
+                          // color: appTheme.colorPrimary,
+                          // borderRadius: BorderRadius.circular(getSize(5)),
                           boxShadow: getBoxShadow(context)),
                       child: AppButton.flat(
                         onTap: () {
@@ -125,21 +126,21 @@ class _AddDemandState extends State<AddDemand> {
                               _diamondTitleTextField.text = "";
                               Navigator.pop(context);
                               widget.applyCallBack(
-                                  selectedDate: _selectedDate.toUtc().toIso8601String(),
+                                  selectedDate:
+                                      _selectedDate.toUtc().toIso8601String(),
                                   diamondTitle: diamondTitle);
                             } else {
                               _autoValidate = true;
                             }
                           } else {
-                           
                             widget.applyCallBack(
-                              selectedDate: _selectedDate.toUtc().toIso8601String(),
-              
+                              selectedDate:
+                                  _selectedDate.toUtc().toIso8601String(),
                             );
-                             Navigator.pop(context);
+                            Navigator.pop(context);
                           }
                         },
-                        borderRadius: getSize(5),
+                        // borderRadius: getSize(5),
                         text: R.string.commonString.btnSubmit,
                       ),
                     ),
@@ -158,7 +159,7 @@ class _AddDemandState extends State<AddDemand> {
     // SchedulerBinding.instance.addPostFrameCallback((duration) {
     //   setState(() {});
     // });
-     DateTime dt = args.value;
+    DateTime dt = args.value;
     _selectedDate = DateTime(dt.year, dt.month, dt.day, _selectedDate.hour,
         _selectedDate.minute, _selectedDate.second, _selectedDate.millisecond);
     SchedulerBinding.instance.addPostFrameCallback((duration) {
@@ -190,7 +191,6 @@ class _AddDemandState extends State<AddDemand> {
         selectionColor: appTheme.colorPrimary,
         todayHighlightColor: appTheme.colorPrimary,
         initialSelectedDate: DateTime.now(),
-        
         view: DateRangePickerView.month,
         selectionMode: DateRangePickerSelectionMode.single,
         onSelectionChanged: selectionChanged,

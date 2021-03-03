@@ -71,10 +71,11 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      print("--------------------------kyc-----------------${user.isKycUploaded}");
       if (user.type == UserConstant.CUSTOMER) {
         //Kyc rejected
-        if (user.isApproved == KYCStatus.rejected &&
-            user.isKycUploaded == true) {
+        if (user.account.isApproved == KYCStatus.rejected &&
+            user.account.isKycUploaded == true) {
           Timer(
             Duration(seconds: 2),
             () => (app.resolve<CustomDialogs>().confirmDialog(context,
@@ -94,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
         }
 
         //Documents not uploaded
-        if (user.isKycUploaded == false) {
+        if (user.account.isKycUploaded == false) {
           if (!user.kycRequired) {
             Timer(
               Duration(seconds: 2),

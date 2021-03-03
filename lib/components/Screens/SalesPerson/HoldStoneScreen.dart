@@ -92,7 +92,7 @@ class _HoldStoneScreenState extends State<HoldStoneScreen> {
       backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(
         context,
-        "Hold Stone",
+        R.string.screenTitle.holdStone,
         centerTitle: false,
         leadingButton: getBackButton(context),
       ),
@@ -209,10 +209,10 @@ class _HoldStoneScreenState extends State<HoldStoneScreen> {
         MaterialPageRoute(
           builder: (BuildContext context) {
             return SelectionScreen(
-              title: "Select Party",
-              hintText: "Min. 3 Chars",
-              positiveButtonTitle: "Done",
-              negativeButtonTitle: "Cancel",
+              title: R.string.screenTitle.selectParty,
+              hintText: R.string.commonString.search,
+              positiveButtonTitle:R.string.commonString.done,
+              negativeButtonTitle:R.string.commonString.cancel,
               isSearchEnable: true,
               type: CellType.Hold_Party,
               isMultiSelectionEnable: false,
@@ -253,10 +253,10 @@ class _HoldStoneScreenState extends State<HoldStoneScreen> {
         MaterialPageRoute(
           builder: (BuildContext context) {
             return SelectionScreen(
-              title: "Select Buyer",
-              hintText: "Min. 3 Chars",
-              positiveButtonTitle: "Done",
-              negativeButtonTitle: "Cancel",
+              title: R.string.screenTitle.selectBuyer,
+              hintText: R.string.commonString.search,
+              positiveButtonTitle:R.string.commonString.done,
+              negativeButtonTitle:R.string.commonString.cancel,
               isSearchEnable: true,
               type: CellType.Hold_Buyer,
               isMultiSelectionEnable: false,
@@ -291,10 +291,10 @@ class _HoldStoneScreenState extends State<HoldStoneScreen> {
         MaterialPageRoute(
           builder: (BuildContext context) {
             return SelectionScreen(
-              title: "Select Salesman",
-              hintText: "Min. 3 Chars",
-              positiveButtonTitle: "Done",
-              negativeButtonTitle: "Cancel",
+              title: R.string.screenTitle.selectSalesman,
+              hintText: R.string.commonString.search,
+              positiveButtonTitle:R.string.commonString.done,
+              negativeButtonTitle:R.string.commonString.cancel,
               isSearchEnable: false,
               type: CellType.SalesPersonName,
               isMultiSelectionEnable: false,
@@ -429,37 +429,37 @@ class _HoldStoneScreenState extends State<HoldStoneScreen> {
   List<CellModel> getDropdownTextFieldList() {
     return [
       CellModel(
-        hintText: "Party*",
+        hintText: R.string.screenTitle.party,
         perfixImage: buildingIcon,
-        emptyValidationText: "Please select and enter party.",
+        emptyValidationText: R.string.errorString.enterParty,
         type: CellType.Hold_Party,
         textFieldType: TextFieldEnum.DropDown,
       ),
       CellModel(
-        hintText: "Buyer Name*",
+        hintText: R.string.screenTitle.buyerName,
         perfixImage: buyer,
-        emptyValidationText: "Please select and enter buyer name.",
+        emptyValidationText: R.string.errorString.enterBuyer,
         type: CellType.Hold_Buyer,
         textFieldType: TextFieldEnum.DropDown,
       ),
       CellModel(
-        hintText: "Salesman*",
+        hintText: R.string.screenTitle.salesman,
         perfixImage: salesman,
-        emptyValidationText: "Please select and enter salesman.",
+        emptyValidationText:R.string.errorString.enterSales,
         type: CellType.SalesPersonName,
         textFieldType: TextFieldEnum.DropDown,
       ),
       CellModel(
-        hintText: "Enter Hold Time (Hours)*",
+        hintText: R.string.screenTitle.holdTimeTitle,
         perfixImage: clock,
         emptyValidationText:
-            "Please select and enter time.\nMin Hold Time: 1 | Max Hold Time: 72",
-        patternValidationText: "Min Hold Time: 1 | Max Hold Time: 72",
+        R.string.errorString.enterHoldTime+"\n"+R.string.errorString.minHoldTime+" | "+R.string.errorString.maxHoldTime,
+        patternValidationText: R.string.errorString.minHoldTime+" | "+R.string.errorString.maxHoldTime,
         type: CellType.HoldTime,
         keyboardType: TextInputType.number,
       ),
       CellModel(
-        hintText: "Comment",
+        hintText: R.string.screenTitle.comment,
 //        perfixImage: clock,
         type: CellType.Comment,
         inputAction: TextInputAction.done,

@@ -211,7 +211,9 @@ class CommonString {
   String addDemand = "Add demand";
   String demandTitle = "Demand Title";
   String pleaseEnterDemandTitle = "Please enter Demand Title";
-  String demandAddedSuccessfully = "Demand Added Successfully";
+  String demandAddedSuccessfully =
+      "Your new demand request has been submitted successfully";
+  String demandadded = "Demand added";
   String selectAtleastOneFilter = "Please";
   String savedSearch = "Saved Search";
   String searchSavedSearch = "Search Saved Search";
@@ -402,6 +404,7 @@ class CommonString {
   String quit = "Quit";
   String agree = "I Agree";
   String laterToday = "Later today";
+  String later = "Later";
   String toMorrow = "Tomorrow";
   String nextWeek = "Next week";
   String chooseAnother = "Choose another";
@@ -556,6 +559,12 @@ class ErrorString {
   String enterComments = "Please enter comment";
   String selectVirtualType = "Please select virtual type";
   String versionError = "Version Error";
+  String enterParty = "Please select and enter party.";
+  String enterBuyer = "Please select and enter buyer name.";
+  String enterSales = "Please select and enter salesman.";
+  String enterHoldTime = "Please select and enter time.";
+  String minHoldTime = "Min Hold Time: 1";
+  String maxHoldTime = "Max Hold Time: 72";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -710,11 +719,13 @@ class ScreenTitle {
   String addToCart = "Add to Cart";
   String addToWatchList = "Add to Watchlist";
   String memo = "Memo";
+  String memoStone = "Memo Stone";
   String finalCalculation = "Final Calculation";
   String bookOffice = "Book Office";
   String clearSelection = "Clear Selection";
-  String comment = "Comments";
+  String comment = "Comment";
   String hold = "Hold";
+  String holdStone = "Hold Stone";
   String offer = "Offer";
   String officeView = "Office View";
   String placeOrder = "Place Order";
@@ -749,7 +760,24 @@ class ScreenTitle {
   String voiceSearch = "Voice Search";
   String tapMictoSpeak = "Tap mic to Speak";
   String typeToSearch = "Type to Search";
-  String typeWordsToSearch = "Type at least 3 words to search stones";
+  String typeWordsToSearch = "Type at least 3 character to search";
+  String selectCompany = "Select Company";
+  String selectParty = "Select Party";
+  String selectSalesman = "Select Salesman";
+  String selectBuyer = "Select Buyer";
+  String selectBroker = "Select Broker";
+  String selectBillType = "Select Bill Type";
+  String bankRate = "Bank Rate";
+  String selectInvoiceType = "Select Invoice Type";
+  String selectTermType = "Select Term Type";
+  String party = "Party";
+  String buyerName = "Buyer Name";
+  String salesman = "Salesman";
+  String broker = "Broker";
+  String invoicedate = "Invoice Date";
+  String billType = "Bill Type";
+  String terms = "Terms";
+  String holdTimeTitle = "Enter Hold Time (Hours)*";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }
@@ -830,6 +858,7 @@ class Dynamickeys {
   String disTitle = "Dis%";
   String depthTitleWithoutPerc = "Depth";
   String otherInformationTitle = "Other Information";
+  String matchPairTitle = "Match Pair";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
     "shape": "Shape",
@@ -907,6 +936,7 @@ class Dynamickeys {
     "disTitle": "Dis%",
     "depthTitleWithoutPerc": "Depth",
     "otherInformationTitle": "Other Information",
+    "matchPairTitle": "Match Pair",
   };
 }
 

@@ -119,6 +119,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   @override
   void initState() {
     super.initState();
+    if(app.resolve<PrefUtils>().getCompanyDetails()!=null){
+      isCompanySelected = true;
+    }
     Config().getOptionsJson().then((result) {
       result.forEach((element) {
         if (element.isActive) {
@@ -1173,10 +1176,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           MaterialPageRoute(
             builder: (BuildContext context) {
               return SelectionScreen(
-                title: "Select Company",
-                hintText: "Select Company",
-                positiveButtonTitle: "Apply",
-                negativeButtonTitle: "Cancel",
+                title: R.string.screenTitle.selectCompany,
+                hintText: R.string.commonString.search,
+                positiveButtonTitle: R.string.commonString.apply,
+                negativeButtonTitle: R.string.commonString.cancel,
                 isSearchEnable: true,
                 type: CellType.Company,
                 isMultiSelectionEnable: false,

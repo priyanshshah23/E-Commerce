@@ -125,7 +125,7 @@ class _OverlayScreenState extends State<OverlayScreen> {
                   setTakeaTourValueAsTrue();
                   widget.finishTakeTour();
                 },
-                borderRadius: getSize(5),
+                // borderRadius: getSize(5),
                 text: "Skip",
               ),
             ),
@@ -159,7 +159,7 @@ class _OverlayScreenState extends State<OverlayScreen> {
                     }
                   });
                 },
-                borderRadius: getSize(5),
+                // borderRadius: getSize(5),
                 text:
                     currentPage == (arrOverlays.length - 1) ? "Finish" : "Next",
               ),
