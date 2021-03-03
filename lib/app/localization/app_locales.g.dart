@@ -211,7 +211,9 @@ class CommonString {
   String addDemand = "Add demand";
   String demandTitle = "Demand Title";
   String pleaseEnterDemandTitle = "Please enter Demand Title";
-  String demandAddedSuccessfully = "Demand Added Successfully";
+  String demandAddedSuccessfully =
+      "Your new demand request has been submitted successfully";
+  String demandadded = "Demand added";
   String selectAtleastOneFilter = "Please";
   String savedSearch = "Saved Search";
   String searchSavedSearch = "Search Saved Search";
@@ -830,6 +832,7 @@ class Dynamickeys {
   String disTitle = "Dis%";
   String depthTitleWithoutPerc = "Depth";
   String otherInformationTitle = "Other Information";
+  String matchPairTitle = "Match Pair";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
     "shape": "Shape",
@@ -907,6 +910,7 @@ class Dynamickeys {
     "disTitle": "Dis%",
     "depthTitleWithoutPerc": "Depth",
     "otherInformationTitle": "Other Information",
+    "matchPairTitle": "Match Pair",
   };
 }
 
