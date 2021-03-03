@@ -22,5 +22,12 @@
     "tab": "matchpair",
     "sequence": 4,
     "isActive": true
+  },
+  {
+    "title": "layoutTitle",
+    "tab": "layout",
+    "sequence": 4,
+    "isActive": true
   }
+
 ]

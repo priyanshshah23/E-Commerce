@@ -75,6 +75,7 @@ class BaseTheme {
   Color get borderColor => fromHex("#DDDDDD");
   Color get selectedFilterColor => fromHex("#414143");
   Color get unSelectedBgColor => fromHex("#f7f7f7");
+  Color get seemoreBgColor => fromHex("#E6E6E6");
   Color get greenColor => fromHex("#0EAC33");
   Color get lightBGColor => fromHex("#F8F8F8");
   Color get textFieldBorderColor => fromHex("#DDDDDD");
@@ -145,7 +146,8 @@ class BaseTheme {
         fontWeight: FontWeight.normal,
         color: colorPrimary);
   }
-TextStyle get whiteNormal12TitleColor {
+
+  TextStyle get whiteNormal12TitleColor {
     return TextStyle(
         fontSize: getFontSize(12),
         fontWeight: FontWeight.normal,

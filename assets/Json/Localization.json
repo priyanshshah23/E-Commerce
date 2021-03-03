@@ -482,6 +482,7 @@
       "delete": "Delete",
       "addDemand": "Add Demand",
       "matchPair": "Match Pair",
+      "layout": "Layout",
       "savedAndSearch": "Save & Search",
       "updateAndSearch": "Update & Search",
       "upcoming": "Upcoming",
@@ -728,7 +729,8 @@
         "disTitle",
         "depthTitleWithoutPerc",
         "otherInformationTitle",
-        "matchPairTitle"
+        "matchPairTitle",
+        "layoutTitle"
       ],
       "shape": "Shape",
       "caratRange": "Carat",
@@ -805,7 +807,8 @@
       "disTitle": "Dis%",
       "depthTitleWithoutPerc": "Depth",
       "otherInformationTitle": "Other Information",
-      "matchPairTitle" : "Match Pair"
+      "matchPairTitle" : "Match Pair",
+      "layoutTitle": "Layout"
     }
   },
   "Chinese": {

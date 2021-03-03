@@ -78,43 +78,7 @@ class _FromToWidgetState extends State<FromToWidget> {
             !widget.fromTomodel.fromToStyle.showUnderline
                 ? SizedBox(height: getSize(16))
                 : SizedBox(),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                    height: getSize(40),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(getSize(5)),
-                      border: Border.all(
-                        width: getSize(1.0),
-                        color: widget.fromTomodel.fromToStyle.showUnderline
-                            ? Colors.transparent
-                            : appTheme.borderColor,
-                      ),
-                    ),
-                    child: Center(child: getFromTextFieldWithPadding()),
-                  ),
-                ),
-                SizedBox(
-                  width: getSize(15),
-                ),
-                Expanded(
-                  child: Container(
-                    height: getSize(40),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(getSize(5)),
-                      border: Border.all(
-                        width: getSize(1.0),
-                        color: widget.fromTomodel.fromToStyle.showUnderline
-                            ? Colors.transparent
-                            : appTheme.borderColor,
-                      ),
-                    ),
-                    child: Center(child: getToTextFieldWithPadding()),
-                  ),
-                ),
-              ],
-            ),
+            isBothWidget(),
             SizedBox(
               height: getSize(12),
             ),
@@ -122,6 +86,63 @@ class _FromToWidgetState extends State<FromToWidget> {
         ),
       ],
     );
+  }
+
+  isBothWidget() {
+    if (!widget.fromTomodel.isOnlyFrom) {
+      return Row(
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              height: getSize(40),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(getSize(5)),
+                border: Border.all(
+                  width: getSize(1.0),
+                  color: widget.fromTomodel.fromToStyle.showUnderline
+                      ? Colors.transparent
+                      : appTheme.borderColor,
+                ),
+              ),
+              child: Center(child: getFromTextFieldWithPadding()),
+            ),
+          ),
+          SizedBox(
+            width: getSize(15),
+          ),
+          Expanded(
+            child: Container(
+              height: getSize(40),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(getSize(5)),
+                border: Border.all(
+                  width: getSize(1.0),
+                  color: widget.fromTomodel.fromToStyle.showUnderline
+                      ? Colors.transparent
+                      : appTheme.borderColor,
+                ),
+              ),
+              child: Center(child: getToTextFieldWithPadding()),
+            ),
+          ),
+        ],
+      );
+    } else {
+      print("Pair No.");
+      return Container(
+        height: getSize(40),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(getSize(5)),
+          border: Border.all(
+            width: getSize(1.0),
+            color: widget.fromTomodel.fromToStyle.showUnderline
+                ? Colors.transparent
+                : appTheme.borderColor,
+          ),
+        ),
+        child: Center(child: getFromTextFieldWithPadding()),
+      );
+    }
   }
 
   getFromTextFieldWithPadding() {

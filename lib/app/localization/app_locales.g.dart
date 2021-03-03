@@ -576,6 +576,7 @@ class ScreenTitle {
   String delete = "Delete";
   String addDemand = "Add Demand";
   String matchPair = "Match Pair";
+  String layout = "Layout";
   String savedAndSearch = "Save & Search";
   String updateAndSearch = "Update & Search";
   String upcoming = "Upcoming";
@@ -830,6 +831,8 @@ class Dynamickeys {
   String disTitle = "Dis%";
   String depthTitleWithoutPerc = "Depth";
   String otherInformationTitle = "Other Information";
+  String matchPairTitle = "Match Pair";
+  String layoutTitle = "Layout";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
     "shape": "Shape",
@@ -907,6 +910,8 @@ class Dynamickeys {
     "disTitle": "Dis%",
     "depthTitleWithoutPerc": "Depth",
     "otherInformationTitle": "Other Information",
+    "matchPairTitle": "Match Pair",
+    "layoutTitle": "Layout",
   };
 }
 
