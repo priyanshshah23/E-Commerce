@@ -793,25 +793,6 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       ),
     );
   }
-  // getImageView() {
-  //   Container(
-  //     width: getSize(62),
-  //     height: getSize(62),
-  //     decoration: BoxDecoration(
-  //                         // color: widget.item.isSelected
-  //                         //     ? appTheme.colorPrimary
-  //                         //     : appTheme.dividerColor,
-  //     borderRadius: BorderRadius.circular(getSize(5))),
-  //     child: Row(
-  //       children: [
-  //         widget.item.getDiamondImage(),
-  //       ],
-  //     ),
-  //     // widget.item.getDiamondImage(),
-  //     // // placeHolderImage: diamond,
-  //     //
-  //   );
-  // }
 
   getDymentionAndCaratDetail() {
     return Padding(
@@ -947,7 +928,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             Expanded(
               flex: 2,
               child: getTextWithLabel(widget.item?.fluNm ?? "-", "FL : "),
-            ),
+          ),
             // PriceUtilities.getPercent(widget.item?.depPer ?? 0)
             Expanded(
               flex: 4,

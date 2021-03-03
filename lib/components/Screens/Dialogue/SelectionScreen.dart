@@ -241,7 +241,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
               child: Text(
                   searchController.text.length > 2
                       ? R.string.noDataStrings.noDataFound
-                      : "Type at least 3 characters to search",
+                      : R.string.screenTitle.typeWordsToSearch,
                   textAlign: TextAlign.center,
                   style: appTheme.black18TextStyle),
             ),

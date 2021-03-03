@@ -207,6 +207,7 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
         ),
         Expanded(
           child: TabBarView(
+            physics: NeverScrollableScrollPhysics(),
             children: getChildren(),
             controller: _tabController,
           ),

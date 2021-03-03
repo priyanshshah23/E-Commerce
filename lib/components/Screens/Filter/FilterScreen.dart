@@ -348,10 +348,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                           MaterialPageRoute(
                             builder: (BuildContext context) {
                               return SelectionScreen(
-                                title: "Select Company",
-                                hintText: "Select Company",
-                                positiveButtonTitle: "Apply",
-                                negativeButtonTitle: "Cancel",
+                                title: R.string.screenTitle.selectCompany,
+                                hintText: R.string.commonString.search,
+                                positiveButtonTitle: R.string.commonString.apply,
+                                negativeButtonTitle: R.string.commonString.cancel,
                                 isSearchEnable: true,
                                 type: CellType.Company,
                                 isMultiSelectionEnable: false,
@@ -479,6 +479,13 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                             });
                           }
                         });
+                        selectStatus.clear();
+                        selectStatusModel.forEach((element) {
+                          element.isSelected = false;
+                        });
+                        isStatusSelected = false;
+                        isCompanySelected = false;
+                        app.resolve<PrefUtils>().saveCompany(null);
                       });
                     },
                     child: Padding(
@@ -981,15 +988,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 .getModulePermission(
                     ModulePermissionConstant.permission_searchResult)
                 .view) {
-              if (app.resolve<PrefUtils>().getUserDetails().type == 1) {
-                callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-                    isSearch: true);
-              } else {
-                callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-                    isSearch: true);
-              }
-//              callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-//                  isSearch: true);
+
+              callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+                  isSearch: true);
               // place code
             } else {
               app.resolve<CustomDialogs>().accessDenideDialog(context);
@@ -1002,16 +1003,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                   ModulePermissionConstant.permission_mySavedSearch)
               .insert) {
             if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList))) {
-              if (app.resolve<PrefUtils>().getUserDetails().type == 1) {
-                callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-                    isSearch: true);
-              } else {
-                callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-                    isSearch: true);
-              }
+              callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+                  isSavedSearch: true, isSearch: true);
             }
-//              callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-//                  isSavedSearch: true, isSearch: true);
             else {
               showToast(R.string.commonString.selectAtleastOneFilter,
                   context: context);
