@@ -124,9 +124,9 @@ class _DashboardState extends StatefulScreenWidgetState {
     NetworkCall<DashboardResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().dashboard(dict),
-        context,
-        isProgress: false)
-    // !isRefress && !isLoading
+            context,
+            isProgress: false)
+        // !isRefress && !isLoading
         .then((resp) async {
       await app.resolve<PrefUtils>().saveDashboardDetails(resp.data);
 
@@ -141,10 +141,10 @@ class _DashboardState extends StatefulScreenWidgetState {
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
-          context,
-          desc: onError.message,
-          positiveBtnTitle: R.string.commonString.btnTryAgain,
-        );
+              context,
+              desc: onError.message,
+              positiveBtnTitle: R.string.commonString.btnTryAgain,
+            );
       }
     });
   }
