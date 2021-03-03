@@ -598,7 +598,7 @@ class DiamondModel {
         return "-";
       }
     }
-    return "-";
+    return colNm ?? "-";
   }
 
   setBidAmount() {

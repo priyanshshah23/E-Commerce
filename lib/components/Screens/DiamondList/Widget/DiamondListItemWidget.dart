@@ -596,8 +596,12 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 appTheme.blackMedium12TitleColorblack),
           ),
           Expanded(
-            flex: 2,
-            child: getTextWithLabel(widget.item?.mlkNm ?? "-", "M : "),
+            flex: 3,
+            child: Align(
+              alignment: Alignment.centerLeft,
+//              fit: BoxFit.values[-1],
+              child: getTextWithLabel(widget.item?.mlkNm ?? "-", "M : "),
+            ),
           ),
           // PriceUtilities.getPercent(widget.item?.depPer ?? 0)
           Expanded(

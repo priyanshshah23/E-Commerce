@@ -99,7 +99,6 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
     list = await AppDatabase.instance.masterDao
         .getSubMastersFromParentCode(MasterCode.billType);
     list.forEach((element) {
-      print("=============${element.code}");
       arrBillType.add(SelectionPopupModel(element.sId, element.name));
     });
   }
@@ -120,7 +119,7 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
       backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(
         context,
-        "Buy Now",
+        R.string.screenTitle.buyNow,
         centerTitle: false,
         leadingButton: getBackButton(context),
       ),
@@ -197,9 +196,9 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
           builder: (BuildContext context) {
             return SelectionScreen(
               title: "Select Party",
-              hintText: "Min. 3 Chars",
-              positiveButtonTitle: "Done",
-              negativeButtonTitle: "Cancel",
+              hintText: R.string.commonString.search,
+              positiveButtonTitle:R.string.commonString.done,
+              negativeButtonTitle:R.string.commonString.cancel,
               isSearchEnable: true,
               type: CellType.Hold_Party,
               isMultiSelectionEnable: false,
@@ -241,9 +240,9 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
           builder: (BuildContext context) {
             return SelectionScreen(
               title: "Select Buyer",
-              hintText: "Min. 3 Chars",
-              positiveButtonTitle: "Done",
-              negativeButtonTitle: "Cancel",
+              hintText: R.string.commonString.search,
+              positiveButtonTitle:R.string.commonString.done,
+              negativeButtonTitle:R.string.commonString.cancel,
               isSearchEnable: true,
               type: CellType.Hold_Buyer,
               isMultiSelectionEnable: false,
@@ -280,9 +279,9 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
           builder: (BuildContext context) {
             return SelectionScreen(
               title: "Select Salesman",
-              hintText: "Min. 3 Chars",
-              positiveButtonTitle: "Done",
-              negativeButtonTitle: "Cancel",
+              hintText: R.string.commonString.search,
+              positiveButtonTitle:R.string.commonString.done,
+              negativeButtonTitle:R.string.commonString.cancel,
               isSearchEnable: false,
               type: CellType.SalesPersonName,
               isMultiSelectionEnable: false,
@@ -311,9 +310,9 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
           builder: (BuildContext context) {
             return SelectionScreen(
               title: "Select Broker",
-              hintText: "Min. 3 Chars",
-              positiveButtonTitle: "Done",
-              negativeButtonTitle: "Cancel",
+              hintText: R.string.commonString.search,
+              positiveButtonTitle:R.string.commonString.done,
+              negativeButtonTitle:R.string.commonString.cancel,
               isSearchEnable: true,
               type: CellType.BrokerName,
               isMultiSelectionEnable: false,

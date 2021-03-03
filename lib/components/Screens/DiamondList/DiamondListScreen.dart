@@ -119,6 +119,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   @override
   void initState() {
     super.initState();
+    if(app.resolve<PrefUtils>().getCompanyDetails()!=null){
+      isCompanySelected = true;
+    }
     Config().getOptionsJson().then((result) {
       result.forEach((element) {
         if (element.isActive) {
