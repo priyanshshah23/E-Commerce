@@ -5,7 +5,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class ColorConstants {
-  static Color colorPrimary = fromHex("#4EB45E");
+  static Color colorPrimary = fromHex("#414143");
   static Color lightPrimary = fromHex("#ADEFEF");
   static Color textGray = fromHex("#7B7E84");
   
