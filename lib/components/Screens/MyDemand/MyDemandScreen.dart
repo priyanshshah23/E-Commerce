@@ -237,29 +237,72 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                                             ),
                                           )
                                         : SizedBox(),
+                                    getPreviewItem(delete_icon_medium,
+                                        appTheme.redPrimaryNormal14TitleColor,
+                                        () {
+                                      app
+                                          .resolve<CustomDialogs>()
+                                          .confirmDialog(
+                                        context,
+                                        barrierDismissible: true,
+                                        title: "",
+                                        desc:
+                                            "${R.string.commonString.youreallywanttodelete} ${model.name}?.",
+                                        positiveBtnTitle:
+                                            R.string.commonString.ok,
+                                        negativeBtnTitle:
+                                            R.string.commonString.cancel,
+                                        onClickCallback: (buttonType) {
+                                          if (buttonType ==
+                                              ButtonType.PositveButtonClick) {
+                                            SyncManager.instance
+                                                .callApiForDeleteSavedSearch(
+                                                    context, model.id ?? "",
+                                                    success: (resp) {
+                                              callApi(true);
+                                            });
+                                          }
+                                        },
+                                      );
+                                    }),
+                                    getPreviewItem(
+                                      search,
+                                      appTheme.primaryColor14TextStyle,
+                                      () {
+                                        Map<String, dynamic> dict =
+                                            new HashMap();
+                                        dict["filterId"] = model.id;
+                                        dict[ArgumentConstant.ModuleType] =
+                                            DiamondModuleConstant
+                                                .MODULE_TYPE_MY_SAVED_SEARCH;
+                                        NavigationUtilities.pushRoute(
+                                            DiamondListScreen.route,
+                                            args: dict);
+                                      },
+                                    ),
                                   ],
                                 ),
                               ),
                               // Expiry date code
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    R.string.commonString.expirydate,
-                                    style: appTheme.grey14HintTextStyle,
-                                  ),
-                                  SizedBox(width: getSize(5)),
-                                  Text(
-                                    DateUtilities()
-                                        .convertServerDateToFormatterString(
-                                            model.expiryDate ?? "-",
-                                            formatter: DateUtilities
-                                                .dd_mm_yyyy_hh_mm_a),
-                                    style:
-                                        appTheme.blackNormal14TitleColorblack,
-                                  )
-                                ],
-                              )
+                              // Row(
+                              //   mainAxisSize: MainAxisSize.min,
+                              //   children: [
+                              //     Text(
+                              //       R.string.commonString.expirydate,
+                              //       style: appTheme.grey14HintTextStyle,
+                              //     ),
+                              //     SizedBox(width: getSize(5)),
+                              //     Text(
+                              //       DateUtilities()
+                              //           .convertServerDateToFormatterString(
+                              //               model.expiryDate ?? "-",
+                              //               formatter: DateUtilities
+                              //                   .dd_mm_yyyy_hh_mm_a),
+                              //       style:
+                              //           appTheme.blackNormal14TitleColorblack,
+                              //     )
+                              //   ],
+                              // )
                             ],
                           ),
                           SizedBox(
@@ -299,61 +342,61 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                                       DiamondModuleConstant
                                           .MODULE_TYPE_MY_DEMAND)
                                     getPreviewItem(
-                                        R.string.commonString.modify,
-                                        edit_icon,
-                                        appTheme.greenPrimaryNormal14TitleColor,
-                                        () {
-                                      Map<String, dynamic> dict = {};
-                                      dict["searchData"] = model.searchData;
-                                      dict[ArgumentConstant.IsFromDrawer] =
-                                          false;
-                                      NavigationUtilities.pushRoute(
-                                          FilterScreen.route,
-                                          args: dict);
-                                    }),
-                                  getPreviewItem(
-                                      R.string.commonString.delete,
-                                      delete_icon_medium,
-                                      appTheme.redPrimaryNormal14TitleColor,
+                                      edit_icon,
+                                      appTheme.greenPrimaryNormal14TitleColor,
                                       () {
-                                    app.resolve<CustomDialogs>().confirmDialog(
-                                      context,
-                                      barrierDismissible: true,
-                                      title: "",
-                                      desc:
-                                          "${R.string.commonString.youreallywanttodelete} ${model.name}?.",
-                                      positiveBtnTitle:
-                                          R.string.commonString.ok,
-                                      negativeBtnTitle:
-                                          R.string.commonString.cancel,
-                                      onClickCallback: (buttonType) {
-                                        if (buttonType ==
-                                            ButtonType.PositveButtonClick) {
-                                          SyncManager.instance
-                                              .callApiForDeleteSavedSearch(
-                                                  context, model.id ?? "",
-                                                  success: (resp) {
-                                            callApi(true);
-                                          });
-                                        }
+                                        Map<String, dynamic> dict = {};
+                                        dict["searchData"] = model.searchData;
+                                        dict[ArgumentConstant.IsFromDrawer] =
+                                            false;
+                                        NavigationUtilities.pushRoute(
+                                            FilterScreen.route,
+                                            args: dict);
                                       },
-                                    );
-                                  }),
-                                  getPreviewItem(
-                                    R.string.commonString.search,
-                                    saved_medium,
-                                    appTheme.primaryColor14TextStyle,
-                                    () {
-                                      Map<String, dynamic> dict = new HashMap();
-                                      dict["filterId"] = model.id;
-                                      dict[ArgumentConstant.ModuleType] =
-                                          DiamondModuleConstant
-                                              .MODULE_TYPE_MY_SAVED_SEARCH;
-                                      NavigationUtilities.pushRoute(
-                                          DiamondListScreen.route,
-                                          args: dict);
-                                    },
-                                  ),
+                                      txt: R.string.commonString.modify,
+                                    ),
+                                  // getPreviewItem(
+                                  //   delete_icon_medium,
+                                  //   appTheme.redPrimaryNormal14TitleColor,
+                                  //   () {
+                                  //     app
+                                  //         .resolve<CustomDialogs>()
+                                  //         .confirmDialog(
+                                  //       context,
+                                  //       barrierDismissible: true,
+                                  //       title: "",
+                                  //       desc:
+                                  //           "${R.string.commonString.youreallywanttodelete} ${model.name}?.",
+                                  //       positiveBtnTitle:
+                                  //           R.string.commonString.ok,
+                                  //       negativeBtnTitle:
+                                  //           R.string.commonString.cancel,
+                                  //       onClickCallback: (buttonType) {
+                                  //         if (buttonType ==
+                                  //             ButtonType.PositveButtonClick) {
+                                  //           SyncManager.instance
+                                  //               .callApiForDeleteSavedSearch(
+                                  //                   context, model.id ?? "",
+                                  //                   success: (resp) {
+                                  //             callApi(true);
+                                  //           });
+                                  //         }
+                                  //       },
+                                  //     );
+                                  //   },
+                                  //   txt: R.string.commonString.delete,
+                                  // ),
+                                  // getPreviewItem(saved_medium,
+                                  //     appTheme.primaryColor14TextStyle, () {
+                                  //   Map<String, dynamic> dict = new HashMap();
+                                  //   dict["filterId"] = model.id;
+                                  //   dict[ArgumentConstant.ModuleType] =
+                                  //       DiamondModuleConstant
+                                  //           .MODULE_TYPE_MY_SAVED_SEARCH;
+                                  //   NavigationUtilities.pushRoute(
+                                  //       DiamondListScreen.route,
+                                  //       args: dict);
+                                  // }, txt: R.string.commonString.search),
                                 ],
                               ),
                             ),
@@ -371,7 +414,8 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
     );
   }
 
-  getPreviewItem(String txt, String img, TextStyle textStyle, Function onTap) {
+  getPreviewItem(String img, TextStyle textStyle, Function onTap,
+      {String txt}) {
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -384,9 +428,9 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
               width: getSize(30),
               height: getSize(30),
               alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(getSize(15)),
-                  border: Border.all(color: appTheme.borderColor)),
+              // decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(getSize(15)),
+              //     border: Border.all(color: appTheme.borderColor)),
               child: Padding(
                 padding: EdgeInsets.all(4),
                 child: Image.asset(
@@ -397,34 +441,39 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
             SizedBox(
               width: getSize(8),
             ),
-            Text(
-              txt,
-              style: textStyle,
-            )
+            if (txt != null && txt.isNotEmpty)
+              Text(
+                txt,
+                style: textStyle,
+              )
           ],
         ),
       ),
     );
   }
 
-  Column listOfSelectedFilter(List<Map<String, dynamic>> arr,
+  Widget listOfSelectedFilter(List<Map<String, dynamic>> arr,
       SavedSearchModel savedSearchModel, int length) {
-    return Column(
-      children: <Widget>[
+    return GridView.count(
+      shrinkWrap: true,
+      crossAxisCount: 2,
+      children: [
         for (int i = 0; i < length; i++)
           Padding(
             padding: EdgeInsets.only(top: getSize(10)),
-            child: Row(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${arr[i]["key"] ?? ""} :",
-                  textAlign: TextAlign.left,
+                  "${arr[i]["key"] ?? ""}",
+                  // textAlign: TextAlign.left,
                   style: appTheme.grey16HintTextStyle,
                 ),
                 SizedBox(width: getSize(16)),
                 Expanded(
                   child: Text(arr[i]["value"] ?? "",
-                      textAlign: TextAlign.right,
+                      // textAlign: TextAlign.right,
                       style: appTheme.blackNormal16TitleColorblack),
                 ),
               ],
@@ -432,6 +481,29 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
           ),
       ],
     );
+    // return Column(
+    //   children: <Widget>[
+    //     for (int i = 0; i < length; i++)
+    //       Padding(
+    //         padding: EdgeInsets.only(top: getSize(10)),
+    //         child: Row(
+    //           children: [
+    //             Text(
+    //               "${arr[i]["key"] ?? ""} :",
+    //               textAlign: TextAlign.left,
+    //               style: appTheme.grey16HintTextStyle,
+    //             ),
+    //             SizedBox(width: getSize(16)),
+    //             Expanded(
+    //               child: Text(arr[i]["value"] ?? "",
+    //                   textAlign: TextAlign.right,
+    //                   style: appTheme.blackNormal16TitleColorblack),
+    //             ),
+    //           ],
+    //         ),
+    //       ),
+    //   ],
+    // );
   }
 
   getDisplayData(DisplayDataClass displayDataClass) {
