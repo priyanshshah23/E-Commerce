@@ -99,8 +99,7 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
     list = await AppDatabase.instance.masterDao
         .getSubMastersFromParentCode(MasterCode.billType);
     list.forEach((element) {
-      print("=============${element.code}");
-      arrBillType.add(SelectionPopupModel(element.sId, element.name));
+      arrBillType.add(SelectionPopupModel(element.sId, element.name,type: element.code));
     });
   }
 
@@ -120,7 +119,7 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
       backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(
         context,
-        "Buy Now",
+        R.string.screenTitle.buyNow,
         centerTitle: false,
         leadingButton: getBackButton(context),
       ),
@@ -196,10 +195,10 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
         MaterialPageRoute(
           builder: (BuildContext context) {
             return SelectionScreen(
-              title: "Select Party",
-              hintText: "Min. 3 Chars",
-              positiveButtonTitle: "Done",
-              negativeButtonTitle: "Cancel",
+              title: R.string.screenTitle.selectParty,
+              hintText: R.string.commonString.search,
+              positiveButtonTitle:R.string.commonString.done,
+              negativeButtonTitle:R.string.commonString.cancel,
               isSearchEnable: true,
               type: CellType.Hold_Party,
               isMultiSelectionEnable: false,
@@ -240,10 +239,10 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
         MaterialPageRoute(
           builder: (BuildContext context) {
             return SelectionScreen(
-              title: "Select Buyer",
-              hintText: "Min. 3 Chars",
-              positiveButtonTitle: "Done",
-              negativeButtonTitle: "Cancel",
+              title: R.string.screenTitle.selectBuyer,
+              hintText: R.string.commonString.search,
+              positiveButtonTitle:R.string.commonString.done,
+              negativeButtonTitle:R.string.commonString.cancel,
               isSearchEnable: true,
               type: CellType.Hold_Buyer,
               isMultiSelectionEnable: false,
@@ -279,10 +278,10 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
         MaterialPageRoute(
           builder: (BuildContext context) {
             return SelectionScreen(
-              title: "Select Salesman",
-              hintText: "Min. 3 Chars",
-              positiveButtonTitle: "Done",
-              negativeButtonTitle: "Cancel",
+              title: R.string.screenTitle.selectSalesman,
+              hintText: R.string.commonString.search,
+              positiveButtonTitle:R.string.commonString.done,
+              negativeButtonTitle:R.string.commonString.cancel,
               isSearchEnable: false,
               type: CellType.SalesPersonName,
               isMultiSelectionEnable: false,
@@ -310,10 +309,10 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
         MaterialPageRoute(
           builder: (BuildContext context) {
             return SelectionScreen(
-              title: "Select Broker",
-              hintText: "Min. 3 Chars",
-              positiveButtonTitle: "Done",
-              negativeButtonTitle: "Cancel",
+              title:R.string.screenTitle.selectBroker,
+              hintText: R.string.commonString.search,
+              positiveButtonTitle:R.string.commonString.done,
+              negativeButtonTitle:R.string.commonString.cancel,
               isSearchEnable: true,
               type: CellType.BrokerName,
               isMultiSelectionEnable: false,
@@ -339,23 +338,33 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
 
     if (arr.isNotEmpty) {
       modalBottomSheetMenu(context,
-          title: "Select Bill Type",
+          title: R.string.screenTitle.selectBillType,
           selectionOptions: arrBillType, callback: (model) {
-//        if (model.id == "LOCAL_BILL") {
-//          _arrDropDown.insert(7, CellModel(
-//
-//              hintText: "Comment",
-//              type: CellType.Comment,
-//              inputAction: TextInputAction.done,
-//              leftPadding: 20,
-//              maxLine: 5,
-//              isRequired: false,
-//          ),);
-//        }
         arrBillType.forEach((value) => value.isSelected = false);
         arrBillType.firstWhere((value) => value == model).isSelected = true;
         arr.first.userText = model.title;
         arr.first.id = model.id;
+        if (model.type == MasterCode.localBill) {
+          _arrDropDown.forEach((element) {
+            _arrDropDown
+                .removeWhere((element) => element.type == CellType.Bank_Rate);
+          });
+          _arrDropDown.insert(
+            7,
+            CellModel(
+              hintText: R.string.screenTitle.bankRate,
+              type: CellType.Bank_Rate,
+              inputAction: TextInputAction.done,
+              leftPadding: 20,
+              keyboardType: TextInputType.number,
+              isRequired: false,
+            ),
+          );
+          setState(() {});
+        } else {
+          _arrDropDown
+              .removeWhere((element) => element.type == CellType.Bank_Rate);
+        }
         setState(() {});
       });
     }
@@ -369,9 +378,9 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
 
     if (arr.isNotEmpty) {
       modalBottomSheetMenu(context,
-          title: "Select Invoice Type",
+          title: R.string.screenTitle.selectInvoiceType,
           selectionOptions: arrInvoiceType, callback: (model) {
-        if (model.id == "Later") {
+        if (model.id == R.string.commonString.later) {
           openDatePicker();
         }
         arrInvoiceType.forEach((value) => value.isSelected = false);
@@ -390,7 +399,7 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
 
     if (arr.isNotEmpty) {
       modalBottomSheetMenu(context,
-          title: "Select Term Type",
+          title: R.string.screenTitle.selectTermType,
           selectionOptions: arrTermType, callback: (model) {
         arrTermType.forEach((value) => value.isSelected = false);
         arrTermType.firstWhere((value) => value == model).isSelected = true;
@@ -513,6 +522,8 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
         dict["terms"] = element.id;
       } else if (element.type == CellType.Comment) {
         if (element.userText.isNotEmpty) dict['comment'] = element.userText;
+      } else if (element.type == CellType.Bank_Rate) {
+        dict['bankRate'] = int.tryParse(element.userText);
       }
     });
     List<String> list = [];
@@ -577,49 +588,49 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
   List<CellModel> getDropdownTextFieldList() {
     return [
       CellModel(
-        hintText: "Party*",
+        hintText: R.string.screenTitle.party,
         perfixImage: buildingIcon,
-        emptyValidationText: "Please select and enter party.",
+        emptyValidationText: R.string.errorString.enterParty,
         type: CellType.Hold_Party,
         textFieldType: TextFieldEnum.DropDown,
       ),
       CellModel(
-        hintText: "Buyer Name*",
+        hintText: R.string.screenTitle.buyerName,
         perfixImage: buyer,
-        emptyValidationText: "Please select and enter buyer name.",
+        emptyValidationText: R.string.errorString.enterBuyer,
         type: CellType.Hold_Buyer,
         textFieldType: TextFieldEnum.DropDown,
       ),
       CellModel(
-        hintText: "Salesman*",
+        hintText: R.string.screenTitle.salesman,
         perfixImage: salesman,
-        emptyValidationText: "Please select and enter salesman.",
+        emptyValidationText:R.string.errorString.enterSales,
         type: CellType.SalesPersonName,
         textFieldType: TextFieldEnum.DropDown,
       ),
       CellModel(
-        hintText: "Broker",
+        hintText: R.string.screenTitle.broker,
         perfixImage: broker,
         isRequired: false,
         type: CellType.BrokerName,
         textFieldType: TextFieldEnum.DropDown,
       ),
       CellModel(
-        hintText: "Invoice Date",
+        hintText: R.string.screenTitle.invoicedate,
         perfixImage: calender,
         type: CellType.Invoice,
         textFieldType: TextFieldEnum.DropDown,
         isRequired: false,
       ),
       CellModel(
-        hintText: "Bill Type",
+        hintText: R.string.screenTitle.billType,
         perfixImage: invoice,
         type: CellType.BillType,
         textFieldType: TextFieldEnum.DropDown,
         isRequired: false,
       ),
       CellModel(
-        hintText: "Terms",
+        hintText: R.string.screenTitle.terms,
         perfixImage: clock,
         type: CellType.Term,
         textFieldType: TextFieldEnum.DropDown,
@@ -635,7 +646,7 @@ class _BuyNowScreenState extends State<BuyNowScreen> {
         keyboardType: TextInputType.number,
       ),*/
       CellModel(
-        hintText: "Comment",
+        hintText: R.string.screenTitle.comment,
         type: CellType.Comment,
         inputAction: TextInputAction.done,
         leftPadding: 20,
