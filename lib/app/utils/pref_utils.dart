@@ -124,7 +124,9 @@ class PrefUtils {
       return defaultValue;
     }
   }
-
+  bool isDisplayedTour(String key) {
+    return true;
+  }
   /// Gets the bool value for the [key] if it exists.
   bool getBool(String key, {bool defaultValue = false}) {
     try {

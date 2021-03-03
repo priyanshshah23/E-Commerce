@@ -4,10 +4,8 @@ import '../app.export.dart';
 
 class ApiConstants {
 //  static const String PROXY_URL = "PROXY 192.168.0.114:8888";
-  // static String PROXY_URL = "PROXY 192.168.0.132:8888"; //HONEY
-  // static String PROXY_URL = "PROXY 192.168.2.153:8888"; //HONEY
-  static String PROXY_URL = "PROXY 192.168.0.131:8888"; //HONEY
-
+  //static String PROXY_URL = "PROXY 192.168.2.153:8888"; //HONEY
+  static String PROXY_URL = "PROXY 192.168.0.131:8888"; //H
 // static String PROXY_URL = "PROXY 192.168.0.118:8888"; //JECKY
 
 //    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
@@ -161,6 +159,16 @@ class DiamondUrls {
   static const String type2A = commonUrl + "TYPE_IIA/";
   static const String roughScopeImg = commonUrl + "MFG/RoughImages/";
   static const String image3D = commonUrl + "MFG/PlanImages/";
+  static const String roughImage =
+      commonUrl + "MFG/RoughImages/";
+  static const String threeDImage = commonUrl + "MFG/PlanImages/"; // 3D Image
+  static const String b2bImage = commonUrl + "RealImages/"; // B2B Image
+}
+class DiamondDetailImageConstant {
+  static const int RoughImage = 1;
+  static const int RoughVideo = 2;
+  static const int ThreeDImage = 3;
+  static const int B2BImage = 4;
 }
 // https://s3.ap-south-1.amazonaws.com/finestargroup/CertiImages/<report_no>.pdf
 // https://s3.ap-south-1.amazonaws.com/finestargroup/MFG/RoughVideo/<packet_no>.html

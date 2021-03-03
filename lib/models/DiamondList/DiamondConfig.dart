@@ -397,9 +397,14 @@ class DiamondConfig {
     return list;
   }
 
-  manageDiamondAction(BuildContext context, List<DiamondModel> list,
-      BottomTabModel bottomTabModel, Function refreshList,
-      {int moduleType}) async {
+  manageDiamondAction(
+    BuildContext context,
+    List<DiamondModel> list,
+    BottomTabModel bottomTabModel,
+    Function refreshList, {
+    int moduleType,
+    bool isFromDetailScreen = false,
+  }) async {
     switch (bottomTabModel.type) {
       case ActionMenuConstant.ACTION_TYPE_FINAL_CALCULATION:
         actionForFinalCalculation(context, list);
