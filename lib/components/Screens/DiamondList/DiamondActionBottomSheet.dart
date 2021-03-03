@@ -1078,11 +1078,6 @@ Future openBottomSheetForSavedSearch(
       return SaveAndSearchBottomSheet(
         savedSearchModel: savedSearchModel,
         callBack: (text, isNewSearch) {
-          print("--filter--${req.runtimeType}");
-          print("--name--${text.toString()}");
-          print("--isNewSearch--${isNewSearch.toString()}");
-          print("--id--${isNewSearch ? "" : savedSearchModel?.id}");
-          print("--searchType--${DiamondSearchType.SAVE}");
           Map<String, dynamic> dict = {};
           dict["filter"] = req;
           dict["name"] = text;
@@ -1096,21 +1091,14 @@ Future openBottomSheetForSavedSearch(
             isProgress: true,
           )
               .then((diamondListResp) async {
-            print("---0---");
             Navigator.pop(context);
-            print("---1---");
             if (isSearch) {
-              print("---2---");
               Map<String, dynamic> dict = new HashMap();
               dict["filterId"] = diamondListResp.data.savedSearchModel.id;
-              print("---3---");
               dict["filters"] = req;
-              print("---4---");
               dict["filterModel"] = filterList;
-              print("---5---");
               dict[ArgumentConstant.ModuleType] =
                   DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
-              print("---6---");
               NavigationUtilities.pushRoute(DiamondListScreen.route,
                   args: dict);
             }

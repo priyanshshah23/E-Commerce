@@ -89,7 +89,7 @@ class _MemoStoneScreenState extends State<MemoStoneScreen> {
       backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(
         context,
-        "Memo Stone",
+        R.string.screenTitle.memoStone,
         centerTitle: false,
         leadingButton: getBackButton(context),
       ),
@@ -204,10 +204,10 @@ class _MemoStoneScreenState extends State<MemoStoneScreen> {
         MaterialPageRoute(
           builder: (BuildContext context) {
             return SelectionScreen(
-              title: "Select Party",
-              hintText: "Min. 3 Chars",
-              positiveButtonTitle: "Done",
-              negativeButtonTitle: "Cancel",
+              title: R.string.screenTitle.selectParty,
+              hintText: R.string.commonString.search,
+              positiveButtonTitle:R.string.commonString.done,
+              negativeButtonTitle:R.string.commonString.cancel,
               isSearchEnable: true,
               type: CellType.Hold_Party,
               isMultiSelectionEnable: false,
@@ -248,10 +248,10 @@ class _MemoStoneScreenState extends State<MemoStoneScreen> {
         MaterialPageRoute(
           builder: (BuildContext context) {
             return SelectionScreen(
-              title: "Select Buyer",
-              hintText: "Min. 3 Chars",
-              positiveButtonTitle: "Done",
-              negativeButtonTitle: "Cancel",
+              title: R.string.screenTitle.selectBuyer,
+              hintText: R.string.commonString.search,
+              positiveButtonTitle:R.string.commonString.done,
+              negativeButtonTitle:R.string.commonString.cancel,
               isSearchEnable: true,
               type: CellType.Hold_Buyer,
               isMultiSelectionEnable: false,
@@ -285,10 +285,10 @@ class _MemoStoneScreenState extends State<MemoStoneScreen> {
         MaterialPageRoute(
           builder: (BuildContext context) {
             return SelectionScreen(
-              title: "Select Salesman",
-              hintText: "Min. 3 Chars",
-              positiveButtonTitle: "Done",
-              negativeButtonTitle: "Cancel",
+              title: R.string.screenTitle.selectSalesman,
+              hintText: R.string.commonString.search,
+              positiveButtonTitle:R.string.commonString.done,
+              negativeButtonTitle:R.string.commonString.cancel,
               isSearchEnable: false,
               type: CellType.SalesPersonName,
               isMultiSelectionEnable: false,
@@ -316,10 +316,10 @@ class _MemoStoneScreenState extends State<MemoStoneScreen> {
         MaterialPageRoute(
           builder: (BuildContext context) {
             return SelectionScreen(
-              title: "Select Broker",
-              hintText: "Min. 3 Chars",
-              positiveButtonTitle: "Done",
-              negativeButtonTitle: "Cancel",
+              title: R.string.screenTitle.selectBroker,
+              hintText: R.string.commonString.search,
+              positiveButtonTitle:R.string.commonString.done,
+              negativeButtonTitle:R.string.commonString.cancel,
               isSearchEnable: true,
               type: CellType.Memo_BrokerName,
               isMultiSelectionEnable: false,
@@ -447,25 +447,28 @@ class _MemoStoneScreenState extends State<MemoStoneScreen> {
   List<CellModel> getDropdownTextFieldList() {
     return [
       CellModel(
-        hintText: "Party*",
+        hintText: R.string.screenTitle.party,
         perfixImage: buildingIcon,
-        emptyValidationText: "Please select and enter party.",
+        emptyValidationText: R.string.errorString.enterParty,
         type: CellType.Hold_Party,
+        textFieldType: TextFieldEnum.DropDown,
       ),
       CellModel(
-        hintText: "Buyer Name*",
+        hintText: R.string.screenTitle.buyerName,
         perfixImage: buyer,
-        emptyValidationText: "Please select and enter buyer name.",
+        emptyValidationText: R.string.errorString.enterBuyer,
         type: CellType.Hold_Buyer,
+        textFieldType: TextFieldEnum.DropDown,
       ),
       CellModel(
-        hintText: "Salesman*",
+        hintText: R.string.screenTitle.salesman,
         perfixImage: salesman,
-        emptyValidationText: "Please select and enter salesman.",
+        emptyValidationText:R.string.errorString.enterSales,
         type: CellType.SalesPersonName,
+        textFieldType: TextFieldEnum.DropDown,
       ),
       CellModel(
-        hintText: "Broker",
+        hintText: R.string.screenTitle.broker,
         perfixImage: broker,
         isRequired: false,
         type: CellType.Memo_BrokerName,

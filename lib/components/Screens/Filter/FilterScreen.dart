@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:diamnow/app/AppConfiguration/AppNavigation.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
@@ -26,8 +27,10 @@ import 'package:diamnow/components/Screens/Filter/Widget/FromToWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SeperatorWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
+import 'package:diamnow/components/Screens/MyDemand/MyDemandScreen.dart';
 import 'package:diamnow/components/Screens/Notification/Notifications.dart';
 import 'package:diamnow/components/Screens/SalesPerson/Widget/CellModel.dart';
+import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
 import 'package:diamnow/components/Screens/Search/Search.dart';
 import 'package:diamnow/components/Screens/VoiceSearch/VoiceSearch.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
@@ -337,106 +340,108 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                     : getBackButton(context),
                 centerTitle: false,
                 actionItems: [
-                  if(app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES)
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) {
-                            return SelectionScreen(
-                              title: "Select Company",
-                              hintText: "Select Company",
-                              positiveButtonTitle: "Apply",
-                              negativeButtonTitle: "Cancel",
-                              isSearchEnable: true,
-                              type: CellType.Company,
-                              isMultiSelectionEnable: false,
-                              applyFilterCallBack: (
-                                  {List<SelectionPopupModel>
-                                      multiSelectedItem}) {
-                                isCompanySelected = true;
-                                app
-                                    .resolve<PrefUtils>()
-                                    .saveCompany(multiSelectedItem.first);
-                                setState(() {});
-                              },
-                            );
-                          },
-                        ),
-                      );
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        right: getSize(Spacing.rightPadding),
-                        left: getSize(8.0),
-                      ),
-                      child: Stack(
-                        alignment: Alignment.topCenter,
-                        children: [
-                          Center(
-                            child: Image.asset(
-                              buildingIcon,
-                              height: getSize(20),
-                              width: getSize(20),
-                            ),
-                          ),
-                          Visibility(
-                            visible: isCompanySelected,
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                top: getSize(10),
-                              ),
-                              height: getSize(8),
-                              width: getSize(8),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: appTheme.colorPrimary,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  if(app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES)
+                  if (app.resolve<PrefUtils>().getUserDetails().type ==
+                      UserConstant.SALES)
                     InkWell(
-                    onTap: () {
-                      openDialogueForSelectStatus(context);
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        right: getSize(Spacing.rightPadding),
-                        left: getSize(8.0),
-                      ),
-                      child: Stack(
-                        alignment: Alignment.topCenter,
-                        children: [
-                          Center(
-                            child: Image.asset(
-                              descendantIcon,
-                              height: getSize(20),
-                              width: getSize(20),
-                            ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return SelectionScreen(
+                                title: R.string.screenTitle.selectCompany,
+                                hintText: R.string.commonString.search,
+                                positiveButtonTitle: R.string.commonString.apply,
+                                negativeButtonTitle: R.string.commonString.cancel,
+                                isSearchEnable: true,
+                                type: CellType.Company,
+                                isMultiSelectionEnable: false,
+                                applyFilterCallBack: (
+                                    {List<SelectionPopupModel>
+                                        multiSelectedItem}) {
+                                  isCompanySelected = true;
+                                  app
+                                      .resolve<PrefUtils>()
+                                      .saveCompany(multiSelectedItem.first);
+                                  setState(() {});
+                                },
+                              );
+                            },
                           ),
-                          Visibility(
-                            visible: isStatusSelected,
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                top: getSize(10),
-                              ),
-                              height: getSize(8),
-                              width: getSize(8),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: appTheme.colorPrimary,
+                        );
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          right: getSize(Spacing.rightPadding),
+                          left: getSize(8.0),
+                        ),
+                        child: Stack(
+                          alignment: Alignment.topCenter,
+                          children: [
+                            Center(
+                              child: Image.asset(
+                                buildingIcon,
+                                height: getSize(20),
+                                width: getSize(20),
                               ),
                             ),
-                          )
-                        ],
+                            Visibility(
+                              visible: isCompanySelected,
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                  top: getSize(10),
+                                ),
+                                height: getSize(8),
+                                width: getSize(8),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: appTheme.colorPrimary,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
+                  if (app.resolve<PrefUtils>().getUserDetails().type ==
+                      UserConstant.SALES)
+                    InkWell(
+                      onTap: () {
+                        openDialogueForSelectStatus(context);
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          right: getSize(Spacing.rightPadding),
+                          left: getSize(8.0),
+                        ),
+                        child: Stack(
+                          alignment: Alignment.topCenter,
+                          children: [
+                            Center(
+                              child: Image.asset(
+                                descendantIcon,
+                                height: getSize(20),
+                                width: getSize(20),
+                              ),
+                            ),
+                            Visibility(
+                              visible: isStatusSelected,
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                  top: getSize(10),
+                                ),
+                                height: getSize(8),
+                                width: getSize(8),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: appTheme.colorPrimary,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
                   InkWell(
                     onTap: () {
                       setState(() {
@@ -475,6 +480,13 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                             });
                           }
                         });
+                        selectStatus.clear();
+                        selectStatusModel.forEach((element) {
+                          element.isSelected = false;
+                        });
+                        isStatusSelected = false;
+                        isCompanySelected = false;
+                        app.resolve<PrefUtils>().saveCompany(null);
                       });
                     },
                     child: Padding(
@@ -754,8 +766,25 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       isProgress: true,
     )
         .then((diamondListResp) async {
-      showToast(R.string.commonString.demandAddedSuccessfully,
-          context: context);
+      app.resolve<CustomDialogs>().confirmDialog(
+        context,
+        title: R.string.commonString.demandadded,
+        desc: R.string.commonString.demandAddedSuccessfully,
+        negativeBtnTitle: R.string.commonString.myDemand,
+        positiveBtnTitle: R.string.commonString.home,
+        onClickCallback: (click) {
+          if (click == ButtonType.PositveButtonClick) {
+            AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+          } else {
+            Map<String, dynamic> dict = {};
+            dict[ArgumentConstant.ModuleType] =
+                DiamondModuleConstant.MODULE_TYPE_MY_DEMAND;
+            NavigationUtilities.pushRoute(MyDemandScreen.route, args: dict);
+          }
+        },
+      );
+      // showToast(R.string.commonString.demandAddedSuccessfully,
+      //     context: context);
     }).catchError((onError) {
       print(onError.toString());
     });
@@ -809,6 +838,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               title: R.string.commonString.savedSearch,
               hintText: R.string.commonString.searchSavedSearch,
               selectionOptions: saveSearchList,
+              showViewAllButton: true,
+              showViewAllButtonCallBack: () {
+                NavigationUtilities.pushRoute(SavedSearchScreen.route);
+              },
               applyFilterCallBack: (
                   {SelectionPopupModel selectedItem,
                   List<SelectionPopupModel> multiSelectedItem}) {
@@ -901,9 +934,21 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               .resolve<PrefUtils>()
               .getModulePermission(ModulePermissionConstant.permission_myDemand)
               .insert) {
-            if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList)))
-              getAddDemand();
-            else {
+            if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList))) {
+              Map<String, dynamic> map = FilterRequest()
+                  .createRequest(arrList, selectedStatus: selectStatus);
+              if (app.resolve<PrefUtils>().getUserDetails().type ==
+                      UserConstant.CUSTOMER &&
+                  map.length < 3) {
+                app.resolve<CustomDialogs>().errorDialog(
+                      context,
+                      "",
+                      "Please select any 2 criteria.",
+                      btntitle: R.string.commonString.ok,
+                    );
+              } else
+                getAddDemand();
+            } else {
               showToast(R.string.commonString.selectAtleastOneFilter,
                   context: context);
             }
@@ -948,16 +993,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 .getModulePermission(
                     ModulePermissionConstant.permission_searchResult)
                 .view) {
-              if (app.resolve<PrefUtils>().getUserDetails().type == 1) {
-                callApiForGetFilterId(
-                    DiamondModuleConstant.MODULE_TYPE_SEARCH,
-                    isSearch: true);
-              } else {
-                callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-                    isSearch: true);
-              }
-//              callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-//                  isSearch: true);
+
+              callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+                  isSearch: true);
               // place code
             } else {
               app.resolve<CustomDialogs>().accessDenideDialog(context);
@@ -970,17 +1008,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                   ModulePermissionConstant.permission_mySavedSearch)
               .insert) {
             if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList))) {
-              if (app.resolve<PrefUtils>().getUserDetails().type == 1) {
-                callApiForGetFilterId(
-                    DiamondModuleConstant.MODULE_TYPE_SEARCH,
-                    isSearch: true);
-              } else {
-                callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-                    isSearch: true);
-              }
+              callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
+                  isSavedSearch: true, isSearch: true);
             }
-//              callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
-//                  isSavedSearch: true, isSearch: true);
             else {
               showToast(R.string.commonString.selectAtleastOneFilter,
                   context: context);
@@ -1019,8 +1049,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         page: PageAnalytics.DIAMOND_SEARCH,
         section: SectionAnalytics.SEARCH,
         action: ActionAnalytics.CLICK);
-    Map<String, dynamic> map = FilterRequest().createRequest(arrList,selectedStatus: selectStatus);
-    if (app.resolve<PrefUtils>().getUserDetails().type == UserConstant.CUSTOMER&&map.length < 3) {
+    Map<String, dynamic> map =
+        FilterRequest().createRequest(arrList, selectedStatus: selectStatus);
+    if (app.resolve<PrefUtils>().getUserDetails().type ==
+            UserConstant.CUSTOMER &&
+        map.length < 3) {
       app.resolve<CustomDialogs>().errorDialog(
             context,
             "",
@@ -1034,8 +1067,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         (diamondListResp) {
           if (isSavedSearch) {
             openBottomSheetForSavedSearch(
-                context, FilterRequest().createRequest(arrList,selectedStatus: selectStatus),
-                isSearch: isSearch, savedSearchModel: this.savedSearchModel);
+                context,
+                FilterRequest()
+                    .createRequest(arrList, selectedStatus: selectStatus),
+                isSearch: isSearch,
+                savedSearchModel: this.savedSearchModel);
           } else {
             if (isSearch) {
               if (diamondListResp.data.count == 0) {
@@ -1390,24 +1426,24 @@ class _FilterItemState extends State<FilterItem> {
                                     width: getSize(1)),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(getSize(5))),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(getSize(5))),
                                 borderSide: BorderSide(
                                   color: appTheme.dividerColor,
                                   width: getSize(1),
                                 ),
                               ),
                               border: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(getSize(5))),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(getSize(5))),
                                 borderSide: BorderSide(
                                     color: appTheme.dividerColor,
                                     width: getSize(1)),
                               ),
 
                               hintStyle: appTheme.grey16HintTextStyle,
-                              hintText: R
-                                  .string.commonString.searchStoneIdCertificateNo,
+                              hintText: R.string.commonString
+                                  .searchStoneIdCertificateNo,
                               labelStyle: TextStyle(
                                 color: appTheme.textColor,
                                 fontSize: getFontSize(16),
@@ -1512,134 +1548,134 @@ class _FilterItemState extends State<FilterItem> {
           ),
         if (app.resolve<PrefUtils>().getUserDetails().type ==
             UserConstant.CUSTOMER)
-        Padding(
-          padding: EdgeInsets.only(top: getSize(16.0), bottom: getSize(16.0)),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Hero(
-                  tag: 'searchTextField',
-                  child: Material(
-                    color: appTheme.whiteColor,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        left: getSize(Spacing.leftPadding),
-                        right: getSize(Spacing.rightPadding),
-                      ),
-                      child: Container(
-                        height: getSize(40),
-                        decoration: BoxDecoration(
-                          color: appTheme.whiteColor,
-                          borderRadius: BorderRadius.circular(getSize(5)),
-                          border: Border.all(
-                            color: appTheme.colorPrimary,
-                            width: getSize(1),
-                          ),
+          Padding(
+            padding: EdgeInsets.only(top: getSize(16.0), bottom: getSize(16.0)),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Hero(
+                    tag: 'searchTextField',
+                    child: Material(
+                      color: appTheme.whiteColor,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: getSize(Spacing.leftPadding),
+                          right: getSize(Spacing.rightPadding),
                         ),
-                        child: TextField(
-                          textAlignVertical: TextAlignVertical(y: 1.0),
-                          textInputAction: TextInputAction.done,
-                          focusNode: _focusSearch,
-                          readOnly: true,
-                          autofocus: false,
-                          controller: _searchController,
-                          obscureText: false,
-                          style: appTheme.black16TextStyle,
-                          keyboardType: TextInputType.text,
-                          textCapitalization: TextCapitalization.none,
-                          cursorColor: appTheme.colorPrimary,
-                          inputFormatters: [
-                            WhitelistingTextInputFormatter(
-                                new RegExp(alphaRegEx)),
-                            BlacklistingTextInputFormatter(
-                                RegExp(RegexForEmoji))
-                          ],
-                          decoration: InputDecoration(
-                            fillColor: fromHex("#FFEFEF"),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(
-                                  getSize(5),
+                        child: Container(
+                          height: getSize(40),
+                          decoration: BoxDecoration(
+                            color: appTheme.whiteColor,
+                            borderRadius: BorderRadius.circular(getSize(5)),
+                            border: Border.all(
+                              color: appTheme.colorPrimary,
+                              width: getSize(1),
+                            ),
+                          ),
+                          child: TextField(
+                            textAlignVertical: TextAlignVertical(y: 1.0),
+                            textInputAction: TextInputAction.done,
+                            focusNode: _focusSearch,
+                            readOnly: true,
+                            autofocus: false,
+                            controller: _searchController,
+                            obscureText: false,
+                            style: appTheme.black16TextStyle,
+                            keyboardType: TextInputType.text,
+                            textCapitalization: TextCapitalization.none,
+                            cursorColor: appTheme.colorPrimary,
+                            inputFormatters: [
+                              WhitelistingTextInputFormatter(
+                                  new RegExp(alphaRegEx)),
+                              BlacklistingTextInputFormatter(
+                                  RegExp(RegexForEmoji))
+                            ],
+                            decoration: InputDecoration(
+                              fillColor: fromHex("#FFEFEF"),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(
+                                    getSize(5),
+                                  ),
+                                ),
+                                borderSide: BorderSide(
+                                    color: appTheme.dividerColor,
+                                    width: getSize(1)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(getSize(5))),
+                                borderSide: BorderSide(
+                                  color: appTheme.dividerColor,
+                                  width: getSize(1),
                                 ),
                               ),
-                              borderSide: BorderSide(
-                                  color: appTheme.dividerColor,
-                                  width: getSize(1)),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(getSize(5))),
-                              borderSide: BorderSide(
-                                color: appTheme.dividerColor,
-                                width: getSize(1),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(getSize(5))),
+                                borderSide: BorderSide(
+                                    color: appTheme.dividerColor,
+                                    width: getSize(1)),
                               ),
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(getSize(5))),
-                              borderSide: BorderSide(
-                                  color: appTheme.dividerColor,
-                                  width: getSize(1)),
-                            ),
 
-                            hintStyle: appTheme.grey16HintTextStyle,
-                            hintText: R
-                                .string.commonString.searchStoneIdCertificateNo,
-                            labelStyle: TextStyle(
-                              color: appTheme.textColor,
-                              fontSize: getFontSize(16),
+                              hintStyle: appTheme.grey16HintTextStyle,
+                              hintText: R.string.commonString
+                                  .searchStoneIdCertificateNo,
+                              labelStyle: TextStyle(
+                                color: appTheme.textColor,
+                                fontSize: getFontSize(16),
+                              ),
+                              // suffix: widget.textOption.postfixWidOnFocus,
+                              suffixIcon: Padding(
+                                  padding: EdgeInsets.all(getSize(10)),
+                                  child: Image.asset(search)),
                             ),
-                            // suffix: widget.textOption.postfixWidOnFocus,
-                            suffixIcon: Padding(
-                                padding: EdgeInsets.all(getSize(10)),
-                                child: Image.asset(search)),
+                            onChanged: (String text) {
+                              //
+                            },
+                            onEditingComplete: () {
+                              //
+                              _focusSearch.unfocus();
+                            },
+                            onTap: () {
+                              Map<String, dynamic> dict = new HashMap();
+                              dict["isFromSearch"] = true;
+                              dict["isFromManual"] = false;
+                              NavigationUtilities.pushRoute(
+                                SearchScreen.route,
+                                args: dict,
+                              );
+                            },
                           ),
-                          onChanged: (String text) {
-                            //
-                          },
-                          onEditingComplete: () {
-                            //
-                            _focusSearch.unfocus();
-                          },
-                          onTap: () {
-                            Map<String, dynamic> dict = new HashMap();
-                            dict["isFromSearch"] = true;
-                            dict["isFromManual"] = false;
-                            NavigationUtilities.pushRoute(
-                              SearchScreen.route,
-                              args: dict,
-                            );
-                          },
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              if (widget.moduleType !=
-                  DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH)
-                Center(
-                  child: InkWell(
-                    onTap: () {
-                      NavigationUtilities.pushRoute(VoiceSearch.route);
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        right: getSize(Spacing.leftPadding),
-                      ),
-                      child: Image.asset(
-                        microphone,
-                        alignment: Alignment.centerRight,
-                        width: getSize(26),
-                        height: getSize(26),
+                if (widget.moduleType !=
+                    DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH)
+                  Center(
+                    child: InkWell(
+                      onTap: () {
+                        NavigationUtilities.pushRoute(VoiceSearch.route);
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          right: getSize(Spacing.leftPadding),
+                        ),
+                        child: Image.asset(
+                          microphone,
+                          alignment: Alignment.centerRight,
+                          width: getSize(26),
+                          height: getSize(26),
+                        ),
                       ),
                     ),
-                  ),
-                )
-            ],
+                  )
+              ],
+            ),
           ),
-        ),
       ],
     );
   }

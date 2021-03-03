@@ -1,3 +1,4 @@
+import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/math_utils.dart';
 import 'package:flutter/services.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
@@ -152,6 +153,7 @@ class MasterCode {
   static const String milkyStatic = "MILKYSTATIC";
   static const String billType = "BILL_TYPE";
   static const String dayTerm = "DAY_TERM";
+  static const String localBill = "LOCAL_BILL";
   // static const String mixTint = "MIX_TINT";
 }
 
@@ -323,19 +325,19 @@ List<SelectionPopupModel> getInvoiceArr() {
   arrInvoiceTypes.add(
     SelectionPopupModel(
       now.toUtc().toIso8601String(),
-      "Today",
+      R.string.commonString.today,
     ),
   );
   arrInvoiceTypes.add(
     SelectionPopupModel(
       tomorrow.toUtc().toIso8601String(),
-      "Tomorrow",
+      R.string.commonString.toMorrow,
     ),
   );
   arrInvoiceTypes.add(
     SelectionPopupModel(
-      "Later",
-      "Later",
+      R.string.commonString.later,
+      R.string.commonString.later,
     ),
   );
   return arrInvoiceTypes;

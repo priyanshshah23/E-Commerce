@@ -19,7 +19,8 @@ class SelectionDialogue extends StatefulWidget {
   bool isMultiSelectionEnable;
   String positiveButtonTitle;
   String negativeButtonTitle;
-
+  bool showViewAllButton;
+  VoidCallback showViewAllButtonCallBack;
   SelectionDialogue(
       {this.selectionOptions,
       this.applyFilterCallBack,
@@ -28,18 +29,23 @@ class SelectionDialogue extends StatefulWidget {
       this.isSearchEnable = true,
       this.isMultiSelectionEnable = false,
       this.negativeButtonTitle,
-      this.positiveButtonTitle});
+      this.positiveButtonTitle,
+      this.showViewAllButton = false,
+      this.showViewAllButtonCallBack});
 
   @override
   _SelectionDialogueState createState() => _SelectionDialogueState(
-      selectionOptions,
-      applyFilterCallBack,
-      hintText,
-      title,
-      isSearchEnable,
-      isMultiSelectionEnable,
-      positiveButtonTitle,
-      negativeButtonTitle);
+        selectionOptions,
+        applyFilterCallBack,
+        hintText,
+        title,
+        isSearchEnable,
+        isMultiSelectionEnable,
+        positiveButtonTitle,
+        negativeButtonTitle,
+        showViewAllButton,
+        showViewAllButtonCallBack,
+      );
 }
 
 class _SelectionDialogueState extends State<SelectionDialogue> {
@@ -55,16 +61,20 @@ class _SelectionDialogueState extends State<SelectionDialogue> {
   bool isMultiSelectionEnable;
   String positiveButtonTitle;
   String negativeButtonTitle;
-
+  bool showViewAllButton;
+  VoidCallback showViewAllButtonCallBack;
   _SelectionDialogueState(
-      this.selectionOptions,
-      this.applyFilterCallBack,
-      this.hintText,
-      this.title,
-      this.isSearchEnable,
-      this.isMultiSelectionEnable,
-      this.positiveButtonTitle,
-      this.negativeButtonTitle);
+    this.selectionOptions,
+    this.applyFilterCallBack,
+    this.hintText,
+    this.title,
+    this.isSearchEnable,
+    this.isMultiSelectionEnable,
+    this.positiveButtonTitle,
+    this.negativeButtonTitle,
+    this.showViewAllButton,
+    this.showViewAllButtonCallBack,
+  );
 
   @override
   void initState() {
@@ -123,8 +133,8 @@ class _SelectionDialogueState extends State<SelectionDialogue> {
                                     imageName: search,
                                     imageType: IconSizeType.medium),
                                 focusedBorder: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5.0))),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(25.0))),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(25.0)))),
@@ -187,6 +197,17 @@ class _SelectionDialogueState extends State<SelectionDialogue> {
                       },
                     ),
                   ),
+                  showViewAllButton
+                      ? Container(
+                          height: getSize(50),
+                          child: AppButton.flat(
+                            onTap: () {
+                              showViewAllButtonCallBack();
+                            },
+                            text: R.string.screenTitle.viewAll,
+                          ),
+                        )
+                      : SizedBox(),
                   isMultiSelectionEnable
                       ? Padding(
                           padding: EdgeInsets.symmetric(

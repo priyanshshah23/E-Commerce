@@ -22,7 +22,6 @@ import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:downloads_path_provider/downloads_path_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -43,26 +42,23 @@ class DiamondDeepDetailScreen extends StatefulScreenWidget {
   List<DiamondDetailImagePagerModel> arrImages =
       List<DiamondDetailImagePagerModel>();
   DiamondModel diamondModel;
-  int index;
 
-  DiamondDeepDetailScreen({this.arrImages, this.diamondModel, this.index});
+  DiamondDeepDetailScreen({this.arrImages, this.diamondModel});
 
   @override
-  _DiamondDeepDetailScreenState createState() => _DiamondDeepDetailScreenState(
-      this.arrImages, this.diamondModel, this.index);
+  _DiamondDeepDetailScreenState createState() =>
+      _DiamondDeepDetailScreenState(this.arrImages, this.diamondModel);
 }
 
-class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
-    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
   bool isLoading = true;
   bool isErroWhileLoading = false;
   DiamondConfig diamondConfig;
   int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
-  int index;
-  bool isPageLoading = false;
+
   List<DiamondDetailImagePagerModel> arrImages =
       List<DiamondDetailImagePagerModel>();
-  WebView webView = WebView();
+
   DiamondModel diamondModel;
 
   //new design
@@ -74,9 +70,7 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
   final _pageController = PageController(viewportFraction: 0.9);
   Dio dio = Dio();
 
-  _DiamondDeepDetailScreenState(this.arrImages, this.diamondModel, this.index);
-
-  TabController _tabController;
+  _DiamondDeepDetailScreenState(this.arrImages, this.diamondModel);
 
   @override
   void initState() {
@@ -86,13 +80,6 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
     // });
     // removeNotContainedImages();
 
-    print("------------${arrImages.toList().toString()}");
-    _tabController = TabController(length: arrImages.length, vsync: this)
-      ..addListener(_setActiveTabIndex);
-    if (index != null) {
-      currTab = index;
-      _tabController.animateTo(index);
-    }
     super.initState();
     getPrefixSum();
     getScrollControllerEventListener();
@@ -100,11 +87,6 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
     isErroWhileLoading = false;
     diamondConfig = DiamondConfig(moduleType);
     diamondConfig.initItems(isDetail: true);
-  }
-
-  void _setActiveTabIndex() {
-    currTab = _tabController.index;
-    setState(() {});
   }
 
   // removeNotContainedImages() {
@@ -161,6 +143,9 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
       }
       mapOfInitialPixels[j] = value;
     }
+    mapOfInitialPixels.forEach((key, value) {
+      print("${key} => ${value}");
+    });
   }
 
   @override
@@ -171,12 +156,11 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Scaffold(
       backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(
         context,
-        diamondModel?.vStnId?.toString() ?? "-",
+        diamondModel.stoneId.toString(),
         bgColor: appTheme.whiteColor,
         leadingButton: getBackButton(context),
         centerTitle: false,
@@ -190,42 +174,74 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
   Widget getDiamondDetailComponents() {
     return Column(
       children: <Widget>[
-        TabBar(
-          isScrollable: true,
-          unselectedLabelColor: Colors.white,
-          labelColor: Colors.amber,
-          controller: _tabController,
-          indicatorColor: Colors.transparent,
-          onTap: (index) {
-            currTab = index;
-            setState(() {});
-          },
-          tabs: getTabs(),
+        Container(
+          margin: EdgeInsets.only(
+              left: getSize(20),
+              right: getSize(20),
+              top: getSize(0),
+              bottom: getSize(0)),
+          height: getSize(52),
+          child: ScrollablePositionedList.builder(
+            itemScrollController: _sc,
+            scrollDirection: Axis.horizontal,
+            itemCount: arrImages.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                padding: EdgeInsets.only(right: getSize(30)),
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      jumpToAnyTabFromTabBarClick(index);
+                    });
+                  },
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        arrImages[index].title,
+                        style: appTheme.blackNormal18TitleColorblack,
+                      ),
+                      index == currTab
+                          ? Padding(
+                              padding: EdgeInsets.only(top: getSize(8)),
+                              child: Container(
+                                width: getSize(50),
+                                height: getSize(3),
+                                decoration: BoxDecoration(
+                                  color: appTheme.colorPrimary,
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(3),
+                                      topRight: Radius.circular(3)),
+                                ),
+                              ),
+                            )
+                          : SizedBox(),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
         ),
         SizedBox(
           height: getSize(25),
         ),
         Expanded(
-          child: TabBarView(
-            children: getChildren(),
-            controller: _tabController,
+          child: ListView.builder(
+            shrinkWrap: true,
+            controller: _scrollController1,
+            itemCount: arrImages.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: EdgeInsets.only(
+                  left: getSize(20),
+                  right: getSize(20),
+                  top: getSize(0),
+                  bottom: getSize(25),
+                ),
+                child: getListViewItem(index),
+              );
+            },
           ),
-//          child: ListView.builder(
-//            shrinkWrap: true,
-//            controller: _scrollController1,
-//            itemCount: arrImages.length,
-//            itemBuilder: (context, index) {
-//              return Padding(
-//                padding: EdgeInsets.only(
-//                  left: getSize(20),
-//                  right: getSize(20),
-//                  top: getSize(0),
-//                  bottom: getSize(25),
-//                ),
-//                child: getListViewItem(index),
-//              );
-//            },
-//          ),
         ),
       ],
     );
@@ -234,33 +250,39 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
   getListViewItem(int index) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: ListView.builder(
-              // physics: New,
-              // shrinkWrap: true,
-              controller: _pageController,
-              itemCount: arrImages[index].arr.length,
-              itemBuilder: (BuildContext context, int i) {
-                return InkWell(
-                  onTap: () {
-                    Map<String, dynamic> dict = new HashMap();
-                    dict["imageData"] = arrImages[index].arr;
-                    NavigationUtilities.pushRoute(
-                      DiamondImageBrowserScreen.route,
-                      args: dict,
-                    );
-                  },
-                  child: getTabBlock(
-                    arrImages[index].arr[i],
-                  ),
-                );
-              },
-            ),
+        Text(
+          arrImages[index].title,
+          style: appTheme.blackMedium16TitleColorblack,
+        ),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          margin: EdgeInsets.only(top: getSize(10)),
+          height: getSize(245),
+          child: PageView.builder(
+            // physics: New,
+            // shrinkWrap: true,
+            controller: _pageController,
+            scrollDirection: Axis.horizontal,
+            itemCount: arrImages[index].arr.length,
+            itemBuilder: (BuildContext context, int i) {
+              return InkWell(
+                onTap: () {
+                  Map<String, dynamic> dict = new HashMap();
+                  dict["imageData"] = arrImages[index].arr;
+                  NavigationUtilities.pushRoute(
+                    DiamondImageBrowserScreen.route,
+                    args: dict,
+                  );
+                },
+                child: getTabBlock(
+                  arrImages[index].arr[i],
+                ),
+              );
+            },
           ),
         ),
       ],
@@ -284,7 +306,7 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
     List<Widget> list = [];
     for (int i = 0; i < diamondConfig.toolbarList.length; i++) {
       var element = diamondConfig.toolbarList[i];
-      list.add(InkWell(
+      list.add(GestureDetector(
         onTap: () {
           manageToolbarClick(element);
         },
@@ -308,137 +330,106 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
   manageToolbarClick(BottomTabModel model) {
     switch (model.code) {
       case BottomCodeConstant.TBShare:
-        BottomTabModel tabModel = BottomTabModel();
-        tabModel.type = ActionMenuConstant.ACTION_TYPE_SHARE;
-        List<DiamondModel> selectedList = [diamondModel];
-
-        diamondConfig.manageDiamondAction(
-            context, selectedList, tabModel, () {});
         break;
       case BottomCodeConstant.TBClock:
         break;
       case BottomCodeConstant.TBDownloadView:
-        if ((app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
-                KYCStatus.pending) ==
-            KYCStatus.approved) {
-          BottomTabModel tabModel = BottomTabModel();
-          tabModel.type = ActionMenuConstant.ACTION_TYPE_DOWNLOAD;
-          List<DiamondModel> selectedList = [diamondModel];
-
-          diamondConfig.manageDiamondAction(
-              context, selectedList, tabModel, () {});
-        }
         break;
     }
   }
 
   Widget getTabBlock(DiamondDetailImagePagerModel model) {
     return (model.isImage == false)
-        ? Stack(
-            alignment: Alignment.center,
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height / 3,
-                width: getSize(354),
-                child: FutureBuilder<Widget>(
+        ? Container(
+            height: getSize(245),
+            width: getSize(354),
+            child: Stack(
+              children: [
+                FutureBuilder<Widget>(
                     future: getPDFView(context, model),
                     builder:
                         (BuildContext context, AsyncSnapshot<Widget> snapshot) {
-                      if (snapshot.hasData) {
-                        return snapshot.data;
-                      }
-                      return Center(
-                        child: SpinKitFadingCircle(
-                          color: appTheme.colorPrimary,
-                          size: getSize(30),
-                        ),
-                      );
+                      if (snapshot.hasData) return snapshot.data;
+
+                      return Container();
                     }),
-              ),
-              (isLoading)
-                  ? Center(
-                      child: SpinKitFadingCircle(
-                        color: appTheme.colorPrimary,
-                        size: getSize(30),
-                      ),
-                    )
-                  : Container()
-            ],
+                // !isErroWhileLoading ?Icon(Icons.title) :SizedBox(),
+                if (isLoading)
+                  Center(
+                    child: SpinKitFadingCircle(
+                      color: appTheme.colorPrimary,
+                      size: getSize(30),
+                    ),
+                  ),
+              ],
+            ),
           )
-        : Stack(
-            alignment: Alignment.bottomRight,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(bottom: 10),
-                child: getImageView(
-                  ((model.arr != null &&
+        : Container(
+            margin: EdgeInsets.only(right: getSize(10)),
+            child: Stack(
+              children: [
+                getImageView(
+                  (model.arr != null &&
                           model.arr.length > 0 &&
                           isStringEmpty(model.url) == false)
                       ? model.arr[model.subIndex].url
-                      : model.url),
-                  height: getSize(286),
-                  width: MathUtilities.screenWidth(context),
-                  fit: BoxFit.fitHeight,
-//                  shape: BoxDecoration(
-//                    color: appTheme.whiteColor,
-//                    // color: Colors.yellow,
-//                    borderRadius: BorderRadius.circular(getSize(20)),
-//                    border: Border.all(color: appTheme.lightBGColor),
-//                  ),
+                      : model.url,
+                  height: getSize(245),
+                  width: getSize(354),
+                  fit: BoxFit.fill,
+                  shape: BoxDecoration(
+                    color: appTheme.whiteColor,
+                    // color: Colors.yellow,
+                    borderRadius: BorderRadius.circular(getSize(20)),
+                    border: Border.all(color: appTheme.lightBGColor),
+                  ),
                 ),
-//                  child: Image.network(
-//                    (model.arr != null &&
-//                            model.arr.length > 0 &&
-//                            isStringEmpty(model.url) == false)
-//                        ? model.arr[model.subIndex].url
-//                        : model.url,
-//                    height: getSize(286),
-//                    width: MathUtilities.screenWidth(context),
-//                    fit: BoxFit.fitHeight,
-//                  ),
-              ),
-              Container(
-                padding: EdgeInsets.only(
-                  bottom: getSize(10),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Container(
+                    padding: EdgeInsets.only(
+                      bottom: getSize(10),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        getImageViewForDownloadAndShare(
+                          imageName: share,
+                          onTap: () {
+                            downloadSingleImage(
+                              model.url,
+                              model.title +
+                                  diamondModel.id +
+                                  "." +
+                                  getExtensionOfUrl(model.url),
+                              isFileShare: true,
+                            );
+                          },
+                        ),
+                        SizedBox(
+                          width: getSize(10),
+                        ),
+                        getImageViewForDownloadAndShare(
+                          imageName: download,
+                          onTap: () {
+                            downloadSingleImage(
+                              model.url,
+                              model.title +
+                                  diamondModel.id +
+                                  "." +
+                                  getExtensionOfUrl(model.url),
+                            );
+                          },
+                        ),
+                        SizedBox(
+                          width: getSize(10),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    getImageViewForDownloadAndShare(
-                      imageName: share,
-                      onTap: () {
-                        downloadSingleImage(
-                          model.url,
-                          model.title +
-                              diamondModel.id +
-                              "." +
-                              getExtensionOfUrl(model.url),
-                          isFileShare: true,
-                        );
-                      },
-                    ),
-                    SizedBox(
-                      width: getSize(10),
-                    ),
-                    getImageViewForDownloadAndShare(
-                      imageName: download,
-                      onTap: () {
-                        downloadSingleImage(
-                          model.url,
-                          model.title +
-                              diamondModel.id +
-                              "." +
-                              getExtensionOfUrl(model.url),
-                        );
-                      },
-                    ),
-                    SizedBox(
-                      width: getSize(10),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           );
   }
 
@@ -537,10 +528,9 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
     DiamondDetailImagePagerModel model,
   ) async {
     // if (!model.isImage) print(model.url);
-    return webView = WebView(
+    return WebView(
         initialUrl: model.url,
         onPageStarted: (url) {
-          isPageLoading = true;
           // app.resolve<CustomDialogs>().showProgressDialog(context, "");
           setState(() {
             isLoading = true;
@@ -548,12 +538,9 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
         },
         onPageFinished: (finish) {
           // app.resolve<CustomDialogs>().hideProgressDialog();
-          if (!isPageLoading) {
-            webView.onPageStarted(model.url);
-          } else {
+          setState(() {
             isLoading = false;
-            setState(() {});
-          }
+          });
         },
         onWebResourceError: (error) {
           print(error);
@@ -589,55 +576,4 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen>
       Navigator.pop(context, true);
     }, moduleType: moduleType);
   }
-
-  List<Widget> getTabs() {
-    List<Widget> list = [];
-    for (int i = 0; i < arrImages.length; i++) {
-      list.add(Tab(
-        child: Column(
-          children: [
-            Text(
-              arrImages[i].title,
-              style: appTheme.blackNormal18TitleColorblack,
-            ),
-            currTab == i
-                ? Padding(
-                    padding: EdgeInsets.only(top: getSize(8)),
-                    child: Container(
-                      width: getSize(50),
-                      height: getSize(3),
-                      decoration: BoxDecoration(
-                        color: appTheme.colorPrimary,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(3),
-                            topRight: Radius.circular(3)),
-                      ),
-                    ),
-                  )
-                : SizedBox(),
-          ],
-        ),
-      ));
-    }
-    return list;
-  }
-
-  getChildren() {
-    List<Widget> list = [];
-    for (int i = 0; i < arrImages.length; i++) {
-      list.add(Padding(
-        padding: EdgeInsets.only(
-          left: getSize(20),
-          right: getSize(20),
-          top: getSize(0),
-          bottom: getSize(25),
-        ),
-        child: getListViewItem(i),
-      ));
-    }
-    return list;
-  }
-
-  @override
-  bool get wantKeepAlive => true;
 }

@@ -158,6 +158,16 @@ class DiamondUrls {
   static const String type2A = commonUrl + "TYPE_IIA/";
   static const String roughScopeImg = commonUrl + "MFG/RoughImages/";
   static const String image3D = commonUrl + "MFG/PlanImages/";
+  static const String roughImage =
+      commonUrl + "MFG/RoughImages/";
+  static const String threeDImage = commonUrl + "MFG/PlanImages/"; // 3D Image
+  static const String b2bImage = commonUrl + "RealImages/"; // B2B Image
+}
+class DiamondDetailImageConstant {
+  static const int RoughImage = 1;
+  static const int RoughVideo = 2;
+  static const int ThreeDImage = 3;
+  static const int B2BImage = 4;
 }
 // https://s3.ap-south-1.amazonaws.com/finestargroup/CertiImages/<report_no>.pdf
 // https://s3.ap-south-1.amazonaws.com/finestargroup/MFG/RoughVideo/<packet_no>.html

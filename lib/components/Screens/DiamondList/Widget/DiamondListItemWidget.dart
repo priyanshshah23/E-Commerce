@@ -238,12 +238,51 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                               ),
                           child: Column(
                             children: [
+                              Padding(
+                                padding: EdgeInsets.only(top: getSize(10)),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    getCaratDetail(widget.actionClick),
+                                    getStoneAndAmountDetails(),
+                                    getDiamondImage()
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: getSize(14), right: getSize(10)),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    getDiscountDetails(),
+                                    getMeasurementDetails(),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: getSize(11),
+                                    right: getSize(10),
+                                    top: getSize(10),
+                                    bottom: getSize(10)),
+                                child: Row(
+                                  children: [
+                                    getStatusDetails(),
+                                    getTableDetails(),
+                                  ], //getMeasurementAndColorDetails(),
+                                ),
+                              ),
+                            ],
+                          ),
+                          /*child: Column(
+                            children: [
                               IntrinsicHeight(
                                 child: Row(
                                   children: <Widget>[
                                     getCaratAndDiscountDetail(
                                         widget.actionClick),
-                                    //   getIdColorDetail(),
+                                    // getIdColorDetail(),
 
                                     Expanded(
                                       child: Container(
@@ -269,13 +308,19 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                                         ],
                                                       ),
                                                     ),
-                                                    getImageView(
-                                                      widget.item
-                                                          .getDiamondImage(),
-                                                      placeHolderImage: diamond,
-                                                      width: getSize(62),
-                                                      height: getSize(62),
-                                                    ),
+                                                    ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              getSize(8)),
+                                                      child: getImageView(
+                                                        widget.item
+                                                            .getDiamondImage(),
+                                                        placeHolderImage:
+                                                            diamond,
+                                                        width: getSize(62),
+                                                        height: getSize(62),
+                                                      ),
+                                                    )
                                                   ],
                                                 ),
                                               ),
@@ -346,7 +391,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                 ),
                               getOfferedBottomSection(),
                             ],
-                          ),
+                          ),*/
                         ),
                       ),
                     ),
@@ -413,14 +458,13 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
     );
   }
 
-  getCaratAndDiscountDetail(ActionClick actionClick) {
+  getCaratDetail(ActionClick actionClick) {
     return GestureDetector(
       onTap: () {
         actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_SELECTION));
       },
       child: Container(
         padding: EdgeInsets.only(
-          top: getSize(8),
           left: getSize(8),
           right: getSize(8),
           bottom: getSize(8),
@@ -454,6 +498,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                             PriceUtilities.getDoubleValue(
                                 widget.item?.crt ?? 0),
                             style: appTheme.blue14TextStyle.copyWith(
+                                fontSize: getSize(14),
                                 color: widget.item.isSelected
                                     ? appTheme.whiteColor
                                     : appTheme.colorPrimary),
@@ -461,6 +506,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                           Text(
                             R.string.commonString.carat,
                             style: appTheme.blue14TextStyle.copyWith(
+                                fontSize: getSize(10),
                                 color: widget.item.isSelected
                                     ? appTheme.whiteColor
                                     : appTheme.colorPrimary),
@@ -471,22 +517,22 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               ),
             ),
             SizedBox(height: getSize(4)),
-            Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.only(top: getSize(5)),
-              width: getSize(60),
-              height: getSize(20),
-              decoration: BoxDecoration(
-                  color: appTheme.whiteColor,
-                  borderRadius: BorderRadius.circular(getSize(5))),
-              child: Text(
-                PriceUtilities.getPercent(widget.item.isAddToBid
-                        ? widget.item.getbidFinalDiscount()
-                        : widget.item?.getFinalDiscount()) ??
-                    "",
-                style: appTheme.green10TextStyle,
-              ),
-            ),
+            // Container(
+            //   alignment: Alignment.center,
+            //   margin: EdgeInsets.only(top: getSize(5)),
+            //   width: getSize(60),
+            //   height: getSize(20),
+            //   decoration: BoxDecoration(
+            //       color: appTheme.whiteColor,
+            //       borderRadius: BorderRadius.circular(getSize(5))),
+            //   child: Text(
+            //     PriceUtilities.getPercent(widget.item.isAddToBid
+            //             ? widget.item.getbidFinalDiscount()
+            //             : widget.item?.getFinalDiscount()) ??
+            //         "",
+            //     style: appTheme.green10TextStyle,
+            //   ),
+            // ),
             widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER
                 ? Container(
                     alignment: Alignment.center,
@@ -508,6 +554,70 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
     );
   }
 
+  getStoneAndAmountDetails() {
+    return Expanded(
+        child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        getIdShapeDetail(),
+        getShapeAndAmountDetail(),
+        getColorAndCutPolishDetail(),
+      ],
+    ));
+  }
+
+  getDiscountDetail() {
+    return Container(
+      alignment: Alignment.center,
+      //margin: EdgeInsets.only(top: getSize(5), left: getSize(14)),
+      width: getSize(44),
+      height: getSize(16),
+      decoration: BoxDecoration(
+          color: appTheme.whiteColor,
+          borderRadius: BorderRadius.circular(getSize(5))),
+      child: Text(
+        PriceUtilities.getPercent(widget.item.isAddToBid
+                ? widget.item.getbidFinalDiscount()
+                : widget.item?.getFinalDiscount()) ??
+            "",
+        style: appTheme.green10TextStyle,
+      ),
+    );
+  }
+
+  // getDiamondList2() {
+  //   return Expanded(
+  //     flex: 4,
+  //     child: Row(
+  //       children: <Widget>[
+  //         getText(
+  //             widget.item?.cutNm ?? "-", appTheme.blackMedium14TitleColorblack),
+  //         SizedBox(width: getSize(2.0)),
+  //         Container(
+  //           height: getSize(4),
+  //           width: getSize(4),
+  //           decoration: BoxDecoration(
+  //               color: appTheme.dividerColor, shape: BoxShape.circle),
+  //         ),
+  //         SizedBox(width: getSize(2.0)),
+  //         getText(
+  //             widget.item?.polNm ?? "-", appTheme.blackMedium14TitleColorblack),
+  //         SizedBox(width: getSize(2.0)),
+  //         Container(
+  //           height: getSize(4),
+  //           width: getSize(4),
+  //           decoration: BoxDecoration(
+  //               color: appTheme.dividerColor, shape: BoxShape.circle),
+  //         ),
+  //         SizedBox(width: getSize(2.0)),
+  //         getText(
+  //             widget.item?.symNm ?? "-", appTheme.blackMedium14TitleColorblack),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  getDiamondList3() {}
   getIdShapeDetail() {
     return Padding(
       padding: EdgeInsets.only(bottom: getSize(4)),
@@ -515,7 +625,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Expanded(
-            flex: 4,
+            // flex: 4,
             child: FittedBox(
               fit: BoxFit.scaleDown,
               alignment: Alignment.centerLeft,
@@ -525,20 +635,161 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               ),
             ),
           ),
+          // Expanded(
+          //   flex: 2,
+          //   child: FittedBox(
+          //     fit: BoxFit.scaleDown,
+          //     child: getText(widget.item?.shpNm ?? "",
+          //         appTheme.blackMedium14TitleColorblack),
+          //   ),
+          // ),
+          getAmountText(widget.item?.getPricePerCarat() ?? "",
+              align: TextAlign.right),
+        ],
+      ),
+    );
+  }
+
+  getShapeAndAmountDetail() {
+    return Padding(
+        padding: EdgeInsets.only(bottom: getSize(4)),
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
           Expanded(
-            flex: 2,
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: getText(widget.item?.shpNm ?? "",
+            // flex: 2,
+            child: getText(widget.item?.shpNm ?? "",
+                appTheme.blackMedium14TitleColorblack),
+          ),
+          getAmountText(widget.item?.getAmount() ?? "-")
+        ]));
+  }
+
+  getColorAndCutPolishDetail() {
+    return Padding(
+        padding: EdgeInsets.only(bottom: getSize(4)),
+        child: Row(
+            // mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              getText(widget.item?.colNm ?? "",
                   appTheme.blackMedium14TitleColorblack),
+              Expanded(
+                  flex: 3,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: getText(widget.item?.clrNm ?? "-",
+                        appTheme.blackMedium14TitleColorblack),
+                  )),
+              Expanded(
+                flex: 4,
+                child: Row(
+                  children: <Widget>[
+                    getText(widget.item?.cutNm ?? "-",
+                        appTheme.blackMedium14TitleColorblack),
+                    SizedBox(width: getSize(2.0)),
+                    Container(
+                      height: getSize(4),
+                      width: getSize(4),
+                      decoration: BoxDecoration(
+                          color: appTheme.dividerColor, shape: BoxShape.circle),
+                    ),
+                    SizedBox(width: getSize(2.0)),
+                    getText(widget.item?.polNm ?? "-",
+                        appTheme.blackMedium14TitleColorblack),
+                    SizedBox(width: getSize(2.0)),
+                    Container(
+                      height: getSize(4),
+                      width: getSize(4),
+                      decoration: BoxDecoration(
+                          color: appTheme.dividerColor, shape: BoxShape.circle),
+                    ),
+                    SizedBox(width: getSize(2.0)),
+                    getText(widget.item?.symNm ?? "-",
+                        appTheme.blackMedium14TitleColorblack),
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: getText(widget.item?.lbNm ?? "",
+                    appTheme.blackMedium12TitleColorblack),
+              ),
+            ]));
+  }
+  /*getSecondRow() {
+    return Padding(
+      padding: EdgeInsets.only(top: getSize(10), right: getSize(10)),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: getText(widget.item?.colNm ?? "-",
+                appTheme.blackMedium14TitleColorblack),
+          ),
+          Expanded(
+            flex: 3,
+            child: getText(widget.item?.clrNm ?? "-",
+                appTheme.blackMedium14TitleColorblack),
+          ),
+          Expanded(
+            flex: 3,
+            child: Row(
+              children: <Widget>[
+                getText(widget.item?.cutNm ?? "-",
+                    appTheme.blackMedium14TitleColorblack),
+                SizedBox(width: getSize(2.0)),
+                Container(
+                  height: getSize(4),
+                  width: getSize(4),
+                  decoration: BoxDecoration(
+                      color: appTheme.dividerColor, shape: BoxShape.circle),
+                ),
+                SizedBox(width: getSize(2.0)),
+                getText(widget.item?.polNm ?? "-",
+                    appTheme.blackMedium14TitleColorblack),
+                SizedBox(width: getSize(2.0)),
+                Container(
+                  height: getSize(4),
+                  width: getSize(4),
+                  decoration: BoxDecoration(
+                      color: appTheme.dividerColor, shape: BoxShape.circle),
+                ),
+                SizedBox(width: getSize(2.0)),
+                getText(widget.item?.symNm ?? "-",
+                    appTheme.blackMedium14TitleColorblack),
+              ],
             ),
           ),
           Expanded(
+            flex: 1,
+            child: getText(
+                widget.item?.lbNm ?? "", appTheme.blackMedium12TitleColorblack),
+          ),
+          Expanded(
             flex: 4,
-            child: getAmountText(widget.item?.getPricePerCarat() ?? "",
-                align: TextAlign.right),
+            child: getAmountText(
+              widget.item?.getPricePerCarat() ?? "",
+              align: TextAlign.right,
+            ),
           ),
         ],
+      ),
+    );
+  }*/
+
+  getDiamondImage() {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: getSize(10),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(getSize(8)),
+        child: getImageView(
+          widget.item.getDiamondImage(),
+          placeHolderImage: diamond,
+          width: getSize(62),
+          height: getSize(62),
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
@@ -593,7 +844,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   appTheme.blackMedium14TitleColorblack),
             ],
           ),
-          getAmountText(widget.item?.getAmount() ?? "-"),
+          //getAmountText(widget.item?.getAmount() ?? "-"),
         ],
       ),
     );
@@ -605,8 +856,22 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       child: Row(
         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
+          Container(
+            alignment: Alignment.center,
+            //margin: EdgeInsets.only(top: getSize(5), left: getSize(14)),
+
+            decoration: BoxDecoration(
+                color: appTheme.whiteColor,
+                borderRadius: BorderRadius.circular(getSize(5))),
+            child: Text(
+              PriceUtilities.getPercent(widget.item.isAddToBid
+                      ? widget.item.getbidFinalDiscount()
+                      : widget.item?.getFinalDiscount()) ??
+                  "",
+              style: appTheme.green10TextStyle,
+            ),
+          ),
           Expanded(
-            flex: 2,
             child: getText(
                 widget.item?.lbNm ?? "", appTheme.blackMedium12TitleColorblack),
           ),
@@ -625,41 +890,166 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
     );
   }
 
-  getTableDepthAndAmountDetail() {
-    return Padding(
-      padding: EdgeInsets.only(top: getSize(4)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Expanded(
-            flex: 2,
-            child: getText(widget.item?.fluNm ?? "-",
-                appTheme.blackMedium12TitleColorblack),
-          ),
-          Expanded(
-            flex: 2,
-            child: getTextWithLabel(widget.item?.mlkNm ?? "-", "M : "),
-          ),
-          // PriceUtilities.getPercent(widget.item?.depPer ?? 0)
-          Expanded(
-            flex: 3,
-            child: getTextWithLabel(
-                PriceUtilities.getPercentWithoutPercentSign(
-                    widget.item?.depPer ?? 0),
-                "D : "),
-          ),
-          Expanded(
-            flex: 3,
-            child: getTextWithLabel(
-                PriceUtilities.getPercentWithoutPercentSign(
-                    widget.item?.tblPer ?? 0),
-                "T : "),
-          ),
-          // getAmountText(widget.item?.getAmount() ?? ""),
-        ],
+  getDiscountDetails() {
+    return Container(
+      margin: EdgeInsets.only(right: getSize(15)),
+      alignment: Alignment.center,
+      //margin: EdgeInsets.only(top: getSize(5), left: getSize(14)),
+
+      decoration: BoxDecoration(
+          color: appTheme.whiteColor,
+          borderRadius: BorderRadius.circular(getSize(5))),
+      child: Text(
+        PriceUtilities.getPercent(widget.item.isAddToBid
+                ? widget.item.getbidFinalDiscount()
+                : widget.item?.getFinalDiscount()) ??
+            "",
+        style: appTheme.green10TextStyle,
       ),
     );
   }
+
+  getMeasurementDetails() {
+    return Expanded(
+      child: Container(
+        height: getSize(16),
+        // padding: EdgeInsets.only(left: getSize(16)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Expanded(
+                child: Align(
+              alignment: Alignment.centerLeft,
+              child: getTextWithLabel(
+                widget.item?.shdNm ?? "-",
+                "S : ",
+              ),
+            )),
+            Expanded(
+              flex: 2,
+              child: getTextWithLabel(widget.item?.fluNm ?? "-", "FL : "),
+          ),
+            // PriceUtilities.getPercent(widget.item?.depPer ?? 0)
+            Expanded(
+              flex: 4,
+              child: getTextWithLabel(widget.item?.msrmnt ?? "-", "M : "),
+            ),
+            // getAmountText(widget.item?.getAmount() ?? ""),
+          ],
+        ),
+      ),
+    );
+  }
+
+  getStatusDetails() {
+    return Container(
+      margin: EdgeInsets.only(right: getSize(10)),
+      alignment: Alignment.topLeft,
+      child: Row(
+        children: [
+          Container(
+            width: getSize(6),
+            height: getSize(6),
+            decoration: BoxDecoration(
+                shape: BoxShape.circle, color: widget.item.getStatusColor()),
+          ),
+          SizedBox(
+            width: getSize(2),
+          ),
+          getText(
+              widget.item.getStatusText(),
+              appTheme.black12TextStyle
+                  .copyWith(color: widget.item.getStatusColor()))
+        ],
+      ),
+    );
+    // return Container(
+    //   margin: EdgeInsets.only(right: getSize(10)),
+    //   alignment: Alignment.center,
+    //   child: getText(
+    //       widget.item.getStatusText(),
+    //       appTheme.black12TextStyle
+    //           .copyWith(color: widget.item.getStatusColor())),
+    // );
+  }
+
+  getTableDetails() {
+    return Expanded(
+      child: Container(
+        height: getSize(16),
+        // padding: EdgeInsets.only(left: getSize(16)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Expanded(
+                flex: 1,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: getTextWithLabel(
+                    widget.item?.ratio.toString() ?? "-",
+                    "R : ",
+                  ),
+                )),
+            Expanded(
+              flex: 1,
+              child: getTextWithLabel(widget.item?.eClnNm ?? "-", "EC : "),
+            ),
+            // PriceUtilities.getPercent(widget.item?.depPer ?? 0)
+            Expanded(
+              flex: 2,
+              child: getTextWithLabel(
+                  widget.item?.depPer.toString() ?? "-", "D% : "),
+            ),
+            Expanded(
+              flex: 1,
+              child: getTextWithLabel(
+                  widget.item?.tblPer.toString() ?? "-", "T% : "),
+            ),
+            // getAmountText(widget.item?.getAmount() ?? ""),
+          ],
+        ),
+      ),
+    );
+  }
+
+  //getRowThreeDetails() {
+  // return Expanded(
+  //   child: Container(
+  //     height: getSize(16),
+  //     // padding: EdgeInsets.only(left: getSize(16)),
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //       children: <Widget>[
+  //         Expanded(
+  //             flex: 1,
+  //             child: Align(
+  //               alignment: Alignment.centerLeft,
+  //               child: getTextWithLabel(
+  //                 widget.item?.ratio.toString() ?? "-",
+  //                 "R : ",
+  //               ),
+  //             )),
+  //         Expanded(
+  //           flex: 1,
+  //           child: getTextWithLabel(widget.item?.eClnNm ?? "-", "EC : "),
+  //         ),
+  //         // PriceUtilities.getPercent(widget.item?.depPer ?? 0)
+  //         Expanded(
+  //           flex: 1,
+  //           child: getTextWithLabel(
+  //               widget.item?.depPer.toString() ?? "-", "D% : "),
+  //         ),
+  //         Expanded(
+  //           flex: 1,
+  //           child: getTextWithLabel(
+  //               widget.item?.tblPer.toString() ?? "-", "T% : "),
+  //         ),
+  //         // getAmountText(widget.item?.getAmount() ?? ""),
+  //       ],
+  //     ),
+  //   ),
+  // );
+  //}
 
   //Watch list
   getWatchlistData() {
@@ -1439,11 +1829,7 @@ class _DropDownItemState extends State<DropDownItem> {
 }
 
 getText(String text, TextStyle style, {TextAlign align}) {
-  return Text(
-    text,
-    textAlign: align ?? TextAlign.left,
-    style: style,
-  );
+  return Text(text, textAlign: align ?? TextAlign.left, style: style);
 }
 
 getPrimaryText(String text) {
