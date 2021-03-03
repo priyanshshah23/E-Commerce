@@ -1,0 +1,14 @@
+targets:
+  $default:
+    builders:
+      custom_localization_generator|custom_localization:
+        enabled: true
+builders:
+  custom_localization:
+    target: ":custom_localization_generator"
+    import: "package:custom_localization_generator/builder.dart"
+    builder_factories: ["customLocalizationGenerator"]
+    build_extensions: {".dart": [".custom_localization.g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
