@@ -662,7 +662,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 ? GridView.count(
                     shrinkWrap: true,
                     crossAxisCount: 2,
-                    childAspectRatio: 0.8,
+                    childAspectRatio: (166) / (202 + 73),
                     mainAxisSpacing: 10,
                     crossAxisSpacing: 8,
                     padding: EdgeInsets.only(
@@ -1197,7 +1197,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         break;
       case BottomCodeConstant.TBGrideView:
         viewTypeCount += 1;
-        if (viewTypeCount == 2) {
+        if (viewTypeCount == 3) {
           viewTypeCount = 0;
         }
         fillArrayList();
