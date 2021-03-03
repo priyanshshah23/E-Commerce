@@ -93,7 +93,10 @@ dependencies:
   collection: ^1.14.13
   screenshot_callback: any
   flutter_device_type: ^0.3.2
-  flutter_inappwebview: ^4.0.0+4
+  flutter_native_timezone: ^1.0.4
+  flick_video_player: any
+  flutter_widgets: 0.1.12
+
 
 dev_dependencies:
   flutter_test:
