@@ -4,7 +4,7 @@ import '../app.export.dart';
 
 class ApiConstants {
 //  static const String PROXY_URL = "PROXY 192.168.0.114:8888";
-  static String PROXY_URL = "PROXY 192.168.0.131:8888"; //HONEY
+  static String PROXY_URL = "PROXY 192.168.0.132:8888"; //HONEY
 // static String PROXY_URL = "PROXY 192.168.0.118:8888"; //JECKY
 
 //    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
