@@ -95,7 +95,7 @@ class AuthStrings {
   String offlineFilter =
       "Unable to find the desired solitaire? We can help you get the best deal from our offline inventory.";
   String loginDesc =
-      "Do you want to enable Touch Id/MPin to unlock My Diamonds? Please choose an option to unlock app";
+      "Do you want to enable Touch Id/MPin to unlock Arjiv? Please choose an option to unlock app";
   String searchDiamonds = "Search diamonds";
   String continueWithSearch = "Do you want to continue your search?";
   String mobileNumber = "Mobile";
@@ -447,10 +447,10 @@ class CommonString {
   String pleaseSelectBusinessProof = "Please select document";
   String touchId = "Touch Id";
   String faceId = "Face Id";
-  String enableTouchId = "Enable Touch Id to unlock My Diamonds?";
-  String enableFaceId = "Enable Face Id to unlock My Diamonds?";
-  String unlockWithTouchId = "Unlock My Diamonds using Touch Id";
-  String unlockWithFaceId = "Unlock My Diamonds using Face Id.";
+  String enableTouchId = "Enable Touch Id to unlock Arjiv?";
+  String enableFaceId = "Enable Face Id to unlock Arjiv?";
+  String unlockWithTouchId = "Unlock Arjiv using Touch Id";
+  String unlockWithFaceId = "Unlock Arjiv using Face Id.";
   String mPin = "MPin";
   String holdMemoStatusDiamondorder =
       "You can not confirmed stones which are already in hold or memo status";

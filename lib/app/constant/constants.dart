@@ -19,7 +19,7 @@ const rupee = "\u0024";
 
 var IMAGEFILESIZE = 10.0;
 
-const APPNAME = "My Diamonds";
+const APPNAME = "Arjiv";
 
 const CODE_OK = "OK";
 const CODE_SUCCESS = "SUCCESS";
