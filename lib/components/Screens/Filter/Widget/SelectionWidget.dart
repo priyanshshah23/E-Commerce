@@ -512,45 +512,50 @@ class _TagWidgetState extends State<TagWidget> {
       children: [
         isNullEmptyOrFalse(widget.model.title)
             ? SizedBox()
-            : Row(
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     widget.model.title ?? "",
                     style: appTheme.blackNormal18TitleColorblack,
                     textAlign: TextAlign.left,
                   ),
-                  Spacer(),
-                  getFromTextField(),
-                  SizedBox(
-                    width: getSize(8),
-                  ),
-                  getToTextField(),
+                  //Spacer(),
+                  Row(
+                    children: [
+                      getFromTextField(),
+                      SizedBox(
+                        width: getSize(15),
+                      ),
+                      getToTextField(),
+                    ],
+                  )
                 ],
               ),
-        isNullEmptyOrFalse(widget.model.title)
-            ? SizedBox()
-            : SizedBox(height: getSize(20)),
-        Container(
-          height: getSize(40),
-          child: ListView.builder(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemCount: widget.model.masters.length,
-            itemBuilder: (context, index) {
-              return InkWell(
-                child: getSingleTag(index),
-                onTap: () {
-                  setState(() {
-                    widget.model.masters[index].isSelected =
-                        !widget.model.masters[index].isSelected;
+        // isNullEmptyOrFalse(widget.model.title)
+        //     ? SizedBox()
+        //     : SizedBox(height: getSize(20)),
+        // Container(
+        //   height: getSize(40),
+        //   child: ListView.builder(
+        //     shrinkWrap: true,
+        //     scrollDirection: Axis.horizontal,
+        //     itemCount: widget.model.masters.length,
+        //     itemBuilder: (context, index) {
+        //       return InkWell(
+        //         child: getSingleTag(index),
+        //         onTap: () {
+        //           setState(() {
+        //             widget.model.masters[index].isSelected =
+        //                 !widget.model.masters[index].isSelected;
 
-                    getMultipleMasterSelections(index);
-                  });
-                },
-              );
-            },
-          ),
-        ),
+        //             getMultipleMasterSelections(index);
+        //           });
+        //         },
+        //       );
+        //     },
+        //   ),
+        // ),
         SizedBox(height: getSize(8))
       ],
     );
@@ -567,7 +572,7 @@ class _TagWidgetState extends State<TagWidget> {
               : appTheme.borderColor,
         ),
       ),
-      width: getSize(100),
+      width: getSize(185),
       height: getSize(40),
       child: TextField(
         readOnly: true,
@@ -597,6 +602,10 @@ class _TagWidgetState extends State<TagWidget> {
               : InputBorder.none,
           hintText: R.string.commonString.fromLbl,
           hintStyle: appTheme.grey14HintTextStyle,
+          suffixIcon: Icon(
+            Icons.calendar_today_rounded,
+            size: 15,
+          ),
         ),
       ),
     );
@@ -613,7 +622,7 @@ class _TagWidgetState extends State<TagWidget> {
               : appTheme.borderColor,
         ),
       ),
-      width: getSize(100),
+      width: getSize(180),
       height: getSize(40),
       child: TextField(
         readOnly: true,
@@ -651,6 +660,7 @@ class _TagWidgetState extends State<TagWidget> {
               : InputBorder.none,
           hintText: "To",
           hintStyle: appTheme.grey14HintTextStyle,
+          suffixIcon: Icon(Icons.calendar_today_rounded, size: 15),
         ),
       ),
     );

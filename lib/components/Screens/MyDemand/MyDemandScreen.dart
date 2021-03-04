@@ -143,22 +143,21 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
       child: Column(
         children: [
           Material(
-            elevation: 10,
-            shadowColor: appTheme.shadowColor,
+            // elevation: 10,
+            // shadowColor: appTheme.shadowColor,
             borderRadius: BorderRadius.circular(getSize(5)),
             child: Container(
               decoration: BoxDecoration(
                 color: appTheme.whiteColor,
                 borderRadius: BorderRadius.circular(getSize(5)),
                 border: Border.all(
-                  color: appTheme.lightBGColor,
-                ),
+                    color: appTheme.textFieldBorderColor, width: getSize(0.5)),
               ),
               child: Padding(
                 padding: EdgeInsets.only(
-                  left: getSize(16),
-                  top: getSize(16),
-                  right: getSize(16),
+                  // left: getSize(16),
+                  top: getSize(10),
+                  // right: getSize(16),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -173,16 +172,20 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(bottom: getSize(6.0)),
+                                padding: EdgeInsets.only(bottom: getSize(2.0)),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
-                                      child: Text(
-                                        model.name ?? "-",
-                                        style: appTheme
-                                            .blackNormal16TitleColorblack,
+                                      child: Padding(
+                                        padding:
+                                            EdgeInsets.only(left: getSize(16)),
+                                        child: Text(
+                                          model.name ?? "-",
+                                          style: appTheme
+                                              .blackBold16TitleColorblack,
+                                        ),
                                       ),
                                     ),
                                     arr.length > 3
@@ -305,102 +308,102 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                               // )
                             ],
                           ),
-                          SizedBox(
-                            height: getSize(16),
-                          ),
+                          // SizedBox(
+                          //   height: getSize(16),
+                          // ),
                           Divider(
                             color: appTheme.dividerColor,
                           ),
-                          SizedBox(
-                            height: getSize(6),
-                          ),
+                          // SizedBox(
+                          //   height: getSize(6),
+                          // ),
                           if (arr.length <= 3)
                             listOfSelectedFilter(arr, model, arr.length),
                           if (arr.length > 3 && model.isExpand)
                             listOfSelectedFilter(arr, model, arr.length),
                           if (arr.length > 3 && !model.isExpand)
                             listOfSelectedFilter(arr, model, 3),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              // left: getSize(16),
-                              // right: getSize(16),
-                              top: getSize(11),
-                              bottom: getSize(11),
-                            ),
-                            child: Container(
-                              padding: EdgeInsets.only(
-                                  top: getSize(8), bottom: getSize(8)),
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      top: BorderSide(
-                                          color: appTheme.dividerColor))),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  if (widget.moduleType !=
-                                      DiamondModuleConstant
-                                          .MODULE_TYPE_MY_DEMAND)
-                                    getPreviewItem(
-                                      edit_icon,
-                                      appTheme.greenPrimaryNormal14TitleColor,
-                                      () {
-                                        Map<String, dynamic> dict = {};
-                                        dict["searchData"] = model.searchData;
-                                        dict[ArgumentConstant.IsFromDrawer] =
-                                            false;
-                                        NavigationUtilities.pushRoute(
-                                            FilterScreen.route,
-                                            args: dict);
-                                      },
-                                      txt: R.string.commonString.modify,
-                                    ),
-                                  // getPreviewItem(
-                                  //   delete_icon_medium,
-                                  //   appTheme.redPrimaryNormal14TitleColor,
-                                  //   () {
-                                  //     app
-                                  //         .resolve<CustomDialogs>()
-                                  //         .confirmDialog(
-                                  //       context,
-                                  //       barrierDismissible: true,
-                                  //       title: "",
-                                  //       desc:
-                                  //           "${R.string.commonString.youreallywanttodelete} ${model.name}?.",
-                                  //       positiveBtnTitle:
-                                  //           R.string.commonString.ok,
-                                  //       negativeBtnTitle:
-                                  //           R.string.commonString.cancel,
-                                  //       onClickCallback: (buttonType) {
-                                  //         if (buttonType ==
-                                  //             ButtonType.PositveButtonClick) {
-                                  //           SyncManager.instance
-                                  //               .callApiForDeleteSavedSearch(
-                                  //                   context, model.id ?? "",
-                                  //                   success: (resp) {
-                                  //             callApi(true);
-                                  //           });
-                                  //         }
-                                  //       },
-                                  //     );
-                                  //   },
-                                  //   txt: R.string.commonString.delete,
-                                  // ),
-                                  // getPreviewItem(saved_medium,
-                                  //     appTheme.primaryColor14TextStyle, () {
-                                  //   Map<String, dynamic> dict = new HashMap();
-                                  //   dict["filterId"] = model.id;
-                                  //   dict[ArgumentConstant.ModuleType] =
-                                  //       DiamondModuleConstant
-                                  //           .MODULE_TYPE_MY_SAVED_SEARCH;
-                                  //   NavigationUtilities.pushRoute(
-                                  //       DiamondListScreen.route,
-                                  //       args: dict);
-                                  // }, txt: R.string.commonString.search),
-                                ],
-                              ),
-                            ),
-                          ),
+                          // Padding(
+                          //   padding: EdgeInsets.only(
+                          //     // left: getSize(16),
+                          //     // right: getSize(16),
+                          //     top: getSize(11),
+                          //     bottom: getSize(11),
+                          //   ),
+                          //   child: Container(
+                          //     padding: EdgeInsets.only(
+                          //         top: getSize(8), bottom: getSize(8)),
+                          //     decoration: BoxDecoration(
+                          //         border: Border(
+                          //             top: BorderSide(
+                          //                 color: appTheme.dividerColor))),
+                          //     child: Row(
+                          //       mainAxisAlignment:
+                          //           MainAxisAlignment.spaceAround,
+                          //       children: [
+                          //         if (widget.moduleType !=
+                          //             DiamondModuleConstant
+                          //                 .MODULE_TYPE_MY_DEMAND)
+                          //           getPreviewItem(
+                          //             edit_icon,
+                          //             appTheme.greenPrimaryNormal14TitleColor,
+                          //             () {
+                          //               Map<String, dynamic> dict = {};
+                          //               dict["searchData"] = model.searchData;
+                          //               dict[ArgumentConstant.IsFromDrawer] =
+                          //                   false;
+                          //               NavigationUtilities.pushRoute(
+                          //                   FilterScreen.route,
+                          //                   args: dict);
+                          //             },
+                          //             txt: R.string.commonString.modify,
+                          //           ),
+                          //         // getPreviewItem(
+                          //         //   delete_icon_medium,
+                          //         //   appTheme.redPrimaryNormal14TitleColor,
+                          //         //   () {
+                          //         //     app
+                          //         //         .resolve<CustomDialogs>()
+                          //         //         .confirmDialog(
+                          //         //       context,
+                          //         //       barrierDismissible: true,
+                          //         //       title: "",
+                          //         //       desc:
+                          //         //           "${R.string.commonString.youreallywanttodelete} ${model.name}?.",
+                          //         //       positiveBtnTitle:
+                          //         //           R.string.commonString.ok,
+                          //         //       negativeBtnTitle:
+                          //         //           R.string.commonString.cancel,
+                          //         //       onClickCallback: (buttonType) {
+                          //         //         if (buttonType ==
+                          //         //             ButtonType.PositveButtonClick) {
+                          //         //           SyncManager.instance
+                          //         //               .callApiForDeleteSavedSearch(
+                          //         //                   context, model.id ?? "",
+                          //         //                   success: (resp) {
+                          //         //             callApi(true);
+                          //         //           });
+                          //         //         }
+                          //         //       },
+                          //         //     );
+                          //         //   },
+                          //         //   txt: R.string.commonString.delete,
+                          //         // ),
+                          //         // getPreviewItem(saved_medium,
+                          //         //     appTheme.primaryColor14TextStyle, () {
+                          //         //   Map<String, dynamic> dict = new HashMap();
+                          //         //   dict["filterId"] = model.id;
+                          //         //   dict[ArgumentConstant.ModuleType] =
+                          //         //       DiamondModuleConstant
+                          //         //           .MODULE_TYPE_MY_SAVED_SEARCH;
+                          //         //   NavigationUtilities.pushRoute(
+                          //         //       DiamondListScreen.route,
+                          //         //       args: dict);
+                          //         // }, txt: R.string.commonString.search),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
@@ -454,33 +457,64 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
 
   Widget listOfSelectedFilter(List<Map<String, dynamic>> arr,
       SavedSearchModel savedSearchModel, int length) {
-    return GridView.count(
-      shrinkWrap: true,
-      crossAxisCount: 2,
-      children: [
-        for (int i = 0; i < length; i++)
-          Padding(
-            padding: EdgeInsets.only(top: getSize(10)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "${arr[i]["key"] ?? ""}",
-                  // textAlign: TextAlign.left,
-                  style: appTheme.grey16HintTextStyle,
+    return Container(
+        padding: EdgeInsets.only(
+            top: getSize(10),
+            bottom: getSize(13),
+            left: getSize(16),
+            right: getSize(15.5)),
+        child: Wrap(
+          children: [
+            for (int i = 0; i < length; i++)
+              Container(
+                // color: Colors.blue,
+                width: getSize(155.5),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${arr[i]["key"] ?? ""}",
+                      textAlign: TextAlign.left,
+                      style: appTheme.grey14HintTextStyle,
+                    ),
+                    // SizedBox(width: getSize(16)),
+                    Text(arr[i]["value"] ?? "",
+                        textAlign: TextAlign.left,
+                        style: appTheme.blackMedium14TitleColorblack),
+                  ],
                 ),
-                SizedBox(width: getSize(16)),
-                Expanded(
-                  child: Text(arr[i]["value"] ?? "",
-                      // textAlign: TextAlign.right,
-                      style: appTheme.blackNormal16TitleColorblack),
-                ),
-              ],
-            ),
-          ),
-      ],
-    );
+              )
+          ],
+        )
+
+        // Container(
+        //   // color: Colors.blue,
+        //   margin: EdgeInsets.all(5),
+        //   child: Padding(
+        //     padding: EdgeInsets.only(top: getSize(0)),
+        //     child: Column(
+        //       mainAxisAlignment: MainAxisAlignment.start,
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: [
+        //         Text(
+        //           "${arr[i]["key"] ?? ""}",
+        //           // textAlign: TextAlign.left,
+
+        //           style: appTheme.grey16HintTextStyle,
+        //         ),
+        //         SizedBox(width: getSize(16)),
+        //         Expanded(
+        //           child: Text(arr[i]["value"] ?? "",
+        //               // textAlign: TextAlign.right,
+        //               style: appTheme.blackNormal16TitleColorblack),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
+
+        );
     // return Column(
     //   children: <Widget>[
     //     for (int i = 0; i < length; i++)
