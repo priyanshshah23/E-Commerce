@@ -1361,7 +1361,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   showOverlayScreens() {
     if (this.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
-      return (app.resolve<PrefUtils>().getBool(PrefUtils().keyOfferTour) ==
+      return (app.resolve<PrefUtils>().isDisplayedTour(PrefUtils().keyOfferTour) ==
                   false &&
               isNullEmptyOrFalse(arraDiamond) == false)
           ? OverlayScreen(
@@ -1377,7 +1377,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     if (this.moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
       return (app
                       .resolve<PrefUtils>()
-                      .getBool(PrefUtils().keySearchResultTour) ==
+                      .isDisplayedTour(PrefUtils().keySearchResultTour) ==
                   false &&
               isNullEmptyOrFalse(arraDiamond) == false)
           ? OverlayScreen(
