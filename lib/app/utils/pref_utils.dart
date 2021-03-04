@@ -353,10 +353,10 @@ class PrefUtils {
 
     if (module == ModulePermissionConstant.permission_searchDiamond ||
         module == ModulePermissionConstant.permission_quickSearch ||
+        module == ModulePermissionConstant.permission_searchResult ||
         module == ModulePermissionConstant.permission_watchlist ||
         module == ModulePermissionConstant.permission_cart ||
-        module == ModulePermissionConstant.permission_myDemand ||
-        module == ModulePermissionConstant.permission_mySavedSearch) {
+        module == ModulePermissionConstant.permission_myDemand ) {
       data = UserPermissionsData(module: module);
       data.insert = true;
       data.view = true;
