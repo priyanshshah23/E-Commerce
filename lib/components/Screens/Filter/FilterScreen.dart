@@ -489,7 +489,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             ),
             bottomNavigationBar: getBottomTab(),
           ),
-          (app.resolve<PrefUtils>().getBool(PrefUtils().keySearchTour) ==
+          (app.resolve<PrefUtils>().isDisplayedTour(PrefUtils().keySearchTour) ==
                       false &&
                   this.moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH)
               ? OverlayScreen(

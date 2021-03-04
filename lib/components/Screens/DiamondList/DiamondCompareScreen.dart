@@ -649,7 +649,7 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
             ),
           ),
         ),
-        (app.resolve<PrefUtils>().getBool(PrefUtils().keyCompareStoneTour) ==
+        (app.resolve<PrefUtils>().isDisplayedTour(PrefUtils().keyCompareStoneTour) ==
                 false)
             ? OverlayScreen(
                 DiamondModuleConstant.MODULE_TYPE_COMPARE,
