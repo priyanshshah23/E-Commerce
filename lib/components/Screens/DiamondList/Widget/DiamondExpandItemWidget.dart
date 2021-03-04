@@ -207,7 +207,8 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
             flex: 2,
             child: Text(
               PriceUtilities.getPercent(widget.item?.getFinalDiscount() ?? 0),
-              style: appTheme.blue14TextStyle,
+              style:
+                  appTheme.blue14TextStyle.copyWith(color: appTheme.greenColor),
               textAlign: TextAlign.right,
             ),
           ),
@@ -263,7 +264,7 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
           Expanded(
             flex: 1,
             child: getText(
-                widget.item?.lbNm ?? "", appTheme.blackMedium12TitleColorblack),
+                widget.item?.lbNm ?? "", appTheme.blackMedium14TitleColorblack),
           ),
           Expanded(
             flex: 4,

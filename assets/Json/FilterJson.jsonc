@@ -25,7 +25,7 @@
   {
     "viewType": "seperator",
     "sequence": 2,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -42,7 +42,7 @@
     "allLableTitle": "All",
     "apiKey": "crt",
     "masterCode": "Size",
-    "verticalScroll": true,
+    "verticalScroll": false,
     "orientation": "v",
     "gridViewItemCount": 3,
     "labelFrom": "From",
@@ -57,8 +57,8 @@
     "isActive": true,
     "showFromTo": true,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -68,7 +68,7 @@
   {
     "viewType": "seperator",
     "sequence": 4,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -87,7 +87,7 @@
     "showRadio": true,
     "showGroup": false,
     "showWhiteFancy": true,
-    "verticalScroll": true,
+    "verticalScroll": false,
     "orientation": "v",
     "isShowAll": false,
     "gridViewItemCount": 5,
@@ -154,39 +154,10 @@
     "viewType": "seperator",
     "sequence": 6,
     "height": 1,
-    "isActive": true,
+    "isActive": false,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
-    "rightPadding": 0,
-    "topPadding": 4,
-    "bottomPadding": 4
-  },
-  {
-    "title": "Color Shade",
-    "desc": "Desc",
-    "viewType": "selection",
-    "allLableTitle": "All",
-    "apiKey": "shd",
-    "masterCode": "SHADE",
-    "verticalScroll": false,
-    "orientation": "v",
-    "isShowAll": false,
-    "isShowMore": false,
-    "tab": "basic",
-    "isWhiteColor": false,
-    "sequence": 7,
-    "isActive": false,
-    "valueKeyisCode": false
-  },
-  {
-    "viewType": "seperator",
-    "sequence": 8,
-    "isActive": false,
-    "height": 1,
-    "color": "#E3E3E3",
-    "tab": "basic",
-    "leftPadding": 0,
     "rightPadding": 0,
     "topPadding": 4,
     "bottomPadding": 4
@@ -200,7 +171,7 @@
     "allLableTitle": "All",
     "apiKey": "clr",
     "masterCode": "CLARITY",
-    "verticalScroll": true,
+    "verticalScroll": false,
     "orientation": "v",
     "isShowAll": false,
     "isShowMore": false,
@@ -264,45 +235,11 @@
   {
     "viewType": "seperator",
     "sequence": 10,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
-    "rightPadding": 0,
-    "topPadding": 4,
-    "bottomPadding": 4
-  },
-  {
-    "title": "Arrivals",
-    "viewType": "selection",
-    "allLableTitle": "All",
-    "apiKey": "arrivals",
-    "masterCode": "ARRIVALS",
-    "verticalScroll": true,
-    "orientation": "v",
-    "isShowAll": false,
-    "isShowMore": false,
-    "tab": "basic",
-    "sequence": 15,
-    "isActive": false,
-    "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
-      "underlineColor": "#E3E3E3",
-      "borderColor": "#E3E3E3",
-      "borderWidth": 1
-    },
-    "valueKeyisCode": false
-  },
-  {
-    "viewType": "seperator",
-    "sequence": 16,
-    "isActive": false,
-    "height": 1,
-    "color": "#E3E3E3",
-    "tab": "basic",
-    "leftPadding": 0,
     "rightPadding": 0,
     "topPadding": 4,
     "bottomPadding": 4
@@ -469,7 +406,7 @@
   {
     "viewType": "seperator",
     "sequence": 23,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -484,7 +421,7 @@
     "allLableTitle": "All",
     "apiKey": "flu",
     "masterCode": "FLUORESCENCE",
-    "verticalScroll": true,
+    "verticalScroll": false,
     "orientation": "v",
     "isShowAll": false,
     "isShowMore": false,
@@ -498,7 +435,7 @@
   {
     "viewType": "seperator",
     "sequence": 12,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
@@ -527,7 +464,7 @@
   {
     "viewType": "seperator",
     "sequence": 14,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -590,7 +527,7 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 70,
-    "isActive": true,
+    "isActive": false,
     "masterSelection": [
       {
         "code": "NEWARRIVAL",
@@ -645,70 +582,8 @@
   },
   {
     "viewType": "seperator",
-    "sequence": 27,
-    "isActive": true,
-    "height": 1,
-    "color": "#E3E3E3",
-    "tab": "basic",
-    "leftPadding": 0,
-    "rightPadding": 0,
-    "topPadding": 4,
-    "bottomPadding": 4
-  },
-  {
-    "title": "Price / Carat",
-    "viewType": "fromto",
-    "apiKey": "ctPr",
-    "sequence": 28,
-    "isActive": true,
-    "labelFrom": "From",
-    "tab": "basic",
-    "labelTo": "To",
-    "maxValue": 10000000,
-    "minValue": 0,
-    "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
-      "underlineColor": "#E3E3E3",
-      "borderColor": "#E3E3E3",
-      "borderWidth": 1
-    }
-  },
-  {
-    "viewType": "seperator",
-    "sequence": 29,
-    "isActive": false,
-    "height": 1,
-    "color": "#E3E3E3",
-    "tab": "basic",
-    "leftPadding": 0,
-    "rightPadding": 0,
-    "topPadding": 4,
-    "bottomPadding": 4
-  },
-  {
-    "title": "Disc %",
-    "viewType": "fromto",
-    "apiKey": "back",
-    "sequence": 30,
-    "isActive": true,
-    "labelFrom": "From",
-    "labelTo": "To",
-    "tab": "basic",
-    "maxValue": 100,
-    "minValue": 0,
-    "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
-      "underlineColor": "#E3E3E3",
-      "borderColor": "#E3E3E3",
-      "borderWidth": 1
-    }
-  },
-  {
-    "viewType": "seperator",
     "sequence": 31,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "basic",
@@ -734,12 +609,266 @@
   },
   {
     "viewType": "seperator",
-    "sequence": 18,
-    "isActive": true,
+    "sequence": 59,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
     "tab": "basic",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Shade",
+    "desc": "Desc",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "shd",
+    "masterCode": "SHADE",
+    "verticalScroll": false,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "isWhiteColor": false,
+    "sequence": 7,
+    "isActive": true,
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 8,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "basic",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Milky",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "mlk",
+    "masterCode": "MILKEY",
+    "verticalScroll": true,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "gridViewItemCount": 5,
+    "showMoreTagAfterTotalItemCount": 5,
+    "tab": "basic",
+    "sequence": 70,
+    "isActive": true,
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 71,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "basic",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Eye Clean",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "eCln",
+    "masterCode": "EYECLEAN",
+    "verticalScroll": true,
+    "gridViewItemCount": 4,
+    "showMoreTagAfterTotalItemCount": 5,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 68,
+    "isActive": true,
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 29,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "basic",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Discount %",
+    "viewType": "fromto",
+    "apiKey": "back",
+    "sequence": 30,
+    "isActive": true,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "basic",
+    "maxValue": 100,
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 27,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "basic",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Price/Ct",
+    "viewType": "fromto",
+    "apiKey": "ctPr",
+    "sequence": 28,
+    "isActive": true,
+    "labelFrom": "From",
+    "tab": "basic",
+    "labelTo": "To",
+    "maxValue": 10000000,
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 18,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "basic",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Total Amount",
+    "viewType": "fromto",
+    "apiKey": "ctPr",
+    "sequence": 28,
+    "isActive": true,
+    "labelFrom": "From",
+    "tab": "basic",
+    "labelTo": "To",
+    "maxValue": 10000000,
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
+  },
+  {
+    "title": "New Arrivals",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "arrivals",
+    "masterCode": "ARRIVALS",
+    "verticalScroll": true,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "basic",
+    "sequence": 15,
+    "isActive": true,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    },
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 16,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "basic",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Pair No.",
+    "viewType": "fromto",
+    "apiKey": "ratio",
+    "sequence": 36,
+    "isActive": true,
+    "labelFrom": "Pair No.",
+    "labelTo": "To",
+    "tab": "basic",
+    "maxValue": 100,
+    "minValue": 0,
+    "isOnlyFrom": true,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
+  },
+  {
+    "title": "Layout No.",
+    "viewType": "fromto",
+    "apiKey": "ratio",
+    "sequence": 36,
+    "isActive": true,
+    "labelFrom": "Layout No.",
+    "labelTo": "To",
+    "tab": "basic",
+    "maxValue": 100,
+    "minValue": 0,
+    "isOnlyFrom": true,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 16,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "basic",
+    "leftPadding": 0,
     "rightPadding": 0,
     "topPadding": 4,
     "bottomPadding": 4
@@ -802,6 +931,37 @@
     "valueKeyisCode": false
   },
   {
+    "title": "Total Depth%",
+    "viewType": "fromto",
+    "apiKey": "depPer",
+    "sequence": 34,
+    "isActive": true,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "advance",
+    "maxValue": 100,
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 35,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
     "title": "Table%",
     "viewType": "fromto",
     "apiKey": "tblPer",
@@ -813,8 +973,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -823,37 +983,6 @@
   {
     "viewType": "seperator",
     "sequence": 33,
-    "isActive": false,
-    "height": 1,
-    "color": "#E3E3E3",
-    "tab": "advance",
-    "leftPadding": 0,
-    "rightPadding": 0,
-    "topPadding": 4,
-    "bottomPadding": 4
-  },
-  {
-    "title": "Depth%",
-    "viewType": "fromto",
-    "apiKey": "depPer",
-    "sequence": 34,
-    "isActive": true,
-    "labelFrom": "From",
-    "labelTo": "To",
-    "tab": "advance",
-    "maxValue": 100,
-    "minValue": 0,
-    "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
-      "underlineColor": "#E3E3E3",
-      "borderColor": "#E3E3E3",
-      "borderWidth": 1
-    }
-  },
-  {
-    "viewType": "seperator",
-    "sequence": 35,
     "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
@@ -875,8 +1004,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -906,8 +1035,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -937,8 +1066,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -957,7 +1086,7 @@
     "bottomPadding": 4
   },
   {
-    "title": "Depth (MM)",
+    "title": "Height (MM)",
     "viewType": "fromto",
     "apiKey": "height",
     "sequence": 42,
@@ -968,8 +1097,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -999,8 +1128,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1023,15 +1152,15 @@
     "viewType": "fromto",
     "apiKey": "cHgt",
     "sequence": 46,
-    "isActive": true,
+    "isActive": false,
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "advance",
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1054,15 +1183,15 @@
     "viewType": "fromto",
     "apiKey": "strLen",
     "sequence": 56,
-    "isActive": true,
+    "isActive": false,
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "advance",
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1081,7 +1210,7 @@
     "bottomPadding": 4
   },
   {
-    "title": "Pav. Angle",
+    "title": "Pavilion Angle",
     "viewType": "fromto",
     "apiKey": "pAng",
     "sequence": 50,
@@ -1092,8 +1221,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1116,15 +1245,15 @@
     "viewType": "fromto",
     "apiKey": "pHgt",
     "sequence": 52,
-    "isActive": true,
+    "isActive": false,
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "advance",
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1147,15 +1276,15 @@
     "viewType": "fromto",
     "apiKey": "lwrHal",
     "sequence": 54,
-    "isActive": true,
+    "isActive": false,
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "advance",
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1164,7 +1293,7 @@
   {
     "viewType": "seperator",
     "sequence": 55,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "tab": "advance",
@@ -1178,15 +1307,15 @@
     "viewType": "fromto",
     "apiKey": "grdlPer",
     "sequence": 48,
-    "isActive": false,
+    "isActive": true,
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "advance",
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -1205,26 +1334,110 @@
     "bottomPadding": 4
   },
   {
-    "title": "Black Inclusion",
+  "megaTitle": "Black Inclusion",
+  "title": "Center Natts",
+  "viewType": "selection",
+  "allLableTitle": "All",
+  "apiKey": "blkTbl",
+  "masterCode": "BLACK_INCLUSION_TABLE",
+  "verticalScroll": false,
+  "orientation": "v",
+  "isShowAll": false,
+  "isShowMore": false,
+  "tab": "advance",
+  "sequence": 68,
+  "isActive": false,
+  "valueKeyisCode": false
+},
+{
+  "title": "Side Natts",
+  "viewType": "selection",
+  "allLableTitle": "All",
+  "apiKey": "blkSd",
+  "masterCode": "BLACK_INCLUSION_SIDE",
+  "verticalScroll": false,
+  "orientation": "v",
+  "isShowAll": false,
+  "isShowMore": false,
+  "tab": "advance",
+  "sequence": 68,
+  "isActive": false,
+  "valueKeyisCode": false
+},
+{
+  "viewType": "seperator",
+  "sequence": 69,
+  "isActive": false,
+  "height": 1,
+  "color": "#E3E3E3",
+  "leftPadding": 0,
+  "tab": "advance",
+  "rightPadding": 0,
+  "topPadding": 4,
+  "bottomPadding": 4
+},
+{
+  "megaTitle": "White Inclusion",
+  "title": "Center",
+  "viewType": "selection",
+  "allLableTitle": "All",
+  "apiKey": "wTbl",
+  "masterCode": "WHITE_INCLUSION_TABLE",
+  "verticalScroll": false,
+  "orientation": "v",
+  "isShowAll": false,
+  "isShowMore": false,
+  "tab": "advance",
+  "sequence": 68,
+  "isActive": false,
+  "valueKeyisCode": false
+},
+{
+  "title": "Side",
+  "viewType": "selection",
+  "allLableTitle": "All",
+  "apiKey": "wSd",
+  "masterCode": "WHITE_INCLUSION_SIDE",
+  "verticalScroll": false,
+  "orientation": "v",
+  "isShowAll": false,
+  "isShowMore": false,
+  "tab": "advance",
+  "sequence": 68,
+  "isActive": false,
+  "valueKeyisCode": false
+},
+{
+  "viewType": "seperator",
+  "sequence": 69,
+  "isActive": false,
+  "height": 1,
+  "color": "#E3E3E3",
+  "leftPadding": 0,
+  "tab": "advance",
+  "rightPadding": 0,
+  "topPadding": 4,
+  "bottomPadding": 4
+},
+{
+    "title": "Open On Table",
     "viewType": "selection",
     "allLableTitle": "All",
-    "apiKey": "blkInc",
-    "masterCode": "BLACK_INCLUSION",
-    "gridViewItemCount": 5,
-    "showMoreTagAfterTotalItemCount": 5,
-    "verticalScroll": true,
+    "apiKey": "opTbl",
+    "masterCode": "OPEN_INCLUSION_TABLE",
+    "verticalScroll": false,
     "orientation": "v",
     "isShowAll": false,
     "isShowMore": false,
     "tab": "advance",
-    "sequence": 58,
+    "sequence": 68,
     "isActive": true,
     "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
-    "sequence": 59,
-    "isActive": true,
+    "sequence": 69,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1234,26 +1447,24 @@
     "bottomPadding": 4
   },
   {
-    "title": "Open Inclusion",
+    "title": "Open On Crown",
     "viewType": "selection",
     "allLableTitle": "All",
-    "apiKey": "opInc",
-    "gridViewItemCount": 5,
-    "showMoreTagAfterTotalItemCount": 5,
-    "masterCode": "OPEN_INCLUSION",
-    "verticalScroll": true,
+    "apiKey": "opCrwn",
+    "masterCode": "OPEN_INCLUSION_CROWN",
+    "verticalScroll": false,
     "orientation": "v",
     "isShowAll": false,
     "isShowMore": false,
     "tab": "advance",
-    "sequence": 58,
+    "sequence": 68,
     "isActive": true,
     "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
-    "sequence": 59,
-    "isActive": true,
+    "sequence": 69,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1263,26 +1474,24 @@
     "bottomPadding": 4
   },
   {
-    "title": "Milky",
+    "title": "Open On Pavillion",
     "viewType": "selection",
     "allLableTitle": "All",
-    "apiKey": "mlk",
-    "masterCode": "MILKEY",
-    "verticalScroll": true,
+    "apiKey": "opPav",
+    "masterCode": "OPEN_INCLUSION_PAVILION",
+    "verticalScroll": false,
     "orientation": "v",
     "isShowAll": false,
     "isShowMore": false,
-    "gridViewItemCount": 5,
-    "showMoreTagAfterTotalItemCount": 5,
-    "tab": "basic",
-    "sequence": 70,
+    "tab": "advance",
+    "sequence": 68,
     "isActive": true,
     "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
-    "sequence": 71,
-    "isActive": true,
+    "sequence": 69,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1292,57 +1501,24 @@
     "bottomPadding": 4
   },
   {
-    "title": "Brown",
-    "desc": "Desc",
+    "title": "Open On Girdle",
     "viewType": "selection",
     "allLableTitle": "All",
-    "apiKey": "shd",
-    "masterCode": "SHADE",
-    "verticalScroll": true,
+    "apiKey": "opGir",
+    "masterCode": "OPEN_INCLUSION_GIRDLE",
+    "verticalScroll": false,
     "orientation": "v",
     "isShowAll": false,
-    "gridViewItemCount": 5,
-    "showMoreTagAfterTotalItemCount": 5,
     "isShowMore": false,
     "tab": "advance",
-    "isWhiteColor": false,
-    "sequence": 7,
+    "sequence": 68,
     "isActive": true,
     "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
-    "sequence": 8,
-    "isActive": true,
-    "height": 1,
-    "color": "#E3E3E3",
-    "tab": "advance",
-    "leftPadding": 0,
-    "rightPadding": 0,
-    "topPadding": 4,
-    "bottomPadding": 4
-  },
-  {
-    "title": "Mix Tint",
-    "viewType": "selection",
-    "allLableTitle": "All",
-    "apiKey": "mixTint",
-    "masterCode": "MIX_TINT",
-    "verticalScroll": true,
-    "orientation": "v",
-    "isShowAll": false,
-    "isShowMore": false,
-    "gridViewItemCount": 5,
-    "showMoreTagAfterTotalItemCount": 5,
-    "tab": "advance",
-    "sequence": 58,
-    "isActive": true,
-    "valueKeyisCode": false
-  },
-  {
-    "viewType": "seperator",
-    "sequence": 59,
-    "isActive": true,
+    "sequence": 69,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1370,8 +1546,38 @@
   },
   {
     "viewType": "seperator",
-    "sequence": 71,
-    "isActive": true,
+    "sequence": 69,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "advance",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  
+  {
+    "title": "Black Inclusion",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "blkInc",
+    "masterCode": "BLACK_INCLUSION",
+    "gridViewItemCount": 5,
+    "showMoreTagAfterTotalItemCount": 5,
+    "verticalScroll": true,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "advance",
+    "sequence": 58,
+    "isActive": false,
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 59,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1381,26 +1587,86 @@
     "bottomPadding": 4
   },
   {
-    "title": "Eye Clean",
+    "title": "Open Inclusion",
     "viewType": "selection",
     "allLableTitle": "All",
-    "apiKey": "eCln",
-    "masterCode": "EYECLEAN",
-    "verticalScroll": true,
-    "gridViewItemCount": 4,
+    "apiKey": "opInc",
+    "gridViewItemCount": 5,
     "showMoreTagAfterTotalItemCount": 5,
+    "masterCode": "OPEN_INCLUSION",
+    "verticalScroll": true,
     "orientation": "v",
     "isShowAll": false,
     "isShowMore": false,
     "tab": "advance",
-    "sequence": 68,
-    "isActive": true,
+    "sequence": 58,
+    "isActive": false,
     "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
-    "sequence": 69,
-    "isActive": true,
+    "sequence": 71,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "advance",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Brown",
+    "desc": "Desc",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "shd",
+    "masterCode": "SHADE",
+    "verticalScroll": true,
+    "orientation": "v",
+    "isShowAll": false,
+    "gridViewItemCount": 5,
+    "showMoreTagAfterTotalItemCount": 5,
+    "isShowMore": false,
+    "tab": "advance",
+    "isWhiteColor": false,
+    "sequence": 7,
+    "isActive": false,
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 8,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "advance",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Mix Tint",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "mixTint",
+    "masterCode": "MIX_TINT",
+    "verticalScroll": true,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "gridViewItemCount": 5,
+    "showMoreTagAfterTotalItemCount": 5,
+    "tab": "advance",
+    "sequence": 58,
+    "isActive": false,
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 59,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1423,13 +1689,13 @@
     "isShowMore": false,
     "tab": "advance",
     "sequence": 62,
-    "isActive": true,
+    "isActive": false,
     "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
     "sequence": 63,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1452,13 +1718,13 @@
     "showMoreTagAfterTotalItemCount": 5,
     "tab": "advance",
     "sequence": 58,
-    "isActive": true,
+    "isActive": false,
     "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
     "sequence": 59,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1481,13 +1747,13 @@
     "showMoreTagAfterTotalItemCount": 5,
     "tab": "advance",
     "sequence": 58,
-    "isActive": true,
+    "isActive": false,
     "valueKeyisCode": false
   },
   {
     "viewType": "seperator",
     "sequence": 59,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1541,173 +1807,6 @@
   {
     "viewType": "seperator",
     "sequence": 65,
-    "isActive": false,
-    "height": 1,
-    "color": "#E3E3E3",
-    "leftPadding": 0,
-    "tab": "advance",
-    "rightPadding": 0,
-    "topPadding": 4,
-    "bottomPadding": 4
-  },
-  {
-    "megaTitle": "Black Inclusion",
-    "title": "Center Natts",
-    "viewType": "selection",
-    "allLableTitle": "All",
-    "apiKey": "blkTbl",
-    "masterCode": "BLACK_INCLUSION_TABLE",
-    "verticalScroll": false,
-    "orientation": "v",
-    "isShowAll": false,
-    "isShowMore": false,
-    "tab": "advance",
-    "sequence": 68,
-    "isActive": false,
-    "valueKeyisCode": false
-  },
-  {
-    "title": "Side Natts",
-    "viewType": "selection",
-    "allLableTitle": "All",
-    "apiKey": "blkSd",
-    "masterCode": "BLACK_INCLUSION_SIDE",
-    "verticalScroll": false,
-    "orientation": "v",
-    "isShowAll": false,
-    "isShowMore": false,
-    "tab": "advance",
-    "sequence": 68,
-    "isActive": false,
-    "valueKeyisCode": false
-  },
-  {
-    "viewType": "seperator",
-    "sequence": 69,
-    "isActive": false,
-    "height": 1,
-    "color": "#E3E3E3",
-    "leftPadding": 0,
-    "tab": "advance",
-    "rightPadding": 0,
-    "topPadding": 4,
-    "bottomPadding": 4
-  },
-  {
-    "megaTitle": "White Inclusion",
-    "title": "Center",
-    "viewType": "selection",
-    "allLableTitle": "All",
-    "apiKey": "wTbl",
-    "masterCode": "WHITE_INCLUSION_TABLE",
-    "verticalScroll": false,
-    "orientation": "v",
-    "isShowAll": false,
-    "isShowMore": false,
-    "tab": "advance",
-    "sequence": 68,
-    "isActive": false,
-    "valueKeyisCode": false
-  },
-  {
-    "title": "Side",
-    "viewType": "selection",
-    "allLableTitle": "All",
-    "apiKey": "wSd",
-    "masterCode": "WHITE_INCLUSION_SIDE",
-    "verticalScroll": false,
-    "orientation": "v",
-    "isShowAll": false,
-    "isShowMore": false,
-    "tab": "advance",
-    "sequence": 68,
-    "isActive": false,
-    "valueKeyisCode": false
-  },
-  {
-    "viewType": "seperator",
-    "sequence": 69,
-    "isActive": false,
-    "height": 1,
-    "color": "#E3E3E3",
-    "leftPadding": 0,
-    "tab": "advance",
-    "rightPadding": 0,
-    "topPadding": 4,
-    "bottomPadding": 4
-  },
-  {
-    "title": "Open On Table",
-    "viewType": "selection",
-    "allLableTitle": "All",
-    "apiKey": "opTbl",
-    "masterCode": "OPEN_INCLUSION_TABLE",
-    "verticalScroll": false,
-    "orientation": "v",
-    "isShowAll": false,
-    "isShowMore": false,
-    "tab": "advance",
-    "sequence": 68,
-    "isActive": false,
-    "valueKeyisCode": false
-  },
-  {
-    "viewType": "seperator",
-    "sequence": 69,
-    "isActive": false,
-    "height": 1,
-    "color": "#E3E3E3",
-    "leftPadding": 0,
-    "tab": "advance",
-    "rightPadding": 0,
-    "topPadding": 4,
-    "bottomPadding": 4
-  },
-  {
-    "title": "Open On Pavillion",
-    "viewType": "selection",
-    "allLableTitle": "All",
-    "apiKey": "opPav",
-    "masterCode": "OPEN_INCLUSION_PAVILION",
-    "verticalScroll": false,
-    "orientation": "v",
-    "isShowAll": false,
-    "isShowMore": false,
-    "tab": "advance",
-    "sequence": 68,
-    "isActive": false,
-    "valueKeyisCode": false
-  },
-  {
-    "viewType": "seperator",
-    "sequence": 69,
-    "isActive": false,
-    "height": 1,
-    "color": "#E3E3E3",
-    "leftPadding": 0,
-    "tab": "advance",
-    "rightPadding": 0,
-    "topPadding": 4,
-    "bottomPadding": 4
-  },
-  {
-    "title": "Open On Crown",
-    "viewType": "selection",
-    "allLableTitle": "All",
-    "apiKey": "opCrwn",
-    "masterCode": "OPEN_INCLUSION_CROWN",
-    "verticalScroll": false,
-    "orientation": "v",
-    "isShowAll": false,
-    "isShowMore": false,
-    "tab": "advance",
-    "sequence": 68,
-    "isActive": false,
-    "valueKeyisCode": false
-  },
-  {
-    "viewType": "seperator",
-    "sequence": 69,
     "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
@@ -1826,7 +1925,7 @@
   {
     "viewType": "seperator",
     "sequence": 2,
-    "isActive": true,
+    "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
     "leftPadding": 0,
@@ -1834,5 +1933,1532 @@
     "rightPadding": 0,
     "topPadding": 4,
     "bottomPadding": 4
+  },
+  {
+    "title": "Carat Range",
+    "desc": "Desc",
+    "viewType": "caratrange",
+    "isCaratRange": true,
+    "allLableTitle": "All",
+    "apiKey": "crt",
+    "masterCode": "Size",
+    "verticalScroll": true,
+    "orientation": "v",
+    "gridViewItemCount": 3,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "showMoreTagAfterTotalItemCount": 9,
+    "isShowAll": false,
+    "isShowMore": false,
+    "isShowMoreHorizontal": true,
+    "tab": "matchpair",
+    "isWhiteColor": false,
+    "sequence": 3,
+    "isActive": true,
+    "showFromTo": true,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    },
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 4,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "matchpair",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Color",
+    "viewType": "groupwidget",
+    "groupMasterCode": "COLORGROUP",
+    "allLableTitle": "All",
+    "apiKey": "col",
+    "masterCode": "COLOR",
+    "showRadio": true,
+    "showGroup": false,
+    "showWhiteFancy": true,
+    "verticalScroll": true,
+    "orientation": "v",
+    "isShowAll": false,
+    "gridViewItemCount": 5,
+    "showMoreTagAfterTotalItemCount": 5,
+    "isShowMore": false,
+    "tab": "matchpair",
+    "sequence": 5,
+    "masterSelection": [
+      {
+        "code": "DEF",
+        "masterToSelect": [
+          {
+            "code": "COLOR",
+            "subMasters": [
+              "D",
+              "E",
+              "F"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "GH",
+        "masterToSelect": [
+          {
+            "code": "COLOR",
+            "subMasters": [
+              "G",
+              "H"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "IJK",
+        "masterToSelect": [
+          {
+            "code": "COLOR",
+            "subMasters": [
+              "I",
+              "J",
+              "K"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "LMN",
+        "masterToSelect": [
+          {
+            "code": "COLOR",
+            "subMasters": [
+              "L",
+              "M",
+              "N"
+            ]
+          }
+        ]
+      }
+    ],
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 6,
+    "height": 1,
+    "isActive": false,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "matchpair",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Clarity",
+    "viewType": "selection",
+    "groupMasterCode": "CLARITYGROUP",
+    "showGroup": true,
+    "showRadio": true,
+    "allLableTitle": "All",
+    "apiKey": "clr",
+    "masterCode": "CLARITY",
+    "verticalScroll": true,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "matchpair",
+    "gridViewItemCount": 5,
+    "showMoreTagAfterTotalItemCount": 5,
+    "sequence": 9,
+    "isActive": true,
+    "masterSelection": [
+      {
+        "code": "FL-IF",
+        "masterToSelect": [
+          {
+            "code": "CLARITY",
+            "subMasters": [
+              "FL",
+              "IF"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "VVS",
+        "masterToSelect": [
+          {
+            "code": "CLARITY",
+            "subMasters": [
+              "VVS1",
+              "VVS2"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "VS",
+        "masterToSelect": [
+          {
+            "code": "CLARITY",
+            "subMasters": [
+              "SI1",
+              "SI2"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "I",
+        "masterToSelect": [
+          {
+            "code": "CLARITY",
+            "subMasters": [
+              "I1",
+              "I2"
+            ]
+          }
+        ]
+      }
+    ],
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 10,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "matchpair",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Make",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "isSingleSelection": true,
+    "apiKey": "",
+    "masterCode": "MAKE",
+    "verticalScroll": false,
+    "orientation": "h",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "matchpair",
+    "sequence": 19,
+    "isActive": true,
+    "masterSelection": [
+      {
+        "code": "3EX",
+        "masterToSelect": [
+          {
+            "code": "CUT",
+            "subMasters": [
+              "EX"
+            ]
+          },
+          {
+            "code": "POLISH",
+            "subMasters": [
+              "EX"
+            ]
+          },
+          {
+            "code": "SYMMETRY",
+            "subMasters": [
+              "EX"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "3VG+",
+        "masterToSelect": [
+          {
+            "code": "CUT",
+            "subMasters": [
+              "EX",
+              "VG"
+            ]
+          },
+          {
+            "code": "POLISH",
+            "subMasters": [
+              "EX",
+              "VG"
+            ]
+          },
+          {
+            "code": "SYMMETRY",
+            "subMasters": [
+              "EX",
+              "VG"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "3VG",
+        "masterToSelect": [
+          {
+            "code": "CUT",
+            "subMasters": [
+              "qwqw",
+              "VG",
+              "qwe"
+            ]
+          },
+          {
+            "code": "POLISH",
+            "subMasters": [
+              "EX",
+              "VG",
+              "G"
+            ]
+          },
+          {
+            "code": "SYMMETRY",
+            "subMasters": [
+              "EX",
+              "VG",
+              "G"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "NoBGM",
+        "masterToSelect": [
+          {
+            "code": "SHADE",
+            "subMasters": [
+              "YEL",
+              "WHT"
+            ]
+          },
+          {
+            "code": "MILKEY",
+            "subMasters": [
+              "NONE"
+            ]
+          }
+        ]
+      }
+    ],
+    "valueKeyisCode": false
+  },
+  {
+    "title": "Cut",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "cut",
+    "masterCode": "CUT",
+    "verticalScroll": false,
+    "orientation": "h",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "matchpair",
+    "sequence": 20,
+    "isActive": true,
+    "valueKeyisCode": false
+  },
+  {
+    "title": "Polish",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "pol",
+    "masterCode": "POLISH",
+    "verticalScroll": false,
+    "orientation": "h",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "matchpair",
+    "sequence": 21,
+    "isActive": true,
+    "valueKeyisCode": false
+  },
+  {
+    "title": "Symmetry",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "sym",
+    "masterCode": "SYMMETRY",
+    "verticalScroll": false,
+    "orientation": "h",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "matchpair",
+    "sequence": 22,
+    "isActive": true,
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 23,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "matchpair",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Fluorescence",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "flu",
+    "masterCode": "FLUORESCENCE",
+    "verticalScroll": true,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "matchpair",
+    "sequence": 11,
+    "gridViewItemCount": 3,
+    "showMoreTagAfterTotalItemCount": 9,
+    "isActive": true,
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 12,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "matchpair",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Lab",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "lb",
+    "masterCode": "LAB",
+    "verticalScroll": true,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "matchpair",
+    "gridViewItemCount": 5,
+    "showMoreTagAfterTotalItemCount": 5,
+    "sequence": 13,
+    "isActive": true,
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 14,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "matchpair",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Location",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "loc",
+    "masterCode": "LOCATION",
+    "verticalScroll": false,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "matchpair",
+    "sequence": 17,
+    "isActive": true,
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 59,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "matchpair",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Shade",
+    "desc": "Desc",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "shd",
+    "masterCode": "SHADE",
+    "verticalScroll": false,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "matchpair",
+    "isWhiteColor": false,
+    "sequence": 7,
+    "isActive": true,
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 8,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "matchpair",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Milky",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "mlk",
+    "masterCode": "MILKEY",
+    "verticalScroll": true,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "gridViewItemCount": 5,
+    "showMoreTagAfterTotalItemCount": 5,
+    "tab": "matchpair",
+    "sequence": 70,
+    "isActive": true,
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 71,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "matchpair",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Eye Clean",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "eCln",
+    "masterCode": "EYECLEAN",
+    "verticalScroll": true,
+    "gridViewItemCount": 4,
+    "showMoreTagAfterTotalItemCount": 5,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "matchpair",
+    "sequence": 68,
+    "isActive": true,
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 29,
+    "isActive": true,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "matchpair",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Length (MM)",
+    "viewType": "fromto",
+    "apiKey": "length",
+    "sequence": 38,
+    "isActive": true,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "matchpair",
+    "maxValue": 100,
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 39,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "matchpair",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+  "title": "Ratio",
+  "viewType": "fromto",
+  "apiKey": "ratio",
+  "sequence": 36,
+  "isActive": true,
+  "labelFrom": "From",
+  "labelTo": "To",
+  "tab": "matchpair",
+  "maxValue": 100,
+  "minValue": 0,
+  "fromToStyle": {
+    "showUnderline": true,
+    "showBorder": false,
+    "underlineColor": "#E3E3E3",
+    "borderColor": "#E3E3E3",
+    "borderWidth": 1
+  }
+},
+{
+  "viewType": "seperator",
+  "sequence": 37,
+  "isActive": false,
+  "height": 1,
+  "color": "#E3E3E3",
+  "tab": "matchpair",
+  "leftPadding": 0,
+  "rightPadding": 0,
+  "topPadding": 4,
+  "bottomPadding": 4
+},
+  {
+    "title": "Width (MM)",
+    "viewType": "fromto",
+    "apiKey": "width",
+    "sequence": 40,
+    "isActive": true,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "matchpair",
+    "maxValue": 100,
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 41,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "matchpair",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Height (MM)",
+    "viewType": "fromto",
+    "apiKey": "height",
+    "sequence": 42,
+    "isActive": true,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "matchpair",
+    "maxValue": 100,
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 43,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "matchpair",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Discount %",
+    "viewType": "fromto",
+    "apiKey": "back",
+    "sequence": 30,
+    "isActive": true,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "matchpair",
+    "maxValue": 100,
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 27,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "matchpair",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Price / Carat",
+    "viewType": "fromto",
+    "apiKey": "ctPr",
+    "sequence": 28,
+    "isActive": true,
+    "labelFrom": "From",
+    "tab": "matchpair",
+    "labelTo": "To",
+    "maxValue": 10000000,
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
+  },
+  {
+    "title": "Total Amount",
+    "viewType": "fromto",
+    "apiKey": "ctPr",
+    "sequence": 28,
+    "isActive": true,
+    "labelFrom": "From",
+    "tab": "matchpair",
+    "labelTo": "To",
+    "maxValue": 10000000,
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
+  },
+  {
+    "title": "Shape",
+    "viewType": "searchText",
+    "tab": "layout",
+    "isActive": true
+  },
+  {
+    "title": "Shape",
+    "viewType": "shape",
+    "allLableTitle": "All Shapes",
+    "apiKey": "shp",
+    "numberOfelementsToShow": 7,
+    "masterCode": "SHAPE",
+    "verticalScroll": true,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": true,
+    "isShowMoreHorizontal": true,
+    "tab": "layout",
+    "sequence": 1,
+    "isActive": true,
+    "valueKeyisCode": true
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 2,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "layout",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Carat Range",
+    "desc": "Desc",
+    "viewType": "caratrange",
+    "isCaratRange": true,
+    "allLableTitle": "All",
+    "apiKey": "crt",
+    "masterCode": "Size",
+    "verticalScroll": true,
+    "orientation": "v",
+    "gridViewItemCount": 3,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "showMoreTagAfterTotalItemCount": 9,
+    "isShowAll": false,
+    "isShowMore": false,
+    "isShowMoreHorizontal": true,
+    "tab": "layout",
+    "isWhiteColor": false,
+    "sequence": 3,
+    "isActive": true,
+    "showFromTo": true,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    },
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 4,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "layout",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Color",
+    "viewType": "groupwidget",
+    "groupMasterCode": "COLORGROUP",
+    "allLableTitle": "All",
+    "apiKey": "col",
+    "masterCode": "COLOR",
+    "showRadio": true,
+    "showGroup": false,
+    "showWhiteFancy": true,
+    "verticalScroll": true,
+    "orientation": "v",
+    "isShowAll": false,
+    "gridViewItemCount": 5,
+    "showMoreTagAfterTotalItemCount": 5,
+    "isShowMore": false,
+    "tab": "layout",
+    "sequence": 5,
+    "masterSelection": [
+      {
+        "code": "DEF",
+        "masterToSelect": [
+          {
+            "code": "COLOR",
+            "subMasters": [
+              "D",
+              "E",
+              "F"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "GH",
+        "masterToSelect": [
+          {
+            "code": "COLOR",
+            "subMasters": [
+              "G",
+              "H"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "IJK",
+        "masterToSelect": [
+          {
+            "code": "COLOR",
+            "subMasters": [
+              "I",
+              "J",
+              "K"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "LMN",
+        "masterToSelect": [
+          {
+            "code": "COLOR",
+            "subMasters": [
+              "L",
+              "M",
+              "N"
+            ]
+          }
+        ]
+      }
+    ],
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 6,
+    "height": 1,
+    "isActive": false,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "layout",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Clarity",
+    "viewType": "selection",
+    "groupMasterCode": "CLARITYGROUP",
+    "showGroup": true,
+    "showRadio": true,
+    "allLableTitle": "All",
+    "apiKey": "clr",
+    "masterCode": "CLARITY",
+    "verticalScroll": true,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "layout",
+    "gridViewItemCount": 5,
+    "showMoreTagAfterTotalItemCount": 5,
+    "sequence": 9,
+    "isActive": true,
+    "masterSelection": [
+      {
+        "code": "FL-IF",
+        "masterToSelect": [
+          {
+            "code": "CLARITY",
+            "subMasters": [
+              "FL",
+              "IF"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "VVS",
+        "masterToSelect": [
+          {
+            "code": "CLARITY",
+            "subMasters": [
+              "VVS1",
+              "VVS2"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "VS",
+        "masterToSelect": [
+          {
+            "code": "CLARITY",
+            "subMasters": [
+              "SI1",
+              "SI2"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "I",
+        "masterToSelect": [
+          {
+            "code": "CLARITY",
+            "subMasters": [
+              "I1",
+              "I2"
+            ]
+          }
+        ]
+      }
+    ],
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 10,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "layout",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Make",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "isSingleSelection": true,
+    "apiKey": "",
+    "masterCode": "MAKE",
+    "verticalScroll": false,
+    "orientation": "h",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "layout",
+    "sequence": 19,
+    "isActive": true,
+    "masterSelection": [
+      {
+        "code": "3EX",
+        "masterToSelect": [
+          {
+            "code": "CUT",
+            "subMasters": [
+              "EX"
+            ]
+          },
+          {
+            "code": "POLISH",
+            "subMasters": [
+              "EX"
+            ]
+          },
+          {
+            "code": "SYMMETRY",
+            "subMasters": [
+              "EX"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "3VG+",
+        "masterToSelect": [
+          {
+            "code": "CUT",
+            "subMasters": [
+              "EX",
+              "VG"
+            ]
+          },
+          {
+            "code": "POLISH",
+            "subMasters": [
+              "EX",
+              "VG"
+            ]
+          },
+          {
+            "code": "SYMMETRY",
+            "subMasters": [
+              "EX",
+              "VG"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "3VG",
+        "masterToSelect": [
+          {
+            "code": "CUT",
+            "subMasters": [
+              "qwqw",
+              "VG",
+              "qwe"
+            ]
+          },
+          {
+            "code": "POLISH",
+            "subMasters": [
+              "EX",
+              "VG",
+              "G"
+            ]
+          },
+          {
+            "code": "SYMMETRY",
+            "subMasters": [
+              "EX",
+              "VG",
+              "G"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "NoBGM",
+        "masterToSelect": [
+          {
+            "code": "SHADE",
+            "subMasters": [
+              "YEL",
+              "WHT"
+            ]
+          },
+          {
+            "code": "MILKEY",
+            "subMasters": [
+              "NONE"
+            ]
+          }
+        ]
+      }
+    ],
+    "valueKeyisCode": false
+  },
+  {
+    "title": "Cut",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "cut",
+    "masterCode": "CUT",
+    "verticalScroll": false,
+    "orientation": "h",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "layout",
+    "sequence": 20,
+    "isActive": true,
+    "valueKeyisCode": false
+  },
+  {
+    "title": "Polish",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "pol",
+    "masterCode": "POLISH",
+    "verticalScroll": false,
+    "orientation": "h",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "layout",
+    "sequence": 21,
+    "isActive": true,
+    "valueKeyisCode": false
+  },
+  {
+    "title": "Symmetry",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "sym",
+    "masterCode": "SYMMETRY",
+    "verticalScroll": false,
+    "orientation": "h",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "layout",
+    "sequence": 22,
+    "isActive": true,
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 23,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "layout",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Fluorescence",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "flu",
+    "masterCode": "FLUORESCENCE",
+    "verticalScroll": true,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "layout",
+    "sequence": 11,
+    "gridViewItemCount": 3,
+    "showMoreTagAfterTotalItemCount": 9,
+    "isActive": true,
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 12,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "layout",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Lab",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "lb",
+    "masterCode": "LAB",
+    "verticalScroll": true,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "layout",
+    "gridViewItemCount": 5,
+    "showMoreTagAfterTotalItemCount": 5,
+    "sequence": 13,
+    "isActive": true,
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 14,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "layout",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Location",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "loc",
+    "masterCode": "LOCATION",
+    "verticalScroll": false,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "layout",
+    "sequence": 17,
+    "isActive": true,
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 59,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "layout",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Shade",
+    "desc": "Desc",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "shd",
+    "masterCode": "SHADE",
+    "verticalScroll": false,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "layout",
+    "isWhiteColor": false,
+    "sequence": 7,
+    "isActive": true,
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 8,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "layout",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Milky",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "mlk",
+    "masterCode": "MILKEY",
+    "verticalScroll": true,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "gridViewItemCount": 5,
+    "showMoreTagAfterTotalItemCount": 5,
+    "tab": "layout",
+    "sequence": 70,
+    "isActive": true,
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 71,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "leftPadding": 0,
+    "tab": "layout",
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Eye Clean",
+    "viewType": "selection",
+    "allLableTitle": "All",
+    "apiKey": "eCln",
+    "masterCode": "EYECLEAN",
+    "verticalScroll": true,
+    "gridViewItemCount": 4,
+    "showMoreTagAfterTotalItemCount": 5,
+    "orientation": "v",
+    "isShowAll": false,
+    "isShowMore": false,
+    "tab": "layout",
+    "sequence": 68,
+    "isActive": true,
+    "valueKeyisCode": false
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 29,
+    "isActive": true,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "layout",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Length (MM)",
+    "viewType": "fromto",
+    "apiKey": "length",
+    "sequence": 38,
+    "isActive": true,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "layout",
+    "maxValue": 100,
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 39,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "layout",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+  "title": "Ratio",
+  "viewType": "fromto",
+  "apiKey": "ratio",
+  "sequence": 36,
+  "isActive": true,
+  "labelFrom": "From",
+  "labelTo": "To",
+  "tab": "layout",
+  "maxValue": 100,
+  "minValue": 0,
+  "fromToStyle": {
+    "showUnderline": true,
+    "showBorder": false,
+    "underlineColor": "#E3E3E3",
+    "borderColor": "#E3E3E3",
+    "borderWidth": 1
+  }
+},
+{
+  "viewType": "seperator",
+  "sequence": 37,
+  "isActive": false,
+  "height": 1,
+  "color": "#E3E3E3",
+  "tab": "layout",
+  "leftPadding": 0,
+  "rightPadding": 0,
+  "topPadding": 4,
+  "bottomPadding": 4
+},
+  {
+    "title": "Width (MM)",
+    "viewType": "fromto",
+    "apiKey": "width",
+    "sequence": 40,
+    "isActive": true,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "layout",
+    "maxValue": 100,
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": false,
+      "showBorder": true,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 41,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "layout",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Height (MM)",
+    "viewType": "fromto",
+    "apiKey": "height",
+    "sequence": 42,
+    "isActive": true,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "layout",
+    "maxValue": 100,
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 43,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "layout",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Discount %",
+    "viewType": "fromto",
+    "apiKey": "back",
+    "sequence": 30,
+    "isActive": true,
+    "labelFrom": "From",
+    "labelTo": "To",
+    "tab": "layout",
+    "maxValue": 100,
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 27,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "layout",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+  {
+    "title": "Price / Carat",
+    "viewType": "fromto",
+    "apiKey": "ctPr",
+    "sequence": 28,
+    "isActive": true,
+    "labelFrom": "From",
+    "tab": "layout",
+    "labelTo": "To",
+    "maxValue": 10000000,
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
+  },
+  {
+    "title": "Total Amount",
+    "viewType": "fromto",
+    "apiKey": "ctPr",
+    "sequence": 28,
+    "isActive": true,
+    "labelFrom": "From",
+    "tab": "layout",
+    "labelTo": "To",
+    "maxValue": 10000000,
+    "minValue": 0,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
   }
 ]

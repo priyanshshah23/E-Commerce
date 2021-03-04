@@ -96,7 +96,6 @@ class Config {
         if (element is Map<String, dynamic>) {
           String viewType = element["viewType"];
           if (element["isActive"] ?? true) {
-
             if (viewType == "searchText") {
               arrFilter.add(FormBaseModel.fromJson(element));
             } else if (viewType == ViewTypes.fromTo) {
@@ -373,6 +372,7 @@ class FromToModel extends FormBaseModel {
   FromToStyle fromToStyle;
   bool isCaratRange;
   SelectionModel selectionModel;
+  bool isOnlyFrom;
 
   FromToModel.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     labelFrom = json['labelFrom'];
@@ -383,6 +383,8 @@ class FromToModel extends FormBaseModel {
         ? new FromToStyle.fromJson(json['fromToStyle'])
         : null;
     isCaratRange = json["isCaratRange"] ?? false;
+    isOnlyFrom = json["isOnlyFrom"] ?? false;
+    print(isOnlyFrom);
   }
 }
 
@@ -705,5 +707,3 @@ class MasterToSelect {
     return data;
   }
 }
-
-

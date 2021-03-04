@@ -143,22 +143,21 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
       child: Column(
         children: [
           Material(
-            elevation: 10,
-            shadowColor: appTheme.shadowColor,
+            // elevation: 10,
+            // shadowColor: appTheme.shadowColor,
             borderRadius: BorderRadius.circular(getSize(5)),
             child: Container(
               decoration: BoxDecoration(
                 color: appTheme.whiteColor,
                 borderRadius: BorderRadius.circular(getSize(5)),
                 border: Border.all(
-                  color: appTheme.lightBGColor,
-                ),
+                    color: appTheme.textFieldBorderColor, width: getSize(0.5)),
               ),
               child: Padding(
                 padding: EdgeInsets.only(
-                  left: getSize(16),
-                  top: getSize(16),
-                  right: getSize(16),
+                  // left: getSize(16),
+                  top: getSize(10),
+                  // right: getSize(16),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -173,16 +172,20 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(bottom: getSize(6.0)),
+                                padding: EdgeInsets.only(bottom: getSize(2.0)),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
-                                      child: Text(
-                                        model.name ?? "-",
-                                        style: appTheme
-                                            .blackNormal16TitleColorblack,
+                                      child: Padding(
+                                        padding:
+                                            EdgeInsets.only(left: getSize(16)),
+                                        child: Text(
+                                          model.name ?? "-",
+                                          style: appTheme
+                                              .blackBold16TitleColorblack,
+                                        ),
                                       ),
                                     ),
                                     arr.length > 3
@@ -237,127 +240,170 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                                             ),
                                           )
                                         : SizedBox(),
+                                    getPreviewItem(delete_icon_medium,
+                                        appTheme.redPrimaryNormal14TitleColor,
+                                        () {
+                                      app
+                                          .resolve<CustomDialogs>()
+                                          .confirmDialog(
+                                        context,
+                                        barrierDismissible: true,
+                                        title: "",
+                                        desc:
+                                            "${R.string.commonString.youreallywanttodelete} ${model.name}?.",
+                                        positiveBtnTitle:
+                                            R.string.commonString.ok,
+                                        negativeBtnTitle:
+                                            R.string.commonString.cancel,
+                                        onClickCallback: (buttonType) {
+                                          if (buttonType ==
+                                              ButtonType.PositveButtonClick) {
+                                            SyncManager.instance
+                                                .callApiForDeleteSavedSearch(
+                                                    context, model.id ?? "",
+                                                    success: (resp) {
+                                              callApi(true);
+                                            });
+                                          }
+                                        },
+                                      );
+                                    }),
+                                    getPreviewItem(
+                                      search,
+                                      appTheme.primaryColor14TextStyle,
+                                      () {
+                                        Map<String, dynamic> dict =
+                                            new HashMap();
+                                        dict["filterId"] = model.id;
+                                        dict[ArgumentConstant.ModuleType] =
+                                            DiamondModuleConstant
+                                                .MODULE_TYPE_MY_SAVED_SEARCH;
+                                        NavigationUtilities.pushRoute(
+                                            DiamondListScreen.route,
+                                            args: dict);
+                                      },
+                                    ),
                                   ],
                                 ),
                               ),
                               // Expiry date code
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    R.string.commonString.expirydate,
-                                    style: appTheme.grey14HintTextStyle,
-                                  ),
-                                  SizedBox(width: getSize(5)),
-                                  Text(
-                                    DateUtilities()
-                                        .convertServerDateToFormatterString(
-                                            model.expiryDate ?? "-",
-                                            formatter: DateUtilities
-                                                .dd_mm_yyyy_hh_mm_a),
-                                    style:
-                                        appTheme.blackNormal14TitleColorblack,
-                                  )
-                                ],
-                              )
+                              // Row(
+                              //   mainAxisSize: MainAxisSize.min,
+                              //   children: [
+                              //     Text(
+                              //       R.string.commonString.expirydate,
+                              //       style: appTheme.grey14HintTextStyle,
+                              //     ),
+                              //     SizedBox(width: getSize(5)),
+                              //     Text(
+                              //       DateUtilities()
+                              //           .convertServerDateToFormatterString(
+                              //               model.expiryDate ?? "-",
+                              //               formatter: DateUtilities
+                              //                   .dd_mm_yyyy_hh_mm_a),
+                              //       style:
+                              //           appTheme.blackNormal14TitleColorblack,
+                              //     )
+                              //   ],
+                              // )
                             ],
                           ),
-                          SizedBox(
-                            height: getSize(16),
-                          ),
+                          // SizedBox(
+                          //   height: getSize(16),
+                          // ),
                           Divider(
                             color: appTheme.dividerColor,
                           ),
-                          SizedBox(
-                            height: getSize(6),
-                          ),
+                          // SizedBox(
+                          //   height: getSize(6),
+                          // ),
                           if (arr.length <= 3)
                             listOfSelectedFilter(arr, model, arr.length),
                           if (arr.length > 3 && model.isExpand)
                             listOfSelectedFilter(arr, model, arr.length),
                           if (arr.length > 3 && !model.isExpand)
                             listOfSelectedFilter(arr, model, 3),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              // left: getSize(16),
-                              // right: getSize(16),
-                              top: getSize(11),
-                              bottom: getSize(11),
-                            ),
-                            child: Container(
-                              padding: EdgeInsets.only(
-                                  top: getSize(8), bottom: getSize(8)),
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      top: BorderSide(
-                                          color: appTheme.dividerColor))),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  if (widget.moduleType !=
-                                      DiamondModuleConstant
-                                          .MODULE_TYPE_MY_DEMAND)
-                                    getPreviewItem(
-                                        R.string.commonString.modify,
-                                        edit_icon,
-                                        appTheme.greenPrimaryNormal14TitleColor,
-                                        () {
-                                      Map<String, dynamic> dict = {};
-                                      dict["searchData"] = model.searchData;
-                                      dict[ArgumentConstant.IsFromDrawer] =
-                                          false;
-                                      NavigationUtilities.pushRoute(
-                                          FilterScreen.route,
-                                          args: dict);
-                                    }),
-                                  getPreviewItem(
-                                      R.string.commonString.delete,
-                                      delete_icon_medium,
-                                      appTheme.redPrimaryNormal14TitleColor,
-                                      () {
-                                    app.resolve<CustomDialogs>().confirmDialog(
-                                      context,
-                                      barrierDismissible: true,
-                                      title: "",
-                                      desc:
-                                          "${R.string.commonString.youreallywanttodelete} ${model.name}?.",
-                                      positiveBtnTitle:
-                                          R.string.commonString.ok,
-                                      negativeBtnTitle:
-                                          R.string.commonString.cancel,
-                                      onClickCallback: (buttonType) {
-                                        if (buttonType ==
-                                            ButtonType.PositveButtonClick) {
-                                          SyncManager.instance
-                                              .callApiForDeleteSavedSearch(
-                                                  context, model.id ?? "",
-                                                  success: (resp) {
-                                            callApi(true);
-                                          });
-                                        }
-                                      },
-                                    );
-                                  }),
-                                  getPreviewItem(
-                                    R.string.commonString.search,
-                                    saved_medium,
-                                    appTheme.primaryColor14TextStyle,
-                                    () {
-                                      Map<String, dynamic> dict = new HashMap();
-                                      dict["filterId"] = model.id;
-                                      dict[ArgumentConstant.ModuleType] =
-                                          DiamondModuleConstant
-                                              .MODULE_TYPE_MY_SAVED_SEARCH;
-                                      NavigationUtilities.pushRoute(
-                                          DiamondListScreen.route,
-                                          args: dict);
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                          // Padding(
+                          //   padding: EdgeInsets.only(
+                          //     // left: getSize(16),
+                          //     // right: getSize(16),
+                          //     top: getSize(11),
+                          //     bottom: getSize(11),
+                          //   ),
+                          //   child: Container(
+                          //     padding: EdgeInsets.only(
+                          //         top: getSize(8), bottom: getSize(8)),
+                          //     decoration: BoxDecoration(
+                          //         border: Border(
+                          //             top: BorderSide(
+                          //                 color: appTheme.dividerColor))),
+                          //     child: Row(
+                          //       mainAxisAlignment:
+                          //           MainAxisAlignment.spaceAround,
+                          //       children: [
+                          //         if (widget.moduleType !=
+                          //             DiamondModuleConstant
+                          //                 .MODULE_TYPE_MY_DEMAND)
+                          //           getPreviewItem(
+                          //             edit_icon,
+                          //             appTheme.greenPrimaryNormal14TitleColor,
+                          //             () {
+                          //               Map<String, dynamic> dict = {};
+                          //               dict["searchData"] = model.searchData;
+                          //               dict[ArgumentConstant.IsFromDrawer] =
+                          //                   false;
+                          //               NavigationUtilities.pushRoute(
+                          //                   FilterScreen.route,
+                          //                   args: dict);
+                          //             },
+                          //             txt: R.string.commonString.modify,
+                          //           ),
+                          //         // getPreviewItem(
+                          //         //   delete_icon_medium,
+                          //         //   appTheme.redPrimaryNormal14TitleColor,
+                          //         //   () {
+                          //         //     app
+                          //         //         .resolve<CustomDialogs>()
+                          //         //         .confirmDialog(
+                          //         //       context,
+                          //         //       barrierDismissible: true,
+                          //         //       title: "",
+                          //         //       desc:
+                          //         //           "${R.string.commonString.youreallywanttodelete} ${model.name}?.",
+                          //         //       positiveBtnTitle:
+                          //         //           R.string.commonString.ok,
+                          //         //       negativeBtnTitle:
+                          //         //           R.string.commonString.cancel,
+                          //         //       onClickCallback: (buttonType) {
+                          //         //         if (buttonType ==
+                          //         //             ButtonType.PositveButtonClick) {
+                          //         //           SyncManager.instance
+                          //         //               .callApiForDeleteSavedSearch(
+                          //         //                   context, model.id ?? "",
+                          //         //                   success: (resp) {
+                          //         //             callApi(true);
+                          //         //           });
+                          //         //         }
+                          //         //       },
+                          //         //     );
+                          //         //   },
+                          //         //   txt: R.string.commonString.delete,
+                          //         // ),
+                          //         // getPreviewItem(saved_medium,
+                          //         //     appTheme.primaryColor14TextStyle, () {
+                          //         //   Map<String, dynamic> dict = new HashMap();
+                          //         //   dict["filterId"] = model.id;
+                          //         //   dict[ArgumentConstant.ModuleType] =
+                          //         //       DiamondModuleConstant
+                          //         //           .MODULE_TYPE_MY_SAVED_SEARCH;
+                          //         //   NavigationUtilities.pushRoute(
+                          //         //       DiamondListScreen.route,
+                          //         //       args: dict);
+                          //         // }, txt: R.string.commonString.search),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
@@ -371,7 +417,8 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
     );
   }
 
-  getPreviewItem(String txt, String img, TextStyle textStyle, Function onTap) {
+  getPreviewItem(String img, TextStyle textStyle, Function onTap,
+      {String txt}) {
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -384,9 +431,9 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
               width: getSize(30),
               height: getSize(30),
               alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(getSize(15)),
-                  border: Border.all(color: appTheme.borderColor)),
+              // decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(getSize(15)),
+              //     border: Border.all(color: appTheme.borderColor)),
               child: Padding(
                 padding: EdgeInsets.all(4),
                 child: Image.asset(
@@ -397,620 +444,688 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
             SizedBox(
               width: getSize(8),
             ),
-            Text(
-              txt,
-              style: textStyle,
-            )
+            if (txt != null && txt.isNotEmpty)
+              Text(
+                txt,
+                style: textStyle,
+              )
           ],
         ),
       ),
     );
   }
 
-  Column listOfSelectedFilter(List<Map<String, dynamic>> arr,
+  Widget listOfSelectedFilter(List<Map<String, dynamic>> arr,
       SavedSearchModel savedSearchModel, int length) {
-    return Column(
-      children: <Widget>[
-        for (int i = 0; i < length; i++)
-          Padding(
-            padding: EdgeInsets.only(top: getSize(10)),
-            child: Row(
-              children: [
-                Text(
-                  "${arr[i]["key"] ?? ""} :",
-                  textAlign: TextAlign.left,
-                  style: appTheme.grey16HintTextStyle,
+    return Container(
+        padding: EdgeInsets.only(
+            top: getSize(10),
+            bottom: getSize(13),
+            left: getSize(16),
+            right: getSize(15.5)),
+        child: Wrap(
+          children: [
+            for (int i = 0; i < length; i++)
+              Container(
+                // color: Colors.blue,
+                width: getSize(155.5),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${arr[i]["key"] ?? ""}",
+                      textAlign: TextAlign.left,
+                      style: appTheme.grey14HintTextStyle,
+                    ),
+                    // SizedBox(width: getSize(16)),
+                    Text(arr[i]["value"] ?? "",
+                        textAlign: TextAlign.left,
+                        style: appTheme.blackMedium14TitleColorblack),
+                  ],
                 ),
-                SizedBox(width: getSize(16)),
-                Expanded(
-                  child: Text(arr[i]["value"] ?? "",
-                      textAlign: TextAlign.right,
-                      style: appTheme.blackNormal16TitleColorblack),
-                ),
-              ],
-            ),
-          ),
-      ],
-    );
+              )
+          ],
+        )
+
+        // Container(
+        //   // color: Colors.blue,
+        //   margin: EdgeInsets.all(5),
+        //   child: Padding(
+        //     padding: EdgeInsets.only(top: getSize(0)),
+        //     child: Column(
+        //       mainAxisAlignment: MainAxisAlignment.start,
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: [
+        //         Text(
+        //           "${arr[i]["key"] ?? ""}",
+        //           // textAlign: TextAlign.left,
+
+        //           style: appTheme.grey16HintTextStyle,
+        //         ),
+        //         SizedBox(width: getSize(16)),
+        //         Expanded(
+        //           child: Text(arr[i]["value"] ?? "",
+        //               // textAlign: TextAlign.right,
+        //               style: appTheme.blackNormal16TitleColorblack),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
+
+        );
+    // return Column(
+    //   children: <Widget>[
+    //     for (int i = 0; i < length; i++)
+    //       Padding(
+    //         padding: EdgeInsets.only(top: getSize(10)),
+    //         child: Row(
+    //           children: [
+    //             Text(
+    //               "${arr[i]["key"] ?? ""} :",
+    //               textAlign: TextAlign.left,
+    //               style: appTheme.grey16HintTextStyle,
+    //             ),
+    //             SizedBox(width: getSize(16)),
+    //             Expanded(
+    //               child: Text(arr[i]["value"] ?? "",
+    //                   textAlign: TextAlign.right,
+    //                   style: appTheme.blackNormal16TitleColorblack),
+    //             ),
+    //           ],
+    //         ),
+    //       ),
+    //   ],
+    // );
   }
 
   getDisplayData(DisplayDataClass displayDataClass) {
     List<Map<String, String>> arrData = [];
 
-    if (!isNullEmptyOrFalse(displayDataClass.shp)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Shape";
-      for (int i = 0; i < displayDataClass.shp.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.shp.join(", ");
+    if (!isNullEmptyOrFalse(displayDataClass)) {
+      if (!isNullEmptyOrFalse(displayDataClass) &&
+          !isNullEmptyOrFalse(displayDataClass.shp)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Shape";
+        for (int i = 0; i < displayDataClass.shp.length; i++) {
+          displayDataKeyValue["value"] = displayDataClass.shp.join(", ");
+        }
+
+        arrData.add(displayDataKeyValue);
       }
 
-      arrData.add(displayDataKeyValue);
-    }
+      if (!isNullEmptyOrFalse(displayDataClass) &&
+          !isNullEmptyOrFalse(displayDataClass.or)) {
+        Map<String, String> displayDataKeyValue = {};
+        List<String> tempList = [];
+        for (int i = 0; i < displayDataClass.or.length; i++) {
+          if (!isNullEmptyOrFalse(displayDataClass.or[i].crt)) {
+            String temp = displayDataClass.or[i].crt.back.toString() +
+                "-" +
+                displayDataClass.or[i].crt.empty.toString();
+            tempList.add(temp);
+          }
+        }
+        displayDataKeyValue["key"] = "Carat Range";
+        displayDataKeyValue["value"] = tempList.join(", ");
 
-    if (!isNullEmptyOrFalse(displayDataClass.or)) {
-      Map<String, String> displayDataKeyValue = {};
-      List<String> tempList = [];
-      for (int i = 0; i < displayDataClass.or.length; i++) {
-        if (!isNullEmptyOrFalse(displayDataClass.or[i].crt)) {
-          String temp = displayDataClass.or[i].crt.back.toString() +
-              "-" +
-              displayDataClass.or[i].crt.empty.toString();
-          tempList.add(temp);
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass) &&
+          !isNullEmptyOrFalse(displayDataClass.col)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Color";
+        for (int i = 0; i < displayDataClass.col.length; i++) {
+          displayDataKeyValue["value"] = displayDataClass.col.join(", ");
+        }
+
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass) &&
+          !isNullEmptyOrFalse(displayDataClass.shd)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Shade";
+        for (int i = 0; i < displayDataClass.shd.length; i++) {
+          displayDataKeyValue["value"] = displayDataClass.shd.join(", ");
+        }
+
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass) &&
+          !isNullEmptyOrFalse(displayDataClass.clr)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Clarity";
+        for (int i = 0; i < displayDataClass.clr.length; i++) {
+          displayDataKeyValue["value"] = displayDataClass.clr.join(", ");
+        }
+
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass) &&
+          !isNullEmptyOrFalse(displayDataClass.cut)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Cut";
+        for (int i = 0; i < displayDataClass.cut.length; i++) {
+          displayDataKeyValue["value"] = displayDataClass.cut.join(", ");
+        }
+
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass) &&
+          !isNullEmptyOrFalse(displayDataClass.pol)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Polish";
+        for (int i = 0; i < displayDataClass.pol.length; i++) {
+          displayDataKeyValue["value"] = displayDataClass.pol.join(", ");
+        }
+
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.sym)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Symmentry";
+        for (int i = 0; i < displayDataClass.sym.length; i++) {
+          displayDataKeyValue["value"] = displayDataClass.sym.join(", ");
+        }
+
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.hA)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "H & A";
+        for (int i = 0; i < displayDataClass.hA.length; i++) {
+          displayDataKeyValue["value"] = displayDataClass.hA.join(", ");
+        }
+
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.brlncy)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Brilliancy";
+        for (int i = 0; i < displayDataClass.brlncy.length; i++) {
+          displayDataKeyValue["value"] = displayDataClass.brlncy.join(", ");
+        }
+
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.wSts)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Web Status";
+        for (int i = 0; i < displayDataClass.wSts.length; i++) {
+          displayDataKeyValue["value"] = displayDataClass.wSts.join(", ");
+        }
+
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.isCm)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "isCm";
+        for (int i = 0; i < displayDataClass.isCm.length; i++) {
+          displayDataKeyValue["value"] = displayDataClass.isCm.join(", ");
+        }
+
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.isDor)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "isDor";
+        for (int i = 0; i < displayDataClass.isDor.length; i++) {
+          displayDataKeyValue["value"] = displayDataClass.isDor.join(", ");
+        }
+
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.isFm)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "isFm";
+        for (int i = 0; i < displayDataClass.isFm.length; i++) {
+          displayDataKeyValue["value"] = displayDataClass.isFm.join(", ");
+        }
+
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.blkTbl)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Black Table";
+        for (int i = 0; i < displayDataClass.blkTbl.length; i++) {
+          displayDataKeyValue["value"] = displayDataClass.blkTbl.join(", ");
+        }
+
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.blkSd)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Black Side";
+        for (int i = 0; i < displayDataClass.blkSd.length; i++) {
+          displayDataKeyValue["value"] = displayDataClass.blkSd.join(", ");
+        }
+
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.wTbl)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "White Table";
+        for (int i = 0; i < displayDataClass.wTbl.length; i++) {
+          displayDataKeyValue["value"] = displayDataClass.wTbl.join(", ");
+        }
+
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.cult)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Culet";
+        for (int i = 0; i < displayDataClass.cult.length; i++) {
+          displayDataKeyValue["value"] = displayDataClass.cult.join(", ");
+        }
+
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.wSd)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "White Inclusion Side";
+        for (int i = 0; i < displayDataClass.wSd.length; i++) {
+          displayDataKeyValue["value"] = displayDataClass.wSd.join(", ");
+        }
+
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.opTbl)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Open Table";
+        for (int i = 0; i < displayDataClass.opTbl.length; i++) {
+          displayDataKeyValue["value"] = displayDataClass.opTbl.join(", ");
+        }
+
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.opPav)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Open Pavallion";
+        for (int i = 0; i < displayDataClass.opPav.length; i++) {
+          displayDataKeyValue["value"] = displayDataClass.opPav.join(", ");
+        }
+
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.opCrwn)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Open Crown";
+        for (int i = 0; i < displayDataClass.opCrwn.length; i++) {
+          displayDataKeyValue["value"] = displayDataClass.opCrwn.join(", ");
+        }
+
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.grdl)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Girdle";
+        for (int i = 0; i < displayDataClass.grdl.length; i++) {
+          displayDataKeyValue["value"] = displayDataClass.grdl.join(", ");
+        }
+
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.ctPr)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Carat Per Price";
+
+        String temp = "";
+        if (!isNullEmptyOrFalse(displayDataClass.ctPr.back) &&
+            !isNullEmptyOrFalse(displayDataClass.ctPr.empty)) {
+          temp = displayDataClass.ctPr.back.toString() +
+              " to " +
+              displayDataClass.ctPr.empty.toString();
+        } else if (!isNullEmptyOrFalse(displayDataClass.ctPr.back)) {
+          temp = displayDataClass.ctPr.back.toString();
+        } else {
+          temp = displayDataClass.ctPr.empty.toString();
+        }
+        displayDataKeyValue["value"] = temp;
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.back)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "back";
+
+        String temp = "";
+        if (!isNullEmptyOrFalse(displayDataClass.back.back) &&
+            !isNullEmptyOrFalse(displayDataClass.back.empty)) {
+          temp = displayDataClass.back.back.toString() +
+              " to " +
+              displayDataClass.back.empty.toString();
+        } else if (!isNullEmptyOrFalse(displayDataClass.back.back)) {
+          temp = displayDataClass.back.back.toString();
+        } else {
+          temp = displayDataClass.back.empty.toString();
+        }
+        displayDataKeyValue["value"] = temp;
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.tblPer)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Table Percentage";
+
+        String temp = "";
+        if (!isNullEmptyOrFalse(displayDataClass.tblPer.back) &&
+            !isNullEmptyOrFalse(displayDataClass.tblPer.empty)) {
+          temp = displayDataClass.tblPer.back.toString() +
+              " to " +
+              displayDataClass.tblPer.empty.toString();
+        } else if (!isNullEmptyOrFalse(displayDataClass.tblPer.back)) {
+          temp = displayDataClass.tblPer.back.toString();
+        } else {
+          temp = displayDataClass.tblPer.empty.toString();
+        }
+        displayDataKeyValue["value"] = temp;
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.depPer)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "depPer";
+
+        String temp = "";
+        if (!isNullEmptyOrFalse(displayDataClass.depPer.back) &&
+            !isNullEmptyOrFalse(displayDataClass.depPer.empty)) {
+          temp = displayDataClass.depPer.back.toString() +
+              " to " +
+              displayDataClass.depPer.empty.toString();
+        } else if (!isNullEmptyOrFalse(displayDataClass.depPer.back)) {
+          temp = displayDataClass.depPer.back.toString();
+        } else {
+          temp = displayDataClass.depPer.empty.toString();
+        }
+        displayDataKeyValue["value"] = temp;
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.ratio)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Ratio";
+
+        String temp = "";
+        if (!isNullEmptyOrFalse(displayDataClass.ratio.back) &&
+            !isNullEmptyOrFalse(displayDataClass.ratio.empty)) {
+          temp = displayDataClass.ratio.back.toString() +
+              " to " +
+              displayDataClass.ratio.empty.toString();
+        } else if (!isNullEmptyOrFalse(displayDataClass.ratio.back)) {
+          temp = displayDataClass.ratio.back.toString();
+        } else {
+          temp = displayDataClass.ratio.empty.toString();
+        }
+        displayDataKeyValue["value"] = temp;
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.length)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Length";
+
+        String temp = "";
+        if (!isNullEmptyOrFalse(displayDataClass.length.back) &&
+            !isNullEmptyOrFalse(displayDataClass.length.empty)) {
+          temp = displayDataClass.length.back.toString() +
+              " to " +
+              displayDataClass.length.empty.toString();
+        } else if (!isNullEmptyOrFalse(displayDataClass.length.back)) {
+          temp = displayDataClass.length.back.toString();
+        } else {
+          temp = displayDataClass.length.empty.toString();
+        }
+        displayDataKeyValue["value"] = temp;
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.width)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Width";
+
+        String temp = "";
+        if (!isNullEmptyOrFalse(displayDataClass.width.back) &&
+            !isNullEmptyOrFalse(displayDataClass.width.empty)) {
+          temp = displayDataClass.width.back.toString() +
+              " to " +
+              displayDataClass.width.empty.toString();
+        } else if (!isNullEmptyOrFalse(displayDataClass.width.back)) {
+          temp = displayDataClass.width.back.toString();
+        } else {
+          temp = displayDataClass.width.empty.toString();
+        }
+        displayDataKeyValue["value"] = temp;
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.height)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Height";
+
+        String temp = "";
+        if (!isNullEmptyOrFalse(displayDataClass.height.back) &&
+            !isNullEmptyOrFalse(displayDataClass.height.empty)) {
+          temp = displayDataClass.height.back.toString() +
+              " to " +
+              displayDataClass.height.empty.toString();
+        } else if (!isNullEmptyOrFalse(displayDataClass.height.back)) {
+          temp = displayDataClass.height.back.toString();
+        } else {
+          temp = displayDataClass.height.empty.toString();
+        }
+        displayDataKeyValue["value"] = temp;
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.cAng)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "cAng";
+
+        String temp = "";
+        if (!isNullEmptyOrFalse(displayDataClass.cAng.back) &&
+            !isNullEmptyOrFalse(displayDataClass.cAng.empty)) {
+          temp = displayDataClass.cAng.back.toString() +
+              " to " +
+              displayDataClass.cAng.empty.toString();
+        } else if (!isNullEmptyOrFalse(displayDataClass.cAng.back)) {
+          temp = displayDataClass.cAng.back.toString();
+        } else {
+          temp = displayDataClass.cAng.empty.toString();
+        }
+        displayDataKeyValue["value"] = temp;
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.cHgt)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "cHgt";
+
+        String temp = "";
+        if (!isNullEmptyOrFalse(displayDataClass.cHgt.back) &&
+            !isNullEmptyOrFalse(displayDataClass.cHgt.empty)) {
+          temp = displayDataClass.cHgt.back.toString() +
+              " to " +
+              displayDataClass.cHgt.empty.toString();
+        } else if (!isNullEmptyOrFalse(displayDataClass.cHgt.back)) {
+          temp = displayDataClass.cHgt.back.toString();
+        } else {
+          temp = displayDataClass.cHgt.empty.toString();
+        }
+        displayDataKeyValue["value"] = temp;
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.grdlPer)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Girdle Per";
+
+        String temp = "";
+        if (!isNullEmptyOrFalse(displayDataClass.grdlPer.back) &&
+            !isNullEmptyOrFalse(displayDataClass.grdlPer.empty)) {
+          temp = displayDataClass.grdlPer.back.toString() +
+              " to " +
+              displayDataClass.grdlPer.empty.toString();
+        } else if (!isNullEmptyOrFalse(displayDataClass.grdlPer.back)) {
+          temp = displayDataClass.grdlPer.back.toString();
+        } else {
+          temp = displayDataClass.grdlPer.empty.toString();
+        }
+        displayDataKeyValue["value"] = temp;
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.pAng)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Pavallion Angle";
+
+        String temp = "";
+        if (!isNullEmptyOrFalse(displayDataClass.pAng.back) &&
+            !isNullEmptyOrFalse(displayDataClass.pAng.empty)) {
+          temp = displayDataClass.pAng.back.toString() +
+              " to " +
+              displayDataClass.pAng.empty.toString();
+        } else if (!isNullEmptyOrFalse(displayDataClass.pAng.back)) {
+          temp = displayDataClass.pAng.back.toString();
+        } else {
+          temp = displayDataClass.pAng.empty.toString();
+        }
+        displayDataKeyValue["value"] = temp;
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.pHgt)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Pavallion Height";
+
+        String temp = "";
+        if (!isNullEmptyOrFalse(displayDataClass.pHgt.back) &&
+            !isNullEmptyOrFalse(displayDataClass.pHgt.empty)) {
+          temp = displayDataClass.pHgt.back.toString() +
+              " to " +
+              displayDataClass.pHgt.empty.toString();
+        } else if (!isNullEmptyOrFalse(displayDataClass.pHgt.back)) {
+          temp = displayDataClass.pHgt.back.toString();
+        } else {
+          temp = displayDataClass.pHgt.empty.toString();
+        }
+        displayDataKeyValue["value"] = temp;
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.lwr)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "lwr";
+
+        String temp = "";
+        if (!isNullEmptyOrFalse(displayDataClass.lwr.back) &&
+            !isNullEmptyOrFalse(displayDataClass.lwr.empty)) {
+          temp = displayDataClass.lwr.back.toString() +
+              " to " +
+              displayDataClass.lwr.empty.toString();
+        } else if (!isNullEmptyOrFalse(displayDataClass.lwr.back)) {
+          temp = displayDataClass.lwr.back.toString();
+        } else {
+          temp = displayDataClass.lwr.empty.toString();
+        }
+        displayDataKeyValue["value"] = temp;
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.strLn)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "strLn";
+
+        String temp = "";
+        if (!isNullEmptyOrFalse(displayDataClass.strLn.back) &&
+            !isNullEmptyOrFalse(displayDataClass.strLn.empty)) {
+          temp = displayDataClass.strLn.back.toString() +
+              " to " +
+              displayDataClass.strLn.empty.toString();
+        } else if (!isNullEmptyOrFalse(displayDataClass.strLn.back)) {
+          temp = displayDataClass.strLn.back.toString();
+        } else {
+          temp = displayDataClass.strLn.empty.toString();
+        }
+        displayDataKeyValue["value"] = temp;
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.cAng)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "cAng";
+
+        String temp = "";
+        if (!isNullEmptyOrFalse(displayDataClass.cAng.back) &&
+            !isNullEmptyOrFalse(displayDataClass.cAng.empty)) {
+          temp = displayDataClass.cAng.back.toString() +
+              " to " +
+              displayDataClass.cAng.empty.toString();
+        } else if (!isNullEmptyOrFalse(displayDataClass.cAng.back)) {
+          temp = displayDataClass.cAng.back.toString();
+        } else {
+          temp = displayDataClass.cAng.empty.toString();
+        }
+        displayDataKeyValue["value"] = temp;
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.type2)) {
+        if (!isNullEmptyOrFalse(displayDataClass.type2.empty)) {
+          Map<String, String> displayDataKeyValue = {};
+          displayDataKeyValue["key"] = "type2";
+
+          displayDataKeyValue["value"] =
+              displayDataClass.type2.empty.toString();
+          arrData.add(displayDataKeyValue);
         }
       }
-      displayDataKeyValue["key"] = "Carat Range";
-      displayDataKeyValue["value"] = tempList.join(", ");
 
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.col)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Color";
-      for (int i = 0; i < displayDataClass.col.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.col.join(", ");
-      }
-
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.shd)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Shade";
-      for (int i = 0; i < displayDataClass.shd.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.shd.join(", ");
-      }
-
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.clr)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Clarity";
-      for (int i = 0; i < displayDataClass.clr.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.clr.join(", ");
-      }
-
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.cut)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Cut";
-      for (int i = 0; i < displayDataClass.cut.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.cut.join(", ");
-      }
-
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.pol)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Polish";
-      for (int i = 0; i < displayDataClass.pol.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.pol.join(", ");
-      }
-
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.sym)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Symmentry";
-      for (int i = 0; i < displayDataClass.sym.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.sym.join(", ");
-      }
-
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.hA)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "H & A";
-      for (int i = 0; i < displayDataClass.hA.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.hA.join(", ");
-      }
-
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.brlncy)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Brilliancy";
-      for (int i = 0; i < displayDataClass.brlncy.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.brlncy.join(", ");
-      }
-
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.wSts)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Web Status";
-      for (int i = 0; i < displayDataClass.wSts.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.wSts.join(", ");
-      }
-
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.isCm)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "isCm";
-      for (int i = 0; i < displayDataClass.isCm.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.isCm.join(", ");
-      }
-
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.isDor)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "isDor";
-      for (int i = 0; i < displayDataClass.isDor.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.isDor.join(", ");
-      }
-
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.isFm)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "isFm";
-      for (int i = 0; i < displayDataClass.isFm.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.isFm.join(", ");
-      }
-
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.blkTbl)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Black Table";
-      for (int i = 0; i < displayDataClass.blkTbl.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.blkTbl.join(", ");
-      }
-
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.blkSd)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Black Side";
-      for (int i = 0; i < displayDataClass.blkSd.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.blkSd.join(", ");
-      }
-
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.wTbl)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "White Table";
-      for (int i = 0; i < displayDataClass.wTbl.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.wTbl.join(", ");
-      }
-
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.cult)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Culet";
-      for (int i = 0; i < displayDataClass.cult.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.cult.join(", ");
-      }
-
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.wSd)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "White Inclusion Side";
-      for (int i = 0; i < displayDataClass.wSd.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.wSd.join(", ");
-      }
-
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.opTbl)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Open Table";
-      for (int i = 0; i < displayDataClass.opTbl.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.opTbl.join(", ");
-      }
-
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.opPav)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Open Pavallion";
-      for (int i = 0; i < displayDataClass.opPav.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.opPav.join(", ");
-      }
-
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.opCrwn)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Open Crown";
-      for (int i = 0; i < displayDataClass.opCrwn.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.opCrwn.join(", ");
-      }
-
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.grdl)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Girdle";
-      for (int i = 0; i < displayDataClass.grdl.length; i++) {
-        displayDataKeyValue["value"] = displayDataClass.grdl.join(", ");
-      }
-
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.ctPr)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Carat Per Price";
-
-      String temp = "";
-      if (!isNullEmptyOrFalse(displayDataClass.ctPr.back) &&
-          !isNullEmptyOrFalse(displayDataClass.ctPr.empty)) {
-        temp = displayDataClass.ctPr.back.toString() +
-            " to " +
-            displayDataClass.ctPr.empty.toString();
-      } else if (!isNullEmptyOrFalse(displayDataClass.ctPr.back)) {
-        temp = displayDataClass.ctPr.back.toString();
-      } else {
-        temp = displayDataClass.ctPr.empty.toString();
-      }
-      displayDataKeyValue["value"] = temp;
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.back)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "back";
-
-      String temp = "";
-      if (!isNullEmptyOrFalse(displayDataClass.back.back) &&
-          !isNullEmptyOrFalse(displayDataClass.back.empty)) {
-        temp = displayDataClass.back.back.toString() +
-            " to " +
-            displayDataClass.back.empty.toString();
-      } else if (!isNullEmptyOrFalse(displayDataClass.back.back)) {
-        temp = displayDataClass.back.back.toString();
-      } else {
-        temp = displayDataClass.back.empty.toString();
-      }
-      displayDataKeyValue["value"] = temp;
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.tblPer)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Table Percentage";
-
-      String temp = "";
-      if (!isNullEmptyOrFalse(displayDataClass.tblPer.back) &&
-          !isNullEmptyOrFalse(displayDataClass.tblPer.empty)) {
-        temp = displayDataClass.tblPer.back.toString() +
-            " to " +
-            displayDataClass.tblPer.empty.toString();
-      } else if (!isNullEmptyOrFalse(displayDataClass.tblPer.back)) {
-        temp = displayDataClass.tblPer.back.toString();
-      } else {
-        temp = displayDataClass.tblPer.empty.toString();
-      }
-      displayDataKeyValue["value"] = temp;
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.depPer)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "depPer";
-
-      String temp = "";
-      if (!isNullEmptyOrFalse(displayDataClass.depPer.back) &&
-          !isNullEmptyOrFalse(displayDataClass.depPer.empty)) {
-        temp = displayDataClass.depPer.back.toString() +
-            " to " +
-            displayDataClass.depPer.empty.toString();
-      } else if (!isNullEmptyOrFalse(displayDataClass.depPer.back)) {
-        temp = displayDataClass.depPer.back.toString();
-      } else {
-        temp = displayDataClass.depPer.empty.toString();
-      }
-      displayDataKeyValue["value"] = temp;
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.ratio)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Ratio";
-
-      String temp = "";
-      if (!isNullEmptyOrFalse(displayDataClass.ratio.back) &&
-          !isNullEmptyOrFalse(displayDataClass.ratio.empty)) {
-        temp = displayDataClass.ratio.back.toString() +
-            " to " +
-            displayDataClass.ratio.empty.toString();
-      } else if (!isNullEmptyOrFalse(displayDataClass.ratio.back)) {
-        temp = displayDataClass.ratio.back.toString();
-      } else {
-        temp = displayDataClass.ratio.empty.toString();
-      }
-      displayDataKeyValue["value"] = temp;
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.length)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Length";
-
-      String temp = "";
-      if (!isNullEmptyOrFalse(displayDataClass.length.back) &&
-          !isNullEmptyOrFalse(displayDataClass.length.empty)) {
-        temp = displayDataClass.length.back.toString() +
-            " to " +
-            displayDataClass.length.empty.toString();
-      } else if (!isNullEmptyOrFalse(displayDataClass.length.back)) {
-        temp = displayDataClass.length.back.toString();
-      } else {
-        temp = displayDataClass.length.empty.toString();
-      }
-      displayDataKeyValue["value"] = temp;
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.width)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Width";
-
-      String temp = "";
-      if (!isNullEmptyOrFalse(displayDataClass.width.back) &&
-          !isNullEmptyOrFalse(displayDataClass.width.empty)) {
-        temp = displayDataClass.width.back.toString() +
-            " to " +
-            displayDataClass.width.empty.toString();
-      } else if (!isNullEmptyOrFalse(displayDataClass.width.back)) {
-        temp = displayDataClass.width.back.toString();
-      } else {
-        temp = displayDataClass.width.empty.toString();
-      }
-      displayDataKeyValue["value"] = temp;
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.height)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Height";
-
-      String temp = "";
-      if (!isNullEmptyOrFalse(displayDataClass.height.back) &&
-          !isNullEmptyOrFalse(displayDataClass.height.empty)) {
-        temp = displayDataClass.height.back.toString() +
-            " to " +
-            displayDataClass.height.empty.toString();
-      } else if (!isNullEmptyOrFalse(displayDataClass.height.back)) {
-        temp = displayDataClass.height.back.toString();
-      } else {
-        temp = displayDataClass.height.empty.toString();
-      }
-      displayDataKeyValue["value"] = temp;
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.cAng)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "cAng";
-
-      String temp = "";
-      if (!isNullEmptyOrFalse(displayDataClass.cAng.back) &&
-          !isNullEmptyOrFalse(displayDataClass.cAng.empty)) {
-        temp = displayDataClass.cAng.back.toString() +
-            " to " +
-            displayDataClass.cAng.empty.toString();
-      } else if (!isNullEmptyOrFalse(displayDataClass.cAng.back)) {
-        temp = displayDataClass.cAng.back.toString();
-      } else {
-        temp = displayDataClass.cAng.empty.toString();
-      }
-      displayDataKeyValue["value"] = temp;
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.cHgt)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "cHgt";
-
-      String temp = "";
-      if (!isNullEmptyOrFalse(displayDataClass.cHgt.back) &&
-          !isNullEmptyOrFalse(displayDataClass.cHgt.empty)) {
-        temp = displayDataClass.cHgt.back.toString() +
-            " to " +
-            displayDataClass.cHgt.empty.toString();
-      } else if (!isNullEmptyOrFalse(displayDataClass.cHgt.back)) {
-        temp = displayDataClass.cHgt.back.toString();
-      } else {
-        temp = displayDataClass.cHgt.empty.toString();
-      }
-      displayDataKeyValue["value"] = temp;
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.grdlPer)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Girdle Per";
-
-      String temp = "";
-      if (!isNullEmptyOrFalse(displayDataClass.grdlPer.back) &&
-          !isNullEmptyOrFalse(displayDataClass.grdlPer.empty)) {
-        temp = displayDataClass.grdlPer.back.toString() +
-            " to " +
-            displayDataClass.grdlPer.empty.toString();
-      } else if (!isNullEmptyOrFalse(displayDataClass.grdlPer.back)) {
-        temp = displayDataClass.grdlPer.back.toString();
-      } else {
-        temp = displayDataClass.grdlPer.empty.toString();
-      }
-      displayDataKeyValue["value"] = temp;
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.pAng)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Pavallion Angle";
-
-      String temp = "";
-      if (!isNullEmptyOrFalse(displayDataClass.pAng.back) &&
-          !isNullEmptyOrFalse(displayDataClass.pAng.empty)) {
-        temp = displayDataClass.pAng.back.toString() +
-            " to " +
-            displayDataClass.pAng.empty.toString();
-      } else if (!isNullEmptyOrFalse(displayDataClass.pAng.back)) {
-        temp = displayDataClass.pAng.back.toString();
-      } else {
-        temp = displayDataClass.pAng.empty.toString();
-      }
-      displayDataKeyValue["value"] = temp;
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.pHgt)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Pavallion Height";
-
-      String temp = "";
-      if (!isNullEmptyOrFalse(displayDataClass.pHgt.back) &&
-          !isNullEmptyOrFalse(displayDataClass.pHgt.empty)) {
-        temp = displayDataClass.pHgt.back.toString() +
-            " to " +
-            displayDataClass.pHgt.empty.toString();
-      } else if (!isNullEmptyOrFalse(displayDataClass.pHgt.back)) {
-        temp = displayDataClass.pHgt.back.toString();
-      } else {
-        temp = displayDataClass.pHgt.empty.toString();
-      }
-      displayDataKeyValue["value"] = temp;
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.lwr)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "lwr";
-
-      String temp = "";
-      if (!isNullEmptyOrFalse(displayDataClass.lwr.back) &&
-          !isNullEmptyOrFalse(displayDataClass.lwr.empty)) {
-        temp = displayDataClass.lwr.back.toString() +
-            " to " +
-            displayDataClass.lwr.empty.toString();
-      } else if (!isNullEmptyOrFalse(displayDataClass.lwr.back)) {
-        temp = displayDataClass.lwr.back.toString();
-      } else {
-        temp = displayDataClass.lwr.empty.toString();
-      }
-      displayDataKeyValue["value"] = temp;
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.strLn)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "strLn";
-
-      String temp = "";
-      if (!isNullEmptyOrFalse(displayDataClass.strLn.back) &&
-          !isNullEmptyOrFalse(displayDataClass.strLn.empty)) {
-        temp = displayDataClass.strLn.back.toString() +
-            " to " +
-            displayDataClass.strLn.empty.toString();
-      } else if (!isNullEmptyOrFalse(displayDataClass.strLn.back)) {
-        temp = displayDataClass.strLn.back.toString();
-      } else {
-        temp = displayDataClass.strLn.empty.toString();
-      }
-      displayDataKeyValue["value"] = temp;
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.cAng)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "cAng";
-
-      String temp = "";
-      if (!isNullEmptyOrFalse(displayDataClass.cAng.back) &&
-          !isNullEmptyOrFalse(displayDataClass.cAng.empty)) {
-        temp = displayDataClass.cAng.back.toString() +
-            " to " +
-            displayDataClass.cAng.empty.toString();
-      } else if (!isNullEmptyOrFalse(displayDataClass.cAng.back)) {
-        temp = displayDataClass.cAng.back.toString();
-      } else {
-        temp = displayDataClass.cAng.empty.toString();
-      }
-      displayDataKeyValue["value"] = temp;
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.type2)) {
-      if (!isNullEmptyOrFalse(displayDataClass.type2.empty)) {
+      if (!isNullEmptyOrFalse(displayDataClass.kToSArr)) {
         Map<String, String> displayDataKeyValue = {};
-        displayDataKeyValue["key"] = "type2";
+        displayDataKeyValue["key"] = "Key to Symbol";
+        String temp = "";
+        if (!isNullEmptyOrFalse(displayDataClass.kToSArr.kToSArrIn)) {
+          temp = displayDataClass.kToSArr.kToSArrIn.join(", ");
+        } else if (!isNullEmptyOrFalse(displayDataClass.kToSArr.kToSArrnIn)) {
+          temp = displayDataClass.kToSArr.kToSArrnIn.join(", ");
+        }
 
-        displayDataKeyValue["value"] = displayDataClass.type2.empty.toString();
+        displayDataKeyValue["value"] = temp;
+        arrData.add(displayDataKeyValue);
+      }
+
+      if (!isNullEmptyOrFalse(displayDataClass.loc)) {
+        Map<String, String> displayDataKeyValue = {};
+        displayDataKeyValue["key"] = "Location";
+
+        String temp = displayDataClass.loc.join(", ");
+        displayDataKeyValue["value"] = temp;
         arrData.add(displayDataKeyValue);
       }
     }
-
-    if (!isNullEmptyOrFalse(displayDataClass.kToSArr)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Key to Symbol";
-      String temp = "";
-      if (!isNullEmptyOrFalse(displayDataClass.kToSArr.kToSArrIn)) {
-        temp = displayDataClass.kToSArr.kToSArrIn.join(", ");
-      } else if (!isNullEmptyOrFalse(displayDataClass.kToSArr.kToSArrnIn)) {
-        temp = displayDataClass.kToSArr.kToSArrnIn.join(", ");
-      }
-
-      displayDataKeyValue["value"] = temp;
-      arrData.add(displayDataKeyValue);
-    }
-
-    if (!isNullEmptyOrFalse(displayDataClass.loc)) {
-      Map<String, String> displayDataKeyValue = {};
-      displayDataKeyValue["key"] = "Location";
-
-      String temp = displayDataClass.loc.join(", ");
-      displayDataKeyValue["value"] = temp;
-      arrData.add(displayDataKeyValue);
-    }
-
     if (isNullEmptyOrFalse(arrData)) {
       Map<String, String> displayDataKeyValue = {};
       displayDataKeyValue["key"] = "All All All All All";
