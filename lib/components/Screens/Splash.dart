@@ -39,7 +39,6 @@ class _SplashState extends State<Splash> {
 
   Future openNextScreen({bool isOfflineMode = false}) async {
     if (app.resolve<PrefUtils>().isUserLogin()) {
-
       SyncManager().callVersionUpdateApi(
         context,
         VersionUpdateApi.splash,
@@ -94,10 +93,11 @@ class _SplashState extends State<Splash> {
           alignment: Alignment.center,
           width: getSize(260),
           height: getSize(260),
-          child: Lottie.asset(
-            'assets/pn.json',
-            fit: BoxFit.fill,
-          ),
+          // child: Lottie.asset(
+          //   'assets/pn.json',
+          //   fit: BoxFit.fill,
+          // ),
+          child: Image.asset(splashLogo),
         ),
       ),
     );
