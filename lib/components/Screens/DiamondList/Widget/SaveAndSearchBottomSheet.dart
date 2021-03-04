@@ -34,13 +34,15 @@ class _SaveAndSearchBottomSheetState extends State<SaveAndSearchBottomSheet> {
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
       child: Column(
+        // mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
             padding: EdgeInsets.only(top: getSize(20)),
             child: Text(
               R.string.screenTitle.savedAndSearch,
-              style: appTheme.black16MediumTextStyle,
+              style: appTheme.black18MediumTextStyle,
             ),
           ),
           SizedBox(
@@ -52,14 +54,21 @@ class _SaveAndSearchBottomSheetState extends State<SaveAndSearchBottomSheet> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                getFieldTitleText(R.string.screenTitle.searchTitle),
-                SizedBox(height: getSize(8)),
+                Padding(
+                  padding: EdgeInsets.only(left: getSize(18)),
+                  child: Text(
+                    R.string.screenTitle.searchTitle,
+                    style: appTheme.black18MediumTextStyle,
+                  ),
+                ),
+                SizedBox(height: getSize(16)),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: getSize(16)),
                   child: CommonTextfield(
                     autoFocus: false,
                     textOption: TextFieldOption(
                       inputController: _titleController,
+                      maxLine: null,
                       hintText: R.string.screenTitle.enterSearchTitle,
                       formatter: [
                         //WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
@@ -135,7 +144,7 @@ class _SaveAndSearchBottomSheetState extends State<SaveAndSearchBottomSheet> {
                           color: appTheme.colorPrimary,
                           width: getSize(1),
                         ),
-                        borderRadius: BorderRadius.circular(getSize(5)),
+                        borderRadius: BorderRadius.circular(getSize(65)),
                       ),
                       child: Text(
                         R.string.commonString.cancel,
@@ -168,7 +177,7 @@ class _SaveAndSearchBottomSheetState extends State<SaveAndSearchBottomSheet> {
                       ),
                       decoration: BoxDecoration(
                           color: appTheme.colorPrimary,
-                          borderRadius: BorderRadius.circular(getSize(5)),
+                          borderRadius: BorderRadius.circular(getSize(65)),
                           boxShadow: getBoxShadow(context)),
                       child: Text(
                         R.string.commonString.btnSubmit,

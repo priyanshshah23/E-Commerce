@@ -256,14 +256,15 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     arrOfImages.add(
       DiamondDetailImagePagerModel(
         title: "AssetImage",
-        url: (DiamondUrls.image +
-            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
-            "/" +
-            "still.jpg"),
+        url: (DiamondUrls.image + (diamondModel.vStnId) + ".jpg"),
+        // url: (DiamondUrls.image +
+        //     (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+        //     "/" +
+        //     "still.jpg"),
 //        url: "${DiamondUrls.image}${diamondModel.mfgStnId}/still.jpg",
         isSelected: true,
         isImage: true,
-        type: "AssetImage",
+        type: "Image",
       ),
     );
     // }
@@ -284,28 +285,30 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     // }
 
     // if (diamondModel.assetFile) {
-    arrOfImages.add(
-      DiamondDetailImagePagerModel(
-        title: "AssetImage",
-        url: DiamondUrls.image +
-            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
-            "/" +
-            "Office_Light_Black_BG.jpg",
-        isSelected: false,
-        type: "AssetImage",
-        isImage: true,
-      ),
-    );
+    // arrOfImages.add(
+    //   DiamondDetailImagePagerModel(
+    //     title: "AssetImage",
+    //     url: (DiamondUrls.image + (diamondModel.vStnId) + ".jpg"),
+    //     // url: DiamondUrls.image +
+    //     //     (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+    //     //     "/" +
+    //     //     "Office_Light_Black_BG.jpg",
+    //     isSelected: false,
+    //     type: "AssetImage",
+    //     isImage: true,
+    //   ),
+    // );
     // }
 
     // if (diamondModel.img) {
     arrImages.add(
       DiamondDetailImagePagerModel(
           title: "Image",
-          url: DiamondUrls.image +
-              (diamondModel.mfgStnId ?? diamondModel.vStnId) +
-              "/" +
-              "still.jpg",
+          url: (DiamondUrls.image + (diamondModel.vStnId) + ".jpg"),
+          // url: DiamondUrls.image +
+          //     (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+          //     "/" +
+          //     "still.jpg",
           isSelected: true,
           isImage: true,
           type: "Image",
@@ -321,13 +324,15 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     arrOfVideos.add(
       DiamondDetailImagePagerModel(
         title: "Movie",
-        url: (DiamondUrls.video +
-            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
-            "/" +
-            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
-            ".html"),
+        url: DiamondUrls.video + "Vision360.html" + "?d=" + diamondModel.vStnId,
+        // url: (DiamondUrls.video +
+        // (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+        // "/" +
+        // (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+        // ".html"),
         type: "Video",
         isSelected: true,
+        isImage: false,
         isVideo: true,
       ),
     );
@@ -356,20 +361,25 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     // }
 
     // if (diamondModel.videoFile) {
+
+    print((DiamondUrls.video + "Vision360.html?d=" + (diamondModel.vStnId)));
+
     arrImages.add(
       DiamondDetailImagePagerModel(
         title: "Movie",
-        url: DiamondUrls.video +
-            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
-            "/" +
-            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
-            ".html",
+        url: (DiamondUrls.video + "Vision360.html?d=" + (diamondModel.vStnId)),
+        // (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+        // "/" +
+        // (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+        // ".html",
         type: "Video",
         isSelected: true,
+        isImage: false,
         isVideo: true,
         arr: arrOfVideos,
       ),
     );
+
     // }
 
     //List of certificate
@@ -382,10 +392,11 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         title: "Certificate",
         url: ApiConstants.googleDocUrl +
             DiamondUrls.certificate +
-            diamondModel.rptNo +
+            diamondModel.vStnId +
             ".pdf",
         type: "Certificate",
         isSelected: true,
+        isVideo: true,
         isImage: false,
       ),
     );
@@ -400,7 +411,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           title: "Certificate",
           url: ApiConstants.googleDocUrl +
               DiamondUrls.certificate +
-              diamondModel.rptNo +
+              diamondModel.vStnId +
               ".pdf",
           isSelected: false,
           isImage: false,
@@ -418,11 +429,67 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       DiamondDetailImagePagerModel(
         title: "Heart & Arrow",
         url: (DiamondUrls.heartImage +
-            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+            (diamondModel.vStnId) +
             "/" +
-            "Heart_Black_BG.jpg"),
+            (diamondModel.vStnId) +
+            "-Arrows-01.jpg"),
+        // url: DiamondUrls.heartImage +
+        //     (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+        //     "/" +
+        //     "Arrow_Black_BG.jpg",
+        type: "Image",
+        isSelected: true,
+        isImage: true,
+      ),
+    );
+    arrOfHA.add(
+      DiamondDetailImagePagerModel(
+        title: "Heart & Arrow",
+        url: (DiamondUrls.heartImage +
+            (diamondModel.vStnId) +
+            "/" +
+            (diamondModel.vStnId) +
+            "-ASET%20white-01.jpg"),
+        // url: DiamondUrls.heartImage +
+        //     (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+        //     "/" +
+        //     "Arrow_Black_BG.jpg",
+        type: "Image",
+        isSelected: true,
+        isImage: true,
+      ),
+    );
+    arrOfHA.add(
+      DiamondDetailImagePagerModel(
+        title: "Heart & Arrow",
+        url: (DiamondUrls.heartImage +
+            (diamondModel.vStnId) +
+            "/" +
+            (diamondModel.vStnId) +
+            "-IdealScope-01.jpg"),
+        // url: DiamondUrls.heartImage +
+        //     (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+        //     "/" +
+        //     "Arrow_Black_BG.jpg",
+        type: "Image",
+        isSelected: true,
+        isImage: true,
+      ),
+    );
+    arrOfHA.add(
+      DiamondDetailImagePagerModel(
+        title: "Heart & Arrow",
+        url: (DiamondUrls.heartImage +
+            (diamondModel.vStnId) +
+            "/" +
+            (diamondModel.vStnId) +
+            "-Hearts-01.jpg"),
+        // url: (DiamondUrls.heartImage +
+        //     (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+        //     "/" +
+        //     "Heart_Black_BG.jpg"),
 //        url: "",
-        type: "AssetImage",
+        type: "Image",
         isSelected: true,
         isImage: true,
       ),
@@ -432,11 +499,16 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     arrOfHA.add(
       DiamondDetailImagePagerModel(
         title: "Heart & Arrow",
-        url: DiamondUrls.heartImage +
-            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+        url: (DiamondUrls.heartImage +
+            (diamondModel.vStnId) +
             "/" +
-            "Arrow_Black_BG.jpg",
-        type: "AssetImage",
+            (diamondModel.vStnId) +
+            "-Arrows-01.jpg"),
+        // url: DiamondUrls.heartImage +
+        //     (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+        //     "/" +
+        //     "Arrow_Black_BG.jpg",
+        type: "Image",
         isSelected: true,
         isImage: true,
       ),
@@ -445,10 +517,11 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     arrImages.add(
       DiamondDetailImagePagerModel(
         title: "Heart & Arrow",
-        url: DiamondUrls.heartImage +
-            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+        url: (DiamondUrls.heartImage +
+            (diamondModel.vStnId) +
             "/" +
-            "Heart_Black_BG.jpg",
+            (diamondModel.vStnId) +
+            "-Hearts-01.jpg"),
         type: "Image",
         isSelected: false,
         isImage: true,
@@ -463,43 +536,37 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     arrOfPloty.add(
       DiamondDetailImagePagerModel(
         title: "Ploty",
-        url: (DiamondUrls.plotting +
-            (diamondModel.vStnId) +
-            //(diamondModel.mfgStnId ?? diamondModel.vStnId) +
-            ".png"),
+        url: (DiamondUrls.plotting + (diamondModel.vStnId) + ".png"),
+        //(diamondModel.mfgStnId ?? diamondModel.vStnId) +
 //        url: "",
-        type: "AssetImage",
+        type: "Image",
         isSelected: true,
         isImage: true,
       ),
     );
     // }
 
-    arrOfPloty.add(
-      DiamondDetailImagePagerModel(
-        title: "Ploty",
-        url: DiamondUrls.plotting +
-            (diamondModel.vStnId) +
-            //(diamondModel.mfgStnId ?? diamondModel.vStnId) +
-
-            ".png",
-        type: "AssetImage",
-        isSelected: true,
-        isImage: true,
-      ),
-    );
-    print(DiamondUrls.plotting +
-        (diamondModel.vStnId) +
-        //(diamondModel.mfgStnId ?? diamondModel.vStnId) +
-        ".png");
+    // arrOfPloty.add(
+    //   DiamondDetailImagePagerModel(
+    //     title: "Ploty",
+    //     url: DiamondUrls.plotting +
+    //         (diamondModel.vStnId) +".png",
+    //         //(diamondModel.mfgStnId ?? diamondModel.vStnId) +
+    //     type: "AssetImage",
+    //     isSelected: true,
+    //     isImage: true,
+    //   ),
+    // );
+    // print(DiamondUrls.plotting +
+    //     (diamondModel.vStnId) +
+    //     //(diamondModel.mfgStnId ?? diamondModel.vStnId) +
+    //     ".png");
     // if (diamondModel.PlotyFile) {
     arrImages.add(
       DiamondDetailImagePagerModel(
         title: "Ploty",
-        url: DiamondUrls.plotting +
-            (diamondModel.vStnId) +
-            //(diamondModel.mfgStnId ?? diamondModel.vStnId) +
-            ".png",
+        url: DiamondUrls.plotting + (diamondModel.vStnId) + ".png",
+        //(diamondModel.mfgStnId ?? diamondModel.vStnId) +
         type: "Image",
         isSelected: false,
         isImage: true,
@@ -515,38 +582,37 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     arrOfProportion.add(
       DiamondDetailImagePagerModel(
         title: "Proportion",
-        url: (DiamondUrls.heartImage +
-            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
-            "/" +
-            "Heart_Black_BG.jpg"),
+        url: (DiamondUrls.proportion + diamondModel.vStnId + ".png"),
+        // (diamondModel.mfgStnId ?? diamondModel.vStnId) +
 //        url: "",
-        type: "AssetImage",
+        type: "Image",
         isSelected: true,
         isImage: true,
       ),
     );
     // }
 
-    arrOfProportion.add(
-      DiamondDetailImagePagerModel(
-        title: "Proportion",
-        url: DiamondUrls.heartImage +
-            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
-            "/" +
-            "Arrow_Black_BG.jpg",
-        type: "AssetImage",
-        isSelected: true,
-        isImage: true,
-      ),
-    );
+    // arrOfProportion.add(
+    //   DiamondDetailImagePagerModel(
+    //     title: "Proportion",
+    //     url: DiamondUrls.heartImage +
+    //         (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+    //         "/" +
+    //         "Arrow_Black_BG.jpg",
+    //     type: "AssetImage",
+    //     isSelected: true,
+    //     isImage: true,
+    //   ),
+    // );
     // if (diamondModel.ProportionFile) {
     arrImages.add(
       DiamondDetailImagePagerModel(
         title: "Proportion",
-        url: DiamondUrls.heartImage +
-            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
-            "/" +
-            "Heart_Black_BG.jpg",
+        url: (DiamondUrls.proportion + diamondModel.vStnId + ".png"),
+        // url: DiamondUrls.heartImage +
+        //     (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+        //     "/" +
+        //     "Heart_Black_BG.jpg",
         type: "Image",
         isSelected: false,
         isImage: true,
@@ -559,49 +625,53 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         List<DiamondDetailImagePagerModel>();
 
     // if (diamondModel.NaturalFile) {
-    arrOfProportion.add(
+    arrOfNatural.add(
       DiamondDetailImagePagerModel(
         title: "Natural",
-        url: (DiamondUrls.heartImage +
-            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
-            "/" +
-            "Heart_Black_BG.jpg"),
+        url: (DiamondUrls.natural + diamondModel.vStnId + ".mp4"),
+        // url: (DiamondUrls.heartImage +
+        //     (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+        // "/" +
+        // "Heart_Black_BG.jpg"),
 //        url: "",
-        type: "AssetImage",
+        type: "Video",
         isSelected: true,
-        isImage: true,
+        isImage: false,
+        isVideo: true,
       ),
     );
     // }
 
-    arrOfProportion.add(
-      DiamondDetailImagePagerModel(
-        title: "Natural",
-        url: DiamondUrls.heartImage +
-            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
-            "/" +
-            "Arrow_Black_BG.jpg",
-        type: "AssetImage",
-        isSelected: true,
-        isImage: true,
-      ),
-    );
+    // arrOfProportion.add(
+    //   DiamondDetailImagePagerModel(
+    //     title: "Natural",
+    //     url: DiamondUrls.heartImage +
+    //         (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+    //         "/" +
+    //         "Arrow_Black_BG.jpg",
+    //     type: "AssetImage",
+    //     isSelected: true,
+    //     isImage: true,
+    //   ),
+    // );
     // if (diamondModel.NaturalFile) {
     arrImages.add(
       DiamondDetailImagePagerModel(
         title: "Natural",
-        url: DiamondUrls.heartImage +
-            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
-            "/" +
-            "Heart_Black_BG.jpg",
-        type: "Image",
+        url: (DiamondUrls.natural + diamondModel.vStnId + ".mp4"),
+        // url: DiamondUrls.heartImage +
+        //     (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+        //     "/" +
+        //     "Heart_Black_BG.jpg",
+        type: "Video",
         isSelected: false,
-        isImage: true,
+        isImage: false,
+        isVideo: true,
         arr: arrOfNatural,
       ),
     );
     //}
-
+    print("--------length---------${arrImages.length}");
     setState(() {
       //
     });
@@ -690,7 +760,9 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           bottomNavigationBar: getBottomTab(),
           body: getDiamondDetailComponents(),
         ),
-        (app.resolve<PrefUtils>().isDisplayedTour(PrefUtils().keyDiamondDetailTour) ==
+        (app
+                    .resolve<PrefUtils>()
+                    .isDisplayedTour(PrefUtils().keyDiamondDetailTour) ==
                 false)
             ? OverlayScreen(
                 DiamondModuleConstant.MODULE_TYPE_DIAMOND_DETAIL,
@@ -893,6 +965,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   }
 
   Widget getDiamondDetailComponents() {
+    print("-------345--------${arrImages.length}");
     return !isNullEmptyOrFalse((arrDiamondDetailUIModel))
         ? Stack(
             children: <Widget>[
