@@ -64,10 +64,10 @@ class LoginScreenState extends StatefulScreenWidgetState {
   void initState() {
     // TODO: implement initState
     super.initState();
-     if (kDebugMode) {
-       userNameController.text="admin@pnshah.com";
-       _passwordController.text = "Admin#01032021";
-     }
+    if (kDebugMode) {
+      userNameController.text = "admin@pnshah.com";
+      _passwordController.text = "Admin#01032021";
+    }
     getUserNameAndPassword();
     // }
   }
@@ -618,6 +618,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
         else {
           return null;
         }
+        // navigateToPopUpBox(context, loginResp);
       },
       inputAction: TextInputAction.done,
       onNextPress: () {
@@ -650,7 +651,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
             () => app.resolve<ServiceModule>().networkService().login(req),
             context,
             isProgress: true)
-        .then((loginResp) async{
+        .then((loginResp) async {
 //      app.resolve<PrefUtils>().saveUser(loginResp.data.user);
 //      if (loginResp.data.userPermissions != null) {
 //        await app.resolve<PrefUtils>().saveUserPermission(
@@ -660,7 +661,8 @@ class LoginScreenState extends StatefulScreenWidgetState {
 //      AppNavigation.shared.movetoHome(isPopAndSwitch: true);
 
 //      saveUserResponse(loginResp);
-      navigateToPopUpBox(context, loginResp);
+      // navigateToPopUpBox(context, loginResp);
+      saveUserResponse(loginResp);
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(

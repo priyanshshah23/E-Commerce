@@ -14,6 +14,7 @@ import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/SalesPerson/BuyNowScreen.dart';
 import 'package:diamnow/components/Screens/Splash.dart';
 import 'package:diamnow/components/Screens/VoiceSearch/VoiceSearch.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -36,6 +37,18 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 main() {
   WidgetsFlutterBinding.ensureInitialized();
+  if (kDebugMode) {
+    rootBundle
+        .load('assets/chls.pem')
+        .then((value) => {
+      if (value != null)
+        {
+          SecurityContext.defaultContext
+              .setTrustedCertificatesBytes(value.buffer.asUint8List())
+        }
+    })
+        .catchError((object) => {print(object)});
+  }
   configureFirebase();
   app = KiwiContainer();
   HttpOverrides.global = new MyHttpOverrides();
