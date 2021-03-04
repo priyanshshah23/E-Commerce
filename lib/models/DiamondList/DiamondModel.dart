@@ -637,7 +637,7 @@ class DiamondModel {
     // element.url = DiamondUrls.image + item.vStnId + "/" + "still.jpg";
 
     if (isStringEmpty(vStnId) == false) {
-      return DiamondUrls.image + vStnId + "/" + "still.jpg";
+      return DiamondUrls.image + vStnId + ".jpg";
     }
     //img
     return "";
