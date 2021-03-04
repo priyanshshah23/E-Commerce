@@ -3,7 +3,7 @@ import 'package:diamnow/app/utils/math_utils.dart';
 import 'package:flutter/services.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
 
-const String baseURL = "http://pndevelopapi.democ.in/";
+const String baseURL = "https://betaapi.arjivexports.com/";
 //const String baseURL = "192.168.0.212:8094/";
 const apiV1 = "api/v1/";
 
@@ -19,7 +19,7 @@ const rupee = "\u0024";
 
 var IMAGEFILESIZE = 10.0;
 
-const APPNAME = "My Diamonds";
+const APPNAME = "Arjiv";
 
 const CODE_OK = "OK";
 const CODE_SUCCESS = "SUCCESS";

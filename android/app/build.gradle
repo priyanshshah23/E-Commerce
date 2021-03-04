@@ -59,7 +59,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.mydiamonds.app"
+        applicationId "com.arjiv.app"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 6

@@ -463,10 +463,10 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     arrOfPloty.add(
       DiamondDetailImagePagerModel(
         title: "Ploty",
-        url: (DiamondUrls.heartImage +
-            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
-            "/" +
-            "Heart_Black_BG.jpg"),
+        url: (DiamondUrls.plotting +
+            (diamondModel.vStnId) +
+            //(diamondModel.mfgStnId ?? diamondModel.vStnId) +
+            ".png"),
 //        url: "",
         type: "AssetImage",
         isSelected: true,
@@ -478,23 +478,28 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     arrOfPloty.add(
       DiamondDetailImagePagerModel(
         title: "Ploty",
-        url: DiamondUrls.heartImage +
-            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
-            "/" +
-            "Arrow_Black_BG.jpg",
+        url: DiamondUrls.plotting +
+            (diamondModel.vStnId) +
+            //(diamondModel.mfgStnId ?? diamondModel.vStnId) +
+
+            ".png",
         type: "AssetImage",
         isSelected: true,
         isImage: true,
       ),
     );
+    print(DiamondUrls.plotting +
+        (diamondModel.vStnId) +
+        //(diamondModel.mfgStnId ?? diamondModel.vStnId) +
+        ".png");
     // if (diamondModel.PlotyFile) {
     arrImages.add(
       DiamondDetailImagePagerModel(
         title: "Ploty",
-        url: DiamondUrls.heartImage +
-            (diamondModel.mfgStnId ?? diamondModel.vStnId) +
-            "/" +
-            "Heart_Black_BG.jpg",
+        url: DiamondUrls.plotting +
+            (diamondModel.vStnId) +
+            //(diamondModel.mfgStnId ?? diamondModel.vStnId) +
+            ".png",
         type: "Image",
         isSelected: false,
         isImage: true,
@@ -685,7 +690,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           bottomNavigationBar: getBottomTab(),
           body: getDiamondDetailComponents(),
         ),
-        (app.resolve<PrefUtils>().getBool(PrefUtils().keyDiamondDetailTour) ==
+        (app.resolve<PrefUtils>().isDisplayedTour(PrefUtils().keyDiamondDetailTour) ==
                 false)
             ? OverlayScreen(
                 DiamondModuleConstant.MODULE_TYPE_DIAMOND_DETAIL,

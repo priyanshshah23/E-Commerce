@@ -31,7 +31,7 @@
     </queries> -->
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="My Diamonds"
+        android:label="Arjiv"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:usesCleartextTraffic="true">
         <!--
