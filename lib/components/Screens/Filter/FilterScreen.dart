@@ -351,8 +351,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                               return SelectionScreen(
                                 title: R.string.screenTitle.selectCompany,
                                 hintText: R.string.commonString.search,
-                                positiveButtonTitle: R.string.commonString.apply,
-                                negativeButtonTitle: R.string.commonString.cancel,
+                                positiveButtonTitle:
+                                    R.string.commonString.apply,
+                                negativeButtonTitle:
+                                    R.string.commonString.cancel,
                                 isSearchEnable: true,
                                 type: CellType.Company,
                                 isMultiSelectionEnable: false,
@@ -442,63 +444,6 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                         ),
                       ),
                     ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        arrList.forEach((element) {
-                          if (element is SelectionModel) {
-                            element.masters.forEach((element) {
-                              element.isSelected = false;
-                            });
-                            element.isShowAllSelected = false;
-                            element.caratRangeChipsToShow = [];
-                          }
-                          if (element is KeyToSymbolModel) {
-                            element.masters.forEach((element) {
-                              element.isSelected = false;
-                            });
-                          }
-                          if (element is FromToModel) {
-                            element.valueFrom = "";
-                            element.valueTo = "";
-                          }
-                          if (element is ColorModel) {
-                            element.masters.forEach((element) {
-                              element.isSelected = false;
-                            });
-                            element.mainMasters.forEach((element) {
-                              element.isSelected = false;
-                            });
-                            element.groupMaster.forEach((element) {
-                              element.isSelected = false;
-                            });
-                            element.intensity.forEach((element) {
-                              element.isSelected = false;
-                            });
-                            element.overtone.forEach((element) {
-                              element.isSelected = false;
-                            });
-                          }
-                        });
-                        selectStatus.clear();
-                        selectStatusModel.forEach((element) {
-                          element.isSelected = false;
-                        });
-                        isStatusSelected = false;
-                        isCompanySelected = false;
-                        app.resolve<PrefUtils>().saveCompany(null);
-                      });
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          right: getSize(8.0), left: getSize(8.0)),
-                      child: Image.asset(
-                        reset,
-                        height: getSize(20),
-                        width: getSize(20),
-                      ),
-                    ),
-                  ),
                   InkWell(
                     onTap: () {
                       NavigationUtilities.pushRoute(Notifications.route);
@@ -988,15 +933,44 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 DiamondListScreen.route,
                 args: dict,
               );
+            } else if (segmentedControlValue == 2) {
+              if (app
+                  .resolve<PrefUtils>()
+                  .getModulePermission(
+                      ModulePermissionConstant.permission_matchPair)
+                  .view) {
+                Map<String, dynamic> map = FilterRequest()
+                    .createRequest(arrList, selectedStatus: selectStatus);
+                if (/*app.resolve<PrefUtils>().getUserDetails().type ==
+                        UserConstant.CUSTOMER &&*/
+                    map.length < 3) {
+                  app.resolve<CustomDialogs>().errorDialog(
+                        context,
+                        "",
+                        "Please select any 2 criteria.",
+                        btntitle: R.string.commonString.ok,
+                      );
+                } else {
+                  SyncManager.instance.callApiForMatchPair(context, map,
+                      (diamondListResp) {
+                    Map<String, dynamic> dict = new HashMap();
+                    dict["filterId"] = diamondListResp.data.filter.id;
+                    dict["filter"] = FilterRequest().createRequest(arrList);
+                    dict[ArgumentConstant.ModuleType] =
+                        DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR;
+                    NavigationUtilities.pushRoute(DiamondListScreen.route,
+                        args: dict);
+                  }, (onError) {});
+                }
+              }
+              // place code
             } else if (app
                 .resolve<PrefUtils>()
                 .getModulePermission(
                     ModulePermissionConstant.permission_searchResult)
                 .view) {
-
               callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
                   isSearch: true);
-              // place code
             } else {
               app.resolve<CustomDialogs>().accessDenideDialog(context);
             }
@@ -1010,34 +984,57 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList))) {
               callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_SEARCH,
                   isSavedSearch: true, isSearch: true);
-            }
-            else {
+            } else {
               showToast(R.string.commonString.selectAtleastOneFilter,
                   context: context);
             }
           } else {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
           }
-        } else if (obj.code == BottomCodeConstant.filteMatchPair) {
-          if (app
-              .resolve<PrefUtils>()
-              .getModulePermission(
-                  ModulePermissionConstant.permission_matchPair)
-              .view) {
-            SyncManager.instance.callApiForMatchPair(
-                context, FilterRequest().createRequest(arrList),
-                (diamondListResp) {
-              Map<String, dynamic> dict = new HashMap();
-              dict["filterId"] = diamondListResp.data.filter.id;
-              dict["filter"] = FilterRequest().createRequest(arrList);
-              dict[ArgumentConstant.ModuleType] =
-                  DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR;
-              NavigationUtilities.pushRoute(DiamondListScreen.route,
-                  args: dict);
-            }, (onError) {});
-          } else {
-            app.resolve<CustomDialogs>().accessDenideDialog(context);
-          }
+        } else if (obj.code == BottomCodeConstant.filterReset) {
+          arrList.forEach((element) {
+            if (element is SelectionModel) {
+              element.masters.forEach((element) {
+                element.isSelected = false;
+              });
+              element.isShowAllSelected = false;
+              element.caratRangeChipsToShow = [];
+            }
+            if (element is KeyToSymbolModel) {
+              element.masters.forEach((element) {
+                element.isSelected = false;
+              });
+            }
+            if (element is FromToModel) {
+              element.valueFrom = "";
+              element.valueTo = "";
+            }
+            if (element is ColorModel) {
+              element.masters.forEach((element) {
+                element.isSelected = false;
+              });
+              element.mainMasters.forEach((element) {
+                element.isSelected = false;
+              });
+              element.groupMaster.forEach((element) {
+                element.isSelected = false;
+              });
+              element.intensity.forEach((element) {
+                element.isSelected = false;
+              });
+              element.overtone.forEach((element) {
+                element.isSelected = false;
+              });
+            }
+          });
+          selectStatus.clear();
+          selectStatusModel.forEach((element) {
+            element.isSelected = false;
+          });
+          isStatusSelected = false;
+          isCompanySelected = false;
+          app.resolve<PrefUtils>().saveCompany(null);
+          setState(() {});
         }
       },
     );
