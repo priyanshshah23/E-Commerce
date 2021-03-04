@@ -133,17 +133,21 @@ class ApiConstants {
 
 class DiamondUrls {
   static const String commonUrl =
-      "https://s3.us-east-2.wasabisys.com/cdn.pndiamonds.com/";
-  static const String commonUrlForImage = "https://cdn.pndiamonds.com/";
-  static const String image =
-      commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
+      // "https://s3.us-east-2.wasabisys.com/cdn.pndiamonds.com/";
+      // "https://arjivexports.blob.core.windows.net/arjivfiles/Imaged/PLOTING/C895-46.png";
+      "https://arjivexports.blob.core.windows.net/arjivfiles/";
+  static const String commonUrlForImage =
+      "https://arjivexports.blob.core.windows.net/arjivfiles/Imaged/";
+  static const String image = commonUrlForImage + "IMAGE/";
+  // commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
   static String video =
-      commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
-  static const String heartImage =
-      commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
-  static const String plotting = commonUrl + "PlottingImages/";
-  static const String certificate =
-      "https://s3.us-east-2.wasabisys.com/" + "certificates/";
+       commonUrl + "HDView/";
+  static const String heartImage = commonUrlForImage + "HA/";
+  // commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
+  static const String plotting = commonUrlForImage + "PLOTING/";
+  static const String proportion = commonUrlForImage + "PLOTING/MEASUREMENT/";
+  static const String natural = commonUrlForImage + "NVIDEO/";
+  static const String certificate =commonUrlForImage  + "PDF/";
   static const String arroImage =
       commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
   static const String videomp4 = commonUrl + "Mov/";
