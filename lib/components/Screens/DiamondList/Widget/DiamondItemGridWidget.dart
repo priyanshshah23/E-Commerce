@@ -24,7 +24,8 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        widget.actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_ROW));
+        // widget.actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_ROW));
+        widget.actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_DETAIL));
       },
       child: Stack(
         alignment: Alignment.topCenter,
@@ -320,32 +321,37 @@ class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
   }
 
   getDiamondImageView() {
-    return Material(
-      // elevation: 10,
-      shadowColor: appTheme.shadowColor,
-      color: Colors.transparent,
-      borderRadius: BorderRadius.circular(getSize(75)),
-      child: Container(
-        width: getSize(146),
-        height: getSize(146),
-        decoration: BoxDecoration(
-            color: appTheme.whiteColor,
-            shape: BoxShape.circle,
-            boxShadow: widget.item.isSelected
-                ? getBoxShadow(context)
-                : [BoxShadow(color: Colors.transparent)]),
-        child: Padding(
-          padding: EdgeInsets.all(getSize(0)),
-          child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(getSize(75))),
-            child: getImageView(widget.item.getDiamondImage(),
+    return InkWell(
+      onTap: () {
+        widget.actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_ROW));
+      },
+      child: Material(
+        // elevation: 10,
+        shadowColor: appTheme.shadowColor,
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(getSize(75)),
+        child: Container(
+          width: getSize(146),
+          height: getSize(146),
+          decoration: BoxDecoration(
+              color: appTheme.whiteColor,
+              shape: BoxShape.circle,
+              boxShadow: widget.item.isSelected
+                  ? getBoxShadow(context)
+                  : [BoxShadow(color: Colors.transparent)]),
+          child: Padding(
+            padding: EdgeInsets.all(getSize(0)),
+            child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(getSize(75))),
+              child: getImageView(widget.item.getDiamondImage(),
 //                                    finalUrl: model.img
 //                                        ? DiamondUrls.image +
 //                                        model.vStnId +
 //                                        ".jpg"
 //                                        : "",
-                placeHolderImage: diamond,
-                fit: BoxFit.cover),
+                  placeHolderImage: diamond,
+                  fit: BoxFit.cover),
+            ),
           ),
         ),
       ),

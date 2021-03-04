@@ -200,7 +200,7 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                                               fillArrayList();
                                             },
                                             child: Container(
-                                              width: getSize(102),
+                                              // width: getSize(102),
                                               decoration: BoxDecoration(
                                                 border: Border(
                                                   bottom: BorderSide(
@@ -216,8 +216,8 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                                                     padding: EdgeInsets.only(
                                                         right: getSize(3)),
                                                     child: Text(
-                                                      R.string.commonString
-                                                          .viewDetails,
+                                                      R.string.screenTitle
+                                                          .viewAll,
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: appTheme
@@ -322,7 +322,7 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                           if (arr.length > 3 && model.isExpand)
                             listOfSelectedFilter(arr, model, arr.length),
                           if (arr.length > 3 && !model.isExpand)
-                            listOfSelectedFilter(arr, model, 3),
+                            listOfSelectedFilter(arr, model, 4),
                           // Padding(
                           //   padding: EdgeInsets.only(
                           //     // left: getSize(16),
@@ -462,27 +462,31 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
             top: getSize(10),
             bottom: getSize(13),
             left: getSize(16),
-            right: getSize(15.5)),
+            right: getSize(16)),
         child: Wrap(
           children: [
             for (int i = 0; i < length; i++)
-              Container(
-                // color: Colors.blue,
-                width: getSize(155.5),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "${arr[i]["key"] ?? ""}",
-                      textAlign: TextAlign.left,
-                      style: appTheme.grey14HintTextStyle,
-                    ),
-                    // SizedBox(width: getSize(16)),
-                    Text(arr[i]["value"] ?? "",
+              Expanded(
+                child: Container(
+                  // color: Colors.blue,
+                  width: (MathUtilities.screenWidth(context) / 2) - getSize(37),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: getSize(7)),
+                      Text(
+                        "${arr[i]["key"] ?? ""}",
                         textAlign: TextAlign.left,
-                        style: appTheme.blackMedium14TitleColorblack),
-                  ],
+                        style: appTheme.grey14HintTextStyle,
+                      ),
+                      SizedBox(height: getSize(4)),
+                      Text(arr[i]["value"] ?? "",
+                          textAlign: TextAlign.left,
+                          style: appTheme.blackMedium14TitleColorblack),
+                      SizedBox(height: getSize(7)),
+                    ],
+                  ),
                 ),
               )
           ],

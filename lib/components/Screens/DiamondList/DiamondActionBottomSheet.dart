@@ -1064,7 +1064,65 @@ Future openBottomSheetForSavedSearch(
   SavedSearchModel savedSearchModel,
   List<FormBaseModel> filterList,
 }) {
-  return showModalBottomSheet(
+  return showDialog(
+    barrierDismissible: true,
+    context: context,
+
+    // barrierDismissible: true,
+    // useSafeArea: true,
+    // useRootNavigator: true,
+    builder: (context) {
+      return Dialog(
+        insetPadding: EdgeInsets.symmetric(
+            horizontal: getSize(20), vertical: getSize(20)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(getSize(25)),
+        ),
+        // shape: RoundedRectangleBorder(
+        //     borderRadius: BorderRadius.all(Radius.circular(getSize(15)))),
+        child: SaveAndSearchBottomSheet(
+          savedSearchModel: savedSearchModel,
+          callBack: (text, isNewSearch) {
+            Map<String, dynamic> dict = {};
+            dict["filter"] = req;
+            dict["name"] = text;
+            dict["id"] = isNewSearch ? "" : savedSearchModel?.id ?? "";
+            dict["searchType"] = DiamondSearchType.SAVE;
+            NetworkCall<SavedSearchResp>()
+                .makeCall(
+              () => app
+                  .resolve<ServiceModule>()
+                  .networkService()
+                  .saveSearch(dict),
+              context,
+              isProgress: true,
+            )
+                .then((diamondListResp) async {
+              Navigator.pop(context);
+              if (isSearch) {
+                Map<String, dynamic> dict = new HashMap();
+                dict["filterId"] = diamondListResp.data.savedSearchModel.id;
+                dict["filters"] = req;
+                dict["filterModel"] = filterList;
+                dict[ArgumentConstant.ModuleType] =
+                    DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
+                NavigationUtilities.pushRoute(DiamondListScreen.route,
+                    args: dict);
+              }
+              // Navigator.pop(context);
+            }).catchError((onError) {
+              app.resolve<CustomDialogs>().confirmDialog(
+                    context,
+                    desc: onError.message,
+                    positiveBtnTitle: R.string.commonString.ok,
+                  );
+            });
+          },
+        ),
+      );
+    },
+  );
+  /*return showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     backgroundColor: appTheme.whiteColor,
@@ -1113,5 +1171,5 @@ Future openBottomSheetForSavedSearch(
         },
       );
     },
-  );
+  );*/
 }
