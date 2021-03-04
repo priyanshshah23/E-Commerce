@@ -680,7 +680,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                         appTheme.blackMedium14TitleColorblack),
                   )),
               Expanded(
-                flex: 4,
+                flex: 3,
                 child: Row(
                   children: <Widget>[
                     getText(widget.item?.cutNm ?? "-",
@@ -884,7 +884,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           ),
           // getText(widget.item?.msrmnt ?? ""),
           Expanded(
-            flex: 5,
+            flex: 4,
             child: getTextWithLabel(widget.item?.msrmnt ?? "-", "M : ",
                 align: TextAlign.right),
           ),
@@ -934,7 +934,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             ),
             // PriceUtilities.getPercent(widget.item?.depPer ?? 0)
             Expanded(
-              flex: 3,
+              flex: 2,
               child: getTextWithLabel(widget.item?.msrmnt ?? "-", "M : "),
             ),
             // getAmountText(widget.item?.getAmount() ?? ""),
@@ -984,27 +984,25 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Expanded(
-                flex: 1,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: getTextWithLabel(
-                    widget.item?.ratio.toString() ?? "-",
-                    "R : ",
-                  ),
-                )),
-            Expanded(
-              flex: 1,
+            Align(
+              alignment: Alignment.centerLeft,
+              child: getTextWithLabel(
+                widget.item?.ratio.toString() ?? "-",
+                "R : ",
+              ),
+            ),
+            Flexible(
+              flex: 4,
               child: getTextWithLabel(widget.item?.eClnNm ?? "-", "EC : "),
             ),
             // PriceUtilities.getPercent(widget.item?.depPer ?? 0)
-            Expanded(
+            Flexible(
               flex: 2,
               child: getTextWithLabel(
                   widget.item?.depPer.toString() ?? "-", "D% : "),
             ),
-            Expanded(
-              flex: 1,
+            Flexible(
+              flex: 2,
               child: getTextWithLabel(
                   widget.item?.tblPer.toString() ?? "-", "T% : "),
             ),
