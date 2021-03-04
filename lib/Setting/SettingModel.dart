@@ -15,7 +15,7 @@ class DrawerSetting {
             .getModulePermission(ModulePermissionConstant.permission_dashboard)
             .view)
       drawerList.add(DrawerModel(
-        image: home,
+        image: dashboard,
         title: R.string.screenTitle.home,
         isSelected: true,
         type: DiamondModuleConstant.MODULE_TYPE_HOME,
@@ -507,7 +507,7 @@ class BottomMenuSetting {
     }
     if (app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES &&
         moduleType != DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST) {
-      addWatchlistInBottomMenu(moreMenuList,home_watchlist);
+      addWatchlistInBottomMenu(moreMenuList, home_watchlist);
     }
 
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ORDER) {
@@ -866,11 +866,11 @@ class BottomMenuSetting {
         .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_hold)
         .insert) {
-    moreMenuList.add(BottomTabModel(
-        image: image,
-        isCenter: isCenter,
-        title: R.string.screenTitle.hold,
-        type: ActionMenuConstant.ACTION_TYPE_HOLD));
+      moreMenuList.add(BottomTabModel(
+          image: image,
+          isCenter: isCenter,
+          title: R.string.screenTitle.hold,
+          type: ActionMenuConstant.ACTION_TYPE_HOLD));
     }
   }
 
@@ -880,11 +880,11 @@ class BottomMenuSetting {
         .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_memo)
         .insert) {
-    moreMenuList.add(BottomTabModel(
-        image: image,
-        isCenter: isCenter,
-        title: R.string.screenTitle.memo,
-        type: ActionMenuConstant.ACTION_TYPE_MEMO));
+      moreMenuList.add(BottomTabModel(
+          image: image,
+          isCenter: isCenter,
+          title: R.string.screenTitle.memo,
+          type: ActionMenuConstant.ACTION_TYPE_MEMO));
     }
   }
 

@@ -42,8 +42,9 @@ class DiamondDeepDetailScreen extends StatefulScreenWidget {
   List<DiamondDetailImagePagerModel> arrImages =
       List<DiamondDetailImagePagerModel>();
   DiamondModel diamondModel;
+  int index = 0;
 
-  DiamondDeepDetailScreen({this.arrImages, this.diamondModel});
+  DiamondDeepDetailScreen({this.arrImages, this.index, this.diamondModel});
 
   @override
   _DiamondDeepDetailScreenState createState() =>

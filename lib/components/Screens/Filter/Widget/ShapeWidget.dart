@@ -245,7 +245,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                         child: Container(
                           height: getSize(26),
                           decoration: BoxDecoration(
-                            color: appTheme.unSelectedBgColor,
+                            color: appTheme.seemoreBgColor,
                             borderRadius: BorderRadius.circular(getSize(5)),
                           ),
                           child: Row(
@@ -278,7 +278,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                         child: Container(
                           height: getSize(26),
                           decoration: BoxDecoration(
-                            color: appTheme.unSelectedBgColor,
+                            color: appTheme.seemoreBgColor,
                             borderRadius: BorderRadius.circular(getSize(5)),
                           ),
                           child: Row(
