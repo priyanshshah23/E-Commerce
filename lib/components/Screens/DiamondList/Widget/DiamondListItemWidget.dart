@@ -673,7 +673,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               getText(widget.item?.colNm ?? "",
                   appTheme.blackMedium14TitleColorblack),
               Expanded(
-                  flex: 3,
+                  flex: 2,
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: getText(widget.item?.clrNm ?? "-",
@@ -709,9 +709,12 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 ),
               ),
               Expanded(
-                flex: 1,
-                child: getText(widget.item?.lbNm ?? "",
-                    appTheme.blackMedium12TitleColorblack),
+                flex: 2,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: getText(widget.item?.lbNm ?? "",
+                      appTheme.blackMedium12TitleColorblack),
+                ),
               ),
             ]));
   }
@@ -926,12 +929,12 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               ),
             )),
             Expanded(
-              flex: 2,
+              flex: 1,
               child: getTextWithLabel(widget.item?.fluNm ?? "-", "FL : "),
-          ),
+            ),
             // PriceUtilities.getPercent(widget.item?.depPer ?? 0)
             Expanded(
-              flex: 4,
+              flex: 3,
               child: getTextWithLabel(widget.item?.msrmnt ?? "-", "M : "),
             ),
             // getAmountText(widget.item?.getAmount() ?? ""),

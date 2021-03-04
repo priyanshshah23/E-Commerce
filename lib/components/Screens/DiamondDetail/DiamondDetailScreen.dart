@@ -466,7 +466,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         url: (DiamondUrls.plotting +
             (diamondModel.vStnId) +
             //(diamondModel.mfgStnId ?? diamondModel.vStnId) +
-
             ".png"),
 //        url: "",
         type: "AssetImage",
