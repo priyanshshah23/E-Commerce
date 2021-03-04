@@ -124,9 +124,11 @@ class PrefUtils {
       return defaultValue;
     }
   }
+
   bool isDisplayedTour(String key) {
     return true;
   }
+
   /// Gets the bool value for the [key] if it exists.
   bool getBool(String key, {bool defaultValue = false}) {
     try {
@@ -348,7 +350,28 @@ class PrefUtils {
         data.downloadExcel = false;
       }
     }
-    if (app.resolve<PrefUtils>().getUserDetails() == UserConstant.CUSTOMER &&
+
+    if (module == ModulePermissionConstant.permission_searchDiamond ||
+        module == ModulePermissionConstant.permission_quickSearch ||
+        module == ModulePermissionConstant.permission_searchResult ||
+        module == ModulePermissionConstant.permission_watchlist ||
+        module == ModulePermissionConstant.permission_cart ||
+        module == ModulePermissionConstant.permission_myDemand ) {
+      data = UserPermissionsData(module: module);
+      data.insert = true;
+      data.view = true;
+      data.update = true;
+      data.delete = true;
+      data.downloadExcel = true;
+    }else{
+      data = UserPermissionsData(module: module);
+      data.insert = false;
+      data.view = false;
+      data.update = false;
+      data.delete = false;
+      data.downloadExcel = false;
+    }
+    /*  if (app.resolve<PrefUtils>().getUserDetails() == UserConstant.CUSTOMER &&
         (app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
                 KYCStatus.pending) !=
             KYCStatus.approved) {
@@ -377,7 +400,7 @@ class PrefUtils {
       }
     }else{
       //Admin permission
-    }
+    }*/
     return data;
   }
 

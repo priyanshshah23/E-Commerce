@@ -560,7 +560,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
             ),
           ),
         ),
-        app.resolve<PrefUtils>().getBool(PrefUtils().keyMyAccountTour) == false
+        app.resolve<PrefUtils>().isDisplayedTour(PrefUtils().keyMyAccountTour) == false
             ? OverlayScreen(
                 DiamondModuleConstant.MODULE_TYPE_PROFILE,
                 finishTakeTour: () {

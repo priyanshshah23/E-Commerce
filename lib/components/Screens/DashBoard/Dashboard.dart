@@ -348,13 +348,13 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   checkTourIsShown() {
-    return (app.resolve<PrefUtils>().getBool(PrefUtils().keyHomeTour) ==
+    return (app.resolve<PrefUtils>().isDisplayedTour(PrefUtils().keyHomeTour) ==
             false &&
         isNullEmptyOrFalse(this.dashboardModel) == false);
   }
 
   showTour() {
-    return (app.resolve<PrefUtils>().getBool(PrefUtils().keyHomeTour) ==
+    return (app.resolve<PrefUtils>().isDisplayedTour(PrefUtils().keyHomeTour) ==
                 false &&
             isNullEmptyOrFalse(this.dashboardModel) == false)
         ? OverlayScreen(

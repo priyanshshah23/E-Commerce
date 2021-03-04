@@ -691,7 +691,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           bottomNavigationBar: getBottomTab(),
           body: getDiamondDetailComponents(),
         ),
-        (app.resolve<PrefUtils>().getBool(PrefUtils().keyDiamondDetailTour) ==
+        (app.resolve<PrefUtils>().isDisplayedTour(PrefUtils().keyDiamondDetailTour) ==
                 false)
             ? OverlayScreen(
                 DiamondModuleConstant.MODULE_TYPE_DIAMOND_DETAIL,

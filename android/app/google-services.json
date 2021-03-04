@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1009456816397:android:287cee2cacf75a0cdfd044",
         "android_client_info": {
-          "package_name": "com.mydiamonds.app"
+          "package_name": "com.arjiv.app"
         }
       },
       "oauth_client": [
@@ -34,7 +34,7 @@
               "client_id": "1009456816397-o60omifrrgaplo4s2d0facqel0sc1u5k.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.mydiamonds.app"
+                "bundle_id": "com.arjiv.app"
               }
             }
           ]
@@ -45,7 +45,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1009456816397:android:82d01dc9ff86ff41dfd044",
         "android_client_info": {
-          "package_name": "com.mydiamonds.app"
+          "package_name": "com.arjiv.app"
         }
       },
       "oauth_client": [
@@ -70,7 +70,7 @@
               "client_id": "1009456816397-o60omifrrgaplo4s2d0facqel0sc1u5k.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.mydiamonds.app"
+                "bundle_id": "com.arjiv.app"
               }
             }
           ]

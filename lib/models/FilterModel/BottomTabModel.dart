@@ -10,6 +10,7 @@ class BottomCodeConstant {
   static const String filterSearch = "FILTER_SEARCH";
   static const String filterSaveAndSearch = "FILTER_SAVE_SEARCH";
   static const String filteMatchPair = "FILTER_MATCH_PAIR";
+  static const String filterReset = "FILTER_RESET";
 
   //DIAMOND LIST
   static const String dLShowSelected = "DL_SHOWSELECTED";
@@ -157,13 +158,18 @@ class BottomTabBar {
         code: BottomCodeConstant.filterSaveAndSearch,
         sequence: 3,
         isCenter: false));
+//    arrBootomTab.add(BottomTabModel(
+//        title: R.string.screenTitle.matchPair,
+//        image: matchPair,
+//        code: BottomCodeConstant.filteMatchPair,
+//        sequence: 4,
+//        isCenter: false));
     arrBootomTab.add(BottomTabModel(
-        title: R.string.screenTitle.matchPair,
-        image: matchPair,
-        code: BottomCodeConstant.filteMatchPair,
+        title: "Reset",
+        image: reset,
+        code: BottomCodeConstant.filterReset,
         sequence: 4,
         isCenter: false));
-
     return arrBootomTab;
   }
 }

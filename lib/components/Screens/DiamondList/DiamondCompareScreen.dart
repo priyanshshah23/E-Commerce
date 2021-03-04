@@ -649,7 +649,7 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
             ),
           ),
         ),
-        (app.resolve<PrefUtils>().getBool(PrefUtils().keyCompareStoneTour) ==
+        (app.resolve<PrefUtils>().isDisplayedTour(PrefUtils().keyCompareStoneTour) ==
                 false)
             ? OverlayScreen(
                 DiamondModuleConstant.MODULE_TYPE_COMPARE,
@@ -727,156 +727,200 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
   }
 
   getDiamondCompareItem(int index, Key key, DiamondCompare compareModel) {
-    return Column(
+    return Padding(
       key: key,
-      children: <Widget>[
-        Stack(
-          children: [
-            Container(
-              width: getSize(150),
-              height: getSize(90),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  // color: Colors.yellow,
-                  border: index == 0 || compareModel.isSelected
-                      ? (Border.all(
-                          color: compareModel.isSelected
-                              ? appTheme.colorPrimary
-                              : appTheme.dividerColor,
-                        ))
-                      : Border(
-                          // left: BorderSide(
-                          //     width: getSize(1),
-                          //     color: appTheme.dividerColor),
-                          top: BorderSide(
-                              width: getSize(1), color: appTheme.dividerColor),
-                          bottom: BorderSide(
-                              width: getSize(1), color: appTheme.dividerColor),
-                          right: BorderSide(
-                              width: getSize(1), color: appTheme.dividerColor),
-                        )),
-              child: getImageView(
-                  DiamondUrls.image +
-                      compareModel.diamondModel.mfgStnId +
-                      "/" +
-                      "still.jpg",
-                  height: getSize(120),
-                  width: getSize(60),
-                  fit: BoxFit.scaleDown),
-            ),
-            Positioned(
-              top: 0,
-              left: 2,
-              child: Container(
-                // color: Colors.red,
-                // padding: EdgeInsets.only(left:getSize(14)),
-                alignment: Alignment.topCenter,
-                width: getSize(30),
-                height: getSize(30),
-                child: IconButton(
-                  icon: Icon(
-                    Icons.done,
-                    size: getSize(18),
-                    color: compareModel.isSelected == true
-                        ? appTheme.colorPrimary
-                        : appTheme.textBlackColor,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      compareModel.isSelected = !compareModel.isSelected;
-                    });
-                  },
-                ),
-              ),
-            ),
-            Positioned(
-              right: 0,
-              top: 0,
-              child: Container(
-                // color: Colors.red,
-                alignment: Alignment.center,
-                width: getSize(30),
-                height: getSize(30),
-                child: IconButton(
-                  icon: Icon(
-                    Icons.clear,
-                    size: getSize(18),
-                  ),
-                  onPressed: () {
-                    removeDiamond(index);
-                    ;
-                  },
-                ),
-              ),
-            ),
-          ],
+      padding: index == 0
+          ? EdgeInsets.only(
+              top: getSize(5), right: getSize(5), bottom: getSize(5))
+          : EdgeInsets.all(getSize(5)),
+      child: Container(
+        decoration: BoxDecoration(
+          // color: Colors.yellow,
+          border: index == 0 || compareModel.isSelected
+              ? (Border.all(
+                  color: compareModel.isSelected
+                      ? appTheme.colorPrimary
+                      : appTheme.dividerColor,
+                ))
+              : Border(
+                  // left: BorderSide(
+                  //     width: getSize(1),
+                  //     color: appTheme.dividerColor),
+                  top: BorderSide(
+                      width: getSize(1), color: appTheme.dividerColor),
+                  bottom: BorderSide(
+                      width: getSize(1), color: appTheme.dividerColor),
+                  right: BorderSide(
+                      width: getSize(1), color: appTheme.dividerColor),
+                  left: BorderSide(
+                      width: getSize(1), color: appTheme.dividerColor)),
+          borderRadius: BorderRadius.circular(getSize(5)),
         ),
-        Expanded(
-          child: Column(
-            children: <Widget>[
-              for (int i = 0; i < compareModel.compareDetailList.length; i++)
-                for (int j = 0;
-                    j < compareModel.compareDetailList[i].parameters.length;
-                    j++)
-                  Container(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                            padding: EdgeInsets.only(left: getSize(14)),
-                            alignment: Alignment.centerLeft,
-                            height: getSize(30),
-                            width: getSize(150),
-                            decoration: BoxDecoration(
-                              color: ColorConstants.compareChangesRowBgColor,
-                              // border: Border(
-                              //   left: BorderSide(width: getSize(0.5)),
-                              //   right: BorderSide(width: getSize(0.5)),
-                              // ),
-                            ),
-                            child: index == 0
-                                ? Text(
-                                    compareModel.compareDetailList[i]
-                                        .parameters[j].title,
-                                    style:
-                                        appTheme.blackNormal12TitleColorblack,
-                                  )
-                                : SizedBox()),
-                        Container(
-                          padding: EdgeInsets.only(left: getSize(14)),
-                          alignment: Alignment.centerLeft,
-                          height: getSize(40),
-                          width: getSize(150),
-                          decoration: BoxDecoration(
-                            color: ColorConstants.white,
-                            border: index == 0
-                                ? Border(
-                                    left: BorderSide(
-                                        width: getSize(1),
-                                        color: appTheme.dividerColor),
-                                    right: BorderSide(
-                                        width: getSize(1),
-                                        color: appTheme.dividerColor),
-                                  )
-                                : Border(
-                                    right: BorderSide(
-                                        width: getSize(1),
-                                        color: appTheme.dividerColor),
-                                  ),
-                          ),
-                          child: Text(
-                            compareModel
-                                    .compareDetailList[i].parameters[j].value ??
-                                "-",
-                            style: appTheme.blackNormal14TitleColorblack,
-                          ),
-                        )
-                      ],
+        child: Column(
+          children: <Widget>[
+            Stack(
+              children: [
+                Container(
+                  width: getSize(150),
+                  height: getSize(123),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      // color: Colors.yellow,
+                      border: compareModel.isSelected
+                          ? (Border(
+                              // left: BorderSide(
+                              //     width: getSize(1),
+                              //     color: appTheme.dividerColor),
+                              // top: BorderSide(
+                              //     width: getSize(1),
+                              //     color: appTheme.dividerColor),
+                              bottom: BorderSide(
+                                  width: getSize(1),
+                                  color: appTheme.colorPrimary),
+                              // right: BorderSide(
+                              //     width: getSize(1),
+                              //     color: appTheme.dividerColor),
+                            ))
+                          : Border(
+                              // left: BorderSide(
+                              //     width: getSize(1),
+                              //     color: appTheme.dividerColor),
+                              // top: BorderSide(
+                              //     width: getSize(1),
+                              //     color: appTheme.dividerColor),
+                              bottom: BorderSide(
+                                  width: getSize(1),
+                                  color: appTheme.dividerColor),
+                              // right: BorderSide(
+                              //     width: getSize(1),
+                              //     color: appTheme.dividerColor),
+                            )),
+                  child: Padding(
+                      padding: EdgeInsets.all(getSize(0)),
+                      child: getImageView(
+                          DiamondUrls.image +
+                              compareModel.diamondModel.mfgStnId +
+                              "/" +
+                              "still.jpg",
+                          height: getSize(103),
+                          width: getSize(130),
+                          fit: BoxFit.cover)),
+                ),
+                Positioned(
+                  top: 0,
+                  left: 2,
+                  child: Container(
+                    // color: Colors.red,
+                    // padding: EdgeInsets.only(left:getSize(14)),
+                    alignment: Alignment.topCenter,
+                    width: getSize(30),
+                    height: getSize(30),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.done,
+                        size: getSize(18),
+                        color: compareModel.isSelected == true
+                            ? appTheme.colorPrimary
+                            : appTheme.textBlackColor,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          compareModel.isSelected = !compareModel.isSelected;
+                        });
+                      },
                     ),
                   ),
-            ],
-          ),
-        )
-      ],
+                ),
+                Positioned(
+                  right: 0,
+                  top: 0,
+                  child: Container(
+                    // color: Colors.red,
+                    alignment: Alignment.center,
+                    width: getSize(30),
+                    height: getSize(30),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.clear,
+                        size: getSize(18),
+                      ),
+                      onPressed: () {
+                        removeDiamond(index);
+                        ;
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Expanded(
+              child: Column(
+                children: <Widget>[
+                  for (int i = 0;
+                      i < compareModel.compareDetailList.length;
+                      i++)
+                    for (int j = 0;
+                        j < compareModel.compareDetailList[i].parameters.length;
+                        j++)
+                      Container(
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                                padding: EdgeInsets.only(left: getSize(14)),
+                                alignment: Alignment.centerLeft,
+                                height: getSize(30),
+                                width: getSize(150),
+                                decoration: BoxDecoration(
+                                    // color:
+                                    //     ColorConstants.compareChangesRowBgColor,
+                                    // border: Border(
+                                    //   left: BorderSide(width: getSize(0.5)),
+                                    //   right: BorderSide(width: getSize(0.5)),
+                                    // ),
+                                    ),
+                                child: Text(
+                                  compareModel
+                                      .compareDetailList[i].parameters[j].title,
+                                  style: appTheme.blackNormal12TitleColorblack,
+                                )),
+                            Container(
+                              padding: EdgeInsets.only(left: getSize(14)),
+                              alignment: Alignment.centerLeft,
+                              height: getSize(40),
+                              width: getSize(150),
+                              decoration: BoxDecoration(
+                                color: ColorConstants.white,
+                                // border: index == 0
+                                //     ? Border(
+                                //         left: BorderSide(
+                                //             width: getSize(1),
+                                //             color: appTheme.dividerColor),
+                                //         right: BorderSide(
+                                //             width: getSize(1),
+                                //             color: appTheme.dividerColor),
+                                //       )
+                                //     : Border(
+                                //         right: BorderSide(
+                                //             width: getSize(1),
+                                //             color: appTheme.dividerColor),
+                                //       ),
+                              ),
+                              child: Text(
+                                compareModel.compareDetailList[i].parameters[j]
+                                        .value ??
+                                    "-",
+                                style: appTheme.blackNormal14TitleColorblack,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
