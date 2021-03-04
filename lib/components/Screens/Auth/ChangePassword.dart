@@ -57,7 +57,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     padding: EdgeInsets.only(
                       right: getSize(30),
                       left: getSize(82),
-                      bottom: getSize(52),
+                      bottom: getSize(28),
                     ),
                     child: Image.asset(
                       resetPassword,
@@ -65,13 +65,26 @@ class _ChangePasswordState extends State<ChangePassword> {
                       width: getSize(200),
                     ),
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        R.string.authStrings.setNewPassword,
+                        textAlign: TextAlign.center,
+                        style: appTheme.black14TextStyle,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: getSize(36),
+                  ),
                   getOldPasswordTextField(),
                   SizedBox(
-                    height: getSize(20),
+                    height: getSize(16),
                   ),
                   getNewPasswordTextField(),
                   SizedBox(
-                    height: getSize(20),
+                    height: getSize(16),
                   ),
                   getConfirmPasswordTextField(),
                   SizedBox(
@@ -96,7 +109,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                         // NavigationUtilities.push(ThemeSetting());
                       },
                       //  backgroundColor: appTheme.buttonColor,
-                      borderRadius: getSize(5),
+                      // borderRadius: getSize(5),
                       fitWidth: true,
                       text: R.string.authStrings.changePassword,
                       //isButtonEnabled: enableDisableSigninButton(),

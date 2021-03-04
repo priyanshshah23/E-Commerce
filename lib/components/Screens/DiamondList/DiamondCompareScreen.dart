@@ -736,6 +736,10 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
       child: Container(
         decoration: BoxDecoration(
           // color: Colors.yellow,
+          color: appTheme.whiteColor,
+          boxShadow: compareModel.isSelected
+              ? getBoxShadow(context)
+              : [BoxShadow(color: Colors.transparent)],
           border: index == 0 || compareModel.isSelected
               ? (Border.all(
                   color: compareModel.isSelected
@@ -795,8 +799,8 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
                               //     width: getSize(1),
                               //     color: appTheme.dividerColor),
                             )),
-                  child: Padding(
-                      padding: EdgeInsets.all(getSize(0)),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(getSize(4)),
                       child: getImageView(
                           DiamondUrls.image +
                               compareModel.diamondModel.mfgStnId +
@@ -807,15 +811,18 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
                           fit: BoxFit.cover)),
                 ),
                 Positioned(
-                  top: 0,
-                  left: 2,
+                  top: 10,
+                  left: 10,
                   child: Container(
-                    // color: Colors.red,
                     // padding: EdgeInsets.only(left:getSize(14)),
-                    alignment: Alignment.topCenter,
+                    decoration: BoxDecoration(
+                        color: appTheme.whiteColor,
+                        borderRadius: BorderRadius.circular(getSize(4))),
+                    alignment: Alignment.center,
                     width: getSize(30),
                     height: getSize(30),
                     child: IconButton(
+                      padding: EdgeInsets.all(getSize(0)),
                       icon: Icon(
                         Icons.done,
                         size: getSize(18),
@@ -832,14 +839,18 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
                   ),
                 ),
                 Positioned(
-                  right: 0,
-                  top: 0,
+                  right: 10,
+                  top: 10,
                   child: Container(
                     // color: Colors.red,
+                    decoration: BoxDecoration(
+                        color: appTheme.whiteColor,
+                        borderRadius: BorderRadius.circular(getSize(4))),
                     alignment: Alignment.center,
                     width: getSize(30),
                     height: getSize(30),
                     child: IconButton(
+                      padding: EdgeInsets.all(getSize(0)),
                       icon: Icon(
                         Icons.clear,
                         size: getSize(18),
