@@ -677,16 +677,16 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
     });
 
     Config().getDiamonDetailUIJson().then((result) {
-      setState(() {
-        setupDiamonDetail(result);
-        getPrefixSum();
-      });
+      setupDiamonDetail(result);
+      getPrefixSum();
+      setState(() {});
     });
   }
 
   setupDiamonDetail(List<DiamondDetailUIModel> arrModel) {
     for (int i = 0; i < arrModel.length; i++) {
       var diamondDetailItem = arrModel[i];
+      print("-----title---------${arrModel[i].title}");
       var diamondDetailUIModel = DiamondDetailUIModel(
           title: diamondDetailItem.title,
           sequence: diamondDetailItem.sequence,
@@ -838,13 +838,13 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                 child: Row(
                   children: <Widget>[
                     Image.asset(img, height: getSize(30), width: getSize(30)),
-                    SizedBox(
-                      width: getSize(10),
-                    ),
-                    Text(
-                      num != 0 ? num.toString() : "0",
-                      style: appTheme.primaryColor14TextStyle,
-                    )
+                    // SizedBox(
+                    //   width: getSize(10),
+                    // ),
+                    // Text(
+                    //   num != 0 ? num.toString() : "0",
+                    //   style: appTheme.primaryColor14TextStyle,
+                    // )
 //                    for (var model in arrImages)
 //                      model.title == type
 //                          ? model.title == "Image"
@@ -1090,8 +1090,9 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                               ),
                               child: Row(
                                 children: [
-                                  getSection(
-                                      arrDiamondDetailUIModel[index - 1].title),
+                                  getSection(arrDiamondDetailUIModel[index - 1]
+                                          ?.title ??
+                                      ""),
                                   Spacer(),
                                   Icon(
                                     arrDiamondDetailUIModel[index - 1]

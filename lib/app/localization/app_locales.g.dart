@@ -724,7 +724,6 @@ class ScreenTitle {
   String finalCalculation = "Final Calculation";
   String bookOffice = "Book Office";
   String clearSelection = "Clear Selection";
-  String comment = "Comment";
   String hold = "Hold";
   String holdStone = "Hold Stone";
   String offer = "Offer";
@@ -778,6 +777,7 @@ class ScreenTitle {
   String invoicedate = "Invoice Date";
   String billType = "Bill Type";
   String terms = "Terms";
+  String comment = "Comment";
   String holdTimeTitle = "Enter Hold Time (Hours)*";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
@@ -793,7 +793,7 @@ class Dynamickeys {
   String stoneID = "Stone ID";
   String labTitle = "Lab";
   String certNo = "Cert. No.";
-  String locationTitle = "Location";
+  String locationTitle = "Origin";
   String shapeTitle = "Shape";
   String caratTitle = "Carat";
   String colorTitle = "Color";
@@ -801,26 +801,25 @@ class Dynamickeys {
   String cutTitle = "Cut";
   String polishTitle = "Polish";
   String symmentryTitle = "Symmentry";
-  String fluorescenceTitle = "Fluorescence";
+  String fluorescenceTitle = "Fluorescence:";
   String rapTitle = "Rap (%)";
   String discountTitle = "Discount (%)";
   String priceAndCt = "Price/Ct";
   String amountTitle = "Amount";
   String eyeCleanTitle = "Eye Clean";
   String brownTitle = "Brown";
-  String milkyTitle = "Milky";
-  String mixTingeTitle = "Mix Tinge";
+  String milkyTitle = "Milky:";
+  String mixTingeTitle = "MixTinge:";
   String dimensionTitle = "Dimensions  (MM)";
   String girdleTitle = "Girdle (%)";
   String tableTitle = "Table %";
-  String crownAngleTitle = "Crown Angle";
+  String crownAngleTitle = "CrownAngle";
   String depthTitle = "Depth %";
-  String pavAngleTitle = "Pav Angle";
-  String crownHeightTitle = "Crown Height  (%)";
+  String pavAngleTitle = "PavAngle:";
+  String crownHeightTitle = "CrownHeight(%)";
   String pavDepthTitle = "Pavilion Depth (%)";
   String starLengthTitle = "Star Length";
   String lowerHalfTitle = "Lower Half";
-  String gridleTitle = "Girdle";
   String gridleFacetedTitle = "Gridle Faceted";
   String culetTitle = "Culet";
   String rationTitle = "Ratio";
@@ -858,9 +857,28 @@ class Dynamickeys {
   String cluetConditionTitle = "Culet Condition";
   String disTitle = "Dis%";
   String depthTitleWithoutPerc = "Depth";
+  String otherDetails = "Other Information";
   String otherInformationTitle = "Other Information";
   String matchPairTitle = "Match Pair";
   String layoutTitle = "Layout";
+  String heartArrow = "Heart&Arrow";
+  String extraFacets = "ExtraFacets";
+  String tableBlack = "TableBlack";
+  String tableOpen = "TableOpen";
+  String sideBlack = "SideBlack";
+  String crownOpen = "CrownOpen";
+  String tableInclusion = "TableInclusion:";
+  String sideInclusion = "SideInclusion";
+  String pavillionOpen = "PavillionOpen";
+  String girdleOpen = "GirdleOpen";
+  String pavHeight = "PavHeight";
+  String eTK = "ETK";
+  String bGMDetails = "BGMDetails";
+  String brownTinge = "BrownTinge";
+  String otherTinge = "OtherTinge";
+  String symmetry = "Symmetry";
+  String reportNo = "ReportNo";
+  String packetNo = "PacketNo";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
     "shape": "Shape",
@@ -872,7 +890,7 @@ class Dynamickeys {
     "stoneID": "Stone ID",
     "labTitle": "Lab",
     "certNo": "Cert. No.",
-    "locationTitle": "Location",
+    "locationTitle": "Origin",
     "shapeTitle": "Shape",
     "caratTitle": "Carat",
     "colorTitle": "Color",
@@ -880,26 +898,25 @@ class Dynamickeys {
     "cutTitle": "Cut",
     "polishTitle": "Polish",
     "symmentryTitle": "Symmentry",
-    "fluorescenceTitle": "Fluorescence",
+    "fluorescenceTitle": "Fluorescence:",
     "rapTitle": "Rap (%)",
     "discountTitle": "Discount (%)",
     "priceAndCt": "Price/Ct",
     "amountTitle": "Amount",
     "eyeCleanTitle": "Eye Clean",
     "brownTitle": "Brown",
-    "milkyTitle": "Milky",
-    "mixTingeTitle": "Mix Tinge",
+    "milkyTitle": "Milky:",
+    "mixTingeTitle": "MixTinge:",
     "dimensionTitle": "Dimensions  (MM)",
     "girdleTitle": "Girdle (%)",
     "tableTitle": "Table %",
-    "crownAngleTitle": "Crown Angle",
+    "crownAngleTitle": "CrownAngle",
     "depthTitle": "Depth %",
-    "pavAngleTitle": "Pav Angle",
-    "crownHeightTitle": "Crown Height  (%)",
+    "pavAngleTitle": "PavAngle:",
+    "crownHeightTitle": "CrownHeight(%)",
     "pavDepthTitle": "Pavilion Depth (%)",
     "starLengthTitle": "Star Length",
     "lowerHalfTitle": "Lower Half",
-    "gridleTitle": "Girdle",
     "gridleFacetedTitle": "Gridle Faceted",
     "culetTitle": "Culet",
     "rationTitle": "Ratio",
@@ -940,6 +957,24 @@ class Dynamickeys {
     "otherInformationTitle": "Other Information",
     "matchPairTitle": "Match Pair",
     "layoutTitle": "Layout",
+    "heartArrow": "Heart&Arrow",
+    "extraFacets": "ExtraFacets",
+    "tableBlack": "TableBlack",
+    "tableOpen": "TableOpen",
+    "sideBlack": "SideBlack",
+    "crownOpen": "CrownOpen",
+    "tableInclusion": "TableInclusion:",
+    "sideInclusion": "SideInclusion",
+    "pavillionOpen": "PavillionOpen",
+    "girdleOpen": "GirdleOpen",
+    "pavHeight": "PavHeight",
+    "eTK": "ETK",
+    "bGMDetails": "BGMDetails",
+    "brownTinge": "BrownTinge",
+    "otherTinge": "OtherTinge",
+    "symmetry": "Symmetry",
+    "reportNo": "ReportNo",
+    "packetNo": "PacketNo",
   };
 }
 
@@ -1756,6 +1791,7 @@ class ChineseCommonString extends CommonString {
   get youreallywanttodelete => "你真的要删除";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
+    "packetNo": "包号：",
     "shape": "形状",
   };
 }
@@ -3337,6 +3373,7 @@ class FrenchCommonString extends CommonString {
   get youreallywanttodelete => "Vous voulez vraiment supprimer";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
+    "packetNo": "Non paquet:",
     "shape": "Forme",
   };
 }
@@ -4924,6 +4961,7 @@ class JapanCommonString extends CommonString {
   get youreallywanttodelete => "あなたは本当に削除したいです";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
+    "packetNo": "パケット番号：",
     "shape": "形状",
   };
 }
@@ -6503,6 +6541,7 @@ class ItalianCommonString extends CommonString {
   get youreallywanttodelete => "Si vuole veramente cancellare";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
+    "packetNo": "Packet No:",
     "shape": "Forma",
   };
 }
@@ -8098,6 +8137,7 @@ class SpanishCommonString extends CommonString {
   get youreallywanttodelete => "你 真的 要 删除";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
+    "packetNo": "Sin paquete:",
     "shape": "Forma",
   };
 }
@@ -9695,6 +9735,7 @@ class GermanyCommonString extends CommonString {
   get youreallywanttodelete => "Sie wollen wirklich löschen";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
+    "packetNo": "Packet No:",
     "shape": "Gestalten",
   };
 }
@@ -11283,6 +11324,7 @@ class ArabicCommonString extends CommonString {
   get youreallywanttodelete => "هل حقا تريد حذف";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
+    "packetNo": "حزمة رقم:",
     "shape": "شكل",
   };
 }
@@ -11509,7 +11551,7 @@ class ArabicScreenTitle extends ScreenTitle {
   get finalValue => "القيمة النهائية";
   @override
   get orderMsg =>
-      "1) المذكورة أسعار أكثر من هنا وثابتة، وبالتالي غير قابلة للتفاوض. \\ N2) والدرجات، وذكرت المعلمات على موقعنا على الانترنت وراء تصنيف GIA ل.";
+      "1 المذكورة أسعار أكثر من هنا وثابتة، وبالتالي غير قابلة للتفاوض. \\ N2 والدرجات، وذكرت المعلمات على موقعنا على الانترنت وراء تصنيف GIA ل.";
   @override
   get offerMsg =>
       "ومباشرة تأكيد الحجر إذا عرضت يحصل على الموافقة على السعر لذلك نحن نطلب من سيادتكم التأكد قبل الطرح. لا يتم الاحتفاظ أي الحجر (ق) وضعت في قائمة عرض في الانتظار بالنسبة لك كما هو متاح للعملاء الآخرين أيضا.";
