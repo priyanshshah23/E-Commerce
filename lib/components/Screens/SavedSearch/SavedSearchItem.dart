@@ -258,7 +258,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                   ? getPreviewItem(
                                       // R.string.commonString.modify,
                                       edit_icon,
-                                      appTheme.greenPrimaryNormal14TitleColor,
+                                      appTheme.blackPrimaryNormal14TitleColor,
                                       () {
                                       Map<String, dynamic> dict = {};
                                       dict["searchData"] = model.searchData;

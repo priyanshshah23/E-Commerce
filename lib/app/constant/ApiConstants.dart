@@ -141,9 +141,11 @@ class DiamondUrls {
   static const String commonUrlForImage =
       "https://arjivexports.blob.core.windows.net/arjivfiles/Imaged/";
   static const String image = commonUrlForImage + "IMAGE/";
+
   // commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
   static String video = commonUrl + "HDView/";
   static const String heartImage = commonUrlForImage + "HA/";
+
   // commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
   static const String plotting = commonUrlForImage + "PLOTING/";
   static const String proportion = commonUrlForImage + "PLOTING/MEASUREMENT/";
