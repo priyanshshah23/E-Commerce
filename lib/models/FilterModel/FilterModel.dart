@@ -396,6 +396,7 @@ class SelectionModel extends FormBaseModel {
   bool verticalScroll;
   int gridViewItemCount;
   bool isShowAll;
+  bool isExpand;
   bool isShowAllSelected = false;
   bool isShowMore;
   bool isShowMoreSelected = true;
@@ -416,6 +417,7 @@ class SelectionModel extends FormBaseModel {
       this.orientation,
       this.allLableTitle,
       this.isShowAll,
+      this.isExpand,
       this.verticalScroll,
       this.gridViewItemCount,
       this.masterCode,
@@ -436,6 +438,7 @@ class SelectionModel extends FormBaseModel {
     gridViewItemCount = json["gridViewItemCount"] ?? 3;
     orientation = json["orientation"];
     isShowAll = json['isShowAll'] ?? false;
+    isExpand = json['isExpand'] ?? isExpand;
     isShowMore = json['isShowMore'] ?? false;
     isShowMoreHorizontal = json['isShowMoreHorizontal'] ?? false;
     masterCode = json["masterCode"];

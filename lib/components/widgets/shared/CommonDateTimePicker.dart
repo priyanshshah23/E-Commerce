@@ -177,7 +177,7 @@ class _DateTimeDialogState extends State<DateTimeDialog>
                       decoration: BoxDecoration(
                         border: Border.all(
                             color: appTheme.colorPrimary, width: getSize(1)),
-                        borderRadius: BorderRadius.circular(getSize(5)),
+                        borderRadius: BorderRadius.circular(getSize(50)),
                       ),
                       child: Text(
                         R.string.commonString.cancel,
@@ -216,7 +216,7 @@ class _DateTimeDialogState extends State<DateTimeDialog>
                       ),
                       decoration: BoxDecoration(
                           color: appTheme.colorPrimary,
-                          borderRadius: BorderRadius.circular(getSize(5)),
+                          borderRadius: BorderRadius.circular(getSize(50)),
                           boxShadow: getBoxShadow(context)),
                       child: Text(
                         R.string.commonString.btnSubmit,

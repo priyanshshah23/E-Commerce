@@ -832,7 +832,7 @@ class BottomMenuSetting {
         .insert) {
       moreMenuList.add(BottomTabModel(
           image: enquiry,
-          title: R.string.screenTitle.myEnquiry,
+          title: R.string.screenTitle.addEnquiry,
           isCenter: false,
           type: ActionMenuConstant.ACTION_TYPE_ENQUIRY));
     }

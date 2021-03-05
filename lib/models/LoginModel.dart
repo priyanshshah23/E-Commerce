@@ -123,6 +123,7 @@ class User {
   String vendorNo;
   String firstName;
   String lastName;
+  String middleName;
   String name;
   String companyName;
   String companyAddress;
@@ -147,7 +148,7 @@ class User {
   int status;
 
 //  Null connectedSockets;
-  int termsDiscount;
+  num termsDiscount;
 
 //  Null resetPasswordLink;
 //  Null apiTokens;
@@ -197,8 +198,7 @@ class User {
 //  Null addedBy;
 //  Null updatedBy;
   Account account;
-  String accountTerm;
-//  AccountTerm accountTerm;
+  AccountTerm accountTerm;
   String seller;
 
   String country;
@@ -217,6 +217,7 @@ class User {
     vendorNo = json['vendorNo'];
     firstName = json['firstName'];
     lastName = json['lastName'];
+    middleName = json['middleName'];
     name = json['name'];
     companyName = json['companyName'];
     companyAddress = json['companyAddress'];
@@ -293,10 +294,10 @@ class User {
         account = new Account.fromJson(json['account']);
       }
     }
-accountTerm = json['accountTerm'] ;
-//     accountTerm = json['accountTerm'] != null
-//         ? new AccountTerm.fromJson(json['accountTerm'])
-//         : null;
+
+    accountTerm = json['accountTerm'] != null && json['accountTerm'] is Map
+        ? new AccountTerm.fromJson(json['accountTerm'])
+        : null;
     seller = json['seller'];
 
     if (json['city'] is Map<String, dynamic>) {
@@ -331,6 +332,7 @@ accountTerm = json['accountTerm'] ;
     data['vendorNo'] = this.vendorNo;
     data['firstName'] = this.firstName;
     data['lastName'] = this.lastName;
+    data['middleName'] = this.middleName;
     data['name'] = this.name;
     data['companyName'] = this.companyName;
     data['companyAddress'] = this.companyAddress;
@@ -404,10 +406,9 @@ accountTerm = json['accountTerm'] ;
     if (this.account != null) {
       data['account'] = this.account.toJson();
     }
-    data['accountTerm'] = this.accountTerm;
-//     if (this.accountTerm != null) {
-//       data['accountTerm'] = this.accountTerm.toJson();
-//     }
+    if (this.accountTerm != null) {
+      data['accountTerm'] = this.accountTerm.toJson();
+    }
     data['seller'] = this.seller;
     data["kycRequired"] = this.kycRequired;
     data["isKycUploaded"] = this.isKycUploaded;
