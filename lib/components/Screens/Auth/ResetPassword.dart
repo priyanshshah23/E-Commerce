@@ -129,7 +129,7 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
                                 });
                               }
                             },
-                            borderRadius: getSize(5),
+                            // borderRadius: getSize(5),
                             fitWidth: true,
                             text: R.string.commonString.save,
                             //isButtonEnabled: enableDisableSigninButton(),
@@ -225,7 +225,6 @@ class _ResetPasswordState extends StatefulScreenWidgetState {
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-            
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.btnTryAgain,
           );

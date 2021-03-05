@@ -65,7 +65,7 @@ class _PasswordResetSuccessfullyState extends State<PasswordResetSuccessfully> {
                 callLogout(context);
               },
               //  backgroundColor: appTheme.buttonColor,
-              borderRadius: getSize(5),
+              // borderRadius: getSize(5),
               fitWidth: true,
               text: R.string.authStrings.backToSignIn,
               //isButtonEnabled: enableDisableSigninButton(),

@@ -27,6 +27,7 @@ import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/OfflineDownloadPopup.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/DownLoadAndShareDialogue.dart';
+import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
 import 'package:diamnow/components/Screens/SalesPerson/BuyNowScreen.dart';
 import 'package:diamnow/components/Screens/SalesPerson/HoldStoneScreen.dart';
 import 'package:diamnow/components/Screens/SalesPerson/MemoStoneScreen.dart';
@@ -200,6 +201,8 @@ class DiamondConfig {
         return R.string.screenTitle.finalCalculation;
       case DiamondTrackConstant.TRACK_TYPE_OFFICE:
         return R.string.screenTitle.bookOffice;
+      case DiamondTrackConstant.TRACK_TYPE_COMMENT:
+        return R.string.screenTitle.addComment;
       default:
         return R.string.screenTitle.addToWatchList;
     }
@@ -622,13 +625,23 @@ class DiamondConfig {
   }
 
   actionComment(BuildContext context, List<DiamondModel> list) {
-    showNotesDialog(context, (manageClick) {
-      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
-        callApiFoCreateTrack(
-            context, list, DiamondTrackConstant.TRACK_TYPE_COMMENT,
-            isPop: true, remark: manageClick.remark);
-      }
+    // showNotesDialog(context, (manageClick) {
+    //   if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
+    //     callApiFoCreateTrack(
+    //         context, list, DiamondTrackConstant.TRACK_TYPE_COMMENT,
+    //         isPop: true, remark: manageClick.remark);
+    //   }
+    // });
+
+    List<DiamondModel> selectedList = [];
+    DiamondModel model;
+    list.forEach((element) {
+      model = DiamondModel.fromJson(element.toJson());
+      model.isNoteEditable = true;
+      selectedList.add(model);
     });
+    openDiamondActionAcreen(
+        context, DiamondTrackConstant.TRACK_TYPE_COMMENT, selectedList);
   }
 
   actionOffer(BuildContext context, List<DiamondModel> list) {
@@ -730,8 +743,9 @@ class DiamondConfig {
       selectedList.add(model);
     });
 
-    openDiamondActionAcreen(
-        context, DiamondTrackConstant.TRACK_TYPE_OFFICE, selectedList);
+    NavigationUtilities.pushRoute(OfferViewScreen.route);
+    // openDiamondActionAcreen(
+    //     context, DiamondTrackConstant.TRACK_TYPE_OFFICE, selectedList);
     /* showOfferListDialog(context, selectedList, (manageClick) {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
         callApiFoCreateTrack(

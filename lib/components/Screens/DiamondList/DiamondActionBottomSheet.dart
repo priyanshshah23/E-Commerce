@@ -727,10 +727,11 @@ Future showEnquiryDialog(BuildContext context, ActionClick actionClick) {
                                       vertical: getSize(15),
                                     ),
                                     decoration: BoxDecoration(
-                                      color: appTheme.colorPrimary
-                                          .withOpacity(0.1),
+                                      color: appTheme.whiteColor,
+                                      border: Border.all(
+                                          color: appTheme.colorPrimary),
                                       borderRadius:
-                                          BorderRadius.circular(getSize(5)),
+                                          BorderRadius.circular(getSize(50)),
                                     ),
                                     child: Text(
                                       R.string.commonString.cancel,
@@ -766,7 +767,7 @@ Future showEnquiryDialog(BuildContext context, ActionClick actionClick) {
                                     decoration: BoxDecoration(
                                         color: appTheme.colorPrimary,
                                         borderRadius:
-                                            BorderRadius.circular(getSize(5)),
+                                            BorderRadius.circular(getSize(50)),
                                         boxShadow: getBoxShadow(context)),
                                     child: Text(
                                       R.string.commonString.btnSubmit,

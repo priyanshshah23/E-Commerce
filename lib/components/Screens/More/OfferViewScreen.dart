@@ -153,7 +153,9 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
         ),
       ),
       bottomNavigationBar: Container(
+        height: getSize(70),
         decoration: new BoxDecoration(
+          color: appTheme.colorPrimary,
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.2),
@@ -167,79 +169,71 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
           ],
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Expanded(
-              child: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  height: getSize(50),
-                  color: appTheme.whiteColor,
-                  padding: EdgeInsets.symmetric(
-                    vertical: getSize(15),
-                  ),
-                  child: Text(
-                    R.string.commonString.cancel,
-                    textAlign: TextAlign.center,
-                    style: appTheme.blue14TextStyle.copyWith(
-                        fontSize: getFontSize(16), fontWeight: FontWeight.w500),
-                  ),
+            Center(
+              child: Container(
+                margin: EdgeInsets.all(getSize(8)),
+                width: getSize(172),
+                height: getSize(40),
+                child: AppButton.flat(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  textColor: appTheme.whiteColor,
+                  backgroundColor: appTheme.colorPrimary,
+                  text: R.string.commonString.cancel,
                 ),
               ),
             ),
-            Expanded(
-              child: InkWell(
-                onTap: () {
-                  FocusScope.of(context).unfocus();
+            Center(
+              child: Container(
+                width: getSize(172),
+                height: getSize(50),
+                child: AppButton.flat(
+                    onTap: () {
+                      FocusScope.of(context).unfocus();
 
-                  if (pickedDate == null) {
-                    app.resolve<CustomDialogs>().confirmDialog(
-                          context,
-                          title: "",
-                          desc: R.string.errorString.selectAppointmentDate,
-                          positiveBtnTitle: R.string.commonString.ok,
-                        );
-                    return;
-                  } else if (selectedSlot < 0) {
-                    app.resolve<CustomDialogs>().confirmDialog(
-                          context,
-                          title: "",
-                          desc: R.string.errorString.selectTimeSlot,
-                          positiveBtnTitle: R.string.commonString.ok,
-                        );
-                    return;
-                  } else if (isNullEmptyOrFalse(_virtualTypeController.text)) {
-                    app.resolve<CustomDialogs>().confirmDialog(
-                          context,
-                          title: "",
-                          desc: R.string.errorString.selectVirtualType,
-                          positiveBtnTitle: R.string.commonString.ok,
-                        );
-                    return;
-                  } else if (isNullEmptyOrFalse(_commentTypeController.text)) {
-                    app.resolve<CustomDialogs>().confirmDialog(
-                          context,
-                          title: "",
-                          desc: R.string.errorString.enterComments,
-                          positiveBtnTitle: R.string.commonString.ok,
-                        );
-                    return;
-                  }
-                  callApiForRequestForOffice();
-                },
-                child: Container(
-                  height: getSize(50),
-                  color: appTheme.colorPrimary,
-                  padding: EdgeInsets.symmetric(
-                    vertical: getSize(15),
-                  ),
-                  child: Text(
-                    R.string.screenTitle.reqOfficeView,
-                    textAlign: TextAlign.center,
-                    style: appTheme.white16TextStyle,
-                  ),
-                ),
+                      if (pickedDate == null) {
+                        app.resolve<CustomDialogs>().confirmDialog(
+                              context,
+                              title: "",
+                              desc: R.string.errorString.selectAppointmentDate,
+                              positiveBtnTitle: R.string.commonString.ok,
+                            );
+                        return;
+                      } else if (selectedSlot < 0) {
+                        app.resolve<CustomDialogs>().confirmDialog(
+                              context,
+                              title: "",
+                              desc: R.string.errorString.selectTimeSlot,
+                              positiveBtnTitle: R.string.commonString.ok,
+                            );
+                        return;
+                      } else if (isNullEmptyOrFalse(
+                          _virtualTypeController.text)) {
+                        app.resolve<CustomDialogs>().confirmDialog(
+                              context,
+                              title: "",
+                              desc: R.string.errorString.selectVirtualType,
+                              positiveBtnTitle: R.string.commonString.ok,
+                            );
+                        return;
+                      } else if (isNullEmptyOrFalse(
+                          _commentTypeController.text)) {
+                        app.resolve<CustomDialogs>().confirmDialog(
+                              context,
+                              title: "",
+                              desc: R.string.errorString.enterComments,
+                              positiveBtnTitle: R.string.commonString.ok,
+                            );
+                        return;
+                      }
+                      callApiForRequestForOffice();
+                    },
+                    textColor: appTheme.colorPrimary,
+                    backgroundColor: appTheme.whiteColor,
+                    text: R.string.screenTitle.reqOfficeView),
               ),
             )
           ],

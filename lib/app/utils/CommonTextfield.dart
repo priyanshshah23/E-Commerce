@@ -93,27 +93,40 @@ class _CommonTextfieldState extends State<CommonTextfield> {
         decoration: InputDecoration(
           contentPadding: widget.textOption.prefixWid != null
               ? EdgeInsets.all(0)
-              : EdgeInsets.only(
-                  left: getSize(15),
-                ),
+              : EdgeInsets.only(left: getSize(18), top: getSize(16)),
           errorStyle: appTheme.error16TextStyle,
           errorMaxLines: 3,
 //          fillColor: widget.textOption.fillColor ?? fromHex("#F6F6F6"),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(getSize(50))),
-            borderSide:
-                BorderSide(color: appTheme.dividerColor, width: getSize(2)),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(getSize(50))),
-            borderSide:
-                BorderSide(color: appTheme.dividerColor, width: getSize(0.7)),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(getSize(50))),
-            borderSide:
-                BorderSide(color: appTheme.dividerColor, width: getSize(0.7)),
-          ),
+          enabledBorder: !widget.textOption.isBorder
+              ? InputBorder.none
+              : OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(
+                      widget.textOption.maxLine != null
+                          ? getSize(25)
+                          : getSize(50))),
+                  borderSide: BorderSide(
+                      color: appTheme.dividerColor, width: getSize(2)),
+                ),
+          focusedBorder: !widget.textOption.isBorder
+              ? InputBorder.none
+              : OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(
+                      widget.textOption.maxLine != null
+                          ? getSize(25)
+                          : getSize(50))),
+                  borderSide: BorderSide(
+                      color: appTheme.dividerColor, width: getSize(0.7)),
+                ),
+          border: !widget.textOption.isBorder
+              ? InputBorder.none
+              : OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(
+                      widget.textOption.maxLine != null
+                          ? getSize(25)
+                          : getSize(50))),
+                  borderSide: BorderSide(
+                      color: appTheme.dividerColor, width: getSize(0.7)),
+                ),
 //         errorBorder: widget.textOption.errorBorder ?? OutlineInputBorder(
 //               borderRadius: BorderRadius.all(Radius.circular(11)),
 //             borderSide: BorderSide.none
@@ -204,11 +217,15 @@ class TextFieldOption {
   List<TextInputFormatter> formatter;
   TextEditingController inputController;
   TextCapitalization textCapitalization;
+  bool isBorder;
+  TextAlign textAlign;
 
   TextFieldOption(
       {this.text,
       this.labelText,
       this.hintText,
+      this.isBorder,
+      this.textAlign,
       this.isSecureTextField,
       this.keyboardType,
       this.type,

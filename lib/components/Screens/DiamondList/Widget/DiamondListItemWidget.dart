@@ -51,7 +51,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       TextEditingController();
   var _focusOfferedDisc = FocusNode();
   var _focusOfferedPricePerCarat = FocusNode();
-
+  final TextEditingController _noteController = TextEditingController();
+  var _focusNote = FocusNode();
   @override
   void initState() {
     super.initState();
@@ -409,6 +410,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 height: getSize(20),
               ),
             // getWatchListDetail(),
+            getNotesDetail(),
             getOfferValues(),
             // ),
           ],
@@ -1053,6 +1055,67 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   //}
 
   //Watch list
+  getNotesDetail() {
+    return (widget.item.isNoteEditable)
+        ? Container(
+            decoration: BoxDecoration(
+                border: Border.all(color: appTheme.dividerColor),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(getSize(6)),
+                )),
+            height: getSize(54),
+            child: Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      color: appTheme.dividerColor,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(getSize(6)),
+                        bottomLeft: Radius.circular(getSize(6)),
+                      )),
+                  width: getSize(72),
+                  child: Center(
+                    child: Text(
+                      "Note :",
+                      style: appTheme.blackMedium12TitleColorblack,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: CommonTextfield(
+                    focusNode: _focusNote,
+                    textOption: TextFieldOption(
+                      isBorder: false,
+                      textAlign: TextAlign.right,
+                      // contentPadding: EdgeInsets.symmetric(
+                      //   horizontal: getSize(10),
+                      // ),
+
+                      hintText: 'Enter Note',
+                      maxLine: 2,
+                      keyboardType: TextInputType.multiline,
+                      fillColor: fromHex("#FFEFEF"),
+                      inputController: _noteController,
+                      formatter: [
+                        //  WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+                        BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+                      ],
+                    ),
+                    textCallback: (text) {
+                      widget.item.remarks = text;
+                    },
+                    inputAction: TextInputAction.newline,
+                    onNextPress: () {
+                      _focusNote.unfocus();
+                    },
+                  ),
+                ),
+              ],
+            ),
+          )
+        : Container();
+  }
+
   getWatchlistData() {
     return widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST
         ? Padding(

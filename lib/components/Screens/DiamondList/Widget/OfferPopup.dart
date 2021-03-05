@@ -110,27 +110,27 @@ class _OfferPopupState extends State<OfferPopup> {
                 ),
               ),
             ),
-            widget.actionType == DiamondTrackConstant.TRACK_TYPE_OFFICE
-                ? Container()
-                : InkWell(
-                    onTap: () {
-                      print("Shipping policy clicked");
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: getSize(16),
-                          right: getSize(16),
-                          top: getSize(8),
-                          bottom: getSize(8)),
-                      child: Text(
-                        R.string.commonString.shippingPolicy,
-                        style: appTheme.blackNormal14TitleColorblack.copyWith(
-                          decoration: TextDecoration.underline,
-                          color: appTheme.colorPrimary,
-                        ),
-                      ),
-                    ),
-                  ),
+            // widget.actionType == DiamondTrackConstant.TRACK_TYPE_OFFICE
+            //     ? Container()
+            //     : InkWell(
+            //         onTap: () {
+            //           print("Shipping policy clicked");
+            //         },
+            //         child: Padding(
+            //           padding: EdgeInsets.only(
+            //               left: getSize(16),
+            //               right: getSize(16),
+            //               top: getSize(8),
+            //               bottom: getSize(8)),
+            //           child: Text(
+            //             R.string.commonString.shippingPolicy,
+            //             style: appTheme.blackNormal14TitleColorblack.copyWith(
+            //               decoration: TextDecoration.underline,
+            //               color: appTheme.colorPrimary,
+            //             ),
+            //           ),
+            //         ),
+            //       ),
             Padding(
               padding: EdgeInsets.only(
                   left: getSize(Spacing.leftPadding),
@@ -152,7 +152,7 @@ class _OfferPopupState extends State<OfferPopup> {
                         decoration: BoxDecoration(
                           border: Border.all(
                               color: appTheme.colorPrimary, width: getSize(1)),
-                          borderRadius: BorderRadius.circular(getSize(5)),
+                          borderRadius: BorderRadius.circular(getSize(50)),
                         ),
                         child: Text(
                           R.string.commonString.cancel,
@@ -187,7 +187,7 @@ class _OfferPopupState extends State<OfferPopup> {
                         ),
                         decoration: BoxDecoration(
                             color: appTheme.colorPrimary,
-                            borderRadius: BorderRadius.circular(getSize(5)),
+                            borderRadius: BorderRadius.circular(getSize(50)),
                             boxShadow: getBoxShadow(context)),
                         child: Text(
                           R.string.commonString.btnSubmit,

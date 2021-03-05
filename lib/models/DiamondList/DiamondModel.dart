@@ -20,6 +20,7 @@ class DiamondModel {
   bool videoFile;
   bool roughVdo;
   bool polVdo;
+  bool isNoteEditable;
   bool hAFile;
   String mlkNm;
   String clrNm;
