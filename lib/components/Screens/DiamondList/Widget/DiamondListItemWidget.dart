@@ -1056,7 +1056,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
 
   //Watch list
   getNotesDetail() {
-    return (widget.item.isNoteEditable)
+    return (widget.item.isNoteEditable ?? false)
         ? Container(
             decoration: BoxDecoration(
                 border: Border.all(color: appTheme.dividerColor),

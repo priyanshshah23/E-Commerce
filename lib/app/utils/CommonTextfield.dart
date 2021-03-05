@@ -224,7 +224,7 @@ class TextFieldOption {
       {this.text,
       this.labelText,
       this.hintText,
-      this.isBorder,
+      this.isBorder = true,
       this.textAlign,
       this.isSecureTextField,
       this.keyboardType,

@@ -463,6 +463,7 @@ class DiamondConfig {
         actionDownload(context, list, isForShare: true);
 
         break;
+
       case ActionMenuConstant.ACTION_TYPE_PLACE_ORDER:
         break;
       case ActionMenuConstant.ACTION_TYPE_COMPARE:
@@ -503,6 +504,22 @@ class DiamondConfig {
     // openDiamondActionAcreen(
     //     context, DiamondTrackConstant.TRACK_TYPE_CART, selectedList);
   }
+
+  // actionUpdateNote(BuildContext context, List<DiamondModel> list) {
+  //   // callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,
+  //   //     isPop: false, title: R.string.screenTitle.addedInCart);
+  //   List<DiamondModel> selectedList = [];
+  //   DiamondModel model;
+  //   list.forEach((element) {
+  //     model = DiamondModel.fromJson(element.toJson());
+  //     model.isNoteEditable = true;
+  //     model.isNotes = false;
+  //     selectedList.add(model);
+  //   });
+
+  //   openDiamondActionAcreen(
+  //       context, DiamondTrackConstant.TRACK_TYPE_UPDATE_COMMENT, selectedList);
+  // }
 
   actionForFinalCalculation(BuildContext context, List<DiamondModel> list) {
     List<DiamondModel> selectedList = [];
@@ -700,6 +717,20 @@ class DiamondConfig {
         callApiFoPlaceOrder(context, list, () {
           Navigator.pop(context, true);
         }, isPop: true, remark: remark, companyName: companyName, date: date);
+        break;
+      case DiamondTrackConstant.TRACK_TYPE_UPDATE_COMMENT:
+        print('Update Comment api');
+        callApiFoCreateTrack(
+            context, list, DiamondTrackConstant.TRACK_TYPE_UPDATE_COMMENT,
+            isPop: true);
+        break;
+
+      case DiamondTrackConstant.TRACK_TYPE_COMMENT:
+        print('Add Note api');
+        callApiFoCreateTrack(
+            context, list, DiamondTrackConstant.TRACK_TYPE_COMMENT,
+            isPop: true);
+
         break;
     }
   }
@@ -1400,6 +1431,10 @@ class DiamondConfig {
         //   diamonds.newDiscount = num.parse(element.selectedBackPer);
         //   break;
         case DiamondTrackConstant.TRACK_TYPE_COMMENT:
+        case DiamondTrackConstant.TRACK_TYPE_UPDATE_COMMENT:
+          diamonds.remarks = element.remarks;
+          reqDiamond["remarks"] = element.remarks;
+          break;
         case DiamondTrackConstant.TRACK_TYPE_ENQUIRY:
           diamonds.remarks = remark;
           reqDiamond["remarks"] = remark;
