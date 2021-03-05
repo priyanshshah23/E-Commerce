@@ -91,7 +91,11 @@ class _CommonTextfieldState extends State<CommonTextfield> {
         cursorColor: appTheme.colorPrimary,
         inputFormatters: widget.textOption.formatter ?? [],
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.all(0),
+          contentPadding: widget.textOption.prefixWid != null
+              ? EdgeInsets.all(0)
+              : EdgeInsets.only(
+                  left: getSize(15),
+                ),
           errorStyle: appTheme.error16TextStyle,
           errorMaxLines: 3,
 //          fillColor: widget.textOption.fillColor ?? fromHex("#F6F6F6"),

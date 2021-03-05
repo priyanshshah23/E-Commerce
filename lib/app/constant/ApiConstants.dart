@@ -5,7 +5,8 @@ import '../app.export.dart';
 class ApiConstants {
 //  static const String PROXY_URL = "PROXY 192.168.0.114:8888";
   //static String PROXY_URL = "PROXY 192.168.2.153:8888"; //HONEY
-  static String PROXY_URL = "PROXY 192.168.0.170:8888"; //HIMANSHI
+  //static String PROXY_URL = "PROXY 192.168.0.170:8888"; //HIMANSHI
+  static String PROXY_URL = "PROXY 192.168.2.156:8888"; //SNEHAL
 // static String PROXY_URL = "PROXY 192.168.0.118:8888"; //JECKY
 
 //    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
@@ -133,17 +134,20 @@ class ApiConstants {
 
 class DiamondUrls {
   static const String commonUrl =
-      "https://s3.us-east-2.wasabisys.com/cdn.pndiamonds.com/";
-  static const String commonUrlForImage = "https://cdn.pndiamonds.com/";
-  static const String image =
-      commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
-  static String video =
-      commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
-  static const String heartImage =
-      commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
-  static const String plotting = commonUrl + "PlottingImages/";
-  static const String certificate =
-      "https://s3.us-east-2.wasabisys.com/" + "certificates/";
+      // "https://s3.us-east-2.wasabisys.com/cdn.pndiamonds.com/";
+      // "https://arjivexports.blob.core.windows.net/arjivfiles/Imaged/PLOTING/C895-46.png";
+      "https://arjivexports.blob.core.windows.net/arjivfiles/";
+  static const String commonUrlForImage =
+      "https://arjivexports.blob.core.windows.net/arjivfiles/Imaged/";
+  static const String image = commonUrlForImage + "IMAGE/";
+  // commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
+  static String video = commonUrl + "HDView/";
+  static const String heartImage = commonUrlForImage + "HA/";
+  // commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
+  static const String plotting = commonUrlForImage + "PLOTING/";
+  static const String proportion = commonUrlForImage + "PLOTING/MEASUREMENT/";
+  static const String natural = commonUrlForImage + "NVIDEO/";
+  static const String certificate = commonUrlForImage + "PDF/";
   static const String arroImage =
       commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
   static const String videomp4 = commonUrl + "Mov/";

@@ -373,6 +373,13 @@ class BaseTheme {
         fontWeight: FontWeight.w500);
   }
 
+  TextStyle get black18MediumTextStyle {
+    return TextStyle(
+        fontSize: getFontSize(16),
+        color: textColor,
+        fontWeight: FontWeight.w500);
+  }
+
   TextStyle get black14W300TextStyle {
     return TextStyle(
         fontSize: getFontSize(14),
