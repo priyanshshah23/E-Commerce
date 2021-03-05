@@ -168,11 +168,11 @@ class BaseTheme {
         color: redColor);
   }
 
-  TextStyle get greenPrimaryNormal14TitleColor {
+  TextStyle get blackPrimaryNormal14TitleColor {
     return TextStyle(
         fontSize: getFontSize(14),
         fontWeight: FontWeight.normal,
-        color: greenColor);
+        color: blackColor);
   }
 
   TextStyle get redPrimaryNormal14TitleColor {

@@ -96,7 +96,7 @@ class _OfflineSearchHistoryState extends State<OfflineSearchHistory> {
                   ),
                   Text(
                     APPNAME,
-                    style: appTheme.greenPrimaryNormal14TitleColor.copyWith(
+                    style: appTheme.blackPrimaryNormal14TitleColor.copyWith(
                       fontSize: getFontSize(28),
                       fontWeight: FontWeight.w700,
                     ),
