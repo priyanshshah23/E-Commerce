@@ -146,22 +146,22 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
       child: Column(
         children: [
           Material(
-            elevation: 10,
-            shadowColor: appTheme.shadowColor,
+            // elevation: 10,
+            // shadowColor: appTheme.shadowColor,
             borderRadius: BorderRadius.circular(getSize(5)),
             child: Container(
               decoration: BoxDecoration(
                 color: appTheme.whiteColor,
                 borderRadius: BorderRadius.circular(getSize(5)),
                 border: Border.all(
-                  color: appTheme.lightBGColor,
+                  color: appTheme.textFieldBorderColor,
                 ),
               ),
               child: Padding(
                 padding: EdgeInsets.only(
-                  top: getSize(16),
-                  left: getSize(16),
-                  right: getSize(16),
+                  top: getSize(10),
+                  // left: getSize(16),
+                  // right: getSize(16),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -183,10 +183,12 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                       children: [
                                         Padding(
                                           padding: EdgeInsets.only(
-                                              bottom: getSize(5.0)),
+                                            left: getSize(16),
+                                            // bottom: getSize(5.0),
+                                          ),
                                           child: Text(model.name ?? "-",
                                               style: appTheme
-                                                  .blackNormal16TitleColorblack),
+                                                  .blackMedium16TitleColorblack),
                                         ),
                                       ],
                                     )
@@ -207,49 +209,122 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                   : SizedBox(
                                       width: getSize(16),
                                     ),
-                              widget.searchType ==
-                                          SavedSearchType.savedSearch &&
-                                      arr.length > 3
-                                  ? GestureDetector(
-                                      onTap: () {
-                                        model.isExpand ^= true;
-                                        savedSearchBaseList.state
-                                            .setApiCalling(false);
-                                        fillArrayList();
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            border: Border(
-                                                bottom: BorderSide(
-                                          color: appTheme.colorPrimary,
-                                          width: 1.0,
-                                        ))),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                  right: getSize(3)),
-                                              child: Text(
-                                                R.string.commonString
-                                                    .viewDetails,
-                                                textAlign: TextAlign.center,
-                                                style: appTheme
-                                                    .primaryColor14TextStyle,
-                                              ),
-                                            ),
-                                            model.isExpand
-                                                ? Image.asset(
-                                                    showLess,
-                                                    width: getSize(12),
-                                                  )
-                                                : Image.asset(
-                                                    showMore,
-                                                    width: getSize(12),
-                                                  ),
-                                          ],
-                                        ),
-                                      ),
+                              // widget.searchType ==
+                              //             SavedSearchType.savedSearch &&
+                              //         arr.length > 3
+                              //     ? GestureDetector(
+                              //         onTap: () {
+                              //           model.isExpand ^= true;
+                              //           savedSearchBaseList.state
+                              //               .setApiCalling(false);
+                              //           fillArrayList();
+                              //         },
+                              //         child: Container(
+                              //           decoration: BoxDecoration(
+                              //               border: Border(
+                              //                   bottom: BorderSide(
+                              //             color: appTheme.colorPrimary,
+                              //             width: 1.0,
+                              //           ))),
+                              //           child: Row(
+                              //             mainAxisSize: MainAxisSize.min,
+                              //             children: [
+                              //               Padding(
+                              //                 padding: EdgeInsets.only(
+                              //                     right: getSize(3)),
+                              //                 child: Text(
+                              //                   R.string.commonString
+                              //                       .viewDetails,
+                              //                   textAlign: TextAlign.center,
+                              //                   style: appTheme
+                              //                       .primaryColor14TextStyle,
+                              //                 ),
+                              //               ),
+                              //               model.isExpand
+                              //                   ? Image.asset(
+                              //                       showLess,
+                              //                       width: getSize(12),
+                              //                     )
+                              //                   : Image.asset(
+                              //                       showMore,
+                              //                       width: getSize(12),
+                              //                     ),
+                              //             ],
+                              //           ),
+                              //         ),
+                              //       )
+                              //     : SizedBox(),
+                              widget.searchType == SavedSearchType.savedSearch
+                                  ? getPreviewItem(
+                                      // R.string.commonString.modify,
+                                      edit_icon,
+                                      appTheme.greenPrimaryNormal14TitleColor,
+                                      () {
+                                      Map<String, dynamic> dict = {};
+                                      dict["searchData"] = model.searchData;
+                                      dict["savedSearchModel"] = model;
+                                      dict[ArgumentConstant.IsFromDrawer] =
+                                          false;
+                                      NavigationUtilities.pushRoute(
+                                          FilterScreen.route,
+                                          args: dict);
+                                    })
+                                  : SizedBox(),
+                              widget.searchType == SavedSearchType.savedSearch
+                                  ? getPreviewItem(
+                                      // R.string.commonString.delete,
+                                      delete_icon_medium,
+                                      appTheme.redPrimaryNormal14TitleColor,
+                                      () {
+                                      SyncManager.instance.callAnalytics(
+                                          context,
+                                          page: PageAnalytics.MYSAVED_SEARCH,
+                                          section: SectionAnalytics.DELETE,
+                                          action: ActionAnalytics.LIST);
+
+                                      app
+                                          .resolve<CustomDialogs>()
+                                          .confirmDialog(
+                                        context,
+                                        barrierDismissible: true,
+                                        title: "",
+                                        desc: R.string.commonString.deleteItem,
+                                        positiveBtnTitle:
+                                            R.string.commonString.ok,
+                                        negativeBtnTitle:
+                                            R.string.commonString.cancel,
+                                        onClickCallback: (buttonType) {
+                                          if (buttonType ==
+                                              ButtonType.PositveButtonClick) {
+                                            SyncManager.instance
+                                                .callApiForDeleteSavedSearch(
+                                                    context, model.id ?? "",
+                                                    success: (resp) {
+                                              callApi(true);
+                                            });
+                                          }
+                                        },
+                                      );
+                                    })
+                                  : SizedBox(),
+                              widget.searchType == SavedSearchType.savedSearch
+                                  ? getPreviewItem(
+                                      // R.string.commonString.search,
+                                      search,
+                                      appTheme.primaryColor14TextStyle, () {
+                                      Map<String, dynamic> dict = new HashMap();
+                                      dict["filterId"] = model.id;
+                                      dict[ArgumentConstant.ModuleType] =
+                                          DiamondModuleConstant
+                                              .MODULE_TYPE_MY_SAVED_SEARCH;
+                                      NavigationUtilities.pushRoute(
+                                          DiamondListScreen.route,
+                                          args: dict);
+                                    })
+                                  : SizedBox(),
+                              widget.searchType == SavedSearchType.savedSearch
+                                  ? SizedBox(
+                                      width: getSize(10),
                                     )
                                   : SizedBox(),
                             ],
@@ -269,118 +344,120 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                           //         height: getSize(6),
                           //       )
                           //     : SizedBox(),
-                          if (arr.length <= 3 &&
-                              widget.searchType == SavedSearchType.savedSearch)
+                          if (widget.searchType == SavedSearchType.savedSearch)
                             listOfSelectedFilter(arr, model, arr.length),
-                          if (arr.length > 3 &&
-                              model.isExpand &&
-                              widget.searchType == SavedSearchType.savedSearch)
-                            listOfSelectedFilter(arr, model, arr.length),
-                          if (arr.length > 3 &&
-                              !model.isExpand &&
-                              widget.searchType == SavedSearchType.savedSearch)
-                            listOfSelectedFilter(arr, model, 3),
+                          // if (arr.length <= 3 &&
+                          //     widget.searchType == SavedSearchType.savedSearch)
+                          //   listOfSelectedFilter(arr, model, arr.length),
+                          // if (arr.length > 3 &&
+                          //     model.isExpand &&
+                          //     widget.searchType == SavedSearchType.savedSearch)
+                          //   listOfSelectedFilter(arr, model, arr.length),
+                          // if (arr.length > 3 &&
+                          //     !model.isExpand &&
+                          //     widget.searchType == SavedSearchType.savedSearch)
+                          //   listOfSelectedFilter(arr, model, 3),
                           if (widget.searchType == SavedSearchType.recentSearch)
                             listOfSelectedFilter(arr, model, arr.length),
-                          widget.searchType == SavedSearchType.savedSearch
-                              ? Padding(
-                                  padding: EdgeInsets.only(
-                                    // left: getSize(15),
-                                    // right: getSize(15),
-                                    top: getSize(11),
-                                    // bottom: getSize(11),
-                                  ),
-                                  child: Container(
-                                    padding: EdgeInsets.only(
-                                        top: getSize(8), bottom: getSize(8)),
-                                    decoration: BoxDecoration(
-                                        // color: Colors.red,
-                                        border: Border(
-                                      top: BorderSide(
-                                          color: appTheme.dividerColor),
-                                    )),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        getPreviewItem(
-                                            R.string.commonString.modify,
-                                            edit_icon,
-                                            appTheme
-                                                .greenPrimaryNormal14TitleColor,
-                                            () {
-                                          Map<String, dynamic> dict = {};
-                                          dict["searchData"] = model.searchData;
-                                          dict["savedSearchModel"] = model;
-                                          dict[ArgumentConstant.IsFromDrawer] =
-                                              false;
-                                          NavigationUtilities.pushRoute(
-                                              FilterScreen.route,
-                                              args: dict);
-                                        }),
-                                        getPreviewItem(
-                                            R.string.commonString.delete,
-                                            delete_icon_medium,
-                                            appTheme
-                                                .redPrimaryNormal14TitleColor,
-                                            () {
-                                          SyncManager.instance.callAnalytics(
-                                              context,
-                                              page:
-                                                  PageAnalytics.MYSAVED_SEARCH,
-                                              section: SectionAnalytics.DELETE,
-                                              action: ActionAnalytics.LIST);
+                          // widget.searchType == SavedSearchType.savedSearch
+                          //     ? Padding(
+                          //         padding: EdgeInsets.only(
+                          //           // left: getSize(15),
+                          //           // right: getSize(15),
+                          //           top: getSize(11),
+                          //           // bottom: getSize(11),
+                          //         ),
+                          //         child: Container(
+                          //           padding: EdgeInsets.only(
+                          //               top: getSize(8), bottom: getSize(8)),
+                          //           decoration: BoxDecoration(
+                          //               // color: Colors.red,
+                          //               border: Border(
+                          //             top: BorderSide(
+                          //                 color: appTheme.dividerColor),
+                          //           )),
+                          //           child: Row(
+                          //             mainAxisAlignment:
+                          //                 MainAxisAlignment.spaceAround,
+                          //             children: [
+                          //               getPreviewItem(
+                          //                   R.string.commonString.modify,
+                          //                   edit_icon,
+                          //                   appTheme
+                          //                       .greenPrimaryNormal14TitleColor,
+                          //                   () {
+                          //                 Map<String, dynamic> dict = {};
+                          //                 dict["searchData"] = model.searchData;
+                          //                 dict["savedSearchModel"] = model;
+                          //                 dict[ArgumentConstant.IsFromDrawer] =
+                          //                     false;
+                          //                 NavigationUtilities.pushRoute(
+                          //                     FilterScreen.route,
+                          //                     args: dict);
+                          //               }),
+                          //               getPreviewItem(
+                          //                   R.string.commonString.delete,
+                          //                   delete_icon_medium,
+                          //                   appTheme
+                          //                       .redPrimaryNormal14TitleColor,
+                          //                   () {
+                          //                 SyncManager.instance.callAnalytics(
+                          //                     context,
+                          //                     page:
+                          //                         PageAnalytics.MYSAVED_SEARCH,
+                          //                     section: SectionAnalytics.DELETE,
+                          //                     action: ActionAnalytics.LIST);
 
-                                          app
-                                              .resolve<CustomDialogs>()
-                                              .confirmDialog(
-                                            context,
-                                            barrierDismissible: true,
-                                            title: "",
-                                            desc: R
-                                                .string.commonString.deleteItem,
-                                            positiveBtnTitle:
-                                                R.string.commonString.ok,
-                                            negativeBtnTitle:
-                                                R.string.commonString.cancel,
-                                            onClickCallback: (buttonType) {
-                                              if (buttonType ==
-                                                  ButtonType
-                                                      .PositveButtonClick) {
-                                                SyncManager.instance
-                                                    .callApiForDeleteSavedSearch(
-                                                        context, model.id ?? "",
-                                                        success: (resp) {
-                                                  callApi(true);
-                                                });
-                                              }
-                                            },
-                                          );
-                                        }),
-                                        getPreviewItem(
-                                            R.string.commonString.search,
-                                            saved_medium,
-                                            appTheme.primaryColor14TextStyle,
-                                            () {
-                                          Map<String, dynamic> dict =
-                                              new HashMap();
-                                          dict["filterId"] = model.id;
-                                          dict[ArgumentConstant.ModuleType] =
-                                              DiamondModuleConstant
-                                                  .MODULE_TYPE_MY_SAVED_SEARCH;
-                                          NavigationUtilities.pushRoute(
-                                              DiamondListScreen.route,
-                                              args: dict);
-                                        }),
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              : Padding(
-                                  padding:
-                                      EdgeInsets.only(bottom: getSize(12.0)),
-                                  child: SizedBox(),
-                                ),
+                          //                 app
+                          //                     .resolve<CustomDialogs>()
+                          //                     .confirmDialog(
+                          //                   context,
+                          //                   barrierDismissible: true,
+                          //                   title: "",
+                          //                   desc: R
+                          //                       .string.commonString.deleteItem,
+                          //                   positiveBtnTitle:
+                          //                       R.string.commonString.ok,
+                          //                   negativeBtnTitle:
+                          //                       R.string.commonString.cancel,
+                          //                   onClickCallback: (buttonType) {
+                          //                     if (buttonType ==
+                          //                         ButtonType
+                          //                             .PositveButtonClick) {
+                          //                       SyncManager.instance
+                          //                           .callApiForDeleteSavedSearch(
+                          //                               context, model.id ?? "",
+                          //                               success: (resp) {
+                          //                         callApi(true);
+                          //                       });
+                          //                     }
+                          //                   },
+                          //                 );
+                          //               }),
+                          //               getPreviewItem(
+                          //                   R.string.commonString.search,
+                          //                   saved_medium,
+                          //                   appTheme.primaryColor14TextStyle,
+                          //                   () {
+                          //                 Map<String, dynamic> dict =
+                          //                     new HashMap();
+                          //                 dict["filterId"] = model.id;
+                          //                 dict[ArgumentConstant.ModuleType] =
+                          //                     DiamondModuleConstant
+                          //                         .MODULE_TYPE_MY_SAVED_SEARCH;
+                          //                 NavigationUtilities.pushRoute(
+                          //                     DiamondListScreen.route,
+                          //                     args: dict);
+                          //               }),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //       )
+                          //     : Padding(
+                          //         padding:
+                          //             EdgeInsets.only(bottom: getSize(12.0)),
+                          //         child: SizedBox(),
+                          //       ),
                         ],
                       ),
                     ),
@@ -394,7 +471,8 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
     );
   }
 
-  getPreviewItem(String txt, String img, TextStyle textStyle, Function onTap) {
+  getPreviewItem(String img, TextStyle textStyle, Function onTap,
+      {String txt}) {
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -407,23 +485,24 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
               width: getSize(30),
               height: getSize(30),
               alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(getSize(15)),
-                  border: Border.all(color: appTheme.borderColor)),
+              // decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(getSize(15)),
+              //     border: Border.all(color: appTheme.borderColor)),
               child: Padding(
-                padding: EdgeInsets.all(6),
+                padding: EdgeInsets.all(4),
                 child: Image.asset(
                   img,
                 ),
               ),
             ),
-            SizedBox(
-              width: getSize(8),
-            ),
-            Text(
-              txt,
-              style: textStyle,
-            )
+            // SizedBox(
+            //   width: getSize(8),
+            // ),
+            if (txt != null)
+              Text(
+                txt,
+                style: textStyle,
+              )
           ],
         ),
       ),
@@ -432,31 +511,40 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
 
   listOfSelectedFilter(List<Map<String, dynamic>> arr,
       SavedSearchModel savedSearchModel, int length) {
-    return Column(
-      children: <Widget>[
-        for (int i = 0; i < length; i++)
-          Padding(
-            padding: EdgeInsets.only(top: getSize(10)),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  isNullEmptyOrFalse(arr[i]["value"])
-                      ? "${arr[i]["key"] ?? ""} "
-                      : "${arr[i]["key"] ?? ""} :",
-                  textAlign: TextAlign.left,
-                  style: appTheme.grey16HintTextStyle,
-                ),
-                SizedBox(width: getSize(16)),
-                Expanded(
-                  child: Text(arr[i]["value"] ?? "",
-                      textAlign: TextAlign.right,
-                      style: appTheme.blackNormal16TitleColorblack),
-                ),
-              ],
+    return Padding(
+      padding: EdgeInsets.only(
+          top: getSize(5),
+          bottom: getSize(8),
+          left: getSize(16),
+          right: getSize(16)),
+      child: Wrap(
+        children: [
+          for (int i = 0; i < length; i++)
+            Container(
+              // color: Colors.blue,
+              width: (MathUtilities.screenWidth(context) / 2) - getSize(38),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: getSize(7)),
+                  Text(
+                    isNullEmptyOrFalse(arr[i]["value"])
+                        ? "${arr[i]["key"] ?? ""}"
+                        : "${arr[i]["key"] ?? ""}",
+                    textAlign: TextAlign.left,
+                    style: appTheme.grey14HintTextStyle,
+                  ),
+                  SizedBox(height: getSize(4)),
+                  // SizedBox(width: getSize(16)),
+                  Text(arr[i]["value"] ?? "",
+                      textAlign: TextAlign.left,
+                      style: appTheme.blackMedium14TitleColorblack),
+                  SizedBox(height: getSize(7)),
+                ],
+              ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 

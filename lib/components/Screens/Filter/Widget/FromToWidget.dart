@@ -41,6 +41,18 @@ class _FromToWidgetState extends State<FromToWidget> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            isNullEmptyOrFalse(widget.fromTomodel.megaTitle)
+                ? SizedBox()
+                : Text(
+                    widget.fromTomodel.megaTitle ?? "",
+                    style: appTheme.blackNormal18TitleColorblack.copyWith(
+                        //decoration: TextDecoration.underline,
+                        ),
+                    textAlign: TextAlign.left,
+                  ),
+            !isNullEmptyOrFalse(widget.fromTomodel.megaTitle)
+                ? SizedBox(height: getSize(20))
+                : SizedBox(),
             Row(
               children: [
                 Text(
