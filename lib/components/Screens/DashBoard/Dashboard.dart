@@ -128,8 +128,6 @@ class _DashboardState extends StatefulScreenWidgetState {
             isProgress: false)
         // !isRefress && !isLoading
         .then((resp) async {
-      await app.resolve<PrefUtils>().saveDashboardDetails(resp.data);
-
       setState(() {
         this.dashboardModel = resp.data;
 
@@ -138,6 +136,10 @@ class _DashboardState extends StatefulScreenWidgetState {
         }
         setTopCountData();
       });
+      await app
+          .resolve<PrefUtils>()
+          .saveDashboardDetails(resp.data)
+          .then((value) => {});
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
