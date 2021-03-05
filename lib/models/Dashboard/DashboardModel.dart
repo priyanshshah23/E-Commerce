@@ -2,14 +2,16 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 
-
-class AdminDashboardResp extends BaseApiResp{
+class AdminDashboardResp extends BaseApiResp {
   AdminDashboardModel data;
 
-  AdminDashboardResp({ this.data});
+  AdminDashboardResp({this.data});
 
-  AdminDashboardResp.fromJson(Map<String, dynamic> json) : super.fromJson(json){
-    data = json['data'] != null ? new AdminDashboardModel.fromJson(json['data']) : null;
+  AdminDashboardResp.fromJson(Map<String, dynamic> json)
+      : super.fromJson(json) {
+    data = json['data'] != null
+        ? new AdminDashboardModel.fromJson(json['data'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -53,7 +55,8 @@ class AdminDashboardModel {
 //    recentSearch = json['recentSearch'] != null ? new TotalDiamond.fromJson(json['recentSearch']) : null;
 //    analytics = json['analytics'] != null ? new TotalDiamond.fromJson(json['analytics']) : null;
 //    recentEnquiryTracksAndNotes = json['recentEnquiryTracksAndNotes'] != null ? new TotalDiamond.fromJson(json['recentEnquiryTracksAndNotes']) : null;
-    counts = json['counts'] != null ? new Counts.fromJson(json['counts']) : null;
+    counts =
+        json['counts'] != null ? new Counts.fromJson(json['counts']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -97,7 +100,13 @@ class Counts {
   int order;
   int memo;
 
-  Counts({this.cart, this.watchlist, this.offer, this.office, this.order, this.memo});
+  Counts(
+      {this.cart,
+      this.watchlist,
+      this.offer,
+      this.office,
+      this.order,
+      this.memo});
 
   Counts.fromJson(Map<String, dynamic> json) {
     cart = json['Cart'];
@@ -139,6 +148,29 @@ class DashboardResp extends BaseApiResp {
   }
 }
 
+class BannerModel {
+  List<Banners> banners;
+
+  BannerModel({this.banners});
+
+  BannerModel.fromJson(Map<String, dynamic> json) {
+    if (json['banners'] != null) {
+      banners = new List<Banners>();
+      json['banners'].forEach((v) {
+        banners.add(new Banners.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.banners != null) {
+      data['banners'] = this.banners.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
 class DashboardModel {
   DashboardModel({
     this.savedSearch,
@@ -148,6 +180,7 @@ class DashboardModel {
     this.seller,
     this.tracks,
     this.dashboardCount,
+    this.banners,
   });
 
   Seller seller;
@@ -156,6 +189,7 @@ class DashboardModel {
   List<SavedSearchModel> savedSearch;
   List<SavedSearchModel> recentSearch;
   Map<String, Track> tracks;
+  List<Banners> banners;
   List<DashboardCount> dashboardCount;
 
   factory DashboardModel.fromJson(Map<String, dynamic> json) {
@@ -167,7 +201,13 @@ class DashboardModel {
         });
       }
     }
-
+    List<Banners> banners = [];
+    if (json['banners'] != null) {
+      banners = new List<Banners>();
+      json['banners'].forEach((v) {
+        banners.add(new Banners.fromJson(v));
+      });
+    }
     List<DiamondModel> arrNewArrivals = [];
     if (!isNullEmptyOrFalse(json["newArrival"])) {
       if (json["newArrival"] is List<dynamic>) {
@@ -181,6 +221,7 @@ class DashboardModel {
           ? null
           : Seller.fromJson(json["seller"]),
       featuredStone: arrFeaturestone,
+      banners: banners,
       recentSearch: List<SavedSearchModel>.from(
           json["recentSearch"].map((x) => SavedSearchModel.fromJson(x))),
       savedSearch: List<SavedSearchModel>.from(
@@ -200,6 +241,7 @@ class DashboardModel {
         "savedSearch": List<dynamic>.from(
           savedSearch.map((x) => x.toJson()),
         ),
+        "banners": List<dynamic>.from(banners.map((x) => x.toJson())),
         "featuredStone":
             List<dynamic>.from(featuredStone.map((x) => x.toJson())),
         "newArrival": List<dynamic>.from(
