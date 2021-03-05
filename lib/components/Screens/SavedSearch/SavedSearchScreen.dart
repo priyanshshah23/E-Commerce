@@ -63,6 +63,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(
         context,
         R.string.screenTitle.savedSearch,

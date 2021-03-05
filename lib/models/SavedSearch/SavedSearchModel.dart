@@ -34,6 +34,9 @@ class AddDemandModel extends BaseApiResp {
   }
 }
 
+
+
+
 class SavedSearchResp extends BaseApiResp {
   SavedSearchResp({
     this.code,
@@ -84,6 +87,7 @@ class Data {
         "count": count,
       };
 }
+
 
 class SavedSearchModel {
   SavedSearchModel({
@@ -507,4 +511,98 @@ class Type2 {
   Map<String, dynamic> toJson() => {
         "!=": empty,
       };
+}
+
+class Banners {
+  String createdAt;
+  String updatedAt;
+  String id;
+  String fontColor;
+  String searchBarPosition;
+  String backgroundImage;
+  List<String> images;
+  String mobileImage;
+  String maequeeText;
+  String fromdateTime;
+  String toDateTime;
+  String description;
+  String eventName;
+  bool isActive;
+  String type;
+  String bannerType;
+  String url;
+  String activity;
+  bool isVideo;
+  String ipadImage;
+
+  Banners(
+      {this.createdAt,
+      this.updatedAt,
+      this.id,
+      this.fontColor,
+      this.searchBarPosition,
+      this.backgroundImage,
+      this.images,
+      this.mobileImage,
+      this.maequeeText,
+      this.fromdateTime,
+      this.toDateTime,
+      this.description,
+      this.eventName,
+      this.isActive,
+      this.type,
+      this.bannerType,
+      this.url,
+      this.activity,
+      this.isVideo,
+      this.ipadImage,
+    });
+
+  Banners.fromJson(Map<String, dynamic> json) {
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    id = json['id'];
+    fontColor = json['fontColor'];
+    searchBarPosition = json['searchBarPosition'];
+    backgroundImage = json['backgroundImage'];
+    images = json['images'].cast<String>();
+    mobileImage = json['mobileImage'];
+    maequeeText = json['maequeeText'];
+    fromdateTime = json['fromdateTime'];
+    toDateTime = json['toDateTime'];
+    description = json['description'];
+    eventName = json['eventName'];
+    isActive = json['isActive'];
+    type = json['type'];
+    bannerType = json['bannerType'];
+    url = json['url'];
+    activity = json['activity'];
+    isVideo = json['isVideo'];
+    ipadImage = json['ipadImage'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    data['id'] = this.id;
+    data['fontColor'] = this.fontColor;
+    data['searchBarPosition'] = this.searchBarPosition;
+    data['backgroundImage'] = this.backgroundImage;
+    data['images'] = this.images;
+    data['mobileImage'] = this.mobileImage;
+    data['maequeeText'] = this.maequeeText;
+    data['fromdateTime'] = this.fromdateTime;
+    data['toDateTime'] = this.toDateTime;
+    data['description'] = this.description;
+    data['eventName'] = this.eventName;
+    data['isActive'] = this.isActive;
+    data['type'] = this.type;
+    data['bannerType'] = this.bannerType;
+    data['url'] = this.url;
+    data['activity'] = this.activity;
+    data['isVideo'] = this.isVideo;
+    data['ipadImage'] = this.ipadImage;
+    return data;
+  }
 }

@@ -119,7 +119,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   @override
   void initState() {
     super.initState();
-    if(app.resolve<PrefUtils>().getCompanyDetails()!=null){
+    if (app.resolve<PrefUtils>().getCompanyDetails() != null) {
       isCompanySelected = true;
     }
     Config().getOptionsJson().then((result) {
@@ -749,7 +749,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: appTheme.lightColorPrimary,
+                    color: appTheme.whiteColor,
                     border: Border.all(color: appTheme.colorPrimary),
                     shape: BoxShape.circle,
                   ),
@@ -850,7 +850,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   Container(
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: appTheme.lightColorPrimary,
+                      color: appTheme.whiteColor,
                       border: Border.all(color: appTheme.colorPrimary),
                       shape: BoxShape.circle,
                     ),
@@ -1361,7 +1361,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   showOverlayScreens() {
     if (this.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
-      return (app.resolve<PrefUtils>().isDisplayedTour(PrefUtils().keyOfferTour) ==
+      return (app
+                      .resolve<PrefUtils>()
+                      .isDisplayedTour(PrefUtils().keyOfferTour) ==
                   false &&
               isNullEmptyOrFalse(arraDiamond) == false)
           ? OverlayScreen(

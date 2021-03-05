@@ -321,11 +321,8 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Expanded(
-            flex: 2,
-            child: getTextWithLabel(widget.item?.eClnNm ?? "-", "EC : ",
-                aligmentOfRow: MainAxisAlignment.start),
-          ),
+          getTextWithLabel(widget.item?.eClnNm ?? "-", "EC : ",
+              aligmentOfRow: MainAxisAlignment.start),
           // PriceUtilities.getPercent(widget.item?.depPer ?? 0)
           Expanded(
             flex: 2,
@@ -341,11 +338,8 @@ class _DiamondExpandItemWidgetState extends State<DiamondExpandItemWidget> {
                     widget.item?.tblPer ?? 0),
                 "T%: "),
           ),
-          Expanded(
-            flex: 4,
-            child: getTextWithLabel(widget.item?.msrmnt ?? "-", "M : ",
-                align: TextAlign.right),
-          ),
+          getTextWithLabel(widget.item?.msrmnt ?? "-", "M : ",
+              align: TextAlign.right),
           // getAmountText(widget.item?.getAmount() ?? ""),
         ],
       ),

@@ -135,7 +135,7 @@ class BaseListState extends State<BaseList> {
                 ),
               if (noDataMsg != null)
                 Text(noDataMsg,
-                    style: appTheme.greenPrimaryNormal14TitleColor.copyWith(
+                    style: appTheme.blackPrimaryNormal14TitleColor.copyWith(
                       fontSize: getFontSize(28),
                       fontWeight: FontWeight.w700,
                     ),

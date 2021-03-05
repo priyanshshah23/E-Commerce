@@ -931,6 +931,19 @@
     "valueKeyisCode": false
   },
   {
+      "viewType": "seperator",
+      "sequence": 23,
+      "isActive": true,
+      "isExpand": true,
+      "height": 100,
+      "color": "#E3E3E3",
+      "leftPadding": 0,
+      "tab": "advance",
+      "rightPadding": 0,
+      "topPadding": 4,
+      "bottomPadding": 4
+    },
+  {
     "title": "Total Depth%",
     "viewType": "fromto",
     "apiKey": "depPer",

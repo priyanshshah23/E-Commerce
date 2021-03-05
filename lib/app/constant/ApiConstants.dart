@@ -8,6 +8,8 @@ class ApiConstants {
   //static String PROXY_URL = "PROXY 192.168.0.170:8888"; //HIMANSHI
   static String PROXY_URL = "PROXY 192.168.2.153:8888"; //SNEHAL
 // static String PROXY_URL = "PROXY 192.168.0.118:8888"; //JECKY
+  //static String PROXY_URL = "PROXY 192.168.2.156:8888"; //SNEHAL
+  // static String PROXY_URL = "PROXY 192.168.0.118:8888"; //JECKY
 
 //    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 
@@ -100,11 +102,12 @@ class ApiConstants {
   //Excel
   static const String baseURLForExcel = "http://pndevelopapi.democ.in/data";
 
-  static const String termsCondition = webPageUrl + "terms-condition";
-  static const String privacyPolicy = webPageUrl + "privacy-policy";
-  static const String contactUs = webPageUrl + "contact-us";
-  static const String shippingPolicy = webPageUrl + "shipping-policy";
-  static const String aboutUs = webPageUrl + "about-us";
+  static const String baseURL2 = "https://beta.arjivexports.com/device/";
+  static const String termsCondition = baseURL2 + "terms-condition";
+  static const String privacyPolicy = baseURL2 + "privacy-policy";
+  static const String contactUs = baseURL2 + "contact-us";
+  static const String shippingPolicy = baseURL2 + "shipping-policy";
+  static const String aboutUs = baseURL2 + "about-us";
 
   //mpin
   static const String createMpin = commonUrl + "user/create-mpin";
@@ -140,9 +143,11 @@ class DiamondUrls {
   static const String commonUrlForImage =
       "https://arjivexports.blob.core.windows.net/arjivfiles/Imaged/";
   static const String image = commonUrlForImage + "IMAGE/";
+
   // commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
   static String video = commonUrl + "HDView/";
   static const String heartImage = commonUrlForImage + "HA/";
+
   // commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
   static const String plotting = commonUrlForImage + "PLOTING/";
   static const String proportion = commonUrlForImage + "PLOTING/MEASUREMENT/";
