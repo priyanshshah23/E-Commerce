@@ -1196,6 +1196,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         break;
       case BottomCodeConstant.TBSelectAll:
         model.isSelected = !model.isSelected;
+        if(model.isSelected)
+        print("--image------------${model.image}");
+        else
+        print("--image------------${model.image}");
         setSelectAllDiamond(model);
         break;
       case BottomCodeConstant.TBGrideView:
