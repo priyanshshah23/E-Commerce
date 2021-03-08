@@ -2123,21 +2123,38 @@ class _DashboardState extends StatefulScreenWidgetState {
     );
   }
 
+  openDiamondList(String id) {
+    Map<String, dynamic> dict = new HashMap();
+    dict["filterId"] = id;
+    dict[ArgumentConstant.ModuleType] =
+        DiamondModuleConstant.MODULE_TYPE_SEARCH;
+    NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+  }
+
   getSideImages(String type) {
     Banners banner = this.dashboardModel.getBannerDetails(type);
-    banner.url;
-    return banner != null ??
-        Container(
-          margin: EdgeInsets.only(top: 30, left: 15),
-          height: getSize(72),
-          width: getSize(90),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: getImageView(banner.getDisplayImage(),
-                fit: BoxFit.cover,
-                height: getSize(243),
-                width: MathUtilities.screenWidth(context)),
-          ),
-        );
+    //banner.url;
+    return InkWell(
+      onTap: () {
+        List<String> result = banner.url.split("?");
+        //print(result[1]);
+        if (result != null && result.length > 1) {
+          print(result[1]);
+          openDiamondList(result[1]);
+        }
+      },
+      child: Container(
+        margin: EdgeInsets.only(top: 30, left: 15),
+        height: getSize(72),
+        width: getSize(90),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: getImageView(banner.getDisplayImage(),
+              fit: BoxFit.cover,
+              height: getSize(243),
+              width: MathUtilities.screenWidth(context)),
+        ),
+      ),
+    );
   }
 }
