@@ -73,6 +73,7 @@ class BaseTheme {
   Color get errorColor => fromHex("#FF4D4D");
   Color get segmentSelectedColor => Colors.white;
   Color get borderColor => fromHex("#DDDDDD");
+  Color get borderColorr => fromHex("#4545456E");
   Color get selectedFilterColor => fromHex("#414143");
   Color get unSelectedBgColor => fromHex("#f7f7f7");
   Color get seemoreBgColor => fromHex("#E6E6E6");

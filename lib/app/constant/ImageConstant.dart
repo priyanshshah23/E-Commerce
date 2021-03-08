@@ -83,6 +83,11 @@ const String selectList = "assets/DiamondDetail/selectAllList.png";
 const String medal = "assets/DiamondDetail/medal.png";
 const String playButton = "assets/DiamondDetail/play-button.png";
 const String gallary = "assets/DiamondDetail/image.png";
+const String ploty = "assets/DiamondDetail/ploty.png";
+const String proportion = "assets/DiamondDetail/proportion.png";
+const String nature = "assets/DiamondDetail/nature.png";
+const String hA = "assets/DiamondDetail/heartandarrow.png";
+const String certi = "assets/DiamondDetail/quality.png";
 
 //PersonalInformation
 const String city = "assets/Common/city.png";
