@@ -20,7 +20,6 @@ class DiamondModel {
   bool videoFile;
   bool roughVdo;
   bool polVdo;
-  bool isNoteEditable;
   bool hAFile;
   String mlkNm;
   String clrNm;
@@ -176,6 +175,9 @@ class DiamondModel {
   TrackDiamonds trackItemOffice;
   bool isSectionOfferDisplay = false;
   bool isGrouping = false;
+  bool isNotes = false;
+  bool isNoteEditable = false;
+  bool isNoteUpdated = false;
 
   String strDate;
   String expiryDate;
@@ -397,6 +399,8 @@ class DiamondModel {
     wSd = json['wSd'];
     opTbl = json['opTbl'];
     opCrwn = json['opCrwn'];
+    isNotes = json['isNotes'] ?? false;
+    isNoteEditable = json['isNoteEditable'] ?? false;
   }
 
   String getOfferStatus() {
@@ -563,6 +567,8 @@ class DiamondModel {
     data["opPav"] = this.opPav;
     data["opCrwn"] = this.opCrwn;
     data['offerValidDate'] = this.offerValidDate;
+    data['isNotes'] = this.isNotes;
+    data['isNoteEditable'] = this.isNoteEditable;
     return data;
   }
 

@@ -80,6 +80,19 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           num.parse(_offeredPricePerCaratTextfieldContoller.text) *
               widget.item.crt);
     }
+    if (widget.item.isNotes) {
+      _noteController.text = widget.item.remarks;
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant DiamondItemWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.item.isNoteUpdated ?? false) {
+      print('false');
+      _noteController.text = widget.item.remarks;
+      widget.item.isNoteUpdated = false;
+    }
   }
 
   @override
@@ -1075,7 +1088,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
 
   //Watch list
   getNotesDetail() {
-    return (widget.item.isNoteEditable ?? false)
+    return (widget.item.isNotes ?? false)
         ? Container(
             decoration: BoxDecoration(
                 border: Border.all(color: appTheme.dividerColor),
@@ -1103,6 +1116,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 Expanded(
                   child: CommonTextfield(
                     focusNode: _focusNote,
+                    readOnly: !widget.item.isNoteEditable,
                     textOption: TextFieldOption(
                       isBorder: false,
                       textAlign: TextAlign.right,
@@ -1113,7 +1127,11 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                       hintText: 'Enter Note',
                       maxLine: 2,
                       keyboardType: TextInputType.multiline,
-                      fillColor: fromHex("#FFEFEF"),
+
+                      fillColor: !widget.item.isNoteEditable
+                          ? fromHex("#FFEFEF")
+                          : appTheme.dividerColor,
+                      // fillColor: Colors.red,
                       inputController: _noteController,
                       formatter: [
                         //  WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
