@@ -645,7 +645,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               fit: BoxFit.scaleDown,
               alignment: Alignment.centerLeft,
               child: getText(
-                widget.item?.vStnId ?? "",
+                (widget.item?.vStnId ?? "").replaceAll('null', '--'),
                 appTheme.blackNormal14TitleColorblack,
               ),
             ),
@@ -658,7 +658,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           //         appTheme.blackMedium14TitleColorblack),
           //   ),
           // ),
-          getAmountText(widget.item?.getPricePerCarat() ?? "",
+          getAmountText(
+              (widget.item?.getPricePerCarat() ?? "").replaceAll('null', '--'),
               align: TextAlign.right),
         ],
       ),
@@ -672,10 +673,11 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
           Expanded(
             // flex: 2,
-            child: getText(widget.item?.shpNm ?? "",
+            child: getText((widget.item?.shpNm ?? "").replaceAll('null', '--'),
                 appTheme.blackMedium14TitleColorblack),
           ),
-          getAmountText(widget.item?.getAmount() ?? "-")
+          getAmountText(
+              (widget.item?.getAmount() ?? "-").replaceAll('null', '--'))
         ]));
   }
 
@@ -685,20 +687,22 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         child: Row(
             // mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              getText(widget.item?.colNm ?? "",
+              getText((widget.item?.colNm ?? "").replaceAll('null', '--'),
                   appTheme.blackMedium14TitleColorblack),
               Expanded(
                   flex: 2,
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
-                    child: getText(widget.item?.clrNm ?? "-",
+                    child: getText(
+                        (widget.item?.clrNm ?? "-").replaceAll('null', '--'),
                         appTheme.blackMedium14TitleColorblack),
                   )),
               Expanded(
                 flex: 3,
                 child: Row(
                   children: <Widget>[
-                    getText(widget.item?.cutNm ?? "-",
+                    getText(
+                        (widget.item?.cutNm ?? "-").replaceAll('null', '--'),
                         appTheme.blackMedium14TitleColorblack),
                     SizedBox(width: getSize(2.0)),
                     Container(
@@ -708,7 +712,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                           color: appTheme.dividerColor, shape: BoxShape.circle),
                     ),
                     SizedBox(width: getSize(2.0)),
-                    getText(widget.item?.polNm ?? "-",
+                    getText(
+                        (widget.item?.polNm ?? "-").replaceAll('null', '--'),
                         appTheme.blackMedium14TitleColorblack),
                     SizedBox(width: getSize(2.0)),
                     Container(
@@ -718,7 +723,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                           color: appTheme.dividerColor, shape: BoxShape.circle),
                     ),
                     SizedBox(width: getSize(2.0)),
-                    getText(widget.item?.symNm ?? "-",
+                    getText(
+                        (widget.item?.symNm ?? "-").replaceAll('null', '--'),
                         appTheme.blackMedium14TitleColorblack),
                   ],
                 ),
@@ -727,7 +733,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 flex: 2,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: getText(widget.item?.lbNm ?? "",
+                  child: getText(
+                      (widget.item?.lbNm ?? "").replaceAll('null', '--'),
                       appTheme.blackMedium12TitleColorblack),
                 ),
               ),
@@ -823,7 +830,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               right: getSize(10),
             ),
             child: getText(
-              widget.item?.getColorName() ?? "-",
+              (widget.item?.getColorName() ?? "-").replaceAll('null', '--'),
               appTheme.blackMedium14TitleColorblack,
             ),
           ),
@@ -831,13 +838,13 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             padding: EdgeInsets.only(
               right: getSize(10),
             ),
-            child: getText(widget.item?.clrNm ?? "-",
+            child: getText((widget.item?.clrNm ?? "-").replaceAll('null', '--'),
                 appTheme.blackMedium14TitleColorblack),
           ),
           Row(
             children: <Widget>[
               getText(
-                widget.item?.cutNm ?? "-",
+                (widget.item?.cutNm ?? "-").replaceAll('null', '--'),
                 appTheme.blackMedium14TitleColorblack,
               ),
               SizedBox(width: getSize(2.0)),
@@ -848,7 +855,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                     color: appTheme.dividerColor, shape: BoxShape.circle),
               ),
               SizedBox(width: getSize(2.0)),
-              getText(widget.item?.polNm ?? "-",
+              getText((widget.item?.polNm ?? "-").replaceAll('null', '--'),
                   appTheme.blackMedium14TitleColorblack),
               SizedBox(width: getSize(2.0)),
               Container(
@@ -858,7 +865,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                     color: appTheme.dividerColor, shape: BoxShape.circle),
               ),
               SizedBox(width: getSize(2.0)),
-              getText(widget.item?.symNm ?? "-",
+              getText((widget.item?.symNm ?? "-").replaceAll('null', '--'),
                   appTheme.blackMedium14TitleColorblack),
             ],
           ),
@@ -890,17 +897,19 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             ),
           ),
           Expanded(
-            child: getText(
-                widget.item?.lbNm ?? "", appTheme.blackMedium12TitleColorblack),
+            child: getText((widget.item?.lbNm ?? "").replaceAll('null', '--'),
+                appTheme.blackMedium12TitleColorblack),
           ),
           Expanded(
             flex: 3,
-            child: getTextWithLabel(widget.item?.shdNm ?? "-", "S : "),
+            child: getTextWithLabel(
+                (widget.item?.shdNm ?? "-").replaceAll('null', '--'), "S : "),
           ),
           // getText(widget.item?.msrmnt ?? ""),
           Expanded(
             flex: 4,
-            child: getTextWithLabel(widget.item?.msrmnt ?? "-", "M : ",
+            child: getTextWithLabel(
+                (widget.item?.msrmnt ?? "-").replaceAll('null', '--'), "M : ",
                 align: TextAlign.right),
           ),
         ],
@@ -939,18 +948,22 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 child: Align(
               alignment: Alignment.centerLeft,
               child: getTextWithLabel(
-                widget.item?.shdNm ?? "-",
+                (widget.item?.shdNm ?? "-").replaceAll('null', '--'),
                 "S : ",
               ),
             )),
             Expanded(
               flex: 1,
-              child: getTextWithLabel(widget.item?.fluNm ?? "-", "FL : "),
+              child: getTextWithLabel(
+                  (widget.item?.fluNm ?? "-").replaceAll('null', '--'),
+                  "FL : "),
             ),
             // PriceUtilities.getPercent(widget.item?.depPer ?? 0)
             Expanded(
               flex: 2,
-              child: getTextWithLabel(widget.item?.msrmnt ?? "-", "M : "),
+              child: getTextWithLabel(
+                  (widget.item?.msrmnt ?? "-").replaceAll('null', '--'),
+                  "M : "),
             ),
             // getAmountText(widget.item?.getAmount() ?? ""),
           ],
@@ -1002,24 +1015,30 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             Align(
               alignment: Alignment.centerLeft,
               child: getTextWithLabel(
-                widget.item?.ratio.toString() ?? "-",
+                (widget.item?.ratio.toString() ?? "-").replaceAll('null', '--'),
                 "R : ",
               ),
             ),
             Flexible(
               flex: 4,
-              child: getTextWithLabel(widget.item?.eClnNm ?? "-", "EC : "),
+              child: getTextWithLabel(
+                  (widget.item?.eClnNm ?? "-").replaceAll('null', '--'),
+                  "EC : "),
             ),
             // PriceUtilities.getPercent(widget.item?.depPer ?? 0)
             Flexible(
               flex: 2,
               child: getTextWithLabel(
-                  widget.item?.depPer.toString() ?? "-", "D% : "),
+                  (widget.item?.depPer.toString() ?? "-")
+                      .replaceAll('null', '--'),
+                  "D% : "),
             ),
             Flexible(
               flex: 2,
               child: getTextWithLabel(
-                  widget.item?.tblPer.toString() ?? "-", "T% : "),
+                  (widget.item?.tblPer.toString() ?? "-")
+                      .replaceAll('null', '--'),
+                  "T% : "),
             ),
             // getAmountText(widget.item?.getAmount() ?? ""),
           ],

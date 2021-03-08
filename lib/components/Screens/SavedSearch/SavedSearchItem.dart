@@ -139,10 +139,10 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
   getItemWidget(SavedSearchModel model, List<Map<String, dynamic>> arr) {
     return Padding(
       padding: EdgeInsets.only(
-        left: getSize(20),
-        top: getSize(16),
-        right: getSize(20),
-      ),
+          left: getSize(20),
+          top: getSize(8),
+          right: getSize(20),
+          bottom: getSize(8)),
       child: Column(
         children: [
           Material(
@@ -194,15 +194,21 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
                                     )
                                   : widget.searchType ==
                                           SavedSearchType.recentSearch
-                                      ? Text(
-                                          DateUtilities()
-                                                  .convertServerDateToFormatterString(
-                                                      model.createdAt ?? "",
-                                                      formatter: DateUtilities
-                                                          .dd_mmm_yy_h_mm_a) ??
-                                              "-",
-                                          style: appTheme
-                                              .blackMedium16TitleColorblack)
+                                      ? Padding(
+                                          padding: EdgeInsets.only(
+                                            left: getSize(16),
+                                            // bottom: getSize(5.0),
+                                          ),
+                                          child: Text(
+                                              DateUtilities()
+                                                      .convertServerDateToFormatterString(
+                                                          model.createdAt ?? "",
+                                                          formatter: DateUtilities
+                                                              .dd_mmm_yy_h_mm_a) ??
+                                                  "-",
+                                              style: appTheme
+                                                  .blackMedium16TitleColorblack),
+                                        )
                                       : SizedBox(),
                               widget.searchType == SavedSearchType.savedSearch
                                   ? Spacer()

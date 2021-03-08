@@ -145,7 +145,7 @@ flutter:
     - assets/Overlay/DiamondDetail/
     - assets/Overlay/CompareStone/
     - assets/Overlay/Offer/
-   # - assets/chls.pem
+    - assets/chls.pem
 
 
   fonts:

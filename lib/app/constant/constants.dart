@@ -53,6 +53,22 @@ const eventBusLogout = "EventBusLogout";
 const eventBusDropDown = "EventBusDropDown";
 const eventBusRefreshList = "DiamondListRefresh";
 
+const HOME_TOP_LEFT_1 = "9";
+const HOME_TOP_LEFT_2 = "10";
+const HOME_TOP_LEFT_3 = "11";
+const HOME_TOP_RIGHT_1 = "12";
+const HOME_TOP_RIGHT_2 = "13";
+const HOME_TOP_RIGHT_3 = "14";
+const HOME_TOP_CENTRE = "15";
+const HOME_BOTTOM_LEFT_1 = "16";
+const HOME_BOTTOM_LEFT_2 = "17";
+const HOME_BOTTOM_LEFT_3 = "18";
+const HOME_BOTTOM_RIGHT_1 = "19";
+const HOME_BOTTOM_RIGHT_2 = "20";
+const HOME_BOTTOM_RIGHT_3 = "21";
+const HOME_BOTTOM_CENTRE = "22";
+const HOME_CENTRE = "23";
+
 const imagePath = "assest/icon.png";
 const String googleDocViewURL =
     "https://docs.google.com/gview?embedded=true&url=";

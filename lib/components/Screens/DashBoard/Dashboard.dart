@@ -121,7 +121,8 @@ class _DashboardState extends StatefulScreenWidgetState {
     dict["account"] = true;
     dict["featuredStone"] = true;
     dict["newArrival"] = true;
-
+    dict["banners"] = true;
+    print(dict);
     NetworkCall<DashboardResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().dashboard(dict),
@@ -281,6 +282,8 @@ class _DashboardState extends StatefulScreenWidgetState {
 
   @override
   Widget build(BuildContext context) {
+    //print(this.dashboardModel.banners.length);
+    //getHomeSliderImage(HOME_CENTRE);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -322,12 +325,14 @@ class _DashboardState extends StatefulScreenWidgetState {
                       ? ListView(
                           physics: ClampingScrollPhysics(),
                           children: <Widget>[
-                            if (dashboardConfig.arrTopSection.length > 0)
-                              //getTopSection(),
-                              //getFeaturedSection(),
-                              //getStoneOfDaySection(),
-                              //buildtopSection(),
-                              getSavedSearchSection(),
+                            //if (dashboardConfig.arrTopSection.length > 0)
+                            getTopSection(),
+                            //getFeaturedSection(),
+                            //getStoneOfDaySection(),
+                            buildTopSection(HOME_TOP_CENTRE),
+                            getHomeSliderImage(HOME_CENTRE),
+                            buildTopSection(HOME_BOTTOM_CENTRE),
+                            getSavedSearchSection(),
                             //getRecentSection(),
                             getSalesSection(),
                             SizedBox(
@@ -475,22 +480,22 @@ class _DashboardState extends StatefulScreenWidgetState {
               ),
             ),
           ),
-          InkWell(
-            onTap: () {
-              NavigationUtilities.pushRoute(VoiceSearch.route);
-            },
-            child: Padding(
-              padding: EdgeInsets.only(
-                left: getSize(Spacing.leftPadding),
-              ),
-              child: Image.asset(
-                microphone,
-                alignment: Alignment.centerRight,
-                width: getSize(26),
-                height: getSize(26),
-              ),
-            ),
-          )
+          // InkWell(
+          //   onTap: () {
+          //     NavigationUtilities.pushRoute(VoiceSearch.route);
+          //   },
+          //   child: Padding(
+          //     padding: EdgeInsets.only(
+          //       left: getSize(Spacing.leftPadding),
+          //     ),
+          //     child: Image.asset(
+          //       microphone,
+          //       alignment: Alignment.centerRight,
+          //       width: getSize(26),
+          //       height: getSize(26),
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );
@@ -505,36 +510,36 @@ class _DashboardState extends StatefulScreenWidgetState {
       child: Column(
         children: [
           getSarchTextField(),
-          Material(
-            elevation: 10,
-            shadowColor: appTheme.shadowColorWithoutOpacity.withOpacity(0.3),
-            borderRadius: BorderRadius.circular(getSize(5)),
-            child: Container(
-              // height: getSize(200),
-              decoration: BoxDecoration(
-                color: appTheme.whiteColor,
-                borderRadius: BorderRadius.circular(getSize(5)),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(
-                  getSize(10),
-                ),
-                child: GridView.count(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  crossAxisCount: 2,
-                  childAspectRatio: 2.0,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  children: List.generate(dashboardConfig.arrTopSection.length,
-                      (index) {
-                    return getTopSectionGridItem(
-                        dashboardConfig.arrTopSection[index]);
-                  }),
-                ),
-              ),
-            ),
-          ),
+          // Material(
+          //   elevation: 10,
+          //   shadowColor: appTheme.shadowColorWithoutOpacity.withOpacity(0.3),
+          //   borderRadius: BorderRadius.circular(getSize(5)),
+          //   child: Container(
+          //     // height: getSize(200),
+          //     decoration: BoxDecoration(
+          //       color: appTheme.whiteColor,
+          //       borderRadius: BorderRadius.circular(getSize(5)),
+          //     ),
+          //     child: Padding(
+          //       padding: EdgeInsets.all(
+          //         getSize(10),
+          //       ),
+          //       child: GridView.count(
+          //         physics: NeverScrollableScrollPhysics(),
+          //         shrinkWrap: true,
+          //         crossAxisCount: 2,
+          //         childAspectRatio: 2.0,
+          //         mainAxisSpacing: 10,
+          //         crossAxisSpacing: 10,
+          //         children: List.generate(dashboardConfig.arrTopSection.length,
+          //             (index) {
+          //           return getTopSectionGridItem(
+          //               dashboardConfig.arrTopSection[index]);
+          //         }),
+          //       ),
+          //     ),
+          //   ),
+          // ),
           SizedBox(
             height: getSize(20),
           ),
@@ -1061,6 +1066,18 @@ class _DashboardState extends StatefulScreenWidgetState {
       ),
     );
   }
+
+  // getBannerSection() {
+  //   if (isNullEmptyOrFalse(this.dashboardModel)) {
+  //     return SizedBox();
+  //   }
+  //   if (isNullEmptyOrFalse(this.dashboardModel.banners)) {
+  //     return SizedBox();
+  //   }
+  //   return Container(
+  //     child: buildtopSection(this.dashboardModel.banners),
+  //   );
+  // }
 
   getSavedSearchSection() {
     if (isNullEmptyOrFalse(this.dashboardModel)) {
@@ -1986,522 +2003,158 @@ class _DashboardState extends StatefulScreenWidgetState {
     });
   }
 
-  buildtopSection() {
-    return Stack(
-      children: [
-        Positioned(
-          top: 10,
-          left: 0,
-          right: 0,
-          child: Container(
-            margin: EdgeInsets.all(20),
-            height: 200,
-            //color: Colors.red,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                "https://i.pinimg.com/originals/b7/c9/8e/b7c98e3facc616729d501f2247abe052.jpg",
-                fit: BoxFit.cover,
+  buildTopSection(String type) {
+    return Container(
+      height: getSize(450),
+      child: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Card(
+              elevation: 10,
+              margin: EdgeInsets.all(20),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: getImageView(getHomeCenterImage(type),
+                    fit: BoxFit.cover,
+                    height: getSize(243),
+                    width: MathUtilities.screenWidth(context)),
               ),
             ),
           ),
-        ),
-        Positioned(
-          top: 150,
-          left: 40,
-          right: 40,
-          child: Container(
-            width: 311,
-            height: 207,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white,
-            ),
-            child: Column(
-              children: [
-                Row(
+          Positioned(
+            top: 200,
+            left: 40,
+            right: 40,
+            child: Card(
+              elevation: 10,
+              child: Container(
+                width: getSize(311),
+                height: getSize(220),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                ),
+                child: Column(
                   children: [
-                    Column(
+                    Row(
                       children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 30, left: 15),
-                          height: 72,
-                          width: 90,
-                          decoration: BoxDecoration(
-                              color: Color(0xFFE2F7FC),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Flat Off",
-                                style: TextStyle(
-                                    fontSize: 16, color: Color(0xFF2193B0)),
-                              ),
-                              Text(
-                                "80%",
-                                style: TextStyle(
-                                    fontSize: 22, color: Color(0xFF2193B0)),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 30, left: 15),
-                          height: 72,
-                          width: 90,
-                          decoration: BoxDecoration(
-                              color: Color(0xFFFEEAE1),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Flat Off",
-                                style: TextStyle(
-                                    fontSize: 16, color: Color(0xFFE04300)),
-                              ),
-                              Text(
-                                "70%",
-                                style: TextStyle(
-                                    fontSize: 22, color: Color(0xFFE04300)),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 30, left: 15),
-                          height: 72,
-                          width: 90,
-                          decoration: BoxDecoration(
-                              color: Color(0xFFFE2FFF0),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Flat Off",
-                                style: TextStyle(
-                                    fontSize: 16, color: Color(0xFF288F5A)),
-                              ),
-                              Text(
-                                "60%",
-                                style: TextStyle(
-                                    fontSize: 22, color: Color(0xFF288F5A)),
-                              )
-                            ],
-                          ),
-                        )
+                        Column(children: [
+                          getSideImages(type == HOME_TOP_CENTRE
+                              ? HOME_TOP_LEFT_1
+                              : HOME_BOTTOM_LEFT_1),
+                          getSideImages(type == HOME_TOP_CENTRE
+                              ? HOME_TOP_RIGHT_1
+                              : HOME_BOTTOM_RIGHT_1),
+                        ]),
+                        Column(children: [
+                          getSideImages(type == HOME_TOP_CENTRE
+                              ? HOME_TOP_LEFT_2
+                              : HOME_BOTTOM_LEFT_2),
+                          getSideImages(type == HOME_TOP_CENTRE
+                              ? HOME_TOP_RIGHT_2
+                              : HOME_BOTTOM_RIGHT_2),
+                        ]),
+                        Column(children: [
+                          getSideImages(type == HOME_TOP_CENTRE
+                              ? HOME_TOP_LEFT_3
+                              : HOME_BOTTOM_LEFT_3),
+                          getSideImages(type == HOME_TOP_CENTRE
+                              ? HOME_TOP_RIGHT_3
+                              : HOME_BOTTOM_RIGHT_3),
+                        ]),
                       ],
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 15, left: 15),
-                          height: 72,
-                          width: 90,
-                          decoration: BoxDecoration(
-                              color: Color(0xFFFEF7DE),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Flat Off",
-                                style: TextStyle(
-                                    fontSize: 16, color: Color(0xFFB89000)),
-                              ),
-                              Text(
-                                "600",
-                                style: TextStyle(
-                                    fontSize: 22, color: Color(0xFFB89000)),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 15, left: 15),
-                          height: 72,
-                          width: 90,
-                          decoration: BoxDecoration(
-                              color: Color(0xFFF9DDFC),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Under Store",
-                                style: TextStyle(
-                                    fontSize: 16, color: Color(0xFFD618EB)),
-                              ),
-                              Text(
-                                "1000",
-                                style: TextStyle(
-                                    fontSize: 22, color: Color(0xFFD618EB)),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 15, left: 15),
-                          height: 72,
-                          width: 90,
-                          decoration: BoxDecoration(
-                              color: Color(0xFFE3DFFF),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Buy 1 Get 1",
-                                style: TextStyle(
-                                    fontSize: 16, color: Color(0xFF1D06D9)),
-                              ),
-                              Text(
-                                "Free",
-                                style: TextStyle(
-                                    fontSize: 22, color: Color(0xFF1D06D9)),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+              ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  getHomeCenterImage(String type) {
+    String s = this.dashboardModel.getBannerDetails(type).url;
+
+//Removes everything after first '?'
+    //List<String> result = s.split("?");
+    //print(s);
+    print(this.dashboardModel.getBannerDetails(type).url);
+    return this.dashboardModel.getBannerDetails(type).getDisplayImage();
+    //for(int i=0;i<banners.length;i++)
+  }
+
+  getHomeSliderImage(String type) {
+    List<String> images =
+        this.dashboardModel.getBannerDetails(type).getSliderImage();
+    return Container(
+      height: getSize(200),
+      child: CarouselSlider(
+        options: CarouselOptions(
+          height: 180.0,
+          enlargeCenterPage: true,
+          autoPlay: true,
+          aspectRatio: 16 / 9,
+          autoPlayCurve: Curves.fastOutSlowIn,
+          enableInfiniteScroll: true,
+          autoPlayAnimationDuration: Duration(milliseconds: 800),
+          viewportFraction: 0.8,
         ),
-        Positioned(
-          top: 390,
-          left: 0,
-          right: 0,
-          child: Container(
-            height: 200,
-            child: ListView(
-              children: [
-                CarouselSlider(
-                  items: [
-                    //1st Image of Slider
-                    Container(
-                      margin: EdgeInsets.all(6.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        image: DecorationImage(
-                          image: NetworkImage(
-                              "http://www.wallpapermania.eu/images/lthumbs/2012-10/3583_Diamonds-from-San-Diego-HD-wallpaper.jpg"),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-
-                    //2nd Image of Slider
-                    Container(
-                      margin: EdgeInsets.all(6.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        image: DecorationImage(
-                          image: NetworkImage(
-                              "https://c4.wallpaperflare.com/wallpaper/408/466/326/diamond-pack-1080p-hd-wallpaper-preview.jpg"),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-
-                    //3rd Image of Slider
-                    Container(
-                      margin: EdgeInsets.all(6.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        image: DecorationImage(
-                          image: NetworkImage(
-                              "https://www.itl.cat/pngfile/big/12-122088_diamond-wallpaper-hd-diamond.jpg"),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-
-                    //4th Image of Slider
-                    Container(
-                      margin: EdgeInsets.all(6.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        image: DecorationImage(
-                          image: NetworkImage(
-                              "https://wallpapercave.com/wp/QCWFPW7.jpg"),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-
-                    //5th Image of Slider
-                    Container(
-                      margin: EdgeInsets.all(6.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        image: DecorationImage(
-                          image: NetworkImage(
-                              "https://previews.123rf.com/images/peterschreibermedia/peterschreibermedia1906/peterschreibermedia190600101/125692582-group-of-diamonds-with-tweezers-on-a-white-background-3d-illustration.jpg"),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ],
-
-                  //Slider Container properties
-                  options: CarouselOptions(
-                    height: 180.0,
-                    enlargeCenterPage: true,
-                    autoPlay: true,
-                    aspectRatio: 16 / 9,
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    enableInfiniteScroll: true,
-                    autoPlayAnimationDuration: Duration(milliseconds: 800),
-                    viewportFraction: 0.8,
+        items: images
+            .map((item) => Container(
+                  margin: EdgeInsets.all(6.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
-                ),
-              ],
-            ),
-          ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: getImageView(item,
+                        fit: BoxFit.cover,
+                        height: getSize(243),
+                        width: MathUtilities.screenWidth(context)),
+                  ),
+                ))
+            .toList(),
+      ),
+    );
+  }
+
+  openDiamondList(String id) {
+    Map<String, dynamic> dict = new HashMap();
+    dict["filterId"] = id;
+    dict[ArgumentConstant.ModuleType] =
+        DiamondModuleConstant.MODULE_TYPE_SEARCH;
+    NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+  }
+
+  getSideImages(String type) {
+    Banners banner = this.dashboardModel.getBannerDetails(type);
+    //banner.url;
+    return InkWell(
+      onTap: () {
+        List<String> result = banner.url.split("?");
+        //print(result[1]);
+        if (result != null && result.length > 1) {
+          print(result[1]);
+          openDiamondList(result[1]);
+        }
+      },
+      child: Container(
+        margin: EdgeInsets.only(top: 30, left: 15),
+        height: getSize(72),
+        width: getSize(90),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: getImageView(banner.getDisplayImage(),
+              fit: BoxFit.cover,
+              height: getSize(243),
+              width: MathUtilities.screenWidth(context)),
         ),
-        Positioned(
-          top: 600,
-          left: 0,
-          right: 0,
-          child: Container(
-            margin: EdgeInsets.all(20),
-            height: 200,
-            //color: Colors.red,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                "https://i.pinimg.com/originals/b7/c9/8e/b7c98e3facc616729d501f2247abe052.jpg",
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-          top: 760,
-          left: 40,
-          right: 40,
-          child: Container(
-            width: 311,
-            height: 207,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white,
-            ),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 30, left: 15),
-                          height: 72,
-                          width: 90,
-                          decoration: BoxDecoration(
-                              color: Color(0xFFE2F7FC),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Flat Off",
-                                style: TextStyle(
-                                    fontSize: 16, color: Color(0xFF2193B0)),
-                              ),
-                              Text(
-                                "80%",
-                                style: TextStyle(
-                                    fontSize: 22, color: Color(0xFF2193B0)),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 30, left: 15),
-                          height: 72,
-                          width: 90,
-                          decoration: BoxDecoration(
-                              color: Color(0xFFFEEAE1),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Flat Off",
-                                style: TextStyle(
-                                    fontSize: 16, color: Color(0xFFE04300)),
-                              ),
-                              Text(
-                                "70%",
-                                style: TextStyle(
-                                    fontSize: 22, color: Color(0xFFE04300)),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 30, left: 15),
-                          height: 72,
-                          width: 90,
-                          decoration: BoxDecoration(
-                              color: Color(0xFFFE2FFF0),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Flat Off",
-                                style: TextStyle(
-                                    fontSize: 16, color: Color(0xFF288F5A)),
-                              ),
-                              Text(
-                                "60%",
-                                style: TextStyle(
-                                    fontSize: 22, color: Color(0xFF288F5A)),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 15, left: 15),
-                          height: 72,
-                          width: 90,
-                          decoration: BoxDecoration(
-                              color: Color(0xFFFEF7DE),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Flat Off",
-                                style: TextStyle(
-                                    fontSize: 16, color: Color(0xFFB89000)),
-                              ),
-                              Text(
-                                "600",
-                                style: TextStyle(
-                                    fontSize: 22, color: Color(0xFFB89000)),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 15, left: 15),
-                          height: 72,
-                          width: 90,
-                          decoration: BoxDecoration(
-                              color: Color(0xFFF9DDFC),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Under Store",
-                                style: TextStyle(
-                                    fontSize: 16, color: Color(0xFFD618EB)),
-                              ),
-                              Text(
-                                "1000",
-                                style: TextStyle(
-                                    fontSize: 22, color: Color(0xFFD618EB)),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 15, left: 15),
-                          height: 72,
-                          width: 90,
-                          decoration: BoxDecoration(
-                              color: Color(0xFFE3DFFF),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Buy 1 Get 1",
-                                style: TextStyle(
-                                    fontSize: 16, color: Color(0xFF1D06D9)),
-                              ),
-                              Text(
-                                "Free",
-                                style: TextStyle(
-                                    fontSize: 22, color: Color(0xFF1D06D9)),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
