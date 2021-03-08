@@ -148,28 +148,29 @@ class DashboardResp extends BaseApiResp {
   }
 }
 
-class BannerModel {
-  List<Banners> banners;
+// class BannerModel {
+//   List<Banners> banners;
 
-  BannerModel({this.banners});
+//   BannerModel({this.banners});
 
-  BannerModel.fromJson(Map<String, dynamic> json) {
-    if (json['banners'] != null) {
-      banners = new List<Banners>();
-      json['banners'].forEach((v) {
-        banners.add(new Banners.fromJson(v));
-      });
-    }
-  }
+//   BannerModel.fromJson(Map<String, dynamic> json) {
+//     if (json['banners'] != null) {
+//       banners = new List<Banners>();
+//       json['banners'].forEach((v) {
+//         banners.add(new Banners.fromJson(v));
+//       });
+//     }
+//     print(banners.length);
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.banners != null) {
-      data['banners'] = this.banners.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     if (this.banners != null) {
+//       data['banners'] = this.banners.map((v) => v.toJson()).toList();
+//     }
+//     return data;
+//   }
+// }
 
 class DashboardModel {
   DashboardModel({
@@ -191,6 +192,15 @@ class DashboardModel {
   Map<String, Track> tracks;
   List<Banners> banners;
   List<DashboardCount> dashboardCount;
+
+  Banners getBannerDetails(String type) {
+    for (int i = 0; i < banners.length; i++) {
+      if (type == banners[i].type) {
+        return banners[i];
+      }
+    }
+    return null;
+  }
 
   factory DashboardModel.fromJson(Map<String, dynamic> json) {
     List<DiamondModel> arrFeaturestone = [];
@@ -221,7 +231,8 @@ class DashboardModel {
           ? null
           : Seller.fromJson(json["seller"]),
       featuredStone: arrFeaturestone,
-      banners: banners,
+      banners:
+          List<Banners>.from(json["banners"].map((x) => Banners.fromJson(x))),
       recentSearch: List<SavedSearchModel>.from(
           json["recentSearch"].map((x) => SavedSearchModel.fromJson(x))),
       savedSearch: List<SavedSearchModel>.from(
@@ -439,3 +450,38 @@ class DashboardCount {
         "account": account,
       };
 }
+
+class DashboardBannerModel {
+  String type;
+  Banners banners;
+  List<DashboardBannerDetail> itemList;
+
+  DashboardBannerModel(
+    this.type,
+    this.banners,
+    this.itemList  );
+}
+
+class DashboardBannerDetail {
+  String type;
+  Banners banners;
+
+  DashboardBannerDetail(
+    this.type,
+    this.banners,
+  );
+}
+
+List<DashboardBannerModel> dBannerModel() {
+  List<DashboardBannerModel> banners;
+
+  Banners getBannerDetails(String type) {
+    for (int i = 0; i < banners.length; i++) {
+      if (type == banners[i].type) {
+        print(banners[i]);
+      }
+    }
+    return null;
+  }
+}
+

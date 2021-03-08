@@ -34,9 +34,6 @@ class AddDemandModel extends BaseApiResp {
   }
 }
 
-
-
-
 class SavedSearchResp extends BaseApiResp {
   SavedSearchResp({
     this.code,
@@ -87,7 +84,6 @@ class Data {
         "count": count,
       };
 }
-
 
 class SavedSearchModel {
   SavedSearchModel({
@@ -535,28 +531,42 @@ class Banners {
   bool isVideo;
   String ipadImage;
 
-  Banners(
-      {this.createdAt,
-      this.updatedAt,
-      this.id,
-      this.fontColor,
-      this.searchBarPosition,
-      this.backgroundImage,
-      this.images,
-      this.mobileImage,
-      this.maequeeText,
-      this.fromdateTime,
-      this.toDateTime,
-      this.description,
-      this.eventName,
-      this.isActive,
-      this.type,
-      this.bannerType,
-      this.url,
-      this.activity,
-      this.isVideo,
-      this.ipadImage,
-    });
+  String getDisplayImage() {
+    if (images != null && images.length > 0) {
+      return images[0];
+    }
+    return "";
+  }
+
+  List<String> getSliderImage() {
+    if (images != null && images.length > 0) {
+      return images;
+    }
+    return null;
+  }
+
+  Banners({
+    this.createdAt,
+    this.updatedAt,
+    this.id,
+    this.fontColor,
+    this.searchBarPosition,
+    this.backgroundImage,
+    this.images,
+    this.mobileImage,
+    this.maequeeText,
+    this.fromdateTime,
+    this.toDateTime,
+    this.description,
+    this.eventName,
+    this.isActive,
+    this.type,
+    this.bannerType,
+    this.url,
+    this.activity,
+    this.isVideo,
+    this.ipadImage,
+  });
 
   Banners.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
