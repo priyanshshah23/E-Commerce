@@ -125,6 +125,7 @@ class _DashboardState extends StatefulScreenWidgetState {
     print(dict);
     NetworkCall<DashboardResp>()
         .makeCall(
+          
             () => app.resolve<ServiceModule>().networkService().dashboard(dict),
             context,
             isProgress: false)
