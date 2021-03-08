@@ -440,6 +440,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   break;
                 case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
                   diamondModel.trackItemComment = trackDiamonds;
+                  diamondModel.remarks = element.remarks;
+                  diamondModel.isNotes = true;
+                  diamondModel.isNoteEditable = false;
                   break;
 
                 case DiamondModuleConstant.MODULE_TYPE_MY_BID:

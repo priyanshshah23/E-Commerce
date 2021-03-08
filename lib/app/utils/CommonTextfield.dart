@@ -96,7 +96,7 @@ class _CommonTextfieldState extends State<CommonTextfield> {
               : EdgeInsets.only(left: getSize(18), top: getSize(16)),
           errorStyle: appTheme.error16TextStyle,
           errorMaxLines: 3,
-//          fillColor: widget.textOption.fillColor ?? fromHex("#F6F6F6"),
+          fillColor: widget.textOption.fillColor ?? fromHex("#F6F6F6"),
           enabledBorder: !widget.textOption.isBorder
               ? InputBorder.none
               : OutlineInputBorder(
