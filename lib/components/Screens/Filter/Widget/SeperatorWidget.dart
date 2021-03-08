@@ -5,8 +5,9 @@ import 'package:flutter/cupertino.dart';
 
 class SeperatorWidget extends StatefulWidget {
   SeperatorModel seperatorModel;
+  Function(SeperatorModel) callBack;
 
-  SeperatorWidget(this.seperatorModel);
+  SeperatorWidget(this.seperatorModel, {this.callBack});
 
   @override
   _SeperatorWidget createState() => _SeperatorWidget();
@@ -25,22 +26,59 @@ class _SeperatorWidget extends State<SeperatorWidget> {
               double.parse(widget.seperatorModel.topPadding.toString())),
           bottom: getSize(
               double.parse(widget.seperatorModel.bottomPadding.toString()))),
-      child: widget.seperatorModel.isExpand
+      child: widget.seperatorModel.filterName != ""
           ? getExpandWidet()
           : Container(
-        color: widget.seperatorModel.color,
-        height: getSize(
-            double.parse(widget.seperatorModel.height.toString())),
-      ),
+              color: widget.seperatorModel.color,
+              height: getSize(
+                double.parse(
+                  widget.seperatorModel.height.toString(),
+                ),
+              ),
+            ),
     );
   }
 
   getExpandWidet() {
-    return Container(
-      color: appTheme.blackColor,
-      height: getSize(
-          double.parse(widget.seperatorModel.height.toString())),
+    return GestureDetector(
+      onTap: () => widget.callBack(widget.seperatorModel),
+      child: Container(
+        // color: appTheme.blackColor,
+        decoration: BoxDecoration(
+            border: Border.symmetric(
+                horizontal: BorderSide(color: widget.seperatorModel.color))),
+        height: getSize(52),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(
+                bottom: getSize(16),
+                top: getSize(16),
+                left: getSize(16),
+              ),
+              child: Text(
+                widget.seperatorModel.filterName,
+                style: appTheme.black16MediumTextStyle,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(right: getSize(16)),
+              child: Container(
+                height: getSize(16),
+
+                width: getSize(16),
+                child: widget.seperatorModel.isExpand
+                    ? Image.asset(downArrow)
+                    : Image.asset(upArrow),
+                // child: items[index].isSelected
+                //     ? Image.asset(selectedIcon)
+                //     : Image.asset(unselectedIcon),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
-
 }
