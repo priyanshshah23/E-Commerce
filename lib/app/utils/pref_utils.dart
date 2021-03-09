@@ -345,11 +345,11 @@ class PrefUtils {
     if (data == null) {
       if (true) {
         data = UserPermissionsData(module: module);
-        data.view = true;
-        data.insert = true;
-        data.update = true;
-        data.delete = true;
-        data.downloadExcel = true;
+        data.view = false;
+        data.insert = false;
+        data.update = false;
+        data.delete = false;
+        data.downloadExcel = false;
       }
     }
 
