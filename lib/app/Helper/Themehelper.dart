@@ -56,6 +56,7 @@ class PnShahTheme extends BaseTheme {
 }
 
 class BaseTheme {
+  Color get chipRange => fromHex("#E0E0E1");
   Color get bodercolour => fromHex("#DDDDDD");
   Color get colorPrimary => fromHex("#414143");
   Color get colorPrimaryShadow => fromHex("#4141434D");
@@ -75,7 +76,7 @@ class BaseTheme {
   Color get borderColor => fromHex("#DDDDDD");
   Color get borderColorr => fromHex("#4545456E");
   Color get selectedFilterColor => fromHex("#414143");
-  Color get unSelectedBgColor => fromHex("#f7f7f7");
+  Color get unSelectedBgColor => fromHex("#FAFAFA");
   Color get seemoreBgColor => fromHex("#E6E6E6");
   Color get greenColor => fromHex("#0EAC33");
   Color get lightBGColor => fromHex("#F8F8F8");

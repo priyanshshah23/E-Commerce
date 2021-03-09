@@ -29,6 +29,7 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/OfflineDownloadPop
 import 'package:diamnow/components/Screens/Filter/Widget/DownLoadAndShareDialogue.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/DownLoadAndShareScreen.dart';
 import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
+import 'package:diamnow/components/Screens/MyBid/MyBidScreen.dart';
 import 'package:diamnow/components/Screens/SalesPerson/BuyNowScreen.dart';
 import 'package:diamnow/components/Screens/SalesPerson/HoldStoneScreen.dart';
 import 'package:diamnow/components/Screens/SalesPerson/MemoStoneScreen.dart';
@@ -155,7 +156,7 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_MY_HOLD:
         return R.string.screenTitle.myHold;
       case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
-        return R.string.screenTitle.myOrder;
+        return R.string.screenTitle.confirmStone;
       case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
         return R.string.screenTitle.myOffice;
       case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
@@ -1686,7 +1687,11 @@ class DiamondConfig {
     }
 
     dict[ArgumentConstant.IsFromDrawer] = false;
-    NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+    if (trackType == DiamondTrackConstant.TRACK_TYPE_BID) {
+      NavigationUtilities.pushRoute(MyBidScreen.route, args: dict);
+    } else {
+      NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+    }
   }
 
   callApiForDeleteTrack(BuildContext context, List<DiamondModel> list,

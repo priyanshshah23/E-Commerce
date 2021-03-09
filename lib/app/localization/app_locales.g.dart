@@ -688,10 +688,10 @@ class ScreenTitle {
   String myBid = "My Bid";
   String myHold = "My Hold";
   String myOrder = "My Ordered List";
-  String confirmStone = "Confirm Stone";
+  String confirmStone = "My Confirm Stone";
   String myOffice = "My Appointment";
   String myOffer = "My Quote";
-  String myPurchased = "My Purchased History";
+  String myPurchased = "My Order History";
   String mySavedSearch = "My Saved Search";
   String savedSearch = "Saved Search";
   String myDemand = "My Demand";

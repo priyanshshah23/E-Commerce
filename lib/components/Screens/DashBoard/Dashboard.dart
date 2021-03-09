@@ -41,6 +41,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class Dashboard extends StatefulScreenWidget {
   static const route = "Dashboard";
@@ -73,6 +75,7 @@ class Dashboard extends StatefulScreenWidget {
 class _DashboardState extends StatefulScreenWidgetState {
   int moduleType;
   bool isFromDrawer;
+  bool isLoading = true;
   DiamondConfig diamondConfig;
   DashboardConfig dashboardConfig;
   String emailURL;
@@ -2011,6 +2014,7 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   buildTopSection(String type) {
+    bool isVideo = this.dashboardModel.getBannerDetails(type).isVideo;
     return Container(
       height: getSize(450),
       child: Stack(
@@ -2023,27 +2027,36 @@ class _DashboardState extends StatefulScreenWidgetState {
               margin: EdgeInsets.all(
                 getSize(20),
               ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                  getSize(10),
+                ),
+              ),
               elevation: 10,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(
                   getSize(10),
                 ),
-                child: getImageView(getHomeCenterImage(type),
-                    fit: BoxFit.cover,
-                    height: getSize(243),
-                    width: MathUtilities.screenWidth(context)),
+                child: isVideo
+                    ? openWebView(type)
+                    : getImageView(getHomeCenterImage(type),
+                        fit: BoxFit.cover,
+                        placeHolderImage: diamond,
+                        height: getSize(243),
+                        width: MathUtilities.screenWidth(context)),
               ),
             ),
           ),
           Positioned(
             top: getSize(200),
-            left: getSize(40),
-            right: getSize(40),
+            left: getSize(42),
+            right: getSize(42),
             child: Card(
               elevation: 10,
               child: Container(
-                width: getSize(313.2),
-                height: getSize(190),
+                padding: EdgeInsets.all(getSize(10)),
+                width: getSize(311),
+                height: getSize(207),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
                     getSize(10),
@@ -2091,12 +2104,10 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   getHomeCenterImage(String type) {
-    String s = this.dashboardModel.getBannerDetails(type).url;
-
 //Removes everything after first '?'
     //List<String> result = s.split("?");
     //print(s);
-    print(this.dashboardModel.getBannerDetails(type).url);
+    //print(this.dashboardModel.getBannerDetails(type).url);
     return this.dashboardModel.getBannerDetails(type).getDisplayImage();
     //for(int i=0;i<banners.length;i++)
   }
@@ -2132,6 +2143,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                       getSize(10),
                     ),
                     child: getImageView(item,
+                    placeHolderImage: diamond,
                         fit: BoxFit.cover,
                         height: getSize(
                           getSize(243),
@@ -2165,17 +2177,43 @@ class _DashboardState extends StatefulScreenWidgetState {
         }
       },
       child: Container(
-        margin: EdgeInsets.all(10),
+        margin: EdgeInsets.all(getSize(10)),
         height: getSize(72),
-        width: getSize(85),
+        width: getSize(80),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: getImageView(banner.getDisplayImage(),
               fit: BoxFit.cover,
+              placeHolderImage: diamond,
               height: getSize(243),
               width: MathUtilities.screenWidth(context)),
         ),
       ),
     );
+  }
+
+  Future<WebView> openWebView(String type) async {
+    return WebView(
+        initialUrl:
+            this.dashboardModel.getBannerDetails(type).getDisplayImage(),
+        onPageStarted: (url) {
+          // app.resolve<CustomDialogs>().showProgressDialog(context, "");
+          setState(() {
+            isLoading = true;
+          });
+        },
+        onPageFinished: (finish) {
+          // app.resolve<CustomDialogs>().hideProgressDialog();
+          setState(() {
+            isLoading = false;
+          });
+        },
+        onWebResourceError: (error) {
+          // print(error);
+          setState(() {
+            isLoading = true;
+          });
+        },
+        javascriptMode: JavascriptMode.unrestricted);
   }
 }
