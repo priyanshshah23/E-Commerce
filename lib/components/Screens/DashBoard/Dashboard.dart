@@ -104,7 +104,7 @@ class _DashboardState extends StatefulScreenWidgetState {
 
     dashboardConfig = DashboardConfig();
     dashboardConfig.initItems();
-//    this.dashboardModel = app.resolve<PrefUtils>().getDashboardDetails();
+    this.dashboardModel = app.resolve<PrefUtils>().getDashboardDetails();
 
     callApiForDashboard(false);
     // setState(() {
@@ -2024,7 +2024,6 @@ class _DashboardState extends StatefulScreenWidgetState {
             left: getSize(0),
             right: getSize(0),
             child: Card(
-              color: Colors.red,
               margin: EdgeInsets.all(
                 getSize(20),
               ),
@@ -2105,7 +2104,6 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   getHomeCenterImage(String type) {
-
 //Removes everything after first '?'
     //List<String> result = s.split("?");
     //print(s);
@@ -2145,6 +2143,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                       getSize(10),
                     ),
                     child: getImageView(item,
+                    placeHolderImage: diamond,
                         fit: BoxFit.cover,
                         height: getSize(
                           getSize(243),
@@ -2193,9 +2192,10 @@ class _DashboardState extends StatefulScreenWidgetState {
     );
   }
 
-  Future<WebView> openWebView(String type) async{
+  Future<WebView> openWebView(String type) async {
     return WebView(
-      initialUrl: this.dashboardModel.getBannerDetails(type).getDisplayImage(),
+        initialUrl:
+            this.dashboardModel.getBannerDetails(type).getDisplayImage(),
         onPageStarted: (url) {
           // app.resolve<CustomDialogs>().showProgressDialog(context, "");
           setState(() {
@@ -2215,6 +2215,5 @@ class _DashboardState extends StatefulScreenWidgetState {
           });
         },
         javascriptMode: JavascriptMode.unrestricted);
-    
   }
 }

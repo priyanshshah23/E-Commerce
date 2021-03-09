@@ -52,7 +52,7 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
   DiamondConfig diamondConfig;
   int actionType;
   List<DiamondModel> diamondList;
-  bool isCheckBoxSelected = false;
+  bool isCheckBoxSelected = true;
 
   _PlaceOrderPopUpState(
       {this.diamondConfig, this.diamondList, this.actionType});
@@ -107,91 +107,125 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
                   Container(
                     height: getSize(8),
                   ),
+                  getCompanyNameTextfield(),
+                  SizedBox(
+                    height: getSize(16),
+                  ),
+                  getInvoiceDateTextField(),
+                  SizedBox(
+                    height: getSize(16),
+                  ),
                   getCommentTextField(),
                   Padding(
                     padding: EdgeInsets.only(
-                      left: getSize(16),
-                      right: getSize(16),
-                      bottom: getSize(16),
                       top: getSize(16),
+                      left: getSize(20),
+                      right: getSize(20),
+                      bottom: getSize(16),
                     ),
-                    child: Row(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            isCheckBoxSelected = !isCheckBoxSelected;
-                            setState(() {});
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(getSize(3))),
-                            width: getSize(21),
-                            height: getSize(21),
-                            child: Image.asset(
-                              isCheckBoxSelected
-                                  ? selectedCheckbox
-                                  : unSelectedCheckbox,
-                              height: getSize(20),
-                              width: getSize(20),
+                    child: Container(
+                      // width: getSize(311),
+                      child: Row(
+                        // mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(R.string.screenTitle.note + " : "),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(R.string.screenTitle.orderMsg1),
+                                Text(R.string.screenTitle.orderMsg2),
+                                // Text(
+                                //   "1) The Price Mentioned over here are fixed and nonce not negotiable.",
+                                // ),
+                                // Text(
+                                //   "2) The grading, parameters mentioned on our website beyond GIA's Grading.",
+                                //   maxLines: 2,
+                                // ),
+                              ],
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: getSize(6),
-                        ),
-                        Text.rich(
-                          TextSpan(
-                            text: R.string.commonString.ihaveread,
-                            style: appTheme.blackNormal14TitleColorblack,
-                            children: <TextSpan>[
-                              TextSpan(
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    print("Terms and condition clicked");
-                                    Navigator.pop(context);
-                                    Map<String, dynamic> dict = {};
-                                    dict["type"] =
-                                        StaticPageConstant.TERMS_CONDITION;
-                                    dict["strUrl"] =
-                                        ApiConstants.termsCondition;
-                                    dict[ArgumentConstant.IsFromDrawer] = false;
-                                    NavigationUtilities.pushRoute(
-                                        StaticPageScreen.route,
-                                        args: dict);
-                                  },
-                                text: R.string.screenTitle.termsAndCondition,
-                                style: appTheme.black16MediumTextStyle.copyWith(
-                                  decoration: TextDecoration.underline,
-                                  fontSize: getFontSize(14),
-                                  color: appTheme.colorPrimary,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      print("Shipping policy clicked");
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: getSize(16),
-                          right: getSize(16),
-                          top: getSize(8),
-                          bottom: getSize(8)),
-                      child: Text(
-                        R.string.commonString.shippingPolicy,
-                        style: appTheme.blackNormal14TitleColorblack.copyWith(
-                          decoration: TextDecoration.underline,
-                          color: appTheme.colorPrimary,
-                        ),
+                        ],
                       ),
                     ),
                   ),
+                  Row(
+                    children: [
+                      // InkWell(
+                      //   onTap: () {
+                      //     isCheckBoxSelected = !isCheckBoxSelected;
+                      //     setState(() {});
+                      //   },
+                      //   child: Container(
+                      //     decoration: BoxDecoration(
+                      //         borderRadius:
+                      //             BorderRadius.circular(getSize(3))),
+                      //     width: getSize(21),
+                      //     height: getSize(21),
+                      //     child: Image.asset(
+                      //       isCheckBoxSelected
+                      //           ? selectedCheckbox
+                      //           : unSelectedCheckbox,
+                      //       height: getSize(20),
+                      //       width: getSize(20),
+                      //     ),
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   width: getSize(6),
+                      // ),
+                      // Text.rich(
+                      //   TextSpan(
+                      //     text: R.string.commonString.ihaveread,
+                      //     style: appTheme.blackNormal14TitleColorblack,
+                      //     children: <TextSpan>[
+                      //       TextSpan(
+                      //         recognizer: TapGestureRecognizer()
+                      //           ..onTap = () {
+                      //             print("Terms and condition clicked");
+                      //             Navigator.pop(context);
+                      //             Map<String, dynamic> dict = {};
+                      //             dict["type"] =
+                      //                 StaticPageConstant.TERMS_CONDITION;
+                      //             dict["strUrl"] =
+                      //                 ApiConstants.termsCondition;
+                      //             dict[ArgumentConstant.IsFromDrawer] = false;
+                      //             NavigationUtilities.pushRoute(
+                      //                 StaticPageScreen.route,
+                      //                 args: dict);
+                      //           },
+                      //         text: R.string.screenTitle.termsAndCondition,
+                      //         style: appTheme.black16MediumTextStyle.copyWith(
+                      //           decoration: TextDecoration.underline,
+                      //           fontSize: getFontSize(14),
+                      //           color: appTheme.colorPrimary,
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                  // InkWell(
+                  //   onTap: () {
+                  //     print("Shipping policy clicked");
+                  //   },
+                  //   child: Padding(
+                  //     padding: EdgeInsets.only(
+                  //         left: getSize(16),
+                  //         right: getSize(16),
+                  //         top: getSize(8),
+                  //         bottom: getSize(8)),
+                  //     child: Text(
+                  //       R.string.commonString.shippingPolicy,
+                  //       style: appTheme.blackNormal14TitleColorblack.copyWith(
+                  //         decoration: TextDecoration.underline,
+                  //         color: appTheme.colorPrimary,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -340,7 +374,7 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
 
   getInvoiceDateTextField() {
     return InkWell(
-      highlightColor: Colors.transparent,
+      // highlightColor: Colors.transparent,
       onTap: () {
         showDialog(
             context: context,
@@ -370,7 +404,9 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
         ),
         child: CommonTextfield(
             enable: false,
+            readOnly: true,
             textOption: TextFieldOption(
+                // isBorder: true,
                 hintText: R.string.errorString.selectInvoiceDate,
                 maxLine: 1,
                 prefixWid: getCommonIconWidget(

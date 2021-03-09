@@ -321,8 +321,8 @@ class DrawerSetting {
         .getModulePermission(ModulePermissionConstant.permission_order)
         .view)
       drawerList.add(DrawerModel(
-        image: myOrder,
-        title: R.string.screenTitle.myOrder,
+        image: confirmStone,
+        title: R.string.screenTitle.confirmStone,
         imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_ORDER,
@@ -333,7 +333,7 @@ class DrawerSetting {
         .getModulePermission(ModulePermissionConstant.permission_purchase)
         .view)
       drawerList.add(DrawerModel(
-        image: myPurchased,
+        image: myOrder,
         title: R.string.screenTitle.myPurchased,
         isSelected: false,
         imageColor: appTheme.colorPrimary,
@@ -599,7 +599,11 @@ class BottomMenuSetting {
   List<BottomTabModel> getBottomMenuItems(int moduleType,
       {bool isDetail = false, bool isCompare = false}) {
     List<BottomTabModel> moreMenuList = [];
-
+    moreMenuList.add(BottomTabModel(
+        image: bidImage,
+        isCenter: false,
+        title: R.string.screenTitle.myBid,
+        type: ActionMenuConstant.ACTION_TYPE_BID));
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
       case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
@@ -609,6 +613,7 @@ class BottomMenuSetting {
         break;
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
         addBidStoneInBottomMenu(moreMenuList);
+
         addWatchlistInBottomMenu(moreMenuList, addToWatchlist, isCenter: false);
         addFinalCalculationInBottomMenu(moreMenuList);
         if (!isDetail && !isCompare) {
@@ -657,6 +662,15 @@ class BottomMenuSetting {
               moduleType == DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {
             addPlaceOrderInBottomMenu(moreMenuList, placeOrder,
                 isCenter: false);
+            // if (app
+            //   .resolve<PrefUtils>()
+            //   .getModulePermission(ModulePermissionConstant.permission_bid)
+            //   .insert)
+            // moreMenuList.add(BottomTabModel(
+            //     image: bidImage,
+            //     isCenter: false,
+            //     title: R.string.screenTitle.myBid,
+            //     type: ActionMenuConstant.ACTION_TYPE_MY_BID));
           }
 
 //

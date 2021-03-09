@@ -17,6 +17,7 @@ import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Home/DrawerModel.dart';
 import 'package:diamnow/components/Screens/Home/HomeDrawer.dart';
 import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
+import 'package:diamnow/components/Screens/MyBid/MyBidScreen.dart';
 import 'package:diamnow/components/Screens/MyDemand/MyDemandScreen.dart';
 import 'package:diamnow/components/Screens/Order/OrderListScreen.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
@@ -85,9 +86,11 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
           openDiamondOrderList(type);
           break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+          openMyBid(type);
+          break;
         case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
         case DiamondModuleConstant.MODULE_TYPE_MY_CART:
-        case DiamondModuleConstant.MODULE_TYPE_MY_BID:
         case DiamondModuleConstant.MODULE_TYPE_MY_HOLD:
         case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
         case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
@@ -198,7 +201,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                   width: getSize(12),
                 ),
                 Text(
-                  model.title,
+                  model.title ?? "-",
                   style: appTheme.blackNormal16TitleColorblack,
                 ),
                 Spacer(),
@@ -501,7 +504,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           padding: EdgeInsets.only(
               left: getSize(20), top: getSize(16), bottom: getSize(30)),
           child: Text(
-            "App Version 1.0.0",
+            "App Version 1.0.0" ?? "-",
             style: appTheme.blackNormal12TitleColorblack.copyWith(
               fontWeight: FontWeight.w500,
             ),
@@ -595,6 +598,12 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     dict[ArgumentConstant.ModuleType] = type;
     dict[ArgumentConstant.IsFromDrawer] = false;
     NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+  }
+
+  openMyBid(int moduleType) {
+    NavigationUtilities.pushRoute(
+      MyBidScreen.route,
+    );
   }
 
   changeMPinTouchIdToggle(bool isForMPin) {

@@ -126,7 +126,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      config.getFilterJson().then((result) {
+      config.getFilterJson(isSearch: true).then((result) {
         setState(() {
           arrList = result.where((element) {
             if (element.viewType == ViewTypes.selection) {
