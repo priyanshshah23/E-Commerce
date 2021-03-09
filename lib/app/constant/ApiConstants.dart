@@ -58,7 +58,7 @@ class ApiConstants {
 
   static const String placeOrder = commonUrl + "diamond-confirm/request";
   static const String staticPage = apiV1 + "static-page/{id}";
-  static const String forgetPassword = commonUrl + "forgot-password"; //done
+  static const String forgetPassword = authUrl + "forgot-password"; //done
   static const String resetPassword = commonUrl + "user/reset-password";
   static const String changePassword =
       apiUrl + "web/v1/auth/reset-password-by-user"; //done

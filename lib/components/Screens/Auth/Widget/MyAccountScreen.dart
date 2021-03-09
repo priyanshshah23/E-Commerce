@@ -87,8 +87,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           openDiamondOrderList(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_BID:
-        openMyBid(type);
-        break;
+          openMyBid(type);
+          break;
         case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
         case DiamondModuleConstant.MODULE_TYPE_MY_CART:
         case DiamondModuleConstant.MODULE_TYPE_MY_HOLD:
@@ -201,7 +201,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                   width: getSize(12),
                 ),
                 Text(
-                  model.title,
+                  model.title ?? "-",
                   style: appTheme.blackNormal16TitleColorblack,
                 ),
                 Spacer(),
@@ -504,7 +504,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           padding: EdgeInsets.only(
               left: getSize(20), top: getSize(16), bottom: getSize(30)),
           child: Text(
-            "App Version 1.0.0",
+            "App Version 1.0.0" ?? "-",
             style: appTheme.blackNormal12TitleColorblack.copyWith(
               fontWeight: FontWeight.w500,
             ),
