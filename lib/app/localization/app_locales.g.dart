@@ -262,7 +262,7 @@ class CommonString {
   String home = "Home";
   String goToMyWatchList = "Go to My Watchlist";
   String goToMyOrder = "Go to My Order";
-  String gotToMyOffer = "Go to My Offer";
+  String gotToMyOffer = "Go to My Quote";
   String gotToMyHold = "Go to My Hold";
   String gotToMyEnquiry = "Go to My Enquiry";
   String gotToMyBid = "Go to My Bid";
@@ -576,7 +576,7 @@ class NoDataStrings {
 }
 
 class ScreenTitle {
-  String placeAnOffer = "Place an Offer";
+  String placeAnOffer = "Apply Quote";
   String addedInWatchList = "Added in Watchlist";
   String addedInOffer = "Offer Submitted";
   String addedInCart = "Added in Cart";
@@ -687,8 +687,8 @@ class ScreenTitle {
   String myHold = "My Hold";
   String myOrder = "My Ordered List";
   String confirmStone = "Confirm Stone";
-  String myOffice = "My Office View";
-  String myOffer = "My Offer List";
+  String myOffice = "My Appointment";
+  String myOffer = "My Quote";
   String myPurchased = "My Purchased History";
   String mySavedSearch = "My Saved Search";
   String savedSearch = "Saved Search";
@@ -727,7 +727,7 @@ class ScreenTitle {
   String hold = "Hold";
   String holdStone = "Hold Stone";
   String offer = "Offer";
-  String officeView = "Office View";
+  String officeView = "Appointment";
   String placeOrder = "Place Order";
   String buyNow = "Buy Now";
   String cancelStone = "Cancel Stone";
@@ -744,7 +744,7 @@ class ScreenTitle {
   String timeSlots = "Time Slots";
   String selectCustomDate = "Select Custom date";
   String availableSlot = "Available Slots";
-  String reqOfficeView = "Request Office View";
+  String reqOfficeView = "Request Appointment";
   String myComments = "My Comment";
   String myReminder = "My Reminder";
   String reminder = "Reminder";
@@ -777,7 +777,7 @@ class ScreenTitle {
   String invoicedate = "Invoice Date";
   String billType = "Bill Type";
   String terms = "Terms";
-  String comment = "Comment";
+  String comment = "Note";
   String holdTimeTitle = "Enter Hold Time (Hours)*";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
@@ -6924,7 +6924,7 @@ class ItalianScreenTitle extends ScreenTitle {
   @override
   get confirmStone => "pietra Conferma";
   @override
-  get myOffice => "My Office View";
+  get myOffice => "My Appointment";
   @override
   get myOffer => "Il mio Elenco prodotti";
   @override

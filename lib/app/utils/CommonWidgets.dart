@@ -53,11 +53,12 @@ getBackButton(BuildContext context,
     ),
   );*/
 }
+
 Future pickPDFfile(
-    BuildContext context,
-    String pickeFile,
-    Function(String pickeFile, bool imgUpload) callBack,
-    ) async {
+  BuildContext context,
+  String pickeFile,
+  Function(String pickeFile, bool imgUpload) callBack,
+) async {
   await FlutterFilePicker.pickDocument(onFileSelect: (fileArray) async {
     if (fileArray != null && fileArray.length > 0) {
       int fileSize = await File(fileArray[0].fileUrl).length();
@@ -78,6 +79,7 @@ Future pickPDFfile(
     }
   });
 }
+
 getBarButton(
   BuildContext context,
   String imageName,
@@ -244,9 +246,13 @@ Widget getAppBar(BuildContext context, String title,
         ? Text(
             title,
             overflow: TextOverflow.fade,
-            style: appTheme.blackMedium20TitleColorblack.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
+            style: isWhite
+                ? appTheme.whiteMedium20TitleColorblack.copyWith(
+                    fontWeight: FontWeight.w600,
+                  )
+                : appTheme.blackMedium20TitleColorblack.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
             textAlign: textalign ?? TextAlign.center,
           )
         : Container(),

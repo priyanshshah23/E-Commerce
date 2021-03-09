@@ -505,21 +505,21 @@ class DiamondConfig {
     //     context, DiamondTrackConstant.TRACK_TYPE_CART, selectedList);
   }
 
-  // actionUpdateNote(BuildContext context, List<DiamondModel> list) {
-  //   // callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,
-  //   //     isPop: false, title: R.string.screenTitle.addedInCart);
-  //   List<DiamondModel> selectedList = [];
-  //   DiamondModel model;
-  //   list.forEach((element) {
-  //     model = DiamondModel.fromJson(element.toJson());
-  //     model.isNoteEditable = true;
-  //     model.isNotes = false;
-  //     selectedList.add(model);
-  //   });
+  actionUpdateNote(BuildContext context, List<DiamondModel> list) {
+    // callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,
+    //     isPop: false, title: R.string.screenTitle.addedInCart);
+    List<DiamondModel> selectedList = [];
+    DiamondModel model;
+    list.forEach((element) {
+      model = DiamondModel.fromJson(element.toJson());
+      model.isNoteEditable = true;
+      model.isNotes = false;
+      selectedList.add(model);
+    });
 
-  //   openDiamondActionAcreen(
-  //       context, DiamondTrackConstant.TRACK_TYPE_UPDATE_COMMENT, selectedList);
-  // }
+    openDiamondActionAcreen(
+        context, DiamondTrackConstant.TRACK_TYPE_UPDATE_COMMENT, selectedList);
+  }
 
   actionForFinalCalculation(BuildContext context, List<DiamondModel> list) {
     List<DiamondModel> selectedList = [];
@@ -655,6 +655,7 @@ class DiamondConfig {
     list.forEach((element) {
       model = DiamondModel.fromJson(element.toJson());
       model.isNoteEditable = true;
+      model.isNotes = true;
       selectedList.add(model);
     });
     openDiamondActionAcreen(

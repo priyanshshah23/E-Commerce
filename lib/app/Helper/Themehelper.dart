@@ -245,6 +245,12 @@ class BaseTheme {
         fontWeight: FontWeight.w600,
         color: textColor);
   }
+   TextStyle get whiteMedium20TitleColorblack {
+    return TextStyle(
+        fontSize: getFontSize(20),
+        fontWeight: FontWeight.w600,
+        color: whiteColor);
+  }
 
   TextStyle get grey14HintTextStyle {
     return TextStyle(

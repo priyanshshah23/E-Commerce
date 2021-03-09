@@ -234,6 +234,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                                 element.image,
                                 height: getSize(24),
                                 width: getSize(24),
+                                color: appTheme.whiteColor,
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
@@ -295,12 +296,13 @@ class _DashboardState extends StatefulScreenWidgetState {
             appBar: getAppBar(
               context,
               diamondConfig.getScreenTitle(),
-              bgColor: appTheme.whiteColor,
+              bgColor: appTheme.blackColor,
               leadingButton: isFromDrawer
-                  ? getDrawerButton(context, true)
+                  ? getDrawerButton(context, false)
                   : getBackButton(context),
               centerTitle: false,
               actionItems: getToolbarItem(),
+              isWhite: true,
             ),
             // bottomNavigationBar: getBottomTab(),
             body: SafeArea(
@@ -308,7 +310,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                 padding: EdgeInsets.only(
                   // left: getSize(20),
                   // right: getSize(20),
-                  top: getSize(8),
+                  top: getSize(0),
                 ),
                 child: SmartRefresher(
                   header: MaterialClassicHeader(
@@ -326,7 +328,8 @@ class _DashboardState extends StatefulScreenWidgetState {
                           physics: ClampingScrollPhysics(),
                           children: <Widget>[
                             //if (dashboardConfig.arrTopSection.length > 0)
-                            getTopSection(),
+                            // getTopSection(),
+                            getSarchTextField(),
                             //getFeaturedSection(),
                             //getStoneOfDaySection(),
                             buildTopSection(HOME_TOP_CENTRE),
@@ -391,112 +394,116 @@ class _DashboardState extends StatefulScreenWidgetState {
         .view)) {
       return SizedBox();
     }
-    return Padding(
-      padding: EdgeInsets.only(
-        bottom: getSize(16),
-      ),
-      child: Row(
-        key: checkTourIsShown() ? searchKey : null,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Hero(
-              tag: 'searchTextField',
-              child: Material(
-                color: appTheme.whiteColor,
-                child: Container(
-                  height: getSize(40),
-                  decoration: BoxDecoration(
-                    color: appTheme.whiteColor,
-                    borderRadius: BorderRadius.circular(getSize(5)),
-                    border: Border.all(
-                        color: appTheme.colorPrimary, width: getSize(1)),
-                  ),
-                  child: TextField(
-                    textAlignVertical: TextAlignVertical(y: 1.0),
-                    textInputAction: TextInputAction.done,
-                    focusNode: _focusSearch,
-                    readOnly: true,
-                    autofocus: false,
-                    controller: _searchController,
-                    obscureText: false,
-                    style: appTheme.black16TextStyle,
-                    keyboardType: TextInputType.text,
-                    textCapitalization: TextCapitalization.none,
-                    cursorColor: appTheme.colorPrimary,
-                    inputFormatters: [
-                      WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
-                      BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
-                    ],
-                    decoration: InputDecoration(
-                      fillColor: fromHex("#FFEFEF"),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(getSize(5))),
-                        borderSide: BorderSide(
-                            color: appTheme.dividerColor, width: getSize(1)),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(getSize(5))),
-                        borderSide: BorderSide(
-                            color: appTheme.dividerColor, width: getSize(1)),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(getSize(5))),
-                        borderSide: BorderSide(
-                            color: appTheme.dividerColor, width: getSize(1)),
-                      ),
-
-                      hintStyle: appTheme.grey16HintTextStyle.copyWith(
-                        color: appTheme.placeholderColor,
-                      ),
-                      hintText: "Round 1.0-1.19 D-H-VS",
-                      labelStyle: TextStyle(
-                        color: appTheme.textColor,
-                        fontSize: getFontSize(16),
-                      ),
-                      // suffix: widget.textOption.postfixWidOnFocus,
-                      suffixIcon: Padding(
-                          padding: EdgeInsets.all(getSize(10)),
-                          child: Image.asset(search)),
+    return Container(
+      color: appTheme.blackColor,
+      child: Padding(
+        padding: EdgeInsets.all(
+          getSize(16),
+        ),
+        child: Row(
+          key: checkTourIsShown() ? searchKey : null,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Hero(
+                tag: 'searchTextField',
+                child: Material(
+                  color: appTheme.blackColor,
+                  child: Container(
+                    height: getSize(40),
+                    decoration: BoxDecoration(
+                      color: appTheme.blackColor,
+                      borderRadius: BorderRadius.circular(getSize(5)),
+                      border: Border.all(
+                          color: appTheme.colorPrimary, width: getSize(1)),
                     ),
-                    onChanged: (String text) {
-                      //
-                    },
-                    onEditingComplete: () {
-                      //
-                      _focusSearch.unfocus();
-                    },
-                    onTap: () {
-                      Map<String, dynamic> dict = new HashMap();
-                      dict["isFromSearch"] = false;
-                      NavigationUtilities.pushRoute(SearchScreen.route,
-                          args: dict);
-                    },
+                    child: TextField(
+                      textAlignVertical: TextAlignVertical(y: 1.0),
+                      textInputAction: TextInputAction.done,
+                      focusNode: _focusSearch,
+                      readOnly: true,
+                      autofocus: false,
+                      controller: _searchController,
+                      obscureText: false,
+                      style: appTheme.black16TextStyle,
+                      keyboardType: TextInputType.text,
+                      textCapitalization: TextCapitalization.none,
+                      cursorColor: appTheme.colorPrimary,
+                      inputFormatters: [
+                        WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+                        BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+                      ],
+                      decoration: InputDecoration(
+                        fillColor: fromHex("#FFEFEF"),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(getSize(5))),
+                          borderSide: BorderSide(
+                              color: appTheme.dividerColor, width: getSize(1)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(getSize(5))),
+                          borderSide: BorderSide(
+                              color: appTheme.dividerColor, width: getSize(1)),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(getSize(5))),
+                          borderSide: BorderSide(
+                              color: appTheme.dividerColor, width: getSize(1)),
+                        ),
+
+                        hintStyle: appTheme.grey16HintTextStyle.copyWith(
+                          color: appTheme.placeholderColor,
+                        ),
+                        hintText: "Round 1.0-1.19 D-H-VS",
+                        labelStyle: TextStyle(
+                          color: appTheme.textColor,
+                          fontSize: getFontSize(16),
+                        ),
+                        // suffix: widget.textOption.postfixWidOnFocus,
+                        suffixIcon: Padding(
+                            padding: EdgeInsets.all(getSize(10)),
+                            child: Image.asset(search,
+                                color: appTheme.whiteColor)),
+                      ),
+                      onChanged: (String text) {
+                        //
+                      },
+                      onEditingComplete: () {
+                        //
+                        _focusSearch.unfocus();
+                      },
+                      onTap: () {
+                        Map<String, dynamic> dict = new HashMap();
+                        dict["isFromSearch"] = false;
+                        NavigationUtilities.pushRoute(SearchScreen.route,
+                            args: dict);
+                      },
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          // InkWell(
-          //   onTap: () {
-          //     NavigationUtilities.pushRoute(VoiceSearch.route);
-          //   },
-          //   child: Padding(
-          //     padding: EdgeInsets.only(
-          //       left: getSize(Spacing.leftPadding),
-          //     ),
-          //     child: Image.asset(
-          //       microphone,
-          //       alignment: Alignment.centerRight,
-          //       width: getSize(26),
-          //       height: getSize(26),
-          //     ),
-          //   ),
-          // )
-        ],
+            // InkWell(
+            //   onTap: () {
+            //     NavigationUtilities.pushRoute(VoiceSearch.route);
+            //   },
+            //   child: Padding(
+            //     padding: EdgeInsets.only(
+            //       left: getSize(Spacing.leftPadding),
+            //     ),
+            //     child: Image.asset(
+            //       microphone,
+            //       alignment: Alignment.centerRight,
+            //       width: getSize(26),
+            //       height: getSize(26),
+            //     ),
+            //   ),
+            // )
+          ],
+        ),
       ),
     );
   }
@@ -2009,14 +2016,18 @@ class _DashboardState extends StatefulScreenWidgetState {
       child: Stack(
         children: [
           Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
+            top: getSize(0),
+            left: getSize(0),
+            right: getSize(0),
             child: Card(
+              margin: EdgeInsets.all(
+                getSize(20),
+              ),
               elevation: 10,
-              margin: EdgeInsets.all(20),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(
+                  getSize(10),
+                ),
                 child: getImageView(getHomeCenterImage(type),
                     fit: BoxFit.cover,
                     height: getSize(243),
@@ -2025,16 +2036,18 @@ class _DashboardState extends StatefulScreenWidgetState {
             ),
           ),
           Positioned(
-            top: 200,
-            left: 40,
-            right: 40,
+            top: getSize(200),
+            left: getSize(40),
+            right: getSize(40),
             child: Card(
               elevation: 10,
               child: Container(
-                width: getSize(311),
-                height: getSize(220),
+                width: getSize(313.2),
+                height: getSize(190),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(
+                    getSize(10),
+                  ),
                   color: Colors.white,
                 ),
                 child: Column(
@@ -2095,7 +2108,7 @@ class _DashboardState extends StatefulScreenWidgetState {
       height: getSize(200),
       child: CarouselSlider(
         options: CarouselOptions(
-          height: 180.0,
+          height: getSize(180),
           enlargeCenterPage: true,
           autoPlay: true,
           aspectRatio: 16 / 9,
@@ -2106,15 +2119,23 @@ class _DashboardState extends StatefulScreenWidgetState {
         ),
         items: images
             .map((item) => Container(
-                  margin: EdgeInsets.all(6.0),
+                  margin: EdgeInsets.all(
+                    getSize(6.0),
+                  ),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
+                    borderRadius: BorderRadius.circular(
+                      getSize(8.0),
+                    ),
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(
+                      getSize(10),
+                    ),
                     child: getImageView(item,
                         fit: BoxFit.cover,
-                        height: getSize(243),
+                        height: getSize(
+                          getSize(243),
+                        ),
                         width: MathUtilities.screenWidth(context)),
                   ),
                 ))
@@ -2144,9 +2165,9 @@ class _DashboardState extends StatefulScreenWidgetState {
         }
       },
       child: Container(
-        margin: EdgeInsets.only(top: 30, left: 15),
+        margin: EdgeInsets.all(10),
         height: getSize(72),
-        width: getSize(90),
+        width: getSize(85),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: getImageView(banner.getDisplayImage(),
