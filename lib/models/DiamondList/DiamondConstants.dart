@@ -68,32 +68,38 @@ class ModulePermissionConstant {
   static const permission_parcelList = "parcelList";
   static const permission_newGoods = "NEW_ARRIVAL_BID_IT";
   static const permission_bestOfHK = "bestOfHK";
-  static const permission_PpcomingDiamonds = "UPCOMING";
+  static const permission_upcomingDiamonds = "UPCOMING";
   static const permission_cart = "CART";
-  static const permission_reminder = "reminder";
+  static const permission_reminder = "REMINDER";
   static const permission_watchlist = "WATCHLIST";
   static const permission_comment = "NOTES";
-  static const permission_enquiry = "enquiry";
+  static const permission_enquiry = "ENQUIRY";
   static const permission_excel = "excel";
   static const permission_order = "order";
   static const permission_purchase = "purchase";
   static const permission_stone_of_the_day = "stoneoftheday";
-  static const permission_appointment = "appointment";
+  static const permission_appointment = "APPOINTMENT";
   static const permission_address = "address";
 
   static const permission_featured = "featured";
   static const permission_auction = "auction";
   static const permission_exclusive = "EXCLUSIVE";
-  static const permission_bid = "bid";
+  static const permission_bid = "MY_BID";
   static const permission_hold = "HOLD";
   static const permission_memo = "MEMO";
-  static const permission_offer = "offer";
-  static const permission_notification = "notification";
+  static const permission_offer = "QUOTE";
+  static const permission_notification = "NOTIFICATIONS";
   static const permission_offline_stock = "offlineStock";
   static const permission_confirm_stone = "CONFIRM_STONE";
   static const permission_office = "OFFICE";
-
   static const permission_remove_rapnet = "REMOVE_FROM_RAPNET";
+  static const permission_shipment = "SHIPMENT";
+  static const permission_print = "PRINT";
+  static const permission_final_calculation = "FINAL_CALCULATIONS";
+  static const permission_share_via_mail = "SHARE_VIA_MAIL";
+  static const permission_share_via_whatsapp = "SHARE_VIA_WHATSAPP";
+  static const permission_share_via_skype = "SHARE_VIA_SKYPE";
+  static const permission_suggested_stock = "SUGGESTED_STOCK";
 }
 
 class ReminderType {
