@@ -165,6 +165,7 @@ class DiamondModel {
   String opPav;
   String opCrwn;
   String mfgStnId;
+  String layoutNo;
 
   TrackDiamonds trackItemCart;
   TrackDiamonds trackItemWatchList;
@@ -356,6 +357,7 @@ class DiamondModel {
     pltFile = isNullEmptyOrFalse(json['pltFile']) ? false : json['pltFile'];
     groupNo = json['groupNo'];
     mfgStnId = json["mfgStnId"];
+    layoutNo = json["layoutNo"];
 
 //    isSelected = json['isSelected'];
 
@@ -535,6 +537,7 @@ class DiamondModel {
     data["expiryDate"] = this.expiryDate;
     data["strDate"] = this.strDate;
     data["mfgStnId"] = this.mfgStnId;
+    data["layoutNo"] = this.layoutNo;
 
     //Id's
     data["shp"] = this.shp;

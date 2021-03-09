@@ -261,6 +261,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           dict["filters"]["diamondSearchId"] = this.filterId;
         }
         break;
+      case DiamondModuleConstant.MODULE_TYPE_LAYOUT:
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
         if (app.resolve<PrefUtils>().getUserDetails().type ==
             UserConstant.SALES) {
@@ -437,6 +438,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   diamondModel.createdAt = element.createdAt;
                   diamondModel.trackItemOffer = trackDiamonds;
                   diamondModel.memoNo = element.memoNo;
+                  diamondModel.layoutNo = element.memoNo;
                   diamondModel.offerValidDate = element.offerValidDate;
                   diamondModel.offerStatus = element.offerStatus;
                   diamondModel.newAmount = element.newAmount;
@@ -1208,6 +1210,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         break;
       case BottomCodeConstant.TBSelectAll:
         model.isSelected = !model.isSelected;
+        if(model.isSelected)
+        print("--image------------${model.image}");
+        else
+        print("--image------------${model.image}");
         setSelectAllDiamond(model);
         break;
       case BottomCodeConstant.TBGrideView:

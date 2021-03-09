@@ -802,8 +802,8 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(getSize(4)),
                       child: getImageView(
-                          DiamondUrls.image +
-                              compareModel.diamondModel.mfgStnId +
+                          DiamondUrls?.image??"" +
+                              compareModel?.diamondModel?.mfgStnId ?? "" +
                               "/" +
                               "still.jpg",
                           height: getSize(103),

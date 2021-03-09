@@ -36,6 +36,7 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_OFFLINE_STOCK = 32;
   static const MODULE_TYPE_OFFLINE_STOCK_SEARCH = 33;
   static const MODULE_TYPE_OFFLINE_STOCK_SEARCH_HISTORY = 34;
+  static const MODULE_TYPE_LAYOUT = 35;
   static const MODULE_TYPE_MY_BID_HISTORY = 37;
   static const MODULE_TYPE_OPEN_DRAWER = 1000;
   static const MODULE_TYPE_HOME = 100;
@@ -89,6 +90,9 @@ class ModulePermissionConstant {
   static const permission_offer = "offer";
   static const permission_notification = "notification";
   static const permission_offline_stock = "offlineStock";
+  static const permission_confirm_stone = "CONFIRM_STONE";
+  static const permission_office = "OFFICE";
+
   static const permission_remove_rapnet = "REMOVE_FROM_RAPNET";
 }
 
@@ -219,6 +223,9 @@ class ActionMenuConstant {
   static const ACTION_TYPE_EXCEL = 20;
   static const ACTION_TYPE_MEMO = 21;
   static const ACTION_TYPE_MY_BID = 27;
+  static const ACTION_TYPE_CONFIRM_STONE = 22;
+  static const ACTION_TYPE_OFFICE_VIEW = 23;
+
 }
 
 class MoreMenuConstant {

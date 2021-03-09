@@ -68,7 +68,8 @@ class _SaveAndSearchBottomSheetState extends State<SaveAndSearchBottomSheet> {
                     autoFocus: false,
                     textOption: TextFieldOption(
                       inputController: _titleController,
-                      maxLine: null,
+                      maxLine: 3,
+                      keyboardType: TextInputType.multiline,
                       hintText: R.string.screenTitle.enterSearchTitle,
                       formatter: [
                         //WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
@@ -82,7 +83,7 @@ class _SaveAndSearchBottomSheetState extends State<SaveAndSearchBottomSheet> {
                         return "Please enter search title";
                       }
                     },
-                    inputAction: TextInputAction.done,
+                    inputAction: TextInputAction.newline,
                     onNextPress: () {
                       FocusScope.of(context).unfocus();
                     },
