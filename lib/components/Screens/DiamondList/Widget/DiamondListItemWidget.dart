@@ -1157,6 +1157,36 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         : Container();
   }
 
+  Widget getDiscountUpOrDown(num disc, num newDisc) {
+    bool isUp = false;
+    bool isEqual = false;
+    num diff = 0;
+    if (newDisc < disc) {
+      isUp = true;
+      diff = newDisc - disc;
+    } else if (newDisc > disc) {
+      diff = disc - newDisc;
+    } else {
+      isEqual = true;
+    }
+    return Expanded(
+        child: Center(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text("${(diff).toStringAsFixed(0)}%",
+              style: appTheme.black12TextStyleMedium
+                  .copyWith(color: isUp ? Colors.green : Colors.red)),
+          SizedBox(width: getSize(4)),
+          Image.asset(
+            !isUp ? upRedArrow : downGreenArrow,
+            height: getSize(15),
+          )
+        ],
+      ),
+    ));
+  }
+
   getWatchlistData() {
     return widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST
         ? Padding(
@@ -1182,6 +1212,9 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                       ),
                     ),
                   ),
+                  if (widget.item.getFinalDiscount() != widget.item.newDiscount)
+                    getDiscountUpOrDown(widget.item.getFinalDiscount(),
+                        widget.item.newDiscount),
                   // Expanded(
                   //     child: Center(
                   //   child: Text(
