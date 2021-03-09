@@ -298,10 +298,12 @@ class PrefUtils {
   }
 
   SelectionPopupModel getCompanyDetails() {
-    var companyJson = json.decode(_preferences.getString(keyCompany));
-    return companyJson != null
-        ? new SelectionPopupModel.fromJson(companyJson)
-        : null;
+    if(_preferences.getString(keyCompany)!=null&&_preferences.getString(keyCompany).length>0) {
+      var companyJson = json.decode(_preferences.getString(keyCompany));
+      return companyJson != null
+          ? new SelectionPopupModel.fromJson(companyJson)
+          : null;
+    }
   }
 
   Future<void> saveUserPermission(UserPermissions user) async {
