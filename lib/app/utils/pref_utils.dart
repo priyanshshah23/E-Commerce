@@ -325,7 +325,7 @@ class PrefUtils {
         permissions.data != null &&
         permissions.data.length > 0) {
       permissions.data.forEach((element) {
-        if (element.module == module) {
+        if (element.module == module.toUpperCase()) {
           element.view = element.permissions?.view ?? true;
           element.insert = element.permissions?.insert ?? true;
           element.update = element.permissions?.update ?? true;
