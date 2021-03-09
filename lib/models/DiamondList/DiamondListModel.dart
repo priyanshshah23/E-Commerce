@@ -441,7 +441,8 @@ class TrackItem {
   String createIp;
   bool isSentReminder;
   String addedBy;
-
+  num bidPricePerCarat;
+  
   //User user;
   DiamondModel diamond;
 
