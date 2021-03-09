@@ -419,14 +419,20 @@ class User {
   }
 
   String getFullName() {
-    var fn = firstName
-        .split(' ')
-        .map((word) => word[0].toUpperCase() + word.substring(1))
-        .join(' ');
-    var ln = lastName
-        .split(' ')
-        .map((word) => word[0].toUpperCase() + word.substring(1))
-        .join(' ');
+    var fn = "";
+    if (!isNullEmptyOrFalse(firstName)) {
+      fn = firstName
+          .split(' ')
+          .map((word) => word[0].toUpperCase() + word.substring(1))
+          .join(' ');
+    }
+    var ln = "";
+    if (!isNullEmptyOrFalse(lastName)) {
+      ln = lastName
+          .split(' ')
+          .map((word) => word[0].toUpperCase() + word.substring(1))
+          .join(' ');
+    }
     return fn + " " + ln;
   }
 }
