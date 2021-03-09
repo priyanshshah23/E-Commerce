@@ -686,10 +686,10 @@ class ScreenTitle {
   String myBid = "My Bid";
   String myHold = "My Hold";
   String myOrder = "My Ordered List";
-  String confirmStone = "Confirm Stone";
+  String confirmStone = "My Confirm Stone";
   String myOffice = "My Appointment";
   String myOffer = "My Quote";
-  String myPurchased = "My Purchased History";
+  String myPurchased = "My Order History";
   String mySavedSearch = "My Saved Search";
   String savedSearch = "Saved Search";
   String myDemand = "My Demand";
@@ -794,7 +794,6 @@ class Dynamickeys {
   String labTitle = "Lab";
   String certNo = "Cert. No.";
   String locationTitle = "Origin";
-  String shapeTitle = "Shape";
   String caratTitle = "Carat";
   String colorTitle = "Color";
   String clarityTitle = "Clarity";
@@ -808,14 +807,14 @@ class Dynamickeys {
   String amountTitle = "Amount";
   String eyeCleanTitle = "Eye Clean";
   String brownTitle = "Brown";
-  String milkyTitle = "Milky:";
-  String mixTingeTitle = "MixTinge:";
+  String milkyTitle = "Milky";
+  String mixTingeTitle = "MixTinge";
   String dimensionTitle = "Dimensions  (MM)";
   String girdleTitle = "Girdle (%)";
   String tableTitle = "Table %";
   String crownAngleTitle = "CrownAngle";
   String depthTitle = "Depth %";
-  String pavAngleTitle = "PavAngle:";
+  String pavAngleTitle = "PavAngle";
   String crownHeightTitle = "CrownHeight(%)";
   String pavDepthTitle = "Pavilion Depth (%)";
   String starLengthTitle = "Star Length";
@@ -857,17 +856,15 @@ class Dynamickeys {
   String cluetConditionTitle = "Culet Condition";
   String disTitle = "Dis%";
   String depthTitleWithoutPerc = "Depth";
-  String otherDetails = "Other Information";
   String otherInformationTitle = "Other Information";
   String matchPairTitle = "Match Pair";
   String layoutTitle = "Layout";
-  String heartArrow = "Heart&Arrow";
-  String extraFacets = "ExtraFacets";
+  String heartArrow = "Heart and Arrow";
   String tableBlack = "TableBlack";
   String tableOpen = "TableOpen";
   String sideBlack = "SideBlack";
   String crownOpen = "CrownOpen";
-  String tableInclusion = "TableInclusion:";
+  String tableInclusion = "TableInclusion";
   String sideInclusion = "SideInclusion";
   String pavillionOpen = "PavillionOpen";
   String girdleOpen = "GirdleOpen";
@@ -876,7 +873,6 @@ class Dynamickeys {
   String bGMDetails = "BGMDetails";
   String brownTinge = "BrownTinge";
   String otherTinge = "OtherTinge";
-  String symmetry = "Symmetry";
   String reportNo = "ReportNo";
   String packetNo = "PacketNo";
   String byKey(String key) => _dynamicValues[key];
@@ -891,7 +887,6 @@ class Dynamickeys {
     "labTitle": "Lab",
     "certNo": "Cert. No.",
     "locationTitle": "Origin",
-    "shapeTitle": "Shape",
     "caratTitle": "Carat",
     "colorTitle": "Color",
     "clarityTitle": "Clarity",
@@ -905,14 +900,14 @@ class Dynamickeys {
     "amountTitle": "Amount",
     "eyeCleanTitle": "Eye Clean",
     "brownTitle": "Brown",
-    "milkyTitle": "Milky:",
-    "mixTingeTitle": "MixTinge:",
+    "milkyTitle": "Milky",
+    "mixTingeTitle": "MixTinge",
     "dimensionTitle": "Dimensions  (MM)",
     "girdleTitle": "Girdle (%)",
     "tableTitle": "Table %",
     "crownAngleTitle": "CrownAngle",
     "depthTitle": "Depth %",
-    "pavAngleTitle": "PavAngle:",
+    "pavAngleTitle": "PavAngle",
     "crownHeightTitle": "CrownHeight(%)",
     "pavDepthTitle": "Pavilion Depth (%)",
     "starLengthTitle": "Star Length",
@@ -957,13 +952,12 @@ class Dynamickeys {
     "otherInformationTitle": "Other Information",
     "matchPairTitle": "Match Pair",
     "layoutTitle": "Layout",
-    "heartArrow": "Heart&Arrow",
-    "extraFacets": "ExtraFacets",
+    "heartArrow": "Heart and Arrow",
     "tableBlack": "TableBlack",
     "tableOpen": "TableOpen",
     "sideBlack": "SideBlack",
     "crownOpen": "CrownOpen",
-    "tableInclusion": "TableInclusion:",
+    "tableInclusion": "TableInclusion",
     "sideInclusion": "SideInclusion",
     "pavillionOpen": "PavillionOpen",
     "girdleOpen": "GirdleOpen",
@@ -972,7 +966,6 @@ class Dynamickeys {
     "bGMDetails": "BGMDetails",
     "brownTinge": "BrownTinge",
     "otherTinge": "OtherTinge",
-    "symmetry": "Symmetry",
     "reportNo": "ReportNo",
     "packetNo": "PacketNo",
   };
@@ -2461,7 +2454,6 @@ class ChineseDynamickeys extends Dynamickeys {
     "labTitle": "实验室",
     "certNo": "CERT。没有。",
     "locationTitle": "位置",
-    "shapeTitle": "形状",
     "caratTitle": "克拉",
     "colorTitle": "颜色",
     "clarityTitle": "明晰",
@@ -4073,7 +4065,6 @@ class FrenchDynamickeys extends Dynamickeys {
     "labTitle": "Laboratoire",
     "certNo": "Cert. Non.",
     "locationTitle": "EMPLACEMENT",
-    "shapeTitle": "Forme",
     "caratTitle": "Carat",
     "colorTitle": "Couleur",
     "clarityTitle": "CLARTÉ",
@@ -5635,7 +5626,6 @@ class JapanDynamickeys extends Dynamickeys {
     "labTitle": "ラボ",
     "certNo": "CERT。番号。",
     "locationTitle": "ロケーション",
-    "shapeTitle": "形状",
     "caratTitle": "カラット",
     "colorTitle": "色",
     "clarityTitle": "CLARITY",
@@ -7233,7 +7223,6 @@ class ItalianDynamickeys extends Dynamickeys {
     "labTitle": "Laboratorio",
     "certNo": "Cert. No.",
     "locationTitle": "POSIZIONE",
-    "shapeTitle": "Forma",
     "caratTitle": "carato",
     "colorTitle": "Colore",
     "clarityTitle": "CHIAREZZA",
@@ -8831,7 +8820,6 @@ class SpanishDynamickeys extends Dynamickeys {
     "labTitle": "Laboratorio",
     "certNo": "Cert. No.",
     "locationTitle": "UBICACIÓN",
-    "shapeTitle": "Forma",
     "caratTitle": "Quilate",
     "colorTitle": "Color",
     "clarityTitle": "CLARIDAD",
@@ -10425,7 +10413,6 @@ class GermanyDynamickeys extends Dynamickeys {
     "labTitle": "Labor",
     "certNo": "Cert. Nein.",
     "locationTitle": "STANDORT",
-    "shapeTitle": "Gestalten",
     "caratTitle": "Karat",
     "colorTitle": "Farbe",
     "clarityTitle": "KLARHEIT",
@@ -12006,7 +11993,6 @@ class ArabicDynamickeys extends Dynamickeys {
     "labTitle": "مختبر",
     "certNo": "Cert. لا.",
     "locationTitle": "موقعك",
-    "shapeTitle": "شكل",
     "caratTitle": "قيراط",
     "colorTitle": "اللون",
     "clarityTitle": "وضوح",

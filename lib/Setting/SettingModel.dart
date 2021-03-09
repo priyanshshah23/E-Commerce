@@ -321,8 +321,8 @@ class DrawerSetting {
         .getModulePermission(ModulePermissionConstant.permission_order)
         .view)
       drawerList.add(DrawerModel(
-        image: myOrder,
-        title: R.string.screenTitle.myOrder,
+        image: confirmStone,
+        title: R.string.screenTitle.confirmStone,
         imageColor: appTheme.colorPrimary,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_MY_ORDER,
@@ -333,7 +333,7 @@ class DrawerSetting {
         .getModulePermission(ModulePermissionConstant.permission_purchase)
         .view)
       drawerList.add(DrawerModel(
-        image: myPurchased,
+        image: myOrder,
         title: R.string.screenTitle.myPurchased,
         isSelected: false,
         imageColor: appTheme.colorPrimary,

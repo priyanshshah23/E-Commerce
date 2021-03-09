@@ -155,7 +155,7 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_MY_HOLD:
         return R.string.screenTitle.myHold;
       case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
-        return R.string.screenTitle.myOrder;
+        return R.string.screenTitle.confirmStone;
       case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
         return R.string.screenTitle.myOffice;
       case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
