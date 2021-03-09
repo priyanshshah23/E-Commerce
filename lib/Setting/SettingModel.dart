@@ -264,13 +264,13 @@ class DrawerSetting {
     //     .resolve<PrefUtils>()
     //     .getModulePermission(ModulePermissionConstant.permission_bid)
     //     .view)
-      drawerList.add(DrawerModel(
-        image: bidImage,
-        title: R.string.screenTitle.myBid,
-        imageColor: appTheme.colorPrimary,
-        isSelected: false,
-        type: DiamondModuleConstant.MODULE_TYPE_MY_BID,
-      ));
+    drawerList.add(DrawerModel(
+      image: bidImage,
+      title: R.string.screenTitle.myBid,
+      imageColor: appTheme.colorPrimary,
+      isSelected: false,
+      type: DiamondModuleConstant.MODULE_TYPE_MY_BID,
+    ));
 //    if (app
 //        .resolve<PrefUtils>()
 //        .getModulePermission(ModulePermissionConstant.permission_hold)
@@ -578,7 +578,11 @@ class BottomMenuSetting {
   List<BottomTabModel> getBottomMenuItems(int moduleType,
       {bool isDetail = false, bool isCompare = false}) {
     List<BottomTabModel> moreMenuList = [];
-
+    moreMenuList.add(BottomTabModel(
+        image: bidImage,
+        isCenter: false,
+        title: R.string.screenTitle.myBid,
+        type: ActionMenuConstant.ACTION_TYPE_BID));
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
       case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
@@ -588,6 +592,7 @@ class BottomMenuSetting {
         break;
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
         addBidStoneInBottomMenu(moreMenuList);
+
         addWatchlistInBottomMenu(moreMenuList, addToWatchlist, isCenter: false);
         addFinalCalculationInBottomMenu(moreMenuList);
         if (!isDetail && !isCompare) {
@@ -636,6 +641,15 @@ class BottomMenuSetting {
               moduleType == DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {
             addPlaceOrderInBottomMenu(moreMenuList, placeOrder,
                 isCenter: false);
+            // if (app
+            //   .resolve<PrefUtils>()
+            //   .getModulePermission(ModulePermissionConstant.permission_bid)
+            //   .insert)
+            // moreMenuList.add(BottomTabModel(
+            //     image: bidImage,
+            //     isCenter: false,
+            //     title: R.string.screenTitle.myBid,
+            //     type: ActionMenuConstant.ACTION_TYPE_MY_BID));
           }
 
 //

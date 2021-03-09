@@ -601,7 +601,7 @@ class DiamondModel {
   }
 
   String getStatusText() {
-    String color;
+    String color = "";
     switch (wSts) {
       case DiamondStatus.DIAMOND_STATUS_AVAILABLE:
         color = R.string.screenTitle.statusAvailable;

@@ -28,6 +28,7 @@ import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/OfflineDownloadPopup.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/DownLoadAndShareDialogue.dart';
 import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
+import 'package:diamnow/components/Screens/MyBid/MyBidScreen.dart';
 import 'package:diamnow/components/Screens/SalesPerson/BuyNowScreen.dart';
 import 'package:diamnow/components/Screens/SalesPerson/HoldStoneScreen.dart';
 import 'package:diamnow/components/Screens/SalesPerson/MemoStoneScreen.dart';
@@ -1659,7 +1660,11 @@ class DiamondConfig {
     }
 
     dict[ArgumentConstant.IsFromDrawer] = false;
-    NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+    if (trackType == DiamondTrackConstant.TRACK_TYPE_BID) {
+      NavigationUtilities.pushRoute(MyBidScreen.route, args: dict);
+    } else {
+      NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+    }
   }
 
   callApiForDeleteTrack(BuildContext context, List<DiamondModel> list,
