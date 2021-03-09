@@ -2020,8 +2020,14 @@ class _DashboardState extends StatefulScreenWidgetState {
             left: getSize(0),
             right: getSize(0),
             child: Card(
+              color: Colors.red,
               margin: EdgeInsets.all(
                 getSize(20),
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                  getSize(10),
+                ),
               ),
               elevation: 10,
               child: ClipRRect(
@@ -2038,13 +2044,14 @@ class _DashboardState extends StatefulScreenWidgetState {
           ),
           Positioned(
             top: getSize(200),
-            left: getSize(40),
-            right: getSize(40),
+            left: getSize(42),
+            right: getSize(42),
             child: Card(
               elevation: 10,
               child: Container(
-                width: getSize(313.2),
-                height: getSize(190),
+                padding: EdgeInsets.all(getSize(10)),
+                width: getSize(311),
+                height: getSize(207),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
                     getSize(10),
@@ -2166,9 +2173,9 @@ class _DashboardState extends StatefulScreenWidgetState {
         }
       },
       child: Container(
-        margin: EdgeInsets.all(10),
+        margin: EdgeInsets.all(getSize(10)),
         height: getSize(72),
-        width: getSize(85),
+        width: getSize(80),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: getImageView(banner.getDisplayImage(),
