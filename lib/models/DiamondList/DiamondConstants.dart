@@ -169,9 +169,9 @@ class DiamondTrackConstant {
 }
 
 class BidConstant {
-  // static const BID_TYPE_ADD = 2;
+  static const BID_TYPE_ADD = 2;
   static const BID_TYPE_BLIND = 1;
-  static const BID_TYPE_OPEN = 2;
+  static const BID_TYPE_OPEN = 3;
 }
 
 class MemoConstant {
@@ -180,10 +180,10 @@ class MemoConstant {
 }
 
 class BidStatus {
-  // static const BID_STATUS_ACTIVE = 1;
-  static const BID_STATUS_PENDING = 1;
-  static const BID_STATUS_WIN = 2;
-  static const BID_STATUS_LOSS = 3;
+  static const BID_STATUS_ACTIVE = 1;
+  static const BID_STATUS_PENDING = 2;
+  static const BID_STATUS_WIN = 3;
+  static const BID_STATUS_LOSS = 4;
 }
 
 class BorderConstant {

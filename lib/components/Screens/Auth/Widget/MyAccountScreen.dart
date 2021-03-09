@@ -87,8 +87,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           openDiamondOrderList(type);
           break;
         case DiamondModuleConstant.MODULE_TYPE_MY_BID:
-          openMyBid(type);
-          break;
+        openMyBid(type);
+        break;
         case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
         case DiamondModuleConstant.MODULE_TYPE_MY_CART:
         case DiamondModuleConstant.MODULE_TYPE_MY_HOLD:
