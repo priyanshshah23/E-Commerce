@@ -84,13 +84,11 @@ class Config {
     return arrSorting;
   }
 
-  Future<List<FormBaseModel>> getFilterJson() async {
+  Future<List<FormBaseModel>> getFilterJson({booll }) async {
     if (isNullEmptyOrFalse(arrFilter)) {
       String jsonForm =
           await rootBundle.loadString('assets/Json/FilterJson.jsonc');
-
       List<dynamic> fieldList = jsonDecode(jsonForm);
-
       for (int i = 0; i < fieldList.length; i++) {
         dynamic element = fieldList[i];
         if (element is Map<String, dynamic>) {
