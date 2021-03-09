@@ -611,6 +611,8 @@ class ScreenTitle {
   String finalDisc = "Final Disc";
   String finalRate = "Final Rate";
   String finalValue = "Final Value";
+  String orderMsg =
+      "1) The prices mentioned over here are fixed and hence not negotiable. \\n2) The grading, parameters mentioned on our website beyond GIA's Grading.";
   String orderMsg1 =
       "1) The prices mentioned over here are fixed and hence not negotiable.";
   String orderMsg2 =
@@ -688,10 +690,10 @@ class ScreenTitle {
   String myBid = "My Bid";
   String myHold = "My Hold";
   String myOrder = "My Ordered List";
-  String confirmStone = "My Confirm Stone";
+  String confirmStone = "Confirm Stone";
   String myOffice = "My Appointment";
   String myOffer = "My Quote";
-  String myPurchased = "My Order History";
+  String myPurchased = "My Purchased History";
   String mySavedSearch = "My Saved Search";
   String savedSearch = "Saved Search";
   String myDemand = "My Demand";
