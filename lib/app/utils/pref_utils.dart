@@ -298,10 +298,12 @@ class PrefUtils {
   }
 
   SelectionPopupModel getCompanyDetails() {
-    var companyJson = json.decode(_preferences.getString(keyCompany));
-    return companyJson != null
-        ? new SelectionPopupModel.fromJson(companyJson)
-        : null;
+    if(_preferences.getString(keyCompany)!=null&&_preferences.getString(keyCompany).length>0) {
+      var companyJson = json.decode(_preferences.getString(keyCompany));
+      return companyJson != null
+          ? new SelectionPopupModel.fromJson(companyJson)
+          : null;
+    }
   }
 
   Future<void> saveUserPermission(UserPermissions user) async {
@@ -343,11 +345,11 @@ class PrefUtils {
     if (data == null) {
       if (true) {
         data = UserPermissionsData(module: module);
-        data.view = true;
-        data.insert = true;
-        data.update = true;
-        data.delete = true;
-        data.downloadExcel = true;
+        data.view = false;
+        data.insert = false;
+        data.update = false;
+        data.delete = false;
+        data.downloadExcel = false;
       }
     }
 

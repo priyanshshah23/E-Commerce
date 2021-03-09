@@ -7,10 +7,10 @@ class ApiConstants {
   //static String PROXY_URL = "PROXY 192.168.2.153:8888"; //HONEY
   //static String PROXY_URL = "PROXY 192.168.0.170:8888"; //HIMANSHI
   //static String PROXY_URL = "PROXY 192.168.2.153:8888"; //SNEHAL
-  //static String PROXY_URL = "PROXY 192.168.0.131:8888"; //SNEHAL
+  // static String PROXY_URL = "PROXY 192.168.0.131:8888"; //kk
 // static String PROXY_URL = "PROXY 192.168.0.118:8888"; //JECKY
-  static String PROXY_URL = "PROXY 192.168.2.156:8888"; //SNEHAL
-  // static String PROXY_URL = "PROXY 192.168.0.118:8888"; //JECKY
+  // static String PROXY_URL = "PROXY 192.168.2.156:8888"; //SNEHAL
+  static String PROXY_URL = "PROXY 192.168.0.118:8888"; //JECKY
 
 //    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 
@@ -58,7 +58,7 @@ class ApiConstants {
 
   static const String placeOrder = commonUrl + "diamond-confirm/request";
   static const String staticPage = apiV1 + "static-page/{id}";
-  static const String forgetPassword = commonUrl + "forgot-password"; //done
+  static const String forgetPassword = authUrl + "forgot-password"; //done
   static const String resetPassword = commonUrl + "user/reset-password";
   static const String changePassword =
       apiUrl + "web/v1/auth/reset-password-by-user"; //done

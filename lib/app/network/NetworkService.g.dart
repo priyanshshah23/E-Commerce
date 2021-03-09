@@ -302,7 +302,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/forgot-password',
+        'https://betaapi.arjivexports.com/web/v1/auth/forgot-password',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',

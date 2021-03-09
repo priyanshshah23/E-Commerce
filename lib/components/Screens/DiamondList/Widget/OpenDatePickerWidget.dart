@@ -31,8 +31,7 @@ class _OpenDatePickerWidgetState extends State<OpenDatePickerWidget> {
         getDateRangePicker(),
         Padding(
           padding: EdgeInsets.symmetric(
-              horizontal: getSize(Spacing.leftPadding),
-              vertical: getSize(16)),
+              horizontal: getSize(Spacing.leftPadding), vertical: getSize(16)),
           child: Row(
             children: [
               Expanded(
@@ -47,8 +46,8 @@ class _OpenDatePickerWidgetState extends State<OpenDatePickerWidget> {
                     ),
                     decoration: BoxDecoration(
                       border: Border.all(
-                              color: appTheme.colorPrimary, width: getSize(1)),
-                      borderRadius: BorderRadius.circular(getSize(5)),
+                          color: appTheme.colorPrimary, width: getSize(1)),
+                      borderRadius: BorderRadius.circular(getSize(65)),
                     ),
                     child: Text(
                       R.string.commonString.cancel,
@@ -74,8 +73,7 @@ class _OpenDatePickerWidgetState extends State<OpenDatePickerWidget> {
                     ),
                     decoration: BoxDecoration(
                         color: appTheme.colorPrimary,
-                        borderRadius:
-                        BorderRadius.circular(getSize(5)),
+                        borderRadius: BorderRadius.circular(getSize(65)),
                         boxShadow: getBoxShadow(context)),
                     child: Text(
                       R.string.commonString.btnSubmit,
@@ -104,15 +102,19 @@ class _OpenDatePickerWidgetState extends State<OpenDatePickerWidget> {
     );
   }
 
-
   void selectionChanged(DateRangePickerSelectionChangedArgs args) {
     DateTime dt = args.value;
-    widget.selectedDate = DateTime(dt.year, dt.month, dt.day, widget.selectedDate.hour,
-        widget.selectedDate.minute, widget.selectedDate.second, widget.selectedDate.millisecond);
+    widget.selectedDate = DateTime(
+        dt.year,
+        dt.month,
+        dt.day,
+        widget.selectedDate.hour,
+        widget.selectedDate.minute,
+        widget.selectedDate.second,
+        widget.selectedDate.millisecond);
     SchedulerBinding.instance.addPostFrameCallback((duration) {
 //    setState(() {});addPostFrameCallback
 //  });
     });
   }
-
 }

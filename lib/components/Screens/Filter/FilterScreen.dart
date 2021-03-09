@@ -126,7 +126,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      config.getFilterJson().then((result) {
+      config.getFilterJson(isSearch: true).then((result) {
         setState(() {
           arrList = result.where((element) {
             if (element.viewType == ViewTypes.selection) {
@@ -839,6 +839,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 hintText: R.string.commonString.searchSavedSearch,
                 title: R.string.commonString.savedSearch,
                 selectionOptions: saveSearchList,
+                showViewAllButton: true,
+                showViewAllButtonCallBack: () {
+                  NavigationUtilities.pushRoute(SavedSearchScreen.route);
+                },
                 applyFilterCallBack: (
                     {SelectionPopupModel selectedItem,
                     List<SelectionPopupModel> multiSelectedItem}) {

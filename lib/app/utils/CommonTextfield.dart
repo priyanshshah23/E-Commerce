@@ -97,6 +97,16 @@ class _CommonTextfieldState extends State<CommonTextfield> {
           errorStyle: appTheme.error16TextStyle,
           errorMaxLines: 3,
           fillColor: widget.textOption.fillColor ?? fromHex("#F6F6F6"),
+          disabledBorder: !widget.textOption.isBorder
+              ? InputBorder.none
+              : OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(
+                      widget.textOption.maxLine != null
+                          ? getSize(25)
+                          : getSize(50))),
+                  borderSide: BorderSide(
+                      color: appTheme.dividerColor, width: getSize(2)),
+                ),
           enabledBorder: !widget.textOption.isBorder
               ? InputBorder.none
               : OutlineInputBorder(

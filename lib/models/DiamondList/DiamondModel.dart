@@ -663,7 +663,7 @@ class DiamondModel {
 
   num getFinalRate() {
     if (isAddToBid) {
-      return ctPr;
+      return ctPr ?? 0;
     }
     // if (isAddToOffer) {
     //   if (selectedOfferPer != null) {
@@ -704,7 +704,7 @@ class DiamondModel {
     //     (-app.resolve<PrefUtils>().getUserDetails().accountTerm.extraPer);
     // var extractpr = this.ctPr / 100;
 
-    return this.ctPr;
+    return this.ctPr??0;
     // - extractpr;
     // }
   }
@@ -747,7 +747,7 @@ class DiamondModel {
   }
 
   num getFinalAmount() {
-    return crt * getFinalRate();
+    return (crt ?? 0) * getFinalRate();
   }
 
   num getbidAmount() {
@@ -767,15 +767,15 @@ class DiamondModel {
   }
 
   String getAmount() {
-    var amount =
+    /*  var amount =
         (amt.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
-
+*/
     return PriceUtilities.getPrice(getFinalAmount()) + "/Amt" ?? "";
   }
 
   String getPricePerCarat() {
-    var caratPerPrice =
-        (ctPr.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
+    //var caratPerPrice =
+    // (ctPr.toStringAsFixed(2)).replaceAll(RegExp(r"([.]*00)(?!.*\d)"), "");
     // return PriceUtilities.getPrice(getFinalRate()) + "Cts";
     return PriceUtilities.getPrice(getFinalRate()) + "/Cts" ?? "";
   }
