@@ -260,10 +260,10 @@ class DrawerSetting {
           imageColor: appTheme.colorPrimary,
           isSelected: false,
           type: DiamondModuleConstant.MODULE_TYPE_MY_CART));
-    if (app
-        .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_bid)
-        .view)
+    // if (app
+    //     .resolve<PrefUtils>()
+    //     .getModulePermission(ModulePermissionConstant.permission_bid)
+    //     .view)
       drawerList.add(DrawerModel(
         image: bidImage,
         title: R.string.screenTitle.myBid,

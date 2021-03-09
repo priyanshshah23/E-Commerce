@@ -17,3 +17,11 @@ final String eventForShareCaratRangeSelected =
 
 final String eventOfflineDiamond = "offlineDiamond";
 final String eventDiamondRefresh = "diamondRefresh";
+
+final String eventSelectAll = "eventSelectAll";
+final String eventGridView = "eventGridView";
+
+final String eventDiamondMoreClick = "eventDiamondMoreClick";
+final String eventManageBottomMenuClick = "eventManageBottomMenuClick";
+final String eventDiamondDownloadClick = "clickOnDownload";
+final String eventSortClick = "eventSortClick";
