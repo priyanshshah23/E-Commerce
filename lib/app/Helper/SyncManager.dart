@@ -151,21 +151,20 @@ class SyncManager {
     Map<String, dynamic> dict = {};
     dict["isNotReturnTotal"] = true;
     dict["isReturnCountOnly"] = true;
-    if(app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES){
+    if (app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES) {
       dict["filters"] = [req];
-    }else{
+    } else {
       dict["filters"] = req;
     }
-
 
     if (!isNullEmptyOrFalse(searchText)) {
       dict["search"] = searchText;
     }
 
-    if(app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES){
+    if (app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES) {
       NetworkCall<DiamondListResp>()
           .makeCall(
-            () => app
+        () => app
             .resolve<ServiceModule>()
             .networkService()
             .salesDiamondListPaginate(dict),
@@ -180,10 +179,10 @@ class SyncManager {
       }).catchError((onError) {
         print(onError);
       });
-    }else{
+    } else {
       NetworkCall<DiamondListResp>()
           .makeCall(
-            () => app
+        () => app
             .resolve<ServiceModule>()
             .networkService()
             .diamondListPaginate(dict),
@@ -195,10 +194,7 @@ class SyncManager {
       }).catchError((onError) {
         print(onError);
       });
-
     }
-
-
   }
 
   Future callApiForMatchPair(
@@ -757,7 +753,7 @@ class SyncManager {
         carat += item.crt;
         calcAmount += item.amt;
         rapAvg += (item.rap ?? 0) * item.crt;
-        priceCrt += item.ctPr * item.crt;
+        priceCrt += item.ctPr ?? 0 * item.crt ?? 0;
       }
     }
     avgRapAmt = rapAvg / carat;
