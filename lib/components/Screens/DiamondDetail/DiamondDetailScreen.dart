@@ -1093,6 +1093,14 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                                                   ))
                                               : SizedBox(),
                                           // getRowItem("Video", playButton),
+                                          Padding(
+                                              padding: EdgeInsets.only(
+                                                  right: getSize(10)),
+                                              child: getRowItem(
+                                                "Certificate",
+                                                certi,
+                                                3,
+                                              )),
                                           imageFlag_hA
                                               ? Padding(
                                                   padding: EdgeInsets.only(
@@ -1133,11 +1141,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                                                     7,
                                                   ))
                                               : SizedBox(),
-                                          getRowItem(
-                                            "Certificate",
-                                            certi,
-                                            3,
-                                          ),
                                         ],
                                       ),
                                     )

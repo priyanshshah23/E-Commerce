@@ -182,18 +182,17 @@ class CustomDialogs {
         );
   }
 
-  void confirmDialog(
-    BuildContext context, {
-    String title,
-    String desc,
-    String positiveBtnTitle,
-    String negativeBtnTitle,
-    String positiveBtnTitle2,
-    OnClickCallback onClickCallback,
-    bool dismissPopup: true,
-    bool barrierDismissible: false,
-    RichText richText,
-  }) {
+  void confirmDialog(BuildContext context,
+      {String title,
+      String desc,
+      String positiveBtnTitle,
+      String negativeBtnTitle,
+      String positiveBtnTitle2,
+      OnClickCallback onClickCallback,
+      bool dismissPopup: true,
+      bool barrierDismissible: false,
+      RichText richText,
+      Color color}) {
     OpenConfirmationPopUp(context,
         title: title,
         desc: desc,
@@ -203,7 +202,8 @@ class CustomDialogs {
         onClickCallback: onClickCallback,
         dismissPopup: dismissPopup,
         barrierDismissible: barrierDismissible,
-        richText: richText);
+        richText: richText,
+        color: color);
   }
 }
 
@@ -396,18 +396,17 @@ bool isFilePDF(String url) {
   return false;
 }
 
-Future OpenConfirmationPopUp(
-  BuildContext context, {
-  String title,
-  String desc,
-  String positiveBtnTitle,
-  String positiveBtnTitle2,
-  String negativeBtnTitle,
-  OnClickCallback onClickCallback,
-  bool dismissPopup: true,
-  bool barrierDismissible: false,
-  RichText richText,
-}) {
+Future OpenConfirmationPopUp(BuildContext context,
+    {String title,
+    String desc,
+    String positiveBtnTitle,
+    String positiveBtnTitle2,
+    String negativeBtnTitle,
+    OnClickCallback onClickCallback,
+    bool dismissPopup: true,
+    bool barrierDismissible: false,
+    RichText richText,
+    Color color}) {
   Future<bool> _onBackPressed() {
     if (dismissPopup) {
       Navigator.pop(context);
@@ -425,6 +424,7 @@ Future OpenConfirmationPopUp(
             //SystemChrome.setEnabledSystemUIOverlays([]);
 
             return Dialog(
+              backgroundColor: color,
               insetPadding: EdgeInsets.only(
                   left: getSize(Spacing.leftPadding),
                   right: getSize(Spacing.rightPadding)),

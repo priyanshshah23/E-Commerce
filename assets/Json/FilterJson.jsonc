@@ -958,7 +958,14 @@
       "tab": "advance",
       "rightPadding": 0,
       "topPadding": 4,
-      "bottomPadding": 4
+      "bottomPadding": 4,
+      "fromToStyle": {
+        "showUnderline": true,
+        "showBorder": false,
+        "underlineColor": "#E3E3E3",
+        "borderColor": "#E3E3E3",
+        "borderWidth": 1
+      }
     },
   {
     "title": "Total Depth%",
