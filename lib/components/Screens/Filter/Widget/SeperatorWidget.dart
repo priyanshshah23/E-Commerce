@@ -43,10 +43,11 @@ class _SeperatorWidget extends State<SeperatorWidget> {
     return GestureDetector(
       onTap: () => widget.callBack(widget.seperatorModel),
       child: Container(
-        // color: appTheme.blackColor,
+        margin: EdgeInsets.only(top: 20),
         decoration: BoxDecoration(
+            color: appTheme.unSelectedBgColor,
             border: Border.symmetric(
-                horizontal: BorderSide(color: widget.seperatorModel.color))),
+                horizontal: BorderSide(color: appTheme.borderColor))),
         height: getSize(52),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

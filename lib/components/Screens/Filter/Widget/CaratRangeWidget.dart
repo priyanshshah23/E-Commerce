@@ -106,6 +106,7 @@ class _CaratRangeWidgetState extends State<CaratRangeWidget> {
                               title: "",
                               desc: R.string.errorString.fromValueGreateThanTo,
                               positiveBtnTitle: R.string.commonString.ok,
+                              color: appTheme.chipRange,
                             );
                         _minValueController.text = "";
                         setState(() {});
