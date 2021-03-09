@@ -489,7 +489,9 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             ),
             bottomNavigationBar: getBottomTab(),
           ),
-          (app.resolve<PrefUtils>().isDisplayedTour(PrefUtils().keySearchTour) ==
+          (app
+                          .resolve<PrefUtils>()
+                          .isDisplayedTour(PrefUtils().keySearchTour) ==
                       false &&
                   this.moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH)
               ? OverlayScreen(
@@ -1046,18 +1048,19 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         page: PageAnalytics.DIAMOND_SEARCH,
         section: SectionAnalytics.SEARCH,
         action: ActionAnalytics.CLICK);
-    Map<String, dynamic> map =
-        FilterRequest().createRequest(arrList, selectedStatus: selectStatus);
-    if (app.resolve<PrefUtils>().getUserDetails().type ==
-            UserConstant.CUSTOMER &&
-        map.length < 3) {
-      app.resolve<CustomDialogs>().errorDialog(
-            context,
-            "",
-            "Please select any 2 criteria.",
-            btntitle: R.string.commonString.ok,
-          );
-    } else {
+    Map<String, dynamic> map = FilterRequest().createRequest(arrList,
+        selectedStatus: selectStatus,
+        isFromLayout: segmentedControlValue == 3 ? true : false);
+//    if (app.resolve<PrefUtils>().getUserDetails().type ==
+//            UserConstant.CUSTOMER &&
+//        map.length < 3) {
+//      app.resolve<CustomDialogs>().errorDialog(
+//            context,
+//            "",
+//            "Please select any 2 criteria.",
+//            btntitle: R.string.commonString.ok,
+//          );
+//    } else {
       SyncManager.instance.callApiForDiamondList(
         context,
         map,
@@ -1118,7 +1121,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           //print("Error");
         },
       );
-    }
+//    }
   }
 
   callApiForGetFilterIdForSales(int moduleType,

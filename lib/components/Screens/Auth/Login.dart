@@ -65,8 +65,8 @@ class LoginScreenState extends StatefulScreenWidgetState {
     // TODO: implement initState
     super.initState();
     if (kDebugMode) {
-      userNameController.text = "admin@pnshah.com";
-      _passwordController.text = "Admin#01032021";
+      userNameController.text = "abcd";
+      _passwordController.text = "1234";
     }
     getUserNameAndPassword();
     // }
