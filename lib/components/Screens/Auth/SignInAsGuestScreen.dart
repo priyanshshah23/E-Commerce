@@ -417,6 +417,10 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
               setState(() {
                 isMobilevalid = false;
               });
+            } else if (text.length < 7 || text.length > 15) {
+              setState(() {
+                isMobilevalid = false;
+              });
             } else {
               setState(() {
                 isMobilevalid = true;
@@ -426,6 +430,9 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
         },
         validation: (text) {
           if (text.isEmpty) {
+            isMobilevalid = false;
+            return R.string.errorString.enterPhone;
+          } else if (text.length < 7 || text.length > 15) {
             isMobilevalid = false;
             return R.string.errorString.enterPhone;
           }

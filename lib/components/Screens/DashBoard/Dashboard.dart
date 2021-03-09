@@ -40,6 +40,9 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class Dashboard extends StatefulScreenWidget {
   static const route = "Dashboard";
@@ -72,6 +75,7 @@ class Dashboard extends StatefulScreenWidget {
 class _DashboardState extends StatefulScreenWidgetState {
   int moduleType;
   bool isFromDrawer;
+  bool isLoading = true;
   DiamondConfig diamondConfig;
   DashboardConfig dashboardConfig;
   String emailURL;
@@ -120,7 +124,8 @@ class _DashboardState extends StatefulScreenWidgetState {
     dict["account"] = true;
     dict["featuredStone"] = true;
     dict["newArrival"] = true;
-
+    dict["banners"] = true;
+    print(dict);
     NetworkCall<DashboardResp>()
         .makeCall(
             () => app.resolve<ServiceModule>().networkService().dashboard(dict),
@@ -128,8 +133,6 @@ class _DashboardState extends StatefulScreenWidgetState {
             isProgress: false)
         // !isRefress && !isLoading
         .then((resp) async {
-      await app.resolve<PrefUtils>().saveDashboardDetails(resp.data);
-
       setState(() {
         this.dashboardModel = resp.data;
 
@@ -138,6 +141,10 @@ class _DashboardState extends StatefulScreenWidgetState {
         }
         setTopCountData();
       });
+      await app
+          .resolve<PrefUtils>()
+          .saveDashboardDetails(resp.data)
+          .then((value) => {});
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
@@ -230,6 +237,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                                 element.image,
                                 height: getSize(24),
                                 width: getSize(24),
+                                color: appTheme.whiteColor,
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
@@ -278,6 +286,8 @@ class _DashboardState extends StatefulScreenWidgetState {
 
   @override
   Widget build(BuildContext context) {
+    //print(this.dashboardModel.banners.length);
+    //getHomeSliderImage(HOME_CENTRE);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -289,12 +299,13 @@ class _DashboardState extends StatefulScreenWidgetState {
             appBar: getAppBar(
               context,
               diamondConfig.getScreenTitle(),
-              bgColor: appTheme.whiteColor,
+              bgColor: appTheme.blackColor,
               leadingButton: isFromDrawer
-                  ? getDrawerButton(context, true)
+                  ? getDrawerButton(context, false)
                   : getBackButton(context),
               centerTitle: false,
               actionItems: getToolbarItem(),
+              isWhite: true,
             ),
             // bottomNavigationBar: getBottomTab(),
             body: SafeArea(
@@ -302,7 +313,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                 padding: EdgeInsets.only(
                   // left: getSize(20),
                   // right: getSize(20),
-                  top: getSize(8),
+                  top: getSize(0),
                 ),
                 child: SmartRefresher(
                   header: MaterialClassicHeader(
@@ -319,12 +330,16 @@ class _DashboardState extends StatefulScreenWidgetState {
                       ? ListView(
                           physics: ClampingScrollPhysics(),
                           children: <Widget>[
-                            if (dashboardConfig.arrTopSection.length > 0)
-                              getTopSection(),
-                            getFeaturedSection(),
-                            getStoneOfDaySection(),
+                            //if (dashboardConfig.arrTopSection.length > 0)
+                            // getTopSection(),
+                            getSarchTextField(),
+                            //getFeaturedSection(),
+                            //getStoneOfDaySection(),
+                            buildTopSection(HOME_TOP_CENTRE),
+                            getHomeSliderImage(HOME_CENTRE),
+                            buildTopSection(HOME_BOTTOM_CENTRE),
                             getSavedSearchSection(),
-                            getRecentSection(),
+                            //getRecentSection(),
                             getSalesSection(),
                             SizedBox(
                               height: getSize(20),
@@ -382,112 +397,116 @@ class _DashboardState extends StatefulScreenWidgetState {
         .view)) {
       return SizedBox();
     }
-    return Padding(
-      padding: EdgeInsets.only(
-        bottom: getSize(16),
-      ),
-      child: Row(
-        key: checkTourIsShown() ? searchKey : null,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Hero(
-              tag: 'searchTextField',
-              child: Material(
-                color: appTheme.whiteColor,
-                child: Container(
-                  height: getSize(40),
-                  decoration: BoxDecoration(
-                    color: appTheme.whiteColor,
-                    borderRadius: BorderRadius.circular(getSize(5)),
-                    border: Border.all(
-                        color: appTheme.colorPrimary, width: getSize(1)),
-                  ),
-                  child: TextField(
-                    textAlignVertical: TextAlignVertical(y: 1.0),
-                    textInputAction: TextInputAction.done,
-                    focusNode: _focusSearch,
-                    readOnly: true,
-                    autofocus: false,
-                    controller: _searchController,
-                    obscureText: false,
-                    style: appTheme.black16TextStyle,
-                    keyboardType: TextInputType.text,
-                    textCapitalization: TextCapitalization.none,
-                    cursorColor: appTheme.colorPrimary,
-                    inputFormatters: [
-                      WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
-                      BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
-                    ],
-                    decoration: InputDecoration(
-                      fillColor: fromHex("#FFEFEF"),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(getSize(5))),
-                        borderSide: BorderSide(
-                            color: appTheme.dividerColor, width: getSize(1)),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(getSize(5))),
-                        borderSide: BorderSide(
-                            color: appTheme.dividerColor, width: getSize(1)),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(getSize(5))),
-                        borderSide: BorderSide(
-                            color: appTheme.dividerColor, width: getSize(1)),
-                      ),
-
-                      hintStyle: appTheme.grey16HintTextStyle.copyWith(
-                        color: appTheme.placeholderColor,
-                      ),
-                      hintText: "Round 1.0-1.19 D-H-VS",
-                      labelStyle: TextStyle(
-                        color: appTheme.textColor,
-                        fontSize: getFontSize(16),
-                      ),
-                      // suffix: widget.textOption.postfixWidOnFocus,
-                      suffixIcon: Padding(
-                          padding: EdgeInsets.all(getSize(10)),
-                          child: Image.asset(search)),
+    return Container(
+      color: appTheme.blackColor,
+      child: Padding(
+        padding: EdgeInsets.all(
+          getSize(16),
+        ),
+        child: Row(
+          key: checkTourIsShown() ? searchKey : null,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Hero(
+                tag: 'searchTextField',
+                child: Material(
+                  color: appTheme.blackColor,
+                  child: Container(
+                    height: getSize(40),
+                    decoration: BoxDecoration(
+                      color: appTheme.blackColor,
+                      borderRadius: BorderRadius.circular(getSize(5)),
+                      border: Border.all(
+                          color: appTheme.colorPrimary, width: getSize(1)),
                     ),
-                    onChanged: (String text) {
-                      //
-                    },
-                    onEditingComplete: () {
-                      //
-                      _focusSearch.unfocus();
-                    },
-                    onTap: () {
-                      Map<String, dynamic> dict = new HashMap();
-                      dict["isFromSearch"] = false;
-                      NavigationUtilities.pushRoute(SearchScreen.route,
-                          args: dict);
-                    },
+                    child: TextField(
+                      textAlignVertical: TextAlignVertical(y: 1.0),
+                      textInputAction: TextInputAction.done,
+                      focusNode: _focusSearch,
+                      readOnly: true,
+                      autofocus: false,
+                      controller: _searchController,
+                      obscureText: false,
+                      style: appTheme.black16TextStyle,
+                      keyboardType: TextInputType.text,
+                      textCapitalization: TextCapitalization.none,
+                      cursorColor: appTheme.colorPrimary,
+                      inputFormatters: [
+                        WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+                        BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+                      ],
+                      decoration: InputDecoration(
+                        fillColor: fromHex("#FFEFEF"),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(getSize(5))),
+                          borderSide: BorderSide(
+                              color: appTheme.dividerColor, width: getSize(1)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(getSize(5))),
+                          borderSide: BorderSide(
+                              color: appTheme.dividerColor, width: getSize(1)),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(getSize(5))),
+                          borderSide: BorderSide(
+                              color: appTheme.dividerColor, width: getSize(1)),
+                        ),
+
+                        hintStyle: appTheme.grey16HintTextStyle.copyWith(
+                          color: appTheme.placeholderColor,
+                        ),
+                        hintText: "Round 1.0-1.19 D-H-VS",
+                        labelStyle: TextStyle(
+                          color: appTheme.textColor,
+                          fontSize: getFontSize(16),
+                        ),
+                        // suffix: widget.textOption.postfixWidOnFocus,
+                        suffixIcon: Padding(
+                            padding: EdgeInsets.all(getSize(10)),
+                            child: Image.asset(search,
+                                color: appTheme.whiteColor)),
+                      ),
+                      onChanged: (String text) {
+                        //
+                      },
+                      onEditingComplete: () {
+                        //
+                        _focusSearch.unfocus();
+                      },
+                      onTap: () {
+                        Map<String, dynamic> dict = new HashMap();
+                        dict["isFromSearch"] = false;
+                        NavigationUtilities.pushRoute(SearchScreen.route,
+                            args: dict);
+                      },
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          InkWell(
-            onTap: () {
-              NavigationUtilities.pushRoute(VoiceSearch.route);
-            },
-            child: Padding(
-              padding: EdgeInsets.only(
-                left: getSize(Spacing.leftPadding),
-              ),
-              child: Image.asset(
-                microphone,
-                alignment: Alignment.centerRight,
-                width: getSize(26),
-                height: getSize(26),
-              ),
-            ),
-          )
-        ],
+            // InkWell(
+            //   onTap: () {
+            //     NavigationUtilities.pushRoute(VoiceSearch.route);
+            //   },
+            //   child: Padding(
+            //     padding: EdgeInsets.only(
+            //       left: getSize(Spacing.leftPadding),
+            //     ),
+            //     child: Image.asset(
+            //       microphone,
+            //       alignment: Alignment.centerRight,
+            //       width: getSize(26),
+            //       height: getSize(26),
+            //     ),
+            //   ),
+            // )
+          ],
+        ),
       ),
     );
   }
@@ -501,36 +520,36 @@ class _DashboardState extends StatefulScreenWidgetState {
       child: Column(
         children: [
           getSarchTextField(),
-          Material(
-            elevation: 10,
-            shadowColor: appTheme.shadowColorWithoutOpacity.withOpacity(0.3),
-            borderRadius: BorderRadius.circular(getSize(5)),
-            child: Container(
-              // height: getSize(200),
-              decoration: BoxDecoration(
-                color: appTheme.whiteColor,
-                borderRadius: BorderRadius.circular(getSize(5)),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(
-                  getSize(10),
-                ),
-                child: GridView.count(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  crossAxisCount: 2,
-                  childAspectRatio: 2.0,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  children: List.generate(dashboardConfig.arrTopSection.length,
-                      (index) {
-                    return getTopSectionGridItem(
-                        dashboardConfig.arrTopSection[index]);
-                  }),
-                ),
-              ),
-            ),
-          ),
+          // Material(
+          //   elevation: 10,
+          //   shadowColor: appTheme.shadowColorWithoutOpacity.withOpacity(0.3),
+          //   borderRadius: BorderRadius.circular(getSize(5)),
+          //   child: Container(
+          //     // height: getSize(200),
+          //     decoration: BoxDecoration(
+          //       color: appTheme.whiteColor,
+          //       borderRadius: BorderRadius.circular(getSize(5)),
+          //     ),
+          //     child: Padding(
+          //       padding: EdgeInsets.all(
+          //         getSize(10),
+          //       ),
+          //       child: GridView.count(
+          //         physics: NeverScrollableScrollPhysics(),
+          //         shrinkWrap: true,
+          //         crossAxisCount: 2,
+          //         childAspectRatio: 2.0,
+          //         mainAxisSpacing: 10,
+          //         crossAxisSpacing: 10,
+          //         children: List.generate(dashboardConfig.arrTopSection.length,
+          //             (index) {
+          //           return getTopSectionGridItem(
+          //               dashboardConfig.arrTopSection[index]);
+          //         }),
+          //       ),
+          //     ),
+          //   ),
+          // ),
           SizedBox(
             height: getSize(20),
           ),
@@ -1057,6 +1076,18 @@ class _DashboardState extends StatefulScreenWidgetState {
       ),
     );
   }
+
+  // getBannerSection() {
+  //   if (isNullEmptyOrFalse(this.dashboardModel)) {
+  //     return SizedBox();
+  //   }
+  //   if (isNullEmptyOrFalse(this.dashboardModel.banners)) {
+  //     return SizedBox();
+  //   }
+  //   return Container(
+  //     child: buildtopSection(this.dashboardModel.banners),
+  //   );
+  // }
 
   getSavedSearchSection() {
     if (isNullEmptyOrFalse(this.dashboardModel)) {
@@ -1980,5 +2011,210 @@ class _DashboardState extends StatefulScreenWidgetState {
         .then((value) {
       setState(() {});
     });
+  }
+
+  buildTopSection(String type) {
+    bool isVideo = this.dashboardModel.getBannerDetails(type).isVideo;
+    return Container(
+      height: getSize(450),
+      child: Stack(
+        children: [
+          Positioned(
+            top: getSize(0),
+            left: getSize(0),
+            right: getSize(0),
+            child: Card(
+              color: Colors.red,
+              margin: EdgeInsets.all(
+                getSize(20),
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                  getSize(10),
+                ),
+              ),
+              elevation: 10,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(
+                  getSize(10),
+                ),
+                child: isVideo
+                    ? openWebView(type)
+                    : getImageView(getHomeCenterImage(type),
+                        fit: BoxFit.cover,
+                        placeHolderImage: diamond,
+                        height: getSize(243),
+                        width: MathUtilities.screenWidth(context)),
+              ),
+            ),
+          ),
+          Positioned(
+            top: getSize(200),
+            left: getSize(42),
+            right: getSize(42),
+            child: Card(
+              elevation: 10,
+              child: Container(
+                padding: EdgeInsets.all(getSize(10)),
+                width: getSize(311),
+                height: getSize(207),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    getSize(10),
+                  ),
+                  color: Colors.white,
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Column(children: [
+                          getSideImages(type == HOME_TOP_CENTRE
+                              ? HOME_TOP_LEFT_1
+                              : HOME_BOTTOM_LEFT_1),
+                          getSideImages(type == HOME_TOP_CENTRE
+                              ? HOME_TOP_RIGHT_1
+                              : HOME_BOTTOM_RIGHT_1),
+                        ]),
+                        Column(children: [
+                          getSideImages(type == HOME_TOP_CENTRE
+                              ? HOME_TOP_LEFT_2
+                              : HOME_BOTTOM_LEFT_2),
+                          getSideImages(type == HOME_TOP_CENTRE
+                              ? HOME_TOP_RIGHT_2
+                              : HOME_BOTTOM_RIGHT_2),
+                        ]),
+                        Column(children: [
+                          getSideImages(type == HOME_TOP_CENTRE
+                              ? HOME_TOP_LEFT_3
+                              : HOME_BOTTOM_LEFT_3),
+                          getSideImages(type == HOME_TOP_CENTRE
+                              ? HOME_TOP_RIGHT_3
+                              : HOME_BOTTOM_RIGHT_3),
+                        ]),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  getHomeCenterImage(String type) {
+
+//Removes everything after first '?'
+    //List<String> result = s.split("?");
+    //print(s);
+    //print(this.dashboardModel.getBannerDetails(type).url);
+    return this.dashboardModel.getBannerDetails(type).getDisplayImage();
+    //for(int i=0;i<banners.length;i++)
+  }
+
+  getHomeSliderImage(String type) {
+    List<String> images =
+        this.dashboardModel.getBannerDetails(type).getSliderImage();
+    return Container(
+      height: getSize(200),
+      child: CarouselSlider(
+        options: CarouselOptions(
+          height: getSize(180),
+          enlargeCenterPage: true,
+          autoPlay: true,
+          aspectRatio: 16 / 9,
+          autoPlayCurve: Curves.fastOutSlowIn,
+          enableInfiniteScroll: true,
+          autoPlayAnimationDuration: Duration(milliseconds: 800),
+          viewportFraction: 0.8,
+        ),
+        items: images
+            .map((item) => Container(
+                  margin: EdgeInsets.all(
+                    getSize(6.0),
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      getSize(8.0),
+                    ),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(
+                      getSize(10),
+                    ),
+                    child: getImageView(item,
+                        fit: BoxFit.cover,
+                        height: getSize(
+                          getSize(243),
+                        ),
+                        width: MathUtilities.screenWidth(context)),
+                  ),
+                ))
+            .toList(),
+      ),
+    );
+  }
+
+  openDiamondList(String id) {
+    Map<String, dynamic> dict = new HashMap();
+    dict["filterId"] = id;
+    dict[ArgumentConstant.ModuleType] =
+        DiamondModuleConstant.MODULE_TYPE_SEARCH;
+    NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+  }
+
+  getSideImages(String type) {
+    Banners banner = this.dashboardModel.getBannerDetails(type);
+    //banner.url;
+    return InkWell(
+      onTap: () {
+        List<String> result = banner.url.split("?");
+        //print(result[1]);
+        if (result != null && result.length > 1) {
+          print(result[1]);
+          openDiamondList(result[1]);
+        }
+      },
+      child: Container(
+        margin: EdgeInsets.all(getSize(10)),
+        height: getSize(72),
+        width: getSize(80),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: getImageView(banner.getDisplayImage(),
+              fit: BoxFit.cover,
+              placeHolderImage: diamond,
+              height: getSize(243),
+              width: MathUtilities.screenWidth(context)),
+        ),
+      ),
+    );
+  }
+
+  Future<WebView> openWebView(String type) async{
+    return WebView(
+      initialUrl: this.dashboardModel.getBannerDetails(type).getDisplayImage(),
+        onPageStarted: (url) {
+          // app.resolve<CustomDialogs>().showProgressDialog(context, "");
+          setState(() {
+            isLoading = true;
+          });
+        },
+        onPageFinished: (finish) {
+          // app.resolve<CustomDialogs>().hideProgressDialog();
+          setState(() {
+            isLoading = false;
+          });
+        },
+        onWebResourceError: (error) {
+          // print(error);
+          setState(() {
+            isLoading = true;
+          });
+        },
+        javascriptMode: JavascriptMode.unrestricted);
+    
   }
 }

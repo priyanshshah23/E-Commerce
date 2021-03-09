@@ -42,7 +42,7 @@ const successStatusCode = 200;
 const addedSuccesStatusCode = 201;
 const notFoundStatusCode = 404;
 
-const signupURl = "http://pndevelop.democ.in/device/signup";
+const signupURl = "https://beta.arjivexports.com/signup";
 const termConditionUrl = "https://loremipsum.io/";
 const privacyPolicyUrl = "https://loremipsum.io/";
 const aboutUsUrl = "https://loremipsum.io/";
@@ -52,6 +52,22 @@ const eventBusSocket = "EventBusSocket";
 const eventBusLogout = "EventBusLogout";
 const eventBusDropDown = "EventBusDropDown";
 const eventBusRefreshList = "DiamondListRefresh";
+
+const HOME_TOP_LEFT_1 = "9";
+const HOME_TOP_LEFT_2 = "10";
+const HOME_TOP_LEFT_3 = "11";
+const HOME_TOP_RIGHT_1 = "12";
+const HOME_TOP_RIGHT_2 = "13";
+const HOME_TOP_RIGHT_3 = "14";
+const HOME_TOP_CENTRE = "15";
+const HOME_BOTTOM_LEFT_1 = "16";
+const HOME_BOTTOM_LEFT_2 = "17";
+const HOME_BOTTOM_LEFT_3 = "18";
+const HOME_BOTTOM_RIGHT_1 = "19";
+const HOME_BOTTOM_RIGHT_2 = "20";
+const HOME_BOTTOM_RIGHT_3 = "21";
+const HOME_BOTTOM_CENTRE = "22";
+const HOME_CENTRE = "23";
 
 const imagePath = "assest/icon.png";
 const String googleDocViewURL =
@@ -217,6 +233,21 @@ class VirtualTypesString {
   static const String phoneCall = "Phone Call";
   static const String webConference = "Web Conference";
   static const String inPerson = "In Person";
+}
+
+class MyBidConstant {
+  static const String LiveBid = 'LiveBid';
+  static const String BidHistory = 'BidHistory';
+}
+
+class MyBidRangeConstant {
+  static const String All = 'All';
+  static const String Today = 'Today';
+  static const String Yesterday = 'Yesterday';
+  static const String Last7Days = 'Last7Days';
+  static const String ThisMonth = 'This Month';
+  static const String ThisYear = 'This Year';
+  static const String CustomRange = 'Custom Range';
 }
 
 class InvoiceTypesString {

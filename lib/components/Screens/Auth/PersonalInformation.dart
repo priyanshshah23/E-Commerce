@@ -23,6 +23,7 @@ import 'package:diamnow/models/Address/CountryListModel.dart';
 import 'package:diamnow/models/Address/StateListModel.dart';
 import 'package:diamnow/models/Auth/PersonalInformationModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
+import 'package:diamnow/models/Master/Master.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,8 +35,7 @@ class PersonalInformation extends StatefulWidget {
   _PersonalInformationState createState() => _PersonalInformationState();
 }
 
-class _PersonalInformationState extends State<PersonalInformation>
-    with AutomaticKeepAliveClientMixin<PersonalInformation> {
+class _PersonalInformationState extends State<PersonalInformation> {
   final _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
 
@@ -44,23 +44,16 @@ class _PersonalInformationState extends State<PersonalInformation>
   final TextEditingController _middleNameController = TextEditingController();
   final TextEditingController _addressLineOneController =
       TextEditingController();
-  final TextEditingController _addressLineTwoController =
-      TextEditingController();
-  final TextEditingController _addressLineThreeController =
-      TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
   final TextEditingController _skypeController = TextEditingController();
   final TextEditingController _whatsAppMobileController =
       TextEditingController();
   final TextEditingController companyController = TextEditingController();
-  final TextEditingController _pinCodeController = TextEditingController();
   final TextEditingController _countryController = TextEditingController();
   final TextEditingController _stateController = TextEditingController();
   final TextEditingController _cityController = TextEditingController();
-
-  // final TextEditingController _skypeController = TextEditingController();
-
+  final TextEditingController _documentController = TextEditingController();
   bool isProfileImageUpload = false;
   File profileImage;
   String image;
@@ -68,22 +61,24 @@ class _PersonalInformationState extends State<PersonalInformation>
       CountryPickerUtils.getCountryByIsoCode("US");
   Country selectedDialogCountryForWhatsapp =
       CountryPickerUtils.getCountryByIsoCode("US");
+  final TextEditingController _pinCodeController = TextEditingController();
 
   var _focusFirstName = FocusNode();
   var _focusSkype = FocusNode();
   var _focusLastName = FocusNode();
   var _focusMiddleName = FocusNode();
   var _focusAddressLineOne = FocusNode();
-  var _focusAddressLineTwo = FocusNode();
-  var _focusAddressLineThree = FocusNode();
   var _focusEmail = FocusNode();
   var _focusPinCode = FocusNode();
   var _focusCountry = FocusNode();
   var _focusState = FocusNode();
   var _focusCity = FocusNode();
   var _focusMobile = FocusNode();
+  var _focusDocument = FocusNode();
   // var _focusSkype = FocusNode();
   var _focusWhatsAppMobile = FocusNode();
+  String pickeFile = "";
+  bool imageUpload = false;
 
   List<SelectionPopupModel> cityList = List<SelectionPopupModel>();
   // SelectionPopupModel selectedCityItem;
@@ -91,11 +86,13 @@ class _PersonalInformationState extends State<PersonalInformation>
   // SelectionPopupModel selectedCountryItem;
   List<SelectionPopupModel> stateList = List<SelectionPopupModel>();
   // SelectionPopupModel selectedStateItem;
+  List<SelectionPopupModel> arrPhotos = [];
 
   PersonalInformationViewResp userAccount;
   var selectedCityItem = -1;
   var selectedCountryItem = -1;
   var selectedStateItem = -1;
+  var selectedDocument = -1;
 
   CompanyInformationState companyInformationState = CompanyInformationState();
   //Boolean for readonly while edit profile.
@@ -106,12 +103,24 @@ class _PersonalInformationState extends State<PersonalInformation>
     super.initState();
     // _callApiForCountryList();
     getPersonalInformation();
+    getMasters();
   }
 
   @override
   void dispose() {
     companyInformationState.pinCodeController.dispose();
     super.dispose();
+  }
+
+  getMasters() async {
+    Master.getSubMaster(MasterCode.docTypePersonal).then((arrMaster) {
+      arrMaster.forEach((element) {
+        arrPhotos.add(SelectionPopupModel(
+          element.sId,
+          element.name,
+        ));
+      });
+    });
   }
 
   @override
@@ -267,6 +276,10 @@ class _PersonalInformationState extends State<PersonalInformation>
                   SizedBox(
                     height: getSize(20),
                   ),
+                  getMiddleNameTextField(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
                   getLastNameTextField(),
                   SizedBox(
                     height: getSize(20),
@@ -293,7 +306,8 @@ class _PersonalInformationState extends State<PersonalInformation>
                     height: getSize(20),
                   ),
                   companyInformationState.getPinCodeTextField(
-                      zipCodeTitle: "ZipCode *", rd: this.readOnly),
+                      zipCodeTitle: "ZipCode *",
+                      rd: this.readOnly),
                   SizedBox(
                     height: getSize(20),
                   ),
@@ -306,6 +320,14 @@ class _PersonalInformationState extends State<PersonalInformation>
                     height: getSize(20),
                   ),
                   getSkypeTextField(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  getDocumentDropDown(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  getDocumentView(),
                 ],
               ),
             ),
@@ -536,7 +558,6 @@ class _PersonalInformationState extends State<PersonalInformation>
     }).catchError(
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
@@ -687,7 +708,6 @@ class _PersonalInformationState extends State<PersonalInformation>
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(
           context,
-       
           desc: onError.message,
           positiveBtnTitle: R.string.commonString.btnTryAgain,
           onClickCallback: (buttonType) {
@@ -761,7 +781,6 @@ class _PersonalInformationState extends State<PersonalInformation>
     }).catchError(
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
@@ -824,8 +843,108 @@ class _PersonalInformationState extends State<PersonalInformation>
       inputAction: TextInputAction.next,
       onNextPress: () {
         _focusMobile.unfocus();
-        fieldFocusChange(context, _focusSkype);
+        fieldFocusChange(context, _focusWhatsAppMobile);
       },
+    );
+  }
+
+  getDocumentDropDown() {
+    return InkWell(
+      onTap: () {
+        if (!readOnly) {
+          if (arrPhotos == null || arrPhotos.length == 0) {
+            getMasters();
+          } else {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Dialog(
+                  insetPadding: EdgeInsets.symmetric(
+                      horizontal: getSize(20), vertical: getSize(20)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(getSize(25)),
+                  ),
+                  child: SelectionDialogue(
+                    title: "Document Type",
+                    selectionOptions: arrPhotos,
+                    isMultiSelectionEnable: false,
+                    isSearchEnable: false,
+                    applyFilterCallBack: (
+                        {SelectionPopupModel selectedItem,
+                        List<SelectionPopupModel> multiSelectedItem}) {
+                      arrPhotos.forEach((element) {
+                        if (element == selectedItem) {
+                          selectedDocument = arrPhotos.indexOf(element);
+                          _documentController.text = element.title;
+                        }
+                      });
+                    },
+                  ),
+                );
+              },
+            );
+          }
+        }
+      },
+      child: CommonTextfield(
+          focusNode: _focusDocument,
+          readOnly: this.readOnly ? true : false,
+          enable: false,
+          textOption: TextFieldOption(
+              hintText: "Select Document",
+              maxLine: 1,
+              prefixWid: getCommonIconWidget(
+                  imageName: documentPlaceHolder,
+                  imageType: IconSizeType.small),
+              type: TextFieldType.DropDown,
+              keyboardType: TextInputType.text,
+              inputController: _documentController,
+              isSecureTextField: false),
+          textCallback: (text) {
+//                  setState(() {
+//                    checkValidation();
+//                  });
+          },
+          inputAction: TextInputAction.done,
+          onNextPress: () {
+            FocusScope.of(context).unfocus();
+          }),
+    );
+  }
+
+  getDocumentView() {
+    return InkWell(
+      onTap: () {
+        if (!readOnly) {
+          pickPDFfile(context, pickeFile, (pickedFile, isUploaded) {
+            pickeFile = pickedFile;
+            setState(() {
+              imageUpload = isUploaded;
+            });
+            print("-----file------$pickedFile");
+            print("-----imageUpload------$imageUpload");
+          });
+        }
+      },
+      child: Container(
+        height: getSize(130),
+        width: getSize(230),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(
+            getSize(30),
+          ),
+          border: Border.all(
+            color: appTheme.textGreyColor.withOpacity(0.3),
+          ),
+        ),
+        child: readOnly
+            ? SizedBox()
+            : Icon(
+                Icons.add,
+                size: getSize(40),
+                color: appTheme.textGreyColor.withOpacity(0.3),
+              ),
+      ),
     );
   }
 
@@ -910,7 +1029,7 @@ class _PersonalInformationState extends State<PersonalInformation>
       inputAction: TextInputAction.next,
       onNextPress: () {
         _focusWhatsAppMobile.unfocus();
-        fieldFocusChange(context, _focusMobile);
+        fieldFocusChange(context, _focusSkype);
       },
     );
   }
@@ -1042,6 +1161,46 @@ class _PersonalInformationState extends State<PersonalInformation>
     );
   }
 
+  getMiddleNameTextField() {
+    return CommonTextfield(
+      focusNode: _focusMiddleName,
+      readOnly: this.readOnly ? true : false,
+      textOption: TextFieldOption(
+        hintText: R.string.authStrings.middleName,
+        maxLine: 1,
+        prefixWid: getCommonIconWidget(
+            imageName: user,
+            imageType: IconSizeType.small,
+            color: Colors.black),
+        fillColor: fromHex("#FFEFEF"),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(11)),
+          borderSide: BorderSide(width: 1, color: Colors.red),
+        ),
+        inputController: _middleNameController,
+        formatter: [
+          //WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+          BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+        ],
+        //isSecureTextField: false
+      ),
+      textCallback: (text) {},
+      validation: (text) {
+        if (text.trim().isEmpty) {
+          return R.string.errorString.enterMiddleName;
+        } else {
+          return null;
+        }
+        // }
+      },
+      inputAction: TextInputAction.next,
+      onNextPress: () {
+        _focusMiddleName.unfocus();
+        fieldFocusChange(context, _focusLastName);
+      },
+    );
+  }
+
   getLastNameTextField() {
     return CommonTextfield(
       focusNode: _focusLastName,
@@ -1117,7 +1276,7 @@ class _PersonalInformationState extends State<PersonalInformation>
       inputAction: TextInputAction.next,
       onNextPress: () {
         _focusAddressLineOne.unfocus();
-        fieldFocusChange(context, _focusAddressLineTwo);
+        fieldFocusChange(context, _focusEmail);
       },
     );
   }
@@ -1149,6 +1308,7 @@ class _PersonalInformationState extends State<PersonalInformation>
     req.id = app.resolve<PrefUtils>().getUserDetails().id;
     req.address = _addressLineOneController.text.trim();
     req.firstName = _firstNameController.text.trim();
+    req.middleName = _middleNameController.text.trim();
     req.lastName = _lastNameController.text.trim();
     req.mobile = _mobileController.text;
     req.countryCode = selectedDialogCountryForMobile.phoneCode;
@@ -1185,7 +1345,6 @@ class _PersonalInformationState extends State<PersonalInformation>
             context,
             isProgress: true)
         .then((resp) async {
-      readOnly = true;
       setState(() {});
       if (resp.data.accountTerm == null) {
         var oldAccTerm = app.resolve<PrefUtils>().getUserDetails().accountTerm;
@@ -1207,7 +1366,6 @@ class _PersonalInformationState extends State<PersonalInformation>
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-           
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.btnTryAgain,
           );
@@ -1227,6 +1385,7 @@ class _PersonalInformationState extends State<PersonalInformation>
       userAccount = resp;
       _firstNameController.text = resp.data.firstName;
       _lastNameController.text = resp.data.lastName;
+      _middleNameController.text = resp.data.middleName;
       _addressLineOneController.text = resp.data.address;
       _mobileController.text = resp.data.mobile;
       selectedDialogCountryForMobile =
@@ -1249,13 +1408,9 @@ class _PersonalInformationState extends State<PersonalInformation>
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-           
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.btnTryAgain,
           );
     });
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

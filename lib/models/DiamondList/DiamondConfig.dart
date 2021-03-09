@@ -27,6 +27,7 @@ import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/OfflineDownloadPopup.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/DownLoadAndShareDialogue.dart';
+import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
 import 'package:diamnow/components/Screens/SalesPerson/BuyNowScreen.dart';
 import 'package:diamnow/components/Screens/SalesPerson/HoldStoneScreen.dart';
 import 'package:diamnow/components/Screens/SalesPerson/MemoStoneScreen.dart';
@@ -200,6 +201,8 @@ class DiamondConfig {
         return R.string.screenTitle.finalCalculation;
       case DiamondTrackConstant.TRACK_TYPE_OFFICE:
         return R.string.screenTitle.bookOffice;
+      case DiamondTrackConstant.TRACK_TYPE_COMMENT:
+        return R.string.screenTitle.addComment;
       default:
         return R.string.screenTitle.addToWatchList;
     }
@@ -209,6 +212,7 @@ class DiamondConfig {
       int moduleType, Map<String, dynamic> dict) {
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
+      case DiamondModuleConstant.MODULE_TYPE_LAYOUT:
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
@@ -460,6 +464,7 @@ class DiamondConfig {
         actionDownload(context, list, isForShare: true);
 
         break;
+
       case ActionMenuConstant.ACTION_TYPE_PLACE_ORDER:
         break;
       case ActionMenuConstant.ACTION_TYPE_COMPARE:
@@ -473,8 +478,10 @@ class DiamondConfig {
           return;
         }
         var dict = Map<String, dynamic>();
+        print("-----------list-------${list.length}");
+        print("-----------moduleType-------${moduleType}");
         dict[ArgumentConstant.DiamondList] = list;
-        dict[ArgumentConstant.ModuleType] = moduleType;
+        dict[ArgumentConstant.ModuleType] = DiamondModuleConstant.MODULE_TYPE_SEARCH;
         // NavigationUtilities.pushRoute(DiamondCompareScreen.route, args: dict);
         bool isBack = await Navigator.of(context).push(MaterialPageRoute(
           settings: RouteSettings(name: DiamondCompareScreen.route),
@@ -499,6 +506,22 @@ class DiamondConfig {
 
     // openDiamondActionAcreen(
     //     context, DiamondTrackConstant.TRACK_TYPE_CART, selectedList);
+  }
+
+  actionUpdateNote(BuildContext context, List<DiamondModel> list) {
+    // callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,
+    //     isPop: false, title: R.string.screenTitle.addedInCart);
+    List<DiamondModel> selectedList = [];
+    DiamondModel model;
+    list.forEach((element) {
+      model = DiamondModel.fromJson(element.toJson());
+      model.isNoteEditable = true;
+      model.isNotes = false;
+      selectedList.add(model);
+    });
+
+    openDiamondActionAcreen(
+        context, DiamondTrackConstant.TRACK_TYPE_UPDATE_COMMENT, selectedList);
   }
 
   actionForFinalCalculation(BuildContext context, List<DiamondModel> list) {
@@ -622,13 +645,24 @@ class DiamondConfig {
   }
 
   actionComment(BuildContext context, List<DiamondModel> list) {
-    showNotesDialog(context, (manageClick) {
-      if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
-        callApiFoCreateTrack(
-            context, list, DiamondTrackConstant.TRACK_TYPE_COMMENT,
-            isPop: true, remark: manageClick.remark);
-      }
+    // showNotesDialog(context, (manageClick) {
+    //   if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
+    //     callApiFoCreateTrack(
+    //         context, list, DiamondTrackConstant.TRACK_TYPE_COMMENT,
+    //         isPop: true, remark: manageClick.remark);
+    //   }
+    // });
+
+    List<DiamondModel> selectedList = [];
+    DiamondModel model;
+    list.forEach((element) {
+      model = DiamondModel.fromJson(element.toJson());
+      model.isNoteEditable = true;
+      model.isNotes = true;
+      selectedList.add(model);
     });
+    openDiamondActionAcreen(
+        context, DiamondTrackConstant.TRACK_TYPE_COMMENT, selectedList);
   }
 
   actionOffer(BuildContext context, List<DiamondModel> list) {
@@ -688,6 +722,20 @@ class DiamondConfig {
           Navigator.pop(context, true);
         }, isPop: true, remark: remark, companyName: companyName, date: date);
         break;
+      case DiamondTrackConstant.TRACK_TYPE_UPDATE_COMMENT:
+        print('Update Comment api');
+        callApiFoCreateTrack(
+            context, list, DiamondTrackConstant.TRACK_TYPE_UPDATE_COMMENT,
+            isPop: true);
+        break;
+
+      case DiamondTrackConstant.TRACK_TYPE_COMMENT:
+        print('Add Note api');
+        callApiFoCreateTrack(
+            context, list, DiamondTrackConstant.TRACK_TYPE_COMMENT,
+            isPop: true);
+
+        break;
     }
   }
 
@@ -730,8 +778,9 @@ class DiamondConfig {
       selectedList.add(model);
     });
 
-    openDiamondActionAcreen(
-        context, DiamondTrackConstant.TRACK_TYPE_OFFICE, selectedList);
+    NavigationUtilities.pushRoute(OfferViewScreen.route);
+    // openDiamondActionAcreen(
+    //     context, DiamondTrackConstant.TRACK_TYPE_OFFICE, selectedList);
     /* showOfferListDialog(context, selectedList, (manageClick) {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
         callApiFoCreateTrack(
@@ -1386,6 +1435,10 @@ class DiamondConfig {
         //   diamonds.newDiscount = num.parse(element.selectedBackPer);
         //   break;
         case DiamondTrackConstant.TRACK_TYPE_COMMENT:
+        case DiamondTrackConstant.TRACK_TYPE_UPDATE_COMMENT:
+          diamonds.remarks = element.remarks;
+          reqDiamond["remarks"] = element.remarks;
+          break;
         case DiamondTrackConstant.TRACK_TYPE_ENQUIRY:
           diamonds.remarks = remark;
           reqDiamond["remarks"] = remark;
@@ -1929,6 +1982,28 @@ class DiamondConfig {
           arraDiamond[i].isSectionOfferDisplay = true;
         } else if (i > 0 &&
             (arraDiamond[i].memoNo != arraDiamond[i - 1].memoNo)) {
+          arraDiamond[i - 1].isSectionOfferDisplay = true;
+        }
+        if (i == arraDiamond.length - 1) {
+          arraDiamond[i].isSectionOfferDisplay = true;
+        }
+        arraDiamond[i].isGrouping = true;
+      }
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_LAYOUT) {
+      for (int i = 0; i < arraDiamond.length; i++) {
+        if (i == 0 ||
+            (arraDiamond[i].layoutNo != arraDiamond[i - 1].layoutNo)) {
+          arraDiamond[i].displayTitle = "#${arraDiamond[i].layoutNo}";
+          arraDiamond[i].displayDesc = DateUtilities()
+              .convertServerDateToFormatterString(arraDiamond[i].createdAt,
+                  formatter: DateUtilities.dd_mm_yyyy_hh_mm_ss);
+          arraDiamond[i].showCheckBox = true;
+        }
+
+        if (arraDiamond.length == 1) {
+          arraDiamond[i].isSectionOfferDisplay = true;
+        } else if (i > 0 &&
+            (arraDiamond[i].layoutNo != arraDiamond[i - 1].layoutNo)) {
           arraDiamond[i - 1].isSectionOfferDisplay = true;
         }
         if (i == arraDiamond.length - 1) {

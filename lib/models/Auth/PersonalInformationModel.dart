@@ -4,6 +4,7 @@ import 'package:diamnow/models/LoginModel.dart';
 class PersonalInformationReq {
   String id;
   String firstName;
+  String middleName;
   String lastName;
   String email;
 
@@ -42,11 +43,12 @@ class PersonalInformationReq {
   String pincode;
   String skype;
 
-  PersonalInformationReq(
-      {this.id,
-      this.firstName,
-      this.lastName,
-      this.email,
+  PersonalInformationReq({
+    this.id,
+    this.firstName,
+    this.middleName,
+    this.lastName,
+    this.email,
 //        this.username,
 //        this.country,
 //        this.state,
@@ -55,33 +57,34 @@ class PersonalInformationReq {
 //        this.fax,
 //        this.seller,
 //        this.vendorNo,
-      this.mobile,
-      this.countryCode,
+    this.mobile,
+    this.countryCode,
 //        this.account,
 //        this.name,
-      this.address,
+    this.address,
 //        this.isActive,
 //        this.androidPlayerId,
 //        this.iosPlayerId,
-      this.profileImage,
+    this.profileImage,
 //        this.dob,
 //        this.gender,
 //        this.phone,
 //        this.photoId,
 //        this.reference,
-      this.whatsapp,
-      this.whatsappCounCode,
-      this.city,
-      this.country,
-      this.state,
-      this.pincode,
+    this.whatsapp,
+    this.whatsappCounCode,
+    this.city,
+    this.country,
+    this.state,
+    this.pincode,
 //        this.skype,skype
 //        this.wechat,
-      });
+  });
 
   PersonalInformationReq.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     firstName = json['firstName'];
+    middleName = json['middleName'];
     lastName = json['lastName'];
     email = json['email'];
     countryCode = json['countryCode'];
@@ -108,8 +111,8 @@ class PersonalInformationReq {
 //    reference = json['reference'];
     whatsapp = json['whatsapp'];
     whatsappCounCode = json['whatsappCounCode'];
-    skype = json['skype']??"";
-    pincode = json['pinCode']??"";
+    skype = json['skype'] ?? "";
+    pincode = json['pinCode'] ?? "";
 //    wechat = json['wechat'];
   }
 
@@ -120,6 +123,9 @@ class PersonalInformationReq {
     }
     if (this.firstName != null) {
       data['firstName'] = this.firstName;
+    }
+    if (this.middleName != null) {
+      data['middleName'] = this.middleName;
     }
     if (this.lastName != null) {
       data["lastName"] = this.lastName;
@@ -163,10 +169,8 @@ class PersonalInformationReq {
     if (this.countryCode != null) {
       data['countryCode'] = this.countryCode;
     }
-    if(!isNullEmptyOrFalse(this.skype))
-      data['skype'] = this.skype;
-    if(!isNullEmptyOrFalse(this.pincode))
-      data['pinCode'] = this.pincode;
+    if (!isNullEmptyOrFalse(this.skype)) data['skype'] = this.skype;
+    if (!isNullEmptyOrFalse(this.pincode)) data['pinCode'] = this.pincode;
 //    data['skype'] = this.skype;
 //    data['wechat'] = this.wechat;
     return data;

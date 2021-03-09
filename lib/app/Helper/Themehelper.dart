@@ -73,6 +73,7 @@ class BaseTheme {
   Color get errorColor => fromHex("#FF4D4D");
   Color get segmentSelectedColor => Colors.white;
   Color get borderColor => fromHex("#DDDDDD");
+  Color get borderColorr => fromHex("#4545456E");
   Color get selectedFilterColor => fromHex("#414143");
   Color get unSelectedBgColor => fromHex("#f7f7f7");
   Color get seemoreBgColor => fromHex("#E6E6E6");
@@ -168,11 +169,11 @@ class BaseTheme {
         color: redColor);
   }
 
-  TextStyle get greenPrimaryNormal14TitleColor {
+  TextStyle get blackPrimaryNormal14TitleColor {
     return TextStyle(
         fontSize: getFontSize(14),
         fontWeight: FontWeight.normal,
-        color: greenColor);
+        color: blackColor);
   }
 
   TextStyle get redPrimaryNormal14TitleColor {
@@ -243,6 +244,12 @@ class BaseTheme {
         fontSize: getFontSize(20),
         fontWeight: FontWeight.w600,
         color: textColor);
+  }
+   TextStyle get whiteMedium20TitleColorblack {
+    return TextStyle(
+        fontSize: getFontSize(20),
+        fontWeight: FontWeight.w600,
+        color: whiteColor);
   }
 
   TextStyle get grey14HintTextStyle {

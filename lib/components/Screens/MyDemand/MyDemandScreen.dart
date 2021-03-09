@@ -191,55 +191,55 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                                     arr.length > 3
                                         ? SizedBox(width: getSize(8))
                                         : SizedBox(),
-                                    arr.length > 3
-                                        ? GestureDetector(
-                                            onTap: () {
-                                              model.isExpand ^= true;
-                                              myDemandBaseList.state
-                                                  .setApiCalling(false);
-                                              fillArrayList();
-                                            },
-                                            child: Container(
-                                              // width: getSize(102),
-                                              decoration: BoxDecoration(
-                                                border: Border(
-                                                  bottom: BorderSide(
-                                                    color:
-                                                        appTheme.colorPrimary,
-                                                    width: 1.0,
-                                                  ),
-                                                ),
-                                              ),
-                                              child: Row(
-                                                children: [
-                                                  Padding(
-                                                    padding: EdgeInsets.only(
-                                                        right: getSize(3)),
-                                                    child: Text(
-                                                      R.string.screenTitle
-                                                          .viewAll,
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: appTheme
-                                                          .primaryColor14TextStyle,
-                                                    ),
-                                                  ),
-                                                  model.isExpand
-                                                      ? Image.asset(
-                                                          showLess,
-                                                          height: getSize(10),
-                                                          width: getSize(14),
-                                                        )
-                                                      : Image.asset(
-                                                          showMore,
-                                                          height: getSize(10),
-                                                          width: getSize(14),
-                                                        ),
-                                                ],
-                                              ),
-                                            ),
-                                          )
-                                        : SizedBox(),
+                                    // arr.length > 3
+                                    //     ? GestureDetector(
+                                    //         onTap: () {
+                                    //           model.isExpand ^= true;
+                                    //           myDemandBaseList.state
+                                    //               .setApiCalling(false);
+                                    //           fillArrayList();
+                                    //         },
+                                    //         child: Container(
+                                    //           // width: getSize(102),
+                                    //           decoration: BoxDecoration(
+                                    //             border: Border(
+                                    //               bottom: BorderSide(
+                                    //                 color:
+                                    //                     appTheme.colorPrimary,
+                                    //                 width: 1.0,
+                                    //               ),
+                                    //             ),
+                                    //           ),
+                                    //           child: Row(
+                                    //             children: [
+                                    //               Padding(
+                                    //                 padding: EdgeInsets.only(
+                                    //                     right: getSize(3)),
+                                    //                 child: Text(
+                                    //                   R.string.screenTitle
+                                    //                       .viewAll,
+                                    //                   textAlign:
+                                    //                       TextAlign.center,
+                                    //                   style: appTheme
+                                    //                       .primaryColor14TextStyle,
+                                    //                 ),
+                                    //               ),
+                                    //               model.isExpand
+                                    //                   ? Image.asset(
+                                    //                       showLess,
+                                    //                       height: getSize(10),
+                                    //                       width: getSize(14),
+                                    //                     )
+                                    //                   : Image.asset(
+                                    //                       showMore,
+                                    //                       height: getSize(10),
+                                    //                       width: getSize(14),
+                                    //                     ),
+                                    //             ],
+                                    //           ),
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox(),
                                     getPreviewItem(delete_icon_medium,
                                         appTheme.redPrimaryNormal14TitleColor,
                                         () {
@@ -317,12 +317,12 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                           // SizedBox(
                           //   height: getSize(6),
                           // ),
-                          if (arr.length <= 3)
-                            listOfSelectedFilter(arr, model, arr.length),
-                          if (arr.length > 3 && model.isExpand)
-                            listOfSelectedFilter(arr, model, arr.length),
-                          if (arr.length > 3 && !model.isExpand)
-                            listOfSelectedFilter(arr, model, 4),
+                          // if (arr.length <= 3)
+                          listOfSelectedFilter(arr, model, arr.length),
+                          // if (arr.length > 3 && model.isExpand)
+                          //   listOfSelectedFilter(arr, model, arr.length),
+                          // if (arr.length > 3 && !model.isExpand)
+                          //   listOfSelectedFilter(arr, model, 4),
                           // Padding(
                           //   padding: EdgeInsets.only(
                           //     // left: getSize(16),
@@ -1143,6 +1143,7 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(
         context,
         R.string.commonString.myDemand,

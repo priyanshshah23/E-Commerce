@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/Uploadmanager.dart';
+import 'package:diamnow/app/utils/validator_utils.dart';
 import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -8,6 +10,7 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_files_picker/flutter_files_picker.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:rxbus/rxbus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -49,6 +52,32 @@ getBackButton(BuildContext context,
       ),
     ),
   );*/
+}
+
+Future pickPDFfile(
+  BuildContext context,
+  String pickeFile,
+  Function(String pickeFile, bool imgUpload) callBack,
+) async {
+  await FlutterFilePicker.pickDocument(onFileSelect: (fileArray) async {
+    if (fileArray != null && fileArray.length > 0) {
+      int fileSize = await File(fileArray[0].fileUrl).length();
+
+      FileUploadResp result = await uploadFile(context, "User",
+          file: File(fileArray[0].fileUrl), pdfUpload: true);
+      pickeFile = result.detail != null && result.detail.files.length > 0
+          ? result.detail.files.first.absolutePath
+          : "";
+      if (!ValidationUtils.isStingEmpty(pickeFile)) {
+        // callApiForUploadProfileImage(context, imagePath, DocTypeConstant.USER_SELFIE);
+
+        // rideFlowModel.deliveryImage.add(pickeFile);
+        callBack(pickeFile, true);
+      }
+    } else {
+      callBack('', false);
+    }
+  });
 }
 
 getBarButton(
@@ -217,9 +246,13 @@ Widget getAppBar(BuildContext context, String title,
         ? Text(
             title,
             overflow: TextOverflow.fade,
-            style: appTheme.blackMedium20TitleColorblack.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
+            style: isWhite
+                ? appTheme.whiteMedium20TitleColorblack.copyWith(
+                    fontWeight: FontWeight.w600,
+                  )
+                : appTheme.blackMedium20TitleColorblack.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
             textAlign: textalign ?? TextAlign.center,
           )
         : Container(),

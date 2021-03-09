@@ -112,6 +112,7 @@ class DiamondModel {
   bool isUpdateOffer = false;
   bool isAddAppointment = false;
   bool isAddToBid = false;
+  bool isMyBid = false;
   String selectedBackPer;
   String selectedOfferPer = "0.5";
   String selectedOfferHour;
@@ -164,6 +165,7 @@ class DiamondModel {
   String opPav;
   String opCrwn;
   String mfgStnId;
+  String layoutNo;
 
   TrackDiamonds trackItemCart;
   TrackDiamonds trackItemWatchList;
@@ -175,9 +177,14 @@ class DiamondModel {
   TrackDiamonds trackItemOffice;
   bool isSectionOfferDisplay = false;
   bool isGrouping = false;
+  bool isNotes = false;
+  bool isNoteEditable = false;
+  bool isNoteUpdated = false;
 
   String strDate;
   String expiryDate;
+
+  int status;
 
   getSelectedDetail(int type) {
     switch (type) {
@@ -350,6 +357,7 @@ class DiamondModel {
     pltFile = isNullEmptyOrFalse(json['pltFile']) ? false : json['pltFile'];
     groupNo = json['groupNo'];
     mfgStnId = json["mfgStnId"];
+    layoutNo = json["layoutNo"];
 
 //    isSelected = json['isSelected'];
 
@@ -396,6 +404,8 @@ class DiamondModel {
     wSd = json['wSd'];
     opTbl = json['opTbl'];
     opCrwn = json['opCrwn'];
+    isNotes = json['isNotes'] ?? false;
+    isNoteEditable = json['isNoteEditable'] ?? false;
   }
 
   String getOfferStatus() {
@@ -527,6 +537,7 @@ class DiamondModel {
     data["expiryDate"] = this.expiryDate;
     data["strDate"] = this.strDate;
     data["mfgStnId"] = this.mfgStnId;
+    data["layoutNo"] = this.layoutNo;
 
     //Id's
     data["shp"] = this.shp;
@@ -562,6 +573,8 @@ class DiamondModel {
     data["opPav"] = this.opPav;
     data["opCrwn"] = this.opCrwn;
     data['offerValidDate'] = this.offerValidDate;
+    data['isNotes'] = this.isNotes;
+    data['isNoteEditable'] = this.isNoteEditable;
     return data;
   }
 

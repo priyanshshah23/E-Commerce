@@ -36,6 +36,8 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_OFFLINE_STOCK = 32;
   static const MODULE_TYPE_OFFLINE_STOCK_SEARCH = 33;
   static const MODULE_TYPE_OFFLINE_STOCK_SEARCH_HISTORY = 34;
+  static const MODULE_TYPE_LAYOUT = 35;
+  static const MODULE_TYPE_MY_BID_HISTORY = 37;
   static const MODULE_TYPE_OPEN_DRAWER = 1000;
   static const MODULE_TYPE_HOME = 100;
   static const MODULE_TYPE_FINAL_CALCULATION = 101;
@@ -70,6 +72,7 @@ class ModulePermissionConstant {
   static const permission_cart = "cart";
   static const permission_reminder = "reminder";
   static const permission_watchlist = "watchlist";
+
   static const permission_comment = "comment";
   static const permission_enquiry = "enquiry";
   static const permission_excel = "excel";
@@ -88,6 +91,9 @@ class ModulePermissionConstant {
   static const permission_offer = "offer";
   static const permission_notification = "notification";
   static const permission_offline_stock = "offlineStock";
+  static const permission_confirm_stone = "CONFIRM_STONE";
+  static const permission_office = "OFFICE";
+
 }
 
 class ReminderType {
@@ -164,10 +170,13 @@ class DiamondTrackConstant {
   static const TRACK_TYPE_BID = 101;
   static const TRACK_TYPE_PLACE_ORDER = 102;
   static const TRACK_TYPE_FINAL_CALCULATION = 103;
+  static const TRACK_TYPE_UPDATE_COMMENT = 104;
 }
 
 class BidConstant {
   static const BID_TYPE_ADD = 2;
+  static const BID_TYPE_BLIND = 1;
+  static const BID_TYPE_OPEN = 2;
 }
 
 class MemoConstant {
@@ -177,6 +186,10 @@ class MemoConstant {
 
 class BidStatus {
   static const BID_STATUS_ACTIVE = 1;
+  static const BID_STATUS_PENDING = 1;
+  static const BID_STATUS_WIN = 2;
+  static const BID_STATUS_LOSS = 3;
+
 }
 
 class BorderConstant {
@@ -210,6 +223,10 @@ class ActionMenuConstant {
   static const ACTION_TYPE_CANCEL_STONE = 19;
   static const ACTION_TYPE_EXCEL = 20;
   static const ACTION_TYPE_MEMO = 21;
+  static const ACTION_TYPE_MY_BID = 27;
+  static const ACTION_TYPE_CONFIRM_STONE = 22;
+  static const ACTION_TYPE_OFFICE_VIEW = 23;
+
 }
 
 class MoreMenuConstant {

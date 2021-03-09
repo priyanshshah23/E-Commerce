@@ -119,7 +119,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   @override
   void initState() {
     super.initState();
-    if(app.resolve<PrefUtils>().getCompanyDetails()!=null){
+    if (app.resolve<PrefUtils>().getCompanyDetails() != null) {
       isCompanySelected = true;
     }
     Config().getOptionsJson().then((result) {
@@ -253,6 +253,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           dict["filters"]["diamondSearchId"] = this.filterId;
         }
         break;
+      case DiamondModuleConstant.MODULE_TYPE_LAYOUT:
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
         if (app.resolve<PrefUtils>().getUserDetails().type ==
             UserConstant.SALES) {
@@ -428,6 +429,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   diamondModel.createdAt = element.createdAt;
                   diamondModel.trackItemOffer = trackDiamonds;
                   diamondModel.memoNo = element.memoNo;
+                  diamondModel.layoutNo = element.memoNo;
                   diamondModel.offerValidDate = element.offerValidDate;
                   diamondModel.offerStatus = element.offerStatus;
                   diamondModel.newAmount = element.newAmount;
@@ -440,6 +442,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   break;
                 case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
                   diamondModel.trackItemComment = trackDiamonds;
+                  diamondModel.remarks = element.remarks;
+                  diamondModel.isNotes = true;
+                  diamondModel.isNoteEditable = false;
                   break;
 
                 case DiamondModuleConstant.MODULE_TYPE_MY_BID:
@@ -749,7 +754,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: appTheme.lightColorPrimary,
+                    color: appTheme.whiteColor,
                     border: Border.all(color: appTheme.colorPrimary),
                     shape: BoxShape.circle,
                   ),
@@ -850,7 +855,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   Container(
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: appTheme.lightColorPrimary,
+                      color: appTheme.whiteColor,
                       border: Border.all(color: appTheme.colorPrimary),
                       shape: BoxShape.circle,
                     ),
@@ -1365,7 +1370,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   showOverlayScreens() {
     if (this.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
-      return (app.resolve<PrefUtils>().isDisplayedTour(PrefUtils().keyOfferTour) ==
+      return (app
+                      .resolve<PrefUtils>()
+                      .isDisplayedTour(PrefUtils().keyOfferTour) ==
                   false &&
               isNullEmptyOrFalse(arraDiamond) == false)
           ? OverlayScreen(

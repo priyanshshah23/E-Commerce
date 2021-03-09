@@ -15,6 +15,8 @@ Future openDateTimeDialog(BuildContext context, ActionClick actionClick,
     {bool isDate = true,
     bool isTime = true,
     String title = "Select Date & Time",
+    DateTime minDate,
+    DateTime initialDate,
     int actionType}) {
   return showDialog(
       context: context,
@@ -177,7 +179,7 @@ class _DateTimeDialogState extends State<DateTimeDialog>
                       decoration: BoxDecoration(
                         border: Border.all(
                             color: appTheme.colorPrimary, width: getSize(1)),
-                        borderRadius: BorderRadius.circular(getSize(5)),
+                        borderRadius: BorderRadius.circular(getSize(50)),
                       ),
                       child: Text(
                         R.string.commonString.cancel,
@@ -216,7 +218,7 @@ class _DateTimeDialogState extends State<DateTimeDialog>
                       ),
                       decoration: BoxDecoration(
                           color: appTheme.colorPrimary,
-                          borderRadius: BorderRadius.circular(getSize(5)),
+                          borderRadius: BorderRadius.circular(getSize(50)),
                           boxShadow: getBoxShadow(context)),
                       child: Text(
                         R.string.commonString.btnSubmit,
@@ -350,4 +352,19 @@ class TabTitle {
     this.id, {
     this.isSelected = false,
   });
+}
+
+getBidTypeBasedOnTime() {
+  final currentTime = DateTime.now();
+
+  final startTime = DateTime(
+      currentTime.year, currentTime.month, currentTime.day, 11, 00, 00);
+  final endTime = DateTime(
+      currentTime.year, currentTime.month, currentTime.day, 15, 00, 00);
+
+  if (currentTime.isAfter(startTime) && currentTime.isBefore(endTime)) {
+    return BidConstant.BID_TYPE_OPEN;
+  } else {
+    return BidConstant.BID_TYPE_BLIND;
+  }
 }

@@ -884,16 +884,16 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList))) {
               Map<String, dynamic> map = FilterRequest()
                   .createRequest(arrList, selectedStatus: selectStatus);
-              if (app.resolve<PrefUtils>().getUserDetails().type ==
-                      UserConstant.CUSTOMER &&
-                  map.length < 3) {
-                app.resolve<CustomDialogs>().errorDialog(
-                      context,
-                      "",
-                      "Please select any 2 criteria.",
-                      btntitle: R.string.commonString.ok,
-                    );
-              } else
+//              if (app.resolve<PrefUtils>().getUserDetails().type ==
+//                      UserConstant.CUSTOMER &&
+//                  map.length < 3) {
+//                app.resolve<CustomDialogs>().errorDialog(
+//                      context,
+//                      "",
+//                      "Please select any 2 criteria.",
+//                      btntitle: R.string.commonString.ok,
+//                    );
+//              } else
                 getAddDemand();
             } else {
               showToast(R.string.commonString.selectAtleastOneFilter,
@@ -943,16 +943,16 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                   .view) {
                 Map<String, dynamic> map = FilterRequest()
                     .createRequest(arrList, selectedStatus: selectStatus);
-                if (/*app.resolve<PrefUtils>().getUserDetails().type ==
-                        UserConstant.CUSTOMER &&*/
-                    map.length < 3) {
-                  app.resolve<CustomDialogs>().errorDialog(
-                        context,
-                        "",
-                        "Please select any 2 criteria.",
-                        btntitle: R.string.commonString.ok,
-                      );
-                } else {
+//                if (/*app.resolve<PrefUtils>().getUserDetails().type ==
+//                        UserConstant.CUSTOMER &&*/
+//                    map.length < 3) {
+//                  app.resolve<CustomDialogs>().errorDialog(
+//                        context,
+//                        "",
+//                        "Please select any 2 criteria.",
+//                        btntitle: R.string.commonString.ok,
+//                      );
+//                } else {
                   SyncManager.instance.callApiForMatchPair(context, map,
                       (diamondListResp) {
                     Map<String, dynamic> dict = new HashMap();
@@ -963,7 +963,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                     NavigationUtilities.pushRoute(DiamondListScreen.route,
                         args: dict);
                   }, (onError) {});
-                }
+//                }
               }
               // place code
             } else if (app
@@ -1061,51 +1061,42 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 //            btntitle: R.string.commonString.ok,
 //          );
 //    } else {
-      SyncManager.instance.callApiForDiamondList(
-        context,
-        map,
-        (diamondListResp) {
-          if (isSavedSearch) {
-            openBottomSheetForSavedSearch(
-                context,
-                FilterRequest()
-                    .createRequest(arrList, selectedStatus: selectStatus),
-                isSearch: isSearch,
-                savedSearchModel: this.savedSearchModel);
-          } else {
-            if (isSearch) {
-              if (diamondListResp.data.count == 0) {
-                app.resolve<CustomDialogs>().confirmDialog(context,
-                    desc: R.string.commonString.noDiamondFound,
-                    positiveBtnTitle: R.string.commonString.ok,
-                    negativeBtnTitle: R.string.screenTitle.addDemand,
-                    onClickCallback: (buttonType) {
-                  if (buttonType == ButtonType.NagativeButtonClick) {
-                    if (app
-                        .resolve<PrefUtils>()
-                        .getModulePermission(
-                            ModulePermissionConstant.permission_myDemand)
-                        .insert) {
-                      if (!isNullEmptyOrFalse(
-                          FilterRequest().createRequest(arrList)))
-                        getAddDemand();
-                      else {
-                        showToast(R.string.commonString.selectAtleastOneFilter,
-                            context: context);
-                      }
-                      // place code
+    SyncManager.instance.callApiForDiamondList(
+      context,
+      map,
+      (diamondListResp) {
+        if (isSavedSearch) {
+          openBottomSheetForSavedSearch(
+              context,
+              FilterRequest()
+                  .createRequest(arrList, selectedStatus: selectStatus),
+              isSearch: isSearch,
+              savedSearchModel: this.savedSearchModel);
+        } else {
+          if (isSearch) {
+            if (diamondListResp.data.count == 0) {
+              app.resolve<CustomDialogs>().confirmDialog(context,
+                  desc: R.string.commonString.noDiamondFound,
+                  positiveBtnTitle: R.string.commonString.ok,
+                  negativeBtnTitle: R.string.screenTitle.addDemand,
+                  onClickCallback: (buttonType) {
+                if (buttonType == ButtonType.NagativeButtonClick) {
+                  if (app
+                      .resolve<PrefUtils>()
+                      .getModulePermission(
+                          ModulePermissionConstant.permission_myDemand)
+                      .insert) {
+                    if (!isNullEmptyOrFalse(
+                        FilterRequest().createRequest(arrList)))
+                      getAddDemand();
+                    else {
+                      showToast(R.string.commonString.selectAtleastOneFilter,
+                          context: context);
                     }
+                    // place code
                   }
-                });
-              } else {
-                Map<String, dynamic> dict = new HashMap();
-                dict["filterId"] = diamondListResp.data.filter.id;
-                dict["filters"] = FilterRequest().createRequest(arrList);
-                dict['isCompanySelected'] = isCompanySelected ?? false;
-                dict[ArgumentConstant.ModuleType] = moduleType;
-                NavigationUtilities.pushRoute(DiamondListScreen.route,
-                    args: dict);
-              }
+                }
+              });
             } else {
               Map<String, dynamic> dict = new HashMap();
               dict["filterId"] = diamondListResp.data.filter.id;
@@ -1115,12 +1106,20 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               NavigationUtilities.pushRoute(DiamondListScreen.route,
                   args: dict);
             }
+          } else {
+            Map<String, dynamic> dict = new HashMap();
+            dict["filterId"] = diamondListResp.data.filter.id;
+            dict["filters"] = FilterRequest().createRequest(arrList);
+            dict['isCompanySelected'] = isCompanySelected ?? false;
+            dict[ArgumentConstant.ModuleType] = moduleType;
+            NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
           }
-        },
-        (onError) {
-          //print("Error");
-        },
-      );
+        }
+      },
+      (onError) {
+        //print("Error");
+      },
+    );
 //    }
   }
 
@@ -1258,8 +1257,17 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 class FilterItem extends StatefulWidget {
   List<FormBaseModel> arrList = [];
   int moduleType;
+  bool isSearch;
+  bool isMatchPair;
+  bool isLayout;
 
-  FilterItem(this.arrList, {this.moduleType});
+  FilterItem(
+    this.arrList, {
+    this.moduleType,
+    this.isSearch = false,
+    this.isMatchPair = false,
+    this.isLayout = false,
+  });
 
   @override
   _FilterItemState createState() => _FilterItemState();
@@ -1289,72 +1297,97 @@ class _FilterItemState extends State<FilterItem> {
     if (model.viewType == "searchText") {
       return getSearchTextField();
     } else if (model.viewType == ViewTypes.seperator) {
-      return SeperatorWidget(model);
+      return SeperatorWidget(model, callBack: (model) {
+        model.isExpand = !model.isExpand;
+        for (int i = 0; i < widget.arrList.length; i++) {
+          if (model.childrenApiKeys.contains(widget.arrList[i].apiKey)) {
+            widget.arrList[i].isExpanded = model.isExpand;
+          }
+        }
+
+        // model.childrenApiKeys;
+        // widgetToggal(model.childrenViewType);
+        setState(() {});
+      });
     } else if (model.viewType == ViewTypes.selection) {
-      return Padding(
-        padding: EdgeInsets.only(
-            left: getSize(Spacing.leftPadding),
-            right: getSize(Spacing.rightPadding),
-            top: getSize(8),
-            bottom: getSize(8)),
-        child: SelectionWidget(model),
-      );
+      return !model.isExpanded
+          ? Container()
+          : Padding(
+              padding: EdgeInsets.only(
+                  left: getSize(Spacing.leftPadding),
+                  right: getSize(Spacing.rightPadding),
+                  top: getSize(8),
+                  bottom: getSize(8)),
+              child: SelectionWidget(model),
+            );
     } else if (model.viewType == ViewTypes.fromTo) {
-      return Padding(
-        padding: EdgeInsets.only(
-            left: getSize(Spacing.leftPadding),
-            right: getSize(Spacing.rightPadding),
-            top: getSize(8),
-            bottom: getSize(8)),
-        child: FromToWidget(model),
-      );
+      return !model.isExpanded
+          ? Container()
+          : Padding(
+              padding: EdgeInsets.only(
+                  left: getSize(Spacing.leftPadding),
+                  right: getSize(Spacing.rightPadding),
+                  top: getSize(8),
+                  bottom: getSize(8)),
+              child: FromToWidget(model),
+            );
     } else if (model.viewType == ViewTypes.certNo) {
-      return Padding(
-        padding: EdgeInsets.only(
-            left: getSize(Spacing.leftPadding),
-            right: getSize(Spacing.rightPadding),
-            top: getSize(8),
-            bottom: getSize(8)),
-        child: CertNoWidget(model),
-      );
+      return !model.isExpanded
+          ? Container()
+          : Padding(
+              padding: EdgeInsets.only(
+                  left: getSize(Spacing.leftPadding),
+                  right: getSize(Spacing.rightPadding),
+                  top: getSize(8),
+                  bottom: getSize(8)),
+              child: CertNoWidget(model),
+            );
     } else if (model.viewType == ViewTypes.keytosymbol) {
-      return Padding(
-        padding: EdgeInsets.only(
-            left: getSize(Spacing.leftPadding),
-            right: getSize(Spacing.rightPadding),
-            top: getSize(8),
-            bottom: getSize(8)),
-        child: KeyToSymbolWidget(model),
-      );
+      return !model.isExpanded
+          ? Container()
+          : Padding(
+              padding: EdgeInsets.only(
+                  left: getSize(Spacing.leftPadding),
+                  right: getSize(Spacing.rightPadding),
+                  top: getSize(8),
+                  bottom: getSize(8)),
+              child: KeyToSymbolWidget(model),
+            );
     } else if (model.viewType == ViewTypes.groupWidget) {
-      return Padding(
-        padding: EdgeInsets.only(
-            left: getSize(Spacing.leftPadding),
-            right: getSize(Spacing.rightPadding),
-            top: getSize(8),
-            bottom: getSize(8)),
-        child: (model as ColorModel).showGroup
-            ? ColorWidget(model)
-            : ColorWhiteFancyWidget(model),
-      );
+      return !model.isExpanded
+          ? Container()
+          : Padding(
+              padding: EdgeInsets.only(
+                  left: getSize(Spacing.leftPadding),
+                  right: getSize(Spacing.rightPadding),
+                  top: getSize(8),
+                  bottom: getSize(8)),
+              child: (model as ColorModel).showGroup
+                  ? ColorWidget(model)
+                  : ColorWhiteFancyWidget(model),
+            );
     } else if (model.viewType == ViewTypes.caratRange) {
-      return Padding(
-        padding: EdgeInsets.only(
-            left: getSize(Spacing.leftPadding),
-            right: getSize(Spacing.rightPadding),
-            top: getSize(8),
-            bottom: getSize(8)),
-        child: CaratRangeWidget(model),
-      );
+      return !model.isExpanded
+          ? Container()
+          : Padding(
+              padding: EdgeInsets.only(
+                  left: getSize(Spacing.leftPadding),
+                  right: getSize(Spacing.rightPadding),
+                  top: getSize(8),
+                  bottom: getSize(8)),
+              child: CaratRangeWidget(model),
+            );
     } else if (model.viewType == ViewTypes.shapeWidget) {
-      return Padding(
-        padding: EdgeInsets.only(
-            left: getSize(Spacing.leftPadding),
-            right: getSize(Spacing.rightPadding),
-            top: getSize(8),
-            bottom: getSize(8)),
-        child: ShapeWidget(model),
-      );
+      return !model.isExpanded
+          ? Container()
+          : Padding(
+              padding: EdgeInsets.only(
+                  left: getSize(Spacing.leftPadding),
+                  right: getSize(Spacing.rightPadding),
+                  top: getSize(8),
+                  bottom: getSize(8)),
+              child: ShapeWidget(model),
+            );
     }
   }
 
