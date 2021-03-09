@@ -84,7 +84,7 @@ class Config {
     return arrSorting;
   }
 
-  Future<List<FormBaseModel>> getFilterJson({booll }) async {
+  Future<List<FormBaseModel>> getFilterJson({bool isSearch = false}) async {
     if (isNullEmptyOrFalse(arrFilter)) {
       String jsonForm =
           await rootBundle.loadString('assets/Json/FilterJson.jsonc');
@@ -93,17 +93,127 @@ class Config {
         dynamic element = fieldList[i];
         if (element is Map<String, dynamic>) {
           String viewType = element["viewType"];
-          if (element["isActive"] ?? true) {
-            if (viewType == "searchText") {
-              arrFilter.add(FormBaseModel.fromJson(element));
-            } else if (viewType == ViewTypes.fromTo) {
-              var fromToModel = FromToModel.fromJson(element);
-              arrFilter.add(fromToModel);
+          if (!isSearch &&
+              (element["tab"] == "matchpair" || element["tab"] == "layout")) {
+          } else {
+            if (element["isActive"] ?? true) {
+              if (viewType == "searchText") {
+                arrFilter.add(FormBaseModel.fromJson(element));
+              } else if (viewType == ViewTypes.fromTo) {
+                var fromToModel = FromToModel.fromJson(element);
+                arrFilter.add(fromToModel);
 
-              if (fromToModel.isCaratRange) {
+                if (fromToModel.isCaratRange) {
+                  SelectionModel selectionModel =
+                      SelectionModel.fromJson(element);
+
+                  List<Master> arrMaster = await Master.getSizeMaster();
+
+                  selectionModel.masters = arrMaster;
+
+                  if (selectionModel.isShowAll == true) {
+                    appendAllTitle(selectionModel);
+                  }
+
+                  if (selectionModel.isShowMore == true) {
+                    appendShowMoreTitle(selectionModel);
+                  }
+
+                  fromToModel.selectionModel = selectionModel;
+                  // arrFilter.add(FromToModel.fromJson(element));
+                }
+              } else if (viewType == ViewTypes.shapeWidget) {
                 SelectionModel selectionModel =
                     SelectionModel.fromJson(element);
+                arrFilter.add(selectionModel);
 
+                List<Master> arrMaster =
+                    await Master.getSubMaster(selectionModel.masterCode);
+                selectionModel.masters = arrMaster;
+
+                if (selectionModel.isShowAll == true) {
+                  appendAllTitle(selectionModel);
+                }
+              } else if (viewType == ViewTypes.selection) {
+                SelectionModel selectionModel =
+                    SelectionModel.fromJson(element);
+                arrFilter.add(selectionModel);
+                List<Master> arrMaster =
+                    await Master.getSubMaster(selectionModel.masterCode);
+                selectionModel.masters = arrMaster;
+
+                if (selectionModel.isShowAll == true) {
+                  appendAllTitle(selectionModel);
+                }
+                if (selectionModel.isShowMore == true) {
+                  appendShowMoreTitle(selectionModel);
+                }
+              } else if (viewType == ViewTypes.groupWidget) {
+                ColorModel colorModel = ColorModel.fromJson(element);
+                arrFilter.add(colorModel);
+
+                if (colorModel.showGroup) {
+                  List<Master> arrMaster =
+                      await Master.getSubMaster(colorModel.masterCode);
+                  List<Master> arrGroupMaster =
+                      await Master.getSubMaster(colorModel.groupMasterCode);
+                  colorModel.mainMasters = arrMaster;
+                  colorModel.groupMaster = arrGroupMaster;
+                  colorModel.masters = arrMaster;
+
+                  if (colorModel.isShowAll == true) {
+                    appendAllTitle(colorModel);
+                  }
+
+                  if (colorModel.isShowMore == true) {
+                    appendShowMoreTitle(colorModel);
+                  }
+                } else if (colorModel.showWhiteFancy) {
+                  List<Master> arrMaster =
+                      await Master.getSubMaster(colorModel.masterCode);
+                  List<Master> arrGroupMaster =
+                      await Master.getSubMaster(MasterCode.fancyColor);
+
+                  List<Master> intensity =
+                      await Master.getSubMaster(MasterCode.intensity);
+                  List<Master> overtone =
+                      await Master.getSubMaster(MasterCode.overTone);
+                  colorModel.mainMasters = arrMaster;
+                  colorModel.groupMaster = arrGroupMaster;
+                  colorModel.intensity = intensity;
+                  colorModel.overtone = overtone;
+                  colorModel.masters = arrMaster;
+
+                  if (colorModel.isShowAll == true) {
+                    appendAllTitle(colorModel);
+                  }
+
+                  if (colorModel.isShowMore == true) {
+                    appendShowMoreTitle(colorModel);
+                  }
+                }
+              } else if (viewType == ViewTypes.seperator) {
+                SeperatorModel seperatorModel =
+                    SeperatorModel.fromJson(element);
+                arrFilter.add(seperatorModel);
+              } else if (viewType == ViewTypes.certNo) {
+                CertNoModel seperatorModel = CertNoModel.fromJson(element);
+                arrFilter.add(seperatorModel);
+              } else if (viewType == ViewTypes.keytosymbol) {
+                KeyToSymbolModel keyToSymbol =
+                    KeyToSymbolModel.fromJson(element);
+                arrFilter.add(keyToSymbol);
+                List<Master> arrMaster =
+                    await Master.getSubMaster(keyToSymbol.masterCode);
+                keyToSymbol.masters = arrMaster;
+
+                if (keyToSymbol.isShowAll == true) {
+                  appendAllTitle(keyToSymbol);
+                }
+              } else if (viewType == ViewTypes.caratRange) {
+                SelectionModel selectionModel =
+                    SelectionModel.fromJson(element);
+                arrFilter.add(selectionModel);
                 List<Master> arrMaster = await Master.getSizeMaster();
 
                 selectionModel.masters = arrMaster;
@@ -115,107 +225,6 @@ class Config {
                 if (selectionModel.isShowMore == true) {
                   appendShowMoreTitle(selectionModel);
                 }
-
-                fromToModel.selectionModel = selectionModel;
-                // arrFilter.add(FromToModel.fromJson(element));
-              }
-            } else if (viewType == ViewTypes.shapeWidget) {
-              SelectionModel selectionModel = SelectionModel.fromJson(element);
-              arrFilter.add(selectionModel);
-
-              List<Master> arrMaster =
-                  await Master.getSubMaster(selectionModel.masterCode);
-              selectionModel.masters = arrMaster;
-
-              if (selectionModel.isShowAll == true) {
-                appendAllTitle(selectionModel);
-              }
-            } else if (viewType == ViewTypes.selection) {
-              SelectionModel selectionModel = SelectionModel.fromJson(element);
-              arrFilter.add(selectionModel);
-              List<Master> arrMaster =
-                  await Master.getSubMaster(selectionModel.masterCode);
-              selectionModel.masters = arrMaster;
-
-              if (selectionModel.isShowAll == true) {
-                appendAllTitle(selectionModel);
-              }
-              if (selectionModel.isShowMore == true) {
-                appendShowMoreTitle(selectionModel);
-              }
-            } else if (viewType == ViewTypes.groupWidget) {
-              ColorModel colorModel = ColorModel.fromJson(element);
-              arrFilter.add(colorModel);
-
-              if (colorModel.showGroup) {
-                List<Master> arrMaster =
-                    await Master.getSubMaster(colorModel.masterCode);
-                List<Master> arrGroupMaster =
-                    await Master.getSubMaster(colorModel.groupMasterCode);
-                colorModel.mainMasters = arrMaster;
-                colorModel.groupMaster = arrGroupMaster;
-                colorModel.masters = arrMaster;
-
-                if (colorModel.isShowAll == true) {
-                  appendAllTitle(colorModel);
-                }
-
-                if (colorModel.isShowMore == true) {
-                  appendShowMoreTitle(colorModel);
-                }
-              } else if (colorModel.showWhiteFancy) {
-                List<Master> arrMaster =
-                    await Master.getSubMaster(colorModel.masterCode);
-                List<Master> arrGroupMaster =
-                    await Master.getSubMaster(MasterCode.fancyColor);
-
-                List<Master> intensity =
-                    await Master.getSubMaster(MasterCode.intensity);
-                List<Master> overtone =
-                    await Master.getSubMaster(MasterCode.overTone);
-                colorModel.mainMasters = arrMaster;
-                colorModel.groupMaster = arrGroupMaster;
-                colorModel.intensity = intensity;
-                colorModel.overtone = overtone;
-                colorModel.masters = arrMaster;
-
-                if (colorModel.isShowAll == true) {
-                  appendAllTitle(colorModel);
-                }
-
-                if (colorModel.isShowMore == true) {
-                  appendShowMoreTitle(colorModel);
-                }
-              }
-            } else if (viewType == ViewTypes.seperator) {
-              SeperatorModel seperatorModel = SeperatorModel.fromJson(element);
-              arrFilter.add(seperatorModel);
-            } else if (viewType == ViewTypes.certNo) {
-              CertNoModel seperatorModel = CertNoModel.fromJson(element);
-              arrFilter.add(seperatorModel);
-            } else if (viewType == ViewTypes.keytosymbol) {
-              KeyToSymbolModel keyToSymbol = KeyToSymbolModel.fromJson(element);
-              arrFilter.add(keyToSymbol);
-              List<Master> arrMaster =
-                  await Master.getSubMaster(keyToSymbol.masterCode);
-              keyToSymbol.masters = arrMaster;
-
-              if (keyToSymbol.isShowAll == true) {
-                appendAllTitle(keyToSymbol);
-              }
-            } else if (viewType == ViewTypes.caratRange) {
-              SelectionModel selectionModel = SelectionModel.fromJson(element);
-              arrFilter.add(selectionModel);
-              List<Master> arrMaster = await Master.getSizeMaster();
-
-              selectionModel.masters = arrMaster;
-
-              if (selectionModel.isShowAll == true) {
-                appendAllTitle(selectionModel);
-              }
-
-              if (selectionModel.isShowMore == true) {
-                appendShowMoreTitle(selectionModel);
               }
             }
           }
@@ -351,6 +360,7 @@ class FormBaseModel {
     this.viewType,
     this.isExpanded,
   });
+
   FormBaseModel.fromJson(Map<String, dynamic> json) {
     title = json['title'] ?? "";
     megaTitle = json["megaTitle"] ?? "";
