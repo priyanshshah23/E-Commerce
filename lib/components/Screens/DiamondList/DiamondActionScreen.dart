@@ -119,6 +119,15 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
     if (this.actionType == DiamondTrackConstant.TRACK_TYPE_OFFICE) {
       callApiforTimeSlots();
     }
+    if (this.actionType == DiamondTrackConstant.TRACK_TYPE_OFFER ||
+        this.actionType == DiamondTrackConstant.TRACK_TYPE_BID) {
+      RxBus.register<bool>(tag: eventBusRefreshList).listen((event) {
+        print("action update");
+        setState(() {
+          manageDiamondCalculation();
+        });
+      });
+    }
   }
 
   manageDiamondCalculation() {

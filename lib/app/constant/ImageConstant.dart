@@ -190,6 +190,8 @@ const String clearSelectionWhite = "assets/Common/clearWhite.png";
 const String shareWhite = "assets/Common/shareWhite.png";
 const String downloadWhite = "assets/Common/downloadWhite.png";
 const String offerWhite = "assets/Common/offerWhite.png";
+const String upRedArrow = "assets/Common/upRedArrow.png";
+const String downGreenArrow = "assets/Common/downGreenArrow.png";
 
 //PnShah
 const String forgetMPIN = "assets/PNShah/ForgetMPIN/forgetMPIN.png";
