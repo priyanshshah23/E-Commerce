@@ -49,7 +49,7 @@ class DrawerSetting {
         title: R.string.screenTitle.exclusiveDiamonds,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND,
-        isShowCount: true,
+        isShowCount: false,
         countBackgroundColor: fromHex("#288F5A"),
         count: 25,
       ));
@@ -75,7 +75,7 @@ class DrawerSetting {
         title: R.string.screenTitle.diamondOnAuction,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION,
-        isShowCount: true,
+        isShowCount: false,
         countBackgroundColor: fromHex("#9C2AC4"),
         count: 50,
       ));
