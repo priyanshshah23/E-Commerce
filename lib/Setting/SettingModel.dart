@@ -85,7 +85,7 @@ class DrawerSetting {
             ModulePermissionConstant.permission_upcomingDiamonds)
         .view)
       drawerList.add(DrawerModel(
-        image: quickSearch,
+        image: upcoming,
         title: R.string.screenTitle.upcoming,
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_UPCOMING,
@@ -103,7 +103,7 @@ class DrawerSetting {
         isShowCount: false,
         countBackgroundColor: fromHex("#003365"),
         count: 15,
-      ));
+      )); //Best Buy
 
     /*drawerList.add(DrawerModel(
       image: stoneOfTheDay,
