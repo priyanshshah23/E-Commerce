@@ -227,33 +227,32 @@ class _OfferPopupState extends State<OfferPopup> {
         right: getSize(Spacing.rightPadding),
       ),
       child: CommonTextfield(
-          readOnly: true,
-          tapCallback: () {
-            openDatePicker();
-          },
+          // readOnly: true,
+          tapCallback: () {},
           textOption: TextFieldOption(
-              prefixWid: getCommonIconWidget(
-                  imageName: company, imageType: IconSizeType.small),
-              hintText:
-                  widget.actionType == DiamondTrackConstant.TRACK_TYPE_OFFICE
-                      ? R.string.commonString.officeVisitDate
-                      : R.string.commonString.offerVelidTill,
-              maxLine: 1,
-              keyboardType: TextInputType.text,
-              inputController: _dateController,
-              isSecureTextField: false),
-          textCallback: (text) {
-//                  setState(() {
-//                    checkValidation();
-//                  });
-          },
-          validation: (text) {
-            if (text.isEmpty) {
-              return widget.actionType == DiamondTrackConstant.TRACK_TYPE_OFFICE
-                  ? R.string.errorString.pleaseSelectOfficeVisitDate
-                  : R.string.errorString.pleaseSelectOfferTillDate;
-            }
-          },
+            prefixWid: getCommonIconWidget(
+                imageName: company, imageType: IconSizeType.small),
+            hintText:
+                widget.actionType == DiamondTrackConstant.TRACK_TYPE_OFFICE
+                    ? R.string.commonString.officeVisitDate
+                    : R.string.commonString.offerVelidTill,
+            maxLine: 1,
+            keyboardType: TextInputType.text,
+            inputController: _dateController,
+            // isSecureTextField: false,
+          ),
+//           textCallback: (text) {
+// //                  setState(() {
+// //                    checkValidation();
+// //                  });
+//           },
+          // validation: (text) {
+          //   if (text.isEmpty) {
+          //     return widget.actionType == DiamondTrackConstant.TRACK_TYPE_OFFICE
+          //         ? R.string.errorString.pleaseSelectOfficeVisitDate
+          //         : R.string.errorString.pleaseSelectOfferTillDate;
+          //   }
+          // },
           inputAction: TextInputAction.next,
           onNextPress: () {
             FocusScope.of(context).unfocus();
