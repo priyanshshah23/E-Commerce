@@ -36,7 +36,8 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
 
   calcualteDifference() {
     if (widget.moduleType ==
-        DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
+            DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION ||
+        widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_BID) {
       isTimerCompleted = false;
       var currentTime = DateTime.now();
       var strBlindBid = DateTime.now();
@@ -140,14 +141,14 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
             ],
           ),
         ),
-        widget.moduleType == DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION
+        widget.moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL
             ? Padding(
                 padding: EdgeInsets.only(top: getSize(2.0)),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(getSize(5)),
-                    border: Border.all(color: appTheme.selectedFilterColor),
-                    color: appTheme.selectedFilterColor,
+                    border: Border.all(color: appTheme.dividerColor),
+                    color: appTheme.dividerColor,
                   ),
                   height: getSize(40),
                   child: Row(

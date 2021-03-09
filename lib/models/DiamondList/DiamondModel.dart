@@ -112,6 +112,7 @@ class DiamondModel {
   bool isUpdateOffer = false;
   bool isAddAppointment = false;
   bool isAddToBid = false;
+  bool isMyBid = false;
   String selectedBackPer;
   String selectedOfferPer = "0.5";
   String selectedOfferHour;
@@ -181,6 +182,8 @@ class DiamondModel {
 
   String strDate;
   String expiryDate;
+
+  int status;
 
   getSelectedDetail(int type) {
     switch (type) {
@@ -598,7 +601,7 @@ class DiamondModel {
   }
 
   String getStatusText() {
-    String color;
+    String color = "";
     switch (wSts) {
       case DiamondStatus.DIAMOND_STATUS_AVAILABLE:
         color = R.string.screenTitle.statusAvailable;

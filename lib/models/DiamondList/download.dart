@@ -146,7 +146,7 @@ class DownloadState extends State<Download> {
                       showToast(R.string.commonString.downloadingCanceled,
                           context: context);
                     },
-                    borderRadius: getSize(5),
+                    // borderRadius: getSize(5),
                     text: R.string.commonString.cancel,
                   ),
                 ),

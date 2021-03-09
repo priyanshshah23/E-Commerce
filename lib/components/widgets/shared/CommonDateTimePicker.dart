@@ -15,6 +15,8 @@ Future openDateTimeDialog(BuildContext context, ActionClick actionClick,
     {bool isDate = true,
     bool isTime = true,
     String title = "Select Date & Time",
+    DateTime minDate,
+    DateTime initialDate,
     int actionType}) {
   return showDialog(
       context: context,
@@ -350,4 +352,19 @@ class TabTitle {
     this.id, {
     this.isSelected = false,
   });
+}
+
+getBidTypeBasedOnTime() {
+  final currentTime = DateTime.now();
+
+  final startTime = DateTime(
+      currentTime.year, currentTime.month, currentTime.day, 11, 00, 00);
+  final endTime = DateTime(
+      currentTime.year, currentTime.month, currentTime.day, 15, 00, 00);
+
+  if (currentTime.isAfter(startTime) && currentTime.isBefore(endTime)) {
+    return BidConstant.BID_TYPE_OPEN;
+  } else {
+    return BidConstant.BID_TYPE_BLIND;
+  }
 }

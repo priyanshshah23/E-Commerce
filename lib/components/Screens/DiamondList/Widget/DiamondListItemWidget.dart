@@ -287,6 +287,9 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                   ], //getMeasurementAndColorDetails(),
                                 ),
                               ),
+                              getBidDetail(),
+                              getOfferData(),
+                              getWatchlistData()
                             ],
                           ),
                           /*child: Column(
@@ -548,21 +551,22 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             //     style: appTheme.green10TextStyle,
             //   ),
             // ),
-            widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER
-                ? Container(
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(top: getSize(30)),
-                    width: getSize(55),
-                    height: getSize(20),
-                    decoration: BoxDecoration(
-                        color: appTheme.whiteColor,
-                        borderRadius: BorderRadius.circular(getSize(5))),
-                    child: Text(
-                      PriceUtilities.getPercent(widget.item.newDiscount),
-                      style: appTheme.green10TextStyle,
-                    ),
-                  )
-                : Container(),
+            // widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER
+            //     ? Container(
+            //         alignment: Alignment.center,
+            //         margin: EdgeInsets.only(top: getSize(30)),
+            //         width: getSize(55),
+            //         height: getSize(20),
+            //         decoration: BoxDecoration(
+            //             // color: appTheme.whiteColor,
+            //             color: Colors.red,
+            //             borderRadius: BorderRadius.circular(getSize(5))),
+            //         child: Text(
+            //           PriceUtilities.getPercent(widget.item.newDiscount),
+            //           style: appTheme.green10TextStyle,
+            //         ),
+            //       )
+            //     : Container(),
           ],
         ),
       ),
@@ -1153,6 +1157,36 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         : Container();
   }
 
+  Widget getDiscountUpOrDown(num disc, num newDisc) {
+    bool isUp = false;
+    bool isEqual = false;
+    num diff = 0;
+    if (newDisc < disc) {
+      isUp = true;
+      diff = newDisc - disc;
+    } else if (newDisc > disc) {
+      diff = disc - newDisc;
+    } else {
+      isEqual = true;
+    }
+    return Expanded(
+        child: Center(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text("${(diff).toStringAsFixed(0)}%",
+              style: appTheme.black12TextStyleMedium
+                  .copyWith(color: isUp ? Colors.green : Colors.red)),
+          SizedBox(width: getSize(4)),
+          Image.asset(
+            !isUp ? upRedArrow : downGreenArrow,
+            height: getSize(15),
+          )
+        ],
+      ),
+    ));
+  }
+
   getWatchlistData() {
     return widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST
         ? Padding(
@@ -1160,8 +1194,9 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(getSize(5)),
-                border: Border.all(color: appTheme.lightColorPrimary),
-                color: appTheme.lightColorPrimary,
+                border:
+                    Border.all(color: appTheme.dividerColor.withOpacity(0.5)),
+                color: appTheme.dividerColor.withOpacity(0.5),
               ),
               height: getSize(30),
               child: Row(
@@ -1177,6 +1212,16 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                       ),
                     ),
                   ),
+                  if (widget.item.getFinalDiscount() != widget.item.newDiscount)
+                    getDiscountUpOrDown(widget.item.getFinalDiscount(),
+                        widget.item.newDiscount),
+                  // Expanded(
+                  //     child: Center(
+                  //   child: Text(
+                  //     "${(widget.item.newDiscount - widget.item.getFinalDiscount()).toStringAsFixed(2)}%",
+                  //     style: appTheme.black12TextStyleMedium,
+                  //   ),
+                  // ))
                 ],
               ),
             ),
@@ -1239,39 +1284,35 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(getSize(5)),
-                border: Border.all(color: appTheme.lightColorPrimary),
-                color: appTheme.lightColorPrimary,
+                border:
+                    Border.all(color: appTheme.dividerColor.withOpacity(0.5)),
+                color: appTheme.dividerColor.withOpacity(0.5),
               ),
               height: getSize(30),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Expanded(
-                    child: Center(
-                      child: Text(
-                        PriceUtilities.getPrice(widget.item.newAmount) + "/Ct",
-                        style: appTheme.black16MediumTextStyle.copyWith(
-                          fontSize: getFontSize(14),
-                        ),
+                  Center(
+                    child: Text(
+                      PriceUtilities.getPercent(widget.item.newDiscount),
+                      style: appTheme.black16MediumTextStyle.copyWith(
+                          color: Colors.green, fontSize: getFontSize(14)),
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      PriceUtilities.getPrice(widget.item.newAmount) + "/Ct",
+                      style: appTheme.black16MediumTextStyle.copyWith(
+                        fontSize: getFontSize(14),
                       ),
                     ),
                   ),
                   Center(
                     child: Text(
-                      "|",
-                      style: appTheme.primary16TextStyle.copyWith(
+                      PriceUtilities.getPrice(widget.item.newPricePerCarat) +
+                          "/Amt",
+                      style: appTheme.black16MediumTextStyle.copyWith(
                         fontSize: getFontSize(14),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Center(
-                      child: Text(
-                        PriceUtilities.getPrice(widget.item.newPricePerCarat) +
-                            "/Amt",
-                        style: appTheme.black16MediumTextStyle.copyWith(
-                          fontSize: getFontSize(14),
-                        ),
                       ),
                     ),
                   ),

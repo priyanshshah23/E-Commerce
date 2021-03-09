@@ -235,6 +235,21 @@ class VirtualTypesString {
   static const String inPerson = "In Person";
 }
 
+class MyBidConstant {
+  static const String LiveBid = 'LiveBid';
+  static const String BidHistory = 'BidHistory';
+}
+
+class MyBidRangeConstant {
+  static const String All = 'All';
+  static const String Today = 'Today';
+  static const String Yesterday = 'Yesterday';
+  static const String Last7Days = 'Last7Days';
+  static const String ThisMonth = 'This Month';
+  static const String ThisYear = 'This Year';
+  static const String CustomRange = 'Custom Range';
+}
+
 class InvoiceTypesString {
   static const String today = "Today";
   static const String tomorrow = "Tommorrow";

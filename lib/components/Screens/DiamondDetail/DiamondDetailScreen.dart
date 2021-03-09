@@ -410,7 +410,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         // (diamondModel.mfgStnId ?? diamondModel.vStnId) +
         // ".html",
         type: "Video",
-        isSelected: true,
+        isSelected: false,
         isImage: false,
         isVideo: true,
         arr: arrOfVideos,
@@ -890,14 +890,14 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
               );
             },
             child: Container(
-              height: getSize(50),
-              width: getSize(50),
+              height: getSize(40),
+              width: getSize(40),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(getSize(10)),
                   border: Border.all(color: appTheme.borderColorr),
                   color: Colors.white),
               child: Padding(
-                padding: EdgeInsets.all(getSize(0)),
+                padding: EdgeInsets.all(getSize(10)),
                 child: Center(
                   child:
                       Image.asset(img, height: getSize(25), width: getSize(25)),
@@ -1061,6 +1061,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                               Padding(
                                 padding: EdgeInsets.only(top: getSize(25)),
                                 child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
                                     Padding(
                                       padding: EdgeInsets.only(
@@ -1069,6 +1070,8 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                                           top: getSize(0),
                                           bottom: getSize(0)),
                                       child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
                                           imageFlag
@@ -1093,6 +1096,15 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                                                   ))
                                               : SizedBox(),
                                           // getRowItem("Video", playButton),
+                                          Padding(
+                                              padding: EdgeInsets.only(
+                                                  right: getSize(10)),
+                                              child: getRowItem(
+                                                "Certificate",
+                                                certi,
+                                                3,
+                                              )),
+
                                           imageFlag_hA
                                               ? Padding(
                                                   padding: EdgeInsets.only(
@@ -1133,11 +1145,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                                                     7,
                                                   ))
                                               : SizedBox(),
-                                          getRowItem(
-                                            "Certificate",
-                                            certi,
-                                            3,
-                                          ),
                                         ],
                                       ),
                                     )

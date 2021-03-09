@@ -27,7 +27,9 @@ import 'package:diamnow/components/Screens/DiamondList/DiamondCompareScreen.dart
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/OfflineDownloadPopup.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/DownLoadAndShareDialogue.dart';
+import 'package:diamnow/components/Screens/Filter/Widget/DownLoadAndShareScreen.dart';
 import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
+import 'package:diamnow/components/Screens/MyBid/MyBidScreen.dart';
 import 'package:diamnow/components/Screens/SalesPerson/BuyNowScreen.dart';
 import 'package:diamnow/components/Screens/SalesPerson/HoldStoneScreen.dart';
 import 'package:diamnow/components/Screens/SalesPerson/MemoStoneScreen.dart';
@@ -154,7 +156,7 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_MY_HOLD:
         return R.string.screenTitle.myHold;
       case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
-        return R.string.screenTitle.myOrder;
+        return R.string.screenTitle.confirmStone;
       case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
         return R.string.screenTitle.myOffice;
       case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
@@ -1196,70 +1198,96 @@ class DiamondConfig {
       section: SectionAnalytics.SHARE,
       action: ActionAnalytics.OPEN,
     );
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return WillPopScope(
-          onWillPop: () {
-            return Future.value(false);
-          },
-          child: Dialog(
-            insetPadding: EdgeInsets.symmetric(
-                horizontal: getSize(20), vertical: getSize(5)),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(getSize(25)),
-            ),
-            child: SelectionDialogue(
-              isSearchEnable: false,
-              title: isForShare
-                  ? R.string.commonString.share
-                  : R.string.commonString.download,
-              isMultiSelectionEnable: true,
-              positiveButtonTitle: isForShare
-                  ? R.string.commonString.share
-                  : R.string.commonString.download,
-              selectionOptions: downloadOptionList,
-              applyFilterCallBack: (
-                  {SelectionPopupModel selectedItem,
-                  List<SelectionPopupModel> multiSelectedItem}) {
-                selectedOptions = multiSelectedItem;
-                // Navigator.pop(context);
-                //check condition for only excel,if so then redirect to static page
-                //else show showDialog method.
-                if (isForShare) {
-                  _onShare(context, list, isForShare, selectedOptions);
-                } else {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return WillPopScope(
-                          onWillPop: () {
-                            return Future.value(false);
-                          },
-                          child: Dialog(
-                            insetPadding: EdgeInsets.symmetric(
-                                horizontal: getSize(20), vertical: getSize(20)),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(getSize(25)),
-                            ),
-                            child: Download(
-                              allDiamondPreviewThings: selectedOptions,
-                              diamondList: list,
-                            ),
-                          ),
-                        );
-                      });
-                }
-              },
-            ),
-//          child: DownLoadAndShareDialogue(
-//            title: R.string.commonString.download,
-//          ),
-          ),
-        );
+    NavigationUtilities.push(DownLoadAndShareScreen(
+      diamondList: list,
+      title: "Share Stone",
+      onDownload: (selectedOptions) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return WillPopScope(
+                onWillPop: () {
+                  return Future.value(false);
+                },
+                child: Dialog(
+                  insetPadding: EdgeInsets.symmetric(
+                      horizontal: getSize(20), vertical: getSize(20)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(getSize(25)),
+                  ),
+                  child: Download(
+                    allDiamondPreviewThings: selectedOptions,
+                    diamondList: list,
+                  ),
+                ),
+              );
+            });
       },
-    );
+    ));
+//     showDialog(
+//       context: context,
+//       barrierDismissible: false,
+//       builder: (BuildContext context) {
+//         return WillPopScope(
+//           onWillPop: () {
+//             return Future.value(false);
+//           },
+//           child: Dialog(
+//             insetPadding: EdgeInsets.symmetric(
+//                 horizontal: getSize(20), vertical: getSize(5)),
+//             shape: RoundedRectangleBorder(
+//               borderRadius: BorderRadius.circular(getSize(25)),
+//             ),
+//             child: SelectionDialogue(
+//               isSearchEnable: false,
+//               title: isForShare
+//                   ? R.string.commonString.share
+//                   : R.string.commonString.download,
+//               isMultiSelectionEnable: true,
+//               positiveButtonTitle: isForShare
+//                   ? R.string.commonString.share
+//                   : R.string.commonString.download,
+//               selectionOptions: downloadOptionList,
+//               applyFilterCallBack: (
+//                   {SelectionPopupModel selectedItem,
+//                   List<SelectionPopupModel> multiSelectedItem}) {
+//                 selectedOptions = multiSelectedItem;
+//                 // Navigator.pop(context);
+//                 //check condition for only excel,if so then redirect to static page
+//                 //else show showDialog method.
+//                 if (isForShare) {
+//                   _onShare(context, list, isForShare, selectedOptions);
+//                 } else {
+//                   showDialog(
+//                       context: context,
+//                       builder: (BuildContext context) {
+//                         return WillPopScope(
+//                           onWillPop: () {
+//                             return Future.value(false);
+//                           },
+//                           child: Dialog(
+//                             insetPadding: EdgeInsets.symmetric(
+//                                 horizontal: getSize(20), vertical: getSize(20)),
+//                             shape: RoundedRectangleBorder(
+//                               borderRadius: BorderRadius.circular(getSize(25)),
+//                             ),
+//                             child: Download(
+//                               allDiamondPreviewThings: selectedOptions,
+//                               diamondList: list,
+//                             ),
+//                           ),
+//                         );
+//                       });
+//                 }
+//               },
+//             ),
+// //          child: DownLoadAndShareDialogue(
+// //            title: R.string.commonString.download,
+// //          ),
+//           ),
+//         );
+//       },
+//     );
   }
 
   _onShare(BuildContext context, List<DiamondModel> list, bool isForShare,
@@ -1659,7 +1687,11 @@ class DiamondConfig {
     }
 
     dict[ArgumentConstant.IsFromDrawer] = false;
-    NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+    if (trackType == DiamondTrackConstant.TRACK_TYPE_BID) {
+      NavigationUtilities.pushRoute(MyBidScreen.route, args: dict);
+    } else {
+      NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+    }
   }
 
   callApiForDeleteTrack(BuildContext context, List<DiamondModel> list,

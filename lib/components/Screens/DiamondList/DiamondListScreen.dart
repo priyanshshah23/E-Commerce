@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:diamnow/Setting/SettingModel.dart';
@@ -27,6 +28,7 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondSquareGridI
 import 'package:diamnow/components/Screens/DiamondList/Widget/FinalCalculation.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
+import 'package:diamnow/components/Screens/MyBid/BidTerms.dart';
 import 'package:diamnow/components/Screens/SalesPerson/Widget/CellModel.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
@@ -215,6 +217,12 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         manageDiamondSelection();
       });
     });
+    if (moduleType == DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
+      Timer(
+        Duration(seconds: 1),
+        () => (NavigationUtilities.pushRoute(BidTerms.route)),
+      );
+    }
   }
 
   @override
@@ -276,9 +284,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict["viewType"] = 2;
         break;
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
-//        dict["filters"] = [
-//          {"wSts": DiamondStatus.DIAMOND_STATUS_BID}
-//        ];
+        dict["filters"] = [
+          {"wSts": DiamondStatus.DIAMOND_STATUS_BID}
+        ];
         dict["filters"] = {};
         dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_BID;
         break;
@@ -402,6 +410,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                     diamonds.date = element.date;
                     diamonds.createdAt = element.createdAt;
                     diamonds.purpose = element.purpose;
+
                     break;
                 }
                 list.add(diamonds);

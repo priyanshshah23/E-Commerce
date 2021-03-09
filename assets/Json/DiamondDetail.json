@@ -96,7 +96,7 @@
     "parameters": [
       {
         "title": "brownTinge",
-        "apiKey": "vStnId",
+        "apiKey": "-",
         "sequence": 1,
         "isActive": true
       },
@@ -108,7 +108,7 @@
       },
       {
         "title": "otherTinge",
-        "apiKey": "vStnId",
+        "apiKey": "-",
         "sequence": 3,
         "isActive": true
       },
@@ -129,7 +129,7 @@
     "parameters": [
       {
         "title": "dimensionTitle",
-        "apiKey": "vStnId",
+        "apiKey": "msrmnt",
         "sequence": 1,
         "isActive": true
       },
@@ -206,7 +206,7 @@
       },
       {
         "title": "eTK",
-        "apiKey": "vStnId",
+        "apiKey": "-",
         "sequence": 13,
         "isActive": true
       }

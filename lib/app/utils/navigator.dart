@@ -24,6 +24,8 @@ import 'package:diamnow/components/Screens/Filter/FilterScreen.dart';
 import 'package:diamnow/components/Screens/Home/HomeScreen.dart';
 import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
 import 'package:diamnow/components/Screens/Auth/SignInAsGuestScreen.dart';
+import 'package:diamnow/components/Screens/MyBid/BidTerms.dart';
+import 'package:diamnow/components/Screens/MyBid/MyBidScreen.dart';
 import 'package:diamnow/components/Screens/MyDemand/MyDemandScreen.dart';
 import 'package:diamnow/components/Screens/Notification/Notifications.dart';
 import 'package:diamnow/components/Screens/OfflineSearchHistory/OfflineSearchHistory.dart';
@@ -180,6 +182,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case TabBarDemo.route:
       screen = TabBarDemo();
       break;
+    case BidTerms.route:
+      screen = BidTerms(arguments);
+      break;
     case Profile.route:
       screen = Profile();
       break;
@@ -226,6 +231,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       break;
     case ProfileList.route:
       screen = ProfileList(arguments);
+      break;
+    case MyBidScreen.route:
+      screen = MyBidScreen();
       break;
     case DiamondDetailScreen.route:
       screen = DiamondDetailScreen(
