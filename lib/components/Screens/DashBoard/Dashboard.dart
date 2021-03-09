@@ -1917,11 +1917,12 @@ class _DashboardState extends StatefulScreenWidgetState {
     );
   }
 
-  getText(String text, {FontWeight fontWeight = FontWeight.normal}) {
+  getText(String text,
+      {FontWeight fontWeight = FontWeight.normal, double fontsize = 12}) {
     return Text(
       text,
       style: appTheme.black12TextStyle.copyWith(
-        fontSize: getFontSize(12),
+        fontSize: getFontSize(fontsize),
         fontWeight: fontWeight,
       ),
     );
@@ -2054,9 +2055,9 @@ class _DashboardState extends StatefulScreenWidgetState {
             child: Card(
               elevation: 10,
               child: Container(
-                padding: EdgeInsets.all(getSize(10)),
+                padding: EdgeInsets.only(bottom: 13),
                 width: getSize(311),
-                height: getSize(207),
+                //height: getSize(207),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
                     getSize(10),
@@ -2064,33 +2065,61 @@ class _DashboardState extends StatefulScreenWidgetState {
                   color: Colors.white,
                 ),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Container(
+                        margin: EdgeInsets.all(10),
+                        child: getText(
+                          this
+                              .dashboardModel
+                              .getBannerDetails(type)
+                              .description,
+                          fontWeight: FontWeight.bold,
+                          fontsize: 16,
+                        )),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Column(children: [
-                          getSideImages(type == HOME_TOP_CENTRE
-                              ? HOME_TOP_LEFT_1
-                              : HOME_BOTTOM_LEFT_1),
-                          getSideImages(type == HOME_TOP_CENTRE
-                              ? HOME_TOP_RIGHT_1
-                              : HOME_BOTTOM_RIGHT_1),
-                        ]),
-                        Column(children: [
-                          getSideImages(type == HOME_TOP_CENTRE
-                              ? HOME_TOP_LEFT_2
-                              : HOME_BOTTOM_LEFT_2),
-                          getSideImages(type == HOME_TOP_CENTRE
-                              ? HOME_TOP_RIGHT_2
-                              : HOME_BOTTOM_RIGHT_2),
-                        ]),
-                        Column(children: [
-                          getSideImages(type == HOME_TOP_CENTRE
-                              ? HOME_TOP_LEFT_3
-                              : HOME_BOTTOM_LEFT_3),
-                          getSideImages(type == HOME_TOP_CENTRE
-                              ? HOME_TOP_RIGHT_3
-                              : HOME_BOTTOM_RIGHT_3),
-                        ]),
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              getSideImages(type == HOME_TOP_CENTRE
+                                  ? HOME_TOP_LEFT_1
+                                  : HOME_BOTTOM_LEFT_1),
+                              SizedBox(
+                                height: getSize(13),
+                              ),
+                              getSideImages(type == HOME_TOP_CENTRE
+                                  ? HOME_TOP_RIGHT_1
+                                  : HOME_BOTTOM_RIGHT_1),
+                            ]),
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              getSideImages(type == HOME_TOP_CENTRE
+                                  ? HOME_TOP_LEFT_2
+                                  : HOME_BOTTOM_LEFT_2),
+                              SizedBox(
+                                height: getSize(13),
+                              ),
+                              getSideImages(type == HOME_TOP_CENTRE
+                                  ? HOME_TOP_RIGHT_2
+                                  : HOME_BOTTOM_RIGHT_2),
+                            ]),
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              getSideImages(type == HOME_TOP_CENTRE
+                                  ? HOME_TOP_LEFT_3
+                                  : HOME_BOTTOM_LEFT_3),
+                              SizedBox(
+                                height: getSize(13),
+                              ),
+                              getSideImages(type == HOME_TOP_CENTRE
+                                  ? HOME_TOP_RIGHT_3
+                                  : HOME_BOTTOM_RIGHT_3),
+                            ]),
                       ],
                     ),
                   ],
@@ -2143,7 +2172,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                       getSize(10),
                     ),
                     child: getImageView(item,
-                    placeHolderImage: diamond,
+                        placeHolderImage: diamond,
                         fit: BoxFit.cover,
                         height: getSize(
                           getSize(243),
@@ -2177,11 +2206,10 @@ class _DashboardState extends StatefulScreenWidgetState {
         }
       },
       child: Container(
-        margin: EdgeInsets.all(getSize(10)),
         height: getSize(72),
-        width: getSize(80),
+        width: getSize(90),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(13),
           child: getImageView(banner.getDisplayImage(),
               fit: BoxFit.cover,
               placeHolderImage: diamond,
