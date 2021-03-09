@@ -891,7 +891,7 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
                                     ),
                                 child: Text(
                                   compareModel
-                                      .compareDetailList[i].parameters[j].title,
+                                      ?.compareDetailList[i]?.parameters[j]?.title ?? "-",
                                   style: appTheme.blackNormal12TitleColorblack,
                                 )),
                             Container(

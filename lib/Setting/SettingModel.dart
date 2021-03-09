@@ -599,11 +599,6 @@ class BottomMenuSetting {
   List<BottomTabModel> getBottomMenuItems(int moduleType,
       {bool isDetail = false, bool isCompare = false}) {
     List<BottomTabModel> moreMenuList = [];
-    moreMenuList.add(BottomTabModel(
-        image: bidImage,
-        isCenter: false,
-        title: R.string.screenTitle.myBid,
-        type: ActionMenuConstant.ACTION_TYPE_BID));
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
       case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
