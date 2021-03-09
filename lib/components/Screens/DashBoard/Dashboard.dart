@@ -125,7 +125,6 @@ class _DashboardState extends StatefulScreenWidgetState {
     print(dict);
     NetworkCall<DashboardResp>()
         .makeCall(
-          
             () => app.resolve<ServiceModule>().networkService().dashboard(dict),
             context,
             isProgress: false)
@@ -2017,14 +2016,18 @@ class _DashboardState extends StatefulScreenWidgetState {
       child: Stack(
         children: [
           Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
+            top: getSize(0),
+            left: getSize(0),
+            right: getSize(0),
             child: Card(
-              margin: EdgeInsets.all(20),
+              margin: EdgeInsets.all(
+                getSize(20),
+              ),
               elevation: 10,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(
+                  getSize(10),
+                ),
                 child: getImageView(getHomeCenterImage(type),
                     fit: BoxFit.cover,
                     height: getSize(243),
@@ -2033,17 +2036,18 @@ class _DashboardState extends StatefulScreenWidgetState {
             ),
           ),
           Positioned(
-            top: 200,
-            left: 40,
-            right: 40,
+            top: getSize(200),
+            left: getSize(40),
+            right: getSize(40),
             child: Card(
               elevation: 10,
               child: Container(
-                margin: EdgeInsets.only(top: 10, left: 5),
-                width: getSize(311),
+                width: getSize(313.2),
                 height: getSize(190),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(
+                    getSize(10),
+                  ),
                   color: Colors.white,
                 ),
                 child: Column(
@@ -2104,7 +2108,7 @@ class _DashboardState extends StatefulScreenWidgetState {
       height: getSize(200),
       child: CarouselSlider(
         options: CarouselOptions(
-          height: 180.0,
+          height: getSize(180),
           enlargeCenterPage: true,
           autoPlay: true,
           aspectRatio: 16 / 9,
@@ -2115,15 +2119,23 @@ class _DashboardState extends StatefulScreenWidgetState {
         ),
         items: images
             .map((item) => Container(
-                  margin: EdgeInsets.all(6.0),
+                  margin: EdgeInsets.all(
+                    getSize(6.0),
+                  ),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
+                    borderRadius: BorderRadius.circular(
+                      getSize(8.0),
+                    ),
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(
+                      getSize(10),
+                    ),
                     child: getImageView(item,
                         fit: BoxFit.cover,
-                        height: getSize(243),
+                        height: getSize(
+                          getSize(243),
+                        ),
                         width: MathUtilities.screenWidth(context)),
                   ),
                 ))
