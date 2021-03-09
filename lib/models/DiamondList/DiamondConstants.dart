@@ -169,7 +169,7 @@ class DiamondTrackConstant {
 }
 
 class BidConstant {
-  static const BID_TYPE_ADD = 2;
+  // static const BID_TYPE_ADD = 2;
   static const BID_TYPE_BLIND = 1;
   static const BID_TYPE_OPEN = 2;
 }
@@ -180,11 +180,10 @@ class MemoConstant {
 }
 
 class BidStatus {
-  static const BID_STATUS_ACTIVE = 1;
+  // static const BID_STATUS_ACTIVE = 1;
   static const BID_STATUS_PENDING = 1;
   static const BID_STATUS_WIN = 2;
   static const BID_STATUS_LOSS = 3;
-
 }
 
 class BorderConstant {
@@ -219,8 +218,6 @@ class ActionMenuConstant {
   static const ACTION_TYPE_EXCEL = 20;
   static const ACTION_TYPE_MEMO = 21;
   static const ACTION_TYPE_MY_BID = 27;
-
-
 }
 
 class MoreMenuConstant {
