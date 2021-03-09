@@ -299,7 +299,7 @@ class _DashboardState extends StatefulScreenWidgetState {
             appBar: getAppBar(
               context,
               diamondConfig.getScreenTitle(),
-              bgColor: appTheme.blackColor,
+              bgColor: appTheme.colorPrimary,
               leadingButton: isFromDrawer
                   ? getDrawerButton(context, false)
                   : getBackButton(context),
@@ -398,7 +398,7 @@ class _DashboardState extends StatefulScreenWidgetState {
       return SizedBox();
     }
     return Container(
-      color: appTheme.blackColor,
+      color: appTheme.colorPrimary,
       child: Padding(
         padding: EdgeInsets.all(
           getSize(16),
@@ -411,11 +411,11 @@ class _DashboardState extends StatefulScreenWidgetState {
               child: Hero(
                 tag: 'searchTextField',
                 child: Material(
-                  color: appTheme.blackColor,
+                  color: appTheme.colorPrimary,
                   child: Container(
                     height: getSize(40),
                     decoration: BoxDecoration(
-                      color: appTheme.blackColor,
+                      color: appTheme.colorPrimary,
                       borderRadius: BorderRadius.circular(getSize(5)),
                       border: Border.all(
                           color: appTheme.colorPrimary, width: getSize(1)),

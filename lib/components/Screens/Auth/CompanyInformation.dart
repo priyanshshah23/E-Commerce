@@ -188,9 +188,9 @@ class CompanyInformationState extends State<CompanyInformation>
                 setState(() {});
                 // NavigationUtilities.push(ThemeSetting());
               },
-              backgroundColor: appTheme.colorPrimary.withOpacity(0.1),
-              textColor: appTheme.colorPrimary,
-              borderRadius: getSize(5),
+              backgroundColor: appTheme.colorPrimary,
+              textColor: appTheme.whiteColor,
+              //borderRadius: getSize(5),
               fitWidth: true,
               text: !readOnly
                   ? R.string.authStrings.saveCompanyDetails
@@ -926,7 +926,6 @@ class CompanyInformationState extends State<CompanyInformation>
     }).catchError(
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
@@ -993,7 +992,6 @@ class CompanyInformationState extends State<CompanyInformation>
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(
           context,
-          
           desc: onError.message,
           positiveBtnTitle: R.string.commonString.btnTryAgain,
           onClickCallback: (buttonType) {
@@ -1065,7 +1063,6 @@ class CompanyInformationState extends State<CompanyInformation>
     }).catchError(
       (onError) => {
         app.resolve<CustomDialogs>().confirmDialog(context,
-            
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.btnTryAgain,
             onClickCallback: (PositveButtonClick) {
@@ -1133,7 +1130,6 @@ class CompanyInformationState extends State<CompanyInformation>
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-            
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.btnTryAgain,
           );
@@ -1196,7 +1192,6 @@ class CompanyInformationState extends State<CompanyInformation>
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-           
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.btnTryAgain,
           );
