@@ -11,6 +11,7 @@ const String company = "assets/auth/company.png";
 const String india = "assets/auth/india.png";
 const String back = "assets/auth/back.png";
 const String plusIcon = "assets/diamnow/plusIcon.png";
+const String plusGreenIcon = "assets/diamnow/plusgreenicon.png";
 const String minusIcon = "assets/diamnow/minusIcon.png";
 const String exclamation = "assets/diamnow/exclamation.png";
 
