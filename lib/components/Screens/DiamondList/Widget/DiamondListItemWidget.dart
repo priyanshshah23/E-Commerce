@@ -142,7 +142,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                             : SizedBox(),
                         Spacer(),
                         Text(
-                          "Date : " + widget.item.displayDesc,
+                          "Date : " + (widget.item?.displayDesc ?? ""),
                           style: appTheme.black16MediumTextStyle.copyWith(
                             fontSize: getFontSize(14),
                           ),

@@ -298,7 +298,8 @@ class PrefUtils {
   }
 
   SelectionPopupModel getCompanyDetails() {
-    if(_preferences.getString(keyCompany)!=null&&_preferences.getString(keyCompany).length>0) {
+    if (_preferences.getString(keyCompany) != null &&
+        _preferences.getString(keyCompany).length > 0) {
       var companyJson = json.decode(_preferences.getString(keyCompany));
       return companyJson != null
           ? new SelectionPopupModel.fromJson(companyJson)

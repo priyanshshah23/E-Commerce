@@ -2042,7 +2042,7 @@ class DiamondConfig {
         }
         arraDiamond[i].isGrouping = true;
       }
-    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_UPCOMING) {
+    } /*else if (moduleType == DiamondModuleConstant.MODULE_TYPE_UPCOMING) {
       for (int i = 0; i < arraDiamond.length; i++) {
         if (i == 0 || (arraDiamond[i].inDt != arraDiamond[i - 1].inDt)) {
           arraDiamond[i].displayTitle = DateUtilities()
@@ -2050,7 +2050,8 @@ class DiamondConfig {
                   formatter: DateUtilities.dd_mm_yyyy);
         }
       }
-    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR) {
+    } */
+    else if (moduleType == DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR) {
       DiamondModel diamondItem;
       if (arraDiamond.length == 1) {
         diamondItem = arraDiamond[0];
