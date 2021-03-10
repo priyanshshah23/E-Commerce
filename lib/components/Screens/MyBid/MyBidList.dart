@@ -317,7 +317,7 @@ class _MyBidListState extends State<MyBidList> {
 
   manageDiamondSelection() {
     fillArrayList();
-    widget.diamondCalculation.setAverageCalculation(arraDiamond);
+    // widget.diamondCalculation.setAverageCalculation(arraDiamond);
     diamondList.state.setApiCalling(false);
     setState(() {});
   }
