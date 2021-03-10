@@ -321,7 +321,7 @@ class DrawerSetting {
         .getModulePermission(ModulePermissionConstant.permission_order)
         .view)
       drawerList.add(DrawerModel(
-        image: confirmStone,
+        image: confirmStones,
         title: R.string.screenTitle.confirmStone,
         imageColor: appTheme.colorPrimary,
         isSelected: false,
@@ -527,9 +527,8 @@ class BottomMenuSetting {
         }
       }
     }
-    if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY){
+    if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
       addEnquiryInBottomMenu(moreMenuList);
-
     }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFICE &&
         moduleType != DiamondModuleConstant.MODULE_TYPE_MY_BID &&
@@ -550,7 +549,7 @@ class BottomMenuSetting {
         moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
       addCommentInBottomMenu(moreMenuList);
     }
-    if (moduleType != DiamondModuleConstant.MODULE_TYPE_COMPARE){
+    if (moduleType != DiamondModuleConstant.MODULE_TYPE_COMPARE) {
       addCompareInBottomMenu(moreMenuList, compare);
     }
 
@@ -734,7 +733,8 @@ class BottomMenuSetting {
           ));
         } else {
           addConfirmStone(moreMenuList);
-          addOfferInBottomMenu(moreMenuList, offer, isCenter: false,title: "Quote");
+          addOfferInBottomMenu(moreMenuList, offer,
+              isCenter: false, title: "Quote");
           if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST) {
             addWatchlistInBottomMenu(moreMenuList, addToWatchlist,
                 isCenter: false);
@@ -1072,11 +1072,11 @@ class BottomMenuSetting {
 //    if ((app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
 //            KYCStatus.pending) ==
 //        KYCStatus.approved) {
-      moreMenuList.add(BottomTabModel(
-          image: image,
-          isCenter: isCenter,
-          title: R.string.screenTitle.download,
-          type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
+    moreMenuList.add(BottomTabModel(
+        image: image,
+        isCenter: isCenter,
+        title: R.string.screenTitle.download,
+        type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
 //    }
   }
 
