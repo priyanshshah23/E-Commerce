@@ -53,6 +53,7 @@ class _ProfileListState extends State<ProfileList> {
   bool readOnly = true;
 
   final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _middleNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
@@ -73,6 +74,7 @@ class _ProfileListState extends State<ProfileList> {
   final TextEditingController _faxNumberController = TextEditingController();
 
   var _focusFirstName = FocusNode();
+  var _focusMiddleName = FocusNode();
   var _focusLastName = FocusNode();
   var _focusEmail = FocusNode();
   var _focusMobile = FocusNode();
@@ -137,6 +139,7 @@ class _ProfileListState extends State<ProfileList> {
       print(resp.data.designation);
       //  userAccount = resp;
       _firstNameController.text = resp.data.firstName;
+      _middleNameController.text = resp.data.middleName;
       _lastNameController.text = resp.data.lastName;
       _CompanyNameController.text = resp.data.companyName;
       _designationController.text = resp.data.designation;
@@ -368,6 +371,10 @@ class _ProfileListState extends State<ProfileList> {
                   SizedBox(
                     height: getSize(20),
                   ),
+                  getMiddleNameTextField(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
                   getLastNameTextField(),
                   SizedBox(
                     height: getSize(20),
@@ -484,6 +491,49 @@ class _ProfileListState extends State<ProfileList> {
       validation: (text) {
         if (text.trim().isEmpty) {
           return R.string.errorString.enterFirstName;
+        } else {
+          return null;
+        }
+        // }
+      },
+      inputAction: TextInputAction.next,
+      onNextPress: () {
+        _focusFirstName.unfocus();
+        fieldFocusChange(context, _focusMiddleName);
+      },
+    );
+  }
+
+  getMiddleNameTextField() {
+    return CommonTextfield(
+      autoFocus: false,
+      focusNode: _focusMiddleName,
+      readOnly: this.readOnly ? true : false,
+      textOption: TextFieldOption(
+        hintText: R.string.authStrings.middleName,
+        maxLine: 1,
+        prefixWid: getCommonIconWidget(
+            imageName: user,
+            imageType: IconSizeType.small,
+            color: Colors.black),
+        fillColor: fromHex("#FFEFEF"),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(11)),
+          borderSide: BorderSide(width: 1, color: Colors.red),
+        ),
+        inputController: _middleNameController,
+        formatter: [
+          //WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+          BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+        ],
+        //isSecureTextField: false
+      ),
+      textCallback: (text) {
+        // _firstNameController.text = _firstNameController.text.trim();
+      },
+      validation: (text) {
+        if (text.trim().isEmpty) {
+          return R.string.errorString.enterMiddleName;
         } else {
           return null;
         }
