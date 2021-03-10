@@ -46,6 +46,7 @@ class _ProfileListState extends State<ProfileList> {
   bool readOnly = true;
 
   final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _middleNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
@@ -66,6 +67,7 @@ class _ProfileListState extends State<ProfileList> {
   final TextEditingController _faxNumberController = TextEditingController();
 
   var _focusFirstName = FocusNode();
+  var _focusMiddleName = FocusNode();
   var _focusLastName = FocusNode();
   var _focusEmail = FocusNode();
   var _focusMobile = FocusNode();
@@ -370,14 +372,14 @@ class _ProfileListState extends State<ProfileList> {
                   SizedBox(
                     height: getSize(30),
                   ),
-//                getPhotoIdentityProofView(),
-//                SizedBox(
-//                  height: getSize(20),
-//                ),
-//                getBusinessIdentityProofView(),
-//                SizedBox(
-//                  height: getSize(20),
-//                ),
+                  getPhotoIdentityProofView(),
+                  SizedBox(
+                    height: getSize(30),
+                  ),
+                  getBusinessIdentityProofView(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
                 ],
               ),
             ),
@@ -425,7 +427,7 @@ class _ProfileListState extends State<ProfileList> {
       inputAction: TextInputAction.next,
       onNextPress: () {
         _focusFirstName.unfocus();
-        fieldFocusChange(context, _focusLastName);
+        fieldFocusChange(context, _focusMiddleName);
       },
     );
   }
@@ -1226,7 +1228,7 @@ class _ProfileListState extends State<ProfileList> {
       focusNode: _focusFaxNumber,
       readOnly: this.readOnly ? true : false,
       textOption: TextFieldOption(
-        hintText: R.string.authStrings.lblFaxNumber,
+        hintText: R.string.commonString.lblFaxNumber,
         maxLine: 1,
         keyboardType: TextInputType.number,
         inputController: _faxNumberController,
@@ -1313,5 +1315,161 @@ class _ProfileListState extends State<ProfileList> {
       }
       return;
     });
+  }
+
+  getPhotoIdentityProofView() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(
+            left: getSize(8),
+            right: getSize(8),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  "Photo Identity Proof",
+                  style: appTheme.black16MediumTextStyle,
+                ),
+              ),
+              !readOnly
+                  ? Container(
+                      height: getSize(11),
+                      width: getSize(9),
+                      child: Image.asset(
+                        home_delete,
+                      ),
+                    )
+                  : SizedBox(),
+              SizedBox(
+                width: !readOnly ? getSize(4) : getSize(0),
+              ),
+              !readOnly
+                  ? Text(
+                      "Remove",
+                      style: appTheme.error12MediumTextStyle,
+                    )
+                  : SizedBox(),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: getSize(16),
+        ),
+        InkWell(
+          onTap: () {
+//        if (!readOnly) {
+//          pickPDFfile(context, pickeFile, (pickedFile, isUploaded) {
+//            pickeFile = pickedFile;
+//            setState(() {
+//              imageUpload = isUploaded;
+//            });
+//            print("-----file------$pickedFile");
+//            print("-----imageUpload------$imageUpload");
+//          });
+//        }
+          },
+          child: Container(
+            height: getSize(150),
+            width: MediaQuery.of(context).size.width - getSize(32),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                getSize(30),
+              ),
+              border: Border.all(
+                color: appTheme.dividerColor,
+              ),
+            ),
+            child: readOnly
+                ? SizedBox()
+                : Icon(
+                    Icons.add,
+                    size: getSize(40),
+                    color: appTheme.textGreyColor.withOpacity(0.3),
+                  ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  getBusinessIdentityProofView() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(
+            left: getSize(8),
+            right: getSize(8),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  "Business Identity Proof",
+                  style: appTheme.black16MediumTextStyle,
+                ),
+              ),
+              !readOnly
+                  ? Container(
+                      height: getSize(11),
+                      width: getSize(9),
+                      child: Image.asset(
+                        home_delete,
+                      ),
+                    )
+                  : SizedBox(),
+              SizedBox(
+                width: !readOnly ? getSize(4) : getSize(0),
+              ),
+              !readOnly
+                  ? Text(
+                      "Remove",
+                      style: appTheme.error12MediumTextStyle,
+                    )
+                  : SizedBox(),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: getSize(16),
+        ),
+        InkWell(
+          onTap: () {
+//        if (!readOnly) {
+//          pickPDFfile(context, pickeFile, (pickedFile, isUploaded) {
+//            pickeFile = pickedFile;
+//            setState(() {
+//              imageUpload = isUploaded;
+//            });
+//            print("-----file------$pickedFile");
+//            print("-----imageUpload------$imageUpload");
+//          });
+//        }
+          },
+          child: Container(
+            height: getSize(150),
+            width: MediaQuery.of(context).size.width - getSize(32),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                getSize(30),
+              ),
+              border: Border.all(
+                color: appTheme.dividerColor,
+              ),
+            ),
+            child: readOnly
+                ? SizedBox()
+                : Icon(
+                    Icons.add,
+                    size: getSize(40),
+                    color: appTheme.textGreyColor.withOpacity(0.3),
+                  ),
+          ),
+        ),
+      ],
+    );
   }
 }
