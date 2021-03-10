@@ -4,9 +4,12 @@ import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_pickers.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/network/Uploadmanager.dart';
 import 'package:diamnow/app/theme/app_theme.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/Screens/Auth/ChangePassword.dart';
 import 'package:diamnow/components/Screens/Auth/CompanyInformation.dart';
@@ -14,6 +17,7 @@ import 'package:diamnow/components/Screens/Auth/Documents.dart';
 import 'package:diamnow/components/Screens/Auth/PersonalInformation.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/DialogueList.dart';
 import 'package:diamnow/components/widgets/shared/CountryPickerWidget.dart';
+import 'package:diamnow/models/Auth/PersonalInformationModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -106,6 +110,65 @@ class _ProfileListState extends State<ProfileList> {
   String image;
 
   _ProfileListState({this.isFromDrawer});
+
+  @override
+  void initState() {
+    super.initState();
+    // _callApiForCountryList();
+    getPersonalInformation();
+    //  getMasters();
+  }
+
+  getPersonalInformation() async {
+    NetworkCall<PersonalInformationViewResp>()
+        .makeCall(
+            () => app
+                .resolve<ServiceModule>()
+                .networkService()
+                .personalInformationView(),
+            context,
+            isProgress: true)
+        .then((resp) async {
+      print("----------------profile load -----------------");
+      print(resp.data.designation);
+      //  userAccount = resp;
+      _firstNameController.text = resp.data.firstName;
+      _lastNameController.text = resp.data.lastName;
+      _CompanyNameController.text = resp.data.companyName;
+      _designationController.text = resp.data.designation;
+      _businessTypeController.text = resp.data.businessType;
+      pinCodeController.text = resp.data.zipcode;
+      _companyMobileController.text = resp.data.mobile;
+      _faxNumberController.text = resp.data.fax;
+      // _natureOfOrgController.text = resp.data.
+      //  _middleNameController.text = resp.data.middleName;
+      _addressLineOneController.text = resp.data.address;
+      _mobileController.text = resp.data.mobile;
+      selectedDialogCountryForMobile =
+          CountryPickerUtils.getCountryByPhoneCode(resp.data.countryCode);
+      _whatsAppMobileController.text = resp.data.whatsapp;
+      if (!isNullEmptyOrFalse(resp.data.whatsappCounCode)) {
+        selectedDialogCountryForWhatsapp =
+            CountryPickerUtils.getCountryByPhoneCode(
+                resp.data.whatsappCounCode);
+      }
+
+      _emailController.text = resp.data.email;
+      image = resp.data.profileImage;
+      _countryController.text = resp.data.country;
+      _stateController.text = resp.data.state;
+      _cityController.text = resp.data.city;
+      //  companyInformationState.pinCodeController.text = resp.data.zipcode;
+      //  _skypeController.text = resp.data.skype;
+      setState(() {});
+    }).catchError((onError) {
+      app.resolve<CustomDialogs>().confirmDialog(
+            context,
+            desc: onError.message,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
+          );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -338,10 +401,10 @@ class _ProfileListState extends State<ProfileList> {
                   SizedBox(
                     height: getSize(20),
                   ),
-                  getNatureOfOrgDropDown(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
+                  // getNatureOfOrgDropDown(),
+                  // SizedBox(
+                  //   height: getSize(20),
+                  // ),
                   getAddressLineOneTextField(),
                   SizedBox(
                     height: getSize(20),
@@ -1226,7 +1289,7 @@ class _ProfileListState extends State<ProfileList> {
       focusNode: _focusFaxNumber,
       readOnly: this.readOnly ? true : false,
       textOption: TextFieldOption(
-        hintText: R.string.authStrings.lblFaxNumber,
+        hintText: R.string.commonString.lblFaxNumber,
         maxLine: 1,
         keyboardType: TextInputType.number,
         inputController: _faxNumberController,
