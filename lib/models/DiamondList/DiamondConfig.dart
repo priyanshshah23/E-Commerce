@@ -322,6 +322,15 @@ class DiamondConfig {
               isCenter: true,
             ),
           );
+          list.add(
+            BottomTabModel(
+              title: "",
+              image: download,
+              code: BottomCodeConstant.TBDownloadView,
+              sequence: 1,
+              isCenter: true,
+            ),
+          );
           // list.add(BottomTabModel(
           //     title: "",
           //     image: clock,
@@ -457,7 +466,7 @@ class DiamondConfig {
         actionMemo(context, list, refreshList);
         break;
       case ActionMenuConstant.ACTION_TYPE_DOWNLOAD:
-        actionDownload(context, list);
+        actionDownload(context, list, isDownloadSearched: true);
         break;
       case ActionMenuConstant.ACTION_TYPE_EXCEL:
         actionExportExcel(context, list);
@@ -483,7 +492,8 @@ class DiamondConfig {
         print("-----------list-------${list.length}");
         print("-----------moduleType-------${moduleType}");
         dict[ArgumentConstant.DiamondList] = list;
-        dict[ArgumentConstant.ModuleType] = DiamondModuleConstant.MODULE_TYPE_SEARCH;
+        dict[ArgumentConstant.ModuleType] =
+            DiamondModuleConstant.MODULE_TYPE_SEARCH;
         // NavigationUtilities.pushRoute(DiamondCompareScreen.route, args: dict);
         bool isBack = await Navigator.of(context).push(MaterialPageRoute(
           settings: RouteSettings(name: DiamondCompareScreen.route),
@@ -1175,7 +1185,7 @@ class DiamondConfig {
     BuildContext context,
     List<DiamondModel> list, {
     bool isForShare = false,
-    bool isDownloadSearched = true,
+    bool isDownloadSearched = false,
   }) {
     List<SelectionPopupModel> downloadOptionList = List<SelectionPopupModel>();
     List<SelectionPopupModel> selectedOptions = List<SelectionPopupModel>();
@@ -1201,9 +1211,12 @@ class DiamondConfig {
       section: SectionAnalytics.SHARE,
       action: ActionAnalytics.OPEN,
     );
+    print("++++++++++++++++${isDownloadSearched}+++++++++${isForShare}");
     NavigationUtilities.push(DownLoadAndShareScreen(
       diamondList: list,
-      title: "Share Stone",
+      title: isDownloadSearched
+          ? R.string.commonString.download
+          : R.string.screenTitle.shareStone,
       onDownload: (selectedOptions) {
         showDialog(
             context: context,
