@@ -74,6 +74,7 @@ class _ProfileListState extends State<ProfileList> {
   final TextEditingController _faxNumberController = TextEditingController();
 
   var _focusFirstName = FocusNode();
+  var _focusMiddleName = FocusNode();
   var _focusLastName = FocusNode();
   var _focusEmail = FocusNode();
   var _focusMobile = FocusNode();
@@ -134,12 +135,10 @@ class _ProfileListState extends State<ProfileList> {
             context,
             isProgress: true)
         .then((resp) async {
-      print("----------------profile load -----------------");
-      print(resp.data.designation);
-      //  userAccount = resp;
       _firstNameController.text = resp.data.firstName;
       _middleNameController.text = resp.data.middleName;
       _lastNameController.text = resp.data.lastName;
+      _emailController.text = resp.data.email;
       _CompanyNameController.text = resp.data.companyName;
       _designationController.text = resp.data.designation;
       _businessTypeController.text = resp.data.businessType;
@@ -227,15 +226,15 @@ class _ProfileListState extends State<ProfileList> {
                       FocusScope.of(context).unfocus();
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
-//                          if (_mobileController.text.isNotEmpty) {
-//                            if (await checkValidation()) {
-//                              if (isProfileImageUpload) {
-//                                await uploadDocument();
-//                              } else {
-//                                callPersonalInformationApi();
-//                              }
-//                            }
-//                          }
+                        if (_mobileController.text.isNotEmpty) {
+                          if (await checkValidation()) {
+                            if (isProfileImageUpload) {
+                              await uploadDocument();
+                            } else {
+                              callPersonalInformationApi();
+                            }
+                          }
+                        }
                       } else {
                         setState(() {
                           _autoValidate = true;
@@ -391,10 +390,10 @@ class _ProfileListState extends State<ProfileList> {
                     height: getSize(20),
                   ),
                   getCompanyNameTextField(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  getDesignationDropDown(),
+//                  SizedBox(
+//                    height: getSize(20),
+//                  ),
+//                  getDesignationDropDown(),
                   SizedBox(
                     height: getSize(30),
                   ),
@@ -846,11 +845,11 @@ class _ProfileListState extends State<ProfileList> {
 //                  });
           },
           validation: (text) {
-            if (text.trim().isEmpty) {
-              return R.string.errorString.enterDesignation;
-            } else {
-              return null;
-            }
+//            if (text.trim().isEmpty) {
+//              return R.string.errorString.enterDesignation;
+//            } else {
+//              return null;
+//            }
           },
           inputAction: TextInputAction.done,
           onNextPress: () {
@@ -1867,5 +1866,84 @@ class _ProfileListState extends State<ProfileList> {
         ),
       ],
     );
+  }
+
+  checkValidation() async {
+    if (await isValidMobile(_mobileController.text.trim(),
+            selectedDialogCountryForMobile.isoCode) ==
+        false) {
+      showToast(R.string.errorString.enterValidPhone, context: context);
+      return false;
+    }
+    return true;
+  }
+
+  callPersonalInformationApi({String imagePath}) async {
+    PersonalInformationReq req = PersonalInformationReq();
+    req.id = app.resolve<PrefUtils>().getUserDetails().id;
+    req.address = _addressLineOneController.text.trim();
+    req.firstName = _firstNameController.text.trim();
+    req.middleName = _middleNameController.text.trim();
+    req.lastName = _lastNameController.text.trim();
+    req.mobile = _mobileController.text;
+    req.countryCode = selectedDialogCountryForMobile.phoneCode;
+    req.whatsapp = _whatsAppMobileController.text;
+    req.whatsappCounCode = selectedDialogCountryForWhatsapp.phoneCode;
+    req.email = _emailController.text.trim();
+//    req.skype = _skypeController.text.trim();
+    req.pincode = pinCodeController.text.trim();
+    countryList.forEach((element) {
+      if (element.title == _countryController.text.trim()) {
+        req.country = element.id;
+      }
+    });
+    stateList.forEach((element) {
+      if (element.title == _stateController.text.trim()) {
+        req.state = element.id;
+      }
+    });
+    cityList.forEach((element) {
+      if (element.title == _cityController.text.trim()) {
+        req.city = element.id;
+      }
+    });
+    if (imagePath != null) {
+      req.profileImage = imagePath;
+    }
+
+    NetworkCall<PersonalInformationViewResp>()
+        .makeCall(
+            () => app
+                .resolve<ServiceModule>()
+                .networkService()
+                .personalInformation(req),
+            context,
+            isProgress: true)
+        .then((resp) async {
+      setState(() {});
+      if (resp.data.accountTerm == null) {
+        var oldAccTerm = app.resolve<PrefUtils>().getUserDetails().accountTerm;
+        resp.data.accountTerm = oldAccTerm;
+      }
+      String oldEmail = app.resolve<PrefUtils>().getUserDetails().email;
+
+      app.resolve<PrefUtils>().saveUser(resp.data);
+      app.resolve<CustomDialogs>().confirmDialog(
+            context,
+            title: R.string.commonString.successfully,
+            desc: resp.message,
+            positiveBtnTitle: R.string.commonString.ok,
+          );
+
+      if (oldEmail != _emailController.text) {
+        callLogout(context);
+      }
+    }).catchError((onError) {
+      app.resolve<CustomDialogs>().confirmDialog(
+            context,
+            desc: onError.message,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
+          );
+    });
   }
 }
