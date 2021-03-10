@@ -1,7 +1,7 @@
 import 'dart:collection';
 import 'dart:io';
 
-import 'package:diamnow/app/Helper/LocalNotification.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
@@ -23,14 +23,12 @@ import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/Notification/Notifications.dart';
 import 'package:diamnow/components/Screens/SavedSearch/SavedSearchScreen.dart';
 import 'package:diamnow/components/Screens/Search/Search.dart';
-import 'package:diamnow/components/Screens/VoiceSearch/VoiceSearch.dart';
 import 'package:diamnow/components/widgets/BaseStateFulWidget.dart';
 import 'package:diamnow/models/AnalyticsModel/AnalyticsModel.dart';
 import 'package:diamnow/models/Dashboard/DashboardModel.dart';
 import 'package:diamnow/models/Dashbord/DashBoardConfigModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
-import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:flutter/material.dart';
@@ -40,8 +38,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class Dashboard extends StatefulScreenWidget {
@@ -104,9 +100,11 @@ class _DashboardState extends StatefulScreenWidgetState {
 
     dashboardConfig = DashboardConfig();
     dashboardConfig.initItems();
-    this.dashboardModel = app.resolve<PrefUtils>().getDashboardDetails();
-
-    callApiForDashboard(false);
+    dashboardModel = app.resolve<PrefUtils>().getDashboardDetails();
+    print("=============================${dashboardModel != null}");
+    if (dashboardModel != null) {
+      callApiForDashboard(false);
+    }
     // setState(() {
     //   //
     // });
@@ -132,7 +130,7 @@ class _DashboardState extends StatefulScreenWidgetState {
             context,
             isProgress: false)
         // !isRefress && !isLoading
-        .then((resp) async {
+        .then((resp)  {
       setState(() {
         this.dashboardModel = resp.data;
 
@@ -140,11 +138,13 @@ class _DashboardState extends StatefulScreenWidgetState {
           emailURL = this.dashboardModel.seller.email;
         }
         setTopCountData();
+         app
+            .resolve<PrefUtils>()
+            .saveDashboardDetails(resp.data);
+        print("-----------------------------------${app.resolve<PrefUtils>().getDashboardDetails().seller.lastName}");
+
       });
-      await app
-          .resolve<PrefUtils>()
-          .saveDashboardDetails(resp.data)
-          .then((value) => {});
+
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
@@ -2186,11 +2186,16 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   openDiamondList(String id) {
-    Map<String, dynamic> dict = new HashMap();
-    dict["filterId"] = id;
-    dict[ArgumentConstant.ModuleType] =
-        DiamondModuleConstant.MODULE_TYPE_SEARCH;
-    NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_searchResult)
+        .view) {
+      Map<String, dynamic> dict = new HashMap();
+      dict["filterId"] = id;
+      dict[ArgumentConstant.ModuleType] =
+          DiamondModuleConstant.MODULE_TYPE_SEARCH;
+      NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+    }
   }
 
   getSideImages(String type) {

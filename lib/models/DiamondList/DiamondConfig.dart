@@ -787,8 +787,9 @@ class DiamondConfig {
       model.isAddAppointment = true;
       selectedList.add(model);
     });
-
-    NavigationUtilities.pushRoute(OfferViewScreen.route);
+    var dict = Map<String, dynamic>();
+    dict[ArgumentConstant.DiamondList] = selectedList;
+    NavigationUtilities.pushRoute(OfferViewScreen.route,args: dict);
     // openDiamondActionAcreen(
     //     context, DiamondTrackConstant.TRACK_TYPE_OFFICE, selectedList);
     /* showOfferListDialog(context, selectedList, (manageClick) {
