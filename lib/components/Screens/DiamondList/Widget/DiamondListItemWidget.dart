@@ -1103,59 +1103,79 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   Radius.circular(getSize(6)),
                 )),
             height: getSize(54),
-            child: Row(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                      color: appTheme.dividerColor,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(getSize(6)),
-                        bottomLeft: Radius.circular(getSize(6)),
-                      )),
-                  width: getSize(72),
-                  child: Center(
-                    child: Text(
-                      "Note :",
-                      style: appTheme.blackMedium12TitleColorblack,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: CommonTextfield(
-                    focusNode: _focusNote,
-                    readOnly: !widget.item.isNoteEditable,
-                    textOption: TextFieldOption(
-                      isBorder: false,
-                      textAlign: TextAlign.right,
-                      // contentPadding: EdgeInsets.symmetric(
-                      //   horizontal: getSize(10),
-                      // ),
-
-                      hintText: 'Enter Note',
-                      maxLine: 2,
-                      keyboardType: TextInputType.multiline,
-
-                      fillColor: !widget.item.isNoteEditable
-                          ? fromHex("#FFEFEF")
-                          : appTheme.dividerColor,
-                      // fillColor: Colors.red,
-                      inputController: _noteController,
-                      formatter: [
-                        //  WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
-                        BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+            child: !widget.item.isNoteEditable
+                ? Container(
+                    decoration: BoxDecoration(
+                        color: appTheme.dividerColor,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(getSize(6)),
+                          bottomLeft: Radius.circular(getSize(6)),
+                        )),
+                    // width: getSize(341),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 11, bottom: 11, top: 9),
+                          child: Text(
+                            "Note : " + widget.item.remarks,
+                            style: appTheme.blackMedium12TitleColorblack,
+                          ),
+                        ),
                       ],
                     ),
-                    textCallback: (text) {
-                      widget.item.remarks = text;
-                    },
-                    inputAction: TextInputAction.newline,
-                    onNextPress: () {
-                      _focusNote.unfocus();
-                    },
+                  )
+                : Row(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            color: appTheme.dividerColor,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(getSize(6)),
+                              bottomLeft: Radius.circular(getSize(6)),
+                            )),
+                        width: getSize(72),
+                        child: Center(
+                          child: Text(
+                            "Note :",
+                            style: appTheme.blackMedium12TitleColorblack,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: CommonTextfield(
+                          focusNode: _focusNote,
+                          readOnly: !widget.item.isNoteEditable,
+                          textOption: TextFieldOption(
+                            isBorder: false,
+                            textAlign: TextAlign.right,
+                            // contentPadding: EdgeInsets.symmetric(
+                            //   horizontal: getSize(10),
+                            // ),
+
+                            hintText: 'Enter Note',
+                            maxLine: 2,
+                            keyboardType: TextInputType.multiline,
+                            fillColor: appTheme.dividerColor,
+                            // fillColor: Colors.red,
+                            inputController: _noteController,
+                            formatter: [
+                              //  WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+                              BlacklistingTextInputFormatter(
+                                  RegExp(RegexForEmoji))
+                            ],
+                          ),
+                          textCallback: (text) {
+                            widget.item.remarks = text;
+                          },
+                          inputAction: TextInputAction.newline,
+                          onNextPress: () {
+                            _focusNote.unfocus();
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
           )
         : Container();
   }
