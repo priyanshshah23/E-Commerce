@@ -415,7 +415,7 @@ class _ProfileListState extends State<ProfileList> {
                   SizedBox(
                     height: getSize(20),
                   ),
-                  getCompanyNameTextField(),
+                  // getCompanyNameTextField(),
 //                  SizedBox(
 //                    height: getSize(20),
 //                  ),
