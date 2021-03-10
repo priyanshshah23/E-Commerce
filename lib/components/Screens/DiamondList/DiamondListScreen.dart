@@ -117,6 +117,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   bool hasData = false;
   int viewTypeCount = 0;
   ScreenshotCallback screenshotCallback = ScreenshotCallback();
+  bool isTermsOpen = false;
 
   @override
   void initState() {
@@ -217,11 +218,17 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         manageDiamondSelection();
       });
     });
-    if (moduleType == DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
-      Timer(
+  }
+
+  openTerms() {
+    if (moduleType == DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
+        !isTermsOpen) {
+      /*   Timer(
         Duration(seconds: 1),
-        () => (NavigationUtilities.pushRoute(BidTerms.route)),
-      );
+            () => (),
+      );*/
+      isTermsOpen = true;
+      NavigationUtilities.pushRoute(BidTerms.route);
     }
   }
 
@@ -393,6 +400,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       if (page == DEFAULT_PAGE) {
         hasData = diamondListResp.data.diamonds.length > 0 ||
             diamondListResp.data.list.length > 0;
+        openTerms();
       }
       switch (moduleType) {
         case DiamondModuleConstant.MODULE_TYPE_MY_CART:
