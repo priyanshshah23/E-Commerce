@@ -233,6 +233,9 @@ class _ProfileListState extends State<ProfileList> {
                             } else {
                               callPersonalInformationApi();
                             }
+                          } else {
+                            showToast("Please add valid phone number.",
+                                context: context);
                           }
                         }
                       } else {
