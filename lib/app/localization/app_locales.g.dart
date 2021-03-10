@@ -66,12 +66,12 @@ class AuthStrings {
   String pleaseEnterDeliveryOTP = "Please enter customer delivery code.";
   String verified = "Verified";
   String verify = "Verify";
-  String addressLineOne = "Address 1";
+  String addressLineOne = "Address";
   String addressLineTwo = "Address 2";
   String addressLineThree = "Address 3";
   String oldPassword = "Old Password";
   String skype = "Skype";
-  String whatsApp = "Whatsapp";
+  String whatsApp = "Telephone Number";
   String pinCode = "PinCode*";
   String verifyMobileDesc =
       "Please verify mobile number to update the profile.";
@@ -98,7 +98,7 @@ class AuthStrings {
       "Do you want to enable Touch Id/MPin to unlock Arjiv? Please choose an option to unlock app";
   String searchDiamonds = "Search diamonds";
   String continueWithSearch = "Do you want to continue your search?";
-  String mobileNumber = "Mobile";
+  String mobileNumber = "Mobile Number";
   String searchHint = "Search...";
   String selectYourCountry = "Select Country";
   String resendCodeIn = "Resend code in";
@@ -306,10 +306,11 @@ class CommonString {
   String lblCity = "City";
   String lblCountry = "Country";
   String lblName = "Name";
-  String lblPinCode = "PIN Code";
+  String lblPinCode = "Zip Code";
   String lblMobileNumber = "Mobile Number";
   String lblState = "State";
   String lblCode = "Code:";
+  String lblFaxNumber = "Fax Number";
   String lblOrderNo = "Order No:";
   String lblOrderItem = "Order Item:";
   String lblDelivered = "Delivered";

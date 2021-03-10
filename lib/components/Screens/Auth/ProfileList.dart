@@ -475,7 +475,7 @@ class _ProfileListState extends State<ProfileList> {
       focusNode: _focusEmail,
       readOnly: this.readOnly ? true : false,
       textOption: TextFieldOption(
-        hintText: R.string.authStrings.emaillbl,
+        hintText: R.string.authStrings.emailAddress,
         maxLine: 1,
         prefixWid: getCommonIconWidget(
             imageName: email,
@@ -711,7 +711,7 @@ class _ProfileListState extends State<ProfileList> {
           readOnly: this.readOnly ? true : false,
           enable: false,
           textOption: TextFieldOption(
-              hintText: "Select Document",
+              hintText: R.string.authStrings.designation + "*",
               maxLine: 1,
               prefixWid: getCommonIconWidget(
                   imageName: documentPlaceHolder,
@@ -945,7 +945,7 @@ class _ProfileListState extends State<ProfileList> {
           readOnly: this.readOnly ? true : false,
           enable: false,
           textOption: TextFieldOption(
-              hintText: R.string.commonString.lblCountry,
+              hintText: R.string.commonString.lblCountry + "*",
               maxLine: 1,
               prefixWid: getCommonIconWidget(
                   imageName: country, imageType: IconSizeType.small),
@@ -1023,7 +1023,7 @@ class _ProfileListState extends State<ProfileList> {
           readOnly: this.readOnly ? true : false,
           enable: false,
           textOption: TextFieldOption(
-              hintText: R.string.commonString.lblState,
+              hintText: R.string.commonString.lblState + "*",
               maxLine: 1,
               prefixWid: getCommonIconWidget(
                   imageName: state, imageType: IconSizeType.small),
@@ -1100,7 +1100,7 @@ class _ProfileListState extends State<ProfileList> {
           textOption: TextFieldOption(
               prefixWid: getCommonIconWidget(
                   imageName: city, imageType: IconSizeType.small),
-              hintText: R.string.commonString.lblCity,
+              hintText: R.string.commonString.lblCity + "*",
               maxLine: 1,
               keyboardType: TextInputType.text,
               type: TextFieldType.DropDown,
@@ -1168,7 +1168,7 @@ class _ProfileListState extends State<ProfileList> {
       focusNode: _focusCompanyMobile,
       readOnly: this.readOnly ? true : false,
       textOption: TextFieldOption(
-        hintText: R.string.authStrings.mobileNumber + "*",
+        hintText: R.string.authStrings.whatsApp,
         prefixWid: Padding(
           padding: EdgeInsets.only(left: getSize(0)),
           child: Row(
@@ -1226,7 +1226,7 @@ class _ProfileListState extends State<ProfileList> {
       focusNode: _focusFaxNumber,
       readOnly: this.readOnly ? true : false,
       textOption: TextFieldOption(
-        hintText: R.string.authStrings.mobileNumber + "*",
+        hintText: R.string.authStrings.lblFaxNumber,
         maxLine: 1,
         keyboardType: TextInputType.number,
         inputController: _faxNumberController,
