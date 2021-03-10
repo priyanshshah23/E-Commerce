@@ -52,6 +52,7 @@ const eventBusSocket = "EventBusSocket";
 const eventBusLogout = "EventBusLogout";
 const eventBusDropDown = "EventBusDropDown";
 const eventBusRefreshList = "DiamondListRefresh";
+const eventBusRefreshItem = "DiamondRefresh";
 
 const HOME_TOP_LEFT_1 = "9";
 const HOME_TOP_LEFT_2 = "10";
@@ -170,7 +171,7 @@ class MasterCode {
   static const String billType = "BILL_TYPE";
   static const String dayTerm = "DAY_TERM";
   static const String localBill = "LOCAL_BILL";
-  // static const String mixTint = "MIX_TINT";
+// static const String mixTint = "MIX_TINT";
 }
 
 class LocalizationConstant {

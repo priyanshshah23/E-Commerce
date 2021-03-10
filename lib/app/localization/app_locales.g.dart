@@ -66,12 +66,12 @@ class AuthStrings {
   String pleaseEnterDeliveryOTP = "Please enter customer delivery code.";
   String verified = "Verified";
   String verify = "Verify";
-  String addressLineOne = "Address 1";
+  String addressLineOne = "Address";
   String addressLineTwo = "Address 2";
   String addressLineThree = "Address 3";
   String oldPassword = "Old Password";
   String skype = "Skype";
-  String whatsApp = "Whatsapp";
+  String whatsApp = "Whatsapp Number";
   String pinCode = "PinCode*";
   String verifyMobileDesc =
       "Please verify mobile number to update the profile.";
@@ -98,7 +98,7 @@ class AuthStrings {
       "Do you want to enable Touch Id/MPin to unlock Arjiv? Please choose an option to unlock app";
   String searchDiamonds = "Search diamonds";
   String continueWithSearch = "Do you want to continue your search?";
-  String mobileNumber = "Mobile";
+  String mobileNumber = "Mobile Number";
   String searchHint = "Search...";
   String selectYourCountry = "Select Country";
   String resendCodeIn = "Resend code in";
@@ -306,10 +306,11 @@ class CommonString {
   String lblCity = "City";
   String lblCountry = "Country";
   String lblName = "Name";
-  String lblPinCode = "PIN Code";
+  String lblPinCode = "Zip Code";
   String lblMobileNumber = "Mobile Number";
   String lblState = "State";
   String lblCode = "Code:";
+  String lblFaxNumber = "Fax Number";
   String lblOrderNo = "Order No:";
   String lblOrderItem = "Order Item:";
   String lblDelivered = "Delivered";
@@ -509,10 +510,21 @@ class ErrorString {
   String enterSkype = "Please Enter Skype.";
   String enterRegisterCode = "Please enter registration code";
   String enterEmail = "Please enter the Email address.";
-  String enterPhone = "Please enter Mobile Number.";
+  String enterPhone = "Please enter the Mobile Number.";
+  String enterTelePhone = "Please enter the TelePhone Number.";
+  String enterFax = "Please enter Fax Number.";
+  String enterDesignation = "Please select the designation.";
+  String selectNatureOfOrganization =
+      "Please select the Nature Of The Organization.";
+  String selectCountry = "Please select the country.";
+  String selectState = "Please select the State.";
+  String selectCity = "Please select the City.";
+  String enterBusinessType = "Please select the Business Type.";
   String enterUsername = "Username can't be empty. Please enter Username.";
   String enterValidEmail = "Please enter the valid Email address.";
   String enterValidPhone = "Please enter the valid Mobile Number.";
+  String enterValidTelePhone = "Please enter the valid Telephone Number.";
+  String enterValidFaxNumber = "Please enter the valid fax number.";
   String enterValidWhatsappPhone =
       "Please enter the valid WhatsApp Mobile Number.";
   String enterValidPassword = "Please enter 6 characters or long password.";
@@ -521,9 +533,10 @@ class ErrorString {
   String enterMiddleName = "Please enter the Middle Name.";
   String enterPinCode = "Please enter the Pin Code.";
   String enterName = "Please enter name.";
-  String enterLastName = "Please enter Last Name.";
+  String enterLastName = "Please enter the Last Name.";
   String enterAddress = "Please enter address.";
-  String enterValidPinCode = "Enter Valid PinCode.";
+  String enterValidPinCode = "Please enter the Valid PinCode.";
+  String enterValidZipCode = "Please enter the valid Zip Code.";
   String enterValidAddress = "Please enter 10 characters or long address.";
   String enterPostalCode = "Please enter postal code.";
   String enterValidPostalCode = "Please enter 6 digit numeric postal code.";
@@ -661,7 +674,7 @@ class ScreenTitle {
   String forgotPassword = "Forgot your";
   String forgotPasswordDesc =
       "Enter your registered mobile number to recover your password.";
-  String termsAndCondition = "Terms & Conditions";
+  String termsAndCondition = "Terms & Condition";
   String privacyPolicy = "Privacy Policy";
   String aboutUS = "About Us";
   String otpVerification = "Verify Ride Code";
@@ -683,7 +696,7 @@ class ScreenTitle {
   String search = "Stone Search";
   String quickSearch = "Quick Search";
   String newArrival = "New Arrival";
-  String exclusiveDiamonds = "Arjiv Diamonds";
+  String exclusiveDiamonds = "Arjiv Exclusive";
   String diamondOnAuction = "Bid It";
   String stoneOfTheDays = "Best Buy";
   String myWatchlist = "My Watchlist";
@@ -691,10 +704,10 @@ class ScreenTitle {
   String myHold = "My Hold";
   String myOrder = "My Ordered List";
   String confirmStone = "Confirm Stone";
-  String myOffice = "My Appointment";
+  String myOffice = "My Office";
   String myOffer = "My Quote";
   String myPurchased = "My Purchased History";
-  String mySavedSearch = "My Saved Search";
+  String mySavedSearch = "Saved Search";
   String savedSearch = "Saved Search";
   String myDemand = "My Demand";
   String contactUs = "Contact Us";
@@ -749,7 +762,7 @@ class ScreenTitle {
   String selectCustomDate = "Select Custom date";
   String availableSlot = "Available Slots";
   String reqOfficeView = "Request Appointment";
-  String myComments = "My Comment";
+  String myComments = "My Note";
   String myReminder = "My Reminder";
   String reminder = "Reminder";
   String manageAddress = "Manage Addresses";
@@ -783,6 +796,7 @@ class ScreenTitle {
   String terms = "Terms";
   String comment = "Note";
   String holdTimeTitle = "Enter Hold Time (Hours)*";
+  String appointment = "Appointment";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }

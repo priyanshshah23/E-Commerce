@@ -266,7 +266,7 @@ class PrefUtils {
   // Store Dashboard Data
   Future<void> saveDashboardDetails(DashboardModel dashboardModel) async {
     await _preferences.setString(
-        keyDashboard, json.encode(dashboardModel.toJson()));
+        keyDashboard, json.encode(dashboardModel));
   }
 
   DashboardModel getDashboardDetails() {
@@ -298,7 +298,8 @@ class PrefUtils {
   }
 
   SelectionPopupModel getCompanyDetails() {
-    if(_preferences.getString(keyCompany)!=null&&_preferences.getString(keyCompany).length>0) {
+    if (_preferences.getString(keyCompany) != null &&
+        _preferences.getString(keyCompany).length > 0) {
       var companyJson = json.decode(_preferences.getString(keyCompany));
       return companyJson != null
           ? new SelectionPopupModel.fromJson(companyJson)
@@ -376,33 +377,42 @@ class PrefUtils {
     /*  if (app.resolve<PrefUtils>().getUserDetails() == UserConstant.CUSTOMER &&
         (app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
                 KYCStatus.pending) !=
-            KYCStatus.approved) {
-      if (module == ModulePermissionConstant.permission_searchDiamond ||
-          module == ModulePermissionConstant.permission_quickSearch ||
-          module == ModulePermissionConstant.permission_newGoods ||
-          module == ModulePermissionConstant.permission_stone_of_the_day ||
-          module == ModulePermissionConstant.permission_watchlist ||
-          module == ModulePermissionConstant.permission_cart ||
-          module == ModulePermissionConstant.permission_appointment ||
-          module == ModulePermissionConstant.permission_offer ||
-          module == ModulePermissionConstant.permission_order ||
-          module == ModulePermissionConstant.permission_upcomingDiamonds ||
-          module == ModulePermissionConstant.permission_purchase ||
-          module == ModulePermissionConstant.permission_myDemand ||
-          module == ModulePermissionConstant.permission_mySavedSearch) {
-        if (module == ModulePermissionConstant.permission_searchDiamond ||
-            module == ModulePermissionConstant.permission_quickSearch) {
-        } else {
-          data.view = false;
-        }
-        data.insert = false;
-        data.update = false;
-        data.delete = false;
-        data.downloadExcel = false;
-      }
-    }else{
-      //Admin permission
-    }*/
+            KYCStatus.approved) {*/
+    if (module == ModulePermissionConstant.permission_searchDiamond ||
+        module == ModulePermissionConstant.permission_searchResult ||
+        module == ModulePermissionConstant.permission_dashboard ||
+        module == ModulePermissionConstant.permission_quickSearch ||
+        module == ModulePermissionConstant.permission_newGoods ||
+        module == ModulePermissionConstant.permission_exclusive ||
+        module == ModulePermissionConstant.permission_auction ||
+        module == ModulePermissionConstant.permission_upcomingDiamonds ||
+        module == ModulePermissionConstant.permission_myDemand ||
+        module == ModulePermissionConstant.permission_mySavedSearch ||
+        module == ModulePermissionConstant.permission_watchlist ||
+        module == ModulePermissionConstant.permission_cart ||
+        module == ModulePermissionConstant.permission_bid ||
+        module == ModulePermissionConstant.permission_enquiry ||
+        module == ModulePermissionConstant.permission_appointment ||
+        module == ModulePermissionConstant.permission_offer ||
+        module == ModulePermissionConstant.permission_order ||
+        module == ModulePermissionConstant.permission_comment ||
+        module == ModulePermissionConstant.permission_purchase) {
+      data = UserPermissionsData(module: module);
+      data.view = true;
+      data.insert = true;
+      data.update = true;
+      data.delete = true;
+      data.downloadExcel = true;
+    } else {
+      data = UserPermissionsData(module: module);
+      data.view = false;
+      data.insert = false;
+      data.update = false;
+      data.delete = false;
+      data.downloadExcel = false;
+    }
+//Admin permission
+
     return data;
   }
 

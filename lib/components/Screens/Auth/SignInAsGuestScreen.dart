@@ -204,6 +204,55 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
     );
   }
 
+  getCompanyTextField() {
+    return CommonTextfield(
+      focusNode: _focusAddress,
+      textOption: TextFieldOption(
+        hintText: R.string.authStrings.companyName + "*",
+        maxLine: 1,
+        prefixWid: getCommonIconWidget(
+            imageName: company,
+            imageType: IconSizeType.small,
+            color: Colors.black),
+        fillColor: isCompanyValid ? null : fromHex("#FFEFEF"),
+        errorBorder: isCompanyValid
+            ? null
+            : OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(11)),
+                borderSide: BorderSide(width: 1, color: Colors.red),
+              ),
+        inputController: _companyController,
+        formatter: [BlacklistingTextInputFormatter(new RegExp(RegexForEmoji))],
+//isSecureTextField: false
+      ),
+      textCallback: (text) {
+        if (_autoValidate) {
+          if (text.trim().isEmpty) {
+            setState(() {
+              isCompanyValid = false;
+            });
+          } else {
+            setState(() {
+              isCompanyValid = true;
+            });
+          }
+        }
+      },
+      validation: (text) {
+        if (text.trim().isEmpty) {
+          isCompanyValid = false;
+          return R.string.authStrings.enterCompanyName;
+        } else {
+          return null;
+        }
+      },
+      inputAction: TextInputAction.done,
+      onNextPress: () {
+        _focusAddress.unfocus();
+      },
+    );
+  }
+
   getFirstNameTextField() {
     return CommonTextfield(
       autoFocus: false,
@@ -463,55 +512,6 @@ class _GuestSignInScreenState extends StatefulScreenWidgetState {
     } else {
       callApi(context);
     }
-  }
-
-  getCompanyTextField() {
-    return CommonTextfield(
-      focusNode: _focusAddress,
-      textOption: TextFieldOption(
-        hintText: R.string.authStrings.companyName + "*",
-        maxLine: 1,
-        prefixWid: getCommonIconWidget(
-            imageName: company,
-            imageType: IconSizeType.small,
-            color: Colors.black),
-        fillColor: isCompanyValid ? null : fromHex("#FFEFEF"),
-        errorBorder: isCompanyValid
-            ? null
-            : OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(11)),
-                borderSide: BorderSide(width: 1, color: Colors.red),
-              ),
-        inputController: _companyController,
-        formatter: [BlacklistingTextInputFormatter(new RegExp(RegexForEmoji))],
-        //isSecureTextField: false
-      ),
-      textCallback: (text) {
-        if (_autoValidate) {
-          if (text.trim().isEmpty) {
-            setState(() {
-              isCompanyValid = false;
-            });
-          } else {
-            setState(() {
-              isCompanyValid = true;
-            });
-          }
-        }
-      },
-      validation: (text) {
-        if (text.trim().isEmpty) {
-          isCompanyValid = false;
-          return R.string.authStrings.enterCompanyName;
-        } else {
-          return null;
-        }
-      },
-      inputAction: TextInputAction.done,
-      onNextPress: () {
-        _focusAddress.unfocus();
-      },
-    );
   }
 
   getConditionCheckBox() {

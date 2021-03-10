@@ -321,7 +321,7 @@ class DrawerSetting {
         .getModulePermission(ModulePermissionConstant.permission_order)
         .view)
       drawerList.add(DrawerModel(
-        image: confirmStone,
+        image: confirmStones,
         title: R.string.screenTitle.confirmStone,
         imageColor: appTheme.colorPrimary,
         isSelected: false,
@@ -527,9 +527,8 @@ class BottomMenuSetting {
         }
       }
     }
-    if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY){
+    if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
       addEnquiryInBottomMenu(moreMenuList);
-
     }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFICE &&
         moduleType != DiamondModuleConstant.MODULE_TYPE_MY_BID &&
@@ -543,14 +542,14 @@ class BottomMenuSetting {
           image: myOffice,
           isCenter: false,
           title: R.string.screenTitle.officeView,
-          type: ActionMenuConstant.ACTION_TYPE_OFFICE_VIEW));
+          type: ActionMenuConstant.ACTION_TYPE_APPOINTMENT));
     }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
         moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
         moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
       addCommentInBottomMenu(moreMenuList);
     }
-    if (moduleType != DiamondModuleConstant.MODULE_TYPE_COMPARE){
+    if (!isDetail && !isCompare) {
       addCompareInBottomMenu(moreMenuList, compare);
     }
 
@@ -622,6 +621,13 @@ class BottomMenuSetting {
           type: ActionMenuConstant.ACTION_TYPE_MORE,
         ));
         break;
+      case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+        addConfirmStone(moreMenuList,title: "Update Stone",image: updateStones,type: ActionMenuConstant.ACTION_TYPE_UPDATE_NOTE);
+        addEnquiryInBottomMenu(moreMenuList);
+        addCompareInBottomMenu(moreMenuList, compare,isCenter: false);
+        addShareInBottomMenu(moreMenuList, shareWhite,isCenter: false);
+        addDownloadInBottomMenu(moreMenuList, downloadWhite,isCenter: false);
+        break;
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
         if (!isDetail && !isCompare) {
           addCompareInBottomMenu(moreMenuList, compare, isCenter: false);
@@ -684,12 +690,12 @@ class BottomMenuSetting {
 //          addWatchlistInBottomMenu(moreMenuList, addToWatchlist,
 //              isCenter: false);
 //        }
-          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
-            addEnquiryInBottomMenu(moreMenuList);
+//          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
+//            addEnquiryInBottomMenu(moreMenuList);
+//          }
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_CART) {
+            addCartInBottomMenu(moreMenuList);
           }
-//        if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_CART) {
-//          addCartInBottomMenu(moreMenuList);
-//        }
 
           if (!isDiamondSearchModule(moduleType)) {
             if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER &&
@@ -703,7 +709,7 @@ class BottomMenuSetting {
             addOfferInBottomMenu(moreMenuList, offerWhite, isCenter: false);
           }
 
-          //For Compare special
+//          For Compare special
           if (isCompare) {
             addOfferInBottomMenu(moreMenuList, offerWhite, isCenter: false);
           }
@@ -733,15 +739,20 @@ class BottomMenuSetting {
             type: ActionMenuConstant.ACTION_TYPE_MORE,
           ));
         } else {
-          addConfirmStone(moreMenuList);
-          addOfferInBottomMenu(moreMenuList, offer, isCenter: false,title: "Quote");
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE) {
+            addConfirmStone(moreMenuList);
+          }
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+            addOfferInBottomMenu(moreMenuList, offer,
+                isCenter: false, title: "Quote");
+          }
           if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST) {
             addWatchlistInBottomMenu(moreMenuList, addToWatchlist,
                 isCenter: false);
           }
-//          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
-//            addEnquiryInBottomMenu(moreMenuList);
-//          }
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
+            addEnquiryInBottomMenu(moreMenuList);
+          }
           if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_CART) {
             addCartInBottomMenu(moreMenuList);
           }
@@ -754,8 +765,7 @@ class BottomMenuSetting {
 //              moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL ||
 //              moduleType == DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH ||
 //              moduleType == DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {
-//            addPlaceOrderInBottomMenu(moreMenuList, placeOrder,
-//                isCenter: false);
+//            addEnquiryInBottomMenu(moreMenuList);
 //          }
 
 //          if (!isDiamondSearchModule(moduleType)) {
@@ -771,9 +781,9 @@ class BottomMenuSetting {
 //          }
 
           //For Compare special
-          if (isCompare) {
-            addOfferInBottomMenu(moreMenuList, offerWhite, isCenter: false);
-          }
+//          if (isCompare) {
+//            addOfferInBottomMenu(moreMenuList, offerWhite, isCenter: false);
+//          }
 //          if (!isCompare && !isDetail) {
 //            if (moduleType !=
 //                    DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
@@ -892,16 +902,22 @@ class BottomMenuSetting {
     }
   }
 
-  addConfirmStone(List<BottomTabModel> moreMenuList) {
+  addConfirmStone(
+    List<BottomTabModel> moreMenuList, {
+    bool isCenter: true,
+    String title,
+    String image,
+    int type,
+  }) {
     if (app
         .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_confirm_stone)
         .insert) {
       moreMenuList.add(BottomTabModel(
-        title: R.string.commonString.confirmStone,
+        title: title ?? R.string.commonString.confirmStone,
         isCenter: false,
-        image: confirmStone,
-        type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER,
+        image: image ?? confirmStone,
+        type: type ?? ActionMenuConstant.ACTION_TYPE_PLACE_ORDER,
       ));
     }
   }
@@ -1072,11 +1088,11 @@ class BottomMenuSetting {
 //    if ((app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
 //            KYCStatus.pending) ==
 //        KYCStatus.approved) {
-      moreMenuList.add(BottomTabModel(
-          image: image,
-          isCenter: isCenter,
-          title: R.string.screenTitle.download,
-          type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
+    moreMenuList.add(BottomTabModel(
+        image: image,
+        isCenter: isCenter,
+        title: R.string.screenTitle.download,
+        type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
 //    }
   }
 

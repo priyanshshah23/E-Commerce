@@ -322,6 +322,15 @@ class DiamondConfig {
               isCenter: true,
             ),
           );
+          list.add(
+            BottomTabModel(
+              title: "",
+              image: download,
+              code: BottomCodeConstant.TBDownloadView,
+              sequence: 1,
+              isCenter: true,
+            ),
+          );
           // list.add(BottomTabModel(
           //     title: "",
           //     image: clock,
@@ -457,7 +466,7 @@ class DiamondConfig {
         actionMemo(context, list, refreshList);
         break;
       case ActionMenuConstant.ACTION_TYPE_DOWNLOAD:
-        actionDownload(context, list);
+        actionDownload(context, list, isDownloadSearched: true);
         break;
       case ActionMenuConstant.ACTION_TYPE_EXCEL:
         actionExportExcel(context, list);
@@ -778,8 +787,9 @@ class DiamondConfig {
       model.isAddAppointment = true;
       selectedList.add(model);
     });
-
-    NavigationUtilities.pushRoute(OfferViewScreen.route);
+    var dict = Map<String, dynamic>();
+    dict[ArgumentConstant.DiamondList] = selectedList;
+    NavigationUtilities.pushRoute(OfferViewScreen.route,args: dict);
     // openDiamondActionAcreen(
     //     context, DiamondTrackConstant.TRACK_TYPE_OFFICE, selectedList);
     /* showOfferListDialog(context, selectedList, (manageClick) {
@@ -1174,7 +1184,7 @@ class DiamondConfig {
     BuildContext context,
     List<DiamondModel> list, {
     bool isForShare = false,
-    bool isDownloadSearched = true,
+    bool isDownloadSearched = false,
   }) {
     List<SelectionPopupModel> downloadOptionList = List<SelectionPopupModel>();
     List<SelectionPopupModel> selectedOptions = List<SelectionPopupModel>();
@@ -1200,9 +1210,12 @@ class DiamondConfig {
       section: SectionAnalytics.SHARE,
       action: ActionAnalytics.OPEN,
     );
+    print("++++++++++++++++${isDownloadSearched}+++++++++${isForShare}");
     NavigationUtilities.push(DownLoadAndShareScreen(
       diamondList: list,
-      title: "Share Stone",
+      title: isDownloadSearched
+          ? R.string.commonString.download
+          : R.string.screenTitle.shareStone,
       onDownload: (selectedOptions) {
         showDialog(
             context: context,
@@ -2042,7 +2055,7 @@ class DiamondConfig {
         }
         arraDiamond[i].isGrouping = true;
       }
-    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_UPCOMING) {
+    } /*else if (moduleType == DiamondModuleConstant.MODULE_TYPE_UPCOMING) {
       for (int i = 0; i < arraDiamond.length; i++) {
         if (i == 0 || (arraDiamond[i].inDt != arraDiamond[i - 1].inDt)) {
           arraDiamond[i].displayTitle = DateUtilities()
@@ -2050,7 +2063,8 @@ class DiamondConfig {
                   formatter: DateUtilities.dd_mm_yyyy);
         }
       }
-    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR) {
+    } */
+    else if (moduleType == DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR) {
       DiamondModel diamondItem;
       if (arraDiamond.length == 1) {
         diamondItem = arraDiamond[0];

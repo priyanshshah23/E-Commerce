@@ -58,6 +58,12 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   void initState() {
     super.initState();
     widget.item.setBidAmount();
+    RxBus.register<bool>(tag: eventBusRefreshItem).listen((event) {
+//        Future.delayed(Duration(seconds: 1));
+
+      _noteController.text = widget.item.remarks ?? "";
+      setState(() {});
+    });
 
     if (widget.item.isAddToOffer ?? false || widget.item.isAddToBid ?? false) {
       RxBus.register<bool>(tag: eventBusDropDown).listen((event) {
@@ -142,7 +148,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                             : SizedBox(),
                         Spacer(),
                         Text(
-                          "Date : " + widget.item.displayDesc,
+                          "Date : " + (widget.item?.displayDesc ?? ""),
                           style: appTheme.black16MediumTextStyle.copyWith(
                             fontSize: getFontSize(14),
                           ),
@@ -1204,7 +1210,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           SizedBox(width: getSize(4)),
           Image.asset(
             !isUp ? upRedArrow : downGreenArrow,
-            height: getSize(15),
+            height: getSize(10),
           )
         ],
       ),
@@ -1888,7 +1894,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         ? Column(
             children: [
               Padding(
-                padding: EdgeInsets.only(top: getSize(5)),
+                padding: EdgeInsets.only(
+                    left: getSize(10), right: getSize(10), bottom: getSize(10)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -1907,7 +1914,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: getSize(5)),
+                padding: EdgeInsets.only(
+                    left: getSize(10), right: getSize(10), bottom: getSize(10)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -1926,86 +1934,115 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: getSize(5)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    getText(R.string.screenTitle.bidPricePerCt + " :",
-                        appTheme.blackNormal12TitleColorblack),
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              widget.item.bidPlus = false;
-                              widget.item.minusAmount = 20;
-                              widget.item.ctPr = widget.item.getbidAmount();
-                              RxBus.post(false, tag: eventBusDropDown);
-                            });
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(right: getSize(10)),
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(
-                                getSize(5),
-                              ),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Center(
-                                child: Image.asset(
-                                  minusIcon,
-                                  width: getSize(16),
-                                  height: getSize(16),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: getSize(5), horizontal: getSize(10)),
+                padding: EdgeInsets.only(
+                    left: getSize(10), right: getSize(10), bottom: getSize(10)),
+                child: Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: appTheme.dividerColor),
+                      borderRadius: BorderRadius.circular(getSize(4))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Expanded(
+                        flex: 4,
+                        child: Container(
+                          height: getSize(36),
                           decoration: BoxDecoration(
-                              border: Border.all(color: appTheme.dividerColor),
-                              borderRadius: BorderRadius.circular(getSize(5))),
-                          child: getText(
-                              PriceUtilities.getPrice(
-                                  widget.item.getFinalRate()),
-                              appTheme.blackNormal12TitleColorblack),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              widget.item.bidPlus = true;
-                              widget.item.plusAmount = 20;
-                              widget.item.ctPr = widget.item.getbidAmount();
-                              RxBus.post(true, tag: eventBusDropDown);
-                            });
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(left: getSize(10)),
-                            decoration: BoxDecoration(
-                              color: appTheme.colorPrimary,
-                              borderRadius: BorderRadius.circular(
-                                getSize(5),
-                              ),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Center(
-                                child: Image.asset(
-                                  plusIcon,
-                                  width: getSize(16),
-                                  height: getSize(16),
-                                ),
-                              ),
-                            ),
+                            color: appTheme.dividerColor,
+                          ),
+                          child: Center(
+                            child: getText(
+                                R.string.screenTitle.bidPricePerCt + " :",
+                                appTheme.blackNormal12TitleColorblack),
                           ),
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                      Expanded(
+                        flex: 6,
+                        child: Container(
+                          height: getSize(36),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    widget.item.bidPlus = false;
+                                    widget.item.minusAmount = 20;
+                                    widget.item.ctPr =
+                                        widget.item.getbidAmount();
+                                    RxBus.post(false, tag: eventBusDropDown);
+                                  });
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(right: getSize(10)),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                      getSize(5),
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Center(
+                                      child: Image.asset(
+                                        minusIcon,
+                                        width: getSize(16),
+                                        height: getSize(16),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: getSize(5),
+                                    horizontal: getSize(10)),
+                                decoration: BoxDecoration(
+                                    // border:
+                                    //     Border.all(color: appTheme.dividerColor),
+                                    borderRadius:
+                                        BorderRadius.circular(getSize(5))),
+                                child: getText(
+                                    PriceUtilities.getPrice(
+                                        widget.item.getFinalRate()),
+                                    appTheme.black16MediumTextStyle),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    widget.item.bidPlus = true;
+                                    widget.item.plusAmount = 20;
+                                    widget.item.ctPr =
+                                        widget.item.getbidAmount();
+                                    RxBus.post(true, tag: eventBusDropDown);
+                                  });
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(left: getSize(10)),
+                                  decoration: BoxDecoration(
+                                    // color: appTheme.colorPrimary,
+                                    borderRadius: BorderRadius.circular(
+                                      getSize(5),
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Center(
+                                      child: Image.asset(
+                                        plusGreenIcon,
+                                        width: getSize(16),
+                                        height: getSize(16),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

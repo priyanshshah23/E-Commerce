@@ -95,59 +95,6 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 5,
-    "masterSelection": [
-      {
-        "code": "DEF",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "D",
-              "E",
-              "F"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "GH",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "G",
-              "H"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "IJK",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "I",
-              "J",
-              "K"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "LMN",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "L",
-              "M",
-              "N"
-            ]
-          }
-        ]
-      }
-    ],
     "valueKeyisCode": false
   },
   {
@@ -180,56 +127,6 @@
     "showMoreTagAfterTotalItemCount": 5,
     "sequence": 9,
     "isActive": true,
-    "masterSelection": [
-      {
-        "code": "FL-IF",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "FL",
-              "IF"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "VVS",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "VVS1",
-              "VVS2"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "VS",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "SI1",
-              "SI2"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "I",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "I1",
-              "I2"
-            ]
-          }
-        ]
-      }
-    ],
     "valueKeyisCode": false
   },
   {
@@ -2146,59 +2043,6 @@
     "isShowMore": false,
     "tab": "matchpair",
     "sequence": 5,
-    "masterSelection": [
-      {
-        "code": "DEF",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "D",
-              "E",
-              "F"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "GH",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "G",
-              "H"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "IJK",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "I",
-              "J",
-              "K"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "LMN",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "L",
-              "M",
-              "N"
-            ]
-          }
-        ]
-      }
-    ],
     "valueKeyisCode": false
   },
   {
@@ -2231,56 +2075,6 @@
     "showMoreTagAfterTotalItemCount": 5,
     "sequence": 9,
     "isActive": true,
-    "masterSelection": [
-      {
-        "code": "FL-IF",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "FL",
-              "IF"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "VVS",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "VVS1",
-              "VVS2"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "VS",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "SI1",
-              "SI2"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "I",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "I1",
-              "I2"
-            ]
-          }
-        ]
-      }
-    ],
     "valueKeyisCode": false
   },
   {
@@ -2671,37 +2465,6 @@
     "bottomPadding": 4
   },
   {
-  "title": "Ratio",
-  "viewType": "fromto",
-  "apiKey": "ratio",
-  "sequence": 36,
-  "isActive": true,
-  "labelFrom": "From",
-  "labelTo": "To",
-  "tab": "matchpair",
-  "maxValue": 100,
-  "minValue": 0,
-  "fromToStyle": {
-    "showUnderline": true,
-    "showBorder": false,
-    "underlineColor": "#E3E3E3",
-    "borderColor": "#E3E3E3",
-    "borderWidth": 1
-  }
-},
-{
-  "viewType": "seperator",
-  "sequence": 37,
-  "isActive": false,
-  "height": 1,
-  "color": "#E3E3E3",
-  "tab": "matchpair",
-  "leftPadding": 0,
-  "rightPadding": 0,
-  "topPadding": 4,
-  "bottomPadding": 4
-},
-  {
     "title": "Width (MM)",
     "viewType": "fromto",
     "apiKey": "width",
@@ -2754,6 +2517,95 @@
   {
     "viewType": "seperator",
     "sequence": 43,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "matchpair",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+
+
+ {
+      "title": "Ratio",
+      "viewType": "fromto",
+      "apiKey": "ratio",
+      "sequence": 36,
+      "isActive": true,
+      "labelFrom": "From",
+      "labelTo": "To",
+      "tab": "matchpair",
+      "maxValue": 100,
+      "minValue": 0,
+      "fromToStyle": {
+        "showUnderline": true,
+        "showBorder": false,
+        "underlineColor": "#E3E3E3",
+        "borderColor": "#E3E3E3",
+        "borderWidth": 1
+      }
+    },
+    {
+      "viewType": "seperator",
+      "sequence": 37,
+      "isActive": false,
+      "height": 1,
+      "color": "#E3E3E3",
+      "tab": "matchpair",
+      "leftPadding": 0,
+      "rightPadding": 0,
+      "topPadding": 4,
+      "bottomPadding": 4
+    },
+
+
+
+  {
+    "title": "Pair No.",
+    "viewType": "fromto",
+    "apiKey": "pairStkNo",
+    "sequence": 36,
+    "isActive": true,
+    "labelFrom": "Pair No.",
+    "labelTo": "To",
+    "tab": "matchpair",
+    "maxValue": 100,
+    "minValue": 0,
+    "isOnlyFrom": true,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
+  },
+
+  {
+    "title": "Layout No.",
+    "viewType": "fromto",
+    "apiKey": "layoutNo",
+    "sequence": 36,
+    "isActive": true,
+    "labelFrom": "Layout No.",
+    "labelTo": "To",
+    "tab": "matchpair",
+    "maxValue": 100,
+    "minValue": 0,
+    "isOnlyFrom": true,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 16,
     "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
@@ -2928,59 +2780,6 @@
     "isShowMore": false,
     "tab": "layout",
     "sequence": 5,
-    "masterSelection": [
-      {
-        "code": "DEF",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "D",
-              "E",
-              "F"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "GH",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "G",
-              "H"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "IJK",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "I",
-              "J",
-              "K"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "LMN",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "L",
-              "M",
-              "N"
-            ]
-          }
-        ]
-      }
-    ],
     "valueKeyisCode": false
   },
   {
@@ -3013,56 +2812,6 @@
     "showMoreTagAfterTotalItemCount": 5,
     "sequence": 9,
     "isActive": true,
-    "masterSelection": [
-      {
-        "code": "FL-IF",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "FL",
-              "IF"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "VVS",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "VVS1",
-              "VVS2"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "VS",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "SI1",
-              "SI2"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "I",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "I1",
-              "I2"
-            ]
-          }
-        ]
-      }
-    ],
     "valueKeyisCode": false
   },
   {
@@ -3452,37 +3201,7 @@
     "topPadding": 4,
     "bottomPadding": 4
   },
-  {
-  "title": "Ratio",
-  "viewType": "fromto",
-  "apiKey": "ratio",
-  "sequence": 36,
-  "isActive": true,
-  "labelFrom": "From",
-  "labelTo": "To",
-  "tab": "layout",
-  "maxValue": 100,
-  "minValue": 0,
-  "fromToStyle": {
-    "showUnderline": true,
-    "showBorder": false,
-    "underlineColor": "#E3E3E3",
-    "borderColor": "#E3E3E3",
-    "borderWidth": 1
-  }
-},
-{
-  "viewType": "seperator",
-  "sequence": 37,
-  "isActive": false,
-  "height": 1,
-  "color": "#E3E3E3",
-  "tab": "layout",
-  "leftPadding": 0,
-  "rightPadding": 0,
-  "topPadding": 4,
-  "bottomPadding": 4
-},
+
   {
     "title": "Width (MM)",
     "viewType": "fromto",
@@ -3495,8 +3214,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -3514,6 +3233,68 @@
     "topPadding": 4,
     "bottomPadding": 4
   },
+  {
+      "title": "Height (MM)",
+      "viewType": "fromto",
+      "apiKey": "height",
+      "sequence": 42,
+      "isActive": true,
+      "labelFrom": "From",
+      "labelTo": "To",
+      "tab": "layout",
+      "maxValue": 100,
+      "minValue": 0,
+      "fromToStyle": {
+        "showUnderline": true,
+        "showBorder": false,
+        "underlineColor": "#E3E3E3",
+        "borderColor": "#E3E3E3",
+        "borderWidth": 1
+      }
+    },
+    {
+      "viewType": "seperator",
+      "sequence": 43,
+      "isActive": false,
+      "height": 1,
+      "color": "#E3E3E3",
+      "tab": "layout",
+      "leftPadding": 0,
+      "rightPadding": 0,
+      "topPadding": 4,
+      "bottomPadding": 4
+    },
+    {
+      "title": "Ratio",
+      "viewType": "fromto",
+      "apiKey": "ratio",
+      "sequence": 36,
+      "isActive": true,
+      "labelFrom": "From",
+      "labelTo": "To",
+      "tab": "layout",
+      "maxValue": 100,
+      "minValue": 0,
+      "fromToStyle": {
+        "showUnderline": true,
+        "showBorder": false,
+        "underlineColor": "#E3E3E3",
+        "borderColor": "#E3E3E3",
+        "borderWidth": 1
+      }
+    },
+    {
+      "viewType": "seperator",
+      "sequence": 37,
+      "isActive": false,
+      "height": 1,
+      "color": "#E3E3E3",
+      "tab": "layout",
+      "leftPadding": 0,
+      "rightPadding": 0,
+      "topPadding": 4,
+      "bottomPadding": 4
+    },
   {
     "title": "Pair No.",
     "viewType": "fromto",
@@ -3534,37 +3315,7 @@
       "borderWidth": 1
     }
   },
-  {
-    "title": "Height (MM)",
-    "viewType": "fromto",
-    "apiKey": "height",
-    "sequence": 42,
-    "isActive": true,
-    "labelFrom": "From",
-    "labelTo": "To",
-    "tab": "layout",
-    "maxValue": 100,
-    "minValue": 0,
-    "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
-      "underlineColor": "#E3E3E3",
-      "borderColor": "#E3E3E3",
-      "borderWidth": 1
-    }
-  },
-  {
-    "viewType": "seperator",
-    "sequence": 43,
-    "isActive": false,
-    "height": 1,
-    "color": "#E3E3E3",
-    "tab": "layout",
-    "leftPadding": 0,
-    "rightPadding": 0,
-    "topPadding": 4,
-    "bottomPadding": 4
-  },
+
   {
     "title": "Layout No.",
     "viewType": "fromto",
