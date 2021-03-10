@@ -168,9 +168,9 @@ class _PersonalInformationState extends State<PersonalInformation> {
                 setState(() {});
                 // NavigationUtilities.push(ThemeSetting());
               },
-              backgroundColor: appTheme.colorPrimary.withOpacity(0.1),
-              textColor: appTheme.colorPrimary,
-              borderRadius: getSize(5),
+              backgroundColor: appTheme.colorPrimary,
+              textColor: appTheme.whiteColor,
+              //borderRadius: getSize(5),
               fitWidth: true,
               text: readOnly
                   ? R.string.authStrings.editProfileTitle
@@ -306,8 +306,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     height: getSize(20),
                   ),
                   companyInformationState.getPinCodeTextField(
-                      zipCodeTitle: "ZipCode *",
-                      rd: this.readOnly),
+                      zipCodeTitle: "ZipCode *", rd: this.readOnly),
                   SizedBox(
                     height: getSize(20),
                   ),

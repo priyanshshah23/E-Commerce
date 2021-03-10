@@ -131,6 +131,7 @@ const String edit = "assets/drawer/edit.png";
 const String enquiryDrawer = "assets/drawer/enquiry.png";
 const String addToCartDrawer = "assets/drawer/addToCart.png";
 const String commentDrawer = "assets/drawer/comment.png";
+const String upcoming = "assets/drawer/upcoming.png";
 
 //Home
 const String home_clock = "assets/Home/clock.png";

@@ -596,7 +596,7 @@ class ScreenTitle {
   String myCart = "My Cart";
   String myComment = "My Notes";
   String compare = "Compare";
-  String compareStones = "Compare Stones";
+  String compareStones = "Compare Stone";
   String statusHold = "On Hold";
   String statusOnMemo = "On Memo";
   String statusAvailable = "Available";
@@ -606,7 +606,7 @@ class ScreenTitle {
   String signup = "Sign up";
   String addToOffice = "Add To Office";
   String addComment = "Add Comment";
-  String addEnquiry = "Add Enquiry";
+  String addEnquiry = "Enquiry";
   String finalOffer = "Final Offer";
   String finalDisc = "Final Disc";
   String finalRate = "Final Rate";
@@ -721,8 +721,8 @@ class ScreenTitle {
   String accountAndPayment = "Account and Payment";
   String enquiry = "Enquiry";
   String download = "Download";
-  String addToCart = "Add to Cart";
-  String addToWatchList = "Add to Watchlist";
+  String addToCart = "Cart";
+  String addToWatchList = "Watch";
   String memo = "Memo";
   String memoStone = "Memo Stone";
   String finalCalculation = "Final Calculation";
@@ -731,7 +731,7 @@ class ScreenTitle {
   String hold = "Hold";
   String holdStone = "Hold Stone";
   String offer = "Offer";
-  String officeView = "Appointment";
+  String officeView = "Office";
   String placeOrder = "Place Order";
   String buyNow = "Buy Now";
   String cancelStone = "Cancel Stone";

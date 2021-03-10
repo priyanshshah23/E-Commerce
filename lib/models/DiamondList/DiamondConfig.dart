@@ -214,6 +214,7 @@ class DiamondConfig {
       int moduleType, Map<String, dynamic> dict) {
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
+      case DiamondModuleConstant.MODULE_TYPE_LAYOUT:
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
@@ -479,8 +480,10 @@ class DiamondConfig {
           return;
         }
         var dict = Map<String, dynamic>();
+        print("-----------list-------${list.length}");
+        print("-----------moduleType-------${moduleType}");
         dict[ArgumentConstant.DiamondList] = list;
-        dict[ArgumentConstant.ModuleType] = moduleType;
+        dict[ArgumentConstant.ModuleType] = DiamondModuleConstant.MODULE_TYPE_SEARCH;
         // NavigationUtilities.pushRoute(DiamondCompareScreen.route, args: dict);
         bool isBack = await Navigator.of(context).push(MaterialPageRoute(
           settings: RouteSettings(name: DiamondCompareScreen.route),
@@ -2011,6 +2014,28 @@ class DiamondConfig {
           arraDiamond[i].isSectionOfferDisplay = true;
         } else if (i > 0 &&
             (arraDiamond[i].memoNo != arraDiamond[i - 1].memoNo)) {
+          arraDiamond[i - 1].isSectionOfferDisplay = true;
+        }
+        if (i == arraDiamond.length - 1) {
+          arraDiamond[i].isSectionOfferDisplay = true;
+        }
+        arraDiamond[i].isGrouping = true;
+      }
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_LAYOUT) {
+      for (int i = 0; i < arraDiamond.length; i++) {
+        if (i == 0 ||
+            (arraDiamond[i].layoutNo != arraDiamond[i - 1].layoutNo)) {
+          arraDiamond[i].displayTitle = "#${arraDiamond[i].layoutNo}";
+          arraDiamond[i].displayDesc = DateUtilities()
+              .convertServerDateToFormatterString(arraDiamond[i].createdAt,
+                  formatter: DateUtilities.dd_mm_yyyy_hh_mm_ss);
+          arraDiamond[i].showCheckBox = true;
+        }
+
+        if (arraDiamond.length == 1) {
+          arraDiamond[i].isSectionOfferDisplay = true;
+        } else if (i > 0 &&
+            (arraDiamond[i].layoutNo != arraDiamond[i - 1].layoutNo)) {
           arraDiamond[i - 1].isSectionOfferDisplay = true;
         }
         if (i == arraDiamond.length - 1) {
