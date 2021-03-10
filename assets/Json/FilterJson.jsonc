@@ -95,59 +95,6 @@
     "isShowMore": false,
     "tab": "basic",
     "sequence": 5,
-    "masterSelection": [
-      {
-        "code": "DEF",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "D",
-              "E",
-              "F"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "GH",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "G",
-              "H"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "IJK",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "I",
-              "J",
-              "K"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "LMN",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "L",
-              "M",
-              "N"
-            ]
-          }
-        ]
-      }
-    ],
     "valueKeyisCode": false
   },
   {
@@ -180,56 +127,6 @@
     "showMoreTagAfterTotalItemCount": 5,
     "sequence": 9,
     "isActive": true,
-    "masterSelection": [
-      {
-        "code": "FL-IF",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "FL",
-              "IF"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "VVS",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "VVS1",
-              "VVS2"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "VS",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "SI1",
-              "SI2"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "I",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "I1",
-              "I2"
-            ]
-          }
-        ]
-      }
-    ],
     "valueKeyisCode": false
   },
   {
@@ -2146,59 +2043,6 @@
     "isShowMore": false,
     "tab": "matchpair",
     "sequence": 5,
-    "masterSelection": [
-      {
-        "code": "DEF",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "D",
-              "E",
-              "F"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "GH",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "G",
-              "H"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "IJK",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "I",
-              "J",
-              "K"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "LMN",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "L",
-              "M",
-              "N"
-            ]
-          }
-        ]
-      }
-    ],
     "valueKeyisCode": false
   },
   {
@@ -2231,56 +2075,6 @@
     "showMoreTagAfterTotalItemCount": 5,
     "sequence": 9,
     "isActive": true,
-    "masterSelection": [
-      {
-        "code": "FL-IF",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "FL",
-              "IF"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "VVS",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "VVS1",
-              "VVS2"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "VS",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "SI1",
-              "SI2"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "I",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "I1",
-              "I2"
-            ]
-          }
-        ]
-      }
-    ],
     "valueKeyisCode": false
   },
   {
@@ -2986,59 +2780,6 @@
     "isShowMore": false,
     "tab": "layout",
     "sequence": 5,
-    "masterSelection": [
-      {
-        "code": "DEF",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "D",
-              "E",
-              "F"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "GH",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "G",
-              "H"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "IJK",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "I",
-              "J",
-              "K"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "LMN",
-        "masterToSelect": [
-          {
-            "code": "COLOR",
-            "subMasters": [
-              "L",
-              "M",
-              "N"
-            ]
-          }
-        ]
-      }
-    ],
     "valueKeyisCode": false
   },
   {
@@ -3071,56 +2812,6 @@
     "showMoreTagAfterTotalItemCount": 5,
     "sequence": 9,
     "isActive": true,
-    "masterSelection": [
-      {
-        "code": "FL-IF",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "FL",
-              "IF"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "VVS",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "VVS1",
-              "VVS2"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "VS",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "SI1",
-              "SI2"
-            ]
-          }
-        ]
-      },
-      {
-        "code": "I",
-        "masterToSelect": [
-          {
-            "code": "CLARITY",
-            "subMasters": [
-              "I1",
-              "I2"
-            ]
-          }
-        ]
-      }
-    ],
     "valueKeyisCode": false
   },
   {

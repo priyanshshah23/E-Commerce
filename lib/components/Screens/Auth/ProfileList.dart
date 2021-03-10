@@ -566,6 +566,8 @@ class _ProfileListState extends State<ProfileList> {
       validation: (text) {
         if (text.isEmpty) {
           return R.string.errorString.enterPhone;
+        } else if (!validateMobile(text)) {
+          return R.string.errorString.enterValidPhone;
         } else {
           return null;
         }
@@ -620,13 +622,15 @@ class _ProfileListState extends State<ProfileList> {
       textCallback: (text) async {
 //            await checkValidation();
       },
-      // validation: (text) {
-      //   if (text.isEmpty) {
-      //     return R.string.errorString.enterPhone;
-      //   } else {
-      //     return null;
-      //   }
-      // },
+      validation: (text) {
+        if (text.isEmpty) {
+          return R.string.errorString.enterTelePhone;
+        } else if (!validateMobile(text)) {
+          return R.string.errorString.enterValidTelePhone;
+        } else {
+          return null;
+        }
+      },
       inputAction: TextInputAction.next,
       onNextPress: () {
         _focusWhatsAppMobile.unfocus();
@@ -733,6 +737,13 @@ class _ProfileListState extends State<ProfileList> {
 //                    checkValidation();
 //                  });
           },
+          validation: (text) {
+            if (text.trim().isEmpty) {
+              return R.string.errorString.enterDesignation;
+            } else {
+              return null;
+            }
+          },
           inputAction: TextInputAction.done,
           onNextPress: () {
             FocusScope.of(context).unfocus();
@@ -789,6 +800,13 @@ class _ProfileListState extends State<ProfileList> {
 //                  setState(() {
 //                    checkValidation();
 //                  });
+          },
+          validation: (text) {
+            if (text.trim().isEmpty) {
+              return R.string.errorString.enterBusinessType;
+            } else {
+              return null;
+            }
           },
           inputAction: TextInputAction.next,
           onNextPress: () {
@@ -847,6 +865,13 @@ class _ProfileListState extends State<ProfileList> {
 //                  setState(() {
 //                    checkValidation();
 //                  });
+          },
+          validation: (text) {
+            if (text.trim().isEmpty) {
+              return R.string.errorString.selectNatureOfOrganization;
+            } else {
+              return null;
+            }
           },
           inputAction: TextInputAction.next,
           onNextPress: () {
@@ -1216,6 +1241,13 @@ class _ProfileListState extends State<ProfileList> {
 //                    checkValidation();
 //                  });
           },
+          validation: (text) {
+            if (text.trim().isEmpty) {
+              return R.string.errorString.selectCountry;
+            } else {
+              return null;
+            }
+          },
           inputAction: TextInputAction.next,
           onNextPress: () {
             FocusScope.of(context).unfocus();
@@ -1294,6 +1326,13 @@ class _ProfileListState extends State<ProfileList> {
 //                    checkValidation();
 //                  });
           },
+          validation: (text) {
+            if (text.trim().isEmpty) {
+              return R.string.errorString.selectState;
+            } else {
+              return null;
+            }
+          },
           inputAction: TextInputAction.next,
           onNextPress: () {
             FocusScope.of(context).unfocus();
@@ -1369,6 +1408,13 @@ class _ProfileListState extends State<ProfileList> {
 //                    checkValidation();
 //                  });
           },
+          validation: (text) {
+            if (text.trim().isEmpty) {
+              return R.string.errorString.selectCity;
+            } else {
+              return null;
+            }
+          },
           inputAction: TextInputAction.next,
           onNextPress: () {
             FocusScope.of(context).unfocus();
@@ -1408,7 +1454,7 @@ class _ProfileListState extends State<ProfileList> {
           if (text.isEmpty) {
             return R.string.errorString.enterPinCode;
           } else if (!validatePincode(text)) {
-            return R.string.errorString.enterValidPinCode;
+            return R.string.errorString.enterValidZipCode;
           } else {
             return null;
           }
@@ -1463,13 +1509,6 @@ class _ProfileListState extends State<ProfileList> {
       textCallback: (text) async {
 //          await checkValidation();
       },
-      validation: (text) {
-        if (text.isEmpty) {
-          return R.string.errorString.enterPhone;
-        } else {
-          return null;
-        }
-      },
       inputAction: TextInputAction.next,
       onNextPress: () {
         _focusCompanyMobile.unfocus();
@@ -1495,13 +1534,6 @@ class _ProfileListState extends State<ProfileList> {
       ),
       textCallback: (text) async {
 //          await checkValidation();
-      },
-      validation: (text) {
-        if (text.isEmpty) {
-          return R.string.errorString.enterPhone;
-        } else {
-          return null;
-        }
       },
       inputAction: TextInputAction.next,
       onNextPress: () {

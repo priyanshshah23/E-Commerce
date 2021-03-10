@@ -8,6 +8,7 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/AddDemand.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/Slot/SlotModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,19 @@ import 'package:flutter/services.dart';
 
 class OfferViewScreen extends StatefulWidget {
   static const route = "OfferView";
+
+  List<DiamondModel> list;
+
+  OfferViewScreen(
+    Map<String, dynamic> arguments, {
+    Key key,
+  }) : super(key: key) {
+    if (arguments != null) {
+      if (arguments[ArgumentConstant.DiamondList] != null) {
+        list = arguments[ArgumentConstant.DiamondList];
+      }
+    }
+  }
 
   @override
   _OfferViewScreenState createState() => _OfferViewScreenState();
@@ -77,11 +91,12 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
 
   callApiForRequestForOffice() {
     Map<String, dynamic> req = {};
+    List<String> diamondId = [];
     req["purpose"] = _commentTypeController.text;
     DateTime date = DateTime(pickedDate.year, pickedDate.month, pickedDate.day,
             pickedDate.hour, pickedDate.minute)
         .toUtc();
-    req["date"] = DateUtilities().getStartOfDay(date).toUtc().toIso8601String();
+    req["date"] = DateTime.now().toUtc().toIso8601String();
     req["type"] = 2;
     req["start"] = DateUtilities()
         .getSpecificTimeOfDate(date, 9, 30, 00)
@@ -98,9 +113,11 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
             : _virtualTypeController.text == VirtualTypesString.webConference
                 ? VirtualTypes.webConference
                 : VirtualTypes.inPerson;
-    req["cabinSlot"] = [
-      {"id": arrSlots[selectedSlot].id ?? ""}
-    ];
+    req["cabinSlot"] = [arrSlots[selectedSlot]];
+    widget.list.forEach((element) {
+      diamondId.add(element.id);
+    });
+    req['diamonds'] = diamondId;
 
     NetworkCall<BaseApiResp>()
         .makeCall(
@@ -278,8 +295,9 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                           pd = selectedDate;
                           days.forEach((element) {
                             element.isSelected = false;
-                            if(element.date.day == DateTime.parse(selectedDate).day){
-                              element.isSelected =true;
+                            if (element.date.day ==
+                                DateTime.parse(selectedDate).day) {
+                              element.isSelected = true;
                             }
                           });
 
@@ -320,7 +338,9 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                         : R.string.screenTitle.selectCustomDate,
                     style: appTheme.black16TextStyle,
                   ),
-                  SizedBox(width: getSize(10),),
+                  SizedBox(
+                    width: getSize(10),
+                  ),
                   Image.asset(
                     calender,
                     height: getSize(20),
@@ -353,14 +373,13 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                   days[index].isSelected = !days[index].isSelected;
                   if (days[index].isSelected) {
                     pickedDate = days[index].date;
-                    pd = pickedDate.toIso8601String() ;
+                    pd = pickedDate.toIso8601String();
                   }
 //                  print()
 //                  if(pickedDate != pd){
 //                    pd = null;
 //                  }
                 });
-
               },
               child: Container(
                 alignment: Alignment.center,
@@ -511,10 +530,10 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
 //                    checkValidation();
 //                  });
           },
-          validation: (text){
-            if(text.isEmpty){
+          validation: (text) {
+            if (text.isEmpty) {
               return R.string.errorString.selectVirtualType;
-            } else{
+            } else {
               return null;
             }
           },
@@ -554,16 +573,16 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
         inputController: _commentTypeController,
         hintText: "Enter Comments",
         formatter: [
-          WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+//          WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
           BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
         ],
         errorBorder: InputBorder.none,
         //isSecureTextField: false
       ),
-      validation: (text){
-        if(text.isEmpty){
+      validation: (text) {
+        if (text.isEmpty) {
           return R.string.errorString.enterComments;
-        } else{
+        } else {
           return null;
         }
       },
@@ -587,86 +606,89 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
     ];
   }
 
-  showAppoitmentDialog(BuildContext context){
+  showAppoitmentDialog(BuildContext context) {
     return showDialog(
-      context: context,
-      builder: (context){
-
-        return Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(getSize(15))),
-          insetPadding: EdgeInsets.all(getSize(20)),
-          child: Padding(
-            padding: EdgeInsets.all(getSize(15)),
-            child: Form(
-              key: _formKey,
-              autovalidate: _autoValidate,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text("Book Appointment",style: appTheme.black16MediumTextStyle,),
-                  setVirtualDropDown(virtualList, (value) {
-                    _virtualTypeController.text = value;
-                  }),
-                  SizedBox(
-                    height: getSize(10),
-                  ),
-                  getCommentTextField(),
-                  Padding(
-                    padding: EdgeInsets.only(top: getSize(20), bottom: getSize(20)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              // border: Border.all(
-                              //     color: appTheme.colorPrimary, width: getSize(1)),
-                              borderRadius: BorderRadius.circular(getSize(5)),
-                            ),
-                            child: AppButton.flat(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              // borderRadius: getSize(5),
-                              text: R.string.commonString.cancel,
-                              textColor: appTheme.colorPrimary,
-                              backgroundColor: appTheme.whiteColor,
+        context: context,
+        builder: (context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(getSize(15))),
+            insetPadding: EdgeInsets.all(getSize(20)),
+            child: Padding(
+              padding: EdgeInsets.all(getSize(15)),
+              child: Form(
+                key: _formKey,
+                autovalidate: _autoValidate,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Book Appointment",
+                      style: appTheme.black16MediumTextStyle,
+                    ),
+                    setVirtualDropDown(virtualList, (value) {
+                      _virtualTypeController.text = value;
+                    }),
+                    SizedBox(
+                      height: getSize(10),
+                    ),
+                    getCommentTextField(),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: getSize(20), bottom: getSize(20)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                // border: Border.all(
+                                //     color: appTheme.colorPrimary, width: getSize(1)),
+                                borderRadius: BorderRadius.circular(getSize(5)),
+                              ),
+                              child: AppButton.flat(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                // borderRadius: getSize(5),
+                                text: R.string.commonString.cancel,
+                                textColor: appTheme.colorPrimary,
+                                backgroundColor: appTheme.whiteColor,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: getSize(20),
-                        ),
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              // color: appTheme.colorPrimary,
-                              // borderRadius: BorderRadius.circular(getSize(5)),
-                                boxShadow: getBoxShadow(context)),
-                            child: AppButton.flat(
-                              onTap: () {
-                                FocusScope.of(context).unfocus();
+                          SizedBox(
+                            width: getSize(20),
+                          ),
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  // color: appTheme.colorPrimary,
+                                  // borderRadius: BorderRadius.circular(getSize(5)),
+                                  boxShadow: getBoxShadow(context)),
+                              child: AppButton.flat(
+                                onTap: () {
+                                  FocusScope.of(context).unfocus();
                                   if (_formKey.currentState.validate()) {
                                     callApiForRequestForOffice();
                                   } else {
                                     _autoValidate = true;
                                   }
-                              },
-                              // borderRadius: getSize(5),
-                              text: R.string.commonString.btnSubmit,
+                                },
+                                // borderRadius: getSize(5),
+                                text: R.string.commonString.btnSubmit,
+                              ),
                             ),
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      }
-    ).then((value) => Navigator.pop(context,true));
+          );
+        });/*.then((value) => Navigator.pop(context, true))*/
   }
 }
 
