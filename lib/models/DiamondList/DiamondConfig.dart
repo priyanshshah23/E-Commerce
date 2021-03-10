@@ -214,6 +214,7 @@ class DiamondConfig {
       int moduleType, Map<String, dynamic> dict) {
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
+      case DiamondModuleConstant.MODULE_TYPE_LAYOUT:
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
@@ -318,6 +319,15 @@ class DiamondConfig {
               image: share,
               code: BottomCodeConstant.TBShare,
               sequence: 0,
+              isCenter: true,
+            ),
+          );
+          list.add(
+            BottomTabModel(
+              title: "",
+              image: download,
+              code: BottomCodeConstant.TBDownloadView,
+              sequence: 1,
               isCenter: true,
             ),
           );
@@ -456,7 +466,7 @@ class DiamondConfig {
         actionMemo(context, list, refreshList);
         break;
       case ActionMenuConstant.ACTION_TYPE_DOWNLOAD:
-        actionDownload(context, list);
+        actionDownload(context, list, isDownloadSearched: true);
         break;
       case ActionMenuConstant.ACTION_TYPE_EXCEL:
         actionExportExcel(context, list);
@@ -466,8 +476,6 @@ class DiamondConfig {
 
         break;
 
-      case ActionMenuConstant.ACTION_TYPE_PLACE_ORDER:
-        break;
       case ActionMenuConstant.ACTION_TYPE_COMPARE:
         if (list.length < 2) {
           app.resolve<CustomDialogs>().confirmDialog(
@@ -479,8 +487,11 @@ class DiamondConfig {
           return;
         }
         var dict = Map<String, dynamic>();
+        print("-----------list-------${list.length}");
+        print("-----------moduleType-------${moduleType}");
         dict[ArgumentConstant.DiamondList] = list;
-        dict[ArgumentConstant.ModuleType] = moduleType;
+        dict[ArgumentConstant.ModuleType] =
+            DiamondModuleConstant.MODULE_TYPE_SEARCH;
         // NavigationUtilities.pushRoute(DiamondCompareScreen.route, args: dict);
         bool isBack = await Navigator.of(context).push(MaterialPageRoute(
           settings: RouteSettings(name: DiamondCompareScreen.route),
@@ -564,19 +575,19 @@ class DiamondConfig {
   }
 
   actionAddToWishList(BuildContext context, List<DiamondModel> list) {
-    // List<DiamondModel> selectedList = [];
-    // DiamondModel model;
-    // list.forEach((element) {
-    //   model = DiamondModel.fromJson(element.toJson());
-    //   model.isAddToWatchList = true;
-    //   selectedList.add(model);
-    // });
-    // openDiamondActionAcreen(
-    //     context, DiamondTrackConstant.TRACK_TYPE_WATCH_LIST, selectedList);
+    List<DiamondModel> selectedList = [];
+    DiamondModel model;
+    list.forEach((element) {
+      model = DiamondModel.fromJson(element.toJson());
+      model.isAddToWatchList = true;
+      selectedList.add(model);
+    });
+    openDiamondActionAcreen(
+        context, DiamondTrackConstant.TRACK_TYPE_WATCH_LIST, selectedList);
     // if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
-    callApiFoCreateTrack(
+    /* callApiFoCreateTrack(
         context, list, DiamondTrackConstant.TRACK_TYPE_WATCH_LIST,
-        isPop: false, title: "Added in Watchlist");
+        isPop: false, title: "Added in Watchlist");*/
     // }
     /*showWatchListDialog(context, selectedList, (manageClick) {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
@@ -1172,7 +1183,7 @@ class DiamondConfig {
     BuildContext context,
     List<DiamondModel> list, {
     bool isForShare = false,
-    bool isDownloadSearched = true,
+    bool isDownloadSearched = false,
   }) {
     List<SelectionPopupModel> downloadOptionList = List<SelectionPopupModel>();
     List<SelectionPopupModel> selectedOptions = List<SelectionPopupModel>();
@@ -1198,9 +1209,12 @@ class DiamondConfig {
       section: SectionAnalytics.SHARE,
       action: ActionAnalytics.OPEN,
     );
+    print("++++++++++++++++${isDownloadSearched}+++++++++${isForShare}");
     NavigationUtilities.push(DownLoadAndShareScreen(
       diamondList: list,
-      title: "Share Stone",
+      title: isDownloadSearched
+          ? R.string.commonString.download
+          : R.string.screenTitle.shareStone,
       onDownload: (selectedOptions) {
         showDialog(
             context: context,
@@ -2018,7 +2032,29 @@ class DiamondConfig {
         }
         arraDiamond[i].isGrouping = true;
       }
-    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_UPCOMING) {
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_LAYOUT) {
+      for (int i = 0; i < arraDiamond.length; i++) {
+        if (i == 0 ||
+            (arraDiamond[i].layoutNo != arraDiamond[i - 1].layoutNo)) {
+          arraDiamond[i].displayTitle = "#${arraDiamond[i].layoutNo}";
+          arraDiamond[i].displayDesc = DateUtilities()
+              .convertServerDateToFormatterString(arraDiamond[i].createdAt,
+                  formatter: DateUtilities.dd_mm_yyyy_hh_mm_ss);
+          arraDiamond[i].showCheckBox = true;
+        }
+
+        if (arraDiamond.length == 1) {
+          arraDiamond[i].isSectionOfferDisplay = true;
+        } else if (i > 0 &&
+            (arraDiamond[i].layoutNo != arraDiamond[i - 1].layoutNo)) {
+          arraDiamond[i - 1].isSectionOfferDisplay = true;
+        }
+        if (i == arraDiamond.length - 1) {
+          arraDiamond[i].isSectionOfferDisplay = true;
+        }
+        arraDiamond[i].isGrouping = true;
+      }
+    } /*else if (moduleType == DiamondModuleConstant.MODULE_TYPE_UPCOMING) {
       for (int i = 0; i < arraDiamond.length; i++) {
         if (i == 0 || (arraDiamond[i].inDt != arraDiamond[i - 1].inDt)) {
           arraDiamond[i].displayTitle = DateUtilities()
@@ -2026,7 +2062,8 @@ class DiamondConfig {
                   formatter: DateUtilities.dd_mm_yyyy);
         }
       }
-    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR) {
+    } */
+    else if (moduleType == DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR) {
       DiamondModel diamondItem;
       if (arraDiamond.length == 1) {
         diamondItem = arraDiamond[0];

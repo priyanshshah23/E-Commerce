@@ -298,7 +298,8 @@ class PrefUtils {
   }
 
   SelectionPopupModel getCompanyDetails() {
-    if(_preferences.getString(keyCompany)!=null&&_preferences.getString(keyCompany).length>0) {
+    if (_preferences.getString(keyCompany) != null &&
+        _preferences.getString(keyCompany).length > 0) {
       var companyJson = json.decode(_preferences.getString(keyCompany));
       return companyJson != null
           ? new SelectionPopupModel.fromJson(companyJson)
@@ -325,7 +326,7 @@ class PrefUtils {
         permissions.data != null &&
         permissions.data.length > 0) {
       permissions.data.forEach((element) {
-        if (element.module == module) {
+        if (element.module == module.toUpperCase()) {
           element.view = element.permissions?.view ?? true;
           element.insert = element.permissions?.insert ?? true;
           element.update = element.permissions?.update ?? true;

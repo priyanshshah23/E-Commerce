@@ -65,10 +65,10 @@ class _BottomTabbarWidgetState extends State<BottomTabbarWidget> {
                                     ),
                                   ))
                               : Image.asset(widget.arrBottomTab[i].image,
-                                  // color:
-                                  //     widget.arrBottomTab[i].imageColor != null
-                                  //         ? widget.arrBottomTab[i].imageColor
-                                  //         : null,
+                                   color:
+                                       widget.arrBottomTab[i].color != null
+                                           ? widget.arrBottomTab[i].color
+                                           : null,
                                   width: getSize(20),
                                   height: getSize(20),
                           ),

@@ -291,7 +291,7 @@ class _MyBidListState extends State<MyBidList> {
 
       diamondList.state.listCount = arraDiamond.length;
       diamondList.state.totalCount = diamondListResp.data.count;
-    //  manageDiamondSelection();
+      manageDiamondSelection();
       page = page + 1;
       diamondList.state.setApiCalling(false);
     }).catchError((onError) {
@@ -317,7 +317,7 @@ class _MyBidListState extends State<MyBidList> {
 
   manageDiamondSelection() {
     fillArrayList();
-    widget.diamondCalculation.setAverageCalculation(arraDiamond);
+    // widget.diamondCalculation.setAverageCalculation(arraDiamond);
     diamondList.state.setApiCalling(false);
     setState(() {});
   }

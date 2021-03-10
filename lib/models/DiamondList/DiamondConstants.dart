@@ -36,6 +36,7 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_OFFLINE_STOCK = 32;
   static const MODULE_TYPE_OFFLINE_STOCK_SEARCH = 33;
   static const MODULE_TYPE_OFFLINE_STOCK_SEARCH_HISTORY = 34;
+  static const MODULE_TYPE_LAYOUT = 35;
   static const MODULE_TYPE_MY_BID_HISTORY = 37;
   static const MODULE_TYPE_OPEN_DRAWER = 1000;
   static const MODULE_TYPE_HOME = 100;
@@ -53,42 +54,52 @@ class DiamondModuleConstant {
 }
 
 class ModulePermissionConstant {
-  static const permission_dashboard = "dashboard";
-  static const permission_searchDiamond = "searchDiamond";
-  static const permission_fancySearch = "fancySearch";
-  static const permission_quickSearch = "quickSearch";
-  static const permission_mySavedSearch = "mySavedSearch";
-  static const permission_myDemand = "myDemand";
-  static const permission_searchResult = "searchResult";
-  static const permission_compare = "compare";
+  static const permission_dashboard = "DASHBOARD";
+  static const permission_searchDiamond = "SEARCH_DIAMOND";
+  static const permission_fancySearch = "FANCY_SEARCH";
+  static const permission_quickSearch = "QUICK_SEARCH";
+  static const permission_mySavedSearch = "SAVE_SEARCH";
+  static const permission_myDemand = "DEMAND";
+  static const permission_searchResult = "SEARCH_LIST";
+  static const permission_compare = "COMPARE";
   static const permission_showSelected = "showSelected";
-  static const permission_matchPair = "matchPair";
+  static const permission_matchPair = "MATCH_PAIR";
   static const permission_iAmLucky = "iAmLucky";
   static const permission_parcelList = "parcelList";
-  static const permission_newGoods = "newGoods";
+  static const permission_newGoods = "NEW_ARRIVAL_BID_IT";
   static const permission_bestOfHK = "bestOfHK";
-  static const permission_upcomingDiamonds = "upcomingDiamonds";
-  static const permission_cart = "cart";
-  static const permission_reminder = "reminder";
-  static const permission_watchlist = "watchlist";
-  static const permission_comment = "comment";
-  static const permission_enquiry = "enquiry";
+  static const permission_upcomingDiamonds = "UPCOMING";
+  static const permission_cart = "CART";
+  static const permission_reminder = "REMINDER";
+  static const permission_watchlist = "WATCHLIST";
+  static const permission_comment = "NOTES";
+  static const permission_enquiry = "ENQUIRY";
   static const permission_excel = "excel";
   static const permission_order = "order";
   static const permission_purchase = "purchase";
   static const permission_stone_of_the_day = "stoneoftheday";
-  static const permission_appointment = "appointment";
+  static const permission_appointment = "APPOINTMENT";
   static const permission_address = "address";
 
   static const permission_featured = "featured";
   static const permission_auction = "auction";
-  static const permission_exclusive = "exclusive";
-  static const permission_bid = "bid";
-  static const permission_hold = "hold";
-  static const permission_memo = "memo";
-  static const permission_offer = "offer";
-  static const permission_notification = "notification";
+  static const permission_exclusive = "EXCLUSIVE";
+  static const permission_bid = "MY_BID";
+  static const permission_hold = "HOLD";
+  static const permission_memo = "MEMO";
+  static const permission_offer = "QUOTE";
+  static const permission_notification = "NOTIFICATIONS";
   static const permission_offline_stock = "offlineStock";
+  static const permission_confirm_stone = "CONFIRM_STONE";
+  static const permission_office = "OFFICE";
+  static const permission_remove_rapnet = "REMOVE_FROM_RAPNET";
+  static const permission_shipment = "SHIPMENT";
+  static const permission_print = "PRINT";
+  static const permission_final_calculation = "FINAL_CALCULATIONS";
+  static const permission_share_via_mail = "SHARE_VIA_MAIL";
+  static const permission_share_via_whatsapp = "SHARE_VIA_WHATSAPP";
+  static const permission_share_via_skype = "SHARE_VIA_SKYPE";
+  static const permission_suggested_stock = "SUGGESTED_STOCK";
 }
 
 class ReminderType {
@@ -217,7 +228,9 @@ class ActionMenuConstant {
   static const ACTION_TYPE_CANCEL_STONE = 19;
   static const ACTION_TYPE_EXCEL = 20;
   static const ACTION_TYPE_MEMO = 21;
+  static const ACTION_TYPE_OFFICE_VIEW = 23;
   static const ACTION_TYPE_MY_BID = 27;
+
 }
 
 class MoreMenuConstant {

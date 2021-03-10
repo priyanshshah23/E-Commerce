@@ -26,6 +26,7 @@ class PlaceOrderPopUp extends StatefulWidget {
   int actionType;
   List<DiamondModel> diamondList;
   Function(String selectedDate, String remark) callBack;
+
   PlaceOrderPopUp(
       {this.diamondConfig, this.actionType, this.diamondList, this.callBack});
 
@@ -111,7 +112,12 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
                   SizedBox(
                     height: getSize(16),
                   ),
-                  getInvoiceDateTextField(),
+                  //getInvoiceDateTextField(),
+                  setInvoiceDropDown(context, _dateController, invoiceList,
+                      (value) {
+                    selectedPopUpDate = value;
+                    _dateController.text = value;
+                  }),
                   SizedBox(
                     height: getSize(16),
                   ),

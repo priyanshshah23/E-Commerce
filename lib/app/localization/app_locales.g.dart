@@ -360,7 +360,7 @@ class CommonString {
   String applicationUpdate = "Application Update";
   String newVersionMessage = "A new version of application is available";
   String paymentCollected = "Payment Collected";
-  String addComment = "Add a comment";
+  String addComment = "Add a note";
   String more = "More";
   String carat = "Carat";
   String pcs = "Pcs";
@@ -421,7 +421,7 @@ class CommonString {
   String download = "Download";
   String share = "Share";
   String placeOrder = "Place order";
-  String enterComment = "Please Enter Comment";
+  String enterComment = "Please Enter Note";
   String deleteItem = "Are you sure you want to delete?";
   String shippingPolicy = "Shipping Policy";
   String offerSundayRestriction =
@@ -596,7 +596,7 @@ class ScreenTitle {
   String myCart = "My Cart";
   String myComment = "My Notes";
   String compare = "Compare";
-  String compareStones = "Compare Stones";
+  String compareStones = "Compare Stone";
   String statusHold = "On Hold";
   String statusOnMemo = "On Memo";
   String statusAvailable = "Available";
@@ -606,7 +606,7 @@ class ScreenTitle {
   String signup = "Sign up";
   String addToOffice = "Add To Office";
   String addComment = "Add Comment";
-  String addEnquiry = "Add Enquiry";
+  String addEnquiry = "Enquiry";
   String finalOffer = "Final Offer";
   String finalDisc = "Final Disc";
   String finalRate = "Final Rate";
@@ -661,7 +661,7 @@ class ScreenTitle {
   String forgotPassword = "Forgot your";
   String forgotPasswordDesc =
       "Enter your registered mobile number to recover your password.";
-  String termsAndCondition = "Terms & Conditions";
+  String termsAndCondition = "Terms & Condition";
   String privacyPolicy = "Privacy Policy";
   String aboutUS = "About Us";
   String otpVerification = "Verify Ride Code";
@@ -683,8 +683,8 @@ class ScreenTitle {
   String search = "Stone Search";
   String quickSearch = "Quick Search";
   String newArrival = "New Arrival";
-  String exclusiveDiamonds = "Arjiv Diamonds";
-  String diamondOnAuction = "Diamond On Auction";
+  String exclusiveDiamonds = "Arjiv Exclusive";
+  String diamondOnAuction = "Bid It";
   String stoneOfTheDays = "Best Buy";
   String myWatchlist = "My Watchlist";
   String myBid = "My Bid";
@@ -694,7 +694,7 @@ class ScreenTitle {
   String myOffice = "My Appointment";
   String myOffer = "My Quote";
   String myPurchased = "My Purchased History";
-  String mySavedSearch = "My Saved Search";
+  String mySavedSearch = "Saved Search";
   String savedSearch = "Saved Search";
   String myDemand = "My Demand";
   String contactUs = "Contact Us";
@@ -721,8 +721,8 @@ class ScreenTitle {
   String accountAndPayment = "Account and Payment";
   String enquiry = "Enquiry";
   String download = "Download";
-  String addToCart = "Add to Cart";
-  String addToWatchList = "Add to Watchlist";
+  String addToCart = "Cart";
+  String addToWatchList = "Add To Watchlist";
   String memo = "Memo";
   String memoStone = "Memo Stone";
   String finalCalculation = "Final Calculation";
@@ -731,7 +731,7 @@ class ScreenTitle {
   String hold = "Hold";
   String holdStone = "Hold Stone";
   String offer = "Offer";
-  String officeView = "Appointment";
+  String officeView = "Office";
   String placeOrder = "Place Order";
   String buyNow = "Buy Now";
   String cancelStone = "Cancel Stone";
@@ -749,7 +749,7 @@ class ScreenTitle {
   String selectCustomDate = "Select Custom date";
   String availableSlot = "Available Slots";
   String reqOfficeView = "Request Appointment";
-  String myComments = "My Comment";
+  String myComments = "My Note";
   String myReminder = "My Reminder";
   String reminder = "Reminder";
   String manageAddress = "Manage Addresses";
