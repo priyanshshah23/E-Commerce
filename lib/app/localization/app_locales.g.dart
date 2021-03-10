@@ -360,7 +360,7 @@ class CommonString {
   String applicationUpdate = "Application Update";
   String newVersionMessage = "A new version of application is available";
   String paymentCollected = "Payment Collected";
-  String addComment = "Add a comment";
+  String addComment = "Add a note";
   String more = "More";
   String carat = "Carat";
   String pcs = "Pcs";
@@ -421,7 +421,7 @@ class CommonString {
   String download = "Download";
   String share = "Share";
   String placeOrder = "Place order";
-  String enterComment = "Please Enter Comment";
+  String enterComment = "Please Enter Note";
   String deleteItem = "Are you sure you want to delete?";
   String shippingPolicy = "Shipping Policy";
   String offerSundayRestriction =
@@ -661,7 +661,7 @@ class ScreenTitle {
   String forgotPassword = "Forgot your";
   String forgotPasswordDesc =
       "Enter your registered mobile number to recover your password.";
-  String termsAndCondition = "Terms & Conditions";
+  String termsAndCondition = "Terms & Condition";
   String privacyPolicy = "Privacy Policy";
   String aboutUS = "About Us";
   String otpVerification = "Verify Ride Code";
@@ -683,7 +683,7 @@ class ScreenTitle {
   String search = "Stone Search";
   String quickSearch = "Quick Search";
   String newArrival = "New Arrival";
-  String exclusiveDiamonds = "Arjiv Diamonds";
+  String exclusiveDiamonds = "Arjiv Exclusive";
   String diamondOnAuction = "Diamond On Auction";
   String stoneOfTheDays = "Best Buy";
   String myWatchlist = "My Watchlist";
@@ -694,7 +694,7 @@ class ScreenTitle {
   String myOffice = "My Appointment";
   String myOffer = "My Quote";
   String myPurchased = "My Purchased History";
-  String mySavedSearch = "My Saved Search";
+  String mySavedSearch = "Saved Search";
   String savedSearch = "Saved Search";
   String myDemand = "My Demand";
   String contactUs = "Contact Us";
@@ -749,7 +749,7 @@ class ScreenTitle {
   String selectCustomDate = "Select Custom date";
   String availableSlot = "Available Slots";
   String reqOfficeView = "Request Appointment";
-  String myComments = "My Comment";
+  String myComments = "My Note";
   String myReminder = "My Reminder";
   String reminder = "Reminder";
   String manageAddress = "Manage Addresses";
