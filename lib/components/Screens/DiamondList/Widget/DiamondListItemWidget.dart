@@ -58,6 +58,12 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   void initState() {
     super.initState();
     widget.item.setBidAmount();
+    RxBus.register<bool>(tag: eventBusRefreshItem).listen((event) {
+//        Future.delayed(Duration(seconds: 1));
+
+      _noteController.text = widget.item.remarks ?? "";
+      setState(() {});
+    });
 
     if (widget.item.isAddToOffer ?? false || widget.item.isAddToBid ?? false) {
       RxBus.register<bool>(tag: eventBusDropDown).listen((event) {

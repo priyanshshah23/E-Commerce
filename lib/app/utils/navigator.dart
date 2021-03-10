@@ -241,7 +241,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       );
       break;
     case OfferViewScreen.route:
-      screen = OfferViewScreen();
+      screen = OfferViewScreen(arguments);
       break;
     case Notifications.route:
       screen = Notifications();
