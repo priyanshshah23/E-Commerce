@@ -692,7 +692,7 @@ class ScreenTitle {
   String myHold = "My Hold";
   String myOrder = "My Ordered List";
   String confirmStone = "Confirm Stone";
-  String myOffice = "My Appointment";
+  String myOffice = "My Office";
   String myOffer = "My Quote";
   String myPurchased = "My Purchased History";
   String mySavedSearch = "Saved Search";
