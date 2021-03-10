@@ -71,8 +71,9 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      print("--------------------------kyc-----------------${user.isKycUploaded}");
-     /* if (user.type == UserConstant.CUSTOMER) {
+      print(
+          "--------------------------kyc-----------------${user.isKycUploaded}");
+      /* if (user.type == UserConstant.CUSTOMER) {
         //Kyc rejected
         if (user.account.isApproved == KYCStatus.rejected &&
             user.account.isKycUploaded == true) {

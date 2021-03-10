@@ -11,6 +11,7 @@ const String company = "assets/auth/company.png";
 const String india = "assets/auth/india.png";
 const String back = "assets/auth/back.png";
 const String plusIcon = "assets/diamnow/plusIcon.png";
+const String plusGreenIcon = "assets/diamnow/plusgreenicon.png";
 const String minusIcon = "assets/diamnow/minusIcon.png";
 const String exclamation = "assets/diamnow/exclamation.png";
 
@@ -107,6 +108,7 @@ const String aboutUs = "assets/drawer/aboutUs.png";
 const String drawerSearch = "assets/drawer/search.png";
 const String changePassword = "assets/drawer/changePassword.png";
 const String contactUs = "assets/drawer/contactUs.png";
+const String confirmStones = "assets/drawer/confirmStones.png";
 const String diamondOnAuction = "assets/drawer/diamondOnAuction.png";
 const String exclusiveDiamonds = "assets/drawer/exclusiveDiamonds.png";
 const String dashboard = "assets/drawer/dashboard.png";

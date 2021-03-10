@@ -331,10 +331,24 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
   manageToolbarClick(BottomTabModel model) {
     switch (model.code) {
       case BottomCodeConstant.TBShare:
+        BottomTabModel tabModel = BottomTabModel();
+
+        tabModel.type = ActionMenuConstant.ACTION_TYPE_SHARE;
+        List<DiamondModel> selectedList = [diamondModel];
+
+        diamondConfig.manageDiamondAction(
+            context, selectedList, tabModel, () {});
+
         break;
       case BottomCodeConstant.TBClock:
         break;
       case BottomCodeConstant.TBDownloadView:
+        BottomTabModel tabModel = BottomTabModel();
+        tabModel.type = ActionMenuConstant.ACTION_TYPE_DOWNLOAD;
+        List<DiamondModel> selectedList = [diamondModel];
+
+        diamondConfig.manageDiamondAction(
+            context, selectedList, tabModel, () {});
         break;
     }
   }

@@ -661,7 +661,7 @@ class ScreenTitle {
   String forgotPassword = "Forgot your";
   String forgotPasswordDesc =
       "Enter your registered mobile number to recover your password.";
-  String termsAndCondition = "Terms & Conditions";
+  String termsAndCondition = "Terms & Condition";
   String privacyPolicy = "Privacy Policy";
   String aboutUS = "About Us";
   String otpVerification = "Verify Ride Code";
@@ -683,8 +683,8 @@ class ScreenTitle {
   String search = "Stone Search";
   String quickSearch = "Quick Search";
   String newArrival = "New Arrival";
-  String exclusiveDiamonds = "Arjiv Diamonds";
-  String diamondOnAuction = "Diamond On Auction";
+  String exclusiveDiamonds = "Arjiv Exclusive";
+  String diamondOnAuction = "Bid It";
   String stoneOfTheDays = "Best Buy";
   String myWatchlist = "My Watchlist";
   String myBid = "My Bid";
@@ -694,7 +694,7 @@ class ScreenTitle {
   String myOffice = "My Appointment";
   String myOffer = "My Quote";
   String myPurchased = "My Purchased History";
-  String mySavedSearch = "My Saved Search";
+  String mySavedSearch = "Saved Search";
   String savedSearch = "Saved Search";
   String myDemand = "My Demand";
   String contactUs = "Contact Us";
@@ -722,7 +722,7 @@ class ScreenTitle {
   String enquiry = "Enquiry";
   String download = "Download";
   String addToCart = "Cart";
-  String addToWatchList = "Watch";
+  String addToWatchList = "Add To Watchlist";
   String memo = "Memo";
   String memoStone = "Memo Stone";
   String finalCalculation = "Final Calculation";
@@ -749,7 +749,7 @@ class ScreenTitle {
   String selectCustomDate = "Select Custom date";
   String availableSlot = "Available Slots";
   String reqOfficeView = "Request Appointment";
-  String myComments = "My Comment";
+  String myComments = "My Note";
   String myReminder = "My Reminder";
   String reminder = "Reminder";
   String manageAddress = "Manage Addresses";

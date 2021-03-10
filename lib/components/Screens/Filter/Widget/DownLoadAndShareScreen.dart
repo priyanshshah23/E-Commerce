@@ -50,7 +50,7 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
   bool isAllCertificateSelected = false;
   bool isAllExcelSelected = false;
   bool isAllRoughSelected = false;
-
+  bool isAllSelected = false;
   bool isImageExpanded = true;
   bool isVideoExpanded = true;
   bool isCertificateExpanded = true;
@@ -101,21 +101,79 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appTheme.whiteColor,
-      appBar: getAppBar(
-        context,
-        title,
-        bgColor: appTheme.whiteColor,
-        leadingButton: getBackButton(context),
-        centerTitle: false,
-        textalign: TextAlign.left,
-      ),
+      appBar: getAppBar(context, title,
+          bgColor: appTheme.whiteColor,
+          leadingButton: getBackButton(context),
+          centerTitle: false,
+          textalign: TextAlign.left,
+          actionItems: [
+            GestureDetector(
+              onTap: () {
+                isAllSelected = !isAllSelected;
+                isAllImageSelected = isAllSelected;
+                isAllVideoSelected = isAllSelected;
+                isAllCertificateSelected = isAllSelected;
+                isAllExcelSelected = isAllSelected;
+                isAllRoughSelected = isAllSelected;
+                firstImageList.forEach((element) {
+                  element.isSelected = isAllSelected;
+                });
+                secondImageList.forEach((element) {
+                  element.isSelected = isAllSelected;
+                });
+                firstVideoList.forEach((element) {
+                  element.isSelected = isAllSelected;
+                });
+                secondVideoList.forEach((element) {
+                  element.isSelected = isAllSelected;
+                });
+                firstExcelList.forEach((element) {
+                  element.isSelected = isAllSelected;
+                });
+                firstCertificateList.forEach((element) {
+                  element.isSelected = isAllSelected;
+                });
+                secondCertificateList.forEach((element) {
+                  element.isSelected = isAllSelected;
+                });
+                firstRoughList.forEach((element) {
+                  element.isSelected = isAllSelected;
+                });
+                secondRoughList.forEach((element) {
+                  element.isSelected = isAllSelected;
+                });
+                setState(() {});
+              },
+              child: Padding(
+                  padding:
+                      EdgeInsets.only(right: getSize(8), left: getSize(16)),
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        isAllSelected ? selectedCheckbox : unSelectedCheckbox,
+                        height: getSize(20),
+                        width: getSize(20),
+                      ),
+                      SizedBox(
+                        width: getSize(5),
+                      ),
+                      Text(
+                        "Select All",
+                        style: appTheme.black12TextStyleBold,
+                      ),
+                    ],
+                  )),
+            )
+          ]),
       bottomNavigationBar: Container(
-        color: appTheme.colorPrimary,
+        color: title == R.string.screenTitle.shareStone
+            ? appTheme.whiteColor
+            : appTheme.colorPrimary,
         padding: EdgeInsets.symmetric(
           horizontal: getSize(16),
           vertical: getSize(8),
         ),
-        child: title == R.string.commonString.share
+        child: title == R.string.screenTitle.shareStone
             ? Row(
                 children: [
                   Expanded(
@@ -827,6 +885,7 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
   }
 
   getConditionValue(DownloadDataType type) {
+    // print("..............................");
     if (type == DownloadDataType.Images) {
       return isAllImageSelected;
     } else if (type == DownloadDataType.Video) {

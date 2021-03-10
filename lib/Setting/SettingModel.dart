@@ -321,7 +321,7 @@ class DrawerSetting {
         .getModulePermission(ModulePermissionConstant.permission_order)
         .view)
       drawerList.add(DrawerModel(
-        image: confirmStone,
+        image: confirmStones,
         title: R.string.screenTitle.confirmStone,
         imageColor: appTheme.colorPrimary,
         isSelected: false,
@@ -527,9 +527,8 @@ class BottomMenuSetting {
         }
       }
     }
-    if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY){
+    if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
       addEnquiryInBottomMenu(moreMenuList);
-
     }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFICE &&
         moduleType != DiamondModuleConstant.MODULE_TYPE_MY_BID &&
@@ -919,7 +918,7 @@ class BottomMenuSetting {
         title: R.string.commonString.confirmStone,
         isCenter: false,
         image: confirmStone,
-        type: ActionMenuConstant.ACTION_TYPE_CONFIRM_STONE,
+        type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER,
       ));
     }
   }
@@ -1076,11 +1075,11 @@ class BottomMenuSetting {
 //    if ((app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
 //            KYCStatus.pending) ==
 //        KYCStatus.approved) {
-      moreMenuList.add(BottomTabModel(
-          image: image,
-          isCenter: isCenter,
-          title: R.string.screenTitle.download,
-          type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
+    moreMenuList.add(BottomTabModel(
+        image: image,
+        isCenter: isCenter,
+        title: R.string.screenTitle.download,
+        type: ActionMenuConstant.ACTION_TYPE_DOWNLOAD));
 //    }
   }
 

@@ -82,6 +82,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
   List<DiamondModel> diamondList;
   String selectedDate;
   bool isAllSelected = false;
+  bool isCheckBoxChecked = false;
   bool isCMChargesApplied = false;
   List<SlotModel> arrSlots = [];
   bool isOfferUpdate;
@@ -136,6 +137,101 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
     diamondCalculation.setAverageCalculation(diamondList);
   }
 
+  whenCheckBoxIsChecked() {
+    String remarkGlobal;
+    if (isCheckBoxChecked) {
+      showNotesDialog(context, (manageClick) {
+        if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
+          remarkGlobal = manageClick.remark;
+        }
+      }).then((value) {
+        if (remarkGlobal != null) {
+          for (var i = 0; i < diamondList.length; i++) {
+            diamondList[i].remarks = remarkGlobal;
+            print(diamondList[i].remarks);
+          }
+          setState(() {});
+        }
+      });
+    } else {
+      for (var i = 0; i < diamondList.length; i++) {
+        diamondList[i].remarks = '';
+      }
+      setState(() {});
+    }
+  }
+
+  Widget getToolbarItem() {
+    return GestureDetector(
+      onTap: () {
+        // manageToolbarClick(element);
+      },
+      child: Padding(
+          padding: EdgeInsets.only(right: getSize(20.0)),
+          child: Container(
+            child: Row(
+              children: <Widget>[
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        isCheckBoxChecked = !isCheckBoxChecked;
+                        whenCheckBoxIsChecked();
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(getSize(3))),
+                        width: getSize(21),
+                        height: getSize(21),
+                        child: Image.asset(
+                          isCheckBoxChecked
+                              ? selectedCheckbox
+                              : unSelectedCheckbox,
+                          height: getSize(20),
+                          width: getSize(20),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: getSize(5),
+                    ),
+                    Text(
+                      "Global comment",
+                      style: appTheme.blackNormal14TitleColorblack,
+                    )
+                  ],
+                ),
+              ],
+            ),
+          )),
+    );
+  }
+
+  Widget getDiamondList() {
+    return ListView.builder(
+      // primary: false,
+      shrinkWrap: true,
+      itemCount: diamondList.length,
+      physics: NeverScrollableScrollPhysics(),
+      itemBuilder: (BuildContext context, int index) {
+        return DiamondItemWidget(
+            item: diamondList[index],
+            isUpdateOffer: diamondList[index].isUpdateOffer,
+            actionClick: (manageClick) {
+              setState(() {
+                if (this.actionType ==
+                    DiamondTrackConstant.TRACK_TYPE_FINAL_CALCULATION) {
+                  diamondList[index].isSelected =
+                      !diamondList[index].isSelected;
+                  diamondCalculation.setAverageCalculation(diamondList);
+                }
+              });
+            });
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -155,6 +251,11 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
           actionItems: [
             this.actionType == DiamondTrackConstant.TRACK_TYPE_FINAL_CALCULATION
                 ? getActionItems()
+                : SizedBox(),
+            (this.actionType == DiamondTrackConstant.TRACK_TYPE_COMMENT ||
+                    this.actionType ==
+                        DiamondTrackConstant.TRACK_TYPE_UPDATE_COMMENT)
+                ? getToolbarItem()
                 : SizedBox()
           ],
         ),
@@ -173,29 +274,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                   height: getSize(20),
                 ),
                 Container(
-                  child: ListView.builder(
-                    // primary: false,
-                    shrinkWrap: true,
-                    itemCount: diamondList.length,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) {
-                      return DiamondItemWidget(
-                          item: diamondList[index],
-                          isUpdateOffer: diamondList[index].isUpdateOffer,
-                          actionClick: (manageClick) {
-                            setState(() {
-                              if (this.actionType ==
-                                  DiamondTrackConstant
-                                      .TRACK_TYPE_FINAL_CALCULATION) {
-                                diamondList[index].isSelected =
-                                    !diamondList[index].isSelected;
-                                diamondCalculation
-                                    .setAverageCalculation(diamondList);
-                              }
-                            });
-                          });
-                    },
-                  ),
+                  child: getDiamondList(),
                 ),
                 SizedBox(
                   height: getSize(20),

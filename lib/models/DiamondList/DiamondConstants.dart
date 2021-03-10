@@ -230,6 +230,8 @@ class ActionMenuConstant {
   static const ACTION_TYPE_MEMO = 21;
   static const ACTION_TYPE_MY_BID = 27;
   static const ACTION_TYPE_CONFIRM_STONE = 22;
+  static const ACTION_TYPE_OFFICE_VIEW = 23;
+
 }
 
 class MoreMenuConstant {

@@ -53,6 +53,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   var _focusOfferedPricePerCarat = FocusNode();
   final TextEditingController _noteController = TextEditingController();
   var _focusNote = FocusNode();
+
   @override
   void initState() {
     super.initState();
@@ -141,7 +142,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                             : SizedBox(),
                         Spacer(),
                         Text(
-                          "Date : " + widget.item.displayDesc,
+                          "Date : " + (widget.item?.displayDesc ?? ""),
                           style: appTheme.black16MediumTextStyle.copyWith(
                             fontSize: getFontSize(14),
                           ),
@@ -425,7 +426,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               SizedBox(
                 height: getSize(20),
               ),
-            // getWatchListDetail(),
+            getWatchListDetail(),
             getNotesDetail(),
             getOfferValues(),
             // ),
@@ -637,6 +638,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   // }
 
   getDiamondList3() {}
+
   getIdShapeDetail() {
     return Padding(
       padding: EdgeInsets.only(bottom: getSize(4)),
@@ -744,6 +746,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               ),
             ]));
   }
+
   /*getSecondRow() {
     return Padding(
       padding: EdgeInsets.only(top: getSize(10), right: getSize(10)),
@@ -1100,59 +1103,79 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   Radius.circular(getSize(6)),
                 )),
             height: getSize(54),
-            child: Row(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                      color: appTheme.dividerColor,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(getSize(6)),
-                        bottomLeft: Radius.circular(getSize(6)),
-                      )),
-                  width: getSize(72),
-                  child: Center(
-                    child: Text(
-                      "Note :",
-                      style: appTheme.blackMedium12TitleColorblack,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: CommonTextfield(
-                    focusNode: _focusNote,
-                    readOnly: !widget.item.isNoteEditable,
-                    textOption: TextFieldOption(
-                      isBorder: false,
-                      textAlign: TextAlign.right,
-                      // contentPadding: EdgeInsets.symmetric(
-                      //   horizontal: getSize(10),
-                      // ),
-
-                      hintText: 'Enter Note',
-                      maxLine: 2,
-                      keyboardType: TextInputType.multiline,
-
-                      fillColor: !widget.item.isNoteEditable
-                          ? fromHex("#FFEFEF")
-                          : appTheme.dividerColor,
-                      // fillColor: Colors.red,
-                      inputController: _noteController,
-                      formatter: [
-                        //  WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
-                        BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+            child: !widget.item.isNoteEditable
+                ? Container(
+                    decoration: BoxDecoration(
+                        color: appTheme.dividerColor,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(getSize(6)),
+                          bottomLeft: Radius.circular(getSize(6)),
+                        )),
+                    // width: getSize(341),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 11, bottom: 11, top: 9),
+                          child: Text(
+                            "Note : " + widget.item.remarks,
+                            style: appTheme.blackMedium12TitleColorblack,
+                          ),
+                        ),
                       ],
                     ),
-                    textCallback: (text) {
-                      widget.item.remarks = text;
-                    },
-                    inputAction: TextInputAction.newline,
-                    onNextPress: () {
-                      _focusNote.unfocus();
-                    },
+                  )
+                : Row(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            color: appTheme.dividerColor,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(getSize(6)),
+                              bottomLeft: Radius.circular(getSize(6)),
+                            )),
+                        width: getSize(72),
+                        child: Center(
+                          child: Text(
+                            "Note :",
+                            style: appTheme.blackMedium12TitleColorblack,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: CommonTextfield(
+                          focusNode: _focusNote,
+                          readOnly: !widget.item.isNoteEditable,
+                          textOption: TextFieldOption(
+                            isBorder: false,
+                            textAlign: TextAlign.right,
+                            // contentPadding: EdgeInsets.symmetric(
+                            //   horizontal: getSize(10),
+                            // ),
+
+                            hintText: 'Enter Note',
+                            maxLine: 2,
+                            keyboardType: TextInputType.multiline,
+                            fillColor: appTheme.dividerColor,
+                            // fillColor: Colors.red,
+                            inputController: _noteController,
+                            formatter: [
+                              //  WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+                              BlacklistingTextInputFormatter(
+                                  RegExp(RegexForEmoji))
+                            ],
+                          ),
+                          textCallback: (text) {
+                            widget.item.remarks = text;
+                          },
+                          inputAction: TextInputAction.newline,
+                          onNextPress: () {
+                            _focusNote.unfocus();
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
           )
         : Container();
   }
@@ -1180,7 +1203,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           SizedBox(width: getSize(4)),
           Image.asset(
             !isUp ? upRedArrow : downGreenArrow,
-            height: getSize(15),
+            height: getSize(10),
           )
         ],
       ),
@@ -1764,7 +1787,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         ? Column(
             children: [
               Padding(
-                padding: EdgeInsets.only(top: getSize(5)),
+                padding: EdgeInsets.only(
+                    left: getSize(10), right: getSize(10), bottom: getSize(10)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -1783,7 +1807,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: getSize(5)),
+                padding: EdgeInsets.only(
+                    left: getSize(10), right: getSize(10), bottom: getSize(10)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -1802,86 +1827,115 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: getSize(5)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    getText(R.string.screenTitle.bidPricePerCt + " :",
-                        appTheme.blackNormal12TitleColorblack),
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              widget.item.bidPlus = false;
-                              widget.item.minusAmount = 20;
-                              widget.item.ctPr = widget.item.getbidAmount();
-                              RxBus.post(false, tag: eventBusDropDown);
-                            });
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(right: getSize(10)),
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(
-                                getSize(5),
-                              ),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Center(
-                                child: Image.asset(
-                                  minusIcon,
-                                  width: getSize(16),
-                                  height: getSize(16),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: getSize(5), horizontal: getSize(10)),
+                padding: EdgeInsets.only(
+                    left: getSize(10), right: getSize(10), bottom: getSize(10)),
+                child: Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: appTheme.dividerColor),
+                      borderRadius: BorderRadius.circular(getSize(4))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Expanded(
+                        flex: 4,
+                        child: Container(
+                          height: getSize(36),
                           decoration: BoxDecoration(
-                              border: Border.all(color: appTheme.dividerColor),
-                              borderRadius: BorderRadius.circular(getSize(5))),
-                          child: getText(
-                              PriceUtilities.getPrice(
-                                  widget.item.getFinalRate()),
-                              appTheme.blackNormal12TitleColorblack),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              widget.item.bidPlus = true;
-                              widget.item.plusAmount = 20;
-                              widget.item.ctPr = widget.item.getbidAmount();
-                              RxBus.post(true, tag: eventBusDropDown);
-                            });
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(left: getSize(10)),
-                            decoration: BoxDecoration(
-                              color: appTheme.colorPrimary,
-                              borderRadius: BorderRadius.circular(
-                                getSize(5),
-                              ),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Center(
-                                child: Image.asset(
-                                  plusIcon,
-                                  width: getSize(16),
-                                  height: getSize(16),
-                                ),
-                              ),
-                            ),
+                            color: appTheme.dividerColor,
+                          ),
+                          child: Center(
+                            child: getText(
+                                R.string.screenTitle.bidPricePerCt + " :",
+                                appTheme.blackNormal12TitleColorblack),
                           ),
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                      Expanded(
+                        flex: 6,
+                        child: Container(
+                          height: getSize(36),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    widget.item.bidPlus = false;
+                                    widget.item.minusAmount = 20;
+                                    widget.item.ctPr =
+                                        widget.item.getbidAmount();
+                                    RxBus.post(false, tag: eventBusDropDown);
+                                  });
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(right: getSize(10)),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                      getSize(5),
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Center(
+                                      child: Image.asset(
+                                        minusIcon,
+                                        width: getSize(16),
+                                        height: getSize(16),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: getSize(5),
+                                    horizontal: getSize(10)),
+                                decoration: BoxDecoration(
+                                    // border:
+                                    //     Border.all(color: appTheme.dividerColor),
+                                    borderRadius:
+                                        BorderRadius.circular(getSize(5))),
+                                child: getText(
+                                    PriceUtilities.getPrice(
+                                        widget.item.getFinalRate()),
+                                    appTheme.black16MediumTextStyle),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    widget.item.bidPlus = true;
+                                    widget.item.plusAmount = 20;
+                                    widget.item.ctPr =
+                                        widget.item.getbidAmount();
+                                    RxBus.post(true, tag: eventBusDropDown);
+                                  });
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(left: getSize(10)),
+                                  decoration: BoxDecoration(
+                                    // color: appTheme.colorPrimary,
+                                    borderRadius: BorderRadius.circular(
+                                      getSize(5),
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Center(
+                                      child: Image.asset(
+                                        plusGreenIcon,
+                                        width: getSize(16),
+                                        height: getSize(16),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
