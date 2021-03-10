@@ -40,27 +40,27 @@ main() {
     rootBundle
         .load('assets/chls.pem')
         .then((value) => {
-      if (value != null)
-        {
-          SecurityContext.defaultContext
-              .setTrustedCertificatesBytes(value.buffer.asUint8List())
-        }
-    })
+              if (value != null)
+                {
+                  SecurityContext.defaultContext
+                      .setTrustedCertificatesBytes(value.buffer.asUint8List())
+                }
+            })
         .catchError((object) => {print(object)});
   }
   WidgetsFlutterBinding.ensureInitialized();
-  if (kDebugMode) {
-    rootBundle
-        .load('assets/chls.pem')
-        .then((value) => {
-      if (value != null)
-        {
-          SecurityContext.defaultContext
-              .setTrustedCertificatesBytes(value.buffer.asUint8List())
-        }
-    })
-        .catchError((object) => {print(object)});
-  }
+  // if (kDebugMode) {
+  //   rootBundle
+  //       .load('assets/chls.pem')
+  //       .then((value) => {
+  //     if (value != null)
+  //       {
+  //         SecurityContext.defaultContext
+  //             .setTrustedCertificatesBytes(value.buffer.asUint8List())
+  //       }
+  //   })
+  //       .catchError((object) => {print(object)});
+  // }
   configureFirebase();
   app = KiwiContainer();
   HttpOverrides.global = new MyHttpOverrides();

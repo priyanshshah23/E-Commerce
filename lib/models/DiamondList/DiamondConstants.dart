@@ -228,9 +228,8 @@ class ActionMenuConstant {
   static const ACTION_TYPE_CANCEL_STONE = 19;
   static const ACTION_TYPE_EXCEL = 20;
   static const ACTION_TYPE_MEMO = 21;
-  static const ACTION_TYPE_MY_BID = 27;
-  static const ACTION_TYPE_CONFIRM_STONE = 22;
   static const ACTION_TYPE_OFFICE_VIEW = 23;
+  static const ACTION_TYPE_MY_BID = 27;
 
 }
 

@@ -232,10 +232,10 @@ class _OfferPopupState extends State<OfferPopup> {
           textOption: TextFieldOption(
             prefixWid: getCommonIconWidget(
                 imageName: company, imageType: IconSizeType.small),
-            hintText:
-                widget.actionType == DiamondTrackConstant.TRACK_TYPE_OFFICE
-                    ? R.string.commonString.officeVisitDate
-                    : R.string.commonString.offerVelidTill,
+            hintText: R.string.authStrings.companyName,
+            // widget.actionType == DiamondTrackConstant.TRACK_TYPE_OFFICE
+            //     ? R.string.commonString.officeVisitDate
+            //     : R.string.commonString.offerVelidTill,
             maxLine: 1,
             keyboardType: TextInputType.text,
             inputController: _dateController,

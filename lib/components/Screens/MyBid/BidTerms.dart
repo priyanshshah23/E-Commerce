@@ -74,15 +74,11 @@ class _BidTermsState extends State<BidTerms> {
         decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
         child: AppButton.flat(
           onTap: () {
-            Map<String, dynamic> dict = new HashMap();
-            dict[ArgumentConstant.ModuleType] =
-                DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION;
-            dict[ArgumentConstant.IsFromDrawer] = false;
-            NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+            Navigator.pop(context);
           },
           borderRadius: getSize(5),
           fitWidth: true,
-          text: "Go to New Arrivals 'Just Bid it'",
+          text: "Go to 'Bid it'",
           //isButtonEnabled: enableDisableSigninButton(),
         ),
       ),
