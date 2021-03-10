@@ -51,11 +51,11 @@ PODS:
     - Flutter
   - flutter_files_picker (0.0.2):
     - Flutter
-  - flutter_inappwebview (0.0.1):
-    - Flutter
   - flutter_local_notifications (0.0.1):
     - Flutter
   - flutter_money_formatter (0.0.1):
+    - Flutter
+  - flutter_native_timezone (0.0.1):
     - Flutter
   - flutter_statusbarcolor (0.0.1):
     - Flutter
@@ -102,17 +102,17 @@ PODS:
     - nanopb/encode (= 1.30906.0)
   - nanopb/decode (1.30906.0)
   - nanopb/encode (1.30906.0)
-  - OneSignal (2.16.1)
-  - onesignal_flutter (2.6.2):
+  - OneSignal (2.16.3)
+  - onesignal_flutter (2.6.3):
     - Flutter
-    - OneSignal (= 2.16.1)
+    - OneSignal (= 2.16.3)
   - package_info (0.0.1):
     - Flutter
   - path_provider (0.0.1):
     - Flutter
   - "permission_handler (4.4.0+hotfix.4)":
     - Flutter
-  - PromisesObjC (1.2.11)
+  - PromisesObjC (1.2.12)
   - Reachability (3.2)
   - screenshot_callback (0.0.1):
     - Flutter
@@ -152,9 +152,9 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_exif_rotation (from `.symlinks/plugins/flutter_exif_rotation/ios`)
   - flutter_files_picker (from `.symlinks/plugins/flutter_files_picker/ios`)
-  - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_money_formatter (from `.symlinks/plugins/flutter_money_formatter/ios`)
+  - flutter_native_timezone (from `.symlinks/plugins/flutter_native_timezone/ios`)
   - flutter_statusbarcolor (from `.symlinks/plugins/flutter_statusbarcolor/ios`)
   - gallery_saver (from `.symlinks/plugins/gallery_saver/ios`)
   - libphonenumber (from `.symlinks/plugins/libphonenumber/ios`)
@@ -214,12 +214,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_exif_rotation/ios"
   flutter_files_picker:
     :path: ".symlinks/plugins/flutter_files_picker/ios"
-  flutter_inappwebview:
-    :path: ".symlinks/plugins/flutter_inappwebview/ios"
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_money_formatter:
     :path: ".symlinks/plugins/flutter_money_formatter/ios"
+  flutter_native_timezone:
+    :path: ".symlinks/plugins/flutter_native_timezone/ios"
   flutter_statusbarcolor:
     :path: ".symlinks/plugins/flutter_statusbarcolor/ios"
   gallery_saver:
@@ -276,9 +276,9 @@ SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_exif_rotation: 85a029bc8f10235c50736be688519f4037a87f13
   flutter_files_picker: 10942b5e4c22c90e3da2faf82dc8bf9f83660089
-  flutter_inappwebview: 69dfbac46157b336ffbec19ca6dfd4638c7bf189
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_money_formatter: d0d18ddc5be333fad8d09964d741b59fa11a91dc
+  flutter_native_timezone: e72ff1900460ff57cfd331d1758050c9269f3e99
   flutter_statusbarcolor: 8afb1071ed8c58be929f1e32b36c629771fd2259
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   gallery_saver: 9fc173c9f4fcc48af53b2a9ebea1b643255be542
@@ -289,12 +289,12 @@ SPEC CHECKSUMS:
   libPhoneNumber-iOS: 0a32a9525cf8744fe02c5206eb30d571e38f7d75
   local_auth: 17f985934bb4ab2637431e5b3fe1b2d6698d2051
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
-  OneSignal: 5f6514ec2b931306eb067acb124afbb2e49970af
-  onesignal_flutter: 260bb95c0a2d791c990c7bd8749525c9834d43fc
+  OneSignal: fd223b247d46e0aa97c7712f3e031c29798d018a
+  onesignal_flutter: 605e4ed3c95a9705db9f5073a66ac6d0045b3fee
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: 8278954f2382902f63f00dd8828769c0bd6d511b
-  PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
+  PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   screenshot_callback: dcbd6a3d715947a44ed20c114172bcdfcd577e42
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410
@@ -307,7 +307,7 @@ SPEC CHECKSUMS:
   unique_identifier: ebb92b4bc4ad9c2c93f85cb5e02f70ad168a2bd6
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
   video_player: 9cc823b1d9da7e8427ee591e8438bfbcde500e6e
-  wakelock: bfc7955c418d0db797614075aabbc58a39ab5107
+  wakelock: 0d4a70faf8950410735e3f61fb15d517c8a6efc4
   webview_flutter: d2b4d6c66968ad042ad94cbb791f5b72b4678a96
 
 PODFILE CHECKSUM: 6fafb14ff954ec0d94194edf038d84201d7be595
