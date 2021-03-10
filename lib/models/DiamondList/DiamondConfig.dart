@@ -476,8 +476,6 @@ class DiamondConfig {
 
         break;
 
-      case ActionMenuConstant.ACTION_TYPE_PLACE_ORDER:
-        break;
       case ActionMenuConstant.ACTION_TYPE_COMPARE:
         if (list.length < 2) {
           app.resolve<CustomDialogs>().confirmDialog(
@@ -577,19 +575,19 @@ class DiamondConfig {
   }
 
   actionAddToWishList(BuildContext context, List<DiamondModel> list) {
-    // List<DiamondModel> selectedList = [];
-    // DiamondModel model;
-    // list.forEach((element) {
-    //   model = DiamondModel.fromJson(element.toJson());
-    //   model.isAddToWatchList = true;
-    //   selectedList.add(model);
-    // });
-    // openDiamondActionAcreen(
-    //     context, DiamondTrackConstant.TRACK_TYPE_WATCH_LIST, selectedList);
+    List<DiamondModel> selectedList = [];
+    DiamondModel model;
+    list.forEach((element) {
+      model = DiamondModel.fromJson(element.toJson());
+      model.isAddToWatchList = true;
+      selectedList.add(model);
+    });
+    openDiamondActionAcreen(
+        context, DiamondTrackConstant.TRACK_TYPE_WATCH_LIST, selectedList);
     // if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
-    callApiFoCreateTrack(
+    /* callApiFoCreateTrack(
         context, list, DiamondTrackConstant.TRACK_TYPE_WATCH_LIST,
-        isPop: false, title: "Added in Watchlist");
+        isPop: false, title: "Added in Watchlist");*/
     // }
     /*showWatchListDialog(context, selectedList, (manageClick) {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
@@ -2056,7 +2054,7 @@ class DiamondConfig {
         }
         arraDiamond[i].isGrouping = true;
       }
-    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_UPCOMING) {
+    } /*else if (moduleType == DiamondModuleConstant.MODULE_TYPE_UPCOMING) {
       for (int i = 0; i < arraDiamond.length; i++) {
         if (i == 0 || (arraDiamond[i].inDt != arraDiamond[i - 1].inDt)) {
           arraDiamond[i].displayTitle = DateUtilities()
@@ -2064,7 +2062,8 @@ class DiamondConfig {
                   formatter: DateUtilities.dd_mm_yyyy);
         }
       }
-    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR) {
+    } */
+    else if (moduleType == DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR) {
       DiamondModel diamondItem;
       if (arraDiamond.length == 1) {
         diamondItem = arraDiamond[0];
