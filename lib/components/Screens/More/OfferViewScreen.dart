@@ -9,6 +9,7 @@ import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/AddDemand.dart';
 import 'package:diamnow/models/Slot/SlotModel.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -20,10 +21,12 @@ class OfferViewScreen extends StatefulWidget {
 }
 
 class _OfferViewScreenState extends State<OfferViewScreen> {
+  final _formKey = GlobalKey<FormState>();
+  bool _autoValidate = false;
   DateTime now = DateTime.now();
   List<DateModel> days;
-  DateTime pickedDate;
-  String pd;
+  DateTime pickedDate = DateTime.now();
+  String pd = DateTime.now().toIso8601String();
   int selectedDate = -1;
   int selectedSlot = 0;
   int selectedVirtualType = -1;
@@ -129,9 +132,10 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(
         context,
-        R.string.screenTitle.officeView,
+        R.string.screenTitle.appointment,
         leadingButton: getBackButton(context),
         centerTitle: false,
       ),
@@ -142,13 +146,13 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
             getTopRow(),
             getDateList(),
             getTimeSlot(),
-            setVirtualDropDown(virtualList, (value) {
-              _virtualTypeController.text = value;
-            }),
-            SizedBox(
-              height: getSize(10),
-            ),
-            getCommentTextField(),
+//            setVirtualDropDown(virtualList, (value) {
+//              _virtualTypeController.text = value;
+//            }),
+//            SizedBox(
+//              height: getSize(10),
+//            ),
+//            getCommentTextField(),
           ],
         ),
       ),
@@ -210,26 +214,8 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                               positiveBtnTitle: R.string.commonString.ok,
                             );
                         return;
-                      } else if (isNullEmptyOrFalse(
-                          _virtualTypeController.text)) {
-                        app.resolve<CustomDialogs>().confirmDialog(
-                              context,
-                              title: "",
-                              desc: R.string.errorString.selectVirtualType,
-                              positiveBtnTitle: R.string.commonString.ok,
-                            );
-                        return;
-                      } else if (isNullEmptyOrFalse(
-                          _commentTypeController.text)) {
-                        app.resolve<CustomDialogs>().confirmDialog(
-                              context,
-                              title: "",
-                              desc: R.string.errorString.enterComments,
-                              positiveBtnTitle: R.string.commonString.ok,
-                            );
-                        return;
                       }
-                      callApiForRequestForOffice();
+                      showAppoitmentDialog(context);
                     },
                     textColor: appTheme.colorPrimary,
                     backgroundColor: appTheme.whiteColor,
@@ -289,8 +275,14 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                         isShowTextField: false,
                         applyCallBack: (
                             {String selectedDate, String diamondTitle}) {
-                          // pd = DateUtilities().getDateFromString(selectedDate);
                           pd = selectedDate;
+                          days.forEach((element) {
+                            element.isSelected = false;
+                            if(element.date.day == DateTime.parse(selectedDate).day){
+                              element.isSelected =true;
+                            }
+                          });
+
                           setState(() {});
                         }),
                   );
@@ -310,18 +302,25 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
               // });
             },
             child: Container(
-              width: getSize(175),
+//              width: getSize(175),
+              padding: EdgeInsets.only(bottom: getSize(5)),
               decoration: BoxDecoration(
                   border: Border(
                       bottom: BorderSide(
                           color: appTheme.dividerColor, width: getSize(2)))),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    pd != null ? pd : R.string.screenTitle.selectCustomDate,
+                    pd != null
+                        ? DateUtilities().convertServerDateToFormatterString(
+                            pd,
+                            formatter: DateUtilities.ddmmyyyy_,
+                          )
+                        : R.string.screenTitle.selectCustomDate,
                     style: appTheme.black16TextStyle,
                   ),
+                  SizedBox(width: getSize(10),),
                   Image.asset(
                     calender,
                     height: getSize(20),
@@ -354,8 +353,14 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                   days[index].isSelected = !days[index].isSelected;
                   if (days[index].isSelected) {
                     pickedDate = days[index].date;
+                    pd = pickedDate.toIso8601String() ;
                   }
+//                  print()
+//                  if(pickedDate != pd){
+//                    pd = null;
+//                  }
                 });
+
               },
               child: Container(
                 alignment: Alignment.center,
@@ -489,33 +494,34 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
       );
 
   getVirtualTypeDropDown() {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: getSize(Spacing.leftPadding),
-        right: getSize(Spacing.rightPadding),
-      ),
-      child: AbsorbPointer(
-        child: CommonTextfield(
-            enable: false,
-            textOption: TextFieldOption(
-                prefixWid: getCommonIconWidget(
-                    imageName: company, imageType: IconSizeType.small),
-                hintText: R.string.commonString.selectType,
-                maxLine: 1,
-                keyboardType: TextInputType.text,
-                type: TextFieldType.DropDown,
-                inputController: _virtualTypeController,
-                isSecureTextField: false),
-            textCallback: (text) {
+    return AbsorbPointer(
+      child: CommonTextfield(
+          enable: false,
+          textOption: TextFieldOption(
+              prefixWid: getCommonIconWidget(
+                  imageName: company, imageType: IconSizeType.small),
+              hintText: R.string.commonString.selectType,
+              maxLine: 1,
+              keyboardType: TextInputType.text,
+              type: TextFieldType.DropDown,
+              inputController: _virtualTypeController,
+              isSecureTextField: false),
+          textCallback: (text) {
 //                  setState(() {
 //                    checkValidation();
 //                  });
-            },
-            inputAction: TextInputAction.next,
-            onNextPress: () {
-              FocusScope.of(context).unfocus();
-            }),
-      ),
+          },
+          validation: (text){
+            if(text.isEmpty){
+              return R.string.errorString.selectVirtualType;
+            } else{
+              return null;
+            }
+          },
+          inputAction: TextInputAction.next,
+          onNextPress: () {
+            FocusScope.of(context).unfocus();
+          }),
     );
   }
 
@@ -542,39 +548,125 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
   }
 
   getCommentTextField() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: Spacing.leftPadding),
-      child: CommonTextfield(
-        autoFocus: false,
-        textOption: TextFieldOption(
-          maxLine: 4,
-          inputController: _commentTypeController,
-          hintText: "Enter Comments",
-          formatter: [
-            WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
-            BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
-          ],
-          //isSecureTextField: false
-        ),
-        textCallback: (text) {},
-        inputAction: TextInputAction.done,
-        onNextPress: () {
-          FocusScope.of(context).unfocus();
-        },
+    return CommonTextfield(
+      textOption: TextFieldOption(
+        maxLine: 4,
+        inputController: _commentTypeController,
+        hintText: "Enter Comments",
+        formatter: [
+          WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+          BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+        ],
+        errorBorder: InputBorder.none,
+        //isSecureTextField: false
       ),
+      validation: (text){
+        if(text.isEmpty){
+          return R.string.errorString.enterComments;
+        } else{
+          return null;
+        }
+      },
+      textCallback: (text) {},
+      inputAction: TextInputAction.done,
+      onNextPress: () {
+        FocusScope.of(context).unfocus();
+      },
     );
   }
 
   List<DateModel> setDateList() {
     return [
-      DateModel(0, now, false),
-      DateModel(1, getDate(1), false),
-      DateModel(2, getDate(2), false),
-      DateModel(3, getDate(3), false),
-      DateModel(4, getDate(4), false),
-      DateModel(5, getDate(5), false),
-      DateModel(6, getDate(6), false),
+      DateModel(0, getDate(1), false),
+      DateModel(1, getDate(2), false),
+      DateModel(2, getDate(3), false),
+      DateModel(3, getDate(4), false),
+      DateModel(4, getDate(5), false),
+      DateModel(5, getDate(6), false),
+      DateModel(6, getDate(7), false),
     ];
+  }
+
+  showAppoitmentDialog(BuildContext context){
+    return showDialog(
+      context: context,
+      builder: (context){
+
+        return Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(getSize(15))),
+          insetPadding: EdgeInsets.all(getSize(20)),
+          child: Padding(
+            padding: EdgeInsets.all(getSize(15)),
+            child: Form(
+              key: _formKey,
+              autovalidate: _autoValidate,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text("Book Appointment",style: appTheme.black16MediumTextStyle,),
+                  setVirtualDropDown(virtualList, (value) {
+                    _virtualTypeController.text = value;
+                  }),
+                  SizedBox(
+                    height: getSize(10),
+                  ),
+                  getCommentTextField(),
+                  Padding(
+                    padding: EdgeInsets.only(top: getSize(20), bottom: getSize(20)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              // border: Border.all(
+                              //     color: appTheme.colorPrimary, width: getSize(1)),
+                              borderRadius: BorderRadius.circular(getSize(5)),
+                            ),
+                            child: AppButton.flat(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              // borderRadius: getSize(5),
+                              text: R.string.commonString.cancel,
+                              textColor: appTheme.colorPrimary,
+                              backgroundColor: appTheme.whiteColor,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: getSize(20),
+                        ),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              // color: appTheme.colorPrimary,
+                              // borderRadius: BorderRadius.circular(getSize(5)),
+                                boxShadow: getBoxShadow(context)),
+                            child: AppButton.flat(
+                              onTap: () {
+                                FocusScope.of(context).unfocus();
+                                  if (_formKey.currentState.validate()) {
+                                    callApiForRequestForOffice();
+                                  } else {
+                                    _autoValidate = true;
+                                  }
+                              },
+                              // borderRadius: getSize(5),
+                              text: R.string.commonString.btnSubmit,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      }
+    ).then((value) => Navigator.pop(context,true));
   }
 }
 

@@ -2671,37 +2671,6 @@
     "bottomPadding": 4
   },
   {
-  "title": "Ratio",
-  "viewType": "fromto",
-  "apiKey": "ratio",
-  "sequence": 36,
-  "isActive": true,
-  "labelFrom": "From",
-  "labelTo": "To",
-  "tab": "matchpair",
-  "maxValue": 100,
-  "minValue": 0,
-  "fromToStyle": {
-    "showUnderline": true,
-    "showBorder": false,
-    "underlineColor": "#E3E3E3",
-    "borderColor": "#E3E3E3",
-    "borderWidth": 1
-  }
-},
-{
-  "viewType": "seperator",
-  "sequence": 37,
-  "isActive": false,
-  "height": 1,
-  "color": "#E3E3E3",
-  "tab": "matchpair",
-  "leftPadding": 0,
-  "rightPadding": 0,
-  "topPadding": 4,
-  "bottomPadding": 4
-},
-  {
     "title": "Width (MM)",
     "viewType": "fromto",
     "apiKey": "width",
@@ -2754,6 +2723,95 @@
   {
     "viewType": "seperator",
     "sequence": 43,
+    "isActive": false,
+    "height": 1,
+    "color": "#E3E3E3",
+    "tab": "matchpair",
+    "leftPadding": 0,
+    "rightPadding": 0,
+    "topPadding": 4,
+    "bottomPadding": 4
+  },
+
+
+ {
+      "title": "Ratio",
+      "viewType": "fromto",
+      "apiKey": "ratio",
+      "sequence": 36,
+      "isActive": true,
+      "labelFrom": "From",
+      "labelTo": "To",
+      "tab": "matchpair",
+      "maxValue": 100,
+      "minValue": 0,
+      "fromToStyle": {
+        "showUnderline": true,
+        "showBorder": false,
+        "underlineColor": "#E3E3E3",
+        "borderColor": "#E3E3E3",
+        "borderWidth": 1
+      }
+    },
+    {
+      "viewType": "seperator",
+      "sequence": 37,
+      "isActive": false,
+      "height": 1,
+      "color": "#E3E3E3",
+      "tab": "matchpair",
+      "leftPadding": 0,
+      "rightPadding": 0,
+      "topPadding": 4,
+      "bottomPadding": 4
+    },
+
+
+
+  {
+    "title": "Pair No.",
+    "viewType": "fromto",
+    "apiKey": "pairStkNo",
+    "sequence": 36,
+    "isActive": true,
+    "labelFrom": "Pair No.",
+    "labelTo": "To",
+    "tab": "matchpair",
+    "maxValue": 100,
+    "minValue": 0,
+    "isOnlyFrom": true,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
+  },
+
+  {
+    "title": "Layout No.",
+    "viewType": "fromto",
+    "apiKey": "layoutNo",
+    "sequence": 36,
+    "isActive": true,
+    "labelFrom": "Layout No.",
+    "labelTo": "To",
+    "tab": "matchpair",
+    "maxValue": 100,
+    "minValue": 0,
+    "isOnlyFrom": true,
+    "fromToStyle": {
+      "showUnderline": true,
+      "showBorder": false,
+      "underlineColor": "#E3E3E3",
+      "borderColor": "#E3E3E3",
+      "borderWidth": 1
+    }
+  },
+  {
+    "viewType": "seperator",
+    "sequence": 16,
     "isActive": false,
     "height": 1,
     "color": "#E3E3E3",
@@ -3452,37 +3510,7 @@
     "topPadding": 4,
     "bottomPadding": 4
   },
-  {
-  "title": "Ratio",
-  "viewType": "fromto",
-  "apiKey": "ratio",
-  "sequence": 36,
-  "isActive": true,
-  "labelFrom": "From",
-  "labelTo": "To",
-  "tab": "layout",
-  "maxValue": 100,
-  "minValue": 0,
-  "fromToStyle": {
-    "showUnderline": true,
-    "showBorder": false,
-    "underlineColor": "#E3E3E3",
-    "borderColor": "#E3E3E3",
-    "borderWidth": 1
-  }
-},
-{
-  "viewType": "seperator",
-  "sequence": 37,
-  "isActive": false,
-  "height": 1,
-  "color": "#E3E3E3",
-  "tab": "layout",
-  "leftPadding": 0,
-  "rightPadding": 0,
-  "topPadding": 4,
-  "bottomPadding": 4
-},
+
   {
     "title": "Width (MM)",
     "viewType": "fromto",
@@ -3495,8 +3523,8 @@
     "maxValue": 100,
     "minValue": 0,
     "fromToStyle": {
-      "showUnderline": false,
-      "showBorder": true,
+      "showUnderline": true,
+      "showBorder": false,
       "underlineColor": "#E3E3E3",
       "borderColor": "#E3E3E3",
       "borderWidth": 1
@@ -3514,6 +3542,68 @@
     "topPadding": 4,
     "bottomPadding": 4
   },
+  {
+      "title": "Height (MM)",
+      "viewType": "fromto",
+      "apiKey": "height",
+      "sequence": 42,
+      "isActive": true,
+      "labelFrom": "From",
+      "labelTo": "To",
+      "tab": "layout",
+      "maxValue": 100,
+      "minValue": 0,
+      "fromToStyle": {
+        "showUnderline": true,
+        "showBorder": false,
+        "underlineColor": "#E3E3E3",
+        "borderColor": "#E3E3E3",
+        "borderWidth": 1
+      }
+    },
+    {
+      "viewType": "seperator",
+      "sequence": 43,
+      "isActive": false,
+      "height": 1,
+      "color": "#E3E3E3",
+      "tab": "layout",
+      "leftPadding": 0,
+      "rightPadding": 0,
+      "topPadding": 4,
+      "bottomPadding": 4
+    },
+    {
+      "title": "Ratio",
+      "viewType": "fromto",
+      "apiKey": "ratio",
+      "sequence": 36,
+      "isActive": true,
+      "labelFrom": "From",
+      "labelTo": "To",
+      "tab": "layout",
+      "maxValue": 100,
+      "minValue": 0,
+      "fromToStyle": {
+        "showUnderline": true,
+        "showBorder": false,
+        "underlineColor": "#E3E3E3",
+        "borderColor": "#E3E3E3",
+        "borderWidth": 1
+      }
+    },
+    {
+      "viewType": "seperator",
+      "sequence": 37,
+      "isActive": false,
+      "height": 1,
+      "color": "#E3E3E3",
+      "tab": "layout",
+      "leftPadding": 0,
+      "rightPadding": 0,
+      "topPadding": 4,
+      "bottomPadding": 4
+    },
   {
     "title": "Pair No.",
     "viewType": "fromto",
@@ -3534,37 +3624,7 @@
       "borderWidth": 1
     }
   },
-  {
-    "title": "Height (MM)",
-    "viewType": "fromto",
-    "apiKey": "height",
-    "sequence": 42,
-    "isActive": true,
-    "labelFrom": "From",
-    "labelTo": "To",
-    "tab": "layout",
-    "maxValue": 100,
-    "minValue": 0,
-    "fromToStyle": {
-      "showUnderline": true,
-      "showBorder": false,
-      "underlineColor": "#E3E3E3",
-      "borderColor": "#E3E3E3",
-      "borderWidth": 1
-    }
-  },
-  {
-    "viewType": "seperator",
-    "sequence": 43,
-    "isActive": false,
-    "height": 1,
-    "color": "#E3E3E3",
-    "tab": "layout",
-    "leftPadding": 0,
-    "rightPadding": 0,
-    "topPadding": 4,
-    "bottomPadding": 4
-  },
+
   {
     "title": "Layout No.",
     "viewType": "fromto",

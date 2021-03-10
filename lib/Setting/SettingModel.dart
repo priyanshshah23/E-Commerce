@@ -543,14 +543,14 @@ class BottomMenuSetting {
           image: myOffice,
           isCenter: false,
           title: R.string.screenTitle.officeView,
-          type: ActionMenuConstant.ACTION_TYPE_OFFICE_VIEW));
+          type: ActionMenuConstant.ACTION_TYPE_APPOINTMENT));
     }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
         moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
         moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
       addCommentInBottomMenu(moreMenuList);
     }
-    if (moduleType != DiamondModuleConstant.MODULE_TYPE_COMPARE){
+    if ( !isDetail && !isCompare){
       addCompareInBottomMenu(moreMenuList, compare);
     }
 
@@ -687,9 +687,9 @@ class BottomMenuSetting {
           if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
             addEnquiryInBottomMenu(moreMenuList);
           }
-//        if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_CART) {
-//          addCartInBottomMenu(moreMenuList);
-//        }
+        if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_CART) {
+          addCartInBottomMenu(moreMenuList);
+        }
 
           if (!isDiamondSearchModule(moduleType)) {
             if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER &&
@@ -703,7 +703,7 @@ class BottomMenuSetting {
             addOfferInBottomMenu(moreMenuList, offerWhite, isCenter: false);
           }
 
-          //For Compare special
+//          For Compare special
           if (isCompare) {
             addOfferInBottomMenu(moreMenuList, offerWhite, isCenter: false);
           }
@@ -733,8 +733,12 @@ class BottomMenuSetting {
             type: ActionMenuConstant.ACTION_TYPE_MORE,
           ));
         } else {
-          addConfirmStone(moreMenuList);
-          addOfferInBottomMenu(moreMenuList, offer, isCenter: false,title: "Quote");
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE) {
+            addConfirmStone(moreMenuList);
+          }
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+            addOfferInBottomMenu(moreMenuList, offer, isCenter: false,title: "Quote");
+          }
           if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST) {
             addWatchlistInBottomMenu(moreMenuList, addToWatchlist,
                 isCenter: false);
@@ -771,9 +775,9 @@ class BottomMenuSetting {
 //          }
 
           //For Compare special
-          if (isCompare) {
-            addOfferInBottomMenu(moreMenuList, offerWhite, isCenter: false);
-          }
+//          if (isCompare) {
+//            addOfferInBottomMenu(moreMenuList, offerWhite, isCenter: false);
+//          }
 //          if (!isCompare && !isDetail) {
 //            if (moduleType !=
 //                    DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
@@ -901,7 +905,7 @@ class BottomMenuSetting {
         title: R.string.commonString.confirmStone,
         isCenter: false,
         image: confirmStone,
-        type: ActionMenuConstant.ACTION_TYPE_CONFIRM_STONE,
+        type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER,
       ));
     }
   }
