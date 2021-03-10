@@ -1226,7 +1226,7 @@ class _ProfileListState extends State<ProfileList> {
       focusNode: _focusFaxNumber,
       readOnly: this.readOnly ? true : false,
       textOption: TextFieldOption(
-        hintText: R.string.authStrings.lblFaxNumber,
+        hintText: R.string.commonString.lblFaxNumber,
         maxLine: 1,
         keyboardType: TextInputType.number,
         inputController: _faxNumberController,
