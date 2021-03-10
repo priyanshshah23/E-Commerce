@@ -71,7 +71,7 @@ class AuthStrings {
   String addressLineThree = "Address 3";
   String oldPassword = "Old Password";
   String skype = "Skype";
-  String whatsApp = "Telephone Number";
+  String whatsApp = "Whatsapp Number";
   String pinCode = "PinCode*";
   String verifyMobileDesc =
       "Please verify mobile number to update the profile.";
