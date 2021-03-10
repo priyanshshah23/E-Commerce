@@ -2186,11 +2186,16 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   openDiamondList(String id) {
-    Map<String, dynamic> dict = new HashMap();
-    dict["filterId"] = id;
-    dict[ArgumentConstant.ModuleType] =
-        DiamondModuleConstant.MODULE_TYPE_SEARCH;
-    NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_searchResult)
+        .view) {
+      Map<String, dynamic> dict = new HashMap();
+      dict["filterId"] = id;
+      dict[ArgumentConstant.ModuleType] =
+          DiamondModuleConstant.MODULE_TYPE_SEARCH;
+      NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+    }
   }
 
   getSideImages(String type) {

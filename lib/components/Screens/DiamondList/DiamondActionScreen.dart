@@ -139,7 +139,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
 
   whenCheckBoxIsChecked() {
     String remarkGlobal;
-    if (isCheckBoxChecked) {
+    if (!isCheckBoxChecked) {
       showNotesDialog(context, (manageClick) {
         if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
           remarkGlobal = manageClick.remark;
@@ -148,16 +148,11 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
         if (remarkGlobal != null) {
           for (var i = 0; i < diamondList.length; i++) {
             diamondList[i].remarks = remarkGlobal;
-            print(diamondList[i].remarks);
           }
-          setState(() {});
+
+          RxBus.post(true, tag: eventBusRefreshItem);
         }
       });
-    } else {
-      for (var i = 0; i < diamondList.length; i++) {
-        diamondList[i].remarks = '';
-      }
-      setState(() {});
     }
   }
 
@@ -176,7 +171,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                   children: [
                     InkWell(
                       onTap: () {
-                        isCheckBoxChecked = !isCheckBoxChecked;
+                        //isCheckBoxChecked = !isCheckBoxChecked;
                         whenCheckBoxIsChecked();
                       },
                       child: Container(
