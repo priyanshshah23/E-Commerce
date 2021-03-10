@@ -549,7 +549,7 @@ class BottomMenuSetting {
         moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
       addCommentInBottomMenu(moreMenuList);
     }
-    if ( !isDetail && !isCompare){
+    if (!isDetail && !isCompare) {
       addCompareInBottomMenu(moreMenuList, compare);
     }
 
@@ -621,6 +621,13 @@ class BottomMenuSetting {
           type: ActionMenuConstant.ACTION_TYPE_MORE,
         ));
         break;
+      case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+        addConfirmStone(moreMenuList,title: "Update Stone",image: updateStones,type: ActionMenuConstant.ACTION_TYPE_UPDATE_NOTE);
+        addEnquiryInBottomMenu(moreMenuList);
+        addCompareInBottomMenu(moreMenuList, compare,isCenter: false);
+        addShareInBottomMenu(moreMenuList, shareWhite,isCenter: false);
+        addDownloadInBottomMenu(moreMenuList, downloadWhite,isCenter: false);
+        break;
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
         if (!isDetail && !isCompare) {
           addCompareInBottomMenu(moreMenuList, compare, isCenter: false);
@@ -683,12 +690,12 @@ class BottomMenuSetting {
 //          addWatchlistInBottomMenu(moreMenuList, addToWatchlist,
 //              isCenter: false);
 //        }
-          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
-            addEnquiryInBottomMenu(moreMenuList);
+//          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
+//            addEnquiryInBottomMenu(moreMenuList);
+//          }
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_CART) {
+            addCartInBottomMenu(moreMenuList);
           }
-        if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_CART) {
-          addCartInBottomMenu(moreMenuList);
-        }
 
           if (!isDiamondSearchModule(moduleType)) {
             if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER &&
@@ -736,15 +743,16 @@ class BottomMenuSetting {
             addConfirmStone(moreMenuList);
           }
           if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
-            addOfferInBottomMenu(moreMenuList, offer, isCenter: false,title: "Quote");
+            addOfferInBottomMenu(moreMenuList, offer,
+                isCenter: false, title: "Quote");
           }
           if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST) {
             addWatchlistInBottomMenu(moreMenuList, addToWatchlist,
                 isCenter: false);
           }
-//          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
-//            addEnquiryInBottomMenu(moreMenuList);
-//          }
+          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
+            addEnquiryInBottomMenu(moreMenuList);
+          }
           if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_CART) {
             addCartInBottomMenu(moreMenuList);
           }
@@ -757,8 +765,7 @@ class BottomMenuSetting {
 //              moduleType == DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL ||
 //              moduleType == DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH ||
 //              moduleType == DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK) {
-//            addPlaceOrderInBottomMenu(moreMenuList, placeOrder,
-//                isCenter: false);
+//            addEnquiryInBottomMenu(moreMenuList);
 //          }
 
 //          if (!isDiamondSearchModule(moduleType)) {
@@ -895,16 +902,22 @@ class BottomMenuSetting {
     }
   }
 
-  addConfirmStone(List<BottomTabModel> moreMenuList) {
+  addConfirmStone(
+    List<BottomTabModel> moreMenuList, {
+    bool isCenter: true,
+    String title,
+    String image,
+    int type,
+  }) {
     if (app
         .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_confirm_stone)
         .insert) {
       moreMenuList.add(BottomTabModel(
-        title: R.string.commonString.confirmStone,
+        title: title ?? R.string.commonString.confirmStone,
         isCenter: false,
-        image: confirmStone,
-        type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER,
+        image: image ?? confirmStone,
+        type: type ?? ActionMenuConstant.ACTION_TYPE_PLACE_ORDER,
       ));
     }
   }
